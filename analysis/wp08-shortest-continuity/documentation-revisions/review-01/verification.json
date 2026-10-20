@@ -1,0 +1,54 @@
+{
+  "schema": "wp08-shortest-subpackage-final-verification-v1",
+  "status": "passed_bounded_subpackage",
+  "accepted_run": "run-05",
+  "accepted_Source_cases": 2,
+  "compared_execution_boundaries": 193,
+  "fake_zero_progress_checks": 2,
+  "output_buffer_pairs": 579,
+  "original_CPU_instructions": 162728,
+  "new_Native_frames": 0,
+  "production_original_CPU_callbacks": 0,
+  "whole_WP08_complete": false,
+  "whole_game_closure_proven": false,
+  "human14_phases1_to6_proven": false,
+  "operable_city_UI_proven": false,
+  "field_ledger": {
+    "total": 1526,
+    "conditional_disjoint": 1201,
+    "possible": 80,
+    "unknown": 245,
+    "remaining": 325,
+    "raw_independent_total": 345,
+    "city_offset1_official_name": null,
+    "city_offsets28_31_official_names": null
+  },
+  "unknown_unique_services": null,
+  "completion_percentage": null,
+  "remaining_rounds_estimate": null,
+  "new_genuine_unknown_service_prefixes": 0,
+  "WP02_fallback_executed": false,
+  "next_recommended_not_executed": "WP02: current-JSR B517 contracts; requires separate next-package authorization",
+  "artifact_manifest": {
+    "path": "analysis/wp08-shortest-continuity/artifact-manifest.json",
+    "sha256": "b740946309628cc266473d771e25e3d0ab1146f123da6539652d29713ee45e12",
+    "bytes": 1090826
+  },
+  "input_manifest": {
+    "path": "analysis/wp08-shortest-continuity/input-manifest.json",
+    "sha256": "bb155102e38f8bac7636cae4e6201e53d853b8d583dbc2bc13ebcece5e6f7913",
+    "bytes": 15661
+  },
+  "semantic_validation": {
+    "path": "analysis/wp08-shortest-continuity/semantic-validation.json",
+    "sha256": "5eb2652ffbd6cee3ed93641c26fdaed3e5d633d29dea3ac3a6a4dc219b9960e3",
+    "bytes": 11728
+  },
+  "frozen_after": {
+    "path": "analysis/wp08-shortest-continuity/frozen-after.json",
+    "sha256": "a7f46a6059ec743cf51f7d6220e73995aa9124b497b9ecadf1cc9c3c24972e9e",
+    "bytes": 596
+  },
+  "artifact_paths_before_self_and_final": 5038,
+  "old_pins_preserved": 101066
+}

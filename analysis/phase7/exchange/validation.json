@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "case_count": 655,
+  "counts": {
+    "request_decision_all0087": 256,
+    "request_secondary_exactFF": 256,
+    "proposal_route_prefix": 5,
+    "movement_coordinate_suffix": 96,
+    "movement_cost_suffix": 42
+  },
+  "failures": [],
+  "source_only_guard_count": 3,
+  "source_only_guards": [
+    {
+      "kind": "route",
+      "value": 5
+    },
+    {
+      "kind": "route",
+      "value": 255
+    },
+    {
+      "kind": "slot",
+      "value": 20
+    }
+  ],
+  "code_ranges": [
+    {
+      "bank": 12,
+      "cpu_start": 48806,
+      "cpu_end_exclusive": 48826,
+      "file": 106166,
+      "raw_hex": "ad 87 00 10 0e a9 00 8d 8b 6f 8d 8d 6f 8d 8e 6f ee 01 05 60",
+      "sha256": "ff88a4ab0c9fede0a2b9d4d6ed0622f9bfabcfa8ee0f67e19f55cd355f24b454"
+    },
+    {
+      "bank": 12,
+      "cpu_start": 48897,
+      "cpu_end_exclusive": 48906,
+      "file": 106257,
+      "raw_hex": "ac 8f 6f b9 14 bf 8d 01 05",
+      "sha256": "1b9e3b6f5e3aefb3461e16f17de3530f11829d83231e20efec3754a11b2f75b0"
+    },
+    {
+      "bank": 12,
+      "cpu_start": 48916,
+      "cpu_end_exclusive": 48921,
+      "file": 106276,
+      "raw_hex": "03 05 08 0c 0d",
+      "sha256": "f9bbe49b0d3061bdc6c830abbf6a5f28b6e83a8c45816ebb96c8bb25f9708033"
+    },
+    {
+      "bank": 12,
+      "cpu_start": 48934,
+      "cpu_end_exclusive": 49020,
+      "file": 106294,
+      "raw_hex": "a9 00 85 00 85 01 a9 01 85 02 ad 8d 6f 29 01 d0 04 a9 ff 85 02 ad 8d 6f 4a 29 01 49 01 aa a5 02 9d 00 00 ac 09 05 b9 00 06 18 65 00 99 00 06 b9 14 06 18 65 01 99 14 06 c9 0f d0 16 a5 01 30 09 b9 14 06 18 69 01 4c 75 bf b9 14 06 38 e9 01 99 14 06 ee 01 05 60",
+      "sha256": "3f8cdb4f2e97ba24a12986ee340f54543857c144bdf6b98a9a2c12e90c8d5090"
+    },
+    {
+      "bank": 12,
+      "cpu_start": 49027,
+      "cpu_end_exclusive": 49048,
+      "file": 106387,
+      "raw_hex": "ad 05 05 38 ed 97 6f 8d 05 05 a9 04 8d 00 05 a9 02 8d 01 05 60",
+      "sha256": "0a19f24afc2af513731e1636d7334ac6098d5a634a3811c8c81a024d3d40a608"
+    },
+    {
+      "bank": 12,
+      "cpu_start": 42271,
+      "cpu_end_exclusive": 42293,
+      "file": 99631,
+      "raw_hex": "ad 8b 6f c9 ff d0 0e a9 01 8d 8b 6f ad 09 05 8d 8c 6f ee 01 05 60",
+      "sha256": "a91ce9ffd9e5dc7ae7897d54369a4f65771e506f21e69cae67cccddc49ac4ade"
+    }
+  ],
+  "source_sha256": "82f9616c15f546d6af912455c6f87aa982890fc3ab178a4491746db895a76268",
+  "validator_sha256": "0ab2f2e0fdc05d076bf7d7f6823628ac5f9dbd34d3ef26e259822488345a61b8",
+  "scope": "All2K RAM and all8K SRAM effects only, excluding CPU registers/flags/stack and renderer request prerequisites.",
+  "limits": [
+    "BF26 and BF83 are suffix entries after real graphics requests; no graphics helper is substituted.",
+    "BF01 is checked only until BF0A, before the no-action message request.",
+    "This is not a complete NMI or a full action animation."
+  ]
+}

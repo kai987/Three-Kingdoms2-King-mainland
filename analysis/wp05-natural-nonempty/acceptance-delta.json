@@ -1,0 +1,57 @@
+{
+  "schema": "wp05-closure-acceptance-delta-v1",
+  "work_package": "WP05",
+  "status": "complete_with_declared_bounded_scope",
+  "frozen_requirement": "analysis/closure-audit-20261018/unique-gap-register.json#G-NONEMPTY-MODE2",
+  "closure_gap_id": "G-NONEMPTY-MODE2",
+  "result": "Natural nonempty mode2 actual allocation and BB39 return demonstrated in the new383-frame window, repeated in four fresh processes.",
+  "acceptance_receipt": {
+    "path": "analysis/wp05-natural-nonempty/flow-validation.json",
+    "bytes": 824,
+    "sha256": "28fa4409953ba81f235bc8ef5d404d8fdd2059573ad0b26797cfb154fa9258b9"
+  },
+  "native_comparison_receipt": {
+    "path": "analysis/wp05-natural-nonempty/runtime/validation.json",
+    "bytes": 1274,
+    "sha256": "79018bfd55cc00398e5eb5904f66da4ff709be0bc907d10bc9f1bf831714a4fe"
+  },
+  "satisfied": [
+    "Natural documented ancestry and ordinary A/release inputs only",
+    "Actual CF02 outcome1→1 writer",
+    "Real current JSR Push8/entry/RTS/continuation chain and mode2 dispatch",
+    "BDCD nonempty[67,FF×20] and BDB8 city16 roster FF→67",
+    "Fresh original/observer five-buffer byte equivalence from first actual callback, full imported state/RAM/SRAM before it",
+    "0overflow/0new memory injection and old inputs preserved"
+  ],
+  "initial_boundary_limit": "Before first retro_run there is no RGB/audio callback. No initial image is fabricated; actual first frame7611 is the initial five-buffer video boundary.",
+  "uncovered": [
+    "Nontrivial BE55 exchange between different indices",
+    "Full-city / adjacent-city BE90 fallback",
+    "Other officer/city outcomes or arbitrary interrupt schedules",
+    "Human14 phases1..6 and full continuous Source UI"
+  ],
+  "field_classification_changes": 0,
+  "official_city_names": {
+    "1": null,
+    "28": null,
+    "29": null,
+    "30": null,
+    "31": null
+  },
+  "overall_reverse_engineering_complete": false,
+  "unknown_unique_services": null,
+  "completion_percentage": null,
+  "remaining_rounds_estimate": null,
+  "next_recommendation": {
+    "work_package": "WP02",
+    "reason": "WP01 frozen audit is complete and the B517 current-JSR static premises/counterexamples are already located. A new corrected contract validator can be reviewed in a separate package; the frozen32 draft is not a passing CPU receipt."
+  },
+  "not_automatically_started": [
+    "WP02",
+    "WP06",
+    "WP08",
+    "phase32 completion",
+    "phase33"
+  ],
+  "stop": "WP05 delivered, stop for parent assessment."
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "phase18-original-CPU-city-auxiliary-trace-v1",
+  "status": "bounded_trace_complete",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "cohort": "aux44",
+  "target_officer": 8,
+  "explicit_pre_main_NMI_arrivals": 0,
+  "native_memory_prefix": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame6758",
+  "native_memory_sha256": {
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame6758-ram.bin": "483a81ee3f401e006f65a845b66b1dbf51bbdf9317d66892b65b0bd71539c1de",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame6758-sram.bin": "4f633444fc3b648921fe836f73035bdff8f59cb66043195022bfd1f7e4c06ccb"
+  },
+  "original_initial_registers": {
+    "a": 17,
+    "x": 31,
+    "y": 63,
+    "p": 32,
+    "sp": 255,
+    "pc": 57446
+  },
+  "raw_native_PRG_shadows": [
+    48,
+    42,
+    43
+  ],
+  "initial_physical_banks": [
+    16,
+    10,
+    11,
+    31
+  ],
+  "prepared_bytes": [
+    {
+      "address": 24706,
+      "before": 15,
+      "after": 1,
+      "reason": "City4 realgold257 low"
+    },
+    {
+      "address": 24707,
+      "before": 39,
+      "after": 1,
+      "reason": "City4 realgold257 high"
+    },
+    {
+      "address": 25640,
+      "before": 232,
+      "after": 132,
+      "reason": "Target officer troops900 low"
+    },
+    {
+      "address": 24705,
+      "before": 0,
+      "after": 44,
+      "reason": "City4 aux1 comparator cohort only"
+    }
+  ],
+  "postentry_memory_injections": 0,
+  "original_instructions": 208273,
+  "explicit_NMI_arrivals": 30,
+  "explicit_IRQ_arrivals": 150,
+  "main_boundaries": 30,
+  "boundary": {
+    "kind": "explicit_main_update_budget",
+    "updates": 30,
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    }
+  },
+  "auxiliary_reads": 0,
+  "auxiliary_writes": 0,
+  "auxiliary_role_counts": {},
+  "BD95_visits": 0,
+  "source_pipeline_executed": false,
+  "Native_internal_CPU_trace": false,
+  "core_frames_generated": 0,
+  "hardware_inputs": {
+    "PPUSTATUS": "explicit0",
+    "APUSTATUS": "explicit0",
+    "NamcoIRQcounter": "explicit127",
+    "controllers": [
+      0,
+      0
+    ]
+  },
+  "limits": [
+    "DeclaredE066 AXYP/SP and mappedbank shadows from frozenNative memory do not provide originalcore internalCPU registers or PC.",
+    "Explicit NMI/IRQ arrivals are software oracle inputs, not Nativevideo frames or cycle timing.",
+    "Nativebaseline changes no RAM/SRAM; comparator cohorts change only disclosed validcity/officer numeric bytes and aux1 beforeentry.",
+    "No request/ready/result/ack/controller/pointer bytes are prepared or injected afterentry.",
+    "Trace budget/unknown hardware boundary is retained; zero observations in this finite window do not establish unused fields."
+  ],
+  "source_sha256": {
+    "scripts/trace_city_auxiliary_fields.py": "e6fb1099a08df9d7e9aba9386b8f81e70dfae32f081984c4158811c354b5bf6b",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1"
+  },
+  "artifact_sha256": {
+    "analysis/phase18/cpu/short-window-frame6758/aux44/main-boundaries.json": "dc8cfbe887e3a053696edd8e13bd7eb956c0110a4d1b4bb8525f98f4b678a899",
+    "analysis/phase18/cpu/short-window-frame6758/aux44/final-ram.bin": "2a6f86d79b98aac39a749917905b1e624469883454b76374f0935efaeadb5b2c",
+    "analysis/phase18/cpu/short-window-frame6758/aux44/city-accesses.json": "436c465bdbc083abe51f631f1451427486c85229b66525262c4261e9ce715c68",
+    "analysis/phase18/cpu/short-window-frame6758/aux44/input-ram.bin": "483a81ee3f401e006f65a845b66b1dbf51bbdf9317d66892b65b0bd71539c1de",
+    "analysis/phase18/cpu/short-window-frame6758/aux44/final-sram.bin": "7f8777fe5a0d78a41e3e83f87cee0af2358641f5503dcfc6c1bb4ca27c952053",
+    "analysis/phase18/cpu/short-window-frame6758/aux44/update-fields.json": "7fd09fd9a84e56fc82d76071346d90ad8d6c5f8aff7e4b2706ed11d04e24955c",
+    "analysis/phase18/cpu/short-window-frame6758/aux44/auxiliary-accesses.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "analysis/phase18/cpu/short-window-frame6758/aux44/input-sram.bin": "2fbfcb0492b1476fc44573887726bfedf271fb7eb1b80ade9b04429c0b05ed23",
+    "analysis/phase18/cpu/short-window-frame6758/aux44/watchpoints.json": "2926f7d9a328ce50b4d0d2d8cdd9bdce3c4912f2d3bf0bf10c5d7bbb68f39035"
+  }
+}

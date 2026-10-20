@@ -1,0 +1,410 @@
+{
+  "schema": "phase20-explicit-disjoint-authority-selection-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "row_count": 20,
+  "broader_candidate_count": 5,
+  "unknown_candidate_count": 15,
+  "rows": [
+    {
+      "physical_bank": 8,
+      "cpu": 45572,
+      "rom_offset": 70164,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 32,
+      "raw_hex": "B1 20",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 8,
+        "cpu": 45572,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 9,
+      "cpu": 49493,
+      "rom_offset": 74085,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 2,
+      "raw_hex": "B1 02",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 9,
+        "cpu": 49493,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 9,
+      "cpu": 49521,
+      "rom_offset": 74113,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 2,
+      "raw_hex": "B1 02",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 9,
+        "cpu": 49521,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 9,
+      "cpu": 54519,
+      "rom_offset": 79111,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "raw_hex": "B1 00",
+      "candidate_auxiliary_intersection_count": 40,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 9,
+        "cpu": 54519,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 56399,
+      "rom_offset": 97375,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "raw_hex": "B1 00",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 11,
+        "cpu": 56399,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 56429,
+      "rom_offset": 97405,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "raw_hex": "B1 00",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 11,
+        "cpu": 56429,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 14,
+      "cpu": 46645,
+      "rom_offset": 120389,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 10,
+      "raw_hex": "B1 0A",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 14,
+        "cpu": 46645,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 14,
+      "cpu": 46650,
+      "rom_offset": 120394,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 12,
+      "raw_hex": "B1 0C",
+      "candidate_auxiliary_intersection_count": 46,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 14,
+        "cpu": 46650,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 14,
+      "cpu": 46944,
+      "rom_offset": 120688,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 26,
+      "raw_hex": "B1 1A",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 14,
+        "cpu": 46944,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 14,
+      "cpu": 46958,
+      "rom_offset": 120702,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 28,
+      "raw_hex": "B1 1C",
+      "candidate_auxiliary_intersection_count": 46,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 14,
+        "cpu": 46958,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 14,
+      "cpu": 46970,
+      "rom_offset": 120714,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 10,
+      "raw_hex": "B1 0A",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 14,
+        "cpu": 46970,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 14,
+      "cpu": 46984,
+      "rom_offset": 120728,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 12,
+      "raw_hex": "B1 0C",
+      "candidate_auxiliary_intersection_count": 46,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 14,
+        "cpu": 46984,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 41161,
+      "rom_offset": 205017,
+      "op": "STA",
+      "mode": "iy",
+      "operand": 238,
+      "raw_hex": "91 EE",
+      "candidate_auxiliary_intersection_count": 1,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 25,
+        "cpu": 41161,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 26,
+      "cpu": 49534,
+      "rom_offset": 213390,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 16,
+      "raw_hex": "B1 10",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 26,
+        "cpu": 49534,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 26,
+      "cpu": 54866,
+      "rom_offset": 218722,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "raw_hex": "B1 00",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 26,
+        "cpu": 54866,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 28,
+      "cpu": 49722,
+      "rom_offset": 229962,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 2,
+      "raw_hex": "B1 02",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 28,
+        "cpu": 49722,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 28,
+      "cpu": 49750,
+      "rom_offset": 229990,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 2,
+      "raw_hex": "B1 02",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 28,
+        "cpu": 49750,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 29,
+      "cpu": 42101,
+      "rom_offset": 238725,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "raw_hex": "B1 00",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 29,
+        "cpu": 42101,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 29,
+      "cpu": 45356,
+      "rom_offset": 241980,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "raw_hex": "B1 00",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 29,
+        "cpu": 45356,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    },
+    {
+      "physical_bank": 30,
+      "cpu": 51722,
+      "rom_offset": 248346,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "raw_hex": "B1 00",
+      "candidate_auxiliary_intersection_count": null,
+      "authoritative_auxiliary_intersection_count": 0,
+      "authoritative_contract_origin": {
+        "path": "analysis/phase18/fields-static/all-indirect-accesses.json",
+        "sha256": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+        "physical_bank": 30,
+        "cpu": 51722,
+        "contract_field": "address_contract",
+        "scope": "Exact frozen original pointer/index domain and its original bounded-CFG preconditions; not merely an inherited classification label."
+      },
+      "reason": "The newer whole-pair analysis is broader or unknown here; the separately applicable exact frozen disjoint domain remains the authority."
+    }
+  ],
+  "limits": "Candidate diagnostics are not used to claim disjointness; every inherited authoritative object is linked and recomputed independently."
+}

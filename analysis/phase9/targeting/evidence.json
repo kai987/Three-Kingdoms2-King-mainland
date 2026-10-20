@@ -1,0 +1,1589 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_kind": "independent readable all16 player qualifiers; not original source, no IR/CPU executor",
+  "dependency_pins": [
+    {
+      "path": "source/recovered/player_tactic_targeting.py",
+      "sha256": "384b62ac62a8aebbdba2f9169b66cafc5525c21d949fb12267c910cd681e6009"
+    },
+    {
+      "path": "source/recovered/tactical_decisions.py",
+      "sha256": "ea8ff96eac5544c212095e0a9a9287095ada12b5f6ded01fe3f70b3f0a850f6a"
+    },
+    {
+      "path": "source/recovered/terrain_semantics.py",
+      "sha256": "2fe8f1d9dffe068260408e30fc4f3f750ce34751db4c7fe12a1d622b2eaa02eb"
+    },
+    {
+      "path": "source/recovered/battle.py",
+      "sha256": "e5f7da08d5b318676f319720bb54af147b6e589ce8c31ed4bc47d4b0ab0f5434"
+    },
+    {
+      "path": "source/recovered/game_enums.py",
+      "sha256": "70c34d99d442ea40269507c306de680e1e1511baf5db1469764a63961c56963d"
+    },
+    {
+      "path": "scripts/verify_player_tactic_targeting.py",
+      "sha256": "a8a5e601805330d23b632585368691e951b4dae620a71c5294deb3be5a2dd771"
+    },
+    {
+      "path": "scripts/analyze_player_tactic_targeting.py",
+      "sha256": "e63e264e95572c7fe1f81f71c5961582f2f1f8bd71fbcfd7dd75d50cfe5d7f77"
+    }
+  ],
+  "source_ast_imports": [
+    "dataclasses",
+    "tactical_decisions",
+    "battle"
+  ],
+  "ranges": [
+    {
+      "name": "cursor_enemy_and_range_prefix",
+      "physical_bank": 12,
+      "cpu_start": 43516,
+      "cpu_end_exclusive": 43549,
+      "rom_offset": 100876,
+      "raw_hex": "20 4b dc c9 ff d0 25 8c 09 05 20 60 b8 c9 06 b0 1c 20 80 ad b0 0b a9 0a 8d 01 05 a9 f7 20 83 f2 60",
+      "byte_count": 33,
+      "sha256": "b846e1a904cfe9754451801017b6a9649b42ced296e71deedf7c3f627353261f"
+    },
+    {
+      "name": "full_16_qualification",
+      "physical_bank": 12,
+      "cpu_start": 44416,
+      "cpu_end_exclusive": 45099,
+      "rom_offset": 101776,
+      "raw_hex": "ac 09 05 b9 00 06 85 10 b9 14 06 85 11 20 46 db 85 0a ac 0a 05 b9 00 06 85 10 b9 14 06 85 11 20 46 db 85 0b ad 43 05 29 0f 20 de ea cc ad d8 ad d8 ad d8 ad e4 ad ee ad fb ad 68 ae c4 ae ce ae 0a af 73 af 0a af a1 af d3 af 1d b0 a5 0a f0 06 c9 02 f0 02 18 60 38 60 a5 0a f0 06 c9 04 f0 02 18 60 38 60 a5 0a c9 03 f0 02 18 60 38 60 ac 09 05 f0 06 c0 0a f0 02 18 60 38 60 a4 0a c0 05 d0 28 20 2d ae e6 00 20 42 ae b0 20 20 2d ae c6 00 20 42 ae b0 16 20 2d ae e6 01 20 42 ae b0 0c 20 2d ae c6 01 20 42 ae b0 02 18 60 38 60 ac 09 05 b9 00 06 85 00 b9 14 06 c9 10 90 03 38 e9 01 85 01 60 a5 00 c9 20 b0 e1 a5 01 c9 14 b0 db ac 0a 05 b9 00 06 c5 00 d0 d1 b9 14 06 c9 10 90 03 38 e9 01 c5 01 d0 c3 38 60 a4 0a f0 04 c0 04 d0 32 20 2d ae e6 00 20 a4 ae c9 ff f0 24 20 2d ae c6 00 20 a4 ae c9 ff f0 18 20 2d ae e6 01 20 a4 ae c9 ff f0 0c 20 2d ae c6 01 20 a4 ae c9 ff d0 02 38 60 18 60 a5 00 c9 20 b0 17 a5 01 c9 14 b0 11 c9 0f d0 03 ee 01 00 20 b6 d6 98 30 04 20 4b dc 60 a9 00 60 a5 0a c9 05 d0 02 18 60 38 60 a5 0b c9 04 f0 04 c9 05 d0 30 20 2d ae e6 00 20 42 ae b0 1e 20 2d ae c6 00 20 42 ae b0 14 20 2d ae e6 01 20 42 ae b0 0a 20 2d ae c6 01 20 42 ae 90 08 a5 0a c9 05 f0 02 38 60 18 60 a4 0a c0 03 d0 32 20 2d ae e6 00 20 44 af c9 03 f0 24 20 2d ae c6 00 20 44 af c9 03 f0 18 20 2d ae e6 01 20 44 af c9 03 f0 0c 20 2d ae c6 01 20 44 af c9 03 d0 02 38 60 18 60 a5 00 c9 20 b0 26 a5 01 c9 14 b0 20 c9 0f d0 03 ee 01 00 20 b6 d6 98 30 13 20 4b dc c9 ff d0 0c a5 00 85 10 a5 01 85 11 20 46 db 60 a9 ff 60 a5 0b d0 26 ac 0a 05 b9 64 06 20 d7 f2 a0 09 b1 00 d0 07 88 b1 00 c9 64 90 10 a0 00 ad 04 05 10 02 a0 04 b9 d8 04 c9 ff f0 02 18 60 38 60 a4 0b c0 05 d0 2a 20 2d ae e6 00 20 42 ae b0 1e 20 2d ae c6 00 20 42 ae b0 14 20 2d ae e6 01 20 42 ae b0 0a 20 2d ae c6 01 20 42 ae 90 02 38 60 18 60 a4 0a c0 05 f0 42 20 2d ae e6 00 20 44 af c9 ff f0 04 c9 05 d0 30 20 2d ae c6 00 20 44 af c9 ff f0 04 c9 05 d0 20 20 2d ae e6 01 20 44 af c9 ff f0 04 c9 05 d0 10 20 2d ae c6 01 20 44 af c9 ff f0 06 c9 05 f0 02 38 60 18 60 a4 0a c0 03 f0 06 c0 05 f0 02 38 60 18 60",
+      "byte_count": 683,
+      "sha256": "ee6bae8d42d1e8f4276a9768223ff47bf55a20c9226e1d53f7066d92a5b04d2a"
+    },
+    {
+      "name": "coordinate_distance",
+      "physical_bank": 12,
+      "cpu_start": 47200,
+      "cpu_end_exclusive": 47265,
+      "rom_offset": 104560,
+      "raw_hex": "ac 09 05 b9 14 06 c9 10 90 02 e9 01 85 00 ac 0a 05 b9 14 06 c9 10 90 02 e9 01 38 e5 00 b0 05 49 ff 18 69 01 85 00 ac 0a 05 b9 00 06 38 ac 09 05 f9 00 06 b0 05 49 ff 18 69 01 c5 00 b0 02 a5 00 60",
+      "byte_count": 65,
+      "sha256": "93978daa35273f3db2a69020a68b1a10f4fec14946506ea2ea7fe3cda7435b57"
+    },
+    {
+      "name": "highest_coordinate_match",
+      "physical_bank": 13,
+      "cpu_start": 54966,
+      "cpu_end_exclusive": 54988,
+      "rom_offset": 112326,
+      "raw_hex": "a0 13 b9 00 06 cd 00 00 d0 08 b9 14 06 cd 01 00 f0 03 88 10 ed 60",
+      "byte_count": 22,
+      "sha256": "0158acbad4f123324c9b8b40e13e460525055f320b546e517aa140cad5f7b549"
+    },
+    {
+      "name": "player_terrain_lookup",
+      "physical_bank": 13,
+      "cpu_start": 56134,
+      "cpu_end_exclusive": 56222,
+      "rom_offset": 113494,
+      "raw_hex": "20 50 db c9 06 90 02 a9 02 60 a0 00 ad 10 00 c9 10 90 02 a0 01 ad 11 00 c9 10 90 04 98 09 02 a8 b1 a8 8d 00 00 a0 37 20 07 ee 12 a0 a9 9e 8d 02 00 a9 db 8d 03 00 ad 10 00 29 0f 8d 08 00 a2 00 ad 11 00 0a 0a 0a 0a 0d 08 00 a8 b1 00 a8 c9 80 90 03 a9 00 60 b1 02 60",
+      "byte_count": 88,
+      "sha256": "173426bb74855d0ecd80d9ae0d674eec6de0a1ace5f9e89a1b2c4335d80ee519"
+    },
+    {
+      "name": "terrain_class_table",
+      "physical_bank": 13,
+      "cpu_start": 56222,
+      "cpu_end_exclusive": 56350,
+      "rom_offset": 113582,
+      "raw_hex": "00 01 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 03 02 02 02 02 04 04 02 04 04 02 04 02 04 04 04 02 00 00 02 02 02 02 02 02 02 02 00 00 00 02 00 00 00 00 00 00 03 03 03 03 03 03 03 03 02 00 00 00 02 02 02 02 02 02 02 02 02 02 04 02 02 04 02 04 04 04 03 00 00 05 05 05 05 03 00 03 03 03 01 01 01 01 02 02 01 02 02 02 01 02 02 03 03 06 07 08 00 00 00 00",
+      "byte_count": 128,
+      "sha256": "b79f209483137dfeb6d72bd7fbe17ceb77ff050a09d229ad367c37ed7a5d1b87"
+    },
+    {
+      "name": "opposite_side_lookup",
+      "physical_bank": 13,
+      "cpu_start": 56395,
+      "cpu_end_exclusive": 56419,
+      "rom_offset": 113755,
+      "raw_hex": "ad 04 05 30 0b b9 28 06 30 03 a9 00 60 a9 ff 60 b9 28 06 10 f8 a9 00 60",
+      "byte_count": 24,
+      "sha256": "d82c30fdca6adb0ad6ecf644da007fa9304edc3073b49dbf0eb0b3e307bbfe56"
+    }
+  ],
+  "tables": [
+    {
+      "name": "player_AP_cost_ABC9",
+      "rom_offset": 101337,
+      "byte_count": 16,
+      "raw_hex": "06 05 04 06 07 08 08 08 0a 09 09 0a 0a 08 0c 0a",
+      "sha256": "6b5a7cfab66d7335f49865cba082d6ffcfdc699abc458dbffe7653c7c52aef5b"
+    },
+    {
+      "name": "map_chunk_pointers_bank8_B7CB",
+      "rom_offset": 71643,
+      "byte_count": 240,
+      "raw_hex": "40 80 70 81 00 82 30 83 c0 83 f0 84 80 85 b0 86 40 87 70 88 00 89 30 8a c0 8a f0 8b 80 8c b0 8d 40 8e 70 8f 00 90 30 91 c0 91 f0 92 80 93 b0 94 40 95 70 96 00 97 30 98 c0 98 f0 99 80 9a b0 9b a6 89 d6 8a 66 8b 96 8c 26 8d 56 8e e6 8e 16 90 a6 90 d6 91 66 92 96 93 26 94 56 95 e6 95 16 97 a6 97 d6 98 66 99 96 9a 26 9b 56 9c e6 9c 16 9e 40 95 70 96 00 97 30 98 c0 98 f0 99 80 9a b0 9b 40 80 70 81 00 82 30 83 c0 83 f0 84 80 85 b0 86 40 87 70 88 00 89 30 8a c0 8a f0 8b 80 8c b0 8d 40 8e 70 8f 00 90 30 91 c0 91 f0 92 80 93 b0 94 40 95 70 96 00 97 30 98 c0 98 f0 99 80 9a b0 9b 40 80 70 81 00 82 30 83 c0 83 f0 84 80 85 b0 86 40 87 70 88 00 89 30 8a c0 8a f0 8b 80 8c b0 8d 40 8e 70 8f 00 90 30 91 c0 91 f0 92 80 93 b0 94",
+      "sha256": "66e48be153941cb04d33eefb8e416b4f575fa322071e134904d80532a6c66f2a"
+    },
+    {
+      "name": "map_chunk_selectors_bank8_B8BB",
+      "rom_offset": 71883,
+      "byte_count": 120,
+      "raw_hex": "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 25 25 25 25 25 25 25 25 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25",
+      "sha256": "b68e97ed82a337b6247bc4222c1b49251e5577a3d1d41eadb3f2264e093935f8"
+    }
+  ],
+  "map_chunks": [
+    {
+      "chunk": 0,
+      "physical_bank": 0,
+      "cpu": 32832,
+      "rom_offset": 80,
+      "byte_count": 256,
+      "sha256": "0a1937d2661ce77e149efc3a673fbbe42465fce39c5353cf3e8486c9bc636c10"
+    },
+    {
+      "chunk": 1,
+      "physical_bank": 0,
+      "cpu": 33136,
+      "rom_offset": 384,
+      "byte_count": 256,
+      "sha256": "49b0888c3133abfbbf9905ac15bba5897905ea0a3c0f9d0d00058eef22f0ecfc"
+    },
+    {
+      "chunk": 2,
+      "physical_bank": 0,
+      "cpu": 33280,
+      "rom_offset": 528,
+      "byte_count": 256,
+      "sha256": "c71925101c2acbe21e08c1c0cf2cd5a631a77965da27f0779975f036ff8cc37b"
+    },
+    {
+      "chunk": 3,
+      "physical_bank": 0,
+      "cpu": 33584,
+      "rom_offset": 832,
+      "byte_count": 256,
+      "sha256": "f8b5c50b2df806652f7aff9955984984f84f4a50532b8d768ee98bfeff523148"
+    },
+    {
+      "chunk": 4,
+      "physical_bank": 0,
+      "cpu": 33728,
+      "rom_offset": 976,
+      "byte_count": 256,
+      "sha256": "0c9896193c873a7568145563f3dbbf4f88bd00f0ac75c62bbf3d143e4cb00009"
+    },
+    {
+      "chunk": 5,
+      "physical_bank": 0,
+      "cpu": 34032,
+      "rom_offset": 1280,
+      "byte_count": 256,
+      "sha256": "0adf37d5020e1500a6ca7278049d44890828e78eff7faa13d67c1ea390315ffe"
+    },
+    {
+      "chunk": 6,
+      "physical_bank": 0,
+      "cpu": 34176,
+      "rom_offset": 1424,
+      "byte_count": 256,
+      "sha256": "3223263bdd12077cf0a0eca2f31d6b41aecec2ecdef5e2ef8497a8eaaed12a6f"
+    },
+    {
+      "chunk": 7,
+      "physical_bank": 0,
+      "cpu": 34480,
+      "rom_offset": 1728,
+      "byte_count": 256,
+      "sha256": "3013d69c1ebaa41f8e1c229f46f6a3e958ebe6afbc20ba59a5dd7b94cf871fd3"
+    },
+    {
+      "chunk": 8,
+      "physical_bank": 0,
+      "cpu": 34624,
+      "rom_offset": 1872,
+      "byte_count": 256,
+      "sha256": "2efeb5b6fc1dc27faef20c9ec76c8d743e605676a24c0126e1250e1a7181ea5c"
+    },
+    {
+      "chunk": 9,
+      "physical_bank": 0,
+      "cpu": 34928,
+      "rom_offset": 2176,
+      "byte_count": 256,
+      "sha256": "4c4ad59b383e2acb33ed4f381ad74248bac2c6b98138f48943f7a3159466418d"
+    },
+    {
+      "chunk": 10,
+      "physical_bank": 0,
+      "cpu": 35072,
+      "rom_offset": 2320,
+      "byte_count": 256,
+      "sha256": "a3a603c0eed2b91caa87c9527237ab9c7e18c8eec94978d90686f2c44166cc0b"
+    },
+    {
+      "chunk": 11,
+      "physical_bank": 0,
+      "cpu": 35376,
+      "rom_offset": 2624,
+      "byte_count": 256,
+      "sha256": "f76c4360ddb5cb06ae68ebf6bca2513be8d222155900edeb9dae6cc4d1e44d27"
+    },
+    {
+      "chunk": 12,
+      "physical_bank": 0,
+      "cpu": 35520,
+      "rom_offset": 2768,
+      "byte_count": 256,
+      "sha256": "81ec174d70d38e173412dc22f2b76f795307d7a104d6415177d102dae0819be8"
+    },
+    {
+      "chunk": 13,
+      "physical_bank": 0,
+      "cpu": 35824,
+      "rom_offset": 3072,
+      "byte_count": 256,
+      "sha256": "e826956a0a7c095a5b78d811b2581d27f2abb569e9515b856c3242983fcc620a"
+    },
+    {
+      "chunk": 14,
+      "physical_bank": 0,
+      "cpu": 35968,
+      "rom_offset": 3216,
+      "byte_count": 256,
+      "sha256": "18cd3e7deae143affa3dc2dffd850d1e236227d8b5873a6cd59096d5ba4854e9"
+    },
+    {
+      "chunk": 15,
+      "physical_bank": 0,
+      "cpu": 36272,
+      "rom_offset": 3520,
+      "byte_count": 256,
+      "sha256": "780f0881f8a380cea633a08915e3450488eb1f85a121e72baf439eb48133c3a9"
+    },
+    {
+      "chunk": 16,
+      "physical_bank": 0,
+      "cpu": 36416,
+      "rom_offset": 3664,
+      "byte_count": 256,
+      "sha256": "594937cf62b08a0493f505b0893865a42c0ff8b5f4a867ef56205b93a8ca70f9"
+    },
+    {
+      "chunk": 17,
+      "physical_bank": 0,
+      "cpu": 36720,
+      "rom_offset": 3968,
+      "byte_count": 256,
+      "sha256": "702acf03c0d983aeece0de062398a75ddcdf4825cd46ea621bb1dfbd564198cb"
+    },
+    {
+      "chunk": 18,
+      "physical_bank": 0,
+      "cpu": 36864,
+      "rom_offset": 4112,
+      "byte_count": 256,
+      "sha256": "ad42a1cf8fa79b185f36b9b44dedba316f21c8dda4accdc58ec9b575420ece59"
+    },
+    {
+      "chunk": 19,
+      "physical_bank": 0,
+      "cpu": 37168,
+      "rom_offset": 4416,
+      "byte_count": 256,
+      "sha256": "b92b5046b80a2be0ad69af0c99db9c783bae2fbb11c775341ff96b2a7c396f69"
+    },
+    {
+      "chunk": 20,
+      "physical_bank": 0,
+      "cpu": 37312,
+      "rom_offset": 4560,
+      "byte_count": 256,
+      "sha256": "ea8566b5cea1f3b3ee637698c2c6e2ded2a3319fab718f5ec3ee7947184b6705"
+    },
+    {
+      "chunk": 21,
+      "physical_bank": 0,
+      "cpu": 37616,
+      "rom_offset": 4864,
+      "byte_count": 256,
+      "sha256": "420f796b81eeb4bf60951e5875605aad45d1f76b78b021a8b33aa552a538bfb9"
+    },
+    {
+      "chunk": 22,
+      "physical_bank": 0,
+      "cpu": 37760,
+      "rom_offset": 5008,
+      "byte_count": 256,
+      "sha256": "b05746a4a01d424e5d44982d4ce38235dc41e65ab527c2c1b778af0ded16a7e7"
+    },
+    {
+      "chunk": 23,
+      "physical_bank": 0,
+      "cpu": 38064,
+      "rom_offset": 5312,
+      "byte_count": 256,
+      "sha256": "95cddf8e549ed3347684eb354aafbf6c021a8163a97ec27bf323e89b8f0e1e03"
+    },
+    {
+      "chunk": 24,
+      "physical_bank": 0,
+      "cpu": 38208,
+      "rom_offset": 5456,
+      "byte_count": 256,
+      "sha256": "46197cc3dc49e75fc5f34c2d8bcdd333712ac878cb5b605f0c3c4a628f6b2552"
+    },
+    {
+      "chunk": 25,
+      "physical_bank": 0,
+      "cpu": 38512,
+      "rom_offset": 5760,
+      "byte_count": 256,
+      "sha256": "574135d22a14819abab3f3bf2bebdd1ea0305706364b994c1b31c0bce0148195"
+    },
+    {
+      "chunk": 26,
+      "physical_bank": 0,
+      "cpu": 38656,
+      "rom_offset": 5904,
+      "byte_count": 256,
+      "sha256": "803e74a5e35b6228ed8a6360d1d1b846dad8685a3fc2ec3b38b741dcc0400a5e"
+    },
+    {
+      "chunk": 27,
+      "physical_bank": 0,
+      "cpu": 38960,
+      "rom_offset": 6208,
+      "byte_count": 256,
+      "sha256": "5d6d3ec60606d194ee4d6efdf3e152e60c68a8211c0af4595409ea2e51039e71"
+    },
+    {
+      "chunk": 28,
+      "physical_bank": 0,
+      "cpu": 39104,
+      "rom_offset": 6352,
+      "byte_count": 256,
+      "sha256": "dfd88527d5134fdf89de339e88d1e5c2b7658156ecc06c07c5b6450cf7e1f081"
+    },
+    {
+      "chunk": 29,
+      "physical_bank": 0,
+      "cpu": 39408,
+      "rom_offset": 6656,
+      "byte_count": 256,
+      "sha256": "0118325d18e617f9e67844a715d0dfdcf0a42041ba34e0afa3dc7452b683dd2b"
+    },
+    {
+      "chunk": 30,
+      "physical_bank": 0,
+      "cpu": 39552,
+      "rom_offset": 6800,
+      "byte_count": 256,
+      "sha256": "a95cb7508235ff34c01ad737b2c52cc5f2f4750a6fd5582e1f81997906ac2c84"
+    },
+    {
+      "chunk": 31,
+      "physical_bank": 0,
+      "cpu": 39856,
+      "rom_offset": 7104,
+      "byte_count": 256,
+      "sha256": "4ff1196f3bbe0f2b571ebda2f45e9501b1c716b24439d4ea2dfe9881ffa82dfd"
+    },
+    {
+      "chunk": 32,
+      "physical_bank": 3,
+      "cpu": 35238,
+      "rom_offset": 27062,
+      "byte_count": 256,
+      "sha256": "20b2d0e84ff292586d519f49690aa1c478a650044f0de326c4d22f1d6f5f57ad"
+    },
+    {
+      "chunk": 33,
+      "physical_bank": 3,
+      "cpu": 35542,
+      "rom_offset": 27366,
+      "byte_count": 256,
+      "sha256": "eaef1ad3ec0bfa57392380b07dbca961f3e26ef212678794fdb4b88232187e34"
+    },
+    {
+      "chunk": 34,
+      "physical_bank": 3,
+      "cpu": 35686,
+      "rom_offset": 27510,
+      "byte_count": 256,
+      "sha256": "ad05b955158ee133f34a019d07428f4fee17e5eacee83075d3ee6300b06c3314"
+    },
+    {
+      "chunk": 35,
+      "physical_bank": 3,
+      "cpu": 35990,
+      "rom_offset": 27814,
+      "byte_count": 256,
+      "sha256": "fdc2a99346fe56935c869110551f4046a82e433c7f4c63119b09e947c0898c21"
+    },
+    {
+      "chunk": 36,
+      "physical_bank": 3,
+      "cpu": 36134,
+      "rom_offset": 27958,
+      "byte_count": 256,
+      "sha256": "4ba4239e9992bc3e09b0a990795b09696c9d50e7043f1faeeafd6b91b81c780b"
+    },
+    {
+      "chunk": 37,
+      "physical_bank": 3,
+      "cpu": 36438,
+      "rom_offset": 28262,
+      "byte_count": 256,
+      "sha256": "fbbd2a0b342d683e15fdbf5816c303abe903df3ff95397ff0314fef7229558fe"
+    },
+    {
+      "chunk": 38,
+      "physical_bank": 3,
+      "cpu": 36582,
+      "rom_offset": 28406,
+      "byte_count": 256,
+      "sha256": "66ab8a66408c2e36684b1ad85b665b30800ba2d6638e34822bbbbdc4c012452b"
+    },
+    {
+      "chunk": 39,
+      "physical_bank": 3,
+      "cpu": 36886,
+      "rom_offset": 28710,
+      "byte_count": 256,
+      "sha256": "9bca0b7db8f3158e15676e70bf4e292d7756b48ecfcc260e9493b436386424b9"
+    },
+    {
+      "chunk": 40,
+      "physical_bank": 3,
+      "cpu": 37030,
+      "rom_offset": 28854,
+      "byte_count": 256,
+      "sha256": "4357fad49888e0fec69010857c7858fc4f27162732b60ee35ff99cb2a9d01b52"
+    },
+    {
+      "chunk": 41,
+      "physical_bank": 3,
+      "cpu": 37334,
+      "rom_offset": 29158,
+      "byte_count": 256,
+      "sha256": "d29a7e9137b457ee8c9b0bb89dbf1b4bbf54d3ebc3f0aea562b2005c8f9449cb"
+    },
+    {
+      "chunk": 42,
+      "physical_bank": 3,
+      "cpu": 37478,
+      "rom_offset": 29302,
+      "byte_count": 256,
+      "sha256": "49f59bd3975ca0c964b0a14f109c699abfbfb0532bfb658625821331d78a8f74"
+    },
+    {
+      "chunk": 43,
+      "physical_bank": 3,
+      "cpu": 37782,
+      "rom_offset": 29606,
+      "byte_count": 256,
+      "sha256": "afffd6e9c14b9bbc44cce2f0d2b619712291751b726d51210e0a627dc5b79269"
+    },
+    {
+      "chunk": 44,
+      "physical_bank": 3,
+      "cpu": 37926,
+      "rom_offset": 29750,
+      "byte_count": 256,
+      "sha256": "c7e8bf069fbf5a6dab08992d0536d037480d321655916801f88fef5d00556a99"
+    },
+    {
+      "chunk": 45,
+      "physical_bank": 3,
+      "cpu": 38230,
+      "rom_offset": 30054,
+      "byte_count": 256,
+      "sha256": "6c88f79806ed945f8d7f827c8e1446c79b2bf3cbd796bebe0123000f33bbb3cf"
+    },
+    {
+      "chunk": 46,
+      "physical_bank": 3,
+      "cpu": 38374,
+      "rom_offset": 30198,
+      "byte_count": 256,
+      "sha256": "c15b9f6091a6f093d6a192079c23b94f16737802ceebb53d3bd0b9193752a673"
+    },
+    {
+      "chunk": 47,
+      "physical_bank": 3,
+      "cpu": 38678,
+      "rom_offset": 30502,
+      "byte_count": 256,
+      "sha256": "a35ef89bf2eee32b8738e059bd4bdb0dc3b6edabdd06265e01ff34ca3e9be717"
+    },
+    {
+      "chunk": 48,
+      "physical_bank": 3,
+      "cpu": 38822,
+      "rom_offset": 30646,
+      "byte_count": 256,
+      "sha256": "659db6695b5a8dd3013657e36d6a65bec699bc7e2a281d683f32464a239dc806"
+    },
+    {
+      "chunk": 49,
+      "physical_bank": 3,
+      "cpu": 39126,
+      "rom_offset": 30950,
+      "byte_count": 256,
+      "sha256": "6440f0d28469e1bf3f44edf0ca0fc1cffb303fd7021b4ac19c197b85541a4fa2"
+    },
+    {
+      "chunk": 50,
+      "physical_bank": 3,
+      "cpu": 39270,
+      "rom_offset": 31094,
+      "byte_count": 256,
+      "sha256": "3fae782de95ab2d188bff3310dc00c60313f4f4825b2c0c3f7e3cd410f9bf634"
+    },
+    {
+      "chunk": 51,
+      "physical_bank": 3,
+      "cpu": 39574,
+      "rom_offset": 31398,
+      "byte_count": 256,
+      "sha256": "d4f67d8ab595c236589396c77905a1e2e138364d3524dc99532025141a8232ac"
+    },
+    {
+      "chunk": 52,
+      "physical_bank": 3,
+      "cpu": 39718,
+      "rom_offset": 31542,
+      "byte_count": 256,
+      "sha256": "c401e1d501232a02de6810f3a0363a5eb2b60fa033f4342bf083f63cbe3b5b16"
+    },
+    {
+      "chunk": 53,
+      "physical_bank": 3,
+      "cpu": 40022,
+      "rom_offset": 31846,
+      "byte_count": 256,
+      "sha256": "2e14e4ae7a7580e3bcc0869582277bb2aa25e0d1c0043f754ee5209082f1475a"
+    },
+    {
+      "chunk": 54,
+      "physical_bank": 3,
+      "cpu": 40166,
+      "rom_offset": 31990,
+      "byte_count": 256,
+      "sha256": "073e83debc3e9135c2e6ed07036db12b635cb37b84225cb205507ab4393abb6b"
+    },
+    {
+      "chunk": 55,
+      "physical_bank": 3,
+      "cpu": 40470,
+      "rom_offset": 32294,
+      "byte_count": 256,
+      "sha256": "e96357d1e25b5e8b1c61d4d1b34ce3fbdb3ce31846311d6f614a2bbfd3f64706"
+    },
+    {
+      "chunk": 56,
+      "physical_bank": 5,
+      "cpu": 38208,
+      "rom_offset": 46416,
+      "byte_count": 256,
+      "sha256": "5d28e79243c3b4cdddd773f2887e15681840641641cb08d1c9195eeba8eccd03"
+    },
+    {
+      "chunk": 57,
+      "physical_bank": 5,
+      "cpu": 38512,
+      "rom_offset": 46720,
+      "byte_count": 256,
+      "sha256": "0bf6a5026288221b664458409f116ed74545dc2a3ae7f262263ec4a84b464cc2"
+    },
+    {
+      "chunk": 58,
+      "physical_bank": 5,
+      "cpu": 38656,
+      "rom_offset": 46864,
+      "byte_count": 256,
+      "sha256": "a7695874bb75f3cf85968186f68b88d7b83055ac9f85b51eac173022c38fb092"
+    },
+    {
+      "chunk": 59,
+      "physical_bank": 5,
+      "cpu": 38960,
+      "rom_offset": 47168,
+      "byte_count": 256,
+      "sha256": "27063c5418e8216e052dfcb9716c04e94e74c1db1f08f9a1b00522496b9aad6e"
+    },
+    {
+      "chunk": 60,
+      "physical_bank": 5,
+      "cpu": 39104,
+      "rom_offset": 47312,
+      "byte_count": 256,
+      "sha256": "e1fd7daa8a67e9e0f6227896f2030bdb3a7247566f1734c021eb2fe9df876122"
+    },
+    {
+      "chunk": 61,
+      "physical_bank": 5,
+      "cpu": 39408,
+      "rom_offset": 47616,
+      "byte_count": 256,
+      "sha256": "7e103f88e9181bcb71501494dbbc25c31e253d358ade5fafc5f0086ca9ee49a7"
+    },
+    {
+      "chunk": 62,
+      "physical_bank": 5,
+      "cpu": 39552,
+      "rom_offset": 47760,
+      "byte_count": 256,
+      "sha256": "6f3217203617773ef4186eaf80c6ca1a5906319bb0d34d01a9911ed3429f2370"
+    },
+    {
+      "chunk": 63,
+      "physical_bank": 5,
+      "cpu": 39856,
+      "rom_offset": 48064,
+      "byte_count": 256,
+      "sha256": "d48a1d980c52efdf9cce753e526b762ed6bc4dcaa664f12d57464e3d17766b81"
+    },
+    {
+      "chunk": 64,
+      "physical_bank": 4,
+      "cpu": 32832,
+      "rom_offset": 32848,
+      "byte_count": 256,
+      "sha256": "48ae2412b18642c5beb67b4d67432924693136e40911414f2983362b8fc21ea8"
+    },
+    {
+      "chunk": 65,
+      "physical_bank": 4,
+      "cpu": 33136,
+      "rom_offset": 33152,
+      "byte_count": 256,
+      "sha256": "c2f39318a2a5f23c290a54b677b7ea32a1f3740ba6568686cffb42a9b1992d55"
+    },
+    {
+      "chunk": 66,
+      "physical_bank": 4,
+      "cpu": 33280,
+      "rom_offset": 33296,
+      "byte_count": 256,
+      "sha256": "b1fc764b00370fa6db4f4a91548cd1fb9948a923e33fab1ba3f6316f4d9618bc"
+    },
+    {
+      "chunk": 67,
+      "physical_bank": 4,
+      "cpu": 33584,
+      "rom_offset": 33600,
+      "byte_count": 256,
+      "sha256": "ca3e5228295215cec357286cbff33408703809bb388ef855e319a03b60d885e1"
+    },
+    {
+      "chunk": 68,
+      "physical_bank": 4,
+      "cpu": 33728,
+      "rom_offset": 33744,
+      "byte_count": 256,
+      "sha256": "6cff7a91c70f4493f09a187d853f2b1a31420904f240e749faa523490bf0a630"
+    },
+    {
+      "chunk": 69,
+      "physical_bank": 4,
+      "cpu": 34032,
+      "rom_offset": 34048,
+      "byte_count": 256,
+      "sha256": "7e7b91998b7c2f173dda583fdb6a1bc61c2c717edce97349f7a3c842d43c510e"
+    },
+    {
+      "chunk": 70,
+      "physical_bank": 4,
+      "cpu": 34176,
+      "rom_offset": 34192,
+      "byte_count": 256,
+      "sha256": "e1d25868c105347afe03ff199905628b9d3a3fb83b51b87b6e755581ae83d687"
+    },
+    {
+      "chunk": 71,
+      "physical_bank": 4,
+      "cpu": 34480,
+      "rom_offset": 34496,
+      "byte_count": 256,
+      "sha256": "5fc92f0dbb6a42642e586bdd49250f7425b4ad33b640fa9528db2df8226a23b0"
+    },
+    {
+      "chunk": 72,
+      "physical_bank": 4,
+      "cpu": 34624,
+      "rom_offset": 34640,
+      "byte_count": 256,
+      "sha256": "5c2e6d0af1eafecfe65a4bfa959a57c598401f50857df07fa509da4704111e6a"
+    },
+    {
+      "chunk": 73,
+      "physical_bank": 4,
+      "cpu": 34928,
+      "rom_offset": 34944,
+      "byte_count": 256,
+      "sha256": "97086af84440036004e45bbb34bcdbc16008dc29a0a5f0fc3eca60523b54d154"
+    },
+    {
+      "chunk": 74,
+      "physical_bank": 4,
+      "cpu": 35072,
+      "rom_offset": 35088,
+      "byte_count": 256,
+      "sha256": "d44c53f4d82cdc0a4bfa21adcf4daa8cda375bf3be407f1842d8368cf6cbd611"
+    },
+    {
+      "chunk": 75,
+      "physical_bank": 4,
+      "cpu": 35376,
+      "rom_offset": 35392,
+      "byte_count": 256,
+      "sha256": "f882e9097eecd3b7a63b0ce0d86c1e39b10006902cc20e4c546c84c669bd8bd0"
+    },
+    {
+      "chunk": 76,
+      "physical_bank": 4,
+      "cpu": 35520,
+      "rom_offset": 35536,
+      "byte_count": 256,
+      "sha256": "bfe316005f613c8f884758acfdf0b9157e51f8359d089d619d3adaa51a5526a5"
+    },
+    {
+      "chunk": 77,
+      "physical_bank": 4,
+      "cpu": 35824,
+      "rom_offset": 35840,
+      "byte_count": 256,
+      "sha256": "293ea15f5ea44d9995594732ec8e57d05eefa379a369580e2c8b68d4110e7a73"
+    },
+    {
+      "chunk": 78,
+      "physical_bank": 4,
+      "cpu": 35968,
+      "rom_offset": 35984,
+      "byte_count": 256,
+      "sha256": "8512a00e4eeff805a0a2a12a939f2edea4ef51da9edda8345f7fc20682122efd"
+    },
+    {
+      "chunk": 79,
+      "physical_bank": 4,
+      "cpu": 36272,
+      "rom_offset": 36288,
+      "byte_count": 256,
+      "sha256": "e3cbefcfd61d42ead50d2d3333406ceca803f5f1fdf2931cd3cbead399ff140f"
+    },
+    {
+      "chunk": 80,
+      "physical_bank": 4,
+      "cpu": 36416,
+      "rom_offset": 36432,
+      "byte_count": 256,
+      "sha256": "24f87d56ada11ad50d3789272f3cfc195608d157c4f3dc21d9c8c4835fb8b002"
+    },
+    {
+      "chunk": 81,
+      "physical_bank": 4,
+      "cpu": 36720,
+      "rom_offset": 36736,
+      "byte_count": 256,
+      "sha256": "e921ef9c5e21af88d7683c742742e92932ee53ac6edf7239d4edd53f4326bf25"
+    },
+    {
+      "chunk": 82,
+      "physical_bank": 4,
+      "cpu": 36864,
+      "rom_offset": 36880,
+      "byte_count": 256,
+      "sha256": "60aece201e6bfb335e3d41783e51f75a49a14c2fee5b0e80d65319fc5a2ae446"
+    },
+    {
+      "chunk": 83,
+      "physical_bank": 4,
+      "cpu": 37168,
+      "rom_offset": 37184,
+      "byte_count": 256,
+      "sha256": "a1f71692375b95368208c35bd0b729d77b50d9e2ec0e9ac85cc43f9811f77549"
+    },
+    {
+      "chunk": 84,
+      "physical_bank": 4,
+      "cpu": 37312,
+      "rom_offset": 37328,
+      "byte_count": 256,
+      "sha256": "e539877ee4427fafed664b6625c38942494cc7e345e43eaf713c102699433518"
+    },
+    {
+      "chunk": 85,
+      "physical_bank": 4,
+      "cpu": 37616,
+      "rom_offset": 37632,
+      "byte_count": 256,
+      "sha256": "70113bf9a0048cb15d36515ad168c819247125d451dcd186926e70071377c708"
+    },
+    {
+      "chunk": 86,
+      "physical_bank": 4,
+      "cpu": 37760,
+      "rom_offset": 37776,
+      "byte_count": 256,
+      "sha256": "00dc03fd28755d90d7dc70a1407aeff7bdc8892c329d98fc205a5062f58ab1fa"
+    },
+    {
+      "chunk": 87,
+      "physical_bank": 4,
+      "cpu": 38064,
+      "rom_offset": 38080,
+      "byte_count": 256,
+      "sha256": "339486f7aa63c44458d381cc74141c74870517eb10230f8dd8e81a0ff696891f"
+    },
+    {
+      "chunk": 88,
+      "physical_bank": 4,
+      "cpu": 38208,
+      "rom_offset": 38224,
+      "byte_count": 256,
+      "sha256": "0557e7f0ad3607cd2da9a1d2015f5ae5cdfaba139daaf0b90a372f7c351ca05b"
+    },
+    {
+      "chunk": 89,
+      "physical_bank": 4,
+      "cpu": 38512,
+      "rom_offset": 38528,
+      "byte_count": 256,
+      "sha256": "698d145cee0cc215e8ec483b9ed0f908157ac5937642ea41906667dbe927576f"
+    },
+    {
+      "chunk": 90,
+      "physical_bank": 4,
+      "cpu": 38656,
+      "rom_offset": 38672,
+      "byte_count": 256,
+      "sha256": "5b2bb20db3458cb0b3bb39d68457c440abea6c9cf9d62a4fbfcca1c0d8b228f0"
+    },
+    {
+      "chunk": 91,
+      "physical_bank": 4,
+      "cpu": 38960,
+      "rom_offset": 38976,
+      "byte_count": 256,
+      "sha256": "c6228083d5e9ea98951075c81690ed337b3160ec4ff2e28e24487e6fdef6508a"
+    },
+    {
+      "chunk": 92,
+      "physical_bank": 4,
+      "cpu": 39104,
+      "rom_offset": 39120,
+      "byte_count": 256,
+      "sha256": "ff9e0568c4fa9080c7c1514344ba94a7f215790be4ce467035ccb4feda2ffa16"
+    },
+    {
+      "chunk": 93,
+      "physical_bank": 4,
+      "cpu": 39408,
+      "rom_offset": 39424,
+      "byte_count": 256,
+      "sha256": "f02a05112bed4dc585fb54da995e9ea398955f3056cd250d23d5412bc4939a57"
+    },
+    {
+      "chunk": 94,
+      "physical_bank": 4,
+      "cpu": 39552,
+      "rom_offset": 39568,
+      "byte_count": 256,
+      "sha256": "cc19123c468b57fb645d5cd99b64eff8f3a6efb1c74326bb82eb62dcfa9ab30c"
+    },
+    {
+      "chunk": 95,
+      "physical_bank": 4,
+      "cpu": 39856,
+      "rom_offset": 39872,
+      "byte_count": 256,
+      "sha256": "e6206160f9da2020f0af583b867f99e8894bcbb9830fab6c4aca38466ec4dab1"
+    },
+    {
+      "chunk": 96,
+      "physical_bank": 5,
+      "cpu": 32832,
+      "rom_offset": 41040,
+      "byte_count": 256,
+      "sha256": "6efaaa0a2c5489b5b73c41730e8d4f09a8761001988f9514885fa7d3aa485fc0"
+    },
+    {
+      "chunk": 97,
+      "physical_bank": 5,
+      "cpu": 33136,
+      "rom_offset": 41344,
+      "byte_count": 256,
+      "sha256": "9063a2ea692bbe3d86d19d66689ea3adf26a6148c8d3d81a4e11723546307069"
+    },
+    {
+      "chunk": 98,
+      "physical_bank": 5,
+      "cpu": 33280,
+      "rom_offset": 41488,
+      "byte_count": 256,
+      "sha256": "48dec2113d611c7e8191719f0bb715c55e7c4cc66d3b5714dd6cab1d214e9346"
+    },
+    {
+      "chunk": 99,
+      "physical_bank": 5,
+      "cpu": 33584,
+      "rom_offset": 41792,
+      "byte_count": 256,
+      "sha256": "91e9bc2796b5bcb32010bab38cd4d429aa3a81917ee169b4fe9435b0c839ba74"
+    },
+    {
+      "chunk": 100,
+      "physical_bank": 5,
+      "cpu": 33728,
+      "rom_offset": 41936,
+      "byte_count": 256,
+      "sha256": "33dcc3a75d61f9fbb085c6d7f7ada2d621e06ddd30511fed75ee2a0eb81a2211"
+    },
+    {
+      "chunk": 101,
+      "physical_bank": 5,
+      "cpu": 34032,
+      "rom_offset": 42240,
+      "byte_count": 256,
+      "sha256": "60e2f223604fd0a4630cde54e87c02fefe4c4bf96197a57d290b5deb2753b4d6"
+    },
+    {
+      "chunk": 102,
+      "physical_bank": 5,
+      "cpu": 34176,
+      "rom_offset": 42384,
+      "byte_count": 256,
+      "sha256": "ab800d93508dc7ebfa9d17b14714c33b18916ae8c4bceed5e7d79157c344e16e"
+    },
+    {
+      "chunk": 103,
+      "physical_bank": 5,
+      "cpu": 34480,
+      "rom_offset": 42688,
+      "byte_count": 256,
+      "sha256": "e2840cacea05c7f80d11bfda214b16c9fb2cca66c69bd4d5e489fa9606b0adbc"
+    },
+    {
+      "chunk": 104,
+      "physical_bank": 5,
+      "cpu": 34624,
+      "rom_offset": 42832,
+      "byte_count": 256,
+      "sha256": "18df77c1750dba5f1271d73ccc08e2193d0fdf33c14010ea2cf91e9dda5ebcff"
+    },
+    {
+      "chunk": 105,
+      "physical_bank": 5,
+      "cpu": 34928,
+      "rom_offset": 43136,
+      "byte_count": 256,
+      "sha256": "c496b2182041b34dc8ea1fd1307a05ef4a9f64b0dee90b76d4a9653ab73b89db"
+    },
+    {
+      "chunk": 106,
+      "physical_bank": 5,
+      "cpu": 35072,
+      "rom_offset": 43280,
+      "byte_count": 256,
+      "sha256": "1ca768239c3f3368426b9ce08df4dcdb2aef82537c9a135c759a239888e7be51"
+    },
+    {
+      "chunk": 107,
+      "physical_bank": 5,
+      "cpu": 35376,
+      "rom_offset": 43584,
+      "byte_count": 256,
+      "sha256": "0535c440bdab4932c56ca7b1c29a882eafb5ef61ce74fc217dd3474878ca2065"
+    },
+    {
+      "chunk": 108,
+      "physical_bank": 5,
+      "cpu": 35520,
+      "rom_offset": 43728,
+      "byte_count": 256,
+      "sha256": "9576e5c0012a861d59bde323df37d661dd79fabffe817e74a9df5794505b1895"
+    },
+    {
+      "chunk": 109,
+      "physical_bank": 5,
+      "cpu": 35824,
+      "rom_offset": 44032,
+      "byte_count": 256,
+      "sha256": "6e6bc8822934b45cccf518eaef6dabccfed85392f5ac3654b900d91f393eb1da"
+    },
+    {
+      "chunk": 110,
+      "physical_bank": 5,
+      "cpu": 35968,
+      "rom_offset": 44176,
+      "byte_count": 256,
+      "sha256": "661280e7ea7598a1c6eb2d0785e00d1e1e1b295a3dc8314303f52a10db56aee1"
+    },
+    {
+      "chunk": 111,
+      "physical_bank": 5,
+      "cpu": 36272,
+      "rom_offset": 44480,
+      "byte_count": 256,
+      "sha256": "48623d170ef66191bb83b1f0c1030fcefab7ac6feeec128a4d9dbc157d9618c9"
+    },
+    {
+      "chunk": 112,
+      "physical_bank": 5,
+      "cpu": 36416,
+      "rom_offset": 44624,
+      "byte_count": 256,
+      "sha256": "4ce14172de9403e2522ca1754a9838872f0a3561f55c158b8a530b71854a2e63"
+    },
+    {
+      "chunk": 113,
+      "physical_bank": 5,
+      "cpu": 36720,
+      "rom_offset": 44928,
+      "byte_count": 256,
+      "sha256": "87a4c8d6a43da1078074e29e740a3f0296c31c62cea4bd39a5b01b09b67a7794"
+    },
+    {
+      "chunk": 114,
+      "physical_bank": 5,
+      "cpu": 36864,
+      "rom_offset": 45072,
+      "byte_count": 256,
+      "sha256": "8ec4d7d5f38b6836e0e0c29815c0fd1e7e82fcc1e0bab46affdc16b1d963f4b7"
+    },
+    {
+      "chunk": 115,
+      "physical_bank": 5,
+      "cpu": 37168,
+      "rom_offset": 45376,
+      "byte_count": 256,
+      "sha256": "2c2ce57584e7a20fd50fa1a0459da44ce6afe2621d9fa4bdfce09291e1f55ea4"
+    },
+    {
+      "chunk": 116,
+      "physical_bank": 5,
+      "cpu": 37312,
+      "rom_offset": 45520,
+      "byte_count": 256,
+      "sha256": "f78892844d8e311256964738ff2f7b8bdad10291830cba19ed471aa747c1bd07"
+    },
+    {
+      "chunk": 117,
+      "physical_bank": 5,
+      "cpu": 37616,
+      "rom_offset": 45824,
+      "byte_count": 256,
+      "sha256": "7662e8cfb8ceff625415db2ffd8f9e080c64d6eade19c07c20bbbde36c6a0d63"
+    },
+    {
+      "chunk": 118,
+      "physical_bank": 5,
+      "cpu": 37760,
+      "rom_offset": 45968,
+      "byte_count": 256,
+      "sha256": "cf80fdd1fef54fa2dde0739e0913970127ab6e7cbcc2ad5f0b945e99a5910114"
+    },
+    {
+      "chunk": 119,
+      "physical_bank": 5,
+      "cpu": 38064,
+      "rom_offset": 46272,
+      "byte_count": 256,
+      "sha256": "61b15a41d42f66f13832d509e4106870827f1a73980e1b390bb51fc9dfe4723d"
+    }
+  ],
+  "APIs": [
+    "PlayerTacticTargeting(shared_memory, TargetingData.from_rom(rom), data_window_bank=None)",
+    "eligible(tactic_id, data_window_bank=None)",
+    "eligibility_suffix(tactic_id,target_terrain,actor_terrain)",
+    "can_target(tactic_id,actor_slot,target_slot,data_window_bank=None)"
+  ],
+  "rules": [
+    {
+      "id": 0,
+      "name": "火計",
+      "physical_bank": 12,
+      "cpu": 44492,
+      "rom_offset": 101852,
+      "rule": "目标class0或2",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 6
+    },
+    {
+      "id": 1,
+      "name": "陥穽",
+      "physical_bank": 12,
+      "cpu": 44504,
+      "rom_offset": 101864,
+      "rule": "目标class0或4",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 5
+    },
+    {
+      "id": 2,
+      "name": "虚兵",
+      "physical_bank": 12,
+      "cpu": 44504,
+      "rom_offset": 101864,
+      "rule": "目标class0或4",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 4
+    },
+    {
+      "id": 3,
+      "name": "要撃",
+      "physical_bank": 12,
+      "cpu": 44504,
+      "rom_offset": 101864,
+      "rule": "目标class0或4",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 6
+    },
+    {
+      "id": 4,
+      "name": "乱水",
+      "physical_bank": 12,
+      "cpu": 44516,
+      "rom_offset": 101876,
+      "rule": "目标class3",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 7
+    },
+    {
+      "id": 5,
+      "name": "火箭",
+      "physical_bank": 12,
+      "cpu": 44526,
+      "rom_offset": 101886,
+      "rule": "目标槽0或10",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 8
+    },
+    {
+      "id": 6,
+      "name": "偽撃転殺",
+      "physical_bank": 12,
+      "cpu": 44539,
+      "rom_offset": 101899,
+      "rule": "目标class5且施放者与目标正交相邻",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 8
+    },
+    {
+      "id": 7,
+      "name": "共殺",
+      "physical_bank": 12,
+      "cpu": 44648,
+      "rom_offset": 102008,
+      "rule": "目标class0/4且有任一对施放侧的敌方正交邻格单位",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 8
+    },
+    {
+      "id": 8,
+      "name": "籠絡",
+      "physical_bank": 12,
+      "cpu": 44740,
+      "rom_offset": 102100,
+      "rule": "目标class≠5（没有AI忠诚判定）",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 10
+    },
+    {
+      "id": 9,
+      "name": "落石",
+      "physical_bank": 12,
+      "cpu": 44750,
+      "rom_offset": 102110,
+      "rule": "施放者class4/5且正交相邻，目标class≠5（与AI相反）",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 9
+    },
+    {
+      "id": 10,
+      "name": "連環",
+      "physical_bank": 12,
+      "cpu": 44810,
+      "rom_offset": 102170,
+      "rule": "目标class3且有敌方正交邻格单位class3",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 9
+    },
+    {
+      "id": 11,
+      "name": "十面埋伏",
+      "physical_bank": 12,
+      "cpu": 44915,
+      "rom_offset": 102275,
+      "rule": "施放者class0、完整raw16兵>=100、本侧缓存slot==FF",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 10
+    },
+    {
+      "id": 12,
+      "name": "水攻",
+      "physical_bank": 12,
+      "cpu": 44810,
+      "rom_offset": 102170,
+      "rule": "目标class3且有敌方正交邻格单位class3",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 10
+    },
+    {
+      "id": 13,
+      "name": "連弩",
+      "physical_bank": 12,
+      "cpu": 44961,
+      "rom_offset": 102321,
+      "rule": "施放者class5且正交相邻",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 8
+    },
+    {
+      "id": 14,
+      "name": "劫火",
+      "physical_bank": 12,
+      "cpu": 45011,
+      "rom_offset": 102371,
+      "rule": "目标class≠5且有敌方正交邻格单位class≠5",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 12
+    },
+    {
+      "id": 15,
+      "name": "奇門遁甲",
+      "physical_bank": 12,
+      "cpu": 45085,
+      "rom_offset": 102445,
+      "rule": "目标class≠3且≠5（没有AI武知/兵判定）",
+      "returned_carry_when_eligible": true,
+      "player_AP_cost": 10
+    }
+  ],
+  "boundaries": {
+    "eligible": "FullAD80 prelude and selectedpredicateRTS. Caller supplies actualselectedslots; no generalenemy/range filter isinsideAD80.",
+    "suffix": "ADA4 after0A/0B actualterrainprelude; classesareexplicitbyteinputs.",
+    "can_target": "Cursor game checks: enemy byDC4B, write0509onlyafterenemycheck, normalizedmaxaxisdistance<6, thenAD80. ID11forces selftarget and bypassesenemyfilter. Ends beforeUI messagepreparation.",
+    "AP": "16byte ABC9costtablequoted. Availability/menu selection AP checks and actualAA96 debit are outside, no AP mutation.",
+    "probability": "B7BE/B739 outcomechance is distinct and not invoked here.",
+    "map": "DB46classlookup, raw6/7/8 foldedto2; RAM/SRAM/ROMdescriptor guards; logicaldatawindowfollowsF266 but CPUmapperwrites excluded."
+  },
+  "quirks": [
+    "AE2D y>=16 is reduced1; neighborqueries y15 is convertedto16.",
+    "D6B6 highest matching slot wins; no officerFF filter added, and duplicatefriendly can hide lowerenemy.",
+    "ID11 reads complete raw16 officer bytes8/9, not low10; anynonzerohighbyte passes100 condition.",
+    "04D8/04DC cache occupancy checks onlyslot==FF, notTTL.",
+    "Player9 target!=5 contrasts withAI9 target==5; Player8 and15 do notcopy AIstat requirements."
+  ],
+  "native_snapshot_inputs": [
+    {
+      "tactic_id": 1,
+      "case": "tactic-01",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-01/cast-confirmation.json",
+      "header_sha256": "b07ad083cc158ca8e82461c94128d4bbcd38da26441895c4cf1bcda291cf1fc0",
+      "RAM_path": "analysis/phase9/runtime/tactic-01/cast-confirmation-ram.bin",
+      "RAM_sha256": "16568fdfaca9dc68cf5cf24c87cf1bad50331ad092fe31438d714cde3fcda5d0",
+      "SRAM_path": "analysis/phase9/runtime/tactic-01/cast-confirmation-sram.bin",
+      "SRAM_sha256": "9e89efe6b1d6e84f1d9b320ee1dfedd52b82f52faca335d902c5e84418aa2bc7",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 1,
+      "case": "tactic-01",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-01/target-cursor.json",
+      "header_sha256": "eb688102dc4bbd0c433e5ecf63e7673152a7dde277684d3ec516154d0bb19d4d",
+      "RAM_path": "analysis/phase9/runtime/tactic-01/target-cursor-ram.bin",
+      "RAM_sha256": "94c9e4a2a8655773de0c5319ef66034155076bf56d3b71dd7cd7259a5604aba6",
+      "SRAM_path": "analysis/phase9/runtime/tactic-01/target-cursor-sram.bin",
+      "SRAM_sha256": "9e89efe6b1d6e84f1d9b320ee1dfedd52b82f52faca335d902c5e84418aa2bc7",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 5,
+      "case": "tactic-05",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-05/cast-confirmation.json",
+      "header_sha256": "8ef8b043744d52a796bf49e5ae72bb90bb39da8a8df7a91d9985138b4fac89d7",
+      "RAM_path": "analysis/phase9/runtime/tactic-05/cast-confirmation-ram.bin",
+      "RAM_sha256": "41eeebc492d91b73bb0a7535c49b46efb13decfa27d75bfca61be7ebeab27cad",
+      "SRAM_path": "analysis/phase9/runtime/tactic-05/cast-confirmation-sram.bin",
+      "SRAM_sha256": "aedcd27e8312f8ef1d3f1b63ff328daf8a0a09a1e35cad44b313ee9622fdf9e4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 0
+    },
+    {
+      "tactic_id": 5,
+      "case": "tactic-05",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-05/target-cursor.json",
+      "header_sha256": "f8c10b95128defdfbdfc6ad0c1bab6be8169bcc8b8df6cdde2f52fe1021b9eac",
+      "RAM_path": "analysis/phase9/runtime/tactic-05/target-cursor-ram.bin",
+      "RAM_sha256": "0189ee13103a307dd6d5df44752ab682cce6282bc051a13c385759b74c3c4f26",
+      "SRAM_path": "analysis/phase9/runtime/tactic-05/target-cursor-sram.bin",
+      "SRAM_sha256": "aedcd27e8312f8ef1d3f1b63ff328daf8a0a09a1e35cad44b313ee9622fdf9e4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 0
+    },
+    {
+      "tactic_id": 7,
+      "case": "tactic-07",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-07/cast-confirmation.json",
+      "header_sha256": "65fbc8ad8f069d8283b2f2129a2e79cbef2c97c272794390de4dcb95615b08bd",
+      "RAM_path": "analysis/phase9/runtime/tactic-07/cast-confirmation-ram.bin",
+      "RAM_sha256": "30bb9189d789051982a2a0124c20a4af8ed9bc8bb7e8a39ab07249d32127c122",
+      "SRAM_path": "analysis/phase9/runtime/tactic-07/cast-confirmation-sram.bin",
+      "SRAM_sha256": "93a781f2be1d59048404f746b27b8063244b593b9ccd27831c7d6238d422eb6e",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 7,
+      "case": "tactic-07",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-07/target-cursor.json",
+      "header_sha256": "e89ac3cab3e0a6609b2636dc4999d39dc765fab9f9756a8abd9e9b55f70f5fde",
+      "RAM_path": "analysis/phase9/runtime/tactic-07/target-cursor-ram.bin",
+      "RAM_sha256": "be7fa8e781ab142f9e0cefe2b041ef09d2c68ea71aa5c519cd5d6caadac6fe0c",
+      "SRAM_path": "analysis/phase9/runtime/tactic-07/target-cursor-sram.bin",
+      "SRAM_sha256": "93a781f2be1d59048404f746b27b8063244b593b9ccd27831c7d6238d422eb6e",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 8,
+      "case": "tactic-08",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-08/cast-confirmation.json",
+      "header_sha256": "4d4029c6c1eb744c9422ca2947c8dca321fece8f91994588b5302c300f5d6e6b",
+      "RAM_path": "analysis/phase9/runtime/tactic-08/cast-confirmation-ram.bin",
+      "RAM_sha256": "3da3940364d43cb4278be172313a45137236ddeb44e9f6a220843dfa7f1db05a",
+      "SRAM_path": "analysis/phase9/runtime/tactic-08/cast-confirmation-sram.bin",
+      "SRAM_sha256": "7549e53011e4a078d67391ec260aa7db216303d19379c5a54b08142d6475062a",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 8,
+      "case": "tactic-08",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-08/target-cursor.json",
+      "header_sha256": "c9d5949821384fdd6ddf7e00ebb5a7389e722d4ec6f6f794475cb7aa2575072f",
+      "RAM_path": "analysis/phase9/runtime/tactic-08/target-cursor-ram.bin",
+      "RAM_sha256": "760352cef51e78cb6fdc2a884cbc8f5463328539b3d6e77d9cec5d4e548f3be7",
+      "SRAM_path": "analysis/phase9/runtime/tactic-08/target-cursor-sram.bin",
+      "SRAM_sha256": "7549e53011e4a078d67391ec260aa7db216303d19379c5a54b08142d6475062a",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 9,
+      "case": "tactic-09",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-09/cast-confirmation.json",
+      "header_sha256": "957009bae0454abf767ab859b79c9d87927c13b8f5a2a402ec65786a969af5b8",
+      "RAM_path": "analysis/phase9/runtime/tactic-09/cast-confirmation-ram.bin",
+      "RAM_sha256": "fd72a118277bf828c60569148b1d9b1c4c006a65546955689c30cbc380ca2138",
+      "SRAM_path": "analysis/phase9/runtime/tactic-09/cast-confirmation-sram.bin",
+      "SRAM_sha256": "1af8f3f242321f3e44e49a81222aba571e7df24a29e7ad3aebc41fa8e10d6143",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 9,
+      "case": "tactic-09",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-09/target-cursor.json",
+      "header_sha256": "464e516f5ad47aefa32e2876382df9c6625265b04cd0602c47bcf4fb1bdfc18b",
+      "RAM_path": "analysis/phase9/runtime/tactic-09/target-cursor-ram.bin",
+      "RAM_sha256": "c272c605e0410f74dac4af2fb8034e417b9437f497d83af00a1c05df9a2c4cf7",
+      "SRAM_path": "analysis/phase9/runtime/tactic-09/target-cursor-sram.bin",
+      "SRAM_sha256": "1af8f3f242321f3e44e49a81222aba571e7df24a29e7ad3aebc41fa8e10d6143",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 10,
+      "case": "tactic-10",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-10/cast-confirmation.json",
+      "header_sha256": "b450e334810440b3db7be62090973ee7dad48ffe8eccf0367bc1d23f8eb38778",
+      "RAM_path": "analysis/phase9/runtime/tactic-10/cast-confirmation-ram.bin",
+      "RAM_sha256": "8c93b8f09ef0ab31ab38893e7a1912f98c466ac09f63a0f4bac42d69d4c2a7e9",
+      "SRAM_path": "analysis/phase9/runtime/tactic-10/cast-confirmation-sram.bin",
+      "SRAM_sha256": "0498a20606fa89b9e1e928f477c2d7af88f5c0674bff7e7822357fa3d2d9dfc4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 10,
+      "case": "tactic-10",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-10/target-cursor.json",
+      "header_sha256": "ea26567f997c15ddc1ddb611654dc6e3cd32f2f9ff79b72f9ec0da9b41d23bfa",
+      "RAM_path": "analysis/phase9/runtime/tactic-10/target-cursor-ram.bin",
+      "RAM_sha256": "8c3ef28d28f8763555ea4e30ae1f9a294e437f7e691aaa034dfc374eabc5fe09",
+      "SRAM_path": "analysis/phase9/runtime/tactic-10/target-cursor-sram.bin",
+      "SRAM_sha256": "0498a20606fa89b9e1e928f477c2d7af88f5c0674bff7e7822357fa3d2d9dfc4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 12,
+      "case": "tactic-12",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-12/cast-confirmation.json",
+      "header_sha256": "8d86a71e1c7ed8483d018490cba70649608b8b3fb3e92a36d1854eab41584e9c",
+      "RAM_path": "analysis/phase9/runtime/tactic-12/cast-confirmation-ram.bin",
+      "RAM_sha256": "1143971281961ddcfb45d161faf86c18b92b5135d866e2796f75a0987fa9391e",
+      "SRAM_path": "analysis/phase9/runtime/tactic-12/cast-confirmation-sram.bin",
+      "SRAM_sha256": "0498a20606fa89b9e1e928f477c2d7af88f5c0674bff7e7822357fa3d2d9dfc4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 12,
+      "case": "tactic-12",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-12/target-cursor.json",
+      "header_sha256": "0d935b345c5d319f6d1d2db17fa48f39d6622c9313ee119fc54bf88874daff6c",
+      "RAM_path": "analysis/phase9/runtime/tactic-12/target-cursor-ram.bin",
+      "RAM_sha256": "6bf1fbeb009036bbe1599b43bf1d0bb7e98b1364bd39d47dbf4996ffd97179d7",
+      "SRAM_path": "analysis/phase9/runtime/tactic-12/target-cursor-sram.bin",
+      "SRAM_sha256": "0498a20606fa89b9e1e928f477c2d7af88f5c0674bff7e7822357fa3d2d9dfc4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 14,
+      "case": "tactic-14",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-14/cast-confirmation.json",
+      "header_sha256": "6ca335e0cd5a6c4094c30b36f182ae4179a7c6c92e95f62d98e1ae836f3c80ab",
+      "RAM_path": "analysis/phase9/runtime/tactic-14/cast-confirmation-ram.bin",
+      "RAM_sha256": "0d92b3c95bd202feb989879da210e94b227b2fca3d9e038ee367a136d334536c",
+      "SRAM_path": "analysis/phase9/runtime/tactic-14/cast-confirmation-sram.bin",
+      "SRAM_sha256": "93a781f2be1d59048404f746b27b8063244b593b9ccd27831c7d6238d422eb6e",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 14,
+      "case": "tactic-14",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-14/target-cursor.json",
+      "header_sha256": "f68ea75c02377f0dc0aaacd179977d9c8544b15d5fafe1b1d0c624e5bb72681f",
+      "RAM_path": "analysis/phase9/runtime/tactic-14/target-cursor-ram.bin",
+      "RAM_sha256": "616881efc7a7234f91b2d8f4b7144fddc8b40932024bdc40de2ff6a57041a89c",
+      "SRAM_path": "analysis/phase9/runtime/tactic-14/target-cursor-sram.bin",
+      "SRAM_sha256": "93a781f2be1d59048404f746b27b8063244b593b9ccd27831c7d6238d422eb6e",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 1,
+      "case": "tactic-01-death",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-01-death/cast-confirmation.json",
+      "header_sha256": "b07ad083cc158ca8e82461c94128d4bbcd38da26441895c4cf1bcda291cf1fc0",
+      "RAM_path": "analysis/phase9/runtime/tactic-01-death/cast-confirmation-ram.bin",
+      "RAM_sha256": "16568fdfaca9dc68cf5cf24c87cf1bad50331ad092fe31438d714cde3fcda5d0",
+      "SRAM_path": "analysis/phase9/runtime/tactic-01-death/cast-confirmation-sram.bin",
+      "SRAM_sha256": "d87d20e83dcdf9bf7e282a8a6cbc616ed4855ce78921ef054b645a76945b5e82",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 1,
+      "case": "tactic-01-death",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-01-death/target-cursor.json",
+      "header_sha256": "eb688102dc4bbd0c433e5ecf63e7673152a7dde277684d3ec516154d0bb19d4d",
+      "RAM_path": "analysis/phase9/runtime/tactic-01-death/target-cursor-ram.bin",
+      "RAM_sha256": "94c9e4a2a8655773de0c5319ef66034155076bf56d3b71dd7cd7259a5604aba6",
+      "SRAM_path": "analysis/phase9/runtime/tactic-01-death/target-cursor-sram.bin",
+      "SRAM_sha256": "d87d20e83dcdf9bf7e282a8a6cbc616ed4855ce78921ef054b645a76945b5e82",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 9,
+      "case": "tactic-09-levelup",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-09-levelup/cast-confirmation.json",
+      "header_sha256": "957009bae0454abf767ab859b79c9d87927c13b8f5a2a402ec65786a969af5b8",
+      "RAM_path": "analysis/phase9/runtime/tactic-09-levelup/cast-confirmation-ram.bin",
+      "RAM_sha256": "998834cdcfd5b392955475338c3c72e93475d053f6492a9665595390bb3c198a",
+      "SRAM_path": "analysis/phase9/runtime/tactic-09-levelup/cast-confirmation-sram.bin",
+      "SRAM_sha256": "70ff94f033fb263237b53090b906413b564a62d5780f4cfb614e47fc668f9672",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 9,
+      "case": "tactic-09-levelup",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-09-levelup/target-cursor.json",
+      "header_sha256": "464e516f5ad47aefa32e2876382df9c6625265b04cd0602c47bcf4fb1bdfc18b",
+      "RAM_path": "analysis/phase9/runtime/tactic-09-levelup/target-cursor-ram.bin",
+      "RAM_sha256": "24b9f1e4b0d62c0dceb67c464fd48a5b623bc552af57929c8ae3894320df9b29",
+      "SRAM_path": "analysis/phase9/runtime/tactic-09-levelup/target-cursor-sram.bin",
+      "SRAM_sha256": "70ff94f033fb263237b53090b906413b564a62d5780f4cfb614e47fc668f9672",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    }
+  ],
+  "validation": {
+    "status": "passed",
+    "rom_cpu_case_count": 2148,
+    "original_complete_case_count": 2070,
+    "original_prefix_case_count": 78,
+    "source_guard_case_count": 6,
+    "failed_count": 0,
+    "compared_SRAM_bytes": 8192,
+    "declared_RAM_ranges": [
+      [
+        10,
+        12
+      ],
+      [
+        16,
+        18
+      ],
+      [
+        1289,
+        1291
+      ],
+      [
+        1347,
+        1348
+      ]
+    ],
+    "original_instruction_locations": 523
+  }
+}

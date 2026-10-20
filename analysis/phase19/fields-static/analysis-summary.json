@@ -1,0 +1,66 @@
+{
+  "schema": "phase19-city-pointer-provenance-summary-v1",
+  "status": "analyzed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "analyzer_path": "scripts/analyze_city_pointer_provenance.py",
+  "analyzer_sha256": "a935a413156a463d376eef37e2028a29dc188e2d71724331f7f253708e1c7e5c",
+  "artifact_sha256": {
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/phase18/control/control-contracts.json": "ae6a120f18bace5b2c88855373b3f6037d21d47803d568fca1776ce88abf06e5",
+    "analysis/phase18/fields-static/all-indirect-accesses.json": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+    "analysis/phase18/fields-static/call-effect-summaries.json": "329aaf3403591bfcfeb214fe271789161f88b0279c05795546ad7f89343208eb",
+    "analysis/phase18/fields-static/indexed-store-proofs.json": "e66173eb89a9b89a26787fbb8f0d63ca2c8e39c31b4d2012b8cf438e1be9b782",
+    "analysis/phase18/fields-static/pointer-preserving-store-proofs.json": "fcc96b107f7bd0e850f0c13a647326a2bdabf8c14d390bda5b19e924f458bcd2",
+    "analysis/phase17/fields/alias-refinement.json": "de4fe395668d24aeae6c0a4fdf6bce698ffe8bc8538f8252a76aa230bc61ddea",
+    "analysis/phase17/fields/pointer-accesses.json": "b732f6bb882ae0c58b01cffd0aa2bc95f2b0630df034791f875f49ec1b4c3a62",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up.png": "92f412ba7648f46ef06f9164f4d90f57480f6afc6f6b3636aec3319a97252f9c",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up.json": "82b04b05f0ab58430247b07de0659a8728fad734f28e1f150a0de71ff37ef613",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up-ram.bin": "e8a3e8afb3d728daafba78f72db582da2fccbf8622d11966e351001cf2c4ed90",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up-sram.bin": "b9c4200c1a9543db7bd879729bf5ab90da8a45b0093b48de585f8f7a9ffa658d",
+    "analysis/phase19/runtime/resource-transfer-baseline/validation.json": "20e74b20a48839afdbc4c8ad6d89c84a571d1a4ec5de2a45f10ed02c23dc5dc1",
+    "analysis/phase18/fields-static/access-contracts.json": "ce61a14c828657c3c01e3e8a7b740e5cc1f40339a93de2e585f2a95fc3562d64",
+    "analysis/phase18/fields-static/new-indirect-accesses.json": "eb9cbd8f1b235f5cfce76cfa4865cbe2409c163b655f8c9720036db96155076c"
+  },
+  "instruction_count": 48754,
+  "original_instruction_bytes_verified": 48754,
+  "source_CPU_cases": 0,
+  "whole_ROM_reachability_proven": false,
+  "official_field_names_confirmed": false,
+  "worklist_transfers": 63757,
+  "initial_unknown_root_count": 49,
+  "fallback_unknown_position_count": 0,
+  "relational_domain_fixed_point": true,
+  "fixed_point_scope": "This must-pair domain and frozen conservative call effects; not a complete relational analysis of all CPU state.",
+  "complete_copy_sites_observed": 28,
+  "atomic_factory_count": 14,
+  "conditional_leaf_contract_count": 232,
+  "baseline_candidate_count": 589,
+  "classification_counts": {
+    "unresolved_pointer_or_index_contract": 293,
+    "proved_disjoint_auxiliary_address_domain": 224,
+    "possible_city_auxiliary_alias": 72
+  },
+  "newly_proved_disjoint_candidate_count": 71,
+  "all_indirect_access_count": 1526,
+  "all_indirect_classification_counts": {
+    "unresolved_pointer_or_index_contract": 317,
+    "proved_disjoint_auxiliary_address_domain": 1125,
+    "possible_city_auxiliary_alias": 84
+  },
+  "newly_proved_disjoint_all_count": 504,
+  "whole_relation_disjoint_count": 1046,
+  "inherited_only_disjoint_count": 79,
+  "new_indirect_access_count": 45,
+  "new_indirect_classification_counts": {
+    "proved_disjoint_auxiliary_address_domain": 35,
+    "unresolved_pointer_or_index_contract": 9,
+    "possible_city_auxiliary_alias": 1
+  },
+  "limitations": [
+    "No new production service/ROMCPU/Native execution is claimed by this static receipt.",
+    "Pointer-pair keys are must properties; whole address sets are may unions. Unknown calls erase affected pairs.",
+    "No equality based on producer PC or generation tags; any half-write erases all saved references to that source pair.",
+    "Constructor input domains retain all256 A values and all16 raw ruler indexes; no implicit valid-ID restriction.",
+    "General nonfactory return-pair summaries and arithmetic pointer updates remain unknown. Do not infer unused/padding or official names."
+  ]
+}

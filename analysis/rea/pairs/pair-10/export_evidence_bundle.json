@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/evidence-bundle.json\",\"bytes\":2799691,\"records\":479,\"unknowns\":0}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/evidence-bundle.json",
+      "bytes": 2799691,
+      "records": 479,
+      "unknowns": 0
+    }
+  }
+}

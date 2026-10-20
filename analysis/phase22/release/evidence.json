@@ -1,0 +1,77 @@
+{
+  "schema": "phase22-named-postbattle-release-readable-evidence-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_sha256": {
+    "source/recovered/postbattle_release_services.py": "2ac7e3e914018bd145b2ff831b7e1c3e72e554a4c65e12900a3b1777b2d45714",
+    "source/recovered/wild_recruitment_integration.py": "a98703e9681fcafd4bd46309542658c253ee29ccc5cf761d4c2412f95143ea42",
+    "source/recovered/battle_scene_controller.py": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781",
+    "source/recovered/city_recruitment_services.py": "24bc91c2c537051ca32ca1f6ea8a30d6c51adf5fa1f3574bd4aff008e35fc745",
+    "source/recovered/city_recruitment_integration.py": "15aa6f8e35c5606ff9477555d8a2614ac376a7e5ae2306227a852b33f9508e62",
+    "source/recovered/scene_coordinator.py": "3c80cddcfdd4400d2f41fd93bc5442a4d9886b8fec356f85e94d9c3aa2bd8bab",
+    "source/recovered/nestopia_context.py": "7762c7ac80a8148341582edcf9c0922a230b586c3b336a06281b1315bf9a7ccb",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "scripts/verify_postbattle_release_services.py": "3dd96e299b0256df2963148b1adaceb0dba535e935fb4d133d687b2eec092794",
+    "scripts/analyze_postbattle_release_services.py": "a47c45f5713297f64110ea97cef4c9c954484cb40573a7ecba9eb6d269245f3d",
+    "scripts/trace_wild_recruitment.py": "5e46d507e416dc98208fc8d97cc7fa0618f267b1649af9696f42c59fa708c719"
+  },
+  "production_original_CPU_callbacks": 0,
+  "production_IR_interpretation": false,
+  "production_runtime_codegen": false,
+  "validation": {
+    "path": "analysis/phase22/release/validation.json",
+    "sha256": "3a94a0e445b231028f7b5409f488e42fe3d6147a0d5dd6b0917683dd7a346d82",
+    "original_CPU_parent_cases": 1370,
+    "counts": {
+      "actual_caller_RTS": 1365,
+      "strict_missing_dependency_prefix": 2,
+      "actual_nonlocal_return": 3
+    },
+    "domains": {
+      "controlled_numeric_and_caller_CPU_fixture": 1360,
+      "strict_missing_dependency_fixture": 2,
+      "Native_snapshot_plus_declared_hardware_NMI_CPU_fixture": 3,
+      "actual_Native_snapshot_originalCPU_reached_caller": 5
+    },
+    "source_guard_count": 5
+  },
+  "coverage": {
+    "new_manual_positions": 106,
+    "new_manual_code_bytes": 212,
+    "dynamically_executed_new_manual_positions": 106,
+    "not_dynamic": 0,
+    "all_inputs_or_paths_proven": false
+  },
+  "exact_scope": {
+    "RAM_bytes": 2048,
+    "SRAM_bytes": 8192,
+    "registers": [
+      "A",
+      "X",
+      "Y",
+      "P",
+      "SP",
+      "PC"
+    ],
+    "ordered_IO_reads_and_writes": true,
+    "all_four_PRG_banks": true,
+    "N163_RAM_address_and_autoincrement": true,
+    "free_stack_excluded_bytes": 0
+  },
+  "semantics": {
+    "selection": "D1F9 checks20 flags0580..0593; any nonnegative byte selects the corresponding042C row. PHA/PLA preserves row over the callee.",
+    "release": "D20D destination0540==30; preserve status high6, clear low2; F266 bank16; E856 original random8; location=8neighbors of050E, signed-negative neighbor falls back to050E.",
+    "ordinary_destination": "BC11 firstFF pointer is reused. Destination city roster gets the ID, commander052B updates052C. Neutral owner&7==7 uses(original&F0)|selected_side_ruler_low4, preserving the exact F0 mask.",
+    "cleanup": "D299 first match in20 active IDs wins and clears six arrays; otherwise clear first match in40 contiguous captive bytes. No city-roster cleanup, health/troop/loyalty rewrite, or capacity guard is invented.",
+    "caller": "D20D completes an actual localRTS; D1F9 preserves its own caller and row frames. Existing battle phases invoke these aliases directly.",
+    "waiting": "Missing F2D7/F266 or any reused dependency retains the real callee frame. No NMI/text acknowledgement is generated."
+  },
+  "origin_limits": {
+    "controlled": "1362 numeric/caller CPU cases are explicit fixtures, not natural gameplay.",
+    "pure": "Native actual saved-PC originalCPU continuation, no new interrupt, no PC/stack/RNG/request/ready preparation.",
+    "hardware_fixture": "Release callback input needs one explicitly scheduled real6502 NMI plus ordinary A-port data. It is labelled separately and is not an actual internal Native register trace."
+  },
+  "artifact_sha256": {
+    "analysis/phase22/release/static-catalog.json": "1a9c5e99583ec14657b137ea022fa8628cd35b363d3c0af66a7fac9dbdf18027",
+    "analysis/phase22/release/original.asm": "87181d9d8d6d07e1b3cbdc1769b97780a1ca0eeccfaf000d03b80ed7e0c8046f"
+  }
+}

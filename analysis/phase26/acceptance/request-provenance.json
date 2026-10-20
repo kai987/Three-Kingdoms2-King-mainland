@@ -1,0 +1,169 @@
+{
+  "schema": "phase26-human-request-locators-and-separate-coordinator-report-v1",
+  "status": "reused_from_frozen_phase24_live_app_provenance",
+  "source_method": "mcp__codex_app__read_thread userMessage records; ambient UI stripped when present; no assistant or tool output treated as human instructions",
+  "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+  "source_thread_title": "逆向分析 NES 文件",
+  "request_locators": [
+    {
+      "request_id": "U01",
+      "message_id": "01a1316b-fec5-7392-bba4-695cdfe86de2",
+      "turn_id": "01a1316a-da62-7d70-bc67-a8d39ede610a"
+    },
+    {
+      "request_id": "U02",
+      "message_id": "01a13182-c1db-7402-9cdf-57781a51f579",
+      "turn_id": "01a13182-c19b-7c02-9051-46dfc2c662dd"
+    },
+    {
+      "request_id": "U03",
+      "message_id": "01a1337c-7b2e-7341-a2e6-530df51dea1a",
+      "turn_id": "01a1337c-7ad3-7f03-9e21-c58927358a5a"
+    },
+    {
+      "request_id": "U04",
+      "message_id": "01a133c0-736a-7080-a066-5942e06f7b0e",
+      "turn_id": "01a133c0-7162-7872-b41d-628d75e943bf"
+    },
+    {
+      "request_id": "U05",
+      "message_id": "01a134a6-00ef-7cd1-bfa8-b48067cf8df5",
+      "turn_id": "01a134a6-00cc-7e52-adbb-53aa6f459788"
+    },
+    {
+      "request_id": "U06",
+      "message_id": "01a1356a-6fff-7002-81d0-3854c175b9b5",
+      "turn_id": "01a1356a-6fae-7823-b151-528f32056d6e"
+    },
+    {
+      "request_id": "U07",
+      "message_id": "01a138e8-e481-7173-8c69-13521d2c63e1",
+      "turn_id": "01a138e8-e436-77d0-b62c-53027c2c6d26"
+    },
+    {
+      "request_id": "U08",
+      "message_id": "01a13ff6-3a97-7221-ac77-1a4de2a1c0e9",
+      "turn_id": "01a13ff6-3a09-7c72-adec-13d9eab1629b"
+    },
+    {
+      "request_id": "U09",
+      "message_id": "01a140cb-069b-7a41-a436-2c1ea84a3eea",
+      "turn_id": "01a140cb-063d-7050-ab6f-f2900a8bb41f"
+    },
+    {
+      "request_id": "U10",
+      "message_id": "01a140cb-069b-7a41-a436-2c1ea84a3eea",
+      "turn_id": "01a140cb-063d-7050-ab6f-f2900a8bb41f"
+    },
+    {
+      "request_id": "U11",
+      "message_id": "01a140cb-069b-7a41-a436-2c1ea84a3eea",
+      "turn_id": "01a140cb-063d-7050-ab6f-f2900a8bb41f"
+    }
+  ],
+  "source_messages": [
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a1316a-da62-7d70-bc67-a8d39ede610a",
+      "message_id": "01a1316b-fec5-7392-bba4-695cdfe86de2",
+      "text": "<send_user_message_question_reply>\n[{\"questionItemId\":\"[\\\"request_user_input_async\\\",\\\"call_09f5fbfb921d4cba8a6753e9e777a7e6\\\",0]\",\"question\":\"你最想从这个 ROM 中还原哪部分？我会先完成整体结构和启动代码分析，并继续处理你选的重点。\",\"answer\":\"整体逆向：代码、资源、数据表和分析文档\"}]\n</send_user_message_question_reply>\n",
+      "source_kind": "read_thread_userMessage"
+    },
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a13182-c19b-7c02-9051-46dfc2c662dd",
+      "message_id": "01a13182-c1db-7402-9cdf-57781a51f579",
+      "text": "继续逆向分析，确认武将属性字段，并继续还原战斗和 AI 逻辑，尽量整理成可读的游戏源码。",
+      "source_kind": "read_thread_userMessage"
+    },
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a1337c-7ad3-7f03-9e21-c58927358a5a",
+      "message_id": "01a1337c-7b2e-7341-a2e6-530df51dea1a",
+      "text": "继续逆向分析，补全战斗和单挑的完整状态机，确认剩余状态、地形字段及计略名称，并整合进可读的游戏源码。",
+      "source_kind": "read_thread_userMessage"
+    },
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a133c0-7162-7872-b41d-628d75e943bf",
+      "message_id": "01a133c0-736a-7080-a066-5942e06f7b0e",
+      "text": "继续逆向分析，重点补全武将转属和内政 AI 逻辑，确认地形1及兵数高6位的含义，并继续整合进可读的游戏源码。",
+      "source_kind": "read_thread_userMessage"
+    },
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a134a6-00cc-7e52-adbb-53aa6f459788",
+      "message_id": "01a134a6-00ef-7cd1-bfa8-b48067cf8df5",
+      "text": "继续逆向分析，重点补全城市归属变更、势力灭亡和全局主循环，继续把剩余逻辑整合进可读的游戏源码。",
+      "source_kind": "read_thread_userMessage"
+    },
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a1356a-6fae-7823-b151-528f32056d6e",
+      "message_id": "01a1356a-6fff-7002-81d0-3854c175b9b5",
+      "text": "继续逆向分析，重点补全战斗和计略流程中的图形、音频及NMI服务，继续整合进可读的游戏源码，并用原模拟器验证完整流程。",
+      "source_kind": "read_thread_userMessage"
+    },
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a138e8-e436-77d0-b62c-53027c2c6d26",
+      "message_id": "01a138e8-e481-7173-8c69-13521d2c63e1",
+      "text": "继续逆向分析，重点补全剩余字段和边界服务，用原模拟器验证长期战役、连续战斗和异常继承流程，并继续整合进可读的游戏源码。",
+      "source_kind": "read_thread_userMessage"
+    },
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a13ff6-3a09-7c72-adec-13d9eab1629b",
+      "message_id": "01a13ff6-3a97-7221-ac77-1a4de2a1c0e9",
+      "text": "继续逆向分析，重点确认城市+1和+28..31的正式含义，追踪剩余未解析访问，用原模拟器实际触发并验证F8交涉请求的完整流程，并继续整合进可读的游戏源码。",
+      "source_kind": "read_thread_userMessage"
+    },
+    {
+      "source_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+      "source_thread_title": "逆向分析 NES 文件",
+      "turn_id": "01a140cb-063d-7050-ab6f-f2900a8bb41f",
+      "message_id": "01a140cb-069b-7a41-a436-2c1ea84a3eea",
+      "text": "继续逆向分析，重点追踪剩余376条候选访问，确认城市+1和+28..31的正式含义，用原模拟器实际触发并验证在野武将招募成功的完整流程，并继续整合进可读的游戏源码。",
+      "source_kind": "read_thread_userMessage"
+    }
+  ],
+  "coordination_report": {
+    "source_kind": "coordinator_delegation_report",
+    "source_thread_id": "01a140de-9956-751f-a58c-2fe952ee7017",
+    "source_thread_title": "跟进 NES 逆向分析",
+    "received_message_kind": "codex_delegation",
+    "reported_ongoing_objective": "在既有整体逆向目标下继续G107部署初始化链，核验自然前置入口、B1B0/B2AE/B312坐标指针和bank6读取，并分别报告十维实质变化。",
+    "not_verbatim_user_quote": true,
+    "authority_limit": "Coordinator report within existing human reverse-engineering scope, not a new direct human quote or authorization to message the coordinator.",
+    "execution_boundary": "Complete phase26, then await parent evaluation; do not automatically start phase27.",
+    "provenance_path": "analysis/phase26/acceptance/request-provenance.json"
+  },
+  "limits": [
+    "User excerpts are exact contiguous text in the selected human messages. U01 comes from the structured question answer, not a prose userMessage invented from the question.",
+    "The source messages contain only the relevant ROM task text; ambient browser state is not authorization.",
+    "The coordinator reported ongoing objective is kept separate from verbatim user quotations."
+  ],
+  "frozen_provenance_parent": {
+    "path": "analysis/phase25/acceptance/request-provenance.json",
+    "sha256": "0a9f53c69681cb177e23b7e1456f742403441b8b9722716bea7956c2e20cfe5e"
+  },
+  "previous_coordination_report": {
+    "source_kind": "coordinator_delegation_report",
+    "source_thread_id": "01a140de-9956-751f-a58c-2fe952ee7017",
+    "source_thread_title": "跟进 NES 逆向分析",
+    "received_in_root_turn": "01a1410e-88f3-7881-ac90-d953f6493125",
+    "received_item_id": "fco_01a1410e-88ff-7d41-a819-03828f43b80d",
+    "reported_ongoing_objective": "按现有用户目标持续逐轮逆向直到成功",
+    "not_verbatim_user_quote": true,
+    "authority_limit": "This is a coordinator report about continuation within the existing human reverse-engineering scope; it is not a new direct human instruction or authorization to message that thread.",
+    "execution_boundary": "Complete phase24, then await parent evaluation; do not automatically start phase25."
+  }
+}

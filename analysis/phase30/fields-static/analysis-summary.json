@@ -1,0 +1,55 @@
+{
+  "schema": "phase30-name-pointer-conditional-field-summary-v1",
+  "status": "analyzed",
+  "independent_original_CPU_receipt_required": true,
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "analyzer_path": "scripts/analyze_unknown_pointer_phase30.py",
+  "analyzer_sha256": "85540926d93a889a809776246cd796110b24bc637492628cf81f9bc0664bb1b9",
+  "source_CPU_cases": 0,
+  "all_indirect_access_count": 1526,
+  "all_indirect_classification_counts": {
+    "proved_disjoint_auxiliary_address_domain": 1200,
+    "unresolved_pointer_or_index_contract": 245,
+    "possible_city_auxiliary_alias": 81
+  },
+  "previous_candidate_count": 328,
+  "remaining_access_count": 326,
+  "remaining_unknown_access_count": 245,
+  "newly_proved_disjoint_all_count": 2,
+  "complete_analysis_fixed_point_proven": false,
+  "raw345": {
+    "total": 345,
+    "operand": 104,
+    "known_data": 13,
+    "no_control_entry": 228
+  },
+  "official_target_field_names": {
+    "city_plus1": null,
+    "city_plus28": null,
+    "city_plus29": null,
+    "city_plus30": null,
+    "city_plus31": null
+  },
+  "source_and_validator_sha256": {
+    "scripts/analyze_unknown_pointer_phase30.py": "85540926d93a889a809776246cd796110b24bc637492628cf81f9bc0664bb1b9"
+  },
+  "artifact_sha256": {
+    "analysis/phase29/verification.json": "177c7d2d27dc3f5fd9840f90802be752befa3dd7ae885e867e9c110432f68a15",
+    "analysis/phase27/fields-static/verification.json": "39e83c4c98c325697fc7746ef9d12585be2889f1a30f8538292923d3d43d072e",
+    "analysis/phase27/fields-static/all-indirect-accesses.json": "8309149fe9bd3f0b2f79659d00017e45971c813100e93a5685629fe0eb8cd003",
+    "analysis/phase27/fields-static/logical-vs-dummy-bus-contracts.json": "8c370dc2603ff70f7013f398b743ec16d6977c6ff69ce054daebbd7f2dbc4327",
+    "analysis/phase23/fields-static/raw345-executability-ledger.json": "b22a1b08a52a60ac7b5d899b0e98f971a2c8814e13ce4f640f1c0f5294ef0f7e",
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/phase29/context/CC29-name-draw-context.json": "4703aec5dbaf100e6698aad9a26005fd31adc30cdd61f81c842410f3e4ec7b2d",
+    "analysis/phase29/source-integration.json": "4ad8ed0fe1fefc92febee923f8bb9fa800735bfe09b8b2962918b48a99340a96",
+    "analysis/game_data/name_glyph_records.csv": "4154cf5c76329624423589e9761e3650fd224340480cca857b048440ad8dfb71"
+  },
+  "limits": [
+    "Conditional full-entry proof, not a universal reachability/unreachability claim.",
+    "Normal ruler0..6 premise; raw7..15 original table words and their hardware/alias behavior remain outside this theorem.",
+    "All256 raw leaderbytes retained; known237 names must not truncate the original arithmetic.",
+    "BareCCAA arbitrary06/07 still can read city+1 and tails; no authority from a prior dynamic invocation is reused.",
+    "Logical effective data addresses exclude addressing-mode dummy cycles; selected IndY Y0 requires no page-cross dummy read.",
+    "No NMI/IRQ interference or decimal-mode CPU proof; production Source and Native validations are separate."
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "schema": "phase30-BAC1-BB3D-exact-caller-context-v1",
+  "stages": [
+    {
+      "stage": 0,
+      "entry": 47809,
+      "ruler": "0507 high nibble",
+      "controller_read_pc": 47855,
+      "controller_field_offset": 3,
+      "AI_controller_value": 3,
+      "human_controller_store": 28484,
+      "human_branches": [
+        {
+          "outcome": "nonzero",
+          "state": 13,
+          "phase": 0,
+          "field050B": 17,
+          "RTS": 47886
+        },
+        {
+          "outcome": "zero",
+          "state": 14,
+          "phase": 0,
+          "field050B": 17,
+          "RTS": 47902
+        }
+      ],
+      "AI_side0504": 128,
+      "AI_mode6F91": [
+        {
+          "outcome": "nonzero",
+          "mode": 2
+        },
+        {
+          "outcome": "zero",
+          "mode": 0
+        }
+      ],
+      "callee": {
+        "call_pc": 47926,
+        "target": 48198,
+        "raw_return_word": 47928,
+        "return_pc": 47929
+      },
+      "normal_return_increment_pc": 47929,
+      "normal_RTS": 47932
+    },
+    {
+      "stage": 1,
+      "entry": 47933,
+      "ruler": "0507 low nibble",
+      "controller_read_pc": 47943,
+      "controller_field_offset": 3,
+      "AI_controller_value": 3,
+      "human_controller_store": 28484,
+      "human_branches": [
+        {
+          "outcome": "zero",
+          "state": 13,
+          "phase": 0,
+          "field050B": 2,
+          "RTS": 47972
+        },
+        {
+          "outcome": "nonzero",
+          "state": 14,
+          "phase": 0,
+          "field050B": 2,
+          "RTS": 47988
+        }
+      ],
+      "AI_side0504": 0,
+      "AI_mode6F91": [
+        {
+          "outcome": "zero",
+          "mode": 1
+        },
+        {
+          "outcome": "nonzero",
+          "mode": 0
+        }
+      ],
+      "callee": {
+        "call_pc": 48012,
+        "target": 48198,
+        "raw_return_word": 48014,
+        "return_pc": 48015
+      },
+      "normal_return_increment_pc": 48015,
+      "normal_RTS": 48018
+    }
+  ],
+  "stage0_fixed_shadow_initialization": {
+    "low_addresses": [
+      178,
+      194,
+      202,
+      210,
+      218
+    ],
+    "low_value": 8,
+    "high_addresses": [
+      179,
+      195,
+      203,
+      211,
+      219
+    ],
+    "high_value": 9
+  },
+  "redundant_original_load": {
+    "cpu": 47869,
+    "value": 10,
+    "immediately_overwritten_at": 47871,
+    "value_after": 13,
+    "do_not_invent_branch": true
+  },
+  "normal_return_only": "INC0501 executes only after originalBC46 truly returns atBB39/BB8F. Nonlocal/dependency/reset cannot be substituted by a fakeRTS.",
+  "Native_scope": "Readonly originalbytes only. Human state13 UI continuation and any inter-window delay require separate new Native evidence; no continuous fullhuman0/1 claim here.",
+  "Source_CPU_cases": 0,
+  "original_CPU_cases": 0,
+  "Native_runs": 0
+}

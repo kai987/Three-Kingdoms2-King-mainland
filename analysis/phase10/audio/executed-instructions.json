@@ -1,0 +1,3317 @@
+[
+  {
+    "physical_bank": 14,
+    "cpu": 40963,
+    "rom_offset": 114707
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55508,
+    "rom_offset": 129252
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55510,
+    "rom_offset": 129254
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55513,
+    "rom_offset": 129257
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55515,
+    "rom_offset": 129259
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55518,
+    "rom_offset": 129262
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55520,
+    "rom_offset": 129264
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55523,
+    "rom_offset": 129267
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55525,
+    "rom_offset": 129269
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55528,
+    "rom_offset": 129272
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55531,
+    "rom_offset": 129275
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55532,
+    "rom_offset": 129276
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55535,
+    "rom_offset": 129279
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55537,
+    "rom_offset": 129281
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55540,
+    "rom_offset": 129284
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55541,
+    "rom_offset": 129285
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55542,
+    "rom_offset": 129286
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55543,
+    "rom_offset": 129287
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55546,
+    "rom_offset": 129290
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55549,
+    "rom_offset": 129293
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55552,
+    "rom_offset": 129296
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55555,
+    "rom_offset": 129299
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55557,
+    "rom_offset": 129301
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55559,
+    "rom_offset": 129303
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55561,
+    "rom_offset": 129305
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55564,
+    "rom_offset": 129308
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55567,
+    "rom_offset": 129311
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55570,
+    "rom_offset": 129314
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55573,
+    "rom_offset": 129317
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55575,
+    "rom_offset": 129319
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55578,
+    "rom_offset": 129322
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55581,
+    "rom_offset": 129325
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55584,
+    "rom_offset": 129328
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55586,
+    "rom_offset": 129330
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55589,
+    "rom_offset": 129333
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55591,
+    "rom_offset": 129335
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55594,
+    "rom_offset": 129338
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55597,
+    "rom_offset": 129341
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55600,
+    "rom_offset": 129344
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55602,
+    "rom_offset": 129346
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55605,
+    "rom_offset": 129349
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55608,
+    "rom_offset": 129352
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55610,
+    "rom_offset": 129354
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55613,
+    "rom_offset": 129357
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55616,
+    "rom_offset": 129360
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55619,
+    "rom_offset": 129363
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55622,
+    "rom_offset": 129366
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55625,
+    "rom_offset": 129369
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55628,
+    "rom_offset": 129372
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55631,
+    "rom_offset": 129375
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55632,
+    "rom_offset": 129376
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55633,
+    "rom_offset": 129377
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55635,
+    "rom_offset": 129379
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55637,
+    "rom_offset": 129381
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55639,
+    "rom_offset": 129383
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55640,
+    "rom_offset": 129384
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55643,
+    "rom_offset": 129387
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55646,
+    "rom_offset": 129390
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55649,
+    "rom_offset": 129393
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55652,
+    "rom_offset": 129396
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55654,
+    "rom_offset": 129398
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55656,
+    "rom_offset": 129400
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55658,
+    "rom_offset": 129402
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55661,
+    "rom_offset": 129405
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55664,
+    "rom_offset": 129408
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55665,
+    "rom_offset": 129409
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55668,
+    "rom_offset": 129412
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55669,
+    "rom_offset": 129413
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55671,
+    "rom_offset": 129415
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55674,
+    "rom_offset": 129418
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55677,
+    "rom_offset": 129421
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55680,
+    "rom_offset": 129424
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55681,
+    "rom_offset": 129425
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55683,
+    "rom_offset": 129427
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55686,
+    "rom_offset": 129430
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55688,
+    "rom_offset": 129432
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55691,
+    "rom_offset": 129435
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55694,
+    "rom_offset": 129438
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55697,
+    "rom_offset": 129441
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55700,
+    "rom_offset": 129444
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55702,
+    "rom_offset": 129446
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55705,
+    "rom_offset": 129449
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55707,
+    "rom_offset": 129451
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55710,
+    "rom_offset": 129454
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55713,
+    "rom_offset": 129457
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55715,
+    "rom_offset": 129459
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55718,
+    "rom_offset": 129462
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55721,
+    "rom_offset": 129465
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55722,
+    "rom_offset": 129466
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55725,
+    "rom_offset": 129469
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55728,
+    "rom_offset": 129472
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55731,
+    "rom_offset": 129475
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55734,
+    "rom_offset": 129478
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55737,
+    "rom_offset": 129481
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55740,
+    "rom_offset": 129484
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55741,
+    "rom_offset": 129485
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55742,
+    "rom_offset": 129486
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55744,
+    "rom_offset": 129488
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55747,
+    "rom_offset": 129491
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55748,
+    "rom_offset": 129492
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55750,
+    "rom_offset": 129494
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55752,
+    "rom_offset": 129496
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55754,
+    "rom_offset": 129498
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55756,
+    "rom_offset": 129500
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55758,
+    "rom_offset": 129502
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55760,
+    "rom_offset": 129504
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55762,
+    "rom_offset": 129506
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55764,
+    "rom_offset": 129508
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55766,
+    "rom_offset": 129510
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55768,
+    "rom_offset": 129512
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55770,
+    "rom_offset": 129514
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55772,
+    "rom_offset": 129516
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55775,
+    "rom_offset": 129519
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55778,
+    "rom_offset": 129522
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55780,
+    "rom_offset": 129524
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55782,
+    "rom_offset": 129526
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55785,
+    "rom_offset": 129529
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55788,
+    "rom_offset": 129532
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55791,
+    "rom_offset": 129535
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55793,
+    "rom_offset": 129537
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55795,
+    "rom_offset": 129539
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55798,
+    "rom_offset": 129542
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55801,
+    "rom_offset": 129545
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55803,
+    "rom_offset": 129547
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55805,
+    "rom_offset": 129549
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55806,
+    "rom_offset": 129550
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55808,
+    "rom_offset": 129552
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55811,
+    "rom_offset": 129555
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55813,
+    "rom_offset": 129557
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55816,
+    "rom_offset": 129560
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55818,
+    "rom_offset": 129562
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55821,
+    "rom_offset": 129565
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55823,
+    "rom_offset": 129567
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55826,
+    "rom_offset": 129570
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55829,
+    "rom_offset": 129573
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55832,
+    "rom_offset": 129576
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55834,
+    "rom_offset": 129578
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55837,
+    "rom_offset": 129581
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55840,
+    "rom_offset": 129584
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55842,
+    "rom_offset": 129586
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55845,
+    "rom_offset": 129589
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55847,
+    "rom_offset": 129591
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55849,
+    "rom_offset": 129593
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55851,
+    "rom_offset": 129595
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55854,
+    "rom_offset": 129598
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55857,
+    "rom_offset": 129601
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55860,
+    "rom_offset": 129604
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55863,
+    "rom_offset": 129607
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55865,
+    "rom_offset": 129609
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55867,
+    "rom_offset": 129611
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55868,
+    "rom_offset": 129612
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55870,
+    "rom_offset": 129614
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55872,
+    "rom_offset": 129616
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55873,
+    "rom_offset": 129617
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55876,
+    "rom_offset": 129620
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55878,
+    "rom_offset": 129622
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55880,
+    "rom_offset": 129624
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55883,
+    "rom_offset": 129627
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55885,
+    "rom_offset": 129629
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55886,
+    "rom_offset": 129630
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55889,
+    "rom_offset": 129633
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55891,
+    "rom_offset": 129635
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55893,
+    "rom_offset": 129637
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55896,
+    "rom_offset": 129640
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55898,
+    "rom_offset": 129642
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55900,
+    "rom_offset": 129644
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55903,
+    "rom_offset": 129647
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55906,
+    "rom_offset": 129650
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55909,
+    "rom_offset": 129653
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55911,
+    "rom_offset": 129655
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55914,
+    "rom_offset": 129658
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55916,
+    "rom_offset": 129660
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55919,
+    "rom_offset": 129663
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55921,
+    "rom_offset": 129665
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55923,
+    "rom_offset": 129667
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55926,
+    "rom_offset": 129670
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55928,
+    "rom_offset": 129672
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55930,
+    "rom_offset": 129674
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55932,
+    "rom_offset": 129676
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55935,
+    "rom_offset": 129679
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55938,
+    "rom_offset": 129682
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55940,
+    "rom_offset": 129684
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55942,
+    "rom_offset": 129686
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55945,
+    "rom_offset": 129689
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55947,
+    "rom_offset": 129691
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55950,
+    "rom_offset": 129694
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55952,
+    "rom_offset": 129696
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55955,
+    "rom_offset": 129699
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55958,
+    "rom_offset": 129702
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55961,
+    "rom_offset": 129705
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55964,
+    "rom_offset": 129708
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55966,
+    "rom_offset": 129710
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55968,
+    "rom_offset": 129712
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55970,
+    "rom_offset": 129714
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55972,
+    "rom_offset": 129716
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55973,
+    "rom_offset": 129717
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55975,
+    "rom_offset": 129719
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55976,
+    "rom_offset": 129720
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55979,
+    "rom_offset": 129723
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55982,
+    "rom_offset": 129726
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55983,
+    "rom_offset": 129727
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55985,
+    "rom_offset": 129729
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55988,
+    "rom_offset": 129732
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55990,
+    "rom_offset": 129734
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55993,
+    "rom_offset": 129737
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55996,
+    "rom_offset": 129740
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 55998,
+    "rom_offset": 129742
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56000,
+    "rom_offset": 129744
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56003,
+    "rom_offset": 129747
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56005,
+    "rom_offset": 129749
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56008,
+    "rom_offset": 129752
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56011,
+    "rom_offset": 129755
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56013,
+    "rom_offset": 129757
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56015,
+    "rom_offset": 129759
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56017,
+    "rom_offset": 129761
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56018,
+    "rom_offset": 129762
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56020,
+    "rom_offset": 129764
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56023,
+    "rom_offset": 129767
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56026,
+    "rom_offset": 129770
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56027,
+    "rom_offset": 129771
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56030,
+    "rom_offset": 129774
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56033,
+    "rom_offset": 129777
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56036,
+    "rom_offset": 129780
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56039,
+    "rom_offset": 129783
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56042,
+    "rom_offset": 129786
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56045,
+    "rom_offset": 129789
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56047,
+    "rom_offset": 129791
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56050,
+    "rom_offset": 129794
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56051,
+    "rom_offset": 129795
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56053,
+    "rom_offset": 129797
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56056,
+    "rom_offset": 129800
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56058,
+    "rom_offset": 129802
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56060,
+    "rom_offset": 129804
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56063,
+    "rom_offset": 129807
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56065,
+    "rom_offset": 129809
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56066,
+    "rom_offset": 129810
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56069,
+    "rom_offset": 129813
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56072,
+    "rom_offset": 129816
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56074,
+    "rom_offset": 129818
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56076,
+    "rom_offset": 129820
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56078,
+    "rom_offset": 129822
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56080,
+    "rom_offset": 129824
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56083,
+    "rom_offset": 129827
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56086,
+    "rom_offset": 129830
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56088,
+    "rom_offset": 129832
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56091,
+    "rom_offset": 129835
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56094,
+    "rom_offset": 129838
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56097,
+    "rom_offset": 129841
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56100,
+    "rom_offset": 129844
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56102,
+    "rom_offset": 129846
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56105,
+    "rom_offset": 129849
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56108,
+    "rom_offset": 129852
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56111,
+    "rom_offset": 129855
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56113,
+    "rom_offset": 129857
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56116,
+    "rom_offset": 129860
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56117,
+    "rom_offset": 129861
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56119,
+    "rom_offset": 129863
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56121,
+    "rom_offset": 129865
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56123,
+    "rom_offset": 129867
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56126,
+    "rom_offset": 129870
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56127,
+    "rom_offset": 129871
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56128,
+    "rom_offset": 129872
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56131,
+    "rom_offset": 129875
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56133,
+    "rom_offset": 129877
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56134,
+    "rom_offset": 129878
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56135,
+    "rom_offset": 129879
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56137,
+    "rom_offset": 129881
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56138,
+    "rom_offset": 129882
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56141,
+    "rom_offset": 129885
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56143,
+    "rom_offset": 129887
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56145,
+    "rom_offset": 129889
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56146,
+    "rom_offset": 129890
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56147,
+    "rom_offset": 129891
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56149,
+    "rom_offset": 129893
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56150,
+    "rom_offset": 129894
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56153,
+    "rom_offset": 129897
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56156,
+    "rom_offset": 129900
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56159,
+    "rom_offset": 129903
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56162,
+    "rom_offset": 129906
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56163,
+    "rom_offset": 129907
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56165,
+    "rom_offset": 129909
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56168,
+    "rom_offset": 129912
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56170,
+    "rom_offset": 129914
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56172,
+    "rom_offset": 129916
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56174,
+    "rom_offset": 129918
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56176,
+    "rom_offset": 129920
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56179,
+    "rom_offset": 129923
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56182,
+    "rom_offset": 129926
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56185,
+    "rom_offset": 129929
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56187,
+    "rom_offset": 129931
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56189,
+    "rom_offset": 129933
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56191,
+    "rom_offset": 129935
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56193,
+    "rom_offset": 129937
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56195,
+    "rom_offset": 129939
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56196,
+    "rom_offset": 129940
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56198,
+    "rom_offset": 129942
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56199,
+    "rom_offset": 129943
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56200,
+    "rom_offset": 129944
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56201,
+    "rom_offset": 129945
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56202,
+    "rom_offset": 129946
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56204,
+    "rom_offset": 129948
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56205,
+    "rom_offset": 129949
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56208,
+    "rom_offset": 129952
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56211,
+    "rom_offset": 129955
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56212,
+    "rom_offset": 129956
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56214,
+    "rom_offset": 129958
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56216,
+    "rom_offset": 129960
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56219,
+    "rom_offset": 129963
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56222,
+    "rom_offset": 129966
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56225,
+    "rom_offset": 129969
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56228,
+    "rom_offset": 129972
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56230,
+    "rom_offset": 129974
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56232,
+    "rom_offset": 129976
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56235,
+    "rom_offset": 129979
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56238,
+    "rom_offset": 129982
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56241,
+    "rom_offset": 129985
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56244,
+    "rom_offset": 129988
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56247,
+    "rom_offset": 129991
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56248,
+    "rom_offset": 129992
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56251,
+    "rom_offset": 129995
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56252,
+    "rom_offset": 129996
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56255,
+    "rom_offset": 129999
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56257,
+    "rom_offset": 130001
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56259,
+    "rom_offset": 130003
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56262,
+    "rom_offset": 130006
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56265,
+    "rom_offset": 130009
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56266,
+    "rom_offset": 130010
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56269,
+    "rom_offset": 130013
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56271,
+    "rom_offset": 130015
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56273,
+    "rom_offset": 130017
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56275,
+    "rom_offset": 130019
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56277,
+    "rom_offset": 130021
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56279,
+    "rom_offset": 130023
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56281,
+    "rom_offset": 130025
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56283,
+    "rom_offset": 130027
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56286,
+    "rom_offset": 130030
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56287,
+    "rom_offset": 130031
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56290,
+    "rom_offset": 130034
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56292,
+    "rom_offset": 130036
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56294,
+    "rom_offset": 130038
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56297,
+    "rom_offset": 130041
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56299,
+    "rom_offset": 130043
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56302,
+    "rom_offset": 130046
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56304,
+    "rom_offset": 130048
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56305,
+    "rom_offset": 130049
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56308,
+    "rom_offset": 130052
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56310,
+    "rom_offset": 130054
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56313,
+    "rom_offset": 130057
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56315,
+    "rom_offset": 130059
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56317,
+    "rom_offset": 130061
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56320,
+    "rom_offset": 130064
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56323,
+    "rom_offset": 130067
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56325,
+    "rom_offset": 130069
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56327,
+    "rom_offset": 130071
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56330,
+    "rom_offset": 130074
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56331,
+    "rom_offset": 130075
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56332,
+    "rom_offset": 130076
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56333,
+    "rom_offset": 130077
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56334,
+    "rom_offset": 130078
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56336,
+    "rom_offset": 130080
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56339,
+    "rom_offset": 130083
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56340,
+    "rom_offset": 130084
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56343,
+    "rom_offset": 130087
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56344,
+    "rom_offset": 130088
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56346,
+    "rom_offset": 130090
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56348,
+    "rom_offset": 130092
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56350,
+    "rom_offset": 130094
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56352,
+    "rom_offset": 130096
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56355,
+    "rom_offset": 130099
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56356,
+    "rom_offset": 130100
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56357,
+    "rom_offset": 130101
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56358,
+    "rom_offset": 130102
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56359,
+    "rom_offset": 130103
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56361,
+    "rom_offset": 130105
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56364,
+    "rom_offset": 130108
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56365,
+    "rom_offset": 130109
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56368,
+    "rom_offset": 130112
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56369,
+    "rom_offset": 130113
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56372,
+    "rom_offset": 130116
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56375,
+    "rom_offset": 130119
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56378,
+    "rom_offset": 130122
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56380,
+    "rom_offset": 130124
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56381,
+    "rom_offset": 130125
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56382,
+    "rom_offset": 130126
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56383,
+    "rom_offset": 130127
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56386,
+    "rom_offset": 130130
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56388,
+    "rom_offset": 130132
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56390,
+    "rom_offset": 130134
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56391,
+    "rom_offset": 130135
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56392,
+    "rom_offset": 130136
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56393,
+    "rom_offset": 130137
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56395,
+    "rom_offset": 130139
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56398,
+    "rom_offset": 130142
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56399,
+    "rom_offset": 130143
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56400,
+    "rom_offset": 130144
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56402,
+    "rom_offset": 130146
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56404,
+    "rom_offset": 130148
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56407,
+    "rom_offset": 130151
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56408,
+    "rom_offset": 130152
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56409,
+    "rom_offset": 130153
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56410,
+    "rom_offset": 130154
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56411,
+    "rom_offset": 130155
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56412,
+    "rom_offset": 130156
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56413,
+    "rom_offset": 130157
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56414,
+    "rom_offset": 130158
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56416,
+    "rom_offset": 130160
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56419,
+    "rom_offset": 130163
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56422,
+    "rom_offset": 130166
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56424,
+    "rom_offset": 130168
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56425,
+    "rom_offset": 130169
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56428,
+    "rom_offset": 130172
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56430,
+    "rom_offset": 130174
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56433,
+    "rom_offset": 130177
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56436,
+    "rom_offset": 130180
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56437,
+    "rom_offset": 130181
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56439,
+    "rom_offset": 130183
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56440,
+    "rom_offset": 130184
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56443,
+    "rom_offset": 130187
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56444,
+    "rom_offset": 130188
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56447,
+    "rom_offset": 130191
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56449,
+    "rom_offset": 130193
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56452,
+    "rom_offset": 130196
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56453,
+    "rom_offset": 130197
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56456,
+    "rom_offset": 130200
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56458,
+    "rom_offset": 130202
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56461,
+    "rom_offset": 130205
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56464,
+    "rom_offset": 130208
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56467,
+    "rom_offset": 130211
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56469,
+    "rom_offset": 130213
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56472,
+    "rom_offset": 130216
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56474,
+    "rom_offset": 130218
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56477,
+    "rom_offset": 130221
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56479,
+    "rom_offset": 130223
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56482,
+    "rom_offset": 130226
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56485,
+    "rom_offset": 130229
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56488,
+    "rom_offset": 130232
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56490,
+    "rom_offset": 130234
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56493,
+    "rom_offset": 130237
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56495,
+    "rom_offset": 130239
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56497,
+    "rom_offset": 130241
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56500,
+    "rom_offset": 130244
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56502,
+    "rom_offset": 130246
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56505,
+    "rom_offset": 130249
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56508,
+    "rom_offset": 130252
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56510,
+    "rom_offset": 130254
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56512,
+    "rom_offset": 130256
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56515,
+    "rom_offset": 130259
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56518,
+    "rom_offset": 130262
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56519,
+    "rom_offset": 130263
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56522,
+    "rom_offset": 130266
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56525,
+    "rom_offset": 130269
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56527,
+    "rom_offset": 130271
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56529,
+    "rom_offset": 130273
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56532,
+    "rom_offset": 130276
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56535,
+    "rom_offset": 130279
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56536,
+    "rom_offset": 130280
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56539,
+    "rom_offset": 130283
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56542,
+    "rom_offset": 130286
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56544,
+    "rom_offset": 130288
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56547,
+    "rom_offset": 130291
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56549,
+    "rom_offset": 130293
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56552,
+    "rom_offset": 130296
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56554,
+    "rom_offset": 130298
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56556,
+    "rom_offset": 130300
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56559,
+    "rom_offset": 130303
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56562,
+    "rom_offset": 130306
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56564,
+    "rom_offset": 130308
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56567,
+    "rom_offset": 130311
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56568,
+    "rom_offset": 130312
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56571,
+    "rom_offset": 130315
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56572,
+    "rom_offset": 130316
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56575,
+    "rom_offset": 130319
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56578,
+    "rom_offset": 130322
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 56581,
+    "rom_offset": 130325
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57198,
+    "rom_offset": 130942
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57201,
+    "rom_offset": 130945
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57204,
+    "rom_offset": 130948
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57206,
+    "rom_offset": 130950
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57209,
+    "rom_offset": 130953
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57211,
+    "rom_offset": 130955
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57214,
+    "rom_offset": 130958
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57217,
+    "rom_offset": 130961
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57219,
+    "rom_offset": 130963
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57220,
+    "rom_offset": 130964
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57223,
+    "rom_offset": 130967
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57226,
+    "rom_offset": 130970
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57228,
+    "rom_offset": 130972
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57230,
+    "rom_offset": 130974
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57233,
+    "rom_offset": 130977
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57234,
+    "rom_offset": 130978
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57235,
+    "rom_offset": 130979
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57236,
+    "rom_offset": 130980
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57237,
+    "rom_offset": 130981
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57238,
+    "rom_offset": 130982
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57240,
+    "rom_offset": 130984
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57241,
+    "rom_offset": 130985
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57244,
+    "rom_offset": 130988
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57245,
+    "rom_offset": 130989
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57247,
+    "rom_offset": 130991
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57249,
+    "rom_offset": 130993
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57252,
+    "rom_offset": 130996
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57253,
+    "rom_offset": 130997
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57256,
+    "rom_offset": 131000
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57257,
+    "rom_offset": 131001
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57259,
+    "rom_offset": 131003
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57260,
+    "rom_offset": 131004
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57261,
+    "rom_offset": 131005
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57262,
+    "rom_offset": 131006
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57265,
+    "rom_offset": 131009
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57268,
+    "rom_offset": 131012
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57269,
+    "rom_offset": 131013
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57272,
+    "rom_offset": 131016
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57275,
+    "rom_offset": 131019
+  },
+  {
+    "physical_bank": 15,
+    "cpu": 57278,
+    "rom_offset": 131022
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58751,
+    "rom_offset": 255375
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58753,
+    "rom_offset": 255377
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58756,
+    "rom_offset": 255380
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58759,
+    "rom_offset": 255383
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58761,
+    "rom_offset": 255385
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58764,
+    "rom_offset": 255388
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58767,
+    "rom_offset": 255391
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58768,
+    "rom_offset": 255392
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58770,
+    "rom_offset": 255394
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58773,
+    "rom_offset": 255397
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58776,
+    "rom_offset": 255400
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58778,
+    "rom_offset": 255402
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58781,
+    "rom_offset": 255405
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58784,
+    "rom_offset": 255408
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58787,
+    "rom_offset": 255411
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58789,
+    "rom_offset": 255413
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58792,
+    "rom_offset": 255416
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58795,
+    "rom_offset": 255419
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58797,
+    "rom_offset": 255421
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58800,
+    "rom_offset": 255424
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58803,
+    "rom_offset": 255427
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58804,
+    "rom_offset": 255428
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58806,
+    "rom_offset": 255430
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58809,
+    "rom_offset": 255433
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58811,
+    "rom_offset": 255435
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58814,
+    "rom_offset": 255438
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58815,
+    "rom_offset": 255439
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58816,
+    "rom_offset": 255440
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58818,
+    "rom_offset": 255442
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58819,
+    "rom_offset": 255443
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58821,
+    "rom_offset": 255445
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58823,
+    "rom_offset": 255447
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58825,
+    "rom_offset": 255449
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58828,
+    "rom_offset": 255452
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58830,
+    "rom_offset": 255454
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58832,
+    "rom_offset": 255456
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58835,
+    "rom_offset": 255459
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58836,
+    "rom_offset": 255460
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58838,
+    "rom_offset": 255462
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58840,
+    "rom_offset": 255464
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58843,
+    "rom_offset": 255467
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58845,
+    "rom_offset": 255469
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58848,
+    "rom_offset": 255472
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58851,
+    "rom_offset": 255475
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58852,
+    "rom_offset": 255476
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58854,
+    "rom_offset": 255478
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58856,
+    "rom_offset": 255480
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58858,
+    "rom_offset": 255482
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58860,
+    "rom_offset": 255484
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58863,
+    "rom_offset": 255487
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58865,
+    "rom_offset": 255489
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58867,
+    "rom_offset": 255491
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58870,
+    "rom_offset": 255494
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58873,
+    "rom_offset": 255497
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58874,
+    "rom_offset": 255498
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58875,
+    "rom_offset": 255499
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58876,
+    "rom_offset": 255500
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58879,
+    "rom_offset": 255503
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58880,
+    "rom_offset": 255504
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58881,
+    "rom_offset": 255505
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58882,
+    "rom_offset": 255506
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58884,
+    "rom_offset": 255508
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58885,
+    "rom_offset": 255509
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58887,
+    "rom_offset": 255511
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58888,
+    "rom_offset": 255512
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58889,
+    "rom_offset": 255513
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58891,
+    "rom_offset": 255515
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58894,
+    "rom_offset": 255518
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58896,
+    "rom_offset": 255520
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58899,
+    "rom_offset": 255523
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58900,
+    "rom_offset": 255524
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58903,
+    "rom_offset": 255527
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58904,
+    "rom_offset": 255528
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58907,
+    "rom_offset": 255531
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58908,
+    "rom_offset": 255532
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58910,
+    "rom_offset": 255534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58913,
+    "rom_offset": 255537
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58915,
+    "rom_offset": 255539
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58918,
+    "rom_offset": 255542
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58921,
+    "rom_offset": 255545
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58922,
+    "rom_offset": 255546
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58923,
+    "rom_offset": 255547
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58925,
+    "rom_offset": 255549
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58926,
+    "rom_offset": 255550
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58929,
+    "rom_offset": 255553
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58931,
+    "rom_offset": 255555
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58933,
+    "rom_offset": 255557
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58936,
+    "rom_offset": 255560
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58938,
+    "rom_offset": 255562
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58940,
+    "rom_offset": 255564
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58941,
+    "rom_offset": 255565
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58944,
+    "rom_offset": 255568
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58947,
+    "rom_offset": 255571
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58950,
+    "rom_offset": 255574
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58953,
+    "rom_offset": 255577
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58955,
+    "rom_offset": 255579
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58957,
+    "rom_offset": 255581
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58960,
+    "rom_offset": 255584
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58961,
+    "rom_offset": 255585
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58963,
+    "rom_offset": 255587
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58966,
+    "rom_offset": 255590
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58967,
+    "rom_offset": 255591
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58969,
+    "rom_offset": 255593
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58970,
+    "rom_offset": 255594
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58972,
+    "rom_offset": 255596
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58975,
+    "rom_offset": 255599
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58977,
+    "rom_offset": 255601
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58980,
+    "rom_offset": 255604
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58981,
+    "rom_offset": 255605
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58982,
+    "rom_offset": 255606
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58987,
+    "rom_offset": 255611
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58988,
+    "rom_offset": 255612
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58991,
+    "rom_offset": 255615
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58992,
+    "rom_offset": 255616
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58993,
+    "rom_offset": 255617
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58995,
+    "rom_offset": 255619
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58996,
+    "rom_offset": 255620
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 58999,
+    "rom_offset": 255623
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59000,
+    "rom_offset": 255624
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59001,
+    "rom_offset": 255625
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59003,
+    "rom_offset": 255627
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59004,
+    "rom_offset": 255628
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59007,
+    "rom_offset": 255631
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59008,
+    "rom_offset": 255632
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59009,
+    "rom_offset": 255633
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59011,
+    "rom_offset": 255635
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59012,
+    "rom_offset": 255636
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59015,
+    "rom_offset": 255639
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59016,
+    "rom_offset": 255640
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59017,
+    "rom_offset": 255641
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59019,
+    "rom_offset": 255643
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59020,
+    "rom_offset": 255644
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59023,
+    "rom_offset": 255647
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59024,
+    "rom_offset": 255648
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59025,
+    "rom_offset": 255649
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59027,
+    "rom_offset": 255651
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59028,
+    "rom_offset": 255652
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59031,
+    "rom_offset": 255655
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59032,
+    "rom_offset": 255656
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59033,
+    "rom_offset": 255657
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59035,
+    "rom_offset": 255659
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59036,
+    "rom_offset": 255660
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59039,
+    "rom_offset": 255663
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59040,
+    "rom_offset": 255664
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59041,
+    "rom_offset": 255665
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 59043,
+    "rom_offset": 255667
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62047,
+    "rom_offset": 258671
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62050,
+    "rom_offset": 258674
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62053,
+    "rom_offset": 258677
+  }
+]

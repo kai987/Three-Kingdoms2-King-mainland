@@ -1,0 +1,243 @@
+{
+  "schema": "phase13-ui-graphics-data-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ROM_modified": false,
+  "ranges": [
+    {
+      "name": "public_chunk_attribute_unit_trampolines",
+      "physical_bank": 23,
+      "cpu_start": 40978,
+      "cpu_end_exclusive": 40987,
+      "rom_offset": 188450,
+      "byte_count": 9,
+      "raw_hex": "4C 1C A6 4C F0 AE 4C 83 A9",
+      "sha256": "287c493183d8b1e45adbeda3d03ec3d8800534d83d2376db7caf14c3cec02b56",
+      "kind": "code"
+    },
+    {
+      "name": "chunk_resource_pointer_helper",
+      "physical_bank": 23,
+      "cpu_start": 42524,
+      "cpu_end_exclusive": 42562,
+      "rom_offset": 189996,
+      "byte_count": 38,
+      "raw_hex": "AD 00 00 48 0A A8 B9 42 A6 8D 00 00 B9 43 A6 8D 01 00 A9 77 8D 02 00 A9 F4 8D 03 00 68 A8 B9 22 A8 A8 20 5F F2 60",
+      "sha256": "491f58fb0386413dac3122df11321185515f38d1060de70fee7c5833b3b5a1e1",
+      "kind": "code"
+    },
+    {
+      "name": "attribute_resource_pointer_helper",
+      "physical_bank": 23,
+      "cpu_start": 44784,
+      "cpu_end_exclusive": 44812,
+      "rom_offset": 192256,
+      "byte_count": 28,
+      "raw_hex": "AD 00 00 48 0A A8 B9 32 A7 8D 00 00 B9 33 A7 8D 01 00 68 A8 B9 22 A8 A8 20 5F F2 60",
+      "sha256": "9b49dae78992b2af23d52737141a05c33fcb6885a16a904fbccb1c3114126710",
+      "kind": "code"
+    },
+    {
+      "name": "unit_tile_controller_leader_strength_affinity",
+      "physical_bank": 23,
+      "cpu_start": 43395,
+      "cpu_end_exclusive": 43748,
+      "rom_offset": 190867,
+      "byte_count": 353,
+      "raw_hex": "AC 00 00 98 48 AD 07 05 48 B9 28 06 10 06 68 4A 4A 4A 4A 48 68 29 0F 20 A8 A9 C9 00 F0 23 C9 01 F0 7F 4C 84 AA A8 AD 00 00 48 AD 01 00 48 98 20 68 F3 A0 03 B1 00 A8 68 8D 01 00 68 8D 00 00 98 60 68 A8 48 B9 3C 06 A8 B9 E4 AA 8D B0 01 B9 EF AA 8D B1 01 68 A8 F0 04 C9 0A D0 16 A9 BB 8D B0 01 B9 3C 06 C9 0A D0 0A A9 BA 8D B0 01 A9 AB 8D B1 01 A9 AE 8D B2 01 A9 AF 8D B3 01 B9 28 06 29 03 D0 0A A9 BD 8D B2 01 A9 BE 8D B3 01 B9 28 06 29 03 C9 01 D0 0A A9 AC 8D B2 01 A9 AD 8D B3 01 60 68 A8 48 B9 3C 06 A8 B9 FA AA 8D B0 01 B9 05 AB 8D B1 01 68 A8 F0 04 C0 0A D0 16 A9 B1 8D B0 01 B9 3C 06 C9 0A D0 0A A9 B0 8D B0 01 A9 8B 8D B1 01 A9 8C 8D B2 01 A9 8D 8D B3 01 B9 28 06 29 03 D0 0A A9 B3 8D B2 01 A9 B4 8D B3 01 B9 28 06 29 03 C9 02 D0 0A A9 8E 8D B2 01 A9 8F 8D B3 01 60 68 A8 48 B9 3C 06 A8 B9 10 AB 8D B0 01 B9 1B AB 8D B1 01 68 A8 F0 04 C0 0A D0 16 A9 B6 8D B0 01 B9 3C 06 C9 0A D0 0A A9 B5 8D B0 01 A9 9B 8D B1 01 A9 9C 8D B2 01 A9 9D 8D B3 01 B9 28 06 29 03 D0 0A A9 B8 8D B2 01 A9 B9 8D B3 01 B9 28 06 29 03 C9 02 D0 0A A9 9E 8D B2 01 A9 9F 8D B3 01 60",
+      "sha256": "5f499bc163731ac8a4b1ce47d73c5fe910843ae559f5a5b5e2003553be2f5b09",
+      "kind": "code"
+    }
+  ],
+  "tables": [
+    {
+      "name": "chunk_pointer_table120",
+      "physical_bank": 23,
+      "cpu_start": 42562,
+      "cpu_end_exclusive": 42802,
+      "rom_offset": 190034,
+      "byte_count": 240,
+      "raw_hex": "40 80 70 81 00 82 30 83 C0 83 F0 84 80 85 B0 86 40 87 70 88 00 89 30 8A C0 8A F0 8B 80 8C B0 8D 40 8E 70 8F 00 90 30 91 C0 91 F0 92 80 93 B0 94 40 95 70 96 00 97 30 98 C0 98 F0 99 80 9A B0 9B A6 89 D6 8A 66 8B 96 8C 26 8D 56 8E E6 8E 16 90 A6 90 D6 91 66 92 96 93 26 94 56 95 E6 95 16 97 A6 97 D6 98 66 99 96 9A 26 9B 56 9C E6 9C 16 9E 40 95 70 96 00 97 30 98 C0 98 F0 99 80 9A B0 9B 40 80 70 81 00 82 30 83 C0 83 F0 84 80 85 B0 86 40 87 70 88 00 89 30 8A C0 8A F0 8B 80 8C B0 8D 40 8E 70 8F 00 90 30 91 C0 91 F0 92 80 93 B0 94 40 95 70 96 00 97 30 98 C0 98 F0 99 80 9A B0 9B 40 80 70 81 00 82 30 83 C0 83 F0 84 80 85 B0 86 40 87 70 88 00 89 30 8A C0 8A F0 8B 80 8C B0 8D 40 8E 70 8F 00 90 30 91 C0 91 F0 92 80 93 B0 94",
+      "sha256": "66e48be153941cb04d33eefb8e416b4f575fa322071e134904d80532a6c66f2a",
+      "kind": "data"
+    },
+    {
+      "name": "attribute_pointer_table120",
+      "physical_bank": 23,
+      "cpu_start": 42802,
+      "cpu_end_exclusive": 43042,
+      "rom_offset": 190274,
+      "byte_count": 240,
+      "raw_hex": "00 80 30 81 C0 81 F0 82 80 83 B0 84 40 85 70 86 00 87 30 88 C0 88 F0 89 80 8A B0 8B 40 8C 70 8D 00 8E 30 8F C0 8F F0 90 80 91 B0 92 40 93 70 94 00 95 30 96 C0 96 F0 97 80 98 B0 99 40 9A 70 9B 66 89 96 8A 26 8B 56 8C E6 8C 16 8E A6 8E D6 8F 66 90 96 91 26 92 56 93 E6 93 16 95 A6 95 D6 96 66 97 96 98 26 99 56 9A E6 9A 16 9C A6 9C D6 9D 00 95 30 96 C0 96 F0 97 80 98 B0 99 40 9A 70 9B 00 80 30 81 C0 81 F0 82 80 83 B0 84 40 85 70 86 00 87 30 88 C0 88 F0 89 80 8A B0 8B 40 8C 70 8D 00 8E 30 8F C0 8F F0 90 80 91 B0 92 40 93 70 94 00 95 30 96 C0 96 F0 97 80 98 B0 99 40 9A 70 9B 00 80 30 81 C0 81 F0 82 80 83 B0 84 40 85 70 86 00 87 30 88 C0 88 F0 89 80 8A B0 8B 40 8C 70 8D 00 8E 30 8F C0 8F F0 90 80 91 B0 92 40 93 70 94",
+      "sha256": "bc81b2db425a8a3c41dd20cae5e30a9987a39d0a3c998f843222f3199ea465cd",
+      "kind": "data"
+    },
+    {
+      "name": "data_window_selector_table120",
+      "physical_bank": 23,
+      "cpu_start": 43042,
+      "cpu_end_exclusive": 43162,
+      "rom_offset": 190514,
+      "byte_count": 120,
+      "raw_hex": "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 25 25 25 25 25 25 25 25 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25",
+      "sha256": "b68e97ed82a337b6247bc4222c1b49251e5577a3d1d41eadb3f2264e093935f8",
+      "kind": "data"
+    },
+    {
+      "name": "three_unit_tile_families",
+      "physical_bank": 23,
+      "cpu_start": 43748,
+      "cpu_end_exclusive": 43814,
+      "rom_offset": 191220,
+      "byte_count": 66,
+      "raw_hex": "BC BC BC BC BC BC BC BC BC BC AA A0 A1 A2 A3 A4 A5 A6 A7 A8 A9 AB B2 B2 B2 B2 B2 B2 B2 B2 B2 B2 8A 80 81 82 83 84 85 86 87 88 89 8B B7 B7 B7 B7 B7 B7 B7 B7 B7 B7 9A 90 91 92 93 94 95 96 97 98 99 9B",
+      "sha256": "5a5400d9d2035d2a30e7c63224714373589d69558c42d1d10e92c468af1ff33e",
+      "kind": "data"
+    }
+  ],
+  "dependency_pins": [
+    {
+      "path": "source/recovered/ui_graphics_initialization.py",
+      "bytes": 9508,
+      "sha256": "a80f6377ffa8132d9f61a57eeea164b120ecb6fbf0357d43fa526892629c32ad"
+    },
+    {
+      "path": "scripts/verify_ui_graphics_initialization.py",
+      "bytes": 6323,
+      "sha256": "a37e17fc9a16ab43515ad1fe68d3b88928d9e888a2ae11cfdc0214a7f9b3259f"
+    },
+    {
+      "path": "scripts/analyze_ui_graphics_initialization.py",
+      "bytes": 9641,
+      "sha256": "86785b4841cb8ef98e25567559326d1d2809875f6514ac54d2fbf3519f441ce5"
+    },
+    {
+      "path": "source/recovered/scene_shared_services.py",
+      "bytes": 15120,
+      "sha256": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76"
+    },
+    {
+      "path": "source/recovered/battle_nmi_services.py",
+      "bytes": 35325,
+      "sha256": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15"
+    },
+    {
+      "path": "source/recovered/controller_helpers.py",
+      "bytes": 2827,
+      "sha256": "54dba0ee606f3ce200c648700f908956273ff0a96cc0dbfb847fc4396bf79afb"
+    },
+    {
+      "path": "source/recovered/service_memory.py",
+      "bytes": 5672,
+      "sha256": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920"
+    }
+  ],
+  "REA_archive": [
+    {
+      "path": "analysis/rea/pairs/pair-23/functions/0xa983.c",
+      "bytes": 1402,
+      "sha256": "729c62f8efc3fa111e84b8d784e927c9aa2ea86144a4950bb7e7429c668cb498"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-23/functions/0xaef0.asm",
+      "bytes": 18,
+      "sha256": "8da8fab6a778b76a116e60c195095c9c14d4a5acbc5a87f69b96001919f6e6b8"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-23/functions/0xaef0.c",
+      "bytes": 260,
+      "sha256": "fc0cef1410252c93010d20ec7b176598b66403bf9a4856b21777eeb630825d43"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-23/functions/0xa61c.c",
+      "bytes": 298,
+      "sha256": "edda591879eeb80fbdbb73ba18f7c86508a5083077a1101898ed636c14b1f8d0"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-23/functions/0xa983.asm",
+      "bytes": 18,
+      "sha256": "4e87b096a23a8b5cc76787aaf756826a14f02ec5ef7c4de92363afc0a3a3b8f2"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-23/functions/0xa61c.asm",
+      "bytes": 18,
+      "sha256": "4f4f1b00c354dcf3e472aa51f3879c299ce789d22520e04775eedffe99e8e916"
+    }
+  ],
+  "disassembly_pin": {
+    "path": "analysis/phase13/graphics/original-ranges.asm",
+    "bytes": 12277,
+    "sha256": "488769f9934b652aae8ef21a3d41676dea91cbf9fca243ae5f0c58fdc501333e"
+  },
+  "source_AST_imports": [
+    "dataclasses",
+    "battle_nmi_services",
+    "scene_shared_services"
+  ],
+  "source_runtime_IR": false,
+  "source_runtime_CPU": false,
+  "source_runtime_opcode_decode": false,
+  "source_original_CPU_callbacks": 0,
+  "source_sha256": "a80f6377ffa8132d9f61a57eeea164b120ecb6fbf0357d43fa526892629c32ad",
+  "validator_sha256": "a37e17fc9a16ab43515ad1fe68d3b88928d9e888a2ae11cfdc0214a7f9b3259f",
+  "local_instruction_location_total": 201,
+  "local_instruction_location_observed": 201,
+  "local_unobserved_locations": [],
+  "validation": {
+    "status": "passed",
+    "rom_cpu_case_count": 9440,
+    "original_complete_case_count": 9440,
+    "original_prefix_case_count": 0,
+    "source_guard_case_count": 7,
+    "failed_count": 0,
+    "counts": {
+      "all120_chunk_resource_bodies": 2400,
+      "unit_all_slots_strength_affinity_controller_side": 7040
+    },
+    "comparison": {
+      "RAM_bytes": 2048,
+      "SRAM_bytes": 8192,
+      "free_CPU_stack_residue": "included",
+      "registers": "AXYP/SP/PC",
+      "ordered_IO_ports": true,
+      "all_mapper_banks": true,
+      "hardware_reads": 0
+    }
+  },
+  "contracts": {
+    "APIs": [
+      "UIGraphicsInitialization(memory,UIGraphicsData.from_rom(rom),services=None)",
+      "run_entry(entry=A012,registers)",
+      "__call__(ServiceCall)",
+      "resume()"
+    ],
+    "entry_mappings": {
+      "23A012": "23A61C..A641",
+      "23A015": "23AEF0..AF0B",
+      "23A018": "23A983..AAE3"
+    },
+    "caller": "Real physical23/24 pair and existing RTS frame. Exact AXYP/SP/PC, all2048RAM including stack residue, all8192SRAM, orderedE000 writes and finalbanks are compared.",
+    "input_domains": {
+      "0000_chunk": "0..119, original120-row pointer/mapper tables",
+      "0000_slot": "active0..19",
+      "063C+slot": "displayed strength-hundreds0..10",
+      "0507": "two ruler nibbles, selected nibble0..6",
+      "0628+slot": "highbit selects ruler nibble; low2 choose original affinity tiles",
+      "6F07+8*ruler+3": "controller raw0,1,other select three visual families"
+    },
+    "output": {
+      "A012": "0000/1 mapped chunk pointer,0002/3 fixedF477 metatile pointer; Y data selector and actualF25F port request",
+      "A015": "0000/1 mapped attribute pointer and actualF25F;0002/3 unchanged",
+      "A018": "01B0..01B3 four original unit tiles;0000/1 restored by ruler lookup; no PPU/OAM upload"
+    },
+    "helper_providers": {
+      "F25F": "SceneSharedServices exact stack/mapper request",
+      "F368": "SceneSharedServices original ruler pointer/table"
+    },
+    "distinction": "Bank13D72E is an existing map-refresh JSR site whose far target is23A012. It is not the entry/body of23A012.",
+    "limits": [
+      "No pixels, CHR writes, DMA, queue completion, IRQ/NMI timing or frame emulation.",
+      "The displayed hundreds cache is a tile selector, not raw troop count.",
+      "Undefined chunks>=120, slots>=20, rulers>=7 and cache>10 are explicit source guards, not invented wrapping rules."
+    ]
+  }
+}

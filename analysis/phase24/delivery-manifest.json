@@ -1,0 +1,53 @@
+{
+  "schema": "phase24-local-incremental-delivery-v1",
+  "kind": "incremental_analysis_and_readable_source",
+  "base_archive": {
+    "path": "build/三国志2超级版-逆向分析-v23增量.zip",
+    "sha256": "7b141e38fdc88e6c601d10705b255bb48f04e1047cd0ab40ffa588490bf17e51",
+    "included": false
+  },
+  "base_audit": {
+    "path": "analysis/phase23/verification.json",
+    "sha256": "8e53b4e8c315d49a407c2f120d56fbd3280ed0043fdec36af93e332e70c90f38",
+    "included": true
+  },
+  "foundational_archive": {
+    "path": "build/三国志2超级版-逆向分析-v22.zip",
+    "sha256": "9fd37c2ae0d7d857c787801e8bdc92ca43fb038099491f7dbe09f17b204cef80",
+    "included": false
+  },
+  "include_roots": [
+    "source/recovered",
+    "source/readable_c",
+    "scripts",
+    "analysis/phase24"
+  ],
+  "include_files": [
+    "requirements.txt",
+    "analysis/phase23/verification.json",
+    "analysis/phase23/delivery-manifest.json",
+    "analysis/phase22/verification.json"
+  ],
+  "exclude": [
+    "exploratory*",
+    "__pycache__",
+    "*.pyc",
+    "analysis/phase24/package-receipt.json",
+    ".DS_Store"
+  ],
+  "original_ROM_included": false,
+  "rebuilt_ROM_included": false,
+  "full_ROM_byte_source_included": false,
+  "toolchain_included": false,
+  "old_large_evidence_copied": false,
+  "canonical_v22_archive_replaced": false,
+  "requires_separate_base_and_user_ROM_for_reproduction": true,
+  "external_publication": false,
+  "dependency_order": [
+    "v22 full frozen archive",
+    "v23 frozen supplement",
+    "v24 supplement",
+    "user-provided ROM and separately pinned original core/toolchain"
+  ],
+  "scope": "One natural allocation route and typed pointer lifecycle recovery; not a whole-ROM completion or a standalone playable remake."
+}

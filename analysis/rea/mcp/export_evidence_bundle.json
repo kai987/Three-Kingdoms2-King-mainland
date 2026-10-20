@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/mcp/evidence-bundle.json\",\"bytes\":1433544,\"records\":203,\"unknowns\":0}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/mcp/evidence-bundle.json",
+      "bytes": 1433544,
+      "records": 203,
+      "unknowns": 0
+    }
+  }
+}

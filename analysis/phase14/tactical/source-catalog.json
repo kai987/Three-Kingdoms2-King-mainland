@@ -1,0 +1,1191 @@
+{
+  "source_sha256": "d509bc950949246a627fd3b3d2368789175cd143b77848a5a1149e1bfa081fb9",
+  "procedures": [
+    {
+      "entry": 40960,
+      "name": "tactical_entry",
+      "instruction_nodes": 2,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41005,
+      "name": "cooperative_update",
+      "instruction_nodes": 9,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41020,
+      "name": "scan_eligible_actors",
+      "instruction_nodes": 35,
+      "source_lines": 152,
+      "natural_loop_headers": [
+        41020
+      ]
+    },
+    {
+      "entry": 41107,
+      "name": "tactical_helper_a093",
+      "instruction_nodes": 3,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41113,
+      "name": "dispatch_actor_strategy",
+      "instruction_nodes": 3,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41137,
+      "name": "strategy_00_tactics_and_advance",
+      "instruction_nodes": 36,
+      "source_lines": 66,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41197,
+      "name": "tactical_helper_a0ed",
+      "instruction_nodes": 4,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41221,
+      "name": "strategy_01_opposite_commander",
+      "instruction_nodes": 17,
+      "source_lines": 34,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41255,
+      "name": "tactical_helper_a127",
+      "instruction_nodes": 14,
+      "source_lines": 29,
+      "natural_loop_headers": [
+        41260
+      ]
+    },
+    {
+      "entry": 41284,
+      "name": "tactical_helper_a144",
+      "instruction_nodes": 12,
+      "source_lines": 23,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41306,
+      "name": "tactical_helper_a15a",
+      "instruction_nodes": 3,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41315,
+      "name": "tactical_helper_a163",
+      "instruction_nodes": 2,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41318,
+      "name": "strategy_02_near_actor",
+      "instruction_nodes": 49,
+      "source_lines": 91,
+      "natural_loop_headers": [
+        41354
+      ]
+    },
+    {
+      "entry": 41402,
+      "name": "tactical_helper_a1ba",
+      "instruction_nodes": 3,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41430,
+      "name": "tactical_helper_a1d6",
+      "instruction_nodes": 3,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41439,
+      "name": "tactical_helper_a1df",
+      "instruction_nodes": 3,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41445,
+      "name": "tactical_helper_a1e5",
+      "instruction_nodes": 16,
+      "source_lines": 26,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41478,
+      "name": "tactical_helper_a206",
+      "instruction_nodes": 5,
+      "source_lines": 11,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41488,
+      "name": "strategy_03_escort_own_commander",
+      "instruction_nodes": 14,
+      "source_lines": 32,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41515,
+      "name": "tactical_helper_a22b",
+      "instruction_nodes": 47,
+      "source_lines": 129,
+      "natural_loop_headers": [
+        41527,
+        41566
+      ]
+    },
+    {
+      "entry": 41603,
+      "name": "tactical_helper_a283",
+      "instruction_nodes": 3,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41624,
+      "name": "tactical_helper_a298",
+      "instruction_nodes": 7,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41639,
+      "name": "tactical_helper_a2a7",
+      "instruction_nodes": 3,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41645,
+      "name": "strategy_04_actor_radius_three",
+      "instruction_nodes": 44,
+      "source_lines": 87,
+      "natural_loop_headers": [
+        41678
+      ]
+    },
+    {
+      "entry": 41727,
+      "name": "tactical_helper_a2ff",
+      "instruction_nodes": 3,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41748,
+      "name": "tactical_helper_a314",
+      "instruction_nodes": 7,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41763,
+      "name": "tactical_helper_a323",
+      "instruction_nodes": 3,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41769,
+      "name": "strategy_05_resupply",
+      "instruction_nodes": 17,
+      "source_lines": 27,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41803,
+      "name": "tactical_helper_a34b",
+      "instruction_nodes": 16,
+      "source_lines": 27,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41839,
+      "name": "tactical_helper_a36f",
+      "instruction_nodes": 7,
+      "source_lines": 15,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41853,
+      "name": "tactical_helper_a37d",
+      "instruction_nodes": 32,
+      "source_lines": 47,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41901,
+      "name": "tactical_helper_a3ad",
+      "instruction_nodes": 1,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41924,
+      "name": "tactical_helper_a3c4",
+      "instruction_nodes": 30,
+      "source_lines": 39,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42004,
+      "name": "tactical_helper_a414",
+      "instruction_nodes": 37,
+      "source_lines": 47,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42097,
+      "name": "tactical_helper_a471",
+      "instruction_nodes": 56,
+      "source_lines": 65,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42247,
+      "name": "strategy_06_heal",
+      "instruction_nodes": 19,
+      "source_lines": 29,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42284,
+      "name": "tactical_helper_a52c",
+      "instruction_nodes": 17,
+      "source_lines": 28,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42323,
+      "name": "tactical_helper_a553",
+      "instruction_nodes": 7,
+      "source_lines": 15,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42337,
+      "name": "tactical_helper_a561",
+      "instruction_nodes": 34,
+      "source_lines": 49,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42388,
+      "name": "tactical_helper_a594",
+      "instruction_nodes": 1,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42411,
+      "name": "tactical_helper_a5ab",
+      "instruction_nodes": 7,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42424,
+      "name": "tactical_helper_a5b8",
+      "instruction_nodes": 33,
+      "source_lines": 50,
+      "natural_loop_headers": [
+        42441
+      ]
+    },
+    {
+      "entry": 42501,
+      "name": "tactical_helper_a605",
+      "instruction_nodes": 1,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42502,
+      "name": "strategy_07_no_action",
+      "instruction_nodes": 3,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42508,
+      "name": "plan_two_axis_movement",
+      "instruction_nodes": 12,
+      "source_lines": 21,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42534,
+      "name": "tactical_helper_a626",
+      "instruction_nodes": 7,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42547,
+      "name": "tactical_helper_a633",
+      "instruction_nodes": 10,
+      "source_lines": 19,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42567,
+      "name": "tactical_helper_a647",
+      "instruction_nodes": 15,
+      "source_lines": 23,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42601,
+      "name": "tactical_helper_a669",
+      "instruction_nodes": 11,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42622,
+      "name": "tactical_helper_a67e",
+      "instruction_nodes": 37,
+      "source_lines": 66,
+      "natural_loop_headers": [
+        42624
+      ]
+    },
+    {
+      "entry": 42695,
+      "name": "tactical_helper_a6c7",
+      "instruction_nodes": 41,
+      "source_lines": 85,
+      "natural_loop_headers": [
+        42706
+      ]
+    },
+    {
+      "entry": 42745,
+      "name": "tactical_helper_a6f9",
+      "instruction_nodes": 3,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42751,
+      "name": "tactical_helper_a6ff",
+      "instruction_nodes": 25,
+      "source_lines": 76,
+      "natural_loop_headers": [
+        43015
+      ]
+    },
+    {
+      "entry": 42792,
+      "name": "tactical_helper_a728",
+      "instruction_nodes": 6,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42803,
+      "name": "tactical_helper_a733",
+      "instruction_nodes": 5,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42811,
+      "name": "tactical_helper_a73b",
+      "instruction_nodes": 3,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42816,
+      "name": "quote_direction_ap_cost",
+      "instruction_nodes": 11,
+      "source_lines": 20,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42839,
+      "name": "tactical_helper_a757",
+      "instruction_nodes": 58,
+      "source_lines": 78,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42871,
+      "name": "tactical_helper_a777",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43063,
+      "name": "find_orthogonal_neighbors",
+      "instruction_nodes": 8,
+      "source_lines": 17,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43079,
+      "name": "tactical_helper_a847",
+      "instruction_nodes": 17,
+      "source_lines": 23,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43121,
+      "name": "tactical_helper_a871",
+      "instruction_nodes": 24,
+      "source_lines": 68,
+      "natural_loop_headers": [
+        43123
+      ]
+    },
+    {
+      "entry": 43176,
+      "name": "propose_adjacent_attack",
+      "instruction_nodes": 20,
+      "source_lines": 47,
+      "natural_loop_headers": [
+        43191
+      ]
+    },
+    {
+      "entry": 43217,
+      "name": "tactical_helper_a8d1",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43219,
+      "name": "tactical_helper_a8d3",
+      "instruction_nodes": 8,
+      "source_lines": 17,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43237,
+      "name": "tactical_helper_a8e5",
+      "instruction_nodes": 2,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43240,
+      "name": "tactical_helper_a8e8",
+      "instruction_nodes": 41,
+      "source_lines": 130,
+      "natural_loop_headers": [
+        43242
+      ]
+    },
+    {
+      "entry": 43332,
+      "name": "opposing_side_marker",
+      "instruction_nodes": 11,
+      "source_lines": 25,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43353,
+      "name": "tactical_helper_a959",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43356,
+      "name": "choose_basic_tactic",
+      "instruction_nodes": 19,
+      "source_lines": 40,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43395,
+      "name": "tactical_helper_a983",
+      "instruction_nodes": 30,
+      "source_lines": 57,
+      "natural_loop_headers": [
+        43411
+      ]
+    },
+    {
+      "entry": 43464,
+      "name": "tactical_helper_a9c8",
+      "instruction_nodes": 4,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43471,
+      "name": "prioritize_basic_tactics",
+      "instruction_nodes": 11,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43493,
+      "name": "tactical_helper_a9e5",
+      "instruction_nodes": 14,
+      "source_lines": 31,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43523,
+      "name": "tactical_helper_aa03",
+      "instruction_nodes": 11,
+      "source_lines": 25,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43545,
+      "name": "tactical_helper_aa19",
+      "instruction_nodes": 11,
+      "source_lines": 25,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43567,
+      "name": "tactical_helper_aa2f",
+      "instruction_nodes": 13,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43594,
+      "name": "tactical_helper_aa4a",
+      "instruction_nodes": 13,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43621,
+      "name": "tactical_helper_aa65",
+      "instruction_nodes": 42,
+      "source_lines": 84,
+      "natural_loop_headers": [
+        43631
+      ]
+    },
+    {
+      "entry": 43714,
+      "name": "tactical_helper_aac2",
+      "instruction_nodes": 13,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43741,
+      "name": "tactical_helper_aadd",
+      "instruction_nodes": 10,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43761,
+      "name": "tactical_helper_aaf1",
+      "instruction_nodes": 4,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43768,
+      "name": "choose_special_tactic",
+      "instruction_nodes": 50,
+      "source_lines": 83,
+      "natural_loop_headers": [
+        43820
+      ]
+    },
+    {
+      "entry": 43873,
+      "name": "tactical_helper_ab61",
+      "instruction_nodes": 4,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43880,
+      "name": "prioritize_special_tactics",
+      "instruction_nodes": 17,
+      "source_lines": 34,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43917,
+      "name": "tactical_helper_ab8d",
+      "instruction_nodes": 13,
+      "source_lines": 27,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43944,
+      "name": "tactical_helper_aba8",
+      "instruction_nodes": 15,
+      "source_lines": 32,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43976,
+      "name": "tactical_helper_abc8",
+      "instruction_nodes": 15,
+      "source_lines": 32,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44008,
+      "name": "tactical_helper_abe8",
+      "instruction_nodes": 15,
+      "source_lines": 32,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44040,
+      "name": "tactical_helper_ac08",
+      "instruction_nodes": 18,
+      "source_lines": 38,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44079,
+      "name": "tactical_helper_ac2f",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44081,
+      "name": "scan_special_officer_whitelist",
+      "instruction_nodes": 13,
+      "source_lines": 30,
+      "natural_loop_headers": [
+        44089
+      ]
+    },
+    {
+      "entry": 44096,
+      "name": "tactical_helper_ac40",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44109,
+      "name": "tactical_helper_ac4d",
+      "instruction_nodes": 12,
+      "source_lines": 23,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44129,
+      "name": "tactical_helper_ac61",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44155,
+      "name": "check_tactic_target",
+      "instruction_nodes": 17,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44238,
+      "name": "predicate_tactics_00",
+      "instruction_nodes": 7,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44249,
+      "name": "tactical_helper_acd9",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44251,
+      "name": "predicate_tactics_01_02_03",
+      "instruction_nodes": 7,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44262,
+      "name": "tactical_helper_ace6",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44264,
+      "name": "predicate_tactics_04",
+      "instruction_nodes": 7,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44275,
+      "name": "predicate_tactics_05",
+      "instruction_nodes": 7,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44286,
+      "name": "tactical_helper_acfe",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44288,
+      "name": "predicate_tactics_06",
+      "instruction_nodes": 16,
+      "source_lines": 34,
+      "natural_loop_headers": [
+        44303
+      ]
+    },
+    {
+      "entry": 44318,
+      "name": "tactical_helper_ad1e",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44322,
+      "name": "predicate_tactics_07",
+      "instruction_nodes": 6,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44331,
+      "name": "tactical_helper_ad2b",
+      "instruction_nodes": 13,
+      "source_lines": 37,
+      "natural_loop_headers": [
+        44339
+      ]
+    },
+    {
+      "entry": 44353,
+      "name": "tactical_helper_ad41",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44357,
+      "name": "predicate_tactics_08",
+      "instruction_nodes": 15,
+      "source_lines": 29,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44385,
+      "name": "tactical_helper_ad61",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44389,
+      "name": "predicate_tactics_09",
+      "instruction_nodes": 7,
+      "source_lines": 17,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44400,
+      "name": "tactical_helper_ad70",
+      "instruction_nodes": 16,
+      "source_lines": 34,
+      "natural_loop_headers": [
+        44408
+      ]
+    },
+    {
+      "entry": 44423,
+      "name": "tactical_helper_ad87",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44434,
+      "name": "predicate_tactics_10_12",
+      "instruction_nodes": 27,
+      "source_lines": 63,
+      "natural_loop_headers": [
+        44449
+      ]
+    },
+    {
+      "entry": 44491,
+      "name": "tactical_helper_adcb",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44495,
+      "name": "predicate_tactics_11",
+      "instruction_nodes": 14,
+      "source_lines": 27,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44522,
+      "name": "tactical_helper_adea",
+      "instruction_nodes": 5,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44531,
+      "name": "tactical_helper_adf3",
+      "instruction_nodes": 6,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44538,
+      "name": "tactical_helper_adfa",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44542,
+      "name": "predicate_tactics_13",
+      "instruction_nodes": 16,
+      "source_lines": 34,
+      "natural_loop_headers": [
+        44557
+      ]
+    },
+    {
+      "entry": 44572,
+      "name": "tactical_helper_ae1c",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44576,
+      "name": "predicate_tactics_14",
+      "instruction_nodes": 27,
+      "source_lines": 63,
+      "natural_loop_headers": [
+        44591
+      ]
+    },
+    {
+      "entry": 44633,
+      "name": "tactical_helper_ae59",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44637,
+      "name": "predicate_tactics_15",
+      "instruction_nodes": 7,
+      "source_lines": 17,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44648,
+      "name": "tactical_helper_ae68",
+      "instruction_nodes": 13,
+      "source_lines": 23,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44672,
+      "name": "tactical_helper_ae80",
+      "instruction_nodes": 11,
+      "source_lines": 22,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44687,
+      "name": "tactical_helper_ae8f",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44691,
+      "name": "rank_candidate_troops",
+      "instruction_nodes": 56,
+      "source_lines": 111,
+      "natural_loop_headers": [
+        44695,
+        44730,
+        44732
+      ]
+    },
+    {
+      "entry": 44813,
+      "name": "propose_retreat",
+      "instruction_nodes": 8,
+      "source_lines": 17,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44825,
+      "name": "tactical_helper_af19",
+      "instruction_nodes": 40,
+      "source_lines": 66,
+      "natural_loop_headers": [
+        44956
+      ]
+    },
+    {
+      "entry": 44862,
+      "name": "tactical_helper_af3e",
+      "instruction_nodes": 23,
+      "source_lines": 32,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44913,
+      "name": "tactical_helper_af71",
+      "instruction_nodes": 11,
+      "source_lines": 17,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44990,
+      "name": "tactical_helper_afbe",
+      "instruction_nodes": 10,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45010,
+      "name": "tactical_helper_afd2",
+      "instruction_nodes": 2,
+      "source_lines": 8,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45012,
+      "name": "tactical_helper_afd4",
+      "instruction_nodes": 15,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45045,
+      "name": "tactical_helper_aff5",
+      "instruction_nodes": 1,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45046,
+      "name": "choose_retreat_city",
+      "instruction_nodes": 51,
+      "source_lines": 118,
+      "natural_loop_headers": [
+        45085,
+        45125
+      ]
+    },
+    {
+      "entry": 45159,
+      "name": "sum_army_troops",
+      "instruction_nodes": 36,
+      "source_lines": 58,
+      "natural_loop_headers": [
+        45173
+      ]
+    },
+    {
+      "entry": 45240,
+      "name": "tactical_helper_b0b8",
+      "instruction_nodes": 24,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45307,
+      "name": "officer_record_pointer",
+      "instruction_nodes": 20,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46185,
+      "name": "tactical_helper_b469",
+      "instruction_nodes": 19,
+      "source_lines": 25,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46225,
+      "name": "tactical_helper_b491",
+      "instruction_nodes": 23,
+      "source_lines": 29,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46274,
+      "name": "tactical_helper_b4c2",
+      "instruction_nodes": 8,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46305,
+      "name": "initial_officer_record_pointer",
+      "instruction_nodes": 25,
+      "source_lines": 32,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46390,
+      "name": "divide_u24_by_u16",
+      "instruction_nodes": 30,
+      "source_lines": 48,
+      "natural_loop_headers": [
+        46403
+      ]
+    },
+    {
+      "entry": 46469,
+      "name": "multiply_u24_by_u8",
+      "instruction_nodes": 30,
+      "source_lines": 48,
+      "natural_loop_headers": [
+        46491
+      ]
+    },
+    {
+      "entry": 46549,
+      "name": "draw_ai_rng_byte",
+      "instruction_nodes": 6,
+      "source_lines": 12,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46821,
+      "name": "normalized_terrain_at_scratch_xy",
+      "instruction_nodes": 5,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46830,
+      "name": "tactical_helper_b6ee",
+      "instruction_nodes": 1,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46831,
+      "name": "tactical_helper_b6ef",
+      "instruction_nodes": 6,
+      "source_lines": 15,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46842,
+      "name": "tactical_helper_b6fa",
+      "instruction_nodes": 7,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46853,
+      "name": "read_terrain_chunk",
+      "instruction_nodes": 36,
+      "source_lines": 46,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47411,
+      "name": "consume_opposite_ambush_cache",
+      "instruction_nodes": 7,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47425,
+      "name": "tactical_helper_b941",
+      "instruction_nodes": 19,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47469,
+      "name": "tactical_helper_b96d",
+      "instruction_nodes": 7,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47482,
+      "name": "tactical_helper_b97a",
+      "instruction_nodes": 9,
+      "source_lines": 15,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47501,
+      "name": "tactical_helper_b98d",
+      "instruction_nodes": 33,
+      "source_lines": 43,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47580,
+      "name": "tactical_helper_b9dc",
+      "instruction_nodes": 69,
+      "source_lines": 94,
+      "natural_loop_headers": [
+        47586,
+        47623
+      ]
+    },
+    {
+      "entry": 47750,
+      "name": "tactical_helper_ba86",
+      "instruction_nodes": 17,
+      "source_lines": 22,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47789,
+      "name": "tactical_helper_baad",
+      "instruction_nodes": 3,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    }
+  ],
+  "structured_ifs": 350,
+  "natural_loops": 34,
+  "source_generation": "RawROM CFG only; oldphase7 program.json not read"
+}

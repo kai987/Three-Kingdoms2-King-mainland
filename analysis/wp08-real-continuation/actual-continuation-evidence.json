@@ -1,0 +1,184 @@
+{
+  "routes": [
+    {
+      "parent": "native122-clear80",
+      "stop": {
+        "category": "declared_continuation_boundary",
+        "PC": 63681,
+        "SP": 249
+      },
+      "calls": [
+        {
+          "caller": 63669,
+          "target": 61011,
+          "actual_return": 63672,
+          "SP": 249,
+          "normal": true
+        },
+        {
+          "caller": 63672,
+          "target": 61958,
+          "actual_return": 63675,
+          "SP": 249,
+          "normal": true
+        },
+        {
+          "caller": 63675,
+          "target": 64267,
+          "actual_return": 63678,
+          "SP": 249,
+          "normal": true
+        },
+        {
+          "caller": 64267,
+          "target": 60151,
+          "actual_return": 64270,
+          "SP": 247,
+          "normal": true
+        },
+        {
+          "caller": 63678,
+          "target": 60519,
+          "actual_return": 63681,
+          "SP": 249,
+          "normal": true
+        }
+      ],
+      "instructions": 250,
+      "status_reads": [
+        {
+          "PC": 63493,
+          "value": 0
+        },
+        {
+          "PC": 59158,
+          "value": 0
+        },
+        {
+          "PC": 64290,
+          "value": 128
+        }
+      ]
+    },
+    {
+      "parent": "native122-bit6-wait-missing-resume",
+      "stop": {
+        "category": "declared_continuation_boundary",
+        "PC": 63681,
+        "SP": 249
+      },
+      "calls": [
+        {
+          "caller": 63669,
+          "target": 61011,
+          "actual_return": 63672,
+          "SP": 249,
+          "normal": true
+        },
+        {
+          "caller": 63672,
+          "target": 61958,
+          "actual_return": 63675,
+          "SP": 249,
+          "normal": true
+        },
+        {
+          "caller": 63675,
+          "target": 64267,
+          "actual_return": 63678,
+          "SP": 249,
+          "normal": true
+        },
+        {
+          "caller": 64267,
+          "target": 60151,
+          "actual_return": 64270,
+          "SP": 247,
+          "normal": true
+        },
+        {
+          "caller": 63678,
+          "target": 60519,
+          "actual_return": 63681,
+          "SP": 249,
+          "normal": true
+        }
+      ],
+      "instructions": 252,
+      "status_reads": [
+        {
+          "PC": 63493,
+          "value": 128
+        },
+        {
+          "PC": 59158,
+          "value": 64
+        },
+        {
+          "PC": 64290,
+          "value": 64
+        },
+        {
+          "PC": 64290,
+          "value": 128
+        }
+      ]
+    },
+    {
+      "parent": "controlled-SP00-nonlocal",
+      "stop": {
+        "category": "nonlocal_return",
+        "PC": 4033,
+        "SP": 0,
+        "caller_pc": 63678,
+        "target": 60519,
+        "expected_PC": 63681,
+        "expected_SP": 0
+      },
+      "calls": [
+        {
+          "caller": 63672,
+          "target": 61958,
+          "actual_return": 63675,
+          "SP": 0,
+          "normal": true
+        },
+        {
+          "caller": 63675,
+          "target": 64267,
+          "actual_return": 63678,
+          "SP": 0,
+          "normal": true
+        },
+        {
+          "caller": 64267,
+          "target": 60151,
+          "actual_return": 64270,
+          "SP": 254,
+          "normal": true
+        },
+        {
+          "caller": 63678,
+          "target": 60519,
+          "actual_return": 4033,
+          "SP": 0,
+          "normal": false
+        }
+      ],
+      "instructions": 739,
+      "status_reads": [
+        {
+          "PC": 64290,
+          "value": 0
+        }
+      ]
+    }
+  ],
+  "actual_nonlocal_counterexample": true,
+  "controlled_SP00_is_not_Native": true,
+  "positive_grade": "Native122 full software snapshot -> declared software NMI -> original prologue -> scene2 -> real callee returns; raw device fixture",
+  "old_same64B_queue_bridge_closed": false,
+  "old_controlled_PC_reentry_replaced": false,
+  "NMI_RTI_completed": false,
+  "natural_hardware_NMI_credit": 0
+}

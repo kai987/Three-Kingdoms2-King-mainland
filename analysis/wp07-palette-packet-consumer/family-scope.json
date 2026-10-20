@@ -1,0 +1,206 @@
+{
+  "schema": "WP07-palette-packet-software-device-contract-v1",
+  "ROM_SHA256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ancestry": {
+    "case": "ancestor-controlled-16-producer-sequence/step-01",
+    "state": {
+      "registers": {
+        "pc": 41076,
+        "a": 59,
+        "x": 0,
+        "y": 59,
+        "p": 48,
+        "sp": 0
+      },
+      "banks": [
+        16,
+        27,
+        28,
+        31
+      ],
+      "ports": {
+        "57344": 48,
+        "59392": 251,
+        "61440": 60
+      },
+      "RAM_sha256": "5a5a64dc9e4fe6cc520a992430f9a9e16185e7e3123dc5748c2ecc576c9a94b9",
+      "SRAM_sha256": "4c26b1c630dfbc3fc6f2f041bac349555bafb9efc80cefa2b5300f818c58c155"
+    },
+    "offset": 0,
+    "bytes": 10240,
+    "memory_sha256": "28c408c54d3228dc2c3ab0e5a8a417f06deae0b6b34da01db6aa2a602bf27e0a",
+    "CPU_file": {
+      "path": "analysis/wp03-ee07-phase1-producer/run-01/CPU-final-memory.bin",
+      "bytes": 256000,
+      "sha256": "ec6dbabeb16e7d0e0af7c72190467b6d690bca5ed064aac1f19b9c70b2151993"
+    },
+    "Source_file": {
+      "path": "analysis/wp03-ee07-phase1-producer/run-01/Source-final-memory.bin",
+      "bytes": 256000,
+      "sha256": "ec6dbabeb16e7d0e0af7c72190467b6d690bca5ed064aac1f19b9c70b2151993"
+    },
+    "PPU_state_in_old_capture": false
+  },
+  "original_call": {
+    "bank": 31,
+    "PC": 63669,
+    "target": 61011,
+    "raw_return_word": 63671,
+    "return_bank": 31,
+    "return_PC": 63672,
+    "raw_hex": "20 53 EE"
+  },
+  "known_direct_callers": [
+    {
+      "physical_bank": 31,
+      "cpu": 63669,
+      "rom_offset": 260293,
+      "op": "JSR",
+      "mode": "ab",
+      "size": 3,
+      "operand": 61011,
+      "raw_hex": "20 53 EE",
+      "sources": [
+        "analysis/phase6/global/program.json"
+      ]
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 63742,
+      "rom_offset": 260366,
+      "op": "JSR",
+      "mode": "ab",
+      "size": 3,
+      "operand": 61011,
+      "raw_hex": "20 53 EE",
+      "sources": [
+        "analysis/phase6/global/program.json"
+      ]
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 63850,
+      "rom_offset": 260474,
+      "op": "JSR",
+      "mode": "ab",
+      "size": 3,
+      "operand": 61011,
+      "raw_hex": "20 53 EE",
+      "sources": [
+        "analysis/phase6/global/program.json"
+      ]
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 63904,
+      "rom_offset": 260528,
+      "op": "JSR",
+      "mode": "ab",
+      "size": 3,
+      "operand": 61011,
+      "raw_hex": "20 53 EE",
+      "sources": [
+        "analysis/phase6/global/program.json"
+      ]
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 63972,
+      "rom_offset": 260596,
+      "op": "JSR",
+      "mode": "ab",
+      "size": 3,
+      "operand": 61011,
+      "raw_hex": "20 53 EE",
+      "sources": [
+        "analysis/phase6/global/program.json"
+      ]
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 64019,
+      "rom_offset": 260643,
+      "op": "JSR",
+      "mode": "ab",
+      "size": 3,
+      "operand": 61011,
+      "raw_hex": "20 53 EE",
+      "sources": [
+        "analysis/phase6/global/program.json"
+      ]
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 64083,
+      "rom_offset": 260707,
+      "op": "JSR",
+      "mode": "ab",
+      "size": 3,
+      "operand": 61011,
+      "raw_hex": "20 53 EE",
+      "sources": [
+        "analysis/phase6/global/program.json"
+      ]
+    }
+  ],
+  "controlled_entry": "Per call only PC is changed: seed A074->F8B5 then prior returnF8B8->F8B5. Other REG/SP/RAM/PRG/ports inherited. No host pushes or synthetic outer frame. No NMI hardware entry.",
+  "Source_entry": "consumer_adapter.current_call reuses BattleNMIServices.call(F8B5,EE53); SceneCoordinator owns tail29:A006 via exact TextSceneServices; program adds no RTS.",
+  "palette_path": "7D3A ->EE56/EE72 ->E70E;E713 control;E716 status;E71B clears7D;32 palette data writes;E748 RTS ->F8B8. 7E05 unchanged.",
+  "packet_path": "Second actual JSR;7D0/7E05 ->EEBE/EEC3 true clearbit2 ->F2373D ->EECB tailA006/A11B ->A12D status ->2400/64data/FF ->A152 RTS consuming same F8B7 ->F8B8.",
+  "final_mapping": "[16,29,30,31],rawE1/E2/E3=30/3D/3E; retain7E01. No EE07 restore in this consumer.",
+  "palette_stack_alias": "SP00 actual JSR writes0100=F8,01FF=B7; palette expectation comes from live post-JSR0100..011F, not frozen ancestorA0.",
+  "status_polling": false,
+  "status_bit_values_control_readiness": false,
+  "device_contract": {
+    "path": "analysis/wp07-palette-packet-consumer/consumer_adapter.py",
+    "bytes": 5049,
+    "sha256": "7336fff3afd69964161cd1798061bd52cce470b8dd1147c92944e21ed883800c"
+  },
+  "packet_typed_accesses": [
+    {
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA132:rom03A142",
+      "locator": "/accesses/1405",
+      "prior_classification": "proved_disjoint_auxiliary_address_domain"
+    },
+    {
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA13A:rom03A14A",
+      "locator": "/accesses/1406",
+      "prior_classification": "proved_disjoint_auxiliary_address_domain"
+    },
+    {
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA140:rom03A150",
+      "locator": "/accesses/1407",
+      "prior_classification": "proved_disjoint_auxiliary_address_domain"
+    },
+    {
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA146:rom03A156",
+      "locator": "/accesses/1408",
+      "prior_classification": "proved_disjoint_auxiliary_address_domain"
+    }
+  ],
+  "typed_classification_changes": 0,
+  "raw_classification_changes": 0,
+  "official_city_names": {
+    "1": null,
+    "28": null,
+    "29": null,
+    "30": null,
+    "31": null
+  },
+  "counts": {
+    "total": 1526,
+    "conditional": 1203,
+    "possible": 80,
+    "unknown": 243,
+    "remaining": 323,
+    "raw345": 345,
+    "raw104": 104,
+    "raw13": 13,
+    "raw228": 228
+  },
+  "known_EE07": 155,
+  "covered_EE07_combined": 2,
+  "EE07_outside_packages": 153,
+  "global_remaining_services": null,
+  "scope_limit": "Two calls and their declared missing-input resumes only. No next F206/FB0B/NMI/IRQ/main iteration, Native, rendering or oldouter return."
+}

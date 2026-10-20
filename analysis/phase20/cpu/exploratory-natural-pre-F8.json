@@ -1,0 +1,1395 @@
+{
+  "schema": "phase20-F8-actual-context-gate-trace-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rows": [
+    {
+      "native_state": "analysis/phase20/runtime/exploratory-natural-accept-01/F8-previous-actual-frame.state",
+      "native_sha256": "843fabab626e78276181f4295d0dfd1734d6741955e92456b63fa8b739363333",
+      "native_registers": {
+        "a": 7,
+        "x": 4,
+        "y": 0,
+        "p": 37,
+        "sp": 251,
+        "pc": 53407
+      },
+      "actual_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "prepared_numeric_bytes": [],
+      "initial": {
+        "ruler": 4,
+        "phase": 1,
+        "budget": 30,
+        "request": 0,
+        "weights": [
+          8,
+          6,
+          12
+        ],
+        "rng_cursors": {
+          "50": 49,
+          "52": 84,
+          "54": 187,
+          "55": 183
+        },
+        "scratch": {
+          "20": 64,
+          "21": 98,
+          "22": 220,
+          "23": 8,
+          "24": 19,
+          "25": 111,
+          "26": 0,
+          "27": 185,
+          "28": 27,
+          "29": 71,
+          "2A": 18,
+          "2B": 1,
+          "2C": 4,
+          "2D": 0,
+          "2E": 0,
+          "2F": 4,
+          "30": 28,
+          "31": 28,
+          "32": 26,
+          "33": 0,
+          "34": 0,
+          "35": 0,
+          "36": 7,
+          "37": 4,
+          "38": 1,
+          "39": 0,
+          "3A": 17,
+          "3B": 0,
+          "3C": 27,
+          "3D": 38,
+          "3E": 99,
+          "3F": 0,
+          "40": 222,
+          "41": 0,
+          "42": 38,
+          "43": 0,
+          "44": 0,
+          "45": 2
+        },
+        "quote": 65418
+      },
+      "campaign": [
+        {
+          "ruler": 0,
+          "leader": 173,
+          "controller": 3,
+          "diplomacy": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cities": [
+            {
+              "city": 8,
+              "gold": 8838,
+              "grain": 9999,
+              "roster": [
+                22,
+                211,
+                23,
+                37,
+                186,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 12,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                173,
+                219,
+                218,
+                106,
+                143,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "ruler": 1,
+          "leader": 8,
+          "controller": 0,
+          "diplomacy": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cities": [
+            {
+              "city": 0,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                77,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 1,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                7,
+                27,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 3,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                134,
+                117,
+                9,
+                194,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 4,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                8,
+                51,
+                191,
+                167,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "ruler": 2,
+          "leader": 131,
+          "controller": 3,
+          "diplomacy": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cities": [
+            {
+              "city": 11,
+              "gold": 9099,
+              "grain": 9999,
+              "roster": [
+                131,
+                5,
+                30,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 14,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                130,
+                29,
+                126,
+                26,
+                216,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "ruler": 3,
+          "leader": 138,
+          "controller": 3,
+          "diplomacy": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cities": [
+            {
+              "city": 15,
+              "gold": 9923,
+              "grain": 9999,
+              "roster": [
+                138,
+                89,
+                96,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 16,
+              "gold": 9949,
+              "grain": 9999,
+              "roster": [
+                163,
+                67,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 17,
+              "gold": 9986,
+              "grain": 9999,
+              "roster": [
+                158,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 20,
+              "gold": 9943,
+              "grain": 9969,
+              "roster": [
+                45,
+                141,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "ruler": 4,
+          "leader": 222,
+          "controller": 3,
+          "diplomacy": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cities": [
+            {
+              "city": 2,
+              "gold": 9929,
+              "grain": 9999,
+              "roster": [
+                222,
+                38,
+                153,
+                109,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "ruler": 5,
+          "leader": 220,
+          "controller": 3,
+          "diplomacy": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cities": [
+            {
+              "city": 25,
+              "gold": 8309,
+              "grain": 9999,
+              "roster": [
+                151,
+                63,
+                81,
+                10,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 26,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                70,
+                16,
+                209,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 27,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                66,
+                150,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 28,
+              "gold": 9999,
+              "grain": 9999,
+              "roster": [
+                220,
+                201,
+                196,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "ruler": 6,
+          "leader": 182,
+          "controller": 3,
+          "diplomacy": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cities": [
+            {
+              "city": 6,
+              "gold": 9912,
+              "grain": 9963,
+              "roster": [
+                182,
+                44,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 7,
+              "gold": 9967,
+              "grain": 9999,
+              "roster": [
+                162,
+                146,
+                148,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            },
+            {
+              "city": 9,
+              "gold": 9987,
+              "grain": 9999,
+              "roster": [
+                72,
+                120,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step": 545,
+          "physical_bank": 10,
+          "pc": 46776,
+          "label": "own_city_count_return",
+          "registers": {
+            "a": 1,
+            "x": 4,
+            "y": 0,
+            "p": 37,
+            "sp": 253,
+            "pc": 46776
+          },
+          "fields": {
+            "ruler": 4,
+            "phase": 1,
+            "budget": 30,
+            "request": 0,
+            "weights": [
+              8,
+              6,
+              12
+            ],
+            "rng_cursors": {
+              "50": 49,
+              "52": 84,
+              "54": 187,
+              "55": 183
+            },
+            "scratch": {
+              "20": 160,
+              "21": 99,
+              "22": 220,
+              "23": 8,
+              "24": 19,
+              "25": 111,
+              "26": 0,
+              "27": 185,
+              "28": 27,
+              "29": 71,
+              "2A": 30,
+              "2B": 1,
+              "2C": 4,
+              "2D": 0,
+              "2E": 0,
+              "2F": 4,
+              "30": 28,
+              "31": 28,
+              "32": 26,
+              "33": 0,
+              "34": 0,
+              "35": 0,
+              "36": 7,
+              "37": 4,
+              "38": 1,
+              "39": 0,
+              "3A": 17,
+              "3B": 0,
+              "3C": 27,
+              "3D": 38,
+              "3E": 99,
+              "3F": 0,
+              "40": 222,
+              "41": 0,
+              "42": 38,
+              "43": 0,
+              "44": 0,
+              "45": 2
+            },
+            "quote": 65418
+          },
+          "ROM_offset": 87752
+        },
+        {
+          "step": 549,
+          "physical_bank": 10,
+          "pc": 46784,
+          "label": "strict_city_gap_branch",
+          "registers": {
+            "a": 3,
+            "x": 4,
+            "y": 0,
+            "p": 164,
+            "sp": 253,
+            "pc": 46784
+          },
+          "fields": {
+            "ruler": 4,
+            "phase": 1,
+            "budget": 30,
+            "request": 0,
+            "weights": [
+              8,
+              6,
+              12
+            ],
+            "rng_cursors": {
+              "50": 49,
+              "52": 84,
+              "54": 187,
+              "55": 183
+            },
+            "scratch": {
+              "20": 160,
+              "21": 99,
+              "22": 220,
+              "23": 8,
+              "24": 19,
+              "25": 111,
+              "26": 0,
+              "27": 185,
+              "28": 27,
+              "29": 71,
+              "2A": 30,
+              "2B": 1,
+              "2C": 4,
+              "2D": 0,
+              "2E": 0,
+              "2F": 4,
+              "30": 28,
+              "31": 28,
+              "32": 26,
+              "33": 0,
+              "34": 0,
+              "35": 0,
+              "36": 7,
+              "37": 4,
+              "38": 1,
+              "39": 0,
+              "3A": 17,
+              "3B": 0,
+              "3C": 27,
+              "3D": 38,
+              "3E": 99,
+              "3F": 0,
+              "40": 222,
+              "41": 0,
+              "42": 38,
+              "43": 0,
+              "44": 0,
+              "45": 2
+            },
+            "quote": 65418
+          },
+          "ROM_offset": 87760
+        },
+        {
+          "step": 550,
+          "physical_bank": 10,
+          "pc": 46789,
+          "label": "quote_start",
+          "registers": {
+            "a": 3,
+            "x": 4,
+            "y": 0,
+            "p": 164,
+            "sp": 253,
+            "pc": 46789
+          },
+          "fields": {
+            "ruler": 4,
+            "phase": 1,
+            "budget": 30,
+            "request": 0,
+            "weights": [
+              8,
+              6,
+              12
+            ],
+            "rng_cursors": {
+              "50": 49,
+              "52": 84,
+              "54": 187,
+              "55": 183
+            },
+            "scratch": {
+              "20": 160,
+              "21": 99,
+              "22": 220,
+              "23": 8,
+              "24": 19,
+              "25": 111,
+              "26": 0,
+              "27": 185,
+              "28": 27,
+              "29": 71,
+              "2A": 30,
+              "2B": 1,
+              "2C": 4,
+              "2D": 0,
+              "2E": 0,
+              "2F": 4,
+              "30": 28,
+              "31": 28,
+              "32": 26,
+              "33": 0,
+              "34": 0,
+              "35": 0,
+              "36": 7,
+              "37": 4,
+              "38": 1,
+              "39": 0,
+              "3A": 17,
+              "3B": 0,
+              "3C": 27,
+              "3D": 38,
+              "3E": 99,
+              "3F": 0,
+              "40": 222,
+              "41": 0,
+              "42": 38,
+              "43": 0,
+              "44": 0,
+              "45": 2
+            },
+            "quote": 65418
+          },
+          "ROM_offset": 87765
+        },
+        {
+          "step": 910,
+          "physical_bank": 10,
+          "pc": 46862,
+          "label": "currency_random_return",
+          "registers": {
+            "a": 77,
+            "x": 4,
+            "y": 255,
+            "p": 164,
+            "sp": 253,
+            "pc": 46862
+          },
+          "fields": {
+            "ruler": 4,
+            "phase": 1,
+            "budget": 30,
+            "request": 0,
+            "weights": [
+              8,
+              6,
+              12
+            ],
+            "rng_cursors": {
+              "50": 49,
+              "52": 86,
+              "54": 187,
+              "55": 183
+            },
+            "scratch": {
+              "20": 0,
+              "21": 19,
+              "22": 0,
+              "23": 10,
+              "24": 0,
+              "25": 0,
+              "26": 0,
+              "27": 0,
+              "28": 27,
+              "29": 71,
+              "2A": 120,
+              "2B": 0,
+              "2C": 4,
+              "2D": 0,
+              "2E": 0,
+              "2F": 4,
+              "30": 28,
+              "31": 28,
+              "32": 26,
+              "33": 0,
+              "34": 0,
+              "35": 0,
+              "36": 7,
+              "37": 4,
+              "38": 1,
+              "39": 0,
+              "3A": 17,
+              "3B": 0,
+              "3C": 27,
+              "3D": 38,
+              "3E": 99,
+              "3F": 0,
+              "40": 222,
+              "41": 0,
+              "42": 38,
+              "43": 0,
+              "44": 0,
+              "45": 2
+            },
+            "quote": 76
+          },
+          "ROM_offset": 87838
+        },
+        {
+          "step": 1250,
+          "physical_bank": 10,
+          "pc": 46921,
+          "label": "affordability_return",
+          "registers": {
+            "a": 38,
+            "x": 4,
+            "y": 5,
+            "p": 37,
+            "sp": 253,
+            "pc": 46921
+          },
+          "fields": {
+            "ruler": 4,
+            "phase": 1,
+            "budget": 30,
+            "request": 0,
+            "weights": [
+              8,
+              6,
+              12
+            ],
+            "rng_cursors": {
+              "50": 49,
+              "52": 86,
+              "54": 187,
+              "55": 183
+            },
+            "scratch": {
+              "20": 64,
+              "21": 96,
+              "22": 0,
+              "23": 0,
+              "24": 39,
+              "25": 111,
+              "26": 114,
+              "27": 0,
+              "28": 0,
+              "29": 0,
+              "2A": 222,
+              "2B": 2,
+              "2C": 4,
+              "2D": 0,
+              "2E": 0,
+              "2F": 4,
+              "30": 28,
+              "31": 28,
+              "32": 26,
+              "33": 0,
+              "34": 0,
+              "35": 0,
+              "36": 7,
+              "37": 4,
+              "38": 1,
+              "39": 1,
+              "3A": 114,
+              "3B": 0,
+              "3C": 27,
+              "3D": 38,
+              "3E": 99,
+              "3F": 0,
+              "40": 222,
+              "41": 0,
+              "42": 38,
+              "43": 0,
+              "44": 0,
+              "45": 2
+            },
+            "quote": 114
+          },
+          "ROM_offset": 87897
+        },
+        {
+          "step": 1264,
+          "physical_bank": 10,
+          "pc": 46938,
+          "label": "target_controller_branch",
+          "registers": {
+            "a": 0,
+            "x": 4,
+            "y": 3,
+            "p": 164,
+            "sp": 253,
+            "pc": 46938
+          },
+          "fields": {
+            "ruler": 4,
+            "phase": 1,
+            "budget": 30,
+            "request": 0,
+            "weights": [
+              8,
+              6,
+              12
+            ],
+            "rng_cursors": {
+              "50": 49,
+              "52": 86,
+              "54": 187,
+              "55": 183
+            },
+            "scratch": {
+              "20": 64,
+              "21": 96,
+              "22": 0,
+              "23": 0,
+              "24": 15,
+              "25": 111,
+              "26": 114,
+              "27": 0,
+              "28": 0,
+              "29": 0,
+              "2A": 222,
+              "2B": 2,
+              "2C": 4,
+              "2D": 0,
+              "2E": 0,
+              "2F": 4,
+              "30": 28,
+              "31": 28,
+              "32": 26,
+              "33": 0,
+              "34": 0,
+              "35": 0,
+              "36": 7,
+              "37": 4,
+              "38": 1,
+              "39": 1,
+              "3A": 114,
+              "3B": 0,
+              "3C": 27,
+              "3D": 38,
+              "3E": 99,
+              "3F": 0,
+              "40": 222,
+              "41": 0,
+              "42": 38,
+              "43": 0,
+              "44": 0,
+              "45": 2
+            },
+            "quote": 114
+          },
+          "ROM_offset": 87914
+        },
+        {
+          "step": 1295,
+          "physical_bank": 10,
+          "pc": 46984,
+          "label": "F8_store",
+          "registers": {
+            "a": 248,
+            "x": 4,
+            "y": 3,
+            "p": 164,
+            "sp": 253,
+            "pc": 46984
+          },
+          "fields": {
+            "ruler": 4,
+            "phase": 1,
+            "budget": 30,
+            "request": 0,
+            "weights": [
+              8,
+              6,
+              12
+            ],
+            "rng_cursors": {
+              "50": 49,
+              "52": 86,
+              "54": 187,
+              "55": 183
+            },
+            "scratch": {
+              "20": 64,
+              "21": 96,
+              "22": 0,
+              "23": 0,
+              "24": 15,
+              "25": 111,
+              "26": 114,
+              "27": 0,
+              "28": 0,
+              "29": 0,
+              "2A": 222,
+              "2B": 2,
+              "2C": 4,
+              "2D": 0,
+              "2E": 0,
+              "2F": 4,
+              "30": 28,
+              "31": 28,
+              "32": 26,
+              "33": 0,
+              "34": 0,
+              "35": 0,
+              "36": 7,
+              "37": 4,
+              "38": 1,
+              "39": 1,
+              "3A": 114,
+              "3B": 0,
+              "3C": 27,
+              "3D": 38,
+              "3E": 99,
+              "3F": 0,
+              "40": 222,
+              "41": 8,
+              "42": 38,
+              "43": 0,
+              "44": 0,
+              "45": 2
+            },
+            "quote": 114
+          },
+          "ROM_offset": 87960
+        },
+        {
+          "step": 1296,
+          "physical_bank": 10,
+          "pc": 46987,
+          "label": "F8_reply_wait",
+          "registers": {
+            "a": 248,
+            "x": 4,
+            "y": 3,
+            "p": 164,
+            "sp": 253,
+            "pc": 46987
+          },
+          "fields": {
+            "ruler": 4,
+            "phase": 1,
+            "budget": 30,
+            "request": 248,
+            "weights": [
+              8,
+              6,
+              12
+            ],
+            "rng_cursors": {
+              "50": 49,
+              "52": 86,
+              "54": 187,
+              "55": 183
+            },
+            "scratch": {
+              "20": 64,
+              "21": 96,
+              "22": 0,
+              "23": 0,
+              "24": 15,
+              "25": 111,
+              "26": 114,
+              "27": 0,
+              "28": 0,
+              "29": 0,
+              "2A": 222,
+              "2B": 2,
+              "2C": 4,
+              "2D": 0,
+              "2E": 0,
+              "2F": 4,
+              "30": 28,
+              "31": 28,
+              "32": 26,
+              "33": 0,
+              "34": 0,
+              "35": 0,
+              "36": 7,
+              "37": 4,
+              "38": 1,
+              "39": 1,
+              "3A": 114,
+              "3B": 0,
+              "3C": 27,
+              "3D": 38,
+              "3E": 99,
+              "3F": 0,
+              "40": 222,
+              "41": 8,
+              "42": 38,
+              "43": 0,
+              "44": 0,
+              "45": 2
+            },
+            "quote": 114
+          },
+          "ROM_offset": 87963
+        }
+      ],
+      "selection_summary": {
+        "first_non_F8_branch": null,
+        "reason": "No deciding selection boundary was visited within this prefix"
+      },
+      "rng_writes": [
+        {
+          "step": 895,
+          "writer_pc": 59539,
+          "cursor_address": 82,
+          "before": 84,
+          "after": 85
+        },
+        {
+          "step": 904,
+          "writer_pc": 59539,
+          "cursor_address": 82,
+          "before": 85,
+          "after": 86
+        }
+      ],
+      "stop": "genuine_software_request_boundary",
+      "original_instructions": 1296,
+      "final_registers": {
+        "a": 248,
+        "x": 4,
+        "y": 3,
+        "p": 164,
+        "sp": 253,
+        "pc": 46987
+      },
+      "final": {
+        "ruler": 4,
+        "phase": 1,
+        "budget": 30,
+        "request": 248,
+        "weights": [
+          8,
+          6,
+          12
+        ],
+        "rng_cursors": {
+          "50": 49,
+          "52": 86,
+          "54": 187,
+          "55": 183
+        },
+        "scratch": {
+          "20": 64,
+          "21": 96,
+          "22": 0,
+          "23": 0,
+          "24": 15,
+          "25": 111,
+          "26": 114,
+          "27": 0,
+          "28": 0,
+          "29": 0,
+          "2A": 222,
+          "2B": 2,
+          "2C": 4,
+          "2D": 0,
+          "2E": 0,
+          "2F": 4,
+          "30": 28,
+          "31": 28,
+          "32": 26,
+          "33": 0,
+          "34": 0,
+          "35": 0,
+          "36": 7,
+          "37": 4,
+          "38": 1,
+          "39": 1,
+          "3A": 114,
+          "3B": 0,
+          "3C": 27,
+          "3D": 38,
+          "3E": 99,
+          "3F": 0,
+          "40": 222,
+          "41": 8,
+          "42": 38,
+          "43": 0,
+          "44": 0,
+          "45": 2
+        },
+        "quote": 114
+      },
+      "original_wait_cycle_entire_machine_unchanged": null,
+      "visited_instruction_count": 261,
+      "Native_internal_CPU_trace": false,
+      "new_NMI_IRQ_arrivals": 0,
+      "later_Native_frame_parity": {
+        "native_state": "analysis/phase20/runtime/exploratory-natural-accept-01/F8-request-actually-produced.state",
+        "native_state_sha256": "e6dd709b559d4ac20e927fac0aa669c3b25aec40543c40bc630d89d5dce9dd11",
+        "SRAM_bytes_compared": 8192,
+        "SRAM_difference_count": 0,
+        "SRAM_differences": [],
+        "RAM_difference_count": 32,
+        "RAM_differences": [
+          {
+            "address": 80,
+            "CPU_prefix": 49,
+            "Native_frame_end": 50
+          },
+          {
+            "address": 84,
+            "CPU_prefix": 187,
+            "Native_frame_end": 188
+          },
+          {
+            "address": 85,
+            "CPU_prefix": 183,
+            "Native_frame_end": 184
+          },
+          {
+            "address": 94,
+            "CPU_prefix": 43,
+            "Native_frame_end": 44
+          },
+          {
+            "address": 483,
+            "CPU_prefix": 76,
+            "Native_frame_end": 82
+          },
+          {
+            "address": 484,
+            "CPU_prefix": 170,
+            "Native_frame_end": 171
+          },
+          {
+            "address": 485,
+            "CPU_prefix": 1,
+            "Native_frame_end": 76
+          },
+          {
+            "address": 486,
+            "CPU_prefix": 222,
+            "Native_frame_end": 170
+          },
+          {
+            "address": 487,
+            "CPU_prefix": 0,
+            "Native_frame_end": 1
+          },
+          {
+            "address": 488,
+            "CPU_prefix": 57,
+            "Native_frame_end": 222
+          },
+          {
+            "address": 489,
+            "CPU_prefix": 81,
+            "Native_frame_end": 0
+          },
+          {
+            "address": 490,
+            "CPU_prefix": 238,
+            "Native_frame_end": 57
+          },
+          {
+            "address": 491,
+            "CPU_prefix": 57,
+            "Native_frame_end": 81
+          },
+          {
+            "address": 492,
+            "CPU_prefix": 59,
+            "Native_frame_end": 238
+          },
+          {
+            "address": 493,
+            "CPU_prefix": 0,
+            "Native_frame_end": 57
+          },
+          {
+            "address": 494,
+            "CPU_prefix": 233,
+            "Native_frame_end": 59
+          },
+          {
+            "address": 495,
+            "CPU_prefix": 160,
+            "Native_frame_end": 0
+          },
+          {
+            "address": 496,
+            "CPU_prefix": 40,
+            "Native_frame_end": 233
+          },
+          {
+            "address": 497,
+            "CPU_prefix": 251,
+            "Native_frame_end": 160
+          },
+          {
+            "address": 498,
+            "CPU_prefix": 250,
+            "Native_frame_end": 42
+          },
+          {
+            "address": 499,
+            "CPU_prefix": 248,
+            "Native_frame_end": 251
+          },
+          {
+            "address": 500,
+            "CPU_prefix": 0,
+            "Native_frame_end": 250
+          },
+          {
+            "address": 501,
+            "CPU_prefix": 5,
+            "Native_frame_end": 248
+          },
+          {
+            "address": 1910,
+            "CPU_prefix": 11,
+            "Native_frame_end": 10
+          },
+          {
+            "address": 1932,
+            "CPU_prefix": 3,
+            "Native_frame_end": 2
+          },
+          {
+            "address": 1954,
+            "CPU_prefix": 3,
+            "Native_frame_end": 2
+          },
+          {
+            "address": 1976,
+            "CPU_prefix": 27,
+            "Native_frame_end": 26
+          },
+          {
+            "address": 1982,
+            "CPU_prefix": 5,
+            "Native_frame_end": 6
+          },
+          {
+            "address": 1998,
+            "CPU_prefix": 27,
+            "Native_frame_end": 26
+          },
+          {
+            "address": 2004,
+            "CPU_prefix": 5,
+            "Native_frame_end": 6
+          },
+          {
+            "address": 2020,
+            "CPU_prefix": 3,
+            "Native_frame_end": 2
+          },
+          {
+            "address": 2041,
+            "CPU_prefix": 233,
+            "Native_frame_end": 234
+          }
+        ],
+        "registers_equal": false,
+        "contract": "Only field/SRAM parity is tested across these different timelines; no native perinstruction timing, complete RAM/register or source comparison is claimed."
+      }
+    }
+  ],
+  "status": "passed",
+  "analysis_kind": "original_CPU_prefix_and_wait_diagnostics",
+  "Native_internal_CPU_trace": false,
+  "source_comparison_cases": 0,
+  "original_CPU_prefix_count": 1,
+  "F8_initial_contexts": 0,
+  "source_sha256": {
+    "scripts/trace_f8_eligibility.py": "0d3e0f035734feecb57a7e807b523a6056318febe320fcfbd2abd0757e26b7da",
+    "source/recovered/nestopia_context.py": "7762c7ac80a8148341582edcf9c0922a230b586c3b336a06281b1315bf9a7ccb",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1"
+  },
+  "artifact_sha256": {
+    "analysis/phase20/runtime/exploratory-natural-accept-01/F8-previous-actual-frame.state": "843fabab626e78276181f4295d0dfd1734d6741955e92456b63fa8b739363333",
+    "analysis/phase20/runtime/exploratory-natural-accept-01/F8-request-actually-produced.state": "e6dd709b559d4ac20e927fac0aa669c3b25aec40543c40bc630d89d5dce9dd11",
+    "analysis/phase20/cpu/original-f8-selection.asm": "27265631de8538ffd2bdc8a8624ecde8265e5192cbb523dcf05f649601e5a24d",
+    "analysis/phase20/cpu/original-ranges.json": "1ab64ff2d3a2fd07e8d459202b4e5c41fcab89f8dce6c6f8bd409669e997a4da"
+  },
+  "limitations": [
+    "SavedPC/AXYP/SP/MAP/N163 are imported as captured; no cursor/request/ready/callerframe is injected.",
+    "Hardware reads are explicit constants and no new NMI/IRQ is scheduled. Native video timing is not reproduced.",
+    "Optional campaign numeric preparations are counterfactual software diagnostics, not observed Native effects."
+  ]
+}

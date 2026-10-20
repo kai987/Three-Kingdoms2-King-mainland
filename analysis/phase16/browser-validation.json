@@ -1,0 +1,831 @@
+{
+  "schema": "phase16-CUA-source-native-browser-v1",
+  "status": "passed",
+  "url": "http://127.0.0.1:8765/analysis/phase16/index.html#native",
+  "title": "真实战后继承、势力退出与字段证据",
+  "browser": "Codex In-app Browser via CUA",
+  "viewport": [
+    599,
+    843
+  ],
+  "html_sha256": "9bc4ef8e83efb52bef80d59e7ee6f09ce4a7e10b6fa5cbd786402d22066968cd",
+  "screenshot_sha256": "6ac184153ea36d70347e243cd369b4e1737af34886caea09e4c613116218fd21",
+  "checks": {
+    "identity": true,
+    "meaningful_content": true,
+    "no_framework_overlay": true,
+    "no_horizontal_overflow": true,
+    "complete_source_texts": true,
+    "four_native_pairs": true,
+    "four_actual_WAV_playbacks": true,
+    "declared_original_fields_and_summaries": true,
+    "monthly_field_switch": true,
+    "arbitrary_fields_preserve_real_PNGs": true,
+    "four_original_affinity_regions": true,
+    "no_console_errors": true
+  },
+  "source_modules": [
+    {
+      "key": "fields",
+      "name": "字段与适性机械语义",
+      "file": "field_semantics.py",
+      "bytes": 12013,
+      "sha256": "61ccf10a7913c00c1a5af6db92eb93eb06470fb63a8bf7be5d14ee5ff6153144",
+      "full_source_equal": true,
+      "selected": "true"
+    },
+    {
+      "key": "succession",
+      "name": "真实战后继承消费者",
+      "file": "battle_succession.py",
+      "bytes": 95336,
+      "sha256": "3b3dc1b83f3be9742d4a99ce860003b9d6d32b7d16ee837cb9b419167e1fd219",
+      "full_source_equal": true,
+      "selected": "true"
+    },
+    {
+      "key": "audio-requests",
+      "name": "真实音频请求caller",
+      "file": "exact_audio_requests.py",
+      "bytes": 10510,
+      "sha256": "a7d4c81932a6cfa5092a58b70e60661f003db9aa62979a392faae2b1f08aa448",
+      "full_source_equal": true,
+      "selected": "true"
+    },
+    {
+      "key": "graphics",
+      "name": "实际年月图形请求",
+      "file": "postbattle_graphics.py",
+      "bytes": 4637,
+      "sha256": "ba2526f0973b7891b796972be1dec86d2da3318848c920f44f2bbefbea5e49d6",
+      "full_source_equal": true,
+      "selected": "true"
+    },
+    {
+      "key": "loyalty",
+      "name": "战后忠诚跳转桥",
+      "file": "postbattle_loyalty_bridge.py",
+      "bytes": 2553,
+      "sha256": "7db9351b975723435a7ace5ceb389da13bf3c6a68196fd85b8f4a7501933a236",
+      "full_source_equal": true,
+      "selected": "true"
+    }
+  ],
+  "native_cases": [
+    {
+      "audio": {
+        "error": null,
+        "paused": false,
+        "ready": 4,
+        "src": "runtime/heir-city13-month/full-flow.wav?sha=3f1161d968a91085ca23549d30048aeaa7760ff4f1ca613cee4945b2c065f08d",
+        "time": 33.837143
+      },
+      "captions": [
+        "actual-city13-consumer-open · 原frame90 · city 13/5 · PNG 6c3fa5af81231e44…",
+        "post-succession-month-final · 原frame3880 · city 0/1 · PNG 4ab206c91cc1c427…"
+      ],
+      "case_index": 0,
+      "overflow": false,
+      "pair": [
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/heir-city13-month/actual-city13-consumer-open.png?sha=6c3fa5af81231e444a9c4c40221ab57aaf9dd4a4e98cbf7ba6db3bbe96560508",
+          "width": 256
+        },
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/heir-city13-month/post-succession-month-final.png?sha=4ab206c91cc1c427e08c5c8d428245b8d9612010c0e035452277d5ed635b0ba7",
+          "width": 256
+        }
+      ],
+      "scope": "公开母档一次state import · 本轮新增0byte准备写／继承旧准备19byte · 3,880原帧。Actual inherited battle return enters originalcity13, writes successor9 or absent leaderFF, then ordinary two command cards and complete monthly rotation return toFebruary player; all30 owners/rosters and237status/byte5 retained",
+      "selected": "0"
+    },
+    {
+      "audio": {
+        "error": null,
+        "paused": true,
+        "ready": 4,
+        "src": "runtime/no-heir-city13-month/full-flow.wav?sha=eccb601154cc99de6ab33d435218b5a39a2de12329432e70092532f0ebb0fe38",
+        "time": 1.5037
+      },
+      "captions": [
+        "actual-city13-consumer-open · 原frame90 · city 13/5 · PNG 6c3fa5af81231e44…",
+        "post-succession-month-final · 原frame3800 · city 0/1 · PNG 2cf951977690f676…"
+      ],
+      "case_index": 1,
+      "overflow": false,
+      "pair": [
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/no-heir-city13-month/actual-city13-consumer-open.png?sha=6c3fa5af81231e444a9c4c40221ab57aaf9dd4a4e98cbf7ba6db3bbe96560508",
+          "width": 256
+        },
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/no-heir-city13-month/post-succession-month-final.png?sha=2cf951977690f67674c3cb1626ddde374acc575992637940a7794819b248f01a",
+          "width": 256
+        }
+      ],
+      "scope": "公开母档一次state import · 本轮新增0byte准备写／继承旧准备26byte · 3,800原帧。Actual inherited battle return enters originalcity13, writes successor9 or absent leaderFF, then ordinary two command cards and complete monthly rotation return toFebruary player; all30 owners/rosters and237status/byte5 retained",
+      "selected": "1"
+    },
+    {
+      "audio": {
+        "error": null,
+        "paused": false,
+        "ready": 4,
+        "src": "runtime/player-defeat-successor/full-flow.wav?sha=695e944f6b683b6738010b77228d5dd9582f3cf484d3d425457e579f1c97e185",
+        "time": 56.861293
+      },
+      "captions": [
+        "player-failure-attack-enter · 原frame740 · attack 6/1 · PNG 2e1dbbecbdbcd8f4…",
+        "player-failure-final · 原frame7935 · city 0/1 · PNG 2300b9c038d9585c…"
+      ],
+      "case_index": 2,
+      "overflow": false,
+      "pair": [
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/player-defeat-successor/player-failure-attack-enter.png?sha=2e1dbbecbdbcd8f44b32b4f2053844be0446c315d1e9cbce581752681334a9d5",
+          "width": 256
+        },
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/player-defeat-successor/player-failure-final.png?sha=2300b9c038d9585c023869222a4c93d42c8d8c11743aa9e08e55c239f2f49733",
+          "width": 256
+        }
+      ],
+      "scope": "公开母档一次state import · 本轮新增5byte准备写／继承旧准备0byte · 7,935原帧。Controlled pre-fightHP/martial/adjacent-position data; actual ordinaryattack defeat writes original曹操HPFF/status3; originalcity13/phase4 mapcity11/officer5/confirmation returns toplayercity0/1",
+      "selected": "2"
+    },
+    {
+      "audio": {
+        "error": null,
+        "paused": true,
+        "ready": 4,
+        "src": "runtime/affinity-pages/full-flow.wav?sha=d52a75ed8f6e4767d2ac01fd18f02210ea0c56a0b638503e6f36e154e44812f2",
+        "time": 32.712792
+      },
+      "captions": [
+        "trait-code0-info-open · 原frame272 · battle 1/1 · PNG 02e10825cb270e58…",
+        "trait-code3-info-open · 原frame1724 · battle 1/1 · PNG e16d0eaf606d55ba…"
+      ],
+      "case_index": 3,
+      "overflow": false,
+      "pair": [
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/affinity-pages/trait-code0-info-open.png?sha=02e10825cb270e580caa780fffc235502e2bae5230678f8c8b9f98e7c568d3bb",
+          "width": 256
+        },
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/affinity-pages/trait-code3-info-open.png?sha=e16d0eaf606d55ba4a9665b39265314a18f16c967aeb7b1540faace16d7f2941",
+          "width": 256
+        }
+      ],
+      "scope": "公开母档一次state import · 本轮新增4byte准备写／继承旧准备0byte · 1,966原帧。Natural inherited battle cursor; only officer131 flags11 mid2 are prepared, four actual full information pages redraw and originalA closes; code3 produces out-of-table machinecode glyphs, not a fourth official ability",
+      "selected": "3"
+    }
+  ],
+  "audio_playback": [
+    {
+      "case_index": 0,
+      "start": {
+        "paused": false,
+        "time": 0.009202
+      },
+      "end": {
+        "error": null,
+        "paused": false,
+        "ready": 4,
+        "src": "runtime/heir-city13-month/full-flow.wav?sha=3f1161d968a91085ca23549d30048aeaa7760ff4f1ca613cee4945b2c065f08d",
+        "time": 33.837143
+      },
+      "progressed": true,
+      "paused_after": true
+    },
+    {
+      "case_index": 1,
+      "start": {
+        "paused": false,
+        "time": 0
+      },
+      "end": {
+        "error": null,
+        "paused": true,
+        "ready": 4,
+        "src": "runtime/no-heir-city13-month/full-flow.wav?sha=eccb601154cc99de6ab33d435218b5a39a2de12329432e70092532f0ebb0fe38",
+        "time": 1.5037
+      },
+      "progressed": true,
+      "paused_after": true
+    },
+    {
+      "case_index": 2,
+      "start": {
+        "paused": false,
+        "time": 0.02118
+      },
+      "end": {
+        "error": null,
+        "paused": false,
+        "ready": 4,
+        "src": "runtime/player-defeat-successor/full-flow.wav?sha=695e944f6b683b6738010b77228d5dd9582f3cf484d3d425457e579f1c97e185",
+        "time": 56.861293
+      },
+      "progressed": true,
+      "paused_after": true
+    },
+    {
+      "case_index": 3,
+      "start": {
+        "paused": false,
+        "time": 0.000951
+      },
+      "end": {
+        "error": null,
+        "paused": true,
+        "ready": 4,
+        "src": "runtime/affinity-pages/full-flow.wav?sha=d52a75ed8f6e4767d2ac01fd18f02210ea0c56a0b638503e6f36e154e44812f2",
+        "time": 32.712792
+      },
+      "progressed": true,
+      "paused_after": true
+    }
+  ],
+  "checkpoint_field_checks": [
+    {
+      "case": "heir-city13-month",
+      "checkpoint": "actual-city13-consumer-open",
+      "frame": 90,
+      "displayed_original_fields_equal": true,
+      "displayed_raw_field_count": 30,
+      "displayed_service_field_count": 35,
+      "officer_summaries_equal": true,
+      "RAM_hash_equal": true,
+      "SRAM_hash_equal": true,
+      "year": 89,
+      "month": 0,
+      "rulers": [
+        {
+          "ID": 173,
+          "index": 0,
+          "leader_raw": "58572f640b008813e8036446",
+          "raw": "ad00000300000000"
+        },
+        {
+          "ID": 8,
+          "index": 1,
+          "leader_raw": "00460a643200d007e803622b",
+          "raw": "0800000300000000"
+        },
+        {
+          "ID": 131,
+          "index": 2,
+          "leader_raw": "525463646100393be803a376",
+          "raw": "830b000000000000"
+        },
+        {
+          "ID": 138,
+          "index": 3,
+          "leader_raw": "5a5f3d645a000000e803640a",
+          "raw": "8a00000300000000"
+        },
+        {
+          "ID": 222,
+          "index": 4,
+          "leader_raw": "4e47416463000000bc024302",
+          "raw": "de02000300000000"
+        },
+        {
+          "ID": 220,
+          "index": 5,
+          "leader_raw": "3d272c644d00e803e8030012",
+          "raw": "dc00000300000000"
+        },
+        {
+          "ID": 182,
+          "index": 6,
+          "leader_raw": "505236645400d007e8036226",
+          "raw": "b600000300000000"
+        }
+      ],
+      "owner1": 1,
+      "owner3": 1
+    },
+    {
+      "case": "heir-city13-month",
+      "checkpoint": "post-succession-month-final",
+      "frame": 3880,
+      "displayed_original_fields_equal": true,
+      "displayed_raw_field_count": 30,
+      "displayed_service_field_count": 35,
+      "officer_summaries_equal": true,
+      "RAM_hash_equal": true,
+      "SRAM_hash_equal": true,
+      "year": 89,
+      "month": 1,
+      "rulers": [
+        {
+          "ID": 173,
+          "index": 0,
+          "leader_raw": "58572f640b008813e8036446",
+          "raw": "ad0c000300000000"
+        },
+        {
+          "ID": 9,
+          "index": 1,
+          "leader_raw": "46391e642d00e803bc022812",
+          "raw": "0903000300000000"
+        },
+        {
+          "ID": 131,
+          "index": 2,
+          "leader_raw": "525463646100393be803a376",
+          "raw": "8304000000000000"
+        },
+        {
+          "ID": 138,
+          "index": 3,
+          "leader_raw": "5a5f3d645a000000e803640a",
+          "raw": "8a14000300000000"
+        },
+        {
+          "ID": 222,
+          "index": 4,
+          "leader_raw": "4e47486463000000bc024302",
+          "raw": "de02000300000000"
+        },
+        {
+          "ID": 220,
+          "index": 5,
+          "leader_raw": "3d272c644d00e803e8030012",
+          "raw": "dc1a000300000000"
+        },
+        {
+          "ID": 182,
+          "index": 6,
+          "leader_raw": "505236645400d007e8036326",
+          "raw": "b606000300000000"
+        }
+      ],
+      "owner1": 1,
+      "owner3": 1
+    },
+    {
+      "case": "no-heir-city13-month",
+      "checkpoint": "actual-city13-consumer-open",
+      "frame": 90,
+      "displayed_original_fields_equal": true,
+      "displayed_raw_field_count": 30,
+      "displayed_service_field_count": 35,
+      "officer_summaries_equal": true,
+      "RAM_hash_equal": true,
+      "SRAM_hash_equal": true,
+      "year": 89,
+      "month": 0,
+      "rulers": [
+        {
+          "ID": 173,
+          "index": 0,
+          "leader_raw": "58572f640b008813e8036446",
+          "raw": "ad00000300000000"
+        },
+        {
+          "ID": 8,
+          "index": 1,
+          "leader_raw": "00460a643200d007e803622b",
+          "raw": "0800000300000000"
+        },
+        {
+          "ID": 131,
+          "index": 2,
+          "leader_raw": "525463646100393be803a376",
+          "raw": "830b000000000000"
+        },
+        {
+          "ID": 138,
+          "index": 3,
+          "leader_raw": "5a5f3d645a000000e803640a",
+          "raw": "8a00000300000000"
+        },
+        {
+          "ID": 222,
+          "index": 4,
+          "leader_raw": "4e47416463000000bc024302",
+          "raw": "de02000300000000"
+        },
+        {
+          "ID": 220,
+          "index": 5,
+          "leader_raw": "3d272c644d00e803e8030012",
+          "raw": "dc00000300000000"
+        },
+        {
+          "ID": 182,
+          "index": 6,
+          "leader_raw": "505236645400d007e8036226",
+          "raw": "b600000300000000"
+        }
+      ],
+      "owner1": 1,
+      "owner3": 1
+    },
+    {
+      "case": "no-heir-city13-month",
+      "checkpoint": "post-succession-month-final",
+      "frame": 3800,
+      "displayed_original_fields_equal": true,
+      "displayed_raw_field_count": 30,
+      "displayed_service_field_count": 35,
+      "officer_summaries_equal": true,
+      "RAM_hash_equal": true,
+      "SRAM_hash_equal": true,
+      "year": 89,
+      "month": 1,
+      "rulers": [
+        {
+          "ID": 173,
+          "index": 0,
+          "leader_raw": "58572f640b008813e8036446",
+          "raw": "ad0c000300000000"
+        },
+        {
+          "ID": 255,
+          "index": 1,
+          "leader_raw": null,
+          "raw": "ff00000300000000"
+        },
+        {
+          "ID": 131,
+          "index": 2,
+          "leader_raw": "525463646100393be803a376",
+          "raw": "8304000000000000"
+        },
+        {
+          "ID": 138,
+          "index": 3,
+          "leader_raw": "5a5f3d645a000000e803640a",
+          "raw": "8a14000300000000"
+        },
+        {
+          "ID": 222,
+          "index": 4,
+          "leader_raw": "4e47416463000000bc026302",
+          "raw": "de02000300000000"
+        },
+        {
+          "ID": 220,
+          "index": 5,
+          "leader_raw": "3d272c644d00e803e8030012",
+          "raw": "dc1a000300000000"
+        },
+        {
+          "ID": 182,
+          "index": 6,
+          "leader_raw": "505236645400d007e8036326",
+          "raw": "b606000300000000"
+        }
+      ],
+      "owner1": 1,
+      "owner3": 1
+    },
+    {
+      "case": "player-defeat-successor",
+      "checkpoint": "player-failure-attack-enter",
+      "frame": 740,
+      "displayed_original_fields_equal": true,
+      "displayed_raw_field_count": 30,
+      "displayed_service_field_count": 35,
+      "officer_summaries_equal": true,
+      "RAM_hash_equal": true,
+      "SRAM_hash_equal": true,
+      "year": 89,
+      "month": 0,
+      "rulers": [
+        {
+          "ID": 173,
+          "index": 0,
+          "leader_raw": "58572f640b008813e8036446",
+          "raw": "ad00000300000000"
+        },
+        {
+          "ID": 8,
+          "index": 1,
+          "leader_raw": "4b6334643200d007e803622a",
+          "raw": "0800000300000000"
+        },
+        {
+          "ID": 131,
+          "index": 2,
+          "leader_raw": "010159646100e803e803a316",
+          "raw": "830b000000000000"
+        },
+        {
+          "ID": 138,
+          "index": 3,
+          "leader_raw": "5a5f3d645a000000e803640a",
+          "raw": "8a00000300000000"
+        },
+        {
+          "ID": 222,
+          "index": 4,
+          "leader_raw": "4e47416463000000bc024302",
+          "raw": "de02000300000000"
+        },
+        {
+          "ID": 220,
+          "index": 5,
+          "leader_raw": "3d272c644d00e803e8030012",
+          "raw": "dc00000300000000"
+        },
+        {
+          "ID": 182,
+          "index": 6,
+          "leader_raw": "505236645400d007e8036226",
+          "raw": "b600000300000000"
+        }
+      ],
+      "owner1": 1,
+      "owner3": 1
+    },
+    {
+      "case": "player-defeat-successor",
+      "checkpoint": "player-failure-final",
+      "frame": 7935,
+      "displayed_original_fields_equal": true,
+      "displayed_raw_field_count": 30,
+      "displayed_service_field_count": 35,
+      "officer_summaries_equal": true,
+      "RAM_hash_equal": true,
+      "SRAM_hash_equal": true,
+      "year": 89,
+      "month": 0,
+      "rulers": [
+        {
+          "ID": 173,
+          "index": 0,
+          "leader_raw": "58572f640b008813e8036446",
+          "raw": "ad00000300000000"
+        },
+        {
+          "ID": 8,
+          "index": 1,
+          "leader_raw": "4b63346432004009cf03622a",
+          "raw": "0800000300000000"
+        },
+        {
+          "ID": 5,
+          "index": 2,
+          "leader_raw": "4d4f38645600e803bc02481a",
+          "raw": "050b000000000000"
+        },
+        {
+          "ID": 138,
+          "index": 3,
+          "leader_raw": "5a5f3d645a000000e803640a",
+          "raw": "8a00000300000000"
+        },
+        {
+          "ID": 222,
+          "index": 4,
+          "leader_raw": "4e47416463000000bc024302",
+          "raw": "de02000300000000"
+        },
+        {
+          "ID": 220,
+          "index": 5,
+          "leader_raw": "3d272c644d00e803e8030012",
+          "raw": "dc00000300000000"
+        },
+        {
+          "ID": 182,
+          "index": 6,
+          "leader_raw": "505236645400d007e8036226",
+          "raw": "b600000300000000"
+        }
+      ],
+      "owner1": 1,
+      "owner3": 1
+    },
+    {
+      "case": "affinity-pages",
+      "checkpoint": "trait-code0-info-open",
+      "frame": 272,
+      "displayed_original_fields_equal": true,
+      "displayed_raw_field_count": 30,
+      "displayed_service_field_count": 35,
+      "officer_summaries_equal": true,
+      "RAM_hash_equal": true,
+      "SRAM_hash_equal": true,
+      "year": 89,
+      "month": 0,
+      "rulers": [
+        {
+          "ID": 173,
+          "index": 0,
+          "leader_raw": "58572f640b008813e8036446",
+          "raw": "ad00000300000000"
+        },
+        {
+          "ID": 8,
+          "index": 1,
+          "leader_raw": "4b4634643200d007e803622a",
+          "raw": "0800000300000000"
+        },
+        {
+          "ID": 131,
+          "index": 2,
+          "leader_raw": "525459646100e803e803a312",
+          "raw": "830b000000000000"
+        },
+        {
+          "ID": 138,
+          "index": 3,
+          "leader_raw": "5a5f3d645a000000e803640a",
+          "raw": "8a00000300000000"
+        },
+        {
+          "ID": 222,
+          "index": 4,
+          "leader_raw": "4e47416463000000bc024302",
+          "raw": "de02000300000000"
+        },
+        {
+          "ID": 220,
+          "index": 5,
+          "leader_raw": "3d272c644d00e803e8030012",
+          "raw": "dc00000300000000"
+        },
+        {
+          "ID": 182,
+          "index": 6,
+          "leader_raw": "505236645400d007e8036226",
+          "raw": "b600000300000000"
+        }
+      ],
+      "owner1": 1,
+      "owner3": 1
+    },
+    {
+      "case": "affinity-pages",
+      "checkpoint": "trait-code3-info-open",
+      "frame": 1724,
+      "displayed_original_fields_equal": true,
+      "displayed_raw_field_count": 30,
+      "displayed_service_field_count": 35,
+      "officer_summaries_equal": true,
+      "RAM_hash_equal": true,
+      "SRAM_hash_equal": true,
+      "year": 89,
+      "month": 0,
+      "rulers": [
+        {
+          "ID": 173,
+          "index": 0,
+          "leader_raw": "58572f640b008813e8036446",
+          "raw": "ad00000300000000"
+        },
+        {
+          "ID": 8,
+          "index": 1,
+          "leader_raw": "4b4634643200d007e803622a",
+          "raw": "0800000300000000"
+        },
+        {
+          "ID": 131,
+          "index": 2,
+          "leader_raw": "525459646100e803e803a31e",
+          "raw": "830b000000000000"
+        },
+        {
+          "ID": 138,
+          "index": 3,
+          "leader_raw": "5a5f3d645a000000e803640a",
+          "raw": "8a00000300000000"
+        },
+        {
+          "ID": 222,
+          "index": 4,
+          "leader_raw": "4e47416463000000bc024302",
+          "raw": "de02000300000000"
+        },
+        {
+          "ID": 220,
+          "index": 5,
+          "leader_raw": "3d272c644d00e803e8030012",
+          "raw": "dc00000300000000"
+        },
+        {
+          "ID": 182,
+          "index": 6,
+          "leader_raw": "505236645400d007e8036226",
+          "raw": "b600000300000000"
+        }
+      ],
+      "owner1": 1,
+      "owner3": 1
+    }
+  ],
+  "field_comparison": {
+    "note": "字段frame3470／3471；上方PNG仍为实际检查点frame90／3880，没有给任意字段帧生成截图。",
+    "pair": [
+      "runtime/heir-city13-month/actual-city13-consumer-open.png?sha=6c3fa5af81231e444a9c4c40221ab57aaf9dd4a4e98cbf7ba6db3bbe96560508",
+      "runtime/heir-city13-month/post-succession-month-final.png?sha=4ab206c91cc1c427e08c5c8d428245b8d9612010c0e035452277d5ed635b0ba7"
+    ],
+    "rows": [
+      {
+        "after": "89",
+        "before": "89",
+        "name": "原年值6F00（89→显示189年）"
+      },
+      {
+        "after": "1",
+        "before": "0",
+        "name": "原0-based月6F01"
+      }
+    ]
+  },
+  "affinity_glyph_checks": [
+    {
+      "code": 0,
+      "caption": "rawcode0 · 原frame272 · regionRGB 99f2399c372faa53…",
+      "complete": true,
+      "cssWidth": "2048px",
+      "full": "runtime/affinity-pages/trait-code0-info-open.png?sha=02e10825cb270e580caa780fffc235502e2bae5230678f8c8b9f98e7c568d3bb",
+      "height": 240,
+      "selected": "frame272 · trait-code0-info-open",
+      "transform": "matrix(1, 0, 0, 1, -512, -1536)",
+      "width": 256,
+      "zoom": "runtime/affinity-pages/trait-code0-info-open.png?sha=02e10825cb270e580caa780fffc235502e2bae5230678f8c8b9f98e7c568d3bb",
+      "zoomHidden": false,
+      "original_region_RGB_sha256": "99f2399c372faa53550f3bc7f71caa2d8a54f706caf26e20da02c8425a736f75"
+    },
+    {
+      "code": 1,
+      "caption": "rawcode1 · 原frame756 · regionRGB 87382e6a5f4cd1fd…",
+      "complete": true,
+      "cssWidth": "2048px",
+      "full": "runtime/affinity-pages/trait-code1-info-open.png?sha=1a7b8d3c1d3b6f6981c013171d9b116a2298f4f9849a8e79be48450dc97c64a3",
+      "height": 240,
+      "selected": "frame756 · trait-code1-info-open",
+      "transform": "matrix(1, 0, 0, 1, -512, -1536)",
+      "width": 256,
+      "zoom": "runtime/affinity-pages/trait-code1-info-open.png?sha=1a7b8d3c1d3b6f6981c013171d9b116a2298f4f9849a8e79be48450dc97c64a3",
+      "zoomHidden": false,
+      "original_region_RGB_sha256": "87382e6a5f4cd1fdc01277d228bd3b4e3a5715cc0eff508e35b93c5d37b8c4ca"
+    },
+    {
+      "code": 2,
+      "caption": "rawcode2 · 原frame1240 · regionRGB 017e955bdf84c3e8…",
+      "complete": true,
+      "cssWidth": "2048px",
+      "full": "runtime/affinity-pages/trait-code2-info-open.png?sha=8ab98d4bec06a00bc6381450b114520900d3ecc4b81d81679110921e27a9f263",
+      "height": 240,
+      "selected": "frame1240 · trait-code2-info-open",
+      "transform": "matrix(1, 0, 0, 1, -512, -1536)",
+      "width": 256,
+      "zoom": "runtime/affinity-pages/trait-code2-info-open.png?sha=8ab98d4bec06a00bc6381450b114520900d3ecc4b81d81679110921e27a9f263",
+      "zoomHidden": false,
+      "original_region_RGB_sha256": "017e955bdf84c3e8f33c86b4fd265495dfc78fe3c1e02a3699bff0c813e70fb9"
+    },
+    {
+      "code": 3,
+      "caption": "rawcode3 · 原frame1724 · regionRGB 48d4099c302f3768…",
+      "complete": true,
+      "cssWidth": "2048px",
+      "full": "runtime/affinity-pages/trait-code3-info-open.png?sha=e16d0eaf606d55ba4a9665b39265314a18f16c967aeb7b1540faace16d7f2941",
+      "height": 240,
+      "selected": "frame1724 · trait-code3-info-open",
+      "transform": "matrix(1, 0, 0, 1, -512, -1536)",
+      "width": 256,
+      "zoom": "runtime/affinity-pages/trait-code3-info-open.png?sha=e16d0eaf606d55ba4a9665b39265314a18f16c967aeb7b1540faace16d7f2941",
+      "zoomHidden": false,
+      "original_region_RGB_sha256": "48d4099c302f37687d22b85bf8de59cb7d6765dbed37dd34ff7a8ce1b4160ad9"
+    }
+  ],
+  "console_errors": [],
+  "remaining_scope": [
+    "Default599x843 viewport only; no temporary viewport override",
+    "Eight checkpoints compare all30 displayed raw fields and35 service/derived fields against original frame/checkpoint JSON and actual2K/8K hashes; undisplayed metadata remains original linked JSON",
+    "Cross-realm JSON objects compared by their exact values and property names; no RAM/SRAM/state/media buffer normalization",
+    "WAV playback time verified through actual native controls; no claim of human listening or source PCM synthesis",
+    "Original full PNGs reused with CSS128pixel crop window for16x16 region; code3 is table overflow, not official fourth ability",
+    "No native internal CPU trace; controlled actualCPU caller receipts remain separate",
+    "DOM viewport599x843 and CUA host screenshot584x822 are recorded separately; original returned screenshot bytes saved without editing or resizing"
+  ],
+  "screenshot_dimensions": [
+    584,
+    822
+  ]
+}

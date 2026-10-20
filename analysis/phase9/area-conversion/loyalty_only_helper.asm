@@ -1,0 +1,31 @@
+016F4F b11:$CF3F A5 30          LDA  $30
+016F51 b11:$CF41 A0 04          LDY  #$04
+016F53 b11:$CF43 20 AB D2       JSR  $D2AB
+016F56 b11:$CF46 85 21          STA  $21
+016F58 b11:$CF48 A9 0A          LDA  #$0A
+016F5A b11:$CF4A 85 23          STA  $23
+016F5C b11:$CF4C A9 00          LDA  #$00
+016F5E b11:$CF4E 85 22          STA  $22
+016F60 b11:$CF50 85 24          STA  $24
+016F62 b11:$CF52 20 0F D4       JSR  $D40F
+016F65 b11:$CF55 A5 21          LDA  $21
+016F67 b11:$CF57 18             CLC
+016F68 b11:$CF58 69 46          ADC  #$46
+016F6A b11:$CF5A 48             PHA
+016F6B b11:$CF5B A5 31          LDA  $31
+016F6D b11:$CF5D A0 03          LDY  #$03
+016F6F b11:$CF5F 20 AB D2       JSR  $D2AB
+016F72 b11:$CF62 85 20          STA  $20
+016F74 b11:$CF64 68             PLA
+016F75 b11:$CF65 38             SEC
+016F76 b11:$CF66 E5 20          SBC  $20
+016F78 b11:$CF68 C9 5A          CMP  #$5A
+016F7A b11:$CF6A 90 02          BCC  $CF6E
+016F7C b11:$CF6C A9 5A          LDA  #$5A
+016F7E b11:$CF6E C9 0A          CMP  #$0A
+016F80 b11:$CF70 B0 02          BCS  $CF74
+016F82 b11:$CF72 A9 0A          LDA  #$0A
+016F84 b11:$CF74 A0 03          LDY  #$03
+016F86 b11:$CF76 91 22          STA  ($22),Y
+016F88 b11:$CF78 20 1E D6       JSR  $D61E
+016F8B b11:$CF7B 60             RTS

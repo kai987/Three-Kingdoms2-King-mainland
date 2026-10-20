@@ -1,0 +1,276 @@
+{
+  "schema": "phase13-city-officer-controller-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ROM_modified": false,
+  "ranges": [
+    {
+      "name": "city_card_code_A021",
+      "physical_bank": 25,
+      "cpu_start": 40993,
+      "cpu_end_exclusive": 40996,
+      "rom_offset": 204849,
+      "byte_count": 3,
+      "raw_hex": "4C E5 AF",
+      "sha256": "9dcf4c190ef01b783c849417aa3c008a4779c31462f2df32eb0369385d9637d4",
+      "kind": "code"
+    },
+    {
+      "name": "city_card_code_AFE5",
+      "physical_bank": 25,
+      "cpu_start": 45029,
+      "cpu_end_exclusive": 45035,
+      "rom_offset": 208885,
+      "byte_count": 6,
+      "raw_hex": "AD 01 04 20 DE EA",
+      "sha256": "b78a6b7dd1c4f61f3903fc5d1c63867bbdb1c79e4cd602c98b977308e9ab4e62",
+      "kind": "code"
+    },
+    {
+      "name": "city_card_code_AFF5",
+      "physical_bank": 25,
+      "cpu_start": 45045,
+      "cpu_end_exclusive": 45055,
+      "rom_offset": 208901,
+      "byte_count": 10,
+      "raw_hex": "A9 00 8D 00 00 A0 3D 20 07 EE",
+      "sha256": "7a312af66d17b9324a643736262915e260a9bbd2c47517cb1142a6d4363dfe0d",
+      "kind": "code"
+    },
+    {
+      "name": "city_card_code_B001",
+      "physical_bank": 25,
+      "cpu_start": 45057,
+      "cpu_end_exclusive": 45783,
+      "rom_offset": 208913,
+      "byte_count": 726,
+      "raw_hex": "A9 FF 8D E4 04 A9 00 8D 0C 04 8D 0D 04 EE 01 04 A9 08 8D BA 00 A9 06 8D BB 00 A0 00 A9 FF 99 10 04 C8 C0 0A 90 F8 AD 02 04 20 AF F2 A2 00 A0 11 B1 00 C9 FF F0 04 9D 10 04 E8 C8 C0 1B 90 F1 60 20 D7 B2 AD 0D 04 C9 FF D0 3A A9 00 8D 96 00 A9 01 8D 97 00 A9 00 8D 98 00 A9 01 8D 61 00 A9 40 8D 68 00 A9 18 8D 6A 00 A9 20 8D 6C 00 A9 1A 8D 6E 00 A9 F0 8D 70 00 A9 F1 8D 71 00 EE 01 04 A9 00 8D 08 04 60 A9 AE 8D 0A 00 AE 08 04 BD 10 04 8D 00 00 20 1F CE AD 72 04 D0 0E 20 09 B2 AD 81 00 4A 90 42 AD 70 04 F0 40 AD 40 01 F0 01 60 AD 72 04 30 0A F0 0E C9 0A F0 13 EE 72 04 60 A9 00 8D 72 04 60 A9 80 8D 40 01 EE 72 04 60 A9 80 8D 40 01 AD 73 04 49 03 8D 73 04 0D 50 01 8D 50 01 A9 80 8D 72 04 60 4A 90 4B AD 70 04 8D 00 04 AD 71 04 8D 01 04 A9 40 8D 68 00 A9 14 8D 6A 00 A9 1E 8D 6C 00 A9 20 8D 6E 00 A9 0D 8D 70 00 A9 F2 8D 71 00 A9 03 8D 61 00 A9 00 8D 96 00 8D 97 00 A9 A0 8D 98 00 A9 00 8D E4 04 A9 09 8D BB 00 A9 0D 8D BC 00 60 20 D7 B2 A9 AE 8D 0A 00 AE 08 04 BD 10 04 8D 00 00 20 1F CE AD 0D 04 C9 FF D0 03 EE 01 04 60 20 85 B2 AD 0A 04 D0 51 AD 09 04 C9 29 B0 25 A9 AC 38 ED 09 04 8D 0A 00 AE 08 04 20 FF B1 A9 FC 38 ED 09 04 8D 0A 00 AE 08 04 E8 20 FF B1 20 60 B2 4C 9F B0 A9 FC 38 ED 09 04 8D 0A 00 AE 08 04 E8 20 FF B1 A9 AC 38 ED 09 04 8D 0A 00 AE 08 04 20 FF B1 20 60 B2 4C 9F B0 AD 09 04 C9 29 90 25 A9 60 18 6D 09 04 8D 0A 00 AE 08 04 CA 20 FF B1 A9 B0 18 6D 09 04 8D 0A 00 AE 08 04 20 FF B1 20 60 B2 4C 9F B0 A9 B0 18 6D 09 04 8D 0A 00 AE 08 04 20 FF B1 A9 60 18 6D 09 04 8D 0A 00 AE 08 04 CA 20 FF B1 20 60 B2 4C 9F B0 BD 10 04 8D 00 00 20 1F CE 60 AD 83 00 29 10 F0 20 AD 08 04 F0 1B A9 00 8D 09 04 A9 01 8D 0A 04 EE 01 04 A9 00 8D 0D 04 AD 08 04 38 E9 01 8D 0C 04 AD 83 00 29 20 F0 28 AC 08 04 C0 09 B0 21 C8 B9 10 04 C9 FF F0 19 A9 00 8D 09 04 8D 0A 04 EE 01 04 A9 00 8D 0D 04 AD 08 04 18 69 01 8D 0C 04 60 A9 00 8D 81 00 EE 09 04 EE 09 04 AD 09 04 C9 50 90 12 CE 01 04 CE 01 04 AD 0A 04 D0 04 EE 08 04 60 CE 08 04 60 AD 0A 04 D0 26 AD 09 04 C9 40 D0 0C AD 0E 04 8D BC 00 AD 0F 04 8D BD 00 EE 98 00 EE 98 00 AD 98 00 C9 F0 90 2C A9 00 8D 98 00 60 AD 09 04 C9 10 D0 0C AD 0E 04 8D BC 00 AD 0F 04 8D BD 00 CE 98 00 CE 98 00 AD 98 00 C9 F0 90 06 38 E9 10 8D 98 00 60",
+      "sha256": "a9fcfccba7eb66b20ad1a8fec9c5408abd93d9834a4ac00bc71cfbd633a601e9",
+      "kind": "code"
+    }
+  ],
+  "tables": [
+    {
+      "name": "five_phase_inline_pointer_table",
+      "physical_bank": 25,
+      "cpu_start": 45035,
+      "cpu_end_exclusive": 45045,
+      "rom_offset": 208891,
+      "byte_count": 10,
+      "raw_hex": "F5 AF 41 B0 86 B0 36 B1 55 B1",
+      "sha256": "f6c10dee8bcf379336957cbfa4bd61d475a70d1f414924bc7b9e02542c812242",
+      "kind": "inline_pointer_data"
+    },
+    {
+      "name": "palette_farcall_inline_target",
+      "physical_bank": 25,
+      "cpu_start": 45055,
+      "cpu_end_exclusive": 45057,
+      "rom_offset": 208911,
+      "byte_count": 2,
+      "raw_hex": "15 A0",
+      "sha256": "1020766e2998a8b6729027a00da043d0e84f0e1f009f731ca6a53b0d6d583848",
+      "kind": "inline_far_target_data"
+    }
+  ],
+  "dependency_pins": [
+    {
+      "path": "source/recovered/city_officer_details_controller.py",
+      "bytes": 36076,
+      "sha256": "c6bf5412f735a2d32b5cf2ac2b7547897e9ffc7e9dd957eaf39c14305f74494d"
+    },
+    {
+      "path": "scripts/verify_city_officer_details_controller.py",
+      "bytes": 9567,
+      "sha256": "6fb3a5d2bdceaa75cbe96fdb0f44a1b24894b616cd79d7e114991e2388cfbb93"
+    },
+    {
+      "path": "scripts/analyze_city_officer_details_controller.py",
+      "bytes": 28769,
+      "sha256": "cde4d401d3d8c15742d1033aad1a7ccaa6b3313be555545c3521ed260abf1b03"
+    },
+    {
+      "path": "scripts/analyze_ui_graphics_initialization.py",
+      "bytes": 9641,
+      "sha256": "86785b4841cb8ef98e25567559326d1d2809875f6514ac54d2fbf3519f441ce5"
+    },
+    {
+      "path": "source/recovered/officer_details_ui_services.py",
+      "bytes": 38998,
+      "sha256": "8d203c6c1c73888e953f7260bf2630d7c9227e9f45518898dd1ebc25ea1753fc"
+    },
+    {
+      "path": "source/recovered/portrait_ui_services.py",
+      "bytes": 8206,
+      "sha256": "44dc5314915e18f7308d14401a32e49c993476384a41e6b5f65edd8414ff2124"
+    },
+    {
+      "path": "source/recovered/scene_initialization.py",
+      "bytes": 12560,
+      "sha256": "87dcdffebdc8f2a71eacb02bfc8e0c6476d2edb0a793aea35ffdde8bbc5ef30d"
+    },
+    {
+      "path": "source/recovered/scene_shared_services.py",
+      "bytes": 15120,
+      "sha256": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76"
+    },
+    {
+      "path": "source/recovered/officer_ui_services.py",
+      "bytes": 9555,
+      "sha256": "dd4c81924aad78b089d26bf436284a76945aff7b4c035d0c155707d2c43f2113"
+    },
+    {
+      "path": "source/recovered/battle_nmi_services.py",
+      "bytes": 35325,
+      "sha256": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15"
+    },
+    {
+      "path": "source/recovered/controller_helpers.py",
+      "bytes": 2827,
+      "sha256": "54dba0ee606f3ce200c648700f908956273ff0a96cc0dbfb847fc4396bf79afb"
+    },
+    {
+      "path": "source/recovered/service_memory.py",
+      "bytes": 5672,
+      "sha256": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920"
+    }
+  ],
+  "REA_archive": [
+    {
+      "path": "analysis/rea/pairs/pair-25/functions/0xafe5.c",
+      "bytes": 178,
+      "sha256": "ebb3711befedcc17dba18b67b0ac1c438c2caf40d495e72c7498332f053fc9d3"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-25/functions/0xafe5.asm",
+      "bytes": 37,
+      "sha256": "5772f53d775155d8db8915f112bf3a33d57a1ee7f10f04a651d5dd876d28a12b"
+    }
+  ],
+  "disassembly_pin": {
+    "path": "analysis/phase13/city-details/original-ranges.asm",
+    "bytes": 12544,
+    "sha256": "c1d7cb55d1fc69db4b62bfb7c19e095d5b8c616c1281c7b1d12da2389d55f15e"
+  },
+  "source_AST_imports": [
+    "dataclasses",
+    "battle_nmi_services",
+    "scene_shared_services",
+    "officer_details_ui_services",
+    "portrait_ui_services",
+    "scene_initialization",
+    "controller_helpers"
+  ],
+  "source_runtime_IR": false,
+  "source_runtime_CPU": false,
+  "source_runtime_opcode_decode": false,
+  "source_original_CPU_callbacks": 0,
+  "source_sha256": "c6bf5412f735a2d32b5cf2ac2b7547897e9ffc7e9dd957eaf39c14305f74494d",
+  "validator_sha256": "6fb3a5d2bdceaa75cbe96fdb0f44a1b24894b616cd79d7e114991e2388cfbb93",
+  "local_instruction_location_total": 307,
+  "local_instruction_location_observed": 307,
+  "local_unobserved_locations": [],
+  "validation": {
+    "status": "passed",
+    "rom_cpu_case_count": 7509,
+    "original_complete_case_count": 7509,
+    "original_prefix_case_count": 0,
+    "source_guard_case_count": 5,
+    "failed_count": 0,
+    "counts": {
+      "five_phases_all_button_bytes_real_queue_busy": 2560,
+      "all237_card_rows_and_selected_portrait": 4266,
+      "all30_city_compaction_empty_sparse_full": 90,
+      "roster_navigation_first_last_empty_next": 80,
+      "both80pixel_transitions_all_boundaries": 486,
+      "real_panel_job_readiness_and_notification_phases": 18,
+      "notification_zero_true_A_entry": 1,
+      "original_scroll_wrap_boundaries": 8
+    },
+    "comparison": {
+      "RAM_bytes": 2048,
+      "SRAM_bytes": 8192,
+      "free_CPU_stack_residue": "included",
+      "registers": "AXYP/SP/PC",
+      "all_mapper_banks": true,
+      "exact_IO_ports": true
+    }
+  },
+  "contracts": {
+    "APIs": [
+      "CityOfficerDetailsController(memory,CityOfficerData.from_rom(rom),services=None)",
+      "run_entry(entry=A021,registers)",
+      "tick(registers)",
+      "__call__(ServiceCall)",
+      "resume()"
+    ],
+    "entry_mapping": {
+      "25A021": "4CE5AF→25AFE5",
+      "25A01B": "4C64B9→B964, different officer scan and not this UI"
+    },
+    "phase_table": [
+      {
+        "phase": 0,
+        "entry": 45045,
+        "name": "initialize_city_cards"
+      },
+      {
+        "phase": 1,
+        "entry": 45121,
+        "name": "produce_initial_detail_rows"
+      },
+      {
+        "phase": 2,
+        "entry": 45190,
+        "name": "show_selected_card_and_inputs"
+      },
+      {
+        "phase": 3,
+        "entry": 45366,
+        "name": "produce_adjacent_card"
+      },
+      {
+        "phase": 4,
+        "entry": 45397,
+        "name": "animate_card_transition"
+      }
+    ],
+    "local_closure": {
+      "start": 45029,
+      "end_exclusive": 45783,
+      "named_functions": 12,
+      "original_instruction_locations": 307,
+      "observed_instruction_locations": 307,
+      "unobserved": [],
+      "structure_gaps": []
+    },
+    "inputs": {
+      "0401": "five phases0..4",
+      "0402": "cityID0..29 used to compact original32B city record roster",
+      "0408": "selected portrait/list index; changes only at animation completion",
+      "040C": "detail producer selected index; may already point at next card while0408 still old",
+      "0410..0419": "compact ten officer list; FF empty; actual portrait is0410[0408], row record is0410[040C]",
+      "040D": "real ten-row producer cursor0..9,FF complete, busy007E bit2 means no advancement",
+      "0081/0083": "actual button/direction bytes; no simulated controller read or ack",
+      "0140/0150": "real panel jobs; nonzero0140 postpones notification handling",
+      "0409/040A": "two-pixel transition progress and direction",
+      "040E/F": "pending equipment CHR shadows committed at original scroll offsets64/16"
+    },
+    "effects": [
+      "phase0 copies palette0 via real inline farcall29A015, compacts city roster17..26 withoutFF slots, initializes row0.",
+      "phase1 calls actualB2D7 producer; only040D==FF installs original IRQ/scroll shadows and advances phase2.",
+      "phase2 draws selected portrait; up/down initiate next card with original first/last/empty guards; A/B return0400/0401 from0470/0471 when original condition allows.",
+      "phase3 calls actual row producer and selected portrait; onlyFF advances phase4.",
+      "phase4 positions old/new portraits, advances2pixels, at80 changes0408 and returns phase2. CHR/scroll shadows keep original wrap and timing.",
+      "0140/0150 pending message jobs and all007E bits remain real; no fake consumption or PPU completion."
+    ],
+    "pure_providers": {
+      "B2D7": "frozen OfficerDetailsUIServices ten-row producer",
+      "CE1F": "frozen PortraitUIServices exact portrait caller",
+      "29A015/DBB1": "frozen SceneInitialization real palette copy",
+      "EADE": "ControlHelpers exact dispatch stack protocol",
+      "F2AF/EE07": "SceneSharedServices exact city pointer/farcall mapper/caller protocol"
+    },
+    "comparison": "All2048RAM including stack residue, all8192SRAM, AXYP/SP/PC, ordered ports,banks; no CPU helper callback or IR fallback.",
+    "scope": "One cooperative city details update, not full frame/PPU upload; original phase11/12 data and services are reused without modifying frozen files."
+  }
+}

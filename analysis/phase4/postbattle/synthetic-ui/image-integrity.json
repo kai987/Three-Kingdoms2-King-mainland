@@ -1,0 +1,75 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "synthetic_fixture": true,
+  "items": [
+    {
+      "kind": "cursor",
+      "original_file": "main13-option30-cursor.png",
+      "original_sha256": "738bbeec98aae9936f7feea2249ff8e417a69c94e1ab0eb27139f7516e3efcef",
+      "native_fullframe": "option30-cursor-fullframe-738bbeec98aa.png",
+      "enlarged_fullframe": "option30-cursor-fullframe-x3-738bbeec98aa.png",
+      "enlarged_dimensions": [
+        768,
+        720
+      ],
+      "enlargement": "nearest-neighbor3x of entire frame; no cropping",
+      "paired_zoom": "option30-glyph-zoom.png",
+      "zoom_crop": [
+        140,
+        176,
+        232,
+        200
+      ],
+      "zoom_factor": 8,
+      "zoom_pixel_equality": true,
+      "paired_ram": "main13-option30-cursor-ram.bin",
+      "paired_ram_sha256": "401fb9f580708f5a6a2b6c46bdc21a89853bfd82c16eeba9337267dd36ac9757",
+      "core_frame": 236,
+      "main0500": 13,
+      "sub0501": 2,
+      "cursor0012": 3,
+      "destination_list042C": [
+        4,
+        14,
+        10,
+        30
+      ],
+      "chosen0540": 255
+    },
+    {
+      "kind": "confirmation",
+      "original_file": "main13-option30-confirmation.png",
+      "original_sha256": "7a61641ce1b64d722333b7c133f0f72ff04fda8dfc289fc365b8cd04d3b9f198",
+      "native_fullframe": "option30-confirmation-fullframe-7a61641ce1b6.png",
+      "enlarged_fullframe": "option30-confirmation-fullframe-x3-7a61641ce1b6.png",
+      "enlarged_dimensions": [
+        768,
+        720
+      ],
+      "enlargement": "nearest-neighbor3x of entire frame; no cropping",
+      "paired_zoom": "option30-confirmation-zoom.png",
+      "zoom_crop": [
+        24,
+        164,
+        256,
+        224
+      ],
+      "zoom_factor": 4,
+      "zoom_pixel_equality": true,
+      "paired_ram": "main13-option30-confirmation-ram.bin",
+      "paired_ram_sha256": "8934f045d1a3f18aa41b5dcda55be9b0d49b699f316437b5b972416ba00aad25",
+      "core_frame": 424,
+      "main0500": 13,
+      "sub0501": 3,
+      "cursor0012": 128,
+      "destination_list042C": [
+        4,
+        14,
+        10,
+        30
+      ],
+      "chosen0540": 30
+    }
+  ],
+  "pixel_note": "Hash-named current filesystem frames are verified against their own zoom and paired RAM. A browser response showing another officer/scene must be compared to these file hashes before attributing it to the fixture."
+}

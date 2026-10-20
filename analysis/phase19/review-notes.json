@@ -1,0 +1,22 @@
+{
+  "schema": "phase19-independent-readonly-review-v1",
+  "status": "reviewed",
+  "reviewer": "rom_assets",
+  "scope": [
+    "pinned original-core CPU/PRG/N163 chunk format",
+    "partial/indexed/RAM-mirror pointer invalidation",
+    "saved register and stack half-pair invalidation"
+  ],
+  "findings_resolved": [
+    "N163 auto-increment saturation corrected in new CapturedServiceMemory while historical ServiceMemory remains frozen",
+    "roundtrip output naming made phase/case/stem unique with per-row input/output SHA"
+  ],
+  "current_data_roundtrip_collision_observed": false,
+  "extra_formal_CPU_cases": 0,
+  "extra_formal_Native_frames": 0,
+  "extra_formal_model_guards": 0,
+  "limits": [
+    "Read-only review is not a formal proof or additional CPU/Native replay case.",
+    "An informal 20000-step sanity run is excluded from all formal case counts."
+  ]
+}

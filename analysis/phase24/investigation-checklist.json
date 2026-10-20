@@ -1,0 +1,160 @@
+{
+  "schema": "phase24-natural-pointer-lifecycle-investigation-v1",
+  "status": "bounded_results_recorded_final_audit_separate",
+  "baseline": {
+    "phase23_audit_path": "analysis/phase23/verification.json",
+    "phase23_audit_sha256": "8e53b4e8c315d49a407c2f120d56fbd3280ed0043fdec36af93e332e70c90f38",
+    "phase23_increment_path": "build/三国志2超级版-逆向分析-v23增量.zip",
+    "phase23_increment_sha256": "7b141e38fdc88e6c601d10705b255bb48f04e1047cd0ab40ffa588490bf17e51",
+    "remaining_candidates": 351,
+    "unknown_producer_groups": 55,
+    "unknown_contract_accesses": 270
+  },
+  "selected_chain": {
+    "group_id": "G086",
+    "physical_bank": 28,
+    "pointer_zero_page": 0,
+    "scope": "Player allocation UI subchain: real row selection, city roster pointer, officer pointer, D987 scratch borrowing/restoration, right/left update, packet and parent commit.",
+    "why_selected": [
+      "An existing zero-preparation natural allocation state admits ordinary Right/Left and End actions.",
+      "The precise UI/caller/pointer protocol remains generated source; existing pure allocation arithmetic is retained as earlier evidence, not claimed as a new algorithm.",
+      "A complete pointer generation can distinguish officer-record access from a possible city auxiliary alias.",
+      "G107 deployment and G033 appearance bodies already have named source; they are not repeated as new recovery."
+    ],
+    "not_assumed": [
+      "All G086 accesses belong to this one pointer lifetime.",
+      "The divider writes byte00: it writes01 and other scratch; the pair00/01 is temporarily invalid, then restored.",
+      "An arbitrary bare pointer has the same restoration postcondition as a genuine F2D7 officer pointer.",
+      "A controlled raw alias or a bounded absence of auxiliary writes supplies a formal field name."
+    ]
+  },
+  "questions": [
+    {
+      "question": "Which of the55 unknown producer groups has a witnessed natural entry and actual mapper context?",
+      "status": "complete_ranking_bounded_selected_chain",
+      "evidence": "analysis/phase24/fields-static/unknown-producer-ranking.json",
+      "result": "All55 groups/270 accesses retained; only G086 allocation subchain selected. Ranking alone is not proof."
+    },
+    {
+      "question": "What exact writes invalidate and restore pair00/01 through D987 and EA7C?",
+      "status": "proved_conditional_normal_return",
+      "evidence": "analysis/phase24/fields-static/typed-pointer-return-contract.json",
+      "result": "D98750 local positions plus EA7C22 positions. Actual complete63C0+12*rawID0..255 inputs are preserved on normal no-interrupt return; bare/mixed/ZP/stack/wrapping inputs rejected."
+    },
+    {
+      "question": "Does natural allocation complete through original Right/Left and End without numerical preparation?",
+      "status": "observed_bounded_natural_saved_context",
+      "evidence": "analysis/phase24/runtime/evidence.json",
+      "result": "One imported natural phase14 allocation context, zero ancestor/new numeric writes. ID30 800→900→800, work reserve9999→9899→9999, End returns0400/0401=0/1, no net SRAM difference."
+    },
+    {
+      "question": "Do any observed or proved paths provide dedicated city+1/+28..31 production?",
+      "status": "unresolved",
+      "official_names": null,
+      "evidence": "analysis/phase24/fields-static/analysis-summary.json",
+      "result": "Only ten officer-record accesses newly disjoint; all other possible/unknown accesses remain. No name from zeros or finite nonobservation."
+    },
+    {
+      "question": "What existing user goals are still missing evidence for a whole-ROM completion claim?",
+      "status": "bounded_acceptance_inventory_recorded_overall_incomplete",
+      "evidence": "analysis/phase24/acceptance/README.md",
+      "result": "Explicit requirements, current evidence and unknowns are separate; a readable reconstruction is not an original-author project or proven high-level-source-to-NES build."
+    }
+  ],
+  "limits": [
+    "All phase1..23 source, scripts, reports, cores, ROM and versioned archives remain frozen.",
+    "Original fixed core and separate passive observer are distinct artifacts; Native, independent CPU, and declared new NMI fixtures are separate evidence domains.",
+    "No reductions from a bounded nonobservation, no mandatory source-remake scope inferred from the user request.",
+    "No push, publication, external ROM distribution or automatic phase25.",
+    "Only ten of the fourteen G086 accesses gain new authority. Other four pointer lifetimes remain unknown.",
+    "The10757 static originalCPU contracts,1080 Source differential cases and728 Native control frames are independent domains, not one coverage metric.",
+    "N163 in actual-software-context CPU/Source comparisons is an explicit common fixture; Native did not capture instantaneous N163.",
+    "The final aggregate/browser/package receipts remain separate gates; bounded subdomain passes do not prove whole-ROM completion."
+  ],
+  "results": {
+    "static": {
+      "source_CPU_cases": 0,
+      "original_contract_CPU_cases": 10757,
+      "typed_helper_actual_caller_RTS": 10240,
+      "D805_actual_caller_RTS": 512,
+      "raw_alias_counterexamples": 5,
+      "raw_counterexample_note": "FFF8 is a declared prefix;01E9 executes RTS with a damaged caller address. Not all10757 are ordinary returns.",
+      "model_guards": 14,
+      "all_indirect_accesses": 1526,
+      "proved_disjoint": 1185,
+      "possible_alias": 81,
+      "unknown_contract": 260,
+      "previous_remaining": 351,
+      "remaining": 341,
+      "newly_disjoint": 10,
+      "selected_group_total_accesses": 14,
+      "selected_group_other_accesses_unchanged": 4,
+      "ranking_groups": 55,
+      "ranking_input_unknown_accesses": 270,
+      "finite_rounds": 2,
+      "complete_analysis_fixed_point_proven": false,
+      "raw345_categories": {
+        "instruction_operand": 104,
+        "declared_data": 13,
+        "no_proved_control_entry": 228
+      }
+    },
+    "Source": {
+      "service_CPU_cases": 1038,
+      "integration_CPU_cases": 42,
+      "total_CPU_cases": 1080,
+      "actual_caller_RTS": 1077,
+      "nonlocal_return": 1,
+      "strict_prefix": 2,
+      "guards": 8,
+      "new_body_instruction_positions": 379,
+      "new_body_original_bytes": 913,
+      "separate_table_bytes": 39,
+      "source_original_CPU_callbacks": 0,
+      "production_IR_interpretation": false,
+      "comparison_scope": "Per receipts: all2048RAM/8192SRAM/AXYP-SP-PC/orderedIO/fourPRG/N163; no idle-stack exclusion. Actual Native software callers and controlled CPU/hardware fixtures remain separately tagged."
+    },
+    "Native": {
+      "natural_routes": 1,
+      "mother_phase": 14,
+      "state_imports_per_run": 1,
+      "cold_boot": false,
+      "ancestor_numeric_preparation_bytes": 0,
+      "additional_core_memory_writes": 0,
+      "core_variants": 2,
+      "fresh_process_runs": 4,
+      "frames_per_route": 182,
+      "frames_both_runs_controls": 728,
+      "five_complete_buffers_exact": true,
+      "nonempty_repeat_artifact_checks": 1157,
+      "original_checkpoints": 13,
+      "PNG_count": 26,
+      "WAV_count": 2,
+      "observer_raw_events": 32745,
+      "observer_sparse_full_RAM_SRAM_snapshots": 123,
+      "exported_actual_callees": 4,
+      "observed_D987_lifecycles": 2,
+      "original_core_internal_trace": false,
+      "source_CPU_cases": 0,
+      "instant_N163_captured": false,
+      "N163_CPU_Source_context": "explicit common fixture, not Native snapshot"
+    }
+  },
+  "final_receipts": {
+    "overall_audit": "analysis/phase24/verification.json",
+    "browser_acceptance": "analysis/phase24/browser-validation.json",
+    "package": "analysis/phase24/package-receipt.json",
+    "status": "Separate final receipts are authoritative; no aggregate/browser/package pass is asserted by this checklist."
+  },
+  "delivery": {
+    "kind": "small_increment",
+    "requires": [
+      "v22 complete package",
+      "v23 increment",
+      "user supplied original ROM and declared runtime"
+    ],
+    "canonical_full_package": "v22 unchanged",
+    "original_author_source_claim": false,
+    "high_level_source_builds_identical_NES_claim": false
+  }
+}

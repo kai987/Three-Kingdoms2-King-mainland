@@ -1,0 +1,590 @@
+[
+  {
+    "physical_bank": 31,
+    "cpu_address": 60697,
+    "rom_offset": 257321,
+    "count": 27
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60699,
+    "rom_offset": 257323,
+    "count": 27
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60702,
+    "rom_offset": 257326,
+    "count": 302
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60704,
+    "rom_offset": 257328,
+    "count": 302
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60707,
+    "rom_offset": 257331,
+    "count": 72
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60709,
+    "rom_offset": 257333,
+    "count": 72
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60712,
+    "rom_offset": 257336,
+    "count": 99
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60714,
+    "rom_offset": 257338,
+    "count": 99
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60717,
+    "rom_offset": 257341,
+    "count": 126
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60719,
+    "rom_offset": 257343,
+    "count": 126
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60722,
+    "rom_offset": 257346,
+    "count": 153
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60724,
+    "rom_offset": 257348,
+    "count": 153
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60727,
+    "rom_offset": 257351,
+    "count": 180
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60729,
+    "rom_offset": 257353,
+    "count": 180
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60732,
+    "rom_offset": 257356,
+    "count": 207
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60734,
+    "rom_offset": 257358,
+    "count": 207
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60737,
+    "rom_offset": 257361,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60739,
+    "rom_offset": 257363,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60742,
+    "rom_offset": 257366,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60744,
+    "rom_offset": 257368,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60746,
+    "rom_offset": 257370,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60749,
+    "rom_offset": 257373,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60752,
+    "rom_offset": 257376,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60754,
+    "rom_offset": 257378,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60756,
+    "rom_offset": 257380,
+    "count": 1065
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60759,
+    "rom_offset": 257383,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60762,
+    "rom_offset": 257386,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60764,
+    "rom_offset": 257388,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60766,
+    "rom_offset": 257390,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60769,
+    "rom_offset": 257393,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60772,
+    "rom_offset": 257396,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60774,
+    "rom_offset": 257398,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60776,
+    "rom_offset": 257400,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60779,
+    "rom_offset": 257403,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60782,
+    "rom_offset": 257406,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60784,
+    "rom_offset": 257408,
+    "count": 2075
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60785,
+    "rom_offset": 257409,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60788,
+    "rom_offset": 257412,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60791,
+    "rom_offset": 257415,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60793,
+    "rom_offset": 257417,
+    "count": 944
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60796,
+    "rom_offset": 257420,
+    "count": 944
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60798,
+    "rom_offset": 257422,
+    "count": 944
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60800,
+    "rom_offset": 257424,
+    "count": 192
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60803,
+    "rom_offset": 257427,
+    "count": 192
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60805,
+    "rom_offset": 257429,
+    "count": 192
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60807,
+    "rom_offset": 257431,
+    "count": 8
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60809,
+    "rom_offset": 257433,
+    "count": 8
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60812,
+    "rom_offset": 257436,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60813,
+    "rom_offset": 257437,
+    "count": 1065
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60816,
+    "rom_offset": 257440,
+    "count": 1065
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60818,
+    "rom_offset": 257442,
+    "count": 113
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60821,
+    "rom_offset": 257445,
+    "count": 113
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60823,
+    "rom_offset": 257447,
+    "count": 113
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60825,
+    "rom_offset": 257449,
+    "count": 37
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60827,
+    "rom_offset": 257451,
+    "count": 37
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60830,
+    "rom_offset": 257454,
+    "count": 37
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60833,
+    "rom_offset": 257457,
+    "count": 37
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60836,
+    "rom_offset": 257460,
+    "count": 37
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60838,
+    "rom_offset": 257462,
+    "count": 37
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60840,
+    "rom_offset": 257464,
+    "count": 1065
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60841,
+    "rom_offset": 257465,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60844,
+    "rom_offset": 257468,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60847,
+    "rom_offset": 257471,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60849,
+    "rom_offset": 257473,
+    "count": 316
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60852,
+    "rom_offset": 257476,
+    "count": 316
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60854,
+    "rom_offset": 257478,
+    "count": 316
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60856,
+    "rom_offset": 257480,
+    "count": 14
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60858,
+    "rom_offset": 257482,
+    "count": 14
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60861,
+    "rom_offset": 257485,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60862,
+    "rom_offset": 257486,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60865,
+    "rom_offset": 257489,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60867,
+    "rom_offset": 257491,
+    "count": 144
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60870,
+    "rom_offset": 257494,
+    "count": 144
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60872,
+    "rom_offset": 257496,
+    "count": 144
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60874,
+    "rom_offset": 257498,
+    "count": 32
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60876,
+    "rom_offset": 257500,
+    "count": 32
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60879,
+    "rom_offset": 257503,
+    "count": 92
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60880,
+    "rom_offset": 257504,
+    "count": 92
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60881,
+    "rom_offset": 257505,
+    "count": 92
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60882,
+    "rom_offset": 257506,
+    "count": 92
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60884,
+    "rom_offset": 257508,
+    "count": 92
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60885,
+    "rom_offset": 257509,
+    "count": 92
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60887,
+    "rom_offset": 257511,
+    "count": 92
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60889,
+    "rom_offset": 257513,
+    "count": 32
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60892,
+    "rom_offset": 257516,
+    "count": 1064
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60893,
+    "rom_offset": 257517,
+    "count": 4285
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60895,
+    "rom_offset": 257519,
+    "count": 4285
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60898,
+    "rom_offset": 257522,
+    "count": 12511
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60900,
+    "rom_offset": 257524,
+    "count": 12511
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60902,
+    "rom_offset": 257526,
+    "count": 8226
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60903,
+    "rom_offset": 257527,
+    "count": 8226
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60905,
+    "rom_offset": 257529,
+    "count": 8226
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60906,
+    "rom_offset": 257530,
+    "count": 8226
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60909,
+    "rom_offset": 257533,
+    "count": 4285
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60910,
+    "rom_offset": 257534,
+    "count": 4285
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60913,
+    "rom_offset": 257537,
+    "count": 4285
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60914,
+    "rom_offset": 257538,
+    "count": 4285
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60916,
+    "rom_offset": 257540,
+    "count": 4285
+  }
+]

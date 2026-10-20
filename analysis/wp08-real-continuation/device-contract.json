@@ -1,0 +1,32 @@
+{
+  "kind": "Existing ServiceMemory raw14bit/register sink only",
+  "fresh_Native122": {
+    "raw_PPU_formula": "(i*17+11)&255 for 0<=i<16384",
+    "ppu_address": 10941,
+    "ppu_latch": 1,
+    "ppu_scroll_latch": 1,
+    "ppu_scroll": [
+      17,
+      93
+    ],
+    "initial_control": 4,
+    "initial_increment": 32,
+    "port_E000_E800_F000": "derived from complete RAM E1/E2/E3; E800 OR C0; not captured device state",
+    "N163_zero_fixture": true
+  },
+  "controlled_SP00": "Exact saved raw-sink/register fixture after first WP07 palette return; only finite future2002 plan rebound and new history counters reset",
+  "finite_reads": "Exact PC/ordinal values; no repeat or autofill. Successful read consumes sample and resets latch. bit6 controls FB22 BIT/BVS.",
+  "supported_writes": "5000/5800 raw commands, mapper/CHR/nametable selectors,2000/2001/2003/2005/2006/2007,4014 request with all256 bytes; existing ServiceMemory only",
+  "missing_policy": "CPU stops before missing BIT; Source hardware_read wait. bit6set Source wait pairs with actual CPU BIT+BVS returningFB22. Repeated no-input resume preserves state and owner; only planned sample may be appended.",
+  "NMI_entry": "Explicit one software interrupt primitive per Native122 case; real six-byte stack path including original prologue. No captured hardware NMI edge/timing credit.",
+  "not_modeled": [
+    "PPU/APU/N163 internal timing",
+    "automatic vblank or read-clearbit7",
+    "openbus",
+    "CIRAM/CHR/palette physical mirroring",
+    "6bit palette masking",
+    "DMA transfer/stall/cycles",
+    "IRQ scheduler",
+    "rendering/audio synthesis"
+  ]
+}

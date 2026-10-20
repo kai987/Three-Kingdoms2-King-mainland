@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "previous_frozen_paths": 239404,
+  "current_frozen_paths": 239445,
+  "missing_or_changed": [],
+  "previous_manifest_sha256": "9ba954471ebce73a9ecd8687cbfb0672edb3646b58764ed27f2cd0f23339b384",
+  "current_manifest_sha256": "28ecf6920932bf39ccd68290c4dead583e6b006508ffe253575380c48e033ab9",
+  "Source_CPU_Native_executions": 0,
+  "seconds": 59.396
+}

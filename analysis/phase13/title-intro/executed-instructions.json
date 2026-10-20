@@ -1,0 +1,1427 @@
+[
+  {
+    "physical_bank": 23,
+    "cpu_address": 40993,
+    "rom_offset": 188465
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56869,
+    "rom_offset": 204341
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56872,
+    "rom_offset": 204344
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56874,
+    "rom_offset": 204346
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56876,
+    "rom_offset": 204348
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56878,
+    "rom_offset": 204350
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56881,
+    "rom_offset": 204353
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56884,
+    "rom_offset": 204356
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56887,
+    "rom_offset": 204359
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56900,
+    "rom_offset": 204372
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56903,
+    "rom_offset": 204375
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56906,
+    "rom_offset": 204378
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56908,
+    "rom_offset": 204380
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56910,
+    "rom_offset": 204382
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56912,
+    "rom_offset": 204384
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56915,
+    "rom_offset": 204387
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56917,
+    "rom_offset": 204389
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56920,
+    "rom_offset": 204392
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56922,
+    "rom_offset": 204394
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56925,
+    "rom_offset": 204397
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56927,
+    "rom_offset": 204399
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56930,
+    "rom_offset": 204402
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56933,
+    "rom_offset": 204405
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56934,
+    "rom_offset": 204406
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56937,
+    "rom_offset": 204409
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56939,
+    "rom_offset": 204411
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56941,
+    "rom_offset": 204413
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56943,
+    "rom_offset": 204415
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56946,
+    "rom_offset": 204418
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56948,
+    "rom_offset": 204420
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56951,
+    "rom_offset": 204423
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56954,
+    "rom_offset": 204426
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56957,
+    "rom_offset": 204429
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56960,
+    "rom_offset": 204432
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56963,
+    "rom_offset": 204435
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56965,
+    "rom_offset": 204437
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56967,
+    "rom_offset": 204439
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56970,
+    "rom_offset": 204442
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56973,
+    "rom_offset": 204445
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56976,
+    "rom_offset": 204448
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56979,
+    "rom_offset": 204451
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56981,
+    "rom_offset": 204453
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56983,
+    "rom_offset": 204455
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56986,
+    "rom_offset": 204458
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56988,
+    "rom_offset": 204460
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 56991,
+    "rom_offset": 204463
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57017,
+    "rom_offset": 204489
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57020,
+    "rom_offset": 204492
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57022,
+    "rom_offset": 204494
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57024,
+    "rom_offset": 204496
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57027,
+    "rom_offset": 204499
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57030,
+    "rom_offset": 204502
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57031,
+    "rom_offset": 204503
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57034,
+    "rom_offset": 204506
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57036,
+    "rom_offset": 204508
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57039,
+    "rom_offset": 204511
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57042,
+    "rom_offset": 204514
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57045,
+    "rom_offset": 204517
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57046,
+    "rom_offset": 204518
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57049,
+    "rom_offset": 204521
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57051,
+    "rom_offset": 204523
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57054,
+    "rom_offset": 204526
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57056,
+    "rom_offset": 204528
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57058,
+    "rom_offset": 204530
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57060,
+    "rom_offset": 204532
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57062,
+    "rom_offset": 204534
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57064,
+    "rom_offset": 204536
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57067,
+    "rom_offset": 204539
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57070,
+    "rom_offset": 204542
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57073,
+    "rom_offset": 204545
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57076,
+    "rom_offset": 204548
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57078,
+    "rom_offset": 204550
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57081,
+    "rom_offset": 204553
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57082,
+    "rom_offset": 204554
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57083,
+    "rom_offset": 204555
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57084,
+    "rom_offset": 204556
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57087,
+    "rom_offset": 204559
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57089,
+    "rom_offset": 204561
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57092,
+    "rom_offset": 204564
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57094,
+    "rom_offset": 204566
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57096,
+    "rom_offset": 204568
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57098,
+    "rom_offset": 204570
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57100,
+    "rom_offset": 204572
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57102,
+    "rom_offset": 204574
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57104,
+    "rom_offset": 204576
+  },
+  {
+    "physical_bank": 24,
+    "cpu_address": 57106,
+    "rom_offset": 204578
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58751,
+    "rom_offset": 255375
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58753,
+    "rom_offset": 255377
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58756,
+    "rom_offset": 255380
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58759,
+    "rom_offset": 255383
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58761,
+    "rom_offset": 255385
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58764,
+    "rom_offset": 255388
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58767,
+    "rom_offset": 255391
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58768,
+    "rom_offset": 255392
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58770,
+    "rom_offset": 255394
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58773,
+    "rom_offset": 255397
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58776,
+    "rom_offset": 255400
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58778,
+    "rom_offset": 255402
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58781,
+    "rom_offset": 255405
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58784,
+    "rom_offset": 255408
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58787,
+    "rom_offset": 255411
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58789,
+    "rom_offset": 255413
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58792,
+    "rom_offset": 255416
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58795,
+    "rom_offset": 255419
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58797,
+    "rom_offset": 255421
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58800,
+    "rom_offset": 255424
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58803,
+    "rom_offset": 255427
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58804,
+    "rom_offset": 255428
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58806,
+    "rom_offset": 255430
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58809,
+    "rom_offset": 255433
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58811,
+    "rom_offset": 255435
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58814,
+    "rom_offset": 255438
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58815,
+    "rom_offset": 255439
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58816,
+    "rom_offset": 255440
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58818,
+    "rom_offset": 255442
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58819,
+    "rom_offset": 255443
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58821,
+    "rom_offset": 255445
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58823,
+    "rom_offset": 255447
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58825,
+    "rom_offset": 255449
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58828,
+    "rom_offset": 255452
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58830,
+    "rom_offset": 255454
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58832,
+    "rom_offset": 255456
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58835,
+    "rom_offset": 255459
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58836,
+    "rom_offset": 255460
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58838,
+    "rom_offset": 255462
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58840,
+    "rom_offset": 255464
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58843,
+    "rom_offset": 255467
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58845,
+    "rom_offset": 255469
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58848,
+    "rom_offset": 255472
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58851,
+    "rom_offset": 255475
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58852,
+    "rom_offset": 255476
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58854,
+    "rom_offset": 255478
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58856,
+    "rom_offset": 255480
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58858,
+    "rom_offset": 255482
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58860,
+    "rom_offset": 255484
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58863,
+    "rom_offset": 255487
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58865,
+    "rom_offset": 255489
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58867,
+    "rom_offset": 255491
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58870,
+    "rom_offset": 255494
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58873,
+    "rom_offset": 255497
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58874,
+    "rom_offset": 255498
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58875,
+    "rom_offset": 255499
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58876,
+    "rom_offset": 255500
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58879,
+    "rom_offset": 255503
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58880,
+    "rom_offset": 255504
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58881,
+    "rom_offset": 255505
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58882,
+    "rom_offset": 255506
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58884,
+    "rom_offset": 255508
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58885,
+    "rom_offset": 255509
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58887,
+    "rom_offset": 255511
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58888,
+    "rom_offset": 255512
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58889,
+    "rom_offset": 255513
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58891,
+    "rom_offset": 255515
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58894,
+    "rom_offset": 255518
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58896,
+    "rom_offset": 255520
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58899,
+    "rom_offset": 255523
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58900,
+    "rom_offset": 255524
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58903,
+    "rom_offset": 255527
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58904,
+    "rom_offset": 255528
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58907,
+    "rom_offset": 255531
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58908,
+    "rom_offset": 255532
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58910,
+    "rom_offset": 255534
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58913,
+    "rom_offset": 255537
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58915,
+    "rom_offset": 255539
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58918,
+    "rom_offset": 255542
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58921,
+    "rom_offset": 255545
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58922,
+    "rom_offset": 255546
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58923,
+    "rom_offset": 255547
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58925,
+    "rom_offset": 255549
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58926,
+    "rom_offset": 255550
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58929,
+    "rom_offset": 255553
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58931,
+    "rom_offset": 255555
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58933,
+    "rom_offset": 255557
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58936,
+    "rom_offset": 255560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58938,
+    "rom_offset": 255562
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58940,
+    "rom_offset": 255564
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58941,
+    "rom_offset": 255565
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58944,
+    "rom_offset": 255568
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58947,
+    "rom_offset": 255571
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58950,
+    "rom_offset": 255574
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58953,
+    "rom_offset": 255577
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58955,
+    "rom_offset": 255579
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58957,
+    "rom_offset": 255581
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58960,
+    "rom_offset": 255584
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58961,
+    "rom_offset": 255585
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58963,
+    "rom_offset": 255587
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58966,
+    "rom_offset": 255590
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58967,
+    "rom_offset": 255591
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58969,
+    "rom_offset": 255593
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58970,
+    "rom_offset": 255594
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58972,
+    "rom_offset": 255596
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58975,
+    "rom_offset": 255599
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58977,
+    "rom_offset": 255601
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58980,
+    "rom_offset": 255604
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58981,
+    "rom_offset": 255605
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58982,
+    "rom_offset": 255606
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58995,
+    "rom_offset": 255619
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58996,
+    "rom_offset": 255620
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 58999,
+    "rom_offset": 255623
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59000,
+    "rom_offset": 255624
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59001,
+    "rom_offset": 255625
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59003,
+    "rom_offset": 255627
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59004,
+    "rom_offset": 255628
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59007,
+    "rom_offset": 255631
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59008,
+    "rom_offset": 255632
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59009,
+    "rom_offset": 255633
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59011,
+    "rom_offset": 255635
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59012,
+    "rom_offset": 255636
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59015,
+    "rom_offset": 255639
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59016,
+    "rom_offset": 255640
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59017,
+    "rom_offset": 255641
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59019,
+    "rom_offset": 255643
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59020,
+    "rom_offset": 255644
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59023,
+    "rom_offset": 255647
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59024,
+    "rom_offset": 255648
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59025,
+    "rom_offset": 255649
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59027,
+    "rom_offset": 255651
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59028,
+    "rom_offset": 255652
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59031,
+    "rom_offset": 255655
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59032,
+    "rom_offset": 255656
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59033,
+    "rom_offset": 255657
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59035,
+    "rom_offset": 255659
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59036,
+    "rom_offset": 255660
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59039,
+    "rom_offset": 255663
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59040,
+    "rom_offset": 255664
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59041,
+    "rom_offset": 255665
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59043,
+    "rom_offset": 255667
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60126,
+    "rom_offset": 256750
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60128,
+    "rom_offset": 256752
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60129,
+    "rom_offset": 256753
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60130,
+    "rom_offset": 256754
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60131,
+    "rom_offset": 256755
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60132,
+    "rom_offset": 256756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60134,
+    "rom_offset": 256758
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60135,
+    "rom_offset": 256759
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60137,
+    "rom_offset": 256761
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60139,
+    "rom_offset": 256763
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60141,
+    "rom_offset": 256765
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60142,
+    "rom_offset": 256766
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60144,
+    "rom_offset": 256768
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60146,
+    "rom_offset": 256770
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60148,
+    "rom_offset": 256772
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61869,
+    "rom_offset": 258493
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61871,
+    "rom_offset": 258495
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61874,
+    "rom_offset": 258498
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61876,
+    "rom_offset": 258500
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61879,
+    "rom_offset": 258503
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61881,
+    "rom_offset": 258505
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61884,
+    "rom_offset": 258508
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61886,
+    "rom_offset": 258510
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61888,
+    "rom_offset": 258512
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61891,
+    "rom_offset": 258515
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61892,
+    "rom_offset": 258516
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61894,
+    "rom_offset": 258518
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61896,
+    "rom_offset": 258520
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61898,
+    "rom_offset": 258522
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61899,
+    "rom_offset": 258523
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61902,
+    "rom_offset": 258526
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61905,
+    "rom_offset": 258529
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61914,
+    "rom_offset": 258538
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61917,
+    "rom_offset": 258541
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61918,
+    "rom_offset": 258542
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61920,
+    "rom_offset": 258544
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61921,
+    "rom_offset": 258545
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61924,
+    "rom_offset": 258548
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61927,
+    "rom_offset": 258551
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61928,
+    "rom_offset": 258552
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61930,
+    "rom_offset": 258554
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61933,
+    "rom_offset": 258557
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61936,
+    "rom_offset": 258560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61937,
+    "rom_offset": 258561
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61939,
+    "rom_offset": 258563
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61940,
+    "rom_offset": 258564
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61943,
+    "rom_offset": 258567
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61946,
+    "rom_offset": 258570
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61947,
+    "rom_offset": 258571
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61948,
+    "rom_offset": 258572
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61949,
+    "rom_offset": 258573
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61950,
+    "rom_offset": 258574
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61951,
+    "rom_offset": 258575
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61953,
+    "rom_offset": 258577
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61955,
+    "rom_offset": 258579
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62047,
+    "rom_offset": 258671
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62050,
+    "rom_offset": 258674
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62053,
+    "rom_offset": 258677
+  }
+]

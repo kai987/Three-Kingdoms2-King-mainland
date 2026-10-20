@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+"""Hash-only ancestral and full-tree preservation for the phase1 producer."""
+from pathlib import Path
+import argparse,hashlib,json,sys,time
+sys.dont_write_bytecode=True
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'analysis/wp03-ee07-phase1-producer';PREV=ROOT/'analysis/wp03-ee07-return-family';CACHE={}
+def sha(p):
+ s=p.stat();key=(s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+ if key not in CACHE:
+  h=hashlib.sha256()
+  with p.open('rb')as f:
+   for b in iter(lambda:f.read(4194304),b''):h.update(b)
+  t=p.stat();assert key==(t.st_dev,t.st_ino,t.st_size,t.st_mtime_ns,t.st_ctime_ns);CACHE[key]=h.hexdigest()
+ return CACHE[key]
+def read(p):return json.loads(p.read_text())
+def save(n,x):
+ p=OUT/n;assert not p.exists();p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+def paths():
+ out=[]
+ for d in('analysis','source','scripts','build','tools','.toolchain'):
+  out.extend(p for p in(ROOT/d).rglob('*')if p.is_file()and not p.is_relative_to(OUT)and not(p.parent==ROOT/'scripts'and'wp03_ee07_phase1'in p.name))
+ out.extend(p for p in ROOT.iterdir()if p.is_file()and p.name!='.DS_Store');return sorted(set(out))
+def main(label):
+ start=time.monotonic();OUT.mkdir(parents=True,exist_ok=True)
+ assert sha(PREV/'verification.json')=='2d38d4f2a4f648c946e1339395e2c8bce8c1f8fdb71d0793f46f0cb542dbe4d8'
+ assert sha(ROOT/'.toolchain/nestopia/nestopia_libretro.dylib')=='924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a'
+ assert sha(Path('/Users/paulasmith/Downloads/三国志2超级版.nes'))=='26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82'
+ if label=='before':
+  expected=dict(read(PREV/'frozen-work-inputs.json')['files']);assert len(expected)==239445
+  for n,row in read(PREV/'artifact-manifest.json')['files'].items():
+   assert n not in expected;expected[n]=row
+  for p in(PREV/'artifact-manifest.json',PREV/'verification.json',*(PREV/'clarification-01').iterdir()):
+   n=str(p.relative_to(ROOT));assert n not in expected;expected[n]=dict(sha256=sha(p),bytes=p.stat().st_size)
+  assert len(expected)==239484
+  for row in read(PREV/'input-manifest.json')['current_producers']:
+   assert row['path']not in expected;expected[row['path']]=dict(sha256=row['sha256'],bytes=row['bytes'])
+  assert len(expected)==239489
+  assert sha(PREV/'clarification-01/artifact-manifest.json')=='f3ecd013557601cc989fd042112b93e21a8dbe42e02593fddcea665cc6392f25'
+  for n,row in read(PREV/'clarification-01/artifact-manifest.json')['files'].items():assert expected[n]==row
+  actual={str(p.relative_to(ROOT))for p in paths()};assert actual==set(expected),(len(actual),len(expected),sorted(actual-set(expected))[:8])
+  for n,row in expected.items():
+   p=ROOT/n;assert p.stat().st_size==row['bytes']and sha(p)==row['sha256'],n
+  save('frozen-work-inputs.json',dict(files=expected,ancestral_paths=239445,prior_package_files=39,prior_scripts=5,excluded_new_work='analysis/wp03-ee07-phase1-producer; scripts/*wp03_ee07_phase1*',excluded_runtime='.venv-trace and root .DS_Store'))
+ else:
+  expected=read(OUT/'frozen-work-inputs.json')['files'];assert {str(p.relative_to(ROOT))for p in paths()}==set(expected)
+  for n,row in expected.items():
+   p=ROOT/n;assert p.stat().st_size==row['bytes']and sha(p)==row['sha256'],n
+ result=dict(status='passed',label=label,old_work_paths=len(expected),missing_or_changed=[],ancestral_paths=239445,prior_package_files=39,prior_scripts=5,
+             frozen_manifest_sha256=sha(OUT/'frozen-work-inputs.json'),Source_CPU_Native_executions=0,seconds=round(time.monotonic()-start,3))
+ save(f'frozen-{label}.json',result);print(json.dumps(result))
+if __name__=='__main__':
+ p=argparse.ArgumentParser();p.add_argument('label',choices=('before','after'));main(p.parse_args().label)

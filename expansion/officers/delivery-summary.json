@@ -1,0 +1,16 @@
+{
+  "candidate_people": 1000,
+  "distinct_name_strings": 994,
+  "same_name_people": 11,
+  "chronology_records": 1000,
+  "scenario_cells": 10000,
+  "field_mapping_rows": 29,
+  "original_count": 237,
+  "original_identified_matches": 8,
+  "original_pending": 229,
+  "confirmed_net_new_people": null,
+  "map_relations": 7,
+  "game_runtime_modified": false,
+  "workbook": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/千人武将候选名单与字段映射.xlsx",
+  "report": "expansion/officers/index.html"
+}

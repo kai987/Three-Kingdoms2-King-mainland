@@ -1,0 +1,2887 @@
+{
+  "cityCount": 96,
+  "citiesUnchanged": true,
+  "seaUnchanged": true,
+  "waterUnchanged": true,
+  "cityNames": 0,
+  "roadCurves": [
+    {
+      "segment": 0,
+      "rawVertices": 3,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 8
+    },
+    {
+      "segment": 1,
+      "rawVertices": 10,
+      "simplifiedVertices": 7,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 60,
+      "coreSamplesRendered": 58
+    },
+    {
+      "segment": 2,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 3,
+      "rawVertices": 6,
+      "simplifiedVertices": 6,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 7,
+      "coreSamplesRendered": 7
+    },
+    {
+      "segment": 4,
+      "rawVertices": 6,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 5,
+      "rawVertices": 6,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 6,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 6,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 7,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 8,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 9,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 15,
+      "coreSamplesRendered": 15
+    },
+    {
+      "segment": 10,
+      "rawVertices": 6,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 18,
+      "coreSamplesRendered": 19
+    },
+    {
+      "segment": 11,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 6,
+      "coreSamplesRendered": 7
+    },
+    {
+      "segment": 12,
+      "rawVertices": 6,
+      "simplifiedVertices": 6,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 4
+    },
+    {
+      "segment": 13,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 4,
+      "coreSamplesRendered": 4
+    },
+    {
+      "segment": 14,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 15,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 16,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 17,
+      "rawVertices": 8,
+      "simplifiedVertices": 8,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 14,
+      "coreSamplesRendered": 12
+    },
+    {
+      "segment": 18,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 19,
+      "coreSamplesRendered": 18
+    },
+    {
+      "segment": 19,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 1,
+      "coreSamplesRendered": 1
+    },
+    {
+      "segment": 20,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 11,
+      "coreSamplesRendered": 12
+    },
+    {
+      "segment": 21,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 22,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 25,
+      "coreSamplesRendered": 25
+    },
+    {
+      "segment": 23,
+      "rawVertices": 7,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 54,
+      "coreSamplesRendered": 50
+    },
+    {
+      "segment": 24,
+      "rawVertices": 8,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 12,
+      "coreSamplesRendered": 12
+    },
+    {
+      "segment": 25,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 9
+    },
+    {
+      "segment": 26,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 27,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 33,
+      "coreSamplesRendered": 33
+    },
+    {
+      "segment": 28,
+      "rawVertices": 4,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 8
+    },
+    {
+      "segment": 29,
+      "rawVertices": 4,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 1,
+      "coreSamplesRendered": 2
+    },
+    {
+      "segment": 30,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 31,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 32,
+      "rawVertices": 5,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 33,
+      "rawVertices": 6,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 1,
+      "coreSamplesRendered": 1
+    },
+    {
+      "segment": 34,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 35,
+      "rawVertices": 10,
+      "simplifiedVertices": 8,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 53,
+      "coreSamplesRendered": 53
+    },
+    {
+      "segment": 36,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 21,
+      "coreSamplesRendered": 21
+    },
+    {
+      "segment": 37,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 38,
+      "rawVertices": 4,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 39,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 40,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 41,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 4
+    },
+    {
+      "segment": 42,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 3
+    },
+    {
+      "segment": 43,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 7,
+      "coreSamplesRendered": 7
+    },
+    {
+      "segment": 44,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 45,
+      "rawVertices": 6,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 2,
+      "coreSamplesRendered": 2
+    },
+    {
+      "segment": 46,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 47,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 9,
+      "coreSamplesRendered": 10
+    },
+    {
+      "segment": 48,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 1
+    },
+    {
+      "segment": 49,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 50,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 6,
+      "coreSamplesRendered": 6
+    },
+    {
+      "segment": 51,
+      "rawVertices": 7,
+      "simplifiedVertices": 7,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 52,
+      "rawVertices": 6,
+      "simplifiedVertices": 6,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 12,
+      "coreSamplesRendered": 11
+    },
+    {
+      "segment": 53,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 54,
+      "rawVertices": 11,
+      "simplifiedVertices": 11,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 44,
+      "coreSamplesRendered": 43
+    },
+    {
+      "segment": 55,
+      "rawVertices": 6,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 56,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 7,
+      "coreSamplesRendered": 7
+    },
+    {
+      "segment": 57,
+      "rawVertices": 8,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 21,
+      "coreSamplesRendered": 21
+    },
+    {
+      "segment": 58,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 7,
+      "coreSamplesRendered": 7
+    },
+    {
+      "segment": 59,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 39,
+      "coreSamplesRendered": 39
+    },
+    {
+      "segment": 60,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 61,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 62,
+      "rawVertices": 14,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 63,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 64,
+      "rawVertices": 6,
+      "simplifiedVertices": 6,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 65,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 66,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 2,
+      "coreSamplesRendered": 2
+    },
+    {
+      "segment": 67,
+      "rawVertices": 7,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 53,
+      "coreSamplesRendered": 52
+    },
+    {
+      "segment": 68,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 69,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 70,
+      "rawVertices": 4,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 64,
+      "coreSamplesRendered": 63
+    },
+    {
+      "segment": 71,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 9,
+      "coreSamplesRendered": 10
+    },
+    {
+      "segment": 72,
+      "rawVertices": 6,
+      "simplifiedVertices": 6,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 11,
+      "coreSamplesRendered": 10
+    },
+    {
+      "segment": 73,
+      "rawVertices": 7,
+      "simplifiedVertices": 7,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 10,
+      "coreSamplesRendered": 11
+    },
+    {
+      "segment": 74,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 12,
+      "coreSamplesRendered": 12
+    },
+    {
+      "segment": 75,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 76,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 77,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 7,
+      "coreSamplesRendered": 6
+    },
+    {
+      "segment": 78,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 29,
+      "coreSamplesRendered": 29
+    },
+    {
+      "segment": 79,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 4,
+      "coreSamplesRendered": 4
+    },
+    {
+      "segment": 80,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 11,
+      "coreSamplesRendered": 11
+    },
+    {
+      "segment": 81,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 12,
+      "coreSamplesRendered": 12
+    },
+    {
+      "segment": 82,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 83,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 84,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 85,
+      "rawVertices": 5,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 6,
+      "coreSamplesRendered": 6
+    },
+    {
+      "segment": 86,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 87,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 88,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 89,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 90,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 14,
+      "coreSamplesRendered": 14
+    },
+    {
+      "segment": 91,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 92,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 20,
+      "coreSamplesRendered": 20
+    },
+    {
+      "segment": 93,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 94,
+      "rawVertices": 4,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 95,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 96,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 97,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 98,
+      "rawVertices": 10,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 99,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 20,
+      "coreSamplesRendered": 20
+    },
+    {
+      "segment": 100,
+      "rawVertices": 9,
+      "simplifiedVertices": 7,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 60,
+      "coreSamplesRendered": 57
+    },
+    {
+      "segment": 101,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 10,
+      "coreSamplesRendered": 10
+    },
+    {
+      "segment": 102,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 103,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 104,
+      "rawVertices": 8,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 8
+    },
+    {
+      "segment": 105,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 106,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 8
+    },
+    {
+      "segment": 107,
+      "rawVertices": 9,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 4,
+      "coreSamplesRendered": 4
+    },
+    {
+      "segment": 108,
+      "rawVertices": 9,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 109,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 110,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 111,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 112,
+      "rawVertices": 11,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 113,
+      "rawVertices": 12,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 114,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 3
+    },
+    {
+      "segment": 115,
+      "rawVertices": 6,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 116,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 1
+    },
+    {
+      "segment": 117,
+      "rawVertices": 7,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 118,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 119,
+      "rawVertices": 3,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 15,
+      "coreSamplesRendered": 15
+    },
+    {
+      "segment": 120,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 121,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 122,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 4,
+      "coreSamplesRendered": 4
+    },
+    {
+      "segment": 123,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 124,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 125,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 126,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 4,
+      "coreSamplesRendered": 4
+    },
+    {
+      "segment": 127,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 128,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 3
+    },
+    {
+      "segment": 129,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 7
+    },
+    {
+      "segment": 130,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 2,
+      "coreSamplesRendered": 2
+    },
+    {
+      "segment": 131,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 132,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 133,
+      "rawVertices": 7,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 134,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 8
+    },
+    {
+      "segment": 135,
+      "rawVertices": 7,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 136,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 3
+    },
+    {
+      "segment": 137,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 138,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 139,
+      "rawVertices": 6,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 140,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 141,
+      "rawVertices": 8,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 142,
+      "rawVertices": 3,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 9,
+      "coreSamplesRendered": 8
+    },
+    {
+      "segment": 143,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 56,
+      "coreSamplesRendered": 55
+    },
+    {
+      "segment": 144,
+      "rawVertices": 7,
+      "simplifiedVertices": 7,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 12,
+      "coreSamplesRendered": 11
+    },
+    {
+      "segment": 145,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 29,
+      "coreSamplesRendered": 29
+    },
+    {
+      "segment": 146,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 147,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 148,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 149,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 150,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 14,
+      "coreSamplesRendered": 14
+    },
+    {
+      "segment": 151,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 152,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 3
+    },
+    {
+      "segment": 153,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 31,
+      "coreSamplesRendered": 31
+    },
+    {
+      "segment": 154,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 155,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 156,
+      "rawVertices": 6,
+      "simplifiedVertices": 6,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 157,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 158,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 11,
+      "coreSamplesRendered": 11
+    },
+    {
+      "segment": 159,
+      "rawVertices": 9,
+      "simplifiedVertices": 8,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 17,
+      "coreSamplesRendered": 16
+    },
+    {
+      "segment": 160,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 161,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 162,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 163,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 164,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 165,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 166,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 167,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 168,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 169,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 20,
+      "coreSamplesRendered": 20
+    },
+    {
+      "segment": 170,
+      "rawVertices": 7,
+      "simplifiedVertices": 7,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 17,
+      "coreSamplesRendered": 17
+    },
+    {
+      "segment": 171,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 172,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 173,
+      "rawVertices": 5,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 174,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 175,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 176,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 177,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 49,
+      "coreSamplesRendered": 49
+    },
+    {
+      "segment": 178,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 179,
+      "rawVertices": 6,
+      "simplifiedVertices": 6,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 180,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 181,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 182,
+      "rawVertices": 3,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 183,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 7
+    },
+    {
+      "segment": 184,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 27,
+      "coreSamplesRendered": 28
+    },
+    {
+      "segment": 185,
+      "rawVertices": 3,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 186,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 187,
+      "rawVertices": 7,
+      "simplifiedVertices": 7,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 188,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 189,
+      "rawVertices": 9,
+      "simplifiedVertices": 6,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 4,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 190,
+      "rawVertices": 6,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 191,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 192,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 193,
+      "rawVertices": 6,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 5,
+      "coreSamplesRendered": 5
+    },
+    {
+      "segment": 194,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 195,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 6,
+      "coreSamplesRendered": 6
+    },
+    {
+      "segment": 196,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 197,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 198,
+      "rawVertices": 5,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 199,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 200,
+      "rawVertices": 8,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 201,
+      "rawVertices": 7,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 202,
+      "rawVertices": 4,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 19,
+      "coreSamplesRendered": 18
+    },
+    {
+      "segment": 203,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 204,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 21,
+      "coreSamplesRendered": 21
+    },
+    {
+      "segment": 205,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 206,
+      "rawVertices": 11,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 207,
+      "rawVertices": 6,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 208,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 209,
+      "rawVertices": 6,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 210,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 211,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 212,
+      "rawVertices": 3,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 213,
+      "rawVertices": 4,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 12,
+      "coreSamplesRendered": 12
+    },
+    {
+      "segment": 214,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 12,
+      "coreSamplesRendered": 12
+    },
+    {
+      "segment": 215,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 29,
+      "coreSamplesRendered": 29
+    },
+    {
+      "segment": 216,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 217,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 23,
+      "coreSamplesRendered": 22
+    },
+    {
+      "segment": 218,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 219,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 7,
+      "coreSamplesRendered": 7
+    },
+    {
+      "segment": 220,
+      "rawVertices": 4,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 19,
+      "coreSamplesRendered": 18
+    },
+    {
+      "segment": 221,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 222,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 223,
+      "rawVertices": 3,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 12,
+      "coreSamplesRendered": 12
+    },
+    {
+      "segment": 224,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 3
+    },
+    {
+      "segment": 225,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 226,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 227,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 228,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 229,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 3
+    },
+    {
+      "segment": 230,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 231,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 232,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 233,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 234,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 1,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 235,
+      "rawVertices": 5,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 236,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 9,
+      "coreSamplesRendered": 10
+    },
+    {
+      "segment": 237,
+      "rawVertices": 10,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 238,
+      "rawVertices": 16,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 239,
+      "rawVertices": 4,
+      "simplifiedVertices": 3,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 240,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 241,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 8,
+      "coreSamplesRendered": 8
+    },
+    {
+      "segment": 242,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 40,
+      "coreSamplesRendered": 39
+    },
+    {
+      "segment": 243,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 244,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 245,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 246,
+      "rawVertices": 7,
+      "simplifiedVertices": 7,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 2,
+      "coreSamplesRendered": 2
+    },
+    {
+      "segment": 247,
+      "rawVertices": 5,
+      "simplifiedVertices": 4,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 248,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 9,
+      "coreSamplesRendered": 10
+    },
+    {
+      "segment": 249,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 250,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 14,
+      "coreSamplesRendered": 14
+    },
+    {
+      "segment": 251,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 252,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 253,
+      "rawVertices": 8,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 71,
+      "coreSamplesRendered": 68
+    },
+    {
+      "segment": 254,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 6,
+      "coreSamplesRendered": 6
+    },
+    {
+      "segment": 255,
+      "rawVertices": 3,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 256,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 4,
+      "coreSamplesRendered": 4
+    },
+    {
+      "segment": 257,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 258,
+      "rawVertices": 7,
+      "simplifiedVertices": 5,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 40,
+      "coreSamplesRendered": 38
+    },
+    {
+      "segment": 259,
+      "rawVertices": 4,
+      "simplifiedVertices": 4,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 11,
+      "coreSamplesRendered": 11
+    },
+    {
+      "segment": 260,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 2,
+      "coreSamplesRendered": 2
+    },
+    {
+      "segment": 261,
+      "rawVertices": 4,
+      "simplifiedVertices": 2,
+      "simplified": true,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 262,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 3,
+      "coreSamplesRendered": 3
+    },
+    {
+      "segment": 263,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 264,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 265,
+      "rawVertices": 2,
+      "simplifiedVertices": 2,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 6,
+      "coreSamplesRendered": 6
+    },
+    {
+      "segment": 266,
+      "rawVertices": 5,
+      "simplifiedVertices": 5,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    },
+    {
+      "segment": 267,
+      "rawVertices": 3,
+      "simplifiedVertices": 3,
+      "simplified": false,
+      "radius": 9,
+      "coreSamplesRaw": 0,
+      "coreSamplesRendered": 0
+    }
+  ],
+  "roadSegmentCount": 268,
+  "roadEndsPreserved": true,
+  "roadCoreSamples": {
+    "before": 3137,
+    "rawOptimized": 1731,
+    "rendered": 1702,
+    "reductionPercent": 45.7
+  },
+  "crossingMarkers": 50,
+  "maximumWaterContactSamples": 21,
+  "physicalLandPaintPasses": 1,
+  "errors": [],
+  "mapSha256": "71880162e848ad3a1058858035e781f6212d56d8eb5f42e104a49a1e92d7504b",
+  "roadLogicalChecks": {
+    "cityCount": 96,
+    "landCitiesConnected": 94,
+    "requiredLandConnections": 172,
+    "allRequiredPairsWithoutThirdCity": true,
+    "cityAnchorsUnchanged": true,
+    "duplicateUndirectedSegments": 0,
+    "removedRedundantSegments": 2,
+    "mergedJunctions": 7,
+    "reroutedMountainCrossings": 60,
+    "mountainCoreSamplesBefore": 3167,
+    "mountainCoreSamplesAfter": 1740,
+    "segmentCountBefore": 276,
+    "segmentCountAfter": 268,
+    "maximumLogicalLengthRatio": 1.2859
+  },
+  "riverChecks": {
+    "points": [
+      [
+        904,
+        319
+      ],
+      [
+        946,
+        280
+      ],
+      [
+        986,
+        254
+      ],
+      [
+        1028,
+        238
+      ],
+      [
+        1064,
+        226
+      ],
+      [
+        1090,
+        204
+      ],
+      [
+        1118,
+        190
+      ],
+      [
+        1158,
+        182
+      ],
+      [
+        1208,
+        178
+      ]
+    ],
+    "sampledCenterline": [
+      [
+        904,
+        319
+      ],
+      [
+        937.9392715921107,
+        287.48496209304005
+      ],
+      [
+        939.9726123092614,
+        285.6370042297252
+      ],
+      [
+        942.0422702567689,
+        283.8356116863007
+      ],
+      [
+        944.1482454346333,
+        282.0807844627665
+      ],
+      [
+        946.2905378428545,
+        280.3725225591226
+      ],
+      [
+        948.4691474814324,
+        278.71082597536906
+      ],
+      [
+        950.6840743503672,
+        277.09569471150587
+      ],
+      [
+        952.9353184496588,
+        275.527128767533
+      ],
+      [
+        955.222879779307,
+        274.00512814345046
+      ],
+      [
+        976.777120220693,
+        259.99487185654954
+      ],
+      [
+        979.099347748409,
+        258.52863706824087
+      ],
+      [
+        981.4545904419035,
+        257.12736863158966
+      ],
+      [
+        983.8428483011764,
+        255.79106654659583
+      ],
+      [
+        986.264121326228,
+        254.5197308132594
+      ],
+      [
+        988.7184095170578,
+        253.31336143158046
+      ],
+      [
+        991.2057128736662,
+        252.17195840155892
+      ],
+      [
+        993.7260313960533,
+        251.09552172319482
+      ],
+      [
+        996.2793650842186,
+        250.08405139648812
+      ],
+      [
+        1017.7206349157814,
+        241.91594860351188
+      ],
+      [
+        1020.2929160492475,
+        240.94379650227964
+      ],
+      [
+        1022.8700769075368,
+        239.98531450033886
+      ],
+      [
+        1025.452117490649,
+        239.0405025976895
+      ],
+      [
+        1028.0390377985843,
+        238.10936079433168
+      ],
+      [
+        1030.6308378313427,
+        237.19188909026525
+      ],
+      [
+        1033.227517588924,
+        236.2880874854903
+      ],
+      [
+        1035.8290770713284,
+        235.3979559800068
+      ],
+      [
+        1038.4355162785557,
+        234.52149457381478
+      ],
+      [
+        1054.306703347158,
+        229.2310988842807
+      ],
+      [
+        1056.700444750168,
+        228.3706850832774
+      ],
+      [
+        1059.0350206327764,
+        227.4049931224079
+      ],
+      [
+        1061.3104309949836,
+        226.33402300167214
+      ],
+      [
+        1063.5266758367895,
+        225.15777472107018
+      ],
+      [
+        1065.6837551581941,
+        223.87624828060197
+      ],
+      [
+        1067.7816689591973,
+        222.48944368026756
+      ],
+      [
+        1069.8204172397993,
+        220.99736092006688
+      ],
+      [
+        1071.8,
+        219.4
+      ],
+      [
+        1082.8306687658592,
+        210.0663571981192
+      ],
+      [
+        1084.6422307738608,
+        208.57892972981
+      ],
+      [
+        1086.4922511807958,
+        207.14982592394205
+      ],
+      [
+        1088.3807299866637,
+        205.77904578051533
+      ],
+      [
+        1090.3076671914648,
+        204.4665892995298
+      ],
+      [
+        1092.273062795199,
+        203.2124564809855
+      ],
+      [
+        1094.2769167978663,
+        202.01664732488246
+      ],
+      [
+        1096.3192291994667,
+        200.8791618312206
+      ],
+      [
+        1098.4,
+        199.8
+      ],
+      [
+        1109.6,
+        194.2
+      ],
+      [
+        1111.7126423312925,
+        193.1868465337415
+      ],
+      [
+        1113.8505693251702,
+        192.24738613496595
+      ],
+      [
+        1116.013780981633,
+        191.3816188036734
+      ],
+      [
+        1118.2022773006809,
+        190.58954453986382
+      ],
+      [
+        1120.416058282314,
+        189.8711633435372
+      ],
+      [
+        1122.6551239265323,
+        189.22647521469358
+      ],
+      [
+        1124.9194742333352,
+        188.65548015333292
+      ],
+      [
+        1127.2091092027238,
+        188.15817815945525
+      ],
+      [
+        1147.2136125673999,
+        184.15727748652003
+      ],
+      [
+        1149.912999747914,
+        183.63795936553703
+      ],
+      [
+        1152.617967573156,
+        183.15864374584802
+      ],
+      [
+        1155.3285160431262,
+        182.71933062745305
+      ],
+      [
+        1158.0446451578243,
+        182.32002001035204
+      ],
+      [
+        1160.7663549172505,
+        181.9607118945451
+      ],
+      [
+        1163.4936453214048,
+        181.64140628003213
+      ],
+      [
+        1166.226516370287,
+        181.36210316681317
+      ],
+      [
+        1168.9649680638975,
+        181.1228025548882
+      ],
+      [
+        1208,
+        178
+      ]
+    ],
+    "cityCount": 96,
+    "citiesUnchanged": true,
+    "otherWatersUnchanged": true,
+    "translatedPixels": 956,
+    "translatedPixelMismatches": 0,
+    "outsideEditMaskChanges": 0,
+    "mountainWaterOverlap": 0,
+    "waterOverlap": [],
+    "yellowComponents": 1,
+    "jinanCenterDistance": 16.09968943799844
+  },
+  "cityBankChecks": [
+    {
+      "key": "wei",
+      "expected": "northwest",
+      "observed": "northwest"
+    },
+    {
+      "key": "henei",
+      "expected": "northwest",
+      "observed": "northwest"
+    },
+    {
+      "key": "changshan",
+      "expected": "northwest",
+      "observed": "northwest"
+    },
+    {
+      "key": "zhongshan",
+      "expected": "northwest",
+      "observed": "northwest"
+    },
+    {
+      "key": "anping",
+      "expected": "northwest",
+      "observed": "northwest"
+    },
+    {
+      "key": "pingyuan",
+      "expected": "northwest",
+      "observed": "northwest"
+    },
+    {
+      "key": "bohai",
+      "expected": "northwest",
+      "observed": "northwest"
+    },
+    {
+      "key": "dongjun",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "qiao",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "chenliu",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "yingchuan",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "shanyang",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "jiyin",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "dongping",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "jinan",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "qi",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "beihai",
+      "expected": "southeast",
+      "observed": "southeast"
+    },
+    {
+      "key": "henan",
+      "expected": "southeast",
+      "observed": "southeast"
+    }
+  ],
+  "all18ReviewedBankChecksPassed": true,
+  "sourceVersion": 40,
+  "review": {
+    "cityPositionChanges": 0,
+    "movedExistingMountains": 1,
+    "newMountainArtwork": 0,
+    "jinanRiverCenterDistanceBefore": 30.36399707448116,
+    "jinanRiverCenterDistanceAfter": 16.09968943799844,
+    "readOnlyVisualReview": "Central forks clearer, no evident new major mountain-crossing trunk. A small mountain-skirt bend northwest of Shanggu is retained."
+  },
+  "limitations": [
+    "Artwork-based mountain masks do not model real elevation or every green slope.",
+    "Some fixed castle approaches and mountain-pass roads remain; this revision reduces crossings rather than proving zero.",
+    "This is a map preview and its data; no playable ROM/build is changed."
+  ],
+  "browserChecks": {
+    "responsive": [
+      {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "cityCount": 96,
+        "imagesLoaded": true
+      },
+      {
+        "width": 390,
+        "scrollWidth": 390,
+        "cityCount": 96,
+        "imagesLoaded": true
+      }
+    ],
+    "togglesPassed": 3,
+    "pageErrors": []
+  }
+}

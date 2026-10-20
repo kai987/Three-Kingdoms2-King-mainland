@@ -1,0 +1,4032 @@
+{
+  "schema": "phase31-reused-player-disposition-static-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "new_production_source_modules": 0,
+  "new_gameplay_first_recovery": false,
+  "existing_source_credit": [
+    "phase11 direct BattleSceneController state13/14 and menu helpers",
+    "phase22 named D1F9/D20D/D299 release and relocation",
+    "phase30 exact 8A006 early AI/human disposition owner"
+  ],
+  "states": [
+    {
+      "state": 13,
+      "phase": 0,
+      "physical_bank": 13,
+      "cpu": 52522,
+      "rom_offset": 109882,
+      "source_function": "prepare_defeated_roster",
+      "source_line": 16345,
+      "behavior": "Build current side officer list; empty defeated list or at most10 victorious officers can return to15 immediately.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 13,
+      "phase": 1,
+      "physical_bank": 13,
+      "cpu": 52562,
+      "rom_offset": 109922,
+      "source_function": "select_defeated_roster_destination",
+      "source_line": 16373,
+      "behavior": "Wait for both text jobs FF; only new A advances. Defeated side also checks any available neighboring destination.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 13,
+      "phase": 2,
+      "physical_bank": 13,
+      "cpu": 52722,
+      "rom_offset": 110082,
+      "source_function": "open_defeated_roster_selection",
+      "source_line": 16548,
+      "behavior": "Width2 destination menu; new A accepts release30 or a city with occupancy below10.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 13,
+      "phase": 3,
+      "physical_bank": 13,
+      "cpu": 52822,
+      "rom_offset": 110182,
+      "source_function": "choose_defeated_roster_officer",
+      "source_line": 16635,
+      "behavior": "Wait for both text jobs FF and new A, rebuild officer list and append the End index.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 13,
+      "phase": 4,
+      "physical_bank": 13,
+      "cpu": 52854,
+      "rom_offset": 110214,
+      "source_function": "exclude_defeated_roster_officer",
+      "source_line": 16664,
+      "behavior": "Wait for both text jobs FF, then initialize the width3 officer-selection display.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 13,
+      "phase": 5,
+      "physical_bank": 13,
+      "cpu": 52894,
+      "rom_offset": 110254,
+      "source_function": "prepare_defeated_roster_confirmation",
+      "source_line": 16692,
+      "behavior": "Width3 officer menu; release30 protects the cached ruler leader, city destinations enforce reception capacity; End commits directly or queues confirmation.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 13,
+      "phase": 6,
+      "physical_bank": 13,
+      "cpu": 53001,
+      "rom_offset": 110361,
+      "source_function": "confirm_defeated_roster_transfer",
+      "source_line": 16783,
+      "behavior": "Render chosen entries; both text jobs FF and new A commit through the real D1F9 caller then rebuild phase0.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 14,
+      "phase": 0,
+      "physical_bank": 13,
+      "cpu": 53985,
+      "rom_offset": 111345,
+      "source_function": "prepare_victor_roster",
+      "source_line": 17278,
+      "behavior": "Build current side officer list; empty defeated list or at most10 victorious officers can return to15 immediately.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 14,
+      "phase": 1,
+      "physical_bank": 13,
+      "cpu": 54032,
+      "rom_offset": 111392,
+      "source_function": "select_victor_roster_destination",
+      "source_line": 17308,
+      "behavior": "Wait for both text jobs FF; only new A advances. Defeated side also checks any available neighboring destination.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 14,
+      "phase": 2,
+      "physical_bank": 13,
+      "cpu": 54091,
+      "rom_offset": 111451,
+      "source_function": "open_victor_roster_selection",
+      "source_line": 17349,
+      "behavior": "Width2 destination menu; new A accepts release30 or a city with occupancy below10.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 14,
+      "phase": 3,
+      "physical_bank": 13,
+      "cpu": 54191,
+      "rom_offset": 111551,
+      "source_function": "choose_victor_roster_officer",
+      "source_line": 17436,
+      "behavior": "Wait for both text jobs FF and new A, rebuild officer list and append the End index.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 14,
+      "phase": 4,
+      "physical_bank": 13,
+      "cpu": 54231,
+      "rom_offset": 111591,
+      "source_function": "exclude_victor_roster_officer",
+      "source_line": 17468,
+      "behavior": "Wait for both text jobs FF, then initialize the width3 officer-selection display.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 14,
+      "phase": 5,
+      "physical_bank": 13,
+      "cpu": 54263,
+      "rom_offset": 111623,
+      "source_function": "prepare_victor_roster_confirmation",
+      "source_line": 17493,
+      "behavior": "Width3 officer menu; release30 protects the cached ruler leader, city destinations enforce reception capacity; End commits directly or queues confirmation.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    },
+    {
+      "state": 14,
+      "phase": 6,
+      "physical_bank": 13,
+      "cpu": 54370,
+      "rom_offset": 111730,
+      "source_function": "confirm_victor_roster_transfer",
+      "source_line": 17584,
+      "behavior": "Render chosen entries; both text jobs FF and new A commit through the real D1F9 caller then rebuild phase0.",
+      "existing_Source": true,
+      "first_recovery_claim": false
+    }
+  ],
+  "tables": [
+    {
+      "physical_bank": 13,
+      "cpu": 52508,
+      "rom_offset": 109868,
+      "bytes": 14,
+      "raw_hex": "2A CD 52 CD F2 CD 56 CE 76 CE 9E CE 09 CF",
+      "targets": [
+        52522,
+        52562,
+        52722,
+        52822,
+        52854,
+        52894,
+        53001
+      ]
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53971,
+      "rom_offset": 111331,
+      "bytes": 14,
+      "raw_hex": "E1 D2 10 D3 4B D3 AF D3 D7 D3 F7 D3 62 D4",
+      "targets": [
+        53985,
+        54032,
+        54091,
+        54191,
+        54231,
+        54263,
+        54370
+      ]
+    }
+  ],
+  "state_handler_node_union": [
+    {
+      "physical_bank": 13,
+      "cpu": 52522,
+      "rom_offset": 109882,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52525,
+      "rom_offset": 109885,
+      "bytes": 3,
+      "raw_hex": "20 E1 D0",
+      "opcode": "JSR",
+      "operand": 53473
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52528,
+      "rom_offset": 109888,
+      "bytes": 2,
+      "raw_hex": "A9 FF",
+      "opcode": "LDA",
+      "operand": 255
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52530,
+      "rom_offset": 109890,
+      "bytes": 3,
+      "raw_hex": "9D 2C 04",
+      "opcode": "STA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52533,
+      "rom_offset": 109893,
+      "bytes": 1,
+      "raw_hex": "8A",
+      "opcode": "TXA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52534,
+      "rom_offset": 109894,
+      "bytes": 2,
+      "raw_hex": "D0 0E",
+      "opcode": "BNE",
+      "operand": 14
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52536,
+      "rom_offset": 109896,
+      "bytes": 3,
+      "raw_hex": "AD 0B 05",
+      "opcode": "LDA",
+      "operand": 1291
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52539,
+      "rom_offset": 109899,
+      "bytes": 2,
+      "raw_hex": "29 0F",
+      "opcode": "AND",
+      "operand": 15
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52541,
+      "rom_offset": 109901,
+      "bytes": 3,
+      "raw_hex": "8D 01 05",
+      "opcode": "STA",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52544,
+      "rom_offset": 109904,
+      "bytes": 2,
+      "raw_hex": "A9 0F",
+      "opcode": "LDA",
+      "operand": 15
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52546,
+      "rom_offset": 109906,
+      "bytes": 3,
+      "raw_hex": "8D 00 05",
+      "opcode": "STA",
+      "operand": 1280
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52549,
+      "rom_offset": 109909,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52550,
+      "rom_offset": 109910,
+      "bytes": 2,
+      "raw_hex": "A9 DC",
+      "opcode": "LDA",
+      "operand": 220
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52552,
+      "rom_offset": 109912,
+      "bytes": 3,
+      "raw_hex": "20 93 F2",
+      "opcode": "JSR",
+      "operand": 62099
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52555,
+      "rom_offset": 109915,
+      "bytes": 3,
+      "raw_hex": "20 C3 D0",
+      "opcode": "JSR",
+      "operand": 53443
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52558,
+      "rom_offset": 109918,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52561,
+      "rom_offset": 109921,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52562,
+      "rom_offset": 109922,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52565,
+      "rom_offset": 109925,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52568,
+      "rom_offset": 109928,
+      "bytes": 2,
+      "raw_hex": "90 09",
+      "opcode": "BCC",
+      "operand": 9
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52570,
+      "rom_offset": 109930,
+      "bytes": 3,
+      "raw_hex": "20 63 DC",
+      "opcode": "JSR",
+      "operand": 56419
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52573,
+      "rom_offset": 109933,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52575,
+      "rom_offset": 109935,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52577,
+      "rom_offset": 109937,
+      "bytes": 2,
+      "raw_hex": "D0 01",
+      "opcode": "BNE",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52579,
+      "rom_offset": 109939,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52580,
+      "rom_offset": 109940,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52583,
+      "rom_offset": 109943,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52585,
+      "rom_offset": 109945,
+      "bytes": 3,
+      "raw_hex": "8D 24 04",
+      "opcode": "STA",
+      "operand": 1060
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52588,
+      "rom_offset": 109948,
+      "bytes": 3,
+      "raw_hex": "8D 25 04",
+      "opcode": "STA",
+      "operand": 1061
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52591,
+      "rom_offset": 109951,
+      "bytes": 3,
+      "raw_hex": "AD 0B 05",
+      "opcode": "LDA",
+      "operand": 1291
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52594,
+      "rom_offset": 109954,
+      "bytes": 2,
+      "raw_hex": "29 10",
+      "opcode": "AND",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52596,
+      "rom_offset": 109956,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52597,
+      "rom_offset": 109957,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52598,
+      "rom_offset": 109958,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52599,
+      "rom_offset": 109959,
+      "bytes": 3,
+      "raw_hex": "8D 04 05",
+      "opcode": "STA",
+      "operand": 1284
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52602,
+      "rom_offset": 109962,
+      "bytes": 3,
+      "raw_hex": "20 84 BB",
+      "opcode": "JSR",
+      "operand": 48004
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52605,
+      "rom_offset": 109965,
+      "bytes": 3,
+      "raw_hex": "EE 0A 05",
+      "opcode": "INC",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52608,
+      "rom_offset": 109968,
+      "bytes": 3,
+      "raw_hex": "AD 0A 05",
+      "opcode": "LDA",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52611,
+      "rom_offset": 109971,
+      "bytes": 2,
+      "raw_hex": "F0 17",
+      "opcode": "BEQ",
+      "operand": 23
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52613,
+      "rom_offset": 109973,
+      "bytes": 1,
+      "raw_hex": "A8",
+      "opcode": "TAY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52614,
+      "rom_offset": 109974,
+      "bytes": 2,
+      "raw_hex": "A9 1E",
+      "opcode": "LDA",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52616,
+      "rom_offset": 109976,
+      "bytes": 3,
+      "raw_hex": "99 2C 04",
+      "opcode": "STA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52619,
+      "rom_offset": 109979,
+      "bytes": 1,
+      "raw_hex": "88",
+      "opcode": "DEY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52620,
+      "rom_offset": 109980,
+      "bytes": 3,
+      "raw_hex": "B9 50 05",
+      "opcode": "LDA",
+      "operand": 1360
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52623,
+      "rom_offset": 109983,
+      "bytes": 2,
+      "raw_hex": "C9 0A",
+      "opcode": "CMP",
+      "operand": 10
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52625,
+      "rom_offset": 109985,
+      "bytes": 2,
+      "raw_hex": "B0 06",
+      "opcode": "BCS",
+      "operand": 6
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52627,
+      "rom_offset": 109987,
+      "bytes": 2,
+      "raw_hex": "A9 D7",
+      "opcode": "LDA",
+      "operand": 215
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52629,
+      "rom_offset": 109989,
+      "bytes": 3,
+      "raw_hex": "20 83 F2",
+      "opcode": "JSR",
+      "operand": 62083
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52632,
+      "rom_offset": 109992,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52633,
+      "rom_offset": 109993,
+      "bytes": 1,
+      "raw_hex": "88",
+      "opcode": "DEY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52634,
+      "rom_offset": 109994,
+      "bytes": 2,
+      "raw_hex": "10 F0",
+      "opcode": "BPL",
+      "operand": 240
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52636,
+      "rom_offset": 109996,
+      "bytes": 3,
+      "raw_hex": "AD 07 05",
+      "opcode": "LDA",
+      "operand": 1287
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52639,
+      "rom_offset": 109999,
+      "bytes": 3,
+      "raw_hex": "AC 0B 05",
+      "opcode": "LDY",
+      "operand": 1291
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52642,
+      "rom_offset": 110002,
+      "bytes": 2,
+      "raw_hex": "C0 02",
+      "opcode": "CPY",
+      "operand": 2
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52644,
+      "rom_offset": 110004,
+      "bytes": 2,
+      "raw_hex": "F0 04",
+      "opcode": "BEQ",
+      "operand": 4
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52646,
+      "rom_offset": 110006,
+      "bytes": 1,
+      "raw_hex": "4A",
+      "opcode": "LSR",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52647,
+      "rom_offset": 110007,
+      "bytes": 1,
+      "raw_hex": "4A",
+      "opcode": "LSR",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52648,
+      "rom_offset": 110008,
+      "bytes": 1,
+      "raw_hex": "4A",
+      "opcode": "LSR",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52649,
+      "rom_offset": 110009,
+      "bytes": 1,
+      "raw_hex": "4A",
+      "opcode": "LSR",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52650,
+      "rom_offset": 110010,
+      "bytes": 2,
+      "raw_hex": "29 0F",
+      "opcode": "AND",
+      "operand": 15
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52652,
+      "rom_offset": 110012,
+      "bytes": 3,
+      "raw_hex": "20 68 F3",
+      "opcode": "JSR",
+      "operand": 62312
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52655,
+      "rom_offset": 110015,
+      "bytes": 2,
+      "raw_hex": "A0 00",
+      "opcode": "LDY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52657,
+      "rom_offset": 110017,
+      "bytes": 2,
+      "raw_hex": "B1 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52659,
+      "rom_offset": 110019,
+      "bytes": 2,
+      "raw_hex": "85 03",
+      "opcode": "STA",
+      "operand": 3
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52661,
+      "rom_offset": 110021,
+      "bytes": 3,
+      "raw_hex": "20 E1 D0",
+      "opcode": "JSR",
+      "operand": 53473
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52664,
+      "rom_offset": 110024,
+      "bytes": 2,
+      "raw_hex": "A2 00",
+      "opcode": "LDX",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52666,
+      "rom_offset": 110026,
+      "bytes": 3,
+      "raw_hex": "BD 2C 04",
+      "opcode": "LDA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52669,
+      "rom_offset": 110029,
+      "bytes": 2,
+      "raw_hex": "C9 FE",
+      "opcode": "CMP",
+      "operand": 254
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52671,
+      "rom_offset": 110031,
+      "bytes": 2,
+      "raw_hex": "B0 1A",
+      "opcode": "BCS",
+      "operand": 26
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52673,
+      "rom_offset": 110033,
+      "bytes": 2,
+      "raw_hex": "C5 03",
+      "opcode": "CMP",
+      "operand": 3
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52675,
+      "rom_offset": 110035,
+      "bytes": 2,
+      "raw_hex": "F0 1E",
+      "opcode": "BEQ",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52677,
+      "rom_offset": 110037,
+      "bytes": 3,
+      "raw_hex": "20 D7 F2",
+      "opcode": "JSR",
+      "operand": 62167
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52680,
+      "rom_offset": 110040,
+      "bytes": 2,
+      "raw_hex": "A0 0B",
+      "opcode": "LDY",
+      "operand": 11
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52682,
+      "rom_offset": 110042,
+      "bytes": 2,
+      "raw_hex": "B1 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52684,
+      "rom_offset": 110044,
+      "bytes": 2,
+      "raw_hex": "29 FC",
+      "opcode": "AND",
+      "operand": 252
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52686,
+      "rom_offset": 110046,
+      "bytes": 2,
+      "raw_hex": "91 00",
+      "opcode": "STA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52688,
+      "rom_offset": 110048,
+      "bytes": 2,
+      "raw_hex": "A0 05",
+      "opcode": "LDY",
+      "operand": 5
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52690,
+      "rom_offset": 110050,
+      "bytes": 3,
+      "raw_hex": "AD 0E 05",
+      "opcode": "LDA",
+      "operand": 1294
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52693,
+      "rom_offset": 110053,
+      "bytes": 2,
+      "raw_hex": "91 00",
+      "opcode": "STA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52695,
+      "rom_offset": 110055,
+      "bytes": 1,
+      "raw_hex": "E8",
+      "opcode": "INX",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52696,
+      "rom_offset": 110056,
+      "bytes": 3,
+      "raw_hex": "4C BA CD",
+      "opcode": "JMP",
+      "operand": 52666
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52699,
+      "rom_offset": 110059,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52701,
+      "rom_offset": 110061,
+      "bytes": 3,
+      "raw_hex": "8D 01 05",
+      "opcode": "STA",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52704,
+      "rom_offset": 110064,
+      "bytes": 3,
+      "raw_hex": "4C 38 CD",
+      "opcode": "JMP",
+      "operand": 52536
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52707,
+      "rom_offset": 110067,
+      "bytes": 3,
+      "raw_hex": "20 D7 F2",
+      "opcode": "JSR",
+      "operand": 62167
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52710,
+      "rom_offset": 110070,
+      "bytes": 2,
+      "raw_hex": "A0 0B",
+      "opcode": "LDY",
+      "operand": 11
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52712,
+      "rom_offset": 110072,
+      "bytes": 2,
+      "raw_hex": "B1 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52714,
+      "rom_offset": 110074,
+      "bytes": 2,
+      "raw_hex": "09 03",
+      "opcode": "ORA",
+      "operand": 3
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52716,
+      "rom_offset": 110076,
+      "bytes": 2,
+      "raw_hex": "91 00",
+      "opcode": "STA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52718,
+      "rom_offset": 110078,
+      "bytes": 1,
+      "raw_hex": "E8",
+      "opcode": "INX",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52719,
+      "rom_offset": 110079,
+      "bytes": 3,
+      "raw_hex": "4C BA CD",
+      "opcode": "JMP",
+      "operand": 52666
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52722,
+      "rom_offset": 110082,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52725,
+      "rom_offset": 110085,
+      "bytes": 3,
+      "raw_hex": "AD 0A 05",
+      "opcode": "LDA",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52728,
+      "rom_offset": 110088,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52729,
+      "rom_offset": 110089,
+      "bytes": 1,
+      "raw_hex": "A8",
+      "opcode": "TAY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52730,
+      "rom_offset": 110090,
+      "bytes": 3,
+      "raw_hex": "B9 9F BA",
+      "opcode": "LDA",
+      "operand": 47775
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52733,
+      "rom_offset": 110093,
+      "bytes": 2,
+      "raw_hex": "85 10",
+      "opcode": "STA",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52735,
+      "rom_offset": 110095,
+      "bytes": 3,
+      "raw_hex": "B9 A0 BA",
+      "opcode": "LDA",
+      "operand": 47776
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52738,
+      "rom_offset": 110098,
+      "bytes": 2,
+      "raw_hex": "85 11",
+      "opcode": "STA",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52740,
+      "rom_offset": 110100,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52742,
+      "rom_offset": 110102,
+      "bytes": 2,
+      "raw_hex": "85 12",
+      "opcode": "STA",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52744,
+      "rom_offset": 110104,
+      "bytes": 3,
+      "raw_hex": "20 1E ED",
+      "opcode": "JSR",
+      "operand": 60702
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52747,
+      "rom_offset": 110107,
+      "bytes": 2,
+      "raw_hex": "A9 6F",
+      "opcode": "LDA",
+      "operand": 111
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52749,
+      "rom_offset": 110109,
+      "bytes": 2,
+      "raw_hex": "85 10",
+      "opcode": "STA",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52751,
+      "rom_offset": 110111,
+      "bytes": 2,
+      "raw_hex": "A9 BB",
+      "opcode": "LDA",
+      "operand": 187
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52753,
+      "rom_offset": 110113,
+      "bytes": 2,
+      "raw_hex": "85 11",
+      "opcode": "STA",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52755,
+      "rom_offset": 110115,
+      "bytes": 2,
+      "raw_hex": "A9 7F",
+      "opcode": "LDA",
+      "operand": 127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52757,
+      "rom_offset": 110117,
+      "bytes": 2,
+      "raw_hex": "85 00",
+      "opcode": "STA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52759,
+      "rom_offset": 110119,
+      "bytes": 2,
+      "raw_hex": "A9 BB",
+      "opcode": "LDA",
+      "operand": 187
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52761,
+      "rom_offset": 110121,
+      "bytes": 2,
+      "raw_hex": "85 01",
+      "opcode": "STA",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52763,
+      "rom_offset": 110123,
+      "bytes": 2,
+      "raw_hex": "A5 12",
+      "opcode": "LDA",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52765,
+      "rom_offset": 110125,
+      "bytes": 3,
+      "raw_hex": "20 F5 ED",
+      "opcode": "JSR",
+      "operand": 60917
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52768,
+      "rom_offset": 110128,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52771,
+      "rom_offset": 110131,
+      "bytes": 2,
+      "raw_hex": "90 30",
+      "opcode": "BCC",
+      "operand": 48
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52773,
+      "rom_offset": 110133,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52775,
+      "rom_offset": 110135,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52777,
+      "rom_offset": 110137,
+      "bytes": 2,
+      "raw_hex": "F0 2A",
+      "opcode": "BEQ",
+      "operand": 42
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52779,
+      "rom_offset": 110139,
+      "bytes": 2,
+      "raw_hex": "A4 12",
+      "opcode": "LDY",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52781,
+      "rom_offset": 110141,
+      "bytes": 3,
+      "raw_hex": "B9 2C 04",
+      "opcode": "LDA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52784,
+      "rom_offset": 110144,
+      "bytes": 3,
+      "raw_hex": "8D 40 05",
+      "opcode": "STA",
+      "operand": 1344
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52787,
+      "rom_offset": 110147,
+      "bytes": 3,
+      "raw_hex": "8C 41 05",
+      "opcode": "STY",
+      "operand": 1345
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52790,
+      "rom_offset": 110150,
+      "bytes": 2,
+      "raw_hex": "C9 1E",
+      "opcode": "CMP",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52792,
+      "rom_offset": 110152,
+      "bytes": 2,
+      "raw_hex": "F0 07",
+      "opcode": "BEQ",
+      "operand": 7
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52794,
+      "rom_offset": 110154,
+      "bytes": 3,
+      "raw_hex": "B9 50 05",
+      "opcode": "LDA",
+      "operand": 1360
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52797,
+      "rom_offset": 110157,
+      "bytes": 2,
+      "raw_hex": "C9 0A",
+      "opcode": "CMP",
+      "operand": 10
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52799,
+      "rom_offset": 110159,
+      "bytes": 2,
+      "raw_hex": "B0 14",
+      "opcode": "BCS",
+      "operand": 20
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52801,
+      "rom_offset": 110161,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52804,
+      "rom_offset": 110164,
+      "bytes": 2,
+      "raw_hex": "A9 DD",
+      "opcode": "LDA",
+      "operand": 221
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52806,
+      "rom_offset": 110166,
+      "bytes": 3,
+      "raw_hex": "AC 40 05",
+      "opcode": "LDY",
+      "operand": 1344
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52809,
+      "rom_offset": 110169,
+      "bytes": 2,
+      "raw_hex": "C0 1E",
+      "opcode": "CPY",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52811,
+      "rom_offset": 110171,
+      "bytes": 2,
+      "raw_hex": "D0 02",
+      "opcode": "BNE",
+      "operand": 2
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52813,
+      "rom_offset": 110173,
+      "bytes": 2,
+      "raw_hex": "A9 E5",
+      "opcode": "LDA",
+      "operand": 229
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52815,
+      "rom_offset": 110175,
+      "bytes": 3,
+      "raw_hex": "20 83 F2",
+      "opcode": "JSR",
+      "operand": 62083
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52818,
+      "rom_offset": 110178,
+      "bytes": 3,
+      "raw_hex": "20 C3 D0",
+      "opcode": "JSR",
+      "operand": 53443
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52821,
+      "rom_offset": 110181,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52822,
+      "rom_offset": 110182,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52825,
+      "rom_offset": 110185,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52828,
+      "rom_offset": 110188,
+      "bytes": 2,
+      "raw_hex": "90 17",
+      "opcode": "BCC",
+      "operand": 23
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52830,
+      "rom_offset": 110190,
+      "bytes": 3,
+      "raw_hex": "20 63 DC",
+      "opcode": "JSR",
+      "operand": 56419
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52833,
+      "rom_offset": 110193,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52835,
+      "rom_offset": 110195,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52837,
+      "rom_offset": 110197,
+      "bytes": 2,
+      "raw_hex": "F0 0E",
+      "opcode": "BEQ",
+      "operand": 14
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52839,
+      "rom_offset": 110199,
+      "bytes": 3,
+      "raw_hex": "20 E1 D0",
+      "opcode": "JSR",
+      "operand": 53473
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52842,
+      "rom_offset": 110202,
+      "bytes": 3,
+      "raw_hex": "8E 0A 05",
+      "opcode": "STX",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52845,
+      "rom_offset": 110205,
+      "bytes": 2,
+      "raw_hex": "A9 DE",
+      "opcode": "LDA",
+      "operand": 222
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52847,
+      "rom_offset": 110207,
+      "bytes": 3,
+      "raw_hex": "20 8B F2",
+      "opcode": "JSR",
+      "operand": 62091
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52850,
+      "rom_offset": 110210,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52853,
+      "rom_offset": 110213,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52854,
+      "rom_offset": 110214,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52857,
+      "rom_offset": 110217,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52860,
+      "rom_offset": 110220,
+      "bytes": 2,
+      "raw_hex": "90 1F",
+      "opcode": "BCC",
+      "operand": 31
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52862,
+      "rom_offset": 110222,
+      "bytes": 3,
+      "raw_hex": "AE 0A 05",
+      "opcode": "LDX",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52865,
+      "rom_offset": 110225,
+      "bytes": 2,
+      "raw_hex": "A9 FF",
+      "opcode": "LDA",
+      "operand": 255
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52867,
+      "rom_offset": 110227,
+      "bytes": 3,
+      "raw_hex": "9D 2C 04",
+      "opcode": "STA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52870,
+      "rom_offset": 110230,
+      "bytes": 2,
+      "raw_hex": "A9 E0",
+      "opcode": "LDA",
+      "operand": 224
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52872,
+      "rom_offset": 110232,
+      "bytes": 2,
+      "raw_hex": "85 E6",
+      "opcode": "STA",
+      "operand": 230
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52874,
+      "rom_offset": 110234,
+      "bytes": 2,
+      "raw_hex": "85 E7",
+      "opcode": "STA",
+      "operand": 231
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52876,
+      "rom_offset": 110236,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52879,
+      "rom_offset": 110239,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52881,
+      "rom_offset": 110241,
+      "bytes": 2,
+      "raw_hex": "85 8E",
+      "opcode": "STA",
+      "operand": 142
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52883,
+      "rom_offset": 110243,
+      "bytes": 2,
+      "raw_hex": "85 90",
+      "opcode": "STA",
+      "operand": 144
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52885,
+      "rom_offset": 110245,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52887,
+      "rom_offset": 110247,
+      "bytes": 3,
+      "raw_hex": "8D 24 04",
+      "opcode": "STA",
+      "operand": 1060
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52890,
+      "rom_offset": 110250,
+      "bytes": 3,
+      "raw_hex": "8D 25 04",
+      "opcode": "STA",
+      "operand": 1061
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52893,
+      "rom_offset": 110253,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52894,
+      "rom_offset": 110254,
+      "bytes": 3,
+      "raw_hex": "AD 0A 05",
+      "opcode": "LDA",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52897,
+      "rom_offset": 110257,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52898,
+      "rom_offset": 110258,
+      "bytes": 1,
+      "raw_hex": "A8",
+      "opcode": "TAY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52899,
+      "rom_offset": 110259,
+      "bytes": 3,
+      "raw_hex": "B9 5E CF",
+      "opcode": "LDA",
+      "operand": 53086
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52902,
+      "rom_offset": 110262,
+      "bytes": 2,
+      "raw_hex": "85 10",
+      "opcode": "STA",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52904,
+      "rom_offset": 110264,
+      "bytes": 3,
+      "raw_hex": "B9 5F CF",
+      "opcode": "LDA",
+      "operand": 53087
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52907,
+      "rom_offset": 110267,
+      "bytes": 2,
+      "raw_hex": "85 11",
+      "opcode": "STA",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52909,
+      "rom_offset": 110269,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52911,
+      "rom_offset": 110271,
+      "bytes": 2,
+      "raw_hex": "85 12",
+      "opcode": "STA",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52913,
+      "rom_offset": 110273,
+      "bytes": 3,
+      "raw_hex": "20 23 ED",
+      "opcode": "JSR",
+      "operand": 60707
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52916,
+      "rom_offset": 110276,
+      "bytes": 2,
+      "raw_hex": "A9 34",
+      "opcode": "LDA",
+      "operand": 52
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52918,
+      "rom_offset": 110278,
+      "bytes": 2,
+      "raw_hex": "85 10",
+      "opcode": "STA",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52920,
+      "rom_offset": 110280,
+      "bytes": 2,
+      "raw_hex": "A9 CF",
+      "opcode": "LDA",
+      "operand": 207
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52922,
+      "rom_offset": 110282,
+      "bytes": 2,
+      "raw_hex": "85 11",
+      "opcode": "STA",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52924,
+      "rom_offset": 110284,
+      "bytes": 2,
+      "raw_hex": "A9 04",
+      "opcode": "LDA",
+      "operand": 4
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52926,
+      "rom_offset": 110286,
+      "bytes": 2,
+      "raw_hex": "85 00",
+      "opcode": "STA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52928,
+      "rom_offset": 110288,
+      "bytes": 2,
+      "raw_hex": "A9 CF",
+      "opcode": "LDA",
+      "operand": 207
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52930,
+      "rom_offset": 110290,
+      "bytes": 2,
+      "raw_hex": "85 01",
+      "opcode": "STA",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52932,
+      "rom_offset": 110292,
+      "bytes": 2,
+      "raw_hex": "A5 12",
+      "opcode": "LDA",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52934,
+      "rom_offset": 110294,
+      "bytes": 3,
+      "raw_hex": "8D 08 05",
+      "opcode": "STA",
+      "operand": 1288
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52937,
+      "rom_offset": 110297,
+      "bytes": 3,
+      "raw_hex": "20 F5 ED",
+      "opcode": "JSR",
+      "operand": 60917
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52940,
+      "rom_offset": 110300,
+      "bytes": 3,
+      "raw_hex": "20 67 D1",
+      "opcode": "JSR",
+      "operand": 53607
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52943,
+      "rom_offset": 110303,
+      "bytes": 3,
+      "raw_hex": "20 BC D1",
+      "opcode": "JSR",
+      "operand": 53692
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52946,
+      "rom_offset": 110306,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52948,
+      "rom_offset": 110308,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52950,
+      "rom_offset": 110310,
+      "bytes": 2,
+      "raw_hex": "F0 2B",
+      "opcode": "BEQ",
+      "operand": 43
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52952,
+      "rom_offset": 110312,
+      "bytes": 3,
+      "raw_hex": "AD 0A 05",
+      "opcode": "LDA",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52955,
+      "rom_offset": 110315,
+      "bytes": 3,
+      "raw_hex": "CD 08 05",
+      "opcode": "CMP",
+      "operand": 1288
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52958,
+      "rom_offset": 110318,
+      "bytes": 2,
+      "raw_hex": "D0 23",
+      "opcode": "BNE",
+      "operand": 35
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52960,
+      "rom_offset": 110320,
+      "bytes": 2,
+      "raw_hex": "A0 00",
+      "opcode": "LDY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52962,
+      "rom_offset": 110322,
+      "bytes": 2,
+      "raw_hex": "A2 00",
+      "opcode": "LDX",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52964,
+      "rom_offset": 110324,
+      "bytes": 3,
+      "raw_hex": "B9 80 05",
+      "opcode": "LDA",
+      "operand": 1408
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52967,
+      "rom_offset": 110327,
+      "bytes": 2,
+      "raw_hex": "30 01",
+      "opcode": "BMI",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52969,
+      "rom_offset": 110329,
+      "bytes": 1,
+      "raw_hex": "E8",
+      "opcode": "INX",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52970,
+      "rom_offset": 110330,
+      "bytes": 1,
+      "raw_hex": "C8",
+      "opcode": "INY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52971,
+      "rom_offset": 110331,
+      "bytes": 2,
+      "raw_hex": "C0 14",
+      "opcode": "CPY",
+      "operand": 20
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52973,
+      "rom_offset": 110333,
+      "bytes": 2,
+      "raw_hex": "90 F5",
+      "opcode": "BCC",
+      "operand": 245
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52975,
+      "rom_offset": 110335,
+      "bytes": 1,
+      "raw_hex": "8A",
+      "opcode": "TXA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52976,
+      "rom_offset": 110336,
+      "bytes": 2,
+      "raw_hex": "F0 28",
+      "opcode": "BEQ",
+      "operand": 40
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52978,
+      "rom_offset": 110338,
+      "bytes": 2,
+      "raw_hex": "A9 D8",
+      "opcode": "LDA",
+      "operand": 216
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52980,
+      "rom_offset": 110340,
+      "bytes": 3,
+      "raw_hex": "AC 40 05",
+      "opcode": "LDY",
+      "operand": 1344
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52983,
+      "rom_offset": 110343,
+      "bytes": 2,
+      "raw_hex": "C0 1E",
+      "opcode": "CPY",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52985,
+      "rom_offset": 110345,
+      "bytes": 2,
+      "raw_hex": "D0 02",
+      "opcode": "BNE",
+      "operand": 2
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52987,
+      "rom_offset": 110347,
+      "bytes": 2,
+      "raw_hex": "A9 E6",
+      "opcode": "LDA",
+      "operand": 230
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52989,
+      "rom_offset": 110349,
+      "bytes": 3,
+      "raw_hex": "20 83 F2",
+      "opcode": "JSR",
+      "operand": 62083
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52992,
+      "rom_offset": 110352,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 52995,
+      "rom_offset": 110355,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53001,
+      "rom_offset": 110361,
+      "bytes": 3,
+      "raw_hex": "20 BC D1",
+      "opcode": "JSR",
+      "operand": 53692
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53004,
+      "rom_offset": 110364,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53007,
+      "rom_offset": 110367,
+      "bytes": 2,
+      "raw_hex": "90 22",
+      "opcode": "BCC",
+      "operand": 34
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53009,
+      "rom_offset": 110369,
+      "bytes": 3,
+      "raw_hex": "20 63 DC",
+      "opcode": "JSR",
+      "operand": 56419
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53012,
+      "rom_offset": 110372,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53014,
+      "rom_offset": 110374,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53016,
+      "rom_offset": 110376,
+      "bytes": 2,
+      "raw_hex": "F0 19",
+      "opcode": "BEQ",
+      "operand": 25
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53018,
+      "rom_offset": 110378,
+      "bytes": 2,
+      "raw_hex": "A9 E1",
+      "opcode": "LDA",
+      "operand": 225
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53020,
+      "rom_offset": 110380,
+      "bytes": 2,
+      "raw_hex": "85 E6",
+      "opcode": "STA",
+      "operand": 230
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53022,
+      "rom_offset": 110382,
+      "bytes": 2,
+      "raw_hex": "85 E7",
+      "opcode": "STA",
+      "operand": 231
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53024,
+      "rom_offset": 110384,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53026,
+      "rom_offset": 110386,
+      "bytes": 2,
+      "raw_hex": "85 8E",
+      "opcode": "STA",
+      "operand": 142
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53028,
+      "rom_offset": 110388,
+      "bytes": 2,
+      "raw_hex": "A9 50",
+      "opcode": "LDA",
+      "operand": 80
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53030,
+      "rom_offset": 110390,
+      "bytes": 2,
+      "raw_hex": "85 90",
+      "opcode": "STA",
+      "operand": 144
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53032,
+      "rom_offset": 110392,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53034,
+      "rom_offset": 110394,
+      "bytes": 3,
+      "raw_hex": "8D 01 05",
+      "opcode": "STA",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53037,
+      "rom_offset": 110397,
+      "bytes": 3,
+      "raw_hex": "20 F9 D1",
+      "opcode": "JSR",
+      "operand": 53753
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53040,
+      "rom_offset": 110400,
+      "bytes": 3,
+      "raw_hex": "4C 2A CD",
+      "opcode": "JMP",
+      "operand": 52522
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53043,
+      "rom_offset": 110403,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53985,
+      "rom_offset": 111345,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53988,
+      "rom_offset": 111348,
+      "bytes": 3,
+      "raw_hex": "20 E1 D0",
+      "opcode": "JSR",
+      "operand": 53473
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53991,
+      "rom_offset": 111351,
+      "bytes": 2,
+      "raw_hex": "A9 FF",
+      "opcode": "LDA",
+      "operand": 255
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53993,
+      "rom_offset": 111353,
+      "bytes": 3,
+      "raw_hex": "9D 2C 04",
+      "opcode": "STA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53996,
+      "rom_offset": 111356,
+      "bytes": 3,
+      "raw_hex": "8E 0A 05",
+      "opcode": "STX",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53999,
+      "rom_offset": 111359,
+      "bytes": 2,
+      "raw_hex": "E0 0B",
+      "opcode": "CPX",
+      "operand": 11
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54001,
+      "rom_offset": 111361,
+      "bytes": 2,
+      "raw_hex": "B0 11",
+      "opcode": "BCS",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54003,
+      "rom_offset": 111363,
+      "bytes": 3,
+      "raw_hex": "20 8D D4",
+      "opcode": "JSR",
+      "operand": 54413
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54006,
+      "rom_offset": 111366,
+      "bytes": 2,
+      "raw_hex": "A9 0F",
+      "opcode": "LDA",
+      "operand": 15
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54008,
+      "rom_offset": 111368,
+      "bytes": 3,
+      "raw_hex": "8D 00 05",
+      "opcode": "STA",
+      "operand": 1280
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54011,
+      "rom_offset": 111371,
+      "bytes": 3,
+      "raw_hex": "AD 0B 05",
+      "opcode": "LDA",
+      "operand": 1291
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54014,
+      "rom_offset": 111374,
+      "bytes": 2,
+      "raw_hex": "29 0F",
+      "opcode": "AND",
+      "operand": 15
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54016,
+      "rom_offset": 111376,
+      "bytes": 3,
+      "raw_hex": "8D 01 05",
+      "opcode": "STA",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54019,
+      "rom_offset": 111379,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54020,
+      "rom_offset": 111380,
+      "bytes": 2,
+      "raw_hex": "A9 DF",
+      "opcode": "LDA",
+      "operand": 223
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54022,
+      "rom_offset": 111382,
+      "bytes": 3,
+      "raw_hex": "20 93 F2",
+      "opcode": "JSR",
+      "operand": 62099
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54025,
+      "rom_offset": 111385,
+      "bytes": 3,
+      "raw_hex": "20 C3 D0",
+      "opcode": "JSR",
+      "operand": 53443
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54028,
+      "rom_offset": 111388,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54031,
+      "rom_offset": 111391,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54032,
+      "rom_offset": 111392,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54035,
+      "rom_offset": 111395,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54038,
+      "rom_offset": 111398,
+      "bytes": 2,
+      "raw_hex": "90 32",
+      "opcode": "BCC",
+      "operand": 50
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54040,
+      "rom_offset": 111400,
+      "bytes": 3,
+      "raw_hex": "20 63 DC",
+      "opcode": "JSR",
+      "operand": 56419
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54043,
+      "rom_offset": 111403,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54045,
+      "rom_offset": 111405,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54047,
+      "rom_offset": 111407,
+      "bytes": 2,
+      "raw_hex": "F0 29",
+      "opcode": "BEQ",
+      "operand": 41
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54049,
+      "rom_offset": 111409,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54052,
+      "rom_offset": 111412,
+      "bytes": 2,
+      "raw_hex": "A9 D7",
+      "opcode": "LDA",
+      "operand": 215
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54054,
+      "rom_offset": 111414,
+      "bytes": 3,
+      "raw_hex": "20 83 F2",
+      "opcode": "JSR",
+      "operand": 62083
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54057,
+      "rom_offset": 111417,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54059,
+      "rom_offset": 111419,
+      "bytes": 3,
+      "raw_hex": "8D 24 04",
+      "opcode": "STA",
+      "operand": 1060
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54062,
+      "rom_offset": 111422,
+      "bytes": 3,
+      "raw_hex": "8D 25 04",
+      "opcode": "STA",
+      "operand": 1061
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54065,
+      "rom_offset": 111425,
+      "bytes": 3,
+      "raw_hex": "AD 0B 05",
+      "opcode": "LDA",
+      "operand": 1291
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54068,
+      "rom_offset": 111428,
+      "bytes": 2,
+      "raw_hex": "29 10",
+      "opcode": "AND",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54070,
+      "rom_offset": 111430,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54071,
+      "rom_offset": 111431,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54072,
+      "rom_offset": 111432,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54073,
+      "rom_offset": 111433,
+      "bytes": 3,
+      "raw_hex": "8D 04 05",
+      "opcode": "STA",
+      "operand": 1284
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54076,
+      "rom_offset": 111436,
+      "bytes": 3,
+      "raw_hex": "20 84 BB",
+      "opcode": "JSR",
+      "operand": 48004
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54079,
+      "rom_offset": 111439,
+      "bytes": 3,
+      "raw_hex": "EE 0A 05",
+      "opcode": "INC",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54082,
+      "rom_offset": 111442,
+      "bytes": 3,
+      "raw_hex": "AC 0A 05",
+      "opcode": "LDY",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54085,
+      "rom_offset": 111445,
+      "bytes": 2,
+      "raw_hex": "A9 1E",
+      "opcode": "LDA",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54087,
+      "rom_offset": 111447,
+      "bytes": 3,
+      "raw_hex": "99 2C 04",
+      "opcode": "STA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54090,
+      "rom_offset": 111450,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54091,
+      "rom_offset": 111451,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54094,
+      "rom_offset": 111454,
+      "bytes": 3,
+      "raw_hex": "AD 0A 05",
+      "opcode": "LDA",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54097,
+      "rom_offset": 111457,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54098,
+      "rom_offset": 111458,
+      "bytes": 1,
+      "raw_hex": "A8",
+      "opcode": "TAY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54099,
+      "rom_offset": 111459,
+      "bytes": 3,
+      "raw_hex": "B9 9F BA",
+      "opcode": "LDA",
+      "operand": 47775
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54102,
+      "rom_offset": 111462,
+      "bytes": 2,
+      "raw_hex": "85 10",
+      "opcode": "STA",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54104,
+      "rom_offset": 111464,
+      "bytes": 3,
+      "raw_hex": "B9 A0 BA",
+      "opcode": "LDA",
+      "operand": 47776
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54107,
+      "rom_offset": 111467,
+      "bytes": 2,
+      "raw_hex": "85 11",
+      "opcode": "STA",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54109,
+      "rom_offset": 111469,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54111,
+      "rom_offset": 111471,
+      "bytes": 2,
+      "raw_hex": "85 12",
+      "opcode": "STA",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54113,
+      "rom_offset": 111473,
+      "bytes": 3,
+      "raw_hex": "20 1E ED",
+      "opcode": "JSR",
+      "operand": 60702
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54116,
+      "rom_offset": 111476,
+      "bytes": 2,
+      "raw_hex": "A9 6F",
+      "opcode": "LDA",
+      "operand": 111
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54118,
+      "rom_offset": 111478,
+      "bytes": 2,
+      "raw_hex": "85 10",
+      "opcode": "STA",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54120,
+      "rom_offset": 111480,
+      "bytes": 2,
+      "raw_hex": "A9 BB",
+      "opcode": "LDA",
+      "operand": 187
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54122,
+      "rom_offset": 111482,
+      "bytes": 2,
+      "raw_hex": "85 11",
+      "opcode": "STA",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54124,
+      "rom_offset": 111484,
+      "bytes": 2,
+      "raw_hex": "A9 7F",
+      "opcode": "LDA",
+      "operand": 127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54126,
+      "rom_offset": 111486,
+      "bytes": 2,
+      "raw_hex": "85 00",
+      "opcode": "STA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54128,
+      "rom_offset": 111488,
+      "bytes": 2,
+      "raw_hex": "A9 BB",
+      "opcode": "LDA",
+      "operand": 187
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54130,
+      "rom_offset": 111490,
+      "bytes": 2,
+      "raw_hex": "85 01",
+      "opcode": "STA",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54132,
+      "rom_offset": 111492,
+      "bytes": 2,
+      "raw_hex": "A5 12",
+      "opcode": "LDA",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54134,
+      "rom_offset": 111494,
+      "bytes": 3,
+      "raw_hex": "20 F5 ED",
+      "opcode": "JSR",
+      "operand": 60917
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54137,
+      "rom_offset": 111497,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54140,
+      "rom_offset": 111500,
+      "bytes": 2,
+      "raw_hex": "90 CC",
+      "opcode": "BCC",
+      "operand": 204
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54142,
+      "rom_offset": 111502,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54144,
+      "rom_offset": 111504,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54146,
+      "rom_offset": 111506,
+      "bytes": 2,
+      "raw_hex": "F0 2A",
+      "opcode": "BEQ",
+      "operand": 42
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54148,
+      "rom_offset": 111508,
+      "bytes": 2,
+      "raw_hex": "A4 12",
+      "opcode": "LDY",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54150,
+      "rom_offset": 111510,
+      "bytes": 3,
+      "raw_hex": "B9 2C 04",
+      "opcode": "LDA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54153,
+      "rom_offset": 111513,
+      "bytes": 3,
+      "raw_hex": "8D 40 05",
+      "opcode": "STA",
+      "operand": 1344
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54156,
+      "rom_offset": 111516,
+      "bytes": 3,
+      "raw_hex": "8C 41 05",
+      "opcode": "STY",
+      "operand": 1345
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54159,
+      "rom_offset": 111519,
+      "bytes": 2,
+      "raw_hex": "C9 1E",
+      "opcode": "CMP",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54161,
+      "rom_offset": 111521,
+      "bytes": 2,
+      "raw_hex": "F0 07",
+      "opcode": "BEQ",
+      "operand": 7
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54163,
+      "rom_offset": 111523,
+      "bytes": 3,
+      "raw_hex": "B9 50 05",
+      "opcode": "LDA",
+      "operand": 1360
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54166,
+      "rom_offset": 111526,
+      "bytes": 2,
+      "raw_hex": "C9 0A",
+      "opcode": "CMP",
+      "operand": 10
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54168,
+      "rom_offset": 111528,
+      "bytes": 2,
+      "raw_hex": "B0 14",
+      "opcode": "BCS",
+      "operand": 20
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54170,
+      "rom_offset": 111530,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54173,
+      "rom_offset": 111533,
+      "bytes": 2,
+      "raw_hex": "A9 DD",
+      "opcode": "LDA",
+      "operand": 221
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54175,
+      "rom_offset": 111535,
+      "bytes": 3,
+      "raw_hex": "AC 40 05",
+      "opcode": "LDY",
+      "operand": 1344
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54178,
+      "rom_offset": 111538,
+      "bytes": 2,
+      "raw_hex": "C0 1E",
+      "opcode": "CPY",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54180,
+      "rom_offset": 111540,
+      "bytes": 2,
+      "raw_hex": "D0 02",
+      "opcode": "BNE",
+      "operand": 2
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54182,
+      "rom_offset": 111542,
+      "bytes": 2,
+      "raw_hex": "A9 E5",
+      "opcode": "LDA",
+      "operand": 229
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54184,
+      "rom_offset": 111544,
+      "bytes": 3,
+      "raw_hex": "20 83 F2",
+      "opcode": "JSR",
+      "operand": 62083
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54187,
+      "rom_offset": 111547,
+      "bytes": 3,
+      "raw_hex": "20 C3 D0",
+      "opcode": "JSR",
+      "operand": 53443
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54190,
+      "rom_offset": 111550,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54191,
+      "rom_offset": 111551,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54194,
+      "rom_offset": 111554,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54197,
+      "rom_offset": 111557,
+      "bytes": 2,
+      "raw_hex": "90 1F",
+      "opcode": "BCC",
+      "operand": 31
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54199,
+      "rom_offset": 111559,
+      "bytes": 3,
+      "raw_hex": "20 63 DC",
+      "opcode": "JSR",
+      "operand": 56419
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54202,
+      "rom_offset": 111562,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54204,
+      "rom_offset": 111564,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54206,
+      "rom_offset": 111566,
+      "bytes": 2,
+      "raw_hex": "F0 16",
+      "opcode": "BEQ",
+      "operand": 22
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54208,
+      "rom_offset": 111568,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54210,
+      "rom_offset": 111570,
+      "bytes": 3,
+      "raw_hex": "8D 24 04",
+      "opcode": "STA",
+      "operand": 1060
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54213,
+      "rom_offset": 111573,
+      "bytes": 3,
+      "raw_hex": "8D 25 04",
+      "opcode": "STA",
+      "operand": 1061
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54216,
+      "rom_offset": 111576,
+      "bytes": 3,
+      "raw_hex": "20 E1 D0",
+      "opcode": "JSR",
+      "operand": 53473
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54219,
+      "rom_offset": 111579,
+      "bytes": 3,
+      "raw_hex": "8E 0A 05",
+      "opcode": "STX",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54222,
+      "rom_offset": 111582,
+      "bytes": 2,
+      "raw_hex": "A9 DE",
+      "opcode": "LDA",
+      "operand": 222
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54224,
+      "rom_offset": 111584,
+      "bytes": 3,
+      "raw_hex": "20 8B F2",
+      "opcode": "JSR",
+      "operand": 62091
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54227,
+      "rom_offset": 111587,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54230,
+      "rom_offset": 111590,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54231,
+      "rom_offset": 111591,
+      "bytes": 3,
+      "raw_hex": "20 29 CC",
+      "opcode": "JSR",
+      "operand": 52265
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54234,
+      "rom_offset": 111594,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54237,
+      "rom_offset": 111597,
+      "bytes": 2,
+      "raw_hex": "90 17",
+      "opcode": "BCC",
+      "operand": 23
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54239,
+      "rom_offset": 111599,
+      "bytes": 3,
+      "raw_hex": "AE 0A 05",
+      "opcode": "LDX",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54242,
+      "rom_offset": 111602,
+      "bytes": 2,
+      "raw_hex": "A9 FF",
+      "opcode": "LDA",
+      "operand": 255
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54244,
+      "rom_offset": 111604,
+      "bytes": 3,
+      "raw_hex": "9D 2C 04",
+      "opcode": "STA",
+      "operand": 1068
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54247,
+      "rom_offset": 111607,
+      "bytes": 2,
+      "raw_hex": "A9 E0",
+      "opcode": "LDA",
+      "operand": 224
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54249,
+      "rom_offset": 111609,
+      "bytes": 2,
+      "raw_hex": "85 E6",
+      "opcode": "STA",
+      "operand": 230
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54251,
+      "rom_offset": 111611,
+      "bytes": 2,
+      "raw_hex": "85 E7",
+      "opcode": "STA",
+      "operand": 231
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54253,
+      "rom_offset": 111613,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54256,
+      "rom_offset": 111616,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54258,
+      "rom_offset": 111618,
+      "bytes": 2,
+      "raw_hex": "85 8E",
+      "opcode": "STA",
+      "operand": 142
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54260,
+      "rom_offset": 111620,
+      "bytes": 2,
+      "raw_hex": "85 90",
+      "opcode": "STA",
+      "operand": 144
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54262,
+      "rom_offset": 111622,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54263,
+      "rom_offset": 111623,
+      "bytes": 3,
+      "raw_hex": "AD 0A 05",
+      "opcode": "LDA",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54266,
+      "rom_offset": 111626,
+      "bytes": 1,
+      "raw_hex": "0A",
+      "opcode": "ASL",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54267,
+      "rom_offset": 111627,
+      "bytes": 1,
+      "raw_hex": "A8",
+      "opcode": "TAY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54268,
+      "rom_offset": 111628,
+      "bytes": 3,
+      "raw_hex": "B9 5E CF",
+      "opcode": "LDA",
+      "operand": 53086
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54271,
+      "rom_offset": 111631,
+      "bytes": 2,
+      "raw_hex": "85 10",
+      "opcode": "STA",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54273,
+      "rom_offset": 111633,
+      "bytes": 3,
+      "raw_hex": "B9 5F CF",
+      "opcode": "LDA",
+      "operand": 53087
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54276,
+      "rom_offset": 111636,
+      "bytes": 2,
+      "raw_hex": "85 11",
+      "opcode": "STA",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54278,
+      "rom_offset": 111638,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54280,
+      "rom_offset": 111640,
+      "bytes": 2,
+      "raw_hex": "85 12",
+      "opcode": "STA",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54282,
+      "rom_offset": 111642,
+      "bytes": 3,
+      "raw_hex": "20 23 ED",
+      "opcode": "JSR",
+      "operand": 60707
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54285,
+      "rom_offset": 111645,
+      "bytes": 2,
+      "raw_hex": "A9 34",
+      "opcode": "LDA",
+      "operand": 52
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54287,
+      "rom_offset": 111647,
+      "bytes": 2,
+      "raw_hex": "85 10",
+      "opcode": "STA",
+      "operand": 16
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54289,
+      "rom_offset": 111649,
+      "bytes": 2,
+      "raw_hex": "A9 CF",
+      "opcode": "LDA",
+      "operand": 207
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54291,
+      "rom_offset": 111651,
+      "bytes": 2,
+      "raw_hex": "85 11",
+      "opcode": "STA",
+      "operand": 17
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54293,
+      "rom_offset": 111653,
+      "bytes": 2,
+      "raw_hex": "A9 5D",
+      "opcode": "LDA",
+      "operand": 93
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54295,
+      "rom_offset": 111655,
+      "bytes": 2,
+      "raw_hex": "85 00",
+      "opcode": "STA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54297,
+      "rom_offset": 111657,
+      "bytes": 2,
+      "raw_hex": "A9 D4",
+      "opcode": "LDA",
+      "operand": 212
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54299,
+      "rom_offset": 111659,
+      "bytes": 2,
+      "raw_hex": "85 01",
+      "opcode": "STA",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54301,
+      "rom_offset": 111661,
+      "bytes": 2,
+      "raw_hex": "A5 12",
+      "opcode": "LDA",
+      "operand": 18
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54303,
+      "rom_offset": 111663,
+      "bytes": 3,
+      "raw_hex": "8D 08 05",
+      "opcode": "STA",
+      "operand": 1288
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54306,
+      "rom_offset": 111666,
+      "bytes": 3,
+      "raw_hex": "20 F5 ED",
+      "opcode": "JSR",
+      "operand": 60917
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54309,
+      "rom_offset": 111669,
+      "bytes": 3,
+      "raw_hex": "20 67 D1",
+      "opcode": "JSR",
+      "operand": 53607
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54312,
+      "rom_offset": 111672,
+      "bytes": 3,
+      "raw_hex": "20 BC D1",
+      "opcode": "JSR",
+      "operand": 53692
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54315,
+      "rom_offset": 111675,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54317,
+      "rom_offset": 111677,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54319,
+      "rom_offset": 111679,
+      "bytes": 2,
+      "raw_hex": "F0 2B",
+      "opcode": "BEQ",
+      "operand": 43
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54321,
+      "rom_offset": 111681,
+      "bytes": 3,
+      "raw_hex": "AD 0A 05",
+      "opcode": "LDA",
+      "operand": 1290
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54324,
+      "rom_offset": 111684,
+      "bytes": 3,
+      "raw_hex": "CD 08 05",
+      "opcode": "CMP",
+      "operand": 1288
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54327,
+      "rom_offset": 111687,
+      "bytes": 2,
+      "raw_hex": "D0 23",
+      "opcode": "BNE",
+      "operand": 35
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54329,
+      "rom_offset": 111689,
+      "bytes": 2,
+      "raw_hex": "A0 00",
+      "opcode": "LDY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54331,
+      "rom_offset": 111691,
+      "bytes": 2,
+      "raw_hex": "A2 00",
+      "opcode": "LDX",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54333,
+      "rom_offset": 111693,
+      "bytes": 3,
+      "raw_hex": "B9 80 05",
+      "opcode": "LDA",
+      "operand": 1408
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54336,
+      "rom_offset": 111696,
+      "bytes": 2,
+      "raw_hex": "30 01",
+      "opcode": "BMI",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54338,
+      "rom_offset": 111698,
+      "bytes": 1,
+      "raw_hex": "E8",
+      "opcode": "INX",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54339,
+      "rom_offset": 111699,
+      "bytes": 1,
+      "raw_hex": "C8",
+      "opcode": "INY",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54340,
+      "rom_offset": 111700,
+      "bytes": 2,
+      "raw_hex": "C0 14",
+      "opcode": "CPY",
+      "operand": 20
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54342,
+      "rom_offset": 111702,
+      "bytes": 2,
+      "raw_hex": "90 F5",
+      "opcode": "BCC",
+      "operand": 245
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54344,
+      "rom_offset": 111704,
+      "bytes": 1,
+      "raw_hex": "8A",
+      "opcode": "TXA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54345,
+      "rom_offset": 111705,
+      "bytes": 2,
+      "raw_hex": "F0 28",
+      "opcode": "BEQ",
+      "operand": 40
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54347,
+      "rom_offset": 111707,
+      "bytes": 2,
+      "raw_hex": "A9 D8",
+      "opcode": "LDA",
+      "operand": 216
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54349,
+      "rom_offset": 111709,
+      "bytes": 3,
+      "raw_hex": "AC 40 05",
+      "opcode": "LDY",
+      "operand": 1344
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54352,
+      "rom_offset": 111712,
+      "bytes": 2,
+      "raw_hex": "C0 1E",
+      "opcode": "CPY",
+      "operand": 30
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54354,
+      "rom_offset": 111714,
+      "bytes": 2,
+      "raw_hex": "D0 02",
+      "opcode": "BNE",
+      "operand": 2
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54356,
+      "rom_offset": 111716,
+      "bytes": 2,
+      "raw_hex": "A9 E6",
+      "opcode": "LDA",
+      "operand": 230
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54358,
+      "rom_offset": 111718,
+      "bytes": 3,
+      "raw_hex": "20 83 F2",
+      "opcode": "JSR",
+      "operand": 62083
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54361,
+      "rom_offset": 111721,
+      "bytes": 3,
+      "raw_hex": "EE 01 05",
+      "opcode": "INC",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54364,
+      "rom_offset": 111724,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54370,
+      "rom_offset": 111730,
+      "bytes": 3,
+      "raw_hex": "20 BC D1",
+      "opcode": "JSR",
+      "operand": 53692
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54373,
+      "rom_offset": 111733,
+      "bytes": 3,
+      "raw_hex": "20 27 DF",
+      "opcode": "JSR",
+      "operand": 57127
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54376,
+      "rom_offset": 111736,
+      "bytes": 2,
+      "raw_hex": "90 22",
+      "opcode": "BCC",
+      "operand": 34
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54378,
+      "rom_offset": 111738,
+      "bytes": 3,
+      "raw_hex": "20 63 DC",
+      "opcode": "JSR",
+      "operand": 56419
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54381,
+      "rom_offset": 111741,
+      "bytes": 2,
+      "raw_hex": "A5 81",
+      "opcode": "LDA",
+      "operand": 129
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54383,
+      "rom_offset": 111743,
+      "bytes": 2,
+      "raw_hex": "29 01",
+      "opcode": "AND",
+      "operand": 1
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54385,
+      "rom_offset": 111745,
+      "bytes": 2,
+      "raw_hex": "F0 19",
+      "opcode": "BEQ",
+      "operand": 25
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54387,
+      "rom_offset": 111747,
+      "bytes": 2,
+      "raw_hex": "A9 E1",
+      "opcode": "LDA",
+      "operand": 225
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54389,
+      "rom_offset": 111749,
+      "bytes": 2,
+      "raw_hex": "85 E6",
+      "opcode": "STA",
+      "operand": 230
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54391,
+      "rom_offset": 111751,
+      "bytes": 2,
+      "raw_hex": "85 E7",
+      "opcode": "STA",
+      "operand": 231
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54393,
+      "rom_offset": 111753,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54395,
+      "rom_offset": 111755,
+      "bytes": 2,
+      "raw_hex": "85 8E",
+      "opcode": "STA",
+      "operand": 142
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54397,
+      "rom_offset": 111757,
+      "bytes": 2,
+      "raw_hex": "A9 50",
+      "opcode": "LDA",
+      "operand": 80
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54399,
+      "rom_offset": 111759,
+      "bytes": 2,
+      "raw_hex": "85 90",
+      "opcode": "STA",
+      "operand": 144
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54401,
+      "rom_offset": 111761,
+      "bytes": 2,
+      "raw_hex": "A9 00",
+      "opcode": "LDA",
+      "operand": 0
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54403,
+      "rom_offset": 111763,
+      "bytes": 3,
+      "raw_hex": "8D 01 05",
+      "opcode": "STA",
+      "operand": 1281
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54406,
+      "rom_offset": 111766,
+      "bytes": 3,
+      "raw_hex": "20 F9 D1",
+      "opcode": "JSR",
+      "operand": 53753
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54409,
+      "rom_offset": 111769,
+      "bytes": 3,
+      "raw_hex": "4C E1 D2",
+      "opcode": "JMP",
+      "operand": 53985
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 54412,
+      "rom_offset": 111772,
+      "bytes": 1,
+      "raw_hex": "60",
+      "opcode": "RTS",
+      "operand": 0
+    }
+  ],
+  "node_union_scope": "Read-only frozen11 state-handler index; not a newly recovered full service closure or new code-position denominator.",
+  "original_byte_ranges": [
+    {
+      "physical_bank": 13,
+      "cpu_start": 52502,
+      "rom_offset": 109862,
+      "bytes": 542,
+      "raw_hex": "AD 01 05 20 DE EA 2A CD 52 CD F2 CD 56 CE 76 CE 9E CE 09 CF 20 29 CC 20 E1 D0 A9 FF 9D 2C 04 8A D0 0E AD 0B 05 29 0F 8D 01 05 A9 0F 8D 00 05 60 A9 DC 20 93 F2 20 C3 D0 EE 01 05 60 20 29 CC 20 27 DF 90 09 20 63 DC A5 81 29 01 D0 01 60 EE 01 05 A9 00 8D 24 04 8D 25 04 AD 0B 05 29 10 0A 0A 0A 8D 04 05 20 84 BB EE 0A 05 AD 0A 05 F0 17 A8 A9 1E 99 2C 04 88 B9 50 05 C9 0A B0 06 A9 D7 20 83 F2 60 88 10 F0 AD 07 05 AC 0B 05 C0 02 F0 04 4A 4A 4A 4A 29 0F 20 68 F3 A0 00 B1 00 85 03 20 E1 D0 A2 00 BD 2C 04 C9 FE B0 1A C5 03 F0 1E 20 D7 F2 A0 0B B1 00 29 FC 91 00 A0 05 AD 0E 05 91 00 E8 4C BA CD A9 00 8D 01 05 4C 38 CD 20 D7 F2 A0 0B B1 00 09 03 91 00 E8 4C BA CD 20 29 CC AD 0A 05 0A A8 B9 9F BA 85 10 B9 A0 BA 85 11 A9 00 85 12 20 1E ED A9 6F 85 10 A9 BB 85 11 A9 7F 85 00 A9 BB 85 01 A5 12 20 F5 ED 20 27 DF 90 30 A5 81 29 01 F0 2A A4 12 B9 2C 04 8D 40 05 8C 41 05 C9 1E F0 07 B9 50 05 C9 0A B0 14 EE 01 05 A9 DD AC 40 05 C0 1E D0 02 A9 E5 20 83 F2 20 C3 D0 60 20 29 CC 20 27 DF 90 17 20 63 DC A5 81 29 01 F0 0E 20 E1 D0 8E 0A 05 A9 DE 20 8B F2 EE 01 05 60 20 29 CC 20 27 DF 90 1F AE 0A 05 A9 FF 9D 2C 04 A9 E0 85 E6 85 E7 EE 01 05 A9 00 85 8E 85 90 A9 00 8D 24 04 8D 25 04 60 AD 0A 05 0A A8 B9 5E CF 85 10 B9 5F CF 85 11 A9 00 85 12 20 23 ED A9 34 85 10 A9 CF 85 11 A9 04 85 00 A9 CF 85 01 A5 12 8D 08 05 20 F5 ED 20 67 D1 20 BC D1 A5 81 29 01 F0 2B AD 0A 05 CD 08 05 D0 23 A0 00 A2 00 B9 80 05 30 01 E8 C8 C0 14 90 F5 8A F0 28 A9 D8 AC 40 05 C0 1E D0 02 A9 E6 20 83 F2 EE 01 05 60 00 07 00 F8 80 20 BC D1 20 27 DF 90 22 20 63 DC A5 81 29 01 F0 19 A9 E1 85 E6 85 E7 A9 00 85 8E A9 50 85 90 A9 00 8D 01 05 20 F9 D1 4C 2A CD 60",
+      "sha256": "528eaccbbb4d1ff73b3b5a1beba9562b0924207cb3608e65310ca1239d18e110",
+      "name": "main13 body and inline table"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_start": 53443,
+      "rom_offset": 110803,
+      "bytes": 310,
+      "raw_hex": "AC 07 05 AD 0B 05 29 F0 F0 06 98 4A 4A 4A 4A A8 98 29 0F 20 68 F3 A0 00 B1 00 8D 4C 04 60 A0 20 A9 FF 99 80 05 88 10 FA A9 FF 8D 0A 05 A0 1F A9 FF 99 2C 04 88 10 FA AD 0B 05 29 10 D0 33 A0 00 A2 00 B9 28 06 29 80 D0 0B B9 64 06 C9 FF F0 04 9D 2C 04 E8 C8 C0 14 90 E9 A0 00 B9 47 6F C9 FF F0 04 9D 2C 04 E8 C8 C0 14 90 F0 A9 FE 9D 2C 04 60 A0 00 A2 00 B9 28 06 29 80 F0 0B B9 64 06 C9 FF F0 04 9D 2C 04 E8 C8 C0 14 90 E9 A0 00 B9 5B 6F C9 FF F0 04 9D 2C 04 E8 C8 C0 14 90 F0 A9 FE 9D 2C 04 60 A2 00 A0 1F B9 80 05 C9 FF F0 01 E8 88 10 F5 A5 81 29 01 F0 3F AC 08 05 CC 0A 05 F0 37 B9 80 05 F0 2D AD 40 05 C9 1E D0 0E 20 C3 D0 AC 08 05 D9 2C 04 F0 20 4C AD D1 86 00 AC 41 05 A9 09 38 F9 50 05 C5 00 90 0E AC 08 05 A9 00 99 80 05 60 A9 FF 99 80 05 60 A9 08 8D AF 00 A9 36 8D 15 01 A9 16 8D 17 01 A0 00 B9 80 05 30 07 98 48 20 DF D1 68 A8 C8 C0 14 90 EF 60 A9 34 85 10 A9 CF 85 11 A9 F4 85 00 A9 D1 85 01 98 20 F5 ED 60 00 7E 01 00 80",
+      "sha256": "ff4eef128cd14a866953d04f4f79acf46bb8046791f31f5db7527240299fb891",
+      "name": "leader/list/selection helpers before frozen22 settlement"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_start": 53965,
+      "rom_offset": 111325,
+      "bytes": 558,
+      "raw_hex": "AD 01 05 20 DE EA E1 D2 10 D3 4B D3 AF D3 D7 D3 F7 D3 62 D4 20 29 CC 20 E1 D0 A9 FF 9D 2C 04 8E 0A 05 E0 0B B0 11 20 8D D4 A9 0F 8D 00 05 AD 0B 05 29 0F 8D 01 05 60 A9 DF 20 93 F2 20 C3 D0 EE 01 05 60 20 29 CC 20 27 DF 90 32 20 63 DC A5 81 29 01 F0 29 EE 01 05 A9 D7 20 83 F2 A9 00 8D 24 04 8D 25 04 AD 0B 05 29 10 0A 0A 0A 8D 04 05 20 84 BB EE 0A 05 AC 0A 05 A9 1E 99 2C 04 60 20 29 CC AD 0A 05 0A A8 B9 9F BA 85 10 B9 A0 BA 85 11 A9 00 85 12 20 1E ED A9 6F 85 10 A9 BB 85 11 A9 7F 85 00 A9 BB 85 01 A5 12 20 F5 ED 20 27 DF 90 CC A5 81 29 01 F0 2A A4 12 B9 2C 04 8D 40 05 8C 41 05 C9 1E F0 07 B9 50 05 C9 0A B0 14 EE 01 05 A9 DD AC 40 05 C0 1E D0 02 A9 E5 20 83 F2 20 C3 D0 60 20 29 CC 20 27 DF 90 1F 20 63 DC A5 81 29 01 F0 16 A9 00 8D 24 04 8D 25 04 20 E1 D0 8E 0A 05 A9 DE 20 8B F2 EE 01 05 60 20 29 CC 20 27 DF 90 17 AE 0A 05 A9 FF 9D 2C 04 A9 E0 85 E6 85 E7 EE 01 05 A9 00 85 8E 85 90 60 AD 0A 05 0A A8 B9 5E CF 85 10 B9 5F CF 85 11 A9 00 85 12 20 23 ED A9 34 85 10 A9 CF 85 11 A9 5D 85 00 A9 D4 85 01 A5 12 8D 08 05 20 F5 ED 20 67 D1 20 BC D1 A5 81 29 01 F0 2B AD 0A 05 CD 08 05 D0 23 A0 00 A2 00 B9 80 05 30 01 E8 C8 C0 14 90 F5 8A F0 28 A9 D8 AC 40 05 C0 1E D0 02 A9 E6 20 83 F2 EE 01 05 60 00 07 00 F8 80 20 BC D1 20 27 DF 90 22 20 63 DC A5 81 29 01 F0 19 A9 E1 85 E6 85 E7 A9 00 85 8E A9 50 85 90 A9 00 8D 01 05 20 F9 D1 4C E1 D2 60 A0 00 B9 2C 04 C9 FF F0 07 98 48 20 A3 D4 68 A8 C8 C0 14 90 ED 60 48 AD 0B 05 48 AD 0E 05 8D 0B 05 20 11 BC 68 8D 0B 05 68 AA BD 2C 04 91 00 A2 00 DD 64 06 F0 12 E8 E0 14 90 F6 A2 00 DD 47 6F F0 1B E8 E0 28 90 F6 60 A9 FF 9D 00 06 9D 14 06 9D 28 06 9D 3C 06 9D 50 06 9D 64 06 60 A9 FF 9D 47 6F 60 20 29 CC A0 28 20 07 EE 06 A0 60",
+      "sha256": "162b8a03f45ab6fc99e13b393323aff82818711a1472a924796a30517120b7d9",
+      "name": "main14 and main15 return body"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_start": 57127,
+      "rom_offset": 114487,
+      "bytes": 18,
+      "raw_hex": "AD 04 03 C9 FF D0 09 AD 00 03 C9 FF D0 02 38 60 18 60",
+      "sha256": "56dc06b1a136d62368b469566c6901200391d5084819950fa00a3e999e404d71",
+      "name": "complete text readiness body through both RTS endpoints"
+    }
+  ],
+  "real_commit_calls": [
+    {
+      "physical_bank": 13,
+      "call_pc": 53037,
+      "callee": 53753,
+      "raw_return_word": 53039,
+      "return_pc": 53040
+    },
+    {
+      "physical_bank": 13,
+      "call_pc": 54406,
+      "callee": 53753,
+      "raw_return_word": 54408,
+      "return_pc": 54409
+    }
+  ],
+  "main15": {
+    "physical_bank": 13,
+    "entry": 54512,
+    "draw_call": 54512,
+    "LDY28_pc": 54515,
+    "EE07_call": 54517,
+    "inline_target": 40966,
+    "return_pc": 54522,
+    "code_pair_restored": [
+      12,
+      13
+    ],
+    "data8000_page_is_preserved_after_far_service": true
+  },
+  "readiness": {
+    "physical_bank": 13,
+    "entry": 57127,
+    "requires": {
+      "0304": 255,
+      "0300": 255
+    },
+    "new_A_mask": 1,
+    "busy_or_no_input_is_normal_body_RTS": true
+  },
+  "dependency_scope": "No unowned dependency discovered in declared complete fixtures. Eight deliberately missing-service cases remain exact prefixes."
+}

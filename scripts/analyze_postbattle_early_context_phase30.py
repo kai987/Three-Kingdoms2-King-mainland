@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+"""Readonly phase30 early-parent/caller context; no Source/CPU/core execution."""
+from pathlib import Path
+import argparse,ast,hashlib,json
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'analysis/phase30/context'
+ROM_SHA='26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82'
+BASE_AUDIT='177c7d2d27dc3f5fd9840f90802be752befa3dd7ae885e867e9c110432f68a15'
+SOURCES=('source/recovered/battle_state_machine.py','source/recovered/postbattle.py','source/recovered/postbattle_completion_services.py','source/recovered/postbattle_completion_integration.py','source/recovered/battle_scene_controller.py','source/recovered/postbattle_release_services.py')
+INPUTS=('analysis/phase29/verification.json','analysis/phase29/context/CC29-name-draw-context.json','analysis/phase29/context/ownership-and-roster-contract.json','analysis/phase29/completion-services/validation.json','analysis/phase29/source-integration.json','analysis/phase4/postbattle/validation.json','analysis/battle_fsm/validation.json','analysis/phase18/control/instruction-atlas.json','analysis/phase27/fields-static/analysis-summary.json')
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def read(p):return json.loads((ROOT/p).read_text())
+def off(b,p):return 16+8192*b+(p&8191)
+def save(n,d):OUT.mkdir(parents=True,exist_ok=True);(OUT/n).write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+def function(path,name):
+ n=next(n for n in ast.walk(ast.parse((ROOT/path).read_text()))if isinstance(n,ast.FunctionDef)and n.name==name)
+ return dict(path=path,function=name,line=n.lineno,end_line=n.end_lineno,sha256=sha(ROOT/path))
+def main():
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('rom',type=Path);a=p.parse_args();rom=a.rom.read_bytes();assert hashlib.sha256(rom).hexdigest()==ROM_SHA and sha(ROOT/'analysis/phase29/verification.json')==BASE_AUDIT
+ frozen=read('analysis/phase29/verification.json');assert frozen['status']=='passed'
+ for path in SOURCES:assert sha(ROOT/path)==frozen['source_and_validator_sha256'][path]
+ atlas=read('analysis/phase18/control/instruction-atlas.json')['instructions'];by={(r['physical_bank'],r['cpu']):r for r in atlas};raw=[]
+ for r in sorted(atlas,key=lambda x:(x['physical_bank'],x['cpu'])):
+  if(r['physical_bank']==8 and 0xBAB3<=r['cpu']<0xBB93)or(r['physical_bank']==13 and(0xCC29<=r['cpu']<0xCCAA or 0xD4F0<=r['cpu']<0xD4FB))or(r['physical_bank']==31 and 0xF368<=r['cpu']<0xF379):
+   row={k:r[k]for k in('physical_bank','cpu','rom_offset','raw_hex','op','mode','operand')};o=off(row['physical_bank'],row['cpu']);bs=bytes.fromhex(row['raw_hex']);assert o==row['rom_offset']and rom[o:o+len(bs)]==bs;raw.append(row)
+ assert by[8,0xBB36]['raw_hex']==by[8,0xBB8C]['raw_hex']=='20 46 BC'
+ assert by[8,0xBB39]['raw_hex']==by[8,0xBB8F]['raw_hex']=='EE 01 05'
+ table=rom[off(8,0xBAB9):off(8,0xBAB9)+8];assert table==bytes.fromhex('C1 BA 3D BB 93 BB A0 BB')
+ ruler_data=rom[off(31,0xF379):off(31,0xF379)+32];rulers=[int.from_bytes(ruler_data[i:i+2],'little')for i in range(0,32,2)]
+ save('original-positions.json',dict(schema='phase30-early-parent-original-context-v1',ROM_sha256=ROM_SHA,instructions=raw,data=[dict(physical_bank=8,cpu=0xBAB9,rom_offset=off(8,0xBAB9),raw_hex=table.hex(' ').upper(),is_opcode=False),dict(physical_bank=31,cpu=0xF379,rom_offset=off(31,0xF379),raw_hex=ruler_data.hex(' ').upper(),is_opcode=False),dict(physical_bank=13,cpu=0xD4F8,rom_offset=off(13,0xD4F8),raw_hex='06 A0',is_opcode=False)]))
+ stages=[dict(stage=0,entry=0xBAC1,ruler='0507 high nibble',controller_read_pc=0xBAEF,controller_field_offset=3,AI_controller_value=3,human_controller_store=0x6F44,human_branches=[dict(outcome='nonzero',state=13,phase=0,field050B=17,RTS=0xBB0E),dict(outcome='zero',state=14,phase=0,field050B=17,RTS=0xBB1E)],AI_side0504=128,AI_mode6F91=[dict(outcome='nonzero',mode=2),dict(outcome='zero',mode=0)],callee=dict(call_pc=0xBB36,target=0xBC46,raw_return_word=0xBB38,return_pc=0xBB39),normal_return_increment_pc=0xBB39,normal_RTS=0xBB3C),dict(stage=1,entry=0xBB3D,ruler='0507 low nibble',controller_read_pc=0xBB47,controller_field_offset=3,AI_controller_value=3,human_controller_store=0x6F44,human_branches=[dict(outcome='zero',state=13,phase=0,field050B=2,RTS=0xBB64),dict(outcome='nonzero',state=14,phase=0,field050B=2,RTS=0xBB74)],AI_side0504=0,AI_mode6F91=[dict(outcome='zero',mode=1),dict(outcome='nonzero',mode=0)],callee=dict(call_pc=0xBB8C,target=0xBC46,raw_return_word=0xBB8E,return_pc=0xBB8F),normal_return_increment_pc=0xBB8F,normal_RTS=0xBB92)]
+ save('early-stage-branches-and-callers.json',dict(schema='phase30-BAC1-BB3D-exact-caller-context-v1',stages=stages,stage0_fixed_shadow_initialization=dict(low_addresses=[0xB2,0xC2,0xCA,0xD2,0xDA],low_value=8,high_addresses=[0xB3,0xC3,0xCB,0xD3,0xDB],high_value=9),redundant_original_load=dict(cpu=0xBAFD,value=10,immediately_overwritten_at=0xBAFF,value_after=13,do_not_invent_branch=True),normal_return_only='INC0501 executes only after originalBC46 truly returns atBB39/BB8F. Nonlocal/dependency/reset cannot be substituted by a fakeRTS.',Native_scope='Readonly originalbytes only. Human state13 UI continuation and any inter-window delay require separate new Native evidence; no continuous fullhuman0/1 claim here.',Source_CPU_cases=0,original_CPU_cases=0,Native_runs=0))
+ old=read('analysis/phase4/postbattle/validation.json');semantic=read('analysis/battle_fsm/validation.json')
+ save('historical-credit-and-return-erratum.json',dict(schema='phase30-postbattle-early-existing-credit-v1',old_AI_semantics=function(SOURCES[1],'process_ai_officers'),old_AI_modes={k:old['counts'][k]for k in('ai_mode0','ai_mode1','ai_mode2')},old_AI_receipt_scope=old['scope'],old_parent=function(SOURCES[0],'finalization_phase'),old_parent_semantic_cases=semantic['semantic_counts']['finalization_phase'],old_parent_ECEE_bypassed=True,old_dependency_markers=[dict(semantic_code_marker=0xBB37,actual_JSR_PC=0xBB36,actual_raw_return_word=0xBB38,actual_return_PC=0xBB39),dict(semantic_code_marker=0xBB8D,actual_JSR_PC=0xBB8C,actual_raw_return_word=0xBB8E,actual_return_PC=0xBB8F)],erratum_scope='Superseding new30 context only. Old semantic-adapter marker is not the actual JSR opcode or its returnPC; no oldfile is edited.',new_precise_protocol_not_first_algorithm_recovery=True,new_Source_CPU_cases=0,new_original_CPU_cases=0,new_Native_runs=0))
+ save('ruler-and-name-pointer-boundaries.json',dict(schema='phase30-ruler-name-pointer-context-boundaries-v1',normal_ruler_domain=list(range(7)),normal_table_words=rulers[:7],raw16_table_words=rulers,raw_table_not_extended_ruler_records=True,raw_boundaries=[dict(index=i,pointer=rulers[i],kind='explicit_hardware_input_required'if i in(7,8)else'raw_ROM_or_RAM_alias_not_normal_ruler',read_performed_by_context=False)for i in range(7,16)],D4F0_chain=dict(draw_call_pc=0xD4F0,draw_entry=0xCC29,draw_return=0xD4F3,selector=0x28,farcall_pc=0xD4F5,inline_target=0xA006),CC6D_exact_JSR_callers=[dict(physical_bank=13,cpu=0xCC54,target=0xCC6D,return_pc=0xCC57),dict(physical_bank=13,cpu=0xCC67,target=0xCC6D,return_pc=0xCC6A)],CC6D_data_mapping='CC6D itself does not callF25F. CompleteCC29 first callsF25F31 to selectphysical17.',typed_name_proposal=dict(first_PC=0xCC92,following_PC=0xCCAC,normal_leader_domain=list(range(256)),raw237_255_not_official_names=True,logical_range=[0x8DB4,0x9AB3],new_independent_contract_receipt='analysis/phase30/fields-static/verification.json',context_promotes_no_authority=True),bare_CCAA=dict(pointer06=0x6001,Y=0,logical_address=0x6001,scope='Address counterexample; new CPU proof in fields-static is independent.'),frozen_source_credit=dict(draw=function(SOURCES[4],'draw_postbattle_units'),full_parent=function(SOURCES[4],'return_to_city'),strict_caller_adapter=function(SOURCES[5],'run_entry')),limits=['Source/OriginalCPU/Native execution0 in this context.','Actual new Source/CPU/Native receipts, not this rawbyte catalog, determine completed coverage.','Neither typed names nor raw aliases establish formal city+1/+28..31 names.']))
+ save('analysis-summary.json',dict(schema='phase30-postbattle-early-context-summary-v1',status='indexed_read_only',ROM_sha256=ROM_SHA,Source_CPU_cases=0,original_CPU_cases=0,Native_runs=0,BC46_actual_callers=[0xBB36,0xBB8C],BC46_actual_return_PCs=[0xBB39,0xBB8F],frozen29_baseline=dict(all_indirect=1526,conditional_disjoint=1198,possible=81,unknown=247,remaining=328,raw345=dict(operand=104,known_data=13,no_control_entry=228)),context_new_exclusions=0,unknown_unique_services=None,official_city_auxiliary_names={str(i):None for i in(1,28,29,30,31)},full_game_closure=False,new_Source_early_scope_not_pregranted=True,source_and_validator_sha256={str(Path(__file__).relative_to(ROOT)):sha(__file__),**{p:sha(ROOT/p)for p in SOURCES}},artifact_and_dependency_sha256={p:sha(ROOT/p)for p in INPUTS}))
+ (OUT/'original-ranges.asm').write_text('; New30 readonly early-parent bytes; offsets include16-byte header\n'+'\n'.join(f"; bank{r['physical_bank']} file${r['rom_offset']:06X}\n${r['cpu']:04X}: {r['raw_hex']:<12}; {r['op']} {r['mode']} ${r['operand']:04X}"for r in raw)+'\n')
+ (OUT/'README.md').write_text('''# 战后前两态：真实BC46调用与姓名指针前提
+
+这是阶段30只读context；新Source/原CPU/Native执行0，不运行旧producer、不修改阶段29。四态0/1的精确新Source及原机覆盖由独立回执确定，此处不预授全父链闭合。
+
+BAC1阶段0先设五组8/9影子页，取0507高半ruler；controller+3不是3走human：outcome非零→主13、零→14，phase0、050B=11。AI路径side0504=80，outcome非零mode6F91=2、零mode0。真正JSR BC46在BB36，原压栈BB38、返回BB39，之后才INC0501/RTS。
+
+BB3D阶段1取低半ruler，human outcome零→主13、非零→14，phase0、050B=02。AI side0504=0，outcome零mode1、非零mode0；真正JSR在BB8C，压栈BB8E、返回BB8F，之后才INC0501/RTS。非局部返回和真实依赖不等于自动执行INC。旧高层适配器中的BB37/BB8D不是原JSR地址或返回PC，只在本新文档纠正，不改冻结旧源码。
+
+BC46的process_ai_officers玩法算法已有旧具名恢复和三模式各512语义案；新精确寄存器/栈/mapper协议是另一scope，不能算首次算法恢复。旧finalization256案的ECEE bypass与新控制器也分开。
+
+原13D4F0先CC29，CC54/CC67才分别JSR CC6D；CC6D本体不切data页，完整CC29的F25F31才选择bank17。正常ruler0..6只有七个正规表项；raw7..15字保持原ROM，其中8指5F20硬件、11指0001活scratch、14指012E栈、15指1800镜像0000，不能强clamp成合法君主。rawleader237..255超正式237姓名表仍照原乘13算法保留；裸CCAA6001仍可读辅助字节。独立fields-static合同若通过只迁移两处适用的完整入口条件域；此context自身新增排除0。
+
+冻结29基线1526=1198条件不交/81可能/247未知，候选328；raw345=104操作数/13数据/228未证入口。城市+1/+28..31正式含义和未知唯一服务数继续null，全款闭包false。新自然窗口、受控祖先、CPU构造caller与已有软件输入不得混为一类；分窗human主13路径不能冒称连续全human0/1流程。
+''')
+ print(json.dumps(dict(status='indexed_read_only',Source_CPU_cases=0,original_CPU_cases=0,Native_runs=0,BC46_returns=[0xBB39,0xBB8F])))
+if __name__=='__main__':main()

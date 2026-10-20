@@ -1,0 +1,41 @@
+{
+  "case": "single-player-empty-rosters-reset",
+  "label": "ending-g14-mode0-phase0-markerFE",
+  "frame": 7084,
+  "native_snapshot": "analysis/phase17/runtime/single-player-empty-rosters-reset/ending-g14-mode0-phase0-markerFE",
+  "original_parent_registers": {
+    "a": 17,
+    "x": 100,
+    "y": 31,
+    "p": 32,
+    "sp": 255,
+    "pc": 57446
+  },
+  "initial_registers": {
+    "a": 0,
+    "x": 255,
+    "y": 55,
+    "p": 34,
+    "sp": 247,
+    "pc": 40990
+  },
+  "actual_banks": [
+    2,
+    23,
+    24,
+    31
+  ],
+  "actual_return_PC": 64136,
+  "actual_return_SP": 249,
+  "preparation": [],
+  "original_prefix_instructions": 1484,
+  "callback_entry": "accepted_original_NMI8",
+  "A000_cadence_returned_before_dispatch": false,
+  "declared_controller_buttons": [
+    1,
+    0
+  ],
+  "additional_new_A_through_original_E6C6": true,
+  "native_internal_CPU_trace": false,
+  "provenance": "FrozenNative RAM/SRAM; declared originalCPU citycallback or acceptedNMI8 parent; actual original JSR frame. Preparation instructions are not extra source cases."
+}

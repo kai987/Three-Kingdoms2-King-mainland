@@ -1,0 +1,208 @@
+{
+  "schema": "phase30-early-parent-context-validation-v1",
+  "status": "passed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "check_count": 41,
+  "checks": [
+    {
+      "test": "original_ROM_identity",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:scripts/analyze_postbattle_early_context_phase30.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/battle_state_machine.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/postbattle.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/postbattle_completion_services.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/postbattle_completion_integration.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/battle_scene_controller.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/postbattle_release_services.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase29/verification.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase29/context/CC29-name-draw-context.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase29/context/ownership-and-roster-contract.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase29/completion-services/validation.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase29/source-integration.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase4/postbattle/validation.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/battle_fsm/validation.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase18/control/instruction-atlas.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase27/fields-static/analysis-summary.json",
+      "status": "passed"
+    },
+    {
+      "test": "all_original_instruction_and_data_bytes_plus16",
+      "status": "passed"
+    },
+    {
+      "test": "stage0_real_call_BB36_rawreturnBB38_resumeBB39",
+      "status": "passed"
+    },
+    {
+      "test": "stage1_real_call_BB8C_rawreturnBB8E_resumeBB8F",
+      "status": "passed"
+    },
+    {
+      "test": "normal_return_increment_only_after_truecallee_return",
+      "status": "passed"
+    },
+    {
+      "test": "stage0_highruler_human_outcome_routes13or14",
+      "status": "passed"
+    },
+    {
+      "test": "stage1_lowruler_human_outcome_routes13or14",
+      "status": "passed"
+    },
+    {
+      "test": "controller_field3_and_AIcode3",
+      "status": "passed"
+    },
+    {
+      "test": "AI_side_and_mode_domains_differ_by_stage",
+      "status": "passed"
+    },
+    {
+      "test": "original_redundant_LDA0A_then0D_is_not_new_branch",
+      "status": "passed"
+    },
+    {
+      "test": "stage0_shadow_five_codepairs8_9",
+      "status": "passed"
+    },
+    {
+      "test": "old_BB37_BB8D_markers_superseded_only_new_context",
+      "status": "passed"
+    },
+    {
+      "test": "frozen_old_semantic_marker_not_rewritten",
+      "status": "passed"
+    },
+    {
+      "test": "old_AIthree_modes512_not_first_recovery",
+      "status": "passed"
+    },
+    {
+      "test": "old_parent256_bypass_separate",
+      "status": "passed"
+    },
+    {
+      "test": "seven_normal_ruler_words_original",
+      "status": "passed"
+    },
+    {
+      "test": "raw8_needs5F20_input_not_fake",
+      "status": "passed"
+    },
+    {
+      "test": "raw11_live_scratch_raw14_stack_raw15_RAMmirror",
+      "status": "passed"
+    },
+    {
+      "test": "CC6D_real_JSRs_CC54_CC67",
+      "status": "passed"
+    },
+    {
+      "test": "D4F0_draw_precedes_D4F5_farcall",
+      "status": "passed"
+    },
+    {
+      "test": "typed_name_proposal_not_context_authority",
+      "status": "passed"
+    },
+    {
+      "test": "bare_CCAA_aux_plus1_counterexample_retained",
+      "status": "passed"
+    },
+    {
+      "test": "frozen29_baseline_328_and_raw345_unchanged",
+      "status": "passed"
+    },
+    {
+      "test": "no_new_context_execution_or_names_or_wholeclosure",
+      "status": "passed"
+    },
+    {
+      "test": "context_no_CPU_Source_core_or_oldproducer_importexecution",
+      "status": "passed"
+    }
+  ],
+  "Source_CPU_cases": 0,
+  "original_CPU_cases": 0,
+  "Native_runs": 0,
+  "new_exclusions": 0,
+  "source_and_validator_sha256": {
+    "scripts/analyze_postbattle_early_context_phase30.py": "28516c013452d825a18a485fcb89f7ecf8aec61928e1ef63b405dc3751ebcab6",
+    "source/recovered/battle_state_machine.py": "7c67a8adef29ff925915184c3f7b17652e7b089107b75a3a362cab50c58d3b21",
+    "source/recovered/postbattle.py": "aa5c87c3f398b9600392dd87b78f786a003b0c2a02f2e4d6114aaa95cb8d2dff",
+    "source/recovered/postbattle_completion_services.py": "1b8d7d20d71d8817053fc75d481739b192769f710fe95bed288f1cfe54e206b3",
+    "source/recovered/postbattle_completion_integration.py": "dd5b7e8a70d82a484ad8ca7a93182f87d8e9cb57eb63617f05e8e114a1bf3b13",
+    "source/recovered/battle_scene_controller.py": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781",
+    "source/recovered/postbattle_release_services.py": "2ac7e3e914018bd145b2ff831b7e1c3e72e554a4c65e12900a3b1777b2d45714",
+    "scripts/verify_postbattle_early_context_phase30.py": "0e8cb30adc63d1f142099ed7c05ab5cdc483e5d8c1b7a5f35ed98c9d58a385c1"
+  },
+  "artifact_and_dependency_sha256": {
+    "analysis/phase29/verification.json": "177c7d2d27dc3f5fd9840f90802be752befa3dd7ae885e867e9c110432f68a15",
+    "analysis/phase29/context/CC29-name-draw-context.json": "4703aec5dbaf100e6698aad9a26005fd31adc30cdd61f81c842410f3e4ec7b2d",
+    "analysis/phase29/context/ownership-and-roster-contract.json": "fd648c54767ea49b41d9a37494c5ce52187a7dcf86afdd491ba4f6a76b58483f",
+    "analysis/phase29/completion-services/validation.json": "62395b07f2196892f316cf0e40dc5127cebc7b149d55655701cdf3835f182e93",
+    "analysis/phase29/source-integration.json": "4ad8ed0fe1fefc92febee923f8bb9fa800735bfe09b8b2962918b48a99340a96",
+    "analysis/phase4/postbattle/validation.json": "6ad3b34eda9a1feada3f18f6e66cb41418514b99d5f60488036db8f049db287a",
+    "analysis/battle_fsm/validation.json": "35a95bad0de1c5b49115fa0fd2572a8ccc66d892a4082e7ac844e411849541aa",
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/phase27/fields-static/analysis-summary.json": "3fc333e35f5207bbf7a0fdaa59b1f71922981d1f5efe28b0eff28835abbf6159",
+    "analysis/phase30/context/analysis-summary.json": "3739d03556d2c293e982c1751c30f097019fb36164cb8f3fd60c23e9da0de32c",
+    "analysis/phase30/context/ruler-and-name-pointer-boundaries.json": "e8943c5b80a4141cc37df572c032f3661225fa5aafdc5656fc4eef74d76390d2",
+    "analysis/phase30/context/original-positions.json": "20a0a2c25c2818e1d029458ec0c6629c75201b370f96940f71355ad2321fad29",
+    "analysis/phase30/context/early-stage-branches-and-callers.json": "e3c9179f21c431273afe5ca40333e2b3fe5fd8e4f0fe0b6e355b7f871e9214ea",
+    "analysis/phase30/context/README.md": "38353ce35f826af0f14c6dbe0642f3f4c3aeb4d7deffa09207d86bf054fe3fb0",
+    "analysis/phase30/context/historical-credit-and-return-erratum.json": "efb4bec8ce955058ab8643c72626e7c8cd333b585bb97ac864bb4b798175b391",
+    "analysis/phase30/context/original-ranges.asm": "fb4a290be8e70617a9844a5cbd4d5136a115e702dbd725735b0e264196b768e3"
+  },
+  "limits": [
+    "Readonly originalbytes/AST/frozen receipt comparison. No Source/CPU/core or old producer execution.",
+    "New fields-static CPU contracts and new Source/Native coverage are independent; no automatic nextphase31."
+  ]
+}

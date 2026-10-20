@@ -1,0 +1,67 @@
+{
+  "schema": "phase22-wild-recruitment-originalCPU-provenance-v1",
+  "status": "bounded_original_CPU_observation",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "contexts": 2,
+  "original_CPU_prefix_instructions": 26383,
+  "source_CPU_cases": 0,
+  "Native_internal_CPU_trace": false,
+  "pure_saved_PC_context_count": 1,
+  "declared_hardware_NMI_context_count": 1,
+  "exported_caller_inputs": 8,
+  "trace": {
+    "path": "analysis/phase22/cpu/trace.json",
+    "sha256": "0e4c8a6f7be4ff8b8c6e33e18ae0de9375db988f383d8f594c67f13b8187ddf4"
+  },
+  "source_sha256": {
+    "scripts/trace_wild_recruitment.py": "5e46d507e416dc98208fc8d97cc7fa0618f267b1649af9696f42c59fa708c719",
+    "source/recovered/nestopia_context.py": "7762c7ac80a8148341582edcf9c0922a230b586c3b336a06281b1315bf9a7ccb",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920"
+  },
+  "artifact_sha256": {
+    "analysis/phase22/runtime/original-control/release-confirmation.state": "30dc31bd1a547ecbb10e377ef0c1876409a7958244ccf1f8931f0ccbd96ee9cb",
+    "analysis/phase22/runtime/original-control/recruitment-success-previous-1-frame14836.state": "17a17cbb51aae801f143cc322a2551227b0d18d26ddca2a6c53336114d68a03f",
+    "analysis/phase22/cpu/actual-callers/entry-C6CC-success/input-n163.bin": "e53a89489446d4548af47b18a3e2d4f6d0b961cbf98f88a22b87a67fec01be9d",
+    "analysis/phase22/cpu/actual-callers/entry-C6CC-success/input-ram.bin": "0a376c04c66ae0b0687e500532da6700ccbf44328d7af673fe09b0725283427e",
+    "analysis/phase22/cpu/actual-callers/entry-C6CC-success/context.json": "a2d5873d8b86e1d453638a4d5a9aa749a9668be026bf9dfbacafd4345a862d2b",
+    "analysis/phase22/cpu/actual-callers/entry-C6CC-success/input-sram.bin": "6fc2f4a8905fab8e456ffee1b76758f90554e604910db8ae56ad271862cc60d7",
+    "analysis/phase22/cpu/actual-callers/entry-D1F9/input-n163.bin": "97f13e251ea2b7a9bec4a2e612b841ddda012af06a5c7929d4b5bb63f82f9e23",
+    "analysis/phase22/cpu/actual-callers/entry-D1F9/input-ram.bin": "32bd8690d40027888e9ab788ce23a60f41248185496f9534c9eedc06a521be86",
+    "analysis/phase22/cpu/actual-callers/entry-D1F9/context.json": "12ef5a7633841d45cb2591d664a96502bf080536d1b2ac0172e0763fb27098cc",
+    "analysis/phase22/cpu/actual-callers/entry-D1F9/input-sram.bin": "e000731c3f4ef8b436af1b26cd1b97553e37a1130ec0e5e6eba1f82d2fb476a1",
+    "analysis/phase22/cpu/actual-callers/entry-A000-pair12/input-n163.bin": "97f13e251ea2b7a9bec4a2e612b841ddda012af06a5c7929d4b5bb63f82f9e23",
+    "analysis/phase22/cpu/actual-callers/entry-A000-pair12/input-ram.bin": "2e3ffc38f479eb2aa018e64ad9900eda59dda973f704f1c0bee6d58a487edee5",
+    "analysis/phase22/cpu/actual-callers/entry-A000-pair12/context.json": "9ec554a20f9bfb8ee26970164a6ccdd2ce4ff1426ee3c08297ae67aa1a53ae9f",
+    "analysis/phase22/cpu/actual-callers/entry-A000-pair12/input-sram.bin": "e000731c3f4ef8b436af1b26cd1b97553e37a1130ec0e5e6eba1f82d2fb476a1",
+    "analysis/phase22/cpu/actual-callers/entry-C765/input-n163.bin": "e53a89489446d4548af47b18a3e2d4f6d0b961cbf98f88a22b87a67fec01be9d",
+    "analysis/phase22/cpu/actual-callers/entry-C765/input-ram.bin": "dc2b37d425a903f8e051c9a4359b6f1a5055750e5d0db37efa9c3f4b9c02267e",
+    "analysis/phase22/cpu/actual-callers/entry-C765/context.json": "194a40a3cfacbfdded747251b752570073a0cd75133d837d7e0869c9cc2fd90b",
+    "analysis/phase22/cpu/actual-callers/entry-C765/input-sram.bin": "62c224dc0ecdeba06449d25ee5366ed31c86b679b6cce895ae7a48fd195320e1",
+    "analysis/phase22/cpu/actual-callers/entry-C71A/input-n163.bin": "e53a89489446d4548af47b18a3e2d4f6d0b961cbf98f88a22b87a67fec01be9d",
+    "analysis/phase22/cpu/actual-callers/entry-C71A/input-ram.bin": "605b7bd4a69061478ad078df87308be200b04593c5d6a40f7786b11cf90d91e6",
+    "analysis/phase22/cpu/actual-callers/entry-C71A/context.json": "301d6b16fa7c24dab381d7e2d3634b47e264f1114f82f88fec5f07480aeee192",
+    "analysis/phase22/cpu/actual-callers/entry-C71A/input-sram.bin": "62c224dc0ecdeba06449d25ee5366ed31c86b679b6cce895ae7a48fd195320e1",
+    "analysis/phase22/cpu/actual-callers/entry-D20D/input-n163.bin": "97f13e251ea2b7a9bec4a2e612b841ddda012af06a5c7929d4b5bb63f82f9e23",
+    "analysis/phase22/cpu/actual-callers/entry-D20D/input-ram.bin": "af42891c6cef7dd01adc5e64ec026b66015bdb938895dd335ea156c35264d39c",
+    "analysis/phase22/cpu/actual-callers/entry-D20D/context.json": "a1913da2632ceed63c9f40b36df13546fcad20ebbbde3705fb36a6a6b793a831",
+    "analysis/phase22/cpu/actual-callers/entry-D20D/input-sram.bin": "e000731c3f4ef8b436af1b26cd1b97553e37a1130ec0e5e6eba1f82d2fb476a1",
+    "analysis/phase22/cpu/actual-callers/entry-C5B9/input-n163.bin": "e53a89489446d4548af47b18a3e2d4f6d0b961cbf98f88a22b87a67fec01be9d",
+    "analysis/phase22/cpu/actual-callers/entry-C5B9/input-ram.bin": "bd5c1df251e7a4fc62d9d20a44e0acd8660f8f5cd2e515fb8d9ea6cdda739718",
+    "analysis/phase22/cpu/actual-callers/entry-C5B9/context.json": "80f496be2fee37f3d7f0361f4cd81506e7258fee14fac5b6fec34bfe3a093176",
+    "analysis/phase22/cpu/actual-callers/entry-C5B9/input-sram.bin": "6fc2f4a8905fab8e456ffee1b76758f90554e604910db8ae56ad271862cc60d7",
+    "analysis/phase22/cpu/actual-callers/entry-C6CC/input-n163.bin": "e53a89489446d4548af47b18a3e2d4f6d0b961cbf98f88a22b87a67fec01be9d",
+    "analysis/phase22/cpu/actual-callers/entry-C6CC/input-ram.bin": "e0336f1d1fe26e481cdf14a744bde0c54704572e86befff2019043d274b7e6e8",
+    "analysis/phase22/cpu/actual-callers/entry-C6CC/context.json": "79dc174de8e757576a688314fd6ec2565e5f1761a3b92ec257da7deae7ae9ab0",
+    "analysis/phase22/cpu/actual-callers/entry-C6CC/input-sram.bin": "6fc2f4a8905fab8e456ffee1b76758f90554e604910db8ae56ad271862cc60d7"
+  },
+  "formal_Native_evidence": {
+    "path": "analysis/phase22/runtime/evidence.json",
+    "sha256": "3ff68baf6352e7cc0023081b1e1af0d78f37277c254de16dc015fa8a9d13d64c"
+  },
+  "limits": [
+    "No saved PC/register/stack/RNG/request/ready or gameplay data is rewritten.",
+    "A release origin explicitly injects one real hardware NMI and ordinary A-port input into the independent CPU; it is not a passive Native callee capture.",
+    "Pure saved-PC continuations do not schedule new interrupts; their outcome need not equal later Native frame timing.",
+    "Diagnostic preparation instructions and exported callees are not extra Source comparison cases."
+  ]
+}

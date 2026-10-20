@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "url": "http://127.0.0.1:8765/analysis/phase3/index.html",
+  "title": "战斗与单挑状态机 · ROM证据",
+  "viewport": {"width": 599, "height": 843},
+  "browser_path": "Existing Codex in-app browser via cua_repl; dedicated Browser skill not listed, purpose-built CUA used",
+  "checks": {
+    "page_identity": "passed",
+    "meaningful_nonblank_content": "passed",
+    "framework_error_overlay": "absent",
+    "console_errors_and_warnings": [],
+    "all_three_images_loaded": true,
+    "artifact_relative_links_exist": true,
+    "interaction_proof": "passed"
+  },
+  "interactions": [
+    "Switch to duel22 -> select state14 -> filter C33B -> one matching return handler",
+    "Refresh final three-controller version -> select battle state15 -> four bank8 settlement aliases shown",
+    "Switch to ordinary-attack11 -> select state6 -> CE address filter -> formation handlers rendered"
+  ],
+  "screenshot": "browser-proof.png",
+  "limits": ["Only the actual599x843 app-pane viewport was tested; no temporary viewport override was used.", "This verifies the evidence browser, not NES gameplay."]
+}

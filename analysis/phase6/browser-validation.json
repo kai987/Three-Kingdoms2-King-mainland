@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "url": "http://127.0.0.1:8765/analysis/phase6/index.html",
+  "method": "Codex in-app browser via documented cua_repl API",
+  "page_sha256": "b89ac762f9b8c59c1c60b68fb05d5443bf4057833e0545ae16e78ee399b2515a",
+  "screenshot": "browser-proof.png",
+  "screenshot_sha256": "9304bc0efc85cb16f322b7ff994fe668d9ad2c7b5cd8dc9fa9135c7f1491b100",
+  "observations": {
+    "main_selector_options": 15,
+    "nmi_selector_options": 9,
+    "main_dispatch_mask": "1F",
+    "F8_withdraw_filter": "1 / 13 points",
+    "withdraw_mask_example": "0xAF -> 0xAF; fixed neutral7",
+    "score300_lowbyte44_ending_mode": 2,
+    "nmi8_entry": "bank31 FA53 -> pair23/24 A01E -> D693",
+    "ending_mode4_sub6_handler": "bank24 DBDA",
+    "ending_mode5_sub5_handler": "bank24 D9C2",
+    "original_core_images_loaded": 4,
+    "runtime_raw_JSON_panels_closed_by_default": true,
+    "browser_error_and_warning_logs": []
+  },
+  "local_link_checks": {
+    "phase6": 27,
+    "main_portal": 257,
+    "missing": []
+  },
+  "scope": "Evidence portal selectors, loaded images, rendered original-core proof and local links; not independent source NES gameplay acceptance."
+}

@@ -1,0 +1,6329 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "plans": [
+    {
+      "scene": 0,
+      "busy_before": 0,
+      "original_instructions": 245,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 64151,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64154,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64157,
+          "target": 59078,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64160,
+          "target": 65378,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64163,
+          "target": 64296,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 230
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 186
+        },
+        {
+          "address": 8197,
+          "value": 91
+        },
+        {
+          "address": 8197,
+          "value": 79
+        },
+        {
+          "address": 8192,
+          "value": 209
+        },
+        {
+          "address": 49152,
+          "value": 214
+        },
+        {
+          "address": 51200,
+          "value": 100
+        },
+        {
+          "address": 53248,
+          "value": 41
+        },
+        {
+          "address": 55296,
+          "value": 196
+        },
+        {
+          "address": 32768,
+          "value": 118
+        },
+        {
+          "address": 34816,
+          "value": 206
+        },
+        {
+          "address": 36864,
+          "value": 12
+        },
+        {
+          "address": 38912,
+          "value": 214
+        },
+        {
+          "address": 40960,
+          "value": 151
+        },
+        {
+          "address": 43008,
+          "value": 65
+        },
+        {
+          "address": 45056,
+          "value": 19
+        },
+        {
+          "address": 47104,
+          "value": 115
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "none required"
+    },
+    {
+      "scene": 1,
+      "busy_before": 0,
+      "original_instructions": 242,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 64151,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64154,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64157,
+          "target": 59078,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64160,
+          "target": 65378,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64163,
+          "target": 64296,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 11
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 56
+        },
+        {
+          "address": 8197,
+          "value": 212
+        },
+        {
+          "address": 8197,
+          "value": 114
+        },
+        {
+          "address": 8192,
+          "value": 206
+        },
+        {
+          "address": 49152,
+          "value": 211
+        },
+        {
+          "address": 51200,
+          "value": 111
+        },
+        {
+          "address": 53248,
+          "value": 108
+        },
+        {
+          "address": 55296,
+          "value": 125
+        },
+        {
+          "address": 32768,
+          "value": 227
+        },
+        {
+          "address": 34816,
+          "value": 164
+        },
+        {
+          "address": 36864,
+          "value": 184
+        },
+        {
+          "address": 38912,
+          "value": 101
+        },
+        {
+          "address": 40960,
+          "value": 169
+        },
+        {
+          "address": 43008,
+          "value": 138
+        },
+        {
+          "address": 45056,
+          "value": 2
+        },
+        {
+          "address": 47104,
+          "value": 217
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 1
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "none required"
+    },
+    {
+      "scene": 2,
+      "busy_before": 0,
+      "original_instructions": 3773,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 63669,
+          "target": 61011,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63672,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63675,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63678,
+          "target": 60519,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63681,
+          "target": 59078,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63686,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63689,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 63692
+        },
+        {
+          "kind": "call",
+          "pc": 63699,
+          "target": 65435,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63702,
+          "target": 64169,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63707,
+          "target": 62007,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63710,
+          "target": 40963,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 63713
+        },
+        {
+          "kind": "call",
+          "pc": 63713,
+          "target": 40969,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40969,
+          "return_pc": 63716
+        },
+        {
+          "kind": "call",
+          "pc": 63716,
+          "target": 40975,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40975,
+          "return_pc": 63719
+        },
+        {
+          "kind": "call",
+          "pc": 63719,
+          "target": 41023,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 41023,
+          "return_pc": 63722
+        },
+        {
+          "kind": "call",
+          "pc": 63724,
+          "target": 62007,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63727,
+          "target": 40960,
+          "banks": [
+            2,
+            27,
+            28,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40960,
+          "return_pc": 63730
+        },
+        {
+          "kind": "call",
+          "pc": 63730,
+          "target": 64191,
+          "banks": [
+            2,
+            27,
+            28,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63733,
+          "target": 59440,
+          "banks": [
+            2,
+            27,
+            28,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63736,
+          "target": 64296,
+          "banks": [
+            2,
+            27,
+            28,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 64
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 30
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 18
+        },
+        {
+          "address": 8199,
+          "value": 26
+        },
+        {
+          "address": 8199,
+          "value": 42
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 42
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 43
+        },
+        {
+          "address": 8199,
+          "value": 40
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 32768,
+          "value": 4
+        },
+        {
+          "address": 34816,
+          "value": 109
+        },
+        {
+          "address": 36864,
+          "value": 109
+        },
+        {
+          "address": 38912,
+          "value": 4
+        },
+        {
+          "address": 40960,
+          "value": 88
+        },
+        {
+          "address": 43008,
+          "value": 5
+        },
+        {
+          "address": 45056,
+          "value": 9
+        },
+        {
+          "address": 47104,
+          "value": 16
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 225
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16386,
+          "value": 199
+        },
+        {
+          "address": 16405,
+          "value": 11
+        },
+        {
+          "address": 16384,
+          "value": 48
+        },
+        {
+          "address": 16385,
+          "value": 0
+        },
+        {
+          "address": 16386,
+          "value": 147
+        },
+        {
+          "address": 16387,
+          "value": 9
+        },
+        {
+          "address": 16390,
+          "value": 24
+        },
+        {
+          "address": 16405,
+          "value": 11
+        },
+        {
+          "address": 16388,
+          "value": 48
+        },
+        {
+          "address": 16389,
+          "value": 0
+        },
+        {
+          "address": 16390,
+          "value": 197
+        },
+        {
+          "address": 16391,
+          "value": 9
+        },
+        {
+          "address": 16405,
+          "value": 11
+        },
+        {
+          "address": 16396,
+          "value": 63
+        },
+        {
+          "address": 16397,
+          "value": 0
+        },
+        {
+          "address": 16398,
+          "value": 3
+        },
+        {
+          "address": 16399,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 59
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 16406,
+          "value": 94
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 53
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 119
+        },
+        {
+          "address": 18432,
+          "value": 56
+        },
+        {
+          "address": 63488,
+          "value": 118
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 112
+        },
+        {
+          "address": 18432,
+          "value": 6
+        },
+        {
+          "address": 63488,
+          "value": 114
+        },
+        {
+          "address": 18432,
+          "value": 57
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 61440,
+          "value": 62
+        },
+        {
+          "address": 59392,
+          "value": 253
+        },
+        {
+          "address": 61440,
+          "value": 60
+        },
+        {
+          "address": 59392,
+          "value": 251
+        },
+        {
+          "address": 61440,
+          "value": 58
+        },
+        {
+          "address": 59392,
+          "value": 249
+        },
+        {
+          "address": 61440,
+          "value": 60
+        },
+        {
+          "address": 59392,
+          "value": 251
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    },
+    {
+      "scene": 3,
+      "busy_before": 0,
+      "original_instructions": 4362,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 63742,
+          "target": 61011,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63745,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63748,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63755,
+          "target": 60519,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63758,
+          "target": 59078,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63763,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63766,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 63769
+        },
+        {
+          "kind": "call",
+          "pc": 63776,
+          "target": 65378,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63791,
+          "target": 61559,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63796,
+          "target": 62007,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63799,
+          "target": 40972,
+          "banks": [
+            2,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40972,
+          "return_pc": 63802
+        },
+        {
+          "kind": "call",
+          "pc": 63802,
+          "target": 40975,
+          "banks": [
+            2,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40975,
+          "return_pc": 63805
+        },
+        {
+          "kind": "call",
+          "pc": 63805,
+          "target": 64169,
+          "banks": [
+            2,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63810,
+          "target": 62007,
+          "banks": [
+            2,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63813,
+          "target": 40975,
+          "banks": [
+            2,
+            25,
+            26,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40975,
+          "return_pc": 63816
+        },
+        {
+          "kind": "call",
+          "pc": 63818,
+          "target": 62007,
+          "banks": [
+            2,
+            25,
+            26,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63821,
+          "target": 40960,
+          "banks": [
+            2,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40960,
+          "return_pc": 63824
+        },
+        {
+          "kind": "call",
+          "pc": 63826,
+          "target": 62007,
+          "banks": [
+            17,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63829,
+          "target": 40963,
+          "banks": [
+            17,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 63832
+        },
+        {
+          "kind": "call",
+          "pc": 63832,
+          "target": 64191,
+          "banks": [
+            17,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63835,
+          "target": 59440,
+          "banks": [
+            17,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63844,
+          "target": 64296,
+          "banks": [
+            17,
+            29,
+            30,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 114
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 30
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 25
+        },
+        {
+          "address": 8199,
+          "value": 10
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 25
+        },
+        {
+          "address": 8199,
+          "value": 18
+        },
+        {
+          "address": 8199,
+          "value": 2
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 32768,
+          "value": 4
+        },
+        {
+          "address": 34816,
+          "value": 140
+        },
+        {
+          "address": 36864,
+          "value": 4
+        },
+        {
+          "address": 38912,
+          "value": 4
+        },
+        {
+          "address": 40960,
+          "value": 136
+        },
+        {
+          "address": 43008,
+          "value": 137
+        },
+        {
+          "address": 45056,
+          "value": 138
+        },
+        {
+          "address": 47104,
+          "value": 136
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 142
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 224
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 224
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16386,
+          "value": 27
+        },
+        {
+          "address": 16384,
+          "value": 112
+        },
+        {
+          "address": 16390,
+          "value": 28
+        },
+        {
+          "address": 16388,
+          "value": 112
+        },
+        {
+          "address": 16396,
+          "value": 58
+        },
+        {
+          "address": 16402,
+          "value": 80
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 62
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 119
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 118
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 127
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 126
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 61440,
+          "value": 56
+        },
+        {
+          "address": 59392,
+          "value": 247
+        },
+        {
+          "address": 61440,
+          "value": 58
+        },
+        {
+          "address": 59392,
+          "value": 249
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 41
+        },
+        {
+          "address": 59392,
+          "value": 232
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 41
+        },
+        {
+          "address": 59392,
+          "value": 232
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 58
+        },
+        {
+          "address": 59392,
+          "value": 249
+        },
+        {
+          "address": 57344,
+          "value": 33
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 41
+        },
+        {
+          "address": 59392,
+          "value": 232
+        },
+        {
+          "address": 57344,
+          "value": 49
+        },
+        {
+          "address": 57344,
+          "value": 49
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 62
+        },
+        {
+          "address": 59392,
+          "value": 253
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    },
+    {
+      "scene": 4,
+      "busy_before": 0,
+      "original_instructions": 2562,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 63850,
+          "target": 61011,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63853,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63856,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63863,
+          "target": 60519,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63866,
+          "target": 59078,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63871,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63874,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 63877
+        },
+        {
+          "kind": "call",
+          "pc": 63884,
+          "target": 65378,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63889,
+          "target": 62007,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63892,
+          "target": 40960,
+          "banks": [
+            2,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40960,
+          "return_pc": 63895
+        },
+        {
+          "kind": "call",
+          "pc": 63895,
+          "target": 59440,
+          "banks": [
+            1,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63898,
+          "target": 64296,
+          "banks": [
+            1,
+            14,
+            15,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 108
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 30
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 55
+        },
+        {
+          "address": 8199,
+          "value": 41
+        },
+        {
+          "address": 8199,
+          "value": 25
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 55
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 55
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 16
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 16
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 32768,
+          "value": 124
+        },
+        {
+          "address": 34816,
+          "value": 125
+        },
+        {
+          "address": 36864,
+          "value": 125
+        },
+        {
+          "address": 38912,
+          "value": 4
+        },
+        {
+          "address": 40960,
+          "value": 149
+        },
+        {
+          "address": 43008,
+          "value": 121
+        },
+        {
+          "address": 45056,
+          "value": 120
+        },
+        {
+          "address": 47104,
+          "value": 25
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16384,
+          "value": 58
+        },
+        {
+          "address": 16390,
+          "value": 25
+        },
+        {
+          "address": 16388,
+          "value": 50
+        },
+        {
+          "address": 16396,
+          "value": 55
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 56
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 60
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 61440,
+          "value": 58
+        },
+        {
+          "address": 59392,
+          "value": 249
+        },
+        {
+          "address": 57344,
+          "value": 33
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 61440,
+          "value": 62
+        },
+        {
+          "address": 59392,
+          "value": 253
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    },
+    {
+      "scene": 5,
+      "busy_before": 0,
+      "original_instructions": 3599,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 63904,
+          "target": 61011,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 61152,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40960,
+          "return_pc": 63907
+        },
+        {
+          "kind": "call",
+          "pc": 63907,
+          "target": 61958,
+          "banks": [
+            6,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63910,
+          "target": 64267,
+          "banks": [
+            6,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63917,
+          "target": 60519,
+          "banks": [
+            6,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63920,
+          "target": 59078,
+          "banks": [
+            6,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63925,
+          "target": 62007,
+          "banks": [
+            6,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63928,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 63931
+        },
+        {
+          "kind": "call",
+          "pc": 63938,
+          "target": 65378,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63941,
+          "target": 64169,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63946,
+          "target": 62007,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63949,
+          "target": 40987,
+          "banks": [
+            2,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40987,
+          "return_pc": 63952
+        },
+        {
+          "kind": "call",
+          "pc": 63954,
+          "target": 62007,
+          "banks": [
+            2,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63957,
+          "target": 40963,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 63960
+        },
+        {
+          "kind": "call",
+          "pc": 63960,
+          "target": 64191,
+          "banks": [
+            19,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63963,
+          "target": 59440,
+          "banks": [
+            19,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63966,
+          "target": 64296,
+          "banks": [
+            19,
+            29,
+            30,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 80
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 30
+        },
+        {
+          "address": 61440,
+          "value": 62
+        },
+        {
+          "address": 59392,
+          "value": 253
+        },
+        {
+          "address": 8198,
+          "value": 34
+        },
+        {
+          "address": 8198,
+          "value": 160
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8198,
+          "value": 34
+        },
+        {
+          "address": 8198,
+          "value": 128
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 32768,
+          "value": 128
+        },
+        {
+          "address": 34816,
+          "value": 129
+        },
+        {
+          "address": 36864,
+          "value": 130
+        },
+        {
+          "address": 38912,
+          "value": 133
+        },
+        {
+          "address": 40960,
+          "value": 141
+        },
+        {
+          "address": 43008,
+          "value": 109
+        },
+        {
+          "address": 45056,
+          "value": 103
+        },
+        {
+          "address": 47104,
+          "value": 144
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 225
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16384,
+          "value": 113
+        },
+        {
+          "address": 16388,
+          "value": 113
+        },
+        {
+          "address": 16396,
+          "value": 50
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 119
+        },
+        {
+          "address": 18432,
+          "value": 50
+        },
+        {
+          "address": 63488,
+          "value": 118
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 61440,
+          "value": 56
+        },
+        {
+          "address": 59392,
+          "value": 247
+        },
+        {
+          "address": 61440,
+          "value": 62
+        },
+        {
+          "address": 59392,
+          "value": 253
+        },
+        {
+          "address": 57344,
+          "value": 51
+        },
+        {
+          "address": 57344,
+          "value": 51
+        },
+        {
+          "address": 57344,
+          "value": 51
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    },
+    {
+      "scene": 6,
+      "busy_before": 0,
+      "original_instructions": 3368,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 63972,
+          "target": 61011,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63975,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63978,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63981,
+          "target": 59078,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63986,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 63989,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 63992
+        },
+        {
+          "kind": "call",
+          "pc": 64001,
+          "target": 62007,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64004,
+          "target": 40963,
+          "banks": [
+            2,
+            10,
+            11,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 64007
+        },
+        {
+          "kind": "call",
+          "pc": 64007,
+          "target": 65378,
+          "banks": [
+            1,
+            10,
+            11,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64010,
+          "target": 59440,
+          "banks": [
+            1,
+            10,
+            11,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64013,
+          "target": 64296,
+          "banks": [
+            1,
+            10,
+            11,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 64
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 30
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 40
+        },
+        {
+          "address": 8199,
+          "value": 25
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8199,
+          "value": 7
+        },
+        {
+          "address": 8199,
+          "value": 33
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8199,
+          "value": 16
+        },
+        {
+          "address": 8199,
+          "value": 33
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 10
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 40
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 6
+        },
+        {
+          "address": 8199,
+          "value": 7
+        },
+        {
+          "address": 8199,
+          "value": 33
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 32768,
+          "value": 176
+        },
+        {
+          "address": 34816,
+          "value": 163
+        },
+        {
+          "address": 36864,
+          "value": 179
+        },
+        {
+          "address": 38912,
+          "value": 163
+        },
+        {
+          "address": 40960,
+          "value": 160
+        },
+        {
+          "address": 43008,
+          "value": 161
+        },
+        {
+          "address": 45056,
+          "value": 162
+        },
+        {
+          "address": 47104,
+          "value": 163
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16386,
+          "value": 171
+        },
+        {
+          "address": 16384,
+          "value": 127
+        },
+        {
+          "address": 16390,
+          "value": 169
+        },
+        {
+          "address": 16388,
+          "value": 120
+        },
+        {
+          "address": 16396,
+          "value": 58
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 60
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 63
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 119
+        },
+        {
+          "address": 18432,
+          "value": 56
+        },
+        {
+          "address": 63488,
+          "value": 118
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 127
+        },
+        {
+          "address": 18432,
+          "value": 56
+        },
+        {
+          "address": 63488,
+          "value": 126
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 61440,
+          "value": 43
+        },
+        {
+          "address": 59392,
+          "value": 234
+        },
+        {
+          "address": 57344,
+          "value": 33
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    },
+    {
+      "scene": 7,
+      "busy_before": 0,
+      "original_instructions": 2532,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 64019,
+          "target": 61011,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64022,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64025,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64028,
+          "target": 60519,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64031,
+          "target": 59078,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64036,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64039,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 64042
+        },
+        {
+          "kind": "call",
+          "pc": 64042,
+          "target": 65435,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64052,
+          "target": 64169,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64057,
+          "target": 62007,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64060,
+          "target": 40963,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 64063
+        },
+        {
+          "kind": "call",
+          "pc": 64065,
+          "target": 62007,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64068,
+          "target": 40996,
+          "banks": [
+            2,
+            8,
+            9,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40996,
+          "return_pc": 64071
+        },
+        {
+          "kind": "call",
+          "pc": 64071,
+          "target": 64191,
+          "banks": [
+            2,
+            8,
+            9,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64074,
+          "target": 59440,
+          "banks": [
+            2,
+            8,
+            9,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64077,
+          "target": 64296,
+          "banks": [
+            2,
+            8,
+            9,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 160
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 30
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 42
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 43
+        },
+        {
+          "address": 8199,
+          "value": 40
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 32768,
+          "value": 4
+        },
+        {
+          "address": 34816,
+          "value": 118
+        },
+        {
+          "address": 36864,
+          "value": 4
+        },
+        {
+          "address": 38912,
+          "value": 4
+        },
+        {
+          "address": 40960,
+          "value": 0
+        },
+        {
+          "address": 43008,
+          "value": 117
+        },
+        {
+          "address": 45056,
+          "value": 9
+        },
+        {
+          "address": 47104,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16386,
+          "value": 29
+        },
+        {
+          "address": 16384,
+          "value": 119
+        },
+        {
+          "address": 16390,
+          "value": 28
+        },
+        {
+          "address": 16388,
+          "value": 118
+        },
+        {
+          "address": 16396,
+          "value": 50
+        },
+        {
+          "address": 16402,
+          "value": 82
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 54
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 54
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 61440,
+          "value": 62
+        },
+        {
+          "address": 59392,
+          "value": 253
+        },
+        {
+          "address": 61440,
+          "value": 41
+        },
+        {
+          "address": 59392,
+          "value": 232
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    },
+    {
+      "scene": 8,
+      "busy_before": 0,
+      "original_instructions": 2489,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 64083,
+          "target": 61011,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64086,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64089,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64092,
+          "target": 60519,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64097,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64100,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 64103
+        },
+        {
+          "kind": "call",
+          "pc": 64109,
+          "target": 62007,
+          "banks": [
+            2,
+            3,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64112,
+          "target": 40963,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 64115
+        },
+        {
+          "kind": "call",
+          "pc": 64122,
+          "target": 59078,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64125,
+          "target": 64169,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64130,
+          "target": 62007,
+          "banks": [
+            2,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64133,
+          "target": 40990,
+          "banks": [
+            2,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40990,
+          "return_pc": 64136
+        },
+        {
+          "kind": "call",
+          "pc": 64136,
+          "target": 64191,
+          "banks": [
+            6,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64139,
+          "target": 65378,
+          "banks": [
+            6,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64142,
+          "target": 59440,
+          "banks": [
+            6,
+            23,
+            24,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64145,
+          "target": 64296,
+          "banks": [
+            6,
+            23,
+            24,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 240
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        },
+        {
+          "address": 8195,
+          "value": 0
+        },
+        {
+          "address": 16404,
+          "value": 2
+        },
+        {
+          "address": 8193,
+          "value": 30
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 38
+        },
+        {
+          "address": 8199,
+          "value": 23
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 39
+        },
+        {
+          "address": 8199,
+          "value": 38
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 6
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 54
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 48
+        },
+        {
+          "address": 8199,
+          "value": 32
+        },
+        {
+          "address": 8199,
+          "value": 22
+        },
+        {
+          "address": 8199,
+          "value": 15
+        },
+        {
+          "address": 8199,
+          "value": 1
+        },
+        {
+          "address": 8199,
+          "value": 2
+        },
+        {
+          "address": 8199,
+          "value": 18
+        },
+        {
+          "address": 8198,
+          "value": 63
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 8198,
+          "value": 0
+        },
+        {
+          "address": 32768,
+          "value": 167
+        },
+        {
+          "address": 34816,
+          "value": 168
+        },
+        {
+          "address": 36864,
+          "value": 169
+        },
+        {
+          "address": 38912,
+          "value": 0
+        },
+        {
+          "address": 40960,
+          "value": 2
+        },
+        {
+          "address": 43008,
+          "value": 165
+        },
+        {
+          "address": 45056,
+          "value": 166
+        },
+        {
+          "address": 47104,
+          "value": 167
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16386,
+          "value": 242
+        },
+        {
+          "address": 16384,
+          "value": 120
+        },
+        {
+          "address": 16390,
+          "value": 238
+        },
+        {
+          "address": 16388,
+          "value": 118
+        },
+        {
+          "address": 16396,
+          "value": 50
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 56
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 54
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 119
+        },
+        {
+          "address": 18432,
+          "value": 54
+        },
+        {
+          "address": 63488,
+          "value": 118
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 61440,
+          "value": 62
+        },
+        {
+          "address": 59392,
+          "value": 253
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 16406,
+          "value": 1
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 61440,
+          "value": 56
+        },
+        {
+          "address": 59392,
+          "value": 247
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        },
+        {
+          "address": 16406,
+          "value": 0
+        },
+        {
+          "address": 16407,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    },
+    {
+      "scene": 3,
+      "busy_before": 1,
+      "original_instructions": 1164,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 64213,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64216,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64230,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64233,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 64236
+        },
+        {
+          "kind": "call",
+          "pc": 64261,
+          "target": 64296,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 114
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 32768,
+          "value": 4
+        },
+        {
+          "address": 34816,
+          "value": 140
+        },
+        {
+          "address": 36864,
+          "value": 4
+        },
+        {
+          "address": 38912,
+          "value": 4
+        },
+        {
+          "address": 40960,
+          "value": 136
+        },
+        {
+          "address": 43008,
+          "value": 137
+        },
+        {
+          "address": 45056,
+          "value": 138
+        },
+        {
+          "address": 47104,
+          "value": 136
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 142
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 224
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 224
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16386,
+          "value": 27
+        },
+        {
+          "address": 16384,
+          "value": 112
+        },
+        {
+          "address": 16390,
+          "value": 28
+        },
+        {
+          "address": 16388,
+          "value": 112
+        },
+        {
+          "address": 16396,
+          "value": 58
+        },
+        {
+          "address": 16402,
+          "value": 80
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 62
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 119
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 118
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 127
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 126
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    },
+    {
+      "scene": 3,
+      "busy_before": 255,
+      "original_instructions": 1164,
+      "source_calls": [
+        {
+          "kind": "call",
+          "pc": 64213,
+          "target": 61958,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64216,
+          "target": 64267,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64267,
+          "target": 60151,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64230,
+          "target": 62007,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        },
+        {
+          "kind": "call",
+          "pc": 64233,
+          "target": 40963,
+          "banks": [
+            6,
+            14,
+            15,
+            31
+          ]
+        },
+        {
+          "kind": "callback_return",
+          "target": 40963,
+          "return_pc": 64236
+        },
+        {
+          "kind": "call",
+          "pc": 64261,
+          "target": 64296,
+          "banks": [
+            6,
+            12,
+            13,
+            31
+          ]
+        }
+      ],
+      "port_writes": [
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 20480,
+          "value": 114
+        },
+        {
+          "address": 22528,
+          "value": 0
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 225
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 225
+        },
+        {
+          "address": 32768,
+          "value": 4
+        },
+        {
+          "address": 34816,
+          "value": 140
+        },
+        {
+          "address": 36864,
+          "value": 4
+        },
+        {
+          "address": 38912,
+          "value": 4
+        },
+        {
+          "address": 40960,
+          "value": 136
+        },
+        {
+          "address": 43008,
+          "value": 137
+        },
+        {
+          "address": 45056,
+          "value": 138
+        },
+        {
+          "address": 47104,
+          "value": 136
+        },
+        {
+          "address": 8197,
+          "value": 0
+        },
+        {
+          "address": 8197,
+          "value": 142
+        },
+        {
+          "address": 8192,
+          "value": 144
+        },
+        {
+          "address": 49152,
+          "value": 224
+        },
+        {
+          "address": 51200,
+          "value": 224
+        },
+        {
+          "address": 53248,
+          "value": 224
+        },
+        {
+          "address": 55296,
+          "value": 224
+        },
+        {
+          "address": 61440,
+          "value": 47
+        },
+        {
+          "address": 59392,
+          "value": 238
+        },
+        {
+          "address": 57344,
+          "value": 34
+        },
+        {
+          "address": 59392,
+          "value": 227
+        },
+        {
+          "address": 16386,
+          "value": 27
+        },
+        {
+          "address": 16384,
+          "value": 112
+        },
+        {
+          "address": 16390,
+          "value": 28
+        },
+        {
+          "address": 16388,
+          "value": 112
+        },
+        {
+          "address": 16396,
+          "value": 58
+        },
+        {
+          "address": 16402,
+          "value": 80
+        },
+        {
+          "address": 63488,
+          "value": 103
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 102
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 111
+        },
+        {
+          "address": 18432,
+          "value": 62
+        },
+        {
+          "address": 63488,
+          "value": 110
+        },
+        {
+          "address": 18432,
+          "value": 8
+        },
+        {
+          "address": 63488,
+          "value": 119
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 118
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 127
+        },
+        {
+          "address": 18432,
+          "value": 48
+        },
+        {
+          "address": 63488,
+          "value": 126
+        },
+        {
+          "address": 18432,
+          "value": 0
+        },
+        {
+          "address": 63488,
+          "value": 76
+        },
+        {
+          "address": 57344,
+          "value": 38
+        },
+        {
+          "address": 59392,
+          "value": 236
+        },
+        {
+          "address": 61440,
+          "value": 45
+        }
+      ],
+      "port_reads": [
+        {
+          "address": 8194,
+          "value": 0
+        },
+        {
+          "address": 8194,
+          "value": 0
+        }
+      ],
+      "full_RAM_SRAM_register_ports_equal": true,
+      "external_callback_policy": "verification-only actual original CPU"
+    }
+  ],
+  "scope": "Original outer NMI control and readable fixed services; banked bodies in these seven scene fixtures execute unchanged bytes only inside the verifier."
+}

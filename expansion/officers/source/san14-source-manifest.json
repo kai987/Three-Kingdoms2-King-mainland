@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "captured_for": "candidate_roster_research",
+  "opencc_commit": "ba09ffb8353f680381200c72452a36c72d540155",
+  "source_versions": {
+    "roster": "SAN14 original official1000 list",
+    "chronology": "blog article published2020-02-09; not official export"
+  },
+  "files": [
+    {
+      "file": "san14-official-tw-officers-list.html",
+      "url": "https://www.gamecity.com.tw/sangokushi14/officers-list.html",
+      "kind": "official_roster_primary",
+      "retrieved_at_utc": "2026-10-20T19:24:49.139523+00:00",
+      "sha256": "2caa510fc9f0d50240c068baff8716b5c3cd43d873e892691330b7f1b443a234",
+      "bytes": 43177,
+      "source_id": "san14-official-tw"
+    },
+    {
+      "file": "san14-official-jp-officers-list.html",
+      "url": "https://www.gamecity.ne.jp/sangokushi14/officers-list.html",
+      "kind": "official_roster_primary",
+      "retrieved_at_utc": "2026-10-20T19:24:49.139523+00:00",
+      "sha256": "a693b0a7b77ac4335af3f85bf97a2431f6ad9340ab2a91b68ec0756a291997b2",
+      "bytes": 62137,
+      "source_id": "san14-official-jp"
+    },
+    {
+      "file": "san14-xgodgame-chronology.html",
+      "url": "https://xgodgame.blogspot.com/2020/02/14_9.html",
+      "kind": "third_party_game_setting_transcription",
+      "retrieved_at_utc": "2026-10-20T19:24:49.139523+00:00",
+      "sha256": "d0672c0c14dbbfb955c9d7d346b535116b276751603a3965244127c74acf54b7",
+      "bytes": 559407,
+      "source_id": "san14-xgodgame"
+    },
+    {
+      "file": "opencc-TSCharacters.txt",
+      "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/ba09ffb8353f680381200c72452a36c72d540155/data/dictionary/TSCharacters.txt",
+      "kind": "search_form_conversion_dictionary",
+      "retrieved_at_utc": "2026-10-20T19:24:49.139523+00:00",
+      "sha256": "9ff46a7d30e5765375eb13d33f2b03a34d298913caf2b120380679f33ae1642d",
+      "bytes": 104520,
+      "source_id": "opencc-tscharacters"
+    },
+    {
+      "file": "opencc-TSPhrases.txt",
+      "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/ba09ffb8353f680381200c72452a36c72d540155/data/dictionary/TSPhrases.txt",
+      "kind": "search_form_conversion_dictionary",
+      "retrieved_at_utc": "2026-10-20T19:24:49.139523+00:00",
+      "sha256": "9a23666e95c97dbf8668b5d71ca19f09f33b4f3a3aa9e05677dab4b608cef102",
+      "bytes": 8835,
+      "source_id": "opencc-tsphrases"
+    },
+    {
+      "file": "opencc-LICENSE",
+      "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/ba09ffb8353f680381200c72452a36c72d540155/LICENSE",
+      "kind": "Apache-2.0_license",
+      "retrieved_at_utc": "2026-10-20T19:24:49.139523+00:00",
+      "sha256": "b534e465949558eec2597b04f5092b5e161236a68dfbfd04d547592ac3964308",
+      "bytes": 9165,
+      "source_id": "opencc-license"
+    }
+  ],
+  "conversion_note": "General traditional-to-simplified dictionaries provide search forms. Personal-name exception 孫乾->孙乾 is retained in build_roster.py; original official names remain authoritative for this candidate list."
+}

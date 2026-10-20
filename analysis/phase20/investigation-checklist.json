@@ -1,0 +1,38 @@
+{
+  "schema": "phase20-investigation-checklist-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a",
+  "preserved_phase19_audit_sha256": "2f232a65b1ecfb1322d909c38e5e813f2a3b24cf222fe189561191258eb77359",
+  "preserved_v19_archive_sha256": "2f0fdf6f3755db09715d5f9149ef84ea0a39dbe6531e41361410ce92db703ba2",
+  "questions": [
+    {
+      "id": "city-official-labels",
+      "question": "City+1 and +28..31 producer/consumer semantics and official names",
+      "required_evidence": "Dedicated original field access chain and independent UI/producer meaning; zeros alone are insufficient",
+      "status": "unconfirmed_no_official_label_inferred"
+    },
+    {
+      "id": "remaining-accesses",
+      "question": "Refine remaining401 possible or unknown aliases",
+      "required_evidence": "Original-byte scoped pair/callee/constant-table contracts with conservative unknowns and counterexamples",
+      "status": "refined_401_to_380_conservative_contracts_verified"
+    },
+    {
+      "id": "Native-F8",
+      "question": "Original core request emission, accept/reject and AI continuation",
+      "required_evidence": "Complete fresh cold-route double replay; zero request/RNG/PC/ready/result patches",
+      "status": "passed_original_core_full_cold_accept_reject_double_replay"
+    },
+    {
+      "id": "readable-source",
+      "question": "Named remaining negotiation helpers and campaign composition",
+      "required_evidence": "Full memory/register/IO/bank/N163 originalCPU differential; real UI consumer sequences; explicit prefix boundaries",
+      "status": "passed_625_controlled_8_actual_callers_6_consumer_parent_sequences"
+    }
+  ],
+  "limitations": [
+    "Saved original-core register contexts are snapshots, not per-instruction Native traces.",
+    "Control-source cases and original-core video/audio frames are separately counted.",
+    "Read-only external search did not establish same-ROM primary official city-field labels; no external ROM acquired."
+  ]
+}

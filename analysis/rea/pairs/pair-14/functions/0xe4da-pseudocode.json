@@ -1,0 +1,108 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"evidence_id\":\"ev_503b139137676e09559eefa2126e67d158e02254d8d011d6fd9505b3216fa986\",\"subject\":{\"name\":\"image.bin\",\"digest\":{\"sha256\":\"3d253517fbe00fe6e497f693cdda99420d4c8bf1d5431b65e39fef53293ed439\"},\"format\":\"raw-binary\",\"architecture\":\"6502\",\"local_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/image.bin\"},\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"analysis_profile\":{\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"parameters\":{\"target_kind\":\"executable\",\"target_format\":\"raw-binary\",\"architecture\":\"6502\",\"available_architectures\":[\"6502\"],\"import_mode\":\"ephemeral-source-immutable\",\"annotation_policy\":\"atomic-function-entry-metadata-v1\",\"load_image_observations\":\"source-mappings-entry-context-v2\",\"function_body_evidence\":\"complete-inclusive-ranges-v1\",\"function_references\":\"complete-body-and-entry-reference-manager-v2\",\"call_relationship_coverage\":\"resolved-call-reference-diagnostics-v1\",\"string_inventory_evidence\":\"defined-data-coverage-v1\",\"location_resolution\":\"explicit-address-exact-entry-symbol-first-v3\",\"instruction_flow_evidence\":\"decoded-return-pcode-v1\",\"instruction_references\":\"exact-address-incoming-v1\",\"function_boundary_observations\":\"ghidra-terminal-call-limitations-v1\",\"no_return_repair\":\"returning-imports-decoded-return-v2\",\"process_launch\":\"inspected-jvm-launch-support-v1\",\"load_image_evidence\":\"independent-raw-mapping-context-v2\",\"jump_table_evidence\":\"typed-case-default-blocks-v1\",\"decompiler_jump_loads\":true,\"loader\":\"BinaryLoader\",\"language_id\":\"6502:LE:16:default\",\"compiler_spec_id\":\"default\",\"language_selection\":\"caller-supplied-v1\",\"entry_point\":\"0xa000\",\"entry_seed\":\"external-entry-and-function-before-analysis-v1\",\"analyzer_preset\":\"ghidra-default\",\"analysis_seeds\":{\"format\":\"rea-ghidra-seeds-v1\",\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/seeds.tsv\",\"configured_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/seeds.tsv\",\"sha256\":\"08b66414278e939e846fcb4168b8a208e67272930b9d3a9d800662334c95f5c9\",\"entries\":{\"function\":10,\"code\":0,\"label\":0}}},\"digest\":\"2619ed83c4a77312ae737201f8fb2fa13e12221bb2a28ab117536215598d32a8\"},\"predicate_type\":\"rea.analysis\",\"operation\":\"procedure_pseudo_code\",\"parameters\":{\"procedure\":\"0xe4da\"},\"raw_result\":{\"value\":\"\\nvoid FUN_e4da(void)\\n\\n{\\n  undefined1 uStack0000;\\n  \\n  uStack0000 = 0xe4;\\n  FUN_e768();\\n  uStack0000 = 0xe4;\\n  DAT_2001 = FUN_e74d();\\n  uStack0000 = 0xe4;\\n  FUN_e57f();\\n  uStack0000 = 0xe4;\\n  FUN_e7df();\\n  DAT_0090 = 0;\\n  DAT_0091 = 0;\\n  DAT_008e = 0;\\n  DAT_008f = 0;\\n  DAT_0098 = 0;\\n  DAT_0099 = 0;\\n  DAT_0096 = 0;\\n  DAT_0097 = 0;\\n  DAT_007e = 0;\\n  DAT_005e = 0;\\n  DAT_005f = 0;\\n  switchD_f878::caseD_f = 0;\\n  DAT_00a4 = 0;\\n  DAT_0300 = 0xff;\\n  DAT_0304 = 0xff;\\n  FUN_e823();\\n  return;\\n}\\n\\n\",\"limitations\":[\"Ghidra Listing reports a terminal call at 0xe51c to 0xe823 FUN_e823 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\"]},\"normalized_result\":\"\\nvoid FUN_e4da(void)\\n\\n{\\n  undefined1 uStack0000;\\n  \\n  uStack0000 = 0xe4;\\n  FUN_e768();\\n  uStack0000 = 0xe4;\\n  DAT_2001 = FUN_e74d();\\n  uStack0000 = 0xe4;\\n  FUN_e57f();\\n  uStack0000 = 0xe4;\\n  FUN_e7df();\\n  DAT_0090 = 0;\\n  DAT_0091 = 0;\\n  DAT_008e = 0;\\n  DAT_008f = 0;\\n  DAT_0098 = 0;\\n  DAT_0099 = 0;\\n  DAT_0096 = 0;\\n  DAT_0097 = 0;\\n  DAT_007e = 0;\\n  DAT_005e = 0;\\n  DAT_005f = 0;\\n  switchD_f878::caseD_f = 0;\\n  DAT_00a4 = 0;\\n  DAT_0300 = 0xff;\\n  DAT_0304 = 0xff;\\n  FUN_e823();\\n  return;\\n}\\n\\n\",\"confidence\":\"observed\",\"authority\":\"shipped-artifact\",\"environment\":null,\"limitations\":[\"The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.\",\"The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.\",\"Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.\",\"Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.\",\"Pseudocode is Ghidra decompiler output, not original source and not text-equivalent to Hopper output.\",\"External functions and functions without an analyzable body return null; other decompiler failures remain explicit.\",\"Ghidra Listing reports a terminal call at 0xe51c to 0xe823 FUN_e823 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\",\"macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.\",\"Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.\",\"Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.\",\"Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.\",\"Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/seeds.tsv (sha256 08b66414278e939e846fcb4168b8a208e67272930b9d3a9d800662334c95f5c9: 10 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.\",\"Seed outcome: 9 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory.\"],\"relationship_coverage\":null,\"locations\":[],\"evidence_links\":[]}"
+    }
+  ],
+  "structuredContent": {
+    "evidence_id": "ev_503b139137676e09559eefa2126e67d158e02254d8d011d6fd9505b3216fa986",
+    "subject": {
+      "name": "image.bin",
+      "digest": {
+        "sha256": "3d253517fbe00fe6e497f693cdda99420d4c8bf1d5431b65e39fef53293ed439"
+      },
+      "format": "raw-binary",
+      "architecture": "6502",
+      "local_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/image.bin"
+    },
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "analysis_profile": {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "parameters": {
+        "target_kind": "executable",
+        "target_format": "raw-binary",
+        "architecture": "6502",
+        "available_architectures": [
+          "6502"
+        ],
+        "import_mode": "ephemeral-source-immutable",
+        "annotation_policy": "atomic-function-entry-metadata-v1",
+        "load_image_observations": "source-mappings-entry-context-v2",
+        "function_body_evidence": "complete-inclusive-ranges-v1",
+        "function_references": "complete-body-and-entry-reference-manager-v2",
+        "call_relationship_coverage": "resolved-call-reference-diagnostics-v1",
+        "string_inventory_evidence": "defined-data-coverage-v1",
+        "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+        "instruction_flow_evidence": "decoded-return-pcode-v1",
+        "instruction_references": "exact-address-incoming-v1",
+        "function_boundary_observations": "ghidra-terminal-call-limitations-v1",
+        "no_return_repair": "returning-imports-decoded-return-v2",
+        "process_launch": "inspected-jvm-launch-support-v1",
+        "load_image_evidence": "independent-raw-mapping-context-v2",
+        "jump_table_evidence": "typed-case-default-blocks-v1",
+        "decompiler_jump_loads": true,
+        "loader": "BinaryLoader",
+        "language_id": "6502:LE:16:default",
+        "compiler_spec_id": "default",
+        "language_selection": "caller-supplied-v1",
+        "entry_point": "0xa000",
+        "entry_seed": "external-entry-and-function-before-analysis-v1",
+        "analyzer_preset": "ghidra-default",
+        "analysis_seeds": {
+          "format": "rea-ghidra-seeds-v1",
+          "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/seeds.tsv",
+          "configured_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/seeds.tsv",
+          "sha256": "08b66414278e939e846fcb4168b8a208e67272930b9d3a9d800662334c95f5c9",
+          "entries": {
+            "function": 10,
+            "code": 0,
+            "label": 0
+          }
+        }
+      },
+      "digest": "2619ed83c4a77312ae737201f8fb2fa13e12221bb2a28ab117536215598d32a8"
+    },
+    "predicate_type": "rea.analysis",
+    "operation": "procedure_pseudo_code",
+    "parameters": {
+      "procedure": "0xe4da"
+    },
+    "raw_result": {
+      "value": "\nvoid FUN_e4da(void)\n\n{\n  undefined1 uStack0000;\n  \n  uStack0000 = 0xe4;\n  FUN_e768();\n  uStack0000 = 0xe4;\n  DAT_2001 = FUN_e74d();\n  uStack0000 = 0xe4;\n  FUN_e57f();\n  uStack0000 = 0xe4;\n  FUN_e7df();\n  DAT_0090 = 0;\n  DAT_0091 = 0;\n  DAT_008e = 0;\n  DAT_008f = 0;\n  DAT_0098 = 0;\n  DAT_0099 = 0;\n  DAT_0096 = 0;\n  DAT_0097 = 0;\n  DAT_007e = 0;\n  DAT_005e = 0;\n  DAT_005f = 0;\n  switchD_f878::caseD_f = 0;\n  DAT_00a4 = 0;\n  DAT_0300 = 0xff;\n  DAT_0304 = 0xff;\n  FUN_e823();\n  return;\n}\n\n",
+      "limitations": [
+        "Ghidra Listing reports a terminal call at 0xe51c to 0xe823 FUN_e823 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation."
+      ]
+    },
+    "normalized_result": "\nvoid FUN_e4da(void)\n\n{\n  undefined1 uStack0000;\n  \n  uStack0000 = 0xe4;\n  FUN_e768();\n  uStack0000 = 0xe4;\n  DAT_2001 = FUN_e74d();\n  uStack0000 = 0xe4;\n  FUN_e57f();\n  uStack0000 = 0xe4;\n  FUN_e7df();\n  DAT_0090 = 0;\n  DAT_0091 = 0;\n  DAT_008e = 0;\n  DAT_008f = 0;\n  DAT_0098 = 0;\n  DAT_0099 = 0;\n  DAT_0096 = 0;\n  DAT_0097 = 0;\n  DAT_007e = 0;\n  DAT_005e = 0;\n  DAT_005f = 0;\n  switchD_f878::caseD_f = 0;\n  DAT_00a4 = 0;\n  DAT_0300 = 0xff;\n  DAT_0304 = 0xff;\n  FUN_e823();\n  return;\n}\n\n",
+    "confidence": "observed",
+    "authority": "shipped-artifact",
+    "environment": null,
+    "limitations": [
+      "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+      "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+      "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+      "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+      "Pseudocode is Ghidra decompiler output, not original source and not text-equivalent to Hopper output.",
+      "External functions and functions without an analyzable body return null; other decompiler failures remain explicit.",
+      "Ghidra Listing reports a terminal call at 0xe51c to 0xe823 FUN_e823 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+      "macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+      "Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.",
+      "Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.",
+      "Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.",
+      "Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/seeds.tsv (sha256 08b66414278e939e846fcb4168b8a208e67272930b9d3a9d800662334c95f5c9: 10 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.",
+      "Seed outcome: 9 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory."
+    ],
+    "relationship_coverage": null,
+    "locations": [],
+    "evidence_links": []
+  }
+}

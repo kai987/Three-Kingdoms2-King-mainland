@@ -1,0 +1,320 @@
+[
+  {
+    "step": 56485,
+    "event": "main1",
+    "physical_bank": 10,
+    "CPU_PC": 48535,
+    "ROM_offset": 89511,
+    "raw_hex": "b120",
+    "opcode": "LDA",
+    "mode": "iy",
+    "operand": 32,
+    "registers": {
+      "a": 1,
+      "x": 3,
+      "y": 1,
+      "p": 49,
+      "sp": 253,
+      "pc": 48535
+    },
+    "actual_zp_pointer": 32,
+    "actual_zp_base": 24608,
+    "actual_index_Y": 1,
+    "pointer_city": 1,
+    "pointer_city_bias": 0,
+    "caller_chain": [
+      {
+        "physical_bank": 31,
+        "call_PC": 57733,
+        "target": 40960,
+        "return_PC": 57736,
+        "caller_SP": 255
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41017,
+        "target": 54420,
+        "return_PC": 41020,
+        "caller_SP": 253
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41404,
+        "target": 54420,
+        "return_PC": 41407,
+        "caller_SP": 253
+      }
+    ],
+    "kind": "read",
+    "address": 24609,
+    "value": 0,
+    "city": 1,
+    "city_offset": 1,
+    "access_role": "dedicated_AI_recruitment_overlapping_word_gate"
+  },
+  {
+    "step": 56803,
+    "event": "main1",
+    "physical_bank": 10,
+    "CPU_PC": 48535,
+    "ROM_offset": 89511,
+    "raw_hex": "b120",
+    "opcode": "LDA",
+    "mode": "iy",
+    "operand": 32,
+    "registers": {
+      "a": 1,
+      "x": 0,
+      "y": 1,
+      "p": 49,
+      "sp": 253,
+      "pc": 48535
+    },
+    "actual_zp_pointer": 32,
+    "actual_zp_base": 24672,
+    "actual_index_Y": 1,
+    "pointer_city": 3,
+    "pointer_city_bias": 0,
+    "caller_chain": [
+      {
+        "physical_bank": 31,
+        "call_PC": 57733,
+        "target": 40960,
+        "return_PC": 57736,
+        "caller_SP": 255
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41017,
+        "target": 54420,
+        "return_PC": 41020,
+        "caller_SP": 253
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41404,
+        "target": 54420,
+        "return_PC": 41407,
+        "caller_SP": 253
+      }
+    ],
+    "kind": "read",
+    "address": 24673,
+    "value": 0,
+    "city": 3,
+    "city_offset": 1,
+    "access_role": "dedicated_AI_recruitment_overlapping_word_gate"
+  },
+  {
+    "step": 57106,
+    "event": "main1",
+    "physical_bank": 10,
+    "CPU_PC": 48535,
+    "ROM_offset": 89511,
+    "raw_hex": "b120",
+    "opcode": "LDA",
+    "mode": "iy",
+    "operand": 32,
+    "registers": {
+      "a": 1,
+      "x": 0,
+      "y": 1,
+      "p": 49,
+      "sp": 253,
+      "pc": 48535
+    },
+    "actual_zp_pointer": 32,
+    "actual_zp_base": 24704,
+    "actual_index_Y": 1,
+    "pointer_city": 4,
+    "pointer_city_bias": 0,
+    "caller_chain": [
+      {
+        "physical_bank": 31,
+        "call_PC": 57733,
+        "target": 40960,
+        "return_PC": 57736,
+        "caller_SP": 255
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41017,
+        "target": 54420,
+        "return_PC": 41020,
+        "caller_SP": 253
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41404,
+        "target": 54420,
+        "return_PC": 41407,
+        "caller_SP": 253
+      }
+    ],
+    "kind": "read",
+    "address": 24705,
+    "value": 44,
+    "city": 4,
+    "city_offset": 1,
+    "access_role": "dedicated_AI_recruitment_overlapping_word_gate"
+  },
+  {
+    "step": 58795,
+    "event": "main1",
+    "physical_bank": 10,
+    "CPU_PC": 48535,
+    "ROM_offset": 89511,
+    "raw_hex": "b120",
+    "opcode": "LDA",
+    "mode": "iy",
+    "operand": 32,
+    "registers": {
+      "a": 1,
+      "x": 0,
+      "y": 1,
+      "p": 49,
+      "sp": 253,
+      "pc": 48535
+    },
+    "actual_zp_pointer": 32,
+    "actual_zp_base": 24608,
+    "actual_index_Y": 1,
+    "pointer_city": 1,
+    "pointer_city_bias": 0,
+    "caller_chain": [
+      {
+        "physical_bank": 31,
+        "call_PC": 57733,
+        "target": 40960,
+        "return_PC": 57736,
+        "caller_SP": 255
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41017,
+        "target": 54420,
+        "return_PC": 41020,
+        "caller_SP": 253
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41404,
+        "target": 54420,
+        "return_PC": 41407,
+        "caller_SP": 253
+      }
+    ],
+    "kind": "read",
+    "address": 24609,
+    "value": 0,
+    "city": 1,
+    "city_offset": 1,
+    "access_role": "dedicated_AI_recruitment_overlapping_word_gate"
+  },
+  {
+    "step": 59113,
+    "event": "main1",
+    "physical_bank": 10,
+    "CPU_PC": 48535,
+    "ROM_offset": 89511,
+    "raw_hex": "b120",
+    "opcode": "LDA",
+    "mode": "iy",
+    "operand": 32,
+    "registers": {
+      "a": 1,
+      "x": 0,
+      "y": 1,
+      "p": 49,
+      "sp": 253,
+      "pc": 48535
+    },
+    "actual_zp_pointer": 32,
+    "actual_zp_base": 24672,
+    "actual_index_Y": 1,
+    "pointer_city": 3,
+    "pointer_city_bias": 0,
+    "caller_chain": [
+      {
+        "physical_bank": 31,
+        "call_PC": 57733,
+        "target": 40960,
+        "return_PC": 57736,
+        "caller_SP": 255
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41017,
+        "target": 54420,
+        "return_PC": 41020,
+        "caller_SP": 253
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41404,
+        "target": 54420,
+        "return_PC": 41407,
+        "caller_SP": 253
+      }
+    ],
+    "kind": "read",
+    "address": 24673,
+    "value": 0,
+    "city": 3,
+    "city_offset": 1,
+    "access_role": "dedicated_AI_recruitment_overlapping_word_gate"
+  },
+  {
+    "step": 59416,
+    "event": "main1",
+    "physical_bank": 10,
+    "CPU_PC": 48535,
+    "ROM_offset": 89511,
+    "raw_hex": "b120",
+    "opcode": "LDA",
+    "mode": "iy",
+    "operand": 32,
+    "registers": {
+      "a": 1,
+      "x": 0,
+      "y": 1,
+      "p": 49,
+      "sp": 253,
+      "pc": 48535
+    },
+    "actual_zp_pointer": 32,
+    "actual_zp_base": 24704,
+    "actual_index_Y": 1,
+    "pointer_city": 4,
+    "pointer_city_bias": 0,
+    "caller_chain": [
+      {
+        "physical_bank": 31,
+        "call_PC": 57733,
+        "target": 40960,
+        "return_PC": 57736,
+        "caller_SP": 255
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41017,
+        "target": 54420,
+        "return_PC": 41020,
+        "caller_SP": 253
+      },
+      {
+        "physical_bank": 10,
+        "call_PC": 41404,
+        "target": 54420,
+        "return_PC": 41407,
+        "caller_SP": 253
+      }
+    ],
+    "kind": "read",
+    "address": 24705,
+    "value": 44,
+    "city": 4,
+    "city_offset": 1,
+    "access_role": "dedicated_AI_recruitment_overlapping_word_gate"
+  }
+]

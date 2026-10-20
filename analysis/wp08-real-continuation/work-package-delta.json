@@ -1,0 +1,24 @@
+{
+  "WP08": {
+    "new_positive_edge": "Complete Native122 E066 software context, declared software NMI, original F878 dispatch and F8B5/EE53,F8B8/F206,F8BB/FB0B,EAF7,F8BE/EC67 returns -> F8C1 before opcode",
+    "new_wait_contract": "FB22 BIT/BVS bit6set wait -> actual missing read -> strict zero-progress retry -> planned80 -> real return; bit7 does not block",
+    "new_negative_edge": "Old actual palette-return SP00 -> same original continuation -> ECB9 overwrites0100 returnhigh -> ECBE RTS0FC1; exact nonlocal stop",
+    "old64B_PC_reentry_replaced": false,
+    "full_WP08_closed": false,
+    "remaining_route_premises": [
+      "Same old64B pendingqueue with compatible actual/derived incoming NMI scene2 context",
+      "Caller/scene/NMI continuation beyondF8C1 through actual next consumer",
+      "Captured compatible device state and timing replacing raw fixture"
+    ],
+    "remaining_route_premises_count": 3
+  },
+  "new_Native_runs": 0,
+  "new_game_hardware_algorithms": 0,
+  "production_Source_changes": 0,
+  "city_field_migrations": 0,
+  "raw_migrations": 0,
+  "remaining323_unchanged": true,
+  "global_unknown_services": null,
+  "completion_percentage": null,
+  "remaining_rounds": null
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "phase32-continuity-design-and-evidence-v1",
+  "status": "authored_static_only_runtime_not_executed",
+  "production_class": "PostbattleContinuity",
+  "source_sha256": {
+    "source/recovered/postbattle_continuity_phase32.py": "fc58fa7e071c82244a5e50bc0f11a766e30c4145a29ea53a35a8298f6db6e44a",
+    "scripts/verify_postbattle_continuity_phase32.py": "89791d376139cdddcca6e5e6537a0c7720f6058abea4ced2ab492e2c27404987",
+    "scripts/analyze_postbattle_continuity_phase32.py": "a8849834193c2b155ca69acd162f888f0b7b603957fde9d2acafc3dbaeec4ae7"
+  },
+  "new_gameplay_algorithm_count": 0,
+  "new_scene_service_owner_count": 0,
+  "source_original_CPU_callbacks": 0,
+  "source_IR_interpretation": false,
+  "AST_checks": {
+    "imports": [
+      "campaign_session"
+    ],
+    "hardware_input_attribute_assignments": [
+      {
+        "line": 73,
+        "target": "self.memory.controller_buttons"
+      }
+    ],
+    "gameplay_subscript_stores": 0
+  },
+  "retained_objects": [
+    "GameEngine",
+    "SceneCoordinator",
+    "ServiceMemory",
+    "registers",
+    "CampaignSession"
+  ],
+  "pending_lifetime": "Same phase, ServiceCall, owner and generator until real caller completion or reset retirement",
+  "completed_callee_lifetime": "A later distinct completed call may own a fresh controller, as in frozen SceneCoordinator",
+  "hardware_inputs": [
+    "physical controller bytes",
+    "explicit port read sequences",
+    "explicit NMI/IRQ arrivals"
+  ],
+  "scheduling": "Driver schedules nothing; validator declares a software main/NMI/IRQ policy, not Native video timing",
+  "initial_contexts": [
+    "actual captured E066 software context plus explicit common device fixture",
+    "clearly labelled E066 register fixture with inherited Native memory"
+  ],
+  "missing_dependencies": "Strict prefix; no service success, PC/SP restoration or ready/62/87/result/RNG patch is fabricated",
+  "author_execution": {
+    "CPU": false,
+    "Native_core": false,
+    "old_producer": false,
+    "source_body": false,
+    "text_AST_only": true
+  },
+  "runtime_counts": null
+}

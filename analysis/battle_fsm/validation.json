@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "case_count": 808,
+  "failed_count": 0,
+  "legal_entry_count": 101,
+  "legal_entry_passed": 101,
+  "instruction_ir_coverage": 3560,
+  "instruction_ir_total": 6403,
+  "semantic_case_count": 3328,
+  "tick_case_count": 56,
+  "fixed_helper_case_count": 4096,
+  "fixed_helper_counts": {
+    "E850": 512,
+    "E856": 512,
+    "E862": 512,
+    "EA7C": 512,
+    "EAA5": 512,
+    "EBE9": 512,
+    "F2AF": 512,
+    "F368": 512
+  },
+  "semantic_counts": {
+    "postbattle_city_losses": 512,
+    "return_campaign_supplies": 512,
+    "finalize_city_ownership": 512,
+    "commander_outcome": 512,
+    "finalization_phase": 256,
+    "restore_side_action_budgets": 512,
+    "finish_side_turn": 512
+  },
+  "external_helper_address_count": 19,
+  "unrecovered_external_helper_address_count": 17,
+  "far_dependency_variant_count": 17,
+  "unrecovered_semantic_dependency_count": 33,
+  "scope": "Local IR CPU/RAM/SRAM equivalence with original-ROM external helper oracle; semantic gameplay APIs compare gameplay fields/SRAM. ECEE NMI barrier is bypassed explicitly on both CPU sides."
+}

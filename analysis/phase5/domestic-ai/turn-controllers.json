@@ -1,0 +1,566 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "physical_pair": [
+    25,
+    26
+  ],
+  "controllers": [
+    {
+      "name": "calendar",
+      "entry": 41011,
+      "call_pc": 41014,
+      "bank": 25,
+      "table_cpu": 41017,
+      "table_file": 204873,
+      "count": 4,
+      "targets": [
+        41025,
+        41260,
+        41310,
+        41350
+      ],
+      "raw_hex": "41 A0 2C A1 5E A1 86 A1",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "name": "turn_events",
+      "entry": 41622,
+      "call_pc": 41625,
+      "bank": 25,
+      "table_cpu": 41628,
+      "table_file": 205484,
+      "count": 16,
+      "targets": [
+        41660,
+        41740,
+        41788,
+        41865,
+        41883,
+        41827,
+        41957,
+        42410,
+        42735,
+        43424,
+        44736,
+        48256,
+        48641,
+        49458,
+        50042,
+        43797
+      ],
+      "raw_hex": "BC A2 0C A3 3C A3 89 A3 9B A3 63 A3 E5 A3 AA A5 EF A6 A0 A9 C0 AE 80 BC 01 BE 32 C1 7A C3 15 AB",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "name": "ruler_ai_scene",
+      "entry": 51059,
+      "call_pc": 51062,
+      "bank": 26,
+      "table_cpu": 51065,
+      "table_file": 214921,
+      "count": 17,
+      "targets": [
+        51099,
+        51168,
+        51168,
+        51168,
+        51666,
+        51778,
+        51778,
+        51778,
+        51844,
+        51924,
+        52015,
+        52095,
+        52125,
+        52095,
+        52163,
+        52262,
+        52361
+      ],
+      "raw_hex": "9B C7 E0 C7 E0 C7 E0 C7 D2 C9 42 CA 42 CA 42 CA 84 CA D4 CA 2F CB 7F CB 9D CB 7F CB C3 CB 26 CC 89 CC",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    }
+  ],
+  "all_tables": [
+    {
+      "call_pc": 41014,
+      "bank": 25,
+      "table_cpu": 41017,
+      "table_file": 204873,
+      "count": 4,
+      "targets": [
+        41025,
+        41260,
+        41310,
+        41350
+      ],
+      "raw_hex": "41 A0 2C A1 5E A1 86 A1",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 41625,
+      "bank": 25,
+      "table_cpu": 41628,
+      "table_file": 205484,
+      "count": 16,
+      "targets": [
+        41660,
+        41740,
+        41788,
+        41865,
+        41883,
+        41827,
+        41957,
+        42410,
+        42735,
+        43424,
+        44736,
+        48256,
+        48641,
+        49458,
+        50042,
+        43797
+      ],
+      "raw_hex": "BC A2 0C A3 3C A3 89 A3 9B A3 63 A3 E5 A3 AA A5 EF A6 A0 A9 C0 AE 80 BC 01 BE 32 C1 7A C3 15 AB",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 41960,
+      "bank": 25,
+      "table_cpu": 41963,
+      "table_file": 205819,
+      "count": 3,
+      "targets": [
+        41969,
+        41988,
+        42016
+      ],
+      "raw_hex": "F1 A3 04 A4 20 A4",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 42413,
+      "bank": 25,
+      "table_cpu": 42416,
+      "table_file": 206272,
+      "count": 3,
+      "targets": [
+        42422,
+        42441,
+        42469
+      ],
+      "raw_hex": "B6 A5 C9 A5 E5 A5",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 42738,
+      "bank": 25,
+      "table_cpu": 42741,
+      "table_file": 206597,
+      "count": 4,
+      "targets": [
+        42749,
+        42784,
+        42817,
+        43103
+      ],
+      "raw_hex": "FD A6 20 A7 41 A7 5F A8",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 43427,
+      "bank": 25,
+      "table_cpu": 43430,
+      "table_file": 207286,
+      "count": 4,
+      "targets": [
+        43438,
+        43473,
+        43506,
+        43742
+      ],
+      "raw_hex": "AE A9 D1 A9 F2 A9 DE AA",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 43800,
+      "bank": 25,
+      "table_cpu": 43803,
+      "table_file": 207659,
+      "count": 5,
+      "targets": [
+        43813,
+        43945,
+        44109,
+        44186,
+        44221
+      ],
+      "raw_hex": "25 AB A9 AB 4D AC 9A AC BD AC",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 44739,
+      "bank": 25,
+      "table_cpu": 44742,
+      "table_file": 208598,
+      "count": 4,
+      "targets": [
+        44750,
+        44916,
+        44939,
+        44984
+      ],
+      "raw_hex": "CE AE 74 AF 8B AF B8 AF",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 48259,
+      "bank": 25,
+      "table_cpu": 48262,
+      "table_file": 212118,
+      "count": 3,
+      "targets": [
+        48268,
+        48277,
+        48487
+      ],
+      "raw_hex": "8C BC 95 BC 67 BD",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 48644,
+      "bank": 25,
+      "table_cpu": 48647,
+      "table_file": 212503,
+      "count": 8,
+      "targets": [
+        48663,
+        48686,
+        48771,
+        48849,
+        48943,
+        49081,
+        49182,
+        49381
+      ],
+      "raw_hex": "17 BE 2E BE 83 BE D1 BE 2F BF B9 BF 1E C0 E5 C0",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 49461,
+      "bank": 26,
+      "table_cpu": 49464,
+      "table_file": 213320,
+      "count": 6,
+      "targets": [
+        49476,
+        49496,
+        49627,
+        49757,
+        49792,
+        49801
+      ],
+      "raw_hex": "44 C1 58 C1 DB C1 5D C2 80 C2 89 C2",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 50045,
+      "bank": 26,
+      "table_cpu": 50048,
+      "table_file": 213904,
+      "count": 3,
+      "targets": [
+        50054,
+        50114,
+        50206
+      ],
+      "raw_hex": "86 C3 C2 C3 1E C4",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 51062,
+      "bank": 26,
+      "table_cpu": 51065,
+      "table_file": 214921,
+      "count": 17,
+      "targets": [
+        51099,
+        51168,
+        51168,
+        51168,
+        51666,
+        51778,
+        51778,
+        51778,
+        51844,
+        51924,
+        52015,
+        52095,
+        52125,
+        52095,
+        52163,
+        52262,
+        52361
+      ],
+      "raw_hex": "9B C7 E0 C7 E0 C7 E0 C7 D2 C9 42 CA 42 CA 42 CA 84 CA D4 CA 2F CB 7F CB 9D CB 7F CB C3 CB 26 CC 89 CC",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 52182,
+      "bank": 26,
+      "table_cpu": 52185,
+      "table_file": 216041,
+      "count": 2,
+      "targets": [
+        52189,
+        52234
+      ],
+      "raw_hex": "DD CB 0A CC",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 52281,
+      "bank": 26,
+      "table_cpu": 52284,
+      "table_file": 216140,
+      "count": 2,
+      "targets": [
+        52288,
+        52333
+      ],
+      "raw_hex": "40 CC 6D CC",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    },
+    {
+      "call_pc": 52364,
+      "bank": 26,
+      "table_cpu": 52367,
+      "table_file": 216223,
+      "count": 3,
+      "targets": [
+        52373,
+        52440,
+        52563
+      ],
+      "raw_hex": "95 CC D8 CC 53 CD",
+      "boundary_evidence": "Pointer table ends exactly at first following handler; callgraph excludeswords fromopcodes."
+    }
+  ],
+  "instruction_count": 3052,
+  "hooks": {
+    "F28B": [
+      52593,
+      52540,
+      52546,
+      52113,
+      52137,
+      52069,
+      51469,
+      51500,
+      51647,
+      51101,
+      43973,
+      44217,
+      44106,
+      50065,
+      49789,
+      49492,
+      49378,
+      49065,
+      48940,
+      48767,
+      48674,
+      48369,
+      44913,
+      43536,
+      43456,
+      42847,
+      42767,
+      42424,
+      41971,
+      41265,
+      41122
+    ],
+    "F1AD": [
+      41442
+    ],
+    "ED1E": [
+      52471,
+      48972
+    ],
+    "EDF5": [
+      52497,
+      48998
+    ],
+    "F25F": [
+      52793,
+      48426,
+      48573,
+      48592,
+      44752,
+      41538
+    ],
+    "F1B7": [
+      52879,
+      52932,
+      52947
+    ],
+    "F26D": [
+      52412,
+      52326,
+      52227,
+      51536,
+      51595,
+      44183,
+      49025,
+      48889,
+      48835,
+      48846,
+      48841,
+      44981,
+      44935,
+      43793,
+      43739,
+      43154,
+      43100
+    ],
+    "EE07": [
+      52434,
+      52054,
+      51952,
+      52001,
+      51872,
+      51910,
+      51838,
+      51694,
+      51216,
+      51253,
+      51435,
+      51762,
+      51547,
+      51606,
+      51347,
+      51381,
+      44172,
+      44079,
+      49898,
+      49243,
+      48866,
+      44971,
+      43727,
+      43093,
+      41312,
+      41144
+    ],
+    "F368": [
+      52032,
+      51930,
+      51979,
+      51850,
+      51888,
+      51672,
+      51193,
+      51230,
+      51413,
+      51570,
+      51359,
+      44031,
+      50146,
+      50071,
+      49760,
+      49037,
+      43678,
+      43039,
+      41489
+    ],
+    "ECEE": [
+      51707
+    ],
+    "E693": [
+      52643
+    ],
+    "F2AF": [
+      44157,
+      43981,
+      43848,
+      49838,
+      49412,
+      49638,
+      49572,
+      49185,
+      48806,
+      48713,
+      48598,
+      48533,
+      48280,
+      44835,
+      43540,
+      42851,
+      42481,
+      42028,
+      41454,
+      41386
+    ],
+    "E850": [
+      43996
+    ],
+    "EBE9": [
+      44394,
+      43344
+    ],
+    "E862": [
+      43919,
+      48465
+    ],
+    "F2D7": [
+      49809,
+      49722,
+      49251,
+      49153,
+      48579,
+      44795,
+      44871,
+      42983,
+      41890,
+      41595
+    ],
+    "E843": [
+      49911,
+      49262
+    ],
+    "E57F": [
+      49173,
+      48677
+    ],
+    "E673": [
+      49178
+    ],
+    "E683": [
+      48682
+    ],
+    "EAA5": [
+      43375,
+      42539,
+      42607,
+      42687,
+      42086,
+      42154,
+      42234
+    ],
+    "E856": [
+      43290,
+      43173
+    ],
+    "EC22": [
+      42576,
+      42656,
+      42123,
+      42203
+    ],
+    "E000": [
+      41371
+    ]
+  },
+  "scope": "Three bounded pair25/26 controllers; doesnot includeNMI, PPU timing orpair10/11 decision body."
+}

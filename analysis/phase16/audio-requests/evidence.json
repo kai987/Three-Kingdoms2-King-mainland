@@ -1,0 +1,46 @@
+{
+  "schema": "phase16-exact-fixed-audio-source-evidence-v1",
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_original_CPU_callbacks": 0,
+  "source_IR_interpretation": false,
+  "source_sha256": {
+    "source/recovered/exact_audio_requests.py": "a7d4c81932a6cfa5092a58b70e60661f003db9aa62979a392faae2b1f08aa448",
+    "source/recovered/global_ui_controller.py": "21e49b6ece3261756f31254b1291da6a6b38f2d5025b752fbb222a0fa844449a",
+    "source/recovered/scene_shared_services.py": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1",
+    "source/recovered/battle_nmi_services.py": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15",
+    "scripts/analyze_exact_audio_requests.py": "46419dbe9682037fe78a22f655ff299a320071d0537c77407aca4c2322c6f542",
+    "scripts/verify_exact_audio_requests.py": "c4284c3fe9ac591bafb986e109474fff7b808db293ca9fde86bdb6dd5e54f3d1"
+  },
+  "artifact_sha256": {
+    "analysis/phase16/audio-requests/static-catalog.json": "9189775d64ccac1c806ce7beef40465ad88257d8b9f12116b157bc3ab16d8834",
+    "analysis/phase16/audio-requests/original.asm": "4d726ab3b4cdc7349e84005cd1134e4d0350935382858a2675012de532e805a1",
+    "analysis/phase16/audio-requests/validation.json": "8f594245d10cfecf951404168d41065ca1d4d12b981ddb8f78fde92e75b7308f",
+    "analysis/phase16/audio-requests/actual-callers.json": "dc28625e4cd310048b22e4529df9e8376dd28ff3807e51bb0406c4895e551a1e"
+  },
+  "static_instruction_count": 146,
+  "dynamic_instruction_count": 146,
+  "unexecuted_positions": [],
+  "comparison": {
+    "RAM_bytes": 2048,
+    "free_stack": "included",
+    "SRAM_bytes": 8192,
+    "AXYP_SP_PC": true,
+    "ordered_ports_reads_banks": true,
+    "N163_image": true
+  },
+  "rom_cpu_case_count": 2767,
+  "complete_return_count": 2765,
+  "strict_prefix_count": 2,
+  "source_guard_case_count": 10,
+  "limits": [
+    "OriginalCPU is the independentvalidator only. FixedF25F is recoveredsource, zeroCPUcallback in productionor sourcecomposition.",
+    "183 legitimate descriptorrecords supplytypedinputs; controlledchannel/state/SP cases are not naturalcore recordings.",
+    "Orderedsoftware port and N163image equality does not synthesizePCM,time,IRQ or readiness."
+  ],
+  "genuine_callee_input_case_count": 19,
+  "total_ROM_CPU_comparisons_including_genuine_callers": 2786,
+  "genuine_callee_comparison_status": "passed"
+}

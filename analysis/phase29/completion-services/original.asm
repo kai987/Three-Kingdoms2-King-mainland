@@ -1,0 +1,81 @@
+08:BBA0 AD 87 00     LDA $0087
+08:BBA3 10 12        BPL $bbb7
+08:BBA5 20 B8 BB     JSR $bbb8
+08:BBA8 A9 01        LDA #$01
+08:BBAA 8D 7A 00     STA $007a
+08:BBAD A9 0D        LDA #$0d
+08:BBAF 8D 00 04     STA $0400
+08:BBB2 A9 00        LDA #$00
+08:BBB4 8D 01 04     STA $0401
+08:BBB7 60           RTS
+08:BBB8 A0 30        LDY #$30
+08:BBBA 20 5F F2     JSR $f25f
+08:BBBD AD 0E 05     LDA $050e
+08:BBC0 20 AF F2     JSR $f2af
+08:BBC3 AD 14 05     LDA $0514
+08:BBC6 D0 17        BNE $bbdf
+08:BBC8 AD 07 05     LDA $0507
+08:BBCB 4A           LSR A
+08:BBCC 4A           LSR A
+08:BBCD 4A           LSR A
+08:BBCE 4A           LSR A
+08:BBCF 29 0F        AND #$0f
+08:BBD1 8D 02 00     STA $0002
+08:BBD4 A0 00        LDY #$00
+08:BBD6 B1 00        LDA ($00),Y
+08:BBD8 29 F0        AND #$f0
+08:BBDA 0D 02 00     ORA $0002
+08:BBDD 91 00        STA ($00),Y
+08:BBDF 20 00 BC     JSR $bc00
+08:BBE2 AD 0E 05     LDA $050e
+08:BBE5 0A           ASL A
+08:BBE6 0A           ASL A
+08:BBE7 0A           ASL A
+08:BBE8 A8           TAY
+08:BBE9 98           TYA
+08:BBEA 48           PHA
+08:BBEB B9 72 9D     LDA $9d72,Y
+08:BBEE C9 FF        CMP #$ff
+08:BBF0 D0 02        BNE $bbf4
+08:BBF2 68           PLA
+08:BBF3 60           RTS
+08:BBF4 20 AF F2     JSR $f2af
+08:BBF7 20 00 BC     JSR $bc00
+08:BBFA 68           PLA
+08:BBFB A8           TAY
+08:BBFC C8           INY
+08:BBFD 4C E9 BB     JMP $bbe9
+08:BC00 AD 00 00     LDA $0000
+08:BC03 8D 0A 00     STA $000a
+08:BC06 AD 01 00     LDA $0001
+08:BC09 8D 0B 00     STA $000b
+08:BC0C A0 00        LDY #$00
+08:BC0E B1 0A        LDA ($0a),Y
+08:BC10 29 0F        AND #$0f
+08:BC12 C9 07        CMP #$07
+08:BC14 D0 01        BNE $bc17
+08:BC16 60           RTS
+08:BC17 20 68 F3     JSR $f368
+08:BC1A A0 00        LDY #$00
+08:BC1C B1 00        LDA ($00),Y
+08:BC1E 8D 02 00     STA $0002
+08:BC21 A0 11        LDY #$11
+08:BC23 B1 0A        LDA ($0a),Y
+08:BC25 CD 02 00     CMP $0002
+08:BC28 F0 06        BEQ $bc30
+08:BC2A C8           INY
+08:BC2B C0 1B        CPY #$1b
+08:BC2D 90 F4        BCC $bc23
+08:BC2F 60           RTS
+08:BC30 98           TYA
+08:BC31 48           PHA
+08:BC32 A0 11        LDY #$11
+08:BC34 B1 0A        LDA ($0a),Y
+08:BC36 8D 03 00     STA $0003
+08:BC39 AD 02 00     LDA $0002
+08:BC3C 91 0A        STA ($0a),Y
+08:BC3E 68           PLA
+08:BC3F A8           TAY
+08:BC40 AD 03 00     LDA $0003
+08:BC43 91 0A        STA ($0a),Y
+08:BC45 60           RTS

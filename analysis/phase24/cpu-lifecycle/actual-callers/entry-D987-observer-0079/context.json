@@ -1,0 +1,69 @@
+{
+  "schema": "phase24-passive-Native-callee-with-device-fixture-v1",
+  "origin": "passive_Native_callee_capture_with_explicit_N163_fixture",
+  "registers": {
+    "a": 3,
+    "x": 4,
+    "y": 9,
+    "p": 32,
+    "sp": 243,
+    "pc": 55687
+  },
+  "physical_banks": [
+    2,
+    27,
+    28,
+    31
+  ],
+  "existing_return_PC": 55425,
+  "N163_address": 127,
+  "N163_autoincrement": true,
+  "N163_origin": "explicit_shared_fixture_not_Native_snapshot",
+  "explicit_N163_fixture": {
+    "bytes": 128,
+    "sha256": "0aedd4856f8eba0963627336ad5144a9a7dbe12498e6066f0165fc97d8ddee4c",
+    "pattern": "(11+37*i)&255",
+    "address": 127,
+    "autoincrement": true,
+    "scope": "Common Source/originalCPU model input, not the instantaneous Native device image"
+  },
+  "prepared_numeric_bytes": [],
+  "additional_CPU_prepared_numeric_bytes": [],
+  "inherited_Native_preparation": [],
+  "controller_buttons": [
+    0,
+    0
+  ],
+  "injected_new_NMI": 0,
+  "injected_new_IRQ": 0,
+  "hardware_events": [
+    {
+      "kind": "explicit_model_port_inputs",
+      "PPUSTATUS": 0,
+      "APU_status": 0,
+      "Namco_IRQ": 127,
+      "controller_buttons": [
+        0,
+        0
+      ],
+      "scope": "Independent callee CPU comparison; captured81 retains the actual Native input"
+    }
+  ],
+  "passive_capture": {
+    "metadata": "analysis/phase24/runtime/observer/callee-0079-D987.json",
+    "metadata_sha256": "17f10e09144a7b20d800912af367b8d9eb3a2d09b4e5b2963f168990211d1188",
+    "frame": 77,
+    "snapshot_sequence": 79,
+    "event_sequence": 3006,
+    "RAM_path": "analysis/phase24/runtime/observer/callee-0079-D987-ram.bin",
+    "RAM_sha256": "6c439824f1427bba49acca03aed975208b190d0017eee3337e01a0e9c35f9049",
+    "SRAM_path": "analysis/phase24/runtime/observer/callee-0079-D987-sram.bin",
+    "SRAM_sha256": "499def359718b3cd3cc4199b7ecca1ef83467d2f0c6b6c7ccd2ff1a27089805d",
+    "manifest": "analysis/phase24/runtime/evidence.json",
+    "manifest_sha256": "7298b3e7c1539cd8ac8279741f1bb8cfa56ec24ac894709fee37b57d98c5573c"
+  },
+  "actual_software_state_captured": true,
+  "synthetic_caller_PC_or_stack": false,
+  "unmodified_core_internal_trace": false,
+  "observer_scope": "Sparse original-CPU entry/watch capture in a separate passive core; one-route five-buffer parity, not a global equivalence theorem"
+}

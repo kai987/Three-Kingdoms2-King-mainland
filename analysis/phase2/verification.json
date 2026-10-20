@@ -1,0 +1,76 @@
+{
+  "status": "passed_with_explicit_limits",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "original_unchanged": true,
+  "officers": 237,
+  "validation": {
+    "officer_fields": {
+      "status": "passed",
+      "case_count": 5702,
+      "evidence": "analysis/officer_fields/validation.json"
+    },
+    "battle": {
+      "status": "passed",
+      "case_count": 35699,
+      "evidence": "analysis/battle/validation.json"
+    },
+    "ai": {
+      "status": "passed",
+      "case_count": 15630,
+      "evidence": "analysis/ai/validation.json"
+    },
+    "c_port": {
+      "status": "passed",
+      "case_count": 14080,
+      "evidence": "analysis/phase2/c-validation.json"
+    }
+  },
+  "new_actual_rom_cpu_case_count": 57031,
+  "rea_bank_pairs": {
+    "8": {
+      "load_image": "verified",
+      "candidate_procedures": 135
+    },
+    "12": {
+      "load_image": "verified",
+      "candidate_procedures": 70
+    },
+    "14": {
+      "load_image": "verified",
+      "candidate_procedures": 77
+    },
+    "25": {
+      "load_image": "verified",
+      "candidate_procedures": 105
+    }
+  },
+  "runtime_pixel_replay": "passed",
+  "runtime_ram_differences": {
+    "title": 0,
+    "game-start": 9,
+    "military-selection": 20
+  },
+  "limitations": [
+    "No claim of complete original game source, full campaign/battle state machine or all action labels.",
+    "AI environment fixtures/stubs are documented per routine.",
+    "C validation compares compiled port to independently ROM-tested Python; not a second complete emulator.",
+    "Runtime pixels and SRAM match; CPU RAM differs at two checkpoints and is explicitly retained."
+  ],
+  "browser_verification": {
+    "officer_rows": 237,
+    "loaded_name_images": 237,
+    "query": "\u95a2\u7fbd",
+    "matched_rows": 1,
+    "id": 38,
+    "fields": [
+      97,
+      97,
+      84,
+      99,
+      88
+    ],
+    "experience_display": 20,
+    "troops_display": 700,
+    "screenshot": "browser-proof.jpg"
+  }
+}

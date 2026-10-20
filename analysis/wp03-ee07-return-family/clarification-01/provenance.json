@@ -1,0 +1,15 @@
+{
+  "schema": "wp03-EE07-documentary-clarification-v1",
+  "original_verification_sha256": "2d38d4f2a4f648c946e1339395e2c8bce8c1f8fdb71d0793f46f0cb542dbe4d8",
+  "original_manifest_sha256": "e031e8dfbc23b88850d9ba0ae10daae4ff5dadfbe339cd58b586f2815aaae865",
+  "original_manifest_entries_verified": 34,
+  "original_artifacts_unchanged": true,
+  "clarification_sha256": "ac46e50b663a11f094c02528362970f4b1633825cd5433ad20e60d208c9621a6",
+  "Source_CPU_Native_executions": 0,
+  "new_WP07_semantic_dependencies": 0,
+  "real_outer_frame_verified": false,
+  "pending_identity_asserted": "callee ServiceCall only",
+  "test_withholding": "already recovered precise Source owner",
+  "field_classification_changes": 0,
+  "raw_classification_changes": 0
+}

@@ -1,0 +1,81 @@
+{
+  "schema": "wp03-EE07-return-family-v1",
+  "ROM_SHA256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "sites": [
+    {
+      "name": "A06F-stateful-phase0",
+      "call_pc": 41071,
+      "selector": 61,
+      "target": 41017,
+      "target_pair": [
+        29,
+        30
+      ],
+      "body": 48259,
+      "body_rts": 48282,
+      "continuation": 41076,
+      "phase": 0,
+      "owner": "SceneCoordinator -> GlobalUIController.city_workers -> CityUIWorkers.block_menu_entry -> cityuiworkers_bc74_phase_0"
+    },
+    {
+      "name": "A077-phase1-busy-only",
+      "call_pc": 41079,
+      "selector": 57,
+      "target": 40990,
+      "target_pair": [
+        25,
+        26
+      ],
+      "body": 50617,
+      "body_rts": 50622,
+      "continuation": 41084,
+      "phase": 1,
+      "owner": "SceneCoordinator -> CityPanelServices.panel_helper_c435 -> panel_helper_c5b9 (007E != 0)"
+    }
+  ],
+  "actual_boundary": "Start before the actual 27:A06F/A077 JSR; stop after real EE52 RTS, before A074/A07C first opcode. No outer RTS.",
+  "bounded_dependency": "DEP-EE07-A06F-A077-REAL-CALLEE-RETURN",
+  "selected_typed_ids": [
+    "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEE1F:rom03EE2F",
+    "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEE25:rom03EE35"
+  ],
+  "entry_origin": "Explicit controlled literals; no exact natural A06F/A077 context found. Prior phase13 positions and phase28 different EE07 caller are supporting history only.",
+  "requirements": [
+    "actual current JSR frame and five-byte far frame",
+    "real named callee body and RTS to EE4D",
+    "F237 raw writes and physical masks",
+    "real EE52 RTS to ordinary continuation",
+    "full independent Source/CPU RAM/SRAM/REG/PRG/port parity with both output buffers saved",
+    "missing callee and fake-return must retain same pending call, then genuine resume once"
+  ],
+  "premises": [
+    "No interrupts or external writes in each positive window",
+    "D=0",
+    "E2 raw selector maps to physical27/28 and E3=E2+1",
+    "007E is nonzero for the secondary busy case"
+  ],
+  "original_fixed_bytes": "ade2008d58008c5d00681869018d59006869008d5a00a000b1598d5b00c8b1598d5c00ac5d002037f2ee5900d003ee5a00ad5a0048ad590048ad580048a9ee48a94c486c5b0068a82037f260",
+  "known_direct_callers": 155,
+  "selected_callers": 2,
+  "inventory_callers_outside_this_package": 153,
+  "global_remaining_shared_entries": null,
+  "unknown_unique_services": null,
+  "completion_percentage": null,
+  "remaining_rounds_estimate": null,
+  "official_city_names": {
+    "1": null,
+    "28": null,
+    "29": null,
+    "30": null,
+    "31": null
+  },
+  "whole_game_closure_proven": false,
+  "Native_new_runs": 0,
+  "forbidden": [
+    "No Source CPU/IR fallback",
+    "No host PC/SP return",
+    "No synthetic outer frame",
+    "No global ledger migration",
+    "No claiming busy-only branch completes the other panel phases"
+  ]
+}

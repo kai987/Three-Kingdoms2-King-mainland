@@ -1,0 +1,28 @@
+.toolchain/
+.venv*/
+__pycache__/
+tools/rea/
+build/
+*.zip
+
+# Local inputs, original game byte source, dependency caches and secrets.
+node_modules
+.DS_Store
+*.py[cod]
+*.nes
+*.state
+*.dylib
+*.so
+.env
+.env.*
+!.env.example
+/source/byte-source/
+
+# Raw evidence is retained locally. Selected source dependencies and reports
+# are explicitly staged through docs/repository-files.txt.
+/analysis/**
+
+# Workbook inspection scratch files; final XLSX and validation stay versioned.
+/outputs/**/*-preview.png
+/outputs/**/*.ndjson
+/outputs/**/sources-preview.png

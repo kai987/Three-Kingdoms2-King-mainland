@@ -1,0 +1,61 @@
+{
+  "schema": "phase29-postbattle-completion-context-summary-v1",
+  "status": "indexed_read_only",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "Source_CPU_cases": 0,
+  "original_CPU_cases": 0,
+  "Native_runs": 0,
+  "all_indirect_positions": 1526,
+  "frozen_classification_counts": {
+    "proved_disjoint_auxiliary_address_domain": 1198,
+    "possible_city_auxiliary_alias": 81,
+    "unresolved_pointer_or_index_contract": 247
+  },
+  "remaining_candidates": 328,
+  "context_new_exclusions": 0,
+  "cleanup_existing_disjoint_sites": 8,
+  "CC29_connected_unresolved_sites": 2,
+  "official_city_auxiliary_names": {
+    "1": null,
+    "28": null,
+    "29": null,
+    "30": null,
+    "31": null
+  },
+  "raw345": {
+    "total": 345,
+    "operand": 104,
+    "known_data": 13,
+    "no_proven_control_entry": 228
+  },
+  "unknown_unique_services": null,
+  "all_four_parent_states_complete": false,
+  "source_and_validator_sha256": {
+    "scripts/analyze_postbattle_completion_context_phase29.py": "6a00c6375267cd25594001a9bb907bf48f2c5dc6beb8262d0dc5032d55487776",
+    "source/recovered/postbattle_parent_services.py": "08811ada8b164e7c2134c5ed5357b81880f8dee815e0abc1cf8caca927d84295",
+    "source/recovered/postbattle_parent_integration.py": "fce1413fe3970939c020e0ef93dab04dd6cf14b64ee1ce5e379e623ab74d97df",
+    "source/recovered/battle_state_machine.py": "7c67a8adef29ff925915184c3f7b17652e7b089107b75a3a362cab50c58d3b21",
+    "source/recovered/battle_scene_controller.py": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781",
+    "source/recovered/scene_shared_services.py": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76",
+    "source/recovered/scene_coordinator.py": "3c80cddcfdd4400d2f41fd93bc5442a4d9886b8fec356f85e94d9c3aa2bd8bab",
+    "source/recovered/postbattle_release_services.py": "2ac7e3e914018bd145b2ff831b7e1c3e72e554a4c65e12900a3b1777b2d45714"
+  },
+  "artifact_and_dependency_sha256": {
+    "analysis/phase28/verification.json": "898835c1f8872349057258ee970f0bb7e0299d9705517ee78e0ab659c9926feb",
+    "analysis/phase28/context/verification.json": "96eb6b8cc921c88ed25e6ea62c073771dd9b9ca2a12f718e39a8bc6c7e21a6cf",
+    "analysis/phase28/context/parent-chain-and-owner.json": "50b4bb361a25d795ec0399f1169fdbc26bb6fbe098227dba549e701c3f754484",
+    "analysis/phase28/context/fade-request-and-progress.json": "fa527046ab0a9203745d10bcedad485b6138bf7bc48549258d730e86e73ace7d",
+    "analysis/phase28/context/EE07-stack-and-mapper.json": "aec790c0b0c14d0cfad523d1cc0e6a766fe84ae421eff79fea731b535603aa2b",
+    "analysis/phase28/parent-services/validation.json": "d79453da59d7a4c41dfd1d47f71ee98cb2cdbed883994cefae07f40bc96f1ecf",
+    "analysis/phase28/source-integration.json": "f203a6f99cba132b60239110b36ad3a71172091d1c1c5dbe5e3c8169e872bc63",
+    "analysis/phase27/fields-static/analysis-summary.json": "3fc333e35f5207bbf7a0fdaa59b1f71922981d1f5efe28b0eff28835abbf6159",
+    "analysis/phase27/fields-static/all-indirect-accesses.json": "8309149fe9bd3f0b2f79659d00017e45971c813100e93a5685629fe0eb8cd003",
+    "analysis/phase27/fields-static/remaining-accesses.json": "8285d1e31696c5287873175ad611755c4761c8d01b83ce065a89c856aeeb67ea",
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/phase6/ownership/evidence.json": "c78232c813ebd86a887f9e2f768fa3d4e76f0861f3df9f4c606df2ba0952fec2",
+    "analysis/battle_fsm/validation.json": "35a95bad0de1c5b49115fa0fd2572a8ccc66d892a4082e7ac844e411849541aa",
+    "scripts/verify_battle_fsm.py": "c408569888c716bd56a7b80998c6563ec6dcb0968607db728a26bcac17b7eac9",
+    "analysis/game_data/name_glyph_records.csv": "4154cf5c76329624423589e9761e3650fd224340480cca857b048440ad8dfb71",
+    "analysis/game_data/README.md": "1f6dac1d74312152b0efd49fdefa6c336408faee1f7f6fc453b970db7b5f1860"
+  }
+}

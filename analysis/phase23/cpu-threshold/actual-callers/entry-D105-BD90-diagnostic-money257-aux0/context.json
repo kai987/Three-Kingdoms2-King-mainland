@@ -1,0 +1,87 @@
+{
+  "schema": "phase23-city-threshold-caller-input-v1",
+  "origin": "diagnostic_Native_snapshot_originalCPU_reached_caller",
+  "original_Native_state": "analysis/phase23/runtime/diagnostic-money257-aux0/original-control/actual-frame-003.state",
+  "original_Native_state_sha256": "f80fadd3f8a42628d09f6a19e86420290575f197daf7f892093786e2cb93f9b7",
+  "native_captured_registers": {
+    "a": 15,
+    "x": 5,
+    "y": 4,
+    "p": 36,
+    "sp": 249,
+    "pc": 54970
+  },
+  "original_CPU_prefix_instructions": 2485,
+  "registers": {
+    "a": 2,
+    "x": 5,
+    "y": 0,
+    "p": 36,
+    "sp": 251,
+    "pc": 53509
+  },
+  "physical_banks": [
+    17,
+    10,
+    11,
+    31
+  ],
+  "N163_address": 76,
+  "N163_autoincrement": false,
+  "existing_return_PC": 48528,
+  "actual_grandparent_return_PC": 57736,
+  "synthetic_caller_or_PC_or_RNG_or_request_preparation": false,
+  "injected_new_NMI": 0,
+  "injected_new_IRQ": 0,
+  "hardware_events": [
+    {
+      "kind": "explicit_port_inputs",
+      "PPUSTATUS": 0,
+      "APU_status": 0,
+      "Namco_IRQ": 127,
+      "controller_buttons": [
+        0,
+        0
+      ],
+      "range": "entire independent originalCPU continuation"
+    }
+  ],
+  "prepared_numeric_bytes": [
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 24642,
+      "before": 184,
+      "after": 1,
+      "reason": "Diagnostic ordinary gold amount before original consumer; not a natural gameplay or city+1 name claim."
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 24643,
+      "before": 34,
+      "after": 1,
+      "reason": "Diagnostic ordinary gold amount before original consumer; not a natural gameplay or city+1 name claim."
+    }
+  ],
+  "inherited_Native_preparation": [
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 24642,
+      "before": 184,
+      "after": 1,
+      "reason": "Diagnostic ordinary gold amount before original consumer; not a natural gameplay or city+1 name claim."
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 24643,
+      "before": 34,
+      "after": 1,
+      "reason": "Diagnostic ordinary gold amount before original consumer; not a natural gameplay or city+1 name claim."
+    }
+  ],
+  "additional_CPU_prepared_numeric_bytes": [],
+  "Native_internal_CPU_trace": false
+}

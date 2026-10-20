@@ -1,0 +1,161 @@
+{
+  "status": "passed",
+  "oracle": "py65 1.2.0 actual ROM helper bytes plus synthetic RAM callers and targets",
+  "case_count": 15,
+  "checks": [
+    {
+      "helper": "EE07",
+      "call_cpu_address": "0x0200",
+      "return_cpu_address": "0x0205",
+      "bank_before": 9,
+      "bank_restored": 9,
+      "stack_restored": true,
+      "instructions": 60
+    },
+    {
+      "helper": "EE07",
+      "call_cpu_address": "0x02FB",
+      "return_cpu_address": "0x0300",
+      "bank_before": 9,
+      "bank_restored": 9,
+      "stack_restored": true,
+      "instructions": 60
+    },
+    {
+      "helper": "EE07",
+      "call_cpu_address": "0x02FC",
+      "return_cpu_address": "0x0301",
+      "bank_before": 9,
+      "bank_restored": 9,
+      "stack_restored": true,
+      "instructions": 61
+    },
+    {
+      "helper": "EE07",
+      "call_cpu_address": "0x02FD",
+      "return_cpu_address": "0x0302",
+      "bank_before": 9,
+      "bank_restored": 9,
+      "stack_restored": true,
+      "instructions": 60
+    },
+    {
+      "helper": "EE07",
+      "call_cpu_address": "0x02FE",
+      "return_cpu_address": "0x0303",
+      "bank_before": 9,
+      "bank_restored": 9,
+      "stack_restored": true,
+      "instructions": 60
+    },
+    {
+      "helper": "EE07",
+      "call_cpu_address": "0x02FF",
+      "return_cpu_address": "0x0304",
+      "bank_before": 9,
+      "bank_restored": 9,
+      "stack_restored": true,
+      "instructions": 60
+    },
+    {
+      "helper": "EADE",
+      "input_index": 0,
+      "target_cpu_address": "0x0500",
+      "table_low_byte_index": 1,
+      "table_high_byte_index": 2,
+      "dispatch_matches_code": true,
+      "return_cpu_address": "0x0203",
+      "outer_return": true,
+      "stack_restored": true
+    },
+    {
+      "helper": "EADE",
+      "input_index": 1,
+      "target_cpu_address": "0x0504",
+      "table_low_byte_index": 3,
+      "table_high_byte_index": 4,
+      "dispatch_matches_code": true,
+      "return_cpu_address": "0x0203",
+      "outer_return": true,
+      "stack_restored": true
+    },
+    {
+      "helper": "EADE",
+      "input_index": 2,
+      "target_cpu_address": "0x0508",
+      "table_low_byte_index": 5,
+      "table_high_byte_index": 6,
+      "dispatch_matches_code": true,
+      "return_cpu_address": "0x0203",
+      "outer_return": true,
+      "stack_restored": true
+    },
+    {
+      "helper": "EADE",
+      "input_index": 3,
+      "target_cpu_address": "0x050C",
+      "table_low_byte_index": 7,
+      "table_high_byte_index": 8,
+      "dispatch_matches_code": true,
+      "return_cpu_address": "0x0203",
+      "outer_return": true,
+      "stack_restored": true
+    },
+    {
+      "helper": "EADE",
+      "input_index": 126,
+      "target_cpu_address": "0x06F8",
+      "table_low_byte_index": 253,
+      "table_high_byte_index": 254,
+      "dispatch_matches_code": true,
+      "return_cpu_address": "0x0203",
+      "outer_return": true,
+      "stack_restored": true
+    },
+    {
+      "helper": "EADE",
+      "input_index": 127,
+      "target_cpu_address": "0xEAFC",
+      "table_low_byte_index": 255,
+      "table_high_byte_index": 0,
+      "dispatch_matches_code": true,
+      "edge_note": "Y wraps after low-byte read at 255; high byte comes from original JSR operand address, so index127/255 is not a normal final table entry."
+    },
+    {
+      "helper": "EADE",
+      "input_index": 128,
+      "target_cpu_address": "0x0500",
+      "table_low_byte_index": 1,
+      "table_high_byte_index": 2,
+      "dispatch_matches_code": true,
+      "return_cpu_address": "0x0203",
+      "outer_return": true,
+      "stack_restored": true
+    },
+    {
+      "helper": "EADE",
+      "input_index": 129,
+      "target_cpu_address": "0x0504",
+      "table_low_byte_index": 3,
+      "table_high_byte_index": 4,
+      "dispatch_matches_code": true,
+      "return_cpu_address": "0x0203",
+      "outer_return": true,
+      "stack_restored": true
+    },
+    {
+      "helper": "EADE",
+      "input_index": 255,
+      "target_cpu_address": "0xEAFC",
+      "table_low_byte_index": 255,
+      "table_high_byte_index": 0,
+      "dispatch_matches_code": true,
+      "edge_note": "Y wraps after low-byte read at 255; high byte comes from original JSR operand address, so index127/255 is not a normal final table entry."
+    }
+  ],
+  "limitations": [
+    "CPU-only helper protocol; mapper writes use flat memory without real bank switching.",
+    "EE07 clobbers A and Y; this does not assert register preservation.",
+    "EE07 restores bank pair from saved E2; original A000/C000 banks assumed consecutive."
+  ]
+}

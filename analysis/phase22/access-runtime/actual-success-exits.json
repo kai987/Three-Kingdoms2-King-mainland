@@ -1,0 +1,42 @@
+[
+  {
+    "sequence": 5157,
+    "frame": 14837,
+    "cycle": 353528,
+    "kind": "opcode_boundary",
+    "opcode_PC": 51092,
+    "bus_PC": 51092,
+    "physical_bank": 11,
+    "rom_offset": 92068,
+    "actual_PRG_banks": [
+      16,
+      10,
+      11,
+      31
+    ],
+    "address": 51092,
+    "value": 0,
+    "A": 197,
+    "X": 0,
+    "Y": 3,
+    "P": 165,
+    "SP": 251,
+    "scratch_0053_0054": [
+      5,
+      12
+    ],
+    "pointer_0022_0023": 25596,
+    "working_0036_0039": [
+      2,
+      0,
+      19,
+      2
+    ],
+    "target_type": "sparse_opcode_boundary",
+    "city_index": null,
+    "city_offset": null,
+    "WRAM_readable": true,
+    "WRAM_writable": true,
+    "storage_byte_after_event": null
+  }
+]

@@ -1,0 +1,2252 @@
+{
+  "schema": "wp02-offline-observed-generation-reentry-v1",
+  "cases": [
+    {
+      "case": "generations/A09E/0/intact",
+      "host_reentry": "Controlled PC/A/Y preparation between completed transfer prefixes; no target RTS or natural path claim.",
+      "register_delta": {
+        "pc": {
+          "before": 41488,
+          "after": 41118
+        },
+        "a": {
+          "before": 162,
+          "after": 7
+        },
+        "y": {
+          "before": 49,
+          "after": 93
+        }
+      },
+      "same_bus_CPU": true,
+      "actual_generations": [
+        {
+          "generation": 0,
+          "call": {
+            "registers": {
+              "pc": 41118,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 0
+            },
+            "raw_return": 41120,
+            "stack_before": [
+              17,
+              244
+            ],
+            "actual_pushes": [
+              {
+                "address": 256,
+                "physical_address": 256,
+                "before": 17,
+                "value": 160,
+                "PC": 41118,
+                "generation": 0
+              },
+              {
+                "address": 511,
+                "physical_address": 511,
+                "before": 244,
+                "value": 160,
+                "PC": 41118,
+                "generation": 0
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 254
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 254,
+              "stack_address": 511,
+              "generation": 0,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 160,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 255
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 255,
+              "stack_address": 256,
+              "generation": 0,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 160,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 0
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 0,
+              "live21_22": 41120,
+              "Y": 7,
+              "logical_effective_address": 41127,
+              "normalized_address": 41127,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 16
+            },
+            {
+              "PC": 46379,
+              "SP": 0,
+              "live21_22": 41120,
+              "Y": 8,
+              "logical_effective_address": 41128,
+              "normalized_address": 41128,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 162
+            }
+          ],
+          "premise_valid": true
+        },
+        {
+          "generation": 1,
+          "call": {
+            "registers": {
+              "pc": 41118,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 0
+            },
+            "raw_return": 41120,
+            "stack_before": [
+              96,
+              0
+            ],
+            "actual_pushes": [
+              {
+                "address": 256,
+                "physical_address": 256,
+                "before": 96,
+                "value": 160,
+                "PC": 41118,
+                "generation": 1
+              },
+              {
+                "address": 511,
+                "physical_address": 511,
+                "before": 0,
+                "value": 160,
+                "PC": 41118,
+                "generation": 1
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 254
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 254,
+              "stack_address": 511,
+              "generation": 1,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 160,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 255
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 255,
+              "stack_address": 256,
+              "generation": 1,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 160,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 0
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 0,
+              "live21_22": 41120,
+              "Y": 15,
+              "logical_effective_address": 41135,
+              "normalized_address": 41135,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 6
+            },
+            {
+              "PC": 46379,
+              "SP": 0,
+              "live21_22": 41120,
+              "Y": 16,
+              "logical_effective_address": 41136,
+              "normalized_address": 41136,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 166
+            }
+          ],
+          "premise_valid": true
+        }
+      ],
+      "RAM_preparations": [
+        {
+          "address": 33,
+          "before": 160,
+          "value": 0,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 34,
+          "before": 160,
+          "value": 96,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 256,
+          "before": 160,
+          "value": 96,
+          "reason": "stale stack high immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 511,
+          "before": 160,
+          "value": 0,
+          "reason": "stale stack low immediately before current real JSR",
+          "generation": 1
+        }
+      ]
+    },
+    {
+      "case": "generations/A09E/0/fault",
+      "host_reentry": "Controlled PC/A/Y preparation between completed transfer prefixes; no target RTS or natural path claim.",
+      "register_delta": {
+        "pc": {
+          "before": 41488,
+          "after": 41118
+        },
+        "a": {
+          "before": 162,
+          "after": 0
+        },
+        "y": {
+          "before": 49,
+          "after": 93
+        }
+      },
+      "same_bus_CPU": true,
+      "actual_generations": [
+        {
+          "generation": 0,
+          "call": {
+            "registers": {
+              "pc": 41118,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 0
+            },
+            "raw_return": 41120,
+            "stack_before": [
+              17,
+              244
+            ],
+            "actual_pushes": [
+              {
+                "address": 256,
+                "physical_address": 256,
+                "before": 17,
+                "value": 160,
+                "PC": 41118,
+                "generation": 0
+              },
+              {
+                "address": 511,
+                "physical_address": 511,
+                "before": 244,
+                "value": 160,
+                "PC": 41118,
+                "generation": 0
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 254
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 254,
+              "stack_address": 511,
+              "generation": 0,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 160,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 255
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 255,
+              "stack_address": 256,
+              "generation": 0,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 160,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 0
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 0,
+              "live21_22": 41120,
+              "Y": 7,
+              "logical_effective_address": 41127,
+              "normalized_address": 41127,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 16
+            },
+            {
+              "PC": 46379,
+              "SP": 0,
+              "live21_22": 41120,
+              "Y": 8,
+              "logical_effective_address": 41128,
+              "normalized_address": 41128,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 162
+            }
+          ],
+          "premise_valid": true
+        },
+        {
+          "generation": 1,
+          "call": {
+            "registers": {
+              "pc": 41118,
+              "a": 0,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 0
+            },
+            "raw_return": 41120,
+            "stack_before": [
+              96,
+              0
+            ],
+            "actual_pushes": [
+              {
+                "address": 256,
+                "physical_address": 256,
+                "before": 96,
+                "value": 160,
+                "PC": 41118,
+                "generation": 1
+              },
+              {
+                "address": 511,
+                "physical_address": 511,
+                "before": 0,
+                "value": 160,
+                "PC": 41118,
+                "generation": 1
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 0,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 254
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 254,
+              "stack_address": 511,
+              "generation": 1,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 160,
+                "x": 195,
+                "y": 1,
+                "p": 160,
+                "sp": 255
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 255,
+              "stack_address": 256,
+              "generation": 1,
+              "value": 96,
+              "last_writer": {
+                "kind": "disclosed_fixture_mutation",
+                "reason": "post-JSR one-byte restoration of stale6000; current frame premise violated",
+                "generation": 1
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 96,
+                "x": 195,
+                "y": 1,
+                "p": 32,
+                "sp": 0
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 0,
+              "live21_22": 24736,
+              "Y": 1,
+              "logical_effective_address": 24737,
+              "normalized_address": 24737,
+              "auxiliary_alias": true,
+              "generation": 1,
+              "value": 2
+            },
+            {
+              "PC": 46379,
+              "SP": 0,
+              "live21_22": 24736,
+              "Y": 2,
+              "logical_effective_address": 24738,
+              "normalized_address": 24738,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 13
+            }
+          ],
+          "premise_valid": false
+        }
+      ],
+      "RAM_preparations": [
+        {
+          "address": 33,
+          "before": 160,
+          "value": 0,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 34,
+          "before": 160,
+          "value": 96,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 256,
+          "before": 160,
+          "value": 96,
+          "reason": "stale stack high immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 511,
+          "before": 160,
+          "value": 0,
+          "reason": "stale stack low immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 256,
+          "before": 160,
+          "value": 96,
+          "reason": "post-JSR one-byte restoration of stale6000; current frame premise violated",
+          "generation": 1
+        }
+      ]
+    },
+    {
+      "case": "generations/A09E/253/intact",
+      "host_reentry": "Controlled PC/A/Y preparation between completed transfer prefixes; no target RTS or natural path claim.",
+      "register_delta": {
+        "pc": {
+          "before": 41488,
+          "after": 41118
+        },
+        "a": {
+          "before": 162,
+          "after": 7
+        },
+        "y": {
+          "before": 49,
+          "after": 93
+        }
+      },
+      "same_bus_CPU": true,
+      "actual_generations": [
+        {
+          "generation": 0,
+          "call": {
+            "registers": {
+              "pc": 41118,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 253
+            },
+            "raw_return": 41120,
+            "stack_before": [
+              186,
+              157
+            ],
+            "actual_pushes": [
+              {
+                "address": 509,
+                "physical_address": 509,
+                "before": 186,
+                "value": 160,
+                "PC": 41118,
+                "generation": 0
+              },
+              {
+                "address": 508,
+                "physical_address": 508,
+                "before": 157,
+                "value": 160,
+                "PC": 41118,
+                "generation": 0
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 251
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 251,
+              "stack_address": 508,
+              "generation": 0,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 160,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 252
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 252,
+              "stack_address": 509,
+              "generation": 0,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 160,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 253
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 253,
+              "live21_22": 41120,
+              "Y": 7,
+              "logical_effective_address": 41127,
+              "normalized_address": 41127,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 16
+            },
+            {
+              "PC": 46379,
+              "SP": 253,
+              "live21_22": 41120,
+              "Y": 8,
+              "logical_effective_address": 41128,
+              "normalized_address": 41128,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 162
+            }
+          ],
+          "premise_valid": true
+        },
+        {
+          "generation": 1,
+          "call": {
+            "registers": {
+              "pc": 41118,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 253
+            },
+            "raw_return": 41120,
+            "stack_before": [
+              96,
+              0
+            ],
+            "actual_pushes": [
+              {
+                "address": 509,
+                "physical_address": 509,
+                "before": 96,
+                "value": 160,
+                "PC": 41118,
+                "generation": 1
+              },
+              {
+                "address": 508,
+                "physical_address": 508,
+                "before": 0,
+                "value": 160,
+                "PC": 41118,
+                "generation": 1
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 251
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 251,
+              "stack_address": 508,
+              "generation": 1,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 160,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 252
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 252,
+              "stack_address": 509,
+              "generation": 1,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 160,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 253
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 253,
+              "live21_22": 41120,
+              "Y": 15,
+              "logical_effective_address": 41135,
+              "normalized_address": 41135,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 6
+            },
+            {
+              "PC": 46379,
+              "SP": 253,
+              "live21_22": 41120,
+              "Y": 16,
+              "logical_effective_address": 41136,
+              "normalized_address": 41136,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 166
+            }
+          ],
+          "premise_valid": true
+        }
+      ],
+      "RAM_preparations": [
+        {
+          "address": 33,
+          "before": 160,
+          "value": 0,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 34,
+          "before": 160,
+          "value": 96,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 509,
+          "before": 160,
+          "value": 96,
+          "reason": "stale stack high immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 508,
+          "before": 160,
+          "value": 0,
+          "reason": "stale stack low immediately before current real JSR",
+          "generation": 1
+        }
+      ]
+    },
+    {
+      "case": "generations/A09E/253/fault",
+      "host_reentry": "Controlled PC/A/Y preparation between completed transfer prefixes; no target RTS or natural path claim.",
+      "register_delta": {
+        "pc": {
+          "before": 41488,
+          "after": 41118
+        },
+        "a": {
+          "before": 162,
+          "after": 0
+        },
+        "y": {
+          "before": 49,
+          "after": 93
+        }
+      },
+      "same_bus_CPU": true,
+      "actual_generations": [
+        {
+          "generation": 0,
+          "call": {
+            "registers": {
+              "pc": 41118,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 253
+            },
+            "raw_return": 41120,
+            "stack_before": [
+              186,
+              157
+            ],
+            "actual_pushes": [
+              {
+                "address": 509,
+                "physical_address": 509,
+                "before": 186,
+                "value": 160,
+                "PC": 41118,
+                "generation": 0
+              },
+              {
+                "address": 508,
+                "physical_address": 508,
+                "before": 157,
+                "value": 160,
+                "PC": 41118,
+                "generation": 0
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 251
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 251,
+              "stack_address": 508,
+              "generation": 0,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 160,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 252
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 252,
+              "stack_address": 509,
+              "generation": 0,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 160,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 253
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 253,
+              "live21_22": 41120,
+              "Y": 7,
+              "logical_effective_address": 41127,
+              "normalized_address": 41127,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 16
+            },
+            {
+              "PC": 46379,
+              "SP": 253,
+              "live21_22": 41120,
+              "Y": 8,
+              "logical_effective_address": 41128,
+              "normalized_address": 41128,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 162
+            }
+          ],
+          "premise_valid": true
+        },
+        {
+          "generation": 1,
+          "call": {
+            "registers": {
+              "pc": 41118,
+              "a": 0,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 253
+            },
+            "raw_return": 41120,
+            "stack_before": [
+              96,
+              0
+            ],
+            "actual_pushes": [
+              {
+                "address": 509,
+                "physical_address": 509,
+                "before": 96,
+                "value": 160,
+                "PC": 41118,
+                "generation": 1
+              },
+              {
+                "address": 508,
+                "physical_address": 508,
+                "before": 0,
+                "value": 160,
+                "PC": 41118,
+                "generation": 1
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 0,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 251
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 251,
+              "stack_address": 508,
+              "generation": 1,
+              "value": 160,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 41118
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 160,
+                "x": 195,
+                "y": 1,
+                "p": 160,
+                "sp": 252
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 252,
+              "stack_address": 509,
+              "generation": 1,
+              "value": 96,
+              "last_writer": {
+                "kind": "disclosed_fixture_mutation",
+                "reason": "post-JSR one-byte restoration of stale6000; current frame premise violated",
+                "generation": 1
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 96,
+                "x": 195,
+                "y": 1,
+                "p": 32,
+                "sp": 253
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 253,
+              "live21_22": 24736,
+              "Y": 1,
+              "logical_effective_address": 24737,
+              "normalized_address": 24737,
+              "auxiliary_alias": true,
+              "generation": 1,
+              "value": 2
+            },
+            {
+              "PC": 46379,
+              "SP": 253,
+              "live21_22": 24736,
+              "Y": 2,
+              "logical_effective_address": 24738,
+              "normalized_address": 24738,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 13
+            }
+          ],
+          "premise_valid": false
+        }
+      ],
+      "RAM_preparations": [
+        {
+          "address": 33,
+          "before": 160,
+          "value": 0,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 34,
+          "before": 160,
+          "value": 96,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 509,
+          "before": 160,
+          "value": 96,
+          "reason": "stale stack high immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 508,
+          "before": 160,
+          "value": 0,
+          "reason": "stale stack low immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 509,
+          "before": 160,
+          "value": 96,
+          "reason": "post-JSR one-byte restoration of stale6000; current frame premise violated",
+          "generation": 1
+        }
+      ]
+    },
+    {
+      "case": "generations/ACAB/0/intact",
+      "host_reentry": "Controlled PC/A/Y preparation between completed transfer prefixes; no target RTS or natural path claim.",
+      "register_delta": {
+        "pc": {
+          "before": 44251,
+          "after": 44203
+        },
+        "a": {
+          "before": 172,
+          "after": 7
+        },
+        "y": {
+          "before": 49,
+          "after": 93
+        }
+      },
+      "same_bus_CPU": true,
+      "actual_generations": [
+        {
+          "generation": 0,
+          "call": {
+            "registers": {
+              "pc": 44203,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 0
+            },
+            "raw_return": 44205,
+            "stack_before": [
+              17,
+              244
+            ],
+            "actual_pushes": [
+              {
+                "address": 256,
+                "physical_address": 256,
+                "before": 17,
+                "value": 172,
+                "PC": 44203,
+                "generation": 0
+              },
+              {
+                "address": 511,
+                "physical_address": 511,
+                "before": 244,
+                "value": 173,
+                "PC": 44203,
+                "generation": 0
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 254
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 254,
+              "stack_address": 511,
+              "generation": 0,
+              "value": 173,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 173,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 255
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 255,
+              "stack_address": 256,
+              "generation": 0,
+              "value": 172,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 172,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 0
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 0,
+              "live21_22": 44205,
+              "Y": 7,
+              "logical_effective_address": 44212,
+              "normalized_address": 44212,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 219
+            },
+            {
+              "PC": 46379,
+              "SP": 0,
+              "live21_22": 44205,
+              "Y": 8,
+              "logical_effective_address": 44213,
+              "normalized_address": 44213,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 172
+            }
+          ],
+          "premise_valid": true
+        },
+        {
+          "generation": 1,
+          "call": {
+            "registers": {
+              "pc": 44203,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 0
+            },
+            "raw_return": 44205,
+            "stack_before": [
+              96,
+              0
+            ],
+            "actual_pushes": [
+              {
+                "address": 256,
+                "physical_address": 256,
+                "before": 96,
+                "value": 172,
+                "PC": 44203,
+                "generation": 1
+              },
+              {
+                "address": 511,
+                "physical_address": 511,
+                "before": 0,
+                "value": 173,
+                "PC": 44203,
+                "generation": 1
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 254
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 254,
+              "stack_address": 511,
+              "generation": 1,
+              "value": 173,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 173,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 255
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 255,
+              "stack_address": 256,
+              "generation": 1,
+              "value": 172,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 172,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 0
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 0,
+              "live21_22": 44205,
+              "Y": 15,
+              "logical_effective_address": 44220,
+              "normalized_address": 44220,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 34
+            },
+            {
+              "PC": 46379,
+              "SP": 0,
+              "live21_22": 44205,
+              "Y": 16,
+              "logical_effective_address": 44221,
+              "normalized_address": 44221,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 173
+            }
+          ],
+          "premise_valid": true
+        }
+      ],
+      "RAM_preparations": [
+        {
+          "address": 33,
+          "before": 173,
+          "value": 0,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 34,
+          "before": 172,
+          "value": 96,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 256,
+          "before": 172,
+          "value": 96,
+          "reason": "stale stack high immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 511,
+          "before": 173,
+          "value": 0,
+          "reason": "stale stack low immediately before current real JSR",
+          "generation": 1
+        }
+      ]
+    },
+    {
+      "case": "generations/ACAB/0/fault",
+      "host_reentry": "Controlled PC/A/Y preparation between completed transfer prefixes; no target RTS or natural path claim.",
+      "register_delta": {
+        "pc": {
+          "before": 44251,
+          "after": 44203
+        },
+        "a": {
+          "before": 172,
+          "after": 7
+        },
+        "y": {
+          "before": 49,
+          "after": 93
+        }
+      },
+      "same_bus_CPU": true,
+      "actual_generations": [
+        {
+          "generation": 0,
+          "call": {
+            "registers": {
+              "pc": 44203,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 0
+            },
+            "raw_return": 44205,
+            "stack_before": [
+              17,
+              244
+            ],
+            "actual_pushes": [
+              {
+                "address": 256,
+                "physical_address": 256,
+                "before": 17,
+                "value": 172,
+                "PC": 44203,
+                "generation": 0
+              },
+              {
+                "address": 511,
+                "physical_address": 511,
+                "before": 244,
+                "value": 173,
+                "PC": 44203,
+                "generation": 0
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 254
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 254,
+              "stack_address": 511,
+              "generation": 0,
+              "value": 173,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 173,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 255
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 255,
+              "stack_address": 256,
+              "generation": 0,
+              "value": 172,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 172,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 0
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 0,
+              "live21_22": 44205,
+              "Y": 7,
+              "logical_effective_address": 44212,
+              "normalized_address": 44212,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 219
+            },
+            {
+              "PC": 46379,
+              "SP": 0,
+              "live21_22": 44205,
+              "Y": 8,
+              "logical_effective_address": 44213,
+              "normalized_address": 44213,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 172
+            }
+          ],
+          "premise_valid": true
+        },
+        {
+          "generation": 1,
+          "call": {
+            "registers": {
+              "pc": 44203,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 0
+            },
+            "raw_return": 44205,
+            "stack_before": [
+              96,
+              0
+            ],
+            "actual_pushes": [
+              {
+                "address": 256,
+                "physical_address": 256,
+                "before": 96,
+                "value": 172,
+                "PC": 44203,
+                "generation": 1
+              },
+              {
+                "address": 511,
+                "physical_address": 511,
+                "before": 0,
+                "value": 173,
+                "PC": 44203,
+                "generation": 1
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 254
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 254,
+              "stack_address": 511,
+              "generation": 1,
+              "value": 173,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 173,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 255
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 255,
+              "stack_address": 256,
+              "generation": 1,
+              "value": 96,
+              "last_writer": {
+                "kind": "disclosed_fixture_mutation",
+                "reason": "post-JSR one-byte restoration of stale6000; current frame premise violated",
+                "generation": 1
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 96,
+                "x": 195,
+                "y": 15,
+                "p": 32,
+                "sp": 0
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 0,
+              "live21_22": 24749,
+              "Y": 15,
+              "logical_effective_address": 24764,
+              "normalized_address": 24764,
+              "auxiliary_alias": true,
+              "generation": 1,
+              "value": 43
+            },
+            {
+              "PC": 46379,
+              "SP": 0,
+              "live21_22": 24749,
+              "Y": 16,
+              "logical_effective_address": 24765,
+              "normalized_address": 24765,
+              "auxiliary_alias": true,
+              "generation": 1,
+              "value": 54
+            }
+          ],
+          "premise_valid": false
+        }
+      ],
+      "RAM_preparations": [
+        {
+          "address": 33,
+          "before": 173,
+          "value": 0,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 34,
+          "before": 172,
+          "value": 96,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 256,
+          "before": 172,
+          "value": 96,
+          "reason": "stale stack high immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 511,
+          "before": 173,
+          "value": 0,
+          "reason": "stale stack low immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 256,
+          "before": 172,
+          "value": 96,
+          "reason": "post-JSR one-byte restoration of stale6000; current frame premise violated",
+          "generation": 1
+        }
+      ]
+    },
+    {
+      "case": "generations/ACAB/253/intact",
+      "host_reentry": "Controlled PC/A/Y preparation between completed transfer prefixes; no target RTS or natural path claim.",
+      "register_delta": {
+        "pc": {
+          "before": 44251,
+          "after": 44203
+        },
+        "a": {
+          "before": 172,
+          "after": 7
+        },
+        "y": {
+          "before": 49,
+          "after": 93
+        }
+      },
+      "same_bus_CPU": true,
+      "actual_generations": [
+        {
+          "generation": 0,
+          "call": {
+            "registers": {
+              "pc": 44203,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 253
+            },
+            "raw_return": 44205,
+            "stack_before": [
+              186,
+              157
+            ],
+            "actual_pushes": [
+              {
+                "address": 509,
+                "physical_address": 509,
+                "before": 186,
+                "value": 172,
+                "PC": 44203,
+                "generation": 0
+              },
+              {
+                "address": 508,
+                "physical_address": 508,
+                "before": 157,
+                "value": 173,
+                "PC": 44203,
+                "generation": 0
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 251
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 251,
+              "stack_address": 508,
+              "generation": 0,
+              "value": 173,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 173,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 252
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 252,
+              "stack_address": 509,
+              "generation": 0,
+              "value": 172,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 172,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 253
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 253,
+              "live21_22": 44205,
+              "Y": 7,
+              "logical_effective_address": 44212,
+              "normalized_address": 44212,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 219
+            },
+            {
+              "PC": 46379,
+              "SP": 253,
+              "live21_22": 44205,
+              "Y": 8,
+              "logical_effective_address": 44213,
+              "normalized_address": 44213,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 172
+            }
+          ],
+          "premise_valid": true
+        },
+        {
+          "generation": 1,
+          "call": {
+            "registers": {
+              "pc": 44203,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 253
+            },
+            "raw_return": 44205,
+            "stack_before": [
+              96,
+              0
+            ],
+            "actual_pushes": [
+              {
+                "address": 509,
+                "physical_address": 509,
+                "before": 96,
+                "value": 172,
+                "PC": 44203,
+                "generation": 1
+              },
+              {
+                "address": 508,
+                "physical_address": 508,
+                "before": 0,
+                "value": 173,
+                "PC": 44203,
+                "generation": 1
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 251
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 251,
+              "stack_address": 508,
+              "generation": 1,
+              "value": 173,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 173,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 252
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 252,
+              "stack_address": 509,
+              "generation": 1,
+              "value": 172,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 172,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 253
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 253,
+              "live21_22": 44205,
+              "Y": 15,
+              "logical_effective_address": 44220,
+              "normalized_address": 44220,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 34
+            },
+            {
+              "PC": 46379,
+              "SP": 253,
+              "live21_22": 44205,
+              "Y": 16,
+              "logical_effective_address": 44221,
+              "normalized_address": 44221,
+              "auxiliary_alias": false,
+              "generation": 1,
+              "value": 173
+            }
+          ],
+          "premise_valid": true
+        }
+      ],
+      "RAM_preparations": [
+        {
+          "address": 33,
+          "before": 173,
+          "value": 0,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 34,
+          "before": 172,
+          "value": 96,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 509,
+          "before": 172,
+          "value": 96,
+          "reason": "stale stack high immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 508,
+          "before": 173,
+          "value": 0,
+          "reason": "stale stack low immediately before current real JSR",
+          "generation": 1
+        }
+      ]
+    },
+    {
+      "case": "generations/ACAB/253/fault",
+      "host_reentry": "Controlled PC/A/Y preparation between completed transfer prefixes; no target RTS or natural path claim.",
+      "register_delta": {
+        "pc": {
+          "before": 44251,
+          "after": 44203
+        },
+        "a": {
+          "before": 172,
+          "after": 7
+        },
+        "y": {
+          "before": 49,
+          "after": 93
+        }
+      },
+      "same_bus_CPU": true,
+      "actual_generations": [
+        {
+          "generation": 0,
+          "call": {
+            "registers": {
+              "pc": 44203,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 253
+            },
+            "raw_return": 44205,
+            "stack_before": [
+              186,
+              157
+            ],
+            "actual_pushes": [
+              {
+                "address": 509,
+                "physical_address": 509,
+                "before": 186,
+                "value": 172,
+                "PC": 44203,
+                "generation": 0
+              },
+              {
+                "address": 508,
+                "physical_address": 508,
+                "before": 157,
+                "value": 173,
+                "PC": 44203,
+                "generation": 0
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 3,
+              "x": 195,
+              "y": 49,
+              "p": 32,
+              "sp": 251
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 251,
+              "stack_address": 508,
+              "generation": 0,
+              "value": 173,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 173,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 252
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 252,
+              "stack_address": 509,
+              "generation": 0,
+              "value": 172,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 0,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 172,
+                "x": 195,
+                "y": 7,
+                "p": 160,
+                "sp": 253
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 253,
+              "live21_22": 44205,
+              "Y": 7,
+              "logical_effective_address": 44212,
+              "normalized_address": 44212,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 219
+            },
+            {
+              "PC": 46379,
+              "SP": 253,
+              "live21_22": 44205,
+              "Y": 8,
+              "logical_effective_address": 44213,
+              "normalized_address": 44213,
+              "auxiliary_alias": false,
+              "generation": 0,
+              "value": 172
+            }
+          ],
+          "premise_valid": true
+        },
+        {
+          "generation": 1,
+          "call": {
+            "registers": {
+              "pc": 44203,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 253
+            },
+            "raw_return": 44205,
+            "stack_before": [
+              96,
+              0
+            ],
+            "actual_pushes": [
+              {
+                "address": 509,
+                "physical_address": 509,
+                "before": 96,
+                "value": 172,
+                "PC": 44203,
+                "generation": 1
+              },
+              {
+                "address": 508,
+                "physical_address": 508,
+                "before": 0,
+                "value": 173,
+                "PC": 44203,
+                "generation": 1
+              }
+            ],
+            "registers_after_JSR": {
+              "pc": 46359,
+              "a": 7,
+              "x": 195,
+              "y": 93,
+              "p": 32,
+              "sp": 251
+            }
+          },
+          "PLA": [
+            {
+              "kind": "actual_PLA",
+              "PC": 46365,
+              "SP_before": 251,
+              "stack_address": 508,
+              "generation": 1,
+              "value": 173,
+              "last_writer": {
+                "kind": "primary_JSR",
+                "generation": 1,
+                "PC": 44203
+              },
+              "registers_after": {
+                "pc": 46366,
+                "a": 173,
+                "x": 195,
+                "y": 15,
+                "p": 160,
+                "sp": 252
+              }
+            },
+            {
+              "kind": "actual_PLA",
+              "PC": 46369,
+              "SP_before": 252,
+              "stack_address": 509,
+              "generation": 1,
+              "value": 96,
+              "last_writer": {
+                "kind": "disclosed_fixture_mutation",
+                "reason": "post-JSR one-byte restoration of stale6000; current frame premise violated",
+                "generation": 1
+              },
+              "registers_after": {
+                "pc": 46370,
+                "a": 96,
+                "x": 195,
+                "y": 15,
+                "p": 32,
+                "sp": 253
+              }
+            }
+          ],
+          "reads": [
+            {
+              "PC": 46373,
+              "SP": 253,
+              "live21_22": 24749,
+              "Y": 15,
+              "logical_effective_address": 24764,
+              "normalized_address": 24764,
+              "auxiliary_alias": true,
+              "generation": 1,
+              "value": 43
+            },
+            {
+              "PC": 46379,
+              "SP": 253,
+              "live21_22": 24749,
+              "Y": 16,
+              "logical_effective_address": 24765,
+              "normalized_address": 24765,
+              "auxiliary_alias": true,
+              "generation": 1,
+              "value": 54
+            }
+          ],
+          "premise_valid": false
+        }
+      ],
+      "RAM_preparations": [
+        {
+          "address": 33,
+          "before": 173,
+          "value": 0,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 34,
+          "before": 172,
+          "value": 96,
+          "reason": "between-generation stale live pointer, before new JSR",
+          "generation": 1
+        },
+        {
+          "address": 509,
+          "before": 172,
+          "value": 96,
+          "reason": "stale stack high immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 508,
+          "before": 173,
+          "value": 0,
+          "reason": "stale stack low immediately before current real JSR",
+          "generation": 1
+        },
+        {
+          "address": 509,
+          "before": 172,
+          "value": 96,
+          "reason": "post-JSR one-byte restoration of stale6000; current frame premise violated",
+          "generation": 1
+        }
+      ]
+    }
+  ],
+  "count": 8,
+  "original_CPU_or_Source_executions": 0,
+  "derivation": "Actual saved generation0 final REG versus generation1 input REG; CPU not rerun."
+}

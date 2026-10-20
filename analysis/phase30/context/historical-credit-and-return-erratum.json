@@ -1,0 +1,44 @@
+{
+  "schema": "phase30-postbattle-early-existing-credit-v1",
+  "old_AI_semantics": {
+    "path": "source/recovered/postbattle.py",
+    "function": "process_ai_officers",
+    "line": 116,
+    "end_line": 191,
+    "sha256": "aa5c87c3f398b9600392dd87b78f786a003b0c2a02f2e4d6114aaa95cb8d2dff"
+  },
+  "old_AI_modes": {
+    "ai_mode0": 512,
+    "ai_mode1": 512,
+    "ai_mode2": 512
+  },
+  "old_AI_receipt_scope": "Independent high-level gameplay source versus original-ROM CPU oracle; full SRAM plus declared gameplay buffers/state. CPU scratch/flags/bank-register and UI queue encodings are not promised.",
+  "old_parent": {
+    "path": "source/recovered/battle_state_machine.py",
+    "function": "finalization_phase",
+    "line": 350,
+    "end_line": 390,
+    "sha256": "7c67a8adef29ff925915184c3f7b17652e7b089107b75a3a362cab50c58d3b21"
+  },
+  "old_parent_semantic_cases": 256,
+  "old_parent_ECEE_bypassed": true,
+  "old_dependency_markers": [
+    {
+      "semantic_code_marker": 47927,
+      "actual_JSR_PC": 47926,
+      "actual_raw_return_word": 47928,
+      "actual_return_PC": 47929
+    },
+    {
+      "semantic_code_marker": 48013,
+      "actual_JSR_PC": 48012,
+      "actual_raw_return_word": 48014,
+      "actual_return_PC": 48015
+    }
+  ],
+  "erratum_scope": "Superseding new30 context only. Old semantic-adapter marker is not the actual JSR opcode or its returnPC; no oldfile is edited.",
+  "new_precise_protocol_not_first_algorithm_recovery": true,
+  "new_Source_CPU_cases": 0,
+  "new_original_CPU_cases": 0,
+  "new_Native_runs": 0
+}

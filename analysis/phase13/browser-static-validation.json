@@ -1,0 +1,142 @@
+{
+  "schema": "phase13-browser-static-v1",
+  "status": "passed",
+  "HTML_sha256": "1ef93dc504fe72d9ec6b2fa97dadab2adb9d9952515b11c0791defd04d58d61a",
+  "generator_sha256": "fdd96c587478b3316a9a576f38add83a14c349ed5c1ad8177711d3ef965dd883",
+  "unique_DOM_ids": 45,
+  "local_links_checked": 265,
+  "JS_syntax": "passed",
+  "native_static_QA": {
+    "nonempty_double_run_artifacts": 204,
+    "formal_JSON_exact_parity": 12,
+    "excluded_empty_VRAM": 47,
+    "excluded_snapshot_metadata_JSON": 47,
+    "WAV_header_PCM_hash": 2,
+    "frame_PCM_segments": 3100,
+    "audio_callback_segments": 3100,
+    "PNG_native_RGB_RAM_SRAM_state_checkpoints": 47
+  },
+  "native_evidence_sha256": "5fb7a939de6da1cf37412d070e28b72aa3f4a0a6a0454adeb24196009d88bf7b",
+  "native_files_modified": false,
+  "modules": [
+    {
+      "key": "city",
+      "status": "passed",
+      "CPU": 712,
+      "complete": 707,
+      "prefix": 5,
+      "RAM_bytes": 2048,
+      "guard_count": 4,
+      "verification_CPU_callbacks": 7998,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "panels",
+      "status": "passed",
+      "CPU": 533,
+      "complete": 530,
+      "prefix": 3,
+      "RAM_bytes": 2048,
+      "guard_count": 4,
+      "verification_CPU_callbacks": 9656,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "global-ui",
+      "status": "passed",
+      "CPU": 2432,
+      "complete": 2157,
+      "prefix": 275,
+      "RAM_bytes": 1972,
+      "guard_count": 18,
+      "verification_CPU_callbacks": 3389,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "graphics",
+      "status": "passed",
+      "CPU": 9440,
+      "complete": 9440,
+      "prefix": 0,
+      "RAM_bytes": 2048,
+      "guard_count": 7,
+      "verification_CPU_callbacks": 0,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "scenario",
+      "status": "passed",
+      "CPU": 256,
+      "complete": 256,
+      "prefix": 0,
+      "RAM_bytes": 2048,
+      "guard_count": 3,
+      "verification_CPU_callbacks": 0,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "city-details",
+      "status": "passed",
+      "CPU": 7509,
+      "complete": 7509,
+      "prefix": 0,
+      "RAM_bytes": 2048,
+      "guard_count": 5,
+      "verification_CPU_callbacks": 0,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "title-intro",
+      "status": "passed",
+      "CPU": 3120,
+      "complete": 3120,
+      "prefix": 0,
+      "RAM_bytes": 1972,
+      "guard_count": 6,
+      "verification_CPU_callbacks": 0,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "action-bridges",
+      "status": "passed",
+      "CPU": 2005,
+      "complete": 2005,
+      "prefix": 0,
+      "RAM_bytes": 2048,
+      "guard_count": 5,
+      "verification_CPU_callbacks": 0,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "arithmetic",
+      "status": "passed",
+      "CPU": 512,
+      "complete": 512,
+      "prefix": 0,
+      "RAM_bytes": 2048,
+      "guard_count": 1,
+      "verification_CPU_callbacks": 0,
+      "production_CPU_callbacks": 0
+    },
+    {
+      "key": "menu-navigation",
+      "status": "passed",
+      "CPU": 2120,
+      "complete": 2120,
+      "prefix": 0,
+      "RAM_bytes": 2048,
+      "guard_count": 5,
+      "verification_CPU_callbacks": 0,
+      "production_CPU_callbacks": 0
+    }
+  ],
+  "integration": {
+    "status": "passed",
+    "path": "source-integration.json",
+    "current_pins_match": true
+  },
+  "field_frames": 3100,
+  "detail_rows": 10,
+  "final_required": true,
+  "browser_visual_acceptance": "Root owns CUA interaction/PNG/audio QA; this receipt is static only"
+}

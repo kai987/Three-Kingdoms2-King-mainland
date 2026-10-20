@@ -1,0 +1,54 @@
+{
+  "schema": "phase26-local-incremental-delivery-v1",
+  "kind": "incremental_analysis_and_readable_source",
+  "base_archive": {
+    "path": "build/三国志2超级版-逆向分析-v25增量.zip",
+    "sha256": "aeb015ef87f34c4ca6db6921cbec717e287881ff0e995aa7aa07e81cb7c9c565",
+    "included": false
+  },
+  "base_audit": {
+    "path": "analysis/phase25/verification.json",
+    "sha256": "0d86bd6ac30879bb2fd03bc0135aec70fcac3c05a99b98e494f98c0de4ec78af",
+    "included": true
+  },
+  "foundational_archive": {
+    "path": "build/三国志2超级版-逆向分析-v22.zip",
+    "sha256": "9fd37c2ae0d7d857c787801e8bdc92ca43fb038099491f7dbe09f17b204cef80",
+    "included": false
+  },
+  "include_roots": [
+    "source/recovered",
+    "source/readable_c",
+    "scripts",
+    "analysis/phase26"
+  ],
+  "include_files": [
+    "requirements.txt",
+    "analysis/phase25/verification.json",
+    "analysis/phase25/delivery-manifest.json"
+  ],
+  "exclude": [
+    "exploratory*",
+    "__pycache__",
+    "*.pyc",
+    "analysis/phase26/package-receipt.json",
+    ".DS_Store"
+  ],
+  "original_ROM_included": false,
+  "rebuilt_ROM_included": false,
+  "full_ROM_byte_source_included": false,
+  "toolchain_included": false,
+  "old_large_evidence_copied": false,
+  "canonical_v22_archive_replaced": false,
+  "requires_separate_base_and_user_ROM_for_reproduction": true,
+  "external_publication": false,
+  "dependency_order": [
+    "v22 full frozen archive",
+    "v23 frozen supplement",
+    "v24 frozen supplement",
+    "v25 frozen supplement",
+    "v26 supplement",
+    "user-provided ROM and separately pinned original core/toolchain"
+  ],
+  "scope": "One G107 deployment pointer chain, readable refactors of existing formation functions, strict caller/context closure and original-emulator route; no whole-ROM completion or standalone-remake claim."
+}

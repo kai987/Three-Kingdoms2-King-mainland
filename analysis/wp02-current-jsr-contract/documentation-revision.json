@@ -1,0 +1,38 @@
+{
+  "schema": "wp02-provenance-wording-revision-v1",
+  "revision": 2,
+  "Source_CPU_Native_executions": 0,
+  "previous_verification": {
+    "path": "analysis/wp02-current-jsr-contract/documentation-revisions/review-01/verification.json",
+    "sha256": "bbc9b7ca1a46ed88faf0f8734e29b1a7e658f739cc721109d6236e55682ce476",
+    "bytes": 2571
+  },
+  "previous_README": {
+    "path": "analysis/wp02-current-jsr-contract/documentation-revisions/review-01/README.md",
+    "sha256": "9174e9fda2b0b182dea33eaea927874a387e9ccdf28125b85e388cf7d91d5a38",
+    "bytes": 8664
+  },
+  "current_README": {
+    "path": "analysis/wp02-current-jsr-contract/README.md",
+    "sha256": "87f7f4a2b9e963a7c51017d8b180ee74be77c90f498c06361f0cb0db8fe32d2b",
+    "bytes": 9321
+  },
+  "corrections": [
+    "AC7B controlled initial X is assigned spec.index by host; nominal spec.registers.x is C3, actual segment input REG is authoritative.",
+    "Appendix references main runtime identity; no independent appendix at-run Python/py65 snapshot was captured."
+  ],
+  "main_CPU_receipt_unchanged": {
+    "path": "analysis/wp02-current-jsr-contract/run-01/validation.json",
+    "sha256": "f855d210dbd0b75774b8a9564db5ec4a8460db09e7dd1bd0c07d02b561b525cd",
+    "bytes": 2013
+  },
+  "appendix_CPU_receipt_unchanged": {
+    "path": "analysis/wp02-current-jsr-contract/samevalue-appendix/run-01/validation.json",
+    "sha256": "181c450c39ac6b2821ab176df6911398ca39fa0cc6016eec06a2ff42041b71c9",
+    "bytes": 9803
+  },
+  "current_runtime_pins_match": true,
+  "current_py65_file_count": 29,
+  "appendix_independent_at_run_runtime_snapshot": null,
+  "current_check_is_not_retroactive_snapshot": true
+}

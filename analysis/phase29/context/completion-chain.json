@@ -1,0 +1,94 @@
+{
+  "schema": "phase29-postbattle-completion-original-context-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "phase28_frozen_owner": {
+    "frontdoor": "PostbattleParentGameEngine / PostbattleParentSceneCoordinator",
+    "source": {
+      "path": "source/recovered/postbattle_parent_integration.py",
+      "function": "_resolve_call",
+      "line": 47,
+      "end_line": 96,
+      "sha256": "fce1413fe3970939c020e0ef93dab04dd6cf14b64ee1ce5e379e623ab74d97df"
+    },
+    "new_public_entries": [
+      40966,
+      47795,
+      48019,
+      49191
+    ],
+    "implemented_parent_stage": 2,
+    "phase3_dispatch": "Original BBA0 is yielded as a strict dispatch dependency; no artificial JSR frame or RTS.",
+    "BBA0_BBB8_BC00_direct_owner_not_declared_in_frozen28": true,
+    "scope": "Concrete frozen28 route/entry AST, not an outdated generic AST model or a global missing-service count.",
+    "bounded_old_reader_erratum": "The frozen25 generic Registry did not resolve the new28 conditional parent-owner construction in readonly review. Its no-owner result for A006 is a bounded-reader false negative; the concrete28 NEW_ENTRIES and pair route establish the declared owner. No frozen file is changed."
+  },
+  "parent_table": {
+    "physical_bank": 8,
+    "cpu": 47801,
+    "rom_offset": 72393,
+    "raw_hex": "C1 BA 3D BB 93 BB A0 BB",
+    "is_opcode": false
+  },
+  "four_states": [
+    {
+      "state": 0,
+      "entry": 47809,
+      "phase28_completion_not_pregranted": true
+    },
+    {
+      "state": 1,
+      "entry": 47933,
+      "phase28_completion_not_pregranted": true
+    },
+    {
+      "state": 2,
+      "entry": 48019,
+      "minimum_protocol": "Initialize fade, execute resource loss and supply return, increment0501, return real caller"
+    },
+    {
+      "state": 3,
+      "entry": 48032,
+      "phase28_completion_not_pregranted": true,
+      "wait_mechanism": "LDA87/BPL BBB7 returns to caller while nonnegative, does not spin insideECEE",
+      "negative_path": "BBA5 JSR BBB8, then global7A=1/city0400=13/0401=0"
+    }
+  ],
+  "stage3": {
+    "entry": 48032,
+    "gate": {
+      "pc": 48032,
+      "address": 135
+    },
+    "hold": {
+      "branch_pc": 48035,
+      "target": 48055,
+      "normal_RTS": true
+    },
+    "completion": {
+      "call_pc": 48037,
+      "target": 48056,
+      "return_pc": 48040
+    },
+    "post_cleanup_writes": [
+      {
+        "cpu": 48042,
+        "address": 122,
+        "value": 1
+      },
+      {
+        "cpu": 48047,
+        "address": 1024,
+        "value": 13
+      },
+      {
+        "cpu": 48052,
+        "address": 1025,
+        "value": 0
+      }
+    ],
+    "does_not_increment_or_clear_0501": true
+  },
+  "immediate_vs_async": "ECEE already returned in stage2. Stage3 is a fresh caller/gate on87; EC67 normal nonbusy NMI advances fade. Native fade completion does not implement missing Source stage3.",
+  "CPU_Source_Native_new_cases": 0,
+  "all_four_states_complete": false
+}

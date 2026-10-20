@@ -1,0 +1,274 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_kind": "independent readable game algorithms, not original source; no ROM/IR executor",
+  "dependency_pins": [
+    {
+      "path": "source/recovered/tactic_individual_effects.py",
+      "sha256": "689cc5d5758b0e35f113f2920047df7ce677ce2d228c73ad1e80b3e2dff54685"
+    },
+    {
+      "path": "source/recovered/battle.py",
+      "sha256": "e5f7da08d5b318676f319720bb54af147b6e589ce8c31ed4bc47d4b0ab0f5434"
+    },
+    {
+      "path": "source/recovered/game_algorithms.py",
+      "sha256": "8ddb91b72997759b905d3812447d11975641adda12775f3d5351e3ad7a9bb902"
+    },
+    {
+      "path": "scripts/verify_tactic_individual_effects.py",
+      "sha256": "3539a524bdcd1b382ea301970edee1be5a0326bd5f924c9cfc69e1332b8c1402"
+    },
+    {
+      "path": "scripts/analyze_tactic_individual_effects.py",
+      "sha256": "6e401169571196a0ed37084ab56567d67fa8d065c4a937785b9b4c64ca13e9ec"
+    }
+  ],
+  "source_ast_imports": [
+    "dataclasses",
+    null,
+    "game_algorithms"
+  ],
+  "ranges": [
+    {
+      "name": "effect_dispatch",
+      "physical_bank": 12,
+      "cpu_start": 45099,
+      "cpu_end_exclusive": 45154,
+      "rom_offset": 102459,
+      "byte_count": 55,
+      "raw_hex": "a0 00 a9 00 99 2c 04 c8 c0 09 90 f8 8d 44 05 ad 43 05 29 0f 20 de ea 62 b0 dd b0 55 b1 7a b1 d5 b1 43 b2 62 b0 cd b2 1c b3 b6 b3 d0 b3 2a b4 66 b4 b8 b4 0c b5 a6 b5",
+      "sha256": "ebe95363eda67700a67f3338b3c9ad74d9afa444e6cc437bdf4034e9ea55ebd7"
+    },
+    {
+      "name": "trap",
+      "physical_bank": 12,
+      "cpu_start": 45277,
+      "cpu_end_exclusive": 45397,
+      "rom_offset": 102637,
+      "byte_count": 120,
+      "raw_hex": "20 be b7 b0 09 ee 01 05 a9 ff 8d 44 05 60 ac 0a 05 b9 64 06 20 d7 f2 a0 0b b1 00 4a 4a 4a 4a 48 a0 01 b1 00 18 a0 02 71 00 85 01 a9 00 85 02 85 04 a9 0a 85 03 20 7c ea 68 18 65 01 85 00 a9 00 85 01 85 02 a9 03 20 62 e8 18 69 05 85 03 20 e9 eb a5 06 85 01 a5 07 85 02 a9 0a 85 03 a9 00 85 04 20 7c ea a5 01 85 02 ac 09 05 b9 64 06 20 d7 f2 20 d8 b5 ee 01 05 60",
+      "sha256": "b922e597f12f58d883fffdb1abca2e55f3a1d9c8ab0009cf942560c7a31d7f50"
+    },
+    {
+      "name": "troop_damage",
+      "physical_bank": 12,
+      "cpu_start": 45448,
+      "cpu_end_exclusive": 45525,
+      "rom_offset": 102808,
+      "byte_count": 77,
+      "raw_hex": "ac 0a 05 b9 64 06 20 d7 f2 a0 01 b1 00 85 00 a9 00 85 01 85 02 a9 07 20 62 e8 18 69 0e 85 03 20 e9 eb a5 06 85 01 a5 07 85 02 a9 0a 85 03 a9 00 85 04 20 7c ea a5 02 85 03 a5 01 85 02 ac 09 05 b9 64 06 20 d7 f2 20 8b b6 ee 01 05 60",
+      "sha256": "a5ce22017a7b7c9abd2ae410d8b04f51925e58c40a0c86a9ba615cbd13344e25"
+    },
+    {
+      "name": "fire_arrow",
+      "physical_bank": 12,
+      "cpu_start": 45635,
+      "cpu_end_exclusive": 45773,
+      "rom_offset": 102995,
+      "byte_count": 138,
+      "raw_hex": "20 be b7 b0 09 ee 01 05 a9 ff 8d 44 05 60 a9 05 20 62 e8 18 69 0a 85 03 a0 00 ad 04 05 30 02 a0 02 b9 22 05 85 00 b9 23 05 85 01 a9 00 85 02 20 e9 eb a5 06 85 00 a5 07 85 01 a5 08 85 02 a9 64 85 03 a9 00 85 04 20 a5 ea a5 00 85 10 a5 01 85 11 ac 0a 05 b9 64 06 20 d7 f2 a0 02 b1 00 85 01 a9 00 85 02 85 04 a9 05 85 03 20 7c ea a5 01 18 65 10 85 10 a5 11 69 00 85 11 a0 00 ad 04 05 30 02 a0 02 20 f0 b6 ee 01 05 60",
+      "sha256": "554f0b1ace9110b615abfd61a4504a90a07711664bb007d35fd650f1b89689a5"
+    },
+    {
+      "name": "rockfall",
+      "physical_bank": 12,
+      "cpu_start": 46006,
+      "cpu_end_exclusive": 46032,
+      "rom_offset": 103366,
+      "byte_count": 26,
+      "raw_hex": "20 be b7 b0 09 ee 01 05 a9 ff 8d 44 05 60 20 eb b0 20 88 b1 a9 07 8d 01 05 60",
+      "sha256": "70b0d710f0cf00bc64db62fcec983b911c8ab37c40bb5c8586fda43600acc8a7"
+    },
+    {
+      "name": "HP_and_death",
+      "physical_bank": 12,
+      "cpu_start": 46552,
+      "cpu_end_exclusive": 46659,
+      "rom_offset": 103912,
+      "byte_count": 107,
+      "raw_hex": "a0 00 b1 00 85 04 38 e5 02 85 06 b0 08 a5 04 85 02 a9 00 85 06 a0 00 a5 06 91 00 a5 02 8d 2f 04 a9 00 8d 30 04 8d 31 04 a9 ff 8d 32 04 a5 06 d0 39 a0 0b b1 00 09 03 91 00 a9 00 85 12 20 cc d6 ac 0a 05 b9 64 06 85 0a ac 09 05 b9 64 06 85 0b a0 2e 20 07 ee 09 a0 ac 09 05 b9 64 06 8d 32 04 8c 00 00 a0 28 20 07 ee 2a a0 60",
+      "sha256": "228e3e8ebd945cebe61a58af3262003406d8e5fbf47da29304bb7e599fa634e7"
+    },
+    {
+      "name": "troop_settlement",
+      "physical_bank": 12,
+      "cpu_start": 46731,
+      "cpu_end_exclusive": 46832,
+      "rom_offset": 104091,
+      "byte_count": 101,
+      "raw_hex": "a0 08 b1 00 85 04 c8 b1 00 29 03 85 05 a5 04 38 e5 02 85 06 a5 05 e5 03 85 07 b0 0e a5 04 85 02 a5 05 85 03 a9 00 85 06 85 07 a0 08 a5 06 91 00 c8 a5 07 91 00 a5 02 18 6d 2c 04 8d 2c 04 a5 03 6d 2d 04 8d 2d 04 a9 00 8d 2e 04 ac 0a 05 b9 64 06 85 0a ad 2c 04 85 0b ad 2d 04 85 0c a0 2e 20 07 ee 06 a0 60",
+      "sha256": "f01f7c3f15bf35c7cb8deee7011e115bd3141409add5f3257c11cea117008dcb"
+    },
+    {
+      "name": "grain_loss",
+      "physical_bank": 12,
+      "cpu_start": 46832,
+      "cpu_end_exclusive": 46891,
+      "rom_offset": 104192,
+      "byte_count": 59,
+      "raw_hex": "b9 22 05 38 e5 10 85 12 b9 23 05 e5 11 85 13 b0 10 b9 22 05 85 10 b9 23 05 85 11 a9 00 85 12 85 13 a5 12 99 22 05 a5 13 99 23 05 a5 10 8d 2c 04 a5 11 8d 2d 04 a9 00 8d 2e 04 60",
+      "sha256": "9b5df888d300a9135f2e00d4af7a5bb8f3786df6cc4c78469b21bee07f412fdf"
+    },
+    {
+      "name": "probability_gate",
+      "physical_bank": 12,
+      "cpu_start": 47038,
+      "cpu_end_exclusive": 47200,
+      "rom_offset": 104398,
+      "byte_count": 162,
+      "raw_hex": "ac 09 05 b9 64 06 20 d7 f2 a0 02 b1 00 85 10 a0 0b b1 00 4a 4a 4a 4a 85 11 ac 0a 05 b9 64 06 20 d7 f2 a0 02 b1 00 85 12 a0 0b b1 00 4a 4a 4a 4a 85 13 a5 12 38 e5 10 b0 02 a9 00 85 10 a5 13 38 e5 11 b0 02 a9 00 0a 85 11 20 60 b8 a8 c0 06 b0 47 b9 5a b8 85 12 a2 0a ad 0f 05 c9 03 d0 0f ad 02 6f c9 01 f0 08 a2 14 c9 02 f0 02 a2 05 86 14 a5 12 18 65 10 18 65 11 18 65 14 10 02 a9 00 c9 5f 90 02 a9 5f c9 05 b0 02 a9 05 85 00 20 7a e8 c9 64 b0 f9 c5 00 90 02 18 60 38 60 0f 0a 05 00 fb f6",
+      "sha256": "a37d1542333ebce30cf2fd281c1e1927a8773b294feb1b24ef2fbb5a71fd68d0"
+    },
+    {
+      "name": "death_map_refresh",
+      "physical_bank": 13,
+      "cpu_start": 54988,
+      "cpu_end_exclusive": 55121,
+      "rom_offset": 112348,
+      "byte_count": 133,
+      "raw_hex": "4c d0 d6 60 ac 09 05 b9 00 06 85 10 b9 14 06 85 11 ad 90 00 4a 4a 4a 4a 85 00 a5 11 38 e5 00 c9 0f b0 e0 a5 8e 18 69 04 90 05 a9 10 4c ff d6 4a 4a 4a 4a 85 00 a5 10 38 e5 00 c9 10 b0 c5 a0 00 a5 10 c9 10 90 02 a0 01 a5 11 c9 10 90 04 98 09 02 a8 b1 a8 85 00 98 49 01 a8 b1 a8 48 a5 00 48 a0 37 20 07 ee 12 a0 a5 10 29 0f 85 08 a2 00 a5 11 0a 0a 0a 0a 48 05 08 a8 a9 00 85 04 b1 00 0a 26 04 0a 26 04",
+      "sha256": "bf4e7011f69534fb9dd7f3424624b2e1a56c62d5d81816e5a6b4ef413e466d29"
+    },
+    {
+      "name": "XP_trampoline",
+      "physical_bank": 14,
+      "cpu_start": 40969,
+      "cpu_end_exclusive": 40972,
+      "rom_offset": 114713,
+      "byte_count": 3,
+      "raw_hex": "4c b0 d8",
+      "sha256": "608d5d2b333b7c3b3a2d9a2a48bdc52e8dcff886bcdfb8ba79e700032771d939"
+    },
+    {
+      "name": "XP_arithmetic",
+      "physical_bank": 15,
+      "cpu_start": 55291,
+      "cpu_end_exclusive": 55508,
+      "rom_offset": 129035,
+      "byte_count": 217,
+      "raw_hex": "ad 0a 00 20 d7 f2 4e 0c 00 6e 0b 00 a0 06 b1 00 18 6d 0b 00 8d 0d 00 91 00 c8 b1 00 6d 0c 00 8d 0e 00 91 00 a0 06 b1 00 38 e9 4f c8 b1 00 e9 c3 90 0b a0 06 a9 4f 91 00 c8 a9 c3 91 00 a0 0b b1 00 29 f0 4a 4a 4a c9 0e b0 10 a8 ad 0d 00 38 f9 5b d8 ad 0e 00 f9 5c d8 b0 14 a9 00 8d 0f 00 60 e8 03 d0 07 ac 0d 88 13 4c 1d 10 27 98 3a 98 4a 18 69 01 0a 0a 0a 0a 8d 0f 00 a0 0b b1 00 29 f0 cd 0f 00 b0 d5 a0 0b b1 00 29 0f 0d 0f 00 91 00 a0 01 b1 00 a0 06 c9 33 90 12 a0 05 c9 47 90 0c a0 04 c9 51 90 06 a0 02 c9 5a b0 08 98 a0 01 18 71 00 91 00 60 ad 0b 00 20 d7 f2 a9 00 8d 0b 00 8d 0c 00 a0 01 b1 00 c8 18 71 00 8d 0b 00 ad 0c 00 69 00 8d 0c 00 4c fb d7",
+      "sha256": "3e002cd4f9ba2325ebe4a7bdcb71937b5cc3a14467c95ebf14f1b36f1e244960"
+    },
+    {
+      "name": "remove_trampoline",
+      "physical_bank": 8,
+      "cpu_start": 41002,
+      "cpu_end_exclusive": 41005,
+      "rom_offset": 65594,
+      "byte_count": 3,
+      "raw_hex": "4c cd d6",
+      "sha256": "7ab89728259e765bfadc3ea4b9ae2cdadf80e82610020fefc5c421854f75b35d"
+    },
+    {
+      "name": "remove_slot_cache",
+      "physical_bank": 9,
+      "cpu_start": 54989,
+      "cpu_end_exclusive": 55055,
+      "rom_offset": 79581,
+      "byte_count": 66,
+      "raw_hex": "ac 00 00 a9 ff 99 00 06 99 14 06 99 28 06 99 3c 06 99 50 06 99 64 06 99 a1 6f a2 00 ad d8 04 cd 00 00 f0 0b a2 04 ad dc 04 cd 00 00 f0 01 60 8a 18 69 04 8d 01 00 a9 ff 9d d8 04 e8 ec 01 00 90 f7 60",
+      "sha256": "37426a611bf87158b1677c5f5e59fefa589f7ac3e8c7e2ba86c10aa61304da01"
+    },
+    {
+      "name": "raw_officer_pointer",
+      "physical_bank": 31,
+      "cpu_start": 62167,
+      "cpu_end_exclusive": 62216,
+      "rom_offset": 258791,
+      "byte_count": 49,
+      "raw_hex": "a0 00 8c 01 00 8d 00 00 0a 2e 01 00 18 6d 00 00 48 ad 01 00 69 00 8d 01 00 68 0a 2e 01 00 0a 2e 01 00 18 69 c0 8d 00 00 ad 01 00 69 63 8d 01 00 60",
+      "sha256": "445caf22cc135d9856345aeb1df2544704aff35b809093844af05e727930b056"
+    }
+  ],
+  "REA_archive": [
+    {
+      "path": "analysis/rea/pairs/pair-12/procedure-index.json",
+      "sha256": "37fa31825cf2c154b2fe4b92dece3965d7d33e5996b9d1d429ccdb7181843ae5"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-12/functions/0xb02b.asm",
+      "sha256": "4c52087bcf5be0c280192f42a31780b049b805b0b82d2875d7e5140e2bb953e1"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-12/functions/0xb02b.c",
+      "sha256": "d6d75371554768b34ef576dd16c15935ccf35005d5d590c61ddc33cdea75249a"
+    }
+  ],
+  "REA_limit": "Existing mapped pair12 analysis discovers B02B dispatcher but does not resolve the 16 inline entry pointers. Original effect bytes and farcall inline words were separately decoded.",
+  "APIs": [
+    "IndividualTactics(shared_memory, IndividualData.from_rom(rom))",
+    "apply(1|5|9)",
+    "health_loss(byte)",
+    "grain_loss(word,side_offset=0|2)",
+    "after_death_graphics(map_refresh_returned=True)"
+  ],
+  "entries": {
+    "1": 45277,
+    "5": 45635,
+    "9": 46006
+  },
+  "death": {
+    "prefix_stop_pc": 46613,
+    "real_dependency": "bank13 D6CC CALL, no source stub",
+    "resume_pc": 46616,
+    "caller_signal_required": true,
+    "asynchronous_ack": false,
+    "XP": "full16 dead martial+intelligence then floor/2, u16 XP wrap/cap49999/single-level advancement",
+    "removal": "six unit arrays and6FA1 FF, first matching entire4B cache row FF",
+    "no_city_or_ruler_transfer": true,
+    "no_army_count_or_total_accounting": true,
+    "graphics_service_test_count": 141,
+    "tested_service_SRAM_writes": 0
+  },
+  "distinctions": {
+    "effect_probability_not_target_eligibility": true,
+    "cast_AP_outside": true,
+    "grain": "raw16 opposite-side 0522/0524",
+    "troop_damage": "masked10 target troops then clear byte9 high6; u16 report accumulation",
+    "HP": "u8 saturated HP, zero includingzero/zero marks record11|3",
+    "HP_formula": "u8 martial+IQ wraps before quotient; level+quotient u8; multiply5..7 then /10",
+    "rockfall": "HP first, real death service if required, live troop phase next, final substate7",
+    "internal_FF": "legitimate removal clears0664; next F2D7(FF) maps6FB4, preserved with full SRAM parity. Initial FF selected officer is rejected.",
+    "aliases": "same record and same slot retain live read/write order; killXP may change martial before troop phase"
+  },
+  "validation": {
+    "rom_cpu_case_count": 727,
+    "source_guard_case_count": 11,
+    "failed_count": 0,
+    "original_complete_case_count": 445,
+    "original_death_prefix_case_count": 141,
+    "original_post_graphics_suffix_case_count": 141,
+    "compared_SRAM_bytes": 8192,
+    "declared_RAM_ranges": [
+      [
+        18,
+        19
+      ],
+      [
+        80,
+        81
+      ],
+      [
+        1068,
+        1077
+      ],
+      [
+        1240,
+        1248
+      ],
+      [
+        1280,
+        1282
+      ],
+      [
+        1306,
+        1318
+      ],
+      [
+        1536,
+        1656
+      ]
+    ],
+    "original_instruction_locations": 949
+  }
+}

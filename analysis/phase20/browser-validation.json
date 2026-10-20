@@ -1,0 +1,362 @@
+{
+  "schema": "phase20-CUA-rendered-evidence-validation-v1",
+  "status": "passed",
+  "url": "http://127.0.0.1:8765/analysis/phase20/index.html",
+  "title": "阶段二十 · 原核心F8交涉与续行",
+  "HTML_sha256": "d2dc79ae2c2bcfb0339f61d3a7a6037d2c0f07e5b90723b4af8aec041aed55cc",
+  "environment": {
+    "surface": "Codex In-app Browser",
+    "browserId": "3",
+    "tool": "cua_repl DOM locators and read-only evaluate",
+    "native_AX_transport": "frame limit; documented DOM snapshot/locator path used",
+    "Playwright_external_used": false,
+    "QA_field_name_correction": "candidate_domain.auxiliary_address_intersection_count (actual DOM schema)",
+    "final_reload_after_authority_fix": true
+  },
+  "checks": [
+    {
+      "name": "page identity",
+      "passed": true
+    },
+    {
+      "name": "meaningful nonblank final page",
+      "passed": true
+    },
+    {
+      "name": "no framework overlay",
+      "passed": true
+    },
+    {
+      "name": "no horizontal page overflow",
+      "passed": true
+    },
+    {
+      "name": "full source negotiation_services.py",
+      "passed": true
+    },
+    {
+      "name": "full source negotiation_integration.py",
+      "passed": true
+    },
+    {
+      "name": "classification filter 1146",
+      "passed": true
+    },
+    {
+      "name": "authority and nonauthoritative wider candidate are explicit",
+      "passed": true
+    },
+    {
+      "name": "original address search",
+      "passed": true
+    },
+    {
+      "name": "pagination",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-accept offer and original reply",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-accept complete checkpoint selector",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-accept first/last",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-accept interior",
+      "passed": true
+    },
+    {
+      "name": "fractional frame rejected and comparison preserved",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-accept actual10113 and later9999",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-accept original WAV actually plays",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-accept original WAV duration",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-reject offer and original reply",
+      "passed": true
+    },
+    {
+      "name": "reject grain-cap preset disabled",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-reject complete checkpoint selector",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-reject first/last",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-reject interior",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-reject original WAV actually plays",
+      "passed": true
+    },
+    {
+      "name": "natural-F8-reject original WAV duration",
+      "passed": true
+    },
+    {
+      "name": "final UI has no alert or overflow",
+      "passed": true
+    },
+    {
+      "name": "console health",
+      "passed": true
+    },
+    {
+      "name": "original dialog and continuation screenshot",
+      "passed": true
+    }
+  ],
+  "sources": [
+    {
+      "file": "negotiation_services.py",
+      "sha256": "d99e983600d59d4a9b16e6b473650d384127ac0eaafc89a8886f381ab6cd445a",
+      "full_UTF8_equal": true,
+      "UTF8_bytes": 12920
+    },
+    {
+      "file": "negotiation_integration.py",
+      "sha256": "419fd3f5af791584d96e6f7e0331a287bcf8276a0a4ed1d3e59561cfd18561ff",
+      "full_UTF8_equal": true,
+      "UTF8_bytes": 2505
+    }
+  ],
+  "native": [
+    {
+      "case": "natural-F8-accept",
+      "frame_values_equal": true,
+      "checkpoint_values_equal": true,
+      "PNG_paths_SHA256_equal": true,
+      "imageStates": [
+        {
+          "label": "F8-original-choice-accept",
+          "frame": 10885,
+          "sha256": "7bb092b0dd8f8d9594bc449e0a39cbadcd82528411cdb4eccf028692f3f297dd",
+          "complete": true,
+          "h": 240,
+          "renderedHeight": 240,
+          "renderedWidth": 256,
+          "src": "../../analysis/phase20/runtime/natural-F8-accept/F8-original-choice-accept.png?sha=7bb092b0dd8f8d9594bc449e0a39cbadcd82528411cdb4eccf028692f3f297dd",
+          "w": 256
+        },
+        {
+          "label": "F8-original-AI-continuation-human-world",
+          "frame": 11589,
+          "sha256": "74e4c7546b8e95f8018033e6590424bb0111b7d5fa1df51b044e06f904ba2da8",
+          "complete": true,
+          "h": 240,
+          "renderedHeight": 240,
+          "renderedWidth": 256,
+          "src": "../../analysis/phase20/runtime/natural-F8-accept/F8-original-AI-continuation-human-world.png?sha=74e4c7546b8e95f8018033e6590424bb0111b7d5fa1df51b044e06f904ba2da8",
+          "w": 256
+        },
+        {
+          "label": "observed-g00-n00-inactive-000-000",
+          "frame": 1,
+          "sha256": "178c607d1558af823e77946d32b47946c3f933da8b5b8bf310d6d716e3a4a7b0",
+          "complete": true,
+          "h": 240,
+          "renderedHeight": 240,
+          "renderedWidth": 256,
+          "src": "../../analysis/phase20/runtime/natural-F8-accept/observed-g00-n00-inactive-000-000.png?sha=178c607d1558af823e77946d32b47946c3f933da8b5b8bf310d6d716e3a4a7b0",
+          "w": 256
+        },
+        {
+          "label": "final",
+          "frame": 11589,
+          "sha256": "74e4c7546b8e95f8018033e6590424bb0111b7d5fa1df51b044e06f904ba2da8",
+          "complete": true,
+          "h": 240,
+          "renderedHeight": 240,
+          "renderedWidth": 256,
+          "src": "../../analysis/phase20/runtime/natural-F8-accept/final.png?sha=74e4c7546b8e95f8018033e6590424bb0111b7d5fa1df51b044e06f904ba2da8",
+          "w": 256
+        }
+      ],
+      "frame_comparisons": [
+        {
+          "frames": [
+            10500,
+            10966
+          ],
+          "field_values": 64
+        },
+        {
+          "frames": [
+            1,
+            11589
+          ],
+          "field_values": 64
+        },
+        {
+          "frames": [
+            6000,
+            6001
+          ],
+          "field_values": 64
+        },
+        {
+          "frames": [
+            11035,
+            11036
+          ],
+          "field_values": 64
+        }
+      ]
+    },
+    {
+      "case": "natural-F8-reject",
+      "frame_values_equal": true,
+      "checkpoint_values_equal": true,
+      "PNG_paths_SHA256_equal": true,
+      "imageStates": [
+        {
+          "label": "F8-original-choice-reject",
+          "frame": 10932,
+          "sha256": "e7228438b23553e47a38aeaea17b40c825d59331265c8be0a7af70edc56afb62",
+          "complete": true,
+          "h": 240,
+          "renderedHeight": 240,
+          "renderedWidth": 256,
+          "src": "../../analysis/phase20/runtime/natural-F8-reject/F8-original-choice-reject.png?sha=e7228438b23553e47a38aeaea17b40c825d59331265c8be0a7af70edc56afb62",
+          "w": 256
+        },
+        {
+          "label": "F8-original-AI-continuation-human-world",
+          "frame": 11645,
+          "sha256": "74e4c7546b8e95f8018033e6590424bb0111b7d5fa1df51b044e06f904ba2da8",
+          "complete": true,
+          "h": 240,
+          "renderedHeight": 240,
+          "renderedWidth": 256,
+          "src": "../../analysis/phase20/runtime/natural-F8-reject/F8-original-AI-continuation-human-world.png?sha=74e4c7546b8e95f8018033e6590424bb0111b7d5fa1df51b044e06f904ba2da8",
+          "w": 256
+        },
+        {
+          "label": "observed-g00-n00-inactive-000-000",
+          "frame": 1,
+          "sha256": "178c607d1558af823e77946d32b47946c3f933da8b5b8bf310d6d716e3a4a7b0",
+          "complete": true,
+          "h": 240,
+          "renderedHeight": 240,
+          "renderedWidth": 256,
+          "src": "../../analysis/phase20/runtime/natural-F8-reject/observed-g00-n00-inactive-000-000.png?sha=178c607d1558af823e77946d32b47946c3f933da8b5b8bf310d6d716e3a4a7b0",
+          "w": 256
+        },
+        {
+          "label": "final",
+          "frame": 11645,
+          "sha256": "74e4c7546b8e95f8018033e6590424bb0111b7d5fa1df51b044e06f904ba2da8",
+          "complete": true,
+          "h": 240,
+          "renderedHeight": 240,
+          "renderedWidth": 256,
+          "src": "../../analysis/phase20/runtime/natural-F8-reject/final.png?sha=74e4c7546b8e95f8018033e6590424bb0111b7d5fa1df51b044e06f904ba2da8",
+          "w": 256
+        }
+      ],
+      "frame_comparisons": [
+        {
+          "frames": [
+            10500,
+            11022
+          ],
+          "field_values": 64
+        },
+        {
+          "frames": [
+            1,
+            11645
+          ],
+          "field_values": 64
+        },
+        {
+          "frames": [
+            6000,
+            6001
+          ],
+          "field_values": 64
+        }
+      ]
+    }
+  ],
+  "audio": [
+    {
+      "case": "natural-F8-accept",
+      "passed": true,
+      "WAV_SHA256_verified": true,
+      "sha256": "e648b9322d37e1d5b63e8fcb720e1f194e0ac73e82ecfcee45777bf49891cb64",
+      "currentTime": 1.435771,
+      "duration": 192.831083,
+      "error": null,
+      "paused": false,
+      "readyState": 4,
+      "src": "../../analysis/phase20/runtime/natural-F8-accept/full-audio.wav?sha=e648b9322d37e1d5b63e8fcb720e1f194e0ac73e82ecfcee45777bf49891cb64",
+      "paused_after_check": true
+    },
+    {
+      "case": "natural-F8-reject",
+      "passed": true,
+      "WAV_SHA256_verified": true,
+      "sha256": "a7483c2e312f7b6ed103d52cfadef74524e8d869a640d02b64d8d7ba243f2ec6",
+      "currentTime": 0.909792,
+      "duration": 193.762875,
+      "error": null,
+      "paused": false,
+      "readyState": 4,
+      "src": "../../analysis/phase20/runtime/natural-F8-reject/full-audio.wav?sha=a7483c2e312f7b6ed103d52cfadef74524e8d869a640d02b64d8d7ba243f2ec6",
+      "paused_after_check": true
+    }
+  ],
+  "findings": [
+    {
+      "issue": "Initial page horizontal overflow",
+      "resolution": "fixed min-width/grid/table/scroll containers; final scrollWidth equals clientWidth"
+    },
+    {
+      "issue": "Inherited authority and a wider candidate appeared in the same contract",
+      "resolution": "Canonical authority/source SHA preserved; candidate is explicitly not a classification basis; final DOM checked"
+    }
+  ],
+  "viewport": {
+    "DOM_width": 1265,
+    "DOM_height": 720,
+    "window_innerWidth": 1280,
+    "override": false,
+    "mobile_tested": false
+  },
+  "screenshot": {
+    "path": "analysis/phase20/browser-proof.jpg",
+    "sha256": "34a13b84db804c572499d840bb7c30362a8414e21675f43c9b2645efcfaeeb81",
+    "bytes": 94425,
+    "format": "JPEG",
+    "original_capture_bytes_preserved": true
+  },
+  "console": [],
+  "limits": [
+    "Default desktop viewport only; mobile and other browsers untested.",
+    "Playback was exercised through the original audio control and time advancement; this is not a source-generated waveform comparison.",
+    "Complete Native snapshot fields and CPU software continuations have separate evidence contracts."
+  ],
+  "interaction_summary": "Two full UTF8 sources; authority vs wider candidate; classification/search/pagination; both cases all checkpoint selectors and original dialog/first/last images;448 frame field values; fractional guard; acceptance cap; both original WAVs actually played."
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "wp05-readonly-frozen-input-check-v1",
+  "status": "passed",
+  "label": "after",
+  "formal_artifact_dependency_pins": 91929,
+  "source_validator_pins": 596,
+  "phase32_residue_files": 2101,
+  "phase32_residue_bytes": 110119793,
+  "closure_file_count": 16,
+  "closure_files": {
+    "analysis/closure-audit-20261018/coverage-table.md": "84d8939050aab14b54b0d4c7585b307724d83da39980be030cf97488dd6e52ca",
+    "analysis/closure-audit-20261018/acceptance-table.md": "07e8519b9b22542ad8079ed07c6073a7cf6fb3d42f5d82053f1682716b24b71c",
+    "analysis/closure-audit-20261018/formal-phase31-inventory.json": "04965aaca298e2e53706ad630a205363768c3d03a068cbba16774652514e18c2",
+    "analysis/closure-audit-20261018/audit.py": "832a85ef2b9d393a855dee2490051a3c9e26b2115b730216fe848bdaf7a2e5f7",
+    "analysis/closure-audit-20261018/work-packages.json": "315887f579c4abbe6503d4ca59d1a9137770b0993e9089e56c24bb8b99d2e92e",
+    "analysis/closure-audit-20261018/scope-provenance.json": "3712ac0e4e8d4c01d4244f2f8c768b719c0b8de2fade89bb614458d5ce7c3bf3",
+    "analysis/closure-audit-20261018/output-hash-manifest.json": "ffebc1e73a2652623321079a55b301dd7ef3d5e02ceb587a57bbfbade52c7b3b",
+    "analysis/closure-audit-20261018/work-packages.md": "00fc39bb795f64b03d31b8d0a359dfdc2fb3229afe153b400af2bcee5f556cdb",
+    "analysis/closure-audit-20261018/README.md": "7ec7718a4dcad5ad37ce5070ccaa2f107e797ad54caff42c93c7443a01e87a9e",
+    "analysis/closure-audit-20261018/gap-table.md": "2fc2aa60befd34542d57f383102d0a57756cfd5496c55a617c70891e93e590be",
+    "analysis/closure-audit-20261018/verification.json": "fb4d10aafdeaa9eab76479bcb930377192481a4545ef5664b37926305882a987",
+    "analysis/closure-audit-20261018/coverage-comparison.json": "c62abc6b38301256baee14eb0679a85956dd3354b87df0ecf1c1e6b6adc55e2e",
+    "analysis/closure-audit-20261018/input-hash-manifest.json": "867143b67be69a100afc1ea84e5a187d1a34ddf8607b04ef62b6a3436531c3dc",
+    "analysis/closure-audit-20261018/unique-gap-register.json": "791356d690ed8998901ef60621eb3a3af44fd2ef0bcc48c63fbd8716883af4a4",
+    "analysis/closure-audit-20261018/frozen-acceptance-matrix.json": "a18733c1f7cc01b3808f9bf40acad0045f264ec5e4049981af95c7e81f3e516a",
+    "analysis/closure-audit-20261018/phase32-residue-inventory.json": "20d57c56d489e298d305ae3ff158f3a0e31a069d3374ca919974e143fe337ac8"
+  },
+  "input_manifest_sha256": "867143b67be69a100afc1ea84e5a187d1a34ddf8607b04ef62b6a3436531c3dc",
+  "unique_expected_paths": 94050,
+  "changed": [],
+  "game_CPU_Source_Native_executed": 0,
+  "elapsed_seconds": 26.18
+}

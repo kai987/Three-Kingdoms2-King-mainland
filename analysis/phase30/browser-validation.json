@@ -1,0 +1,2047 @@
+{
+  "schema": "phase30-CUA-browser-validation-v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "three_routes_8_32_8",
+      "status": "passed"
+    },
+    {
+      "name": "Source1677_separate_from192Native_and7188contract",
+      "status": "passed"
+    },
+    {
+      "name": "complete_embedded_payload_exact_to_frozen_HTML",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/original-control/checkpoint_payload_exact",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observer/checkpoint_payload_exact",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point1/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point1/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point2/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point2/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point3/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point3/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point4/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point4/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point5/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point5/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point6/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point6/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point7/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point7/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point8/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/point8/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/original-control/checkpoint_payload_exact",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observer/checkpoint_payload_exact",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point1/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point1/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point2/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point2/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point3/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point3/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point4/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point4/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point5/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point5/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point6/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point6/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point7/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point7/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point8/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point8/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point9/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point9/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point10/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point10/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point11/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point11/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point12/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point12/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point13/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point13/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point14/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point14/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point15/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point15/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point16/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point16/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point17/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point17/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point18/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point18/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point19/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point19/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point20/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point20/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point21/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point21/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point22/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point22/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point23/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point23/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point24/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point24/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point25/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point25/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point26/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point26/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point27/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point27/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point28/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point28/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point29/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point29/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point30/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point30/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point31/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point31/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point32/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/point32/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/original-control/checkpoint_payload_exact",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observer/checkpoint_payload_exact",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point1/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point1/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point2/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point2/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point3/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point3/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point4/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point4/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point5/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point5/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point6/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point6/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point7/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point7/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point8/35paired_fields",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/point8/original_images_links_navigation",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/two35_field_options_and_ancestry",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/frame",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/parent_route_frame",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/whole_serialized_state_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/PCM_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/PCM_stop_byte",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/actual_saved_CPU_registers",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/actual_saved_PRG_banks",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/global_007A",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/NMI_0078",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/city_0400_0403",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/battle_0500_0501",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/outcome_0514",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/turn_0506",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/battle_city_050E",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/battle_0514_051F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/frame_end_ZP_0000_002F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/frame_end_pointer_001A_001B",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/raw_bank_selectors_DE_DF",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/city_aux150",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/all30_city_records_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/active_city_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/active_city_words",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/active_city_byte11",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/raw_supplies_052B_0533",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/fade_0087_008A",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/ppu_flags_007D_0080",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/palette_active_0100_011F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/palette_backup_0120_013F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/shadow_bank_bytes_00DE_00E5",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/early_side_0504",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/early_mode_6F91",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/early_050B",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/early_working_officers_6FA1_6FB4",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/early_CHR_cache_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/rawField/raw_ruler_records_6F07_6F3E",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/frame",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/parent_route_frame",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/whole_serialized_state_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/PCM_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/PCM_stop_byte",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/actual_saved_CPU_registers",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/actual_saved_PRG_banks",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/global_007A",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/NMI_0078",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/city_0400_0403",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/battle_0500_0501",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/outcome_0514",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/turn_0506",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/battle_city_050E",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/battle_0514_051F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/frame_end_ZP_0000_002F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/frame_end_pointer_001A_001B",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/raw_bank_selectors_DE_DF",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/city_aux150",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/all30_city_records_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/active_city_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/active_city_words",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/active_city_byte11",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/raw_supplies_052B_0533",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/fade_0087_008A",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/ppu_flags_007D_0080",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/palette_active_0100_011F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/palette_backup_0120_013F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/shadow_bank_bytes_00DE_00E5",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/early_side_0504",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/early_mode_6F91",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/early_050B",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/early_working_officers_6FA1_6FB4",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/early_CHR_cache_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/observerRawField/raw_ruler_records_6F07_6F3E",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/WAV0/full_actual_metadata",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/WAV1/full_actual_metadata",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/two35_field_options_and_ancestry",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/frame",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/parent_route_frame",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/whole_serialized_state_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/PCM_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/PCM_stop_byte",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/actual_saved_CPU_registers",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/actual_saved_PRG_banks",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/global_007A",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/NMI_0078",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/city_0400_0403",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/battle_0500_0501",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/outcome_0514",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/turn_0506",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/battle_city_050E",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/battle_0514_051F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/frame_end_ZP_0000_002F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/frame_end_pointer_001A_001B",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/raw_bank_selectors_DE_DF",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/city_aux150",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/all30_city_records_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/active_city_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/active_city_words",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/active_city_byte11",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/raw_supplies_052B_0533",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/fade_0087_008A",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/ppu_flags_007D_0080",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/palette_active_0100_011F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/palette_backup_0120_013F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/shadow_bank_bytes_00DE_00E5",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/early_side_0504",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/early_mode_6F91",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/early_050B",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/early_working_officers_6FA1_6FB4",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/early_CHR_cache_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/rawField/raw_ruler_records_6F07_6F3E",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/frame",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/parent_route_frame",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/whole_serialized_state_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/PCM_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/PCM_stop_byte",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/actual_saved_CPU_registers",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/actual_saved_PRG_banks",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/global_007A",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/NMI_0078",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/city_0400_0403",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/battle_0500_0501",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/outcome_0514",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/turn_0506",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/battle_city_050E",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/battle_0514_051F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/frame_end_ZP_0000_002F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/frame_end_pointer_001A_001B",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/raw_bank_selectors_DE_DF",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/city_aux150",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/all30_city_records_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/active_city_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/active_city_words",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/active_city_byte11",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/raw_supplies_052B_0533",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/fade_0087_008A",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/ppu_flags_007D_0080",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/palette_active_0100_011F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/palette_backup_0120_013F",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/shadow_bank_bytes_00DE_00E5",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/early_side_0504",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/early_mode_6F91",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/early_050B",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/early_working_officers_6FA1_6FB4",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/early_CHR_cache_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/observerRawField/raw_ruler_records_6F07_6F3E",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/WAV0/full_actual_metadata",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/WAV1/full_actual_metadata",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/two35_field_options_and_ancestry",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/frame",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/parent_route_frame",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/whole_serialized_state_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/PCM_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/PCM_stop_byte",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/actual_saved_CPU_registers",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/actual_saved_PRG_banks",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/global_007A",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/NMI_0078",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/city_0400_0403",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/battle_0500_0501",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/outcome_0514",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/turn_0506",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/battle_city_050E",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/battle_0514_051F",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/frame_end_ZP_0000_002F",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/frame_end_pointer_001A_001B",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/raw_bank_selectors_DE_DF",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/city_aux150",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/all30_city_records_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/active_city_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/active_city_words",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/active_city_byte11",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/raw_supplies_052B_0533",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/fade_0087_008A",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/ppu_flags_007D_0080",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/palette_active_0100_011F",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/palette_backup_0120_013F",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/shadow_bank_bytes_00DE_00E5",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/early_side_0504",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/early_mode_6F91",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/early_050B",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/early_working_officers_6FA1_6FB4",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/early_CHR_cache_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/rawField/raw_ruler_records_6F07_6F3E",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/frame",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/parent_route_frame",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/whole_serialized_state_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/PCM_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/PCM_stop_byte",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/actual_saved_CPU_registers",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/actual_saved_PRG_banks",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/global_007A",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/NMI_0078",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/city_0400_0403",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/battle_0500_0501",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/outcome_0514",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/turn_0506",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/battle_city_050E",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/battle_0514_051F",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/frame_end_ZP_0000_002F",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/frame_end_pointer_001A_001B",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/raw_bank_selectors_DE_DF",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/city_aux150",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/all30_city_records_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/active_city_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/active_city_words",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/active_city_byte11",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/raw_supplies_052B_0533",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/fade_0087_008A",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/ppu_flags_007D_0080",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/palette_active_0100_011F",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/palette_backup_0120_013F",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/shadow_bank_bytes_00DE_00E5",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/early_side_0504",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/early_mode_6F91",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/early_050B",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/early_working_officers_6FA1_6FB4",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/early_CHR_cache_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/observerRawField/raw_ruler_records_6F07_6F3E",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/WAV0/full_actual_metadata",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/WAV1/full_actual_metadata",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/all_displayed_events_match_complete_Native_raw",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/all_displayed_events_match_complete_Native_raw",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/all_displayed_events_match_complete_Native_raw",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/event3509/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/event3513/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/event3521/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/event3636/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/all",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/early_stage_entry",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/actual_software_input",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/actual_BC46_JSR_and_entry",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/actual_controller_read",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/original_mode_write",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/original_mode_dispatch",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/early_city_roster_store",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/early_SRAM_store",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/ECEE_immediate_request_RTS",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/fresh_stage3_hold",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage0-human/filter/fresh_stage3_completion",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3507/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3511/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3519/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3569/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3600/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3601/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3605/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3618/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3683/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3726/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3769/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event3812/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4691/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4710/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4729/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4748/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4767/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4786/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4805/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4824/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4843/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4862/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4881/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4900/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4919/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4938/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4957/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4976/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event4995/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event5092/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event5130/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event5168/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event5206/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event5246/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event9209/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event9806/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event9810/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event13870/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event17839/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event21806/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event25771/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event31019/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event34984/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event38951/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event42920/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event46883/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event52400/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event56366/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event60332/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event64298/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event68264/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event73908/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event77876/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event81840/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event85809/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event89774/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/event95446/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/all",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/early_stage_entry",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/actual_software_input",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/actual_BC46_JSR_and_entry",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/actual_controller_read",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/original_mode_write",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/original_mode_dispatch",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/early_city_roster_store",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/early_SRAM_store",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/ECEE_immediate_request_RTS",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/fresh_stage3_hold",
+      "status": "passed"
+    },
+    {
+      "name": "natural-stage1-mode0/filter/fresh_stage3_completion",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event3507/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event3511/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event3519/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event3634/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event11424/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event11428/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event11436/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event11486/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event11515/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event11520/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event11524/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event11537/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12530/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12549/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12568/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12587/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12606/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12625/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12644/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12663/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12682/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12701/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12720/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12739/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12758/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12777/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12796/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12815/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12834/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12853/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12872/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12891/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event12910/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event13906/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event17868/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event18465/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event18469/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event24495/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event28464/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event32427/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/event36396/complete_original_record",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/all",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/early_stage_entry",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/actual_software_input",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/actual_BC46_JSR_and_entry",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/actual_controller_read",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/original_mode_write",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/original_mode_dispatch",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/early_city_roster_store",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/early_SRAM_store",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/ECEE_immediate_request_RTS",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/fresh_stage3_hold",
+      "status": "passed"
+    },
+    {
+      "name": "controlled-stage0-human/filter/fresh_stage3_completion",
+      "status": "passed"
+    },
+    {
+      "name": "branchContext/expanded_full_contract",
+      "status": "passed"
+    },
+    {
+      "name": "boundaryContext/expanded_full_contract",
+      "status": "passed"
+    },
+    {
+      "name": "creditContext/expanded_full_contract",
+      "status": "passed"
+    },
+    {
+      "name": "selectedFields/expanded_full_contract",
+      "status": "passed"
+    },
+    {
+      "name": "nameContract/expanded_full_contract",
+      "status": "passed"
+    },
+    {
+      "name": "postbattle_early_services.py/expanded_complete_source_exact",
+      "status": "passed"
+    },
+    {
+      "name": "postbattle_early_integration.py/expanded_complete_source_exact",
+      "status": "passed"
+    },
+    {
+      "name": "A01/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A02/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A03/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A04/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A05/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A06/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A07/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A08/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A09/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "A10/current_status_changes_results_and_links",
+      "status": "passed"
+    },
+    {
+      "name": "nextPoint_changes_to_local2",
+      "status": "passed"
+    },
+    {
+      "name": "previousPoint_returns_local1",
+      "status": "passed"
+    },
+    {
+      "name": "nextEvent_uses_second_real_city_write",
+      "status": "passed"
+    },
+    {
+      "name": "previousEvent_uses_first_real_city_write",
+      "status": "passed"
+    },
+    {
+      "name": "visible_first_roster_write_uses_real_SRAM_backing",
+      "status": "passed"
+    },
+    {
+      "name": "bounded_claims_visible_no_whole_game_completion",
+      "status": "passed"
+    },
+    {
+      "name": "browser_console_clean",
+      "status": "passed"
+    },
+    {
+      "name": "HTML_unchanged_during_browser_validation",
+      "status": "passed"
+    }
+  ],
+  "Native_frames_added": 0,
+  "Source_CPU_cases_added": 0,
+  "initial_html_sha256": "e3b78c076a610550458eccc5dd5ce19d3824fb3305cf9e731aaa34475949f1a7",
+  "validator_assumption_corrections": [
+    {
+      "kind": "nullable_media_error_representation_checked_with_boolean",
+      "product_changed": false,
+      "exploratory_log_excluded_from_delivery": true,
+      "detail": "First probe required strict null equality on an optional DOM media error value. Final probe uses Boolean(media.error) and verifies loaded metadata."
+    }
+  ],
+  "console_errors": [],
+  "console_warnings": [],
+  "final_html_sha256": "e3b78c076a610550458eccc5dd5ce19d3824fb3305cf9e731aaa34475949f1a7",
+  "check_count": 490,
+  "failed_count": 0,
+  "browser": "CUA in-app browser3",
+  "URL": "http://127.0.0.1:8765/analysis/phase30/index.html#native",
+  "scope": {
+    "routes": 3,
+    "paired_frame_selections": 48,
+    "all_fields_per_frame": 35,
+    "raw_field_selectors_per_route": 70,
+    "raw_field_selectors_per_core": 35,
+    "complete_events": 102,
+    "role_filters_per_route": 11,
+    "full_WAV_variants": 6,
+    "expanded_full_Source_files": 2,
+    "acceptance_dimensions": 10,
+    "complete_context_sections": 3,
+    "complete_field_contract_sections": 2,
+    "Source_CPU_cases": 0,
+    "Native_gameplay_frames_added": 0
+  },
+  "source_and_validator_sha256": {
+    "scripts/build_phase30_report.py": "59f7adb6367b66ae9de2a2fc3b95d875d8bee6c67e2c7ea7028bb01a5ef53f91",
+    "source/recovered/postbattle_early_services.py": "242b4ebf204b6a0b381b11c55231c426af8158695fc46e45ccae43b47886ff4b",
+    "source/recovered/postbattle_early_integration.py": "2ac857672472a4a8b309da33d305e0d02ccad6c9e321a6b5dc58330d8ddf8865"
+  },
+  "artifact_and_dependency_sha256": {
+    "analysis/phase30/index.html": "e3b78c076a610550458eccc5dd5ce19d3824fb3305cf9e731aaa34475949f1a7",
+    "analysis/phase30/runtime/validation.json": "4dfd6406651c0fa632d8806707ef8bcb947331c15d354adb93943b942bd1a6df",
+    "analysis/phase30/runtime/evidence.json": "fee5f103e6036f1546fff20ce5178b74d7e2dc90785790d6e014ad178d1ca939",
+    "analysis/phase30/runtime/early-lifecycle-observations.json": "e92e83dd2410ddd3b2fa568e5826939732109d9f4e82ed55cd994fb058895232",
+    "analysis/phase30/early-services/validation.json": "34666079b2c89f3f695f5906a84f404f9024af803ad46a8e2cb936c9290079ac",
+    "analysis/phase30/source-integration.json": "b94b6953e66dc01e3f5956f55345cd0b23d2d14b08242a8bc9b232f413009bc9",
+    "analysis/phase30/fields-static/verification.json": "8d8a89e0f24addb161f7641d68d2db66750d658acffe53df896d3ce9bd5c3842",
+    "analysis/phase30/acceptance/requirements.json": "7639350332fa470e03930eb3e72a14dc3e3d084d40db9bcb3521bdff1a620d70",
+    "analysis/phase30/acceptance/request-provenance.json": "652afcd04bb754f9b61374e5a632ba493f9abe534314adae8923b85f362a4c78",
+    "analysis/phase30/acceptance/verification.json": "ce94811d415e2b8a9498315a91c82fcf7b5d496f5a1e5433a9077d3397f82d78",
+    "analysis/phase30/context/early-stage-branches-and-callers.json": "e3c9179f21c431273afe5ca40333e2b3fe5fd8e4f0fe0b6e355b7f871e9214ea",
+    "analysis/phase30/context/ruler-and-name-pointer-boundaries.json": "e8943c5b80a4141cc37df572c032f3661225fa5aafdc5656fc4eef74d76390d2",
+    "analysis/phase30/context/historical-credit-and-return-erratum.json": "efb4bec8ce955058ab8643c72626e7c8cd333b585bb97ac864bb4b798175b391",
+    "analysis/phase30/browser/natural-AI-pair.jpg": "f9a393870fc75ab41ded8dd3b0c03ccc677b09cc84257e4e4bed30324ceb83e7",
+    "analysis/phase30/browser/natural-city-roster-write.jpg": "461d7eeae5a8903f92cd6651b967387b88214f92010f9595b708e6cd4fe14b2e",
+    "analysis/phase30/runtime/natural-stage0-human/original-control/checkpoints.json": "b4251e967e4c1461c18dce1f359a46df4c2ee86ec34f88295ec85a7184b90e1f",
+    "analysis/phase30/runtime/natural-stage0-human/original-control/full-audio.wav": "0531d65f4981d33b7ab70ad6242f05bed224cb65755834dd7b21886662115684",
+    "analysis/phase30/runtime/natural-stage0-human/observer/checkpoints.json": "b4251e967e4c1461c18dce1f359a46df4c2ee86ec34f88295ec85a7184b90e1f",
+    "analysis/phase30/runtime/natural-stage0-human/observer/full-audio.wav": "0531d65f4981d33b7ab70ad6242f05bed224cb65755834dd7b21886662115684",
+    "analysis/phase30/runtime/natural-stage0-human/observer/events.jsonl": "f5dd09e0c5458be9b5b7b6856d9ec4f0076a010b4423dba6da35fc29a15abe10",
+    "analysis/phase30/runtime/natural-stage1-mode0/original-control/checkpoints.json": "4d84d2f754b43af7a0564d88107ffccc4be365215715892bc1b70e0e5ce09e50",
+    "analysis/phase30/runtime/natural-stage1-mode0/original-control/full-audio.wav": "6a57c5b6786d985e2585b78482502b655aa4782bd1e9d4c4fbf74f3d22a46ffe",
+    "analysis/phase30/runtime/natural-stage1-mode0/observer/checkpoints.json": "4d84d2f754b43af7a0564d88107ffccc4be365215715892bc1b70e0e5ce09e50",
+    "analysis/phase30/runtime/natural-stage1-mode0/observer/full-audio.wav": "6a57c5b6786d985e2585b78482502b655aa4782bd1e9d4c4fbf74f3d22a46ffe",
+    "analysis/phase30/runtime/natural-stage1-mode0/observer/events.jsonl": "f5361d25a098eb8539d5ffcbafe349733489727bab3ca719bc8214495d5556ff",
+    "analysis/phase30/runtime/controlled-stage0-human/original-control/checkpoints.json": "a695964a7582cd81894c3ebf684347b8d07d51e3695949766a6bf2a259cd8c8a",
+    "analysis/phase30/runtime/controlled-stage0-human/original-control/full-audio.wav": "7b604f5557b5872a1692fd3e81fba9b983145a04ecc48938722c09909e8e966f",
+    "analysis/phase30/runtime/controlled-stage0-human/observer/checkpoints.json": "a695964a7582cd81894c3ebf684347b8d07d51e3695949766a6bf2a259cd8c8a",
+    "analysis/phase30/runtime/controlled-stage0-human/observer/full-audio.wav": "7b604f5557b5872a1692fd3e81fba9b983145a04ecc48938722c09909e8e966f",
+    "analysis/phase30/runtime/controlled-stage0-human/observer/events.jsonl": "ebfb886aa9680413c69a0417c5e19a44aed202a708f1464ed23facd6667137b1"
+  },
+  "limits": [
+    "Saved-evidence presentation only; zero Source CPU or Native gameplay cases added.",
+    "Three separate imported windows, not continuous replay of1519 humanUI frames; controlled ancestry retains19known preparations and olderlegacy uncertainty.",
+    "This new window itself has exact original/observer five buffers and fresh repeats; no assertion of all five buffers matching historical29 absolute frames.",
+    "Native saw only BB8C modes0/1; BB36/mode2 remain controlled Source/OriginalCPU coverage.",
+    "Four natural cityroster changes are redistribution, not wild recruitment; controlled mode1 has no changed cityroster byte.",
+    "Source1677 software comparisons,7188 independent CPU pointer contracts,41 read-only context checks and192 Native controlframes are separate evidence domains.",
+    "Only full-entry CC29 predicates permit two conditional exclusions; bare CCAA counterexamples and326 remaining candidates persist. City auxiliary formal names remain null and whole-game completion false.",
+    "One exploratory probe used strict null equality for optional media.error serialization; formal checks use Boolean(media.error), loaded metadata and exact WAV paths. Product files were unchanged."
+  ]
+}

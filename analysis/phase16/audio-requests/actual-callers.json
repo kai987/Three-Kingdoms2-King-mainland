@@ -1,0 +1,565 @@
+{
+  "schema": "phase16-native-input-originalCPU-audio-caller-v1",
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_cpu_case_count": 19,
+  "complete_return_count": 19,
+  "strict_prefix_count": 0,
+  "source_guard_case_count": 0,
+  "failed_count": 0,
+  "failures": [],
+  "rows": [
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call00-E57F",
+      "entry": 58751,
+      "caller_PC": 48677,
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 57,
+        "p": 34,
+        "sp": 246,
+        "pc": 58751
+      },
+      "final_registers": {
+        "a": 76,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 248,
+        "pc": 48680
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 862,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call01-E673",
+      "entry": 58995,
+      "caller_PC": 58753,
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 57,
+        "p": 34,
+        "sp": 244,
+        "pc": 58995
+      },
+      "final_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 98,
+        "sp": 246,
+        "pc": 58756
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 317,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call02-E609",
+      "entry": 58889,
+      "caller_PC": 58996,
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 57,
+        "p": 34,
+        "sp": 241,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 98,
+        "sp": 243,
+        "pc": 58999
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call03-E609",
+      "entry": 58889,
+      "caller_PC": 59004,
+      "initial_registers": {
+        "a": 1,
+        "x": 0,
+        "y": 3,
+        "p": 32,
+        "sp": 241,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 98,
+        "sp": 243,
+        "pc": 59007
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call04-E609",
+      "entry": 58889,
+      "caller_PC": 59012,
+      "initial_registers": {
+        "a": 2,
+        "x": 0,
+        "y": 3,
+        "p": 32,
+        "sp": 241,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 98,
+        "sp": 243,
+        "pc": 59015
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call05-E609",
+      "entry": 58889,
+      "caller_PC": 59020,
+      "initial_registers": {
+        "a": 3,
+        "x": 0,
+        "y": 3,
+        "p": 32,
+        "sp": 241,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 98,
+        "sp": 243,
+        "pc": 59023
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call06-E609",
+      "entry": 58889,
+      "caller_PC": 59028,
+      "initial_registers": {
+        "a": 4,
+        "x": 0,
+        "y": 3,
+        "p": 32,
+        "sp": 241,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 98,
+        "sp": 243,
+        "pc": 59031
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call07-E609",
+      "entry": 58889,
+      "caller_PC": 59036,
+      "initial_registers": {
+        "a": 5,
+        "x": 0,
+        "y": 3,
+        "p": 32,
+        "sp": 241,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 98,
+        "sp": 243,
+        "pc": 59039
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 43,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call08-E590",
+      "entry": 58768,
+      "caller_PC": 58756,
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 98,
+        "sp": 244,
+        "pc": 58768
+      },
+      "final_registers": {
+        "a": 48,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 246,
+        "pc": 58759
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 538,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call09-E5FA",
+      "entry": 58874,
+      "caller_PC": 58860,
+      "initial_registers": {
+        "a": 240,
+        "x": 100,
+        "y": 3,
+        "p": 161,
+        "sp": 242,
+        "pc": 58874
+      },
+      "final_registers": {
+        "a": 240,
+        "x": 132,
+        "y": 3,
+        "p": 224,
+        "sp": 244,
+        "pc": 58863
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 47,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call10-E5F3",
+      "entry": 58867,
+      "caller_PC": 58876,
+      "initial_registers": {
+        "a": 240,
+        "x": 100,
+        "y": 3,
+        "p": 161,
+        "sp": 240,
+        "pc": 58867
+      },
+      "final_registers": {
+        "a": 240,
+        "x": 100,
+        "y": 3,
+        "p": 161,
+        "sp": 242,
+        "pc": 58879
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 3,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call11-E5F3",
+      "entry": 58867,
+      "caller_PC": 58876,
+      "initial_registers": {
+        "a": 240,
+        "x": 108,
+        "y": 3,
+        "p": 160,
+        "sp": 240,
+        "pc": 58867
+      },
+      "final_registers": {
+        "a": 240,
+        "x": 108,
+        "y": 3,
+        "p": 160,
+        "sp": 242,
+        "pc": 58879
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 3,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call12-E5F3",
+      "entry": 58867,
+      "caller_PC": 58876,
+      "initial_registers": {
+        "a": 240,
+        "x": 116,
+        "y": 3,
+        "p": 160,
+        "sp": 240,
+        "pc": 58867
+      },
+      "final_registers": {
+        "a": 240,
+        "x": 116,
+        "y": 3,
+        "p": 160,
+        "sp": 242,
+        "pc": 58879
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 3,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call13-E5F3",
+      "entry": 58867,
+      "caller_PC": 58876,
+      "initial_registers": {
+        "a": 240,
+        "x": 124,
+        "y": 3,
+        "p": 160,
+        "sp": 240,
+        "pc": 58867
+      },
+      "final_registers": {
+        "a": 240,
+        "x": 124,
+        "y": 3,
+        "p": 160,
+        "sp": 242,
+        "pc": 58879
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 3,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call14-E683",
+      "entry": 59011,
+      "caller_PC": 48682,
+      "initial_registers": {
+        "a": 8,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 246,
+        "pc": 59011
+      },
+      "final_registers": {
+        "a": 127,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 248,
+        "pc": 48685
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 221,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call15-E609",
+      "entry": 58889,
+      "caller_PC": 59012,
+      "initial_registers": {
+        "a": 8,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 243,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 127,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 245,
+        "pc": 59015
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call16-E609",
+      "entry": 58889,
+      "caller_PC": 59020,
+      "initial_registers": {
+        "a": 9,
+        "x": 127,
+        "y": 3,
+        "p": 32,
+        "sp": 243,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 127,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 245,
+        "pc": 59023
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call17-E609",
+      "entry": 58889,
+      "caller_PC": 59028,
+      "initial_registers": {
+        "a": 10,
+        "x": 127,
+        "y": 3,
+        "p": 32,
+        "sp": 243,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 127,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 245,
+        "pc": 59031
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "input": "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call18-E609",
+      "entry": 58889,
+      "caller_PC": 59036,
+      "initial_registers": {
+        "a": 11,
+        "x": 127,
+        "y": 3,
+        "p": 32,
+        "sp": 243,
+        "pc": 58889
+      },
+      "final_registers": {
+        "a": 127,
+        "x": 127,
+        "y": 3,
+        "p": 96,
+        "sp": 245,
+        "pc": 59039
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_instructions": 40,
+      "source_original_CPU_callbacks": 0
+    }
+  ],
+  "source_original_CPU_callbacks": 0,
+  "native_internal_CPU_trace": false,
+  "source_sha256": {
+    "source/recovered/exact_audio_requests.py": "a7d4c81932a6cfa5092a58b70e60661f003db9aa62979a392faae2b1f08aa448",
+    "source/recovered/global_ui_controller.py": "21e49b6ece3261756f31254b1291da6a6b38f2d5025b752fbb222a0fa844449a",
+    "source/recovered/scene_shared_services.py": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1",
+    "scripts/verify_exact_audio_requests.py": "c4284c3fe9ac591bafb986e109474fff7b808db293ca9fde86bdb6dd5e54f3d1"
+  },
+  "artifact_sha256": {
+    "analysis/phase16/succession/actual-callee-inputs/player-defeat-successor-observed-g02-n02-city-013-004.json": "cfd72e916113bcd3e76c7cd9a265cbcfda48fafdd4985d5c7e1bb608352cdd78",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call00-E57F-ram.bin": "5f7098283868dddf9ef317647d205884e78a65b1934743289bfbd0b767aaa59e",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call00-E57F-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call00-E57F.json": "2d56b95cd04248d5902e65fa04b553beb0a1692ae73836a7bf648a666247b721",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call01-E673-ram.bin": "ae471cbe10d155db853f6853a78db0d46978a76c7984f45954295309749197dd",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call01-E673-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call01-E673.json": "002a0477b5e21654e775a26ef6cbf6997391162285a583b481e4cf8ea96acfb2",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call02-E609-ram.bin": "521aab2f3ae15deb9fe3c4d3c8c040fb58a845794c847e8ee1f34c1b23739aa1",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call02-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call02-E609.json": "a637a645894d8a9d744b835f8f54269aa03e81568b5115b53557f463a45904c6",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call03-E609-ram.bin": "b0d682926f2429c75b8cd80745e093231b8d2ada71c0f8ab69353dc372e8353f",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call03-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call03-E609.json": "90475825fca2cd731833fbd5771be2f0086a6406f49c19fc383584f411f3d4cf",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call04-E609-ram.bin": "3fe9175748376d3b54f76d0fae9a4855146a8b40b8b3446c347a9107563c56bf",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call04-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call04-E609.json": "a63491329faf4e22fb21e67f0caa77e6cf3077a6029a7be77eaf23f030f1fb99",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call05-E609-ram.bin": "cc22aa9dacd8703615eca52bcc0ea011a9dfcbb810e79a9ec61b7947b585e740",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call05-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call05-E609.json": "e8b4f298f77f3e22e373c6ae712f45453f923a3f2bbfc081ad645d89099cb937",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call06-E609-ram.bin": "ff3c627678e7b5a18e44ef230b608484d6a1b1a60d6dbfb869fcc0070dbec3cb",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call06-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call06-E609.json": "f472eb85d53ba8b2196c81906309a5950132c83e7b379a6cfbb7d4c0cbc3890e",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call07-E609-ram.bin": "4061c579cd40f71c39cd401f6240cb804d23cb3d540281044841f4d30a3f8540",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call07-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call07-E609.json": "42d0b71f48df484e90e183965485557c2a8cd53664e431bcbe3670822b515598",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call08-E590-ram.bin": "0d70879ea8baa9e1170f793f51777eda981dce3d6f2f7023cfc127f737d8a5f3",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call08-E590-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call08-E590.json": "29513f0cd88b4af865947a83a9b103c0b6a3d67902fefd69b4b73fc46e1e3f70",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call09-E5FA-ram.bin": "87398e2fff02a99dd78664afb44a66fb5df4bc827512ab1f174db6c131f077b4",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call09-E5FA-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call09-E5FA.json": "6ee3096ecb50cc47822067ec412df5eff995a48477c5341de5c8033bd8fe97ea",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call10-E5F3-ram.bin": "30d360d042f74181c096be129c901ec98dcd452e22e9229228585c2e5768f4bb",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call10-E5F3-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call10-E5F3.json": "6330835dbf27f984be7deb711858a8c3640b6748e7756394b0df52fda79d36f0",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call11-E5F3-ram.bin": "30d360d042f74181c096be129c901ec98dcd452e22e9229228585c2e5768f4bb",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call11-E5F3-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call11-E5F3.json": "e3bcd26fcc44bde9b6d5c9045445d9882fca04585377bcc07eb19301f137a1f4",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call12-E5F3-ram.bin": "30d360d042f74181c096be129c901ec98dcd452e22e9229228585c2e5768f4bb",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call12-E5F3-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call12-E5F3.json": "4534299ae1106c9f9c86d1c96a4b7fb7d956b4eb78e6de6c9132115ffd01765d",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call13-E5F3-ram.bin": "30d360d042f74181c096be129c901ec98dcd452e22e9229228585c2e5768f4bb",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call13-E5F3-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call13-E5F3.json": "65dbaeca96aa6d89594f79ca7dab11b4ec23159d95a3ecfa01df47debd058321",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call14-E683-ram.bin": "d4db1cea9196e2047e6ebceafd49490f0ea4506610f64795ba97fca219861349",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call14-E683-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call14-E683.json": "ed2043d47eb7a38fdf2d6efd6c3c04d120c230dc7abd7f3e7e159057ae18e67a",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call15-E609-ram.bin": "ab78d259c39ed5b183e96ec4494984af0d2b5766e4e7c90901545604a0dcab55",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call15-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call15-E609.json": "89535658becebe452a610f0efc21cd6dafd101547396f99ffe95c61826a227a7",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call16-E609-ram.bin": "84b9d29783689f5ffe18f51b15500a138eaff493b8a0d0c59487aeb8f5a5188d",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call16-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call16-E609.json": "a7151553c15afa3bda9d3a77f08b22e930a34dad42aa56f0bd3d76851aae2800",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call17-E609-ram.bin": "cd009f7b5dbd909b0ddc27c33c30e26e48ab23ac29b00c95add4ecc2f61b770c",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call17-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call17-E609.json": "3f20cfc4fe669e205a69f9113f6fe90fda8a8f96cdcd458815dd1a538e3a3ce3",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call18-E609-ram.bin": "b433a1b7799a340b94994cf4102fb14c8659313e8cbb3ee989eed959ac8291fb",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call18-E609-sram.bin": "3b6122abf52af1c31e7847a101a0756dc462668be71cadd246f9dd271d1b62fe",
+    "analysis/phase16/audio-requests/actual-callee-inputs/player-frame6276-call18-E609.json": "f99478805fb2904e0902f5b13ab2d5c5422cc32d660aef0114bebd41188f03ae"
+  },
+  "parent_originalCPU_preparation_steps": 1137,
+  "parent_case_count_not_added": 1,
+  "limits": [
+    "Source cases are genuine originalJSR audio frames created by originalA00C software from NativeRAM/SRAM + explicitcallback context, not observedNestopia registers.",
+    "The parentA00C preparation and19nestedserviceorigins are not newcoreframes or extraNativeparentcases.",
+    "This19callee-input group is separate from the fullaudio-bodymatrix; fullRAM/SRAM/registers/ports/banks/N163allmatch."
+  ]
+}

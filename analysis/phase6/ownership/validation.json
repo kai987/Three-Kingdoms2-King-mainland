@@ -1,0 +1,502 @@
+{
+  "status": "passed",
+  "original_rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "case_count": 2176,
+  "counts": {
+    "AI_capture_preserve_high5": 256,
+    "AI_battle_relocation_or_release": 256,
+    "colonize_finances_roster_owner": 384,
+    "withdraw_finances_roster_neutralize": 256,
+    "persuaded_membership_and_empty_whole7": 256,
+    "mode2_firstFF_whole7": 384,
+    "existing_battle_finalize_composition": 128,
+    "retreat_unit_clear_caches_neutralF0": 256
+  },
+  "source_only_guard_count": 3,
+  "source_only_guards": [
+    "nonzero capture branch",
+    "invalid colonize count",
+    "invalid city"
+  ],
+  "failures": 0,
+  "unique_executed_instruction_locations": 672,
+  "coverage_banks": [
+    8,
+    10,
+    11,
+    12,
+    28,
+    31
+  ],
+  "source_sha256": "0e99a8c311f112e9020aa44c66026a201d8dc8329f5470c20baed83cf0729cf6",
+  "examples": [
+    {
+      "kind": "capture",
+      "fixture": 0,
+      "result": {
+        "city": 3,
+        "before": 0,
+        "after": 0,
+        "preservation_mask": 248
+      }
+    },
+    {
+      "kind": "capture",
+      "fixture": 1,
+      "result": {
+        "city": 3,
+        "before": 1,
+        "after": 1,
+        "preservation_mask": 248
+      }
+    },
+    {
+      "kind": "capture",
+      "fixture": 2,
+      "result": {
+        "city": 3,
+        "before": 2,
+        "after": 2,
+        "preservation_mask": 248
+      }
+    },
+    {
+      "kind": "relocation",
+      "fixture": 0,
+      "result": {
+        "destination": null,
+        "status_low2": 0,
+        "location": 1,
+        "raw_rng_draws": [
+          62,
+          78,
+          79,
+          131,
+          14,
+          201
+        ],
+        "neighbor_selector": "roll0=currentcity;roll1..7=neighbors0..6"
+      }
+    },
+    {
+      "kind": "relocation",
+      "fixture": 1,
+      "result": {
+        "destination": 4,
+        "roster_offset": 18,
+        "choice": "own_minimum_prefix",
+        "owner_write": {
+          "city": 4,
+          "before": 9,
+          "after": 9,
+          "preservation_mask": 248
+        },
+        "loyalty": null,
+        "ruler_residence_unchanged": true
+      }
+    },
+    {
+      "kind": "relocation",
+      "fixture": 2,
+      "result": {
+        "destination": 4,
+        "roster_offset": 18,
+        "choice": "own_minimum_prefix",
+        "owner_write": {
+          "city": 4,
+          "before": 18,
+          "after": 18,
+          "preservation_mask": 248
+        },
+        "loyalty": {
+          "value": 10,
+          "cpu_a": 10,
+          "before": 2,
+          "changed": true,
+          "distance_from50": 48,
+          "cpu_flags": {
+            "C": false,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "ruler_residence_unchanged": true
+      }
+    },
+    {
+      "kind": "relocation",
+      "fixture": 3,
+      "result": {
+        "destination": 0,
+        "roster_offset": 18,
+        "choice": "own_minimum_prefix",
+        "owner_write": {
+          "city": 0,
+          "before": 27,
+          "after": 27,
+          "preservation_mask": 248
+        },
+        "loyalty": null,
+        "ruler_residence_unchanged": true
+      }
+    },
+    {
+      "kind": "relocation",
+      "fixture": 4,
+      "result": {
+        "destination": null,
+        "status_low2": 0,
+        "location": 2,
+        "raw_rng_draws": [
+          14,
+          201
+        ],
+        "neighbor_selector": "roll0=currentcity;roll1..7=neighbors0..6"
+      }
+    },
+    {
+      "kind": "relocation",
+      "fixture": 5,
+      "result": {
+        "destination": 8,
+        "roster_offset": 20,
+        "choice": "own_minimum_prefix",
+        "owner_write": {
+          "city": 8,
+          "before": 45,
+          "after": 45,
+          "preservation_mask": 248
+        },
+        "loyalty": null,
+        "ruler_residence_unchanged": true
+      }
+    },
+    {
+      "kind": "relocation",
+      "fixture": 6,
+      "result": {
+        "destination": 7,
+        "roster_offset": 20,
+        "choice": "own_minimum_prefix",
+        "owner_write": {
+          "city": 7,
+          "before": 54,
+          "after": 54,
+          "preservation_mask": 248
+        },
+        "loyalty": {
+          "value": 10,
+          "cpu_a": 10,
+          "before": 6,
+          "changed": true,
+          "distance_from50": 44,
+          "cpu_flags": {
+            "C": false,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "ruler_residence_unchanged": true
+      }
+    },
+    {
+      "kind": "relocation",
+      "fixture": 7,
+      "result": {
+        "destination": 25,
+        "roster_offset": 22,
+        "choice": "own_minimum_prefix",
+        "owner_write": {
+          "city": 25,
+          "before": 56,
+          "after": 56,
+          "preservation_mask": 248
+        },
+        "loyalty": null,
+        "ruler_residence_unchanged": true
+      }
+    },
+    {
+      "kind": "colonize",
+      "fixture": 0,
+      "gold": 9999,
+      "grain": 0,
+      "result": {
+        "source": 3,
+        "destination": 3,
+        "moved": [
+          32
+        ],
+        "owner_write": {
+          "city": 3,
+          "before": 0,
+          "after": 0,
+          "preservation_mask": 248
+        },
+        "ruler_residence_unchanged": true,
+        "prior_selection_and_affordability_external": true
+      }
+    },
+    {
+      "kind": "colonize",
+      "fixture": 1,
+      "gold": 0,
+      "grain": 100,
+      "result": {
+        "source": 3,
+        "destination": 4,
+        "moved": [
+          31,
+          32
+        ],
+        "owner_write": {
+          "city": 4,
+          "before": 15,
+          "after": 9,
+          "preservation_mask": 248
+        },
+        "ruler_residence_unchanged": true,
+        "prior_selection_and_affordability_external": true
+      }
+    },
+    {
+      "kind": "colonize",
+      "fixture": 2,
+      "gold": 9999,
+      "grain": 0,
+      "result": {
+        "source": 3,
+        "destination": 4,
+        "moved": [
+          34,
+          33,
+          31
+        ],
+        "owner_write": {
+          "city": 4,
+          "before": 23,
+          "after": 18,
+          "preservation_mask": 248
+        },
+        "ruler_residence_unchanged": true,
+        "prior_selection_and_affordability_external": true
+      }
+    },
+    {
+      "kind": "withdraw",
+      "fixture": 0,
+      "result": {
+        "source": 3,
+        "destination": 3,
+        "moved": [],
+        "owner_write": {
+          "city": 3,
+          "before": 0,
+          "after": 7,
+          "preservation_mask": 248
+        },
+        "pending_ai_budget_cost": 4,
+        "source_equals_destination": true,
+        "destination_resources_not_finally_capped": true
+      }
+    },
+    {
+      "kind": "withdraw",
+      "fixture": 1,
+      "result": {
+        "source": 3,
+        "destination": 4,
+        "moved": [
+          30
+        ],
+        "owner_write": {
+          "city": 3,
+          "before": 9,
+          "after": 15,
+          "preservation_mask": 248
+        },
+        "pending_ai_budget_cost": 6,
+        "source_equals_destination": false,
+        "destination_resources_not_finally_capped": true
+      }
+    },
+    {
+      "kind": "withdraw",
+      "fixture": 2,
+      "result": {
+        "source": 3,
+        "destination": 4,
+        "moved": [
+          30,
+          31
+        ],
+        "owner_write": {
+          "city": 3,
+          "before": 18,
+          "after": 23,
+          "preservation_mask": 248
+        },
+        "pending_ai_budget_cost": 8,
+        "source_equals_destination": false,
+        "destination_resources_not_finally_capped": true
+      }
+    },
+    {
+      "kind": "persuaded",
+      "fixture": 0,
+      "result": {
+        "source": 3,
+        "destination": 3,
+        "officer": 30,
+        "old_ruler": 0,
+        "new_ruler": 0,
+        "destination_offset": 18,
+        "remaining_source": [
+          30
+        ],
+        "loyalty": {
+          "value": 70,
+          "cpu_a": 70,
+          "before": 0,
+          "raw_subtraction": 70,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "pending_former_ruler_reaction_entry": 47842
+      }
+    },
+    {
+      "kind": "persuaded",
+      "fixture": 1,
+      "result": {
+        "source": 3,
+        "destination": 4,
+        "officer": 31,
+        "old_ruler": 2,
+        "new_ruler": 1,
+        "destination_offset": 18,
+        "remaining_source": [
+          30
+        ],
+        "loyalty": {
+          "value": 69,
+          "cpu_a": 69,
+          "before": 1,
+          "raw_subtraction": 69,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "pending_former_ruler_reaction_entry": 47842
+      }
+    },
+    {
+      "kind": "persuaded",
+      "fixture": 2,
+      "result": {
+        "source": 3,
+        "destination": 4,
+        "officer": 32,
+        "old_ruler": 3,
+        "new_ruler": 2,
+        "destination_offset": 19,
+        "remaining_source": [
+          30,
+          31
+        ],
+        "loyalty": {
+          "value": 68,
+          "cpu_a": 68,
+          "before": 2,
+          "raw_subtraction": 68,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "pending_former_ruler_reaction_entry": 47842
+      }
+    },
+    {
+      "kind": "retreat_unit",
+      "fixture": 0,
+      "result": {
+        "slot": 0,
+        "officer": 80,
+        "city": 3,
+        "roster_offset": 17,
+        "owner_write": null,
+        "commander_escape_saved": true,
+        "preceding_C91E_helper_external": true
+      }
+    },
+    {
+      "kind": "retreat_unit",
+      "fixture": 1,
+      "result": {
+        "slot": 1,
+        "officer": 80,
+        "city": 3,
+        "roster_offset": 18,
+        "owner_write": {
+          "city": 3,
+          "before": 15,
+          "after": 2,
+          "preservation_mask": 240
+        },
+        "commander_escape_saved": false,
+        "preceding_C91E_helper_external": true
+      }
+    },
+    {
+      "kind": "retreat_unit",
+      "fixture": 2,
+      "result": {
+        "slot": 2,
+        "officer": 80,
+        "city": 3,
+        "roster_offset": 19,
+        "owner_write": {
+          "city": 3,
+          "before": 23,
+          "after": 18,
+          "preservation_mask": 240
+        },
+        "commander_escape_saved": false,
+        "preceding_C91E_helper_external": true
+      }
+    }
+  ],
+  "contract": "All8192B SRAM peractualROM case; declared cursor54/buffers6F73/scan fields/APcost additionally. CPU stack/mapper/scratch are external. No originalROM code installed as sourcefallback.",
+  "stops": {
+    "A8FC": "A90D beforeD249/city-residence search + CA19 succession",
+    "ABA3": "RTS",
+    "B287": "RTS",
+    "B3B1": "B42B before D152 budget/unwind/nextcycle",
+    "BA8D": "BAE2 before former-ruler response",
+    "D16B": "D183 beforeUI/cursor tail",
+    "BBB8": "RTS existing pure source composition",
+    "BC2D": "RTS before caller; precedingBC2A C91E remains outside"
+  },
+  "limitations": [
+    "Strategic selection, diplomacy menus and result/UI setup are not completed by these transaction APIs.",
+    "Controlled valid city/ruler/record inputs; full colonization affordability selection external, explicit amount underflow tested at the bounded core.",
+    "Colonization/withdrawal/persuaded transaction aliases and roster-overcapacity traversal preserve original sequentialwrites; no complete gameplayUI permission claim.",
+    "Family/faction death cleanup remains a distinct source module; cityneutralization alone is not faction elimination."
+  ],
+  "command": ".venv-trace/bin/python scripts/verify_city_ownership.py"
+}

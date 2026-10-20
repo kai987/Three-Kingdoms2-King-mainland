@@ -1,0 +1,29 @@
+{
+  "WP07": {
+    "new_bounded_contract": "Frozen firstphase1 queue -> actualF8B5 palette-priority call -> explicitE716 sample/latchreset ->32 rawpalette commands -> realreturn -> secondactualcall ->clearbit2/F237 -> explicitA12D sample ->64 rawpacket commands ->tailRTS",
+    "device_input_missing_resume_closed_for_selected_plan": true,
+    "software_command_sink_consumer_closed": true,
+    "known_new_algorithms": 0,
+    "unclosed": [
+      "Internal vblank/statusclear/openbus/clock/NMI edges",
+      "CIRAM/CHR/palette physical mirroring or6bit masks",
+      "Native PPU internal state and natural scheduler entry"
+    ]
+  },
+  "WP08": {
+    "new_reusable_fragment": "phase1 step01 filefixture to two controlled realcall returns with full RAM/SRAM/PPUsink state",
+    "full_campaign_or_NMI_continuity_closed": false,
+    "remaining": [
+      "True NMI/IRQ/main continuation and its real incoming frame",
+      "Actual PPU/hardware capture replacing the declared fixture",
+      "Residual7E bit0 service and subsequent F206/FB0B outside this scope"
+    ],
+    "specific_unexecuted_scheduling_premise": "Controlled second entry intentionally bypasses this unexecuted continuation. Natural nextEE53 is not proved to choosebit2;palette priority may be reasserted.",
+    "continuation_static_evidence": "continuation-preconditions.json"
+  },
+  "unknown_unique_services": null,
+  "field_changes": 0,
+  "raw_changes": 0,
+  "completion_percentage": null,
+  "remaining_rounds_estimate": null
+}

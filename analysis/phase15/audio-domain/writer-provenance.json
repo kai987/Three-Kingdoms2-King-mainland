@@ -1,0 +1,4039 @@
+{
+  "schema": "phase15-controlled-original-NMI-audio-writer-v1",
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_cpu_case_count": 20,
+  "complete_return_count": 20,
+  "strict_prefix_count": 0,
+  "source_guard_case_count": 0,
+  "failed_count": 0,
+  "failures": [],
+  "rows": [
+    {
+      "heir": false,
+      "NMI": 1,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-01",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          4
+        ],
+        [
+          497,
+          48,
+          0
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 2,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-02",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 1412,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 493,
+          "value": 56,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 56,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 237,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 492,
+          "value": 56,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 56,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 236,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          492,
+          56,
+          238
+        ],
+        [
+          493,
+          56,
+          46
+        ],
+        [
+          494,
+          6,
+          201
+        ],
+        [
+          495,
+          204,
+          59
+        ],
+        [
+          496,
+          219,
+          81
+        ],
+        [
+          497,
+          57,
+          238
+        ],
+        [
+          498,
+          66,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 3,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-03",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 910,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 51,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 51,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 51,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 51,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          51,
+          81
+        ],
+        [
+          497,
+          51,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 4,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-04",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 915,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 53,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 53,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 53,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 53,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          53,
+          81
+        ],
+        [
+          497,
+          53,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 5,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-05",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 6,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-06",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 7,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-07",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 8,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-08",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 9,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-09",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": false,
+      "NMI": 10,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-10",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 1376,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 493,
+          "value": 56,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 56,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 237,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 492,
+          "value": 56,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 56,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 236,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          492,
+          56,
+          166
+        ],
+        [
+          493,
+          56,
+          120
+        ],
+        [
+          494,
+          6,
+          199
+        ],
+        [
+          495,
+          204,
+          59
+        ],
+        [
+          496,
+          219,
+          81
+        ],
+        [
+          497,
+          57,
+          238
+        ],
+        [
+          498,
+          66,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 1,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-01",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          4
+        ],
+        [
+          497,
+          48,
+          37
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 2,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-02",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 1412,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 493,
+          "value": 56,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 56,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 237,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 492,
+          "value": 56,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 56,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 236,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          492,
+          56,
+          238
+        ],
+        [
+          493,
+          56,
+          15
+        ],
+        [
+          494,
+          6,
+          201
+        ],
+        [
+          495,
+          204,
+          59
+        ],
+        [
+          496,
+          219,
+          81
+        ],
+        [
+          497,
+          57,
+          238
+        ],
+        [
+          498,
+          66,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 3,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-03",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 910,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 51,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 51,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 51,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 51,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          51,
+          81
+        ],
+        [
+          497,
+          51,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 4,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-04",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 915,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 53,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 53,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 53,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 53,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          53,
+          81
+        ],
+        [
+          497,
+          53,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 5,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-05",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 6,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-06",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 7,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-07",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 8,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-08",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          128
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 9,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-09",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 939,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 48,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 48,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          496,
+          48,
+          81
+        ],
+        [
+          497,
+          48,
+          238
+        ],
+        [
+          498,
+          60,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    },
+    {
+      "heir": true,
+      "NMI": 10,
+      "actual_callee_input": "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-10",
+      "initial_registers": {
+        "a": 0,
+        "x": 255,
+        "y": 46,
+        "p": 34,
+        "sp": 243,
+        "pc": 40963
+      },
+      "final_registers": {
+        "a": 242,
+        "x": 220,
+        "y": 6,
+        "p": 35,
+        "sp": 245,
+        "pc": 63692
+      },
+      "comparison": "complete_return",
+      "completion_kind": "actual_caller_RTS",
+      "original_audio_instructions": 1376,
+      "return_PC": 63692,
+      "return_SP": 245,
+      "actual_stack_writers": [
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 176,
+          "slot_volume": 95,
+          "port_group": 16,
+          "registers_before": {
+            "a": 112,
+            "x": 176,
+            "y": 16,
+            "p": 35,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 497,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 241,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 496,
+          "value": 112,
+          "slot_X": 198,
+          "slot_volume": 88,
+          "port_group": 20,
+          "registers_before": {
+            "a": 112,
+            "x": 198,
+            "y": 20,
+            "p": 33,
+            "sp": 240,
+            "pc": 57235
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57234,
+          "ROM_offset": 130978,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 493,
+          "value": 56,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 56,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 237,
+            "pc": 57234
+          }
+        },
+        {
+          "bank": 15,
+          "CPU_PC": 57235,
+          "ROM_offset": 130979,
+          "raw_hex": "48",
+          "opcode": "PHA",
+          "stack_address": 492,
+          "value": 56,
+          "slot_X": 220,
+          "slot_volume": 24,
+          "port_group": 24,
+          "registers_before": {
+            "a": 56,
+            "x": 220,
+            "y": 24,
+            "p": 33,
+            "sp": 236,
+            "pc": 57235
+          }
+        }
+      ],
+      "legacy_semantic_idle_stack_differences": [
+        [
+          492,
+          56,
+          166
+        ],
+        [
+          493,
+          56,
+          120
+        ],
+        [
+          494,
+          6,
+          199
+        ],
+        [
+          495,
+          204,
+          59
+        ],
+        [
+          496,
+          219,
+          81
+        ],
+        [
+          497,
+          57,
+          238
+        ],
+        [
+          498,
+          66,
+          13
+        ],
+        [
+          499,
+          217,
+          0
+        ]
+      ],
+      "new_source_RAM_differences": [],
+      "new_source_SRAM_differences": [],
+      "new_source_register_differences": {},
+      "new_source_ordered_ports_equal": true,
+      "new_source_banks_equal": true,
+      "source_original_CPU_callbacks": 0
+    }
+  ],
+  "sequences": [
+    {
+      "heir": false,
+      "original_main_instructions": 18914,
+      "original_wait_registers": {
+        "a": 251,
+        "x": 0,
+        "y": 0,
+        "p": 161,
+        "sp": 251,
+        "pc": 51839
+      },
+      "explicit_NMI_arrivals": 10,
+      "ack_injected": false,
+      "request_after": 251,
+      "checkpoints": [
+        {
+          "NMI": 1,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 0,
+          "stack_01EC": 238
+        },
+        {
+          "NMI": 2,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 1,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 3,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 2,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 4,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 3,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 5,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 4,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 6,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 5,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 7,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 6,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 8,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 7,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 9,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 8,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 10,
+          "paused_registers": {
+            "a": 251,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 51839
+          },
+          "request": 251,
+          "city_phase": 12,
+          "counter": 9,
+          "stack_01EC": 56
+        }
+      ]
+    },
+    {
+      "heir": true,
+      "original_main_instructions": 14608,
+      "original_wait_registers": {
+        "a": 252,
+        "x": 0,
+        "y": 0,
+        "p": 161,
+        "sp": 251,
+        "pc": 52089
+      },
+      "explicit_NMI_arrivals": 10,
+      "ack_injected": false,
+      "request_after": 252,
+      "checkpoints": [
+        {
+          "NMI": 1,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 0,
+          "stack_01EC": 238
+        },
+        {
+          "NMI": 2,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 1,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 3,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 2,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 4,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 3,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 5,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 4,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 6,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 5,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 7,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 6,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 8,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 7,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 9,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 8,
+          "stack_01EC": 166
+        },
+        {
+          "NMI": 10,
+          "paused_registers": {
+            "a": 252,
+            "x": 0,
+            "y": 0,
+            "p": 177,
+            "sp": 251,
+            "pc": 52089
+          },
+          "request": 252,
+          "city_phase": 11,
+          "counter": 9,
+          "stack_01EC": 56
+        }
+      ]
+    }
+  ],
+  "source_original_CPU_callbacks": 0,
+  "native_internal_CPU_trace": false,
+  "core_frames_generated": 0,
+  "comparison": {
+    "RAM_bytes": 2048,
+    "SRAM_bytes": 8192,
+    "CPU_registers": "AXYP/SP/PC",
+    "free_stack_residue": "included",
+    "ordered_ports_banks": true
+  },
+  "source_sha256": {
+    "source/recovered/audio_scene_services.py": "70142edcb93fb699684841429146d519fecafc581aa4c3da59cb8903eae841d5",
+    "source/recovered/global_ui_controller.py": "21e49b6ece3261756f31254b1291da6a6b38f2d5025b752fbb222a0fa844449a",
+    "source/recovered/scene_shared_services.py": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76",
+    "source/recovered/audio_services.py": "d6d476419a177ef096aa51ad3b78304b51589d1b954a2b78cd8034d6a71fcab4",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1",
+    "source/recovered/battle_nmi_services.py": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15",
+    "scripts/trace_cooperation_audio_writer.py": "ac2b0a322d7d655ae908b2f1b59cd22176fdf71950ea0e1f53a2890230320c29"
+  },
+  "artifact_sha256": {
+    "analysis/phase14/cooperation-integration.json": "58c5f18a5083c470a8056d6f178fea63a5a64f1b0ef67a93cb011d59a18c8bc1",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-01-ram.bin": "ac4080df97099cfe8ae9eb97144755ce9e95fc51ce167d53ebd1026da744f3b5",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-01-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-01.json": "0521c5c9af961d79dc648418326f3fed9f0bdfd2392c64bb8a61e7c70f30e4b8",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-02-ram.bin": "1abea9d10e26d6fce3f3fa6fed6c36cb760551c0d8483a75ceab34884aec4ffe",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-02-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-02.json": "d5d2fe6ee66161f2bab2adc65d2a9bcc5d7029bf2df888831397a1541a019be9",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-03-ram.bin": "10d0c791137e8ab63d6bde38ccc8c6b3f993c84a2492cab326612f356f95d0d3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-03-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-03.json": "c66cf6d551af7e11cabbeb8b4051f22e3ebf2cb3903d2c3245ffba0279ec9580",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-04-ram.bin": "0c98b282d5a78f7422360d698e6e76c83859ad2496ec45b5cf726f8268a3b968",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-04-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-04.json": "00d6d4cc4fcab3230ab44d9eccdd634e32bb8a5a3182a2b898f34f3155c33965",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-05-ram.bin": "8887242bc500fbb47ac75bf55f2ea72a088d87e1a0a55d8b924b8251dfbe9702",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-05-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-05.json": "353130f3812cb3d4348a251d7f7f6c1d692590e0050bf7a5f492024f13f1fa0a",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-06-ram.bin": "11a125664dbd96c10a11661f454fb3b85b4bc42396ca9c20ec96fd2b0c9c862b",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-06-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-06.json": "26727b5503b8bf3e4c769ab66940a0db1c05de1e435f4b8bb7e64271c47b22f5",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-07-ram.bin": "9cbf0ebc8556154d2bd4c6dd8810c4e2f14e28ee5849e9187da042abc2e641f4",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-07-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-07.json": "dc0de3a82cbc67b477f4de429b870b0421bb135633d2e730252c674aad6e740f",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-08-ram.bin": "d40037209bbbcfdcb734d3e3056c93c834baa7525cace2ea92e482dbc14b7503",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-08-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-08.json": "73fd4e7887a9fa73233c9bd4b2af21550224f9f932a51847057e917404cc55b6",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-09-ram.bin": "b6dae95ab76bc383471893989d7a3f3386621a9c5f405059be4ba270ea095c0c",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-09-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-09.json": "2c651ecf15ff2b4e1d5f6735549f555274d05b641092866d1b1206a08871bbb3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-10-ram.bin": "06c27b7fab2254b76914ee571ff4b56486784c34451482de89baf7a1bbd55755",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-10-sram.bin": "9c1fd324bd56428c8020e9c6b304c049cd81d6c5d551c5f4f1894a1880a33fe3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/no-heir-NMI-10.json": "d1bac1a436ed2b4fe2297d579f1e93d823d17673e71f7b4e03079d92b7e35cba",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-01-ram.bin": "e7729485b53e0e97ea7beb0b7dc857ab363403e28f56d376cb9f9689288f170f",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-01-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-01.json": "cd39e8d573e4284d13f4444b76e3051878112109c031aff81a7590aba5d0c111",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-02-ram.bin": "88117f0db02c704b7b63c204b52cc8d40d15aa9fc4cd3fbc5fd743de3354ffb9",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-02-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-02.json": "08d9771876e2fa13e5f1e9cd964705c5a8ac742873e9168aa40fb0fbc6eadf66",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-03-ram.bin": "5032e0274ecca24d06aa43bfb6436c59cf63237f36ff400f5012b47bf19805a3",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-03-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-03.json": "ad9894bedf43512cdc19208ad78695561253fbf012a2d2273ef1e3896babf932",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-04-ram.bin": "f09e61bb3b8c864b15611ebc37e0a729be8955eea0afc9898c17bd71ab18e467",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-04-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-04.json": "0cb682e001bd4cc650dd8d6f337fad2efeadd28770d2ddbb2d1d0c47c8c838da",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-05-ram.bin": "7b7dc69b210f218189f0b26fba68f64bea23537ad31546848c89a6f3be6f7180",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-05-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-05.json": "8ce6c3cabb7c359eeda16eff6a4d06446cd029bd7a604337dd6d2a1a3c95bb50",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-06-ram.bin": "a6f7101737d076c058810b205db7ec6d0ccbea431e54ccf6e163bf75de1d519f",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-06-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-06.json": "227dd0755e966340189b4460bfbc344ef2d4e52a19f5f61898965b3be1a31847",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-07-ram.bin": "55fac4d826f1f0e63fd86c8bff8204b5ecbb0690f248827d5238f0317aa3f22d",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-07-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-07.json": "833e4e1dcddd5ed834d510cd860b2deae994c9a5c5f4117c9ee97ba67c9b4df7",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-08-ram.bin": "8031fcffe4905aac5230084c1c425748f6f62321d69374462b378c57d8296fc6",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-08-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-08.json": "9d1d9b4204bdfc1eb851f1ef010792c506fb793c2bff240de2ff09c430598747",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-09-ram.bin": "fb6ef2923918a0281eed71e177e9abec3760695597dde8c7cc0a9d7e8895747e",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-09-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-09.json": "d6cbaf1860fd9bb8fb259ac17e95f71355a1b8267c7bc006b0720ea92e3d77f9",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-10-ram.bin": "626661786583979c24adb328deda36893c7fac92bd38d3b7c5b450485eae076e",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-10-sram.bin": "9670a8b27cadb0144a56d7e188cf2139453be71b124d48fbbb97d1fdda79d671",
+    "analysis/phase15/audio-domain/actual-callee-inputs/heir-NMI-10.json": "944c23369404dcac3464a666e042034027fd0143d7f02ae0711ad83a66b79088"
+  },
+  "limits": [
+    "Uses frozenphase14 declaredCPU fixtures. E066main and explicitNMI are originalCPU context preparation, notextraCPUcase totals.",
+    "The20audio entrycomparisons reuse genuineF8CBcallerframes; no furtherAXYP/stackpreparation or NMIaudio replacement is planted.",
+    "Source side executes newdirectPython and recoveredF25F only; originalCPU is the independentoracle and caller-context producer.",
+    "Legacysemantic audio differences are diagnostic of its declaredexcluded idle-stack contract, not unknowncallees.",
+    "NoNativeinternaltrace, newNestopiacoreframes, PCM synthesis or hardwarecycle timing are asserted."
+  ]
+}

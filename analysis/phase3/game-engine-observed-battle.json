@@ -1,0 +1,268 @@
+{
+  "snapshot": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/runtime/phase3/battle-tactics-true",
+  "control": {
+    "global_main_state": 4,
+    "nmi_scene": 3,
+    "battle_state": 5,
+    "battle_substate": 3,
+    "attack_state": 0,
+    "attack_substate": 142,
+    "attack_officers": [
+      0,
+      0
+    ],
+    "attack_control_flags": [
+      0,
+      0
+    ],
+    "duel_state": 0,
+    "duel_substate": 0,
+    "battle_slot_050a": 10,
+    "battle_slot_0509": 10,
+    "duel_actor": 0,
+    "duel_officers": [
+      0,
+      0
+    ],
+    "duel_health": [
+      0,
+      0
+    ]
+  },
+  "units": [
+    {
+      "slot": 0,
+      "officer_id": 8,
+      "xy": [
+        20,
+        14
+      ],
+      "faction_and_flags": 2,
+      "hundred_troops_cache": 10,
+      "体": 75,
+      "武": 70,
+      "知": 52,
+      "兵": 1000,
+      "raw_officer_hex": "4b 46 34 64 32 00 d0 07 e8 03 62 2a",
+      "terrain": {
+        "x": 20,
+        "y": 14,
+        "quadrant": 1,
+        "chunk_id": 18,
+        "tile_rom_offset": 4340,
+        "tile_id": 97,
+        "raw_class": 5,
+        "ai_class": 5,
+        "valid_battle_cell": true,
+        "attribute_or_unused_row": false,
+        "physical_pixel_x": 320,
+        "physical_pixel_y": 224,
+        "label": [
+          "城 / 城砦",
+          "strong inference from base location, original pixels and tactic gates"
+        ]
+      }
+    },
+    {
+      "slot": 1,
+      "officer_id": 191,
+      "xy": [
+        17,
+        17
+      ],
+      "faction_and_flags": 1,
+      "hundred_troops_cache": 8,
+      "体": 92,
+      "武": 90,
+      "知": 31,
+      "兵": 800,
+      "raw_officer_hex": "5c 5a 1f 53 32 00 e8 03 20 03 42 16",
+      "terrain": {
+        "x": 17,
+        "y": 17,
+        "quadrant": 3,
+        "chunk_id": 19,
+        "tile_rom_offset": 4433,
+        "tile_id": 57,
+        "raw_class": 2,
+        "ai_class": 2,
+        "valid_battle_cell": true,
+        "attribute_or_unused_row": false,
+        "physical_pixel_x": 272,
+        "physical_pixel_y": 256,
+        "label": [
+          "平地",
+          "strong inference from original-renderer pixels"
+        ]
+      }
+    },
+    {
+      "slot": 2,
+      "officer_id": 51,
+      "xy": [
+        19,
+        14
+      ],
+      "faction_and_flags": 1,
+      "hundred_troops_cache": 10,
+      "体": 91,
+      "武": 89,
+      "知": 37,
+      "兵": 1000,
+      "raw_officer_hex": "5b 59 25 57 34 00 e8 03 e8 03 4b 16",
+      "terrain": {
+        "x": 19,
+        "y": 14,
+        "quadrant": 1,
+        "chunk_id": 18,
+        "tile_rom_offset": 4339,
+        "tile_id": 42,
+        "raw_class": 4,
+        "ai_class": 4,
+        "valid_battle_cell": true,
+        "attribute_or_unused_row": false,
+        "physical_pixel_x": 304,
+        "physical_pixel_y": 224,
+        "label": [
+          "山地",
+          "strong inference from mountain pixels and affinity costs"
+        ]
+      }
+    },
+    {
+      "slot": 3,
+      "officer_id": 167,
+      "xy": [
+        20,
+        13
+      ],
+      "faction_and_flags": 0,
+      "hundred_troops_cache": 7,
+      "体": 40,
+      "武": 35,
+      "知": 93,
+      "兵": 700,
+      "raw_officer_hex": "28 23 5d 5a 59 00 e8 03 bc 02 00 12",
+      "terrain": {
+        "x": 20,
+        "y": 13,
+        "quadrant": 1,
+        "chunk_id": 18,
+        "tile_rom_offset": 4324,
+        "tile_id": 57,
+        "raw_class": 2,
+        "ai_class": 2,
+        "valid_battle_cell": true,
+        "attribute_or_unused_row": false,
+        "physical_pixel_x": 320,
+        "physical_pixel_y": 208,
+        "label": [
+          "平地",
+          "strong inference from original-renderer pixels"
+        ]
+      }
+    },
+    {
+      "slot": 10,
+      "officer_id": 131,
+      "xy": [
+        2,
+        16
+      ],
+      "faction_and_flags": 129,
+      "hundred_troops_cache": 10,
+      "体": 82,
+      "武": 84,
+      "知": 89,
+      "兵": 1000,
+      "raw_officer_hex": "52 54 59 64 61 00 e8 03 e8 03 a3 16",
+      "terrain": {
+        "x": 2,
+        "y": 16,
+        "quadrant": 2,
+        "chunk_id": 17,
+        "tile_rom_offset": 3970,
+        "tile_id": 57,
+        "raw_class": 2,
+        "ai_class": 2,
+        "valid_battle_cell": true,
+        "attribute_or_unused_row": false,
+        "physical_pixel_x": 32,
+        "physical_pixel_y": 240,
+        "label": [
+          "平地",
+          "strong inference from original-renderer pixels"
+        ]
+      }
+    }
+  ],
+  "tactic_menu": [
+    {
+      "row": 0,
+      "action_id": 0,
+      "name": "火計",
+      "action_cost": 6
+    },
+    {
+      "row": 1,
+      "action_id": 1,
+      "name": "陥穽",
+      "action_cost": 5
+    },
+    {
+      "row": 2,
+      "action_id": 2,
+      "name": "虚兵",
+      "action_cost": 4
+    },
+    {
+      "row": 3,
+      "action_id": 3,
+      "name": "要撃",
+      "action_cost": 6
+    },
+    {
+      "row": 4,
+      "action_id": 4,
+      "name": "乱水",
+      "action_cost": 7
+    },
+    {
+      "row": 5,
+      "action_id": 5,
+      "name": "火箭",
+      "action_cost": 8
+    },
+    {
+      "row": 6,
+      "action_id": 6,
+      "name": "偽撃転殺",
+      "action_cost": 8
+    },
+    {
+      "row": 7,
+      "action_id": 7,
+      "name": "共殺",
+      "action_cost": 8
+    },
+    {
+      "row": 8,
+      "action_id": 8,
+      "name": "籠絡",
+      "action_cost": 10
+    },
+    {
+      "row": 9,
+      "action_id": 9,
+      "name": "落石",
+      "action_cost": 9
+    }
+  ],
+  "supplied_controller_data_window_bank": 2,
+  "ram_sha256": "f1300eabc33d355a6aad6082e34409c0266c2ec894898760cde1b8aa19364b65",
+  "sram_sha256": "59cb62b5d2f4411d7cabfdb87b182907d27c12d77f8135b30aa10e67d1382a7b",
+  "limitations": [
+    "This reads a captured original-ROM battle state; it is not a newly simulated turn.",
+    "Scene ticks are controller calls; rendering and global setup need explicit dependencies."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "wp03-bounded-shared-EADE-interface-v1",
+  "canonical_scope": {
+    "path": "analysis/wp03-shared-entry-family/family-scope-v2.json",
+    "sha256": "9c1c758e5e8f035fa45b4fa9abb12bc4ff1373134fc500f767bf9b988c336255",
+    "bytes": 76805
+  },
+  "execution_scope_v1": {
+    "path": "analysis/wp03-shared-entry-family/family-scope.json",
+    "sha256": "aca262e634fa4bc39fc8f2fb6c3c1a5bd15b8e4b88196e030b3f00e3c43a24d4",
+    "bytes": 76575
+  },
+  "ID_normalization": {
+    "path": "analysis/wp03-shared-entry-family/typed-ID-normalization.json",
+    "sha256": "f211b11b7a9fe7f705d2038ff1c30ad855852e4b7fcdf617f2bc3a511ee8e27c",
+    "bytes": 2164
+  },
+  "shared_dependency": "DEP-EADE-CURRENT-JSR-49CALLERS",
+  "typed_instruction_ids": [
+    "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEAE9:rom03EAF9",
+    "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEAEE:rom03EAFE"
+  ],
+  "resolved_bounded_caller_interfaces": 49,
+  "resolved_bounded_legal_inline_slots": 331,
+  "known_direct_callers_static_only": 49,
+  "known_direct_callers_total": 98,
+  "known_inline_words_total": 745,
+  "premises": [
+    "Current original JSR at one locked caller and its original mapped table; both frame bytes retain this generation.",
+    "No external write or interrupts in positive window; raw-byte index addresses separate from legal table slots.",
+    "Boundary is after EAF4 JMP before target first opcode, never RTS or target behavior."
+  ],
+  "raw_A_address_rule": "01/02=current callerPC+2; firstY=(2*A+1)&255, secondY=(2*A+2)&255; each addition uses the whole pointer. Only the locked callers/maps are covered.",
+  "Source_scope": "2845 existing synchronous battle/attack dispatch prefixes (includes inherited postbattle method) plus1190 ControlHelpers-only duel prefixes; no duel handler/whole scene.",
+  "production_Source_changes": 0,
+  "new_gameplay_or_service_algorithms": 0,
+  "unknown_real_dependencies_encountered_in_this_window": 0,
+  "global_reachable_service_closure_proven": false,
+  "global_field_classification_changes": 0,
+  "raw228_semantic_mapping": null
+}

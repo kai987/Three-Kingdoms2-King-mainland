@@ -1,0 +1,45 @@
+{
+  "schema": "phase28-existing-EE07-real-inline-contract-v1",
+  "source": {
+    "path": "source/recovered/scene_shared_services.py",
+    "function": "far_call",
+    "line": 241,
+    "end_line": 258,
+    "sha256": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76"
+  },
+  "caller": {
+    "bank": 13,
+    "call_PC": 54517,
+    "inline_word_CPU": 54520,
+    "inline_target": 40966,
+    "normal_return_PC": 54522,
+    "caller_raw_return_word": 54519
+  },
+  "callee_frame": {
+    "return_PC": 61005,
+    "raw_return_word": 61004,
+    "source": "OriginalEE44..EE49 pushesEE/4C before indirectJMP"
+  },
+  "mapping": {
+    "saved_code_shadow": 226,
+    "save_PC": 60935,
+    "restore_pop_PC": 61005,
+    "restore_call_PC": 61007,
+    "restore_service": 62007,
+    "restored": "OriginalE2/E3 code pair throughF237",
+    "not_restored_by_EE07": [
+      225
+    ],
+    "preserved_side_effect": "BF0A outcome0 F25F#30 setsE1 and active8000 data bank16; code-pair restoration must not erase this fourbank sideeffect."
+  },
+  "same_owner_protocol": {
+    "shared_service": "SceneSharedServices.__call__ owns pendingcall by identicalcallobject",
+    "parent": "Real parent generator/caller survives an unresolvedexternalcall. Resume must not create a replacementparent or replayfadeinit.",
+    "ECEE_itself": "No wait yielded by its sourcebody; it completes its realRTS immediately aftersoftwareinit.",
+    "completion": "Normal returned requires realcallerPC/SP. Waiting/dependency, strictprefix and nonlocal/reset remain separate.",
+    "scope": "This is an identity/protocol audit of frozenSource, not a new continuation CPUtest."
+  },
+  "Source_CPU_cases": 0,
+  "original_CPU_cases": 0,
+  "Native_runs": 0
+}

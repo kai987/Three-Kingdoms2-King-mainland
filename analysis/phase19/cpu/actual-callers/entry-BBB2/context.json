@@ -1,0 +1,77 @@
+{
+  "schema": "phase19-Native-context-originalCPU-callee-input-v1",
+  "Native_internal_CPU_trace": false,
+  "native_state_path": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame35192.state",
+  "native_state_sha256": "8410a9c58141880f7d944f9f1cc529729f3f48b2432a55e64a0839f1783ce414",
+  "captured_native_registers": {
+    "a": 0,
+    "x": 0,
+    "y": 29,
+    "p": 38,
+    "sp": 249,
+    "pc": 54627
+  },
+  "captured_native_prg_banks": [
+    16,
+    10,
+    11,
+    31
+  ],
+  "captured_native_ram_sha256": "8a8f0b2de1221192f491d2dda3662c134fdbcbb5c0c48ed7d38c547b64e44906",
+  "captured_native_sram_sha256": "6900898cde0660da4a53b7b5d33325d1037e9dbffdfcb0a6d96cf04da2888e3e",
+  "original_CPU_prefix_instructions": 40508,
+  "explicit_NMI_IRQ_arrivals": 0,
+  "postcapture_memory_injections": 0,
+  "registers": {
+    "a": 1,
+    "x": 0,
+    "y": 1,
+    "p": 164,
+    "sp": 253,
+    "pc": 48050
+  },
+  "physical_banks": [
+    17,
+    10,
+    11,
+    31
+  ],
+  "N163_address": 76,
+  "N163_autoincrement": false,
+  "existing_return_PC": 57736,
+  "known_prefix_JSR_chain": [
+    {
+      "call_pc": 41017,
+      "target": 54420,
+      "return_pc": 41020,
+      "caller_sp": 253
+    },
+    {
+      "call_pc": 57733,
+      "target": 40960,
+      "return_pc": 57736,
+      "caller_sp": 255
+    },
+    {
+      "call_pc": 41017,
+      "target": 54420,
+      "return_pc": 41020,
+      "caller_sp": 253
+    },
+    {
+      "call_pc": 41404,
+      "target": 54420,
+      "return_pc": 41407,
+      "caller_sp": 253
+    }
+  ],
+  "hardware": {
+    "PPUSTATUS": 0,
+    "APUSTATUS": 0,
+    "NamcoIRQread": 127,
+    "controllers": [
+      0,
+      0
+    ]
+  }
+}

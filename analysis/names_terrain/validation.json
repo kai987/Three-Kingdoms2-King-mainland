@@ -1,0 +1,218 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "oracle": "py65 1.2.0 executing original6502 instructions; synthetic RAM and mapper bus, original ROM read only",
+  "case_count": 16955,
+  "results": [
+    {
+      "routine": "bank12 $ABD9-$AC50",
+      "rom_offset": "0x018BE9",
+      "purpose": "All16 original tactic name records across all16 displayed positions: exact emitted two-row VRAM packets",
+      "cases": 256,
+      "status": "passed"
+    },
+    {
+      "routine": "bank12 $A951-$A958 prefix",
+      "rom_offset": "0x018961",
+      "purpose": "Displayed0580[row] selection is copied directly into0543",
+      "cases": 256,
+      "status": "passed"
+    },
+    {
+      "routine": "bank12 $B02B-$B041 + fixedbank $EADE",
+      "rom_offset": "0x01903B",
+      "purpose": "All256 raw action bytes select the corresponding16 effect addresses via action&15; actual inline dispatcher executed",
+      "cases": 256,
+      "status": "passed"
+    },
+    {
+      "routine": "bank12 $A7E7-$A822",
+      "rom_offset": "0x0187F7",
+      "purpose": "7 terrain rows ×4 affinities ×all256 RAM063C selector bytes; additional AP borrow/flag boundaries",
+      "cases": 8191,
+      "status": "passed",
+      "undefined_affinity3_cases": 2043,
+      "selector_name": "selector_byte (RAM063C[slot]); bank13 DB03 refreshes it from troops_low10//100, orFF for empty slots"
+    },
+    {
+      "routine": "bank8 $B6EF-$B74A / $B6E5-$B6EE",
+      "rom_offset": "0x0116FF / 0x0116F5",
+      "purpose": "All120 chunk pointers/banks; every tile byte present in source chunks; complete32×32 four-quadrant scene raw and AI-normalized lookups",
+      "cases": 4412,
+      "status": "passed",
+      "tile_byte_values_covered": 107,
+      "raw_classes_observed": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "examples": [
+        {
+          "x": 0,
+          "y": 0,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 80,
+          "tile_id": 44,
+          "raw_class": 0,
+          "ai_class": 0,
+          "valid_battle_cell": true,
+          "attribute_or_unused_row": false,
+          "physical_pixel_x": 0,
+          "physical_pixel_y": 0
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 144,
+          "tile_id": 62,
+          "raw_class": 0,
+          "ai_class": 0,
+          "valid_battle_cell": true,
+          "attribute_or_unused_row": false,
+          "physical_pixel_x": 0,
+          "physical_pixel_y": 64
+        },
+        {
+          "x": 0,
+          "y": 14,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 304,
+          "tile_id": 57,
+          "raw_class": 2,
+          "ai_class": 2,
+          "valid_battle_cell": true,
+          "attribute_or_unused_row": false,
+          "physical_pixel_x": 0,
+          "physical_pixel_y": 224
+        },
+        {
+          "x": 0,
+          "y": 15,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 320,
+          "tile_id": 0,
+          "raw_class": 0,
+          "ai_class": 0,
+          "valid_battle_cell": false,
+          "attribute_or_unused_row": true,
+          "physical_pixel_x": 0,
+          "physical_pixel_y": 240
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 100,
+          "tile_id": 74,
+          "raw_class": 0,
+          "ai_class": 0,
+          "valid_battle_cell": true,
+          "attribute_or_unused_row": false,
+          "physical_pixel_x": 64,
+          "physical_pixel_y": 16
+        },
+        {
+          "x": 4,
+          "y": 15,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 324,
+          "tile_id": 84,
+          "raw_class": 2,
+          "ai_class": 2,
+          "valid_battle_cell": false,
+          "attribute_or_unused_row": true,
+          "physical_pixel_x": 64,
+          "physical_pixel_y": 240
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 85,
+          "tile_id": 55,
+          "raw_class": 0,
+          "ai_class": 0,
+          "valid_battle_cell": true,
+          "attribute_or_unused_row": false,
+          "physical_pixel_x": 80,
+          "physical_pixel_y": 0
+        },
+        {
+          "x": 5,
+          "y": 1,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 101,
+          "tile_id": 73,
+          "raw_class": 0,
+          "ai_class": 0,
+          "valid_battle_cell": true,
+          "attribute_or_unused_row": false,
+          "physical_pixel_x": 80,
+          "physical_pixel_y": 16
+        },
+        {
+          "x": 5,
+          "y": 9,
+          "quadrant": 0,
+          "chunk_id": 0,
+          "tile_rom_offset": 229,
+          "tile_id": 39,
+          "raw_class": 2,
+          "ai_class": 2,
+          "valid_battle_cell": true,
+          "attribute_or_unused_row": false,
+          "physical_pixel_x": 80,
+          "physical_pixel_y": 144
+        }
+      ]
+    },
+    {
+      "routine": "bank25 $B630 affinity glyph selector",
+      "rom_offset": "0x033640",
+      "purpose": "All256 packed flags;64 affinity3 cases read past the three documented original glyph entries, rather than defining a fourth name",
+      "cases": 256,
+      "status": "passed",
+      "glyph_table_rom_offset": "0x033657",
+      "valid_three_entry_hex": "62 63 64 65 60 61",
+      "affinity3_following_bytes": [
+        "A0 0B"
+      ]
+    },
+    {
+      "routine": "bank12 $B68B-$B6BF writeback prefix",
+      "rom_offset": "0x01969B",
+      "purpose": "All256 raw troop high bytes ×3 low-byte boundaries ×loss0/1/65535; upper6 bits cleared even on zero loss",
+      "cases": 2304,
+      "status": "passed"
+    },
+    {
+      "routine": "bank8 $ADCF-$ADFD tactic11 predicate",
+      "rom_offset": "0x010DDF",
+      "purpose": "All256 raw troop high bytes ×4 low-byte boundaries; raw high bits remain observable to AI troop predicate",
+      "cases": 1024,
+      "status": "passed",
+      "example": "raw troops0x0400: UI low10 value0 but this AI troop predicate is true"
+    }
+  ],
+  "limitations": [
+    "This verifies recovered packet/index/lookup/cost behavior, not full gameplay effects of each tactic.",
+    "Terrain formal names remain separate visual inferences; class1 name remains unresolved.",
+    "Affinity3 zero costs and glyph overrun are raw invalid-encoding observations, not a legitimate extra ability.",
+    "Map lookup metadata/unused rows are exercised mechanically and are not asserted to be traversable."
+  ]
+}

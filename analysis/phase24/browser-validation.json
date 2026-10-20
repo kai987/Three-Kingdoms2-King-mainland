@@ -1,0 +1,1167 @@
+{
+  "started_at": "2026-10-15T20:02:31.564Z",
+  "checks": [
+    {
+      "name": "final_HTML_identity",
+      "status": "passed",
+      "detail": "Frozen builder HTML"
+    },
+    {
+      "name": "checkpoint_10",
+      "status": "passed",
+      "detail": {
+        "frame": 10,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/allocation-settled.png",
+          "runtime/observer/allocation-settled.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_12",
+      "status": "passed",
+      "detail": {
+        "frame": 12,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/row1-input.png",
+          "runtime/observer/row1-input.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_32",
+      "status": "passed",
+      "detail": {
+        "frame": 32,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/row1-settled.png",
+          "runtime/observer/row1-settled.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_34",
+      "status": "passed",
+      "detail": {
+        "frame": 34,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/row2-input.png",
+          "runtime/observer/row2-input.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_54",
+      "status": "passed",
+      "detail": {
+        "frame": 54,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/row2-settled.png",
+          "runtime/observer/row2-settled.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_56",
+      "status": "passed",
+      "detail": {
+        "frame": 56,
+        "troops": 900,
+        "working_reserve": 9899,
+        "images": [
+          "runtime/original-control/allocate-input.png",
+          "runtime/observer/allocate-input.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_76",
+      "status": "passed",
+      "detail": {
+        "frame": 76,
+        "troops": 900,
+        "working_reserve": 9899,
+        "images": [
+          "runtime/original-control/allocated.png",
+          "runtime/observer/allocated.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_78",
+      "status": "passed",
+      "detail": {
+        "frame": 78,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/return-input.png",
+          "runtime/observer/return-input.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_98",
+      "status": "passed",
+      "detail": {
+        "frame": 98,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/returned.png",
+          "runtime/observer/returned.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_100",
+      "status": "passed",
+      "detail": {
+        "frame": 100,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/end-row-input.png",
+          "runtime/observer/end-row-input.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_120",
+      "status": "passed",
+      "detail": {
+        "frame": 120,
+        "troops": 800,
+        "working_reserve": 9999,
+        "images": [
+          "runtime/original-control/end-row-settled.png",
+          "runtime/observer/end-row-settled.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_122",
+      "status": "passed",
+      "detail": {
+        "frame": 122,
+        "troops": 800,
+        "working_reserve": 10115,
+        "images": [
+          "runtime/original-control/commit-input.png",
+          "runtime/observer/commit-input.png"
+        ]
+      }
+    },
+    {
+      "name": "checkpoint_182",
+      "status": "passed",
+      "detail": {
+        "frame": 182,
+        "troops": 800,
+        "working_reserve": 10115,
+        "images": [
+          "runtime/original-control/city-world-returned.png",
+          "runtime/observer/city-world-returned.png"
+        ]
+      }
+    },
+    {
+      "name": "full_audio_original-control",
+      "status": "passed",
+      "detail": {
+        "duration": 3.028354,
+        "error": null,
+        "readyState": 4,
+        "sha": "865b274cf02587e47acc999bb959505f7f6fb41f51970d9cab1955fb1d58443e",
+        "src": "runtime/original-control/full-audio.wav"
+      }
+    },
+    {
+      "name": "full_audio_observer",
+      "status": "passed",
+      "detail": {
+        "duration": 3.028354,
+        "error": null,
+        "readyState": 4,
+        "sha": "865b274cf02587e47acc999bb959505f7f6fb41f51970d9cab1955fb1d58443e",
+        "src": "runtime/observer/full-audio.wav"
+      }
+    },
+    {
+      "name": "lifecycle_0_subset_size",
+      "status": "passed",
+      "detail": {
+        "actual_frame": 55,
+        "subset": 24,
+        "full_raw_events": 32745
+      }
+    },
+    {
+      "name": "event_2063",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D805",
+        "pointer": "D76E",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_2064",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D808",
+        "pointer": "D76E",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_2065",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "F2AF",
+        "pointer": "D76E",
+        "saved": "D758",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2079",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D80B",
+        "pointer": "6160",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_2080",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D812",
+        "pointer": "6160",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_2081",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D814",
+        "pointer": "6160",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_2082",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "F2D7",
+        "pointer": "6160",
+        "saved": "D758",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2094",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D817",
+        "pointer": "6528",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_2099",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D987",
+        "pointer": "6528",
+        "saved": "D758",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2100",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D993",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2101",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D996",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2103",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D999",
+        "pointer": "2028",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2104",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D99C",
+        "pointer": "2028",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2105",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9A9",
+        "pointer": "2028",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2106",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "EA7C",
+        "pointer": "2028",
+        "saved": "6528",
+        "SP": "EF"
+      }
+    },
+    {
+      "name": "event_2124",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9AC",
+        "pointer": "0828",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2125",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9E4",
+        "pointer": "0828",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2127",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9EA",
+        "pointer": "0828",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2128",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9ED",
+        "pointer": "0828",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2130",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9F0",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2131",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9F2",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2133",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9F8",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2137",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "D9FF",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_2140",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "PC": "DA01",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_next_at_end_0",
+      "status": "passed",
+      "detail": "Final selected raw boundary"
+    },
+    {
+      "name": "event_previous_0",
+      "status": "passed",
+      "detail": "Stepper moves to preceding recorded boundary"
+    },
+    {
+      "name": "event_next_0",
+      "status": "passed",
+      "detail": "Stepper returns to final boundary"
+    },
+    {
+      "name": "lifecycle_1_subset_size",
+      "status": "passed",
+      "detail": {
+        "actual_frame": 77,
+        "subset": 24,
+        "full_raw_events": 32745
+      }
+    },
+    {
+      "name": "event_2970",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D805",
+        "pointer": "D76E",
+        "saved": "D758",
+        "SP": "F5"
+      }
+    },
+    {
+      "name": "event_2971",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D808",
+        "pointer": "D76E",
+        "saved": "D758",
+        "SP": "F5"
+      }
+    },
+    {
+      "name": "event_2972",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "F2AF",
+        "pointer": "D76E",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_2986",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D80B",
+        "pointer": "6160",
+        "saved": "D758",
+        "SP": "F5"
+      }
+    },
+    {
+      "name": "event_2987",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D812",
+        "pointer": "6160",
+        "saved": "D758",
+        "SP": "F5"
+      }
+    },
+    {
+      "name": "event_2988",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D814",
+        "pointer": "6160",
+        "saved": "D758",
+        "SP": "F5"
+      }
+    },
+    {
+      "name": "event_2989",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "F2D7",
+        "pointer": "6160",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3001",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D817",
+        "pointer": "6528",
+        "saved": "D758",
+        "SP": "F5"
+      }
+    },
+    {
+      "name": "event_3006",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D987",
+        "pointer": "6528",
+        "saved": "D758",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3007",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D993",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3008",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D996",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3010",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D999",
+        "pointer": "8428",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3011",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D99C",
+        "pointer": "8428",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3012",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9A9",
+        "pointer": "8428",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3013",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "EA7C",
+        "pointer": "8428",
+        "saved": "6528",
+        "SP": "F1"
+      }
+    },
+    {
+      "name": "event_3032",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9AC",
+        "pointer": "0928",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3033",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9E4",
+        "pointer": "0928",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3035",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9EA",
+        "pointer": "0928",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3036",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9ED",
+        "pointer": "0928",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3038",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9F0",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3039",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9F2",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3041",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9F8",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3045",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "D9FF",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_3048",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "PC": "DA01",
+        "pointer": "6528",
+        "saved": "6528",
+        "SP": "F3"
+      }
+    },
+    {
+      "name": "event_next_at_end_1",
+      "status": "passed",
+      "detail": "Final selected raw boundary"
+    },
+    {
+      "name": "event_previous_1",
+      "status": "passed",
+      "detail": "Stepper moves to preceding recorded boundary"
+    },
+    {
+      "name": "event_next_1",
+      "status": "passed",
+      "detail": "Stepper returns to final boundary"
+    },
+    {
+      "name": "group_page_1",
+      "status": "passed",
+      "detail": {
+        "page": 1,
+        "groups": [
+          "G086",
+          "G107",
+          "G033",
+          "G062",
+          "G106",
+          "G066",
+          "G067",
+          "G071"
+        ],
+        "scope": "Every displayed field checked; omitted static contracts remain in linked ledger"
+      }
+    },
+    {
+      "name": "group_page_2",
+      "status": "passed",
+      "detail": {
+        "page": 2,
+        "groups": [
+          "G079",
+          "G080",
+          "G098",
+          "G101",
+          "G109",
+          "G014",
+          "G015",
+          "G061"
+        ],
+        "scope": "Every displayed field checked; omitted static contracts remain in linked ledger"
+      }
+    },
+    {
+      "name": "group_page_3",
+      "status": "passed",
+      "detail": {
+        "page": 3,
+        "groups": [
+          "G073",
+          "G099",
+          "G100",
+          "G102",
+          "G103",
+          "G105",
+          "G108",
+          "G016"
+        ],
+        "scope": "Every displayed field checked; omitted static contracts remain in linked ledger"
+      }
+    },
+    {
+      "name": "group_page_4",
+      "status": "passed",
+      "detail": {
+        "page": 4,
+        "groups": [
+          "G032",
+          "G035",
+          "G037",
+          "G038",
+          "G039",
+          "G040",
+          "G041",
+          "G044"
+        ],
+        "scope": "Every displayed field checked; omitted static contracts remain in linked ledger"
+      }
+    },
+    {
+      "name": "group_page_5",
+      "status": "passed",
+      "detail": {
+        "page": 5,
+        "groups": [
+          "G045",
+          "G048",
+          "G049",
+          "G050",
+          "G051",
+          "G052",
+          "G054",
+          "G056"
+        ],
+        "scope": "Every displayed field checked; omitted static contracts remain in linked ledger"
+      }
+    },
+    {
+      "name": "group_page_6",
+      "status": "passed",
+      "detail": {
+        "page": 6,
+        "groups": [
+          "G057",
+          "G063",
+          "G064",
+          "G065",
+          "G068",
+          "G069",
+          "G072",
+          "G088"
+        ],
+        "scope": "Every displayed field checked; omitted static contracts remain in linked ledger"
+      }
+    },
+    {
+      "name": "group_page_7",
+      "status": "passed",
+      "detail": {
+        "page": 7,
+        "groups": [
+          "G089",
+          "G090",
+          "G091",
+          "G092",
+          "G093",
+          "G095",
+          "G097"
+        ],
+        "scope": "Every displayed field checked; omitted static contracts remain in linked ledger"
+      }
+    },
+    {
+      "name": "all_groups_preserved",
+      "status": "passed",
+      "detail": "All 55 groups / 270 original unknown accesses and last-page boundary"
+    },
+    {
+      "name": "group_filter_selected",
+      "status": "passed",
+      "detail": {
+        "count": "1 / 55组 · 原270未知合同点均保留来源 · 当前总剩余341项",
+        "first_page": [
+          "G086 · bank28 · ptr $00 · 14点／4仍未知 · 本轮子链"
+        ]
+      }
+    },
+    {
+      "name": "group_filter_writes",
+      "status": "passed",
+      "detail": {
+        "count": "16 / 55组 · 原270未知合同点均保留来源 · 当前总剩余341项",
+        "first_page": [
+          "G086 · bank28 · ptr $00 · 14点／4仍未知 · 本轮子链",
+          "G062 · bank25 · ptr $0A · 18点／18仍未知",
+          "G106 · bank8 · ptr $1A · 7点／7仍未知",
+          "G066 · bank25 · ptr $02 · 4点／4仍未知",
+          "G067 · bank25 · ptr $EE · 16点／16仍未知",
+          "G071 · bank26 · ptr $10 · 4点／4仍未知",
+          "G079 · bank27 · ptr $00 · 2点／2仍未知",
+          "G080 · bank27 · ptr $EE · 7点／7仍未知"
+        ]
+      }
+    },
+    {
+      "name": "group_filter_unknown",
+      "status": "passed",
+      "detail": {
+        "count": "55 / 55组 · 原270未知合同点均保留来源 · 当前总剩余341项",
+        "first_page": [
+          "G086 · bank28 · ptr $00 · 14点／4仍未知 · 本轮子链",
+          "G107 · bank8 · ptr $20 · 4点／4仍未知",
+          "G033 · bank11 · ptr $22 · 2点／2仍未知",
+          "G062 · bank25 · ptr $0A · 18点／18仍未知",
+          "G106 · bank8 · ptr $1A · 7点／7仍未知",
+          "G066 · bank25 · ptr $02 · 4点／4仍未知",
+          "G067 · bank25 · ptr $EE · 16点／16仍未知",
+          "G071 · bank26 · ptr $10 · 4点／4仍未知"
+        ]
+      }
+    },
+    {
+      "name": "search_D850",
+      "status": "passed",
+      "detail": [
+        "G086 · bank28 · ptr $00 · 14点／4仍未知 · 本轮子链"
+      ]
+    },
+    {
+      "name": "selected_group_scope",
+      "status": "passed",
+      "detail": "Expanded selected record with ten exclusions and four unknowns"
+    },
+    {
+      "name": "empty_search",
+      "status": "passed",
+      "detail": "No fallback rows"
+    },
+    {
+      "name": "acceptance_A01",
+      "status": "passed",
+      "detail": {
+        "status": "已验：原字节与资源身份；语义完成另项待验",
+        "receipt_mappings": 2,
+        "pending_results": 2
+      }
+    },
+    {
+      "name": "acceptance_A02",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：存储行为；城市辅助字段和地形1正式名待验",
+        "receipt_mappings": 3,
+        "pending_results": 3
+      }
+    },
+    {
+      "name": "acceptance_A03",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：10处新增有条件不交；341候选及raw入口待验",
+        "receipt_mappings": 3,
+        "pending_results": 3
+      }
+    },
+    {
+      "name": "acceptance_A04",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：选定服务和owner协议；整款服务闭包待验",
+        "receipt_mappings": 2,
+        "pending_results": 3
+      }
+    },
+    {
+      "name": "acceptance_A05",
+      "status": "passed",
+      "detail": {
+        "status": "未列为用户必需目标：独立可玩重制；现有可执行恢复范围另列A04",
+        "receipt_mappings": 1,
+        "pending_results": 2
+      }
+    },
+    {
+      "name": "acceptance_A06",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：声明的等待/reset/返回协议；全部交错待验",
+        "receipt_mappings": 2,
+        "pending_results": 3
+      }
+    },
+    {
+      "name": "acceptance_A07",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：原核心完整音画等同及软件服务；全场景待验",
+        "receipt_mappings": 2,
+        "pending_results": 3
+      }
+    },
+    {
+      "name": "acceptance_A08",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：所列自然和受控场景；未覆盖组合继续待验",
+        "receipt_mappings": 4,
+        "pending_results": 3
+      }
+    },
+    {
+      "name": "acceptance_A09",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：历史包及本轮分项来源；本轮总审计和封包另见最终回执",
+        "receipt_mappings": 2,
+        "pending_results": 2
+      }
+    },
+    {
+      "name": "acceptance_A10",
+      "status": "passed",
+      "detail": {
+        "status": "尚未整体完成：字段、闭包和覆盖缺口明确待验",
+        "receipt_mappings": 2,
+        "pending_results": 2
+      }
+    },
+    {
+      "name": "full_source_pointer_lifecycle_services.py",
+      "status": "passed",
+      "detail": {
+        "UTF8_bytes": 14389,
+        "sha256": "421a12466121ae825d2729c9fd3094f72cf69d307468219e7ceb7f52cd28f2a8"
+      }
+    },
+    {
+      "name": "full_source_pointer_lifecycle_integration.py",
+      "status": "passed",
+      "detail": {
+        "UTF8_bytes": 2711,
+        "sha256": "4f1514eb66c5f41df2d132c3063b9c112b166b1e4741d23166478d7ca8bde043"
+      }
+    },
+    {
+      "name": "honest_scope_and_layout",
+      "status": "passed",
+      "detail": {
+        "viewport": 1280,
+        "document": 1265
+      }
+    },
+    {
+      "name": "console_errors",
+      "status": "passed",
+      "detail": []
+    },
+    {
+      "name": "deliverable_native_view",
+      "status": "passed",
+      "detail": [
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/original-control/allocated.png",
+          "width": 256
+        },
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/observer/allocated.png",
+          "width": 256
+        }
+      ]
+    }
+  ],
+  "validation_method_corrections": [
+    {
+      "invalid_check": {
+        "name": "group_page_1",
+        "status": "failed",
+        "detail": {
+          "page": 1,
+          "groups": [
+            "G086",
+            "G107",
+            "G033",
+            "G062",
+            "G106",
+            "G066",
+            "G067",
+            "G071"
+          ]
+        }
+      },
+      "reason": "The page intentionally presents a documented 11-field group projection. Comparing it to the entire producer contract was an invalid test expectation; no UI/data change was needed. Corrected check compares every displayed field to its formal source and separately preserves all group IDs/access counts."
+    },
+    {
+      "invalid_check": {
+        "name": "deliverable_native_view",
+        "status": "failed",
+        "detail": [
+          {
+            "complete": true,
+            "height": 240,
+            "src": "runtime/original-control/allocated.png",
+            "width": 256
+          },
+          {
+            "complete": true,
+            "height": 240,
+            "src": "runtime/observer/allocated.png",
+            "width": 256
+          }
+        ]
+      },
+      "reason": "The proof-shot check initially used an informal guessed image stem. The formal checkpoint path is allocated.png; corrected to compare the already validated checkpoint manifest, without changing page or evidence."
+    }
+  ],
+  "console_errors": [],
+  "schema": "phase24-browser-DOM-media-evidence-validation-v1",
+  "status": "passed",
+  "check_count": 101,
+  "HTML_sha256": "8ed3acff55c28b9e382abb21b515e1f897ca74151fb0d2efbc5bbdb320160aee",
+  "screenshot": {
+    "path": "analysis/phase24/browser-native-proof.jpg",
+    "sha256": "3420562312169905b1d200666b4d00db9ff9f272a3276798959a2ae52ac07c66",
+    "bytes": 76526,
+    "format": "JPEG",
+    "unaltered_browser_capture": true
+  },
+  "finished_at": "2026-10-15T20:05:09.688Z",
+  "URL": "http://127.0.0.1:8765/analysis/phase24/index.html#native",
+  "limits": [
+    "DOM/media/interaction validation only; no new emulator frames or Source CPU cases.",
+    "Group rows show a documented projection. Full static lifetime contracts are separate linked files.",
+    "Two invalid QA expectations were corrected against formal manifests and retained as method corrections; page and evidence were unchanged."
+  ]
+}

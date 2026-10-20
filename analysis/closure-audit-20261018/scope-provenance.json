@@ -1,0 +1,34 @@
+{
+  "schema": "nes-closure-audit-scope-provenance-v1",
+  "scope": "Read-only whole-project closure inventory; stop phase32 implementation and search, no phase33, no new CPU/Source/Native execution; new audit outputs only in analysis/closure-audit-20261018/.",
+  "authorization_source_kind": "coordinator_delegation_report",
+  "authorization_source_thread_id": "01a140de-9956-751f-a58c-2fe952ee7017",
+  "authorization_source_thread_title": "跟进 NES 逆向分析",
+  "authorization_limit": "Coordinator reports human resumed this thread with an audit-only scope. This record is not a verbatim human quotation; the original reverse-engineering requests remain in the frozen phase31 request register.",
+  "thread_evidence_tool": "mcp__codex_app__read_thread",
+  "thread_evidence_observed_this_turn": true,
+  "root_thread_id": "01a1316a-d5cf-7641-8d98-1e47c65dfb1c",
+  "root_thread_title": "逆向分析 NES 文件",
+  "current_resume": {
+    "turn_id": "01a14d7e-26f3-70c2-bcd2-01087fadf653",
+    "status_at_read": "inProgress",
+    "error_at_read": null,
+    "started_at_unix": 1792301475,
+    "completed_at_read": null,
+    "thread_status_at_read": {"type": "active", "activeFlags": []},
+    "execution_evidence": "New audit documents, current file hashes and read-only structural checks in this directory. Resumption does not itself prove any game logic or emulator result."
+  },
+  "previous_phase32_turn": {
+    "turn_id": "01a14284-3ae8-7051-bfc2-204061f57ded",
+    "status": "failed",
+    "started_at_unix": 1792117324,
+    "completed_at_unix": 1792118256,
+    "error_message_verbatim": "You’ve hit your usage limit. Visit https://chatgpt.com/settings/usage to purchase more credits or try again at Oct 22nd, 2026 4:07 PM.",
+    "additional_details": null,
+    "interpretation": "Historical failure text only. This audit makes no claim about current account limits or reset time."
+  },
+  "original_request_register": "analysis/phase31/acceptance/request-provenance.json",
+  "writer": "root only",
+  "subagent_scope": "Read-only text, JSON, AST and hashes; no file modifications, compilation, CPU or Native runs.",
+  "stop_condition": "Finish this closure inventory and work packages, then stop for parent assessment."
+}

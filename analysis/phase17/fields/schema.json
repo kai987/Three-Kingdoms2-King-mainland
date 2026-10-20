@@ -1,0 +1,30 @@
+{
+  "schema": "phase17-city-field-contract-overlay-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "city_byte1": {
+    "official_name": null,
+    "confirmed_dedicated_consumer": "10BD97 within BD95..BDA1",
+    "mechanical_formula": "LE16(city+1,city+2)>=300",
+    "city_byte2_also_gold_low": true,
+    "not_goldword": "Gold isLE16(+2,+3), so originaloverlapgate can passgold255 and failgold256 whenbyte1=0",
+    "no_proven_dedicated_producer": true,
+    "ordinary_initial_template_byte1": 0
+  },
+  "city_bytes28_31": {
+    "official_name": null,
+    "raw_offsets": [
+      28,
+      29,
+      30,
+      31
+    ],
+    "generic_copy_clear_preserved": true,
+    "dedicated_consumer_or_producer_not_established": true,
+    "padding_or_unassigned_not_proved": true,
+    "raw_roster_scan_can_alias": true,
+    "normal_capacity_protection": "Normalplayertransfer checksfull10 and clampsselectionbudget; twoAIcallers verifydestinationcountbelowgoal<=10 undervalidoccupancydomain",
+    "bounded_nomination": "26C21D readsatmost17..26, includinglegalfull10 withoutFF",
+    "remaining_possible_aliases": 589
+  },
+  "negative_scope": "Whole32banks scanned for raw patterns; trustedCFG/vectors and fieldcontracts areboundedproof. No whole-ROM unused/officialpadding claim."
+}

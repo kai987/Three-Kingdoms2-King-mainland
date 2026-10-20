@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "schema": "phase13-owned-initialization-static-v1",
+  "ROM_unmodified": true,
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "original_range_checks": 41,
+  "pin_checks": 49,
+  "README_links": 24,
+  "receipts": [
+    {
+      "area": "graphics",
+      "CPU": 9440,
+      "guards": 7,
+      "local_observed": 201,
+      "local_total": 201,
+      "source_sha256": "a80f6377ffa8132d9f61a57eeea164b120ecb6fbf0357d43fa526892629c32ad",
+      "validator_sha256": "a37e17fc9a16ab43515ad1fe68d3b88928d9e888a2ae11cfdc0214a7f9b3259f",
+      "evidence_sha256": "cbae51c09ac9daf3cadc5e1fbe1525cb2d86a0efb3ee67be2611fe5e5759301f"
+    },
+    {
+      "area": "scenario",
+      "CPU": 256,
+      "guards": 3,
+      "local_observed": 103,
+      "local_total": 103,
+      "source_sha256": "20f77e59c5ac81f3dbae7861ec1848c17cd75ee656805b85b37f3b4a901d9f12",
+      "validator_sha256": "1d3265a1ca522e72e462d005bc5cb6bcea81ae25afca93b49b04eba81e02a16c",
+      "evidence_sha256": "371303f46c6931db3a1aabc4839869cc4fb64cb3280e183ded80c20c4f719822"
+    },
+    {
+      "area": "city-details",
+      "CPU": 7509,
+      "guards": 5,
+      "local_observed": 307,
+      "local_total": 307,
+      "source_sha256": "c6bf5412f735a2d32b5cf2ac2b7547897e9ffc7e9dd957eaf39c14305f74494d",
+      "validator_sha256": "6fb3a5d2bdceaa75cbe96fdb0f44a1b24894b616cd79d7e114991e2388cfbb93",
+      "evidence_sha256": "53d2618d3dee2220ea1faa0cd44ca3bd8105b2e31dd1ec5a3f106406aa16f4ce"
+    },
+    {
+      "area": "title-intro",
+      "CPU": 3120,
+      "guards": 6,
+      "local_observed": 86,
+      "local_total": 86,
+      "source_sha256": "552c6c27da560e3501851623db5cd300aef5bd12ef64fc59d94b583eccbb9d8d",
+      "validator_sha256": "6ee27ad9598e97805e65abc17e59ac9cdaa743c219a6eecc5a09e1a3b28a8d0d",
+      "evidence_sha256": "8f11f66ca5c43b92b589c43fd88f32a6f903716ea81acad9313bd0d2bb498056"
+    }
+  ],
+  "source_CPU_cases": 20325,
+  "separate_source_guards": 21,
+  "local_original_positions": 697,
+  "local_observed_positions": 697,
+  "scope_note": "Three modules all2048RAM; title fixed1972RAM plus2..12realcaller stackbytes. CPU services, notnativeframes orfullNESemulation."
+}

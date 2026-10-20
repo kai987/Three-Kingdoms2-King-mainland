@@ -1,0 +1,663 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_is_reconstructed": true,
+  "complete_battle_engine": false,
+  "routines": [
+    {
+      "name": "strategy_dispatch",
+      "physical_bank": 12,
+      "cpu_start": 45099,
+      "cpu_end_exclusive": 45154,
+      "rom_start": 102459,
+      "size": 55,
+      "raw_hex": "a000a900992c04c8c00990f88d4405ad4305290f20deea62b0ddb055b17ab1d5b143b262b0cdb21cb3b6b3d0b32ab466b4b8b40cb5a6b5",
+      "sha256": "ebe95363eda67700a67f3338b3c9ad74d9afa444e6cc437bdf4034e9ea55ebd7",
+      "calls": [
+        {
+          "cpu_address": 45119,
+          "kind": "JSR",
+          "target": 60126
+        }
+      ]
+    },
+    {
+      "name": "damage_B070",
+      "physical_bank": 12,
+      "cpu_start": 45168,
+      "cpu_end_exclusive": 45277,
+      "rom_start": 102528,
+      "size": 109,
+      "raw_hex": "ac0a05b9640620d7f2a00bb1004a4a4a4a0a85020a0a18650248a002b1008500a90085018502a9052062e8186909850320e9eba5068501a5078502a90a8503a9008504207cea681865018502a9008503a50218691e8502a50369008503ac0905b9640620d7f2208bb6ee010560",
+      "sha256": "984ac753e1b0504cd083af275e18e8d929699be374015de9efcbede9e0ed4aae",
+      "calls": [
+        {
+          "cpu_address": 45174,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45208,
+          "kind": "JSR",
+          "target": 59490
+        },
+        {
+          "cpu_address": 45216,
+          "kind": "JSR",
+          "target": 60393
+        },
+        {
+          "cpu_address": 45235,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 45267,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45270,
+          "kind": "JSR",
+          "target": 46731
+        }
+      ]
+    },
+    {
+      "name": "damage_B0EB",
+      "physical_bank": 12,
+      "cpu_start": 45291,
+      "cpu_end_exclusive": 45397,
+      "rom_start": 102651,
+      "size": 106,
+      "raw_hex": "ac0a05b9640620d7f2a00bb1004a4a4a4a48a001b10018a00271008501a90085028504a90a8503207cea681865018500a90085018502a9032062e8186905850320e9eba5068501a5078502a90a8503a9008504207ceaa5018502ac0905b9640620d7f220d8b5ee010560",
+      "sha256": "895a03b701979a15a8d2424fc342a3e95eea0c6f58fbf89625e3071676927f1b",
+      "calls": [
+        {
+          "cpu_address": 45297,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45330,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 45347,
+          "kind": "JSR",
+          "target": 59490
+        },
+        {
+          "cpu_address": 45355,
+          "kind": "JSR",
+          "target": 60393
+        },
+        {
+          "cpu_address": 45374,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 45387,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45390,
+          "kind": "JSR",
+          "target": 46552
+        }
+      ]
+    },
+    {
+      "name": "damage_B188",
+      "physical_bank": 12,
+      "cpu_start": 45448,
+      "cpu_end_exclusive": 45525,
+      "rom_start": 102808,
+      "size": 77,
+      "raw_hex": "ac0a05b9640620d7f2a001b1008500a90085018502a9072062e818690e850320e9eba5068501a5078502a90a8503a9008504207ceaa5028503a5018502ac0905b9640620d7f2208bb6ee010560",
+      "sha256": "a5ce22017a7b7c9abd2ae410d8b04f51925e58c40a0c86a9ba615cbd13344e25",
+      "calls": [
+        {
+          "cpu_address": 45454,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45471,
+          "kind": "JSR",
+          "target": 59490
+        },
+        {
+          "cpu_address": 45479,
+          "kind": "JSR",
+          "target": 60393
+        },
+        {
+          "cpu_address": 45498,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 45515,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45518,
+          "kind": "JSR",
+          "target": 46731
+        }
+      ]
+    },
+    {
+      "name": "damage_B1E3",
+      "physical_bank": 12,
+      "cpu_start": 45539,
+      "cpu_end_exclusive": 45635,
+      "rom_start": 102899,
+      "size": 96,
+      "raw_hex": "ac0a05b9640620d7f2a00bb1004a4a4a4a48a002b1008500a90085018502a9072062e8186914850320e9eba5068501a5078502a90a8503a9008504207cea6818690765018501a50269008503a5018502ac0905b9640620d7f2208bb6ee010560",
+      "sha256": "0994b51bf3e9270a344db5e2fbd56065587d6e1b35353fd46cdf9fe58a8983b9",
+      "calls": [
+        {
+          "cpu_address": 45545,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45571,
+          "kind": "JSR",
+          "target": 59490
+        },
+        {
+          "cpu_address": 45579,
+          "kind": "JSR",
+          "target": 60393
+        },
+        {
+          "cpu_address": 45598,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 45625,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45628,
+          "kind": "JSR",
+          "target": 46731
+        }
+      ]
+    },
+    {
+      "name": "damage_B4C6",
+      "physical_bank": 12,
+      "cpu_start": 46278,
+      "cpu_end_exclusive": 46348,
+      "rom_start": 103638,
+      "size": 70,
+      "raw_hex": "ac0a05b9640620d7f2a90085028503207ae8c9c8b0f91869968502a50369008503a001b10018a00271004a1865028502a50369008503ac0905b9640620d7f2208bb6ee010560",
+      "sha256": "a592c2a1f96b2c469265bc8a53e392107c625b11f3b55000d2dff5589bc96496",
+      "calls": [
+        {
+          "cpu_address": 46284,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 46293,
+          "kind": "JSR",
+          "target": 59514
+        },
+        {
+          "cpu_address": 46338,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 46341,
+          "kind": "JSR",
+          "target": 46731
+        }
+      ]
+    },
+    {
+      "name": "damage_B55C",
+      "physical_bank": 12,
+      "cpu_start": 46428,
+      "cpu_end_exclusive": 46502,
+      "rom_start": 103788,
+      "size": 74,
+      "raw_hex": "ac0a05b9640620d7f2a9062062e818691e8503a002b1008500a9008501850220e9eba5068501a5078502a90a8503a9008504207ceaa5028503a5018502ac0905b9640620d7f2208bb660",
+      "sha256": "681287b84a2bae3ac84a47350764185b7cb145964a3f2549131a5fb4ef9dee49",
+      "calls": [
+        {
+          "cpu_address": 46434,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 46439,
+          "kind": "JSR",
+          "target": 59490
+        },
+        {
+          "cpu_address": 46459,
+          "kind": "JSR",
+          "target": 60393
+        },
+        {
+          "cpu_address": 46478,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 46495,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 46498,
+          "kind": "JSR",
+          "target": 46731
+        }
+      ]
+    },
+    {
+      "name": "health_loss",
+      "physical_bank": 12,
+      "cpu_start": 46552,
+      "cpu_end_exclusive": 46659,
+      "rom_start": 103912,
+      "size": 107,
+      "raw_hex": "a000b100850438e5028506b008a5048502a9008506a000a5069100a5028d2f04a9008d30048d3104a9ff8d3204a506d039a00bb10009039100a900851220ccd6ac0a05b96406850aac0905b96406850ba02e2007ee09a0ac0905b964068d32048c0000a0282007ee2aa060",
+      "sha256": "228e3e8ebd945cebe61a58af3262003406d8e5fbf47da29304bb7e599fa634e7",
+      "calls": [
+        {
+          "cpu_address": 46613,
+          "kind": "JSR",
+          "target": 54988
+        },
+        {
+          "cpu_address": 46634,
+          "kind": "EE07_far_call",
+          "inline_target": 40969
+        },
+        {
+          "cpu_address": 46653,
+          "kind": "EE07_far_call",
+          "inline_target": 41002
+        }
+      ]
+    },
+    {
+      "name": "troop_loss",
+      "physical_bank": 12,
+      "cpu_start": 46731,
+      "cpu_end_exclusive": 46832,
+      "rom_start": 104091,
+      "size": 101,
+      "raw_hex": "a008b1008504c8b10029038505a50438e5028506a505e5038507b00ea5048502a5058503a90085068507a008a5069100c8a5079100a502186d2c048d2c04a5036d2d048d2d04a9008d2e04ac0a05b96406850aad2c04850bad2d04850ca02e2007ee06a060",
+      "sha256": "f01f7c3f15bf35c7cb8deee7011e115bd3141409add5f3257c11cea117008dcb",
+      "calls": [
+        {
+          "cpu_address": 46826,
+          "kind": "EE07_far_call",
+          "inline_target": 40966
+        }
+      ]
+    },
+    {
+      "name": "conversion_gate",
+      "physical_bank": 12,
+      "cpu_start": 46891,
+      "cpu_end_exclusive": 47038,
+      "rom_start": 104251,
+      "size": 147,
+      "raw_hex": "2060b8c90690034cb6b7ac0905b9640620d7f2a200a00bb1004a4a4a4a8511a003b100c91f900ce8c9339007e8c94790021860bdbab78510ac0a05b9640620d7f2a500850aa501850ba00bb10a4a4a4a4a38e5111002a9000a8511a002b10a8501a004b10a1865018501a90085028504a90a8503207ceaa50118651065118500207ae8c964b0f9c5009002186038603c1e0a05",
+      "sha256": "41591b3d4972626bec287168922c37ae0e0e5288a21b5882e10e0d038a34986d",
+      "calls": [
+        {
+          "cpu_address": 46891,
+          "kind": "JSR",
+          "target": 47200
+        },
+        {
+          "cpu_address": 46907,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 46953,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 47007,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 47019,
+          "kind": "JSR",
+          "target": 59514
+        }
+      ]
+    },
+    {
+      "name": "strategy_gate",
+      "physical_bank": 12,
+      "cpu_start": 47038,
+      "cpu_end_exclusive": 47200,
+      "rom_start": 104398,
+      "size": 162,
+      "raw_hex": "ac0905b9640620d7f2a002b1008510a00bb1004a4a4a4a8511ac0a05b9640620d7f2a002b1008512a00bb1004a4a4a4a8513a51238e510b002a9008510a51338e511b002a9000a85112060b8a8c006b047b95ab88512a20aad0f05c903d00fad026fc901f008a214c902f002a2058614a5121865101865111865141002a900c95f9002a95fc905b002a9058500207ae8c964b0f9c5009002186038600f0a0500fbf6",
+      "sha256": "a37d1542333ebce30cf2fd281c1e1927a8773b294feb1b24ef2fbb5a71fd68d0",
+      "calls": [
+        {
+          "cpu_address": 47044,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 47069,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 47111,
+          "kind": "JSR",
+          "target": 47200
+        },
+        {
+          "cpu_address": 47179,
+          "kind": "JSR",
+          "target": 59514
+        }
+      ]
+    },
+    {
+      "name": "grid_distance",
+      "physical_bank": 12,
+      "cpu_start": 47200,
+      "cpu_end_exclusive": 47265,
+      "rom_start": 104560,
+      "size": 65,
+      "raw_hex": "ac0905b91406c9109002e9018500ac0a05b91406c9109002e90138e500b00549ff1869018500ac0a05b9000638ac0905f90006b00549ff186901c500b002a50060",
+      "sha256": "93978daa35273f3db2a69020a68b1a10f4fec14946506ea2ea7fe3cda7435b57",
+      "calls": []
+    },
+    {
+      "name": "experience_from_accumulated_loss",
+      "physical_bank": 15,
+      "cpu_start": 55291,
+      "cpu_end_exclusive": 55472,
+      "rom_start": 129035,
+      "size": 181,
+      "raw_hex": "ad0a0020d7f24e0c006e0b00a006b100186d0b008d0d009100c8b1006d0c008d0e009100a006b10038e94fc8b100e9c3900ba006a94f9100c8a9c39100a00bb10029f04a4a4ac90eb010a8ad0d0038f95bd8ad0e00f95cd8b014a9008d0f0060e803d007ac0d88134c1d1027983a984a1869010a0a0a0a8d0f00a00bb10029f0cd0f00b0d5a00bb100290f0d0f009100a001b100a006c9339012a005c947900ca004c9519006a002c95ab00898a001187100910060",
+      "sha256": "7847294d5611bf7c188c21545480658e925c5130c3550a47e4f7fcf6b25f37ae",
+      "calls": [
+        {
+          "cpu_address": 55294,
+          "kind": "JSR",
+          "target": 62167
+        }
+      ]
+    },
+    {
+      "name": "duel_parameter_seed",
+      "physical_bank": 23,
+      "cpu_start": 45616,
+      "cpu_end_exclusive": 45792,
+      "rom_start": 193088,
+      "size": 176,
+      "raw_hex": "a200bdad0420d7f2a00ab1008d10004a4a4a4a4a1869188d1100ad1000291f8d1000a8b9c0b28d1000ac1100b9c0b2186d10008d1000a000b1008d0200a001b100186d02008d0100a9008d02008d0400a90a8d0300207ceaad010018691438ed10009db304207ae8290fc90bb0f77db3049dbd04e8e002d089a200adbd04cdbe04b001e88eaa04a9008dc004eea904600403050809060704040607080706080a040506080708060a01020406050a0307",
+      "sha256": "bd9368c771af372cdd9b3fda33fdc764cbcd794ecc4ac7e83935e49599c90035",
+      "calls": [
+        {
+          "cpu_address": 45621,
+          "kind": "JSR",
+          "target": 62167
+        },
+        {
+          "cpu_address": 45701,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 45717,
+          "kind": "JSR",
+          "target": 59514
+        }
+      ]
+    },
+    {
+      "name": "duel_strike_sample",
+      "physical_bank": 23,
+      "cpu_start": 47637,
+      "cpu_end_exclusive": 47725,
+      "rom_start": 195109,
+      "size": 88,
+      "raw_hex": "2043e88d1000a000aeaa04bdad04cd6005f002a001b9c1048d0100b97005186d01004a8d0100984901a8b96e058d0200ad010038ed02008d0100207ae8290fc90bb0f738e9058d0200ad0100186d02001002a9008d010060",
+      "sha256": "a3fc76f2af0b80a28a7ed0d01ae1b3ce0b99aef8daf5594e638fd9963ea7940c",
+      "calls": [
+        {
+          "cpu_address": 47637,
+          "kind": "JSR",
+          "target": 59459
+        },
+        {
+          "cpu_address": 47695,
+          "kind": "JSR",
+          "target": 59514
+        }
+      ]
+    },
+    {
+      "name": "duel_health_strike",
+      "physical_bank": 23,
+      "cpu_start": 47963,
+      "cpu_end_exclusive": 48019,
+      "rom_start": 195435,
+      "size": 56,
+      "raw_hex": "a90a2062e81869058d2f04a9008d30048d3104adaa044901a8b9ad048d2c0420d7f2a000b10038ed2f041002a9009100eea904a93d4c8bf2",
+      "sha256": "c832b71ac2e3aa36f08b03a6dec26c55c8cd8236ee69d6ba06276f820c321354",
+      "calls": [
+        {
+          "cpu_address": 47965,
+          "kind": "JSR",
+          "target": 59490
+        },
+        {
+          "cpu_address": 47994,
+          "kind": "JSR",
+          "target": 62167
+        }
+      ]
+    },
+    {
+      "name": "duel_strike_effect",
+      "physical_bank": 23,
+      "cpu_start": 47315,
+      "cpu_end_exclusive": 47525,
+      "rom_start": 194787,
+      "size": 210,
+      "raw_hex": "eea9042015baacaa04b9b504297ff026ad10001869148d1000ad01000a186d01008d0200ad0200c90a900be90a8d0200ee01004cf7b8adbf04d01dad1000c96490034ca0b9a9038d0300a9008d02008d0400207cea4c6db9c906d033ad1000c91eb00aad01000a8d01004c6db9207ae8291fc915b0c0690a8d0000acaa04b9b10438ed00001002a90099b1044ca0b9acaa04ad1000d9c504b033ad0100f0293027adaa044901a8b9b10438ed0100b002a90099b104ad01008d2c04a9008d2d048d2e04a9224c8bf2a9394c8bf2a9254c6df2",
+      "sha256": "8b13cdec0715030f7b505c0dc8af0442d67fc872996e031f246f6af9620b43ba",
+      "calls": [
+        {
+          "cpu_address": 47318,
+          "kind": "JSR",
+          "target": 47637
+        },
+        {
+          "cpu_address": 47397,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 47424,
+          "kind": "JSR",
+          "target": 59514
+        }
+      ]
+    },
+    {
+      "name": "duel_attack_parameters",
+      "physical_bank": 15,
+      "cpu_start": 51601,
+      "cpu_end_exclusive": 51775,
+      "rom_start": 125345,
+      "size": 174,
+      "raw_hex": "a00ab10048a001b100a02dc9329020a02dc941901aa032c9509014a037c957900ea03cc95c9008a041c9619002a0468c03008d0000a9008d01008d020020e9ebad06008d0100ad07008d0200a9648d0300a9008d0400207cea207ae8290fc909b0f78d0200ad010018690938ed0200b002a9018d01006848291fa8b91fcaa8684a4a4a4a4aaabd37caaaad010060030407090d0f10110405080a0c0b11130506070a0b10121402030507080a0b0c",
+      "sha256": "05c7a073d08b6f76c6a3832a72c8eeae61698c9bd99b1e049e8d5b9f9e2a67cf",
+      "calls": [
+        {
+          "cpu_address": 51662,
+          "kind": "JSR",
+          "target": 60393
+        },
+        {
+          "cpu_address": 51687,
+          "kind": "JSR",
+          "target": 60028
+        },
+        {
+          "cpu_address": 51690,
+          "kind": "JSR",
+          "target": 59514
+        }
+      ]
+    }
+  ],
+  "strategy_dispatch": {
+    "physical_bank": 12,
+    "cpu_address": 45099,
+    "selector_ram": 1347,
+    "mask": 15,
+    "pointer_table_cpu": 45122,
+    "pointer_table_rom_offset": 102482,
+    "count": 16,
+    "entries": [
+      {
+        "index": 0,
+        "target_cpu": 45154,
+        "action_name": null
+      },
+      {
+        "index": 1,
+        "target_cpu": 45277,
+        "action_name": null
+      },
+      {
+        "index": 2,
+        "target_cpu": 45397,
+        "action_name": null
+      },
+      {
+        "index": 3,
+        "target_cpu": 45434,
+        "action_name": null
+      },
+      {
+        "index": 4,
+        "target_cpu": 45525,
+        "action_name": null
+      },
+      {
+        "index": 5,
+        "target_cpu": 45635,
+        "action_name": null
+      },
+      {
+        "index": 6,
+        "target_cpu": 45154,
+        "action_name": null
+      },
+      {
+        "index": 7,
+        "target_cpu": 45773,
+        "action_name": null
+      },
+      {
+        "index": 8,
+        "target_cpu": 45852,
+        "action_name": null
+      },
+      {
+        "index": 9,
+        "target_cpu": 46006,
+        "action_name": null
+      },
+      {
+        "index": 10,
+        "target_cpu": 46032,
+        "action_name": null
+      },
+      {
+        "index": 11,
+        "target_cpu": 46122,
+        "action_name": null
+      },
+      {
+        "index": 12,
+        "target_cpu": 46182,
+        "action_name": null
+      },
+      {
+        "index": 13,
+        "target_cpu": 46264,
+        "action_name": null
+      },
+      {
+        "index": 14,
+        "target_cpu": 46348,
+        "action_name": null
+      },
+      {
+        "index": 15,
+        "target_cpu": 46502,
+        "action_name": null
+      }
+    ],
+    "extent_evidence": "32 pointer bytes at B042..B061; first handler code begins B062. Names await menu/producer linkage."
+  },
+  "battle_state_ram": {
+    "actor_slot": "$050A",
+    "target_slot": "$0509",
+    "slot_to_officer_id": "$0664[20]",
+    "x_coordinates": "$0600[20]",
+    "y_coordinates": "$0614[20]",
+    "side_bits": "$0628[20].7",
+    "damage_accumulator": "$042C/$042D",
+    "strategy_selector": "$0543&$0F",
+    "phase_substate": "$0501"
+  },
+  "entry_evidence": [
+    {
+      "physical_bank": 31,
+      "cpu_address": 57767,
+      "description": "Fixed-bank initialization sets Y=$2C, calls F237, then A006 -> bank12 A006 JMP bank13 C766"
+    },
+    {
+      "physical_bank": 12,
+      "cpu_address": 40960,
+      "description": "Bank12 public entry JMP A009; A028 dispatches $0500 with EADE"
+    },
+    {
+      "physical_bank": 12,
+      "cpu_address": 43675,
+      "description": "Tactical effect state calls B02B strategy dispatcher"
+    }
+  ],
+  "limits": [
+    "Gameplay action labels are not inferred merely from the opcode index.",
+    "Six damage formulas are verified successful-effect prefixes; preceding success gate is separate.",
+    "Body-zero removal/far-call dependencies and full duel/battle state machines remain outside reconstructed model.",
+    "CPU addresses require mapper state. Pure linear listings in listings/ may decode unmarked data as opcodes; use routines/ annotations for known regions."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "phase26-G107-stable-evidence-denominators-v1",
+  "context_new_CPU_cases": 0,
+  "context_new_Native_runs": 0,
+  "context_new_Source_cases": 0,
+  "static_target_denominator": {
+    "trusted_indirect_positions": 1526,
+    "baseline_disjoint": 1187,
+    "baseline_possible": 81,
+    "baseline_unknown": 258,
+    "baseline_remaining": 339,
+    "selected_group": "G107",
+    "selected_accesses": 4,
+    "selected_access_PC": [
+      45682,
+      45688,
+      45712,
+      45718
+    ],
+    "new_exclusion_count": null
+  },
+  "Source_credit": {
+    "existing_named_entry_count": 3,
+    "existing_methods": [
+      "assign_strategies_and_positions",
+      "first_side_formation",
+      "second_side_formation"
+    ],
+    "phase26_new_or_refactored_body_positions": null,
+    "phase26_raw_bytes": null,
+    "scope": "Newly named/refactored helper scope must be independently measured. No first-recovery credit for the existing entire799-position module."
+  },
+  "existing_old_setup_validation": {
+    "path": "analysis/phase11/setup-ai/validation.json",
+    "old_CPU_cases": 2326,
+    "old_source_guards": 4,
+    "declared_RAM_bytes": 1972,
+    "declared_SRAM_bytes": 8192,
+    "free_stack_scope": "Old free-stack exclusion retained; new full2048 scopes must not retroactively relabel old cases."
+  },
+  "new_case_classes": [
+    "Source exact caller RTS",
+    "Source nonlocal or main-loop boundary",
+    "Source strict dependency prefix",
+    "Standalone originalCPU contract/prefix",
+    "Model guards",
+    "Original-core Native route/control frames",
+    "Passive observer event/snapshot provenance",
+    "Byte-identical ROM reconstruction"
+  ],
+  "forbidden_combination": "Do not sum tests/positions/frames or byte identity into a completion percentage; nested helper calls are not extra parentcases."
+}

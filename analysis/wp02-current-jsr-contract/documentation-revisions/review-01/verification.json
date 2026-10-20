@@ -1,0 +1,73 @@
+{
+  "schema": "wp02-final-bounded-contract-verification-v1",
+  "status": "passed_bounded_WP02",
+  "CPU_parent_cases": 17211,
+  "main_matrix_CPU_parent_cases": 17207,
+  "same_value_appendix_CPU_parent_cases": 4,
+  "actual_primary_JSRs": 17210,
+  "original_CPU_instructions": 752725,
+  "Source_cases": 0,
+  "Native_runs": 0,
+  "actual_capture_origin": null,
+  "actual_caller_RTS_cases": 0,
+  "conditional_candidate_promotions": 2,
+  "field_ledger": {
+    "total": 1526,
+    "conditional_disjoint": 1203,
+    "possible": 80,
+    "unknown": 243,
+    "remaining": 323
+  },
+  "unchanged_other_rows": 1524,
+  "raw345_independent": {
+    "total": 345,
+    "operand": 104,
+    "data": 13,
+    "unproved_entry": 228
+  },
+  "city_official_names": {
+    "1": null,
+    "28": null,
+    "29": null,
+    "30": null,
+    "31": null
+  },
+  "whole_game_closure_proven": false,
+  "unknown_unique_services": null,
+  "completion_percentage": null,
+  "remaining_rounds_estimate": null,
+  "old_work_paths_preserved": 239340,
+  "input_manifest": {
+    "path": "analysis/wp02-current-jsr-contract/input-manifest.json",
+    "sha256": "3da2dfbed92a61530bea85831b9a6414a4d573d50b131544a469cda23c5a662c",
+    "bytes": 2798
+  },
+  "artifact_manifest": {
+    "path": "analysis/wp02-current-jsr-contract/artifact-manifest.json",
+    "sha256": "1a2bf02364bccc7470ce563c68dde7d46c9cab1d5715334b13ddefef964bc092",
+    "bytes": 10209
+  },
+  "semantic_validation": {
+    "path": "analysis/wp02-current-jsr-contract/semantic-validation.json",
+    "sha256": "09971774827010947209e98d44a2f20f94eb38d29bfa1d61395731590fc92cc1",
+    "bytes": 1141
+  },
+  "CPU_receipt": {
+    "path": "analysis/wp02-current-jsr-contract/run-01/validation.json",
+    "sha256": "f855d210dbd0b75774b8a9564db5ec4a8460db09e7dd1bd0c07d02b561b525cd",
+    "bytes": 2013
+  },
+  "same_value_appendix_receipt": {
+    "path": "analysis/wp02-current-jsr-contract/samevalue-appendix/run-01/validation.json",
+    "sha256": "181c450c39ac6b2821ab176df6911398ca39fa0cc6016eec06a2ff42041b71c9",
+    "bytes": 9803
+  },
+  "authoritative_contract_addendum": {
+    "path": "analysis/wp02-current-jsr-contract/contract-samevalue-addendum.json",
+    "sha256": "4b11583b805dd1fd0f14d4500e989663d57fd3075f340a73e9e98ee46242962f",
+    "bytes": 1355
+  },
+  "artifact_paths_before_self_and_final": 51,
+  "next_recommended_not_executed": "WP03 caller/entry proof for the independent raw345 unproved-entry domain",
+  "scope": "Complete predeclared bounded current-JSR contract matrix, not full state Cartesian, natural Native path or complete target behavior."
+}

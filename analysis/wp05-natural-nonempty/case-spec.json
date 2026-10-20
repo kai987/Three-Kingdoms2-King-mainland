@@ -1,0 +1,25 @@
+{
+  "case": "natural-day31-nonempty",
+  "mother": "analysis/phase32/ancestry-prefix/day30/final.state",
+  "mother_sha256": "570e3443291672e859ecd014c73fc272d8d7f724ce5f192fa279bbc01766a175",
+  "parent_frame": 7610,
+  "frames": 383,
+  "natural": true,
+  "additional_core_memory_writes": 0,
+  "ancestry_path": "analysis/wp05-natural-nonempty/ancestry.json",
+  "ancestry_sha256": "996591d43703a84be324093cd275c812c085faeddd2005fe6426c2ec0d61ce07",
+  "plan_source": "analysis/phase31/ancestry/natural-AI-mode2/segment-06/input-plan.json",
+  "plan_sha256": "95620c12273953a6d5b3c0c5e267a931eb1561dbef52815482e0eeb4f65cccd2",
+  "plan_start": 7610,
+  "plan_end": 7993,
+  "expected_initial": {
+    "global_007A": 4,
+    "NMI_0078": 3,
+    "battle_0500_0501": [
+      7,
+      7
+    ],
+    "early_mode_6F91": 10
+  },
+  "intended_goal": "Candidate only until observed: actual day31 CF02 writer, nonempty mode2, officer67 allocation to city16 and true BB39 return."
+}

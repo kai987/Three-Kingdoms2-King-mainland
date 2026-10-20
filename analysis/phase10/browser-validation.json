@@ -1,0 +1,313 @@
+{
+  "status": "passed",
+  "url": "http://127.0.0.1:8765/analysis/phase10/index.html#runtime",
+  "viewport_css": [
+    599,
+    843
+  ],
+  "checks": {
+    "all10_case_options_switch_and_load_actual_256x240_images": true,
+    "all5_module_panels_pass_and_link_correct_source": true,
+    "all10_cases_offer_actual_WAV_controls": true,
+    "both_final_WAV_controls_play_and_pause": true,
+    "levelup_checkpoint_visible": true,
+    "no_horizontal_overflow": true,
+    "no_console_errors": true
+  },
+  "cases": [
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-01/cast-and-result.wav?sha=c9a70582b43df29c8965e001fe0688bacf389cc5c1fea35e548f0fc0ef6245c4"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-01/full-flow.wav?sha=c4b56c28e0306bf607ec6903c96da0156a1a7d7cc2a32ad717ae18e7bcfcca75"
+        }
+      ],
+      "case": "tactic-01 · 陥穽",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-01/effect-before.png?sha=058846bd336d83b755a50e4cd8657305387be1dce12b03c90622ead33ab2359e"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-01/result-message.png?sha=f63a0c5c15e29dda6a861258ee4c88b92e8730828443b5f498b363613e362248"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-05/cast-and-result.wav?sha=e06d7a5fee217f62cb56170729dc98fd03984a131774ec52f214816a6f7e290d"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-05/full-flow.wav?sha=8fff802df3708c7a69b456774bec93c11755c6ea1c4eaa5f1f218916956bcf80"
+        }
+      ],
+      "case": "tactic-05 · 火箭",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-05/effect-before.png?sha=0eb82296b3a76f7d6c30fb709f7d0eedd42e5877697d968c22c2e868494bb79a"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-05/result-message.png?sha=30fc245f8be81fe0e4d6adea3f7e6b6fad4cb9e19c69d36648529be26b923cfa"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-07/cast-and-result.wav?sha=a4dd0f1821883b046d0ebfffeaa2a13a8e57d13f63a90af28ee60b270aa65709"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-07/full-flow.wav?sha=4a6d8ea40b1fae7a14b50c4e2abd4e127977bf03abb4959194aa7299663cdc7e"
+        }
+      ],
+      "case": "tactic-07 · 共殺",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-07/effect-before.png?sha=ea8731f76c42b076624ea23c4ed4f9d96f34559fdaecb65563c33b8fb6a15d64"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-07/result-message.png?sha=56822a2bd53c6bc52120cb13a5f19bdf3d9f7a001f080d106a22cbe8dd7b73d9"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-08/cast-and-result.wav?sha=15c810e26e74b4edf9c8b05e525188707caf5c6c49f7baf04aabd2c76689a84f"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-08/full-flow.wav?sha=df88c8a7649e5aa65d36e7a486a5625caa18978966beadff9924ab9316c6a170"
+        }
+      ],
+      "case": "tactic-08 · 籠絡",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-08/effect-before.png?sha=5f15ea27a3f189941628aefc42d8035ea89c919c32e2536537e4b9df780faf05"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-08/result-message.png?sha=b4322af9f48aeaf3364639fbab94fff78631fd972c7ec1966fb34253b713f9fe"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-09/cast-and-result.wav?sha=3ab809c65cb3f67b4bd89d0debf47e26a4ee56f73627e49b313fc7608380c5e7"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-09/full-flow.wav?sha=9917005570c70536ac4b9d629b2b439459687beca860d3aef14e3894f75347ec"
+        }
+      ],
+      "case": "tactic-09 · 落石",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-09/effect-before.png?sha=3323f332ab17d6f5519330e1481d57d5ad6d19953888137d54f784314f77bc3e"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-09/result-message.png?sha=cd4d0d709fa93253416a829f517cf6d4250b69c61547375fe9e8439989992d6b"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-10/cast-and-result.wav?sha=f83aff4f515fb16b6dcc087f9f7b4831d8d7ae6bba979bedf2709494a439c383"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-10/full-flow.wav?sha=acaad93ced79d8094100ec325e9a682d068a90e6aeccc747800daa99e3eaf7af"
+        }
+      ],
+      "case": "tactic-10 · 連環",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-10/effect-before.png?sha=71d3139618397241f5ae4ebe99b5be43e5d18838bac98158c16535b387efcdbb"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-10/result-message.png?sha=b3fa75ac69cb0c519a16f169c91673a42e7c5be5753b25c93033eb42bcf7a449"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-12/cast-and-result.wav?sha=1c7c1d48a96b5d35f8f431fc006dd951516ebc2822f1a98712fb05b1e141ab60"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-12/full-flow.wav?sha=ecd330ef3ab8432bb2c13ec6c19cf74a130c04df96f12dce2bd3d78540a2ca4e"
+        }
+      ],
+      "case": "tactic-12 · 水攻",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-12/effect-before.png?sha=7d3b3c01249b903a5af4848c4e158ca15dc2e806be67790ac556fb01db8d061e"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-12/result-message.png?sha=c22f4d954ac968c8320bf759d6d1a6f3ac96461b506fd7114b4aa94e8f8a65d5"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-14/cast-and-result.wav?sha=b4c7fbae23f4ce9227e4ac5986d5150c377fb5e7e17a8926ed29ac1a015396d4"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-14/full-flow.wav?sha=0018f0580a90ab9925a2c9fdbdbdd235b7f6e7a3875f0b5410987f575e3bb640"
+        }
+      ],
+      "case": "tactic-14 · 劫火",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-14/effect-before.png?sha=e9039d9149f090409b38392a5461cce549f16c0cb0f04e9f3056f39ea675f6be"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-14/result-message.png?sha=33d83eb210eb8f213eca12587e444942c5aa23dcc1f1a83fa236efe69c9f6555"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-01-death/cast-and-result.wav?sha=d36d5d11fafd69aa3233bf49a6e346029d170dceea8c2705b93b72c54a70d0c2"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-01-death/full-flow.wav?sha=c368759995108619dfa0e7ea5d89122e58c8e61ffb0192dd6dc2cf71c0e612b2"
+        }
+      ],
+      "case": "tactic-01-death · 陥穽",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-01-death/effect-before.png?sha=058846bd336d83b755a50e4cd8657305387be1dce12b03c90622ead33ab2359e"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-01-death/result-message.png?sha=1af44523661a08727c428a0643b6681bf391d6c3deb5e889cc9712e8b6401406"
+        }
+      ]
+    },
+    {
+      "audio": [
+        {
+          "controls": true,
+          "src": "runtime/tactic-09-levelup/cast-and-result.wav?sha=1bc803a147a6e4e44a9452ddd57da424c6225c2a16a458f357486027bb36579a"
+        },
+        {
+          "controls": true,
+          "src": "runtime/tactic-09-levelup/full-flow.wav?sha=4c5ac09304efa2746b031fe05a0285a4a766c0316c4058c6e5c9448c1ebf7800"
+        }
+      ],
+      "case": "tactic-09-levelup · 落石",
+      "images": [
+        {
+          "loaded": true,
+          "src": "runtime/tactic-09-levelup/effect-before.png?sha=3323f332ab17d6f5519330e1481d57d5ad6d19953888137d54f784314f77bc3e"
+        },
+        {
+          "loaded": true,
+          "src": "runtime/tactic-09-levelup/continuation-1.png?sha=d68b850d4f6ec9b0a9a04a5219ec20b4b83b4b765fa7985b9f184819dab427c5"
+        }
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "key": "graphics",
+      "metrics": "状态\npassed\n原CPU对照\n4,596\n单列guards\n4",
+      "source": "../../source/recovered/battle_graphics_services.py"
+    },
+    {
+      "key": "audio",
+      "metrics": "状态\npassed\n原CPU对照\n15,857\n单列guards\n4",
+      "source": "../../source/recovered/audio_services.py"
+    },
+    {
+      "key": "nmi",
+      "metrics": "状态\npassed\n原CPU对照\n3,451\n单列guards\n119",
+      "source": "../../source/recovered/battle_nmi_services.py"
+    },
+    {
+      "key": "text",
+      "metrics": "状态\npassed\n原CPU对照\n893\n单列guards\n7",
+      "source": "../../source/recovered/text_services.py"
+    },
+    {
+      "key": "scroll",
+      "metrics": "状态\npassed\n原CPU对照\n32,768\n单列guards\n2",
+      "source": "../../source/recovered/scroll_graphics_services.py"
+    }
+  ],
+  "audio": [
+    {
+      "id": "cast-audio",
+      "playing": {
+        "duration": 11.347979,
+        "paused": false,
+        "readyState": 4,
+        "src": "http://127.0.0.1:8765/analysis/phase10/runtime/tactic-09-levelup/cast-and-result.wav?sha=1bc803a147a6e4e44a9452ddd57da424c6225c2a16a458f357486027bb36579a",
+        "time": 0.003199
+      },
+      "paused": {
+        "paused": true,
+        "time": 0.015743
+      }
+    },
+    {
+      "id": "full-audio",
+      "playing": {
+        "duration": 38.153833,
+        "paused": false,
+        "readyState": 4,
+        "src": "http://127.0.0.1:8765/analysis/phase10/runtime/tactic-09-levelup/full-flow.wav?sha=4c5ac09304efa2746b031fe05a0285a4a766c0316c4058c6e5c9448c1ebf7800",
+        "time": 0.004797
+      },
+      "paused": {
+        "paused": true,
+        "time": 0.01023
+      }
+    }
+  ],
+  "scope": "CUA interaction with saved original-core media; not a new emulator run or CPU trace",
+  "html_sha256": "d60538d1bf95493d645abcbc88bc2d07a61192ee342368eca7136061c1737e88",
+  "screenshot_sha256": "773f006ccd1032050bd243fc1eaba1b060986975665a08b3247789ebfeb20e77",
+  "screenshot_pixels": [
+    584,
+    822
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ranges": [
+    {
+      "name": "controllers",
+      "physical_bank": 31,
+      "cpu_start": 59078,
+      "cpu_end_exclusive": 59150,
+      "rom_offset": 255702,
+      "byte_count": 72,
+      "raw_hex": "AD 83 00 8D 84 00 AD 85 00 8D 86 00 A9 01 8D 16 40 A9 00 8D 16 40 A2 07 AD 16 40 29 03 C9 01 6E 83 00 AD 17 40 29 03 C9 01 6E 85 00 CA 10 E9 AD 83 00 4D 84 00 2D 83 00 8D 81 00 AD 85 00 4D 86 00 2D 85 00 8D 82 00 60",
+      "sha256": "5153393954b407590bb2506ad1eeb7ff983c04924e86c236561faa35a883064d"
+    },
+    {
+      "name": "palette_upload",
+      "physical_bank": 31,
+      "cpu_start": 59150,
+      "cpu_end_exclusive": 59209,
+      "rom_offset": 255774,
+      "byte_count": 59,
+      "raw_hex": "AD 8B 00 29 FB 8D 00 20 AD 02 20 A0 00 8C 7D 00 A9 3F 8D 06 20 8C 06 20 B9 00 01 8D 07 20 B9 01 01 8D 07 20 C8 C8 C0 20 90 EE A9 3F 8D 06 20 A9 00 8D 06 20 8D 06 20 8D 06 20 60",
+      "sha256": "40fbd50912e3aab35931b93e280e8a98e5ac5e633a10eb34e74b7086d6183f03"
+    },
+    {
+      "name": "OAM_tail",
+      "physical_bank": 31,
+      "cpu_start": 59429,
+      "cpu_end_exclusive": 59459,
+      "rom_offset": 256053,
+      "byte_count": 30,
+      "raw_hex": "A0 00 A9 F0 99 00 02 C8 D0 FA 60 AE 7C 00 E0 FF F0 0B A9 F0 9D 00 02 E8 E8 E8 E8 D0 F5 60",
+      "sha256": "038d858091a5480448099507ecb128ad9d1a4d4f8d5f311df61b60e29405ab4f"
+    },
+    {
+      "name": "scroll_control",
+      "physical_bank": 31,
+      "cpu_start": 60151,
+      "cpu_end_exclusive": 60186,
+      "rom_offset": 256775,
+      "byte_count": 35,
+      "raw_hex": "AD 8E 00 8D 05 20 AD 90 00 8D 05 20 AD 8B 00 29 FE 8D 8B 00 AD 8F 00 29 01 0D 8B 00 8D 8B 00 8D 00 20 60",
+      "sha256": "5a5f942a9a2ba872d4a47a7d28e9ed30699415b18b878edfee948e032bbac97a"
+    },
+    {
+      "name": "palette_fade",
+      "physical_bank": 31,
+      "cpu_start": 60519,
+      "cpu_end_exclusive": 60607,
+      "rom_offset": 257143,
+      "byte_count": 88,
+      "raw_hex": "AD 87 00 30 52 CE 8A 00 10 4D AD 89 00 8D 8A 00 A9 01 8D 7D 00 AD 87 00 F0 0D EE 88 00 AD 88 00 C9 04 90 0D 4C 93 EC CE 88 00 D0 05 A9 FF 8D 87 00 A9 00 85 00 A9 01 85 01 A9 20 85 02 A9 01 85 03 A0 1F AE 88 00 B1 02 CA 30 07 38 E9 10 10 F8 A9 0F 91 00 88 10 EC 60",
+      "sha256": "201746fc01ab67a38850e3eeb5ecfacc6f393682cf1d97aea90b1c0761f811a4"
+    },
+    {
+      "name": "PPU_work_consumers",
+      "physical_bank": 31,
+      "cpu_start": 61011,
+      "cpu_end_exclusive": 61586,
+      "rom_offset": 257635,
+      "byte_count": 575,
+      "raw_hex": "AD 7D 00 D0 1A AD 7E 00 30 18 0A 30 27 0A 30 35 0A 30 3D 0A 30 45 0A 30 52 0A 30 5F 0A 30 6C 4C 0E E7 48 AD 7E 00 29 7F 8D 7E 00 20 0B EF 68 60 0A 4C 60 EE 48 AD 7E 00 29 BF 8D 7E 00 20 71 EF 68 60 4C 60 EE AD 7E 00 29 DF 8D 7E 00 4C C0 EF AD 7E 00 29 EF 8D 7E 00 4C 28 F0 A0 3D 20 37 F2 AD 7E 00 29 F7 8D 7E 00 4C 0C A0 AD 7E 00 29 FB 8D 7E 00 A0 3D 20 37 F2 4C 06 A0 AD 7E 00 29 FD 8D 7E 00 A0 3D 20 37 F2 4C 12 A0 A0 3D 20 37 F2 4C 00 A0 AD 7E 00 30 0A 0A 30 12 0A 30 A7 0A 30 AF 60 AD 7E 00 29 7F 8D 7E 00 4C 0B EF AD 7E 00 29 BF 8D 7E 00 4C 71 EF AD 41 01 8D 01 00 AD 40 01 29 03 0E 01 00 2A 0E 01 00 2A 0E 01 00 2A 8D 01 00 A9 1E 38 ED 01 00 8D 00 00 AD 8B 00 09 04 8D 00 20 AD 02 20 AD 40 01 8D 06 20 AD 41 01 8D 06 20 A0 00 B9 42 01 8D 07 20 C8 CC 00 00 90 F4 AD 40 01 29 FC 8D 06 20 AD 41 01 29 1F 8D 06 20 C0 1E B0 09 B9 42 01 8D 07 20 C8 D0 F3 60 AD 8B 00 29 FB 8D 00 20 AD 02 20 AD 64 01 8D 06 20 AD 65 01 8D 06 20 29 1F 8D 00 00 A9 20 38 ED 00 00 8D 00 00 A0 00 B9 66 01 8D 07 20 C8 CC 00 00 90 F4 AD 64 01 8D 06 20 AD 65 01 29 E0 8D 06 20 C0 20 B0 09 B9 66 01 8D 07 20 C8 D0 F3 60 AD 89 01 8D 01 00 29 38 4A 4A 4A 8D 00 00 A9 08 38 ED 00 00 8D 00 00 A0 00 AD 02 20 AD 88 01 8D 06 20 AD 01 00 8D 06 20 B9 8A 01 8D 07 20 AD 01 00 18 69 08 8D 01 00 C8 CC 00 00 90 DF AD 89 01 29 C7 8D 01 00 C0 08 B0 1E AD 88 01 8D 06 20 AD 01 00 8D 06 20 B9 8A 01 8D 07 20 AD 01 00 18 69 08 8D 01 00 C8 D0 DE 60 AD 8B 00 29 FB 8D 00 20 AD 02 20 AD 9C 01 8D 06 20 AD 9D 01 8D 06 20 29 07 8D 00 00 A9 08 38 ED 00 00 8D 00 00 A0 00 B9 9E 01 8D 07 20 C8 CC 00 00 90 F4 AD 9C 01 8D 06 20 AD 9D 01 29 F8 8D 06 20 C0 08 B0 09 B9 9E 01 8D 07 20 C8 D0 F3 60 AD 9C 00 4D 9D 00 48 29 C0 F0 05 A0 FF 8C 95 00 68 29 30 F0 05 A0 FF 8C 94 00 60",
+      "sha256": "5a03e2f3d589d9f5cd91c2904239321455f63cc717f456d5aa33354b3a0f1337"
+    },
+    {
+      "name": "CHR_and_PRG_windows",
+      "physical_bank": 31,
+      "cpu_start": 61958,
+      "cpu_end_exclusive": 62061,
+      "rom_offset": 258582,
+      "byte_count": 103,
+      "raw_hex": "AD AE 00 8D 00 80 AD AF 00 8D 00 88 AD B0 00 8D 00 90 AD B1 00 8D 00 98 AD B2 00 8D 00 A0 AD B3 00 8D 00 A8 AD B4 00 8D 00 B0 AD B5 00 8D 00 B8 60 8C E2 00 C8 8C E3 00 8C 00 F0 88 48 98 09 C0 8D 00 E8 68 60 8C DF 00 C8 8C E0 00 8C 00 F0 88 48 98 09 C0 8D 00 E8 68 60 8C E1 00 8C 00 E0 60 8C DE 00 8C 00 E0 60",
+      "sha256": "8a1d1469fec336b980ad59db37177148c80f86ce55dc6f15b444a5a7e35ffc80"
+    },
+    {
+      "name": "NMI_IRQ_split_services",
+      "physical_bank": 31,
+      "cpu_start": 63488,
+      "cpu_end_exclusive": 65495,
+      "rom_offset": 260112,
+      "byte_count": 2007,
+      "raw_hex": "48 8A 48 98 48 AD 02 20 A9 00 8D 00 58 AD 68 00 8D 00 50 AD 69 00 8D 00 58 8D 62 00 AD 61 00 8D 60 00 58 A9 E0 8D 00 C0 A9 E1 8D 00 C8 A9 E0 8D 00 D0 A9 E1 8D 00 D8 A5 7B F0 03 4C D5 FA A5 E1 8D 00 E0 A5 E2 09 C0 8D 00 E8 A5 E3 8D 00 F0 A0 00 8C 03 20 C8 84 7B A9 02 8D 14 40 AD 8C 00 8D 01 20 A9 00 85 7C A5 78 29 0F 0A A8 B9 7B F8 8D 00 00 B9 7C F8 8D 01 00 6C 00 00 97 FA 97 FA B5 F8 FE F8 6A F9 A0 F9 E4 F9 13 FA 53 FA CE 7B 00 A5 DE 8D 00 E0 A5 DF 09 C0 8D 00 E8 A5 E0 8D 00 F0 E6 50 E6 52 E6 54 E6 55 E6 5E D0 02 E6 5F 68 A8 68 AA 68 40 20 53 EE 20 06 F2 20 0B FB 20 67 EC 20 C6 E6 A0 2E 20 37 F2 20 03 A0 A9 4C 85 A5 8D 00 F8 20 9B FF 20 A9 FA A0 3D 20 37 F2 20 03 A0 20 09 A0 20 0F A0 20 3F A0 A0 3B 20 37 F2 20 00 A0 20 BF FA 20 30 E8 20 28 FB 4C 8D F8 20 53 EE 20 06 F2 20 0B FB A9 00 85 7C 20 67 EC 20 C6 E6 A0 2E 20 37 F2 20 03 A0 A9 4C 85 A5 8D 00 F8 20 62 FF AD 00 05 C9 0C B0 13 AD 8F 00 D0 0E 20 77 F0 A0 37 20 37 F2 20 0C A0 20 0F A0 20 A9 FA A0 39 20 37 F2 20 0F A0 A0 2C 20 37 F2 20 00 A0 A0 3D 20 37 F2 20 03 A0 20 BF FA 20 30 E8 AD 9C 00 8D 9D 00 20 28 FB 4C 8D F8 20 53 EE 20 06 F2 20 0B FB A9 00 85 7C 20 67 EC 20 C6 E6 A0 2E 20 37 F2 20 03 A0 A9 4C 85 A5 8D 00 F8 20 62 FF A0 2E 20 37 F2 20 00 A0 20 30 E8 20 28 FB 4C 8D F8 20 53 EE 20 06 F2 20 0B FB A9 00 85 7C 20 67 EC 20 C6 E6 A0 2E 20 37 F2 20 03 A0 A9 4C 85 A5 8D 00 F8 20 62 FF 20 A9 FA A0 37 20 37 F2 20 1B A0 A0 3D 20 37 F2 20 03 A0 20 BF FA 20 30 E8 20 28 FB 4C 8D F8 20 53 EE 20 06 F2 20 0B FB 20 C6 E6 A0 2E 20 37 F2 20 03 A0 A9 4C 85 A5 8D 00 F8 A0 2A 20 37 F2 20 03 A0 20 62 FF 20 30 E8 20 28 FB 4C 8D F8 20 53 EE 20 06 F2 20 0B FB 20 67 EC 20 C6 E6 A0 2E 20 37 F2 20 03 A0 20 9B FF A9 4C 85 A5 8D 00 F8 20 A9 FA A0 3D 20 37 F2 20 03 A0 A0 28 20 37 F2 20 24 A0 20 BF FA 20 30 E8 20 28 FB 4C 8D F8 20 53 EE 20 06 F2 20 0B FB 20 67 EC A0 2E 20 37 F2 20 03 A0 A9 00 85 81 A0 3D 20 37 F2 20 03 A0 A9 4C 85 A5 8D 00 F8 20 C6 E6 20 A9 FA A0 37 20 37 F2 20 1E A0 20 BF FA 20 62 FF 20 30 E8 20 28 FB 4C 8D F8 20 0B FB 20 06 F2 20 C6 E6 20 62 FF 20 28 FB 4C 8D F8 AD 44 6F F0 10 A4 81 A5 82 85 81 84 82 A4 83 A5 85 85 83 84 85 60 AD 44 6F F0 10 A4 82 A5 81 85 82 84 81 A4 85 A5 83 85 85 84 83 60 20 06 F2 20 0B FB A5 E3 48 A5 E2 48 A5 E1 48 A0 2E 20 37 F2 20 03 A0 A5 A5 8D 00 F8 68 85 E1 8D 00 E0 68 85 E2 09 C0 8D 00 E8 68 85 E3 8D 00 F0 20 28 FB 4C AF F8 20 F7 EA A5 E6 8D 00 C0 A5 E7 8D 00 C8 A5 E8 8D 00 D0 A5 E9 8D 00 D8 2C 02 20 70 FB 60 A5 62 D0 FC 60 48 8A 48 98 48 AD 00 58 29 7F C9 7F F0 04 EA 4C 3C FB AC 60 00 F0 4E 88 D0 09 EA EA EA EA EA EA 4C A4 FB 88 D0 03 4C 8B FC 88 D0 03 4C A4 FB 88 D0 03 4C 2A FD 88 D0 03 4C 95 FD 88 D0 03 4C F4 FD 88 D0 03 4C 03 FE 88 D0 03 4C 69 FE 88 D0 03 4C 96 FE 88 D0 03 4C CD FE 88 D0 03 4C 31 FF 88 D0 03 4C 48 FF 78 A9 00 8D 62 00 8D 00 50 8D 00 58 68 A8 68 AA 68 40 AD 63 00 0A AA A9 00 8D 00 50 BD 6A 00 8D 00 50 BD 6B 00 8D 00 58 AC 63 00 F0 0F 88 D0 03 4C FC FB 88 D0 03 4C 2A FC 4C 58 FC A5 C2 A4 C3 A6 C4 8D 00 A0 8C 00 A8 8E 00 B0 A5 C5 8D 00 B8 A5 BE A4 BF A6 C0 8D 00 80 8C 00 88 8E 00 90 A5 C1 8D 00 98 EE 63 00 4C 9E FB A5 CA A4 CB A6 CC 8D 00 A0 8C 00 A8 8E 00 B0 A5 CD 8D 00 B8 A4 C6 A6 C7 A5 C8 8C 00 80 8E 00 88 8D 00 90 A4 C9 8C 00 98 EE 63 00 4C 9E FB A5 D2 A4 D3 A6 D4 8D 00 A0 8C 00 A8 8E 00 B0 A5 D5 8D 00 B8 A4 CE A6 CF 8C 00 80 8E 00 88 A5 D0 A4 D1 8D 00 90 8C 00 98 EE 63 00 4C 9E FB A5 DA A4 DB A6 DC 8D 00 A0 8C 00 A8 8E 00 B0 A5 DD 8D 00 B8 A4 D6 A6 D7 8C 00 80 8E 00 88 A5 D8 A4 D9 8D 00 90 8C 00 98 A9 00 8D 63 00 EE 60 00 4C 9E FB 78 A9 00 8D 62 00 8D 00 50 8D 00 58 A0 08 88 10 FD AD 99 00 29 07 0A A8 B9 1A FD 8D 46 00 B9 1B FD 8D 47 00 A9 0F 8D 00 80 8D 00 88 8D 00 90 8D 00 98 8D 00 A0 8D 00 A8 8D 00 B0 8D 00 B8 CE 46 00 D0 FB A5 EA A4 9B A6 9A 8D 00 C7 8C 06 20 8E 06 20 A6 96 8E 05 20 8E 05 20 CE 47 00 D0 FB A5 BA A4 BB A6 BC 8D 00 A0 8C 00 A8 8E 00 B0 A5 BD 8D 00 B8 A0 1B 88 D0 FD A5 B6 A4 B7 A6 B8 8D 00 80 8C 00 88 8E 00 90 A5 B9 8D 00 98 4C 9E FB 68 0B 5C 18 50 23 44 2E 37 39 2A 45 1E 50 12 5B 78 A9 00 8D 62 00 8D 00 50 8D 00 58 A0 0F 8C 00 A0 8C 00 A8 8C 00 B0 8C 00 B8 A4 72 88 10 FD A5 EA A6 9B A4 9A 8E 06 20 8C 06 20 A6 96 8E 05 20 8E 05 20 8D 00 C7 A4 73 88 10 FD A5 BA A4 BB A6 BC 8D 00 A0 8C 00 A8 8E 00 B0 A5 BD 8D 00 B8 A4 74 88 10 FD A5 B6 A4 B7 A6 B8 8D 00 80 8C 00 88 8E 00 90 A5 B9 8D 00 98 4C 9E FB 78 A9 00 8D 62 00 8D 00 50 8D 00 58 AD 02 20 A9 E1 A6 9B A4 9A 8D 00 C7 8D 00 D0 8D 00 C8 8D 00 D8 8E 06 20 8C 06 20 A4 BB A6 BC A5 BA 8D 00 A0 8C 00 A8 8E 00 B0 A5 BD 8D 00 B8 A6 96 8E 05 20 8E 05 20 A0 30 88 10 FD A5 B6 A4 B7 A6 B8 8D 00 80 8C 00 88 8E 00 90 A5 B9 8D 00 98 4C 9E FB 78 A9 00 8D 62 00 8D 00 50 8D 00 58 4C 9E FB AD 63 00 0A AA A9 00 8D 00 50 BD 6A 00 8D 00 50 BD 6B 00 8D 00 58 AC 63 00 F0 09 88 F0 3A 88 F0 3A 4C 61 FE AD 02 20 A9 E1 A2 25 A0 B8 8D 00 C7 8D 00 D0 8D 00 C8 8D 00 D8 8E 06 20 8C 06 20 A9 0F 8D 00 A0 8D 00 A8 8D 00 B0 8D 00 B8 A2 00 8E 05 20 8E 05 20 4C CE FB 4C FC FB 4C 2A FC A9 00 8D 63 00 4C 95 FD AD 63 00 0A AA A9 00 8D 00 50 BD 6A 00 8D 00 50 BD 6B 00 8D 00 58 AC 63 00 D0 03 4C CE FB 88 D0 03 4C FC FB 88 D0 03 4C 2A FC 4C 58 FC 78 A9 00 8D 62 00 8D 00 50 8D 00 58 A5 BA A4 BB A6 BC 8D 00 A0 8C 00 A8 8E 00 B0 A5 BD 8D 00 B8 A5 B6 A4 B7 A6 B8 8D 00 80 8C 00 88 8E 00 90 A5 B9 8D 00 98 4C 9E FB 78 A9 00 8D 62 00 8D 00 50 8D 00 58 AD 02 20 A5 EA 8D 00 C0 A9 0F A4 9B A6 9A 8D 00 A0 8D 00 A8 8D 00 B0 8D 00 B8 8C 06 20 8E 06 20 A9 00 8D 05 20 8D 05 20 A0 10 88 10 FD A5 BA A4 BB A6 BC 8D 00 A0 8C 00 A8 8E 00 B0 A5 BD 8D 00 B8 A5 B6 A4 B7 A6 B8 8D 00 80 8C 00 88 8E 00 90 A5 B9 8D 00 98 4C 9E FB A9 00 8D 00 50 AD 6A 00 8D 00 50 AD 6B 00 8D 00 58 EE 60 00 4C CE FB A9 00 8D 00 50 AD 6C 00 8D 00 50 AD 6D 00 8D 00 58 CE 60 00 CE 60 00 4C FC FB A9 00 8D 47 00 AD 98 00 8D 99 00 29 F8 0A 2E 47 00 0A 2E 47 00 8D 9A 00 AD 47 00 18 69 20 8D 9B 00 A9 E0 8D EA 00 8D EC 00 AD 97 00 29 01 F0 08 A9 E1 8D EA 00 8D EC 00 60 A9 00 8D 47 00 AD 98 00 8D 99 00 29 F8 0A 2E 47 00 0A 2E 47 00 8D 9A 00 AD 47 00 18 69 20 8D 9B 00 A9 E0 8D EA 00 AD 97 00 29 01 F0 0E AD 9B 00 18 69 04 8D 9B 00 A9 E1 8D EA 00 60",
+      "sha256": "67c3c9d34aa2e11b77d1e665eff5c50143bc01c8ac6c3f3f139642ec8aaf7be5"
+    }
+  ],
+  "scene_table": {
+    "cpu": 63611,
+    "file": 260235,
+    "entries": [
+      64151,
+      64151,
+      63669,
+      63742,
+      63850,
+      63904,
+      63972,
+      64019,
+      64083
+    ]
+  },
+  "IRQ_mode_entries": [
+    64402,
+    64420,
+    64651,
+    64420,
+    64810,
+    64917,
+    65012,
+    65027,
+    65129,
+    65174,
+    65229,
+    65329,
+    65352
+  ],
+  "fixed_service_entries": [
+    59078,
+    59150,
+    59429,
+    59440,
+    60151,
+    60519,
+    61011,
+    61158,
+    61195,
+    61297,
+    61376,
+    61480,
+    61559,
+    61958,
+    62007,
+    62027,
+    62047,
+    62054,
+    64169,
+    64191,
+    64267,
+    64296,
+    65378,
+    65435
+  ],
+  "PPU_queue": {
+    "priority": "007D nonzero before highest set007E bit7..0; one transaction each call",
+    "entries": {
+      "7": "EF0B column30",
+      "6": "EF71 row32",
+      "5": "EFC0 attribute_column8",
+      "4": "F028 attribute_row8",
+      "3": "logical3D A00C",
+      "2": "logical3D A006",
+      "1": "logical3D A012",
+      "0": "logical3D A000; flag not cleared by EE53"
+    },
+    "no_work": "E70E palette upload, not audio"
+  },
+  "dependencies": [
+    "physical14/15 A003 audio frame service",
+    "banked scene controller/graphics/text bodies",
+    "explicit PPU/controller/counter port samples",
+    "actual IRQ execution for nonzero0062"
+  ],
+  "limits": [
+    "Static byte provenance only; no dynamic CPU or native core frame count from this file.",
+    "IRQ delays retain byte-loop effects; physical scanline/cycle timing remains external."
+  ],
+  "source_contract": {
+    "source": "source/recovered/battle_nmi_services.py",
+    "source_sha256": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15",
+    "class": "BattleNMIServices",
+    "register_class": "NMIRegisters",
+    "methods": [
+      "run_service",
+      "run_nmi",
+      "run_irq",
+      "resume",
+      "resume_nmi"
+    ],
+    "intrinsic_original_code_execution": false,
+    "control_IR_interpretation": false,
+    "callback": "ServiceCall(target,return_pc,kind,registers,memory,entry_banks,expected_sp); must actually return PC/SP",
+    "hardware_entry": "Explicit already-accepted interrupt push; no signal or cycle timing generated"
+  },
+  "dependency_pins": [
+    {
+      "path": "source/recovered/service_memory.py",
+      "sha256": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920"
+    },
+    {
+      "path": "source/recovered/mapped_memory.py",
+      "sha256": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1"
+    }
+  ],
+  "analysis_sha256": "5f8e5b286f933d3ef558aefb0e222f145b7082b74b90464c3e9d51aa31702eb0"
+}

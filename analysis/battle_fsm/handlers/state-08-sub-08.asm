@@ -1,0 +1,45 @@
+; main=8 sub=8: 电脑方行动桥接
+; entry bank13 $C004; file $01A014
+; Direct calls within bank12/13 execute recovered local IR; fixed/far calls are explicit dependencies.
+01A014 b13:$C004 AD 8D 6F       LDA  $6F8D
+01A017 b13:$C007 C9 0B          CMP  #$0B
+01A019 b13:$C009 D0 03          BNE  $C00E
+01A01B b13:$C00B 4C AF C1       JMP  $C1AF
+01A01E b13:$C00E AD 8E 6F       LDA  $6F8E
+01A021 b13:$C011 8D 09 05       STA  $0509
+01A024 b13:$C014 A0 3D          LDY  #$3D
+01A026 b13:$C016 20 07 EE       JSR  $EE07 ; far_A027
+; inline .word $A027, resumes $C01B
+01A02B b13:$C01B AC 8D 6F       LDY  $6F8D
+01A02E b13:$C01E AD 05 05       LDA  $0505
+01A031 b13:$C021 38             SEC
+01A032 b13:$C022 F9 44 C0       SBC  $C044,Y
+01A035 b13:$C025 8D 05 05       STA  $0505
+01A038 b13:$C028 AD 8D 6F       LDA  $6F8D
+01A03B b13:$C02B 8D 2C 04       STA  $042C
+01A03E b13:$C02E A9 00          LDA  #$00
+01A040 b13:$C030 8D 2D 04       STA  $042D
+01A043 b13:$C033 8D 2E 04       STA  $042E
+01A046 b13:$C036 A9 A1          LDA  #$A1
+01A048 b13:$C038 20 83 F2       JSR  $F283 ; queue_message_job_1
+01A04B b13:$C03B A9 65          LDA  #$65
+01A04D b13:$C03D 20 9B E6       JSR  $E69B ; cpu_E69B
+01A050 b13:$C040 EE 01 05       INC  $0501
+01A053 b13:$C043 60             RTS
+01A1BF b13:$C1AF AD 8D 6F       LDA  $6F8D
+01A1C2 b13:$C1B2 8D 43 05       STA  $0543
+01A1C5 b13:$C1B5 AD 8C 6F       LDA  $6F8C
+01A1C8 b13:$C1B8 8D 09 05       STA  $0509
+01A1CB b13:$C1BB 8D 0A 05       STA  $050A
+01A1CE b13:$C1BE 20 2B B0       JSR  $B02B ; apply_selected_tactic
+01A1D1 b13:$C1C1 20 03 DB       JSR  $DB03 ; cpu_DB03
+01A1D4 b13:$C1C4 A9 01          LDA  #$01
+01A1D6 b13:$C1C6 85 12          STA  $12
+01A1D8 b13:$C1C8 20 CC D6       JSR  $D6CC ; enqueue_battle_unit_graphics
+01A1DB b13:$C1CB 20 F7 A1       JSR  $A1F7 ; reset_command_cursor
+01A1DE b13:$C1CE 4C F0 C1       JMP  $C1F0
+01A200 b13:$C1F0 A9 00          LDA  #$00
+01A202 b13:$C1F2 8D 00 05       STA  $0500
+01A205 b13:$C1F5 8D 01 05       STA  $0501
+01A208 b13:$C1F8 8D A4 00       STA  $00A4
+01A20B b13:$C1FB 60             RTS

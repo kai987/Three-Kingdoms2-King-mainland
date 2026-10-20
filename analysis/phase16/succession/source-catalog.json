@@ -1,0 +1,301 @@
+{
+  "source_sha256": "3b3dc1b83f3be9742d4a99ce860003b9d6d32b7d16ee837cb9b419167e1fd219",
+  "procedures": [
+    {
+      "entry": 40972,
+      "name": "postbattle_successor_entry",
+      "instruction_nodes": 2,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41410,
+      "name": "draw_current_city_focus",
+      "instruction_nodes": 15,
+      "source_lines": 25,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41451,
+      "name": "find_officer_city",
+      "instruction_nodes": 17,
+      "source_lines": 41,
+      "natural_loop_headers": [
+        41453,
+        41459
+      ]
+    },
+    {
+      "entry": 44417,
+      "name": "postbattle_successor_tick",
+      "instruction_nodes": 2,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44420,
+      "name": "dispatch_postbattle_phase",
+      "instruction_nodes": 1,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44437,
+      "name": "prepare_postbattle_city",
+      "instruction_nodes": 8,
+      "source_lines": 15,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44458,
+      "name": "check_defeated_ruler",
+      "instruction_nodes": 44,
+      "source_lines": 64,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44557,
+      "name": "check_winning_ruler",
+      "instruction_nodes": 44,
+      "source_lines": 58,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44625,
+      "name": "restore_city_or_ai_turn",
+      "instruction_nodes": 46,
+      "source_lines": 57,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48641,
+      "name": "player_succession_tick",
+      "instruction_nodes": 2,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48644,
+      "name": "dispatch_player_succession",
+      "instruction_nodes": 1,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48663,
+      "name": "announce_player_leader_death",
+      "instruction_nodes": 9,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48686,
+      "name": "check_player_candidate_cities",
+      "instruction_nodes": 38,
+      "source_lines": 81,
+      "natural_loop_headers": [
+        48712
+      ]
+    },
+    {
+      "entry": 48771,
+      "name": "choose_player_candidate_city",
+      "instruction_nodes": 33,
+      "source_lines": 60,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48849,
+      "name": "choose_player_candidate_officer",
+      "instruction_nodes": 37,
+      "source_lines": 56,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48943,
+      "name": "confirm_player_successor",
+      "instruction_nodes": 51,
+      "source_lines": 89,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49081,
+      "name": "classify_player_successor_family",
+      "instruction_nodes": 45,
+      "source_lines": 95,
+      "natural_loop_headers": [
+        49118
+      ]
+    },
+    {
+      "entry": 49182,
+      "name": "adjust_player_followers",
+      "instruction_nodes": 97,
+      "source_lines": 276,
+      "natural_loop_headers": [
+        49182,
+        49214,
+        49323,
+        49345
+      ]
+    },
+    {
+      "entry": 49381,
+      "name": "await_deserter_message",
+      "instruction_nodes": 12,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49409,
+      "name": "promote_successor_roster_head",
+      "instruction_nodes": 24,
+      "source_lines": 20,
+      "hand_written_structured_control": true
+    },
+    {
+      "entry": 49458,
+      "name": "computer_succession_tick",
+      "instruction_nodes": 2,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49461,
+      "name": "dispatch_computer_succession",
+      "instruction_nodes": 1,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49476,
+      "name": "announce_computer_leader_death",
+      "instruction_nodes": 8,
+      "source_lines": 15,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49496,
+      "name": "choose_family_successor",
+      "instruction_nodes": 33,
+      "source_lines": 51,
+      "natural_loop_headers": [
+        49531
+      ]
+    },
+    {
+      "entry": 49569,
+      "name": "find_family_candidate_city",
+      "instruction_nodes": 28,
+      "source_lines": 27,
+      "hand_written_structured_control": true
+    },
+    {
+      "entry": 49627,
+      "name": "choose_highest_morality_successor",
+      "instruction_nodes": 29,
+      "source_lines": 51,
+      "natural_loop_headers": [
+        49637
+      ]
+    },
+    {
+      "entry": 49693,
+      "name": "consider_city_candidates",
+      "instruction_nodes": 25,
+      "source_lines": 20,
+      "hand_written_structured_control": true
+    },
+    {
+      "entry": 49757,
+      "name": "install_computer_successor",
+      "instruction_nodes": 13,
+      "source_lines": 21,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49792,
+      "name": "wait_computer_successor_notice",
+      "instruction_nodes": 4,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49801,
+      "name": "adjust_computer_followers",
+      "instruction_nodes": 56,
+      "source_lines": 131,
+      "natural_loop_headers": [
+        49835,
+        49869
+      ]
+    },
+    {
+      "entry": 49944,
+      "name": "remove_low_loyalty_follower",
+      "instruction_nodes": 21,
+      "source_lines": 16,
+      "hand_written_structured_control": true
+    },
+    {
+      "entry": 50042,
+      "name": "retirement_tick",
+      "instruction_nodes": 2,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50045,
+      "name": "dispatch_retirement",
+      "instruction_nodes": 1,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50054,
+      "name": "commit_leader_absence",
+      "instruction_nodes": 22,
+      "source_lines": 34,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50114,
+      "name": "await_player_gameover",
+      "instruction_nodes": 39,
+      "source_lines": 61,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50206,
+      "name": "wait_computer_retirement_notice",
+      "instruction_nodes": 9,
+      "source_lines": 19,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50812,
+      "name": "navigate_city_cursor",
+      "instruction_nodes": 66,
+      "source_lines": 192,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50952,
+      "name": "city_at_cursor",
+      "instruction_nodes": 23,
+      "source_lines": 96,
+      "natural_loop_headers": [
+        50971
+      ]
+    }
+  ],
+  "structured_ifs": 107,
+  "natural_loops": 14,
+  "hand_written_core_functions": [
+    49569,
+    49693,
+    49409,
+    49944
+  ],
+  "runtime_IR_interpretation": false
+}

@@ -1,0 +1,509 @@
+{
+  "schema": "phase12-officer-details-v1",
+  "status": "passed",
+  "quick": false,
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_cpu_case_count": 6693,
+  "original_complete_case_count": 6693,
+  "original_prefix_case_count": 0,
+  "source_guard_case_count": 5,
+  "case_count": 6698,
+  "failed_count": 0,
+  "counts": {
+    "all237_officers_all10_rows_busy_and_available": 4740,
+    "out_of_roster_and_FE_sentinel": 30,
+    "negative_row_and_real_queue_busy_early_RTS": 12,
+    "mod3_card_slot_and_selected_index": 80,
+    "attribute_digits_zero_100_loyalty_sentinel": 33,
+    "u10_troops_high6_and_2xu16_experience": 72,
+    "packed_level_and_all_affinity_codes": 768,
+    "all_equipment_byte_pairs_top_bottom_cache": 768,
+    "equipment_shadow_citymode3": 20,
+    "each_local_named_routine": 170
+  },
+  "comparison": {
+    "RAM_bytes": 2048,
+    "SRAM_bytes": 8192,
+    "free_CPU_stack_residue": "included",
+    "registers": "AXYP/SP/PC",
+    "all_mapper_banks": true,
+    "exact_IO_ports": true
+  },
+  "source_original_CPU_callbacks": 0,
+  "source_IR_interpretation": false,
+  "pure_recovered_helper_call_counts": {
+    "0xea7c": 4161,
+    "0xf2d7": 4141,
+    "0xf308": 531,
+    "0xe9ba": 3633,
+    "0xf25f": 3106
+  },
+  "source_sha256": "8d203c6c1c73888e953f7260bf2630d7c9227e9f45518898dd1ebc25ea1753fc",
+  "validator_sha256": "a8b9ecdb3dc69dfa62a008117ff1754efcd0bf0b2661162ada82810d34076c84",
+  "dependency_pins": [
+    {
+      "path": "source/recovered/officer_details_ui_services.py",
+      "sha256": "8d203c6c1c73888e953f7260bf2630d7c9227e9f45518898dd1ebc25ea1753fc"
+    },
+    {
+      "path": "source/recovered/scene_shared_services.py",
+      "sha256": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76"
+    },
+    {
+      "path": "source/recovered/officer_ui_services.py",
+      "sha256": "dd4c81924aad78b089d26bf436284a76945aff7b4c035d0c155707d2c43f2113"
+    },
+    {
+      "path": "source/recovered/battle_nmi_services.py",
+      "sha256": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15"
+    },
+    {
+      "path": "source/recovered/controller_helpers.py",
+      "sha256": "54dba0ee606f3ce200c648700f908956273ff0a96cc0dbfb847fc4396bf79afb"
+    },
+    {
+      "path": "source/recovered/service_memory.py",
+      "sha256": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920"
+    },
+    {
+      "path": "scripts/verify_officer_details_ui_services.py",
+      "bytes": 9150,
+      "sha256": "a8b9ecdb3dc69dfa62a008117ff1754efcd0bf0b2661162ada82810d34076c84"
+    },
+    {
+      "path": "scripts/analyze_officer_details_ui_services.py",
+      "bytes": 32657,
+      "sha256": "7377836f820fc329a42d0d8924bb5a95515715de912dca17137f2e6cf300683b"
+    }
+  ],
+  "guards": [
+    {
+      "name": "producer_does_not_ack_its_queued_row",
+      "passed": true
+    },
+    {
+      "name": "unknown_entry",
+      "passed": true
+    },
+    {
+      "name": "actual_caller_required",
+      "passed": true
+    },
+    {
+      "name": "positive_unproved_row_rejected",
+      "passed": true
+    },
+    {
+      "name": "unowned_callee_remains_dependency",
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "samples": [
+    {
+      "kind": "all237_officers_all10_rows_busy_and_available",
+      "input": [
+        0,
+        0,
+        0
+      ],
+      "entry": 40978,
+      "original_instructions": 619,
+      "registers": {
+        "a": 1,
+        "x": 6,
+        "y": 5,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 40 41 01 01 01 01 46 47 01 01 01 01 01 01 ff",
+      "row_after": 1,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "all237_officers_all10_rows_busy_and_available",
+      "input": [
+        0,
+        0,
+        4
+      ],
+      "entry": 40978,
+      "original_instructions": 5,
+      "registers": {
+        "a": 4,
+        "x": 31,
+        "y": 63,
+        "sp": 255,
+        "p": 32,
+        "pc": 9320
+      },
+      "queued_packet": "02 20 04 22 23 02 20 24 32 33 01 23 c1 40 ff 24 62 00 00 00 00 04 24 82 00 00 00 00 04 24 a2 00 00 00 00 08",
+      "row_after": 0,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "out_of_roster_and_FE_sentinel",
+      "input": [
+        237,
+        0
+      ],
+      "entry": 40978,
+      "original_instructions": 443,
+      "registers": {
+        "a": 1,
+        "x": 31,
+        "y": 0,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 40 41 01 01 01 01 46 47 01 01 01 01 01 01 ff",
+      "row_after": 1,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "out_of_roster_and_FE_sentinel",
+      "input": [
+        237,
+        1
+      ],
+      "entry": 40978,
+      "original_instructions": 443,
+      "registers": {
+        "a": 2,
+        "x": 31,
+        "y": 0,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 20 01 01 00 00 00 00 01 01 01 01 01 01 01 01 01 01 01 01 50 51 01 01 01 01 56 57 01 01 01 01 01 01 ff",
+      "row_after": 2,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "negative_row_and_real_queue_busy_early_RTS",
+      "input": [
+        128,
+        0
+      ],
+      "entry": 40978,
+      "original_instructions": 9,
+      "registers": {
+        "a": 128,
+        "x": 31,
+        "y": 63,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "02 20 04 22 23 02 20 24 32 33 01 23 c1 40 ff 24 62 00 00 00 00 04 24 82 00 00 00 00 04 24 a2 00 00 00 00 08",
+      "row_after": 128,
+      "PPU_jobs_after": 0
+    },
+    {
+      "kind": "negative_row_and_real_queue_busy_early_RTS",
+      "input": [
+        128,
+        1
+      ],
+      "entry": 40978,
+      "original_instructions": 9,
+      "registers": {
+        "a": 128,
+        "x": 31,
+        "y": 63,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "02 20 04 22 23 02 20 24 32 33 01 23 c1 40 ff 24 62 00 00 00 00 04 24 82 00 00 00 00 04 24 a2 00 00 00 00 08",
+      "row_after": 128,
+      "PPU_jobs_after": 1
+    },
+    {
+      "kind": "mod3_card_slot_and_selected_index",
+      "input": [
+        0,
+        0
+      ],
+      "entry": 45783,
+      "original_instructions": 600,
+      "registers": {
+        "a": 1,
+        "x": 6,
+        "y": 4,
+        "sp": 245,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 40 41 01 01 01 01 46 47 01 01 01 01 01 01 ff",
+      "row_after": 1,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "mod3_card_slot_and_selected_index",
+      "input": [
+        0,
+        1
+      ],
+      "entry": 45783,
+      "original_instructions": 1002,
+      "registers": {
+        "a": 2,
+        "x": 6,
+        "y": 4,
+        "sp": 245,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 20 01 01 00 00 00 00 01 01 01 01 12 06 12 06 01 01 01 01 50 51 01 7e 78 01 56 57 01 7f 7d 01 01 01 ff",
+      "row_after": 2,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "attribute_digits_zero_100_loyalty_sentinel",
+      "input": [
+        0,
+        1
+      ],
+      "entry": 40978,
+      "original_instructions": 759,
+      "registers": {
+        "a": 2,
+        "x": 6,
+        "y": 4,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 20 01 01 00 00 00 00 01 01 01 01 12 06 12 06 01 01 01 01 50 51 01 01 76 01 56 57 01 01 76 01 01 01 ff",
+      "row_after": 2,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "attribute_digits_zero_100_loyalty_sentinel",
+      "input": [
+        0,
+        3
+      ],
+      "entry": 40978,
+      "original_instructions": 721,
+      "registers": {
+        "a": 4,
+        "x": 31,
+        "y": 3,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 60 01 01 00 00 00 00 01 01 32 01 2d 20 2c 01 78 01 32 01 52 53 01 01 76 01 58 59 01 01 76 01 01 01 ff",
+      "row_after": 4,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "u10_troops_high6_and_2xu16_experience",
+      "input": [
+        0,
+        0
+      ],
+      "entry": 40978,
+      "original_instructions": 894,
+      "registers": {
+        "a": 6,
+        "x": 0,
+        "y": 7,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 a0 01 01 00 00 00 00 01 01 74 75 5e 5f 01 01 01 01 76 01 54 55 01 7e 7a 01 5a 5b 01 01 76 01 01 01 ff",
+      "row_after": 6,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "u10_troops_high6_and_2xu16_experience",
+      "input": [
+        0,
+        49
+      ],
+      "entry": 40978,
+      "original_instructions": 1020,
+      "registers": {
+        "a": 6,
+        "x": 0,
+        "y": 7,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 a0 01 01 00 00 00 00 01 01 74 75 5e 5f 01 01 01 01 76 01 54 55 01 7e 7a 01 5a 5b 01 01 76 01 01 01 ff",
+      "row_after": 6,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "packed_level_and_all_affinity_codes",
+      "input": [
+        0,
+        3
+      ],
+      "entry": 40978,
+      "original_instructions": 765,
+      "registers": {
+        "a": 4,
+        "x": 31,
+        "y": 3,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 60 01 01 00 00 00 00 01 01 32 01 2d 20 2c 01 77 01 32 01 52 53 01 7e 7f 01 58 59 01 32 32 01 01 01 ff",
+      "row_after": 4,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "packed_level_and_all_affinity_codes",
+      "input": [
+        0,
+        4
+      ],
+      "entry": 40978,
+      "original_instructions": 499,
+      "registers": {
+        "a": 5,
+        "x": 31,
+        "y": 0,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 80 01 01 00 00 00 00 01 01 62 63 4e 4f 01 01 01 01 01 01 44 45 01 01 01 01 4a 4b 01 01 01 01 01 01 ff",
+      "row_after": 5,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "all_equipment_byte_pairs_top_bottom_cache",
+      "input": [
+        0,
+        6
+      ],
+      "entry": 40978,
+      "original_instructions": 706,
+      "registers": {
+        "a": 7,
+        "x": 34,
+        "y": 49,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 c0 01 01 01 01 01 01 01 01 6c 6d 01 90 91 92 93 01 01 01 01 01 4c 4d 01 c0 c1 c2 c3 01 01 01 01 01 ff",
+      "row_after": 7,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "all_equipment_byte_pairs_top_bottom_cache",
+      "input": [
+        0,
+        7
+      ],
+      "entry": 40978,
+      "original_instructions": 700,
+      "registers": {
+        "a": 8,
+        "x": 34,
+        "y": 49,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 e0 01 01 01 01 01 01 01 01 6e 6f 6a a0 a1 a2 a3 01 01 01 01 01 5c 5d 6a d0 d1 d2 d3 01 01 01 01 01 ff",
+      "row_after": 8,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "equipment_shadow_citymode3",
+      "input": [
+        0,
+        0
+      ],
+      "entry": 40978,
+      "original_instructions": 601,
+      "registers": {
+        "a": 1,
+        "x": 6,
+        "y": 4,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 40 41 01 01 01 01 46 47 01 01 01 01 01 01 ff",
+      "row_after": 1,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "equipment_shadow_citymode3",
+      "input": [
+        0,
+        3
+      ],
+      "entry": 40978,
+      "original_instructions": 601,
+      "registers": {
+        "a": 1,
+        "x": 6,
+        "y": 4,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 40 41 01 01 01 01 46 47 01 01 01 01 01 01 ff",
+      "row_after": 1,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "each_local_named_routine",
+      "input": [
+        "public_detail_row",
+        0
+      ],
+      "entry": 40978,
+      "original_instructions": 601,
+      "registers": {
+        "a": 1,
+        "x": 6,
+        "y": 4,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 00 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 40 41 01 01 01 01 46 47 01 01 01 01 01 01 ff",
+      "row_after": 1,
+      "PPU_jobs_after": 4
+    },
+    {
+      "kind": "each_local_named_routine",
+      "input": [
+        "public_detail_row",
+        1
+      ],
+      "entry": 40978,
+      "original_instructions": 1003,
+      "registers": {
+        "a": 2,
+        "x": 6,
+        "y": 4,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      },
+      "queued_packet": "20 24 20 01 01 00 00 00 00 01 01 01 01 12 06 12 06 01 01 01 01 50 51 01 7e 78 01 56 57 01 7f 7d 01 01 01 ff",
+      "row_after": 2,
+      "PPU_jobs_after": 4
+    }
+  ],
+  "evidence_sha256": "606b5d95be12ff1310dcc32c9141a589164aab661249660e6ccf00f520c28302",
+  "instruction_location_total": 439,
+  "instruction_location_observed": 439
+}

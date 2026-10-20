@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "failed_count": 0,
+  "checks": {
+    "raw_decode_exact": 5176,
+    "original_indirect_opcode_checks": 1526,
+    "all_previous_candidates": 376,
+    "negative_observations_promoted_to_exclusion": 0,
+    "source_CPU_cases": 0
+  },
+  "dependency_pins": {
+    "scripts/correlate_wild_recruitment_watch.py": "8083bcc9d89441b1b1df91779158335f9af9a4b63719092ac3a120e2f66e7d11",
+    "scripts/capture_city_auxiliary_watchpoints.py": "f19956cf8535630e8186419209eae10b063743a87e0e4f1f64fc34c251c3d4c3",
+    "scripts/capture_native_wild_recruitment.py": "81113a345b0574ef2cb511f4cbc765a2bd4e7b4eb74e45e4617378ef6f32bf95",
+    "analysis/phase21/runtime/core-provenance/upstream/source/core/NstCpu.cpp": "c677c5030dad3adc8208c4c851415ad6e8200fbf315abe928343f5d633ae22d8",
+    "analysis/phase22/runtime/validation.json": "be9dc9faeed9dad1d0fadba3ff5a44cad9d04f49d64e1981247ea32e2745c0e7",
+    "analysis/phase22/runtime/evidence.json": "3ff68baf6352e7cc0023081b1e1af0d78f37277c254de16dc015fa8a9d13d64c",
+    "analysis/phase22/runtime/observer/events.jsonl": "e9a97cccf9a8c04ef587333e51edaedc42fd06cd06d0e2c20c8a6f191d53f0eb",
+    "analysis/phase22/runtime/observer/bus-events.bin": "9ea7f13ef1c6b369f564efe2d32acbf9928b43bf3e9da29e07489b3976c4bbb1",
+    "analysis/phase22/runtime/observer/event-schema.json": "e469a116ea9648515af4b282813906fe6f1d9a55bcde73538c0a4ea5592560a5",
+    "analysis/phase22/fields-static/all-indirect-accesses.json": "17d01d213a30e90767706475bdf0b84c730e730e791e38be3af4ba18333dea2e",
+    "analysis/phase22/fields-static/phase21-remaining376-handling.json": "0951e8931580ebf02e88ffc0869caa6dba2121b9b562eb885337ae0ce1d002ac",
+    "analysis/phase22/access-runtime/all1526-association.json": "fec211e775e34abde3bd78bb52ea1f0ec701daaf195c78f36008ea956cdb2d8c",
+    "analysis/phase22/access-runtime/previous376-association.json": "a0aae5cfe66544ad66ae17d36884cf739f621f506a938b7b2abdcb8760b66269",
+    "analysis/phase22/access-runtime/actual-success-exits.json": "47685e3aa0d23cda718ecb7c290b941ace51d9a941553da7fbcf0c88729792cd",
+    "analysis/phase22/access-runtime/actual-city-bus-semantics.json": "c337f0e6bf40f3e38e25b46985833e7380e6d22d763b5d51b518372941bb3f60",
+    "analysis/phase22/access-runtime/observed-field-slots.json": "94bb686c82d467f3e4f24de002484afdd14a07814870d69478974e2e57ee65da",
+    "analysis/phase22/access-runtime/evidence.json": "866dfbabfc18cf9291cd9eeaf9b7c3462d43ae9ebc2427fa591e1a3611b7ff38"
+  }
+}

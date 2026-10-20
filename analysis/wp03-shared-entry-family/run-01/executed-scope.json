@@ -1,0 +1,3832 @@
+{
+  "schema": "wp03-EADE-family-scope-v1",
+  "family": "Current original JSR EADE to live01/02 to EAE9/EAEE to EAF4 transfer",
+  "shared_dependency_id": "DEP-EADE-CURRENT-JSR-49CALLERS",
+  "gap_ids": [
+    "G-ACCESS-CONTRACTS",
+    "G-SERVICE-CLOSURE"
+  ],
+  "selected_typed_ids": [
+    "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b1F:cpuEAE9:rom03EAF9",
+    "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b1F:cpuEAEE:rom03EAFE"
+  ],
+  "selected_prior_records": [
+    {
+      "physical_bank": 31,
+      "cpu": 60137,
+      "rom_offset": 256761,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 1,
+      "raw_hex": "B1 01",
+      "pointer_zero_page": 1,
+      "Y_values": null,
+      "classification": "unresolved_pointer_or_index_contract",
+      "address_contract": null,
+      "whole_pointer_values": null,
+      "proof_basis": "frozen_phase23_authoritative_contract",
+      "phase18_classification": "unresolved_pointer_or_index_contract",
+      "phase18_address_contract": null,
+      "newly_proved_disjoint": false,
+      "phase17_instruction_access": true,
+      "phase17_remaining_candidate": true,
+      "pointer_producer_calls": [],
+      "original_preceding_context": [
+        {
+          "physical_bank": 31,
+          "cpu": 60114,
+          "rom_offset": 256738,
+          "raw_hex": "85 05"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60116,
+          "rom_offset": 256740,
+          "raw_hex": "A5 09"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60118,
+          "rom_offset": 256742,
+          "raw_hex": "85 06"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60120,
+          "rom_offset": 256744,
+          "raw_hex": "E6 00"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60122,
+          "rom_offset": 256746,
+          "raw_hex": "88"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60123,
+          "rom_offset": 256747,
+          "raw_hex": "10 D2"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60125,
+          "rom_offset": 256749,
+          "raw_hex": "60"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60126,
+          "rom_offset": 256750,
+          "raw_hex": "84 00"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60128,
+          "rom_offset": 256752,
+          "raw_hex": "0A"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60129,
+          "rom_offset": 256753,
+          "raw_hex": "A8"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60130,
+          "rom_offset": 256754,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60131,
+          "rom_offset": 256755,
+          "raw_hex": "68"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60132,
+          "rom_offset": 256756,
+          "raw_hex": "85 01"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60134,
+          "rom_offset": 256758,
+          "raw_hex": "68"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60135,
+          "rom_offset": 256759,
+          "raw_hex": "85 02"
+        }
+      ],
+      "frozen_caller_and_definition_slice_reference": {
+        "path": "analysis/phase18/fields-static/access-contracts.json",
+        "physical_bank": 31,
+        "cpu": 60137,
+        "scope": "Frozen predecessor diagnostics/call owners, not a new reachability or source-generation proof."
+      },
+      "limits": [
+        "Trusted bounded CFG/call domains only; external interrupted or corrupted pointer/selector inputs are not ruled out.",
+        "Y/index and preexisting disjoint-store contracts are conservatively inherited from frozen phase18.",
+        "An unresolved relation is not evidence of actual auxiliary-field use."
+      ],
+      "authoritative_contract_origin": null,
+      "authoritative_pointer_representation": null,
+      "phase19_classification": "unresolved_pointer_or_index_contract",
+      "phase19_proof_basis": "unknown_relation",
+      "phase19_disjoint_proof": null,
+      "phase20_classification": "unresolved_pointer_or_index_contract",
+      "phase20_address_contract": null,
+      "candidate_address_contract": null,
+      "candidate_whole_pointer_values": null,
+      "candidate_Y_values": null,
+      "candidate_contract_is_authoritative": false,
+      "address_scope": "Logical effective data address; excludes addressing-mode dummy bus reads and instruction/pointer fetches.",
+      "phase21_classification": "unresolved_pointer_or_index_contract",
+      "phase21_newly_disjoint": false,
+      "phase22_classification": "unresolved_pointer_or_index_contract",
+      "phase23_authoritative_contract_origin": null,
+      "phase22_authoritative_contract_origin": null,
+      "phase23_classification": "unresolved_pointer_or_index_contract",
+      "phase24_classification": "unresolved_pointer_or_index_contract",
+      "phase25_classification": "unresolved_pointer_or_index_contract",
+      "phase26_classification": "unresolved_pointer_or_index_contract",
+      "phase29_classification": "unresolved_pointer_or_index_contract"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 60142,
+      "rom_offset": 256766,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 1,
+      "raw_hex": "B1 01",
+      "pointer_zero_page": 1,
+      "Y_values": null,
+      "classification": "unresolved_pointer_or_index_contract",
+      "address_contract": null,
+      "whole_pointer_values": null,
+      "proof_basis": "frozen_phase23_authoritative_contract",
+      "phase18_classification": "unresolved_pointer_or_index_contract",
+      "phase18_address_contract": null,
+      "newly_proved_disjoint": false,
+      "phase17_instruction_access": true,
+      "phase17_remaining_candidate": true,
+      "pointer_producer_calls": [],
+      "original_preceding_context": [
+        {
+          "physical_bank": 31,
+          "cpu": 60118,
+          "rom_offset": 256742,
+          "raw_hex": "85 06"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60120,
+          "rom_offset": 256744,
+          "raw_hex": "E6 00"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60122,
+          "rom_offset": 256746,
+          "raw_hex": "88"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60123,
+          "rom_offset": 256747,
+          "raw_hex": "10 D2"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60125,
+          "rom_offset": 256749,
+          "raw_hex": "60"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60126,
+          "rom_offset": 256750,
+          "raw_hex": "84 00"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60128,
+          "rom_offset": 256752,
+          "raw_hex": "0A"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60129,
+          "rom_offset": 256753,
+          "raw_hex": "A8"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60130,
+          "rom_offset": 256754,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60131,
+          "rom_offset": 256755,
+          "raw_hex": "68"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60132,
+          "rom_offset": 256756,
+          "raw_hex": "85 01"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60134,
+          "rom_offset": 256758,
+          "raw_hex": "68"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60135,
+          "rom_offset": 256759,
+          "raw_hex": "85 02"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60137,
+          "rom_offset": 256761,
+          "raw_hex": "B1 01"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60139,
+          "rom_offset": 256763,
+          "raw_hex": "85 03"
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 60141,
+          "rom_offset": 256765,
+          "raw_hex": "C8"
+        }
+      ],
+      "frozen_caller_and_definition_slice_reference": {
+        "path": "analysis/phase18/fields-static/access-contracts.json",
+        "physical_bank": 31,
+        "cpu": 60142,
+        "scope": "Frozen predecessor diagnostics/call owners, not a new reachability or source-generation proof."
+      },
+      "limits": [
+        "Trusted bounded CFG/call domains only; external interrupted or corrupted pointer/selector inputs are not ruled out.",
+        "Y/index and preexisting disjoint-store contracts are conservatively inherited from frozen phase18.",
+        "An unresolved relation is not evidence of actual auxiliary-field use."
+      ],
+      "authoritative_contract_origin": null,
+      "authoritative_pointer_representation": null,
+      "phase19_classification": "unresolved_pointer_or_index_contract",
+      "phase19_proof_basis": "unknown_relation",
+      "phase19_disjoint_proof": null,
+      "phase20_classification": "unresolved_pointer_or_index_contract",
+      "phase20_address_contract": null,
+      "candidate_address_contract": null,
+      "candidate_whole_pointer_values": null,
+      "candidate_Y_values": null,
+      "candidate_contract_is_authoritative": false,
+      "address_scope": "Logical effective data address; excludes addressing-mode dummy bus reads and instruction/pointer fetches.",
+      "phase21_classification": "unresolved_pointer_or_index_contract",
+      "phase21_newly_disjoint": false,
+      "phase22_classification": "unresolved_pointer_or_index_contract",
+      "phase23_authoritative_contract_origin": null,
+      "phase22_authoritative_contract_origin": null,
+      "phase23_classification": "unresolved_pointer_or_index_contract",
+      "phase24_classification": "unresolved_pointer_or_index_contract",
+      "phase25_classification": "unresolved_pointer_or_index_contract",
+      "phase26_classification": "unresolved_pointer_or_index_contract",
+      "phase29_classification": "unresolved_pointer_or_index_contract"
+    }
+  ],
+  "explicitly_excluded": "31:E04D is a separate instruction/entry; palette/audio/EE07 families not executed.",
+  "selection_history": "Audio descriptors initially considered read-only, replaced before scope lock or CPU/Source execution by broader shared scene-dispatch interface.",
+  "static_caller_inventory": 98,
+  "static_declared_inline_words": 745,
+  "dynamic_selected_callers": 49,
+  "dynamic_legal_inline_slots": 331,
+  "original_catalog_sources": [
+    {
+      "path": "analysis/battle_fsm/program.json",
+      "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+    },
+    {
+      "path": "analysis/attack_fsm/program.json",
+      "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+    },
+    {
+      "path": "analysis/duel_fsm/program.json",
+      "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+    }
+  ],
+  "dynamic_callers": [
+    {
+      "bank": 12,
+      "pc": 41041,
+      "rom_offset": 98401,
+      "targets": [
+        41054,
+        41101,
+        41147,
+        41240,
+        41400
+      ],
+      "edge_targets": [
+        [
+          12,
+          41054
+        ],
+        [
+          12,
+          41101
+        ],
+        [
+          12,
+          41147
+        ],
+        [
+          12,
+          41240
+        ],
+        [
+          12,
+          41400
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "table_start": 41044,
+      "table_end": 41054,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 429,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/232"
+    },
+    {
+      "bank": 12,
+      "pc": 41502,
+      "rom_offset": 98862,
+      "targets": [
+        41511,
+        41540,
+        41595
+      ],
+      "edge_targets": [
+        [
+          12,
+          41511
+        ],
+        [
+          12,
+          41540
+        ],
+        [
+          12,
+          41595
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 41505,
+      "table_end": 41511,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 809,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/278"
+    },
+    {
+      "bank": 12,
+      "pc": 41628,
+      "rom_offset": 98988,
+      "targets": [
+        41639,
+        41659,
+        41740,
+        41765
+      ],
+      "edge_targets": [
+        [
+          12,
+          41639
+        ],
+        [
+          12,
+          41659
+        ],
+        [
+          12,
+          41740
+        ],
+        [
+          12,
+          41765
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "table_start": 41631,
+      "table_end": 41639,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 901,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/360"
+    },
+    {
+      "bank": 12,
+      "pc": 42079,
+      "rom_offset": 99439,
+      "targets": [
+        42096,
+        42110,
+        42165,
+        42271,
+        42293,
+        42446,
+        42519
+      ],
+      "edge_targets": [
+        [
+          12,
+          42096
+        ],
+        [
+          12,
+          42110
+        ],
+        [
+          12,
+          42165
+        ],
+        [
+          12,
+          42271
+        ],
+        [
+          12,
+          42293
+        ],
+        [
+          12,
+          42446
+        ],
+        [
+          12,
+          42519
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "table_start": 42082,
+      "table_end": 42096,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 1506,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/564"
+    },
+    {
+      "bank": 12,
+      "pc": 43141,
+      "rom_offset": 100501,
+      "targets": [
+        43166,
+        43201,
+        43224,
+        43287,
+        43485,
+        43566,
+        43628,
+        43687,
+        43818,
+        43858,
+        43920
+      ],
+      "edge_targets": [
+        [
+          12,
+          43166
+        ],
+        [
+          12,
+          43201
+        ],
+        [
+          12,
+          43224
+        ],
+        [
+          12,
+          43287
+        ],
+        [
+          12,
+          43485
+        ],
+        [
+          12,
+          43566
+        ],
+        [
+          12,
+          43628
+        ],
+        [
+          12,
+          43687
+        ],
+        [
+          12,
+          43818
+        ],
+        [
+          12,
+          43858
+        ],
+        [
+          12,
+          43920
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "table_start": 43144,
+      "table_end": 43166,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 7400,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/898"
+    },
+    {
+      "bank": 12,
+      "pc": 47445,
+      "rom_offset": 104805,
+      "targets": [
+        47460,
+        47469,
+        47542,
+        47664,
+        47716,
+        47747
+      ],
+      "edge_targets": [
+        [
+          12,
+          47460
+        ],
+        [
+          12,
+          47469
+        ],
+        [
+          12,
+          47542
+        ],
+        [
+          12,
+          47664
+        ],
+        [
+          12,
+          47716
+        ],
+        [
+          12,
+          47747
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "table_start": 47448,
+      "table_end": 47460,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 11032,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/1037"
+    },
+    {
+      "bank": 12,
+      "pc": 48288,
+      "rom_offset": 105648,
+      "targets": [
+        48307,
+        48321,
+        48374,
+        48403,
+        48428,
+        48449,
+        48495,
+        48365
+      ],
+      "edge_targets": [
+        [
+          12,
+          48307
+        ],
+        [
+          12,
+          48321
+        ],
+        [
+          12,
+          48374
+        ],
+        [
+          12,
+          48403
+        ],
+        [
+          12,
+          48428
+        ],
+        [
+          12,
+          48449
+        ],
+        [
+          12,
+          48495
+        ],
+        [
+          12,
+          48365
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "table_start": 48291,
+      "table_end": 48307,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 11532,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/1159"
+    },
+    {
+      "bank": 12,
+      "pc": 48769,
+      "rom_offset": 106129,
+      "targets": [
+        48806,
+        48826,
+        48897,
+        48921,
+        49020,
+        49048,
+        49080,
+        49116,
+        49156,
+        49236,
+        49277,
+        49424,
+        49467,
+        49481,
+        49528,
+        49617,
+        49643
+      ],
+      "edge_targets": [
+        [
+          12,
+          48806
+        ],
+        [
+          12,
+          48826
+        ],
+        [
+          12,
+          48897
+        ],
+        [
+          12,
+          48921
+        ],
+        [
+          12,
+          49020
+        ],
+        [
+          12,
+          49048
+        ],
+        [
+          12,
+          49080
+        ],
+        [
+          12,
+          49116
+        ],
+        [
+          13,
+          49156
+        ],
+        [
+          13,
+          49236
+        ],
+        [
+          13,
+          49277
+        ],
+        [
+          13,
+          49424
+        ],
+        [
+          13,
+          49467
+        ],
+        [
+          13,
+          49481
+        ],
+        [
+          13,
+          49528
+        ],
+        [
+          13,
+          49617
+        ],
+        [
+          13,
+          49643
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "table_start": 48772,
+      "table_end": 48806,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 11941,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/1530"
+    },
+    {
+      "bank": 13,
+      "pc": 49671,
+      "rom_offset": 107031,
+      "targets": [
+        49688,
+        49743,
+        49802,
+        49869,
+        49911,
+        49934,
+        50000
+      ],
+      "edge_targets": [
+        [
+          13,
+          49688
+        ],
+        [
+          13,
+          49743
+        ],
+        [
+          13,
+          49802
+        ],
+        [
+          13,
+          49869
+        ],
+        [
+          13,
+          49911
+        ],
+        [
+          13,
+          49934
+        ],
+        [
+          13,
+          50000
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "table_start": 49674,
+      "table_end": 49688,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 12563,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/1718"
+    },
+    {
+      "bank": 13,
+      "pc": 50836,
+      "rom_offset": 108196,
+      "targets": [
+        50847,
+        50860,
+        50873,
+        50876
+      ],
+      "edge_targets": [
+        [
+          13,
+          50847
+        ],
+        [
+          13,
+          50860
+        ],
+        [
+          13,
+          50873
+        ],
+        [
+          13,
+          50876
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "table_start": 50839,
+      "table_end": 50847,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 15117,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/1797"
+    },
+    {
+      "bank": 13,
+      "pc": 51599,
+      "rom_offset": 108959,
+      "targets": [
+        51614,
+        51629,
+        51651,
+        51710,
+        51731,
+        51759
+      ],
+      "edge_targets": [
+        [
+          13,
+          51614
+        ],
+        [
+          13,
+          51629
+        ],
+        [
+          13,
+          51651
+        ],
+        [
+          13,
+          51710
+        ],
+        [
+          13,
+          51731
+        ],
+        [
+          13,
+          51759
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "table_start": 51602,
+      "table_end": 51614,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 15741,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/1871"
+    },
+    {
+      "bank": 13,
+      "pc": 52505,
+      "rom_offset": 109865,
+      "targets": [
+        52522,
+        52562,
+        52722,
+        52822,
+        52854,
+        52894,
+        53001
+      ],
+      "edge_targets": [
+        [
+          13,
+          52522
+        ],
+        [
+          13,
+          52562
+        ],
+        [
+          13,
+          52722
+        ],
+        [
+          13,
+          52822
+        ],
+        [
+          13,
+          52854
+        ],
+        [
+          13,
+          52894
+        ],
+        [
+          13,
+          53001
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "table_start": 52508,
+      "table_end": 52522,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 16342,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/2104"
+    },
+    {
+      "bank": 13,
+      "pc": 53968,
+      "rom_offset": 111328,
+      "targets": [
+        53985,
+        54032,
+        54091,
+        54191,
+        54231,
+        54263,
+        54370
+      ],
+      "edge_targets": [
+        [
+          13,
+          53985
+        ],
+        [
+          13,
+          54032
+        ],
+        [
+          13,
+          54091
+        ],
+        [
+          13,
+          54191
+        ],
+        [
+          13,
+          54231
+        ],
+        [
+          13,
+          54263
+        ],
+        [
+          13,
+          54370
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "table_start": 53971,
+      "table_end": 53985,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 17275,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/2290"
+    },
+    {
+      "bank": 12,
+      "pc": 41003,
+      "rom_offset": 98363,
+      "targets": [
+        41038,
+        41499,
+        41619,
+        41619,
+        42061,
+        43132,
+        47434,
+        48275,
+        48766,
+        49660,
+        49668,
+        50833,
+        51596,
+        52502,
+        53965,
+        54512
+      ],
+      "edge_targets": [
+        [
+          12,
+          41038
+        ],
+        [
+          12,
+          41499
+        ],
+        [
+          12,
+          41619
+        ],
+        [
+          12,
+          41619
+        ],
+        [
+          12,
+          42061
+        ],
+        [
+          12,
+          43132
+        ],
+        [
+          12,
+          47434
+        ],
+        [
+          12,
+          48275
+        ],
+        [
+          12,
+          48766
+        ],
+        [
+          13,
+          49660
+        ],
+        [
+          13,
+          49668
+        ],
+        [
+          13,
+          50833
+        ],
+        [
+          13,
+          51596
+        ],
+        [
+          13,
+          52502
+        ],
+        [
+          13,
+          53965
+        ],
+        [
+          13,
+          54512
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "table_start": 41006,
+      "table_end": 41038,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 419,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/2296"
+    },
+    {
+      "bank": 12,
+      "pc": 45119,
+      "rom_offset": 102479,
+      "targets": [
+        45154,
+        45277,
+        45397,
+        45434,
+        45525,
+        45635,
+        45154,
+        45773,
+        45852,
+        46006,
+        46032,
+        46122,
+        46182,
+        46264,
+        46348,
+        46502
+      ],
+      "edge_targets": [
+        [
+          12,
+          45154
+        ],
+        [
+          12,
+          45277
+        ],
+        [
+          12,
+          45397
+        ],
+        [
+          12,
+          45434
+        ],
+        [
+          12,
+          45525
+        ],
+        [
+          12,
+          45635
+        ],
+        [
+          12,
+          45154
+        ],
+        [
+          12,
+          45773
+        ],
+        [
+          12,
+          45852
+        ],
+        [
+          12,
+          46006
+        ],
+        [
+          12,
+          46032
+        ],
+        [
+          12,
+          46122
+        ],
+        [
+          12,
+          46182
+        ],
+        [
+          12,
+          46264
+        ],
+        [
+          12,
+          46348
+        ],
+        [
+          12,
+          46502
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "table_start": 45122,
+      "table_end": 45154,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 9232,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/4089"
+    },
+    {
+      "bank": 12,
+      "pc": 44457,
+      "rom_offset": 101817,
+      "targets": [
+        44492,
+        44504,
+        44504,
+        44504,
+        44516,
+        44526,
+        44539,
+        44648,
+        44740,
+        44750,
+        44810,
+        44915,
+        44810,
+        44961,
+        45011,
+        45085
+      ],
+      "edge_targets": [
+        [
+          12,
+          44492
+        ],
+        [
+          12,
+          44504
+        ],
+        [
+          12,
+          44504
+        ],
+        [
+          12,
+          44504
+        ],
+        [
+          12,
+          44516
+        ],
+        [
+          12,
+          44526
+        ],
+        [
+          12,
+          44539
+        ],
+        [
+          12,
+          44648
+        ],
+        [
+          12,
+          44740
+        ],
+        [
+          12,
+          44750
+        ],
+        [
+          12,
+          44810
+        ],
+        [
+          12,
+          44915
+        ],
+        [
+          12,
+          44810
+        ],
+        [
+          12,
+          44961
+        ],
+        [
+          12,
+          45011
+        ],
+        [
+          12,
+          45085
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "table_start": 44460,
+      "table_end": 44492,
+      "group": "battle",
+      "code_pair": [
+        12,
+        13
+      ],
+      "Source_method": "battle_scene_controller._dispatch",
+      "Source_line": 8152,
+      "catalog": {
+        "path": "analysis/battle_fsm/program.json",
+        "sha256": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb"
+      },
+      "locator": "/instructions/5482"
+    },
+    {
+      "bank": 14,
+      "pc": 41068,
+      "rom_offset": 114812,
+      "targets": [
+        41093,
+        41311,
+        42231,
+        43555,
+        41916,
+        52547,
+        52773,
+        53095,
+        44229,
+        45548,
+        54970
+      ],
+      "edge_targets": [
+        [
+          14,
+          41093
+        ],
+        [
+          14,
+          41311
+        ],
+        [
+          14,
+          42231
+        ],
+        [
+          14,
+          43555
+        ],
+        [
+          14,
+          41916
+        ],
+        [
+          15,
+          52547
+        ],
+        [
+          15,
+          52773
+        ],
+        [
+          15,
+          53095
+        ],
+        [
+          14,
+          44229
+        ],
+        [
+          14,
+          45548
+        ],
+        [
+          15,
+          54970
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "table_start": 41071,
+      "table_end": 41093,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 419,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/1"
+    },
+    {
+      "bank": 14,
+      "pc": 41096,
+      "rom_offset": 114840,
+      "targets": [
+        41109,
+        41171,
+        41209,
+        41241,
+        41271
+      ],
+      "edge_targets": [
+        [
+          14,
+          41109
+        ],
+        [
+          14,
+          41171
+        ],
+        [
+          14,
+          41209
+        ],
+        [
+          14,
+          41241
+        ],
+        [
+          14,
+          41271
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "table_start": 41099,
+      "table_end": 41109,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 435,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/3"
+    },
+    {
+      "bank": 14,
+      "pc": 41317,
+      "rom_offset": 115061,
+      "targets": [
+        41326,
+        41347,
+        41525
+      ],
+      "edge_targets": [
+        [
+          14,
+          41326
+        ],
+        [
+          14,
+          41347
+        ],
+        [
+          14,
+          41525
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 41320,
+      "table_end": 41326,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 589,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/86"
+    },
+    {
+      "bank": 14,
+      "pc": 41919,
+      "rom_offset": 115663,
+      "targets": [
+        41936,
+        41940,
+        41970,
+        41991,
+        42120,
+        42165,
+        41970
+      ],
+      "edge_targets": [
+        [
+          14,
+          41936
+        ],
+        [
+          14,
+          41940
+        ],
+        [
+          14,
+          41970
+        ],
+        [
+          14,
+          41991
+        ],
+        [
+          14,
+          42120
+        ],
+        [
+          14,
+          42165
+        ],
+        [
+          14,
+          41970
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "table_start": 41922,
+      "table_end": 41936,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 1234,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/331"
+    },
+    {
+      "bank": 14,
+      "pc": 42240,
+      "rom_offset": 115984,
+      "targets": [
+        42265,
+        42436,
+        42483,
+        42525,
+        42580,
+        42724,
+        42754,
+        42798,
+        42826,
+        42843,
+        42976
+      ],
+      "edge_targets": [
+        [
+          14,
+          42265
+        ],
+        [
+          14,
+          42436
+        ],
+        [
+          14,
+          42483
+        ],
+        [
+          14,
+          42525
+        ],
+        [
+          14,
+          42580
+        ],
+        [
+          14,
+          42724
+        ],
+        [
+          14,
+          42754
+        ],
+        [
+          14,
+          42798
+        ],
+        [
+          14,
+          42826
+        ],
+        [
+          14,
+          42843
+        ],
+        [
+          14,
+          42976
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "table_start": 42243,
+      "table_end": 42265,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 1535,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/456"
+    },
+    {
+      "bank": 14,
+      "pc": 43581,
+      "rom_offset": 117325,
+      "targets": [
+        43594,
+        43709,
+        43760,
+        43893,
+        43930
+      ],
+      "edge_targets": [
+        [
+          14,
+          43594
+        ],
+        [
+          14,
+          43709
+        ],
+        [
+          14,
+          43760
+        ],
+        [
+          14,
+          43893
+        ],
+        [
+          14,
+          43930
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "table_start": 43584,
+      "table_end": 43594,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 4264,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/1032"
+    },
+    {
+      "bank": 14,
+      "pc": 44255,
+      "rom_offset": 117999,
+      "targets": [
+        44268,
+        44348,
+        44381,
+        44561,
+        44686
+      ],
+      "edge_targets": [
+        [
+          14,
+          44268
+        ],
+        [
+          14,
+          44348
+        ],
+        [
+          14,
+          44381
+        ],
+        [
+          14,
+          44561
+        ],
+        [
+          14,
+          44686
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "table_start": 44258,
+      "table_end": 44268,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 4796,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/1297"
+    },
+    {
+      "bank": 14,
+      "pc": 44823,
+      "rom_offset": 118567,
+      "targets": [
+        45010,
+        44838,
+        45070,
+        45102,
+        45180,
+        45212
+      ],
+      "edge_targets": [
+        [
+          14,
+          45010
+        ],
+        [
+          14,
+          44838
+        ],
+        [
+          14,
+          45070
+        ],
+        [
+          14,
+          45102
+        ],
+        [
+          14,
+          45180
+        ],
+        [
+          14,
+          45212
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "table_start": 44826,
+      "table_end": 44838,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 5148,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/1480"
+    },
+    {
+      "bank": 14,
+      "pc": 45574,
+      "rom_offset": 119318,
+      "targets": [
+        45585,
+        45659,
+        45813,
+        46063
+      ],
+      "edge_targets": [
+        [
+          14,
+          45585
+        ],
+        [
+          14,
+          45659
+        ],
+        [
+          14,
+          45813
+        ],
+        [
+          14,
+          46063
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "table_start": 45577,
+      "table_end": 45585,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 5703,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/1735"
+    },
+    {
+      "bank": 15,
+      "pc": 52550,
+      "rom_offset": 126294,
+      "targets": [
+        52559,
+        52569,
+        52687
+      ],
+      "edge_targets": [
+        [
+          15,
+          52559
+        ],
+        [
+          15,
+          52569
+        ],
+        [
+          15,
+          52687
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 52553,
+      "table_end": 52559,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 9822,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/4044"
+    },
+    {
+      "bank": 15,
+      "pc": 52776,
+      "rom_offset": 126520,
+      "targets": [
+        52787,
+        52840,
+        52910,
+        52986
+      ],
+      "edge_targets": [
+        [
+          15,
+          52787
+        ],
+        [
+          15,
+          52840
+        ],
+        [
+          15,
+          52910
+        ],
+        [
+          15,
+          52986
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "table_start": 52779,
+      "table_end": 52787,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 10048,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/4132"
+    },
+    {
+      "bank": 15,
+      "pc": 53098,
+      "rom_offset": 126842,
+      "targets": [
+        53111,
+        53149,
+        53186,
+        53256,
+        53332
+      ],
+      "edge_targets": [
+        [
+          15,
+          53111
+        ],
+        [
+          15,
+          53149
+        ],
+        [
+          15,
+          53186
+        ],
+        [
+          15,
+          53256
+        ],
+        [
+          15,
+          53332
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "table_start": 53101,
+      "table_end": 53111,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 10256,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/4248"
+    },
+    {
+      "bank": 15,
+      "pc": 54973,
+      "rom_offset": 128717,
+      "targets": [
+        54988,
+        55005,
+        55082,
+        55082,
+        55107,
+        55167
+      ],
+      "edge_targets": [
+        [
+          15,
+          54988
+        ],
+        [
+          15,
+          55005
+        ],
+        [
+          15,
+          55082
+        ],
+        [
+          15,
+          55082
+        ],
+        [
+          15,
+          55107
+        ],
+        [
+          15,
+          55167
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "table_start": 54976,
+      "table_end": 54988,
+      "group": "attack",
+      "code_pair": [
+        14,
+        15
+      ],
+      "Source_method": "attack_scene_controller._dispatch",
+      "Source_line": 11666,
+      "catalog": {
+        "path": "analysis/attack_fsm/program.json",
+        "sha256": "7d97a6c8541a5a13d156fca6979c6d341394c96f452120590761010c7def9ee6"
+      },
+      "locator": "/instructions/4967"
+    },
+    {
+      "bank": 23,
+      "pc": 45333,
+      "rom_offset": 192805,
+      "targets": [
+        45380,
+        45903,
+        46536,
+        47303,
+        47725,
+        48187,
+        48361,
+        48760,
+        49290,
+        49430,
+        45380,
+        45380,
+        45380,
+        49692,
+        49910,
+        50276,
+        50328,
+        50825,
+        51529,
+        52126,
+        52359,
+        52540
+      ],
+      "edge_targets": [
+        [
+          23,
+          45380
+        ],
+        [
+          23,
+          45903
+        ],
+        [
+          23,
+          46536
+        ],
+        [
+          23,
+          47303
+        ],
+        [
+          23,
+          47725
+        ],
+        [
+          23,
+          48187
+        ],
+        [
+          23,
+          48361
+        ],
+        [
+          23,
+          48760
+        ],
+        [
+          24,
+          49290
+        ],
+        [
+          24,
+          49430
+        ],
+        [
+          23,
+          45380
+        ],
+        [
+          23,
+          45380
+        ],
+        [
+          23,
+          45380
+        ],
+        [
+          24,
+          49692
+        ],
+        [
+          24,
+          49910
+        ],
+        [
+          24,
+          50276
+        ],
+        [
+          24,
+          50328
+        ],
+        [
+          24,
+          50825
+        ],
+        [
+          24,
+          51529
+        ],
+        [
+          24,
+          52126
+        ],
+        [
+          24,
+          52359
+        ],
+        [
+          24,
+          52540
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "table_start": 45336,
+      "table_end": 45380,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 132,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/9"
+    },
+    {
+      "bank": 23,
+      "pc": 45383,
+      "rom_offset": 192855,
+      "targets": [
+        45402,
+        45478,
+        45499,
+        45524,
+        45550,
+        45596,
+        45616,
+        45792
+      ],
+      "edge_targets": [
+        [
+          23,
+          45402
+        ],
+        [
+          23,
+          45478
+        ],
+        [
+          23,
+          45499
+        ],
+        [
+          23,
+          45524
+        ],
+        [
+          23,
+          45550
+        ],
+        [
+          23,
+          45596
+        ],
+        [
+          23,
+          45616
+        ],
+        [
+          23,
+          45792
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "table_start": 45386,
+      "table_end": 45402,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 142,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/11"
+    },
+    {
+      "bank": 23,
+      "pc": 45906,
+      "rom_offset": 193378,
+      "targets": [
+        45921,
+        46064,
+        46087,
+        46206,
+        46418,
+        46441
+      ],
+      "edge_targets": [
+        [
+          23,
+          45921
+        ],
+        [
+          23,
+          46064
+        ],
+        [
+          23,
+          46087
+        ],
+        [
+          23,
+          46206
+        ],
+        [
+          23,
+          46418
+        ],
+        [
+          23,
+          46441
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "table_start": 45909,
+      "table_end": 45921,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 609,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/209"
+    },
+    {
+      "bank": 23,
+      "pc": 46539,
+      "rom_offset": 194011,
+      "targets": [
+        46552,
+        46630,
+        46681,
+        46729,
+        46873
+      ],
+      "edge_targets": [
+        [
+          23,
+          46552
+        ],
+        [
+          23,
+          46630
+        ],
+        [
+          23,
+          46681
+        ],
+        [
+          23,
+          46729
+        ],
+        [
+          23,
+          46873
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "table_start": 46542,
+      "table_end": 46552,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 1171,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/446"
+    },
+    {
+      "bank": 23,
+      "pc": 47306,
+      "rom_offset": 194778,
+      "targets": [
+        47315,
+        47525,
+        47560
+      ],
+      "edge_targets": [
+        [
+          23,
+          47315
+        ],
+        [
+          23,
+          47525
+        ],
+        [
+          23,
+          47560
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 47309,
+      "table_end": 47315,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 2112,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/723"
+    },
+    {
+      "bank": 23,
+      "pc": 47728,
+      "rom_offset": 195200,
+      "targets": [
+        47751,
+        47781,
+        47808,
+        47834,
+        47875,
+        47937,
+        47963,
+        48019,
+        48064,
+        48128
+      ],
+      "edge_targets": [
+        [
+          23,
+          47751
+        ],
+        [
+          23,
+          47781
+        ],
+        [
+          23,
+          47808
+        ],
+        [
+          23,
+          47834
+        ],
+        [
+          23,
+          47875
+        ],
+        [
+          23,
+          47937
+        ],
+        [
+          23,
+          47963
+        ],
+        [
+          23,
+          48019
+        ],
+        [
+          23,
+          48064
+        ],
+        [
+          23,
+          48128
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "table_start": 47731,
+      "table_end": 47751,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 2654,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/896"
+    },
+    {
+      "bank": 23,
+      "pc": 48190,
+      "rom_offset": 195662,
+      "targets": [
+        48199,
+        48220,
+        48268
+      ],
+      "edge_targets": [
+        [
+          23,
+          48199
+        ],
+        [
+          23,
+          48220
+        ],
+        [
+          23,
+          48268
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 48193,
+      "table_end": 48199,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 3137,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/1082"
+    },
+    {
+      "bank": 23,
+      "pc": 48364,
+      "rom_offset": 195836,
+      "targets": [
+        48379,
+        48414,
+        48448,
+        48477,
+        48553,
+        48703
+      ],
+      "edge_targets": [
+        [
+          23,
+          48379
+        ],
+        [
+          23,
+          48414
+        ],
+        [
+          23,
+          48448
+        ],
+        [
+          23,
+          48477
+        ],
+        [
+          23,
+          48553
+        ],
+        [
+          23,
+          48703
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "table_start": 48367,
+      "table_end": 48379,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 3297,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/1147"
+    },
+    {
+      "bank": 23,
+      "pc": 48763,
+      "rom_offset": 196235,
+      "targets": [
+        48774,
+        48963,
+        48998,
+        49022
+      ],
+      "edge_targets": [
+        [
+          23,
+          48774
+        ],
+        [
+          23,
+          48963
+        ],
+        [
+          23,
+          48998
+        ],
+        [
+          23,
+          49022
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "table_start": 48766,
+      "table_end": 48774,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 3680,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/1306"
+    },
+    {
+      "bank": 24,
+      "pc": 49433,
+      "rom_offset": 196905,
+      "targets": [
+        49444,
+        49466,
+        49482,
+        49543
+      ],
+      "edge_targets": [
+        [
+          24,
+          49444
+        ],
+        [
+          24,
+          49466
+        ],
+        [
+          24,
+          49482
+        ],
+        [
+          24,
+          49543
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "table_start": 49436,
+      "table_end": 49444,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 4128,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/1509"
+    },
+    {
+      "bank": 24,
+      "pc": 49695,
+      "rom_offset": 197167,
+      "targets": [
+        49706,
+        49750,
+        49806,
+        49834
+      ],
+      "edge_targets": [
+        [
+          24,
+          49706
+        ],
+        [
+          24,
+          49750
+        ],
+        [
+          24,
+          49806
+        ],
+        [
+          24,
+          49834
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "table_start": 49698,
+      "table_end": 49706,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 4380,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/1607"
+    },
+    {
+      "bank": 24,
+      "pc": 49923,
+      "rom_offset": 197395,
+      "targets": [
+        49934,
+        49979,
+        50013,
+        50255
+      ],
+      "edge_targets": [
+        [
+          24,
+          49934
+        ],
+        [
+          24,
+          49979
+        ],
+        [
+          24,
+          50013
+        ],
+        [
+          24,
+          50255
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "table_start": 49926,
+      "table_end": 49934,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 4599,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/1697"
+    },
+    {
+      "bank": 24,
+      "pc": 50279,
+      "rom_offset": 197751,
+      "targets": [
+        50286,
+        50304
+      ],
+      "edge_targets": [
+        [
+          24,
+          50286
+        ],
+        [
+          24,
+          50304
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1
+      ],
+      "table_start": 50282,
+      "table_end": 50286,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 5051,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/1840"
+    },
+    {
+      "bank": 24,
+      "pc": 50331,
+      "rom_offset": 197803,
+      "targets": [
+        50348,
+        50371,
+        50409,
+        50522,
+        50584,
+        50642,
+        50795
+      ],
+      "edge_targets": [
+        [
+          24,
+          50348
+        ],
+        [
+          24,
+          50371
+        ],
+        [
+          24,
+          50409
+        ],
+        [
+          24,
+          50522
+        ],
+        [
+          24,
+          50584
+        ],
+        [
+          24,
+          50642
+        ],
+        [
+          24,
+          50795
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "table_start": 50334,
+      "table_end": 50348,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 5107,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/1858"
+    },
+    {
+      "bank": 24,
+      "pc": 50828,
+      "rom_offset": 198300,
+      "targets": [
+        50847,
+        50870,
+        50908,
+        50989,
+        51059,
+        51209,
+        51274,
+        51332
+      ],
+      "edge_targets": [
+        [
+          24,
+          50847
+        ],
+        [
+          24,
+          50870
+        ],
+        [
+          24,
+          50908
+        ],
+        [
+          24,
+          50989
+        ],
+        [
+          24,
+          51059
+        ],
+        [
+          24,
+          51209
+        ],
+        [
+          24,
+          51274
+        ],
+        [
+          24,
+          51332
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "table_start": 50831,
+      "table_end": 50847,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 5630,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/2056"
+    },
+    {
+      "bank": 24,
+      "pc": 51532,
+      "rom_offset": 199004,
+      "targets": [
+        51551,
+        51574,
+        51612,
+        51693,
+        51792,
+        51896,
+        51924,
+        51982
+      ],
+      "edge_targets": [
+        [
+          24,
+          51551
+        ],
+        [
+          24,
+          51574
+        ],
+        [
+          24,
+          51612
+        ],
+        [
+          24,
+          51693
+        ],
+        [
+          24,
+          51792
+        ],
+        [
+          24,
+          51896
+        ],
+        [
+          24,
+          51924
+        ],
+        [
+          24,
+          51982
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "table_start": 51535,
+      "table_end": 51551,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 6517,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/2341"
+    },
+    {
+      "bank": 24,
+      "pc": 52129,
+      "rom_offset": 199601,
+      "targets": [
+        52138,
+        52234,
+        52322
+      ],
+      "edge_targets": [
+        [
+          24,
+          52138
+        ],
+        [
+          24,
+          52234
+        ],
+        [
+          24,
+          52322
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 52132,
+      "table_end": 52138,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 7112,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/2584"
+    },
+    {
+      "bank": 24,
+      "pc": 52362,
+      "rom_offset": 199834,
+      "targets": [
+        52371,
+        52394,
+        52432
+      ],
+      "edge_targets": [
+        [
+          24,
+          52371
+        ],
+        [
+          24,
+          52394
+        ],
+        [
+          24,
+          52432
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 52365,
+      "table_end": 52371,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 7367,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/2672"
+    },
+    {
+      "bank": 24,
+      "pc": 52543,
+      "rom_offset": 200015,
+      "targets": [
+        52552,
+        52575,
+        52613
+      ],
+      "edge_targets": [
+        [
+          24,
+          52552
+        ],
+        [
+          24,
+          52575
+        ],
+        [
+          24,
+          52613
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 52546,
+      "table_end": 52552,
+      "group": "duel",
+      "code_pair": [
+        23,
+        24
+      ],
+      "Source_method": "duel_scene_controller._dispatch",
+      "Source_line": 7634,
+      "catalog": {
+        "path": "analysis/duel_fsm/program.json",
+        "sha256": "7e518601f71c6d8b384d46fc43b5ec058c94129dd1c9482d71efc6fef61074b1"
+      },
+      "locator": "/instructions/2746"
+    },
+    {
+      "bank": 8,
+      "pc": 48201,
+      "rom_offset": 72793,
+      "targets": [
+        48210,
+        48473,
+        48487
+      ],
+      "edge_targets": [
+        [
+          8,
+          48210
+        ],
+        [
+          8,
+          48473
+        ],
+        [
+          8,
+          48487
+        ]
+      ],
+      "legal_indices": [
+        0,
+        1,
+        2
+      ],
+      "table_start": 48204,
+      "table_end": 48210,
+      "group": "postbattle",
+      "code_pair": [
+        8,
+        9
+      ],
+      "Source_method": "battle_scene_controller._dispatch inherited by PostbattleEarlyServices",
+      "Source_line": 91,
+      "catalog": {
+        "path": "source/recovered/postbattle_early_services.py",
+        "sha256": "242b4ebf204b6a0b381b11c55231c426af8158695fc46e45ccae43b47886ff4b"
+      },
+      "locator": "allocate_AI_officers"
+    }
+  ],
+  "original_helper": {
+    "bank": 31,
+    "start": 60126,
+    "end_exclusive": 60151,
+    "raw_hex": "84000aa8c8688501688502b1018503c8b1018504a4006c0300"
+  },
+  "natural_reference": {
+    "initial": {
+      "snapshot_sequence": 22,
+      "event_sequence": 245745,
+      "frame": 357,
+      "physical_bank": 8,
+      "entry": 48201,
+      "byte_offset": 215040,
+      "bytes": 10240,
+      "RAM_sha256": "60339fe61e40ff8139280929b00eee2f97c3fa9e2879953ce7d12e10e8f42054",
+      "SRAM_sha256": "34f2d3bbafbd9c138e8df9ebc054df44c6b53654453a7c87c9a23daf771dac8d",
+      "sha256": "ea1ae5ff71c6f478b9f5cbf9e77b698a4606d302766a1058aa70f1c9804b3215",
+      "actual_registers": {
+        "a": 2,
+        "x": 64,
+        "y": 3,
+        "p": 33,
+        "sp": 236,
+        "pc": 48201
+      },
+      "actual_PRG_banks": [
+        17,
+        8,
+        9,
+        31
+      ],
+      "stack_top_word_raw": 47928,
+      "actual_battle_state": [
+        15,
+        0
+      ],
+      "actual_outcome": 1,
+      "actual_side_0504": 128,
+      "actual_mode_6F91": 2,
+      "actual_050B": 0,
+      "actual_UI_0540_0547": [
+        0,
+        255,
+        255,
+        5,
+        255,
+        255,
+        255,
+        255
+      ],
+      "actual_global_007A": 4,
+      "actual_NMI_0078": 3,
+      "actual_day_0506": 31,
+      "actual_working_officers_6FA1_6FB5": [
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        0,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "actual_origin_escape_destination_052A_052C": [
+        16,
+        67,
+        0
+      ],
+      "actual_city_records_6000_63BF": "07000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000001009921441c0f27410355645324770363074d1bffffffffffffff000000000004001622021d0f2742036364771e590363de0532ffffffffffffff00000000000100fd2522140f271c036364571b580363087509c28698ffffffff000000000001005c23f51f0f27520363641b25530363a733bfffffffffffffff00000000000400622507260f276c0363640f276103636d9926ffffffffffffff00000000000600fb20341a0f27370363631b25770363b62cffffffffffffffff0000000000060070269c000f27320363641b251c0363a29294ffffffffffffff0000000000000046220f27491f401f4c640f2734036316d31725ba7dffffffff00000000000600582104150f271f0363641b254d03634878ffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff00000000000200000000000f270f2754640f270f2763ffffffffffffffffffff0000000000000056267a1c0f27410363640f270f2763addaffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000002000f270f120f270f2763640f270f2763821d7e1affffffffffff000000000003006323d31b0f273d0363641b250f27638a60ffffffffffffffff00000000000300d425ae160f27290362641b25360363a39e59ffffffffffffff000000000003009625141f0f274d035964332125036340ffffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff0000000000030041231a190f27320363640f273203632d8d2fffffffffffffff00000000000000f21e0f120f270f2758640f271f0363db6a8fffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000005009c2257160f2724035b641b25370363973f51ffffffffffffff00000000000500eb25aa1e0f274c036364771e6703634610d1ffffffffffffff00000000000500e423491b0f273e036364ef235a03634296ffffffffffffffff00000000000500042165050f27490363630f27370363dcc9c4ffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff0000000000",
+      "actual_active_officers_0664_0677": [
+        131,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        67,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "actual_ruler_records_6F07_6F3E": [
+        "ad0c000300000000",
+        "0803000300000000",
+        "830b000000000000",
+        "8a0f000300000000",
+        "de02000300000000",
+        "dc1c000300000000",
+        "b606000300000000"
+      ],
+      "snapshot_role": "actual_selected_preopcode_software_context",
+      "capture_core_sha256": "f886fefae5f2493d3931341cdb2458ff4a6637fcea8a15ffe818ebb399c9b0a6",
+      "mother": {
+        "path": "analysis/phase32/ancestry-prefix/day30/final.state",
+        "bytes": 13783,
+        "sha256": "570e3443291672e859ecd014c73fc272d8d7f724ce5f192fa279bbc01766a175"
+      },
+      "additional_core_memory_writes": 0,
+      "known_inherited_preparation_byte_writes": 0,
+      "instantaneous_N163_PPU_APU_captured": false,
+      "origin": "Independent WP05 passive observer actual pre-opcode software context; not fixed-core internal trace.",
+      "exported_RAM": "callee-0022-BC49-ram.bin",
+      "exported_SRAM": "callee-0022-BC49-sram.bin"
+    },
+    "target": {
+      "snapshot_sequence": 23,
+      "event_sequence": 245765,
+      "frame": 357,
+      "physical_bank": 8,
+      "entry": 48487,
+      "byte_offset": 225280,
+      "bytes": 10240,
+      "RAM_sha256": "6237a2fe6d214254ce4a7e9f0ff12c0e229b1bd96fe67a891e09c0a376560c95",
+      "SRAM_sha256": "34f2d3bbafbd9c138e8df9ebc054df44c6b53654453a7c87c9a23daf771dac8d",
+      "sha256": "d457cf41a1ce9de3b3440102322851b1685bbe0102ac594aa9a481efcc326af6",
+      "actual_registers": {
+        "a": 189,
+        "x": 64,
+        "y": 3,
+        "p": 32,
+        "sp": 236,
+        "pc": 48487
+      },
+      "actual_PRG_banks": [
+        17,
+        8,
+        9,
+        31
+      ],
+      "stack_top_word_raw": 47928,
+      "actual_battle_state": [
+        15,
+        0
+      ],
+      "actual_outcome": 1,
+      "actual_side_0504": 128,
+      "actual_mode_6F91": 2,
+      "actual_050B": 0,
+      "actual_UI_0540_0547": [
+        0,
+        255,
+        255,
+        5,
+        255,
+        255,
+        255,
+        255
+      ],
+      "actual_global_007A": 4,
+      "actual_NMI_0078": 3,
+      "actual_day_0506": 31,
+      "actual_working_officers_6FA1_6FB5": [
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        0,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "actual_origin_escape_destination_052A_052C": [
+        16,
+        67,
+        0
+      ],
+      "actual_city_records_6000_63BF": "07000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000001009921441c0f27410355645324770363074d1bffffffffffffff000000000004001622021d0f2742036364771e590363de0532ffffffffffffff00000000000100fd2522140f271c036364571b580363087509c28698ffffffff000000000001005c23f51f0f27520363641b25530363a733bfffffffffffffff00000000000400622507260f276c0363640f276103636d9926ffffffffffffff00000000000600fb20341a0f27370363631b25770363b62cffffffffffffffff0000000000060070269c000f27320363641b251c0363a29294ffffffffffffff0000000000000046220f27491f401f4c640f2734036316d31725ba7dffffffff00000000000600582104150f271f0363641b254d03634878ffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff00000000000200000000000f270f2754640f270f2763ffffffffffffffffffff0000000000000056267a1c0f27410363640f270f2763addaffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000002000f270f120f270f2763640f270f2763821d7e1affffffffffff000000000003006323d31b0f273d0363641b250f27638a60ffffffffffffffff00000000000300d425ae160f27290362641b25360363a39e59ffffffffffffff000000000003009625141f0f274d035964332125036340ffffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff0000000000030041231a190f27320363640f273203632d8d2fffffffffffffff00000000000000f21e0f120f270f2758640f271f0363db6a8fffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff000000000005009c2257160f2724035b641b25370363973f51ffffffffffffff00000000000500eb25aa1e0f274c036364771e6703634610d1ffffffffffffff00000000000500e423491b0f273e036364ef235a03634296ffffffffffffffff00000000000500042165050f27490363630f27370363dcc9c4ffffffffffffff000000000007000f270f120f270f2763640f270f2763ffffffffffffffffffff0000000000",
+      "actual_active_officers_0664_0677": [
+        131,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        67,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "actual_ruler_records_6F07_6F3E": [
+        "ad0c000300000000",
+        "0803000300000000",
+        "830b000000000000",
+        "8a0f000300000000",
+        "de02000300000000",
+        "dc1c000300000000",
+        "b606000300000000"
+      ],
+      "snapshot_role": "actual_selected_preopcode_software_context",
+      "capture_core_sha256": "f886fefae5f2493d3931341cdb2458ff4a6637fcea8a15ffe818ebb399c9b0a6",
+      "mother": {
+        "path": "analysis/phase32/ancestry-prefix/day30/final.state",
+        "bytes": 13783,
+        "sha256": "570e3443291672e859ecd014c73fc272d8d7f724ce5f192fa279bbc01766a175"
+      },
+      "additional_core_memory_writes": 0,
+      "known_inherited_preparation_byte_writes": 0,
+      "instantaneous_N163_PPU_APU_captured": false,
+      "origin": "Independent WP05 passive observer actual pre-opcode software context; not fixed-core internal trace.",
+      "exported_RAM": "callee-0023-BD67-ram.bin",
+      "exported_SRAM": "callee-0023-BD67-sram.bin"
+    },
+    "snapshot_index": {
+      "path": "analysis/wp05-natural-nonempty/runtime/natural-day31-nonempty/observer/snapshot-index.jsonl",
+      "sha256": "fd5e9fb6b60f3779662206a28ec57589095518f6737484304f29a88833e0df6f"
+    },
+    "evidence": {
+      "path": "analysis/wp05-natural-nonempty/evidence.json",
+      "sha256": "f986bac6805abdcb01abdeb3eaeb636e1f94a845a30d691a94d0717d3d920f9b"
+    },
+    "new_Native_runs": 0,
+    "credit": "Existing WP05 natural local357 index2 only. Native records actual pushes/PLA boundaries/target, not selected LDA or Pull8 bus read traces."
+  },
+  "ledger_policy": "No global migration: untested callers, computed/bare/middle/alternate mapping entries remain outside proved interface. Preserve all1526 and raw345 bytes.",
+  "field_counts": {
+    "total": 1526,
+    "conditional_disjoint": 1203,
+    "possible": 80,
+    "unknown": 243,
+    "remaining": 323
+  },
+  "raw_counts": {
+    "total": 345,
+    "operand": 104,
+    "data": 13,
+    "unproved_entry": 228
+  },
+  "raw228_semantic_mapping": null,
+  "official_city_names": {
+    "1": null,
+    "28": null,
+    "29": null,
+    "30": null,
+    "31": null
+  },
+  "whole_game_closure_proven": false,
+  "unknown_unique_services": null,
+  "completion_percentage": null,
+  "remaining_rounds_estimate": null
+}

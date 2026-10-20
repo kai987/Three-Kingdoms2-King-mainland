@@ -1,0 +1,47 @@
+{
+  "schema": "phase22-wild-recruitment-caller-input-v1",
+  "origin": "actual_Native_snapshot_originalCPU_reached_caller",
+  "original_Native_state": "analysis/phase22/runtime/original-control/recruitment-success-previous-1-frame14836.state",
+  "original_Native_state_sha256": "17a17cbb51aae801f143cc322a2551227b0d18d26ddca2a6c53336114d68a03f",
+  "native_captured_registers": {
+    "a": 218,
+    "x": 4,
+    "y": 2,
+    "p": 164,
+    "sp": 247,
+    "pc": 54945
+  },
+  "original_CPU_prefix_instructions": 1288,
+  "registers": {
+    "a": 2,
+    "x": 4,
+    "y": 17,
+    "p": 37,
+    "sp": 251,
+    "pc": 50617
+  },
+  "physical_banks": [
+    16,
+    10,
+    11,
+    31
+  ],
+  "N163_address": 76,
+  "N163_autoincrement": false,
+  "existing_return_PC": 40999,
+  "synthetic_caller_or_PC_or_RNG_or_request_preparation": false,
+  "injected_new_NMI": 0,
+  "hardware_events": [
+    {
+      "kind": "controller_ports",
+      "buttons": [
+        0,
+        0
+      ],
+      "range": "entire independent CPU continuation",
+      "write_to_RAM_buttons": false
+    }
+  ],
+  "Native_internal_CPU_trace": false,
+  "prepared_numeric_bytes": []
+}

@@ -1,0 +1,173 @@
+{
+  "schema": "phase16-field-semantics-static-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ranges": [
+    {
+      "name": "upper_affinity_glyph_complete",
+      "physical_bank": 25,
+      "cpu": 46640,
+      "end_cpu_exclusive": 46663,
+      "rom_offset": 210496,
+      "byte_count": 23,
+      "raw_hex": "A0 0B B1 10 4A 4A 29 03 0A A8 B9 47 B6 8D 8B 03 B9 48 B6 8D 8C 03 60"
+    },
+    {
+      "name": "lower_affinity_glyph_prefix",
+      "physical_bank": 25,
+      "cpu": 46669,
+      "end_cpu_exclusive": 46691,
+      "rom_offset": 210525,
+      "byte_count": 22,
+      "raw_hex": "A0 0B B1 10 4A 4A 29 03 0A A8 B9 13 B7 8D 8B 03 B9 14 B7 8D 8C 03"
+    },
+    {
+      "name": "player_movement_quote",
+      "physical_bank": 12,
+      "cpu": 42983,
+      "end_cpu_exclusive": 43043,
+      "rom_offset": 100343,
+      "byte_count": 60,
+      "raw_hex": "48 AC 09 05 B9 64 06 20 D7 F2 A0 0B B1 00 4A 4A 29 03 85 00 68 0A 0A 05 00 A8 AE 09 05 BD 3C 06 C9 06 90 0C B9 23 A8 AA AD 05 05 38 F9 23 A8 60 B9 3F A8 AA AD 05 05 38 F9 3F A8 60"
+    },
+    {
+      "name": "AI_movement_quote_suffix",
+      "physical_bank": 8,
+      "cpu": 42902,
+      "end_cpu_exclusive": 42957,
+      "rom_offset": 67494,
+      "byte_count": 55,
+      "raw_hex": "A0 0B B1 20 4A 4A 29 03 8D 22 00 68 0A 0A 0D 22 00 AA A0 08 B1 20 38 E9 59 B1 20 E9 02 90 0C BD CD A7 A8 AD 05 05 38 FD CD A7 60 BD E9 A7 A8 AD 05 05 38 FD E9 A7 60"
+    },
+    {
+      "name": "attack_terrain_affinity_suffix",
+      "physical_bank": 15,
+      "cpu": 52015,
+      "end_cpu_exclusive": 52057,
+      "rom_offset": 125759,
+      "byte_count": 42,
+      "raw_hex": "48 A0 00 AD 45 05 C9 0B 90 01 C8 B9 60 05 20 D7 F2 A0 0B B1 00 4A 4A 29 03 A8 68 AA D9 E9 CB F0 05 D9 ED CB D0 02 A9 00 A8 60"
+    },
+    {
+      "name": "formation_parameters",
+      "physical_bank": 15,
+      "cpu": 53506,
+      "end_cpu_exclusive": 53680,
+      "rom_offset": 127250,
+      "byte_count": 174,
+      "raw_hex": "8D 0A 00 8E 0B 00 AD 0C 00 20 D7 F2 A0 0B B1 00 4A 4A 29 03 0A 0A 0A 18 6D 44 05 A8 B9 B0 D1 8D 0D 00 AD 7A 05 C9 04 90 09 AD 0D 00 18 69 04 8D 0D 00 AE 0D 00 AC 0A 00 AD 44 05 C9 05 F0 19 BD C8 D1 99 50 05 BD C9 D1 99 51 05 BD CA D1 99 52 05 BD CB D1 99 53 05 60 C0 04 B0 1D A9 02 99 50 05 A9 00 99 51 05 99 52 05 99 53 05 AD 7A 05 C9 04 90 05 A9 00 99 50 05 60 A9 02 99 50 05 99 51 05 99 52 05 99 53 05 AD 7A 05 C9 06 90 05 A9 00 99 51 05 A0 01 A2 00 B9 80 05 C9 08 B0 01 E8 C8 C0 0B 90 F3 E0 00 D0 05 A9 00 8D 56 05 60"
+    },
+    {
+      "name": "unit_affinity_cache",
+      "physical_bank": 13,
+      "cpu": 56623,
+      "end_cpu_exclusive": 56690,
+      "rom_offset": 113983,
+      "byte_count": 67,
+      "raw_hex": "A2 13 BD 64 06 C9 FF F0 24 20 D7 F2 A9 FF 9D 00 06 9D 14 06 A0 0B B1 00 4A 4A 29 03 E0 0A 90 02 09 80 9D 28 06 A9 00 9D 50 06 4C 6B DD 9D 00 06 9D 14 06 9D 28 06 9D 3C 06 9D 50 06 CA 10 C3 20 03 DB 60"
+    },
+    {
+      "name": "hundred_troop_cache",
+      "physical_bank": 13,
+      "cpu": 56067,
+      "end_cpu_exclusive": 56134,
+      "rom_offset": 113427,
+      "byte_count": 67,
+      "raw_hex": "A0 31 20 5F F2 A2 13 BD 64 06 C9 FF F0 2E 20 D7 F2 8A 48 A0 08 B1 00 48 A0 09 B1 00 29 03 8D 01 00 68 8D 00 00 A9 00 8D 02 00 A9 64 8D 03 00 A9 00 8D 04 00 20 A5 EA 68 AA AD 00 00 9D 3C 06 CA 10 C5 60"
+    },
+    {
+      "name": "city_overlap_word_reference",
+      "physical_bank": 10,
+      "cpu": 48533,
+      "end_cpu_exclusive": 48547,
+      "rom_offset": 89509,
+      "byte_count": 14,
+      "raw_hex": "A0 01 B1 20 38 E9 2C C8 B1 20 E9 01 90 4B"
+    }
+  ],
+  "tables": [
+    {
+      "name": "upper_three_glyph_pairs",
+      "physical_bank": 25,
+      "cpu": 46663,
+      "rom_offset": 210519,
+      "byte_count": 6,
+      "raw_hex": "62 63 64 65 60 61"
+    },
+    {
+      "name": "lower_three_glyph_pairs",
+      "physical_bank": 25,
+      "cpu": 46867,
+      "rom_offset": 210723,
+      "byte_count": 6,
+      "raw_hex": "72 73 74 75 70 71"
+    },
+    {
+      "name": "player_first_movement_table",
+      "physical_bank": 12,
+      "cpu": 43043,
+      "rom_offset": 100403,
+      "byte_count": 28,
+      "raw_hex": "03 05 05 00 04 04 04 00 02 03 03 00 05 06 03 00 05 03 06 00 06 06 06 00 06 06 06 00"
+    },
+    {
+      "name": "player_second_movement_table",
+      "physical_bank": 12,
+      "cpu": 43071,
+      "rom_offset": 100431,
+      "byte_count": 28,
+      "raw_hex": "02 03 03 00 03 03 03 00 01 02 02 00 03 05 02 00 03 02 04 00 04 04 04 00 04 04 04 00"
+    },
+    {
+      "name": "AI_first_movement_table",
+      "physical_bank": 8,
+      "cpu": 42957,
+      "rom_offset": 67549,
+      "byte_count": 28,
+      "raw_hex": "03 05 05 00 04 04 04 00 02 03 03 00 05 06 03 00 05 03 06 00 06 06 06 00 06 06 06 00"
+    },
+    {
+      "name": "AI_second_movement_table",
+      "physical_bank": 8,
+      "cpu": 42985,
+      "rom_offset": 67577,
+      "byte_count": 28,
+      "raw_hex": "02 03 03 00 03 03 03 00 01 02 02 00 03 05 02 00 03 02 04 00 04 04 04 00 04 04 04 00"
+    },
+    {
+      "name": "terrain_match_first",
+      "physical_bank": 15,
+      "cpu": 52201,
+      "rom_offset": 125945,
+      "byte_count": 4,
+      "raw_hex": "00 02 03 00"
+    },
+    {
+      "name": "terrain_match_second",
+      "physical_bank": 15,
+      "cpu": 52205,
+      "rom_offset": 125949,
+      "byte_count": 4,
+      "raw_hex": "00 02 04 00"
+    },
+    {
+      "name": "three_affinity_formation_rows",
+      "physical_bank": 15,
+      "cpu": 53680,
+      "rom_offset": 127424,
+      "byte_count": 24,
+      "raw_hex": "00 00 00 00 00 00 00 00 00 00 00 00 08 00 00 00 00 00 00 08 00 00 00 00"
+    },
+    {
+      "name": "adjoining_formation_parameter_records",
+      "physical_bank": 15,
+      "cpu": 53704,
+      "rom_offset": 127448,
+      "byte_count": 16,
+      "raw_hex": "02 80 80 00 80 00 00 00 02 00 00 00 80 00 00 00"
+    }
+  ],
+  "source_path": "source/recovered/field_semantics.py",
+  "source_sha256": "61ccf10a7913c00c1a5af6db92eb93eb06470fb63a8bf7be5d14ee5ff6153144",
+  "analyzer_path": "scripts/analyze_field_semantics.py",
+  "analyzer_sha256": "d8d54e46c2dc16e17bd51909bb11e1fee30b24546003ea17cae171bb1667481a"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "label": "before",
+  "old_work_paths": 239404,
+  "missing_or_changed": [],
+  "full_work_manifest_sha256": "9ba954471ebce73a9ecd8687cbfb0672edb3646b58764ed27f2cd0f23339b384",
+  "anchors": {
+    "analysis/wp02-current-jsr-contract/verification.json": "5c08324983ccb93a02194350c4dc26421b3a6220eb57d8550ea162fa355681e6",
+    ".toolchain/nestopia/nestopia_libretro.dylib": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a",
+    "analysis/phase31/verification.json": "717bc872656ca43617e20888a921951fa086634672a7bbbad1ac148a445341ac",
+    "analysis/closure-audit-20261018/verification.json": "fb4d10aafdeaa9eab76479bcb930377192481a4545ef5664b37926305882a987",
+    "analysis/wp05-natural-nonempty/verification.json": "21feffa6e8b30a6b8d775537f19da2e3bfe1407ae78f026f37c481d8a25f4f1a",
+    "analysis/wp08-shortest-continuity/verification.json": "00cc749b6ce12f0c913226baef32ecefbe109093ac21eca90393e2675974b5fb",
+    "analysis/wp08-shortest-continuity/run-05/validation.json": "f1c76068998c8c800be5a5fc9f9081a474b271a61ea50cd0544c97858945efb5"
+  },
+  "excluded_runtime_environment": ".venv-trace, .DS_Store; runtime identity recorded separately",
+  "excluded_new_work": "analysis/wp03-shared-entry-family and scripts/*wp03*",
+  "Source_CPU_Native_executions": 0,
+  "seconds": 72.815
+}

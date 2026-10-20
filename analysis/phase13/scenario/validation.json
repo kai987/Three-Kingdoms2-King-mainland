@@ -1,0 +1,236 @@
+{
+  "schema": "phase13-scenario-record-init-v1",
+  "status": "passed",
+  "quick": false,
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_cpu_case_count": 256,
+  "original_complete_case_count": 256,
+  "original_prefix_case_count": 0,
+  "source_guard_case_count": 3,
+  "case_count": 259,
+  "failed_count": 0,
+  "source_sha256": "20f77e59c5ac81f3dbae7861ec1848c17cd75ee656805b85b37f3b4a901d9f12",
+  "validator_sha256": "1d3265a1ca522e72e462d005bc5cb6bcea81ae25afca93b49b04eba81e02a16c",
+  "comparison": {
+    "RAM_bytes": 2048,
+    "SRAM_bytes": 8192,
+    "free_CPU_stack_residue": "included",
+    "registers": "AXYP/SP/PC",
+    "ordered_IO_ports": true,
+    "all_mapper_banks": true,
+    "hardware_reads": 0
+  },
+  "source_original_CPU_callbacks": 0,
+  "source_IR_interpretation": false,
+  "fixture_provenance": {
+    "kind": "typed_CPU_conditions",
+    "random_seed": 1245219,
+    "all_RAM_SRAM_initial": "deterministic random bytes, source/CPU byteidentical",
+    "caller": "prepared real two-byte RTS frame2468; actualSP explicit",
+    "hardware_reads": "none",
+    "SRAM_protection": "original Bus4C, lower4KiB writable"
+  },
+  "counts": {
+    "scenario_clear_and_two_templates_rng_rejections": 256
+  },
+  "guards": [
+    {
+      "name": "missing_caller",
+      "passed": true
+    },
+    {
+      "name": "wrong_pair",
+      "passed": true
+    },
+    {
+      "name": "unknown_entry",
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "samples": [
+    {
+      "kind": "scenario_clear_and_two_templates_rng_rejections",
+      "input": [
+        0,
+        40984,
+        0
+      ],
+      "entry": 40984,
+      "original_instructions": 55257,
+      "registers": {
+        "a": 0,
+        "x": 64,
+        "y": 0,
+        "sp": 255,
+        "p": 35,
+        "pc": 9320
+      },
+      "ports": [
+        {
+          "address": 57344,
+          "value": 48
+        },
+        {
+          "address": 57344,
+          "value": 49
+        }
+      ],
+      "unit_tiles": [
+        131,
+        121,
+        92,
+        219
+      ]
+    },
+    {
+      "kind": "scenario_clear_and_two_templates_rng_rejections",
+      "input": [
+        0,
+        40984,
+        255
+      ],
+      "entry": 40984,
+      "original_instructions": 55257,
+      "registers": {
+        "a": 0,
+        "x": 64,
+        "y": 0,
+        "sp": 243,
+        "p": 99,
+        "pc": 9320
+      },
+      "ports": [
+        {
+          "address": 57344,
+          "value": 48
+        },
+        {
+          "address": 57344,
+          "value": 49
+        }
+      ],
+      "unit_tiles": [
+        27,
+        62,
+        158,
+        71
+      ]
+    },
+    {
+      "kind": "scenario_clear_and_two_templates_rng_rejections",
+      "input": [
+        0,
+        56715,
+        0
+      ],
+      "entry": 56715,
+      "original_instructions": 55256,
+      "registers": {
+        "a": 0,
+        "x": 64,
+        "y": 0,
+        "sp": 255,
+        "p": 35,
+        "pc": 9320
+      },
+      "ports": [
+        {
+          "address": 57344,
+          "value": 48
+        },
+        {
+          "address": 57344,
+          "value": 49
+        }
+      ],
+      "unit_tiles": [
+        156,
+        16,
+        15,
+        142
+      ]
+    },
+    {
+      "kind": "scenario_clear_and_two_templates_rng_rejections",
+      "input": [
+        0,
+        56715,
+        255
+      ],
+      "entry": 56715,
+      "original_instructions": 55256,
+      "registers": {
+        "a": 0,
+        "x": 64,
+        "y": 0,
+        "sp": 243,
+        "p": 99,
+        "pc": 9320
+      },
+      "ports": [
+        {
+          "address": 57344,
+          "value": 48
+        },
+        {
+          "address": 57344,
+          "value": 49
+        }
+      ],
+      "unit_tiles": [
+        60,
+        63,
+        14,
+        233
+      ]
+    }
+  ],
+  "dynamic_original_instruction_locations": 112,
+  "evidence_sha256": "371303f46c6931db3a1aabc4839869cc4fb64cb3280e183ded80c20c4f719822",
+  "analyzer_sha256": "402a773f9d29b4385dac7d079a3be9e74f233e22a66981a1b5e39e47f7938394",
+  "dependency_pins": [
+    {
+      "path": "source/recovered/scenario_initialization.py",
+      "bytes": 5593,
+      "sha256": "20f77e59c5ac81f3dbae7861ec1848c17cd75ee656805b85b37f3b4a901d9f12"
+    },
+    {
+      "path": "scripts/verify_scenario_initialization.py",
+      "bytes": 5368,
+      "sha256": "1d3265a1ca522e72e462d005bc5cb6bcea81ae25afca93b49b04eba81e02a16c"
+    },
+    {
+      "path": "scripts/analyze_scenario_initialization.py",
+      "bytes": 5950,
+      "sha256": "402a773f9d29b4385dac7d079a3be9e74f233e22a66981a1b5e39e47f7938394"
+    },
+    {
+      "path": "scripts/analyze_ui_graphics_initialization.py",
+      "bytes": 9641,
+      "sha256": "86785b4841cb8ef98e25567559326d1d2809875f6514ac54d2fbf3519f441ce5"
+    },
+    {
+      "path": "source/recovered/scene_shared_services.py",
+      "bytes": 15120,
+      "sha256": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76"
+    },
+    {
+      "path": "source/recovered/controller_helpers.py",
+      "bytes": 2827,
+      "sha256": "54dba0ee606f3ce200c648700f908956273ff0a96cc0dbfb847fc4396bf79afb"
+    },
+    {
+      "path": "source/recovered/battle_nmi_services.py",
+      "bytes": 35325,
+      "sha256": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15"
+    },
+    {
+      "path": "source/recovered/service_memory.py",
+      "bytes": 5672,
+      "sha256": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920"
+    }
+  ],
+  "local_instruction_location_total": 103,
+  "local_instruction_location_observed": 103
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "wp03-EADE-bounded-family-run-v1",
+  "status": "passed_full_declared_family_matrix",
+  "CPU_parent_cases": 16269,
+  "prefix_segments": 16273,
+  "actual_primary_JSRs": 16264,
+  "current_frame_valid_segments": 16256,
+  "Source_prefix_comparisons": 4035,
+  "Source_comparison_kinds": {
+    "production_synchronous_scene_dispatch_prefix": 2845,
+    "production_ControlHelpers_EADE_only_no_duel_handler": 1190
+  },
+  "original_CPU_instructions": 260289,
+  "groups": {
+    "raw_A_address_axis": 12544,
+    "legal_slots_stack_edges": 1655,
+    "incoming_Y_axis": 1024,
+    "SP_axis": 1024,
+    "actual_WP05_prefix_replay": 1,
+    "bare_EADE_aux_counterexample": 4,
+    "middle_aux_counterexample": 5,
+    "current_frame_fault": 6,
+    "same_bus_two_generations": 4,
+    "stale6000_full_JSR_overwrite": 2
+  },
+  "cases_sha256": "07a26c63643a8348fa2e5abd0ab9f3454c0f3415dae4eb5741cc3014c0e6ea2c",
+  "case_keys_sha256": "42c56773e82b23304889287a1815d31ab5e8ff41669cfac7746121ea61974910",
+  "scope_sha256": "aca262e634fa4bc39fc8f2fb6c3c1a5bd15b8e4b88196e030b3f00e3c43a24d4",
+  "matrix_sha256": "8e119e5d120e07e9e9541397c3f23ad56e0fdf42934c1ab957b21d4c67a30516",
+  "actual_WP05_snapshot_replay": {
+    "status": "exact_WP05_target_snapshot23_matched",
+    "Source_prefix_matched": true,
+    "initial_registers_unmodified": true,
+    "initial_banks_unmodified": true,
+    "new_Native_runs": 0
+  },
+  "failed_count": 0,
+  "failure": null,
+  "Native_new_runs": 0,
+  "actual_caller_RTS_cases": 0,
+  "whole_scene_Source_cases": 0,
+  "production_CPU_IR_fallback_added": false,
+  "new_services_or_algorithms": 0,
+  "field_classification_changes": 0,
+  "raw_classification_changes": 0,
+  "remaining": 323,
+  "raw_unproved_entry": 228,
+  "unknown_unique_services": null,
+  "completion_percentage": null,
+  "remaining_rounds_estimate": null,
+  "whole_game_closure_proven": false
+}

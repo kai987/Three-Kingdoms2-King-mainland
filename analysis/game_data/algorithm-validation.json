@@ -1,0 +1,477 @@
+{
+  "status": "passed",
+  "timestamp_utc": "2026-10-12T18:58:32.007044+00:00",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "oracle": "py65 1.2.0 MPU executes actual supplied ROM bytes, decimal mode disabled",
+  "random_seed": 163,
+  "case_count": 3699,
+  "results": [
+    {
+      "name": "table_a_ram_address",
+      "status": "passed",
+      "case_count": 256,
+      "cpu_address": "0xF2AF",
+      "rom_offset": "0x03F2BF",
+      "raw_routine_hex": "A0 00 8C 01 00 0A 2E 01 00 0A 2E 01 00 0A 2E 01 00 0A 2E 01 00 0A 2E 01 00 18 69 00 8D 00 00 AD 01 00 69 60 8D 01 00 60",
+      "examples": [
+        {
+          "input": 0,
+          "output": "0x6000",
+          "instructions_executed": 20
+        },
+        {
+          "input": 29,
+          "output": "0x63A0",
+          "instructions_executed": 20
+        },
+        {
+          "input": 236,
+          "output": "0x7D80",
+          "instructions_executed": 20
+        },
+        {
+          "input": 255,
+          "output": "0x7FE0",
+          "instructions_executed": 20
+        }
+      ]
+    },
+    {
+      "name": "table_b_ram_address",
+      "status": "passed",
+      "case_count": 256,
+      "cpu_address": "0xF2D7",
+      "rom_offset": "0x03F2E7",
+      "raw_routine_hex": "A0 00 8C 01 00 8D 00 00 0A 2E 01 00 18 6D 00 00 48 AD 01 00 69 00 8D 01 00 68 0A 2E 01 00 0A 2E 01 00 18 69 C0 8D 00 00 AD 01 00 69 63 8D 01 00 60",
+      "examples": [
+        {
+          "input": 0,
+          "output": "0x63C0",
+          "instructions_executed": 24
+        },
+        {
+          "input": 29,
+          "output": "0x651C",
+          "instructions_executed": 24
+        },
+        {
+          "input": 236,
+          "output": "0x6ED0",
+          "instructions_executed": 24
+        },
+        {
+          "input": 255,
+          "output": "0x6FB4",
+          "instructions_executed": 24
+        }
+      ]
+    },
+    {
+      "name": "table_b_initial_cpu_address",
+      "status": "passed",
+      "case_count": 256,
+      "cpu_address": "0xF387",
+      "rom_offset": "0x03F397",
+      "raw_routine_hex": "A0 31 20 5F F2 A0 00 8C 01 00 8D 00 00 0A 2E 01 00 18 6D 00 00 48 AD 01 00 69 00 8D 01 00 68 0A 2E 01 00 0A 2E 01 00 18 69 00 8D 00 00 AD 01 00 69 80 8D 01 00 60",
+      "examples": [
+        {
+          "input": 0,
+          "output": "0x8000",
+          "instructions_executed": 29
+        },
+        {
+          "input": 29,
+          "output": "0x815C",
+          "instructions_executed": 29
+        },
+        {
+          "input": 236,
+          "output": "0x8B10",
+          "instructions_executed": 29
+        },
+        {
+          "input": 255,
+          "output": "0x8BF4",
+          "instructions_executed": 29
+        }
+      ]
+    },
+    {
+      "name": "divide_u16",
+      "status": "passed",
+      "case_count": 258,
+      "cpu_address": "0xEA7C",
+      "rom_offset": "0x03EA8C",
+      "raw_routine_hex": "A9 00 85 05 85 06 A0 0F 06 01 26 02 26 05 26 06 A5 05 38 E5 03 85 07 A5 06 E5 04 90 08 85 06 A5 07 85 05 E6 01 88 10 E0 60",
+      "examples": [
+        {
+          "input": [
+            0,
+            1
+          ],
+          "quotient": 0,
+          "remainder": 0,
+          "instructions_executed": 214
+        },
+        {
+          "input": [
+            1,
+            1
+          ],
+          "quotient": 1,
+          "remainder": 0,
+          "instructions_executed": 218
+        },
+        {
+          "input": [
+            65535,
+            1
+          ],
+          "quotient": 65535,
+          "remainder": 0,
+          "instructions_executed": 278
+        },
+        {
+          "input": [
+            65535,
+            65535
+          ],
+          "quotient": 1,
+          "remainder": 0,
+          "instructions_executed": 218
+        },
+        {
+          "input": [
+            65535,
+            256
+          ],
+          "quotient": 255,
+          "remainder": 255,
+          "instructions_executed": 246
+        },
+        {
+          "input": [
+            5000,
+            7
+          ],
+          "quotient": 714,
+          "remainder": 2,
+          "instructions_executed": 234
+        },
+        {
+          "input": [
+            0,
+            0
+          ],
+          "quotient": 65535,
+          "remainder": 0,
+          "instructions_executed": 278
+        },
+        {
+          "input": [
+            65535,
+            0
+          ],
+          "quotient": 65535,
+          "remainder": 65535,
+          "instructions_executed": 278
+        }
+      ]
+    },
+    {
+      "name": "divide_u24_by_u16",
+      "status": "passed",
+      "case_count": 258,
+      "cpu_address": "0xEAA5",
+      "rom_offset": "0x03EAB5",
+      "raw_routine_hex": "A9 00 85 05 85 06 85 07 A0 17 06 00 26 01 26 02 26 05 26 06 26 07 A5 05 38 E5 03 85 08 A5 06 E5 04 85 09 A5 07 E9 00 90 0C 85 07 A5 08 85 05 A5 09 85 06 E6 00 88 10 D2 60",
+      "examples": [
+        {
+          "input": [
+            0,
+            1
+          ],
+          "quotient": 0,
+          "remainder": 0,
+          "instructions_executed": 439
+        },
+        {
+          "input": [
+            1,
+            1
+          ],
+          "quotient": 1,
+          "remainder": 0,
+          "instructions_executed": 445
+        },
+        {
+          "input": [
+            16777215,
+            1
+          ],
+          "quotient": 16777215,
+          "remainder": 0,
+          "instructions_executed": 583
+        },
+        {
+          "input": [
+            16777215,
+            65535
+          ],
+          "quotient": 256,
+          "remainder": 255,
+          "instructions_executed": 445
+        },
+        {
+          "input": [
+            16777215,
+            256
+          ],
+          "quotient": 65535,
+          "remainder": 255,
+          "instructions_executed": 535
+        },
+        {
+          "input": [
+            5000,
+            7
+          ],
+          "quotient": 714,
+          "remainder": 2,
+          "instructions_executed": 469
+        },
+        {
+          "input": [
+            0,
+            0
+          ],
+          "quotient": 16777215,
+          "remainder": 0,
+          "instructions_executed": 583
+        },
+        {
+          "input": [
+            16777215,
+            0
+          ],
+          "quotient": 16777215,
+          "remainder": 16777215,
+          "instructions_executed": 583
+        }
+      ]
+    },
+    {
+      "name": "packed_bcd6",
+      "status": "passed",
+      "case_count": 111,
+      "cpu_address": "0xE9BA",
+      "rom_offset": "0x03E9CA",
+      "raw_routine_hex": "A9 00 85 07 85 08 85 09 A5 01 38 E9 40 85 04 A5 02 E9 42 85 05 A5 03 E9 0F 90 0D 85 03 A5 04 85 01 A5 05 85 02 4C C2 E9 A5 01 38 E9 A0 85 04 A5 02 E9 86 85 05 A5 03 E9 01 90 12 85 03 A5 04 85 01 A5 05 85 02 A5 09 69 0F 85 09 D0 DB A5 01 38 E9 10 85 04 A5 02 E9 27 85 05 A5 03 E9 00 90 0E 85 03 A5 04 85 01 A5 05 85 02 E6 09 D0 DF A5 01 38 E9 E8 85 04 A5 02 E9 03 90 0E 85 02 A5 04 85 01 A5 08 69 0F 85 08 D0 E5 A5 01 38 E9 64 85 04 A5 02 E9 00 90 0A 85 02 A5 04 85 01 E6 08 D0 E9 A5 01 38 E9 0A 85 04 A5 02 E9 00 90 0E 85 02 A5 04 85 01 A5 07 69 0F 85 07 D0 E5 A5 01 05 07 85 07 60",
+      "examples": [
+        {
+          "input": 0,
+          "packed_bcd_low_to_high": [
+            "00",
+            "00",
+            "00"
+          ],
+          "instructions_executed": 60
+        },
+        {
+          "input": 1,
+          "packed_bcd_low_to_high": [
+            "01",
+            "00",
+            "00"
+          ],
+          "instructions_executed": 60
+        },
+        {
+          "input": 9,
+          "packed_bcd_low_to_high": [
+            "09",
+            "00",
+            "00"
+          ],
+          "instructions_executed": 60
+        },
+        {
+          "input": 10,
+          "packed_bcd_low_to_high": [
+            "10",
+            "00",
+            "00"
+          ],
+          "instructions_executed": 74
+        },
+        {
+          "input": 99,
+          "packed_bcd_low_to_high": [
+            "99",
+            "00",
+            "00"
+          ],
+          "instructions_executed": 186
+        },
+        {
+          "input": 100,
+          "packed_bcd_low_to_high": [
+            "00",
+            "01",
+            "00"
+          ],
+          "instructions_executed": 72
+        },
+        {
+          "input": 9999,
+          "packed_bcd_low_to_high": [
+            "99",
+            "99",
+            "00"
+          ],
+          "instructions_executed": 420
+        },
+        {
+          "input": 10000,
+          "packed_bcd_low_to_high": [
+            "00",
+            "00",
+            "01"
+          ],
+          "instructions_executed": 77
+        },
+        {
+          "input": 999999,
+          "packed_bcd_low_to_high": [
+            "99",
+            "99",
+            "99"
+          ],
+          "instructions_executed": 744
+        },
+        {
+          "input": 1000000,
+          "packed_bcd_low_to_high": [
+            "00",
+            "00",
+            "00"
+          ],
+          "instructions_executed": 76
+        },
+        {
+          "input": 16777215,
+          "packed_bcd_low_to_high": [
+            "15",
+            "72",
+            "77"
+          ],
+          "instructions_executed": 704
+        }
+      ]
+    },
+    {
+      "name": "rng_next",
+      "status": "passed",
+      "case_count": 256,
+      "cpu_address": "0xE87A",
+      "rom_offset": "0x03E88A",
+      "raw_routine_hex": "8E 51 00 AE 50 00 BD BA E8 EE 50 00 AE 51 00 60",
+      "examples": [
+        {
+          "cursor_before": 0,
+          "value": 62,
+          "cursor_after": 1,
+          "X_preserved": true
+        },
+        {
+          "cursor_before": 1,
+          "value": 78,
+          "cursor_after": 2,
+          "X_preserved": true
+        },
+        {
+          "cursor_before": 255,
+          "value": 6,
+          "cursor_after": 0,
+          "X_preserved": true
+        }
+      ]
+    },
+    {
+      "name": "bounded_rng",
+      "status": "passed",
+      "case_count": 2048,
+      "cpu_address": "0xE862",
+      "rom_offset": "0x03E872",
+      "raw_routine_hex": "85 10 C9 0F B0 0A 20 7A E8 29 0F C5 10 B0 F7 60 20 7A E8 C5 10 B0 F9 60",
+      "examples": [
+        {
+          "bound": 1,
+          "cursor_before": 0,
+          "value": 0,
+          "cursor_after": 14,
+          "instructions_executed": 145
+        },
+        {
+          "bound": 2,
+          "cursor_before": 0,
+          "value": 1,
+          "cursor_after": 12,
+          "instructions_executed": 125
+        },
+        {
+          "bound": 7,
+          "cursor_before": 0,
+          "value": 3,
+          "cursor_after": 4,
+          "instructions_executed": 45
+        },
+        {
+          "bound": 14,
+          "cursor_before": 0,
+          "value": 3,
+          "cursor_after": 4,
+          "instructions_executed": 45
+        },
+        {
+          "bound": 15,
+          "cursor_before": 0,
+          "value": 14,
+          "cursor_after": 5,
+          "instructions_executed": 50
+        },
+        {
+          "bound": 16,
+          "cursor_before": 0,
+          "value": 14,
+          "cursor_after": 5,
+          "instructions_executed": 50
+        },
+        {
+          "bound": 100,
+          "cursor_before": 0,
+          "value": 62,
+          "cursor_after": 1,
+          "instructions_executed": 14
+        },
+        {
+          "bound": 255,
+          "cursor_before": 0,
+          "value": 62,
+          "cursor_after": 1,
+          "instructions_executed": 14
+        }
+      ]
+    }
+  ],
+  "listing_decoder_cross_check": {
+    "official_opcode_count": 151,
+    "status": "passed",
+    "oracle": "py65 disassembler size/mnemonic for each official opcode"
+  },
+  "limitations": [
+    "CPU-only flat-memory invocation; mapper side effects, PPU/APU timing, interrupts, and gameplay are not emulated.",
+    "RNG NMI cursor increment is statically supported by bytes at CPU $F8A1 (ROM $03F8B1); complete NMI path is not dynamically tested here.",
+    "The reconstructed Python API rejects RNG bound=0, while the ROM rejection loop would not terminate."
+  ]
+}

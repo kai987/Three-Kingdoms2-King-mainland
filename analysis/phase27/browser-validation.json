@@ -1,0 +1,1568 @@
+{
+  "schema": "phase27-CUA-browser-validation-v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "two_formal_routes",
+      "status": "passed"
+    },
+    {
+      "name": "checkpoint_choices_natural-postbattle-skip",
+      "status": "passed"
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_1",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_2",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_3",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_4",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_5",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_6",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_7",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_8",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_9",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_10",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_11",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_12",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_13",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_14",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_15",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_16",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_17",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_18",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_19",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_20",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_21",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_22",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_23",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_24",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_25",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_26",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_27",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_28",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_29",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_30",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_31",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_32",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_33",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_34",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_35",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_36",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_37",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_38",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_39",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_40",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_41",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_42",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_43",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_44",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_45",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_46",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_47",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_48",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_49",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_50",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_51",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_52",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_53",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_54",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_55",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_56",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_57",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_58",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_59",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_60",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_61",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_62",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_63",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_natural-postbattle-skip_64",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_choices_controlled-ancestry-resource-loss",
+      "status": "passed"
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_1",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_2",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_3",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_4",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_5",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_6",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_7",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_8",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_9",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_10",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_11",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_12",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_13",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_14",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_15",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_16",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_17",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_18",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_19",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_20",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_21",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_22",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_23",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_24",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_25",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_26",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_27",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_28",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_29",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_30",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_31",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "checkpoint_controlled-ancestry-resource-loss_32",
+      "status": "passed",
+      "detail": {
+        "fields": 24,
+        "paired_images": 2
+      }
+    },
+    {
+      "name": "all_event_choices_natural-postbattle-skip",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_25",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_37",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_51",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_55",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_56",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_57",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_58",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_64",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_65",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_66",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_natural-postbattle-skip_67",
+      "status": "passed"
+    },
+    {
+      "name": "event_filter_natural-postbattle-skip_actual_opcode_entry",
+      "status": "passed",
+      "detail": {
+        "events": 3
+      }
+    },
+    {
+      "name": "event_filter_natural-postbattle-skip_G106_logical_LDA",
+      "status": "passed",
+      "detail": {
+        "events": 0
+      }
+    },
+    {
+      "name": "event_filter_natural-postbattle-skip_G106_STA_dummy",
+      "status": "passed",
+      "detail": {
+        "events": 0
+      }
+    },
+    {
+      "name": "event_filter_natural-postbattle-skip_G106_STA_store",
+      "status": "passed",
+      "detail": {
+        "events": 0
+      }
+    },
+    {
+      "name": "event_filter_natural-postbattle-skip_later_supply_return_not_G106",
+      "status": "passed",
+      "detail": {
+        "events": 8
+      }
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_frame",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_parent_route_frame",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_whole_serialized_state_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_PCM_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_PCM_stop_byte",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_actual_saved_CPU_registers",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_actual_saved_PRG_banks",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_global_007A",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_NMI_0078",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_city_0400_0403",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_battle_0500_0501",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_outcome_0514",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_turn_0506",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_battle_city_050E",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_battle_0514_051F",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_frame_end_ZP_0000_002F",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_frame_end_pointer_001A_001B",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_raw_bank_selectors_DE_DF",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_city_aux150",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_all30_city_records_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_active_city_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_active_city_words",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_active_city_byte11",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_natural-postbattle-skip_raw_supplies_052B_0533",
+      "status": "passed"
+    },
+    {
+      "name": "all_event_choices_controlled-ancestry-resource-loss",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_25",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_37",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_105",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_114",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_125",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_206",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_207",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_223",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_224",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_267",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_276",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_287",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_368",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_369",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_385",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_386",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_406",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_415",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_426",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_507",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_508",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_524",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_525",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_544",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_564",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_635",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_636",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_655",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_658",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_669",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_851",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_860",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_871",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_952",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_953",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_969",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_970",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_982",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_985",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_996",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1178",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1187",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1198",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1279",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1280",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1296",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1297",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1306",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1310",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1311",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1312",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1313",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1319",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1320",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1321",
+      "status": "passed"
+    },
+    {
+      "name": "raw_event_controlled-ancestry-resource-loss_1322",
+      "status": "passed"
+    },
+    {
+      "name": "event_filter_controlled-ancestry-resource-loss_actual_opcode_entry",
+      "status": "passed",
+      "detail": {
+        "events": 11
+      }
+    },
+    {
+      "name": "event_filter_controlled-ancestry-resource-loss_G106_logical_LDA",
+      "status": "passed",
+      "detail": {
+        "events": 15
+      }
+    },
+    {
+      "name": "event_filter_controlled-ancestry-resource-loss_G106_STA_dummy",
+      "status": "passed",
+      "detail": {
+        "events": 11
+      }
+    },
+    {
+      "name": "event_filter_controlled-ancestry-resource-loss_G106_STA_store",
+      "status": "passed",
+      "detail": {
+        "events": 11
+      }
+    },
+    {
+      "name": "event_filter_controlled-ancestry-resource-loss_later_supply_return_not_G106",
+      "status": "passed",
+      "detail": {
+        "events": 8
+      }
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_frame",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_parent_route_frame",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_whole_serialized_state_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_PCM_bytes",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_PCM_stop_byte",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_actual_saved_CPU_registers",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_actual_saved_PRG_banks",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_global_007A",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_NMI_0078",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_city_0400_0403",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_battle_0500_0501",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_outcome_0514",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_turn_0506",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_battle_city_050E",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_battle_0514_051F",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_frame_end_ZP_0000_002F",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_frame_end_pointer_001A_001B",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_raw_bank_selectors_DE_DF",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_city_aux150",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_all30_city_records_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_active_city_raw32",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_active_city_words",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_active_city_byte11",
+      "status": "passed"
+    },
+    {
+      "name": "raw_field_controlled-ancestry-resource-loss_raw_supplies_052B_0533",
+      "status": "passed"
+    },
+    {
+      "name": "full_ancestry_natural-postbattle-skip",
+      "status": "passed"
+    },
+    {
+      "name": "full_WAV_natural-postbattle-skip_0",
+      "status": "passed",
+      "detail": {
+        "duration": 1.064917,
+        "bytes": 204508
+      }
+    },
+    {
+      "name": "full_WAV_natural-postbattle-skip_1",
+      "status": "passed",
+      "detail": {
+        "duration": 1.064917,
+        "bytes": 204508
+      }
+    },
+    {
+      "name": "full_ancestry_controlled-ancestry-resource-loss",
+      "status": "passed"
+    },
+    {
+      "name": "full_WAV_controlled-ancestry-resource-loss_0",
+      "status": "passed",
+      "detail": {
+        "duration": 0.532438,
+        "bytes": 102272
+      }
+    },
+    {
+      "name": "full_WAV_controlled-ancestry-resource-loss_1",
+      "status": "passed",
+      "detail": {
+        "duration": 0.532438,
+        "bytes": 102272
+      }
+    },
+    {
+      "name": "current_acceptance_A01",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A02",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A03",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A04",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A05",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A06",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A07",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A08",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A09",
+      "status": "passed"
+    },
+    {
+      "name": "current_acceptance_A10",
+      "status": "passed"
+    },
+    {
+      "name": "expanded_full_Source_postbattle_resource_services.py",
+      "status": "passed",
+      "detail": {
+        "UTF8_bytes": 6525
+      }
+    },
+    {
+      "name": "expanded_full_Source_postbattle_resource_integration.py",
+      "status": "passed",
+      "detail": {
+        "UTF8_bytes": 3511
+      }
+    },
+    {
+      "name": "context_search_all",
+      "status": "passed",
+      "detail": {
+        "rows": 16
+      }
+    },
+    {
+      "name": "context_search_A006",
+      "status": "passed",
+      "detail": {
+        "rows": 1
+      }
+    },
+    {
+      "name": "context_search_BF0A",
+      "status": "passed",
+      "detail": {
+        "rows": 10
+      }
+    },
+    {
+      "name": "context_search_BF9E",
+      "status": "passed",
+      "detail": {
+        "rows": 6
+      }
+    },
+    {
+      "name": "context_search_BF9B",
+      "status": "passed",
+      "detail": {
+        "rows": 1
+      }
+    },
+    {
+      "name": "context_search_BFEC",
+      "status": "passed",
+      "detail": {
+        "rows": 3
+      }
+    },
+    {
+      "name": "context_search_ZZZZ_NO_MATCH",
+      "status": "passed",
+      "detail": {
+        "rows": 0
+      }
+    },
+    {
+      "name": "seven_contracts_independent_fullword_intersections",
+      "status": "passed"
+    },
+    {
+      "name": "next_frame_control",
+      "status": "passed"
+    },
+    {
+      "name": "previous_frame_control",
+      "status": "passed"
+    },
+    {
+      "name": "final_frame_control",
+      "status": "passed"
+    },
+    {
+      "name": "desktop_no_document_horizontal_overflow",
+      "status": "passed",
+      "detail": {
+        "scrollWidth": 1265,
+        "width": 1265
+      }
+    },
+    {
+      "name": "next_event_control",
+      "status": "passed"
+    },
+    {
+      "name": "previous_event_control",
+      "status": "passed"
+    },
+    {
+      "name": "final_event_control",
+      "status": "passed"
+    },
+    {
+      "name": "console_clean",
+      "status": "passed",
+      "detail": {
+        "messages": []
+      }
+    },
+    {
+      "name": "current_counts_and_unknown_field_boundary",
+      "status": "passed"
+    },
+    {
+      "name": "html_unchanged_during_browser_checks",
+      "status": "passed"
+    }
+  ],
+  "Native_frames_added": 0,
+  "Source_CPU_cases_added": 0,
+  "initial_html_sha256": "f1d6cecf44b8806d9182becad9dec78f9d8eabc1961cd560df0c35244abc4b0e",
+  "final_html_sha256": "f1d6cecf44b8806d9182becad9dec78f9d8eabc1961cd560df0c35244abc4b0e",
+  "check_count": 262,
+  "failed_count": 0,
+  "browser": "CUA in-app browser3",
+  "URL": "http://127.0.0.1:8765/analysis/phase27/index.html#events",
+  "scope": {
+    "routes": 2,
+    "paired_frame_selections": 96,
+    "all_fields_per_frame": 24,
+    "raw_field_selectors_per_route": 24,
+    "complete_events": 67,
+    "role_filters_per_route": 5,
+    "full_WAV_variants": 4,
+    "expanded_full_Source_files": 2,
+    "acceptance_dimensions": 10,
+    "context_queries": 7,
+    "logical_contracts": 7,
+    "Source_CPU_cases": 0,
+    "Native_gameplay_frames_added": 0
+  },
+  "console_errors": [],
+  "console_warnings": [],
+  "source_and_validator_sha256": {
+    "scripts/build_phase27_report.py": "8ee799f00397f3af0a9155a0e5a482d4eff1a4c8f82fa69f5c1104217708ccda",
+    "source/recovered/postbattle_resource_services.py": "b823aa7f69e49592e4d25b7e6091eea7f2a70295606a7195af98653ce6105926",
+    "source/recovered/postbattle_resource_integration.py": "fc6fe0a0d4fd9cba72727583bf9f393aa89d809f24208c82c50d9bcc9f445aa2"
+  },
+  "artifact_and_dependency_sha256": {
+    "analysis/phase27/index.html": "f1d6cecf44b8806d9182becad9dec78f9d8eabc1961cd560df0c35244abc4b0e",
+    "analysis/phase27/README.md": "f41d56fef882abc8137a7db1d67998ba320cdf03f2186d6be6f62eb7e3e257a5",
+    "analysis/phase27/acceptance/requirements.json": "a7ec83e86ac9d1881b1e5131e27bdfbdc1ced0eb4dc1209a777b556d0923f57e",
+    "analysis/phase27/acceptance/verification.json": "8ca9585442e844a2f6013a25f3d0323a93ff0ec81aea8667dc728dce03427be7",
+    "analysis/phase27/runtime/evidence.json": "34dca4c41dc0cd3cc2181324337c494555a5b8769a367744da5bd7b014b4d4e7",
+    "analysis/phase27/runtime/validation.json": "23ff6eda2693858dae4ced00f74dd60a1f15e6b2a51848ef154de3f4b0a15f58",
+    "analysis/phase27/runtime/postbattle-observations.json": "34679582283bc5d2a3c0690de8f6ac400a5ef7194753038eb2647303b1307fcb",
+    "analysis/phase27/resources/validation.json": "27032b34b956d351738e4b93a598d2549be7ea3bd700e996304c144c8591ee4b",
+    "analysis/phase27/fields-static/verification.json": "39e83c4c98c325697fc7746ef9d12585be2889f1a30f8538292923d3d43d072e",
+    "analysis/phase27/source-integration.json": "ad3a5b2d89b3aa703f31480f866ddd4795e089efec4202b15b5de8a98298adaa",
+    "analysis/phase27/browser/natural-route.jpg": "ecd63c9f0bd5ed7418261e724fd5965e5be9a9d9251f4c6fcb918f41e35fb0bb",
+    "analysis/phase27/browser/controlled-ancestry-store.jpg": "bcb8117d025dc41e8982a21a9517ee2fca865e4753174ebb59c6bb52875e2d92"
+  },
+  "limits": [
+    "Saved-evidence presentation checks only; no emulator or Source gameplay cases added.",
+    "Natural early return and controlled-ancestry active effect remain separate; 19 known inherited byte preparations do not establish zero preparation in older legacy ancestors.",
+    "Complete software snapshots differ from instantaneous device state; N163 is an explicit shared CPU fixture.",
+    "Unknown city field names, natural active resource writes and exact A006/BAB3 parent closure remain unresolved."
+  ]
+}

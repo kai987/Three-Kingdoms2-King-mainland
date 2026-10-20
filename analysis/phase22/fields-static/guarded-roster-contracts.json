@@ -1,0 +1,4556 @@
+{
+  "schema": "phase22-original-capacity-and-preserved-firstFF-contracts-v1",
+  "contracts": [
+    {
+      "schema": "phase22-original-capacity-unchanged-firstFF-v1",
+      "name": "appearance_recruitment_capacity",
+      "physical_bank": 11,
+      "original_entry_cpu": 50642,
+      "count_call": {
+        "physical_bank": 11,
+        "cpu": 50673,
+        "rom_offset": 91649,
+        "op": "JSR",
+        "mode": "ab",
+        "operand": 54020,
+        "raw_hex": "20 04 D3"
+      },
+      "compare": {
+        "physical_bank": 11,
+        "cpu": 50676,
+        "rom_offset": 91652,
+        "op": "CMP",
+        "mode": "im",
+        "operand": 10,
+        "raw_hex": "C9 0A"
+      },
+      "reject_branch": {
+        "physical_bank": 11,
+        "cpu": 50678,
+        "rom_offset": 91654,
+        "op": "BCS",
+        "mode": "rel",
+        "operand": 245,
+        "raw_hex": "B0 F5"
+      },
+      "passed_edge_cpu": 50680,
+      "guarded_access_cpus": [
+        50788,
+        50796
+      ],
+      "incoming_trusted_edges": [
+        {
+          "source": {
+            "physical_bank": 11,
+            "cpu": 50622,
+            "rom_offset": 91598,
+            "op": "JSR",
+            "mode": "ab",
+            "operand": 50642,
+            "raw_hex": "20 D2 C5"
+          },
+          "target_cpu": 50642
+        }
+      ],
+      "required_dominator_cpus": [
+        50673,
+        50676,
+        50678,
+        50680,
+        50782
+      ],
+      "original_middle_instructions": [
+        {
+          "physical_bank": 11,
+          "cpu": 50680,
+          "rom_offset": 91656,
+          "op": "LDA",
+          "mode": "ab",
+          "operand": 54,
+          "raw_hex": "AD 36 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50683,
+          "rom_offset": 91659,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 32,
+          "raw_hex": "85 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50685,
+          "rom_offset": 91661,
+          "op": "LDA",
+          "mode": "im",
+          "operand": 20,
+          "raw_hex": "A9 14"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50687,
+          "rom_offset": 91663,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 33,
+          "raw_hex": "85 21"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50689,
+          "rom_offset": 91665,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 54385,
+          "raw_hex": "20 71 D4"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50692,
+          "rom_offset": 91668,
+          "op": "LDA",
+          "mode": "im",
+          "operand": 0,
+          "raw_hex": "A9 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50694,
+          "rom_offset": 91670,
+          "op": "STA",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "8D 37 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50697,
+          "rom_offset": 91673,
+          "op": "LDA",
+          "mode": "zp",
+          "operand": 42,
+          "raw_hex": "A5 2A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50699,
+          "rom_offset": 91675,
+          "op": "CLC",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "18"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50700,
+          "rom_offset": 91676,
+          "op": "ADC",
+          "mode": "im",
+          "operand": 28,
+          "raw_hex": "69 1C"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50702,
+          "rom_offset": 91678,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 34,
+          "raw_hex": "85 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50704,
+          "rom_offset": 91680,
+          "op": "LDA",
+          "mode": "zp",
+          "operand": 43,
+          "raw_hex": "A5 2B"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50706,
+          "rom_offset": 91682,
+          "op": "ADC",
+          "mode": "im",
+          "operand": 139,
+          "raw_hex": "69 8B"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50708,
+          "rom_offset": 91684,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 35,
+          "raw_hex": "85 23"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50710,
+          "rom_offset": 91686,
+          "op": "LDY",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "AC 37 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50713,
+          "rom_offset": 91689,
+          "op": "INC",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "EE 37 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50716,
+          "rom_offset": 91692,
+          "op": "INC",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "EE 37 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50719,
+          "rom_offset": 91695,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 34,
+          "raw_hex": "B1 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50721,
+          "rom_offset": 91697,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 36,
+          "raw_hex": "85 24"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50723,
+          "rom_offset": 91699,
+          "op": "INY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50724,
+          "rom_offset": 91700,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 34,
+          "raw_hex": "B1 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50726,
+          "rom_offset": 91702,
+          "op": "SEC",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "38"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50727,
+          "rom_offset": 91703,
+          "op": "SBC",
+          "mode": "im",
+          "operand": 100,
+          "raw_hex": "E9 64"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50729,
+          "rom_offset": 91705,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 32,
+          "raw_hex": "85 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50731,
+          "rom_offset": 91707,
+          "op": "LDA",
+          "mode": "ab",
+          "operand": 28416,
+          "raw_hex": "AD 00 6F"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50734,
+          "rom_offset": 91710,
+          "op": "CMP",
+          "mode": "zp",
+          "operand": 32,
+          "raw_hex": "C5 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50736,
+          "rom_offset": 91712,
+          "op": "BCC",
+          "mode": "rel",
+          "operand": 60,
+          "raw_hex": "90 3C"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50738,
+          "rom_offset": 91714,
+          "op": "LDA",
+          "mode": "zp",
+          "operand": 36,
+          "raw_hex": "A5 24"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50740,
+          "rom_offset": 91716,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 11,
+          "raw_hex": "A0 0B"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50742,
+          "rom_offset": 91718,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 53891,
+          "raw_hex": "20 83 D2"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50745,
+          "rom_offset": 91721,
+          "op": "AND",
+          "mode": "im",
+          "operand": 3,
+          "raw_hex": "29 03"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50747,
+          "rom_offset": 91723,
+          "op": "CMP",
+          "mode": "im",
+          "operand": 1,
+          "raw_hex": "C9 01"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50749,
+          "rom_offset": 91725,
+          "op": "BNE",
+          "mode": "rel",
+          "operand": 215,
+          "raw_hex": "D0 D7"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50751,
+          "rom_offset": 91727,
+          "op": "LDA",
+          "mode": "zp",
+          "operand": 36,
+          "raw_hex": "A5 24"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50753,
+          "rom_offset": 91729,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 50799,
+          "raw_hex": "20 6F C6"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50756,
+          "rom_offset": 91732,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 42,
+          "raw_hex": "85 2A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50758,
+          "rom_offset": 91734,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 59546,
+          "raw_hex": "20 9A E8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50761,
+          "rom_offset": 91737,
+          "op": "CMP",
+          "mode": "im",
+          "operand": 100,
+          "raw_hex": "C9 64"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50763,
+          "rom_offset": 91739,
+          "op": "BCS",
+          "mode": "rel",
+          "operand": 249,
+          "raw_hex": "B0 F9"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50765,
+          "rom_offset": 91741,
+          "op": "CMP",
+          "mode": "zp",
+          "operand": 42,
+          "raw_hex": "C5 2A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50767,
+          "rom_offset": 91743,
+          "op": "BCS",
+          "mode": "rel",
+          "operand": 197,
+          "raw_hex": "B0 C5"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50769,
+          "rom_offset": 91745,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 11,
+          "raw_hex": "A0 0B"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50771,
+          "rom_offset": 91747,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "B1 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50773,
+          "rom_offset": 91749,
+          "op": "AND",
+          "mode": "im",
+          "operand": 252,
+          "raw_hex": "29 FC"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50775,
+          "rom_offset": 91751,
+          "op": "ORA",
+          "mode": "im",
+          "operand": 2,
+          "raw_hex": "09 02"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50777,
+          "rom_offset": 91753,
+          "op": "STA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "91 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50779,
+          "rom_offset": 91755,
+          "op": "LDA",
+          "mode": "ab",
+          "operand": 54,
+          "raw_hex": "AD 36 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50782,
+          "rom_offset": 91758,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 53509,
+          "raw_hex": "20 05 D1"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50785,
+          "rom_offset": 91761,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 16,
+          "raw_hex": "A0 10"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50787,
+          "rom_offset": 91763,
+          "op": "INY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50788,
+          "rom_offset": 91764,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "B1 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50790,
+          "rom_offset": 91766,
+          "op": "CMP",
+          "mode": "im",
+          "operand": 255,
+          "raw_hex": "C9 FF"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50792,
+          "rom_offset": 91768,
+          "op": "BNE",
+          "mode": "rel",
+          "operand": 249,
+          "raw_hex": "D0 F9"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50794,
+          "rom_offset": 91770,
+          "op": "LDA",
+          "mode": "zp",
+          "operand": 36,
+          "raw_hex": "A5 24"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50796,
+          "rom_offset": 91772,
+          "op": "STA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "91 20"
+        }
+      ],
+      "original_stores_and_roles": [
+        {
+          "physical_bank": 11,
+          "cpu": 50683,
+          "rom_offset": 91659,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 32,
+          "raw_hex": "85 20",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50687,
+          "rom_offset": 91663,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 33,
+          "raw_hex": "85 21",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50694,
+          "rom_offset": 91670,
+          "op": "STA",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "8D 37 00",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50702,
+          "rom_offset": 91678,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 34,
+          "raw_hex": "85 22",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50708,
+          "rom_offset": 91684,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 35,
+          "raw_hex": "85 23",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50713,
+          "rom_offset": 91689,
+          "op": "INC",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "EE 37 00",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50716,
+          "rom_offset": 91692,
+          "op": "INC",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "EE 37 00",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50721,
+          "rom_offset": 91697,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 36,
+          "raw_hex": "85 24",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50729,
+          "rom_offset": 91705,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 32,
+          "raw_hex": "85 20",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50756,
+          "rom_offset": 91732,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 42,
+          "raw_hex": "85 2A",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50777,
+          "rom_offset": 91753,
+          "op": "STA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "91 20",
+          "role": "Officers begin63C0; actual status-offset11 write is outside all real30city rosters."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50796,
+          "rom_offset": 91772,
+          "op": "STA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "91 20",
+          "role": "Final firstFF append; happens only after the bound has selected the vacancy."
+        }
+      ],
+      "actual_local_callees": [
+        {
+          "physical_bank": 11,
+          "cpu": 50799
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 53509
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 53891
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54385
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 59546
+        }
+      ],
+      "helper_write_contracts": [
+        {
+          "physical_bank": 11,
+          "entry_cpu": 53509,
+          "end_cpu": 53548,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 53509,
+              "rom_offset": 94485,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "A0 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53511,
+              "rom_offset": 94487,
+              "op": "STY",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "84 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53513,
+              "rom_offset": 94489,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53514,
+              "rom_offset": 94490,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53516,
+              "rom_offset": 94492,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53517,
+              "rom_offset": 94493,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53519,
+              "rom_offset": 94495,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53520,
+              "rom_offset": 94496,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53522,
+              "rom_offset": 94498,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53523,
+              "rom_offset": 94499,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53525,
+              "rom_offset": 94501,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53526,
+              "rom_offset": 94502,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53528,
+              "rom_offset": 94504,
+              "op": "CLC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "18"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53529,
+              "rom_offset": 94505,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "69 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53531,
+              "rom_offset": 94507,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "85 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53533,
+              "rom_offset": 94509,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "A5 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53535,
+              "rom_offset": 94511,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 96,
+              "raw_hex": "69 60"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53537,
+              "rom_offset": 94513,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "85 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53539,
+              "rom_offset": 94515,
+              "op": "JSR",
+              "mode": "ab",
+              "operand": 54941,
+              "raw_hex": "20 9D D6"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53542,
+              "rom_offset": 94518,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "A0 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53544,
+              "rom_offset": 94520,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53546,
+              "rom_offset": 94522,
+              "op": "AND",
+              "mode": "im",
+              "operand": 7,
+              "raw_hex": "29 07"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53548,
+              "rom_offset": 94524,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 11,
+          "entry_cpu": 54941,
+          "end_cpu": 54991,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 54941,
+              "rom_offset": 95917,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 2,
+              "raw_hex": "A0 02"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54943,
+              "rom_offset": 95919,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54945,
+              "rom_offset": 95921,
+              "op": "SEC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "38"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54946,
+              "rom_offset": 95922,
+              "op": "SBC",
+              "mode": "im",
+              "operand": 16,
+              "raw_hex": "E9 10"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54948,
+              "rom_offset": 95924,
+              "op": "INY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54949,
+              "rom_offset": 95925,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54951,
+              "rom_offset": 95927,
+              "op": "SBC",
+              "mode": "im",
+              "operand": 39,
+              "raw_hex": "E9 27"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54953,
+              "rom_offset": 95929,
+              "op": "BCC",
+              "mode": "rel",
+              "operand": 11,
+              "raw_hex": "90 0B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54955,
+              "rom_offset": 95931,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 2,
+              "raw_hex": "A0 02"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54957,
+              "rom_offset": 95933,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 15,
+              "raw_hex": "A9 0F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54959,
+              "rom_offset": 95935,
+              "op": "STA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "91 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54961,
+              "rom_offset": 95937,
+              "op": "INY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54962,
+              "rom_offset": 95938,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 39,
+              "raw_hex": "A9 27"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54964,
+              "rom_offset": 95940,
+              "op": "STA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "91 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54966,
+              "rom_offset": 95942,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 4,
+              "raw_hex": "A0 04"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54968,
+              "rom_offset": 95944,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54970,
+              "rom_offset": 95946,
+              "op": "SEC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "38"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54971,
+              "rom_offset": 95947,
+              "op": "SBC",
+              "mode": "im",
+              "operand": 16,
+              "raw_hex": "E9 10"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54973,
+              "rom_offset": 95949,
+              "op": "INY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54974,
+              "rom_offset": 95950,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54976,
+              "rom_offset": 95952,
+              "op": "SBC",
+              "mode": "im",
+              "operand": 39,
+              "raw_hex": "E9 27"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54978,
+              "rom_offset": 95954,
+              "op": "BCC",
+              "mode": "rel",
+              "operand": 11,
+              "raw_hex": "90 0B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54980,
+              "rom_offset": 95956,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 4,
+              "raw_hex": "A0 04"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54982,
+              "rom_offset": 95958,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 15,
+              "raw_hex": "A9 0F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54984,
+              "rom_offset": 95960,
+              "op": "STA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "91 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54986,
+              "rom_offset": 95962,
+              "op": "INY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54987,
+              "rom_offset": 95963,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 39,
+              "raw_hex": "A9 27"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54989,
+              "rom_offset": 95965,
+              "op": "STA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "91 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54991,
+              "rom_offset": 95967,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 11,
+          "entry_cpu": 53891,
+          "end_cpu": 53930,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 53891,
+              "rom_offset": 94867,
+              "op": "LDX",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "A2 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53893,
+              "rom_offset": 94869,
+              "op": "STX",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "86 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53895,
+              "rom_offset": 94871,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "85 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53897,
+              "rom_offset": 94873,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53898,
+              "rom_offset": 94874,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53900,
+              "rom_offset": 94876,
+              "op": "CLC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "18"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53901,
+              "rom_offset": 94877,
+              "op": "ADC",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "65 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53903,
+              "rom_offset": 94879,
+              "op": "PHA",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "48"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53904,
+              "rom_offset": 94880,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "A5 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53906,
+              "rom_offset": 94882,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "69 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53908,
+              "rom_offset": 94884,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "85 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53910,
+              "rom_offset": 94886,
+              "op": "PLA",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "68"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53911,
+              "rom_offset": 94887,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53912,
+              "rom_offset": 94888,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53914,
+              "rom_offset": 94890,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53915,
+              "rom_offset": 94891,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53917,
+              "rom_offset": 94893,
+              "op": "CLC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "18"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53918,
+              "rom_offset": 94894,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 192,
+              "raw_hex": "69 C0"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53920,
+              "rom_offset": 94896,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "85 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53922,
+              "rom_offset": 94898,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "A5 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53924,
+              "rom_offset": 94900,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 99,
+              "raw_hex": "69 63"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53926,
+              "rom_offset": 94902,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "85 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53928,
+              "rom_offset": 94904,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53930,
+              "rom_offset": 94906,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 11,
+          "entry_cpu": 54385,
+          "end_cpu": 54419,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 54385,
+              "rom_offset": 95361,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 7,
+              "raw_hex": "A0 07"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54387,
+              "rom_offset": 95363,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "A9 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54389,
+              "rom_offset": 95365,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 44,
+              "raw_hex": "85 2C"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54391,
+              "rom_offset": 95367,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 42,
+              "raw_hex": "85 2A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54393,
+              "rom_offset": 95369,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 43,
+              "raw_hex": "85 2B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54395,
+              "rom_offset": 95371,
+              "op": "LSR",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "46 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54397,
+              "rom_offset": 95373,
+              "op": "BCC",
+              "mode": "rel",
+              "operand": 13,
+              "raw_hex": "90 0D"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54399,
+              "rom_offset": 95375,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "A5 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54401,
+              "rom_offset": 95377,
+              "op": "CLC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "18"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54402,
+              "rom_offset": 95378,
+              "op": "ADC",
+              "mode": "zp",
+              "operand": 42,
+              "raw_hex": "65 2A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54404,
+              "rom_offset": 95380,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 42,
+              "raw_hex": "85 2A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54406,
+              "rom_offset": 95382,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 44,
+              "raw_hex": "A5 2C"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54408,
+              "rom_offset": 95384,
+              "op": "ADC",
+              "mode": "zp",
+              "operand": 43,
+              "raw_hex": "65 2B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54410,
+              "rom_offset": 95386,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 43,
+              "raw_hex": "85 2B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54412,
+              "rom_offset": 95388,
+              "op": "ASL",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "06 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54414,
+              "rom_offset": 95390,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 44,
+              "raw_hex": "26 2C"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54416,
+              "rom_offset": 95392,
+              "op": "DEY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "88"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54417,
+              "rom_offset": 95393,
+              "op": "BPL",
+              "mode": "rel",
+              "operand": 232,
+              "raw_hex": "10 E8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54419,
+              "rom_offset": 95395,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 11,
+          "entry_cpu": 50799,
+          "end_cpu": 50889,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 50799,
+              "rom_offset": 91775,
+              "op": "LDY",
+              "mode": "ab",
+              "operand": 28419,
+              "raw_hex": "AC 03 6F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50802,
+              "rom_offset": 91778,
+              "op": "CPY",
+              "mode": "im",
+              "operand": 4,
+              "raw_hex": "C0 04"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50804,
+              "rom_offset": 91780,
+              "op": "BNE",
+              "mode": "rel",
+              "operand": 26,
+              "raw_hex": "D0 1A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50806,
+              "rom_offset": 91782,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 109,
+              "raw_hex": "C9 6D"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50808,
+              "rom_offset": 91784,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 19,
+              "raw_hex": "F0 13"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50810,
+              "rom_offset": 91786,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 112,
+              "raw_hex": "C9 70"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50812,
+              "rom_offset": 91788,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 15,
+              "raw_hex": "F0 0F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50814,
+              "rom_offset": 91790,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 55,
+              "raw_hex": "C9 37"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50816,
+              "rom_offset": 91792,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 11,
+              "raw_hex": "F0 0B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50818,
+              "rom_offset": 91794,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 183,
+              "raw_hex": "C9 B7"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50820,
+              "rom_offset": 91796,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 7,
+              "raw_hex": "F0 07"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50822,
+              "rom_offset": 91798,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 144,
+              "raw_hex": "C9 90"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50824,
+              "rom_offset": 91800,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 3,
+              "raw_hex": "F0 03"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50826,
+              "rom_offset": 91802,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 10,
+              "raw_hex": "A9 0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50828,
+              "rom_offset": 91804,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50829,
+              "rom_offset": 91805,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 90,
+              "raw_hex": "A9 5A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50831,
+              "rom_offset": 91807,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50832,
+              "rom_offset": 91808,
+              "op": "LDY",
+              "mode": "ab",
+              "operand": 28419,
+              "raw_hex": "AC 03 6F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50835,
+              "rom_offset": 91811,
+              "op": "CPY",
+              "mode": "im",
+              "operand": 2,
+              "raw_hex": "C0 02"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50837,
+              "rom_offset": 91813,
+              "op": "BNE",
+              "mode": "rel",
+              "operand": 23,
+              "raw_hex": "D0 17"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50839,
+              "rom_offset": 91815,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 86,
+              "raw_hex": "C9 56"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50841,
+              "rom_offset": 91817,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 242,
+              "raw_hex": "F0 F2"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50843,
+              "rom_offset": 91819,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 99,
+              "raw_hex": "C9 63"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50845,
+              "rom_offset": 91821,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 238,
+              "raw_hex": "F0 EE"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50847,
+              "rom_offset": 91823,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 57,
+              "raw_hex": "C9 39"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50849,
+              "rom_offset": 91825,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 234,
+              "raw_hex": "F0 EA"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50851,
+              "rom_offset": 91827,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 165,
+              "raw_hex": "C9 A5"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50853,
+              "rom_offset": 91829,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 230,
+              "raw_hex": "F0 E6"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50855,
+              "rom_offset": 91831,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 156,
+              "raw_hex": "C9 9C"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50857,
+              "rom_offset": 91833,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 226,
+              "raw_hex": "F0 E2"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50859,
+              "rom_offset": 91835,
+              "op": "JMP",
+              "mode": "ab",
+              "operand": 50826,
+              "raw_hex": "4C 8A C6"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50862,
+              "rom_offset": 91838,
+              "op": "LDY",
+              "mode": "ab",
+              "operand": 28419,
+              "raw_hex": "AC 03 6F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50865,
+              "rom_offset": 91841,
+              "op": "CPY",
+              "mode": "im",
+              "operand": 3,
+              "raw_hex": "C0 03"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50867,
+              "rom_offset": 91843,
+              "op": "BNE",
+              "mode": "rel",
+              "operand": 213,
+              "raw_hex": "D0 D5"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50869,
+              "rom_offset": 91845,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 107,
+              "raw_hex": "C9 6B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50871,
+              "rom_offset": 91847,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 212,
+              "raw_hex": "F0 D4"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50873,
+              "rom_offset": 91849,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 234,
+              "raw_hex": "C9 EA"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50875,
+              "rom_offset": 91851,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 208,
+              "raw_hex": "F0 D0"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50877,
+              "rom_offset": 91853,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 235,
+              "raw_hex": "C9 EB"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50879,
+              "rom_offset": 91855,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 204,
+              "raw_hex": "F0 CC"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50881,
+              "rom_offset": 91857,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 213,
+              "raw_hex": "C9 D5"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50883,
+              "rom_offset": 91859,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 200,
+              "raw_hex": "F0 C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50885,
+              "rom_offset": 91861,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 47,
+              "raw_hex": "C9 2F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50887,
+              "rom_offset": 91863,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 196,
+              "raw_hex": "F0 C4"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50889,
+              "rom_offset": 91865,
+              "op": "JMP",
+              "mode": "ab",
+              "operand": 50826,
+              "raw_hex": "4C 8A C6"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 31,
+          "entry_cpu": 59546,
+          "end_cpu": 59561,
+          "original_instructions": [
+            {
+              "physical_bank": 31,
+              "cpu": 59546,
+              "rom_offset": 256170,
+              "op": "STX",
+              "mode": "ab",
+              "operand": 83,
+              "raw_hex": "8E 53 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59549,
+              "rom_offset": 256173,
+              "op": "LDX",
+              "mode": "ab",
+              "operand": 84,
+              "raw_hex": "AE 54 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59552,
+              "rom_offset": 256176,
+              "op": "LDA",
+              "mode": "abx",
+              "operand": 59578,
+              "raw_hex": "BD BA E8"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59555,
+              "rom_offset": 256179,
+              "op": "INC",
+              "mode": "ab",
+              "operand": 84,
+              "raw_hex": "EE 54 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59558,
+              "rom_offset": 256182,
+              "op": "LDX",
+              "mode": "ab",
+              "operand": 83,
+              "raw_hex": "AE 53 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59561,
+              "rom_offset": 256185,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 31,
+          "entry_cpu": 62054,
+          "end_cpu": 62060,
+          "original_instructions": [
+            {
+              "physical_bank": 31,
+              "cpu": 62054,
+              "rom_offset": 258678,
+              "op": "STY",
+              "mode": "ab",
+              "operand": 222,
+              "raw_hex": "8C DE 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 62057,
+              "rom_offset": 258681,
+              "op": "STY",
+              "mode": "ab",
+              "operand": 57344,
+              "raw_hex": "8C 00 E0"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 62060,
+              "rom_offset": 258684,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        }
+      ],
+      "count_prefix_instructions": [
+        {
+          "physical_bank": 11,
+          "cpu": 54020,
+          "rom_offset": 94996,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 53509,
+          "raw_hex": "20 05 D1"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54023,
+          "rom_offset": 94999,
+          "op": "LDX",
+          "mode": "im",
+          "operand": 0,
+          "raw_hex": "A2 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54025,
+          "rom_offset": 95001,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 17,
+          "raw_hex": "A0 11"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54027,
+          "rom_offset": 95003,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "B1 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54029,
+          "rom_offset": 95005,
+          "op": "CMP",
+          "mode": "im",
+          "operand": 255,
+          "raw_hex": "C9 FF"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54031,
+          "rom_offset": 95007,
+          "op": "BEQ",
+          "mode": "rel",
+          "operand": 6,
+          "raw_hex": "F0 06"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54033,
+          "rom_offset": 95009,
+          "op": "INX",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "E8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54034,
+          "rom_offset": 95010,
+          "op": "INY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54035,
+          "rom_offset": 95011,
+          "op": "CPY",
+          "mode": "im",
+          "operand": 27,
+          "raw_hex": "C0 1B"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54037,
+          "rom_offset": 95013,
+          "op": "BCC",
+          "mode": "rel",
+          "operand": 244,
+          "raw_hex": "90 F4"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54039,
+          "rom_offset": 95015,
+          "op": "TXA",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "8A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54040,
+          "rom_offset": 95016,
+          "op": "RTS",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "60"
+        }
+      ],
+      "argument": "D304 inspects offsets17..26 untilFF or ten entries. A<10 proves a currentFF within17..26. Every trusted path to the four sites passes that accepting edge. Between it and the final read/append, city0036 is unchanged and no real30city roster byte is written. The subsequent D105 reloads that same city pointer. Hence the same vacancy is still in17..26. Rawcity IDs30..255 have base>=63C0, so even unknownY0..255 cannot intersect the target city area.",
+      "scope": "Ordinary no-interrupt/no-external-mutation execution through the original guarded entry, within the frozen trusted-CFG/helper contracts. Bare suffix entry is not covered; the original raw suffix can still read/write tail/nextcity bytes. Not a guarantee of termination or arbitrary raw control entry."
+    },
+    {
+      "schema": "phase22-original-capacity-unchanged-firstFF-v1",
+      "name": "unaffiliated_recruitment_capacity",
+      "physical_bank": 11,
+      "original_entry_cpu": 50892,
+      "count_call": {
+        "physical_bank": 11,
+        "cpu": 50922,
+        "rom_offset": 91898,
+        "op": "JSR",
+        "mode": "ab",
+        "operand": 54020,
+        "raw_hex": "20 04 D3"
+      },
+      "compare": {
+        "physical_bank": 11,
+        "cpu": 50925,
+        "rom_offset": 91901,
+        "op": "CMP",
+        "mode": "im",
+        "operand": 10,
+        "raw_hex": "C9 0A"
+      },
+      "reject_branch": {
+        "physical_bank": 11,
+        "cpu": 50927,
+        "rom_offset": 91903,
+        "op": "BCS",
+        "mode": "rel",
+        "operand": 232,
+        "raw_hex": "B0 E8"
+      },
+      "passed_edge_cpu": 50929,
+      "guarded_access_cpus": [
+        51064,
+        51071
+      ],
+      "incoming_trusted_edges": [
+        {
+          "source": {
+            "physical_bank": 11,
+            "cpu": 50625,
+            "rom_offset": 91601,
+            "op": "JSR",
+            "mode": "ab",
+            "operand": 50892,
+            "raw_hex": "20 CC C6"
+          },
+          "target_cpu": 50892
+        }
+      ],
+      "required_dominator_cpus": [
+        50922,
+        50925,
+        50927,
+        50929,
+        51058
+      ],
+      "original_middle_instructions": [
+        {
+          "physical_bank": 11,
+          "cpu": 50929,
+          "rom_offset": 91905,
+          "op": "LDA",
+          "mode": "im",
+          "operand": 0,
+          "raw_hex": "A9 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50931,
+          "rom_offset": 91907,
+          "op": "STA",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "8D 37 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50934,
+          "rom_offset": 91910,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 48,
+          "raw_hex": "A0 30"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50936,
+          "rom_offset": 91912,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 62054,
+          "raw_hex": "20 66 F2"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50939,
+          "rom_offset": 91915,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 15,
+          "raw_hex": "A0 0F"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50941,
+          "rom_offset": 91917,
+          "op": "LDA",
+          "mode": "im",
+          "operand": 255,
+          "raw_hex": "A9 FF"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50943,
+          "rom_offset": 91919,
+          "op": "STA",
+          "mode": "aby",
+          "operand": 28531,
+          "raw_hex": "99 73 6F"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50946,
+          "rom_offset": 91922,
+          "op": "DEY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "88"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50947,
+          "rom_offset": 91923,
+          "op": "BPL",
+          "mode": "rel",
+          "operand": 250,
+          "raw_hex": "10 FA"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50949,
+          "rom_offset": 91925,
+          "op": "LDA",
+          "mode": "ab",
+          "operand": 54,
+          "raw_hex": "AD 36 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50952,
+          "rom_offset": 91928,
+          "op": "ASL",
+          "mode": "a",
+          "operand": 0,
+          "raw_hex": "0A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50953,
+          "rom_offset": 91929,
+          "op": "ASL",
+          "mode": "a",
+          "operand": 0,
+          "raw_hex": "0A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50954,
+          "rom_offset": 91930,
+          "op": "ASL",
+          "mode": "a",
+          "operand": 0,
+          "raw_hex": "0A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50955,
+          "rom_offset": 91931,
+          "op": "TAY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "A8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50956,
+          "rom_offset": 91932,
+          "op": "LDX",
+          "mode": "im",
+          "operand": 0,
+          "raw_hex": "A2 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50958,
+          "rom_offset": 91934,
+          "op": "LDA",
+          "mode": "aby",
+          "operand": 40306,
+          "raw_hex": "B9 72 9D"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50961,
+          "rom_offset": 91937,
+          "op": "STA",
+          "mode": "abx",
+          "operand": 28531,
+          "raw_hex": "9D 73 6F"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50964,
+          "rom_offset": 91940,
+          "op": "INY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50965,
+          "rom_offset": 91941,
+          "op": "INX",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "E8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50966,
+          "rom_offset": 91942,
+          "op": "CPX",
+          "mode": "im",
+          "operand": 8,
+          "raw_hex": "E0 08"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50968,
+          "rom_offset": 91944,
+          "op": "BCC",
+          "mode": "rel",
+          "operand": 244,
+          "raw_hex": "90 F4"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50970,
+          "rom_offset": 91946,
+          "op": "LDA",
+          "mode": "im",
+          "operand": 192,
+          "raw_hex": "A9 C0"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50972,
+          "rom_offset": 91948,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 34,
+          "raw_hex": "85 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50974,
+          "rom_offset": 91950,
+          "op": "LDA",
+          "mode": "im",
+          "operand": 99,
+          "raw_hex": "A9 63"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50976,
+          "rom_offset": 91952,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 35,
+          "raw_hex": "85 23"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50978,
+          "rom_offset": 91954,
+          "op": "LDX",
+          "mode": "im",
+          "operand": 0,
+          "raw_hex": "A2 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50980,
+          "rom_offset": 91956,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 11,
+          "raw_hex": "A0 0B"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50982,
+          "rom_offset": 91958,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 34,
+          "raw_hex": "B1 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50984,
+          "rom_offset": 91960,
+          "op": "AND",
+          "mode": "im",
+          "operand": 3,
+          "raw_hex": "29 03"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50986,
+          "rom_offset": 91962,
+          "op": "BNE",
+          "mode": "rel",
+          "operand": 38,
+          "raw_hex": "D0 26"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50988,
+          "rom_offset": 91964,
+          "op": "TXA",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "8A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50989,
+          "rom_offset": 91965,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 50799,
+          "raw_hex": "20 6F C6"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50992,
+          "rom_offset": 91968,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 42,
+          "raw_hex": "85 2A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50994,
+          "rom_offset": 91970,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 59546,
+          "raw_hex": "20 9A E8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50997,
+          "rom_offset": 91973,
+          "op": "CMP",
+          "mode": "im",
+          "operand": 100,
+          "raw_hex": "C9 64"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50999,
+          "rom_offset": 91975,
+          "op": "BCS",
+          "mode": "rel",
+          "operand": 249,
+          "raw_hex": "B0 F9"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51001,
+          "rom_offset": 91977,
+          "op": "CMP",
+          "mode": "zp",
+          "operand": 42,
+          "raw_hex": "C5 2A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51003,
+          "rom_offset": 91979,
+          "op": "BCS",
+          "mode": "rel",
+          "operand": 21,
+          "raw_hex": "B0 15"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51005,
+          "rom_offset": 91981,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 5,
+          "raw_hex": "A0 05"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51007,
+          "rom_offset": 91983,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 34,
+          "raw_hex": "B1 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51009,
+          "rom_offset": 91985,
+          "op": "CMP",
+          "mode": "ab",
+          "operand": 54,
+          "raw_hex": "CD 36 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51012,
+          "rom_offset": 91988,
+          "op": "BEQ",
+          "mode": "rel",
+          "operand": 31,
+          "raw_hex": "F0 1F"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51014,
+          "rom_offset": 91990,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 0,
+          "raw_hex": "A0 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51016,
+          "rom_offset": 91992,
+          "op": "CMP",
+          "mode": "aby",
+          "operand": 28531,
+          "raw_hex": "D9 73 6F"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51019,
+          "rom_offset": 91995,
+          "op": "BEQ",
+          "mode": "rel",
+          "operand": 24,
+          "raw_hex": "F0 18"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51021,
+          "rom_offset": 91997,
+          "op": "INY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51022,
+          "rom_offset": 91998,
+          "op": "CPY",
+          "mode": "im",
+          "operand": 8,
+          "raw_hex": "C0 08"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51024,
+          "rom_offset": 92000,
+          "op": "BCC",
+          "mode": "rel",
+          "operand": 246,
+          "raw_hex": "90 F6"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51026,
+          "rom_offset": 92002,
+          "op": "LDA",
+          "mode": "zp",
+          "operand": 34,
+          "raw_hex": "A5 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51028,
+          "rom_offset": 92004,
+          "op": "CLC",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "18"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51029,
+          "rom_offset": 92005,
+          "op": "ADC",
+          "mode": "im",
+          "operand": 12,
+          "raw_hex": "69 0C"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51031,
+          "rom_offset": 92007,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 34,
+          "raw_hex": "85 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51033,
+          "rom_offset": 92009,
+          "op": "LDA",
+          "mode": "zp",
+          "operand": 35,
+          "raw_hex": "A5 23"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51035,
+          "rom_offset": 92011,
+          "op": "ADC",
+          "mode": "im",
+          "operand": 0,
+          "raw_hex": "69 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51037,
+          "rom_offset": 92013,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 35,
+          "raw_hex": "85 23"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51039,
+          "rom_offset": 92015,
+          "op": "INX",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "E8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51040,
+          "rom_offset": 92016,
+          "op": "CPX",
+          "mode": "im",
+          "operand": 237,
+          "raw_hex": "E0 ED"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51042,
+          "rom_offset": 92018,
+          "op": "BCC",
+          "mode": "rel",
+          "operand": 192,
+          "raw_hex": "90 C0"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51045,
+          "rom_offset": 92021,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 11,
+          "raw_hex": "A0 0B"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51047,
+          "rom_offset": 92023,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 34,
+          "raw_hex": "B1 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51049,
+          "rom_offset": 92025,
+          "op": "AND",
+          "mode": "im",
+          "operand": 252,
+          "raw_hex": "29 FC"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51051,
+          "rom_offset": 92027,
+          "op": "ORA",
+          "mode": "im",
+          "operand": 2,
+          "raw_hex": "09 02"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51053,
+          "rom_offset": 92029,
+          "op": "STA",
+          "mode": "iy",
+          "operand": 34,
+          "raw_hex": "91 22"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51055,
+          "rom_offset": 92031,
+          "op": "LDA",
+          "mode": "ab",
+          "operand": 54,
+          "raw_hex": "AD 36 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51058,
+          "rom_offset": 92034,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 53509,
+          "raw_hex": "20 05 D1"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51061,
+          "rom_offset": 92037,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 16,
+          "raw_hex": "A0 10"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51063,
+          "rom_offset": 92039,
+          "op": "INY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51064,
+          "rom_offset": 92040,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "B1 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51066,
+          "rom_offset": 92042,
+          "op": "CMP",
+          "mode": "im",
+          "operand": 255,
+          "raw_hex": "C9 FF"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51068,
+          "rom_offset": 92044,
+          "op": "BNE",
+          "mode": "rel",
+          "operand": 249,
+          "raw_hex": "D0 F9"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51070,
+          "rom_offset": 92046,
+          "op": "TXA",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "8A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51071,
+          "rom_offset": 92047,
+          "op": "STA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "91 20"
+        }
+      ],
+      "original_stores_and_roles": [
+        {
+          "physical_bank": 11,
+          "cpu": 50931,
+          "rom_offset": 91907,
+          "op": "STA",
+          "mode": "ab",
+          "operand": 55,
+          "raw_hex": "8D 37 00",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50943,
+          "rom_offset": 91919,
+          "op": "STA",
+          "mode": "aby",
+          "operand": 28531,
+          "raw_hex": "99 73 6F",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50961,
+          "rom_offset": 91937,
+          "op": "STA",
+          "mode": "abx",
+          "operand": 28531,
+          "raw_hex": "9D 73 6F",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50972,
+          "rom_offset": 91948,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 34,
+          "raw_hex": "85 22",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50976,
+          "rom_offset": 91952,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 35,
+          "raw_hex": "85 23",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 50992,
+          "rom_offset": 91968,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 42,
+          "raw_hex": "85 2A",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51031,
+          "rom_offset": 92007,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 34,
+          "raw_hex": "85 22",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51037,
+          "rom_offset": 92013,
+          "op": "STA",
+          "mode": "zp",
+          "operand": 35,
+          "raw_hex": "85 23",
+          "role": "Full raw-index/16-bit-wrap direct destination domain is disjoint from real30cities and does not change currentcity0036."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51053,
+          "rom_offset": 92029,
+          "op": "STA",
+          "mode": "iy",
+          "operand": 34,
+          "raw_hex": "91 22",
+          "role": "Officers begin63C0; actual status-offset11 write is outside all real30city rosters."
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 51071,
+          "rom_offset": 92047,
+          "op": "STA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "91 20",
+          "role": "Final firstFF append; happens only after the bound has selected the vacancy."
+        }
+      ],
+      "actual_local_callees": [
+        {
+          "physical_bank": 11,
+          "cpu": 50799
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 53509
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 59546
+        },
+        {
+          "physical_bank": 31,
+          "cpu": 62054
+        }
+      ],
+      "helper_write_contracts": [
+        {
+          "physical_bank": 11,
+          "entry_cpu": 53509,
+          "end_cpu": 53548,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 53509,
+              "rom_offset": 94485,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "A0 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53511,
+              "rom_offset": 94487,
+              "op": "STY",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "84 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53513,
+              "rom_offset": 94489,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53514,
+              "rom_offset": 94490,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53516,
+              "rom_offset": 94492,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53517,
+              "rom_offset": 94493,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53519,
+              "rom_offset": 94495,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53520,
+              "rom_offset": 94496,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53522,
+              "rom_offset": 94498,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53523,
+              "rom_offset": 94499,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53525,
+              "rom_offset": 94501,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53526,
+              "rom_offset": 94502,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53528,
+              "rom_offset": 94504,
+              "op": "CLC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "18"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53529,
+              "rom_offset": 94505,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "69 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53531,
+              "rom_offset": 94507,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "85 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53533,
+              "rom_offset": 94509,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "A5 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53535,
+              "rom_offset": 94511,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 96,
+              "raw_hex": "69 60"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53537,
+              "rom_offset": 94513,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "85 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53539,
+              "rom_offset": 94515,
+              "op": "JSR",
+              "mode": "ab",
+              "operand": 54941,
+              "raw_hex": "20 9D D6"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53542,
+              "rom_offset": 94518,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "A0 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53544,
+              "rom_offset": 94520,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53546,
+              "rom_offset": 94522,
+              "op": "AND",
+              "mode": "im",
+              "operand": 7,
+              "raw_hex": "29 07"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53548,
+              "rom_offset": 94524,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 11,
+          "entry_cpu": 54941,
+          "end_cpu": 54991,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 54941,
+              "rom_offset": 95917,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 2,
+              "raw_hex": "A0 02"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54943,
+              "rom_offset": 95919,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54945,
+              "rom_offset": 95921,
+              "op": "SEC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "38"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54946,
+              "rom_offset": 95922,
+              "op": "SBC",
+              "mode": "im",
+              "operand": 16,
+              "raw_hex": "E9 10"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54948,
+              "rom_offset": 95924,
+              "op": "INY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54949,
+              "rom_offset": 95925,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54951,
+              "rom_offset": 95927,
+              "op": "SBC",
+              "mode": "im",
+              "operand": 39,
+              "raw_hex": "E9 27"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54953,
+              "rom_offset": 95929,
+              "op": "BCC",
+              "mode": "rel",
+              "operand": 11,
+              "raw_hex": "90 0B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54955,
+              "rom_offset": 95931,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 2,
+              "raw_hex": "A0 02"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54957,
+              "rom_offset": 95933,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 15,
+              "raw_hex": "A9 0F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54959,
+              "rom_offset": 95935,
+              "op": "STA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "91 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54961,
+              "rom_offset": 95937,
+              "op": "INY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54962,
+              "rom_offset": 95938,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 39,
+              "raw_hex": "A9 27"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54964,
+              "rom_offset": 95940,
+              "op": "STA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "91 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54966,
+              "rom_offset": 95942,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 4,
+              "raw_hex": "A0 04"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54968,
+              "rom_offset": 95944,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54970,
+              "rom_offset": 95946,
+              "op": "SEC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "38"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54971,
+              "rom_offset": 95947,
+              "op": "SBC",
+              "mode": "im",
+              "operand": 16,
+              "raw_hex": "E9 10"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54973,
+              "rom_offset": 95949,
+              "op": "INY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54974,
+              "rom_offset": 95950,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54976,
+              "rom_offset": 95952,
+              "op": "SBC",
+              "mode": "im",
+              "operand": 39,
+              "raw_hex": "E9 27"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54978,
+              "rom_offset": 95954,
+              "op": "BCC",
+              "mode": "rel",
+              "operand": 11,
+              "raw_hex": "90 0B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54980,
+              "rom_offset": 95956,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 4,
+              "raw_hex": "A0 04"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54982,
+              "rom_offset": 95958,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 15,
+              "raw_hex": "A9 0F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54984,
+              "rom_offset": 95960,
+              "op": "STA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "91 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54986,
+              "rom_offset": 95962,
+              "op": "INY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54987,
+              "rom_offset": 95963,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 39,
+              "raw_hex": "A9 27"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54989,
+              "rom_offset": 95965,
+              "op": "STA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "91 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54991,
+              "rom_offset": 95967,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 11,
+          "entry_cpu": 53891,
+          "end_cpu": 53930,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 53891,
+              "rom_offset": 94867,
+              "op": "LDX",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "A2 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53893,
+              "rom_offset": 94869,
+              "op": "STX",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "86 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53895,
+              "rom_offset": 94871,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "85 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53897,
+              "rom_offset": 94873,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53898,
+              "rom_offset": 94874,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53900,
+              "rom_offset": 94876,
+              "op": "CLC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "18"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53901,
+              "rom_offset": 94877,
+              "op": "ADC",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "65 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53903,
+              "rom_offset": 94879,
+              "op": "PHA",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "48"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53904,
+              "rom_offset": 94880,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "A5 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53906,
+              "rom_offset": 94882,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "69 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53908,
+              "rom_offset": 94884,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "85 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53910,
+              "rom_offset": 94886,
+              "op": "PLA",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "68"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53911,
+              "rom_offset": 94887,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53912,
+              "rom_offset": 94888,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53914,
+              "rom_offset": 94890,
+              "op": "ASL",
+              "mode": "a",
+              "operand": 0,
+              "raw_hex": "0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53915,
+              "rom_offset": 94891,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "26 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53917,
+              "rom_offset": 94893,
+              "op": "CLC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "18"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53918,
+              "rom_offset": 94894,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 192,
+              "raw_hex": "69 C0"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53920,
+              "rom_offset": 94896,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "85 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53922,
+              "rom_offset": 94898,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "A5 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53924,
+              "rom_offset": 94900,
+              "op": "ADC",
+              "mode": "im",
+              "operand": 99,
+              "raw_hex": "69 63"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53926,
+              "rom_offset": 94902,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "85 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53928,
+              "rom_offset": 94904,
+              "op": "LDA",
+              "mode": "iy",
+              "operand": 32,
+              "raw_hex": "B1 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 53930,
+              "rom_offset": 94906,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 11,
+          "entry_cpu": 54385,
+          "end_cpu": 54419,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 54385,
+              "rom_offset": 95361,
+              "op": "LDY",
+              "mode": "im",
+              "operand": 7,
+              "raw_hex": "A0 07"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54387,
+              "rom_offset": 95363,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 0,
+              "raw_hex": "A9 00"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54389,
+              "rom_offset": 95365,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 44,
+              "raw_hex": "85 2C"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54391,
+              "rom_offset": 95367,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 42,
+              "raw_hex": "85 2A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54393,
+              "rom_offset": 95369,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 43,
+              "raw_hex": "85 2B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54395,
+              "rom_offset": 95371,
+              "op": "LSR",
+              "mode": "zp",
+              "operand": 33,
+              "raw_hex": "46 21"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54397,
+              "rom_offset": 95373,
+              "op": "BCC",
+              "mode": "rel",
+              "operand": 13,
+              "raw_hex": "90 0D"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54399,
+              "rom_offset": 95375,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "A5 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54401,
+              "rom_offset": 95377,
+              "op": "CLC",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "18"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54402,
+              "rom_offset": 95378,
+              "op": "ADC",
+              "mode": "zp",
+              "operand": 42,
+              "raw_hex": "65 2A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54404,
+              "rom_offset": 95380,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 42,
+              "raw_hex": "85 2A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54406,
+              "rom_offset": 95382,
+              "op": "LDA",
+              "mode": "zp",
+              "operand": 44,
+              "raw_hex": "A5 2C"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54408,
+              "rom_offset": 95384,
+              "op": "ADC",
+              "mode": "zp",
+              "operand": 43,
+              "raw_hex": "65 2B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54410,
+              "rom_offset": 95386,
+              "op": "STA",
+              "mode": "zp",
+              "operand": 43,
+              "raw_hex": "85 2B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54412,
+              "rom_offset": 95388,
+              "op": "ASL",
+              "mode": "zp",
+              "operand": 32,
+              "raw_hex": "06 20"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54414,
+              "rom_offset": 95390,
+              "op": "ROL",
+              "mode": "zp",
+              "operand": 44,
+              "raw_hex": "26 2C"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54416,
+              "rom_offset": 95392,
+              "op": "DEY",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "88"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54417,
+              "rom_offset": 95393,
+              "op": "BPL",
+              "mode": "rel",
+              "operand": 232,
+              "raw_hex": "10 E8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 54419,
+              "rom_offset": 95395,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 11,
+          "entry_cpu": 50799,
+          "end_cpu": 50889,
+          "original_instructions": [
+            {
+              "physical_bank": 11,
+              "cpu": 50799,
+              "rom_offset": 91775,
+              "op": "LDY",
+              "mode": "ab",
+              "operand": 28419,
+              "raw_hex": "AC 03 6F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50802,
+              "rom_offset": 91778,
+              "op": "CPY",
+              "mode": "im",
+              "operand": 4,
+              "raw_hex": "C0 04"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50804,
+              "rom_offset": 91780,
+              "op": "BNE",
+              "mode": "rel",
+              "operand": 26,
+              "raw_hex": "D0 1A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50806,
+              "rom_offset": 91782,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 109,
+              "raw_hex": "C9 6D"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50808,
+              "rom_offset": 91784,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 19,
+              "raw_hex": "F0 13"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50810,
+              "rom_offset": 91786,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 112,
+              "raw_hex": "C9 70"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50812,
+              "rom_offset": 91788,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 15,
+              "raw_hex": "F0 0F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50814,
+              "rom_offset": 91790,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 55,
+              "raw_hex": "C9 37"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50816,
+              "rom_offset": 91792,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 11,
+              "raw_hex": "F0 0B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50818,
+              "rom_offset": 91794,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 183,
+              "raw_hex": "C9 B7"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50820,
+              "rom_offset": 91796,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 7,
+              "raw_hex": "F0 07"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50822,
+              "rom_offset": 91798,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 144,
+              "raw_hex": "C9 90"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50824,
+              "rom_offset": 91800,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 3,
+              "raw_hex": "F0 03"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50826,
+              "rom_offset": 91802,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 10,
+              "raw_hex": "A9 0A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50828,
+              "rom_offset": 91804,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50829,
+              "rom_offset": 91805,
+              "op": "LDA",
+              "mode": "im",
+              "operand": 90,
+              "raw_hex": "A9 5A"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50831,
+              "rom_offset": 91807,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50832,
+              "rom_offset": 91808,
+              "op": "LDY",
+              "mode": "ab",
+              "operand": 28419,
+              "raw_hex": "AC 03 6F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50835,
+              "rom_offset": 91811,
+              "op": "CPY",
+              "mode": "im",
+              "operand": 2,
+              "raw_hex": "C0 02"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50837,
+              "rom_offset": 91813,
+              "op": "BNE",
+              "mode": "rel",
+              "operand": 23,
+              "raw_hex": "D0 17"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50839,
+              "rom_offset": 91815,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 86,
+              "raw_hex": "C9 56"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50841,
+              "rom_offset": 91817,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 242,
+              "raw_hex": "F0 F2"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50843,
+              "rom_offset": 91819,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 99,
+              "raw_hex": "C9 63"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50845,
+              "rom_offset": 91821,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 238,
+              "raw_hex": "F0 EE"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50847,
+              "rom_offset": 91823,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 57,
+              "raw_hex": "C9 39"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50849,
+              "rom_offset": 91825,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 234,
+              "raw_hex": "F0 EA"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50851,
+              "rom_offset": 91827,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 165,
+              "raw_hex": "C9 A5"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50853,
+              "rom_offset": 91829,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 230,
+              "raw_hex": "F0 E6"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50855,
+              "rom_offset": 91831,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 156,
+              "raw_hex": "C9 9C"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50857,
+              "rom_offset": 91833,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 226,
+              "raw_hex": "F0 E2"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50859,
+              "rom_offset": 91835,
+              "op": "JMP",
+              "mode": "ab",
+              "operand": 50826,
+              "raw_hex": "4C 8A C6"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50862,
+              "rom_offset": 91838,
+              "op": "LDY",
+              "mode": "ab",
+              "operand": 28419,
+              "raw_hex": "AC 03 6F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50865,
+              "rom_offset": 91841,
+              "op": "CPY",
+              "mode": "im",
+              "operand": 3,
+              "raw_hex": "C0 03"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50867,
+              "rom_offset": 91843,
+              "op": "BNE",
+              "mode": "rel",
+              "operand": 213,
+              "raw_hex": "D0 D5"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50869,
+              "rom_offset": 91845,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 107,
+              "raw_hex": "C9 6B"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50871,
+              "rom_offset": 91847,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 212,
+              "raw_hex": "F0 D4"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50873,
+              "rom_offset": 91849,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 234,
+              "raw_hex": "C9 EA"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50875,
+              "rom_offset": 91851,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 208,
+              "raw_hex": "F0 D0"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50877,
+              "rom_offset": 91853,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 235,
+              "raw_hex": "C9 EB"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50879,
+              "rom_offset": 91855,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 204,
+              "raw_hex": "F0 CC"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50881,
+              "rom_offset": 91857,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 213,
+              "raw_hex": "C9 D5"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50883,
+              "rom_offset": 91859,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 200,
+              "raw_hex": "F0 C8"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50885,
+              "rom_offset": 91861,
+              "op": "CMP",
+              "mode": "im",
+              "operand": 47,
+              "raw_hex": "C9 2F"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50887,
+              "rom_offset": 91863,
+              "op": "BEQ",
+              "mode": "rel",
+              "operand": 196,
+              "raw_hex": "F0 C4"
+            },
+            {
+              "physical_bank": 11,
+              "cpu": 50889,
+              "rom_offset": 91865,
+              "op": "JMP",
+              "mode": "ab",
+              "operand": 50826,
+              "raw_hex": "4C 8A C6"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 31,
+          "entry_cpu": 59546,
+          "end_cpu": 59561,
+          "original_instructions": [
+            {
+              "physical_bank": 31,
+              "cpu": 59546,
+              "rom_offset": 256170,
+              "op": "STX",
+              "mode": "ab",
+              "operand": 83,
+              "raw_hex": "8E 53 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59549,
+              "rom_offset": 256173,
+              "op": "LDX",
+              "mode": "ab",
+              "operand": 84,
+              "raw_hex": "AE 54 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59552,
+              "rom_offset": 256176,
+              "op": "LDA",
+              "mode": "abx",
+              "operand": 59578,
+              "raw_hex": "BD BA E8"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59555,
+              "rom_offset": 256179,
+              "op": "INC",
+              "mode": "ab",
+              "operand": 84,
+              "raw_hex": "EE 54 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59558,
+              "rom_offset": 256182,
+              "op": "LDX",
+              "mode": "ab",
+              "operand": 83,
+              "raw_hex": "AE 53 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 59561,
+              "rom_offset": 256185,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        },
+        {
+          "physical_bank": 31,
+          "entry_cpu": 62054,
+          "end_cpu": 62060,
+          "original_instructions": [
+            {
+              "physical_bank": 31,
+              "cpu": 62054,
+              "rom_offset": 258678,
+              "op": "STY",
+              "mode": "ab",
+              "operand": 222,
+              "raw_hex": "8C DE 00"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 62057,
+              "rom_offset": 258681,
+              "op": "STY",
+              "mode": "ab",
+              "operand": 57344,
+              "raw_hex": "8C 00 E0"
+            },
+            {
+              "physical_bank": 31,
+              "cpu": 62060,
+              "rom_offset": 258684,
+              "op": "RTS",
+              "mode": "i",
+              "operand": 0,
+              "raw_hex": "60"
+            }
+          ],
+          "SRAM_write_contract": "Only selected city offsets2,3,4,5 for D69D; all remaining writes in these helpers are RAM/stack/mapper, never a real-city roster."
+        }
+      ],
+      "count_prefix_instructions": [
+        {
+          "physical_bank": 11,
+          "cpu": 54020,
+          "rom_offset": 94996,
+          "op": "JSR",
+          "mode": "ab",
+          "operand": 53509,
+          "raw_hex": "20 05 D1"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54023,
+          "rom_offset": 94999,
+          "op": "LDX",
+          "mode": "im",
+          "operand": 0,
+          "raw_hex": "A2 00"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54025,
+          "rom_offset": 95001,
+          "op": "LDY",
+          "mode": "im",
+          "operand": 17,
+          "raw_hex": "A0 11"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54027,
+          "rom_offset": 95003,
+          "op": "LDA",
+          "mode": "iy",
+          "operand": 32,
+          "raw_hex": "B1 20"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54029,
+          "rom_offset": 95005,
+          "op": "CMP",
+          "mode": "im",
+          "operand": 255,
+          "raw_hex": "C9 FF"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54031,
+          "rom_offset": 95007,
+          "op": "BEQ",
+          "mode": "rel",
+          "operand": 6,
+          "raw_hex": "F0 06"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54033,
+          "rom_offset": 95009,
+          "op": "INX",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "E8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54034,
+          "rom_offset": 95010,
+          "op": "INY",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "C8"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54035,
+          "rom_offset": 95011,
+          "op": "CPY",
+          "mode": "im",
+          "operand": 27,
+          "raw_hex": "C0 1B"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54037,
+          "rom_offset": 95013,
+          "op": "BCC",
+          "mode": "rel",
+          "operand": 244,
+          "raw_hex": "90 F4"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54039,
+          "rom_offset": 95015,
+          "op": "TXA",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "8A"
+        },
+        {
+          "physical_bank": 11,
+          "cpu": 54040,
+          "rom_offset": 95016,
+          "op": "RTS",
+          "mode": "i",
+          "operand": 0,
+          "raw_hex": "60"
+        }
+      ],
+      "argument": "D304 inspects offsets17..26 untilFF or ten entries. A<10 proves a currentFF within17..26. Every trusted path to the four sites passes that accepting edge. Between it and the final read/append, city0036 is unchanged and no real30city roster byte is written. The subsequent D105 reloads that same city pointer. Hence the same vacancy is still in17..26. Rawcity IDs30..255 have base>=63C0, so even unknownY0..255 cannot intersect the target city area.",
+      "scope": "Ordinary no-interrupt/no-external-mutation execution through the original guarded entry, within the frozen trusted-CFG/helper contracts. Bare suffix entry is not covered; the original raw suffix can still read/write tail/nextcity bytes. Not a guarantee of termination or arbitrary raw control entry."
+    }
+  ]
+}

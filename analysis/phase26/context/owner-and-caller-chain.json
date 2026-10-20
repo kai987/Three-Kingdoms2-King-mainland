@@ -1,0 +1,2467 @@
+{
+  "schema": "phase26-focused-G107-existing-parent-and-owner-v1",
+  "status": "read_only_existing_evidence",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "frontdoor25": "AppearancePointerGameEngine / AppearancePointerSceneCoordinator",
+  "frontdoor26": "DeploymentPointerGameEngine / DeploymentPointerSceneCoordinator",
+  "owners": [
+    {
+      "physical_pair": [
+        8,
+        9
+      ],
+      "target": 40963,
+      "phase25_owner": "BattleSetupAI",
+      "current26_owner": "DeploymentPointerServices",
+      "phase25_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "BattleSetupAI"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 183,
+        "predicate": "pair in ((8, 9), (12, 13))",
+        "owner_source": "source/recovered/battle_setup_ai.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "current26_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "DeploymentPointerServices"
+        ],
+        "route_path": "source/recovered/deployment_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (8, 9) or call.target not in DeploymentPointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/deployment_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "context": "Explicit paired-code context for static route lookup;8000 data bank deliberately unknown. Not a new captured caller."
+    },
+    {
+      "physical_pair": [
+        8,
+        9
+      ],
+      "target": 45360,
+      "phase25_owner": "BattleSetupAI",
+      "current26_owner": "DeploymentPointerServices",
+      "phase25_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "BattleSetupAI"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 183,
+        "predicate": "pair in ((8, 9), (12, 13))",
+        "owner_source": "source/recovered/battle_setup_ai.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "current26_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "DeploymentPointerServices"
+        ],
+        "route_path": "source/recovered/deployment_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (8, 9) or call.target not in DeploymentPointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/deployment_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "context": "Explicit paired-code context for static route lookup;8000 data bank deliberately unknown. Not a new captured caller."
+    },
+    {
+      "physical_pair": [
+        8,
+        9
+      ],
+      "target": 45488,
+      "phase25_owner": "BattleSetupAI",
+      "current26_owner": "DeploymentPointerServices",
+      "phase25_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "BattleSetupAI"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 183,
+        "predicate": "pair in ((8, 9), (12, 13))",
+        "owner_source": "source/recovered/battle_setup_ai.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "current26_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "DeploymentPointerServices"
+        ],
+        "route_path": "source/recovered/deployment_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (8, 9) or call.target not in DeploymentPointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/deployment_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "context": "Explicit paired-code context for static route lookup;8000 data bank deliberately unknown. Not a new captured caller."
+    },
+    {
+      "physical_pair": [
+        8,
+        9
+      ],
+      "target": 45742,
+      "phase25_owner": "BattleSetupAI",
+      "current26_owner": "DeploymentPointerServices",
+      "phase25_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "BattleSetupAI"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 183,
+        "predicate": "pair in ((8, 9), (12, 13))",
+        "owner_source": "source/recovered/battle_setup_ai.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "current26_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "DeploymentPointerServices"
+        ],
+        "route_path": "source/recovered/deployment_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (8, 9) or call.target not in DeploymentPointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/deployment_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "context": "Explicit paired-code context for static route lookup;8000 data bank deliberately unknown. Not a new captured caller."
+    },
+    {
+      "physical_pair": [
+        8,
+        9
+      ],
+      "target": 45842,
+      "phase25_owner": "BattleSetupAI",
+      "current26_owner": "DeploymentPointerServices",
+      "phase25_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "BattleSetupAI"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 183,
+        "predicate": "pair in ((8, 9), (12, 13))",
+        "owner_source": "source/recovered/battle_setup_ai.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "current26_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "DeploymentPointerServices"
+        ],
+        "route_path": "source/recovered/deployment_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (8, 9) or call.target not in DeploymentPointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/deployment_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "context": "Explicit paired-code context for static route lookup;8000 data bank deliberately unknown. Not a new captured caller."
+    }
+  ],
+  "local_calls": [
+    {
+      "source_path": "source/recovered/battle_setup_ai.py",
+      "source_line": 223,
+      "parent_function": "initialize_battle_AI",
+      "callee_function": "assign_strategies_and_positions",
+      "JSR_call_PC": 45419,
+      "raw_return_word": 45421,
+      "normal_return_PC": 45422,
+      "same_owner_local_call": true
+    },
+    {
+      "source_path": "source/recovered/battle_setup_ai.py",
+      "source_line": 246,
+      "parent_function": "initialize_battle_AI",
+      "callee_function": "assign_strategies_and_positions",
+      "JSR_call_PC": 45461,
+      "raw_return_word": 45463,
+      "normal_return_PC": 45464,
+      "same_owner_local_call": true
+    },
+    {
+      "source_path": "source/recovered/battle_setup_ai.py",
+      "source_line": 309,
+      "parent_function": "assign_strategies_and_positions",
+      "callee_function": "second_side_formation",
+      "JSR_call_PC": 45667,
+      "raw_return_word": 45669,
+      "normal_return_PC": 45670,
+      "same_owner_local_call": true
+    },
+    {
+      "source_path": "source/recovered/battle_setup_ai.py",
+      "source_line": 311,
+      "parent_function": "assign_strategies_and_positions",
+      "callee_function": "first_side_formation",
+      "JSR_call_PC": 45661,
+      "raw_return_word": 45663,
+      "normal_return_PC": 45664,
+      "same_owner_local_call": true
+    }
+  ],
+  "original_parent_chain": [
+    "fixed31:E18B",
+    "0500!=11 branch",
+    "fixed31:E1B2 LDY#28 (decimal40)",
+    "fixed31:E1B4 JSR F237",
+    "pair8/9;fixed31:E1B7 JSR8:A003",
+    "8:A003 JMP B130",
+    "controller byte3==3 per side",
+    "8:B16B or B195 JSR B1B0",
+    "8:B25D→B2AE or B263→B312",
+    "8:B272/B278/B290/B296 coordinate reads"
+  ],
+  "parent_branch": {
+    "battle_main_byte": 1280,
+    "excluded_value": 11,
+    "excluded_path": "fixedE1A9 selector2C→pair12/13,E1AC A006 duel-outcome route; does not enter8A003 here",
+    "selector_decimal": 40,
+    "selector_hex": "28",
+    "setup_terminal_PC": 57446,
+    "setup_terminal_kind": "main_loop_boundary_not_caller_RTS"
+  },
+  "per_side_controller_gates": [
+    {
+      "side_base": 0,
+      "packed_ruler_source": "0507 low nibble",
+      "controller_pointer_call_PC": 45392,
+      "controller_byte_offset": 3,
+      "required_raw_controller_value": 3,
+      "comparison_PC": 45401,
+      "sort_call_PC": 45411,
+      "deployment_call_PC": 45419,
+      "normal_return_PC": 45422
+    },
+    {
+      "side_base": 10,
+      "packed_ruler_source": "0507 high nibble",
+      "controller_pointer_call_PC": 45432,
+      "controller_byte_offset": 3,
+      "required_raw_controller_value": 3,
+      "comparison_PC": 45441,
+      "sort_call_PC": 45453,
+      "deployment_call_PC": 45461,
+      "normal_return_PC": 45464
+    }
+  ],
+  "current_method_definitions": [
+    {
+      "entry": 45488,
+      "method": "assign_strategies_and_positions",
+      "path": "source/recovered/battle_setup_ai.py",
+      "line": 266,
+      "inherited_from_frozen_setup": true
+    },
+    {
+      "entry": 45742,
+      "method": "first_side_formation",
+      "path": "source/recovered/deployment_pointer_services.py",
+      "line": 49,
+      "inherited_from_frozen_setup": false
+    },
+    {
+      "entry": 45842,
+      "method": "second_side_formation",
+      "path": "source/recovered/deployment_pointer_services.py",
+      "line": 89,
+      "inherited_from_frozen_setup": false
+    }
+  ],
+  "coordinate_reads": [
+    {
+      "physical_bank": 8,
+      "cpu": 45682,
+      "rom_offset": 70274,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 32,
+      "raw_hex": "B1 20",
+      "pointer_zero_page": 32,
+      "Y_values": [
+        0
+      ],
+      "classification": "unresolved_pointer_or_index_contract",
+      "address_contract": null,
+      "whole_pointer_values": null,
+      "proof_basis": "frozen_phase23_authoritative_contract",
+      "phase18_classification": "unresolved_pointer_or_index_contract",
+      "phase18_address_contract": null,
+      "newly_proved_disjoint": false,
+      "phase17_instruction_access": true,
+      "phase17_remaining_candidate": true,
+      "pointer_producer_calls": [],
+      "original_preceding_context": [
+        {
+          "physical_bank": 8,
+          "cpu": 45659,
+          "rom_offset": 70251,
+          "raw_hex": "D0 06"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45661,
+          "rom_offset": 70253,
+          "raw_hex": "20 AE B2"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45664,
+          "rom_offset": 70256,
+          "raw_hex": "4C 66 B2"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45667,
+          "rom_offset": 70259,
+          "raw_hex": "20 12 B3"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45670,
+          "rom_offset": 70262,
+          "raw_hex": "AE 91 6F"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45673,
+          "rom_offset": 70265,
+          "raw_hex": "8A"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45674,
+          "rom_offset": 70266,
+          "raw_hex": "18"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45675,
+          "rom_offset": 70267,
+          "raw_hex": "69 0A"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45677,
+          "rom_offset": 70269,
+          "raw_hex": "8D 2A 00"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45680,
+          "rom_offset": 70272,
+          "raw_hex": "A0 00"
+        }
+      ],
+      "frozen_caller_and_definition_slice_reference": {
+        "path": "analysis/phase18/fields-static/access-contracts.json",
+        "physical_bank": 8,
+        "cpu": 45682,
+        "scope": "Frozen predecessor diagnostics/call owners, not a new reachability or source-generation proof."
+      },
+      "limits": [
+        "Trusted bounded CFG/call domains only; external interrupted or corrupted pointer/selector inputs are not ruled out.",
+        "Y/index and preexisting disjoint-store contracts are conservatively inherited from frozen phase18.",
+        "An unresolved relation is not evidence of actual auxiliary-field use."
+      ],
+      "authoritative_contract_origin": null,
+      "authoritative_pointer_representation": null,
+      "phase19_classification": "unresolved_pointer_or_index_contract",
+      "phase19_proof_basis": "unknown_relation",
+      "phase19_disjoint_proof": null,
+      "phase20_classification": "unresolved_pointer_or_index_contract",
+      "phase20_address_contract": null,
+      "candidate_address_contract": null,
+      "candidate_whole_pointer_values": null,
+      "candidate_Y_values": null,
+      "candidate_contract_is_authoritative": false,
+      "address_scope": "Logical effective data address; excludes addressing-mode dummy bus reads and instruction/pointer fetches.",
+      "phase21_classification": "unresolved_pointer_or_index_contract",
+      "phase21_newly_disjoint": false,
+      "phase22_classification": "unresolved_pointer_or_index_contract",
+      "phase23_authoritative_contract_origin": null,
+      "phase22_authoritative_contract_origin": null,
+      "phase23_classification": "unresolved_pointer_or_index_contract",
+      "phase24_classification": "unresolved_pointer_or_index_contract"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45688,
+      "rom_offset": 70280,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 32,
+      "raw_hex": "B1 20",
+      "pointer_zero_page": 32,
+      "Y_values": [
+        1
+      ],
+      "classification": "unresolved_pointer_or_index_contract",
+      "address_contract": null,
+      "whole_pointer_values": null,
+      "proof_basis": "frozen_phase23_authoritative_contract",
+      "phase18_classification": "unresolved_pointer_or_index_contract",
+      "phase18_address_contract": null,
+      "newly_proved_disjoint": false,
+      "phase17_instruction_access": true,
+      "phase17_remaining_candidate": true,
+      "pointer_producer_calls": [],
+      "original_preceding_context": [
+        {
+          "physical_bank": 8,
+          "cpu": 45664,
+          "rom_offset": 70256,
+          "raw_hex": "4C 66 B2"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45667,
+          "rom_offset": 70259,
+          "raw_hex": "20 12 B3"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45670,
+          "rom_offset": 70262,
+          "raw_hex": "AE 91 6F"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45673,
+          "rom_offset": 70265,
+          "raw_hex": "8A"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45674,
+          "rom_offset": 70266,
+          "raw_hex": "18"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45675,
+          "rom_offset": 70267,
+          "raw_hex": "69 0A"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45677,
+          "rom_offset": 70269,
+          "raw_hex": "8D 2A 00"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45680,
+          "rom_offset": 70272,
+          "raw_hex": "A0 00"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45682,
+          "rom_offset": 70274,
+          "raw_hex": "B1 20"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45684,
+          "rom_offset": 70276,
+          "raw_hex": "9D 14 06"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45687,
+          "rom_offset": 70279,
+          "raw_hex": "C8"
+        }
+      ],
+      "frozen_caller_and_definition_slice_reference": {
+        "path": "analysis/phase18/fields-static/access-contracts.json",
+        "physical_bank": 8,
+        "cpu": 45688,
+        "scope": "Frozen predecessor diagnostics/call owners, not a new reachability or source-generation proof."
+      },
+      "limits": [
+        "Trusted bounded CFG/call domains only; external interrupted or corrupted pointer/selector inputs are not ruled out.",
+        "Y/index and preexisting disjoint-store contracts are conservatively inherited from frozen phase18.",
+        "An unresolved relation is not evidence of actual auxiliary-field use."
+      ],
+      "authoritative_contract_origin": null,
+      "authoritative_pointer_representation": null,
+      "phase19_classification": "unresolved_pointer_or_index_contract",
+      "phase19_proof_basis": "unknown_relation",
+      "phase19_disjoint_proof": null,
+      "phase20_classification": "unresolved_pointer_or_index_contract",
+      "phase20_address_contract": null,
+      "candidate_address_contract": null,
+      "candidate_whole_pointer_values": null,
+      "candidate_Y_values": null,
+      "candidate_contract_is_authoritative": false,
+      "address_scope": "Logical effective data address; excludes addressing-mode dummy bus reads and instruction/pointer fetches.",
+      "phase21_classification": "unresolved_pointer_or_index_contract",
+      "phase21_newly_disjoint": false,
+      "phase22_classification": "unresolved_pointer_or_index_contract",
+      "phase23_authoritative_contract_origin": null,
+      "phase22_authoritative_contract_origin": null,
+      "phase23_classification": "unresolved_pointer_or_index_contract",
+      "phase24_classification": "unresolved_pointer_or_index_contract"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45712,
+      "rom_offset": 70304,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 32,
+      "raw_hex": "B1 20",
+      "pointer_zero_page": 32,
+      "Y_values": null,
+      "classification": "unresolved_pointer_or_index_contract",
+      "address_contract": null,
+      "whole_pointer_values": null,
+      "proof_basis": "frozen_phase23_authoritative_contract",
+      "phase18_classification": "unresolved_pointer_or_index_contract",
+      "phase18_address_contract": null,
+      "newly_proved_disjoint": false,
+      "phase17_instruction_access": true,
+      "phase17_remaining_candidate": true,
+      "pointer_producer_calls": [],
+      "original_preceding_context": [
+        {
+          "physical_bank": 8,
+          "cpu": 45688,
+          "rom_offset": 70280,
+          "raw_hex": "B1 20"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45690,
+          "rom_offset": 70282,
+          "raw_hex": "9D 00 06"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45693,
+          "rom_offset": 70285,
+          "raw_hex": "E8"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45694,
+          "rom_offset": 70286,
+          "raw_hex": "BD A1 6F"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45697,
+          "rom_offset": 70289,
+          "raw_hex": "C9 FF"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45699,
+          "rom_offset": 70291,
+          "raw_hex": "F0 28"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45701,
+          "rom_offset": 70293,
+          "raw_hex": "38"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45702,
+          "rom_offset": 70294,
+          "raw_hex": "E9 01"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45704,
+          "rom_offset": 70296,
+          "raw_hex": "8D 2B 00"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45707,
+          "rom_offset": 70299,
+          "raw_hex": "A8"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45708,
+          "rom_offset": 70300,
+          "raw_hex": "B9 22 00"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45711,
+          "rom_offset": 70303,
+          "raw_hex": "A8"
+        }
+      ],
+      "frozen_caller_and_definition_slice_reference": {
+        "path": "analysis/phase18/fields-static/access-contracts.json",
+        "physical_bank": 8,
+        "cpu": 45712,
+        "scope": "Frozen predecessor diagnostics/call owners, not a new reachability or source-generation proof."
+      },
+      "limits": [
+        "Trusted bounded CFG/call domains only; external interrupted or corrupted pointer/selector inputs are not ruled out.",
+        "Y/index and preexisting disjoint-store contracts are conservatively inherited from frozen phase18.",
+        "An unresolved relation is not evidence of actual auxiliary-field use."
+      ],
+      "authoritative_contract_origin": null,
+      "authoritative_pointer_representation": null,
+      "phase19_classification": "unresolved_pointer_or_index_contract",
+      "phase19_proof_basis": "unknown_relation",
+      "phase19_disjoint_proof": null,
+      "phase20_classification": "unresolved_pointer_or_index_contract",
+      "phase20_address_contract": null,
+      "candidate_address_contract": null,
+      "candidate_whole_pointer_values": null,
+      "candidate_Y_values": null,
+      "candidate_contract_is_authoritative": false,
+      "address_scope": "Logical effective data address; excludes addressing-mode dummy bus reads and instruction/pointer fetches.",
+      "phase21_classification": "unresolved_pointer_or_index_contract",
+      "phase21_newly_disjoint": false,
+      "phase22_classification": "unresolved_pointer_or_index_contract",
+      "phase23_authoritative_contract_origin": null,
+      "phase22_authoritative_contract_origin": null,
+      "phase23_classification": "unresolved_pointer_or_index_contract",
+      "phase24_classification": "unresolved_pointer_or_index_contract"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45718,
+      "rom_offset": 70310,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 32,
+      "raw_hex": "B1 20",
+      "pointer_zero_page": 32,
+      "Y_values": null,
+      "classification": "unresolved_pointer_or_index_contract",
+      "address_contract": null,
+      "whole_pointer_values": null,
+      "proof_basis": "frozen_phase23_authoritative_contract",
+      "phase18_classification": "unresolved_pointer_or_index_contract",
+      "phase18_address_contract": null,
+      "newly_proved_disjoint": false,
+      "phase17_instruction_access": true,
+      "phase17_remaining_candidate": true,
+      "pointer_producer_calls": [],
+      "original_preceding_context": [
+        {
+          "physical_bank": 8,
+          "cpu": 45694,
+          "rom_offset": 70286,
+          "raw_hex": "BD A1 6F"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45697,
+          "rom_offset": 70289,
+          "raw_hex": "C9 FF"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45699,
+          "rom_offset": 70291,
+          "raw_hex": "F0 28"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45701,
+          "rom_offset": 70293,
+          "raw_hex": "38"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45702,
+          "rom_offset": 70294,
+          "raw_hex": "E9 01"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45704,
+          "rom_offset": 70296,
+          "raw_hex": "8D 2B 00"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45707,
+          "rom_offset": 70299,
+          "raw_hex": "A8"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45708,
+          "rom_offset": 70300,
+          "raw_hex": "B9 22 00"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45711,
+          "rom_offset": 70303,
+          "raw_hex": "A8"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45712,
+          "rom_offset": 70304,
+          "raw_hex": "B1 20"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45714,
+          "rom_offset": 70306,
+          "raw_hex": "9D 14 06"
+        },
+        {
+          "physical_bank": 8,
+          "cpu": 45717,
+          "rom_offset": 70309,
+          "raw_hex": "C8"
+        }
+      ],
+      "frozen_caller_and_definition_slice_reference": {
+        "path": "analysis/phase18/fields-static/access-contracts.json",
+        "physical_bank": 8,
+        "cpu": 45718,
+        "scope": "Frozen predecessor diagnostics/call owners, not a new reachability or source-generation proof."
+      },
+      "limits": [
+        "Trusted bounded CFG/call domains only; external interrupted or corrupted pointer/selector inputs are not ruled out.",
+        "Y/index and preexisting disjoint-store contracts are conservatively inherited from frozen phase18.",
+        "An unresolved relation is not evidence of actual auxiliary-field use."
+      ],
+      "authoritative_contract_origin": null,
+      "authoritative_pointer_representation": null,
+      "phase19_classification": "unresolved_pointer_or_index_contract",
+      "phase19_proof_basis": "unknown_relation",
+      "phase19_disjoint_proof": null,
+      "phase20_classification": "unresolved_pointer_or_index_contract",
+      "phase20_address_contract": null,
+      "candidate_address_contract": null,
+      "candidate_whole_pointer_values": null,
+      "candidate_Y_values": null,
+      "candidate_contract_is_authoritative": false,
+      "address_scope": "Logical effective data address; excludes addressing-mode dummy bus reads and instruction/pointer fetches.",
+      "phase21_classification": "unresolved_pointer_or_index_contract",
+      "phase21_newly_disjoint": false,
+      "phase22_classification": "unresolved_pointer_or_index_contract",
+      "phase23_authoritative_contract_origin": null,
+      "phase22_authoritative_contract_origin": null,
+      "phase23_classification": "unresolved_pointer_or_index_contract",
+      "phase24_classification": "unresolved_pointer_or_index_contract"
+    }
+  ],
+  "raw_original_positions": [
+    {
+      "physical_bank": 8,
+      "cpu": 40963,
+      "rom_offset": 65555,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 45360,
+      "raw_hex": "4C 30 B1"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45360,
+      "rom_offset": 69952,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A0 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45362,
+      "rom_offset": 69954,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 255,
+      "raw_hex": "A9 FF"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45364,
+      "rom_offset": 69956,
+      "op": "STA",
+      "mode": "aby",
+      "operand": 28577,
+      "raw_hex": "99 A1 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45367,
+      "rom_offset": 69959,
+      "op": "INY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "C8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45368,
+      "rom_offset": 69960,
+      "op": "CPY",
+      "mode": "im",
+      "operand": 64,
+      "raw_hex": "C0 40"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45370,
+      "rom_offset": 69962,
+      "op": "BCC",
+      "mode": "rel",
+      "operand": 248,
+      "raw_hex": "90 F8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45372,
+      "rom_offset": 69964,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A0 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45374,
+      "rom_offset": 69966,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A9 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45376,
+      "rom_offset": 69968,
+      "op": "STA",
+      "mode": "aby",
+      "operand": 28617,
+      "raw_hex": "99 C9 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45379,
+      "rom_offset": 69971,
+      "op": "INY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "C8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45380,
+      "rom_offset": 69972,
+      "op": "CPY",
+      "mode": "im",
+      "operand": 20,
+      "raw_hex": "C0 14"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45382,
+      "rom_offset": 69974,
+      "op": "BCC",
+      "mode": "rel",
+      "operand": 248,
+      "raw_hex": "90 F8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45384,
+      "rom_offset": 69976,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1287,
+      "raw_hex": "AD 07 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45387,
+      "rom_offset": 69979,
+      "op": "AND",
+      "mode": "im",
+      "operand": 15,
+      "raw_hex": "29 0F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45389,
+      "rom_offset": 69981,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 34,
+      "raw_hex": "8D 22 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45392,
+      "rom_offset": 69984,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 46274,
+      "raw_hex": "20 C2 B4"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45395,
+      "rom_offset": 69987,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 3,
+      "raw_hex": "A0 03"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45397,
+      "rom_offset": 69989,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 32,
+      "raw_hex": "B1 20"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45399,
+      "rom_offset": 69991,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 3,
+      "raw_hex": "C9 03"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45401,
+      "rom_offset": 69993,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 19,
+      "raw_hex": "D0 13"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45403,
+      "rom_offset": 69995,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A9 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45405,
+      "rom_offset": 69997,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28561,
+      "raw_hex": "8D 91 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45408,
+      "rom_offset": 70000,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28577,
+      "raw_hex": "8D A1 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45411,
+      "rom_offset": 70003,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 45937,
+      "raw_hex": "20 71 B3"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45414,
+      "rom_offset": 70006,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A9 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45416,
+      "rom_offset": 70008,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "8D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45419,
+      "rom_offset": 70011,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 45488,
+      "raw_hex": "20 B0 B1"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45422,
+      "rom_offset": 70014,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1287,
+      "raw_hex": "AD 07 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45425,
+      "rom_offset": 70017,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "4A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45426,
+      "rom_offset": 70018,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "4A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45427,
+      "rom_offset": 70019,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "4A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45428,
+      "rom_offset": 70020,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "4A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45429,
+      "rom_offset": 70021,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 34,
+      "raw_hex": "8D 22 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45432,
+      "rom_offset": 70024,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 46274,
+      "raw_hex": "20 C2 B4"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45435,
+      "rom_offset": 70027,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 3,
+      "raw_hex": "A0 03"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45437,
+      "rom_offset": 70029,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 32,
+      "raw_hex": "B1 20"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45439,
+      "rom_offset": 70031,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 3,
+      "raw_hex": "C9 03"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45441,
+      "rom_offset": 70033,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 21,
+      "raw_hex": "D0 15"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45443,
+      "rom_offset": 70035,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 10,
+      "raw_hex": "A9 0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45445,
+      "rom_offset": 70037,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28561,
+      "raw_hex": "8D 91 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45448,
+      "rom_offset": 70040,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A9 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45450,
+      "rom_offset": 70042,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28587,
+      "raw_hex": "8D AB 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45453,
+      "rom_offset": 70045,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 45937,
+      "raw_hex": "20 71 B3"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45456,
+      "rom_offset": 70048,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 54,
+      "raw_hex": "A9 36"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45458,
+      "rom_offset": 70050,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "8D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45461,
+      "rom_offset": 70053,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 45488,
+      "raw_hex": "20 B0 B1"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45464,
+      "rom_offset": 70056,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A0 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45466,
+      "rom_offset": 70058,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 255,
+      "raw_hex": "A9 FF"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45468,
+      "rom_offset": 70060,
+      "op": "STA",
+      "mode": "aby",
+      "operand": 1240,
+      "raw_hex": "99 D8 04"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45471,
+      "rom_offset": 70063,
+      "op": "INY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "C8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45472,
+      "rom_offset": 70064,
+      "op": "CPY",
+      "mode": "im",
+      "operand": 8,
+      "raw_hex": "C0 08"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45474,
+      "rom_offset": 70066,
+      "op": "BCC",
+      "mode": "rel",
+      "operand": 248,
+      "raw_hex": "90 F8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45476,
+      "rom_offset": 70068,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A9 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45478,
+      "rom_offset": 70070,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28564,
+      "raw_hex": "8D 94 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45481,
+      "rom_offset": 70073,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28565,
+      "raw_hex": "8D 95 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45484,
+      "rom_offset": 70076,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28566,
+      "raw_hex": "8D 96 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45487,
+      "rom_offset": 70079,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45659,
+      "rom_offset": 70251,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 6,
+      "raw_hex": "D0 06"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45661,
+      "rom_offset": 70253,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 45742,
+      "raw_hex": "20 AE B2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45664,
+      "rom_offset": 70256,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 45670,
+      "raw_hex": "4C 66 B2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45667,
+      "rom_offset": 70259,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 45842,
+      "raw_hex": "20 12 B3"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45670,
+      "rom_offset": 70262,
+      "op": "LDX",
+      "mode": "ab",
+      "operand": 28561,
+      "raw_hex": "AE 91 6F"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45673,
+      "rom_offset": 70265,
+      "op": "TXA",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "8A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45742,
+      "rom_offset": 70334,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 48,
+      "raw_hex": "A0 30"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45744,
+      "rom_offset": 70336,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62054,
+      "raw_hex": "20 66 F2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45747,
+      "rom_offset": 70339,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1294,
+      "raw_hex": "AD 0E 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45750,
+      "rom_offset": 70342,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45751,
+      "rom_offset": 70343,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45752,
+      "rom_offset": 70344,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45753,
+      "rom_offset": 70345,
+      "op": "TAY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "A8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45754,
+      "rom_offset": 70346,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 40306,
+      "raw_hex": "B9 72 9D"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45757,
+      "rom_offset": 70349,
+      "op": "BPL",
+      "mode": "rel",
+      "operand": 5,
+      "raw_hex": "10 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45759,
+      "rom_offset": 70351,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A9 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45761,
+      "rom_offset": 70353,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 45785,
+      "raw_hex": "4C D9 B2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45764,
+      "rom_offset": 70356,
+      "op": "CMP",
+      "mode": "ab",
+      "operand": 1322,
+      "raw_hex": "CD 2A 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45767,
+      "rom_offset": 70359,
+      "op": "BEQ",
+      "mode": "rel",
+      "operand": 4,
+      "raw_hex": "F0 04"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45769,
+      "rom_offset": 70361,
+      "op": "INY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "C8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45770,
+      "rom_offset": 70362,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 45754,
+      "raw_hex": "4C BA B2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45773,
+      "rom_offset": 70365,
+      "op": "TYA",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "98"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45774,
+      "rom_offset": 70366,
+      "op": "PHA",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "48"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45775,
+      "rom_offset": 70367,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 49,
+      "raw_hex": "A0 31"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45777,
+      "rom_offset": 70369,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62054,
+      "raw_hex": "20 66 F2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45780,
+      "rom_offset": 70372,
+      "op": "PLA",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "68"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45781,
+      "rom_offset": 70373,
+      "op": "TAY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "A8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45782,
+      "rom_offset": 70374,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 39604,
+      "raw_hex": "B9 B4 9A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45785,
+      "rom_offset": 70377,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "8D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45788,
+      "rom_offset": 70380,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45789,
+      "rom_offset": 70381,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45790,
+      "rom_offset": 70382,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45791,
+      "rom_offset": 70383,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45792,
+      "rom_offset": 70384,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45793,
+      "rom_offset": 70385,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "8D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45796,
+      "rom_offset": 70388,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 38,
+      "raw_hex": "A0 26"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45798,
+      "rom_offset": 70390,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62054,
+      "raw_hex": "20 66 F2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45801,
+      "rom_offset": 70393,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1294,
+      "raw_hex": "AD 0E 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45804,
+      "rom_offset": 70396,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45805,
+      "rom_offset": 70397,
+      "op": "TAY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "A8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45806,
+      "rom_offset": 70398,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 35922,
+      "raw_hex": "B9 52 8C"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45809,
+      "rom_offset": 70401,
+      "op": "CLC",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "18"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45810,
+      "rom_offset": 70402,
+      "op": "ADC",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "6D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45813,
+      "rom_offset": 70405,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "8D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45816,
+      "rom_offset": 70408,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 35923,
+      "raw_hex": "B9 53 8C"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45819,
+      "rom_offset": 70411,
+      "op": "ADC",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "69 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45821,
+      "rom_offset": 70413,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 33,
+      "raw_hex": "8D 21 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45824,
+      "rom_offset": 70416,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A0 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45826,
+      "rom_offset": 70418,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 45838,
+      "raw_hex": "B9 0E B3"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45829,
+      "rom_offset": 70421,
+      "op": "STA",
+      "mode": "aby",
+      "operand": 34,
+      "raw_hex": "99 22 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45832,
+      "rom_offset": 70424,
+      "op": "INY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "C8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45833,
+      "rom_offset": 70425,
+      "op": "CPY",
+      "mode": "im",
+      "operand": 4,
+      "raw_hex": "C0 04"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45835,
+      "rom_offset": 70427,
+      "op": "BCC",
+      "mode": "rel",
+      "operand": 245,
+      "raw_hex": "90 F5"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45837,
+      "rom_offset": 70429,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45842,
+      "rom_offset": 70434,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 48,
+      "raw_hex": "A0 30"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45844,
+      "rom_offset": 70436,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62054,
+      "raw_hex": "20 66 F2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45847,
+      "rom_offset": 70439,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1294,
+      "raw_hex": "AD 0E 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45850,
+      "rom_offset": 70442,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45851,
+      "rom_offset": 70443,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45852,
+      "rom_offset": 70444,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45853,
+      "rom_offset": 70445,
+      "op": "TAY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "A8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45854,
+      "rom_offset": 70446,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 40306,
+      "raw_hex": "B9 72 9D"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45857,
+      "rom_offset": 70449,
+      "op": "BPL",
+      "mode": "rel",
+      "operand": 5,
+      "raw_hex": "10 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45859,
+      "rom_offset": 70451,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A9 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45861,
+      "rom_offset": 70453,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 45876,
+      "raw_hex": "4C 34 B3"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45864,
+      "rom_offset": 70456,
+      "op": "CMP",
+      "mode": "ab",
+      "operand": 1322,
+      "raw_hex": "CD 2A 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45867,
+      "rom_offset": 70459,
+      "op": "BEQ",
+      "mode": "rel",
+      "operand": 4,
+      "raw_hex": "F0 04"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45869,
+      "rom_offset": 70461,
+      "op": "INY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "C8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45870,
+      "rom_offset": 70462,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 45854,
+      "raw_hex": "4C 1E B3"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45873,
+      "rom_offset": 70465,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 40546,
+      "raw_hex": "B9 62 9E"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45876,
+      "rom_offset": 70468,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "8D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45879,
+      "rom_offset": 70471,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45880,
+      "rom_offset": 70472,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45881,
+      "rom_offset": 70473,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45882,
+      "rom_offset": 70474,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45883,
+      "rom_offset": 70475,
+      "op": "CLC",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "18"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45884,
+      "rom_offset": 70476,
+      "op": "ADC",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "6D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45887,
+      "rom_offset": 70479,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45888,
+      "rom_offset": 70480,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "8D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45891,
+      "rom_offset": 70483,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 38,
+      "raw_hex": "A0 26"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45893,
+      "rom_offset": 70485,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62054,
+      "raw_hex": "20 66 F2"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45896,
+      "rom_offset": 70488,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1294,
+      "raw_hex": "AD 0E 05"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45899,
+      "rom_offset": 70491,
+      "op": "ASL",
+      "mode": "a",
+      "operand": 0,
+      "raw_hex": "0A"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45900,
+      "rom_offset": 70492,
+      "op": "TAY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "A8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45901,
+      "rom_offset": 70493,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 32768,
+      "raw_hex": "B9 00 80"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45904,
+      "rom_offset": 70496,
+      "op": "CLC",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "18"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45905,
+      "rom_offset": 70497,
+      "op": "ADC",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "6D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45908,
+      "rom_offset": 70500,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 32,
+      "raw_hex": "8D 20 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45911,
+      "rom_offset": 70503,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 32769,
+      "raw_hex": "B9 01 80"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45914,
+      "rom_offset": 70506,
+      "op": "ADC",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "69 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45916,
+      "rom_offset": 70508,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 33,
+      "raw_hex": "8D 21 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45919,
+      "rom_offset": 70511,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "raw_hex": "A0 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45921,
+      "rom_offset": 70513,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 45933,
+      "raw_hex": "B9 6D B3"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45924,
+      "rom_offset": 70516,
+      "op": "STA",
+      "mode": "aby",
+      "operand": 34,
+      "raw_hex": "99 22 00"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45927,
+      "rom_offset": 70519,
+      "op": "INY",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "C8"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45928,
+      "rom_offset": 70520,
+      "op": "CPY",
+      "mode": "im",
+      "operand": 4,
+      "raw_hex": "C0 04"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45930,
+      "rom_offset": 70522,
+      "op": "BCC",
+      "mode": "rel",
+      "operand": 245,
+      "raw_hex": "90 F5"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 45932,
+      "rom_offset": 70524,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57739,
+      "rom_offset": 254363,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 58586,
+      "raw_hex": "20 DA E4"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57742,
+      "rom_offset": 254366,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 3,
+      "raw_hex": "A9 03"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57744,
+      "rom_offset": 254368,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 120,
+      "raw_hex": "8D 78 00"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57747,
+      "rom_offset": 254371,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 1,
+      "raw_hex": "A9 01"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57749,
+      "rom_offset": 254373,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 58224,
+      "raw_hex": "20 70 E3"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57752,
+      "rom_offset": 254376,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 55,
+      "raw_hex": "A0 37"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57754,
+      "rom_offset": 254378,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62007,
+      "raw_hex": "20 37 F2"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57757,
+      "rom_offset": 254381,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 40999,
+      "raw_hex": "20 27 A0"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57760,
+      "rom_offset": 254384,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1280,
+      "raw_hex": "AD 00 05"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57763,
+      "rom_offset": 254387,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 11,
+      "raw_hex": "C9 0B"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57765,
+      "rom_offset": 254389,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 11,
+      "raw_hex": "D0 0B"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57767,
+      "rom_offset": 254391,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 44,
+      "raw_hex": "A0 2C"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57769,
+      "rom_offset": 254393,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62007,
+      "raw_hex": "20 37 F2"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57772,
+      "rom_offset": 254396,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 40966,
+      "raw_hex": "20 06 A0"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57775,
+      "rom_offset": 254399,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 57786,
+      "raw_hex": "4C BA E1"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57778,
+      "rom_offset": 254402,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 40,
+      "raw_hex": "A0 28"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57780,
+      "rom_offset": 254404,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62007,
+      "raw_hex": "20 37 F2"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 57783,
+      "rom_offset": 254407,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 40963,
+      "raw_hex": "20 03 A0"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62054,
+      "rom_offset": 258678,
+      "op": "STY",
+      "mode": "ab",
+      "operand": 222,
+      "raw_hex": "8C DE 00"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62057,
+      "rom_offset": 258681,
+      "op": "STY",
+      "mode": "ab",
+      "operand": 57344,
+      "raw_hex": "8C 00 E0"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62060,
+      "rom_offset": 258684,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "raw_hex": "60"
+    }
+  ],
+  "entry_evidence": [
+    {
+      "origin": "existing_zero_preparation_Native_saved_context",
+      "path": "analysis/phase11/runtime/cold-battle/supply-third.state",
+      "role": "Recommended ordinary A continuation before fresh global battle setup; new26 passive entry capture is separate and not yet claimed here."
+    },
+    {
+      "origin": "actual_Native_snapshot_originalCPU_reached_caller_probe",
+      "path": "analysis/phase25/fields-static/selection-comparison.json",
+      "json_pointer": "/independent_original_CPU_probe/G107",
+      "record": {
+        "parent": "analysis/phase11/runtime/cold-battle/handoff-011-g03-n03.state",
+        "initial_PC": 45159,
+        "initial_banks": [
+          0,
+          23,
+          24,
+          31
+        ],
+        "budget": 300000,
+        "new_B1B0_hits": 0,
+        "final_PC": 57456,
+        "conclusion": "This particular saved point does not reach a new setup in the bounded no-interrupt continuation. It may already be after setup; not an unreachable proof."
+      },
+      "role": "Bounded no-interrupt negative at a possibly post-setup save; cannot infer G107 unreachability or a natural failed initialization."
+    }
+  ],
+  "existing_Source_credit": {
+    "path": "source/recovered/battle_setup_ai.py",
+    "methods": {
+      "0xb1b0": "assign_strategies_and_positions",
+      "0xb2ae": "first_side_formation",
+      "0xb312": "second_side_formation"
+    },
+    "first_named_phase": 11,
+    "new_phase26_first_recovery_claim": false,
+    "old_total_instruction_positions": 799,
+    "old_total_local_procedures": 19,
+    "scope": "799/19 describe the old full setup/NMI-aux module, not a new G107 denominator."
+  },
+  "old_full_setup_E18B_samples": [
+    {
+      "json_pointer": "/samples/42",
+      "record": {
+        "group": "full_global_battle_setup_with_pure_source_callees",
+        "entry": 57739,
+        "inputs": {
+          "battle_state": 0
+        },
+        "instructions": 90415,
+        "ports": 4918,
+        "registers": {
+          "a": 144,
+          "x": 35,
+          "y": 0,
+          "sp": 253,
+          "p": 224,
+          "pc": 57446
+        }
+      }
+    },
+    {
+      "json_pointer": "/samples/43",
+      "record": {
+        "group": "full_global_battle_setup_with_pure_source_callees",
+        "entry": 57739,
+        "inputs": {
+          "battle_state": 3
+        },
+        "instructions": 90415,
+        "ports": 4918,
+        "registers": {
+          "a": 144,
+          "x": 35,
+          "y": 0,
+          "sp": 253,
+          "p": 224,
+          "pc": 57446
+        }
+      }
+    },
+    {
+      "json_pointer": "/samples/44",
+      "record": {
+        "group": "full_global_battle_setup_with_pure_source_callees",
+        "entry": 57739,
+        "inputs": {
+          "battle_state": 11
+        },
+        "instructions": 92187,
+        "ports": 4916,
+        "registers": {
+          "a": 144,
+          "x": 35,
+          "y": 0,
+          "sp": 253,
+          "p": 224,
+          "pc": 57446
+        }
+      }
+    }
+  ],
+  "Source_CPU_cases": 0,
+  "original_CPU_cases": 0,
+  "Native_runs": 0
+}

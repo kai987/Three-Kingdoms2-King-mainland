@@ -1,0 +1,108 @@
+{
+  "schema": "phase26-focused-context-readonly-validation-v1",
+  "status": "passed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "Source_CPU_cases": 0,
+  "original_CPU_cases": 0,
+  "Native_runs": 0,
+  "check_count": 15,
+  "checks": [
+    {
+      "test": "focused Source/current factory and frozen inputs all current; no exploratory dependencies",
+      "status": "passed"
+    },
+    {
+      "test": "all focused original instructions byteexact including16B header",
+      "status": "passed"
+    },
+    {
+      "test": "old25 owner and new exact26 owner are distinct declaration evidence",
+      "status": "passed"
+    },
+    {
+      "test": "B1B0 existing named behavior inherited; two formation methods are new readable refactors",
+      "status": "passed"
+    },
+    {
+      "test": "actual local JSReturns preserve same-owner parent edges",
+      "status": "passed"
+    },
+    {
+      "test": "E18B excludes battle_main11 from this path;selector40decimal is28hex",
+      "status": "passed"
+    },
+    {
+      "test": "globalE18B end is mainE066 rather than ordinary RTS",
+      "status": "passed"
+    },
+    {
+      "test": "each side requires exact raw controller3 and retains original side-base",
+      "status": "passed"
+    },
+    {
+      "test": "four original reads retained unknown at25 baseline; context creates no exclusions",
+      "status": "passed"
+    },
+    {
+      "test": "exact new5 public entries have no declared Tactical/Shop/Ruler entry intersection",
+      "status": "passed"
+    },
+    {
+      "test": "old2326CPU/1972RAM8192SRAM scope preserved as old evidence",
+      "status": "passed"
+    },
+    {
+      "test": "all10 inherited acceptance dimensions retained without future pass",
+      "status": "passed"
+    },
+    {
+      "test": "wait prefix nonlocal reset andE066 boundary never merged with callerRTS",
+      "status": "passed"
+    },
+    {
+      "test": "no new CPU Source or Native case from this read-only context",
+      "status": "passed"
+    },
+    {
+      "test": "new scripts have no production Source/CPU/core import or evaluator execution",
+      "status": "passed"
+    }
+  ],
+  "original_byte_positions_verified": 177,
+  "source_and_validator_sha256": {
+    "scripts/analyze_deployment_context_phase26.py": "7675764b9b0889e0ce782083df9990dd8378aa275207a7f96e4436ad408ec332",
+    "source/recovered/appearance_pointer_integration.py": "b23757194388241bb210889f7ab32c599cf743bf3b61804c2f7b417afbf6a503",
+    "source/recovered/pointer_lifecycle_integration.py": "4f1514eb66c5f41df2d132c3063b9c112b166b1e4741d23166478d7ca8bde043",
+    "source/recovered/scene_coordinator.py": "3c80cddcfdd4400d2f41fd93bc5442a4d9886b8fec356f85e94d9c3aa2bd8bab",
+    "source/recovered/scene_initialization.py": "87dcdffebdc8f2a71eacb02bfc8e0c6476d2edb0a793aea35ffdde8bbc5ef30d",
+    "source/recovered/battle_setup_ai.py": "b08fa8bedddf2a4f3ba49acccdc6176c78b0698bc3ac93691a7718afb9985fbb",
+    "source/recovered/deployment_pointer_services.py": "98e6a65b92f2a162b75fc922e73ea18913621d44b5316e37c2bdaab70541120b",
+    "source/recovered/deployment_pointer_integration.py": "600c5411d155fa414f6d00f7ac02313224846cc24bcb01bb5aba9e85821e419c",
+    "scripts/verify_deployment_context_phase26.py": "86f5209fca58ba68298b6343db6b1260f0fae896fd9b85f01a5193668e5bf05e"
+  },
+  "artifact_and_dependency_sha256": {
+    "analysis/phase25/verification.json": "0d86bd6ac30879bb2fd03bc0135aec70fcac3c05a99b98e494f98c0de4ec78af",
+    "analysis/phase25/services/verification.json": "35686c04628417e03e347fac7e9809fa7d705f845106307f2ad5bab08e79f5fc",
+    "analysis/phase25/services/owner-route-catalog.json": "b055bd52c2f5b0c314cc9c95fe122465126915d113cf3afbd481f55c36d3b839",
+    "analysis/phase25/services/analysis-summary.json": "0f21e4c2ccd71fcf70918ae65a78baa20c9c4c5be7cf876fc688bebba7c0c8fc",
+    "analysis/phase25/acceptance/requirements.json": "e0794a436d4b0616c0ae52fd8c8b49d10549a120b2f648a7a75464dcc443e78b",
+    "analysis/phase25/fields-static/selection-comparison.json": "cf2e2a356f3dcf5784a2e427d3b89269f1fc1bc718de108a3576d34a02ddedeb",
+    "analysis/phase25/fields-static/all-indirect-accesses.json": "6d0ea379bec7087cfc05894219c67dbd8820e33178308416fc61f7d0c2c7ff35",
+    "analysis/phase11/setup-ai/validation.json": "92aef101ff26be6ba3c0b3e1d1f3b5400b6d1960707c17eb6881d746ff89ebbd",
+    "analysis/phase11/setup-ai/evidence.json": "ec8d6cc26dc62f52e9a1ed25e152e0d05c8b106559ede525795c6297f12283b3",
+    "analysis/phase11/initialization/validation.json": "36b62e676983ff86ced8c0da70c54a5f12a5f4e8b9d21ef0f9c8d0a683e88539",
+    "analysis/phase25/source-integration.json": "fecdf8dd64c4618bcbf4c6be19ddbfb41fbbfa40f398e7a1cc375dbf2c571e39",
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/phase11/runtime/cold-battle/supply-third.state": "266362eb56d84deb32eef427fe92e118bde9580049e9e9a9094350b629ad297d",
+    "analysis/phase11/runtime/cold-battle/handoff-011-g03-n03.state": "b84104ed2d497e3a2607baa31c787b5ca10748e2c31e31774f7becd1393f92b9",
+    "analysis/phase26/context/README.md": "027c1694ec699354b63b9abe54c83940feaae1ed6610d0f68dc12d5bdb59afd1",
+    "analysis/phase26/context/acceptance-delta-framework.json": "80989a88a6cc53ad2f289083f747f53338d0eaf0430b50846e197ab107f6b9b2",
+    "analysis/phase26/context/analysis-summary.json": "38c5434ef9a88a9f76dd25fb83f87b425d7587512ce77889419d06adb550a13d",
+    "analysis/phase26/context/completion-contracts.json": "868cfaf89f53a46b01c55d930767bb82de0a1581e909956922e6732f90d12b83",
+    "analysis/phase26/context/historical-wording-erratum.json": "9ddc5e59ebd423c8670782d67f9a9a6ace8786bb1ba30657599c5b190a00e3d3",
+    "analysis/phase26/context/owner-and-caller-chain.json": "f51ca2ecfe763f2278c5b19aad7ccf713eb79a299761d1995147837ca1ab5051",
+    "analysis/phase26/context/owner-priority-checks.json": "bfa953e161eca2fc70be3b4f1545eeca7cb53fd0957b845f1f18a113aad59179",
+    "analysis/phase26/context/stable-denominators.json": "2fbe5d8176c01f2fa063f2f243c03ae4ca0d0ce1152f19edec0f162ae8c9b635"
+  },
+  "scope": "Read-only owner/caller/byte/pin audit; not fresh gameplay or new Source differential validation."
+}

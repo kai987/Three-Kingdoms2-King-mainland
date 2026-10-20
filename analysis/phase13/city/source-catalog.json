@@ -1,0 +1,1306 @@
+{
+  "procedures": [
+    {
+      "entry": 40960,
+      "name": "city_scene_entry",
+      "instruction_nodes": 2,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 40963,
+      "name": "city_context_entry",
+      "instruction_nodes": 2,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 40966,
+      "name": "city_setup_entry",
+      "instruction_nodes": 2,
+      "source_lines": 6,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 40969,
+      "name": "city_state_entry",
+      "instruction_nodes": 7,
+      "source_lines": 12,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 40972,
+      "name": "city_scene_tick",
+      "instruction_nodes": 8,
+      "source_lines": 17,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 40991,
+      "name": "city_main_dispatch",
+      "instruction_nodes": 2,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41029,
+      "name": "city_helper_a045",
+      "instruction_nodes": 3,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41037,
+      "name": "city_helper_a04d",
+      "instruction_nodes": 3,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41045,
+      "name": "city_helper_a055",
+      "instruction_nodes": 3,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41053,
+      "name": "city_helper_a05d",
+      "instruction_nodes": 3,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41061,
+      "name": "city_helper_a065",
+      "instruction_nodes": 3,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41069,
+      "name": "city_helper_a06d",
+      "instruction_nodes": 3,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41077,
+      "name": "city_helper_a075",
+      "instruction_nodes": 3,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41085,
+      "name": "world_map_selection",
+      "instruction_nodes": 2,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41097,
+      "name": "prepare_world_map_selection",
+      "instruction_nodes": 33,
+      "source_lines": 56,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41183,
+      "name": "navigate_world_map_selection",
+      "instruction_nodes": 32,
+      "source_lines": 55,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41261,
+      "name": "request_city_information",
+      "instruction_nodes": 22,
+      "source_lines": 41,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41313,
+      "name": "request_system_menu",
+      "instruction_nodes": 10,
+      "source_lines": 20,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41337,
+      "name": "await_world_selection_text",
+      "instruction_nodes": 8,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41355,
+      "name": "command_bar",
+      "instruction_nodes": 2,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41365,
+      "name": "prepare_command_bar",
+      "instruction_nodes": 24,
+      "source_lines": 42,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41424,
+      "name": "navigate_command_bar",
+      "instruction_nodes": 74,
+      "source_lines": 151,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41621,
+      "name": "domestic_commands",
+      "instruction_nodes": 2,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41673,
+      "name": "city_helper_a2c9",
+      "instruction_nodes": 19,
+      "source_lines": 33,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41721,
+      "name": "city_helper_a2f9",
+      "instruction_nodes": 35,
+      "source_lines": 52,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41830,
+      "name": "city_helper_a366",
+      "instruction_nodes": 42,
+      "source_lines": 69,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 41933,
+      "name": "city_helper_a3cd",
+      "instruction_nodes": 61,
+      "source_lines": 90,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42097,
+      "name": "city_helper_a471",
+      "instruction_nodes": 58,
+      "source_lines": 93,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42245,
+      "name": "city_helper_a505",
+      "instruction_nodes": 43,
+      "source_lines": 84,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42352,
+      "name": "city_helper_a570",
+      "instruction_nodes": 119,
+      "source_lines": 284,
+      "natural_loop_headers": [
+        42422
+      ]
+    },
+    {
+      "entry": 42640,
+      "name": "city_helper_a690",
+      "instruction_nodes": 41,
+      "source_lines": 59,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42732,
+      "name": "city_helper_a6ec",
+      "instruction_nodes": 58,
+      "source_lines": 144,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 42876,
+      "name": "city_helper_a77c",
+      "instruction_nodes": 36,
+      "source_lines": 67,
+      "natural_loop_headers": [
+        42920
+      ]
+    },
+    {
+      "entry": 42954,
+      "name": "city_helper_a7ca",
+      "instruction_nodes": 32,
+      "source_lines": 58,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43044,
+      "name": "city_helper_a824",
+      "instruction_nodes": 38,
+      "source_lines": 58,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43137,
+      "name": "city_helper_a881",
+      "instruction_nodes": 18,
+      "source_lines": 36,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43183,
+      "name": "city_helper_a8af",
+      "instruction_nodes": 21,
+      "source_lines": 35,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43234,
+      "name": "city_helper_a8e2",
+      "instruction_nodes": 116,
+      "source_lines": 173,
+      "natural_loop_headers": [
+        43326,
+        43382
+      ]
+    },
+    {
+      "entry": 43515,
+      "name": "city_helper_a9fb",
+      "instruction_nodes": 56,
+      "source_lines": 83,
+      "natural_loop_headers": [
+        43604
+      ]
+    },
+    {
+      "entry": 43657,
+      "name": "city_helper_aa89",
+      "instruction_nodes": 74,
+      "source_lines": 109,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43756,
+      "name": "city_helper_aaec",
+      "instruction_nodes": 125,
+      "source_lines": 227,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 43982,
+      "name": "city_helper_abce",
+      "instruction_nodes": 21,
+      "source_lines": 33,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44032,
+      "name": "city_helper_ac00",
+      "instruction_nodes": 18,
+      "source_lines": 40,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44074,
+      "name": "city_helper_ac2a",
+      "instruction_nodes": 33,
+      "source_lines": 48,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44156,
+      "name": "city_helper_ac7c",
+      "instruction_nodes": 8,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44176,
+      "name": "city_helper_ac90",
+      "instruction_nodes": 17,
+      "source_lines": 46,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44216,
+      "name": "city_helper_acb8",
+      "instruction_nodes": 16,
+      "source_lines": 42,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44353,
+      "name": "transfer_selected_officers",
+      "instruction_nodes": 86,
+      "source_lines": 63,
+      "hand_written_structured_control": true
+    },
+    {
+      "entry": 44530,
+      "name": "military_commands",
+      "instruction_nodes": 2,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44586,
+      "name": "city_helper_ae2a",
+      "instruction_nodes": 17,
+      "source_lines": 31,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44629,
+      "name": "city_helper_ae55",
+      "instruction_nodes": 69,
+      "source_lines": 105,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44818,
+      "name": "city_helper_af12",
+      "instruction_nodes": 67,
+      "source_lines": 131,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 44974,
+      "name": "city_helper_afae",
+      "instruction_nodes": 85,
+      "source_lines": 128,
+      "natural_loop_headers": [
+        45030,
+        45101
+      ]
+    },
+    {
+      "entry": 45127,
+      "name": "city_helper_b047",
+      "instruction_nodes": 51,
+      "source_lines": 78,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45263,
+      "name": "city_helper_b0cf",
+      "instruction_nodes": 75,
+      "source_lines": 108,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45456,
+      "name": "city_helper_b190",
+      "instruction_nodes": 59,
+      "source_lines": 105,
+      "natural_loop_headers": [
+        45523
+      ]
+    },
+    {
+      "entry": 45595,
+      "name": "city_helper_b21b",
+      "instruction_nodes": 16,
+      "source_lines": 34,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45635,
+      "name": "city_helper_b243",
+      "instruction_nodes": 21,
+      "source_lines": 36,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45688,
+      "name": "city_helper_b278",
+      "instruction_nodes": 78,
+      "source_lines": 111,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45884,
+      "name": "city_helper_b33c",
+      "instruction_nodes": 21,
+      "source_lines": 39,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 45933,
+      "name": "city_helper_b36d",
+      "instruction_nodes": 65,
+      "source_lines": 82,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46094,
+      "name": "city_helper_b40e",
+      "instruction_nodes": 15,
+      "source_lines": 28,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46129,
+      "name": "city_helper_b431",
+      "instruction_nodes": 18,
+      "source_lines": 33,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46173,
+      "name": "city_helper_b45d",
+      "instruction_nodes": 12,
+      "source_lines": 26,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46202,
+      "name": "city_helper_b47a",
+      "instruction_nodes": 60,
+      "source_lines": 95,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46343,
+      "name": "city_helper_b507",
+      "instruction_nodes": 13,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46376,
+      "name": "city_helper_b528",
+      "instruction_nodes": 37,
+      "source_lines": 57,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46482,
+      "name": "city_helper_b592",
+      "instruction_nodes": 8,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46502,
+      "name": "city_helper_b5a6",
+      "instruction_nodes": 23,
+      "source_lines": 43,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46556,
+      "name": "city_helper_b5dc",
+      "instruction_nodes": 26,
+      "source_lines": 37,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46624,
+      "name": "city_helper_b620",
+      "instruction_nodes": 36,
+      "source_lines": 104,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46704,
+      "name": "city_helper_b670",
+      "instruction_nodes": 61,
+      "source_lines": 83,
+      "natural_loop_headers": [
+        46779
+      ]
+    },
+    {
+      "entry": 46833,
+      "name": "city_helper_b6f1",
+      "instruction_nodes": 32,
+      "source_lines": 55,
+      "natural_loop_headers": [
+        46874
+      ]
+    },
+    {
+      "entry": 46910,
+      "name": "city_helper_b73e",
+      "instruction_nodes": 11,
+      "source_lines": 25,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46937,
+      "name": "resource_commands",
+      "instruction_nodes": 2,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 46975,
+      "name": "city_helper_b77f",
+      "instruction_nodes": 16,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47015,
+      "name": "city_helper_b7a7",
+      "instruction_nodes": 43,
+      "source_lines": 67,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47134,
+      "name": "city_helper_b81e",
+      "instruction_nodes": 47,
+      "source_lines": 79,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47255,
+      "name": "city_helper_b897",
+      "instruction_nodes": 94,
+      "source_lines": 140,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47486,
+      "name": "city_helper_b97e",
+      "instruction_nodes": 63,
+      "source_lines": 89,
+      "natural_loop_headers": [
+        47508,
+        47552
+      ]
+    },
+    {
+      "entry": 47620,
+      "name": "city_helper_ba04",
+      "instruction_nodes": 80,
+      "source_lines": 125,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47822,
+      "name": "city_helper_bace",
+      "instruction_nodes": 68,
+      "source_lines": 105,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 47997,
+      "name": "city_helper_bb7d",
+      "instruction_nodes": 30,
+      "source_lines": 52,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48070,
+      "name": "city_helper_bbc6",
+      "instruction_nodes": 111,
+      "source_lines": 169,
+      "natural_loop_headers": [
+        48303
+      ]
+    },
+    {
+      "entry": 48358,
+      "name": "city_helper_bce6",
+      "instruction_nodes": 57,
+      "source_lines": 80,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48487,
+      "name": "city_helper_bd67",
+      "instruction_nodes": 71,
+      "source_lines": 114,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48665,
+      "name": "city_helper_be19",
+      "instruction_nodes": 98,
+      "source_lines": 128,
+      "natural_loop_headers": [
+        48785
+      ]
+    },
+    {
+      "entry": 48901,
+      "name": "city_helper_bf05",
+      "instruction_nodes": 8,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48921,
+      "name": "city_helper_bf19",
+      "instruction_nodes": 16,
+      "source_lines": 35,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 48964,
+      "name": "city_helper_bf44",
+      "instruction_nodes": 15,
+      "source_lines": 33,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49001,
+      "name": "city_helper_bf69",
+      "instruction_nodes": 13,
+      "source_lines": 27,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49033,
+      "name": "city_helper_bf89",
+      "instruction_nodes": 9,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49056,
+      "name": "city_helper_bfa0",
+      "instruction_nodes": 9,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49079,
+      "name": "city_helper_bfb7",
+      "instruction_nodes": 2,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49133,
+      "name": "city_helper_bfed",
+      "instruction_nodes": 22,
+      "source_lines": 36,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49229,
+      "name": "city_helper_c04d",
+      "instruction_nodes": 78,
+      "source_lines": 114,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49462,
+      "name": "city_helper_c136",
+      "instruction_nodes": 51,
+      "source_lines": 80,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49601,
+      "name": "city_helper_c1c1",
+      "instruction_nodes": 100,
+      "source_lines": 131,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49861,
+      "name": "city_helper_c2c5",
+      "instruction_nodes": 45,
+      "source_lines": 94,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 49977,
+      "name": "city_helper_c339",
+      "instruction_nodes": 46,
+      "source_lines": 65,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50080,
+      "name": "city_helper_c3a0",
+      "instruction_nodes": 45,
+      "source_lines": 93,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50196,
+      "name": "city_helper_c414",
+      "instruction_nodes": 40,
+      "source_lines": 59,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50282,
+      "name": "city_helper_c46a",
+      "instruction_nodes": 26,
+      "source_lines": 48,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50344,
+      "name": "city_helper_c4a8",
+      "instruction_nodes": 45,
+      "source_lines": 61,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50453,
+      "name": "city_helper_c515",
+      "instruction_nodes": 20,
+      "source_lines": 38,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50503,
+      "name": "city_helper_c547",
+      "instruction_nodes": 31,
+      "source_lines": 67,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50575,
+      "name": "city_helper_c58f",
+      "instruction_nodes": 30,
+      "source_lines": 50,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50647,
+      "name": "city_helper_c5d7",
+      "instruction_nodes": 69,
+      "source_lines": 107,
+      "natural_loop_headers": [
+        50689,
+        50770
+      ]
+    },
+    {
+      "entry": 50815,
+      "name": "city_helper_c67f",
+      "instruction_nodes": 49,
+      "source_lines": 79,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50936,
+      "name": "city_helper_c6f8",
+      "instruction_nodes": 10,
+      "source_lines": 21,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50963,
+      "name": "city_helper_c713",
+      "instruction_nodes": 6,
+      "source_lines": 16,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 50977,
+      "name": "city_helper_c721",
+      "instruction_nodes": 15,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 51012,
+      "name": "city_helper_c744",
+      "instruction_nodes": 17,
+      "source_lines": 35,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 51054,
+      "name": "city_helper_c76e",
+      "instruction_nodes": 51,
+      "source_lines": 76,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 51231,
+      "name": "queue_equipment_icons",
+      "instruction_nodes": 93,
+      "source_lines": 38,
+      "hand_written_structured_control": true
+    },
+    {
+      "entry": 51466,
+      "name": "city_helper_c90a",
+      "instruction_nodes": 74,
+      "source_lines": 98,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 51666,
+      "name": "city_helper_c9d2",
+      "instruction_nodes": 11,
+      "source_lines": 22,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 51695,
+      "name": "city_helper_c9ef",
+      "instruction_nodes": 55,
+      "source_lines": 79,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 51819,
+      "name": "city_helper_ca6b",
+      "instruction_nodes": 52,
+      "source_lines": 149,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 51935,
+      "name": "city_helper_cadf",
+      "instruction_nodes": 2,
+      "source_lines": 9,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 51977,
+      "name": "city_helper_cb09",
+      "instruction_nodes": 95,
+      "source_lines": 147,
+      "natural_loop_headers": [
+        52154
+      ]
+    },
+    {
+      "entry": 52223,
+      "name": "city_helper_cbff",
+      "instruction_nodes": 54,
+      "source_lines": 92,
+      "natural_loop_headers": [
+        52254,
+        52267
+      ]
+    },
+    {
+      "entry": 52354,
+      "name": "city_helper_cc82",
+      "instruction_nodes": 69,
+      "source_lines": 97,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 52556,
+      "name": "city_helper_cd4c",
+      "instruction_nodes": 24,
+      "source_lines": 47,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 52617,
+      "name": "city_helper_cd89",
+      "instruction_nodes": 101,
+      "source_lines": 143,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 52878,
+      "name": "city_helper_ce8e",
+      "instruction_nodes": 12,
+      "source_lines": 27,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 52909,
+      "name": "city_helper_cead",
+      "instruction_nodes": 28,
+      "source_lines": 42,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 52983,
+      "name": "city_helper_cef7",
+      "instruction_nodes": 15,
+      "source_lines": 27,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53022,
+      "name": "city_helper_cf1e",
+      "instruction_nodes": 47,
+      "source_lines": 81,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53133,
+      "name": "city_helper_cf8d",
+      "instruction_nodes": 35,
+      "source_lines": 57,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53220,
+      "name": "city_helper_cfe4",
+      "instruction_nodes": 24,
+      "source_lines": 46,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53279,
+      "name": "city_helper_d01f",
+      "instruction_nodes": 75,
+      "source_lines": 117,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53480,
+      "name": "city_helper_d0e8",
+      "instruction_nodes": 8,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53500,
+      "name": "city_helper_d0fc",
+      "instruction_nodes": 26,
+      "source_lines": 45,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53567,
+      "name": "city_helper_d13f",
+      "instruction_nodes": 33,
+      "source_lines": 63,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53647,
+      "name": "city_helper_d18f",
+      "instruction_nodes": 21,
+      "source_lines": 39,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53689,
+      "name": "city_helper_d1b9",
+      "instruction_nodes": 45,
+      "source_lines": 65,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53820,
+      "name": "city_helper_d23c",
+      "instruction_nodes": 61,
+      "source_lines": 89,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 53987,
+      "name": "city_helper_d2e3",
+      "instruction_nodes": 84,
+      "source_lines": 428,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 54213,
+      "name": "city_helper_d3c5",
+      "instruction_nodes": 34,
+      "source_lines": 48,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 54299,
+      "name": "city_helper_d41b",
+      "instruction_nodes": 38,
+      "source_lines": 61,
+      "natural_loop_headers": [
+        54307,
+        54327,
+        54335
+      ]
+    },
+    {
+      "entry": 54386,
+      "name": "city_helper_d472",
+      "instruction_nodes": 54,
+      "source_lines": 81,
+      "natural_loop_headers": [
+        54391
+      ]
+    },
+    {
+      "entry": 54509,
+      "name": "city_helper_d4ed",
+      "instruction_nodes": 17,
+      "source_lines": 26,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 54536,
+      "name": "city_helper_d508",
+      "instruction_nodes": 28,
+      "source_lines": 45,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 54595,
+      "name": "city_helper_d543",
+      "instruction_nodes": 13,
+      "source_lines": 23,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 54632,
+      "name": "city_helper_d568",
+      "instruction_nodes": 14,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 54668,
+      "name": "city_helper_d58c",
+      "instruction_nodes": 19,
+      "source_lines": 30,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 54717,
+      "name": "city_helper_d5bd",
+      "instruction_nodes": 52,
+      "source_lines": 101,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 54858,
+      "name": "city_helper_d64a",
+      "instruction_nodes": 269,
+      "source_lines": 482,
+      "natural_loop_headers": [
+        54989
+      ]
+    },
+    {
+      "entry": 55155,
+      "name": "city_helper_d773",
+      "instruction_nodes": 21,
+      "source_lines": 28,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 55208,
+      "name": "city_helper_d7a8",
+      "instruction_nodes": 12,
+      "source_lines": 18,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 55630,
+      "name": "city_helper_d94e",
+      "instruction_nodes": 17,
+      "source_lines": 32,
+      "natural_loop_headers": [
+        55630
+      ]
+    },
+    {
+      "entry": 55663,
+      "name": "city_helper_d96f",
+      "instruction_nodes": 11,
+      "source_lines": 19,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 55687,
+      "name": "city_helper_d987",
+      "instruction_nodes": 50,
+      "source_lines": 65,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 55810,
+      "name": "city_helper_da02",
+      "instruction_nodes": 2,
+      "source_lines": 7,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 55812,
+      "name": "city_helper_da04",
+      "instruction_nodes": 104,
+      "source_lines": 168,
+      "natural_loop_headers": [
+        56016
+      ]
+    },
+    {
+      "entry": 56073,
+      "name": "city_helper_db09",
+      "instruction_nodes": 19,
+      "source_lines": 34,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56117,
+      "name": "city_helper_db35",
+      "instruction_nodes": 26,
+      "source_lines": 54,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56178,
+      "name": "city_helper_db72",
+      "instruction_nodes": 7,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56199,
+      "name": "city_helper_db87",
+      "instruction_nodes": 7,
+      "source_lines": 13,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56217,
+      "name": "city_helper_db99",
+      "instruction_nodes": 63,
+      "source_lines": 111,
+      "natural_loop_headers": [
+        56293
+      ]
+    },
+    {
+      "entry": 56427,
+      "name": "city_helper_dc6b",
+      "instruction_nodes": 10,
+      "source_lines": 25,
+      "natural_loop_headers": [
+        56431
+      ]
+    },
+    {
+      "entry": 56444,
+      "name": "city_helper_dc7c",
+      "instruction_nodes": 34,
+      "source_lines": 57,
+      "natural_loop_headers": [
+        56448,
+        56479
+      ]
+    },
+    {
+      "entry": 56528,
+      "name": "city_helper_dcd0",
+      "instruction_nodes": 34,
+      "source_lines": 47,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56655,
+      "name": "city_helper_dd4f",
+      "instruction_nodes": 4,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56662,
+      "name": "city_helper_dd56",
+      "instruction_nodes": 4,
+      "source_lines": 11,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56670,
+      "name": "city_helper_dd5e",
+      "instruction_nodes": 7,
+      "source_lines": 14,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56688,
+      "name": "city_helper_dd70",
+      "instruction_nodes": 4,
+      "source_lines": 10,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56697,
+      "name": "city_helper_dd79",
+      "instruction_nodes": 25,
+      "source_lines": 45,
+      "natural_loop_headers": [
+        56714
+      ]
+    },
+    {
+      "entry": 56749,
+      "name": "text_request_readiness",
+      "instruction_nodes": 10,
+      "source_lines": 24,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56767,
+      "name": "city_helper_ddbf",
+      "instruction_nodes": 14,
+      "source_lines": 30,
+      "natural_loop_headers": [
+        56772
+      ]
+    },
+    {
+      "entry": 56796,
+      "name": "city_helper_dddc",
+      "instruction_nodes": 13,
+      "source_lines": 23,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56818,
+      "name": "world_selection_portrait",
+      "instruction_nodes": 68,
+      "source_lines": 194,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 56963,
+      "name": "update_cursor_repeat",
+      "instruction_nodes": 18,
+      "source_lines": 36,
+      "natural_loop_headers": []
+    },
+    {
+      "entry": 57018,
+      "name": "city_at_cursor",
+      "instruction_nodes": 23,
+      "source_lines": 90,
+      "natural_loop_headers": [
+        57037
+      ]
+    },
+    {
+      "entry": 57141,
+      "name": "city_callback_preparation",
+      "instruction_nodes": 17,
+      "source_lines": 38,
+      "natural_loop_headers": [
+        57160
+      ]
+    },
+    {
+      "entry": 57186,
+      "name": "city_helper_df62",
+      "instruction_nodes": 43,
+      "source_lines": 91,
+      "natural_loop_headers": []
+    }
+  ],
+  "source_sha256": "8685e223907b1ecb9ffc1e46d14cd170fd0c362c69940f3e1f7fe0f82a6680fa",
+  "structured_ifs": 670,
+  "natural_loops": 35
+}

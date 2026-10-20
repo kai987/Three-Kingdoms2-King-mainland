@@ -1,0 +1,39 @@
+{
+  "status": "passed_full_declared_contract_audit",
+  "CPU_parent_cases": 17207,
+  "prefix_segments": 17215,
+  "actual_primary_JSRs": 17206,
+  "current_frame_valid_segments": 17190,
+  "invalid_counterexample_segments": 25,
+  "original_CPU_instructions": 752661,
+  "groups": {
+    "raw_A": 512,
+    "legal_index_all_SP": 6144,
+    "legal_index_all_Y": 6144,
+    "stale_stack_6000_fully_overwritten": 8,
+    "one_byte_frame_fault": 8,
+    "same_bus_two_generations": 8,
+    "old_live_pointer_overwritten": 4,
+    "between_reads_pointer_fault": 4,
+    "A099_AND0F": 256,
+    "AC7B_two_terrain_calls": 4096,
+    "adjacent_real_LDX_JSR_AC7B": 14,
+    "bare_B517_aux_counterexample": 4,
+    "middle_access_aux_counterexample": 5
+  },
+  "F266_actual_returns": 8220,
+  "new_candidate_promotions": 2,
+  "unselected_ledger_objects_unchanged": 1524,
+  "remaining": 323,
+  "raw345_independent": {
+    "operand": 104,
+    "data": 13,
+    "unproved_entry": 228
+  },
+  "Source_cases": 0,
+  "Native_runs": 0,
+  "actual_capture_origin": null,
+  "actual_caller_RTS_cases": 0,
+  "whole_game_closure_proven": false,
+  "CPU_not_rerun_during_this_audit": true
+}

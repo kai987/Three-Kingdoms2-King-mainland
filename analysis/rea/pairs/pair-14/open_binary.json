@@ -1,0 +1,18 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/image.bin\",\"format\":\"raw-binary\",\"kind\":\"executable\",\"sha256\":\"3d253517fbe00fe6e497f693cdda99420d4c8bf1d5431b65e39fef53293ed439\",\"architecture\":\"6502\",\"entry_point\":\"0xa000\"}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-14/image.bin",
+      "format": "raw-binary",
+      "kind": "executable",
+      "sha256": "3d253517fbe00fe6e497f693cdda99420d4c8bf1d5431b65e39fef53293ed439",
+      "architecture": "6502",
+      "entry_point": "0xa000"
+    }
+  }
+}

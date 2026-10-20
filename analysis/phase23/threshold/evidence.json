@@ -1,0 +1,90 @@
+{
+  "schema": "phase23-city-threshold-resource-helper-evidence-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_sha256": {
+    "source/recovered/city_threshold_services.py": "af178dc4a55b831bac79d528ccf2e6d08f0c108f501150c7ca29e2ce289a82aa",
+    "source/recovered/city_threshold_integration.py": "3712839b8219a0013d3814ef34f2aeafb13ab8278ed008acb1551960cc74e4d0",
+    "source/recovered/city_recruitment_services.py": "24bc91c2c537051ca32ca1f6ea8a30d6c51adf5fa1f3574bd4aff008e35fc745",
+    "source/recovered/city_auxiliary_services.py": "9f8b9a725f8b7e06fa08a1f132db2dc110be214736fd39e1b4f248d521ca35f5",
+    "source/recovered/domestic_cooperation_controller.py": "e3f0e0f6bc5d85aa8a9bfb35d07ff99864f66384795319c86f1490ccc5074345",
+    "source/recovered/nestopia_context.py": "7762c7ac80a8148341582edcf9c0922a230b586c3b336a06281b1315bf9a7ccb",
+    "scripts/analyze_city_threshold_services.py": "c9400052f374fc1d1563bb2e77fd0162dc8ce98148e12fdd6c3239dd73af3584",
+    "scripts/verify_city_threshold_services.py": "2dce492eb3c2552a6c6c28e1dac9c106afaac68a1f53685d9422d3c3ab447194"
+  },
+  "production_original_CPU_callbacks": 0,
+  "production_IR_interpretation": false,
+  "production_runtime_codegen": false,
+  "coverage": {
+    "new_manual_instruction_positions": 85,
+    "new_manual_code_bytes": 149,
+    "dynamic_new_positions": 85,
+    "not_dynamic": 0,
+    "all_paths_or_inputs_proven": false
+  },
+  "validation": {
+    "path": "analysis/phase23/threshold/validation.json",
+    "sha256": "32a652d2c1f69e9ba57a09497de1d2addf0fc33a95123b15d74e34b94db9d9f2",
+    "original_CPU_parent_cases": 3161,
+    "counts": {
+      "actual_caller_RTS": 3160,
+      "strict_missing_dependency_prefix": 1
+    },
+    "source_guard_count": 5,
+    "domains": {
+      "legal_city_CPU_fixture": 90,
+      "explicit_raw8_city_CPU_fixture": 678,
+      "controlled_numeric_and_software_caller_CPU_fixture": 2336,
+      "controlled_complete_BD7A_caller": 30,
+      "explicit_overcap_BD7A_caller": 1,
+      "explicit_insufficient_gold_BD7A_caller": 1,
+      "strict_missing_dependency_fixture": 1,
+      "diagnostic_Native_snapshot_originalCPU_reached_caller": 20,
+      "actual_Native_snapshot_originalCPU_reached_caller": 4
+    }
+  },
+  "exact_scope": {
+    "RAM_bytes": 2048,
+    "SRAM_bytes": 8192,
+    "registers": [
+      "A",
+      "X",
+      "Y",
+      "P",
+      "SP",
+      "PC"
+    ],
+    "ordered_IO_reads_writes": true,
+    "four_PRG_banks": true,
+    "N163_RAM_address_autoincrement": true,
+    "free_stack_excluded_bytes": 0
+  },
+  "threshold": {
+    "original_body": "10 BD95..BDA1",
+    "original_city_pointer_call": "10 BD8D→11 D105",
+    "actual_base": "6000+32*rawcity; no pointer+1 bias",
+    "original_low_byte": 1,
+    "original_high_byte": 2,
+    "threshold": 300,
+    "predicate": "postcap_gold_low>=2 or(postcap_gold_low==1 and opaque_city_byte1>=44)",
+    "gold_high": "Ignored by the predicate after caps; it still participates in D105 actual gold cap before the read.",
+    "opaque_name_confirmed": false
+  },
+  "new_helper_effects": {
+    "D105": "Raw8 city pointer20/21; cap actual gold/grain before owner&7 result. Caps happen even when owner check subsequently fails.",
+    "D69D": "LE16 city+2/+3 and+4/+5>=10000 are written9999, low before high, gold before grain. It never writes+1.",
+    "D36F": "Caps before optional random fee, cost16 wrap; repeats D105 and cap before subtraction. Insufficient funds CLC leaves prior caps and fee/RNG/scratch effects; success high-then-low write, another cap, SEC. BD7A ignores returned carry."
+  },
+  "caller_order": "B49C real sampling/redistribution tails BD7A; every city D105/caps→owner test→overlap gate→all10roster entries→low10==1000 skip→head100/武力 late ties→chosen fill/reserve purchase→raw1000 commit→budget2. Existing named caller remains frozen and is not recounted as new recovery.",
+  "hypothesis_limits": [
+    "Six controlled/natural Native cohorts establish this observed branch and complete effect. They do not give+1 a formal name.",
+    "A literal gold>=300 test is not equivalent: actual diagnostic gold258 passes while512 rejects with+1=0.",
+    "The qualifying branch is not a payment300: reserve-sufficient cases keep gold unchanged at reinforcement and deduct reserve300/budget2; later development/payment is separate.",
+    "No dedicated+1 producer is confirmed. Existing initialization/copy and unresolved arbitrary-writer paths are separate; finite zero-write observation is not an unused-field proof.",
+    "Raw corrupt city/pointer cases in the CPU matrix are explicitly mechanical domains, not legal Native UI inputs."
+  ],
+  "artifact_sha256": {
+    "analysis/phase23/threshold/static-catalog.json": "89988797c1e1992e77b41754374270882745e791697201a4abc2071abace15fe",
+    "analysis/phase23/threshold/original.asm": "16d604f292ef29095147dd56501a3a24a8b998ce0a986a7627db3cf14d971986",
+    "analysis/phase23/threshold/README.md": "549678c5b7369a6bd58c1a1c3d690481981c22aa440021e465f7be08cf9f4af1"
+  }
+}

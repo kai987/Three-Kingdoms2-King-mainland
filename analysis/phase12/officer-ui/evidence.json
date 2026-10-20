@@ -1,0 +1,368 @@
+{
+  "schema": "phase12-independent-officer-name-UI-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ROM_modified": false,
+  "source_original_CPU": false,
+  "source_control_IR": false,
+  "source_kind": "handwritten structured packet/name/mapper source",
+  "ranges": [
+    {
+      "name": "public_stub_A027",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 40999,
+      "cpu_end_exclusive": 41002,
+      "rom_offset": 237623,
+      "byte_count": 3,
+      "raw_hex": "4C 30 A8",
+      "sha256": "9eb7f1722fb790f674c5f5f0b1a87c09777079a3787255a940860fe9a979bc6b"
+    },
+    {
+      "name": "public_stub_A02A",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 41002,
+      "cpu_end_exclusive": 41005,
+      "rom_offset": 237626,
+      "byte_count": 3,
+      "raw_hex": "4C 90 A8",
+      "sha256": "9583aa6209fb6aa0b0133ffb44bec14f6e33d709c105c0ce20f5ecd513c09eb3"
+    },
+    {
+      "name": "public_stub_A030",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 41008,
+      "cpu_end_exclusive": 41011,
+      "rom_offset": 237632,
+      "byte_count": 3,
+      "raw_hex": "4C A4 A8",
+      "sha256": "3cb5109c5e8dfd6535a9eef051dbb5d25372bcdae9963cd938b34d4124a07b62"
+    },
+    {
+      "name": "public_stub_A033",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 41011,
+      "cpu_end_exclusive": 41014,
+      "rom_offset": 237635,
+      "byte_count": 3,
+      "raw_hex": "4C FD A8",
+      "sha256": "3936391bbcfbbbaad4794319aea4fa6c0bd2da7b61e8bcf9fcd7d0cc06f82ec4"
+    },
+    {
+      "name": "public_stub_A036",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 41014,
+      "cpu_end_exclusive": 41017,
+      "rom_offset": 237638,
+      "byte_count": 3,
+      "raw_hex": "4C 66 BC",
+      "sha256": "cb6d01d75ae1825af579e7ccd739a7a4f5e38c56887cf1898d9738e41736e668"
+    },
+    {
+      "name": "public_stub_A03C",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 41020,
+      "cpu_end_exclusive": 41023,
+      "rom_offset": 237644,
+      "byte_count": 3,
+      "raw_hex": "4C 91 A9",
+      "sha256": "913abde830874728ba9e4f826be53751ad3481f1f1ea15faf45955a447a258df"
+    },
+    {
+      "name": "selected_unit_name",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 43056,
+      "cpu_end_exclusive": 43094,
+      "rom_offset": 239680,
+      "byte_count": 38,
+      "raw_hex": "A0 3A B9 56 A8 99 80 03 88 10 F7 AC 09 05 B9 64 06 20 57 A9 AC 09 05 B9 64 06 20 76 A9 AD 7E 00 09 04 8D 7E 00 60",
+      "sha256": "ec6592840d1eccfb9eee3b66a7bcfeb7015e838537bb36393e569681c206c299"
+    },
+    {
+      "name": "palette_name_wrapper",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 43152,
+      "cpu_end_exclusive": 43172,
+      "rom_offset": 239776,
+      "byte_count": 20,
+      "raw_hex": "AD 00 00 48 A9 00 8D 00 00 A0 3D 20 07 EE 15 A0 68 8D 00 00",
+      "sha256": "7027b9ce11bbf10a1b2c2b3c39fcdb2bb19918c3ad29f291a2da3692f0657e08"
+    },
+    {
+      "name": "left_name",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 43172,
+      "cpu_end_exclusive": 43203,
+      "rom_offset": 239796,
+      "byte_count": 31,
+      "raw_hex": "A0 3A B9 C3 A8 99 80 03 88 10 F7 AD 00 00 48 20 57 A9 68 20 76 A9 AD 7E 00 09 04 8D 7E 00 60",
+      "sha256": "6f6e65700d98a13f276a80edb892d20b2d9d7b0a1c6b56664ca86b4dd6c72673"
+    },
+    {
+      "name": "duel_name",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 43261,
+      "cpu_end_exclusive": 43293,
+      "rom_offset": 239885,
+      "byte_count": 32,
+      "raw_hex": "A0 3A B9 1D A9 99 80 03 88 10 F7 AD AE 04 20 57 A9 AD AE 04 20 76 A9 AD 7E 00 09 04 8D 7E 00 60",
+      "sha256": "0aa61b59afbbca97b6254054868bbbde64d45cf8cfd72a61e7bf66a5797f2230"
+    },
+    {
+      "name": "name_marks_and_glyphs",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 43351,
+      "cpu_end_exclusive": 43409,
+      "rom_offset": 239975,
+      "byte_count": 58,
+      "raw_hex": "20 08 F3 AA A0 00 B1 00 F0 0D C9 39 F0 0A C9 3A F0 06 C8 E8 4C 5D A9 60 9D A5 03 C8 4C 5D A9 20 08 F3 AA A0 00 B1 00 F0 10 C9 39 F0 08 C9 3A F0 04 9D B1 03 E8 C8 4C 7C A9 60",
+      "sha256": "19cc3e4ee6e002fe4fac53c33d5f98012b5b466610e19130a11b0bc356ce4086"
+    },
+    {
+      "name": "participant_name",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 43409,
+      "cpu_end_exclusive": 43459,
+      "rom_offset": 240033,
+      "byte_count": 50,
+      "raw_hex": "AD 01 00 D0 0E A0 3A B9 FD A9 99 80 03 88 10 F7 4C AF A9 A0 3A B9 C3 A9 99 80 03 88 10 F7 AD 00 00 48 20 57 A9 68 20 76 A9 AD 7E 00 09 04 8D 7E 00 60",
+      "sha256": "6cc011be17029d5155129b77968868777a267222a9e45ff881ebbce91bb1e1c6"
+    },
+    {
+      "name": "clear_attribute_buffer",
+      "kind": "original_code",
+      "physical_bank": 29,
+      "cpu_start": 48230,
+      "cpu_end_exclusive": 48241,
+      "rom_offset": 244854,
+      "byte_count": 11,
+      "raw_hex": "A0 3F A9 00 99 40 01 88 10 FA 60",
+      "sha256": "25eb4e6208edd59b70b60e0fccfcc5d9c252e2d2b05e692884bd43928d698e21"
+    },
+    {
+      "name": "fixed_name_pointer_alignment",
+      "kind": "original_code",
+      "physical_bank": 31,
+      "cpu_start": 62216,
+      "cpu_end_exclusive": 62303,
+      "rom_offset": 258840,
+      "byte_count": 87,
+      "raw_hex": "8D 02 00 A0 30 20 5F F2 A9 00 8D 01 00 AD 02 00 0A 2E 01 00 0A 2E 01 00 18 6D 02 00 8D 00 00 AD 01 00 69 00 8D 01 00 0E 00 00 2E 01 00 AD 00 00 18 69 1A 8D 00 00 AD 01 00 69 90 8D 01 00 A0 00 A2 00 B1 00 F0 0D C8 C9 39 F0 F7 C9 3A F0 F3 E8 4C 4A F3 BD 5F F3 60",
+      "sha256": "4452c57089bc54b96f595d97edfe6aef787eb2b33eb59946b5f662f5b979ccbe"
+    },
+    {
+      "name": "reused_fixed_data_bank_mapper",
+      "kind": "original_code",
+      "physical_bank": 31,
+      "cpu_start": 62047,
+      "cpu_end_exclusive": 62054,
+      "rom_offset": 258671,
+      "byte_count": 7,
+      "raw_hex": "8C E1 00 8C 00 E0 60",
+      "sha256": "ae0160bf6cb0157d2af6c767e501b74d89051f6a4983126486e7d0715d9f4d6c"
+    }
+  ],
+  "tables": [
+    {
+      "name": "selected_unit_name_packet",
+      "kind": "immutable_game_data",
+      "physical_bank": 29,
+      "cpu_start": 43094,
+      "cpu_end_exclusive": 43152,
+      "rom_offset": 239718,
+      "byte_count": 58,
+      "raw_hex": "04 24 22 00 00 00 00 04 24 42 00 00 00 00 04 24 62 00 00 00 00 04 24 82 00 00 00 00 04 24 A2 00 00 00 00 08 24 C0 01 01 01 01 01 01 01 01 08 24 E0 01 01 01 01 01 01 01 01 FF",
+      "sha256": "3d162aa3801156686576d170d9e47c4e182fabdd8af74b63e9eeb074e54055f1",
+      "actual_copy_length": 59,
+      "actual_copy_raw_hex": "04 24 22 00 00 00 00 04 24 42 00 00 00 00 04 24 62 00 00 00 00 04 24 82 00 00 00 00 04 24 A2 00 00 00 00 08 24 C0 01 01 01 01 01 01 01 01 08 24 E0 01 01 01 01 01 01 01 01 FF AD",
+      "actual_copy_includes_next_region_byte": true
+    },
+    {
+      "name": "left_name_packet",
+      "kind": "immutable_game_data",
+      "physical_bank": 29,
+      "cpu_start": 43203,
+      "cpu_end_exclusive": 43261,
+      "rom_offset": 239827,
+      "byte_count": 58,
+      "raw_hex": "04 22 A2 00 00 00 00 04 22 C2 00 00 00 00 04 22 E2 00 00 00 00 04 23 02 00 00 00 00 04 23 22 00 00 00 00 08 23 40 01 01 01 01 01 01 01 01 08 23 60 01 01 01 01 01 01 01 01 FF",
+      "sha256": "e7318623b18f6d54f5c7e6a656abf715ae140dcf443b5e087107c0736005ce17",
+      "actual_copy_length": 59,
+      "actual_copy_raw_hex": "04 22 A2 00 00 00 00 04 22 C2 00 00 00 00 04 22 E2 00 00 00 00 04 23 02 00 00 00 00 04 23 22 00 00 00 00 08 23 40 01 01 01 01 01 01 01 01 08 23 60 01 01 01 01 01 01 01 01 FF A0",
+      "actual_copy_includes_next_region_byte": true
+    },
+    {
+      "name": "duel_name_packet",
+      "kind": "immutable_game_data",
+      "physical_bank": 29,
+      "cpu_start": 43293,
+      "cpu_end_exclusive": 43351,
+      "rom_offset": 239917,
+      "byte_count": 58,
+      "raw_hex": "04 22 B9 00 00 00 00 04 22 D9 00 00 00 00 04 22 F9 00 00 00 00 04 23 19 00 00 00 00 04 23 39 00 00 00 00 08 23 57 01 01 01 01 01 01 01 01 08 23 77 01 01 01 01 01 01 01 01 FF",
+      "sha256": "c305a0c5b635ddd95c155fcafbbb21eb8d3298e440c6ad8c1a8b4e97cf2980fb",
+      "actual_copy_length": 59,
+      "actual_copy_raw_hex": "04 22 B9 00 00 00 00 04 22 D9 00 00 00 00 04 22 F9 00 00 00 00 04 23 19 00 00 00 00 04 23 39 00 00 00 00 08 23 57 01 01 01 01 01 01 01 01 08 23 77 01 01 01 01 01 01 01 01 FF 20",
+      "actual_copy_includes_next_region_byte": true
+    },
+    {
+      "name": "right_participant_packet",
+      "kind": "immutable_game_data",
+      "physical_bank": 29,
+      "cpu_start": 43459,
+      "cpu_end_exclusive": 43517,
+      "rom_offset": 240083,
+      "byte_count": 58,
+      "raw_hex": "04 22 BA 00 00 00 00 04 22 DA 00 00 00 00 04 22 FA 00 00 00 00 04 23 1A 00 00 00 00 04 23 3A 00 00 00 00 08 23 58 01 01 01 01 01 01 01 01 08 23 78 01 01 01 01 01 01 01 01 FF",
+      "sha256": "0ca4f8febf67781b5efdbc9bc8ee6af4993cef9fe5eeeae910330ba2ed63b24b",
+      "actual_copy_length": 59,
+      "actual_copy_raw_hex": "04 22 BA 00 00 00 00 04 22 DA 00 00 00 00 04 22 FA 00 00 00 00 04 23 1A 00 00 00 00 04 23 3A 00 00 00 00 08 23 58 01 01 01 01 01 01 01 01 08 23 78 01 01 01 01 01 01 01 01 FF 04",
+      "actual_copy_includes_next_region_byte": true
+    },
+    {
+      "name": "left_participant_packet",
+      "kind": "immutable_game_data",
+      "physical_bank": 29,
+      "cpu_start": 43517,
+      "cpu_end_exclusive": 43575,
+      "rom_offset": 240141,
+      "byte_count": 58,
+      "raw_hex": "04 22 A2 00 00 00 00 04 22 C2 00 00 00 00 04 22 E2 00 00 00 00 04 23 02 00 00 00 00 04 23 22 00 00 00 00 08 23 40 01 01 01 01 01 01 01 01 08 23 60 01 01 01 01 01 01 01 01 FF",
+      "sha256": "e7318623b18f6d54f5c7e6a656abf715ae140dcf443b5e087107c0736005ce17",
+      "actual_copy_length": 59,
+      "actual_copy_raw_hex": "04 22 A2 00 00 00 00 04 22 C2 00 00 00 00 04 22 E2 00 00 00 00 04 23 02 00 00 00 00 04 23 22 00 00 00 00 08 23 40 01 01 01 01 01 01 01 01 08 23 60 01 01 01 01 01 01 01 01 FF AD",
+      "actual_copy_includes_next_region_byte": true
+    },
+    {
+      "name": "name_alignment_by_nonmark_code_count",
+      "kind": "immutable_game_data",
+      "physical_bank": 31,
+      "cpu_start": 62303,
+      "cpu_end_exclusive": 62312,
+      "rom_offset": 258927,
+      "byte_count": 9,
+      "raw_hex": "03 03 03 02 02 01 01 00 00",
+      "sha256": "988547cfd8ab8307a2a0e3c35c0819da31d43f668622cbae0b92eacdfcf38891"
+    },
+    {
+      "name": "237_initial_encoded_names",
+      "kind": "immutable_game_data",
+      "physical_bank": 16,
+      "cpu_start": 36890,
+      "cpu_end_exclusive": 39260,
+      "rom_offset": 135210,
+      "byte_count": 2370,
+      "raw_hex": "04 09 05 18 31 00 00 00 00 00 05 0D 06 00 00 00 00 00 00 00 05 11 0A 00 00 00 00 00 00 00 05 31 09 05 00 00 00 00 00 00 05 31 0F 37 06 00 00 00 00 00 06 0A 31 00 00 00 00 00 00 00 07 15 0A 15 00 00 00 00 00 00 07 31 0A 00 00 00 00 00 00 00 07 31 0F 37 06 00 00 00 00 00 07 31 13 31 00 00 00 00 00 00 07 31 21 00 00 00 00 00 00 00 08 06 0C 31 00 00 00 00 00 00 08 06 0E 31 00 00 00 00 00 00 08 06 12 06 00 00 00 00 00 00 08 06 14 36 06 00 00 00 00 00 08 06 20 05 00 00 00 00 00 00 08 06 21 00 00 00 00 00 00 00 08 06 2C 05 00 00 00 00 00 00 09 05 07 15 00 00 00 00 00 00 09 05 2B 37 06 00 00 00 00 00 09 09 00 00 00 00 00 00 00 00 09 0A 31 00 00 00 00 00 00 00 09 0B 00 00 00 00 00 00 00 00 09 0B 0F 00 00 00 00 00 00 00 09 0B 09 00 00 00 00 00 00 00 09 0B 0F 37 06 00 00 00 00 00 09 39 0B 0F 31 00 00 00 00 00 09 0B 17 00 00 00 00 00 00 00 09 0B 2F 05 00 00 00 00 00 00 09 0D 06 07 31 00 00 00 00 00 09 0D 06 17 31 00 00 00 00 00 09 0D 06 1D 00 00 00 00 00 00 09 0D 06 21 39 06 00 00 00 00 09 0D 06 2A 31 00 00 00 00 00 09 39 13 31 00 00 00 00 00 00 09 39 38 09 31 00 00 00 00 00 09 1D 31 00 00 00 00 00 00 00 09 28 06 00 00 00 00 00 00 00 09 31 06 00 00 00 00 00 00 00 09 31 07 05 00 00 00 00 00 00 09 31 0A 00 00 00 00 00 00 00 09 31 0C 39 31 00 00 00 00 00 09 31 0D 06 00 00 00 00 00 00 09 31 0E 0B 00 00 00 00 00 00 09 31 10 05 00 00 00 00 00 00 09 31 17 06 00 00 00 00 00 00 09 31 17 0B 00 00 00 00 00 00 09 31 1B 05 00 00 00 00 00 00 09 31 20 3A 05 00 00 00 00 00 09 31 26 06 00 00 00 00 00 00 09 31 29 06 00 00 00 00 00 00 09 39 31 2B 37 06 00 00 00 00 0A 39 07 31 00 00 00 00 00 00 0A 39 0A 37 00 00 00 00 00 00 0A 39 36 06 0A 31 00 00 00 00 0A 37 06 05 00 00 00 00 00 00 0A 37 28 06 00 00 00 00 00 00 0A 37 14 37 00 00 00 00 00 00 0A 39 2A 31 00 00 00 00 00 00 0A 2D 05 00 00 00 00 00 00 00 0A 31 09 31 0C 15 00 00 00 00 0B 39 21 31 00 00 00 00 00 00 0C 05 17 39 06 07 05 00 00 00 0C 39 31 09 39 31 00 00 00 00 0C 39 31 0F 36 31 00 00 00 00 0C 39 31 0D 06 00 00 00 00 00 0D 39 05 00 00 00 00 00 00 00 0D 06 09 39 05 00 00 00 00 00 0D 06 09 31 00 00 00 00 00 00 0D 06 0F 37 06 00 00 00 00 00 0D 06 0C 31 00 00 00 00 00 00 0D 06 11 05 00 00 00 00 00 00 0D 06 11 31 00 00 00 00 00 00 0D 06 12 31 07 31 00 00 00 00 0D 06 12 31 0D 06 00 00 00 00 0D 06 14 36 06 00 00 00 00 00 0D 06 16 05 00 00 00 00 00 00 0D 06 2A 31 00 00 00 00 00 00 0D 39 15 17 15 0D 15 00 00 00 0D 29 06 00 00 00 00 00 00 00 0D 0F 35 0F 39 00 00 00 00 00 0D 39 2A 31 00 00 00 00 00 00 0E 05 07 31 00 00 00 00 00 00 0E 05 29 06 00 00 00 00 00 00 0E 05 2B 37 06 00 00 00 00 00 0F 09 31 00 00 00 00 00 00 00 0F 1D 39 05 00 00 00 00 00 00 0F 1D 39 0F 00 00 00 00 00 00 0F 1D 39 0F 37 06 00 00 00 00 0F 36 06 11 39 31 00 00 00 00 0F 36 06 12 06 00 00 00 00 00 0F 36 06 13 05 00 00 00 00 00 0F 36 06 21 06 00 00 00 00 00 0F 36 06 28 00 00 00 00 00 00 0F 36 09 31 00 00 00 00 00 00 0F 36 11 39 31 00 00 00 00 00 0F 36 14 00 00 00 00 00 00 00 0F 36 21 06 00 00 00 00 00 00 0F 36 2D 05 00 00 00 00 00 00 0F 39 36 31 05 0B 00 00 00 00 0F 39 36 31 06 0C 05 00 00 00 0F 39 36 31 0F 39 31 00 00 00 0F 37 06 09 31 00 00 00 00 00 0F 37 06 09 05 00 00 00 00 00 0F 37 06 07 31 00 00 00 00 00 0F 37 06 14 37 06 00 00 00 00 0F 39 37 07 05 00 00 00 00 00 0F 37 09 15 0A 31 00 00 00 00 0F 37 09 15 11 31 00 00 00 00 0F 37 09 15 2B 37 06 00 00 00 0F 37 09 15 09 0B 00 00 00 00 0F 39 37 0D 06 00 00 00 00 00 0F 39 37 0F 37 00 00 00 00 00 0F 39 37 11 05 00 00 00 00 00 0F 39 31 0F 36 31 00 00 00 00 0F 39 31 12 06 00 00 00 00 00 0F 31 13 31 00 00 00 00 00 00 0F 31 1D 3A 05 00 00 00 00 00 0F 31 1E 3A 00 00 00 00 00 00 0F 31 1E 3A 37 06 00 00 00 00 11 05 0A 39 00 00 00 00 00 00 11 38 12 06 00 00 00 00 00 00 11 39 31 12 06 00 00 00 00 00 12 06 07 05 00 00 00 00 00 00 12 06 0A 36 06 00 00 00 00 00 12 06 0C 31 00 00 00 00 00 00 12 06 0D 06 00 00 00 00 00 00 12 06 0F 37 06 00 00 00 00 00 12 06 0F 37 0B 00 00 00 00 00 12 06 0F 31 00 00 00 00 00 00 12 06 0F 39 31 00 00 00 00 00 12 06 12 06 00 00 00 00 00 00 12 06 1E 00 00 00 00 00 00 00 12 06 28 06 00 00 00 00 00 00 12 0F 39 36 00 00 00 00 00 00 12 1E 00 00 00 00 00 00 00 00 12 31 09 31 00 00 00 00 00 00 12 31 0C 31 00 00 00 00 00 00 12 31 0E 0B 00 00 00 00 00 00 12 31 29 0B 00 00 00 00 00 00 12 31 2D 05 00 00 00 00 00 00 13 05 0F 0F 39 00 00 00 00 00 13 31 28 06 00 00 00 00 00 00 14 37 06 0E 05 00 00 00 00 00 14 37 06 06 31 00 00 00 00 00 14 37 06 07 05 00 00 00 00 00 14 37 06 08 06 00 00 00 00 00 14 37 06 0A 39 00 00 00 00 00 14 37 06 0C 39 15 00 00 00 00 14 37 06 0D 06 00 00 00 00 00 14 37 06 0F 37 06 00 00 00 00 14 37 06 0F 39 31 00 00 00 00 14 37 06 18 31 00 00 00 00 00 14 37 06 1E 00 00 00 00 00 00 14 37 06 21 06 00 00 00 00 00 14 37 06 29 0B 00 00 00 00 00 14 37 06 2B 37 06 00 00 00 00 14 31 0F 31 00 00 00 00 00 00 14 31 1F 39 00 00 00 00 00 00 14 31 2A 31 00 00 00 00 00 00 14 31 2B 31 00 00 00 00 00 00 16 05 05 0B 00 00 00 00 00 00 16 05 0A 39 31 00 00 00 00 00 16 05 1F 00 00 00 00 00 00 00 16 05 20 05 00 00 00 00 00 00 16 31 05 00 00 00 00 00 00 00 16 39 31 14 36 06 00 00 00 00 16 39 31 21 06 00 00 00 00 00 17 06 05 31 00 00 00 00 00 00 17 06 09 39 05 00 00 00 00 00 17 06 0F 00 00 00 00 00 00 00 17 06 0F 36 06 00 00 00 00 00 17 06 17 1A 00 00 00 00 00 00 17 06 13 0B 00 00 00 00 00 00 1D 39 07 31 00 00 00 00 00 00 1D 39 09 39 31 00 00 00 00 00 1D 39 0A 36 06 00 00 00 00 00 1D 39 0F 37 0B 00 00 00 00 00 1D 39 0F 39 36 31 00 00 00 00 1D 39 13 05 00 00 00 00 00 00 1D 39 14 37 06 00 00 00 00 00 1D 39 16 15 00 00 00 00 00 00 1D 39 17 06 00 00 00 00 00 00 1D 39 2B 37 06 00 00 00 00 00 1D 39 31 05 0B 00 00 00 00 00 1D 31 0F 37 06 00 00 00 00 00 1D 31 14 36 06 00 00 00 00 00 1E 05 00 00 00 00 00 00 00 00 1E 39 0F 39 0B 00 00 00 00 00 1E 39 21 06 00 00 00 00 00 00 1F 07 05 00 00 00 00 00 00 00 1F 39 31 0F 36 06 00 00 00 00 1F 39 31 20 3A 05 00 00 00 00 1F 39 04 31 0D 0B 00 00 00 00 21 06 0A 00 00 00 00 00 00 00 21 06 0F 39 36 06 00 00 00 00 21 06 11 05 00 00 00 00 00 00 21 06 17 06 00 00 00 00 00 00 21 06 17 0B 00 00 00 00 00 00 21 0F 15 00 00 00 00 00 00 00 26 06 09 0B 00 00 00 00 00 00 26 06 13 15 00 00 00 00 00 00 26 06 28 06 00 00 00 00 00 00 29 06 09 39 05 00 00 00 00 00 29 06 0A 39 00 00 00 00 00 00 29 06 0D 06 00 00 00 00 00 00 29 06 0F 36 06 00 00 00 00 00 29 06 1F 00 00 00 00 00 00 00 2A 05 1D 0B 00 00 00 00 00 00 2A 05 17 39 06 00 00 00 00 00 2B 05 00 00 00 00 00 00 00 00 2B 09 0B 00 00 00 00 00 00 00 2B 0B 11 0A 00 00 00 00 00 00 2B 0B 12 31 00 00 00 00 00 00 2B 0C 39 31 00 00 00 00 00 00 2B 13 31 00 00 00 00 00 00 00 2B 16 31 00 00 00 00 00 00 00 2B 1F 00 00 00 00 00 00 00 00 2B 37 1F 00 00 00 00 00 00 00 2B 0F 39 36 00 00 00 00 00 00 2B 36 06 0F 37 06 00 00 00 00 2B 36 06 17 39 00 00 00 00 00 2B 36 06 1E 39 00 00 00 00 00 2B 36 06 20 05 00 00 00 00 00 2B 36 06 21 06 00 00 00 00 00 2B 36 06 29 06 00 00 00 00 00 2B 37 06 09 00 00 00 00 00 00 2B 37 06 0D 06 00 00 00 00 00 2B 37 06 17 06 00 00 00 00 00 2B 37 09 39 05 00 00 00 00 00 2B 37 0D 06 00 00 00 00 00 00 2B 37 0C 31 00 00 00 00 00 00 2B 37 0F 37 06 00 00 00 00 00 2B 37 1D 31 00 00 00 00 00 00 2B 37 26 06 00 00 00 00 00 00 2E 0F 36 0B 00 00 00 00 00 00 2B 0C 05 00 00 00 00 00 00 00",
+      "sha256": "8cb4b4d8b7d8fdab0b76b44a12d43d9cb36e8f685393b275db976a53ea72335e"
+    }
+  ],
+  "public_entries": [
+    {
+      "public": 41008,
+      "target": 43172,
+      "mechanics": "ID0000 left-name packet"
+    },
+    {
+      "public": 41020,
+      "target": 43409,
+      "mechanics": "ID0000 participant-name packet;0001 zero vs nonzero"
+    },
+    {
+      "public": 41011,
+      "target": 43261,
+      "mechanics": "ID04AE duel-name packet"
+    },
+    {
+      "public": 40999,
+      "target": 43056,
+      "mechanics": "ID0664[0509] selected-unit-name packet"
+    },
+    {
+      "public": 41002,
+      "target": 43152,
+      "mechanics": "palette0 external EE07 A015 then preserved-ID left-name packet"
+    },
+    {
+      "public": 41014,
+      "target": 48230,
+      "mechanics": "clear0140..017F"
+    },
+    {
+      "public": 62216,
+      "target": 62216,
+      "mechanics": "fixed encoded name pointer, nonmark count and alignment"
+    }
+  ],
+  "dependency_pins": [
+    {
+      "path": "source/recovered/officer_ui_services.py",
+      "sha256": "dd4c81924aad78b089d26bf436284a76945aff7b4c035d0c155707d2c43f2113"
+    },
+    {
+      "path": "source/recovered/battle_nmi_services.py",
+      "sha256": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15"
+    },
+    {
+      "path": "source/recovered/mapped_memory.py",
+      "sha256": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1"
+    },
+    {
+      "path": "source/recovered/service_memory.py",
+      "sha256": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920"
+    },
+    {
+      "path": "scripts/analyze_officer_ui_services.py",
+      "sha256": "a6c17071d17020749b2a3c6d41aaea9b9b777d309ad4a1e6b4de5ebaaaafec05"
+    }
+  ],
+  "REA_archive": [
+    {
+      "path": "analysis/rea/pairs/pair-29/image.bin",
+      "sha256": "85c81d2746e4dc0276dae47f87ffebe63bbee2cc477305bb4ceca08789b1fcd2",
+      "bytes": 24576
+    },
+    {
+      "path": "analysis/rea/pairs/pair-29/mapping.json",
+      "sha256": "9f62685ff30b9a98a79f345ff2488060f60df70306a1bc1e995cc004cfb18889",
+      "bytes": 367
+    },
+    {
+      "path": "analysis/rea/pairs/pair-29/evidence-bundle.json",
+      "sha256": "3ef08f39a6a484c11f2fb1511d187d14b12771db08b86e365026cf51dee9c8a2",
+      "bytes": 2082365
+    }
+  ],
+  "runtime_imports": [
+    "hashlib",
+    "battle_nmi_services",
+    "mapped_memory"
+  ],
+  "actual_far_callers": "analysis/phase12/dependencies/callee-inputs/",
+  "semantics": [
+    "A030/A03C are name packet producers, not officer-stat cards or text consumers.",
+    "The descending template copy really reads59 bytes, including the first byte of the next region.",
+    "F308 writes0002,0000/1 andE1, writesE000 with30, and leaves physical16 in8000.",
+    "Codes39/3A are non-advancing marks; X counts other codes and F35F[X] gives alignment.",
+    "A957 stores marks at03A5+X; A976 stores ordinary codes at03B1+X;007E|4 requests later upload."
+  ],
+  "external_calls": [
+    {
+      "caller": 43163,
+      "target": 60935,
+      "selector": 61,
+      "inline_target": 40981,
+      "return_pc": 43168
+    }
+  ],
+  "scope": "Six banked entry stubs and shared name helpers; not full officer-stat UI or bank29 text controller."
+}

@@ -1,0 +1,3266 @@
+{
+  "schema": "phase25-readonly-captured-caller-owner-index-v1",
+  "callers": [
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        17,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/0"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/1"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/2"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/3"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/4"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/5"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/6"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/7"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/8"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank29:A021",
+      "target": 40993,
+      "physical_bank": 29,
+      "entry_banks": [
+        2,
+        29,
+        30,
+        31
+      ],
+      "caller_call_PC": 41188,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/9"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "GlobalUIController"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 161,
+        "predicate": "pair == (29, 30) and target in CityUIWorkers.PUBLIC_ENTRIES or (pair == (10, 11) and target in TitleUIController.PUBLIC_ENTRIES) or (pair == (8, 9) and target in RulerSelectionUIController.PUBLIC_ENTRIES) or (pair == (23, 24) and target in EndingUIController.PUBLIC_ENTRIES)",
+        "owner_source": "source/recovered/global_ui_controller.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        1,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/10"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A021",
+      "target": 40993,
+      "physical_bank": 25,
+      "entry_banks": [
+        1,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 41039,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/11"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityOfficerDetailsController"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 130,
+        "predicate": "pair == (25, 26) and target in CityOfficerDetailsController.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_officer_details_controller.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        1,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/12"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A021",
+      "target": 40993,
+      "physical_bank": 25,
+      "entry_banks": [
+        1,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 41039,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/13"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityOfficerDetailsController"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 130,
+        "predicate": "pair == (25, 26) and target in CityOfficerDetailsController.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_officer_details_controller.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        1,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/14"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A021",
+      "target": 40993,
+      "physical_bank": 25,
+      "entry_banks": [
+        1,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 41039,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/15"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityOfficerDetailsController"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 130,
+        "predicate": "pair == (25, 26) and target in CityOfficerDetailsController.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_officer_details_controller.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank25:A02A",
+      "target": 41002,
+      "physical_bank": 25,
+      "entry_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "caller_call_PC": 40980,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/16"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "CityPanelServices"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 132,
+        "predicate": "pair == (25, 26) and target in CityPanelServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/city_panel_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank29:A021",
+      "target": 40993,
+      "physical_bank": 29,
+      "entry_banks": [
+        2,
+        29,
+        30,
+        31
+      ],
+      "caller_call_PC": 41188,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "actual_Native_snapshot_originalCPU_reached_caller",
+      "evidence": {
+        "path": "analysis/phase13/dependencies/inventory.json",
+        "sha256": "39ae7159c059560376e4e047fd404501ecec4aeda3c822c68dbb382d01e799bc",
+        "json_pointer": "/actual_farcallee_boundaries/17"
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "GlobalUIController"
+        ],
+        "route_path": "source/recovered/scene_coordinator.py",
+        "route_line": 161,
+        "predicate": "pair == (29, 30) and target in CityUIWorkers.PUBLIC_ENTRIES or (pair == (10, 11) and target in TitleUIController.PUBLIC_ENTRIES) or (pair == (8, 9) and target in RulerSelectionUIController.PUBLIC_ENTRIES) or (pair == (23, 24) and target in EndingUIController.PUBLIC_ENTRIES)",
+        "owner_source": "source/recovered/global_ui_controller.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Native saved point followed by independent originalCPU continuation without new interrupts; not a captured original-core internal entry. Current static owner is separate from a new source-return proof."
+    },
+    {
+      "service_key": "bank28:D64A",
+      "target": 54858,
+      "entry_banks": [
+        2,
+        27,
+        28,
+        31
+      ],
+      "caller_call_PC": null,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase24/cpu-lifecycle/actual-callers/entry-D64A-observer-0055/context.json",
+        "sha256": "ad9c0944b5ee011fd20d0471309e0fdc2fa582045929c0275eecfb88bcbf3819",
+        "json_pointer": ""
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "PointerLifecycleServices"
+        ],
+        "route_path": "source/recovered/pointer_lifecycle_integration.py",
+        "route_line": 18,
+        "predicate": "tuple(call.entry_banks[1:3]) != (27, 28) or call.target not in PointerLifecycleServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/pointer_lifecycle_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Actual software state and real stack. N163 is an explicit shared CPU/Source fixture, not captured Native device state; no new replay."
+    },
+    {
+      "service_key": "bank28:D64A",
+      "target": 54858,
+      "entry_banks": [
+        2,
+        27,
+        28,
+        31
+      ],
+      "caller_call_PC": null,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase24/cpu-lifecycle/actual-callers/entry-D64A-observer-0078/context.json",
+        "sha256": "2444c2fe92e9461f65c3ae6371bd76375d8941f0556943016445015c69d98146",
+        "json_pointer": ""
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "PointerLifecycleServices"
+        ],
+        "route_path": "source/recovered/pointer_lifecycle_integration.py",
+        "route_line": 18,
+        "predicate": "tuple(call.entry_banks[1:3]) != (27, 28) or call.target not in PointerLifecycleServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/pointer_lifecycle_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Actual software state and real stack. N163 is an explicit shared CPU/Source fixture, not captured Native device state; no new replay."
+    },
+    {
+      "service_key": "bank28:D987",
+      "target": 55687,
+      "entry_banks": [
+        2,
+        27,
+        28,
+        31
+      ],
+      "caller_call_PC": null,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase24/cpu-lifecycle/actual-callers/entry-D987-observer-0056/context.json",
+        "sha256": "94d258a99851160b64662792c184d4f6447a5e1f1215e47c3f7620a52cbeb127",
+        "json_pointer": ""
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "PointerLifecycleServices"
+        ],
+        "route_path": "source/recovered/pointer_lifecycle_integration.py",
+        "route_line": 18,
+        "predicate": "tuple(call.entry_banks[1:3]) != (27, 28) or call.target not in PointerLifecycleServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/pointer_lifecycle_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Actual software state and real stack. N163 is an explicit shared CPU/Source fixture, not captured Native device state; no new replay."
+    },
+    {
+      "service_key": "bank28:D987",
+      "target": 55687,
+      "entry_banks": [
+        2,
+        27,
+        28,
+        31
+      ],
+      "caller_call_PC": null,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase24/cpu-lifecycle/actual-callers/entry-D987-observer-0079/context.json",
+        "sha256": "e3e8329949d6d7eff751b92326ef3b77cc766120c4451e8a32198e54be19405f",
+        "json_pointer": ""
+      },
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "PointerLifecycleServices"
+        ],
+        "route_path": "source/recovered/pointer_lifecycle_integration.py",
+        "route_line": 18,
+        "predicate": "tuple(call.entry_banks[1:3]) != (27, 28) or call.target not in PointerLifecycleServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/pointer_lifecycle_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "scope": "Actual software state and real stack. N163 is an explicit shared CPU/Source fixture, not captured Native device state; no new replay."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0001-C5D2.json",
+        "sha256": "8fc5551f93b475e8ec4450862824a155d47c772c0c4bd41b6010b8dcc3521ae9",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 1456,
+      "actual_snapshot_sequence": 1,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0002-C5D2.json",
+        "sha256": "393b982757dd57a0d46d95dad41fe8927216a27c9a5e2c4cc04d8baf50861783",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 1460,
+      "actual_snapshot_sequence": 2,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0003-C5D2.json",
+        "sha256": "979e93adc8f9ceb00243f959b2013258e03cd2ad3e8afb9569fa30cef00eab93",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2421,
+      "actual_snapshot_sequence": 3,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0004-C5D2.json",
+        "sha256": "f8a483385c7b60fb788beaec3e4269911b97d973a6a781acfcd779df5a0d2ae9",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2425,
+      "actual_snapshot_sequence": 4,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:D471",
+      "target": 54385,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50691,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0005-D471.json",
+        "sha256": "99937478a5ea1ef7dbc307602a7fe6d3b767647ad2c1610cbb7e93589d1f2db8",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2431,
+      "actual_snapshot_sequence": 5,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "DomesticCooperationController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0006-C5D2.json",
+        "sha256": "63929ce54a8ecc3c31813cca2e901ff9bacf26a712acd5fae14af10f24bb1e23",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2451,
+      "actual_snapshot_sequence": 6,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:D471",
+      "target": 54385,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50691,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0007-D471.json",
+        "sha256": "629c677212346f7f5c087dcdae6a6f4bfa3bb766f45cd098945c23a9835c8b19",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2457,
+      "actual_snapshot_sequence": 7,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "DomesticCooperationController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0008-C5D2.json",
+        "sha256": "e1db2fc5cf9fe9a1ef99487a7cb0fd6ca043df9db8e8c0412266a97ad899c831",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2475,
+      "actual_snapshot_sequence": 8,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0009-C5D2.json",
+        "sha256": "157146cc8e69092c41506e352703f463080f79f5e294cfefc9aa5bda58bb5a93",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2479,
+      "actual_snapshot_sequence": 9,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0010-C5D2.json",
+        "sha256": "b0e067f094739177a6e04b7cde794c80e8016b29685c6f94578869a7a7d1f69d",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2483,
+      "actual_snapshot_sequence": 10,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0011-C5D2.json",
+        "sha256": "8bd55d36e188da791922f8721947a7cb02c9a599de755e0c3cbfa8c94dd8ea5a",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2487,
+      "actual_snapshot_sequence": 11,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0012-C5D2.json",
+        "sha256": "6d6a9b656abf384d49b6465e17df4fd6eab2205e5b78f44273205e6b31b39de3",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2491,
+      "actual_snapshot_sequence": 12,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0013-C5D2.json",
+        "sha256": "a3f7933e921dad1828ada6d356a4281f71014395580919975d4a242fa69205c6",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2495,
+      "actual_snapshot_sequence": 13,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0014-C5D2.json",
+        "sha256": "607a61e8ee6fb26511686be90dfbdd8c1c939f3c9698122c3ea5f5645ca0d026",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2979,
+      "actual_snapshot_sequence": 14,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0015-C5D2.json",
+        "sha256": "860a0b14bedb9ef362d7ca7e1639565555bdca83f89de5bb296b5aa0274dcf2d",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2983,
+      "actual_snapshot_sequence": 15,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0016-C5D2.json",
+        "sha256": "49214227aaca8a31ac16d7ddeac7647d50d09e9eb9369196e09e411696c58291",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2987,
+      "actual_snapshot_sequence": 16,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0017-C5D2.json",
+        "sha256": "3e5eb9236158cbde38f881e2de59bffb2c500b944c05e269e202d3c1add06952",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2991,
+      "actual_snapshot_sequence": 17,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0018-C5D2.json",
+        "sha256": "d1367b887cf532715ba1f6ec1585e5b4a9d2209e3768b76c64c7ddf10e83d1a2",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2995,
+      "actual_snapshot_sequence": 18,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0019-C5D2.json",
+        "sha256": "a723283b9fc33f2f064d8c71fd0ed1e29cdf6a58ca9778f981fb915b912fc0a8",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 2999,
+      "actual_snapshot_sequence": 19,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0020-C5D2.json",
+        "sha256": "6139086625c3138605addccde1e354b7e31941fa250f7557dd5bfbeb08865430",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3003,
+      "actual_snapshot_sequence": 20,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0021-C5D2.json",
+        "sha256": "b3bdd61c4eae0ed7ac41eaacb07cc8455e2d23ecc5501c47c3ea86830b9675c6",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3007,
+      "actual_snapshot_sequence": 21,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0022-C5D2.json",
+        "sha256": "c649084dd405de69a274c19db47296b979f956d78f6940bf3278a73384c2ac2f",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3011,
+      "actual_snapshot_sequence": 22,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0023-C5D2.json",
+        "sha256": "ed21ae365132cf044c086bed0c0dd57f0c11c3277c464d9b7b895e9177dc4845",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3015,
+      "actual_snapshot_sequence": 23,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0024-C5D2.json",
+        "sha256": "03be3919b7adb7f8891b97c5a9f8b4668803bfe56d9a5bc0e85cb35ebf4ed364",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3019,
+      "actual_snapshot_sequence": 24,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0025-C5D2.json",
+        "sha256": "01ffe075b7bdd0335055b1b0f694ecdc8605360f8cf2f89ed12d174c81d6e9f4",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3023,
+      "actual_snapshot_sequence": 25,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0026-C5D2.json",
+        "sha256": "b36c624b3993007f12f9f90b8ed65a038d324290bffb4edb94f825d13c971b8f",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3027,
+      "actual_snapshot_sequence": 26,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0027-C5D2.json",
+        "sha256": "43cf078667a4588604e696a5e7ed07c6178e0e04ca260a485d1ab7f10027db07",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3031,
+      "actual_snapshot_sequence": 27,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0028-C5D2.json",
+        "sha256": "8a9591ae9916fa07b9330c145708b02c7a233104ceadb3c3fd06e6e0abcfdba6",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3035,
+      "actual_snapshot_sequence": 28,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0029-C5D2.json",
+        "sha256": "6e2546345d52ccf426fed3cc6385901afe8eeeab6e7248bd2253f3a2488be62d",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3039,
+      "actual_snapshot_sequence": 29,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0030-C5D2.json",
+        "sha256": "1bcd9fb83dd83d95f9ae14291fad89f980967fbeb7bbaba8aa88bf7202d63a4a",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3043,
+      "actual_snapshot_sequence": 30,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0031-C5D2.json",
+        "sha256": "f9866d9de55ce618e4aceb34ef9334e7c5e8180e0be82dddb996272580347b74",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3047,
+      "actual_snapshot_sequence": 31,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0032-C5D2.json",
+        "sha256": "abadd22470a51a76e78baed1ae330419e6a12e26242c9aec01e565b4cf3e8592",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 3051,
+      "actual_snapshot_sequence": 32,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0033-C5D2.json",
+        "sha256": "1626fbc3bd1113ef802d5c60746f45157770358e16c33908dbfbc6e2d148cef1",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7748,
+      "actual_snapshot_sequence": 33,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0034-C5D2.json",
+        "sha256": "5712c94f608e3bed8f348402ba2f5197329a1849b65fc66d4a7eed80c9490e82",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7752,
+      "actual_snapshot_sequence": 34,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0035-C5D2.json",
+        "sha256": "9572edd95c374c8dc8695a0b48fe4162a37a6ae973c2810272285171f6cbf821",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7756,
+      "actual_snapshot_sequence": 35,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0036-C5D2.json",
+        "sha256": "9f57833d9a6e8ddd3cbacb95175d6bf056b4a672008a55fd5a6a9f62ce02ee7d",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7760,
+      "actual_snapshot_sequence": 36,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0037-C5D2.json",
+        "sha256": "179cdd68cc76c19d6fecf07a55e50c750309711d0a9c1ef5a0e9db90f07e1217",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7764,
+      "actual_snapshot_sequence": 37,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0038-C5D2.json",
+        "sha256": "d7afeeee5f70fe2d1c4199acbbf3cd28deac748b2c584ea41d52a7cdd752df76",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7768,
+      "actual_snapshot_sequence": 38,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0039-C5D2.json",
+        "sha256": "5202b21408c528b49a0b2434ccccaef44b06e8a4370812227fcd051108207246",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7772,
+      "actual_snapshot_sequence": 39,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0040-C5D2.json",
+        "sha256": "6618ef3d0f9c4fe33332a57dd55e72ed891f9b2609af4b7ea6254b26417d15bd",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7776,
+      "actual_snapshot_sequence": 40,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0041-C5D2.json",
+        "sha256": "81757ff58e087bd18a2b03f4b1ab4167cd40ed36bf1a8ac56e38896564cc64e3",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 7780,
+      "actual_snapshot_sequence": 41,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0042-C5D2.json",
+        "sha256": "97e7d8e25abfd3c303efc0bcd9fd907036401683308f1834e7e42e012763aa1c",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8264,
+      "actual_snapshot_sequence": 42,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0043-C5D2.json",
+        "sha256": "3997c0f66f566eefe29a1a7c76b9b531b0746ccd54eb0b8d7a64db243c710b2a",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8268,
+      "actual_snapshot_sequence": 43,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0044-C5D2.json",
+        "sha256": "69fdc37e1f5fb0efea0fe230ca6929a03e85d33c415824868b1370ec60dd2fd3",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8272,
+      "actual_snapshot_sequence": 44,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0045-C5D2.json",
+        "sha256": "76eb8a627c22581cdee750678431e0477badfd262e5814260ab45c691c6c30c1",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8276,
+      "actual_snapshot_sequence": 45,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0046-C5D2.json",
+        "sha256": "55537d52844da735729346f310435f580ec33e78727054d28d2a13878c0de30b",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8280,
+      "actual_snapshot_sequence": 46,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0047-C5D2.json",
+        "sha256": "fd2389d60379f4cbcb691b984cd19f6bc34c42d833e691bf3d961c38a085ec97",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8284,
+      "actual_snapshot_sequence": 47,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0048-C5D2.json",
+        "sha256": "3fd474f777b2f6ccfd3a599495d8128ffcf4b6f5aef73a7d62999793bf50c149",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8288,
+      "actual_snapshot_sequence": 48,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0049-C5D2.json",
+        "sha256": "b4b00252d3a2df014b040ba6b394c35510933e6525c454f1bc86b8a665af4b4b",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8292,
+      "actual_snapshot_sequence": 49,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0050-C5D2.json",
+        "sha256": "44cc6988137d23dde9c563d20d68cb1f5a455b7ec99dc6b161139edf134e74de",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8296,
+      "actual_snapshot_sequence": 50,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0051-C5D2.json",
+        "sha256": "03b693b4a192df870f78aad40a00060e66b009945a9d292aea2cefec08969288",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8300,
+      "actual_snapshot_sequence": 51,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0052-C5D2.json",
+        "sha256": "428b5bde6c548210a2f7711faa10d6ac51fcc0c307301e615087897d51c320bd",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8304,
+      "actual_snapshot_sequence": 52,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0053-C5D2.json",
+        "sha256": "80b5ff314a02d401853cc6adedbd59a009b1150c5f1e5647b865ae37b9722dac",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8308,
+      "actual_snapshot_sequence": 53,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0054-C5D2.json",
+        "sha256": "93309113a4fcca78dc240eb8cf4ff2ce2dcc01aafe0aeccb4199ce38449892cf",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8312,
+      "actual_snapshot_sequence": 54,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0055-C5D2.json",
+        "sha256": "4fb8306879c06a72d9a092100b3a5112216d89533142afe9d33947a3322a5857",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8316,
+      "actual_snapshot_sequence": 55,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0056-C5D2.json",
+        "sha256": "38c0dd96f9cd14458d6723917c421c6e022563e9767e7dccced20649896cfb65",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8320,
+      "actual_snapshot_sequence": 56,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0057-C5D2.json",
+        "sha256": "5dc7487a5f1494c6df3c072c49aa9bbd877871a4e7247d11dbf1f67f017a02a2",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8324,
+      "actual_snapshot_sequence": 57,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0058-C5D2.json",
+        "sha256": "c2ddc695018a54ea95c4563dab5b59f907b096627477ab4d660ccdb9b3c56dd2",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8328,
+      "actual_snapshot_sequence": 58,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0059-C5D2.json",
+        "sha256": "c3f18d3f5cc97b7d760db8b363dcba2a77ca69ec11152fa2a18607115a5a95dc",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8332,
+      "actual_snapshot_sequence": 59,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0060-C5D2.json",
+        "sha256": "9333f6e3eef993342f71c576acf30d5ae3e25c924e03251d4511054401c59738",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8336,
+      "actual_snapshot_sequence": 60,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0061-C5D2.json",
+        "sha256": "366f5f8db882f5648f0bb6b2a68748c1a7b8261e3fa1d17b7ded01ecf61cf597",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8340,
+      "actual_snapshot_sequence": 61,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank11:C5D2",
+      "target": 50642,
+      "entry_banks": [
+        17,
+        10,
+        11,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 50624,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0062-C5D2.json",
+        "sha256": "50db462aa043f61f520a5fd952b4b9c5148547d1693f90d276585c6763eb6149",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 8344,
+      "actual_snapshot_sequence": 62,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "AppearancePointerServices"
+        ],
+        "route_path": "source/recovered/appearance_pointer_integration.py",
+        "route_line": 15,
+        "predicate": "tuple(call.entry_banks[1:3]) != (10, 11) or call.target not in AppearancePointerServices.PUBLIC_ENTRIES",
+        "owner_source": "source/recovered/appearance_pointer_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "AppearancePointerServices",
+        "CityRecruitmentServices",
+        "CityThresholdServices",
+        "DomesticCooperationController",
+        "DuelSceneController"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    },
+    {
+      "service_key": "bank27:B431",
+      "target": 46129,
+      "entry_banks": [
+        2,
+        27,
+        28,
+        31
+      ],
+      "caller_call_PC": null,
+      "actual_return_word_raw": 63729,
+      "evidence_level": "existing_validation_execution_record",
+      "execution_origin_subtype": "passive_Native_callee_capture",
+      "evidence": {
+        "path": "analysis/phase25/runtime/natural-nonzero-reserve-submit/observer/callee-0023-B431.json",
+        "sha256": "b669a7eba648446ec919745dccfc143c2d736849b736438529b7140a80156a33",
+        "json_pointer": ""
+      },
+      "actual_parent_event_sequence": 843,
+      "actual_snapshot_sequence": 23,
+      "current_route": {
+        "status": "declared_current_owner",
+        "owners": [
+          "PointerLifecycleServices"
+        ],
+        "route_path": "source/recovered/pointer_lifecycle_integration.py",
+        "route_line": 18,
+        "predicate": "tuple(call.entry_banks[1:3]) != (27, 28) or call.target not in PointerLifecycleServices.LOCAL_ENTRIES",
+        "owner_source": "source/recovered/pointer_lifecycle_services.py",
+        "owner_scope": "Static route declaration; does not prove this entry/caller completes or full transitive closure"
+      },
+      "local_entry_declarations": [
+        "CityUIController",
+        "PointerLifecycleServices"
+      ],
+      "invocation_scope": "Observed local or exported original entry; a local call may execute within a parent owner without passing the external resolver.",
+      "scope": "New phase25 observer exact opcode boundary, registers/real stack/PRG mapping/full2K8K verified against raw parent event and sparse snapshot; original-control five-buffer comparison is in its separate Native manifest. No instantaneous device-state claim."
+    }
+  ],
+  "caller_context_count": 85,
+  "origin_subtype_counts": {
+    "actual_Native_snapshot_originalCPU_reached_caller": 18,
+    "passive_Native_callee_capture": 67
+  },
+  "new_phase25_opcode_context_count": 63,
+  "scope": "Context rows are not new CPU/Source/Native cases;85 total index rows must not be confused with85 new Native sparse snapshots.",
+  "source_CPU_cases": 0,
+  "Native_runs": 0
+}

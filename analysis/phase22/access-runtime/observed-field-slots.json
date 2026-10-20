@@ -1,0 +1,72 @@
+[
+  {
+    "city_index": 2,
+    "city_offset": 1,
+    "counts": {
+      "read": 7
+    },
+    "sequences": [
+      2863,
+      2864,
+      2865,
+      2866,
+      2867,
+      5161,
+      5162
+    ]
+  },
+  {
+    "city_index": 6,
+    "city_offset": 1,
+    "counts": {
+      "read": 5
+    },
+    "sequences": [
+      5011,
+      5014,
+      5017,
+      5020,
+      5023
+    ]
+  },
+  {
+    "city_index": 7,
+    "city_offset": 1,
+    "counts": {
+      "read": 5
+    },
+    "sequences": [
+      5012,
+      5015,
+      5018,
+      5021,
+      5024
+    ]
+  },
+  {
+    "city_index": 9,
+    "city_offset": 1,
+    "counts": {
+      "read": 5
+    },
+    "sequences": [
+      5013,
+      5016,
+      5019,
+      5022,
+      5025
+    ]
+  },
+  {
+    "city_index": 24,
+    "city_offset": 1,
+    "counts": {
+      "read": 3
+    },
+    "sequences": [
+      1,
+      132,
+      5156
+    ]
+  }
+]

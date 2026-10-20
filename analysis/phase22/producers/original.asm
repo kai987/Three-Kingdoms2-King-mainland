@@ -1,0 +1,336 @@
+; Seven literal status-clear motifs; no universal arbitrary-writer proof.
+
+; 8 A006→BAB3 postbattle side controller→BC46 result dispatch→no destination path
+011D38 b08:$BD28 20 D7 F2       JSR  $F2D7
+011D3B b08:$BD2B A0 0B          LDY  #$0B
+011D3D b08:$BD2D B1 00          LDA  ($00),Y
+011D3F b08:$BD2F 29 FC          AND  #$FC
+011D41 b08:$BD31 91 00          STA  ($00),Y
+011D43 b08:$BD33 A0 30          LDY  #$30
+011D45 b08:$BD35 20 66 F2       JSR  $F266
+011D48 b08:$BD38 AD 0E 05       LDA  $050E
+011D4B b08:$BD3B 0A             ASL  A
+011D4C b08:$BD3C 0A             ASL  A
+011D4D b08:$BD3D 0A             ASL  A
+011D4E b08:$BD3E 8D 02 00       STA  $0002
+011D51 b08:$BD41 20 56 E8       JSR  $E856
+011D54 b08:$BD44 18             CLC
+011D55 b08:$BD45 6D 02 00       ADC  $0002
+011D58 b08:$BD48 A8             TAY
+011D59 b08:$BD49 B9 72 9D       LDA  $9D72,Y
+011D5C b08:$BD4C 10 03          BPL  $BD51
+011D5E b08:$BD4E AD 0E 05       LDA  $050E
+011D61 b08:$BD51 A0 05          LDY  #$05
+011D63 b08:$BD53 91 00          STA  ($00),Y
+011D65 b08:$BD55 E8             INX
+011D66 b08:$BD56 4C 03 BD       JMP  $BD03
+
+; 10 A000→A00F battle-return handling→ABA3 return/redistribution
+014C31 b10:$AC21 A5 2D          LDA  $2D
+014C33 b10:$AC23 C9 FF          CMP  #$FF
+014C35 b10:$AC25 D0 CD          BNE  $ABF4
+014C37 b10:$AC27 AD 41 00       LDA  $0041
+014C3A b10:$AC2A A0 0B          LDY  #$0B
+014C3C b10:$AC2C 20 AB D2       JSR  $D2AB
+014C3F b10:$AC2F 29 FC          AND  #$FC
+014C41 b10:$AC31 91 22          STA  ($22),Y
+014C43 b10:$AC33 20 9A E8       JSR  $E89A
+014C46 b10:$AC36 29 07          AND  #$07
+014C48 b10:$AC38 D0 0D          BNE  $AC47
+014C4A b10:$AC3A A0 05          LDY  #$05
+014C4C b10:$AC3C AD 38 00       LDA  $0038
+014C4F b10:$AC3F 91 22          STA  ($22),Y
+014C51 b10:$AC41 A9 FF          LDA  #$FF
+014C53 b10:$AC43 8D 2D 00       STA  $002D
+014C56 b10:$AC46 60             RTS
+014C57 b10:$AC47 8D 2D 00       STA  $002D
+014C5A b10:$AC4A CE 2D 00       DEC  $002D
+014C5D b10:$AC4D AD 38 00       LDA  $0038
+014C60 b10:$AC50 0A             ASL  A
+014C61 b10:$AC51 0A             ASL  A
+014C62 b10:$AC52 0A             ASL  A
+014C63 b10:$AC53 18             CLC
+014C64 b10:$AC54 6D 2D 00       ADC  $002D
+014C67 b10:$AC57 A8             TAY
+014C68 b10:$AC58 B9 72 9D       LDA  $9D72,Y
+014C6B b10:$AC5B 30 D6          BMI  $AC33
+014C6D b10:$AC5D A0 05          LDY  #$05
+014C6F b10:$AC5F 91 22          STA  ($22),Y
+014C71 b10:$AC61 A9 FF          LDA  #$FF
+014C73 b10:$AC63 8D 2D 00       STA  $002D
+014C76 b10:$AC66 60             RTS
+
+; Domestic CA19→CB52 successor→CB81 followers
+016B91 b11:$CB81 A5 27          LDA  $27
+016B93 b11:$CB83 85 30          STA  $30
+016B95 b11:$CB85 A9 00          LDA  #$00
+016B97 b11:$CB87 8D 45 00       STA  $0045
+016B9A b11:$CB8A AD 45 00       LDA  $0045
+016B9D b11:$CB8D 20 05 D1       JSR  $D105
+016BA0 b11:$CB90 CD 40 00       CMP  $0040
+016BA3 b11:$CB93 D0 03          BNE  $CB98
+016BA5 b11:$CB95 20 A3 CB       JSR  $CBA3
+016BA8 b11:$CB98 EE 45 00       INC  $0045
+016BAB b11:$CB9B AD 45 00       LDA  $0045
+016BAE b11:$CB9E C9 1E          CMP  #$1E
+016BB0 b11:$CBA0 90 E8          BCC  $CB8A
+016BB2 b11:$CBA2 60             RTS
+016BB3 b11:$CBA3 A9 11          LDA  #$11
+016BB5 b11:$CBA5 8D 44 00       STA  $0044
+016BB8 b11:$CBA8 AD 45 00       LDA  $0045
+016BBB b11:$CBAB 20 05 D1       JSR  $D105
+016BBE b11:$CBAE AC 44 00       LDY  $0044
+016BC1 b11:$CBB1 B1 20          LDA  ($20),Y
+016BC3 b11:$CBB3 C9 FF          CMP  #$FF
+016BC5 b11:$CBB5 F0 E1          BEQ  $CB98
+016BC7 b11:$CBB7 C5 30          CMP  $30
+016BC9 b11:$CBB9 F0 DD          BEQ  $CB98
+016BCB b11:$CBBB 85 31          STA  $31
+016BCD b11:$CBBD AD 40 00       LDA  $0040
+016BD0 b11:$CBC0 85 32          STA  $32
+016BD2 b11:$CBC2 20 7C CF       JSR  $CF7C
+016BD5 b11:$CBC5 A5 31          LDA  $31
+016BD7 b11:$CBC7 A0 03          LDY  #$03
+016BD9 b11:$CBC9 20 AB D2       JSR  $D2AB
+016BDC b11:$CBCC C9 1F          CMP  #$1F
+016BDE b11:$CBCE B0 1B          BCS  $CBEB
+016BE0 b11:$CBD0 A9 64          LDA  #$64
+016BE2 b11:$CBD2 20 BB D4       JSR  $D4BB
+016BE5 b11:$CBD5 C9 14          CMP  #$14
+016BE7 b11:$CBD7 B0 12          BCS  $CBEB
+016BE9 b11:$CBD9 A5 31          LDA  $31
+016BEB b11:$CBDB A0 0B          LDY  #$0B
+016BED b11:$CBDD 20 AB D2       JSR  $D2AB
+016BF0 b11:$CBE0 29 FC          AND  #$FC
+016BF2 b11:$CBE2 91 22          STA  ($22),Y
+016BF4 b11:$CBE4 A0 05          LDY  #$05
+016BF6 b11:$CBE6 AD 45 00       LDA  $0045
+016BF9 b11:$CBE9 91 22          STA  ($22),Y
+016BFB b11:$CBEB EE 44 00       INC  $0044
+016BFE b11:$CBEE AD 44 00       LDA  $0044
+016C01 b11:$CBF1 C9 1B          CMP  #$1B
+016C03 b11:$CBF3 90 B3          BCC  $CBA8
+016C05 b11:$CBF5 AD 45 00       LDA  $0045
+016C08 b11:$CBF8 20 DD D3       JSR  $D3DD
+016C0B b11:$CBFB AD 45 00       LDA  $0045
+016C0E b11:$CBFE 20 04 D3       JSR  $D304
+016C11 b11:$CC01 C9 00          CMP  #$00
+016C13 b11:$CC03 D0 0C          BNE  $CC11
+016C15 b11:$CC05 AD 45 00       LDA  $0045
+016C18 b11:$CC08 20 05 D1       JSR  $D105
+016C1B b11:$CC0B A0 00          LDY  #$00
+016C1D b11:$CC0D A9 07          LDA  #$07
+016C1F b11:$CC0F 91 20          STA  ($20),Y
+016C21 b11:$CC11 60             RTS
+
+; 8 A006 player-controlled side→battle main13/sub1 CD52→BB84 return-city candidates
+01ADAC b13:$CD9C AD 07 05       LDA  $0507
+01ADAF b13:$CD9F AC 0B 05       LDY  $050B
+01ADB2 b13:$CDA2 C0 02          CPY  #$02
+01ADB4 b13:$CDA4 F0 04          BEQ  $CDAA
+01ADB6 b13:$CDA6 4A             LSR  A
+01ADB7 b13:$CDA7 4A             LSR  A
+01ADB8 b13:$CDA8 4A             LSR  A
+01ADB9 b13:$CDA9 4A             LSR  A
+01ADBA b13:$CDAA 29 0F          AND  #$0F
+01ADBC b13:$CDAC 20 68 F3       JSR  $F368
+01ADBF b13:$CDAF A0 00          LDY  #$00
+01ADC1 b13:$CDB1 B1 00          LDA  ($00),Y
+01ADC3 b13:$CDB3 85 03          STA  $03
+01ADC5 b13:$CDB5 20 E1 D0       JSR  $D0E1
+01ADC8 b13:$CDB8 A2 00          LDX  #$00
+01ADCA b13:$CDBA BD 2C 04       LDA  $042C,X
+01ADCD b13:$CDBD C9 FE          CMP  #$FE
+01ADCF b13:$CDBF B0 1A          BCS  $CDDB
+01ADD1 b13:$CDC1 C5 03          CMP  $03
+01ADD3 b13:$CDC3 F0 1E          BEQ  $CDE3
+01ADD5 b13:$CDC5 20 D7 F2       JSR  $F2D7
+01ADD8 b13:$CDC8 A0 0B          LDY  #$0B
+01ADDA b13:$CDCA B1 00          LDA  ($00),Y
+01ADDC b13:$CDCC 29 FC          AND  #$FC
+01ADDE b13:$CDCE 91 00          STA  ($00),Y
+01ADE0 b13:$CDD0 A0 05          LDY  #$05
+01ADE2 b13:$CDD2 AD 0E 05       LDA  $050E
+01ADE5 b13:$CDD5 91 00          STA  ($00),Y
+01ADE7 b13:$CDD7 E8             INX
+01ADE8 b13:$CDD8 4C BA CD       JMP  $CDBA
+01ADEB b13:$CDDB A9 00          LDA  #$00
+01ADED b13:$CDDD 8D 01 05       STA  $0501
+01ADF0 b13:$CDE0 4C 38 CD       JMP  $CD38
+01ADF3 b13:$CDE3 20 D7 F2       JSR  $F2D7
+01ADF6 b13:$CDE6 A0 0B          LDY  #$0B
+01ADF8 b13:$CDE8 B1 00          LDA  ($00),Y
+01ADFA b13:$CDEA 09 03          ORA  #$03
+01ADFC b13:$CDEC 91 00          STA  ($00),Y
+01ADFE b13:$CDEE E8             INX
+01ADFF b13:$CDEF 4C BA CD       JMP  $CDBA
+
+; Player postbattle main13 or14→destination list special30→officer multi-select→confirmation→D1F9→D20D
+01B209 b13:$D1F9 A0 00          LDY  #$00
+01B20B b13:$D1FB B9 80 05       LDA  $0580,Y
+01B20E b13:$D1FE 30 07          BMI  $D207
+01B210 b13:$D200 98             TYA
+01B211 b13:$D201 48             PHA
+01B212 b13:$D202 20 0D D2       JSR  $D20D
+01B215 b13:$D205 68             PLA
+01B216 b13:$D206 A8             TAY
+01B217 b13:$D207 C8             INY
+01B218 b13:$D208 C0 14          CPY  #$14
+01B21A b13:$D20A 90 EF          BCC  $D1FB
+01B21C b13:$D20C 60             RTS
+01B21D b13:$D20D AD 40 05       LDA  $0540
+01B220 b13:$D210 C9 1E          CMP  #$1E
+01B222 b13:$D212 D0 35          BNE  $D249
+01B224 b13:$D214 B9 2C 04       LDA  $042C,Y
+01B227 b13:$D217 48             PHA
+01B228 b13:$D218 20 D7 F2       JSR  $F2D7
+01B22B b13:$D21B A0 0B          LDY  #$0B
+01B22D b13:$D21D B1 00          LDA  ($00),Y
+01B22F b13:$D21F 29 FC          AND  #$FC
+01B231 b13:$D221 91 00          STA  ($00),Y
+01B233 b13:$D223 A0 30          LDY  #$30
+01B235 b13:$D225 20 66 F2       JSR  $F266
+01B238 b13:$D228 AD 0E 05       LDA  $050E
+01B23B b13:$D22B 0A             ASL  A
+01B23C b13:$D22C 0A             ASL  A
+01B23D b13:$D22D 0A             ASL  A
+01B23E b13:$D22E 8D 02 00       STA  $0002
+01B241 b13:$D231 20 56 E8       JSR  $E856
+01B244 b13:$D234 18             CLC
+01B245 b13:$D235 6D 02 00       ADC  $0002
+01B248 b13:$D238 A8             TAY
+01B249 b13:$D239 B9 72 9D       LDA  $9D72,Y
+01B24C b13:$D23C 10 03          BPL  $D241
+01B24E b13:$D23E AD 0E 05       LDA  $050E
+01B251 b13:$D241 A0 05          LDY  #$05
+01B253 b13:$D243 91 00          STA  ($00),Y
+01B255 b13:$D245 68             PLA
+01B256 b13:$D246 4C 99 D2       JMP  $D299
+01B259 b13:$D249 98             TYA
+01B25A b13:$D24A 48             PHA
+01B25B b13:$D24B AD 0B 05       LDA  $050B
+01B25E b13:$D24E 48             PHA
+01B25F b13:$D24F AD 40 05       LDA  $0540
+01B262 b13:$D252 8D 0B 05       STA  $050B
+01B265 b13:$D255 20 11 BC       JSR  $BC11
+01B268 b13:$D258 68             PLA
+01B269 b13:$D259 8D 0B 05       STA  $050B
+01B26C b13:$D25C 68             PLA
+01B26D b13:$D25D AA             TAX
+01B26E b13:$D25E BD 2C 04       LDA  $042C,X
+01B271 b13:$D261 CD 2B 05       CMP  $052B
+01B274 b13:$D264 D0 06          BNE  $D26C
+01B276 b13:$D266 AE 40 05       LDX  $0540
+01B279 b13:$D269 8E 2C 05       STX  $052C
+01B27C b13:$D26C 91 00          STA  ($00),Y
+01B27E b13:$D26E 48             PHA
+01B27F b13:$D26F A0 00          LDY  #$00
+01B281 b13:$D271 B1 00          LDA  ($00),Y
+01B283 b13:$D273 29 07          AND  #$07
+01B285 b13:$D275 C9 07          CMP  #$07
+01B287 b13:$D277 D0 1F          BNE  $D298
+01B289 b13:$D279 AC 07 05       LDY  $0507
+01B28C b13:$D27C AD 0B 05       LDA  $050B
+01B28F b13:$D27F 29 F0          AND  #$F0
+01B291 b13:$D281 F0 06          BEQ  $D289
+01B293 b13:$D283 98             TYA
+01B294 b13:$D284 4A             LSR  A
+01B295 b13:$D285 4A             LSR  A
+01B296 b13:$D286 4A             LSR  A
+01B297 b13:$D287 4A             LSR  A
+01B298 b13:$D288 A8             TAY
+01B299 b13:$D289 98             TYA
+01B29A b13:$D28A 29 0F          AND  #$0F
+01B29C b13:$D28C 85 02          STA  $02
+01B29E b13:$D28E A0 00          LDY  #$00
+01B2A0 b13:$D290 B1 00          LDA  ($00),Y
+01B2A2 b13:$D292 29 F0          AND  #$F0
+01B2A4 b13:$D294 05 02          ORA  $02
+01B2A6 b13:$D296 91 00          STA  ($00),Y
+01B2A8 b13:$D298 68             PLA
+01B2A9 b13:$D299 A2 00          LDX  #$00
+01B2AB b13:$D29B DD 64 06       CMP  $0664,X
+01B2AE b13:$D29E F0 12          BEQ  $D2B2
+01B2B0 b13:$D2A0 E8             INX
+01B2B1 b13:$D2A1 E0 14          CPX  #$14
+01B2B3 b13:$D2A3 90 F6          BCC  $D29B
+01B2B5 b13:$D2A5 A2 00          LDX  #$00
+01B2B7 b13:$D2A7 DD 47 6F       CMP  $6F47,X
+01B2BA b13:$D2AA F0 1B          BEQ  $D2C7
+01B2BC b13:$D2AC E8             INX
+01B2BD b13:$D2AD E0 28          CPX  #$28
+01B2BF b13:$D2AF 90 F6          BCC  $D2A7
+01B2C1 b13:$D2B1 60             RTS
+01B2C2 b13:$D2B2 A9 FF          LDA  #$FF
+01B2C4 b13:$D2B4 9D 00 06       STA  $0600,X
+01B2C7 b13:$D2B7 9D 14 06       STA  $0614,X
+01B2CA b13:$D2BA 9D 28 06       STA  $0628,X
+01B2CD b13:$D2BD 9D 3C 06       STA  $063C,X
+01B2D0 b13:$D2C0 9D 50 06       STA  $0650,X
+01B2D3 b13:$D2C3 9D 64 06       STA  $0664,X
+01B2D6 b13:$D2C6 60             RTS
+01B2D7 b13:$D2C7 A9 FF          LDA  #$FF
+01B2D9 b13:$D2C9 9D 47 6F       STA  $6F47,X
+01B2DC b13:$D2CC 60             RTS
+
+; Player city13 succession BE01→family classification→C01E followers→C099
+0340A9 b26:$C099 A0 0B          LDY  #$0B
+0340AB b26:$C09B B1 00          LDA  ($00),Y
+0340AD b26:$C09D 29 FC          AND  #$FC
+0340AF b26:$C09F 91 00          STA  ($00),Y
+0340B1 b26:$C0A1 A0 05          LDY  #$05
+0340B3 b26:$C0A3 AD 0E 04       LDA  $040E
+0340B6 b26:$C0A6 91 00          STA  ($00),Y
+0340B8 b26:$C0A8 AC 0F 04       LDY  $040F
+0340BB b26:$C0AB C0 1A          CPY  #$1A
+0340BD b26:$C0AD F0 0A          BEQ  $C0B9
+0340BF b26:$C0AF C8             INY
+0340C0 b26:$C0B0 B1 10          LDA  ($10),Y
+0340C2 b26:$C0B2 88             DEY
+0340C3 b26:$C0B3 91 10          STA  ($10),Y
+0340C5 b26:$C0B5 C8             INY
+0340C6 b26:$C0B6 4C AB C0       JMP  $C0AB
+0340C9 b26:$C0B9 A9 FF          LDA  #$FF
+0340CB b26:$C0BB 91 10          STA  ($10),Y
+0340CD b26:$C0BD A2 00          LDX  #$00
+0340CF b26:$C0BF A0 11          LDY  #$11
+0340D1 b26:$C0C1 B1 10          LDA  ($10),Y
+0340D3 b26:$C0C3 C9 FF          CMP  #$FF
+0340D5 b26:$C0C5 F0 01          BEQ  $C0C8
+0340D7 b26:$C0C7 E8             INX
+0340D8 b26:$C0C8 C8             INY
+0340D9 b26:$C0C9 C0 1B          CPY  #$1B
+0340DB b26:$C0CB 90 F4          BCC  $C0C1
+0340DD b26:$C0CD E0 00          CPX  #$00
+0340DF b26:$C0CF D0 06          BNE  $C0D7
+0340E1 b26:$C0D1 A0 00          LDY  #$00
+0340E3 b26:$C0D3 A9 07          LDA  #$07
+0340E5 b26:$C0D5 91 10          STA  ($10),Y
+0340E7 b26:$C0D7 EE 02 04       INC  $0402
+0340EA b26:$C0DA AD 31 00       LDA  $0031
+0340ED b26:$C0DD 8D 2C 04       STA  $042C
+0340F0 b26:$C0E0 A9 D4          LDA  #$D4
+0340F2 b26:$C0E2 4C 8B F2       JMP  $F28B
+
+; Computer city13 succession C132→C289 followers→C318
+034328 b26:$C318 AD 31 00       LDA  $0031
+03432B b26:$C31B CD 0D 04       CMP  $040D
+03432E b26:$C31E D0 01          BNE  $C321
+034330 b26:$C320 60             RTS
+034331 b26:$C321 A0 0B          LDY  #$0B
+034333 b26:$C323 B1 22          LDA  ($22),Y
+034335 b26:$C325 29 FC          AND  #$FC
+034337 b26:$C327 91 22          STA  ($22),Y
+034339 b26:$C329 AC 13 00       LDY  $0013
+03433C b26:$C32C C0 1A          CPY  #$1A
+03433E b26:$C32E F0 0A          BEQ  $C33A
+034340 b26:$C330 C8             INY
+034341 b26:$C331 B1 10          LDA  ($10),Y
+034343 b26:$C333 88             DEY
+034344 b26:$C334 91 10          STA  ($10),Y
+034346 b26:$C336 C8             INY
+034347 b26:$C337 4C 2C C3       JMP  $C32C
+03434A b26:$C33A A9 FF          LDA  #$FF
+03434C b26:$C33C 91 10          STA  ($10),Y
+03434E b26:$C33E CE 13 00       DEC  $0013
+034351 b26:$C341 60             RTS

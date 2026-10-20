@@ -1,0 +1,37 @@
+{
+  "status": "passed_bounded_palette_packet_software_device_contract",
+  "parents": 5,
+  "Source_advances": 14,
+  "calls": 10,
+  "CPU_instructions": 2630,
+  "zero_progress_retries": 2,
+  "missing_boundaries": 2,
+  "saved_paired_points": 44,
+  "bytes_per_point": 26624,
+  "case_sha256": "7f6f6f26f68649566612b9c04aa3a7f9b88fcc2e1c96817473a9f3b46477fcab",
+  "points_sha256": "b7a440d01e30eebb4324bb0abed7e82eeb9c20bb150b119cd3c8eb3fd60c0c93",
+  "buffers": {
+    "CPU-snapshots.bin": {
+      "bytes": 1171456,
+      "sha256": "602d356fb16e08f449ae9fb0b185cfd97baf4b634d16c02606506768c4b95482"
+    },
+    "Source-snapshots.bin": {
+      "bytes": 1171456,
+      "sha256": "602d356fb16e08f449ae9fb0b185cfd97baf4b634d16c02606506768c4b95482"
+    }
+  },
+  "scope_sha256": "f0e810e1239b6196450203377808e882c5ba741be714fabec50b7a48ceec1c42",
+  "acceptance_sha256": "89ece038aa6519d526b6a0a6aba1bb71100059eff8d401dfc2f080993019725d",
+  "failure": null,
+  "Source_CPU_IR_callbacks": 0,
+  "production_Source_changes": 0,
+  "new_algorithms": 0,
+  "new_Native_runs": 0,
+  "NMI_IRQ_entries": 0,
+  "outer_frame_credit": 0,
+  "internal_vblank_mirroring_timing_or_rendering_proven": false,
+  "field_changes": 0,
+  "raw_changes": 0,
+  "remaining": 323,
+  "whole_WP08_or_game_closure": false
+}

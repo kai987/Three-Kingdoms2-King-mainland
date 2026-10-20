@@ -1,0 +1,2127 @@
+{
+  "schema": "phase17-player-extinction-byte-evidence-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "instruction_count": 195,
+  "original_instructions": [
+    {
+      "physical_bank": 25,
+      "cpu_address": 48686,
+      "rom_offset": 212542,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 768,
+      "size": 3,
+      "raw_hex": "ad0003"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48689,
+      "rom_offset": 212545,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "c9ff"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48691,
+      "rom_offset": 212547,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 77,
+      "size": 2,
+      "raw_hex": "d04d"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48693,
+      "rom_offset": 212549,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 772,
+      "size": 3,
+      "raw_hex": "ad0403"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48696,
+      "rom_offset": 212552,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "c9ff"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48698,
+      "rom_offset": 212554,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 70,
+      "size": 2,
+      "raw_hex": "d046"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48700,
+      "rom_offset": 212556,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 41410,
+      "size": 3,
+      "raw_hex": "20c2a1"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48703,
+      "rom_offset": 212559,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 129,
+      "size": 3,
+      "raw_hex": "ad8100"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48706,
+      "rom_offset": 212562,
+      "op": "AND",
+      "mode": "im",
+      "operand": 3,
+      "size": 2,
+      "raw_hex": "2903"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48708,
+      "rom_offset": 212564,
+      "op": "BEQ",
+      "mode": "rel",
+      "operand": 60,
+      "size": 2,
+      "raw_hex": "f03c"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48710,
+      "rom_offset": 212566,
+      "op": "LDX",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a200"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48712,
+      "rom_offset": 212568,
+      "op": "TXA",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "8a"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48713,
+      "rom_offset": 212569,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62127,
+      "size": 3,
+      "raw_hex": "20aff2"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48716,
+      "rom_offset": 212572,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a000"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48718,
+      "rom_offset": 212574,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "b100"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48720,
+      "rom_offset": 212576,
+      "op": "AND",
+      "mode": "im",
+      "operand": 7,
+      "size": 2,
+      "raw_hex": "2907"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48722,
+      "rom_offset": 212578,
+      "op": "CMP",
+      "mode": "ab",
+      "operand": 1034,
+      "size": 3,
+      "raw_hex": "cd0a04"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48725,
+      "rom_offset": 212581,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 8,
+      "size": 2,
+      "raw_hex": "d008"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48727,
+      "rom_offset": 212583,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 17,
+      "size": 2,
+      "raw_hex": "a011"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48729,
+      "rom_offset": 212585,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "b100"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48731,
+      "rom_offset": 212587,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "c9ff"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48733,
+      "rom_offset": 212589,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 17,
+      "size": 2,
+      "raw_hex": "d011"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48735,
+      "rom_offset": 212591,
+      "op": "INX",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "e8"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48736,
+      "rom_offset": 212592,
+      "op": "CPX",
+      "mode": "im",
+      "operand": 30,
+      "size": 2,
+      "raw_hex": "e01e"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48738,
+      "rom_offset": 212594,
+      "op": "BCC",
+      "mode": "rel",
+      "operand": 228,
+      "size": 2,
+      "raw_hex": "90e4"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48740,
+      "rom_offset": 212596,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1137,
+      "size": 3,
+      "raw_hex": "ad7104"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48743,
+      "rom_offset": 212599,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1025,
+      "size": 3,
+      "raw_hex": "8d0104"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48746,
+      "rom_offset": 212602,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48748,
+      "rom_offset": 212604,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1026,
+      "size": 3,
+      "raw_hex": "8d0204"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48751,
+      "rom_offset": 212607,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48752,
+      "rom_offset": 212608,
+      "op": "INC",
+      "mode": "ab",
+      "operand": 1026,
+      "size": 3,
+      "raw_hex": "ee0204"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48755,
+      "rom_offset": 212611,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 128,
+      "size": 2,
+      "raw_hex": "a980"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48757,
+      "rom_offset": 212613,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28479,
+      "size": 3,
+      "raw_hex": "8d3f6f"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48760,
+      "rom_offset": 212616,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 65,
+      "size": 2,
+      "raw_hex": "a941"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48762,
+      "rom_offset": 212618,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28481,
+      "size": 3,
+      "raw_hex": "8d416f"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48765,
+      "rom_offset": 212621,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 208,
+      "size": 2,
+      "raw_hex": "a9d0"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48767,
+      "rom_offset": 212623,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 62091,
+      "size": 3,
+      "raw_hex": "4c8bf2"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_address": 48770,
+      "rom_offset": 212626,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50042,
+      "rom_offset": 213898,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1026,
+      "size": 3,
+      "raw_hex": "ad0204"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50045,
+      "rom_offset": 213901,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 60126,
+      "size": 3,
+      "raw_hex": "20deea"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50054,
+      "rom_offset": 213910,
+      "op": "LDY",
+      "mode": "ab",
+      "operand": 1034,
+      "size": 3,
+      "raw_hex": "ac0a04"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50057,
+      "rom_offset": 213913,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 50107,
+      "size": 3,
+      "raw_hex": "b9bbc3"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50060,
+      "rom_offset": 213916,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1069,
+      "size": 3,
+      "raw_hex": "8d2d04"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50063,
+      "rom_offset": 213919,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 195,
+      "size": 2,
+      "raw_hex": "a9c3"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50065,
+      "rom_offset": 213921,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62091,
+      "size": 3,
+      "raw_hex": "208bf2"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50068,
+      "rom_offset": 213924,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1034,
+      "size": 3,
+      "raw_hex": "ad0a04"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50071,
+      "rom_offset": 213927,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62312,
+      "size": 3,
+      "raw_hex": "2068f3"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50074,
+      "rom_offset": 213930,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a000"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50076,
+      "rom_offset": 213932,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "b100"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50078,
+      "rom_offset": 213934,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1068,
+      "size": 3,
+      "raw_hex": "8d2c04"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50081,
+      "rom_offset": 213937,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "a9ff"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50083,
+      "rom_offset": 213939,
+      "op": "STA",
+      "mode": "iy",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "9100"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50085,
+      "rom_offset": 213941,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 3,
+      "size": 2,
+      "raw_hex": "a003"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50087,
+      "rom_offset": 213943,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "b100"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50089,
+      "rom_offset": 213945,
+      "op": "AND",
+      "mode": "im",
+      "operand": 3,
+      "size": 2,
+      "raw_hex": "2903"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50091,
+      "rom_offset": 213947,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 3,
+      "size": 2,
+      "raw_hex": "c903"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50093,
+      "rom_offset": 213949,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 8,
+      "size": 2,
+      "raw_hex": "d008"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50095,
+      "rom_offset": 213951,
+      "op": "INC",
+      "mode": "ab",
+      "operand": 1026,
+      "size": 3,
+      "raw_hex": "ee0204"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50098,
+      "rom_offset": 213954,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50100,
+      "rom_offset": 213956,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1232,
+      "size": 3,
+      "raw_hex": "8dd004"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50103,
+      "rom_offset": 213959,
+      "op": "INC",
+      "mode": "ab",
+      "operand": 1026,
+      "size": 3,
+      "raw_hex": "ee0204"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50106,
+      "rom_offset": 213962,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50114,
+      "rom_offset": 213970,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 768,
+      "size": 3,
+      "raw_hex": "ad0003"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50117,
+      "rom_offset": 213973,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "c9ff"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50119,
+      "rom_offset": 213975,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 17,
+      "size": 2,
+      "raw_hex": "d011"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50121,
+      "rom_offset": 213977,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 772,
+      "size": 3,
+      "raw_hex": "ad0403"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50124,
+      "rom_offset": 213980,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "c9ff"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50126,
+      "rom_offset": 213982,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 10,
+      "size": 2,
+      "raw_hex": "d00a"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50128,
+      "rom_offset": 213984,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 41410,
+      "size": 3,
+      "raw_hex": "20c2a1"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50131,
+      "rom_offset": 213987,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 129,
+      "size": 3,
+      "raw_hex": "ad8100"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50134,
+      "rom_offset": 213990,
+      "op": "AND",
+      "mode": "im",
+      "operand": 3,
+      "size": 2,
+      "raw_hex": "2903"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50136,
+      "rom_offset": 213992,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 1,
+      "size": 2,
+      "raw_hex": "d001"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50138,
+      "rom_offset": 213994,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50139,
+      "rom_offset": 213995,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1036,
+      "size": 3,
+      "raw_hex": "ad0c04"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50142,
+      "rom_offset": 213998,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "c9ff"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50144,
+      "rom_offset": 214000,
+      "op": "BEQ",
+      "mode": "rel",
+      "operand": 7,
+      "size": 2,
+      "raw_hex": "f007"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50146,
+      "rom_offset": 214002,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62312,
+      "size": 3,
+      "raw_hex": "2068f3"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50149,
+      "rom_offset": 214005,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a000"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50151,
+      "rom_offset": 214007,
+      "op": "LDA",
+      "mode": "iy",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "b100"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50153,
+      "rom_offset": 214009,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1070,
+      "size": 3,
+      "raw_hex": "8d2e04"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50156,
+      "rom_offset": 214012,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 28416,
+      "size": 3,
+      "raw_hex": "ad006f"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50159,
+      "rom_offset": 214015,
+      "op": "CLC",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "18"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50160,
+      "rom_offset": 214016,
+      "op": "ADC",
+      "mode": "im",
+      "operand": 100,
+      "size": 2,
+      "raw_hex": "6964"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50162,
+      "rom_offset": 214018,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1071,
+      "size": 3,
+      "raw_hex": "8d2f04"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50165,
+      "rom_offset": 214021,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50167,
+      "rom_offset": 214023,
+      "op": "ADC",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "6900"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50169,
+      "rom_offset": 214025,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1072,
+      "size": 3,
+      "raw_hex": "8d3004"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50172,
+      "rom_offset": 214028,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 28417,
+      "size": 3,
+      "raw_hex": "ad016f"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50175,
+      "rom_offset": 214031,
+      "op": "CLC",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "18"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50176,
+      "rom_offset": 214032,
+      "op": "ADC",
+      "mode": "im",
+      "operand": 1,
+      "size": 2,
+      "raw_hex": "6901"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50178,
+      "rom_offset": 214034,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1074,
+      "size": 3,
+      "raw_hex": "8d3204"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50181,
+      "rom_offset": 214037,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50183,
+      "rom_offset": 214039,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1073,
+      "size": 3,
+      "raw_hex": "8d3104"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50186,
+      "rom_offset": 214042,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1075,
+      "size": 3,
+      "raw_hex": "8d3304"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50189,
+      "rom_offset": 214045,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1076,
+      "size": 3,
+      "raw_hex": "8d3404"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50192,
+      "rom_offset": 214048,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 13,
+      "size": 2,
+      "raw_hex": "a90d"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50194,
+      "rom_offset": 214050,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 122,
+      "size": 3,
+      "raw_hex": "8d7a00"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50197,
+      "rom_offset": 214053,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50199,
+      "rom_offset": 214055,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1345,
+      "size": 3,
+      "raw_hex": "8d4105"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50202,
+      "rom_offset": 214058,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1226,
+      "size": 3,
+      "raw_hex": "8dca04"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50205,
+      "rom_offset": 214061,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50206,
+      "rom_offset": 214062,
+      "op": "INC",
+      "mode": "ab",
+      "operand": 1232,
+      "size": 3,
+      "raw_hex": "eed004"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50209,
+      "rom_offset": 214065,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 17,
+      "size": 2,
+      "raw_hex": "d011"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50211,
+      "rom_offset": 214067,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1138,
+      "size": 3,
+      "raw_hex": "ad7204"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50214,
+      "rom_offset": 214070,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1024,
+      "size": 3,
+      "raw_hex": "8d0004"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50217,
+      "rom_offset": 214073,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1139,
+      "size": 3,
+      "raw_hex": "ad7304"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50220,
+      "rom_offset": 214076,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1025,
+      "size": 3,
+      "raw_hex": "8d0104"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50223,
+      "rom_offset": 214079,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50225,
+      "rom_offset": 214081,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1026,
+      "size": 3,
+      "raw_hex": "8d0204"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50228,
+      "rom_offset": 214084,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54931,
+      "rom_offset": 202403,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 38,
+      "size": 2,
+      "raw_hex": "a026"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54933,
+      "rom_offset": 202405,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62047,
+      "size": 3,
+      "raw_hex": "205ff2"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54936,
+      "rom_offset": 202408,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1345,
+      "size": 3,
+      "raw_hex": "ad4105"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54939,
+      "rom_offset": 202411,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 60126,
+      "size": 3,
+      "raw_hex": "20deea"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54954,
+      "rom_offset": 202426,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1226,
+      "size": 3,
+      "raw_hex": "adca04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54957,
+      "rom_offset": 202429,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 37,
+      "size": 2,
+      "raw_hex": "d025"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54959,
+      "rom_offset": 202431,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54961,
+      "rom_offset": 202433,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1229,
+      "size": 3,
+      "raw_hex": "8dcd04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54964,
+      "rom_offset": 202436,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1230,
+      "size": 3,
+      "raw_hex": "8dce04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54967,
+      "rom_offset": 202439,
+      "op": "INC",
+      "mode": "ab",
+      "operand": 1226,
+      "size": 3,
+      "raw_hex": "eeca04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54970,
+      "rom_offset": 202442,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "a9ff"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54972,
+      "rom_offset": 202444,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1227,
+      "size": 3,
+      "raw_hex": "8dcb04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54975,
+      "rom_offset": 202447,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 55149,
+      "size": 3,
+      "raw_hex": "206dd7"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54978,
+      "rom_offset": 202450,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 217,
+      "size": 2,
+      "raw_hex": "a9d9"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54980,
+      "rom_offset": 202452,
+      "op": "LDX",
+      "mode": "ab",
+      "operand": 1070,
+      "size": 3,
+      "raw_hex": "ae2e04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54983,
+      "rom_offset": 202455,
+      "op": "CPX",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "e0ff"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54985,
+      "rom_offset": 202457,
+      "op": "BEQ",
+      "mode": "rel",
+      "operand": 2,
+      "size": 2,
+      "raw_hex": "f002"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54987,
+      "rom_offset": 202459,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 216,
+      "size": 2,
+      "raw_hex": "a9d8"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54989,
+      "rom_offset": 202461,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 62091,
+      "size": 3,
+      "raw_hex": "208bf2"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54992,
+      "rom_offset": 202464,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 60607,
+      "size": 3,
+      "raw_hex": "20bfec"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54995,
+      "rom_offset": 202467,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54996,
+      "rom_offset": 202468,
+      "op": "INC",
+      "mode": "ab",
+      "operand": 1229,
+      "size": 3,
+      "raw_hex": "eecd04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54999,
+      "rom_offset": 202471,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 126,
+      "size": 2,
+      "raw_hex": "a97e"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55001,
+      "rom_offset": 202473,
+      "op": "STA",
+      "mode": "zp",
+      "operand": 16,
+      "size": 2,
+      "raw_hex": "8510"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55003,
+      "rom_offset": 202475,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 154,
+      "size": 2,
+      "raw_hex": "a99a"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55005,
+      "rom_offset": 202477,
+      "op": "STA",
+      "mode": "zp",
+      "operand": 17,
+      "size": 2,
+      "raw_hex": "8511"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55007,
+      "rom_offset": 202479,
+      "op": "LDY",
+      "mode": "ab",
+      "operand": 1227,
+      "size": 3,
+      "raw_hex": "accb04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55010,
+      "rom_offset": 202482,
+      "op": "BMI",
+      "mode": "rel",
+      "operand": 3,
+      "size": 2,
+      "raw_hex": "3003"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55012,
+      "rom_offset": 202484,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 56307,
+      "size": 3,
+      "raw_hex": "20f3db"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55015,
+      "rom_offset": 202487,
+      "op": "LDY",
+      "mode": "ab",
+      "operand": 1226,
+      "size": 3,
+      "raw_hex": "acca04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55018,
+      "rom_offset": 202490,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 56307,
+      "size": 3,
+      "raw_hex": "20f3db"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55021,
+      "rom_offset": 202493,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1226,
+      "size": 3,
+      "raw_hex": "adca04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55024,
+      "rom_offset": 202496,
+      "op": "CLC",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "18"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55025,
+      "rom_offset": 202497,
+      "op": "ADC",
+      "mode": "im",
+      "operand": 4,
+      "size": 2,
+      "raw_hex": "6904"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55027,
+      "rom_offset": 202499,
+      "op": "TAY",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "a8"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55028,
+      "rom_offset": 202500,
+      "op": "JSR",
+      "mode": "ab",
+      "operand": 56307,
+      "size": 3,
+      "raw_hex": "20f3db"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55031,
+      "rom_offset": 202503,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1229,
+      "size": 3,
+      "raw_hex": "adcd04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55034,
+      "rom_offset": 202506,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "4a"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55035,
+      "rom_offset": 202507,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "4a"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55036,
+      "rom_offset": 202508,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "4a"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55037,
+      "rom_offset": 202509,
+      "op": "AND",
+      "mode": "im",
+      "operand": 3,
+      "size": 2,
+      "raw_hex": "2903"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55039,
+      "rom_offset": 202511,
+      "op": "CLC",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "18"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55040,
+      "rom_offset": 202512,
+      "op": "ADC",
+      "mode": "im",
+      "operand": 1,
+      "size": 2,
+      "raw_hex": "6901"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55042,
+      "rom_offset": 202514,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1226,
+      "size": 3,
+      "raw_hex": "8dca04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55045,
+      "rom_offset": 202517,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1227,
+      "size": 3,
+      "raw_hex": "adcb04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55048,
+      "rom_offset": 202520,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 254,
+      "size": 2,
+      "raw_hex": "c9fe"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55050,
+      "rom_offset": 202522,
+      "op": "BEQ",
+      "mode": "rel",
+      "operand": 30,
+      "size": 2,
+      "raw_hex": "f01e"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55052,
+      "rom_offset": 202524,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 768,
+      "size": 3,
+      "raw_hex": "ad0003"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55055,
+      "rom_offset": 202527,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "c9ff"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55057,
+      "rom_offset": 202529,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 22,
+      "size": 2,
+      "raw_hex": "d016"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55059,
+      "rom_offset": 202531,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 772,
+      "size": 3,
+      "raw_hex": "ad0403"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55062,
+      "rom_offset": 202534,
+      "op": "CMP",
+      "mode": "im",
+      "operand": 255,
+      "size": 2,
+      "raw_hex": "c9ff"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55064,
+      "rom_offset": 202536,
+      "op": "BNE",
+      "mode": "rel",
+      "operand": 15,
+      "size": 2,
+      "raw_hex": "d00f"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55066,
+      "rom_offset": 202538,
+      "op": "INC",
+      "mode": "ab",
+      "operand": 1230,
+      "size": 3,
+      "raw_hex": "eece04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55069,
+      "rom_offset": 202541,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1230,
+      "size": 3,
+      "raw_hex": "adce04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55072,
+      "rom_offset": 202544,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "4a"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55073,
+      "rom_offset": 202545,
+      "op": "LSR",
+      "mode": "a",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "4a"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55074,
+      "rom_offset": 202546,
+      "op": "TAY",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "a8"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55075,
+      "rom_offset": 202547,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 55125,
+      "size": 3,
+      "raw_hex": "b955d7"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55078,
+      "rom_offset": 202550,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1227,
+      "size": 3,
+      "raw_hex": "8dcb04"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55081,
+      "rom_offset": 202553,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55082,
+      "rom_offset": 202554,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 129,
+      "size": 3,
+      "raw_hex": "ad8100"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55085,
+      "rom_offset": 202557,
+      "op": "AND",
+      "mode": "im",
+      "operand": 1,
+      "size": 2,
+      "raw_hex": "2901"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55087,
+      "rom_offset": 202559,
+      "op": "BEQ",
+      "mode": "rel",
+      "operand": 32,
+      "size": 2,
+      "raw_hex": "f020"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55089,
+      "rom_offset": 202561,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 28483,
+      "size": 3,
+      "raw_hex": "ad436f"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55092,
+      "rom_offset": 202564,
+      "op": "BEQ",
+      "mode": "rel",
+      "operand": 28,
+      "size": 2,
+      "raw_hex": "f01c"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55094,
+      "rom_offset": 202566,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55096,
+      "rom_offset": 202568,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 28483,
+      "size": 3,
+      "raw_hex": "8d436f"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55099,
+      "rom_offset": 202571,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1138,
+      "size": 3,
+      "raw_hex": "ad7204"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55102,
+      "rom_offset": 202574,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1024,
+      "size": 3,
+      "raw_hex": "8d0004"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55105,
+      "rom_offset": 202577,
+      "op": "LDA",
+      "mode": "ab",
+      "operand": 1139,
+      "size": 3,
+      "raw_hex": "ad7304"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55108,
+      "rom_offset": 202580,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1025,
+      "size": 3,
+      "raw_hex": "8d0104"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55111,
+      "rom_offset": 202583,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a900"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55113,
+      "rom_offset": 202585,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1026,
+      "size": 3,
+      "raw_hex": "8d0204"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55116,
+      "rom_offset": 202588,
+      "op": "LDA",
+      "mode": "im",
+      "operand": 1,
+      "size": 2,
+      "raw_hex": "a901"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55118,
+      "rom_offset": 202590,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 122,
+      "size": 3,
+      "raw_hex": "8d7a00"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55121,
+      "rom_offset": 202593,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55122,
+      "rom_offset": 202594,
+      "op": "JMP",
+      "mode": "ab",
+      "operand": 57344,
+      "size": 3,
+      "raw_hex": "4c00e0"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55149,
+      "rom_offset": 202621,
+      "op": "LDY",
+      "mode": "im",
+      "operand": 0,
+      "size": 2,
+      "raw_hex": "a000"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55151,
+      "rom_offset": 202623,
+      "op": "LDA",
+      "mode": "aby",
+      "operand": 55163,
+      "size": 3,
+      "raw_hex": "b97bd7"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55154,
+      "rom_offset": 202626,
+      "op": "STA",
+      "mode": "aby",
+      "operand": 256,
+      "size": 3,
+      "raw_hex": "990001"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55157,
+      "rom_offset": 202629,
+      "op": "INY",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "c8"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55158,
+      "rom_offset": 202630,
+      "op": "CPY",
+      "mode": "im",
+      "operand": 32,
+      "size": 2,
+      "raw_hex": "c020"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55160,
+      "rom_offset": 202632,
+      "op": "BCC",
+      "mode": "rel",
+      "operand": 245,
+      "size": 2,
+      "raw_hex": "90f5"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55162,
+      "rom_offset": 202634,
+      "op": "RTS",
+      "mode": "i",
+      "operand": 0,
+      "size": 1,
+      "raw_hex": "60"
+    }
+  ],
+  "code_ranges": [
+    {
+      "physical_bank": 25,
+      "cpu_address": 48686,
+      "rom_offset": 212542,
+      "length": 85,
+      "role": "candidate_city_head_scan",
+      "raw_hex": "ad0003c9ffd04dad0403c9ffd04620c2a1ad81002903f03ca2008a20aff2a000b1002907cd0a04d008a011b100c9ffd011e8e01e90e4ad71048d0104a9008d020460ee0204a9808d3f6fa9418d416fa9d04c8bf260",
+      "sha256": "ab86d5a98ba05d5f4f8a2d887ba1203a85c592808fdef994bde35ed4673e0ad8"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50042,
+      "rom_offset": 213898,
+      "length": 65,
+      "role": "retirement_dispatch_and_leader_clear",
+      "raw_hex": "ad020420deea86c3c2c31ec4ac0a04b9bbc38d2d04a9c3208bf2ad0a042068f3a000b1008d2c04a9ff9100a003b1002903c903d008ee0204a9008dd004ee020460",
+      "sha256": "77fcf5e748062b57226b89dee6d1600b24f3b438e5fbd41061db43223c39f4c9"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50114,
+      "rom_offset": 213970,
+      "length": 115,
+      "role": "human_loss_payload_and_AI_timer",
+      "raw_hex": "ad0003c9ffd011ad0403c9ffd00a20c2a1ad81002903d00160ad0c04c9fff0072068f3a000b1008d2e04ad006f1869648d2f04a90069008d3004ad016f1869018d3204a9008d31048d33048d3404a90d8d7a00a9008d41058dca0460eed004d011ad72048d0004ad73048d0104a9008d020460",
+      "sha256": "cfe872cf94c62ad8c4bab65df0325c951c06c8da0135384f6cb4b9e0194f449c"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54931,
+      "rom_offset": 202403,
+      "length": 11,
+      "role": "ending_mode_dispatch_prefix",
+      "raw_hex": "a026205ff2ad410520deea",
+      "sha256": "aebe9eda4dfe31ef8936d8e7372c241f0758339f3121a178b0ca7a1d09f9ad76"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54954,
+      "rom_offset": 202426,
+      "length": 171,
+      "role": "mode_zero_loss_display_and_exit",
+      "raw_hex": "adca04d025a9008dcd048dce04eeca04a9ff8dcb04206dd7a9d9ae2e04e0fff002a9d8208bf220bfec60eecd04a97e8510a99a8511accb04300320f3dbacca0420f3dbadca04186904a820f3dbadcd044a4a4a29031869018dca04adcb04c9fef01ead0003c9ffd016ad0403c9ffd00feece04adce044a4aa8b955d78dcb0460ad81002901f020ad436ff01ca9008d436fad72048d0004ad73048d0104a9008d0204a9018d7a00604c00e0",
+      "sha256": "16d1c005c10977fd64e5b106d0a8bb759fc1b0a510045ea324264fb1a61aa630"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55149,
+      "rom_offset": 202621,
+      "length": 14,
+      "role": "loss_palette_copy",
+      "raw_hex": "a000b97bd7990001c8c02090f560",
+      "sha256": "d479ecb9eba4629d2a2aef18121fd3eba3e2c0bc889a2bdf4a93a339b8673112"
+    }
+  ],
+  "data_tables": [
+    {
+      "physical_bank": 26,
+      "cpu_address": 50048,
+      "rom_offset": 213904,
+      "length": 6,
+      "role": "retirement three targets",
+      "raw_hex": "86c3c2c31ec4",
+      "sha256": "612e27af733574bb67c3efd527bb8a901bce02b1f7448860087ac0a519620aff"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_address": 50107,
+      "rom_offset": 213963,
+      "length": 7,
+      "role": "original seven ruler leader labels",
+      "raw_hex": "ad08838adedcb6",
+      "sha256": "2f6db843b7e9d5c3c4d52481797f53483681b671418f5597c7eac2d02cd19c8a"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 54942,
+      "rom_offset": 202414,
+      "length": 12,
+      "role": "six ending mode targets",
+      "raw_hex": "aad69bd73ad8c9d8cad920d9",
+      "sha256": "f6f102ca48577b07100827194d21ae6670b6b27de8d04da27483601e00a3b89d"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55125,
+      "rom_offset": 202597,
+      "length": 24,
+      "role": "loss marker clock table",
+      "raw_hex": "090a0b0cf0f0f00d0e0f10111213131414151514141313fe",
+      "sha256": "d9196888659ac1c34999ff5b91c9e13650084e122592af3e721c1c18f7d1705f"
+    },
+    {
+      "physical_bank": 24,
+      "cpu_address": 55163,
+      "rom_offset": 202635,
+      "length": 32,
+      "role": "loss palette image",
+      "raw_hex": "0f3010000f27162a0f3630160f3010000f3010000f0f1b280f3630160f202717",
+      "sha256": "dc060419c75e3476c3ed87cb5901dd5a87b11c7c53efe4fc3ffaa9319d71dd61"
+    }
+  ],
+  "opening_mode_producers": [
+    {
+      "physical_bank": 11,
+      "cpu_address": 56031,
+      "rom_offset": 97007,
+      "length": 29,
+      "role": "title0012 ->0543;DAF4 writes6F43 exceptload index2",
+      "raw_hex": "ad12008d4305c902d00b202fdc900eee41054ceeec8d436fa9038d4105",
+      "sha256": "32c2fcc011191334fa8a34230a6b467e9773896c6d33b208eb41432776718ad9"
+    },
+    {
+      "physical_bank": 9,
+      "cpu_address": 55118,
+      "rom_offset": 79710,
+      "length": 12,
+      "role": "new-ruler0543 ->6F43 atD751",
+      "raw_hex": "ad43058d436fad44058d026f",
+      "sha256": "eb17b7bc2e197a0211679aa784d0b4392b3e78d453b9e9d5025f17b75d832216"
+    },
+    {
+      "physical_bank": 9,
+      "cpu_address": 55253,
+      "rom_offset": 79845,
+      "length": 14,
+      "role": "6F43 nonzero requestssecondhumanselection",
+      "raw_hex": "ad436fd009a9068d410520eeec60",
+      "sha256": "9ef767bbdadce029e8f7b37e8ea4b9b36f9ac91549792aa977ad2abb36cfed2b"
+    },
+    {
+      "physical_bank": 9,
+      "cpu_address": 55376,
+      "rom_offset": 79968,
+      "length": 29,
+      "role": "secondhumanselection writescontroller1 atD861",
+      "raw_hex": "ac1200b907da0a0a0aa8b90a6ff00ea901990a6fa9068d410520eeec60",
+      "sha256": "ef386a60e450aef746bf46082ba4fc99e5c2326d673ad699b051db2f6c5f54ea"
+    }
+  ],
+  "public_routes": {
+    "postbattle": [
+      "25A00C",
+      "25AD81"
+    ],
+    "ending": [
+      "23A01E"
+    ]
+  },
+  "local_override_functions": [
+    "BE2E",
+    "C386",
+    "C3C2",
+    "C41E",
+    "D6AA",
+    "D76D"
+  ],
+  "unchanged_parent_methods": [
+    "ADAA/AE0D wholecontroller routing",
+    "BE01 eight-phase dispatch",
+    "A1C2 currentfocus",
+    "BED1 original citydetails list",
+    "C37A retirement dispatch",
+    "A01E/D693 six-mode dispatch",
+    "DBF3 ending sprites",
+    "Global13 E46A setup",
+    "E000 reset ->E066",
+    "title/new-ruler selection"
+  ]
+}

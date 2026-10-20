@@ -1,0 +1,914 @@
+{
+  "schema": "phase22-named-postbattle-release-byte-catalog-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "new_manual_instruction_positions": 106,
+  "new_manual_code_bytes": 212,
+  "instructions": [
+    {
+      "physical_bank": 13,
+      "cpu_address": 53753,
+      "rom_offset": 111113,
+      "size": 2,
+      "raw_hex": "A0 00",
+      "assembly": "LDY  #$00"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53755,
+      "rom_offset": 111115,
+      "size": 3,
+      "raw_hex": "B9 80 05",
+      "assembly": "LDA  $0580,Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53758,
+      "rom_offset": 111118,
+      "size": 2,
+      "raw_hex": "30 07",
+      "assembly": "BMI  $D207"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53760,
+      "rom_offset": 111120,
+      "size": 1,
+      "raw_hex": "98",
+      "assembly": "TYA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53761,
+      "rom_offset": 111121,
+      "size": 1,
+      "raw_hex": "48",
+      "assembly": "PHA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53762,
+      "rom_offset": 111122,
+      "size": 3,
+      "raw_hex": "20 0D D2",
+      "assembly": "JSR  $D20D"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53765,
+      "rom_offset": 111125,
+      "size": 1,
+      "raw_hex": "68",
+      "assembly": "PLA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53766,
+      "rom_offset": 111126,
+      "size": 1,
+      "raw_hex": "A8",
+      "assembly": "TAY"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53767,
+      "rom_offset": 111127,
+      "size": 1,
+      "raw_hex": "C8",
+      "assembly": "INY"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53768,
+      "rom_offset": 111128,
+      "size": 2,
+      "raw_hex": "C0 14",
+      "assembly": "CPY  #$14"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53770,
+      "rom_offset": 111130,
+      "size": 2,
+      "raw_hex": "90 EF",
+      "assembly": "BCC  $D1FB"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53772,
+      "rom_offset": 111132,
+      "size": 1,
+      "raw_hex": "60",
+      "assembly": "RTS"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53773,
+      "rom_offset": 111133,
+      "size": 3,
+      "raw_hex": "AD 40 05",
+      "assembly": "LDA  $0540"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53776,
+      "rom_offset": 111136,
+      "size": 2,
+      "raw_hex": "C9 1E",
+      "assembly": "CMP  #$1E"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53778,
+      "rom_offset": 111138,
+      "size": 2,
+      "raw_hex": "D0 35",
+      "assembly": "BNE  $D249"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53780,
+      "rom_offset": 111140,
+      "size": 3,
+      "raw_hex": "B9 2C 04",
+      "assembly": "LDA  $042C,Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53783,
+      "rom_offset": 111143,
+      "size": 1,
+      "raw_hex": "48",
+      "assembly": "PHA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53784,
+      "rom_offset": 111144,
+      "size": 3,
+      "raw_hex": "20 D7 F2",
+      "assembly": "JSR  $F2D7"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53787,
+      "rom_offset": 111147,
+      "size": 2,
+      "raw_hex": "A0 0B",
+      "assembly": "LDY  #$0B"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53789,
+      "rom_offset": 111149,
+      "size": 2,
+      "raw_hex": "B1 00",
+      "assembly": "LDA  ($00),Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53791,
+      "rom_offset": 111151,
+      "size": 2,
+      "raw_hex": "29 FC",
+      "assembly": "AND  #$FC"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53793,
+      "rom_offset": 111153,
+      "size": 2,
+      "raw_hex": "91 00",
+      "assembly": "STA  ($00),Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53795,
+      "rom_offset": 111155,
+      "size": 2,
+      "raw_hex": "A0 30",
+      "assembly": "LDY  #$30"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53797,
+      "rom_offset": 111157,
+      "size": 3,
+      "raw_hex": "20 66 F2",
+      "assembly": "JSR  $F266"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53800,
+      "rom_offset": 111160,
+      "size": 3,
+      "raw_hex": "AD 0E 05",
+      "assembly": "LDA  $050E"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53803,
+      "rom_offset": 111163,
+      "size": 1,
+      "raw_hex": "0A",
+      "assembly": "ASL  A"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53804,
+      "rom_offset": 111164,
+      "size": 1,
+      "raw_hex": "0A",
+      "assembly": "ASL  A"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53805,
+      "rom_offset": 111165,
+      "size": 1,
+      "raw_hex": "0A",
+      "assembly": "ASL  A"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53806,
+      "rom_offset": 111166,
+      "size": 3,
+      "raw_hex": "8D 02 00",
+      "assembly": "STA  $0002"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53809,
+      "rom_offset": 111169,
+      "size": 3,
+      "raw_hex": "20 56 E8",
+      "assembly": "JSR  $E856"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53812,
+      "rom_offset": 111172,
+      "size": 1,
+      "raw_hex": "18",
+      "assembly": "CLC"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53813,
+      "rom_offset": 111173,
+      "size": 3,
+      "raw_hex": "6D 02 00",
+      "assembly": "ADC  $0002"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53816,
+      "rom_offset": 111176,
+      "size": 1,
+      "raw_hex": "A8",
+      "assembly": "TAY"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53817,
+      "rom_offset": 111177,
+      "size": 3,
+      "raw_hex": "B9 72 9D",
+      "assembly": "LDA  $9D72,Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53820,
+      "rom_offset": 111180,
+      "size": 2,
+      "raw_hex": "10 03",
+      "assembly": "BPL  $D241"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53822,
+      "rom_offset": 111182,
+      "size": 3,
+      "raw_hex": "AD 0E 05",
+      "assembly": "LDA  $050E"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53825,
+      "rom_offset": 111185,
+      "size": 2,
+      "raw_hex": "A0 05",
+      "assembly": "LDY  #$05"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53827,
+      "rom_offset": 111187,
+      "size": 2,
+      "raw_hex": "91 00",
+      "assembly": "STA  ($00),Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53829,
+      "rom_offset": 111189,
+      "size": 1,
+      "raw_hex": "68",
+      "assembly": "PLA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53830,
+      "rom_offset": 111190,
+      "size": 3,
+      "raw_hex": "4C 99 D2",
+      "assembly": "JMP  $D299"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53833,
+      "rom_offset": 111193,
+      "size": 1,
+      "raw_hex": "98",
+      "assembly": "TYA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53834,
+      "rom_offset": 111194,
+      "size": 1,
+      "raw_hex": "48",
+      "assembly": "PHA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53835,
+      "rom_offset": 111195,
+      "size": 3,
+      "raw_hex": "AD 0B 05",
+      "assembly": "LDA  $050B"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53838,
+      "rom_offset": 111198,
+      "size": 1,
+      "raw_hex": "48",
+      "assembly": "PHA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53839,
+      "rom_offset": 111199,
+      "size": 3,
+      "raw_hex": "AD 40 05",
+      "assembly": "LDA  $0540"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53842,
+      "rom_offset": 111202,
+      "size": 3,
+      "raw_hex": "8D 0B 05",
+      "assembly": "STA  $050B"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53845,
+      "rom_offset": 111205,
+      "size": 3,
+      "raw_hex": "20 11 BC",
+      "assembly": "JSR  $BC11"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53848,
+      "rom_offset": 111208,
+      "size": 1,
+      "raw_hex": "68",
+      "assembly": "PLA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53849,
+      "rom_offset": 111209,
+      "size": 3,
+      "raw_hex": "8D 0B 05",
+      "assembly": "STA  $050B"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53852,
+      "rom_offset": 111212,
+      "size": 1,
+      "raw_hex": "68",
+      "assembly": "PLA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53853,
+      "rom_offset": 111213,
+      "size": 1,
+      "raw_hex": "AA",
+      "assembly": "TAX"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53854,
+      "rom_offset": 111214,
+      "size": 3,
+      "raw_hex": "BD 2C 04",
+      "assembly": "LDA  $042C,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53857,
+      "rom_offset": 111217,
+      "size": 3,
+      "raw_hex": "CD 2B 05",
+      "assembly": "CMP  $052B"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53860,
+      "rom_offset": 111220,
+      "size": 2,
+      "raw_hex": "D0 06",
+      "assembly": "BNE  $D26C"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53862,
+      "rom_offset": 111222,
+      "size": 3,
+      "raw_hex": "AE 40 05",
+      "assembly": "LDX  $0540"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53865,
+      "rom_offset": 111225,
+      "size": 3,
+      "raw_hex": "8E 2C 05",
+      "assembly": "STX  $052C"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53868,
+      "rom_offset": 111228,
+      "size": 2,
+      "raw_hex": "91 00",
+      "assembly": "STA  ($00),Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53870,
+      "rom_offset": 111230,
+      "size": 1,
+      "raw_hex": "48",
+      "assembly": "PHA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53871,
+      "rom_offset": 111231,
+      "size": 2,
+      "raw_hex": "A0 00",
+      "assembly": "LDY  #$00"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53873,
+      "rom_offset": 111233,
+      "size": 2,
+      "raw_hex": "B1 00",
+      "assembly": "LDA  ($00),Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53875,
+      "rom_offset": 111235,
+      "size": 2,
+      "raw_hex": "29 07",
+      "assembly": "AND  #$07"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53877,
+      "rom_offset": 111237,
+      "size": 2,
+      "raw_hex": "C9 07",
+      "assembly": "CMP  #$07"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53879,
+      "rom_offset": 111239,
+      "size": 2,
+      "raw_hex": "D0 1F",
+      "assembly": "BNE  $D298"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53881,
+      "rom_offset": 111241,
+      "size": 3,
+      "raw_hex": "AC 07 05",
+      "assembly": "LDY  $0507"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53884,
+      "rom_offset": 111244,
+      "size": 3,
+      "raw_hex": "AD 0B 05",
+      "assembly": "LDA  $050B"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53887,
+      "rom_offset": 111247,
+      "size": 2,
+      "raw_hex": "29 F0",
+      "assembly": "AND  #$F0"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53889,
+      "rom_offset": 111249,
+      "size": 2,
+      "raw_hex": "F0 06",
+      "assembly": "BEQ  $D289"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53891,
+      "rom_offset": 111251,
+      "size": 1,
+      "raw_hex": "98",
+      "assembly": "TYA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53892,
+      "rom_offset": 111252,
+      "size": 1,
+      "raw_hex": "4A",
+      "assembly": "LSR  A"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53893,
+      "rom_offset": 111253,
+      "size": 1,
+      "raw_hex": "4A",
+      "assembly": "LSR  A"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53894,
+      "rom_offset": 111254,
+      "size": 1,
+      "raw_hex": "4A",
+      "assembly": "LSR  A"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53895,
+      "rom_offset": 111255,
+      "size": 1,
+      "raw_hex": "4A",
+      "assembly": "LSR  A"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53896,
+      "rom_offset": 111256,
+      "size": 1,
+      "raw_hex": "A8",
+      "assembly": "TAY"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53897,
+      "rom_offset": 111257,
+      "size": 1,
+      "raw_hex": "98",
+      "assembly": "TYA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53898,
+      "rom_offset": 111258,
+      "size": 2,
+      "raw_hex": "29 0F",
+      "assembly": "AND  #$0F"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53900,
+      "rom_offset": 111260,
+      "size": 2,
+      "raw_hex": "85 02",
+      "assembly": "STA  $02"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53902,
+      "rom_offset": 111262,
+      "size": 2,
+      "raw_hex": "A0 00",
+      "assembly": "LDY  #$00"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53904,
+      "rom_offset": 111264,
+      "size": 2,
+      "raw_hex": "B1 00",
+      "assembly": "LDA  ($00),Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53906,
+      "rom_offset": 111266,
+      "size": 2,
+      "raw_hex": "29 F0",
+      "assembly": "AND  #$F0"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53908,
+      "rom_offset": 111268,
+      "size": 2,
+      "raw_hex": "05 02",
+      "assembly": "ORA  $02"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53910,
+      "rom_offset": 111270,
+      "size": 2,
+      "raw_hex": "91 00",
+      "assembly": "STA  ($00),Y"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53912,
+      "rom_offset": 111272,
+      "size": 1,
+      "raw_hex": "68",
+      "assembly": "PLA"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53913,
+      "rom_offset": 111273,
+      "size": 2,
+      "raw_hex": "A2 00",
+      "assembly": "LDX  #$00"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53915,
+      "rom_offset": 111275,
+      "size": 3,
+      "raw_hex": "DD 64 06",
+      "assembly": "CMP  $0664,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53918,
+      "rom_offset": 111278,
+      "size": 2,
+      "raw_hex": "F0 12",
+      "assembly": "BEQ  $D2B2"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53920,
+      "rom_offset": 111280,
+      "size": 1,
+      "raw_hex": "E8",
+      "assembly": "INX"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53921,
+      "rom_offset": 111281,
+      "size": 2,
+      "raw_hex": "E0 14",
+      "assembly": "CPX  #$14"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53923,
+      "rom_offset": 111283,
+      "size": 2,
+      "raw_hex": "90 F6",
+      "assembly": "BCC  $D29B"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53925,
+      "rom_offset": 111285,
+      "size": 2,
+      "raw_hex": "A2 00",
+      "assembly": "LDX  #$00"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53927,
+      "rom_offset": 111287,
+      "size": 3,
+      "raw_hex": "DD 47 6F",
+      "assembly": "CMP  $6F47,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53930,
+      "rom_offset": 111290,
+      "size": 2,
+      "raw_hex": "F0 1B",
+      "assembly": "BEQ  $D2C7"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53932,
+      "rom_offset": 111292,
+      "size": 1,
+      "raw_hex": "E8",
+      "assembly": "INX"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53933,
+      "rom_offset": 111293,
+      "size": 2,
+      "raw_hex": "E0 28",
+      "assembly": "CPX  #$28"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53935,
+      "rom_offset": 111295,
+      "size": 2,
+      "raw_hex": "90 F6",
+      "assembly": "BCC  $D2A7"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53937,
+      "rom_offset": 111297,
+      "size": 1,
+      "raw_hex": "60",
+      "assembly": "RTS"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53938,
+      "rom_offset": 111298,
+      "size": 2,
+      "raw_hex": "A9 FF",
+      "assembly": "LDA  #$FF"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53940,
+      "rom_offset": 111300,
+      "size": 3,
+      "raw_hex": "9D 00 06",
+      "assembly": "STA  $0600,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53943,
+      "rom_offset": 111303,
+      "size": 3,
+      "raw_hex": "9D 14 06",
+      "assembly": "STA  $0614,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53946,
+      "rom_offset": 111306,
+      "size": 3,
+      "raw_hex": "9D 28 06",
+      "assembly": "STA  $0628,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53949,
+      "rom_offset": 111309,
+      "size": 3,
+      "raw_hex": "9D 3C 06",
+      "assembly": "STA  $063C,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53952,
+      "rom_offset": 111312,
+      "size": 3,
+      "raw_hex": "9D 50 06",
+      "assembly": "STA  $0650,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53955,
+      "rom_offset": 111315,
+      "size": 3,
+      "raw_hex": "9D 64 06",
+      "assembly": "STA  $0664,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53958,
+      "rom_offset": 111318,
+      "size": 1,
+      "raw_hex": "60",
+      "assembly": "RTS"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53959,
+      "rom_offset": 111319,
+      "size": 2,
+      "raw_hex": "A9 FF",
+      "assembly": "LDA  #$FF"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53961,
+      "rom_offset": 111321,
+      "size": 3,
+      "raw_hex": "9D 47 6F",
+      "assembly": "STA  $6F47,X"
+    },
+    {
+      "physical_bank": 13,
+      "cpu_address": 53964,
+      "rom_offset": 111324,
+      "size": 1,
+      "raw_hex": "60",
+      "assembly": "RTS"
+    }
+  ],
+  "original_ranges": [
+    {
+      "physical_bank": 13,
+      "cpu_start": 53753,
+      "cpu_end_exclusive": 53965,
+      "rom_offset": 111113,
+      "byte_count": 212,
+      "name": "selected-officer allocation,release and removal",
+      "raw_hex": "A0 00 B9 80 05 30 07 98 48 20 0D D2 68 A8 C8 C0 14 90 EF 60 AD 40 05 C9 1E D0 35 B9 2C 04 48 20 D7 F2 A0 0B B1 00 29 FC 91 00 A0 30 20 66 F2 AD 0E 05 0A 0A 0A 8D 02 00 20 56 E8 18 6D 02 00 A8 B9 72 9D 10 03 AD 0E 05 A0 05 91 00 68 4C 99 D2 98 48 AD 0B 05 48 AD 40 05 8D 0B 05 20 11 BC 68 8D 0B 05 68 AA BD 2C 04 CD 2B 05 D0 06 AE 40 05 8E 2C 05 91 00 48 A0 00 B1 00 29 07 C9 07 D0 1F AC 07 05 AD 0B 05 29 F0 F0 06 98 4A 4A 4A 4A A8 98 29 0F 85 02 A0 00 B1 00 29 F0 05 02 91 00 68 A2 00 DD 64 06 F0 12 E8 E0 14 90 F6 A2 00 DD 47 6F F0 1B E8 E0 28 90 F6 60 A9 FF 9D 00 06 9D 14 06 9D 28 06 9D 3C 06 9D 50 06 9D 64 06 60 A9 FF 9D 47 6F 60",
+      "sha256": "81d0020bc0276387f5d54387f46e73b328c4dc479faa2618af38a7be094a27cf"
+    },
+    {
+      "physical_bank": 16,
+      "cpu_start": 40306,
+      "cpu_end_exclusive": 40546,
+      "rom_offset": 138626,
+      "byte_count": 240,
+      "name": "thirty8byte neighbor records",
+      "raw_hex": "01 03 FF FF FF FF FF FF 00 02 04 03 FF FF FF FF 01 04 05 08 FF FF FF FF 00 01 04 0A FF FF FF FF 02 0C 0B 03 01 FF FF FF 07 08 02 FF FF FF FF FF 07 09 FF FF FF FF FF FF 06 09 19 08 05 FF FF FF 05 07 19 0D 0C 02 FF FF 1A 19 07 06 FF FF FF FF 03 0B 10 0F FF FF FF FF 04 0C 0E 10 0A FF FF FF 08 0D 15 0E 0B 04 FF FF 08 16 15 0C FF FF FF FF 0C 15 14 10 0B FF FF FF 0A 10 11 FF FF FF FF FF 0B 0E 14 11 0F 0A FF FF 0F 10 14 12 FF FF FF FF 11 17 14 FF FF FF FF FF 18 16 1C FF FF FF FF FF 15 17 12 11 10 0E FF FF 16 18 17 14 0E 0C 0D FF 1B 13 18 15 0D FF FF FF 15 18 12 14 FF FF FF FF 16 13 17 15 FF FF FF FF 09 1A 1B 08 07 FF FF FF 1D 1C 1B 19 09 FF FF FF 19 1A 1C 16 FF FF FF FF 1A 1D 13 1B FF FF FF FF 1A 1C FF FF FF FF FF FF",
+      "sha256": "73fba4e4d02ba7fc0ada456b156d808e0f82a5b9ce85799d25540327fcf83b91"
+    }
+  ],
+  "real_dependencies": [
+    {
+      "call_pc": 53784,
+      "target": 62167,
+      "kind": "fixed_service",
+      "rom_offset": 111144,
+      "raw_hex": "20 D7 F2"
+    },
+    {
+      "call_pc": 53797,
+      "target": 62054,
+      "kind": "fixed_service",
+      "rom_offset": 111157,
+      "raw_hex": "20 66 F2"
+    },
+    {
+      "call_pc": 53809,
+      "target": 59478,
+      "kind": "frozen_direct_local_source",
+      "rom_offset": 111169,
+      "raw_hex": "20 56 E8"
+    },
+    {
+      "call_pc": 53845,
+      "target": 48145,
+      "kind": "frozen_direct_local_source",
+      "rom_offset": 111205,
+      "raw_hex": "20 11 BC"
+    }
+  ],
+  "aliases": {
+    "local_d1f9": "settle_selected_officers",
+    "local_d20d": "settle_one_selected_officer"
+  },
+  "new_local_entry": 53913,
+  "ordinary_parent": "Frozen BattleSceneController uses bound-method aliases; no new software frame is added"
+}

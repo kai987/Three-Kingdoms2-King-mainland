@@ -1,0 +1,239 @@
+{
+  "schema": "phase22-native-wild-recruitment-static-correlation-v1",
+  "status": "passed",
+  "raw_records": 5176,
+  "raw_bytes": 372672,
+  "city_bus_events": 25,
+  "store_dummy_reads": 1,
+  "load_indirect_Y_page_cross_dummy_reads": 2,
+  "dedicated_or_logical_reads": 22,
+  "committed_writes": 0,
+  "all_static_accesses": 1526,
+  "previous_candidates": 376,
+  "newly_proved_disjoint": 8,
+  "remaining_candidates": 368,
+  "actual_opcode_boundaries": {
+    "11:C6CC": 693,
+    "11:C71A": 8,
+    "11:C71C": 8,
+    "11:C75F": 1664,
+    "11:C762": 1664,
+    "11:C732": 48,
+    "31:E89A": 62,
+    "31:E8A9": 62,
+    "11:C735": 48,
+    "11:C794": 1
+  },
+  "actual_C794_success_exits": 1,
+  "success_exits": [
+    {
+      "sequence": 5157,
+      "frame": 14837,
+      "cycle": 353528,
+      "kind": "opcode_boundary",
+      "opcode_PC": 51092,
+      "bus_PC": 51092,
+      "physical_bank": 11,
+      "rom_offset": 92068,
+      "actual_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "address": 51092,
+      "value": 0,
+      "A": 197,
+      "X": 0,
+      "Y": 3,
+      "P": 165,
+      "SP": 251,
+      "scratch_0053_0054": [
+        5,
+        12
+      ],
+      "pointer_0022_0023": 25596,
+      "working_0036_0039": [
+        2,
+        0,
+        19,
+        2
+      ],
+      "target_type": "sparse_opcode_boundary",
+      "city_index": null,
+      "city_offset": null,
+      "WRAM_readable": true,
+      "WRAM_writable": true,
+      "storage_byte_after_event": null
+    }
+  ],
+  "positive_static_positions": [
+    {
+      "physical_bank": 10,
+      "cpu": 48535,
+      "rom_offset": 89511,
+      "raw_hex": "B1 20",
+      "classification": "possible_city_auxiliary_alias",
+      "proof_basis": "phase22_scalar_index_prefix_context",
+      "newly_proved_disjoint": false,
+      "contract_representation": "flat_address_contract",
+      "observed_city_bus_events": 22,
+      "observed_logical_effective_address_events": 22,
+      "observed_bus_roles": {
+        "dedicated_city_plus1_load": 22
+      },
+      "observed_kinds": {
+        "read": 22
+      },
+      "observed_offsets": [
+        1
+      ],
+      "sequences": [
+        2863,
+        2864,
+        2865,
+        2866,
+        2867,
+        5011,
+        5012,
+        5013,
+        5014,
+        5015,
+        5016,
+        5017,
+        5018,
+        5019,
+        5020,
+        5021,
+        5022,
+        5023,
+        5024,
+        5025,
+        5161,
+        5162
+      ],
+      "negative_observation_excludes_access": false
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 51007,
+      "rom_offset": 91983,
+      "raw_hex": "B1 22",
+      "classification": "proved_disjoint_auxiliary_address_domain",
+      "proof_basis": "phase22_scalar_index_prefix_context",
+      "newly_proved_disjoint": false,
+      "contract_representation": "flat_address_contract",
+      "observed_city_bus_events": 2,
+      "observed_logical_effective_address_events": 0,
+      "observed_bus_roles": {
+        "load_indirect_Y_page_cross_dummy_read": 2
+      },
+      "observed_kinds": {
+        "read": 2
+      },
+      "observed_offsets": [
+        1
+      ],
+      "sequences": [
+        132,
+        5156
+      ],
+      "negative_observation_excludes_access": false
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53827,
+      "rom_offset": 111187,
+      "raw_hex": "91 00",
+      "classification": "proved_disjoint_auxiliary_address_domain",
+      "proof_basis": "phase22_scalar_index_prefix_context",
+      "newly_proved_disjoint": false,
+      "contract_representation": "flat_address_contract",
+      "observed_city_bus_events": 1,
+      "observed_logical_effective_address_events": 0,
+      "observed_bus_roles": {
+        "store_addressing_dummy_read": 1
+      },
+      "observed_kinds": {
+        "read": 1
+      },
+      "observed_offsets": [
+        1
+      ],
+      "sequences": [
+        1
+      ],
+      "negative_observation_excludes_access": false
+    }
+  ],
+  "disjoint_logical_sites_with_actual_dummy_bus_hits": [
+    {
+      "physical_bank": 11,
+      "cpu": 51007,
+      "rom_offset": 91983,
+      "raw_hex": "B1 22",
+      "classification": "proved_disjoint_auxiliary_address_domain",
+      "proof_basis": "phase22_scalar_index_prefix_context",
+      "newly_proved_disjoint": false,
+      "contract_representation": "flat_address_contract",
+      "observed_city_bus_events": 2,
+      "observed_logical_effective_address_events": 0,
+      "observed_bus_roles": {
+        "load_indirect_Y_page_cross_dummy_read": 2
+      },
+      "observed_kinds": {
+        "read": 2
+      },
+      "observed_offsets": [
+        1
+      ],
+      "sequences": [
+        132,
+        5156
+      ],
+      "negative_observation_excludes_access": false
+    },
+    {
+      "physical_bank": 13,
+      "cpu": 53827,
+      "rom_offset": 111187,
+      "raw_hex": "91 00",
+      "classification": "proved_disjoint_auxiliary_address_domain",
+      "proof_basis": "phase22_scalar_index_prefix_context",
+      "newly_proved_disjoint": false,
+      "contract_representation": "flat_address_contract",
+      "observed_city_bus_events": 1,
+      "observed_logical_effective_address_events": 0,
+      "observed_bus_roles": {
+        "store_addressing_dummy_read": 1
+      },
+      "observed_kinds": {
+        "read": 1
+      },
+      "observed_offsets": [
+        1
+      ],
+      "sequences": [
+        1
+      ],
+      "negative_observation_excludes_access": false
+    }
+  ],
+  "observed_sites_outside_static_indirect_inventory": [],
+  "official_city_names": {
+    "+1": null,
+    "+28": null,
+    "+29": null,
+    "+30": null,
+    "+31": null
+  },
+  "source_CPU_cases": 0,
+  "limits": [
+    "This is a separately rebuilt observer core, with original-core full-flow controls elsewhere.",
+    "Absence on one declared route never becomes a static exclusion or unused-field proof.",
+    "Static contracts describe logical effective addresses. Store dummy reads and LDA indirect-Y page-cross dummy reads have separately computed bus addresses.",
+    "C73F pointer63FC+Y5 gives actual effective6401, while the original IndY_R reads6301 on its page-cross cycle; that bus read does not consume city24+1 as game data.",
+    "Destination ID30 (ざいや) is a postbattle UI selector; it is not the meaning of city-record offset+30.",
+    "C794 events are before the actual RTS; the original two PLA have executed. Exact returned PC/SP comes from the separately recorded CPU continuation and native later snapshots."
+  ]
+}

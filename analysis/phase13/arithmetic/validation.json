@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_cpu_case_count": 512,
+  "complete_return_count": 512,
+  "strict_prefix_count": 0,
+  "source_guard_case_count": 1,
+  "counts": {
+    "complete_return": 512
+  },
+  "failed_count": 0,
+  "failures": [],
+  "source_sha256": "7b212749f477466e750edcc9b7cf217792b434724060a8a34923bfdc79c56894",
+  "source_path": "source/recovered/ui_arithmetic_services.py",
+  "validator_sha256": "3ef0792a04d2093e419892c85b0493e531725f033632a59bd4051bf6c6e783d2",
+  "validator_path": "scripts/verify_ui_arithmetic_services.py",
+  "evidence_sha256": "f8cb9f488cced02e749c9d147d1eeece23476f83209195462f1538800bf15d3c",
+  "comparison": {
+    "RAM_bytes": 2048,
+    "SRAM_bytes": 8192,
+    "registers": "AXYP/SP/PC",
+    "ports_and_banks": true
+  },
+  "source_original_CPU_callbacks": 0,
+  "samples": [
+    {
+      "left": 0,
+      "right": 0,
+      "flags": 32,
+      "product": 0,
+      "registers": {
+        "a": 0,
+        "x": 31,
+        "y": 255,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      }
+    },
+    {
+      "left": 0,
+      "right": 0,
+      "flags": 33,
+      "product": 0,
+      "registers": {
+        "a": 0,
+        "x": 31,
+        "y": 255,
+        "sp": 255,
+        "p": 160,
+        "pc": 9320
+      }
+    },
+    {
+      "left": 0,
+      "right": 0,
+      "flags": 96,
+      "product": 0,
+      "registers": {
+        "a": 0,
+        "x": 31,
+        "y": 255,
+        "sp": 255,
+        "p": 224,
+        "pc": 9320
+      }
+    },
+    {
+      "left": 0,
+      "right": 0,
+      "flags": 225,
+      "product": 0,
+      "registers": {
+        "a": 0,
+        "x": 31,
+        "y": 255,
+        "sp": 255,
+        "p": 224,
+        "pc": 9320
+      }
+    }
+  ],
+  "guards": [
+    "unknown_fixed_entry_is_not_owned"
+  ]
+}

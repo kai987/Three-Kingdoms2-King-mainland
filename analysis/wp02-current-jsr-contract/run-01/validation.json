@@ -1,0 +1,56 @@
+{
+  "schema": "wp02-current-JSR-CPU-contract-run-v1",
+  "status": "passed_full_declared_matrix",
+  "controlled_CPU_parent_cases": 17207,
+  "completed_prefix_segments": 17215,
+  "actual_primary_JSR_executions": 17206,
+  "conditionally_valid_current_frame_segments": 17190,
+  "original_CPU_instructions": 752661,
+  "groups": {
+    "raw_A": 512,
+    "legal_index_all_SP": 6144,
+    "legal_index_all_Y": 6144,
+    "stale_stack_6000_fully_overwritten": 8,
+    "one_byte_frame_fault": 8,
+    "same_bus_two_generations": 8,
+    "old_live_pointer_overwritten": 4,
+    "between_reads_pointer_fault": 4,
+    "A099_AND0F": 256,
+    "AC7B_two_terrain_calls": 4096,
+    "adjacent_real_LDX_JSR_AC7B": 14,
+    "bare_B517_aux_counterexample": 4,
+    "middle_access_aux_counterexample": 5
+  },
+  "case_keys_sha256": "01ce13b53905db91a188369d6dd4f053607fd79943f33bc8f5e8f89ba38664df",
+  "cases": {
+    "path": "analysis/wp02-current-jsr-contract/run-01/cases.jsonl",
+    "bytes": 87985470,
+    "sha256": "6c766bf443cd82cd92b8bafe2f442d759ff0c1b3aa03569c2dd00252c5992e0c"
+  },
+  "matrix_sha256": "9223383ae4543ce06cfa8f280f437406120b91a433be4e3fed2dee7371b27043",
+  "acceptance_sha256": "25a991e628055cf87dadb715f538747b8300209b842443e7c8fd7c6577e9fc47",
+  "scripts_sha256": {
+    "scripts/prepare_wp02_contract_matrix.py": "8606e7685988671c3d3fb78c264a91cae1dea3b73882c3f7bd77d642f23e2639",
+    "scripts/verify_wp02_current_jsr.py": "ac2c41ceb4e9a9cb9f60a873e3ba55a3803b7e29368ed3ab5eb5521c34dff902",
+    "scripts/verify_wp02_frozen_inputs.py": "51d2e3f5e4e403a3ce2a7f7122d78725e9de69f1861b4a436565ff03a194b5c9"
+  },
+  "failed_count": 0,
+  "failure": null,
+  "actual_capture_origin": null,
+  "Source_cases": 0,
+  "Native_runs": 0,
+  "actual_caller_RTS_cases": 0,
+  "unimplemented_target_opcode_executions": 0,
+  "whole_game_closure_proven": false,
+  "auxiliary_counterexample_addresses": [
+    24577,
+    24604,
+    24605,
+    24606,
+    24607,
+    24737,
+    24764,
+    24765
+  ],
+  "production_CPU_or_IR_fallback_added": false
+}

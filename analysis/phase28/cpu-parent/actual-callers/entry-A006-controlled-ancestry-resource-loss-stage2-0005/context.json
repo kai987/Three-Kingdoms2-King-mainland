@@ -1,0 +1,2280 @@
+{
+  "schema": "phase28-passive-postbattle-parent-caller-with-device-fixture-v1",
+  "origin": "passive_Native_callee_capture_with_explicit_N163_fixture",
+  "ancestry_origin": "controlled_ancestry",
+  "controlled_ancestry": true,
+  "natural_ordinary_input_route": false,
+  "registers": {
+    "a": 76,
+    "x": 64,
+    "y": 40,
+    "p": 32,
+    "sp": 240,
+    "pc": 40966
+  },
+  "physical_banks": [
+    17,
+    8,
+    9,
+    31
+  ],
+  "existing_return_PC": 61005,
+  "N163_address": 127,
+  "N163_autoincrement": true,
+  "N163_origin": "explicit_shared_fixture_not_Native_snapshot",
+  "explicit_N163_fixture": {
+    "bytes": 128,
+    "sha256": "0aedd4856f8eba0963627336ad5144a9a7dbe12498e6066f0165fc97d8ddee4c",
+    "pattern": "(11+37*i)&255",
+    "address": 127,
+    "autoincrement": true,
+    "scope": "Common Source/originalCPU fixture, not instantaneous Native capture"
+  },
+  "prepared_numeric_bytes": [],
+  "additional_CPU_prepared_numeric_bytes": [],
+  "inherited_Native_preparation": [
+    {
+      "frame": 0,
+      "kind": "RAM",
+      "address": 1285,
+      "before": 16,
+      "after": 30,
+      "reason": "controlled AP resource30 permits four actual5-AP trap casts plus retries; natural reachability not claimed"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 27110,
+      "before": 89,
+      "after": 99,
+      "reason": "controlled caster intelligence99"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 27114,
+      "before": 232,
+      "after": 152,
+      "reason": "controlled caster experience15000 low"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 27115,
+      "before": 3,
+      "after": 58,
+      "reason": "controlled caster experience15000 high"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 27119,
+      "before": 22,
+      "after": 118,
+      "reason": "controlled caster tier7; original status/affinity low nibble retained"
+    },
+    {
+      "frame": 0,
+      "kind": "RAM",
+      "address": 1537,
+      "before": 17,
+      "after": 5,
+      "reason": "controlled legal unique target X on original class0/4 trap terrain"
+    },
+    {
+      "frame": 0,
+      "kind": "RAM",
+      "address": 1557,
+      "before": 17,
+      "after": 16,
+      "reason": "controlled legal unique target Y within original target range"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 27828,
+      "before": 92,
+      "after": 1,
+      "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 27830,
+      "before": 31,
+      "after": 10,
+      "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+    },
+    {
+      "frame": 0,
+      "kind": "RAM",
+      "address": 1538,
+      "before": 19,
+      "after": 5,
+      "reason": "controlled legal unique target X on original class0/4 trap terrain"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 26148,
+      "before": 91,
+      "after": 1,
+      "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 26150,
+      "before": 37,
+      "after": 10,
+      "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+    },
+    {
+      "frame": 0,
+      "kind": "RAM",
+      "address": 1539,
+      "before": 20,
+      "after": 5,
+      "reason": "controlled legal unique target X on original class0/4 trap terrain"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 27540,
+      "before": 40,
+      "after": 1,
+      "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 27542,
+      "before": 93,
+      "after": 10,
+      "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+    },
+    {
+      "frame": 0,
+      "kind": "RAM",
+      "address": 1536,
+      "before": 20,
+      "after": 3,
+      "reason": "controlled legal unique target X on original class0/4 trap terrain"
+    },
+    {
+      "frame": 0,
+      "kind": "RAM",
+      "address": 1556,
+      "before": 14,
+      "after": 12,
+      "reason": "controlled legal unique target Y within original target range"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 25632,
+      "before": 75,
+      "after": 1,
+      "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+    },
+    {
+      "frame": 0,
+      "kind": "SRAM",
+      "address": 25634,
+      "before": 52,
+      "after": 10,
+      "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+    }
+  ],
+  "known_inherited_preparation_byte_writes": 19,
+  "ancestry_provenance": {
+    "parent_validation": {
+      "path": "analysis/phase15/runtime/succession-heir/validation.json",
+      "bytes": 86008,
+      "sha256": "9717354652052ae0aedcf391d040dcc2ecc80746bcfbc9eb7606cc2509d3b145"
+    },
+    "parent_checkpoints": {
+      "path": "analysis/phase15/runtime/succession-heir/checkpoints.json",
+      "bytes": 1284467,
+      "sha256": "b3044d927b8dec1bf54f3ef7393d1af00603f48c5f05e2f133e1cfb3b12a44a6"
+    },
+    "parent_checkpoint": {
+      "label": "observed-g04-n03-battle-015-002",
+      "frame": 8051,
+      "reason": "first observed active field tuple; not an internal CPU trace",
+      "image": "observed-g04-n03-battle-015-002.png",
+      "RAM": "observed-g04-n03-battle-015-002-ram.bin",
+      "SRAM": "observed-g04-n03-battle-015-002-sram.bin",
+      "state": "observed-g04-n03-battle-015-002.state",
+      "global_state": 4,
+      "nmi_scene": 3,
+      "active_controller": "battle",
+      "active_main": 15,
+      "active_phase": 2,
+      "calendar_and_turn_6F00_6F06": [
+        89,
+        0,
+        0,
+        2,
+        1,
+        2,
+        1
+      ],
+      "cooperation_status_6F8B": 255,
+      "PCM_stop_byte": 25720844,
+      "fields": {
+        "global_state": 4,
+        "nmi_scene": 3,
+        "active_controller": "battle",
+        "active_main": 15,
+        "active_phase": 2,
+        "city_state_0400_040F": [
+          3,
+          0,
+          11,
+          0,
+          0,
+          0,
+          0,
+          0,
+          11,
+          17,
+          131,
+          131,
+          0,
+          255,
+          4,
+          16
+        ],
+        "title_state_0540_0544": [
+          0,
+          142,
+          9,
+          1,
+          0
+        ],
+        "battle_state_0500_050F": [
+          15,
+          2,
+          0,
+          0,
+          0,
+          10,
+          1,
+          33,
+          0,
+          19,
+          1,
+          17,
+          24,
+          16,
+          4,
+          0
+        ],
+        "calendar_year_6F00": 89,
+        "calendar_month_zero_based_6F01": 0,
+        "ruler_6F03": 2,
+        "turn_slot_6F04": 1,
+        "remaining_budget_raw_6F05": 2,
+        "event_flag_6F06": 1,
+        "calendar_and_turn_6F00_6F06": [
+          89,
+          0,
+          0,
+          2,
+          1,
+          2,
+          1
+        ],
+        "ruler_records_6F07_6F3E": "ad000003000000000800000300000000830b0000000000008a00000300000000de02000300000000dc00000300000000b600000300000000",
+        "domestic_control_6F5B_6F62": [
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "domestic_phase_6F5B": 255,
+        "domestic_budget_6F5D": 255,
+        "domestic_city_6F5E": 255,
+        "cooperation_status_6F8B": 255,
+        "cooperation_6F8B_6FAB": "ff0a0000ff0001000000000000000001020000000000ffffffffffffffffffffff",
+        "battery_flags_6FE2_6FEB": [
+          255,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scenario_variant_6F45": 4,
+        "boot_saved_6F43": 0,
+        "menu_cursor_0012": 1,
+        "menu_cursor_0013": 1,
+        "buttons_0081_0086": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "control_0470_047F": [
+          11,
+          4,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          3,
+          3,
+          129,
+          0,
+          0,
+          0
+        ],
+        "PPU_jobs_007E": 0,
+        "NMI_busy_007B": 0,
+        "IRQ_pending_0062": 0,
+        "IRQ_fields_0068_0075": "72af96ef30f240ea20f82f0e0f00",
+        "palette_0100_013F": "0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f2027170f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f202717",
+        "text_progress_0300": 255,
+        "text_cursor_0304": 255,
+        "text_queue_0310_037F": "ffffffff00000000000000004824535349455d01486f6b624f538001010101010101010101010101010101010101010101010101010000000000000028240101010101010101010101018001010101010101010101010101010101010101010101010101010000000000000000838300",
+        "mapper_main_DE_DF_E0": [
+          38,
+          40,
+          41
+        ],
+        "mapper_NMI_E1_E2_E3": [
+          48,
+          61,
+          62
+        ],
+        "audio_RAM_0700_07FF": "ff00dc820000005f0000000001050f000000c5030606ff01e1820000005f0000000001050f00000080030606ff02e6820000001c0000000009020200000002000000ff03eb82010100020000000000000000000003000000ff04f0820000005d1b00000002050500120bfd050000ff05f582000000572700000002050500fefefd0600000ca0848c00005a5a02000000012016000603930302000dc1db8c000056560e00000001200a00fefe930600000b03388d0000181802000000090a0a00fefe030300000ca48b8d000058580200000001201600fefe830302000805fc8d000058581a000000011a1600fefe041102003b0505140b0d01a0000000000000",
+        "scratch_0000_001F": "606003150000298e000018807001caff001401012400020a111702b804017c00",
+        "city_done_flags_04E0_04E4": [
+          0,
+          8,
+          0,
+          0,
+          255
+        ],
+        "UI_roster_0410_0419": [
+          131,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "city11_record": "02000f270f270f270f2763640f270f2763051effffffffffffffff0000000000",
+        "city11_gold": 9999,
+        "city11_reserve_raw16": 9999,
+        "recruitment_quantity_raw_048E_048F": 0,
+        "allocation_working_reserve_042C_042D": 259,
+        "observer_officer_records": {
+          "5": {
+            "ID": 5,
+            "raw": "4d4f38565600e803bc02481a",
+            "health": 77,
+            "status": 2,
+            "experience_raw16": 1000,
+            "troops_raw16": 700,
+            "troops_low10": 700
+          },
+          "30": {
+            "ID": 30,
+            "raw": "5e593c5c4400e80320035216",
+            "health": 94,
+            "status": 2,
+            "experience_raw16": 1000,
+            "troops_raw16": 800,
+            "troops_low10": 800
+          },
+          "131": {
+            "ID": 131,
+            "raw": "525463646100393be803a376",
+            "health": 82,
+            "status": 2,
+            "experience_raw16": 15161,
+            "troops_raw16": 1000,
+            "troops_low10": 1000
+          }
+        },
+        "title_intro_counter_0471_0470": 1035,
+        "world_cursor_6F3F_6F42": [
+          32,
+          0,
+          0,
+          1
+        ],
+        "unit_arrays": {
+          "0x600": [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "0x614": [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "0x628": [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "0x63c": [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "0x650": [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "0x664": [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        "active_units": [],
+        "battle_side_0504": 0,
+        "battle_AP_0505": 10,
+        "battle_round_0506": 1,
+        "battle_actor_050A": 1,
+        "battle_target_0509": 19,
+        "battle_resources_0520_0527": [
+          0,
+          0,
+          15,
+          39,
+          0,
+          0,
+          15,
+          39
+        ],
+        "battle_side_totals_0518_051F": [
+          255,
+          0,
+          172,
+          13,
+          0,
+          0,
+          4,
+          0
+        ],
+        "city_owners": [
+          7,
+          1,
+          4,
+          1,
+          1,
+          7,
+          6,
+          6,
+          0,
+          6,
+          7,
+          2,
+          0,
+          7,
+          2,
+          3,
+          3,
+          3,
+          7,
+          7,
+          3,
+          7,
+          7,
+          7,
+          7,
+          5,
+          5,
+          5,
+          5,
+          7
+        ],
+        "ordinary_attack_fields_0550_05D7": "0403ffffffffffffffffff00000000000000000000000000000000000000000000000000000000000000000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "city_rosters": [
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            77,
+            7,
+            27,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            222,
+            38,
+            153,
+            109,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            134,
+            117,
+            9,
+            194,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            131,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            182,
+            44,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            162,
+            146,
+            148,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            22,
+            211,
+            23,
+            37,
+            186,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            72,
+            120,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            5,
+            30,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            173,
+            219,
+            218,
+            106,
+            143,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            130,
+            29,
+            126,
+            26,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            96,
+            89,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            67,
+            163,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            158,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            138,
+            45,
+            141,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            151,
+            63,
+            81,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            220,
+            16,
+            70,
+            209,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            66,
+            150,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            196,
+            201,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ]
+        ],
+        "city_controls_0478_04DF": "00010303810000000083ffffffffffffffffff00000000000f270000000000000f270f27000000000002000400000000000000000000000000000000000000000000000000000000000000000000000000080300ffb0b000b0ff422748934700ffffffffffffffff",
+        "rulers": [
+          {
+            "index": 0,
+            "ID": 173,
+            "raw": "ad00000300000000",
+            "leader_raw": "58572f640b008813e8036446"
+          },
+          {
+            "index": 1,
+            "ID": 8,
+            "raw": "0800000300000000",
+            "leader_raw": "00460a643200d007e803622b"
+          },
+          {
+            "index": 2,
+            "ID": 131,
+            "raw": "830b000000000000",
+            "leader_raw": "525463646100393be803a376"
+          },
+          {
+            "index": 3,
+            "ID": 138,
+            "raw": "8a00000300000000",
+            "leader_raw": "5a5f3d645a000000e803640a"
+          },
+          {
+            "index": 4,
+            "ID": 222,
+            "raw": "de02000300000000",
+            "leader_raw": "4e47416463000000bc024302"
+          },
+          {
+            "index": 5,
+            "ID": 220,
+            "raw": "dc00000300000000",
+            "leader_raw": "3d272c644d00e803e8030012"
+          },
+          {
+            "index": 6,
+            "ID": 182,
+            "raw": "b600000300000000",
+            "leader_raw": "505236645400d007e8036226"
+          }
+        ],
+        "campaign_officers": {
+          "8": {
+            "raw": "00460a643200d007e803622b",
+            "health": 0,
+            "status": 3
+          },
+          "9": {
+            "raw": "46391e502d00e803bc022812",
+            "health": 70,
+            "status": 2
+          },
+          "51": {
+            "raw": "00590a573400e803e8034b17",
+            "health": 0,
+            "status": 3
+          },
+          "131": {
+            "raw": "525463646100393be803a376",
+            "health": 82,
+            "status": 2
+          },
+          "167": {
+            "raw": "00230a5a5900e803bc020013",
+            "health": 0,
+            "status": 3
+          },
+          "191": {
+            "raw": "005a0a533200e80320034217",
+            "health": 0,
+            "status": 3
+          }
+        }
+      }
+    },
+    "mother": {
+      "path": "analysis/phase15/runtime/succession-heir/observed-g04-n03-battle-015-002.state",
+      "bytes": 13783,
+      "sha256": "f48bd9f42d10c5eba227b76371258307a33ed8071d4e1af8921eafc3d2f22ddc"
+    },
+    "new_case_state_imported": true,
+    "new_case_cold_boot": false,
+    "additional_core_memory_writes": 0,
+    "additional_preparation": [],
+    "earlier_ancestry_scope": "Imports retain all historical preparation. No state is substituted with a similarly named later cold replay.",
+    "natural_ordinary_input_route": false,
+    "controlled_ancestry": true,
+    "known_inherited_preparation": [
+      {
+        "frame": 0,
+        "kind": "RAM",
+        "address": 1285,
+        "before": 16,
+        "after": 30,
+        "reason": "controlled AP resource30 permits four actual5-AP trap casts plus retries; natural reachability not claimed"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 27110,
+        "before": 89,
+        "after": 99,
+        "reason": "controlled caster intelligence99"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 27114,
+        "before": 232,
+        "after": 152,
+        "reason": "controlled caster experience15000 low"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 27115,
+        "before": 3,
+        "after": 58,
+        "reason": "controlled caster experience15000 high"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 27119,
+        "before": 22,
+        "after": 118,
+        "reason": "controlled caster tier7; original status/affinity low nibble retained"
+      },
+      {
+        "frame": 0,
+        "kind": "RAM",
+        "address": 1537,
+        "before": 17,
+        "after": 5,
+        "reason": "controlled legal unique target X on original class0/4 trap terrain"
+      },
+      {
+        "frame": 0,
+        "kind": "RAM",
+        "address": 1557,
+        "before": 17,
+        "after": 16,
+        "reason": "controlled legal unique target Y within original target range"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 27828,
+        "before": 92,
+        "after": 1,
+        "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 27830,
+        "before": 31,
+        "after": 10,
+        "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+      },
+      {
+        "frame": 0,
+        "kind": "RAM",
+        "address": 1538,
+        "before": 19,
+        "after": 5,
+        "reason": "controlled legal unique target X on original class0/4 trap terrain"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 26148,
+        "before": 91,
+        "after": 1,
+        "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 26150,
+        "before": 37,
+        "after": 10,
+        "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+      },
+      {
+        "frame": 0,
+        "kind": "RAM",
+        "address": 1539,
+        "before": 20,
+        "after": 5,
+        "reason": "controlled legal unique target X on original class0/4 trap terrain"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 27540,
+        "before": 40,
+        "after": 1,
+        "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 27542,
+        "before": 93,
+        "after": 10,
+        "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+      },
+      {
+        "frame": 0,
+        "kind": "RAM",
+        "address": 1536,
+        "before": 20,
+        "after": 3,
+        "reason": "controlled legal unique target X on original class0/4 trap terrain"
+      },
+      {
+        "frame": 0,
+        "kind": "RAM",
+        "address": 1556,
+        "before": 14,
+        "after": 12,
+        "reason": "controlled legal unique target Y within original target range"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 25632,
+        "before": 75,
+        "after": 1,
+        "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+      },
+      {
+        "frame": 0,
+        "kind": "SRAM",
+        "address": 25634,
+        "before": 52,
+        "after": 10,
+        "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+      }
+    ],
+    "known_inherited_preparation_byte_writes": 19,
+    "historical_preparation_base": "analysis/phase15/runtime/succession-heir",
+    "historical_preparation_buffer_pins": [
+      {
+        "path": "analysis/phase15/runtime/succession-heir/controlled-inheritance-preparation-before-ram.bin",
+        "bytes": 2048,
+        "sha256": "9fa774acb5028728a51d9164c8cf9c213546a81131037b1d9f0813478813e201"
+      },
+      {
+        "path": "analysis/phase15/runtime/succession-heir/controlled-inheritance-preparation-after-ram.bin",
+        "bytes": 2048,
+        "sha256": "e32f0b282b2e2b8d9bc6df86565ce58647d954d696f380cd5bd9c8b449a751ab"
+      },
+      {
+        "path": "analysis/phase15/runtime/succession-heir/controlled-inheritance-preparation-before-sram.bin",
+        "bytes": 8192,
+        "sha256": "59cb62b5d2f4411d7cabfdb87b182907d27c12d77f8135b30aa10e67d1382a7b"
+      },
+      {
+        "path": "analysis/phase15/runtime/succession-heir/controlled-inheritance-preparation-after-sram.bin",
+        "bytes": 8192,
+        "sha256": "563fa70d8d023992a1b9c28712e50f48923869da9666ef2180ea74056ad76bbf"
+      }
+    ],
+    "historical_preparation_groups": [
+      {
+        "label": "controlled-inheritance-preparation",
+        "frame": 0,
+        "start_write_index": 0,
+        "before": {
+          "RAM": {
+            "path": "controlled-inheritance-preparation-before-ram.bin",
+            "bytes": 2048,
+            "sha256": "9fa774acb5028728a51d9164c8cf9c213546a81131037b1d9f0813478813e201"
+          },
+          "SRAM": {
+            "path": "controlled-inheritance-preparation-before-sram.bin",
+            "bytes": 8192,
+            "sha256": "59cb62b5d2f4411d7cabfdb87b182907d27c12d77f8135b30aa10e67d1382a7b"
+          }
+        },
+        "after": {
+          "RAM": {
+            "path": "controlled-inheritance-preparation-after-ram.bin",
+            "bytes": 2048,
+            "sha256": "e32f0b282b2e2b8d9bc6df86565ce58647d954d696f380cd5bd9c8b449a751ab"
+          },
+          "SRAM": {
+            "path": "controlled-inheritance-preparation-after-sram.bin",
+            "bytes": 8192,
+            "sha256": "563fa70d8d023992a1b9c28712e50f48923869da9666ef2180ea74056ad76bbf"
+          }
+        },
+        "writes": [
+          {
+            "frame": 0,
+            "kind": "RAM",
+            "address": 1285,
+            "before": 16,
+            "after": 30,
+            "reason": "controlled AP resource30 permits four actual5-AP trap casts plus retries; natural reachability not claimed"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 27110,
+            "before": 89,
+            "after": 99,
+            "reason": "controlled caster intelligence99"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 27114,
+            "before": 232,
+            "after": 152,
+            "reason": "controlled caster experience15000 low"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 27115,
+            "before": 3,
+            "after": 58,
+            "reason": "controlled caster experience15000 high"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 27119,
+            "before": 22,
+            "after": 118,
+            "reason": "controlled caster tier7; original status/affinity low nibble retained"
+          },
+          {
+            "frame": 0,
+            "kind": "RAM",
+            "address": 1537,
+            "before": 17,
+            "after": 5,
+            "reason": "controlled legal unique target X on original class0/4 trap terrain"
+          },
+          {
+            "frame": 0,
+            "kind": "RAM",
+            "address": 1557,
+            "before": 17,
+            "after": 16,
+            "reason": "controlled legal unique target Y within original target range"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 27828,
+            "before": 92,
+            "after": 1,
+            "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 27830,
+            "before": 31,
+            "after": 10,
+            "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+          },
+          {
+            "frame": 0,
+            "kind": "RAM",
+            "address": 1538,
+            "before": 19,
+            "after": 5,
+            "reason": "controlled legal unique target X on original class0/4 trap terrain"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 26148,
+            "before": 91,
+            "after": 1,
+            "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 26150,
+            "before": 37,
+            "after": 10,
+            "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+          },
+          {
+            "frame": 0,
+            "kind": "RAM",
+            "address": 1539,
+            "before": 20,
+            "after": 5,
+            "reason": "controlled legal unique target X on original class0/4 trap terrain"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 27540,
+            "before": 40,
+            "after": 1,
+            "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 27542,
+            "before": 93,
+            "after": 10,
+            "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+          },
+          {
+            "frame": 0,
+            "kind": "RAM",
+            "address": 1536,
+            "before": 20,
+            "after": 3,
+            "reason": "controlled legal unique target X on original class0/4 trap terrain"
+          },
+          {
+            "frame": 0,
+            "kind": "RAM",
+            "address": 1556,
+            "before": 14,
+            "after": 12,
+            "reason": "controlled legal unique target Y within original target range"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 25632,
+            "before": 75,
+            "after": 1,
+            "reason": "controlled pre-combat health1; original cast must write health0/status3/slotclear"
+          },
+          {
+            "frame": 0,
+            "kind": "SRAM",
+            "address": 25634,
+            "before": 52,
+            "after": 10,
+            "reason": "controlled target intelligence10 avoids signed gate wrap; actual RNG still consumed"
+          }
+        ]
+      }
+    ],
+    "earlier_parent": {
+      "path": "analysis/runtime/phase3/attack-intro-7.state",
+      "bytes": 13783,
+      "sha256": "82a7e08a2d85b724f495ed6899390ad8c9afa4d9753ee4ac7b713d296233c089"
+    },
+    "earlier_import_metadata_chain": [
+      {
+        "path": "analysis/runtime/phase3/attack-intro-7.json",
+        "bytes": 3618,
+        "sha256": "ce74605c981edbcb72103a04bd86abafc271286d5b8a4f023d3efe3be092b166"
+      },
+      {
+        "path": "analysis/runtime/phase3/battle-enter-confirm.state",
+        "bytes": 13783,
+        "sha256": "3a74998add0b44d383ee3f4fceade223989c878221794b2c63179f22cb3e3a24"
+      },
+      {
+        "path": "analysis/runtime/phase3/battle-enter-confirm.json",
+        "bytes": 2541,
+        "sha256": "9a00dc556532c6a1b07883946564c00f4fec57055e78a019cc463d465ee3b2f8"
+      },
+      {
+        "path": "analysis/runtime/phase3/supply-third.state",
+        "bytes": 13783,
+        "sha256": "ef9844c845bb0c464d9276bf6ee1cf93c0306ac7a2b87ec83bf49150bc815d3b"
+      },
+      {
+        "path": "analysis/runtime/phase3/supply-third.json",
+        "bytes": 2712,
+        "sha256": "b84fdafa26c254cf74f05db923efef5518c4f57ff7d05a46b676d218d7ce8104"
+      },
+      {
+        "path": "analysis/runtime/phase3/army-selected.state",
+        "bytes": 13783,
+        "sha256": "d06b5abbcea1d550e7682e8c1b6e91bcd1780f68241c85d57a664fede3c623c3"
+      },
+      {
+        "path": "analysis/runtime/phase3/army-selected.json",
+        "bytes": 2891,
+        "sha256": "3ae9325c643ddfa728c0d17f1b7d6f52539f4084fbd6679b7633f59740d971d3"
+      },
+      {
+        "path": "analysis/runtime/phase3/army-third.state",
+        "bytes": 13783,
+        "sha256": "f35417ee07dcc0ed8e4540cb01fb154cd4bb33ad20059b9eeff2c61526df968f"
+      },
+      {
+        "path": "analysis/runtime/phase3/army-third.json",
+        "bytes": 2715,
+        "sha256": "2a299cb6e8dc5a4b0c02eff3fbe3a8faa8ee8f5aed0c3f53ec903f5b1481f97a"
+      },
+      {
+        "path": "analysis/runtime/phase3/target-probes/up-1.state",
+        "bytes": 13783,
+        "sha256": "d680059b549f6bca941a4dfad39cadd725ac0afd620709f621d7f1b6303d69e8"
+      },
+      {
+        "path": "analysis/runtime/phase3/target-probes/up-1.json",
+        "bytes": 2587,
+        "sha256": "c222fb96835a3cc7926b4965719d9204cc1a763b2201e31bd662a01c8845dad6"
+      },
+      {
+        "path": "analysis/runtime/phase3/invasion-target.state",
+        "bytes": 13783,
+        "sha256": "15c08c329dcc102490969de7f3d4cd876f5d46d91113f440db6a9aaf00f65190"
+      },
+      {
+        "path": "analysis/runtime/phase3/invasion-target.json",
+        "bytes": 2360,
+        "sha256": "0e125d35eb5e79e4eccda74ea272a38761331b3a416760813c00ba83b3b81732"
+      },
+      {
+        "path": "analysis/runtime/phase3/military-submenu.state",
+        "bytes": 13783,
+        "sha256": "6b412aa6db1106f06614c96f3ca461beb0846dcdcb211e680ee1858fceb818a5"
+      },
+      {
+        "path": "analysis/runtime/phase3/military-submenu.json",
+        "bytes": 2528,
+        "sha256": "73b6eb14e212c4cc33619cde2ad8246fa2ea2ff82b40991afd4af6347c9edca1"
+      },
+      {
+        "path": "analysis/runtime/city-commands.state",
+        "bytes": 13783,
+        "sha256": "78d30424a2c768e59eb6285a81b624eb1d73cd20ab5f57998b3c5de04516dda1"
+      },
+      {
+        "path": "analysis/runtime/city-commands.json",
+        "bytes": 2518,
+        "sha256": "59705eadd9773a20d20b16beebd31d2c606468be4f13c0a1e38b2f8d79a2765f"
+      },
+      {
+        "path": "analysis/runtime/city-panel.state",
+        "bytes": 13783,
+        "sha256": "14ec5e08559281c16145a6905a3b46a5433479eedbef7f83dded800df426cadd"
+      },
+      {
+        "path": "analysis/runtime/city-panel.json",
+        "bytes": 2426,
+        "sha256": "7a667cf7915b36a02340bbc6c75372828f8028ca8f54a5e6dbffa0b156f58c97"
+      },
+      {
+        "path": "analysis/runtime/picked-ruler.state",
+        "bytes": 13783,
+        "sha256": "b05a5357cb2b120198cf8f2168fe78541e6e808710eef10f09af5ea4074ca8f8"
+      },
+      {
+        "path": "analysis/runtime/picked-ruler.json",
+        "bytes": 2521,
+        "sha256": "91d74bdbf513f1d4e93b87708d7cfab1e0405ecb894b5213a439c0cbb29404df"
+      },
+      {
+        "path": "analysis/runtime/game-start.state",
+        "bytes": 13783,
+        "sha256": "6d746aa351166dddff64861a30ad58788e05c4f13f4f1464b6e8bf21b932333c"
+      },
+      {
+        "path": "analysis/runtime/game-start.json",
+        "bytes": 2346,
+        "sha256": "a2ab846d6ea9bb8ca26a6517dd6464752e5f7505022ec8570ef3f0a79234edc4"
+      },
+      {
+        "path": "analysis/runtime/ruler-confirm.state",
+        "bytes": 13783,
+        "sha256": "2e53e624e7999feb7f4cecb3e0609608b7ba100502bc23c31351bc9526530a7f"
+      },
+      {
+        "path": "analysis/runtime/ruler-confirm.json",
+        "bytes": 2343,
+        "sha256": "f65c278ac60686e2bd4a5044791d2ce3221b665d589ab6deb95f5d8ebe897bad"
+      },
+      {
+        "path": "analysis/runtime/confirm.state",
+        "bytes": 13783,
+        "sha256": "594874086a584748265965b9846bf2b2ab90a0e96211703e48caddbfb56ca4e7"
+      },
+      {
+        "path": "analysis/runtime/confirm.json",
+        "bytes": 2349,
+        "sha256": "4820fd0a6334089ff91e7aabe5fcbb7ce49e1c5de325e8f835c84b573c31e9ec"
+      },
+      {
+        "path": "analysis/runtime/scenario-select.state",
+        "bytes": 13783,
+        "sha256": "d3754502ef2ba0675815239c61c0a644396565a6e4059b3230f5840c03a90359"
+      },
+      {
+        "path": "analysis/runtime/scenario-select.json",
+        "bytes": 2354,
+        "sha256": "44262ad4da9a9e1930ea3b7fa1475a79ea57b3aad2d4de9dc303454f79c8bad9"
+      },
+      {
+        "path": "analysis/runtime/menu-after-start.state",
+        "bytes": 13783,
+        "sha256": "302da20d6e4d258d6a07121bea55190196bbf85c1de66a8b3780458f43347a98"
+      },
+      {
+        "path": "analysis/runtime/menu-after-start.json",
+        "bytes": 2355,
+        "sha256": "ae0f4edc7092d8a17b70421fc2e417a21ea91b82421252b0aef9ccd76777611b"
+      },
+      {
+        "path": "analysis/runtime/start-menu.state",
+        "bytes": 13783,
+        "sha256": "293fd828835efc9f46dddcfafeaca43b661c5f369a0dad7936680f2e994e60a4"
+      },
+      {
+        "path": "analysis/runtime/start-menu.json",
+        "bytes": 2273,
+        "sha256": "96c7767f44b91fe515254fafb92cd14a4f83624fbe5b79f1b1489baa6e2a0976"
+      }
+    ],
+    "earlier_than_phase15_numeric_preparation_status": "not fully established by the legacy import/button metadata; not assumed zero",
+    "additional_scope": "The nineteen explicitly recorded phase15 numerical preparations precede real original-core combat. No new numerical/status/location/roster/ready/result/RNG/PC preparation is performed here."
+  },
+  "controller_buttons": [
+    0,
+    0
+  ],
+  "injected_new_NMI": 0,
+  "injected_new_IRQ": 0,
+  "hardware_events": [
+    {
+      "kind": "explicit_model_port_inputs",
+      "PPUSTATUS": 0,
+      "APU_status": 0,
+      "Namco_IRQ": 127,
+      "controller_buttons": [
+        0,
+        0
+      ]
+    }
+  ],
+  "actual_call_kind": "far_indirect_jump",
+  "immediate_transfer_PC": 61002,
+  "immediate_transfer_proof": {
+    "callee_opcode_boundary": {
+      "sequence": 497,
+      "frame": 1,
+      "cycle": 121320,
+      "kind": "opcode_boundary",
+      "opcode_PC": 40966,
+      "bus_PC": 40966,
+      "physical_bank": 8,
+      "actual_PRG_banks": [
+        17,
+        8,
+        9,
+        31
+      ],
+      "rom_offset": 65558,
+      "address": 40966,
+      "value": 0,
+      "A": 76,
+      "X": 64,
+      "Y": 40,
+      "P": 32,
+      "SP": 240,
+      "ZP_0000_0023": [
+        0,
+        131,
+        0,
+        0,
+        0,
+        0,
+        104,
+        148,
+        0,
+        0,
+        24,
+        64,
+        0,
+        1,
+        202,
+        255,
+        0,
+        20,
+        1,
+        1,
+        36,
+        0,
+        2,
+        10,
+        17,
+        23,
+        2,
+        184,
+        4,
+        1,
+        124,
+        0,
+        23,
+        111,
+        2,
+        10
+      ],
+      "pointer_0000_0001": 33536,
+      "saved_pointer_0010_0011": 5120,
+      "scratch_0053_0054": [
+        4,
+        142
+      ],
+      "pointer_0022_0023": 2562,
+      "working_0036_0039": [
+        38,
+        27,
+        222,
+        71
+      ],
+      "city_state_0400_0403": [
+        3,
+        0,
+        11,
+        0
+      ],
+      "row_0012": 1,
+      "row_047A": 3,
+      "end_row_047B": 3,
+      "mode_047C": 129,
+      "working_reserve_042C_042D": 259,
+      "stack_above_SP_4bytes": [
+        76,
+        238,
+        44,
+        249
+      ],
+      "stack_top_word_raw": 61004,
+      "full_snapshot_sequence": 5,
+      "last_CPU_opcode_field": 108,
+      "bus_internal": 160,
+      "bus_external": 160,
+      "raw_UI_cache_0151_plus_row": 50,
+      "NMI_scene_0078": 3,
+      "global_main_007A": 4,
+      "new_buttons_0081": 0,
+      "CHR_cache_00C2": 8,
+      "target_type": "opcode_boundary",
+      "WRAM_readable": true,
+      "WRAM_writable": true,
+      "physical_storage_byte_after_event": null,
+      "city_index": null,
+      "city_offset": null,
+      "ZP_0000_002F": [
+        0,
+        131,
+        0,
+        0,
+        0,
+        0,
+        104,
+        148,
+        0,
+        0,
+        24,
+        64,
+        0,
+        1,
+        202,
+        255,
+        0,
+        20,
+        1,
+        1,
+        36,
+        0,
+        2,
+        10,
+        17,
+        23,
+        2,
+        184,
+        4,
+        1,
+        124,
+        0,
+        23,
+        111,
+        2,
+        10,
+        16,
+        20,
+        0,
+        185,
+        27,
+        71,
+        0,
+        2,
+        4,
+        0,
+        0,
+        0
+      ],
+      "product_002A_002B": 512,
+      "raw_officer_ID_0024": 16,
+      "current_city_0036": 38,
+      "appearance_pair_index_0037": 27,
+      "year_raw_6F00": 89,
+      "ruler_6F03": 2,
+      "domestic_phase_6F5B": 255,
+      "request_6F8B": 255,
+      "officer_index": null,
+      "strategy_side_6F91": 1,
+      "noncommander_count_6F94": 0,
+      "raw_bank_selector_DE": 38,
+      "raw_bank_selector_DF": 40,
+      "profile_counts_6F99_6FA0": [
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_physical_bank": null,
+      "data_ROM_offset": null,
+      "pointer_001A_001B": 47106,
+      "battle_0506_0507_050E_0514": [
+        1,
+        33,
+        4,
+        0
+      ],
+      "RAM0500_0503": [
+        15,
+        2,
+        0,
+        0
+      ],
+      "RAM0514_0517": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "RAM0518_051B": [
+        255,
+        0,
+        172,
+        13
+      ],
+      "storage_byte_before_write": null,
+      "logical_G106_city_read": false,
+      "G106_STA_dummy_read": false,
+      "logical_G106_city_store": false,
+      "fade_0087_008A": [
+        255,
+        0,
+        4,
+        4
+      ],
+      "ppu_flags_007D_0080": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "palette_active_0100_011F": [
+        15,
+        39,
+        25,
+        10,
+        15,
+        25,
+        18,
+        2,
+        15,
+        54,
+        32,
+        22,
+        15,
+        32,
+        32,
+        32,
+        15,
+        15,
+        32,
+        22,
+        15,
+        15,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23
+      ],
+      "palette_backup_0120_013F": [
+        15,
+        39,
+        25,
+        10,
+        15,
+        25,
+        18,
+        2,
+        15,
+        54,
+        32,
+        22,
+        15,
+        32,
+        32,
+        32,
+        15,
+        15,
+        32,
+        22,
+        15,
+        15,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23
+      ],
+      "shadow_bank_bytes_00DE_00E5": [
+        38,
+        40,
+        41,
+        49,
+        40,
+        41,
+        0,
+        0
+      ],
+      "captured_RAM_byte_after_write": null
+    },
+    "previous_watched_opcode_boundary": {
+      "sequence": 493,
+      "frame": 1,
+      "cycle": 121260,
+      "kind": "opcode_boundary",
+      "opcode_PC": 61002,
+      "bus_PC": 61002,
+      "physical_bank": 31,
+      "actual_PRG_banks": [
+        17,
+        8,
+        9,
+        31
+      ],
+      "rom_offset": 257626,
+      "address": 61002,
+      "value": 0,
+      "A": 76,
+      "X": 64,
+      "Y": 40,
+      "P": 32,
+      "SP": 240,
+      "ZP_0000_0023": [
+        0,
+        131,
+        0,
+        0,
+        0,
+        0,
+        104,
+        148,
+        0,
+        0,
+        24,
+        64,
+        0,
+        1,
+        202,
+        255,
+        0,
+        20,
+        1,
+        1,
+        36,
+        0,
+        2,
+        10,
+        17,
+        23,
+        2,
+        184,
+        4,
+        1,
+        124,
+        0,
+        23,
+        111,
+        2,
+        10
+      ],
+      "pointer_0000_0001": 33536,
+      "saved_pointer_0010_0011": 5120,
+      "scratch_0053_0054": [
+        4,
+        142
+      ],
+      "pointer_0022_0023": 2562,
+      "working_0036_0039": [
+        38,
+        27,
+        222,
+        71
+      ],
+      "city_state_0400_0403": [
+        3,
+        0,
+        11,
+        0
+      ],
+      "row_0012": 1,
+      "row_047A": 3,
+      "end_row_047B": 3,
+      "mode_047C": 129,
+      "working_reserve_042C_042D": 259,
+      "stack_above_SP_4bytes": [
+        76,
+        238,
+        44,
+        249
+      ],
+      "stack_top_word_raw": 61004,
+      "full_snapshot_sequence": 4,
+      "last_CPU_opcode_field": 72,
+      "bus_internal": 76,
+      "bus_external": 76,
+      "raw_UI_cache_0151_plus_row": 50,
+      "NMI_scene_0078": 3,
+      "global_main_007A": 4,
+      "new_buttons_0081": 0,
+      "CHR_cache_00C2": 8,
+      "target_type": "opcode_boundary",
+      "WRAM_readable": true,
+      "WRAM_writable": true,
+      "physical_storage_byte_after_event": null,
+      "city_index": null,
+      "city_offset": null,
+      "ZP_0000_002F": [
+        0,
+        131,
+        0,
+        0,
+        0,
+        0,
+        104,
+        148,
+        0,
+        0,
+        24,
+        64,
+        0,
+        1,
+        202,
+        255,
+        0,
+        20,
+        1,
+        1,
+        36,
+        0,
+        2,
+        10,
+        17,
+        23,
+        2,
+        184,
+        4,
+        1,
+        124,
+        0,
+        23,
+        111,
+        2,
+        10,
+        16,
+        20,
+        0,
+        185,
+        27,
+        71,
+        0,
+        2,
+        4,
+        0,
+        0,
+        0
+      ],
+      "product_002A_002B": 512,
+      "raw_officer_ID_0024": 16,
+      "current_city_0036": 38,
+      "appearance_pair_index_0037": 27,
+      "year_raw_6F00": 89,
+      "ruler_6F03": 2,
+      "domestic_phase_6F5B": 255,
+      "request_6F8B": 255,
+      "officer_index": null,
+      "strategy_side_6F91": 1,
+      "noncommander_count_6F94": 0,
+      "raw_bank_selector_DE": 38,
+      "raw_bank_selector_DF": 40,
+      "profile_counts_6F99_6FA0": [
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_physical_bank": null,
+      "data_ROM_offset": null,
+      "pointer_001A_001B": 47106,
+      "battle_0506_0507_050E_0514": [
+        1,
+        33,
+        4,
+        0
+      ],
+      "RAM0500_0503": [
+        15,
+        2,
+        0,
+        0
+      ],
+      "RAM0514_0517": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "RAM0518_051B": [
+        255,
+        0,
+        172,
+        13
+      ],
+      "storage_byte_before_write": null,
+      "logical_G106_city_read": false,
+      "G106_STA_dummy_read": false,
+      "logical_G106_city_store": false,
+      "fade_0087_008A": [
+        255,
+        0,
+        4,
+        4
+      ],
+      "ppu_flags_007D_0080": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "palette_active_0100_011F": [
+        15,
+        39,
+        25,
+        10,
+        15,
+        25,
+        18,
+        2,
+        15,
+        54,
+        32,
+        22,
+        15,
+        32,
+        32,
+        32,
+        15,
+        15,
+        32,
+        22,
+        15,
+        15,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23
+      ],
+      "palette_backup_0120_013F": [
+        15,
+        39,
+        25,
+        10,
+        15,
+        25,
+        18,
+        2,
+        15,
+        54,
+        32,
+        22,
+        15,
+        32,
+        32,
+        32,
+        15,
+        15,
+        32,
+        22,
+        15,
+        15,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23
+      ],
+      "shadow_bank_bytes_00DE_00E5": [
+        38,
+        40,
+        41,
+        49,
+        40,
+        41,
+        0,
+        0
+      ],
+      "captured_RAM_byte_after_write": null
+    },
+    "not_inferred_from_return_stack": true,
+    "scope": "Watched boundary provenance; not an unbroken global CPU trace",
+    "previous_ROM_bytes": "6C 5B 00",
+    "cycle_ticks": 60,
+    "actual_indirect_pointer": 91
+  },
+  "real_return_frame_owner": {
+    "kind": "EE07_constructed_far_callee_frame",
+    "existing_stack_word": 61004,
+    "return_PC": 61005,
+    "SP": 240,
+    "creation_PC": null,
+    "not_inferred_from_return_word_minus3": true,
+    "original_protocol_push_PCs": [
+      60998,
+      61001
+    ],
+    "original_protocol_return_word": 61004,
+    "basis": "Captured actual stack; original EE07 constructs this frame before its indirect jump. No new frame is added at trampoline/dispatch."
+  },
+  "stage": 2,
+  "fade_sign": true,
+  "scope": "stage2_complete_caller",
+  "owner_scope": "PostbattleParentServices",
+  "passive_capture": {
+    "metadata": "analysis/phase28/runtime/controlled-ancestry-resource-loss/observer/callee-0005-A006.json",
+    "metadata_sha256": "656d80b0ac6455675ad067ac90b874ea4e3a3e982264b3ab2f61684d060cea27",
+    "frame": 1,
+    "snapshot_sequence": 5,
+    "event_sequence": 497,
+    "RAM_path": "analysis/phase28/runtime/controlled-ancestry-resource-loss/observer/callee-0005-A006-ram.bin",
+    "RAM_sha256": "0b73d05262eaa3065d1fd10994511931319c38f44e61d431d9162dade220fc89",
+    "SRAM_path": "analysis/phase28/runtime/controlled-ancestry-resource-loss/observer/callee-0005-A006-sram.bin",
+    "SRAM_sha256": "4d87d9e2f3036fcf78fa4394800c52606a3934ca659c368b5876c1d5c645bfe2",
+    "manifest": "analysis/phase28/runtime/evidence.json",
+    "manifest_sha256": "690dba926989eeda59ebe32c45dd8e9ba08ef95037fd6a5585c9eda6cf623c77",
+    "events_path": "analysis/phase28/runtime/controlled-ancestry-resource-loss/observer/events.jsonl",
+    "events_sha256": "4fc59fc600dc8073ba34c175523d66e3fa9a811ff12a6ea41133141840c74c9a",
+    "preparation_path": "analysis/phase28/runtime/controlled-ancestry-resource-loss/observer/preparation.json",
+    "preparation_sha256": "0808c3e5a823931e8d8703ab9c2e508ba13026f0f66d1832ea81f95b61903924"
+  },
+  "actual_software_state_captured": true,
+  "synthetic_caller_PC_or_stack": false,
+  "unmodified_core_internal_trace": false
+}

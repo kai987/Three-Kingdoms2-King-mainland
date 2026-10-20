@@ -1,0 +1,2442 @@
+[
+  {
+    "physical_bank": 10,
+    "cpu": 42050,
+    "rom_offset": 83026,
+    "raw_hex": "A0 10",
+    "assembly": "LDY  #$10",
+    "count": 257
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 42052,
+    "rom_offset": 83028,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 33164
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 42053,
+    "rom_offset": 83029,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 33164
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 42055,
+    "rom_offset": 83031,
+    "raw_hex": "C9 FF",
+    "assembly": "CMP  #$FF",
+    "count": 33164
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 42057,
+    "rom_offset": 83033,
+    "raw_hex": "D0 F9",
+    "assembly": "BNE  $A444",
+    "count": 33164
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 42059,
+    "rom_offset": 83035,
+    "raw_hex": "AD 3C 00",
+    "assembly": "LDA  $003C",
+    "count": 257
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 42062,
+    "rom_offset": 83038,
+    "raw_hex": "91 20",
+    "assembly": "STA  ($20),Y",
+    "count": 257
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45380,
+    "rom_offset": 86356,
+    "raw_hex": "AD 40 00",
+    "assembly": "LDA  $0040",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45383,
+    "rom_offset": 86359,
+    "raw_hex": "38",
+    "assembly": "SEC",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45384,
+    "rom_offset": 86360,
+    "raw_hex": "E9 02",
+    "assembly": "SBC  #$02",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45386,
+    "rom_offset": 86362,
+    "raw_hex": "C9 10",
+    "assembly": "CMP  #$10",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45388,
+    "rom_offset": 86364,
+    "raw_hex": "90 02",
+    "assembly": "BCC  $B150",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45390,
+    "rom_offset": 86366,
+    "raw_hex": "A9 02",
+    "assembly": "LDA  #$02",
+    "count": 240
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45392,
+    "rom_offset": 86368,
+    "raw_hex": "C9 02",
+    "assembly": "CMP  #$02",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45394,
+    "rom_offset": 86370,
+    "raw_hex": "B0 02",
+    "assembly": "BCS  $B156",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45396,
+    "rom_offset": 86372,
+    "raw_hex": "A9 02",
+    "assembly": "LDA  #$02",
+    "count": 2
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45398,
+    "rom_offset": 86374,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45399,
+    "rom_offset": 86375,
+    "raw_hex": "69 02",
+    "assembly": "ADC  #$02",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 45401,
+    "rom_offset": 86377,
+    "raw_hex": "8D 37 00",
+    "assembly": "STA  $0037",
+    "count": 256
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 48533,
+    "rom_offset": 89509,
+    "raw_hex": "A0 01",
+    "assembly": "LDY  #$01",
+    "count": 1024
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 48535,
+    "rom_offset": 89511,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 1024
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 48537,
+    "rom_offset": 89513,
+    "raw_hex": "38",
+    "assembly": "SEC",
+    "count": 1024
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 48538,
+    "rom_offset": 89514,
+    "raw_hex": "E9 2C",
+    "assembly": "SBC  #$2C",
+    "count": 1024
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 48540,
+    "rom_offset": 89516,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 1024
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 48541,
+    "rom_offset": 89517,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 1024
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 48543,
+    "rom_offset": 89519,
+    "raw_hex": "E9 01",
+    "assembly": "SBC  #$01",
+    "count": 1024
+  },
+  {
+    "physical_bank": 10,
+    "cpu": 48545,
+    "rom_offset": 89521,
+    "raw_hex": "90 4B",
+    "assembly": "BCC  $BDEE",
+    "count": 1024
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53509,
+    "rom_offset": 94485,
+    "raw_hex": "A0 00",
+    "assembly": "LDY  #$00",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53511,
+    "rom_offset": 94487,
+    "raw_hex": "84 21",
+    "assembly": "STY  $21",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53513,
+    "rom_offset": 94489,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53514,
+    "rom_offset": 94490,
+    "raw_hex": "26 21",
+    "assembly": "ROL  $21",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53516,
+    "rom_offset": 94492,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53517,
+    "rom_offset": 94493,
+    "raw_hex": "26 21",
+    "assembly": "ROL  $21",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53519,
+    "rom_offset": 94495,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53520,
+    "rom_offset": 94496,
+    "raw_hex": "26 21",
+    "assembly": "ROL  $21",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53522,
+    "rom_offset": 94498,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53523,
+    "rom_offset": 94499,
+    "raw_hex": "26 21",
+    "assembly": "ROL  $21",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53525,
+    "rom_offset": 94501,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53526,
+    "rom_offset": 94502,
+    "raw_hex": "26 21",
+    "assembly": "ROL  $21",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53528,
+    "rom_offset": 94504,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53529,
+    "rom_offset": 94505,
+    "raw_hex": "69 00",
+    "assembly": "ADC  #$00",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53531,
+    "rom_offset": 94507,
+    "raw_hex": "85 20",
+    "assembly": "STA  $20",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53533,
+    "rom_offset": 94509,
+    "raw_hex": "A5 21",
+    "assembly": "LDA  $21",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53535,
+    "rom_offset": 94511,
+    "raw_hex": "69 60",
+    "assembly": "ADC  #$60",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53537,
+    "rom_offset": 94513,
+    "raw_hex": "85 21",
+    "assembly": "STA  $21",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53539,
+    "rom_offset": 94515,
+    "raw_hex": "20 9D D6",
+    "assembly": "JSR  $D69D",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53542,
+    "rom_offset": 94518,
+    "raw_hex": "A0 00",
+    "assembly": "LDY  #$00",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53544,
+    "rom_offset": 94520,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53546,
+    "rom_offset": 94522,
+    "raw_hex": "29 07",
+    "assembly": "AND  #$07",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53548,
+    "rom_offset": 94524,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 256
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53891,
+    "rom_offset": 94867,
+    "raw_hex": "A2 00",
+    "assembly": "LDX  #$00",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53893,
+    "rom_offset": 94869,
+    "raw_hex": "86 21",
+    "assembly": "STX  $21",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53895,
+    "rom_offset": 94871,
+    "raw_hex": "85 20",
+    "assembly": "STA  $20",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53897,
+    "rom_offset": 94873,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53898,
+    "rom_offset": 94874,
+    "raw_hex": "26 21",
+    "assembly": "ROL  $21",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53900,
+    "rom_offset": 94876,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53901,
+    "rom_offset": 94877,
+    "raw_hex": "65 20",
+    "assembly": "ADC  $20",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53903,
+    "rom_offset": 94879,
+    "raw_hex": "48",
+    "assembly": "PHA",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53904,
+    "rom_offset": 94880,
+    "raw_hex": "A5 21",
+    "assembly": "LDA  $21",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53906,
+    "rom_offset": 94882,
+    "raw_hex": "69 00",
+    "assembly": "ADC  #$00",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53908,
+    "rom_offset": 94884,
+    "raw_hex": "85 21",
+    "assembly": "STA  $21",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53910,
+    "rom_offset": 94886,
+    "raw_hex": "68",
+    "assembly": "PLA",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53911,
+    "rom_offset": 94887,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53912,
+    "rom_offset": 94888,
+    "raw_hex": "26 21",
+    "assembly": "ROL  $21",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53914,
+    "rom_offset": 94890,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53915,
+    "rom_offset": 94891,
+    "raw_hex": "26 21",
+    "assembly": "ROL  $21",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53917,
+    "rom_offset": 94893,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53918,
+    "rom_offset": 94894,
+    "raw_hex": "69 C0",
+    "assembly": "ADC  #$C0",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53920,
+    "rom_offset": 94896,
+    "raw_hex": "85 20",
+    "assembly": "STA  $20",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53922,
+    "rom_offset": 94898,
+    "raw_hex": "A5 21",
+    "assembly": "LDA  $21",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53924,
+    "rom_offset": 94900,
+    "raw_hex": "69 63",
+    "assembly": "ADC  #$63",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53926,
+    "rom_offset": 94902,
+    "raw_hex": "85 21",
+    "assembly": "STA  $21",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53928,
+    "rom_offset": 94904,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53930,
+    "rom_offset": 94906,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53931,
+    "rom_offset": 94907,
+    "raw_hex": "A2 00",
+    "assembly": "LDX  #$00",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53933,
+    "rom_offset": 94909,
+    "raw_hex": "86 23",
+    "assembly": "STX  $23",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53935,
+    "rom_offset": 94911,
+    "raw_hex": "85 22",
+    "assembly": "STA  $22",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53937,
+    "rom_offset": 94913,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53938,
+    "rom_offset": 94914,
+    "raw_hex": "26 23",
+    "assembly": "ROL  $23",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53940,
+    "rom_offset": 94916,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53941,
+    "rom_offset": 94917,
+    "raw_hex": "65 22",
+    "assembly": "ADC  $22",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53943,
+    "rom_offset": 94919,
+    "raw_hex": "48",
+    "assembly": "PHA",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53944,
+    "rom_offset": 94920,
+    "raw_hex": "A5 23",
+    "assembly": "LDA  $23",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53946,
+    "rom_offset": 94922,
+    "raw_hex": "69 00",
+    "assembly": "ADC  #$00",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53948,
+    "rom_offset": 94924,
+    "raw_hex": "85 23",
+    "assembly": "STA  $23",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53950,
+    "rom_offset": 94926,
+    "raw_hex": "68",
+    "assembly": "PLA",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53951,
+    "rom_offset": 94927,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53952,
+    "rom_offset": 94928,
+    "raw_hex": "26 23",
+    "assembly": "ROL  $23",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53954,
+    "rom_offset": 94930,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53955,
+    "rom_offset": 94931,
+    "raw_hex": "26 23",
+    "assembly": "ROL  $23",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53957,
+    "rom_offset": 94933,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53958,
+    "rom_offset": 94934,
+    "raw_hex": "69 C0",
+    "assembly": "ADC  #$C0",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53960,
+    "rom_offset": 94936,
+    "raw_hex": "85 22",
+    "assembly": "STA  $22",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53962,
+    "rom_offset": 94938,
+    "raw_hex": "A5 23",
+    "assembly": "LDA  $23",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53964,
+    "rom_offset": 94940,
+    "raw_hex": "69 63",
+    "assembly": "ADC  #$63",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53966,
+    "rom_offset": 94942,
+    "raw_hex": "85 23",
+    "assembly": "STA  $23",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53968,
+    "rom_offset": 94944,
+    "raw_hex": "B1 22",
+    "assembly": "LDA  ($22),Y",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 53970,
+    "rom_offset": 94946,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 1792
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54941,
+    "rom_offset": 95917,
+    "raw_hex": "A0 02",
+    "assembly": "LDY  #$02",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54943,
+    "rom_offset": 95919,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54945,
+    "rom_offset": 95921,
+    "raw_hex": "38",
+    "assembly": "SEC",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54946,
+    "rom_offset": 95922,
+    "raw_hex": "E9 10",
+    "assembly": "SBC  #$10",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54948,
+    "rom_offset": 95924,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54949,
+    "rom_offset": 95925,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54951,
+    "rom_offset": 95927,
+    "raw_hex": "E9 27",
+    "assembly": "SBC  #$27",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54953,
+    "rom_offset": 95929,
+    "raw_hex": "90 0B",
+    "assembly": "BCC  $D6B6",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54955,
+    "rom_offset": 95931,
+    "raw_hex": "A0 02",
+    "assembly": "LDY  #$02",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54957,
+    "rom_offset": 95933,
+    "raw_hex": "A9 0F",
+    "assembly": "LDA  #$0F",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54959,
+    "rom_offset": 95935,
+    "raw_hex": "91 20",
+    "assembly": "STA  ($20),Y",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54961,
+    "rom_offset": 95937,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54962,
+    "rom_offset": 95938,
+    "raw_hex": "A9 27",
+    "assembly": "LDA  #$27",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54964,
+    "rom_offset": 95940,
+    "raw_hex": "91 20",
+    "assembly": "STA  ($20),Y",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54966,
+    "rom_offset": 95942,
+    "raw_hex": "A0 04",
+    "assembly": "LDY  #$04",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54968,
+    "rom_offset": 95944,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54970,
+    "rom_offset": 95946,
+    "raw_hex": "38",
+    "assembly": "SEC",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54971,
+    "rom_offset": 95947,
+    "raw_hex": "E9 10",
+    "assembly": "SBC  #$10",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54973,
+    "rom_offset": 95949,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54974,
+    "rom_offset": 95950,
+    "raw_hex": "B1 20",
+    "assembly": "LDA  ($20),Y",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54976,
+    "rom_offset": 95952,
+    "raw_hex": "E9 27",
+    "assembly": "SBC  #$27",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54978,
+    "rom_offset": 95954,
+    "raw_hex": "90 0B",
+    "assembly": "BCC  $D6CF",
+    "count": 280
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54980,
+    "rom_offset": 95956,
+    "raw_hex": "A0 04",
+    "assembly": "LDY  #$04",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54982,
+    "rom_offset": 95958,
+    "raw_hex": "A9 0F",
+    "assembly": "LDA  #$0F",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54984,
+    "rom_offset": 95960,
+    "raw_hex": "91 20",
+    "assembly": "STA  ($20),Y",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54986,
+    "rom_offset": 95962,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54987,
+    "rom_offset": 95963,
+    "raw_hex": "A9 27",
+    "assembly": "LDA  #$27",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54989,
+    "rom_offset": 95965,
+    "raw_hex": "91 20",
+    "assembly": "STA  ($20),Y",
+    "count": 140
+  },
+  {
+    "physical_bank": 11,
+    "cpu": 54991,
+    "rom_offset": 95967,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 280
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49693,
+    "rom_offset": 213549,
+    "raw_hex": "AD 00 00",
+    "assembly": "LDA  $0000",
+    "count": 257
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49696,
+    "rom_offset": 213552,
+    "raw_hex": "8D 02 00",
+    "assembly": "STA  $0002",
+    "count": 257
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49699,
+    "rom_offset": 213555,
+    "raw_hex": "AD 01 00",
+    "assembly": "LDA  $0001",
+    "count": 257
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49702,
+    "rom_offset": 213558,
+    "raw_hex": "8D 03 00",
+    "assembly": "STA  $0003",
+    "count": 257
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49705,
+    "rom_offset": 213561,
+    "raw_hex": "A0 11",
+    "assembly": "LDY  #$11",
+    "count": 257
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49707,
+    "rom_offset": 213563,
+    "raw_hex": "8C 04 00",
+    "assembly": "STY  $0004",
+    "count": 257
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49710,
+    "rom_offset": 213566,
+    "raw_hex": "AC 04 00",
+    "assembly": "LDY  $0004",
+    "count": 1511
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49713,
+    "rom_offset": 213569,
+    "raw_hex": "B1 02",
+    "assembly": "LDA  ($02),Y",
+    "count": 1511
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49715,
+    "rom_offset": 213571,
+    "raw_hex": "C9 FF",
+    "assembly": "CMP  #$FF",
+    "count": 1511
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49717,
+    "rom_offset": 213573,
+    "raw_hex": "F0 25",
+    "assembly": "BEQ  $C25C",
+    "count": 1511
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49719,
+    "rom_offset": 213575,
+    "raw_hex": "8D 12 00",
+    "assembly": "STA  $0012",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49722,
+    "rom_offset": 213578,
+    "raw_hex": "20 D7 F2",
+    "assembly": "JSR  $F2D7",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49725,
+    "rom_offset": 213581,
+    "raw_hex": "A0 04",
+    "assembly": "LDY  #$04",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49727,
+    "rom_offset": 213583,
+    "raw_hex": "B1 00",
+    "assembly": "LDA  ($00),Y",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49729,
+    "rom_offset": 213585,
+    "raw_hex": "CD 11 00",
+    "assembly": "CMP  $0011",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49732,
+    "rom_offset": 213588,
+    "raw_hex": "90 0C",
+    "assembly": "BCC  $C252",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49734,
+    "rom_offset": 213590,
+    "raw_hex": "8D 11 00",
+    "assembly": "STA  $0011",
+    "count": 945
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49737,
+    "rom_offset": 213593,
+    "raw_hex": "AD 12 00",
+    "assembly": "LDA  $0012",
+    "count": 945
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49740,
+    "rom_offset": 213596,
+    "raw_hex": "8D 10 00",
+    "assembly": "STA  $0010",
+    "count": 945
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49743,
+    "rom_offset": 213599,
+    "raw_hex": "8E 0C 04",
+    "assembly": "STX  $040C",
+    "count": 945
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49746,
+    "rom_offset": 213602,
+    "raw_hex": "EE 04 00",
+    "assembly": "INC  $0004",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49749,
+    "rom_offset": 213605,
+    "raw_hex": "AD 04 00",
+    "assembly": "LDA  $0004",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49752,
+    "rom_offset": 213608,
+    "raw_hex": "C9 1B",
+    "assembly": "CMP  #$1B",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49754,
+    "rom_offset": 213610,
+    "raw_hex": "90 D2",
+    "assembly": "BCC  $C22E",
+    "count": 1278
+  },
+  {
+    "physical_bank": 26,
+    "cpu": 49756,
+    "rom_offset": 213612,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 257
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42779,
+    "rom_offset": 223019,
+    "raw_hex": "AD 71 04",
+    "assembly": "LDA  $0471",
+    "count": 121
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42782,
+    "rom_offset": 223022,
+    "raw_hex": "20 6B DC",
+    "assembly": "JSR  $DC6B",
+    "count": 121
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42785,
+    "rom_offset": 223025,
+    "raw_hex": "E0 0A",
+    "assembly": "CPX  #$0A",
+    "count": 121
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42787,
+    "rom_offset": 223027,
+    "raw_hex": "F0 52",
+    "assembly": "BEQ  $A777",
+    "count": 121
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42789,
+    "rom_offset": 223029,
+    "raw_hex": "8E 7C 04",
+    "assembly": "STX  $047C",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42792,
+    "rom_offset": 223032,
+    "raw_hex": "A9 0A",
+    "assembly": "LDA  #$0A",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42794,
+    "rom_offset": 223034,
+    "raw_hex": "38",
+    "assembly": "SEC",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42795,
+    "rom_offset": 223035,
+    "raw_hex": "ED 7C 04",
+    "assembly": "SBC  $047C",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42798,
+    "rom_offset": 223038,
+    "raw_hex": "8D 7C 04",
+    "assembly": "STA  $047C",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42801,
+    "rom_offset": 223041,
+    "raw_hex": "AD 70 04",
+    "assembly": "LDA  $0470",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42804,
+    "rom_offset": 223044,
+    "raw_hex": "20 AF F2",
+    "assembly": "JSR  $F2AF",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42807,
+    "rom_offset": 223047,
+    "raw_hex": "20 6B DC",
+    "assembly": "JSR  $DC6B",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42810,
+    "rom_offset": 223050,
+    "raw_hex": "EC 7C 04",
+    "assembly": "CPX  $047C",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42813,
+    "rom_offset": 223053,
+    "raw_hex": "B0 03",
+    "assembly": "BCS  $A742",
+    "count": 110
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 42815,
+    "rom_offset": 223055,
+    "raw_hex": "8E 7C 04",
+    "assembly": "STX  $047C",
+    "count": 55
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44353,
+    "rom_offset": 224593,
+    "raw_hex": "AD 71 04",
+    "assembly": "LDA  $0471",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44356,
+    "rom_offset": 224596,
+    "raw_hex": "20 AF F2",
+    "assembly": "JSR  $F2AF",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44359,
+    "rom_offset": 224599,
+    "raw_hex": "A2 00",
+    "assembly": "LDX  #$00",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44361,
+    "rom_offset": 224601,
+    "raw_hex": "A0 11",
+    "assembly": "LDY  #$11",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44363,
+    "rom_offset": 224603,
+    "raw_hex": "B1 00",
+    "assembly": "LDA  ($00),Y",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44365,
+    "rom_offset": 224605,
+    "raw_hex": "C9 FF",
+    "assembly": "CMP  #$FF",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44367,
+    "rom_offset": 224607,
+    "raw_hex": "F0 04",
+    "assembly": "BEQ  $AD55",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44369,
+    "rom_offset": 224609,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 9
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44370,
+    "rom_offset": 224610,
+    "raw_hex": "4C 4B AD",
+    "assembly": "JMP  $AD4B",
+    "count": 9
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44373,
+    "rom_offset": 224613,
+    "raw_hex": "BD 81 04",
+    "assembly": "LDA  $0481,X",
+    "count": 2
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44376,
+    "rom_offset": 224616,
+    "raw_hex": "C9 FF",
+    "assembly": "CMP  #$FF",
+    "count": 2
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44378,
+    "rom_offset": 224618,
+    "raw_hex": "F0 08",
+    "assembly": "BEQ  $AD64",
+    "count": 2
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44380,
+    "rom_offset": 224620,
+    "raw_hex": "91 00",
+    "assembly": "STA  ($00),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44382,
+    "rom_offset": 224622,
+    "raw_hex": "E8",
+    "assembly": "INX",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44383,
+    "rom_offset": 224623,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44384,
+    "rom_offset": 224624,
+    "raw_hex": "E0 0A",
+    "assembly": "CPX  #$0A",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44386,
+    "rom_offset": 224626,
+    "raw_hex": "90 F1",
+    "assembly": "BCC  $AD55",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44388,
+    "rom_offset": 224628,
+    "raw_hex": "A0 00",
+    "assembly": "LDY  #$00",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44390,
+    "rom_offset": 224630,
+    "raw_hex": "B1 EE",
+    "assembly": "LDA  ($EE),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44392,
+    "rom_offset": 224632,
+    "raw_hex": "8D 02 00",
+    "assembly": "STA  $0002",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44395,
+    "rom_offset": 224635,
+    "raw_hex": "A0 11",
+    "assembly": "LDY  #$11",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44397,
+    "rom_offset": 224637,
+    "raw_hex": "B1 00",
+    "assembly": "LDA  ($00),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44399,
+    "rom_offset": 224639,
+    "raw_hex": "CD 02 00",
+    "assembly": "CMP  $0002",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44402,
+    "rom_offset": 224642,
+    "raw_hex": "F0 08",
+    "assembly": "BEQ  $AD7C",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44412,
+    "rom_offset": 224652,
+    "raw_hex": "98",
+    "assembly": "TYA",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44413,
+    "rom_offset": 224653,
+    "raw_hex": "48",
+    "assembly": "PHA",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44414,
+    "rom_offset": 224654,
+    "raw_hex": "A0 11",
+    "assembly": "LDY  #$11",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44416,
+    "rom_offset": 224656,
+    "raw_hex": "B1 00",
+    "assembly": "LDA  ($00),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44418,
+    "rom_offset": 224658,
+    "raw_hex": "8D 03 00",
+    "assembly": "STA  $0003",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44421,
+    "rom_offset": 224661,
+    "raw_hex": "AD 02 00",
+    "assembly": "LDA  $0002",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44424,
+    "rom_offset": 224664,
+    "raw_hex": "91 00",
+    "assembly": "STA  ($00),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44426,
+    "rom_offset": 224666,
+    "raw_hex": "68",
+    "assembly": "PLA",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44427,
+    "rom_offset": 224667,
+    "raw_hex": "A8",
+    "assembly": "TAY",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44428,
+    "rom_offset": 224668,
+    "raw_hex": "AD 03 00",
+    "assembly": "LDA  $0003",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44431,
+    "rom_offset": 224671,
+    "raw_hex": "91 00",
+    "assembly": "STA  ($00),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44433,
+    "rom_offset": 224673,
+    "raw_hex": "A0 01",
+    "assembly": "LDY  #$01",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44435,
+    "rom_offset": 224675,
+    "raw_hex": "AD 71 04",
+    "assembly": "LDA  $0471",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44438,
+    "rom_offset": 224678,
+    "raw_hex": "91 EE",
+    "assembly": "STA  ($EE),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44440,
+    "rom_offset": 224680,
+    "raw_hex": "AD 70 04",
+    "assembly": "LDA  $0470",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44443,
+    "rom_offset": 224683,
+    "raw_hex": "20 AF F2",
+    "assembly": "JSR  $F2AF",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44446,
+    "rom_offset": 224686,
+    "raw_hex": "A2 00",
+    "assembly": "LDX  #$00",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44448,
+    "rom_offset": 224688,
+    "raw_hex": "BD 81 04",
+    "assembly": "LDA  $0481,X",
+    "count": 2
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44451,
+    "rom_offset": 224691,
+    "raw_hex": "C9 FF",
+    "assembly": "CMP  #$FF",
+    "count": 2
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44453,
+    "rom_offset": 224693,
+    "raw_hex": "F0 1C",
+    "assembly": "BEQ  $ADC3",
+    "count": 2
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44455,
+    "rom_offset": 224695,
+    "raw_hex": "8D 10 00",
+    "assembly": "STA  $0010",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44458,
+    "rom_offset": 224698,
+    "raw_hex": "A0 11",
+    "assembly": "LDY  #$11",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44460,
+    "rom_offset": 224700,
+    "raw_hex": "B1 00",
+    "assembly": "LDA  ($00),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44462,
+    "rom_offset": 224702,
+    "raw_hex": "CD 10 00",
+    "assembly": "CMP  $0010",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44465,
+    "rom_offset": 224705,
+    "raw_hex": "D0 07",
+    "assembly": "BNE  $ADBA",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44467,
+    "rom_offset": 224707,
+    "raw_hex": "A9 FF",
+    "assembly": "LDA  #$FF",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44469,
+    "rom_offset": 224709,
+    "raw_hex": "91 00",
+    "assembly": "STA  ($00),Y",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44471,
+    "rom_offset": 224711,
+    "raw_hex": "4C BE AD",
+    "assembly": "JMP  $ADBE",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44478,
+    "rom_offset": 224718,
+    "raw_hex": "E8",
+    "assembly": "INX",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44479,
+    "rom_offset": 224719,
+    "raw_hex": "E0 0A",
+    "assembly": "CPX  #$0A",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44481,
+    "rom_offset": 224721,
+    "raw_hex": "90 DD",
+    "assembly": "BCC  $ADA0",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44483,
+    "rom_offset": 224723,
+    "raw_hex": "A2 00",
+    "assembly": "LDX  #$00",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44485,
+    "rom_offset": 224725,
+    "raw_hex": "A9 FF",
+    "assembly": "LDA  #$FF",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44487,
+    "rom_offset": 224727,
+    "raw_hex": "9D 81 04",
+    "assembly": "STA  $0481,X",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44490,
+    "rom_offset": 224730,
+    "raw_hex": "E8",
+    "assembly": "INX",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44491,
+    "rom_offset": 224731,
+    "raw_hex": "E0 0A",
+    "assembly": "CPX  #$0A",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44493,
+    "rom_offset": 224733,
+    "raw_hex": "90 F8",
+    "assembly": "BCC  $ADC7",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44495,
+    "rom_offset": 224735,
+    "raw_hex": "A0 11",
+    "assembly": "LDY  #$11",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44497,
+    "rom_offset": 224737,
+    "raw_hex": "A2 00",
+    "assembly": "LDX  #$00",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44499,
+    "rom_offset": 224739,
+    "raw_hex": "B1 00",
+    "assembly": "LDA  ($00),Y",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44501,
+    "rom_offset": 224741,
+    "raw_hex": "C9 FF",
+    "assembly": "CMP  #$FF",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44503,
+    "rom_offset": 224743,
+    "raw_hex": "F0 04",
+    "assembly": "BEQ  $ADDD",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44509,
+    "rom_offset": 224749,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44510,
+    "rom_offset": 224750,
+    "raw_hex": "C0 1B",
+    "assembly": "CPY  #$1B",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44512,
+    "rom_offset": 224752,
+    "raw_hex": "90 F1",
+    "assembly": "BCC  $ADD3",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44514,
+    "rom_offset": 224754,
+    "raw_hex": "A0 11",
+    "assembly": "LDY  #$11",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44516,
+    "rom_offset": 224756,
+    "raw_hex": "A2 00",
+    "assembly": "LDX  #$00",
+    "count": 1
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44518,
+    "rom_offset": 224758,
+    "raw_hex": "BD 81 04",
+    "assembly": "LDA  $0481,X",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44521,
+    "rom_offset": 224761,
+    "raw_hex": "91 00",
+    "assembly": "STA  ($00),Y",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44523,
+    "rom_offset": 224763,
+    "raw_hex": "E8",
+    "assembly": "INX",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44524,
+    "rom_offset": 224764,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44525,
+    "rom_offset": 224765,
+    "raw_hex": "E0 0A",
+    "assembly": "CPX  #$0A",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44527,
+    "rom_offset": 224767,
+    "raw_hex": "90 F5",
+    "assembly": "BCC  $ADE6",
+    "count": 10
+  },
+  {
+    "physical_bank": 27,
+    "cpu": 44529,
+    "rom_offset": 224769,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 1
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56427,
+    "rom_offset": 236667,
+    "raw_hex": "A0 11",
+    "assembly": "LDY  #$11",
+    "count": 231
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56429,
+    "rom_offset": 236669,
+    "raw_hex": "A2 00",
+    "assembly": "LDX  #$00",
+    "count": 231
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56431,
+    "rom_offset": 236671,
+    "raw_hex": "B1 00",
+    "assembly": "LDA  ($00),Y",
+    "count": 2310
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56433,
+    "rom_offset": 236673,
+    "raw_hex": "C9 FF",
+    "assembly": "CMP  #$FF",
+    "count": 2310
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56435,
+    "rom_offset": 236675,
+    "raw_hex": "F0 01",
+    "assembly": "BEQ  $DC76",
+    "count": 2310
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56437,
+    "rom_offset": 236677,
+    "raw_hex": "E8",
+    "assembly": "INX",
+    "count": 1155
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56438,
+    "rom_offset": 236678,
+    "raw_hex": "C8",
+    "assembly": "INY",
+    "count": 2310
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56439,
+    "rom_offset": 236679,
+    "raw_hex": "C0 1B",
+    "assembly": "CPY  #$1B",
+    "count": 2310
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56441,
+    "rom_offset": 236681,
+    "raw_hex": "90 F4",
+    "assembly": "BCC  $DC6F",
+    "count": 2310
+  },
+  {
+    "physical_bank": 28,
+    "cpu": 56443,
+    "rom_offset": 236683,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 231
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62127,
+    "rom_offset": 258751,
+    "raw_hex": "A0 00",
+    "assembly": "LDY  #$00",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62129,
+    "rom_offset": 258753,
+    "raw_hex": "8C 01 00",
+    "assembly": "STY  $0001",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62132,
+    "rom_offset": 258756,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62133,
+    "rom_offset": 258757,
+    "raw_hex": "2E 01 00",
+    "assembly": "ROL  $0001",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62136,
+    "rom_offset": 258760,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62137,
+    "rom_offset": 258761,
+    "raw_hex": "2E 01 00",
+    "assembly": "ROL  $0001",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62140,
+    "rom_offset": 258764,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62141,
+    "rom_offset": 258765,
+    "raw_hex": "2E 01 00",
+    "assembly": "ROL  $0001",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62144,
+    "rom_offset": 258768,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62145,
+    "rom_offset": 258769,
+    "raw_hex": "2E 01 00",
+    "assembly": "ROL  $0001",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62148,
+    "rom_offset": 258772,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62149,
+    "rom_offset": 258773,
+    "raw_hex": "2E 01 00",
+    "assembly": "ROL  $0001",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62152,
+    "rom_offset": 258776,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62153,
+    "rom_offset": 258777,
+    "raw_hex": "69 00",
+    "assembly": "ADC  #$00",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62155,
+    "rom_offset": 258779,
+    "raw_hex": "8D 00 00",
+    "assembly": "STA  $0000",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62158,
+    "rom_offset": 258782,
+    "raw_hex": "AD 01 00",
+    "assembly": "LDA  $0001",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62161,
+    "rom_offset": 258785,
+    "raw_hex": "69 60",
+    "assembly": "ADC  #$60",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62163,
+    "rom_offset": 258787,
+    "raw_hex": "8D 01 00",
+    "assembly": "STA  $0001",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62166,
+    "rom_offset": 258790,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 368
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62167,
+    "rom_offset": 258791,
+    "raw_hex": "A0 00",
+    "assembly": "LDY  #$00",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62169,
+    "rom_offset": 258793,
+    "raw_hex": "8C 01 00",
+    "assembly": "STY  $0001",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62172,
+    "rom_offset": 258796,
+    "raw_hex": "8D 00 00",
+    "assembly": "STA  $0000",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62175,
+    "rom_offset": 258799,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62176,
+    "rom_offset": 258800,
+    "raw_hex": "2E 01 00",
+    "assembly": "ROL  $0001",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62179,
+    "rom_offset": 258803,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62180,
+    "rom_offset": 258804,
+    "raw_hex": "6D 00 00",
+    "assembly": "ADC  $0000",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62183,
+    "rom_offset": 258807,
+    "raw_hex": "48",
+    "assembly": "PHA",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62184,
+    "rom_offset": 258808,
+    "raw_hex": "AD 01 00",
+    "assembly": "LDA  $0001",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62187,
+    "rom_offset": 258811,
+    "raw_hex": "69 00",
+    "assembly": "ADC  #$00",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62189,
+    "rom_offset": 258813,
+    "raw_hex": "8D 01 00",
+    "assembly": "STA  $0001",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62192,
+    "rom_offset": 258816,
+    "raw_hex": "68",
+    "assembly": "PLA",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62193,
+    "rom_offset": 258817,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62194,
+    "rom_offset": 258818,
+    "raw_hex": "2E 01 00",
+    "assembly": "ROL  $0001",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62197,
+    "rom_offset": 258821,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62198,
+    "rom_offset": 258822,
+    "raw_hex": "2E 01 00",
+    "assembly": "ROL  $0001",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62201,
+    "rom_offset": 258825,
+    "raw_hex": "18",
+    "assembly": "CLC",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62202,
+    "rom_offset": 258826,
+    "raw_hex": "69 C0",
+    "assembly": "ADC  #$C0",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62204,
+    "rom_offset": 258828,
+    "raw_hex": "8D 00 00",
+    "assembly": "STA  $0000",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62207,
+    "rom_offset": 258831,
+    "raw_hex": "AD 01 00",
+    "assembly": "LDA  $0001",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62210,
+    "rom_offset": 258834,
+    "raw_hex": "69 63",
+    "assembly": "ADC  #$63",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62212,
+    "rom_offset": 258836,
+    "raw_hex": "8D 01 00",
+    "assembly": "STA  $0001",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62215,
+    "rom_offset": 258839,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 1534
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62312,
+    "rom_offset": 258936,
+    "raw_hex": "29 0F",
+    "assembly": "AND  #$0F",
+    "count": 256
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62314,
+    "rom_offset": 258938,
+    "raw_hex": "0A",
+    "assembly": "ASL  A",
+    "count": 256
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62315,
+    "rom_offset": 258939,
+    "raw_hex": "A8",
+    "assembly": "TAY",
+    "count": 256
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62316,
+    "rom_offset": 258940,
+    "raw_hex": "B9 79 F3",
+    "assembly": "LDA  $F379,Y",
+    "count": 256
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62319,
+    "rom_offset": 258943,
+    "raw_hex": "8D 00 00",
+    "assembly": "STA  $0000",
+    "count": 256
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62322,
+    "rom_offset": 258946,
+    "raw_hex": "B9 7A F3",
+    "assembly": "LDA  $F37A,Y",
+    "count": 256
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62325,
+    "rom_offset": 258949,
+    "raw_hex": "8D 01 00",
+    "assembly": "STA  $0001",
+    "count": 256
+  },
+  {
+    "physical_bank": 31,
+    "cpu": 62328,
+    "rom_offset": 258952,
+    "raw_hex": "60",
+    "assembly": "RTS",
+    "count": 256
+  }
+]

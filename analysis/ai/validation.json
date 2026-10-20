@@ -1,0 +1,1076 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "oracle": "py65 1.2.0 executes exact original ROM 6502 bytes",
+  "random_seed": 43471,
+  "case_count": 15630,
+  "results": [
+    {
+      "name": "opposing_side_marker",
+      "status": "passed",
+      "case_count": 1536,
+      "routine": {
+        "bank": 8,
+        "cpu": 43332,
+        "file": 67924,
+        "end_cpu": 43356
+      },
+      "examples": [
+        {
+          "current_side": 0,
+          "target_side": 0,
+          "marker": 0
+        },
+        {
+          "current_side": 0,
+          "target_side": 128,
+          "marker": 128
+        },
+        {
+          "current_side": 128,
+          "target_side": 0,
+          "marker": 128
+        },
+        {
+          "current_side": 128,
+          "target_side": 128,
+          "marker": 0
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": []
+    },
+    {
+      "name": "knowledge_tier",
+      "status": "passed",
+      "case_count": 256,
+      "routine": {
+        "bank": 8,
+        "cpu": 43365,
+        "file": 67957,
+        "end_cpu": 43398
+      },
+      "examples": [
+        {
+          "knowledge": 0,
+          "tier": 1
+        },
+        {
+          "knowledge": 39,
+          "tier": 1
+        },
+        {
+          "knowledge": 40,
+          "tier": 3
+        },
+        {
+          "knowledge": 59,
+          "tier": 3
+        },
+        {
+          "knowledge": 60,
+          "tier": 5
+        },
+        {
+          "knowledge": 74,
+          "tier": 5
+        },
+        {
+          "knowledge": 75,
+          "tier": 7
+        },
+        {
+          "knowledge": 84,
+          "tier": 7
+        },
+        {
+          "knowledge": 85,
+          "tier": 9
+        },
+        {
+          "knowledge": 99,
+          "tier": 9
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": []
+    },
+    {
+      "name": "nearby_candidates",
+      "status": "passed",
+      "case_count": 601,
+      "routine": {
+        "bank": 8,
+        "cpu": 43219,
+        "file": 67811,
+        "end_cpu": 43332
+      },
+      "examples": [
+        {
+          "actor": [
+            10,
+            10
+          ],
+          "target": [
+            11,
+            15
+          ],
+          "radius": 5,
+          "side_marker": 128,
+          "observed_mask": 135,
+          "note": "dx+dy+carry = 1+5+1 = 7; enemy marker -> 0x87"
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": []
+    },
+    {
+      "name": "orthogonal_neighbors",
+      "status": "passed",
+      "case_count": 400,
+      "routine": {
+        "bank": 8,
+        "cpu": 43063,
+        "file": 67655,
+        "end_cpu": 43176
+      },
+      "examples": [
+        {
+          "slot": 2,
+          "neighbors": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "slot": 14,
+          "neighbors": [
+            255,
+            255,
+            128,
+            255
+          ]
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": []
+    },
+    {
+      "name": "action_suitability",
+      "status": "passed",
+      "case_count": 3520,
+      "routine": {
+        "bank": 8,
+        "cpu": 44155,
+        "file": 68747,
+        "end_cpu": 44691,
+        "inline_pointer_table_cpu": 44206,
+        "inline_pointer_table_size": 32
+      },
+      "examples": [
+        {
+          "action": 0,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 1,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 2,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 3,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 4,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 5,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 6,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 7,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 8,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 9,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 10,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 11,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 12,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 13,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 14,
+          "actor": 15,
+          "target": 18,
+          "suitable": true
+        },
+        {
+          "action": 15,
+          "actor": 15,
+          "target": 18,
+          "suitable": false
+        },
+        {
+          "action": 0,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 1,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 2,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 3,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 4,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 5,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 6,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 7,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 8,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 9,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 10,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 11,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 12,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 13,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 14,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        },
+        {
+          "action": 15,
+          "actor": 13,
+          "target": 9,
+          "suitable": false
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": [
+        "bank8 $B6E5 terrain resolver; external classes supplied by RAM fixture"
+      ]
+    },
+    {
+      "name": "rank_enemy_candidates",
+      "status": "passed",
+      "case_count": 229,
+      "routine": {
+        "bank": 8,
+        "cpu": 44691,
+        "file": 69283,
+        "end_cpu": 44813
+      },
+      "examples": [
+        {
+          "counter": 0,
+          "input_officer_values": [
+            100,
+            400,
+            200,
+            300,
+            0
+          ],
+          "observed_slots": [
+            1,
+            2,
+            3,
+            0,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "passes": 1,
+          "remaining_counter": 255
+        },
+        {
+          "counter": 1,
+          "input_officer_values": [
+            100,
+            400,
+            200,
+            300,
+            0
+          ],
+          "observed_slots": [
+            1,
+            3,
+            2,
+            0,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "passes": 2,
+          "remaining_counter": 255
+        },
+        {
+          "counter": 2,
+          "input_officer_values": [
+            100,
+            400,
+            200,
+            300,
+            0
+          ],
+          "observed_slots": [
+            1,
+            3,
+            2,
+            0,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "passes": 3,
+          "remaining_counter": 255
+        },
+        {
+          "counter": 4,
+          "input_officer_values": [
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "observed_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "passes": 5,
+          "remaining_counter": 255
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": []
+    },
+    {
+      "name": "ai_rng_next",
+      "status": "passed",
+      "case_count": 256,
+      "routine": {
+        "bank": 8,
+        "cpu": 46549,
+        "file": 71141,
+        "end_cpu": 46565
+      },
+      "examples": [
+        {
+          "cursor": 0,
+          "value": 62,
+          "next_cursor": 1,
+          "X_preserved": true
+        },
+        {
+          "cursor": 255,
+          "value": 6,
+          "next_cursor": 0,
+          "X_preserved": true
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": []
+    },
+    {
+      "name": "choose_basic_action",
+      "status": "passed",
+      "case_count": 2700,
+      "routine": {
+        "bank": 8,
+        "cpu": 43471,
+        "file": 68063,
+        "end_cpu": 43768
+      },
+      "examples": [
+        {
+          "tier": 1,
+          "resource": 5,
+          "target_raw_u16": 0,
+          "action": 1,
+          "predicate_requests": [
+            1
+          ],
+          "random_samples": [
+            62
+          ],
+          "cursor_after": 1
+        },
+        {
+          "tier": 1,
+          "resource": 6,
+          "target_raw_u16": 100,
+          "action": 0,
+          "predicate_requests": [
+            1,
+            0
+          ],
+          "random_samples": [],
+          "cursor_after": 0
+        },
+        {
+          "tier": 5,
+          "resource": 7,
+          "target_raw_u16": 100,
+          "action": 4,
+          "predicate_requests": [
+            1,
+            4
+          ],
+          "random_samples": [],
+          "cursor_after": 0
+        },
+        {
+          "tier": 5,
+          "resource": 8,
+          "target_raw_u16": 0,
+          "action": 5,
+          "predicate_requests": [
+            5
+          ],
+          "random_samples": [],
+          "cursor_after": 0
+        },
+        {
+          "tier": 7,
+          "resource": 8,
+          "target_raw_u16": 100,
+          "action": 6,
+          "predicate_requests": [
+            6
+          ],
+          "random_samples": [],
+          "cursor_after": 0
+        },
+        {
+          "tier": 7,
+          "resource": 8,
+          "target_raw_u16": 100,
+          "action": 7,
+          "predicate_requests": [
+            6,
+            5,
+            7
+          ],
+          "random_samples": [],
+          "cursor_after": 0
+        },
+        {
+          "tier": 9,
+          "resource": 9,
+          "target_raw_u16": 100,
+          "action": 9,
+          "predicate_requests": [
+            6,
+            5,
+            9
+          ],
+          "random_samples": [],
+          "cursor_after": 0
+        },
+        {
+          "tier": 9,
+          "resource": 10,
+          "target_raw_u16": 0,
+          "action": 8,
+          "predicate_requests": [
+            5,
+            8
+          ],
+          "random_samples": [],
+          "cursor_after": 0
+        },
+        {
+          "tier": 5,
+          "resource": 12,
+          "target_raw_u16": 1,
+          "action": 3,
+          "predicate_requests": [
+            5,
+            1
+          ],
+          "random_samples": [
+            28,
+            243
+          ],
+          "cursor_after": 194
+        },
+        {
+          "tier": 3,
+          "resource": 5,
+          "target_raw_u16": 1023,
+          "action": 2,
+          "predicate_requests": [
+            1
+          ],
+          "random_samples": [
+            85
+          ],
+          "cursor_after": 159
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": [
+        "bank8/9 $AC7B action suitability"
+      ]
+    },
+    {
+      "name": "special_ai_gate",
+      "status": "passed",
+      "case_count": 1536,
+      "routine": {
+        "bank": 8,
+        "cpu": 43768,
+        "file": 68360,
+        "end_cpu": 43807
+      },
+      "examples": [
+        {
+          "knowledge": 91,
+          "level": 2,
+          "passed": false
+        },
+        {
+          "knowledge": 91,
+          "level": 3,
+          "passed": false
+        },
+        {
+          "knowledge": 92,
+          "level": 2,
+          "passed": false
+        },
+        {
+          "knowledge": 92,
+          "level": 3,
+          "passed": true
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": []
+    },
+    {
+      "name": "special_officer_whitelist",
+      "status": "passed",
+      "case_count": 1536,
+      "routine": {
+        "bank": 8,
+        "cpu": 44081,
+        "file": 68673,
+        "end_cpu": 44109
+      },
+      "examples": [
+        {
+          "officer_id": 109,
+          "level": 2,
+          "required": 3,
+          "start_index": 0,
+          "passed": false
+        },
+        {
+          "officer_id": 109,
+          "level": 3,
+          "required": 3,
+          "start_index": 0,
+          "passed": true
+        },
+        {
+          "officer_id": 109,
+          "level": 3,
+          "required": 4,
+          "start_index": 11,
+          "passed": false
+        },
+        {
+          "officer_id": 109,
+          "level": 4,
+          "required": 4,
+          "start_index": 11,
+          "passed": true
+        },
+        {
+          "officer_id": 109,
+          "level": 4,
+          "required": 5,
+          "start_index": 17,
+          "passed": false
+        },
+        {
+          "officer_id": 109,
+          "level": 5,
+          "required": 5,
+          "start_index": 17,
+          "passed": true
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": []
+    },
+    {
+      "name": "choose_special_action",
+      "status": "passed",
+      "case_count": 2580,
+      "routine": {
+        "bank": 8,
+        "cpu": 43880,
+        "file": 68472,
+        "end_cpu": 44081
+      },
+      "examples": [
+        {
+          "officer_id": 161,
+          "level": 3,
+          "resource": 12,
+          "action": 10,
+          "predicate_requests": [
+            10
+          ]
+        },
+        {
+          "officer_id": 161,
+          "level": 3,
+          "resource": 12,
+          "action": 11,
+          "predicate_requests": [
+            10,
+            11
+          ]
+        },
+        {
+          "officer_id": 24,
+          "level": 4,
+          "resource": 12,
+          "action": 12,
+          "predicate_requests": [
+            10,
+            11,
+            12
+          ]
+        },
+        {
+          "officer_id": 24,
+          "level": 4,
+          "resource": 12,
+          "action": 13,
+          "predicate_requests": [
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "officer_id": 197,
+          "level": 5,
+          "resource": 12,
+          "action": 14,
+          "predicate_requests": [
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "officer_id": 109,
+          "level": 6,
+          "resource": 12,
+          "action": 15,
+          "predicate_requests": [
+            10,
+            11,
+            15
+          ]
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": [
+        "bank8/9 $AC7B action suitability"
+      ]
+    },
+    {
+      "name": "plan_basic_tactic",
+      "status": "passed",
+      "case_count": 320,
+      "routine": {
+        "bank": 8,
+        "cpu": 43356,
+        "file": 67948,
+        "end_cpu": 43471
+      },
+      "examples": [
+        {
+          "actor_slot": 1,
+          "knowledge": 21,
+          "resource": 3,
+          "initial_sort_counter": 1,
+          "candidate_slots": [
+            2,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "action": 170,
+          "target": 187,
+          "status": 3,
+          "success": false,
+          "instructions": 742
+        },
+        {
+          "actor_slot": 14,
+          "knowledge": 24,
+          "resource": 5,
+          "initial_sort_counter": 1,
+          "candidate_slots": [
+            2,
+            17,
+            10,
+            16,
+            18,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "action": 170,
+          "target": 187,
+          "status": 3,
+          "success": false,
+          "instructions": 1821
+        },
+        {
+          "actor_slot": 7,
+          "knowledge": 45,
+          "resource": 7,
+          "initial_sort_counter": 2,
+          "candidate_slots": [
+            1,
+            0,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "action": 170,
+          "target": 187,
+          "status": 3,
+          "success": false,
+          "instructions": 1166
+        },
+        {
+          "actor_slot": 19,
+          "knowledge": 66,
+          "resource": 3,
+          "initial_sort_counter": 0,
+          "candidate_slots": [
+            2,
+            5,
+            8,
+            17,
+            18,
+            1,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "action": 170,
+          "target": 187,
+          "status": 3,
+          "success": false,
+          "instructions": 1865
+        }
+      ],
+      "variant": null,
+      "substituted_subroutines": [
+        "bank8/9 $AC7B action suitability"
+      ]
+    },
+    {
+      "name": "plan_basic_tactic",
+      "status": "passed",
+      "case_count": 160,
+      "routine": {
+        "bank": 8,
+        "cpu": 43356,
+        "file": 67948,
+        "end_cpu": 43471
+      },
+      "examples": [
+        {
+          "actor": 1,
+          "resource": 3,
+          "action": 170,
+          "target": 187,
+          "status": 3,
+          "success": false,
+          "instructions": 796
+        },
+        {
+          "actor": 14,
+          "resource": 5,
+          "action": 170,
+          "target": 187,
+          "status": 3,
+          "success": false,
+          "instructions": 2003
+        },
+        {
+          "actor": 7,
+          "resource": 7,
+          "action": 0,
+          "target": 0,
+          "status": 2,
+          "success": true,
+          "instructions": 1316
+        },
+        {
+          "actor": 19,
+          "resource": 3,
+          "action": 170,
+          "target": 187,
+          "status": 3,
+          "success": false,
+          "instructions": 1970
+        }
+      ],
+      "variant": "whole caller pipeline including actual $AC7B predicates and $A837 neighbor discovery",
+      "substituted_subroutines": [
+        "bank8 $B6E5 terrain resolver; external classes supplied by RAM fixture"
+      ]
+    }
+  ],
+  "limitations": [
+    "CPU-only initialized RAM fixtures; not a complete NES gameplay simulation.",
+    "$AC7B is substituted only in controlled-predicate chooser fixtures. Terrain-fixture tests execute actual $AC7B but substitute its bank-backed $B6E5 resolver. Every result lists its substitutions.",
+    "No interrupt/PPU/APU/mapper timing claim; RNG cursor is controlled in each fixture.",
+    "Action number meanings and total UI command costs remain pending a UI/action-table connection.",
+    "Rank routine pass count depends on caller RAM $002F; partial ordering and unstable equal-key swaps are preserved."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "phase25-passive-submit-caller-with-hardware-fixture-v1",
+  "origin": "passive_Native_callee_capture_with_explicit_N163_fixture",
+  "registers": {
+    "a": 180,
+    "x": 3,
+    "y": 59,
+    "p": 32,
+    "sp": 247,
+    "pc": 46129
+  },
+  "physical_banks": [
+    2,
+    27,
+    28,
+    31
+  ],
+  "actual_caller_return_pc": 63730,
+  "original_software_caller_frame_preserved": true,
+  "prepared_numeric_bytes": [],
+  "additional_CPU_prepared_numeric_bytes": [],
+  "N163_origin": "explicit_shared_fixture_not_Native_snapshot",
+  "N163_address": 127,
+  "N163_autoincrement": true,
+  "controller_buttons": [
+    0,
+    0
+  ],
+  "hardware_events": [],
+  "instantaneous_N163_PPU_APU_captured": false,
+  "capture_core_sha256": "7ce7eb671327d6bcf629a1b5a5e43fa6a4184781bb75a6db91b0c1ed5c2b82f0",
+  "capture": "analysis/phase25/runtime/natural-nonzero-reserve-submit/observer/callee-0023-B431.json",
+  "capture_sha256": "b669a7eba648446ec919745dccfc143c2d736849b736438529b7140a80156a33",
+  "exact_capture_input_pins": {
+    "analysis/phase25/runtime/natural-nonzero-reserve-submit/observer/callee-0023-B431-ram.bin": "b9fffb14339c3d205f9e38c0ff1c33f9af386c14400ee8ae0e9938f442984e85",
+    "analysis/phase25/runtime/natural-nonzero-reserve-submit/observer/callee-0023-B431-sram.bin": "499def359718b3cd3cc4199b7ecca1ef83467d2f0c6b6c7ccd2ff1a27089805d"
+  },
+  "paired_Native_validation": "analysis/phase25/runtime/validation.json",
+  "limits": [
+    "RAM,SRAM,registers,four banks and existing stack are instantaneous passive-core software observations.",
+    "The N163 pattern, device read ports and zero controller ports are explicit common CPU/Source inputs; no instant Native hardware state is asserted.",
+    "The import inherits a zero-preparation ordinary-input allocation route; this is not a new cold boot."
+  ]
+}

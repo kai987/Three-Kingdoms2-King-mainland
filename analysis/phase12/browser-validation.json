@@ -1,0 +1,235 @@
+{
+  "cases": [
+    {
+      "audio": {
+        "duration": 8.552583,
+        "ready": 4,
+        "src": "runtime/battle-officer-info/full-flow.wav?sha=5f43ecd37600a7972cff82cfbef1552ea00633bbc426b0f1dfd693cdc5111adb"
+      },
+      "case": "0",
+      "images": [
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/battle-officer-info/before-open.png?sha=0cf28f278d0dd9fe512926120cdc6fadeccc8b2cdfe3c614f9d1aa5f20c240e1",
+          "width": 256
+        },
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/battle-officer-info/info-open.png?sha=bae96c0d026e9ea3f023f7dfeb1cd49975612ce662efa5a9c873b8ecd46ca89e",
+          "width": 256
+        }
+      ]
+    },
+    {
+      "audio": {
+        "duration": 39.950875,
+        "ready": 4,
+        "src": "runtime/ordinary-attack-return/full-flow.wav?sha=81d2bcb344f15331e9e0a33e698bdf162ac4f8e38524420bffdd8576f2e7db4e"
+      },
+      "case": "1",
+      "fields": "global007A\t6\t4\nNMI0078\t4\t3\n匹配场景的活跃控制\tattack\tbattle\n活跃main\t3\t0\n活跃phase\t2\t2\n原battle0500/0501\t[ 3, 3 ]\t[ 0, 2 ]\n原attack0540/0541(inactive仅raw)\t[ 3, 2 ]\t[ 4, 2 ]\n资料",
+      "images": [
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/ordinary-attack-return/retreat-row-4.png?sha=071016216d87659e467fd5a1f6feefc42813e68e9e455ee63ba0e151a19100d0",
+          "width": 256
+        },
+        {
+          "complete": true,
+          "height": 240,
+          "src": "runtime/ordinary-attack-return/final.png?sha=5625f86e35134acbbd8e75b203ed74d04ff37dd98ae28ed789b3833c13e404a4",
+          "width": 256
+        }
+      ]
+    }
+  ],
+  "source_modules": [
+    {
+      "module": "portraits",
+      "file": "portrait_ui_services.py",
+      "full_source_equal": true,
+      "bytes": 8206,
+      "sha256": "44dc5314915e18f7308d14401a32e49c993476384a41e6b5f65edd8414ff2124"
+    },
+    {
+      "module": "officer-ui",
+      "file": "officer_ui_services.py",
+      "full_source_equal": true,
+      "bytes": 9555,
+      "sha256": "dd4c81924aad78b089d26bf436284a76945aff7b4c035d0c155707d2c43f2113"
+    },
+    {
+      "module": "text",
+      "file": "text_scene_services.py",
+      "full_source_equal": true,
+      "bytes": 55277,
+      "sha256": "7f49c5ac0ff30803429d8414595f4edab51a7f17ab631253f9426f80184c2bf6"
+    },
+    {
+      "module": "details",
+      "file": "officer_details_ui_services.py",
+      "full_source_equal": true,
+      "bytes": 38998,
+      "sha256": "8d203c6c1c73888e953f7260bf2630d7c9227e9f45518898dd1ebc25ea1753fc"
+    }
+  ],
+  "checks": {
+    "four_full_source_files_equal": true,
+    "two_original_native_media_loaded": true,
+    "detail_buttons_match_original_cursors": true,
+    "unsaved_field_frame_does_not_replace_PNG": true,
+    "both_original_WAV_playback_advanced": true,
+    "old_FF_label_is_explicit": true,
+    "completed_information_then_battle_return": true,
+    "no_horizontal_overflow": true,
+    "no_console_errors": true
+  },
+  "audio_first_play": {
+    "currentTime": 8.552583,
+    "duration": 8.552583,
+    "paused": true,
+    "ready": 4
+  },
+  "audio_attack_play": {
+    "currentTime": 15.131573,
+    "duration": 39.950875,
+    "paused": false,
+    "ready": 4
+  },
+  "detail_buttons": [
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t0\t255",
+      "left": "frame32 · info-row-00"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t1\t255",
+      "left": "frame33 · info-row-01"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t2\t255",
+      "left": "frame34 · info-row-02"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t3\t255",
+      "left": "frame35 · info-row-03"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t4\t255",
+      "left": "frame36 · info-row-04"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t5\t255",
+      "left": "frame37 · info-row-05"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t6\t255",
+      "left": "frame38 · info-row-06"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t7\t255",
+      "left": "frame39 · info-row-07"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t8\t255",
+      "left": "frame41 · info-row-08"
+    },
+    {
+      "complete": true,
+      "dimensions": [
+        256,
+        240
+      ],
+      "field": "资料生产游标040D(FF停止)\t9\t255",
+      "left": "frame42 · info-row-09"
+    }
+  ],
+  "independent_field": {
+    "cursor": "资料生产游标040D(FF停止)\t7\t255",
+    "frame": "40",
+    "image": "runtime/battle-officer-info/info-row-09.png?sha=0ff0f7a60fedb29792fc9f15f47a902fc58505d336d6df05dd1694c27fef948a",
+    "image_unchanged": true
+  },
+  "final_dom": {
+    "fields": "global007A\t4\t4\nNMI0078\t3\t3\n匹配场景的活跃控制\tbattle\tbattle\n活跃main\t1\t0\n活跃phase\t1\t2\n原battle0500/0501\t[ 1, 1 ]\t[ 0, 2 ]\n原attack0540/0541(inactive仅raw)\t[ 0, 142 ]\t[ 0, 142 ]\n资料名单索引040C\t0\t0\n资料生产游标040D(FF停止)\t255\t255\n原资料ID0410\t131\t131\n",
+    "images": [
+      {
+        "complete": true,
+        "height": 240,
+        "src": "runtime/battle-officer-info/info-open.png?sha=bae96c0d026e9ea3f023f7dfeb1cd49975612ce662efa5a9c873b8ecd46ca89e",
+        "width": 256
+      },
+      {
+        "complete": true,
+        "height": 240,
+        "src": "runtime/battle-officer-info/info-closed.png?sha=8035b8fdccedfb2b6ca0bb5cd1457a0881ceb51f405b54d4e2a62fc612859803",
+        "width": 256
+      }
+    ],
+    "legacyCaption": "frame31 · 进入资料：继承旧FF（非完成）",
+    "points": [
+      "frame272 · info-open",
+      "frame514 · info-closed"
+    ],
+    "title": "肖像、姓名、文本与武将资料",
+    "viewport": {
+      "height": 843,
+      "scrollWidth": 584,
+      "width": 599
+    }
+  },
+  "console_errors": [],
+  "schema": "phase12-CUA-browser-v1",
+  "status": "passed",
+  "url": "http://127.0.0.1:8765/analysis/phase12/index.html",
+  "html_sha256": "367e075738c245577f40b5ca050a3f22f2bf34f18f695a4008ab15fe2a5318af",
+  "screenshot_sha256": "bb2335c310e25fdad28b7f122a4fb8e3e1ad64aacffb64bb7580fa97801d1858",
+  "final_reloaded_after_scope_text_refinement": true
+}

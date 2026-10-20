@@ -1,0 +1,153 @@
+{
+  "schema": "phase17-prior-readonly-audits-v1",
+  "status": "passed",
+  "rows": [
+    {
+      "phase": 5,
+      "command": [
+        "python3",
+        "scripts/verify_phase5.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.115,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_differential_case_count\": 83702, \"terrain_artifact_checks\": 892, \"integration_case_count\": 989, \"programs\": {\"domestic_ai\": {\"instruction_count\": 5735, \"sha256\": \"0dd7f15122575cc63d8f1b505daa9f62e3f438861f86e7689d82f0922c959fef\", \"bytes_verified\": true}, \"ruler_turn\": {\"instruction_count\": 3052, \"sha256\": \"e82705386b66258bd21dc6d2250e0d14b31fad9f53ee5057bfc73f5405e9d34a\", \"bytes_verified\": true}}}"
+    },
+    {
+      "phase": 6,
+      "command": [
+        "python3",
+        "scripts/verify_phase6.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.101,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_comparison_count\": 18194, \"source_only_guard_count\": 251, \"integration_case_count\": 55, \"original_core_repeat_artifact_checks\": 38, \"programs\": {\"global\": {\"instruction_count\": 1005, \"sha256\": \"eb0dbc074215887c201ee8b10a070cef1b17780700574754d40d1c4b54cf19a9\", \"original_bytes_verified\": true}, \"ending\": {\"instruction_count\": 668, \"sha256\": \"846be29c4aeb95aa24cd7657b8f63a79cb488a964035b2cf6b85480e3e561426\", \"original_bytes_verified\": true}}}"
+    },
+    {
+      "phase": 7,
+      "command": [
+        "python3",
+        "scripts/verify_phase7.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.116,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 9806, \"source_guard_case_count\": 255, \"integration_case_count\": 44, \"repeat_artifact_checks\": 55, \"controller_dynamic_instruction_count\": 1315}"
+    },
+    {
+      "phase": 8,
+      "command": [
+        "python3",
+        "scripts/verify_phase8.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.196,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 5779, \"source_guard_case_count\": 11, \"integration_rom_cpu_case_count\": 46, \"native_core_field_comparison_count\": 5, \"native_core_frame_count\": 4168, \"repeat_artifact_checks\": 108, \"verified_code_ranges\": 39}"
+    },
+    {
+      "phase": 9,
+      "command": [
+        "python3",
+        "scripts/verify_phase9.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.211,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 4267, \"source_guard_case_count\": 31, \"integration_rom_cpu_case_count\": 1421, \"integration_source_guard_case_count\": 3, \"native_core_field_comparison_count\": 12, \"native_core_case_count\": 10, \"native_core_frame_count\": 18809, \"repeat_artifact_checks\": 362, \"verified_code_ranges\": 49}"
+    },
+    {
+      "phase": 10,
+      "command": [
+        "python3",
+        "scripts/verify_phase10.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.794,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 57565, \"source_guard_case_count\": 136, \"integration_rom_cpu_case_count\": 468, \"terrain_rom_cpu_case_count\": 40, \"native_core_frame_count\": 18809, \"repeat_artifact_checks\": 392, \"PCM_stereo_sample_frames_full\": 15022464}"
+    },
+    {
+      "phase": 11,
+      "command": [
+        "python3",
+        "scripts/verify_phase11.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.882,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 23077, \"source_guard_case_count\": 37, \"total_complete_return_CPU_cases\": 22418, \"total_strict_prefix_CPU_cases\": 659, \"source_integration_ROM_CPU_cases\": 26, \"browser_status\": \"passed\"}"
+    },
+    {
+      "phase": 12,
+      "command": [
+        "python3",
+        "scripts/verify_phase12.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.636,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"missing_required_artifacts\": [], \"rom_cpu_case_count\": 19425, \"source_guard_case_count\": 28, \"total_complete_return_CPU_cases\": 19423, \"total_strict_prefix_CPU_cases\": 2, \"source_integration_ROM_CPU_cases\": 1164, \"browser_status\": \"passed\"}"
+    },
+    {
+      "phase": 13,
+      "command": [
+        "python3",
+        "scripts/verify_phase13.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.375,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 28639, \"source_guard_case_count\": 58, \"all_CPU_cases_including_integration\": 28652, \"browser_status\": \"passed\", \"missing_required_artifacts\": []}"
+    },
+    {
+      "phase": 14,
+      "command": [
+        "python3",
+        "scripts/verify_phase14.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.707,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 4797, \"source_guard_case_count\": 37, \"all_CPU_cases_including_integration\": 5156, \"browser_status\": \"passed\", \"missing_required_artifacts\": []}"
+    },
+    {
+      "phase": 15,
+      "command": [
+        "python3",
+        "scripts/verify_phase15.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 13.386,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 4788, \"source_guard_case_count\": 23, \"all_CPU_cases_including_integration\": 4841, \"browser_status\": \"passed\", \"missing_required_artifacts\": []}"
+    },
+    {
+      "phase": 16,
+      "command": [
+        "python3",
+        "scripts/verify_phase16.py",
+        "/Users/paulasmith/Downloads/三国志2超级版.nes",
+        "--current-parent-regression",
+        "analysis/phase17/regression/parent-regression.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 9.115,
+      "status": "passed",
+      "output": "{\"status\": \"passed\", \"rom_cpu_case_count\": 12679, \"source_guard_case_count\": 51, \"all_CPU_cases_including_integration\": 12703, \"browser_status\": \"passed\", \"missing_required_artifacts\": []}"
+    }
+  ],
+  "executes_no_original_CPU_or_native_core": true
+}

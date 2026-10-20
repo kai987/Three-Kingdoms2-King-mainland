@@ -1,0 +1,4001 @@
+{
+  "schema": "phase19-saved-Native-context-original-caller-discovery-v1",
+  "status": "bounded_discovery_complete",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "contexts": [
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler0-status00-frame2237.state",
+      "native_sha256": "9298841e00f323138722b3fd13364b48dd5dd4685bfc4a76989e76e735da76b8",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 38,
+        "sp": 249,
+        "pc": 54613
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 77707,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler6-status00-frame10323.state",
+      "native_sha256": "82eb580d7e558268ae65c496a5bf3305b16e4c5e30bcf178d774b5627041b49e",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 6,
+        "p": 38,
+        "sp": 249,
+        "pc": 54647
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 53488,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 7,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler3-status00-frame10571.state",
+      "native_sha256": "44d842d52a56fb90a2b920c25b7281667df83a4da1b915dfe707e0885faab450",
+      "initial_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 4,
+        "p": 36,
+        "sp": 247,
+        "pc": 54968
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 61717,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler5-status00-frame10237.state",
+      "native_sha256": "db953c353dd1046a91eed1cbbb24b4cc6b8ba307bcbf0f6c7d5c3da2df386c3e",
+      "initial_registers": {
+        "a": 6,
+        "x": 3,
+        "y": 0,
+        "p": 37,
+        "sp": 251,
+        "pc": 54567
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 86090,
+      "watch": [
+        {
+          "step": 55990,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 55997,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 162,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 5
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 5,
+        "y": 7,
+        "p": 164,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler2-status00-frame2070.state",
+      "native_sha256": "423f4641a9f26346a689f5de2d1614a874017c77579b433ec575b0e66b2623e8",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 12,
+        "p": 38,
+        "sp": 249,
+        "pc": 54593
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 71303,
+      "watch": [
+        {
+          "step": 47728,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 2
+        },
+        {
+          "step": 47735,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 89,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 2
+        },
+        {
+          "step": 47738,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 89,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 2
+        },
+        {
+          "step": 47745,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 67,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 2
+        },
+        {
+          "step": 47748,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 67,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 2
+        },
+        {
+          "step": 47755,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 249,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 2
+        },
+        {
+          "step": 47758,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 121,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 2
+        },
+        {
+          "step": 47765,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 176,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 2
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 2,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler4-status00-frame10405.state",
+      "native_sha256": "7ee2d405f14383aafc893d9568d398b72ae9ad4ebc9660ac12deb401f129303e",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 28,
+        "p": 38,
+        "sp": 251,
+        "pc": 54576
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 58786,
+      "watch": [
+        {
+          "step": 40435,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40442,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 168,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler4-status00-frame1991.state",
+      "native_sha256": "1b5b13e848c34aef7b5ba8a35833536593d5a007478a97e201e82bf45d442650",
+      "initial_registers": {
+        "a": 0,
+        "x": 2,
+        "y": 1,
+        "p": 38,
+        "sp": 249,
+        "pc": 54624
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 51008,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler3-status00-frame2153.state",
+      "native_sha256": "dbc79a40e0b256fc27751a1913c7251e19c8f583b78ad6fc1fabe0d6cb0511dc",
+      "initial_registers": {
+        "a": 39,
+        "x": 1,
+        "y": 5,
+        "p": 36,
+        "sp": 247,
+        "pc": 54976
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 65088,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 164,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler2-status00-frame10489.state",
+      "native_sha256": "a3bc4333d2c0815f3fa434569af8c165ec42c775d2c192c63a530efe8c1b71be",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 13,
+        "p": 36,
+        "sp": 251,
+        "pc": 54577
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 63537,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 2,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler0-status00-frame10656.state",
+      "native_sha256": "0af2506bba18c5a8cad3a98aec33ecc90223c318975b86b3e4a2ebd691ea1a29",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 38,
+        "sp": 249,
+        "pc": 54613
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 63425,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame52924.state",
+      "native_sha256": "bb099c655aa609c9a2a9c54665ba212ba453e87b5fff18ca996b781171517225",
+      "initial_registers": {
+        "a": 192,
+        "x": 1,
+        "y": 0,
+        "p": 164,
+        "sp": 249,
+        "pc": 53531
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 82186,
+      "watch": [
+        {
+          "step": 49608,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 3
+        },
+        {
+          "step": 49615,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 85,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 3
+        },
+        {
+          "step": 49618,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 85,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 3
+        },
+        {
+          "step": 49625,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 167,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 3
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 164,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame11024.state",
+      "native_sha256": "9244ea6f419a9fe880605dfd5b0736aab8219a8656d7680f7c9f969e39d6ea38",
+      "initial_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 5,
+        "p": 164,
+        "sp": 247,
+        "pc": 54991
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 64505,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame6676.state",
+      "native_sha256": "9dc613058dbbc6777534137d163c031d69d8edd635cdce8db851180bc17e4d02",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 7,
+        "p": 38,
+        "sp": 251,
+        "pc": 54576
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 65905,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame25059.state",
+      "native_sha256": "8fc5e7c6192c6dce61d2bfc6a7f9a3a7fb28ce7a754df10e148791258cf53cc3",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 38,
+        "sp": 249,
+        "pc": 54641
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 53525,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame30406.state",
+      "native_sha256": "752484a148829e05932b545fa2635b048dca37301dc83f5e9c63c14c31fd2734",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 164,
+        "sp": 249,
+        "pc": 54590
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 54695,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame53174.state",
+      "native_sha256": "012095634ea285ea72aae4c591dc7e031be25f55f51f78f69b2cacb4905e989e",
+      "initial_registers": {
+        "a": 96,
+        "x": 3,
+        "y": 0,
+        "p": 36,
+        "sp": 249,
+        "pc": 53539
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 68670,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame20389.state",
+      "native_sha256": "64eec51bbc92d6cbcd2c49f7cedeca4e8fc300faf9eee1cec5c371fa649e4483",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 164,
+        "sp": 249,
+        "pc": 54590
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 51338,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame34791.state",
+      "native_sha256": "a96ed067c60fc1854ea3b0ff26996938963972a91c20b5c235522df173323689",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 7,
+        "p": 164,
+        "sp": 249,
+        "pc": 54590
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 65183,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame24809.state",
+      "native_sha256": "15b0fdb3d9edf72f8dae47baceb9dd0cdaa3989d561e5281d1276621b5d18537",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 7,
+        "p": 38,
+        "sp": 249,
+        "pc": 54596
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 65423,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame49001.state",
+      "native_sha256": "7e4d4c128afd0a353b3ab1daa0bfc5bb87ee170ed2037be6d7d156e930e18640",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 29,
+        "p": 164,
+        "sp": 251,
+        "pc": 54579
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 56861,
+      "watch": [
+        {
+          "step": 40197,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40204,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 170,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame30521.state",
+      "native_sha256": "0816bc7ad8a1524605883f05d8372d001116d74c8ccff735e32b8a9eda8dccd7",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 29,
+        "p": 38,
+        "sp": 249,
+        "pc": 54607
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 54852,
+      "watch": [
+        {
+          "step": 43976,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 43983,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 19,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame34539.state",
+      "native_sha256": "56949f1918661c1fb746f415094b403c23f0002ad2a2f8e5f013e60f0fb11eed",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 6,
+        "p": 38,
+        "sp": 249,
+        "pc": 54647
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 67935,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame6932.state",
+      "native_sha256": "59bdabafd56ee49765f7faa725baf13d8e1d6218ace601dd2fe8f8dd4bb9e08c",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 6,
+        "p": 38,
+        "sp": 249,
+        "pc": 54630
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 55891,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame44569.state",
+      "native_sha256": "302394d868dae6bc2e773d4fcfbe459ca2a7981486761d5320c4dd4d7413db6c",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 30,
+        "p": 39,
+        "sp": 251,
+        "pc": 54581
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 50781,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame26088.state",
+      "native_sha256": "22bb7dee5623aa3f5a8d3c4b93dc58f1be6c3cd80202cb6a947f6b430ddd5685",
+      "initial_registers": {
+        "a": 1,
+        "x": 2,
+        "y": 1,
+        "p": 164,
+        "sp": 249,
+        "pc": 54590
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 57143,
+      "watch": [
+        {
+          "step": 40469,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40476,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 234,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40479,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 106,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40486,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 146,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame30070.state",
+      "native_sha256": "52b4c931f1026bc336e7e2db329f8572de7a974b55efdc08260c0957c1baf135",
+      "initial_registers": {
+        "a": 96,
+        "x": 1,
+        "y": 0,
+        "p": 36,
+        "sp": 247,
+        "pc": 54941
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 66091,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 2,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame57520.state",
+      "native_sha256": "44984431fbdc86bb46da3972021113d58f0699d9105093c52d27dae1f6482dd3",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 1,
+        "p": 39,
+        "sp": 249,
+        "pc": 54630
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 62532,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame11108.state",
+      "native_sha256": "b15d8f393de285a8a6f68a97aed42c081d6d5b5b613d71526002f38fafc8d364",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 7,
+        "p": 38,
+        "sp": 249,
+        "pc": 54624
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 70233,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame6846.state",
+      "native_sha256": "622be0c75dbcf035a41d12c4dad6257e683dbddaa1c57e01b0acfc73f2b2bb99",
+      "initial_registers": {
+        "a": 160,
+        "x": 3,
+        "y": 0,
+        "p": 38,
+        "sp": 249,
+        "pc": 53528
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 73147,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 5,
+        "y": 10,
+        "p": 164,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame48552.state",
+      "native_sha256": "14a374dda73b503c8dd62d59215067f26546a3c0ea6f90bd459d77f20a6503a6",
+      "initial_registers": {
+        "a": 192,
+        "x": 1,
+        "y": 0,
+        "p": 38,
+        "sp": 249,
+        "pc": 53528
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 65973,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 3,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame20216.state",
+      "native_sha256": "2a18dcb580642ce40ba8af151eb112ad8e5ace4a4f3d28d31f3bed0df2779493",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 1,
+        "p": 39,
+        "sp": 249,
+        "pc": 54658
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 56745,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame15613.state",
+      "native_sha256": "cb7abe5011024fa170055224c2b1a9a66842afa727a495ca30193c75881177b5",
+      "initial_registers": {
+        "a": 96,
+        "x": 3,
+        "y": 2,
+        "p": 36,
+        "sp": 247,
+        "pc": 54943
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 86770,
+      "watch": [
+        {
+          "step": 51184,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 51191,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 161,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 5
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame53259.state",
+      "native_sha256": "0f21013ed0857c092698919a097ce7984be61f455af9c2527237848336f81c4c",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 7,
+        "p": 164,
+        "sp": 249,
+        "pc": 54590
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 53122,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame30235.state",
+      "native_sha256": "c591448bb6922a53b3fa9fcd7a138116bcae684d29da4be28da8ab70021130c9",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 1,
+        "p": 39,
+        "sp": 251,
+        "pc": 54576
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 55556,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame24975.state",
+      "native_sha256": "be8b552d5ebb0b7ef78d2df40d3b8ad84abf7db2ff7fa9e2987566a4923de9c1",
+      "initial_registers": {
+        "a": 96,
+        "x": 3,
+        "y": 0,
+        "p": 36,
+        "sp": 247,
+        "pc": 54941
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 61980,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 5,
+        "y": 7,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame11270.state",
+      "native_sha256": "799be87e91bd413f86d36a7d9a8fb8a07f01ac5b34c06091be0a9e419ce2ac5c",
+      "initial_registers": {
+        "a": 0,
+        "x": 3,
+        "y": 0,
+        "p": 38,
+        "sp": 249,
+        "pc": 53535
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 84654,
+      "watch": [
+        {
+          "step": 54434,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 54441,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 82,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 54444,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 82,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 54451,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 142,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 5
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 5,
+        "y": 14,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame39921.state",
+      "native_sha256": "ca84a08074e60f6a2488626369c62ae1532976b97358c2c29d561b3e4da3af0a",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 28,
+        "p": 38,
+        "sp": 249,
+        "pc": 54647
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 51506,
+      "watch": [
+        {
+          "step": 40485,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40492,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 170,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame44024.state",
+      "native_sha256": "12993a2e4dd0bd048fb2c58bc530030db04686c20eb17f2987f6594fd68b2627",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 1,
+        "p": 39,
+        "sp": 249,
+        "pc": 54647
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 61025,
+      "watch": [
+        {
+          "step": 41717,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 1
+        },
+        {
+          "step": 41724,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 24,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 1
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 11,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame57352.state",
+      "native_sha256": "2baab3a760993b44adcffcc50bb191e8bff61b3b719c3297d18347d264526c6a",
+      "initial_registers": {
+        "a": 24,
+        "x": 1,
+        "y": 0,
+        "p": 38,
+        "sp": 249,
+        "pc": 53519
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 59646,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame57435.state",
+      "native_sha256": "31c0349c850d5a9e17846acda9c04288025ab39982581f78f2e1097ee62b6f78",
+      "initial_registers": {
+        "a": 7,
+        "x": 4,
+        "y": 0,
+        "p": 37,
+        "sp": 251,
+        "pc": 54506
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 67624,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame34707.state",
+      "native_sha256": "04e888c6b9110b32ba0130a90526780ca3ce19e17809383de1c69a2b564f28f4",
+      "initial_registers": {
+        "a": 160,
+        "x": 3,
+        "y": 0,
+        "p": 38,
+        "sp": 249,
+        "pc": 53529
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 62349,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 5,
+        "y": 7,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame43936.state",
+      "native_sha256": "41212db65ee08fc62352ebe9509775dff2abf6f77b8df315c5f7cb7eeb88d35b",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 7,
+        "p": 38,
+        "sp": 249,
+        "pc": 54630
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 64856,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame24728.state",
+      "native_sha256": "aa6b125dfe9075f7f04480025ef608d7dd5c74ff542b416e7c769ed97f056be0",
+      "initial_registers": {
+        "a": 48,
+        "x": 1,
+        "y": 0,
+        "p": 38,
+        "sp": 249,
+        "pc": 53522
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 54572,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame39180.state",
+      "native_sha256": "0c542caaade5707d3592f40755549ceb89b5ecfe2710a3a9632d3d108832a4fd",
+      "initial_registers": {
+        "a": 12,
+        "x": 1,
+        "y": 0,
+        "p": 38,
+        "sp": 249,
+        "pc": 53516
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 59747,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame11189.state",
+      "native_sha256": "749f975e4c51f3a5096c2eef76d235b1b0cde37c1a16716d11cac888074fc5dc",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 2,
+        "p": 38,
+        "sp": 249,
+        "pc": 54644
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 57808,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame1953.state",
+      "native_sha256": "19bfe17db4465fc46eeb69c280ac7699d7a399678a4239101c0d27b8177cce85",
+      "initial_registers": {
+        "a": 1,
+        "x": 2,
+        "y": 1,
+        "p": 164,
+        "sp": 251,
+        "pc": 54573
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 52208,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame44103.state",
+      "native_sha256": "52de2f1dbfae6d5d1d9c077057bce33edf11f19549b3e4512546f87111c2e64e",
+      "initial_registers": {
+        "a": 160,
+        "x": 3,
+        "y": 0,
+        "p": 164,
+        "sp": 249,
+        "pc": 53533
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 70915,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame6758.state",
+      "native_sha256": "b303c66389bd6749e4813aa8efb2d01a5f411fa7a3dbac45bb0c644e4d5bb842",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 38,
+        "sp": 249,
+        "pc": 54610
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 56004,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 7,
+        "p": 164,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame53006.state",
+      "native_sha256": "57318925a493d21aedd18be961cdd63caab7d431a31c15ee4c0d91b17015cf17",
+      "initial_registers": {
+        "a": 7,
+        "x": 4,
+        "y": 0,
+        "p": 37,
+        "sp": 251,
+        "pc": 54506
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 67976,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame44189.state",
+      "native_sha256": "ff3d5abe966777dee9197420ea09dd9b8e3da815667a033f358c4ce3d3ebc54f",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 38,
+        "sp": 249,
+        "pc": 54644
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 60606,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame39522.state",
+      "native_sha256": "d99c743716307970a16433ef73ec68f1392c03ff04edfaac981a71649f8274df",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 38,
+        "sp": 249,
+        "pc": 54607
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 56574,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame15697.state",
+      "native_sha256": "726e5fd47e461ab4198bccd958bf3f152a7e83ef513157aea05db078222fb06a",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 6,
+        "p": 38,
+        "sp": 249,
+        "pc": 54641
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 51337,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 14,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame11442.state",
+      "native_sha256": "101cc69a7146c4f340da1c342bb8ddbe863bd8fac504192553c85ccb82abb906",
+      "initial_registers": {
+        "a": 1,
+        "x": 2,
+        "y": 1,
+        "p": 164,
+        "sp": 249,
+        "pc": 54590
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 50715,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame20046.state",
+      "native_sha256": "d1ff77c59661e33302c5533fad64e0ba5de1891996956daca76765d205727e75",
+      "initial_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 5,
+        "p": 164,
+        "sp": 247,
+        "pc": 54978
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 61235,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame53376.state",
+      "native_sha256": "3652cfbde7770ff5df842592a5b805b972ef06e8d009aa1c101ffc43d9c6b73d",
+      "initial_registers": {
+        "a": 1,
+        "x": 2,
+        "y": 1,
+        "p": 164,
+        "sp": 251,
+        "pc": 54587
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 54186,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame20790.state",
+      "native_sha256": "9528f9de8b32109ed03c41a4b01494b49c53a22e98c3f3cfd3bde94d3622a530",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 29,
+        "p": 38,
+        "sp": 249,
+        "pc": 54624
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 54337,
+      "watch": [
+        {
+          "step": 40369,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40376,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 4,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40382,
+          "physical_bank": 10,
+          "pc": 46588,
+          "registers": {
+            "a": 4,
+            "x": 0,
+            "y": 1,
+            "p": 164,
+            "sp": 253,
+            "pc": 46588
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40389,
+          "physical_bank": 10,
+          "pc": 46591,
+          "registers": {
+            "a": 120,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46591
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40392,
+          "physical_bank": 10,
+          "pc": 46588,
+          "registers": {
+            "a": 120,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46588
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40399,
+          "physical_bank": 10,
+          "pc": 46591,
+          "registers": {
+            "a": 181,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46591
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40407,
+          "physical_bank": 10,
+          "pc": 47499,
+          "registers": {
+            "a": 53,
+            "x": 0,
+            "y": 1,
+            "p": 164,
+            "sp": 253,
+            "pc": 47499
+          },
+          "request": 0,
+          "ruler": 4
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame48724.state",
+      "native_sha256": "87e46d5bfde0814b42bbce3a1bac32984a917d1e0c2ae2d9d97f104764e1de1d",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 38,
+        "sp": 249,
+        "pc": 54624
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 52467,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame57693.state",
+      "native_sha256": "721d782fb4c0a1cf7745c442add1d038af409728028cd0b8f5a985ea1ee514a8",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 7,
+        "p": 38,
+        "sp": 249,
+        "pc": 54607
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 53256,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame34458.state",
+      "native_sha256": "2bd95af0fca39a007f4960a37ec322c8fb11c31c0fd54c6b3c6c5d94a50413dd",
+      "initial_registers": {
+        "a": 15,
+        "x": 1,
+        "y": 4,
+        "p": 36,
+        "sp": 247,
+        "pc": 54970
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 57011,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 3,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame20133.state",
+      "native_sha256": "3b401da59539749e410ec7fd90b05ad6e5944ee7f51eaf89e8f6ca69e7ee0633",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 6,
+        "p": 38,
+        "sp": 249,
+        "pc": 54641
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 58021,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame20296.state",
+      "native_sha256": "28034cf6a6d0d79803bba14a93e1b2ce9c59e82c6e74a1dfc673e1271bd6915c",
+      "initial_registers": {
+        "a": 96,
+        "x": 3,
+        "y": 0,
+        "p": 36,
+        "sp": 247,
+        "pc": 54941
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 88741,
+      "watch": [
+        {
+          "step": 58525,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 58532,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 156,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 5
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame16076.state",
+      "native_sha256": "c7bae31d785d816b37e1d1d530a4f554af742942760954e3553186e9961038d2",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 29,
+        "p": 164,
+        "sp": 251,
+        "pc": 54573
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 52804,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame35192.state",
+      "native_sha256": "8410a9c58141880f7d944f9f1cc529729f3f48b2432a55e64a0839f1783ce414",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 29,
+        "p": 38,
+        "sp": 249,
+        "pc": 54627
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 49285,
+      "watch": [
+        {
+          "step": 40472,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40479,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 248,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40482,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 120,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40489,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 0,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40495,
+          "physical_bank": 10,
+          "pc": 46588,
+          "registers": {
+            "a": 0,
+            "x": 0,
+            "y": 1,
+            "p": 164,
+            "sp": 253,
+            "pc": 46588
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40502,
+          "physical_bank": 10,
+          "pc": 46591,
+          "registers": {
+            "a": 129,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46591
+          },
+          "request": 0,
+          "ruler": 4
+        },
+        {
+          "step": 40508,
+          "physical_bank": 10,
+          "pc": 48050,
+          "registers": {
+            "a": 1,
+            "x": 0,
+            "y": 1,
+            "p": 164,
+            "sp": 253,
+            "pc": 48050
+          },
+          "request": 0,
+          "ruler": 4
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame43854.state",
+      "native_sha256": "e26bf12f4305ee78e07292caea1d99dca089b0dc24e68779dbee35e125fdb6a4",
+      "initial_registers": {
+        "a": 209,
+        "x": 1,
+        "y": 5,
+        "p": 37,
+        "sp": 247,
+        "pc": 54974
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 64930,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 3,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame30153.state",
+      "native_sha256": "b08cc0430df2dc3c00ed93b78a975e3f0ec42ba42fe6b0fcf42beb5c462275ff",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 38,
+        "sp": 249,
+        "pc": 54630
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 80752,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame53092.state",
+      "native_sha256": "397da1387add797bea1207fd23c6f8237d2a682aba59667b9f69257560843b73",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 2,
+        "p": 38,
+        "sp": 249,
+        "pc": 54607
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 56118,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame15447.state",
+      "native_sha256": "c390b5461740672cc92efc0490984fdd84c06e75d2b163b8bf6fc8f693bb54fd",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 164,
+        "sp": 249,
+        "pc": 54590
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 80272,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame57805.state",
+      "native_sha256": "9dd1045cd1c07a6a87295743e29bb340e8b80c96231a9d68c4bd5fcf5a2817b2",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 29,
+        "p": 38,
+        "sp": 249,
+        "pc": 54647
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 57287,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame34623.state",
+      "native_sha256": "199aa2eabe898431dd4235383e7a862a8880a58ba5f9888b1de2db0b8afcba0f",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 38,
+        "sp": 249,
+        "pc": 54630
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 64855,
+      "watch": [
+        {
+          "step": 41853,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 1
+        },
+        {
+          "step": 41860,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 218,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 1
+        },
+        {
+          "step": 41863,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 90,
+            "x": 0,
+            "y": 1,
+            "p": 37,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 1
+        },
+        {
+          "step": 41870,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 157,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 1
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame48805.state",
+      "native_sha256": "e193b37d1d9ab41aa33650c9412a4e7c65e6d523a22ee34dfdb8e674cc22d824",
+      "initial_registers": {
+        "a": 6,
+        "x": 3,
+        "y": 0,
+        "p": 37,
+        "sp": 251,
+        "pc": 54567
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 74845,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame24893.state",
+      "native_sha256": "9a3da92f9c2b618b888ed044b8928b768e4c6d56e7633ddbc41cc78fd4affd2c",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 3,
+        "p": 164,
+        "sp": 251,
+        "pc": 54579
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 56121,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame57605.state",
+      "native_sha256": "0adcde06191daed8d489ae8494d34b6e11a4675461c8788b94e96dc9fbd0ebc5",
+      "initial_registers": {
+        "a": 5,
+        "x": 3,
+        "y": 0,
+        "p": 37,
+        "sp": 251,
+        "pc": 54498
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 60519,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 5,
+        "y": 11,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame39433.state",
+      "native_sha256": "5782b2c328a2857e4399a76208207d3565840436c834bfc9fe83f83a5133a69d",
+      "initial_registers": {
+        "a": 6,
+        "x": 3,
+        "y": 0,
+        "p": 37,
+        "sp": 251,
+        "pc": 54564
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 61849,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 5,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame39349.state",
+      "native_sha256": "6d77644b014d049cd172ebfa346951d1142f29cca7395376d00bb426317d8670",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 2,
+        "p": 38,
+        "sp": 249,
+        "pc": 54593
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 62634,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame15532.state",
+      "native_sha256": "5555365797bab432bbaa96432e6b2be7b6df54cf956f07a4d81f92a3be5a1b26",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 2,
+        "p": 38,
+        "sp": 249,
+        "pc": 54644
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 52696,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 1,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame48636.state",
+      "native_sha256": "7d046afb1130bdeb9d21aed6b690ed9c267e046260f1a8d956d5c5795572c029",
+      "initial_registers": {
+        "a": 96,
+        "x": 4,
+        "y": 0,
+        "p": 36,
+        "sp": 249,
+        "pc": 53539
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 75991,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame6592.state",
+      "native_sha256": "7aa8494150b40c582db1f59b9c36336f53082f230bfcd19facb0876297011e20",
+      "initial_registers": {
+        "a": 15,
+        "x": 1,
+        "y": 2,
+        "p": 36,
+        "sp": 247,
+        "pc": 54945
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 67579,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 2,
+        "p": 164,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame48889.state",
+      "native_sha256": "8c81fede2b507fc460594fe46ecba4e13c36c6ade3cc4e64f151990d47876cbc",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 38,
+        "sp": 249,
+        "pc": 54644
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 56564,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 6,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame39263.state",
+      "native_sha256": "e39f83c00fed28e7b27f13bfe26f99e39a860401b2f5b89dd80f5ccde823b76d",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 7,
+        "p": 38,
+        "sp": 249,
+        "pc": 54627
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 70743,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame15364.state",
+      "native_sha256": "7b59c0e061ebd31d02049120e57c9c632b028c6213800340537242711cba4063",
+      "initial_registers": {
+        "a": 6,
+        "x": 1,
+        "y": 0,
+        "p": 37,
+        "sp": 251,
+        "pc": 54567
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 56613,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame11356.state",
+      "native_sha256": "96b59c982e5c1db2bfee4d4d0c7ce0d498ab00e4b337f741d6e01693042765fd",
+      "initial_registers": {
+        "a": 0,
+        "x": 0,
+        "y": 8,
+        "p": 38,
+        "sp": 249,
+        "pc": 54624
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 48849,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame7016.state",
+      "native_sha256": "c261d0695437869c985aab26b27eb0b7a352dd68e79cafadaa30055655910d07",
+      "initial_registers": {
+        "a": 0,
+        "x": 2,
+        "y": 1,
+        "p": 38,
+        "sp": 249,
+        "pc": 54630
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 52038,
+      "watch": [],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 4,
+        "y": 0,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    },
+    {
+      "native_state": "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame30317.state",
+      "native_sha256": "16d49cc2de1e2aef6d09fd57123a7ebe036cf24ab7b8729f6cf0d4c91b2104c3",
+      "initial_registers": {
+        "a": 39,
+        "x": 3,
+        "y": 5,
+        "p": 36,
+        "sp": 247,
+        "pc": 54976
+      },
+      "actual_MAP_PRG_banks": [
+        16,
+        10,
+        11,
+        31
+      ],
+      "RAM_bank_shadows": [
+        48,
+        42,
+        43,
+        31
+      ],
+      "original_CPU_prefix_instructions": 76210,
+      "watch": [
+        {
+          "step": 55114,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 180,
+            "x": 0,
+            "y": 1,
+            "p": 36,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 55121,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 178,
+            "x": 0,
+            "y": 1,
+            "p": 38,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 55124,
+          "physical_bank": 10,
+          "pc": 46236,
+          "registers": {
+            "a": 50,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46236
+          },
+          "request": 0,
+          "ruler": 5
+        },
+        {
+          "step": 55131,
+          "physical_bank": 10,
+          "pc": 46239,
+          "registers": {
+            "a": 148,
+            "x": 0,
+            "y": 1,
+            "p": 39,
+            "sp": 253,
+            "pc": 46239
+          },
+          "request": 0,
+          "ruler": 5
+        }
+      ],
+      "stop": "original_request_FF",
+      "final_registers": {
+        "a": 255,
+        "x": 0,
+        "y": 10,
+        "p": 165,
+        "sp": 253,
+        "pc": 53580
+      },
+      "final_request": 255
+    }
+  ],
+  "contexts_examined": 83,
+  "captured_original_callers": {
+    "B5FC": "analysis/phase19/cpu/actual-callers/entry-B5FC",
+    "B98B": "analysis/phase19/cpu/actual-callers/entry-B98B",
+    "BBB2": "analysis/phase19/cpu/actual-callers/entry-BBB2"
+  },
+  "postcapture_memory_injections": 0,
+  "explicit_NMI_IRQ_arrivals": 0,
+  "source_comparisons_counted_elsewhere": true,
+  "Native_internal_CPU_trace": false,
+  "artifact_sha256": {
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler0-status00-frame2237.state": "9298841e00f323138722b3fd13364b48dd5dd4685bfc4a76989e76e735da76b8",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler6-status00-frame10323.state": "82eb580d7e558268ae65c496a5bf3305b16e4c5e30bcf178d774b5627041b49e",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler3-status00-frame10571.state": "44d842d52a56fb90a2b920c25b7281667df83a4da1b915dfe707e0885faab450",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler5-status00-frame10237.state": "db953c353dd1046a91eed1cbbb24b4cc6b8ba307bcbf0f6c7d5c3da2df386c3e",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler2-status00-frame2070.state": "423f4641a9f26346a689f5de2d1614a874017c77579b433ec575b0e66b2623e8",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler4-status00-frame10405.state": "7ee2d405f14383aafc893d9568d398b72ae9ad4ebc9660ac12deb401f129303e",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler4-status00-frame1991.state": "1b5b13e848c34aef7b5ba8a35833536593d5a007478a97e201e82bf45d442650",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler3-status00-frame2153.state": "dbc79a40e0b256fc27751a1913c7251e19c8f583b78ad6fc1fabe0d6cb0511dc",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler2-status00-frame10489.state": "a3bc4333d2c0815f3fa434569af8c165ec42c775d2c192c63a530efe8c1b71be",
+    "analysis/phase19/runtime/natural-expansion-monthly-secondary-window/AI-ruler0-status00-frame10656.state": "0af2506bba18c5a8cad3a98aec33ecc90223c318975b86b3e4a2ebd691ea1a29",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame52924.state": "bb099c655aa609c9a2a9c54665ba212ba453e87b5fff18ca996b781171517225",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame11024.state": "9244ea6f419a9fe880605dfd5b0736aab8219a8656d7680f7c9f969e39d6ea38",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame6676.state": "9dc613058dbbc6777534137d163c031d69d8edd635cdce8db851180bc17e4d02",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame25059.state": "8fc5e7c6192c6dce61d2bfc6a7f9a3a7fb28ce7a754df10e148791258cf53cc3",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame30406.state": "752484a148829e05932b545fa2635b048dca37301dc83f5e9c63c14c31fd2734",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame53174.state": "012095634ea285ea72aae4c591dc7e031be25f55f51f78f69b2cacb4905e989e",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame20389.state": "64eec51bbc92d6cbcd2c49f7cedeca4e8fc300faf9eee1cec5c371fa649e4483",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame34791.state": "a96ed067c60fc1854ea3b0ff26996938963972a91c20b5c235522df173323689",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame24809.state": "15b0fdb3d9edf72f8dae47baceb9dd0cdaa3989d561e5281d1276621b5d18537",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame49001.state": "7e4d4c128afd0a353b3ab1daa0bfc5bb87ee170ed2037be6d7d156e930e18640",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame30521.state": "0816bc7ad8a1524605883f05d8372d001116d74c8ccff735e32b8a9eda8dccd7",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame34539.state": "56949f1918661c1fb746f415094b403c23f0002ad2a2f8e5f013e60f0fb11eed",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame6932.state": "59bdabafd56ee49765f7faa725baf13d8e1d6218ace601dd2fe8f8dd4bb9e08c",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame44569.state": "302394d868dae6bc2e773d4fcfbe459ca2a7981486761d5320c4dd4d7413db6c",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame26088.state": "22bb7dee5623aa3f5a8d3c4b93dc58f1be6c3cd80202cb6a947f6b430ddd5685",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame30070.state": "52b4c931f1026bc336e7e2db329f8572de7a974b55efdc08260c0957c1baf135",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame57520.state": "44984431fbdc86bb46da3972021113d58f0699d9105093c52d27dae1f6482dd3",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame11108.state": "b15d8f393de285a8a6f68a97aed42c081d6d5b5b613d71526002f38fafc8d364",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame6846.state": "622be0c75dbcf035a41d12c4dad6257e683dbddaa1c57e01b0acfc73f2b2bb99",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame48552.state": "14a374dda73b503c8dd62d59215067f26546a3c0ea6f90bd459d77f20a6503a6",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame20216.state": "2a18dcb580642ce40ba8af151eb112ad8e5ace4a4f3d28d31f3bed0df2779493",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame15613.state": "cb7abe5011024fa170055224c2b1a9a66842afa727a495ca30193c75881177b5",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame53259.state": "0f21013ed0857c092698919a097ce7984be61f455af9c2527237848336f81c4c",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame30235.state": "c591448bb6922a53b3fa9fcd7a138116bcae684d29da4be28da8ab70021130c9",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame24975.state": "be8b552d5ebb0b7ef78d2df40d3b8ad84abf7db2ff7fa9e2987566a4923de9c1",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame11270.state": "799be87e91bd413f86d36a7d9a8fb8a07f01ac5b34c06091be0a9e419ce2ac5c",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame39921.state": "ca84a08074e60f6a2488626369c62ae1532976b97358c2c29d561b3e4da3af0a",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame44024.state": "12993a2e4dd0bd048fb2c58bc530030db04686c20eb17f2987f6594fd68b2627",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame57352.state": "2baab3a760993b44adcffcc50bb191e8bff61b3b719c3297d18347d264526c6a",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame57435.state": "31c0349c850d5a9e17846acda9c04288025ab39982581f78f2e1097ee62b6f78",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame34707.state": "04e888c6b9110b32ba0130a90526780ca3ce19e17809383de1c69a2b564f28f4",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame43936.state": "41212db65ee08fc62352ebe9509775dff2abf6f77b8df315c5f7cb7eeb88d35b",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame24728.state": "aa6b125dfe9075f7f04480025ef608d7dd5c74ff542b416e7c769ed97f056be0",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame39180.state": "0c542caaade5707d3592f40755549ceb89b5ecfe2710a3a9632d3d108832a4fd",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame11189.state": "749f975e4c51f3a5096c2eef76d235b1b0cde37c1a16716d11cac888074fc5dc",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame1953.state": "19bfe17db4465fc46eeb69c280ac7699d7a399678a4239101c0d27b8177cce85",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame44103.state": "52de2f1dbfae6d5d1d9c077057bce33edf11f19549b3e4512546f87111c2e64e",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame6758.state": "b303c66389bd6749e4813aa8efb2d01a5f411fa7a3dbac45bb0c644e4d5bb842",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame53006.state": "57318925a493d21aedd18be961cdd63caab7d431a31c15ee4c0d91b17015cf17",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame44189.state": "ff3d5abe966777dee9197420ea09dd9b8e3da815667a033f358c4ce3d3ebc54f",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame39522.state": "d99c743716307970a16433ef73ec68f1392c03ff04edfaac981a71649f8274df",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame15697.state": "726e5fd47e461ab4198bccd958bf3f152a7e83ef513157aea05db078222fb06a",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame11442.state": "101cc69a7146c4f340da1c342bb8ddbe863bd8fac504192553c85ccb82abb906",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame20046.state": "d1ff77c59661e33302c5533fad64e0ba5de1891996956daca76765d205727e75",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame53376.state": "3652cfbde7770ff5df842592a5b805b972ef06e8d009aa1c101ffc43d9c6b73d",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame20790.state": "9528f9de8b32109ed03c41a4b01494b49c53a22e98c3f3cfd3bde94d3622a530",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame48724.state": "87e46d5bfde0814b42bbce3a1bac32984a917d1e0c2ae2d9d97f104764e1de1d",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame57693.state": "721d782fb4c0a1cf7745c442add1d038af409728028cd0b8f5a985ea1ee514a8",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame34458.state": "2bd95af0fca39a007f4960a37ec322c8fb11c31c0fd54c6b3c6c5d94a50413dd",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame20133.state": "3b401da59539749e410ec7fd90b05ad6e5944ee7f51eaf89e8f6ca69e7ee0633",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame20296.state": "28034cf6a6d0d79803bba14a93e1b2ce9c59e82c6e74a1dfc673e1271bd6915c",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame16076.state": "c7bae31d785d816b37e1d1d530a4f554af742942760954e3553186e9961038d2",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame35192.state": "8410a9c58141880f7d944f9f1cc529729f3f48b2432a55e64a0839f1783ce414",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame43854.state": "e26bf12f4305ee78e07292caea1d99dca089b0dc24e68779dbee35e125fdb6a4",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame30153.state": "b08cc0430df2dc3c00ed93b78a975e3f0ec42ba42fe6b0fcf42beb5c462275ff",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame53092.state": "397da1387add797bea1207fd23c6f8237d2a682aba59667b9f69257560843b73",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame15447.state": "c390b5461740672cc92efc0490984fdd84c06e75d2b163b8bf6fc8f693bb54fd",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame57805.state": "9dd1045cd1c07a6a87295743e29bb340e8b80c96231a9d68c4bd5fcf5a2817b2",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame34623.state": "199aa2eabe898431dd4235383e7a862a8880a58ba5f9888b1de2db0b8afcba0f",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame48805.state": "e193b37d1d9ab41aa33650c9412a4e7c65e6d523a22ee34dfdb8e674cc22d824",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame24893.state": "9a3da92f9c2b618b888ed044b8928b768e4c6d56e7633ddbc41cc78fd4affd2c",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame57605.state": "0adcde06191daed8d489ae8494d34b6e11a4675461c8788b94e96dc9fbd0ebc5",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame39433.state": "5782b2c328a2857e4399a76208207d3565840436c834bfc9fe83f83a5133a69d",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame39349.state": "6d77644b014d049cd172ebfa346951d1142f29cca7395376d00bb426317d8670",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame15532.state": "5555365797bab432bbaa96432e6b2be7b6df54cf956f07a4d81f92a3be5a1b26",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame48636.state": "7d046afb1130bdeb9d21aed6b690ed9c267e046260f1a8d956d5c5795572c029",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame6592.state": "7aa8494150b40c582db1f59b9c36336f53082f230bfcd19facb0876297011e20",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame48889.state": "8c81fede2b507fc460594fe46ecba4e13c36c6ade3cc4e64f151990d47876cbc",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler0-status00-frame39263.state": "e39f83c00fed28e7b27f13bfe26f99e39a860401b2f5b89dd80f5ccde823b76d",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler3-status00-frame15364.state": "7b59c0e061ebd31d02049120e57c9c632b028c6213800340537242711cba4063",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler6-status00-frame11356.state": "96b59c982e5c1db2bfee4d4d0c7ce0d498ab00e4b337f741d6e01693042765fd",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler4-status00-frame7016.state": "c261d0695437869c985aab26b27eb0b7a352dd68e79cafadaa30055655910d07",
+    "analysis/phase15/runtime/cold-yearwrap/AI-ruler5-status00-frame30317.state": "16d49cc2de1e2aef6d09fd57123a7ebe036cf24ab7b8729f6cf0d4c91b2104c3",
+    "analysis/phase19/cpu/actual-callers/entry-BBB2/input-n163.bin": "49fc3753d7985a714c17be720679dcc14b76ff48826d035e957b2417416cb16d",
+    "analysis/phase19/cpu/actual-callers/entry-BBB2/input-ram.bin": "a46b288fb879b68a2d6481a3aec4e34ebd5bd0c4b7c047daa7907aca02b6094e",
+    "analysis/phase19/cpu/actual-callers/entry-BBB2/context.json": "e78b7db540e47063084e086e84df92ab5aa473e4e3515f052e1be3b387aeb0c0",
+    "analysis/phase19/cpu/actual-callers/entry-BBB2/input-sram.bin": "f090ab9f19af42813afe8468279693c15cd364a964e9d6d7bf4510cf6ef4e46d",
+    "analysis/phase19/cpu/actual-callers/entry-B5FC/input-n163.bin": "49fc3753d7985a714c17be720679dcc14b76ff48826d035e957b2417416cb16d",
+    "analysis/phase19/cpu/actual-callers/entry-B5FC/input-ram.bin": "f3783a9f225aad8749ffde1ea477c2d4fa97d43307ce15ba69ddd39189aa00ea",
+    "analysis/phase19/cpu/actual-callers/entry-B5FC/context.json": "1a69f2519dfc8f56196adf7458309db24237e550f559659eefa00d0b4bb85889",
+    "analysis/phase19/cpu/actual-callers/entry-B5FC/input-sram.bin": "8e8409761a35c9cc65645b230c34c6329b53c9e5f21a5809716a5e314a35df12",
+    "analysis/phase19/cpu/actual-callers/entry-B98B/input-n163.bin": "49fc3753d7985a714c17be720679dcc14b76ff48826d035e957b2417416cb16d",
+    "analysis/phase19/cpu/actual-callers/entry-B98B/input-ram.bin": "e08af45aaa18a84440300d3793e51023283168b5ffc05f5b0a722d69be5d8447",
+    "analysis/phase19/cpu/actual-callers/entry-B98B/context.json": "a035c78cdc19716b866e54007c1598e522e9273e0955ded4df8e1051979765b1",
+    "analysis/phase19/cpu/actual-callers/entry-B98B/input-sram.bin": "8e8409761a35c9cc65645b230c34c6329b53c9e5f21a5809716a5e314a35df12"
+  },
+  "source_sha256": {
+    "scripts/trace_domestic_secondary_callers.py": "f95f3c7450067a69aeee0bb27b0085fd727af3beeb6c9b064f70532239a3f908",
+    "source/recovered/nestopia_context.py": "7762c7ac80a8148341582edcf9c0922a230b586c3b336a06281b1315bf9a7ccb",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1"
+  },
+  "limitations": [
+    "SavedNative PC/SP/AXYP, actualPRGbanks andN163 initialize each independentCPU continuation.",
+    "Later hardware/timing state is explicit, no NMI/IRQ arrival is synthesized.",
+    "Requests/waits/instructionbudget remain boundaries, not assumed completion.",
+    "The prefix is independent originalCPU execution, not Nativeinternal perinstruction recording.",
+    "Capturedcallee comparisons are separately counted; these prefixes are not additional complete source cases."
+  ]
+}

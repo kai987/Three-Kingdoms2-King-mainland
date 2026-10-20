@@ -1,0 +1,105 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"evidence_id\":\"ev_07d33df4705cc23ac1309ec6c6c44b158598afb9040a756061060da19e255534\",\"subject\":{\"name\":\"image.bin\",\"digest\":{\"sha256\":\"63c0bce6720222c67b0c732a5b16212d864b130d7ea68863dfe3d9f7b638a7d5\"},\"format\":\"raw-binary\",\"architecture\":\"6502\",\"local_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/image.bin\"},\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"analysis_profile\":{\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"parameters\":{\"target_kind\":\"executable\",\"target_format\":\"raw-binary\",\"architecture\":\"6502\",\"available_architectures\":[\"6502\"],\"import_mode\":\"ephemeral-source-immutable\",\"annotation_policy\":\"atomic-function-entry-metadata-v1\",\"load_image_observations\":\"source-mappings-entry-context-v2\",\"function_body_evidence\":\"complete-inclusive-ranges-v1\",\"function_references\":\"complete-body-and-entry-reference-manager-v2\",\"call_relationship_coverage\":\"resolved-call-reference-diagnostics-v1\",\"string_inventory_evidence\":\"defined-data-coverage-v1\",\"location_resolution\":\"explicit-address-exact-entry-symbol-first-v3\",\"instruction_flow_evidence\":\"decoded-return-pcode-v1\",\"instruction_references\":\"exact-address-incoming-v1\",\"function_boundary_observations\":\"ghidra-terminal-call-limitations-v1\",\"no_return_repair\":\"returning-imports-decoded-return-v2\",\"process_launch\":\"inspected-jvm-launch-support-v1\",\"load_image_evidence\":\"independent-raw-mapping-context-v2\",\"jump_table_evidence\":\"typed-case-default-blocks-v1\",\"decompiler_jump_loads\":true,\"loader\":\"BinaryLoader\",\"language_id\":\"6502:LE:16:default\",\"compiler_spec_id\":\"default\",\"language_selection\":\"caller-supplied-v1\",\"entry_point\":\"0xa000\",\"entry_seed\":\"external-entry-and-function-before-analysis-v1\",\"analyzer_preset\":\"ghidra-default\",\"analysis_seeds\":{\"format\":\"rea-ghidra-seeds-v1\",\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv\",\"configured_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv\",\"sha256\":\"84d0238e728b8735aad1d9dac0c407a406371a7a209c30a944cdadf181d92eb5\",\"entries\":{\"function\":9,\"code\":0,\"label\":0}}},\"digest\":\"cbb920562d5cb4777b7143d587a47ffb80ae2bf051660c2711f1284274d6ea44\"},\"predicate_type\":\"rea.analysis\",\"operation\":\"procedure_pseudo_code\",\"parameters\":{\"procedure\":\"0xa006\"},\"raw_result\":{\"value\":\"\\nbyte thunk_FUN_d64a(void)\\n\\n{\\n  byte bVar1;\\n  byte bVar2;\\n  byte bVar3;\\n  char cVar4;\\n  undefined1 uStack0000;\\n  \\n  DAT_0013 = DAT_0425;\\n  DAT_0010 = 0x4c;\\n  DAT_0011 = 0xd7;\\n  DAT_0012 = 0;\\n  uStack0000 = 0xd6;\\n  FUN_ed19();\\n  cVar4 = DAT_047b <= DAT_0012;\\n  if (((DAT_0012 != DAT_047b) && ((bool)cVar4)) &&\\n     (DAT_0012 = DAT_047b, DAT_0425 = DAT_047b, DAT_0013 != 0)) {\\n    DAT_0012 = 0;\\n    DAT_0425 = DAT_0012;\\n  }\\n  DAT_0010 = 0x58;\\n  DAT_0011 = 0xd7;\\n  DAT_0000 = 0x6e;\\n  DAT_0001 = 0xd7;\\n  DAT_047a = DAT_0012;\\n  uStack0000 = 0xd6;\\n  FUN_edf5();\\n  uStack0000 = 0xd6;\\n  bVar1 = FUN_ddad();\\n  if (cVar4 != '\\\\0') {\\n    if (DAT_047c == '\\\\x10') {\\n      bVar1 = FUN_d7c5();\\n      return bVar1;\\n    }\\n    if ((bool)(DAT_0081 & 1)) {\\n      if ((DAT_047c == '\\\\x0f') || (DAT_0012 != DAT_047b)) {\\n        if (DAT_047c == '\\\\x0f') {\\n          DAT_0481 = (&DAT_0151)[DAT_0012];\\n          uStack0000 = 0xd7;\\n          cVar4 = FUN_dd4f(DAT_0402);\\n          if (cVar4 == DAT_0481) {\\n            DAT_047c = 0x81;\\n            return 0x81;\\n          }\\n          DAT_047c = 0x80;\\n          bVar1 = FUN_d7a8();\\n          return bVar1;\\n        }\\n        if ((&DAT_0481)[DAT_0012] == -1) {\\n          bVar1 = 0;\\n          if (DAT_047c != '\\\\0') {\\n            (&DAT_0481)[DAT_0012] = (&DAT_0151)[DAT_0012];\\n            DAT_047c = DAT_047c + -1;\\n            uStack0000 = 0xd7;\\n            bVar1 = FUN_d773(0x3e);\\n          }\\n        }\\n        else {\\n          (&DAT_0481)[DAT_0012] = 0xff;\\n          DAT_047c = DAT_047c + '\\\\x01';\\n          uStack0000 = 0xd7;\\n          bVar1 = FUN_d773(1);\\n        }\\n      }\\n      else {\\n        bVar2 = 0;\\n        bVar3 = 0;\\n        do {\\n          bVar1 = (&DAT_0481)[bVar3];\\n          if (bVar1 != 0xff) {\\n            (&DAT_0481)[bVar2] = bVar1;\\n            DAT_0000 = bVar2;\\n            if (bVar3 != bVar2) {\\n              bVar1 = 0xff;\\n              (&DAT_0481)[bVar3] = 0xff;\\n            }\\n            bVar2 = bVar2 + 1;\\n          }\\n          bVar3 = bVar3 + 1;\\n        } while (bVar3 < 10);\\n        if (bVar2 != 0) {\\n          DAT_047c = 0x81;\\n          bVar1 = FUN_d7a8();\\n          return bVar1;\\n        }\\n      }\\n    }\\n    else {\\n      bVar1 = DAT_0081 >> 2;\\n      if ((DAT_0081 >> 1 & 1) != 0) {\\n        DAT_047c = 0x90;\\n        bVar1 = FUN_d7a8();\\n        return bVar1;\\n      }\\n    }\\n  }\\n  return bVar1;\\n}\\n\\n\",\"limitations\":[]},\"normalized_result\":\"\\nbyte thunk_FUN_d64a(void)\\n\\n{\\n  byte bVar1;\\n  byte bVar2;\\n  byte bVar3;\\n  char cVar4;\\n  undefined1 uStack0000;\\n  \\n  DAT_0013 = DAT_0425;\\n  DAT_0010 = 0x4c;\\n  DAT_0011 = 0xd7;\\n  DAT_0012 = 0;\\n  uStack0000 = 0xd6;\\n  FUN_ed19();\\n  cVar4 = DAT_047b <= DAT_0012;\\n  if (((DAT_0012 != DAT_047b) && ((bool)cVar4)) &&\\n     (DAT_0012 = DAT_047b, DAT_0425 = DAT_047b, DAT_0013 != 0)) {\\n    DAT_0012 = 0;\\n    DAT_0425 = DAT_0012;\\n  }\\n  DAT_0010 = 0x58;\\n  DAT_0011 = 0xd7;\\n  DAT_0000 = 0x6e;\\n  DAT_0001 = 0xd7;\\n  DAT_047a = DAT_0012;\\n  uStack0000 = 0xd6;\\n  FUN_edf5();\\n  uStack0000 = 0xd6;\\n  bVar1 = FUN_ddad();\\n  if (cVar4 != '\\\\0') {\\n    if (DAT_047c == '\\\\x10') {\\n      bVar1 = FUN_d7c5();\\n      return bVar1;\\n    }\\n    if ((bool)(DAT_0081 & 1)) {\\n      if ((DAT_047c == '\\\\x0f') || (DAT_0012 != DAT_047b)) {\\n        if (DAT_047c == '\\\\x0f') {\\n          DAT_0481 = (&DAT_0151)[DAT_0012];\\n          uStack0000 = 0xd7;\\n          cVar4 = FUN_dd4f(DAT_0402);\\n          if (cVar4 == DAT_0481) {\\n            DAT_047c = 0x81;\\n            return 0x81;\\n          }\\n          DAT_047c = 0x80;\\n          bVar1 = FUN_d7a8();\\n          return bVar1;\\n        }\\n        if ((&DAT_0481)[DAT_0012] == -1) {\\n          bVar1 = 0;\\n          if (DAT_047c != '\\\\0') {\\n            (&DAT_0481)[DAT_0012] = (&DAT_0151)[DAT_0012];\\n            DAT_047c = DAT_047c + -1;\\n            uStack0000 = 0xd7;\\n            bVar1 = FUN_d773(0x3e);\\n          }\\n        }\\n        else {\\n          (&DAT_0481)[DAT_0012] = 0xff;\\n          DAT_047c = DAT_047c + '\\\\x01';\\n          uStack0000 = 0xd7;\\n          bVar1 = FUN_d773(1);\\n        }\\n      }\\n      else {\\n        bVar2 = 0;\\n        bVar3 = 0;\\n        do {\\n          bVar1 = (&DAT_0481)[bVar3];\\n          if (bVar1 != 0xff) {\\n            (&DAT_0481)[bVar2] = bVar1;\\n            DAT_0000 = bVar2;\\n            if (bVar3 != bVar2) {\\n              bVar1 = 0xff;\\n              (&DAT_0481)[bVar3] = 0xff;\\n            }\\n            bVar2 = bVar2 + 1;\\n          }\\n          bVar3 = bVar3 + 1;\\n        } while (bVar3 < 10);\\n        if (bVar2 != 0) {\\n          DAT_047c = 0x81;\\n          bVar1 = FUN_d7a8();\\n          return bVar1;\\n        }\\n      }\\n    }\\n    else {\\n      bVar1 = DAT_0081 >> 2;\\n      if ((DAT_0081 >> 1 & 1) != 0) {\\n        DAT_047c = 0x90;\\n        bVar1 = FUN_d7a8();\\n        return bVar1;\\n      }\\n    }\\n  }\\n  return bVar1;\\n}\\n\\n\",\"confidence\":\"observed\",\"authority\":\"shipped-artifact\",\"environment\":null,\"limitations\":[\"The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.\",\"The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.\",\"Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.\",\"Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.\",\"Pseudocode is Ghidra decompiler output, not original source and not text-equivalent to Hopper output.\",\"External functions and functions without an analyzable body return null; other decompiler failures remain explicit.\",\"macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.\",\"Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.\",\"Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.\",\"Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.\",\"Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv (sha256 84d0238e728b8735aad1d9dac0c407a406371a7a209c30a944cdadf181d92eb5: 9 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.\",\"Seed outcome: 8 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory.\"],\"relationship_coverage\":null,\"locations\":[],\"evidence_links\":[]}"
+    }
+  ],
+  "structuredContent": {
+    "evidence_id": "ev_07d33df4705cc23ac1309ec6c6c44b158598afb9040a756061060da19e255534",
+    "subject": {
+      "name": "image.bin",
+      "digest": {
+        "sha256": "63c0bce6720222c67b0c732a5b16212d864b130d7ea68863dfe3d9f7b638a7d5"
+      },
+      "format": "raw-binary",
+      "architecture": "6502",
+      "local_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/image.bin"
+    },
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "analysis_profile": {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "parameters": {
+        "target_kind": "executable",
+        "target_format": "raw-binary",
+        "architecture": "6502",
+        "available_architectures": [
+          "6502"
+        ],
+        "import_mode": "ephemeral-source-immutable",
+        "annotation_policy": "atomic-function-entry-metadata-v1",
+        "load_image_observations": "source-mappings-entry-context-v2",
+        "function_body_evidence": "complete-inclusive-ranges-v1",
+        "function_references": "complete-body-and-entry-reference-manager-v2",
+        "call_relationship_coverage": "resolved-call-reference-diagnostics-v1",
+        "string_inventory_evidence": "defined-data-coverage-v1",
+        "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+        "instruction_flow_evidence": "decoded-return-pcode-v1",
+        "instruction_references": "exact-address-incoming-v1",
+        "function_boundary_observations": "ghidra-terminal-call-limitations-v1",
+        "no_return_repair": "returning-imports-decoded-return-v2",
+        "process_launch": "inspected-jvm-launch-support-v1",
+        "load_image_evidence": "independent-raw-mapping-context-v2",
+        "jump_table_evidence": "typed-case-default-blocks-v1",
+        "decompiler_jump_loads": true,
+        "loader": "BinaryLoader",
+        "language_id": "6502:LE:16:default",
+        "compiler_spec_id": "default",
+        "language_selection": "caller-supplied-v1",
+        "entry_point": "0xa000",
+        "entry_seed": "external-entry-and-function-before-analysis-v1",
+        "analyzer_preset": "ghidra-default",
+        "analysis_seeds": {
+          "format": "rea-ghidra-seeds-v1",
+          "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv",
+          "configured_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv",
+          "sha256": "84d0238e728b8735aad1d9dac0c407a406371a7a209c30a944cdadf181d92eb5",
+          "entries": {
+            "function": 9,
+            "code": 0,
+            "label": 0
+          }
+        }
+      },
+      "digest": "cbb920562d5cb4777b7143d587a47ffb80ae2bf051660c2711f1284274d6ea44"
+    },
+    "predicate_type": "rea.analysis",
+    "operation": "procedure_pseudo_code",
+    "parameters": {
+      "procedure": "0xa006"
+    },
+    "raw_result": {
+      "value": "\nbyte thunk_FUN_d64a(void)\n\n{\n  byte bVar1;\n  byte bVar2;\n  byte bVar3;\n  char cVar4;\n  undefined1 uStack0000;\n  \n  DAT_0013 = DAT_0425;\n  DAT_0010 = 0x4c;\n  DAT_0011 = 0xd7;\n  DAT_0012 = 0;\n  uStack0000 = 0xd6;\n  FUN_ed19();\n  cVar4 = DAT_047b <= DAT_0012;\n  if (((DAT_0012 != DAT_047b) && ((bool)cVar4)) &&\n     (DAT_0012 = DAT_047b, DAT_0425 = DAT_047b, DAT_0013 != 0)) {\n    DAT_0012 = 0;\n    DAT_0425 = DAT_0012;\n  }\n  DAT_0010 = 0x58;\n  DAT_0011 = 0xd7;\n  DAT_0000 = 0x6e;\n  DAT_0001 = 0xd7;\n  DAT_047a = DAT_0012;\n  uStack0000 = 0xd6;\n  FUN_edf5();\n  uStack0000 = 0xd6;\n  bVar1 = FUN_ddad();\n  if (cVar4 != '\\0') {\n    if (DAT_047c == '\\x10') {\n      bVar1 = FUN_d7c5();\n      return bVar1;\n    }\n    if ((bool)(DAT_0081 & 1)) {\n      if ((DAT_047c == '\\x0f') || (DAT_0012 != DAT_047b)) {\n        if (DAT_047c == '\\x0f') {\n          DAT_0481 = (&DAT_0151)[DAT_0012];\n          uStack0000 = 0xd7;\n          cVar4 = FUN_dd4f(DAT_0402);\n          if (cVar4 == DAT_0481) {\n            DAT_047c = 0x81;\n            return 0x81;\n          }\n          DAT_047c = 0x80;\n          bVar1 = FUN_d7a8();\n          return bVar1;\n        }\n        if ((&DAT_0481)[DAT_0012] == -1) {\n          bVar1 = 0;\n          if (DAT_047c != '\\0') {\n            (&DAT_0481)[DAT_0012] = (&DAT_0151)[DAT_0012];\n            DAT_047c = DAT_047c + -1;\n            uStack0000 = 0xd7;\n            bVar1 = FUN_d773(0x3e);\n          }\n        }\n        else {\n          (&DAT_0481)[DAT_0012] = 0xff;\n          DAT_047c = DAT_047c + '\\x01';\n          uStack0000 = 0xd7;\n          bVar1 = FUN_d773(1);\n        }\n      }\n      else {\n        bVar2 = 0;\n        bVar3 = 0;\n        do {\n          bVar1 = (&DAT_0481)[bVar3];\n          if (bVar1 != 0xff) {\n            (&DAT_0481)[bVar2] = bVar1;\n            DAT_0000 = bVar2;\n            if (bVar3 != bVar2) {\n              bVar1 = 0xff;\n              (&DAT_0481)[bVar3] = 0xff;\n            }\n            bVar2 = bVar2 + 1;\n          }\n          bVar3 = bVar3 + 1;\n        } while (bVar3 < 10);\n        if (bVar2 != 0) {\n          DAT_047c = 0x81;\n          bVar1 = FUN_d7a8();\n          return bVar1;\n        }\n      }\n    }\n    else {\n      bVar1 = DAT_0081 >> 2;\n      if ((DAT_0081 >> 1 & 1) != 0) {\n        DAT_047c = 0x90;\n        bVar1 = FUN_d7a8();\n        return bVar1;\n      }\n    }\n  }\n  return bVar1;\n}\n\n",
+      "limitations": []
+    },
+    "normalized_result": "\nbyte thunk_FUN_d64a(void)\n\n{\n  byte bVar1;\n  byte bVar2;\n  byte bVar3;\n  char cVar4;\n  undefined1 uStack0000;\n  \n  DAT_0013 = DAT_0425;\n  DAT_0010 = 0x4c;\n  DAT_0011 = 0xd7;\n  DAT_0012 = 0;\n  uStack0000 = 0xd6;\n  FUN_ed19();\n  cVar4 = DAT_047b <= DAT_0012;\n  if (((DAT_0012 != DAT_047b) && ((bool)cVar4)) &&\n     (DAT_0012 = DAT_047b, DAT_0425 = DAT_047b, DAT_0013 != 0)) {\n    DAT_0012 = 0;\n    DAT_0425 = DAT_0012;\n  }\n  DAT_0010 = 0x58;\n  DAT_0011 = 0xd7;\n  DAT_0000 = 0x6e;\n  DAT_0001 = 0xd7;\n  DAT_047a = DAT_0012;\n  uStack0000 = 0xd6;\n  FUN_edf5();\n  uStack0000 = 0xd6;\n  bVar1 = FUN_ddad();\n  if (cVar4 != '\\0') {\n    if (DAT_047c == '\\x10') {\n      bVar1 = FUN_d7c5();\n      return bVar1;\n    }\n    if ((bool)(DAT_0081 & 1)) {\n      if ((DAT_047c == '\\x0f') || (DAT_0012 != DAT_047b)) {\n        if (DAT_047c == '\\x0f') {\n          DAT_0481 = (&DAT_0151)[DAT_0012];\n          uStack0000 = 0xd7;\n          cVar4 = FUN_dd4f(DAT_0402);\n          if (cVar4 == DAT_0481) {\n            DAT_047c = 0x81;\n            return 0x81;\n          }\n          DAT_047c = 0x80;\n          bVar1 = FUN_d7a8();\n          return bVar1;\n        }\n        if ((&DAT_0481)[DAT_0012] == -1) {\n          bVar1 = 0;\n          if (DAT_047c != '\\0') {\n            (&DAT_0481)[DAT_0012] = (&DAT_0151)[DAT_0012];\n            DAT_047c = DAT_047c + -1;\n            uStack0000 = 0xd7;\n            bVar1 = FUN_d773(0x3e);\n          }\n        }\n        else {\n          (&DAT_0481)[DAT_0012] = 0xff;\n          DAT_047c = DAT_047c + '\\x01';\n          uStack0000 = 0xd7;\n          bVar1 = FUN_d773(1);\n        }\n      }\n      else {\n        bVar2 = 0;\n        bVar3 = 0;\n        do {\n          bVar1 = (&DAT_0481)[bVar3];\n          if (bVar1 != 0xff) {\n            (&DAT_0481)[bVar2] = bVar1;\n            DAT_0000 = bVar2;\n            if (bVar3 != bVar2) {\n              bVar1 = 0xff;\n              (&DAT_0481)[bVar3] = 0xff;\n            }\n            bVar2 = bVar2 + 1;\n          }\n          bVar3 = bVar3 + 1;\n        } while (bVar3 < 10);\n        if (bVar2 != 0) {\n          DAT_047c = 0x81;\n          bVar1 = FUN_d7a8();\n          return bVar1;\n        }\n      }\n    }\n    else {\n      bVar1 = DAT_0081 >> 2;\n      if ((DAT_0081 >> 1 & 1) != 0) {\n        DAT_047c = 0x90;\n        bVar1 = FUN_d7a8();\n        return bVar1;\n      }\n    }\n  }\n  return bVar1;\n}\n\n",
+    "confidence": "observed",
+    "authority": "shipped-artifact",
+    "environment": null,
+    "limitations": [
+      "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+      "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+      "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+      "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+      "Pseudocode is Ghidra decompiler output, not original source and not text-equivalent to Hopper output.",
+      "External functions and functions without an analyzable body return null; other decompiler failures remain explicit.",
+      "macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+      "Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.",
+      "Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.",
+      "Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.",
+      "Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv (sha256 84d0238e728b8735aad1d9dac0c407a406371a7a209c30a944cdadf181d92eb5: 9 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.",
+      "Seed outcome: 8 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory."
+    ],
+    "relationship_coverage": null,
+    "locations": [],
+    "evidence_links": []
+  }
+}

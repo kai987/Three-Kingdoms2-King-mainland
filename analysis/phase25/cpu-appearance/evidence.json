@@ -1,0 +1,37 @@
+{
+  "schema": "phase25-passive-appearance-caller-provenance-v1",
+  "status": "passed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "exported_caller_inputs": 2,
+  "source_CPU_cases": 0,
+  "original_CPU_prefix_instructions": 0,
+  "origin": "passive_Native_callee_capture_with_explicit_N163_fixture",
+  "prepared_numeric_bytes": [],
+  "actual_software_state": true,
+  "instant_N163_captured": false,
+  "artifact_sha256": {
+    "analysis/phase25/runtime/evidence.json": "e6fe7a9d8ac5e0b19d1903cf38bdf2774bf9b4614edaedabce07199aea7448c6",
+    "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0004-C5D2.json": "f8a483385c7b60fb788beaec3e4269911b97d973a6a781acfcd779df5a0d2ae9",
+    "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0004-C5D2-ram.bin": "64408934cb47ec6cbf9ca3771774e3367db8724c86c8da4b17759e4c4a46cdb7",
+    "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0004-C5D2-sram.bin": "95bc6252e5f811424b5038053be3af742f3cb0c791b36181ef2d95115b606866",
+    "analysis/phase25/cpu-appearance/actual-callers/entry-C5D2-observer-0004/input-n163.bin": "0aedd4856f8eba0963627336ad5144a9a7dbe12498e6066f0165fc97d8ddee4c",
+    "analysis/phase25/cpu-appearance/actual-callers/entry-C5D2-observer-0004/input-ram.bin": "64408934cb47ec6cbf9ca3771774e3367db8724c86c8da4b17759e4c4a46cdb7",
+    "analysis/phase25/cpu-appearance/actual-callers/entry-C5D2-observer-0004/context.json": "31b7cd714100e99834e89eae22b06324f6790e3050b89e1353de503043f9ca34",
+    "analysis/phase25/cpu-appearance/actual-callers/entry-C5D2-observer-0004/input-sram.bin": "95bc6252e5f811424b5038053be3af742f3cb0c791b36181ef2d95115b606866",
+    "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0005-D471.json": "99937478a5ea1ef7dbc307602a7fe6d3b767647ad2c1610cbb7e93589d1f2db8",
+    "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0005-D471-ram.bin": "e0c55880f389d1c1c75eb99cedfafd646a4eed56e79a493858a829389dda5cbf",
+    "analysis/phase25/runtime/natural-appearance-pointer/observer/callee-0005-D471-sram.bin": "95bc6252e5f811424b5038053be3af742f3cb0c791b36181ef2d95115b606866",
+    "analysis/phase25/cpu-appearance/actual-callers/entry-D471-observer-0005/input-n163.bin": "0aedd4856f8eba0963627336ad5144a9a7dbe12498e6066f0165fc97d8ddee4c",
+    "analysis/phase25/cpu-appearance/actual-callers/entry-D471-observer-0005/input-ram.bin": "e0c55880f389d1c1c75eb99cedfafd646a4eed56e79a493858a829389dda5cbf",
+    "analysis/phase25/cpu-appearance/actual-callers/entry-D471-observer-0005/context.json": "ff1b15b3345df94faf63d0ee43780cbc600540b9a5d300fcf8e3788fb444d228",
+    "analysis/phase25/cpu-appearance/actual-callers/entry-D471-observer-0005/input-sram.bin": "95bc6252e5f811424b5038053be3af742f3cb0c791b36181ef2d95115b606866"
+  },
+  "source_sha256": {
+    "scripts/analyze_appearance_pointer_phase25.py": "09f551fb2d46ea1743d40ea362b2df9e587a3109a36285d9c1343522020dfb27"
+  },
+  "limits": [
+    "Captured software RAM/SRAM/AXYP/SP/PC/actual MAP and real caller frame are retained.",
+    "N163 and model port inputs are common explicit fixtures, not instantaneous Native device captures.",
+    "No new IRQ/NMI, caller/PC/RNG/ready preparation or Native internal trace of the fixed original core."
+  ]
+}

@@ -1,0 +1,992 @@
+{
+  "schema": "phase22-CUA-evidence-browser-validation-v1",
+  "status": "passed",
+  "URL": "http://127.0.0.1:8765/analysis/phase22/index.html#native",
+  "check_count": 29,
+  "checks": [
+    {
+      "test": "initial-complete-render",
+      "status": "passed",
+      "observed": {
+        "audio": {
+          "duration": 252.916813,
+          "ready": 4
+        },
+        "events": 25,
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "w": 256
+          }
+        ],
+        "overflow": false,
+        "points": 9,
+        "rows": 376,
+        "title": "阶段22 · 在野武将实际录用"
+      }
+    },
+    {
+      "test": "guarded-candidate-search",
+      "status": "passed",
+      "observed": {
+        "count": 1,
+        "text": "11:C778proved_disjoint_auxiliary_address_domain / guarded_pointer_index_cases（本期新增）0 / 0"
+      }
+    },
+    {
+      "test": "scalar-candidate-search",
+      "status": "passed",
+      "observed": {
+        "count": 1,
+        "text": "24:DF34proved_disjoint_auxiliary_address_domain / flat_address_contract（本期新增）0 / 0"
+      }
+    },
+    {
+      "test": "no-search-match",
+      "status": "passed",
+      "observed": 0
+    },
+    {
+      "test": "restore376",
+      "status": "passed",
+      "observed": 376
+    },
+    {
+      "test": "actual-keypoint-release-option-selected",
+      "status": "passed",
+      "observed": {
+        "label": "release-option-selected",
+        "frame": 6660,
+        "officers": [
+          [
+            "5",
+            "2",
+            "86",
+            "0",
+            "4d4f38565600e803bc02481a"
+          ],
+          [
+            "30",
+            "2",
+            "92",
+            "0",
+            "5e593c5c4400e80320035216"
+          ],
+          [
+            "152",
+            "1",
+            "69",
+            "0",
+            "4f3d2e451e00e80300002819"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/release-option-selected.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/release-option-selected.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "actual-keypoint-release-confirmation",
+      "status": "passed",
+      "observed": {
+        "label": "release-confirmation",
+        "frame": 7634,
+        "officers": [
+          [
+            "5",
+            "2",
+            "86",
+            "0",
+            "4d4f38565600e803bc02481a"
+          ],
+          [
+            "30",
+            "2",
+            "92",
+            "0",
+            "5e593c5c4400e80320035216"
+          ],
+          [
+            "152",
+            "1",
+            "69",
+            "0",
+            "4f3d2e451e00e80300002819"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/release-confirmation.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/release-confirmation.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "actual-keypoint-officer5-status0-frame7635",
+      "status": "passed",
+      "observed": {
+        "label": "officer5-status0-frame7635",
+        "frame": 7635,
+        "officers": [
+          [
+            "5",
+            "0",
+            "86",
+            "2",
+            "4d4f38565602e803bc024818"
+          ],
+          [
+            "30",
+            "0",
+            "92",
+            "11",
+            "5e593c5c440be80320035214"
+          ],
+          [
+            "152",
+            "1",
+            "69",
+            "0",
+            "4f3d2e451e00e80300002819"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/officer5-status0-frame7635.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/officer5-status0-frame7635.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "actual-keypoint-officer30-status0-frame7635",
+      "status": "passed",
+      "observed": {
+        "label": "officer30-status0-frame7635",
+        "frame": 7635,
+        "officers": [
+          [
+            "5",
+            "0",
+            "86",
+            "2",
+            "4d4f38565602e803bc024818"
+          ],
+          [
+            "30",
+            "0",
+            "92",
+            "11",
+            "5e593c5c440be80320035214"
+          ],
+          [
+            "152",
+            "1",
+            "69",
+            "0",
+            "4f3d2e451e00e80300002819"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/officer30-status0-frame7635.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/officer30-status0-frame7635.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "actual-keypoint-release-city-return",
+      "status": "passed",
+      "observed": {
+        "label": "release-city-return",
+        "frame": 7936,
+        "officers": [
+          [
+            "5",
+            "0",
+            "86",
+            "2",
+            "4d4f38565602e803bc024818"
+          ],
+          [
+            "30",
+            "0",
+            "92",
+            "11",
+            "5e593c5c440be80320035214"
+          ],
+          [
+            "152",
+            "1",
+            "69",
+            "0",
+            "4f3d2e451e00e80300002819"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/release-city-return.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/release-city-return.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "actual-keypoint-AI-ruler4-status00-frame14824",
+      "status": "passed",
+      "observed": {
+        "label": "AI-ruler4-status00-frame14824",
+        "frame": 14824,
+        "officers": [
+          [
+            "5",
+            "0",
+            "86",
+            "2",
+            "4d4f38565602e803bc024818"
+          ],
+          [
+            "30",
+            "0",
+            "92",
+            "11",
+            "5e593c5c440be80320035214"
+          ],
+          [
+            "152",
+            "2",
+            "69",
+            "0",
+            "4f3d2e451e00e8030000281a"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/AI-ruler4-status00-frame14824.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/AI-ruler4-status00-frame14824.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "actual-keypoint-recruitment-success-previous-1-frame14836",
+      "status": "passed",
+      "observed": {
+        "label": "recruitment-success-previous-1-frame14836",
+        "frame": 14836,
+        "officers": [
+          [
+            "5",
+            "0",
+            "86",
+            "2",
+            "4d4f38565602e803bc024818"
+          ],
+          [
+            "30",
+            "0",
+            "92",
+            "11",
+            "5e593c5c440be80320035214"
+          ],
+          [
+            "152",
+            "2",
+            "69",
+            "0",
+            "4f3d2e451e00e8030000281a"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/recruitment-success-previous-1-frame14836.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/recruitment-success-previous-1-frame14836.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "actual-keypoint-officer5-status2-frame14837",
+      "status": "passed",
+      "observed": {
+        "label": "officer5-status2-frame14837",
+        "frame": 14837,
+        "officers": [
+          [
+            "5",
+            "2",
+            "90",
+            "2",
+            "4d4f385a5602e803bc02481a"
+          ],
+          [
+            "30",
+            "0",
+            "92",
+            "11",
+            "5e593c5c440be80320035214"
+          ],
+          [
+            "152",
+            "2",
+            "69",
+            "0",
+            "4f3d2e451e00e8030000281a"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          5,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/officer5-status2-frame14837.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/officer5-status2-frame14837.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "actual-keypoint-final",
+      "status": "passed",
+      "observed": {
+        "label": "final",
+        "frame": 15200,
+        "officers": [
+          [
+            "5",
+            "2",
+            "90",
+            "2",
+            "4d4f3c5a5602e803e803481a"
+          ],
+          [
+            "30",
+            "0",
+            "92",
+            "11",
+            "5e593c5c440be80320035214"
+          ],
+          [
+            "152",
+            "2",
+            "69",
+            "0",
+            "4f3d2e451e00e8030000281a"
+          ]
+        ],
+        "city2": [
+          222,
+          38,
+          153,
+          109,
+          5,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "city11": [
+          131,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255,
+          255
+        ],
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/final.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/final.png",
+            "w": 256
+          }
+        ]
+      }
+    },
+    {
+      "test": "all204-checkpoints-exposed",
+      "status": "passed",
+      "observed": 204
+    },
+    {
+      "test": "all-points-first-real-frame",
+      "status": "passed",
+      "observed": 1
+    },
+    {
+      "test": "return-to-nine-keypoints",
+      "status": "passed",
+      "observed": 9
+    },
+    {
+      "test": "event-category-sparse_opcode_boundary",
+      "status": "passed",
+      "observed": {
+        "rows": 4258,
+        "text": "4258条，显示全部匹配记录"
+      }
+    },
+    {
+      "test": "event-category-cpu_scratch_0053",
+      "status": "passed",
+      "observed": {
+        "rows": 893,
+        "text": "893条，显示全部匹配记录"
+      }
+    },
+    {
+      "test": "event-category-city_auxiliary",
+      "status": "passed",
+      "observed": {
+        "rows": 25,
+        "text": "25条，显示全部匹配记录"
+      }
+    },
+    {
+      "test": "all25-dummy-and-dedicated-roles",
+      "status": "passed",
+      "observed": {
+        "city_events": 25
+      }
+    },
+    {
+      "test": "complete-source-postbattle_release_services.py",
+      "status": "passed",
+      "observed": {
+        "bytes": 6771,
+        "sha256": "2ac7e3e914018bd145b2ff831b7e1c3e72e554a4c65e12900a3b1777b2d45714"
+      }
+    },
+    {
+      "test": "complete-source-wild_recruitment_integration.py",
+      "status": "passed",
+      "observed": {
+        "bytes": 1189,
+        "sha256": "a98703e9681fcafd4bd46309542658c253ee29ccc5cf761d4c2412f95143ea42"
+      }
+    },
+    {
+      "test": "complete-source-city_recruitment_services.py",
+      "status": "passed",
+      "observed": {
+        "bytes": 12700,
+        "sha256": "24bc91c2c537051ca32ca1f6ea8a30d6c51adf5fa1f3574bd4aff008e35fc745"
+      }
+    },
+    {
+      "test": "actual-audio-playback-advances",
+      "status": "passed",
+      "observed": {
+        "duration": 252.916813,
+        "paused": false,
+        "time": 212.16772
+      }
+    },
+    {
+      "test": "actual-audio-pause",
+      "status": "passed",
+      "observed": {
+        "paused": true,
+        "time": 212.180201
+      }
+    },
+    {
+      "test": "browser-console-errors-and-warnings",
+      "status": "passed",
+      "observed": []
+    },
+    {
+      "test": "release-confirmation-visual-point-loaded",
+      "status": "passed",
+      "observed": {
+        "images": [
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/original-control/release-confirmation.png",
+            "w": 256
+          },
+          {
+            "complete": true,
+            "h": 240,
+            "src": "runtime/observer/release-confirmation.png",
+            "w": 256
+          }
+        ],
+        "label": "帧 7634 · release-confirmation",
+        "value": "81"
+      }
+    },
+    {
+      "test": "all-existing-local-evidence-links",
+      "status": "passed",
+      "observed": {
+        "checked": 24,
+        "post_audit_or_package": 2
+      }
+    }
+  ],
+  "HTML_sha256": "503edd10816d710118bd8c523112bfaed74a1ca134e617957ae4bdbe097533ad",
+  "screenshot": {
+    "path": "analysis/phase22/browser-proof.jpg",
+    "sha256": "f4ad7dea7082d7666c4ca332a79c5627f6e1a76d209d71415fe6dfcd2c5a5bd9",
+    "format": "JPEG",
+    "bytes": 91143,
+    "dimensions": [
+      1265,
+      712
+    ]
+  },
+  "other_screenshots": [
+    {
+      "path": "analysis/phase22/browser-release-proof.jpg",
+      "sha256": "3fbaad810c0fd4c9ff8641b3e9e73b85f646b4a4f50195691731c29640d07431",
+      "format": "JPEG",
+      "bytes": 61295,
+      "dimensions": [
+        1265,
+        712
+      ]
+    }
+  ],
+  "console_errors": [],
+  "links": [
+    {
+      "href": "../phase21/index.html",
+      "label": "阶段21",
+      "status": "passed",
+      "bytes": 1744652
+    },
+    {
+      "href": "README.md",
+      "label": "完整分析说明",
+      "status": "passed",
+      "bytes": 10889
+    },
+    {
+      "href": "verification.json",
+      "label": "最终审计",
+      "status": "checked_after_final_audit_and_package",
+      "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/phase22/verification.json"
+    },
+    {
+      "href": "runtime/README.md",
+      "label": "原机路线与输入说明",
+      "status": "passed",
+      "bytes": 2145
+    },
+    {
+      "href": "runtime/validation.json",
+      "label": "四进程验证",
+      "status": "passed",
+      "bytes": 1233
+    },
+    {
+      "href": "runtime/observer-success.json",
+      "label": "C794实际成功出口",
+      "status": "passed",
+      "bytes": 3239
+    },
+    {
+      "href": "cpu/README.md",
+      "label": "实际保存PC后的原指令前序",
+      "status": "passed",
+      "bytes": 2511
+    },
+    {
+      "href": "runtime/original-control/release-confirmation.state",
+      "label": "原核心完整状态",
+      "status": "passed",
+      "bytes": 13803
+    },
+    {
+      "href": "runtime/original-control/release-confirmation-sram.bin",
+      "label": "原核心完整SRAM",
+      "status": "passed",
+      "bytes": 8192
+    },
+    {
+      "href": "runtime/original-control/checkpoints.json",
+      "label": "完整检查点数据",
+      "status": "passed",
+      "bytes": 7582894
+    },
+    {
+      "href": "fields-static/README.md",
+      "label": "字段合同及未知项",
+      "status": "passed",
+      "bytes": 7733
+    },
+    {
+      "href": "fields-static/logical-vs-dummy-bus-contracts.json",
+      "label": "有效地址／虚读合同",
+      "status": "passed",
+      "bytes": 1240785
+    },
+    {
+      "href": "access-runtime/actual-city-bus-semantics.json",
+      "label": "25条实际总线解释",
+      "status": "passed",
+      "bytes": 5703
+    },
+    {
+      "href": "access-runtime/previous376-association.json",
+      "label": "全部376项关联",
+      "status": "passed",
+      "bytes": 205447
+    },
+    {
+      "href": "fields-static/remaining-accesses.json",
+      "label": "剩余368项",
+      "status": "passed",
+      "bytes": 5699911
+    },
+    {
+      "href": "fields-static/raw345-executability-ledger.json",
+      "label": "345个原字节窗口账本",
+      "status": "passed",
+      "bytes": 1698391
+    },
+    {
+      "href": "release/README.md",
+      "label": "具名源码与差分合同",
+      "status": "passed",
+      "bytes": 2887
+    },
+    {
+      "href": "source-integration.json",
+      "label": "主循环／场景调用所有权验证",
+      "status": "passed",
+      "bytes": 265044
+    },
+    {
+      "href": "cpu/evidence.json",
+      "label": "前序及输入来源",
+      "status": "passed",
+      "bytes": 6352
+    },
+    {
+      "href": "../../source/recovered/postbattle_release_services.py",
+      "label": "完整源文件",
+      "status": "passed",
+      "bytes": 6771
+    },
+    {
+      "href": "../../source/recovered/wild_recruitment_integration.py",
+      "label": "完整源文件",
+      "status": "passed",
+      "bytes": 1189
+    },
+    {
+      "href": "../../source/recovered/city_recruitment_services.py",
+      "label": "完整源文件",
+      "status": "passed",
+      "bytes": 12700
+    },
+    {
+      "href": "runtime/observer/events.jsonl",
+      "label": "完整JSONL",
+      "status": "passed",
+      "bytes": 2452772
+    },
+    {
+      "href": "runtime/observer/bus-events.bin",
+      "label": "72B原始ABI流",
+      "status": "passed",
+      "bytes": 372672
+    },
+    {
+      "href": "runtime/observer/event-schema.json",
+      "label": "ABI与观察范围",
+      "status": "passed",
+      "bytes": 2597
+    },
+    {
+      "href": "../../build/三国志2超级版-逆向分析-v22.zip",
+      "label": "下载v22完整归档",
+      "status": "checked_after_final_audit_and_package",
+      "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/build/三国志2超级版-逆向分析-v22.zip"
+    }
+  ],
+  "limits": [
+    "Desktop viewport tested; all 9 key points inspected against the original checkpoint raw officer records and city rosters; all 204 options exposed and frame 1 selected.",
+    "Audio advanced to 212 seconds and paused through native controls; not a claim of manual listening to the entire recording.",
+    "On the first release-point read the images were still loading; a subsequent DOM observation and screenshot verified both complete native 256x240 images.",
+    "Final audit and archive links are completed by the post-browser aggregate audit and archive verification."
+  ]
+}

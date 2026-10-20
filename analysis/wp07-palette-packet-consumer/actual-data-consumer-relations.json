@@ -1,0 +1,40 @@
+{
+  "packet_typed_points": [
+    {
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA132:rom03A142",
+      "locator": "/accesses/1405",
+      "prior_classification": "proved_disjoint_auxiliary_address_domain",
+      "actual_reads": 10,
+      "new_classification_credit": false
+    },
+    {
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA13A:rom03A14A",
+      "locator": "/accesses/1406",
+      "prior_classification": "proved_disjoint_auxiliary_address_domain",
+      "actual_reads": 5,
+      "new_classification_credit": false
+    },
+    {
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA140:rom03A150",
+      "locator": "/accesses/1407",
+      "prior_classification": "proved_disjoint_auxiliary_address_domain",
+      "actual_reads": 5,
+      "new_classification_credit": false
+    },
+    {
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA146:rom03A156",
+      "locator": "/accesses/1408",
+      "prior_classification": "proved_disjoint_auxiliary_address_domain",
+      "actual_reads": 320,
+      "new_classification_credit": false
+    }
+  ],
+  "actual_packet_reads": 340,
+  "palette_absolute_Y_reads": 160,
+  "palette_is_not_new_indirect_candidate": true,
+  "raw136_139_inherited_read_credit": false,
+  "raw_source": "This packet is frozen first8800..883F payload now read fromRAM0383..03C2. No new BCBF read or old16packet coverage credit.",
+  "class_migrations": 0,
+  "remaining323_unchanged": true,
+  "shared_semantic_root": null
+}

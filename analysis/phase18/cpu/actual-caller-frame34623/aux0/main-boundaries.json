@@ -1,0 +1,44 @@
+[
+  {
+    "tick": 0,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 7,
+      "x": 2,
+      "y": 1,
+      "p": 32,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 0,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 26237
+  },
+  {
+    "tick": 1,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 0,
+      "x": 1,
+      "y": 0,
+      "p": 51,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 72675
+  }
+]

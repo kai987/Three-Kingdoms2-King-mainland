@@ -1,0 +1,119 @@
+{
+  "schema": "phase16-native-affinity-consumer-binding-v1",
+  "native_validation_path": "analysis/phase16/runtime/affinity-pages/validation.json",
+  "native_validation_sha256": "02cf037d59c6ec13db63fcb85e9fd3335d740ab740c7e85710bbc3902f87acb3",
+  "rows": [
+    {
+      "code": 0,
+      "officer": 131,
+      "flags11": 18,
+      "frame": 272,
+      "completed_after_real_rows0_9": true,
+      "PNG": "analysis/phase16/runtime/affinity-pages/trait-code0-info-open.png",
+      "PNG_sha256": "02e10825cb270e580caa780fffc235502e2bae5230678f8c8b9f98e7c568d3bb",
+      "RAM": "analysis/phase16/runtime/affinity-pages/trait-code0-info-open-ram.bin",
+      "SRAM": "analysis/phase16/runtime/affinity-pages/trait-code0-info-open-sram.bin",
+      "glyph_box": [
+        64,
+        192,
+        80,
+        208
+      ],
+      "glyph_RGB_sha256": "99f2399c372faa53550f3bc7f71caa2d8a54f706caf26e20da02c8425a736f75",
+      "upper_table_bytes": [
+        98,
+        99
+      ],
+      "lower_table_bytes": [
+        114,
+        115
+      ],
+      "official_name": "平"
+    },
+    {
+      "code": 1,
+      "officer": 131,
+      "flags11": 22,
+      "frame": 756,
+      "completed_after_real_rows0_9": true,
+      "PNG": "analysis/phase16/runtime/affinity-pages/trait-code1-info-open.png",
+      "PNG_sha256": "1a7b8d3c1d3b6f6981c013171d9b116a2298f4f9849a8e79be48450dc97c64a3",
+      "RAM": "analysis/phase16/runtime/affinity-pages/trait-code1-info-open-ram.bin",
+      "SRAM": "analysis/phase16/runtime/affinity-pages/trait-code1-info-open-sram.bin",
+      "glyph_box": [
+        64,
+        192,
+        80,
+        208
+      ],
+      "glyph_RGB_sha256": "87382e6a5f4cd1fdc01277d228bd3b4e3a5715cc0eff508e35b93c5d37b8c4ca",
+      "upper_table_bytes": [
+        100,
+        101
+      ],
+      "lower_table_bytes": [
+        116,
+        117
+      ],
+      "official_name": "山"
+    },
+    {
+      "code": 2,
+      "officer": 131,
+      "flags11": 26,
+      "frame": 1240,
+      "completed_after_real_rows0_9": true,
+      "PNG": "analysis/phase16/runtime/affinity-pages/trait-code2-info-open.png",
+      "PNG_sha256": "8ab98d4bec06a00bc6381450b114520900d3ecc4b81d81679110921e27a9f263",
+      "RAM": "analysis/phase16/runtime/affinity-pages/trait-code2-info-open-ram.bin",
+      "SRAM": "analysis/phase16/runtime/affinity-pages/trait-code2-info-open-sram.bin",
+      "glyph_box": [
+        64,
+        192,
+        80,
+        208
+      ],
+      "glyph_RGB_sha256": "017e955bdf84c3e8f33c86b4fd265495dfc78fe3c1e02a3699bff0c813e70fb9",
+      "upper_table_bytes": [
+        96,
+        97
+      ],
+      "lower_table_bytes": [
+        112,
+        113
+      ],
+      "official_name": "水"
+    },
+    {
+      "code": 3,
+      "officer": 131,
+      "flags11": 30,
+      "frame": 1724,
+      "completed_after_real_rows0_9": true,
+      "PNG": "analysis/phase16/runtime/affinity-pages/trait-code3-info-open.png",
+      "PNG_sha256": "e16d0eaf606d55ba4a9665b39265314a18f16c967aeb7b1540faace16d7f2941",
+      "RAM": "analysis/phase16/runtime/affinity-pages/trait-code3-info-open-ram.bin",
+      "SRAM": "analysis/phase16/runtime/affinity-pages/trait-code3-info-open-sram.bin",
+      "glyph_box": [
+        64,
+        192,
+        80,
+        208
+      ],
+      "glyph_RGB_sha256": "48d4099c302f37687d22b85bf8de59cb7d6765dbed37dd34ff7a8ce1b4160ad9",
+      "upper_table_bytes": [
+        160,
+        11
+      ],
+      "lower_table_bytes": [
+        74,
+        74
+      ],
+      "official_name": null
+    }
+  ],
+  "provenance": "OriginalNestopia ordinaryopen/close after fourdeclared flags11bitpreparations; source CPUcases and Nativeframes are independent evidence.",
+  "native_internal_CPU_trace": false,
+  "source_CPU_cases_in_native_receipt": 0,
+  "no_fourth_official_affinity_name": true
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "phase21-city-auxiliary-semantics-evidence-v1",
+  "status": "passed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_CPU_cases": 0,
+  "analyzer_path": "scripts/analyze_city_auxiliary_semantics.py",
+  "analyzer_sha256": "330b3443dc59b1bd4834cd400419c31df6dca6043db16bb15fc10382dc7a9ad4",
+  "validator_path": "scripts/verify_city_auxiliary_semantics.py",
+  "validator_sha256": "36b4f2a02b0ae2b2b0e0f199cbfd90f1128643ff8e4201b7211be3db21e935e2",
+  "source_and_validator_sha256": {
+    "scripts/analyze_city_auxiliary_semantics.py": "330b3443dc59b1bd4834cd400419c31df6dca6043db16bb15fc10382dc7a9ad4",
+    "scripts/verify_city_auxiliary_semantics.py": "36b4f2a02b0ae2b2b0e0f199cbfd90f1128643ff8e4201b7211be3db21e935e2",
+    "scripts/verify_city_auxiliary_contexts.py": "aaa33604b724aac1946e3101ba0aad22f826a9a15b3af7ca733fad780adb079a"
+  },
+  "artifact_sha256": {
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/phase18/control/control-contracts.json": "ae6a120f18bace5b2c88855373b3f6037d21d47803d568fca1776ce88abf06e5",
+    "analysis/phase18/fields-static/all-indirect-accesses.json": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+    "analysis/phase18/fields-static/call-effect-summaries.json": "329aaf3403591bfcfeb214fe271789161f88b0279c05795546ad7f89343208eb",
+    "analysis/phase18/fields-static/indexed-store-proofs.json": "e66173eb89a9b89a26787fbb8f0d63ca2c8e39c31b4d2012b8cf438e1be9b782",
+    "analysis/phase18/fields-static/pointer-preserving-store-proofs.json": "fcc96b107f7bd0e850f0c13a647326a2bdabf8c14d390bda5b19e924f458bcd2",
+    "analysis/phase17/fields/alias-refinement.json": "de4fe395668d24aeae6c0a4fdf6bce698ffe8bc8538f8252a76aa230bc61ddea",
+    "analysis/phase17/fields/pointer-accesses.json": "b732f6bb882ae0c58b01cffd0aa2bc95f2b0630df034791f875f49ec1b4c3a62",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up.png": "92f412ba7648f46ef06f9164f4d90f57480f6afc6f6b3636aec3319a97252f9c",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up.json": "82b04b05f0ab58430247b07de0659a8728fad734f28e1f150a0de71ff37ef613",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up-ram.bin": "e8a3e8afb3d728daafba78f72db582da2fccbf8622d11966e351001cf2c4ed90",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up-sram.bin": "b9c4200c1a9543db7bd879729bf5ab90da8a45b0093b48de585f8f7a9ffa658d",
+    "analysis/phase19/runtime/resource-transfer-baseline/validation.json": "20e74b20a48839afdbc4c8ad6d89c84a571d1a4ec5de2a45f10ed02c23dc5dc1",
+    "analysis/phase18/fields-static/access-contracts.json": "ce61a14c828657c3c01e3e8a7b740e5cc1f40339a93de2e585f2a95fc3562d64",
+    "analysis/phase18/fields-static/new-indirect-accesses.json": "eb9cbd8f1b235f5cfce76cfa4865cbe2409c163b655f8c9720036db96155076c",
+    "scripts/analyze_city_pointer_provenance.py": "a935a413156a463d376eef37e2028a29dc188e2d71724331f7f253708e1c7e5c",
+    "analysis/phase19/fields-static/all-indirect-accesses.json": "6c303c5a22ddcf8dbe8376ba58790fe11902908b3f7ebd004f6de40888fc94ae",
+    "analysis/phase19/fields-static/analysis-summary.json": "99b3dd6fea141ac408b507c57eb2f5b66b0483a4ea62739f4bf436c6b5fbeb77",
+    "analysis/phase19/fields-static/verification.json": "61d4e7e240a63b59eabfa3a7356c93c0fe76920a1317e516373f36cb386c8943",
+    "scripts/analyze_city_auxiliary_contexts.py": "38513d26e475e75c15ae39dac5d84096fdc61e99617077124b75da9ffbf95570",
+    "analysis/phase20/fields-static/all-indirect-accesses.json": "4a800527f50f0d436f4b826e040edb3c6c1fe57691827286b9d9d489d2b80e7d",
+    "analysis/phase20/fields-static/remaining-accesses.json": "63eef9163ecc258ffaae0288d06430801b9283d8ddff08f9252a1c5d54a4780b",
+    "analysis/phase20/fields-static/analysis-summary.json": "2cfc1ff9023fc47bf1eb5110fbbfa221fb16b383ddf1b134a03989d83ef37655",
+    "analysis/phase20/fields-static/verification.json": "8724cdedad34d39082378e87a65584448df930e48d8e1301936353233b476bbf",
+    "analysis/phase20/fields-static/authoritative-contract-selection.json": "ee59fa238a49d62d113b7780bb6b55fdf09267904ab12c52989784e0bfb17a78",
+    "analysis/phase20/fields-static/call-effect-summaries.json": "423a810da9c87e6e6f4ad7fd9efa00dd6c3dcdbae67daab5b5093c4915ddff6a",
+    "analysis/phase20/fields-static/city-field-root-inventory.json": "7b6e8e95b3406d20199b153575eb144b9c5cc0245414faceac66fe56767c4c70",
+    "analysis/phase21/fields-static/access-contracts.json": "8bcee62e1937d935ae71ecc73d5fe0d53d9c7d729c63b736c9265ac5b3519e79",
+    "analysis/phase21/fields-static/all-indirect-accesses.json": "fd617fc1ec8d2bf972d093eccefb8ada65eeca360f6d259c1d3ae5242190e917",
+    "analysis/phase21/fields-static/analysis-summary.json": "41dc205cdb053a2750bbb8624dea68fbff50d5b9a44a82222d3b24a32b7b85f9",
+    "analysis/phase21/fields-static/authoritative-contract-selection.json": "7439bbf726aebcf1ccf7300f2b8169b5fa21ef6672870df41bcb168fd7d3335c",
+    "analysis/phase21/fields-static/bounded-recruitment-contract.json": "49035506b6a0e5f9136a951f2aabbd64f0a4e047915000feeedf3b390255d776",
+    "analysis/phase21/fields-static/city-field-root-inventory.json": "356fd80028ae05f1605b0aeba1b6ac23723e3c51651cc4215e3fec1c2eaa361f",
+    "analysis/phase21/fields-static/direct-indexed-accesses.json": "0b22a6634feefc277db3b101f0a4837c5584de6e9770d5e5bb3baaafdf5ed15a",
+    "analysis/phase21/fields-static/new-indirect-accesses.json": "11e622ede31fdbf9765761d24f4e982b44ba3ddece2108f25ced01693ecbc16d",
+    "analysis/phase21/fields-static/normal-return-register-contracts.json": "d794ceb67ac80f7ac9c2ef2e9ea32d5e9a6fcddec368b37787ceec67b1e61221",
+    "analysis/phase21/fields-static/phase20-remaining380-handling.json": "0462cc801ddd8c8d6f27a51494ff352df94023879fe08ba0a634eb71aa8c4d51",
+    "analysis/phase21/fields-static/remaining-accesses.json": "7d69500384bbffef4820847bb39eaf3eecc64a68e0d19639351235a315aad8c0",
+    "analysis/phase21/fields-static/superseding-erratum.json": "12499d913180ae4cdca10becff39eed8f89ef23c52efa120886996b6a1a18a9e",
+    "analysis/phase21/fields-static/untrusted-PRG-opcode-windows.json": "826e609614d0bde92a50c011c0b9a14df5345ebb83f1d72f67c656598ae148e3",
+    "analysis/phase21/fields-static/README.md": "da39d7f071d4816b1410dbbd841dc7e1c6c83d4876a959205eb7ad487a955dd1",
+    "analysis/phase21/fields-static/verification.json": "64b328b50469b35dc2a4fea0d85f9c576304e6b167b53af56a0cec262850914d"
+  },
+  "all_indirect_access_count": 1526,
+  "old_candidate_count": 589,
+  "new_indirect_access_count": 45,
+  "classifications": {
+    "old589": {
+      "proved_disjoint_auxiliary_address_domain": 243,
+      "unresolved_pointer_or_index_contract": 254,
+      "possible_city_auxiliary_alias": 92
+    },
+    "all1526": {
+      "proved_disjoint_auxiliary_address_domain": 1150,
+      "unresolved_pointer_or_index_contract": 270,
+      "possible_city_auxiliary_alias": 106
+    },
+    "new45": {
+      "proved_disjoint_auxiliary_address_domain": 37,
+      "possible_city_auxiliary_alias": 1,
+      "unresolved_pointer_or_index_contract": 7
+    }
+  },
+  "phase20_remaining_count": 380,
+  "remaining_access_count": 376,
+  "newly_proved_disjoint_all_count": 4,
+  "original_RNG_normal_return_CPU_cases": 65536,
+  "original_recruitment_loop_CPU_cases": 15,
+  "model_guard_check_count": 20,
+  "official_target_field_names": {
+    "city_plus1": null,
+    "city_plus28": null,
+    "city_plus29": null,
+    "city_plus30": null,
+    "city_plus31": null
+  },
+  "limitations": [
+    "Normal-return register relations are separate from may-write effects and from interrupt interleaving.",
+    "The new237-record proof is initializer-rooted/no-interrupt; mid-loop arbitrary entry and external scratch mutation are excluded.",
+    "Every1526/589/45 row retains an applicable authoritative domain; diagnostic candidates never establish disjointness.",
+    "Direct/indexed trusted-CFG zero hits and untrusted raw opcode windows do not prove whole-ROM unused/reserved/padding semantics.",
+    "No new official name is inferred for city+1 or+28..31. Bulk initialization and unbounded roster spill remain real contextual accesses."
+  ]
+}

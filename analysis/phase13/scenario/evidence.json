@@ -1,0 +1,197 @@
+{
+  "schema": "phase13-scenario-record-init-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ROM_modified": false,
+  "ranges": [
+    {
+      "name": "new_scenario_public_trampoline",
+      "physical_bank": 29,
+      "cpu_start": 40984,
+      "cpu_end_exclusive": 40987,
+      "rom_offset": 237608,
+      "byte_count": 3,
+      "raw_hex": "4C 8B DD",
+      "sha256": "4fa497c0c7b6117610c7189cf44dfd4a16c7291497d90bdd2fe92a868e130cbf",
+      "kind": "code"
+    },
+    {
+      "name": "lower_SRAM_clear_random_variant_copy_initialization",
+      "physical_bank": 30,
+      "cpu_start": 56715,
+      "cpu_end_exclusive": 56958,
+      "rom_offset": 253339,
+      "byte_count": 243,
+      "raw_hex": "AD 43 6F 48 A9 60 8D 01 00 A9 00 8D 00 00 A8 91 00 C8 D0 FB EE 01 00 AE 01 00 E0 70 90 F1 68 8D 43 6F 20 7A E8 29 07 C9 05 B0 F7 8D 45 6F A9 FF 8D 04 6F A9 FF 8D E2 6F A9 0B 8D 00 04 A9 00 8D 01 04 A0 30 20 5F F2 A9 00 8D 00 00 A9 8C 8D 01 00 A9 00 8D 02 00 A9 60 8D 03 00 A0 00 A2 00 8E 04 00 B1 00 91 02 EE 00 00 D0 03 EE 01 00 EE 02 00 D0 03 EE 03 00 E8 D0 03 EE 04 00 AD 04 00 C9 03 90 DF E0 C0 90 DB A0 31 20 5F F2 A9 00 8D 00 00 A9 80 8D 01 00 A9 C0 8D 02 00 A9 63 8D 03 00 A0 00 A2 00 8E 04 00 B1 00 91 02 EE 00 00 D0 03 EE 01 00 EE 02 00 D0 03 EE 03 00 E8 D0 03 EE 04 00 AD 04 00 C9 0B 90 DF E0 40 90 DB A9 59 8D 00 6F A9 00 8D 01 6F A9 FF 8D 83 6F 8D 84 6F 8D 85 6F 8D 86 6F 8D 87 6F 8D 88 6F 8D 89 6F A9 00 8D 8A 6F 60",
+      "sha256": "1919dc2c80edebb4a0070395e87ffb8e0b4c2c3c489f78c190368ecde5dfeb98",
+      "kind": "code"
+    }
+  ],
+  "tables": [
+    {
+      "name": "city_record_templates960bytes",
+      "physical_bank": 16,
+      "cpu_start": 35840,
+      "cpu_end_exclusive": 36800,
+      "rom_offset": 134160,
+      "byte_count": 960,
+      "raw_hex": "07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 01 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 4D 07 1B FF FF FF FF FF FF FF 00 00 00 00 00 04 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 DE 26 99 6D FF FF FF FF FF FF 00 00 00 00 00 01 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 86 75 09 C2 FF FF FF FF FF FF 00 00 00 00 00 01 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 08 33 BF A7 FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 06 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 B6 2C FF FF FF FF FF FF FF FF 00 00 00 00 00 06 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 A2 92 94 FF FF FF FF FF FF FF 00 00 00 00 00 00 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 16 D3 17 25 BA FF FF FF FF FF 00 00 00 00 00 06 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 48 78 FF FF FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 02 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 83 05 1E FF FF FF FF FF FF FF 00 00 00 00 00 00 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 AD DB DA 6A 8F FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 02 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 82 1D 7E 1A FF FF FF FF FF FF 00 00 00 00 00 03 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 60 59 FF FF FF FF FF FF FF FF 00 00 00 00 00 03 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 43 A3 FF FF FF FF FF FF FF FF 00 00 00 00 00 03 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 9E FF FF FF FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 03 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 8A 2D 8D FF FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00 05 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 97 3F 51 FF FF FF FF FF FF FF 00 00 00 00 00 05 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 DC 10 46 D1 FF FF FF FF FF FF 00 00 00 00 00 05 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 42 96 FF FF FF FF FF FF FF FF 00 00 00 00 00 05 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 C4 C9 FF FF FF FF FF FF FF FF 00 00 00 00 00 07 00 0F 27 0F 27 0F 27 0F 27 63 64 0F 27 0F 27 63 FF FF FF FF FF FF FF FF FF FF 00 00 00 00 00",
+      "sha256": "10f129e0c4e34c7793ddf24910e9af5809272bebfe2523a497131096b867856b",
+      "kind": "data"
+    },
+    {
+      "name": "officer_pool_template2880bytes",
+      "physical_bank": 17,
+      "cpu_start": 32768,
+      "cpu_end_exclusive": 35648,
+      "rom_offset": 139280,
+      "byte_count": 2880,
+      "raw_hex": "47 40 18 44 34 00 D0 07 00 00 51 25 39 28 2B 39 44 00 E8 03 00 00 00 11 3C 21 54 47 57 00 00 00 00 00 00 01 46 36 27 4B 30 00 E8 03 00 00 30 11 49 3E 26 40 46 00 00 00 00 00 01 01 4D 4F 38 56 56 00 E8 03 BC 02 48 1A 58 51 15 42 38 00 D0 07 00 00 4A 25 40 32 17 53 2E 00 00 00 E8 03 21 02 4B 46 34 64 32 00 D0 07 E8 03 62 2A 46 39 1E 50 2D 00 E8 03 BC 02 28 12 35 20 4E 4D 4A 00 00 00 00 00 00 01 2A 18 4B 3B 29 00 D0 07 00 00 01 21 3B 22 52 3F 46 00 E8 03 00 00 00 11 5A 59 0D 51 26 00 D0 07 00 00 0B 25 44 24 26 3E 29 00 00 00 00 00 28 01 54 47 30 43 4A 00 E8 03 00 00 32 19 3E 26 4F 50 35 00 00 00 00 00 00 02 40 2A 4D 59 54 00 00 00 00 00 01 01 3B 29 54 40 3A 00 E8 03 00 00 00 11 40 26 59 46 4F 00 E8 03 00 00 00 11 4F 41 3A 4B 2A 00 00 00 00 00 21 01 3F 1B 55 40 50 00 00 00 00 00 00 01 34 2E 5F 46 41 00 E8 03 E8 03 00 12 42 3E 18 51 0C 00 00 00 E8 03 31 0A 31 24 61 5A 51 00 D0 07 00 00 00 21 51 4C 4A 53 4B 00 E8 03 00 00 50 15 50 38 32 55 3C 00 00 00 F4 01 30 02 36 1F 50 52 19 00 E8 03 F4 01 00 12 47 40 56 56 46 00 D0 07 00 00 48 29 60 57 21 5B 33 00 E8 03 E8 03 29 16 5E 59 3C 5C 44 00 E8 03 20 03 52 16 5E 56 3C 54 42 00 AC 0D 00 00 49 35 43 2C 0E 47 35 00 D0 07 00 00 22 21 53 39 24 4B 32 00 D0 07 00 00 30 21 4F 4B 44 39 3D 00 D0 07 00 00 51 29 59 55 14 44 20 00 D0 07 00 00 35 25 46 21 40 47 4D 00 AC 0D 00 00 00 31 5F 5A 20 55 2B 00 D0 07 E8 03 42 26 61 61 54 63 58 00 E8 03 BC 02 2C 1A 4D 46 29 3F 2A 00 E8 03 00 00 21 19 52 40 16 43 32 00 E8 03 00 00 11 19 32 29 15 3A 14 00 00 00 00 00 00 01 5C 58 44 57 42 00 D0 07 00 00 49 25 5E 53 3A 55 3C 00 D0 07 00 00 2A 25 44 2B 51 4C 4E 00 00 00 F4 01 00 02 54 46 32 53 58 00 E8 03 E8 03 30 1A 5A 4D 2D 47 33 00 E8 03 00 00 53 15 5E 5D 3C 54 4F 00 E8 03 00 00 29 19 58 52 3C 55 46 00 D0 07 00 00 48 29 4B 3A 15 3D 24 00 E8 03 00 00 30 19 46 22 4A 44 54 00 00 00 00 00 00 01 5B 59 25 57 34 00 E8 03 E8 03 4B 16 5F 5E 2A 37 1A 00 E8 03 00 00 49 15 55 3A 25 49 2A 00 D0 07 00 00 31 29 54 50 24 46 28 00 E8 03 00 00 4A 15 50 5C 5E 4B 4B 00 AC 0D 00 00 B4 35 2F 22 5B 44 2B 00 E8 03 00 00 00 11 5F 61 23 58 3C 00 E8 03 00 00 32 15 60 34 08 31 0A 00 E8 03 00 00 11 11 50 46 1F 39 24 00 E8 03 00 00 4A 19 46 3E 26 3A 28 00 E8 03 00 00 32 11 33 28 4F 45 47 00 00 00 00 00 00 01 57 50 0D 41 29 00 E8 03 00 00 33 15 55 56 42 56 56 00 D0 07 E8 03 48 26 32 15 4A 49 30 00 00 00 00 00 00 01 3C 37 33 43 30 00 E8 03 00 00 21 11 4E 44 49 51 4B 00 E8 03 E8 03 42 1A 48 4F 3F 54 50 00 E8 03 E8 03 28 1A 45 3C 26 46 2A 00 00 00 00 00 30 09 50 3E 37 44 3B 00 E8 03 00 00 51 11 3B 2A 4E 57 44 00 00 00 00 00 00 02 46 48 34 40 3C 00 E8 03 00 00 30 05 51 48 2B 47 35 00 00 00 E8 03 28 06 57 4C 14 30 0A 00 D0 07 00 00 4A 25 4F 40 3E 3F 45 00 E8 03 00 00 20 19 5A 60 40 4E 4B 00 AC 0D 00 00 4B 35 3F 33 38 42 3A 00 E8 03 00 00 28 11 57 46 31 45 36 00 00 00 20 03 30 0A 62 50 1A 33 32 00 D0 07 00 00 71 29 34 2E 53 49 47 00 E8 03 00 00 00 11 5E 4A 32 3A 2B 00 E8 03 00 00 28 15 50 46 2B 4B 3D 00 00 00 F4 01 50 06 2C 2A 4A 3C 3B 00 D0 07 00 00 00 21 46 3E 2F 31 26 00 E8 03 00 00 28 19 45 3A 22 3D 41 00 D0 07 00 00 21 21 50 41 26 35 2A 00 E8 03 00 00 29 19 45 40 62 5A 5A 00 D0 07 00 00 02 21 54 55 59 53 50 00 AC 0D 00 00 31 35 4C 47 5A 50 59 00 AC 0D 00 00 72 39 51 43 2E 55 36 00 00 00 F4 01 01 0A 5B 54 3D 43 3B 00 E8 03 00 00 4A 19 57 52 21 4E 3C 00 E8 03 00 00 30 19 48 36 4F 4A 46 00 E8 03 00 00 20 11 46 57 62 62 60 00 D0 07 00 00 62 29 58 54 46 49 45 00 D0 07 00 00 51 29 5A 4D 28 46 3C 00 E8 03 00 00 28 19 47 3C 37 58 44 00 00 00 E8 03 00 02 46 39 43 41 34 00 D0 07 00 00 4A 21 52 3F 2A 3E 3B 00 E8 03 00 00 30 19 3B 22 60 5C 4A 00 D0 07 00 00 00 21 54 45 10 41 1B 00 E8 03 00 00 21 19 33 1E 48 4C 31 00 E8 03 00 00 00 11 3A 2A 4A 45 27 00 E8 03 00 00 21 11 50 46 5C 50 4A 00 AC 0D 00 00 6B 39 35 2C 5A 47 56 00 D0 07 00 00 00 21 45 46 37 4B 50 00 E8 03 00 00 30 11 3C 34 1E 4F 2F 00 00 00 2C 01 22 02 36 30 5E 5D 5E 00 D0 07 00 00 00 21 4D 56 57 55 5A 00 AC 0D 00 00 42 35 47 3E 63 61 5F 00 D0 07 00 00 82 29 3D 47 5F 51 51 00 AC 0D 00 00 32 39 5D 5B 32 58 2F 00 D0 07 00 00 53 25 49 4A 60 43 50 00 E8 03 00 00 02 15 53 4A 37 4C 46 00 E8 03 00 00 52 19 3C 23 27 3C 40 00 00 00 00 00 21 01 50 41 32 3D 3A 00 00 00 00 00 30 05 51 48 28 40 2B 00 E8 03 00 00 51 19 47 42 50 5A 41 00 00 00 F4 01 01 0A 43 23 56 4F 53 00 E8 03 00 00 00 11 41 36 3C 53 43 00 E8 03 00 00 01 11 54 42 19 49 29 00 00 00 F4 01 30 02 37 25 40 44 2C 00 E8 03 00 00 00 11 4A 3F 38 41 31 00 E8 03 00 00 28 11 49 4F 54 59 3C 00 AC 0D 00 00 62 35 5B 48 2A 54 3F 00 D0 07 00 00 50 29 50 3C 30 38 34 00 E8 03 00 00 30 11 55 45 38 57 3C 00 00 00 20 03 28 02 5E 58 2C 55 1F 00 D0 07 00 00 72 25 25 29 5B 53 44 00 E8 03 00 00 00 11 55 46 4A 56 50 00 E8 03 00 00 51 15 54 4C 3B 59 40 00 00 00 E8 03 30 0A 52 54 59 64 61 00 E8 03 E8 03 A3 16 50 4D 4F 5C 58 00 D0 07 00 00 62 25 1E 22 20 50 4F 00 00 00 00 00 00 01 34 29 54 58 47 00 E8 03 2C 01 00 12 4D 3C 37 43 3D 00 00 00 00 00 31 01 33 2E 4A 47 5C 00 E8 03 00 00 00 11 52 53 58 63 5F 00 D0 07 00 00 62 29 5A 5F 3D 64 5A 00 00 00 E8 03 64 0A 5A 54 1A 58 37 00 E8 03 00 00 4A 15 58 57 3A 49 3C 00 D0 07 00 00 29 25 5C 5E 31 55 4C 00 E8 03 E8 03 52 16 4E 4C 2D 3C 35 00 00 00 00 00 28 05 47 37 0D 4A 15 00 E8 03 E8 03 21 12 62 61 56 4D 5E 00 D0 07 00 00 52 25 39 3D 31 45 35 00 E8 03 00 00 30 15 51 40 25 4B 24 00 00 00 20 03 30 02 4B 4D 38 46 45 00 E8 03 00 00 51 15 4D 3C 26 44 2A 00 00 00 BC 02 21 02 53 59 2B 43 38 00 D0 07 00 00 49 25 26 13 5A 49 3B 00 00 00 C8 00 00 02 5A 54 4A 5D 5A 00 E8 03 E8 03 51 16 4F 3D 2E 45 1E 00 E8 03 00 00 28 19 63 62 14 62 23 00 E8 03 BC 02 70 16 5C 5A 37 57 34 00 D0 07 00 00 52 25 51 43 41 4B 37 00 E8 03 00 00 31 11 5D 5A 54 54 5A 00 D0 07 00 00 72 29 36 35 4E 41 43 00 00 00 00 00 00 01 4E 41 24 4D 20 00 00 00 F4 01 30 0A 54 44 31 36 1E 00 00 00 00 00 48 09 48 2D 52 3C 3D 00 D0 07 00 00 00 21 28 16 5C 59 46 00 E8 03 00 00 01 11 50 49 22 4E 36 00 00 00 E8 03 30 06 50 3C 44 59 4F 00 E8 03 F4 01 51 12 29 24 34 47 41 00 E8 03 00 00 00 11 61 60 1A 5D 27 00 E8 03 00 00 51 15 47 33 36 4A 4D 00 00 00 00 00 21 01 28 23 5D 5A 59 00 E8 03 BC 02 00 12 25 26 56 55 4F 00 E8 03 00 00 00 11 59 57 5A 4E 44 00 AC 0D 00 00 6B 35 45 2D 54 46 50 00 D0 07 00 00 40 21 59 44 32 48 34 00 E8 03 00 00 2A 19 46 3F 31 43 32 00 E8 03 00 00 31 11 58 57 2F 64 0B 00 88 13 E8 03 64 46 50 3A 20 44 17 00 E8 03 00 00 30 19 49 3C 2F 41 37 00 00 00 00 00 48 01 46 3E 28 55 3F 00 E8 03 00 00 51 11 4C 50 59 48 4A 00 D0 07 00 00 22 25 58 33 16 4A 46 00 E8 03 00 00 49 11 5A 58 3F 59 34 00 E8 03 00 00 69 15 61 61 34 63 4C 00 D0 07 00 00 72 25 51 43 27 58 3F 00 E8 03 00 00 41 11 50 52 36 64 54 00 D0 07 E8 03 62 26 2D 2D 5E 49 58 00 E8 03 00 00 00 11 25 30 53 4D 48 00 00 00 00 00 01 01 55 4E 34 4B 36 00 E8 03 00 00 28 19 56 46 1D 47 2C 00 E8 03 F4 01 28 16 36 12 55 3D 54 00 E8 03 00 00 00 11 3D 28 49 4D 50 00 00 00 00 00 21 01 4C 37 2F 44 3F 00 E8 03 00 00 50 11 45 3A 33 47 41 00 E8 03 00 00 31 11 5C 5A 1F 53 32 00 E8 03 20 03 42 16 59 51 35 43 41 00 E8 03 00 00 29 15 57 50 15 41 24 00 E8 03 00 00 31 15 3C 36 49 50 30 00 00 00 F4 01 00 02 4F 3F 2F 3F 46 00 00 00 00 00 28 09 3D 21 5C 48 52 00 E8 03 E8 03 00 12 44 27 62 37 49 00 D0 07 00 00 01 21 5F 5E 3C 4F 4E 00 E8 03 00 00 6D 15 28 27 50 52 35 00 E8 03 00 00 00 11 58 57 1D 35 47 00 D0 07 00 00 6B 25 50 48 4C 46 3C 00 00 00 E8 03 28 06 4E 45 28 3D 41 00 D0 07 00 00 51 21 4F 44 25 41 28 00 E8 03 00 00 2A 15 2F 2F 4F 4D 3C 00 D0 07 00 00 00 21 53 25 45 3C 3D 00 E8 03 00 00 00 11 3C 32 5D 49 52 00 D0 07 00 00 00 21 38 28 4B 3E 21 00 E8 03 00 00 00 11 54 4A 31 3B 1E 00 E8 03 00 00 48 15 5B 52 22 4B 33 00 00 00 20 03 30 06 52 46 21 4C 26 00 E8 03 00 00 53 15 46 48 11 52 18 00 E8 03 E8 03 2A 16 2C 20 40 45 42 00 E8 03 00 00 00 11 41 4D 61 58 53 00 AC 0D 00 00 62 39 57 52 4B 44 51 00 D0 07 00 00 4B 25 54 3F 0C 46 2F 00 E8 03 00 00 30 19 48 3C 40 4E 48 00 E8 03 00 00 50 11 38 21 45 42 31 00 D0 07 00 00 00 21 63 63 11 1E 0A 00 AC 0D E8 03 B5 36 35 2C 5C 59 28 00 D0 07 C8 00 00 22 3D 27 2C 64 4D 00 E8 03 E8 03 00 12 35 33 24 3A 2F 00 00 00 00 00 30 01 4E 47 41 64 63 00 00 00 BC 02 42 02 46 39 2F 3B 3F 00 E8 03 00 00 21 11 54 49 37 53 45 00 D0 07 00 00 52 29 2A 25 5B 47 5D 00 D0 07 00 00 21 21 51 48 36 43 29 00 E8 03 00 00 49 19 52 41 1C 41 2F 00 E8 03 00 00 30 15 5A 56 35 50 3E 00 D0 07 00 00 49 29 2E 25 57 44 53 00 00 00 00 00 00 01 49 41 28 3F 12 00 00 00 00 00 28 01 50 3F 39 3D 3F 00 E8 03 00 00 30 15 51 32 24 45 1B 00 E8 03 00 00 51 11 46 17 50 51 41 00 00 00 00 00 00 01 4B 57 5D 55 5B 00 D0 07 00 00 62 29 28 27 5F 59 5D 00 D0 07 00 00 01 21 26 24 34 46 57 00 00 00 00 00 00 01 4A BE 0B D0 24 D1 49 D2 FF FF FF FF FF FF FF FF FF FF FF FF 9D BD 90 BE 31 BF 41 C0 FF FF FF FF FF FF FF FF",
+      "sha256": "97f9382dde8aa97c1f8f872876159e557ed23b52ad46098722623d73f0c82a5c",
+      "kind": "data"
+    },
+    {
+      "name": "original_rng256byte_lookup",
+      "physical_bank": 31,
+      "cpu_start": 59578,
+      "cpu_end_exclusive": 59834,
+      "rom_offset": 256202,
+      "byte_count": 256,
+      "raw_hex": "3E 4E 4F 83 0E C9 7F 5D FC E6 BA 01 F8 00 F4 0A E5 A9 8D D1 E8 DB DE 81 95 72 08 9A C7 49 C8 23 39 37 E0 91 C3 33 9B 5F BE 41 EE 74 E2 0B 47 7E BF 60 BB 20 61 05 B2 94 B6 E4 3A 21 1E B4 8C CE 7B FE 22 DC 18 C4 6D FB CD 27 A0 09 6E 38 8A 04 7C 56 97 5A A8 4D 78 B5 6C AA 03 1A 4A 0D 26 82 AD 02 A1 B9 A3 6B D8 0C 4C AE 19 45 5B 9C 16 07 89 51 90 29 F5 62 F7 CB F1 53 FF 14 65 D0 87 35 10 73 7A 9F EB D9 3C EF 9E D7 3D 6F D6 84 AB 11 CA D2 88 17 E1 A6 52 8E 5E 36 24 44 28 A4 55 A7 C2 FD 76 2E B7 D5 F6 64 15 31 99 93 C0 8F B3 FA E9 E3 67 4B 85 32 C6 69 48 DF A2 EC 98 6A E7 D4 1C F3 58 50 ED 2B 1D 86 F0 71 BD 34 1B AF 30 2D 68 CC 0F 57 EA 92 8B 3F 3B AC B8 C1 2F F2 46 75 96 7D 2A 79 40 DA 9D 25 12 42 54 D3 1F 80 5C 59 43 F9 B0 DD 63 A5 77 CF 13 2C 66 BC 70 B1 C5 06",
+      "sha256": "47502bec71a43116f27d80852f9598fa2013745d0aa794c2003046173d9fd09d",
+      "kind": "data"
+    }
+  ],
+  "dependency_pins": [
+    {
+      "path": "source/recovered/scenario_initialization.py",
+      "bytes": 5593,
+      "sha256": "20f77e59c5ac81f3dbae7861ec1848c17cd75ee656805b85b37f3b4a901d9f12"
+    },
+    {
+      "path": "scripts/verify_scenario_initialization.py",
+      "bytes": 5368,
+      "sha256": "1d3265a1ca522e72e462d005bc5cb6bcea81ae25afca93b49b04eba81e02a16c"
+    },
+    {
+      "path": "scripts/analyze_scenario_initialization.py",
+      "bytes": 5950,
+      "sha256": "402a773f9d29b4385dac7d079a3be9e74f233e22a66981a1b5e39e47f7938394"
+    },
+    {
+      "path": "scripts/analyze_ui_graphics_initialization.py",
+      "bytes": 9641,
+      "sha256": "86785b4841cb8ef98e25567559326d1d2809875f6514ac54d2fbf3519f441ce5"
+    },
+    {
+      "path": "source/recovered/scene_shared_services.py",
+      "bytes": 15120,
+      "sha256": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76"
+    },
+    {
+      "path": "source/recovered/controller_helpers.py",
+      "bytes": 2827,
+      "sha256": "54dba0ee606f3ce200c648700f908956273ff0a96cc0dbfb847fc4396bf79afb"
+    },
+    {
+      "path": "source/recovered/battle_nmi_services.py",
+      "bytes": 35325,
+      "sha256": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15"
+    },
+    {
+      "path": "source/recovered/service_memory.py",
+      "bytes": 5672,
+      "sha256": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920"
+    }
+  ],
+  "REA_archive": [
+    {
+      "path": "analysis/rea/pairs/pair-29/functions/0xdd8b.asm",
+      "bytes": 1846,
+      "sha256": "05537b2f86fda9095f3c97c635ac49e5e3081085a66cbe5e1aabd57e44ad34ef"
+    },
+    {
+      "path": "analysis/rea/pairs/pair-29/functions/0xdd8b.c",
+      "bytes": 2046,
+      "sha256": "74206e931a1e58c5f37ca7bc2021b459cebb2e10cdd234b723ca91f09595cedf"
+    }
+  ],
+  "disassembly_pin": {
+    "path": "analysis/phase13/scenario/original-ranges.asm",
+    "bytes": 28525,
+    "sha256": "44858928ef1a728c4f52eeff27af84bcff45203762cc4cf6287de1b3982b081b"
+  },
+  "source_AST_imports": [
+    "dataclasses",
+    "battle_nmi_services",
+    "scene_shared_services"
+  ],
+  "source_runtime_IR": false,
+  "source_runtime_CPU": false,
+  "source_runtime_opcode_decode": false,
+  "source_original_CPU_callbacks": 0,
+  "source_sha256": "20f77e59c5ac81f3dbae7861ec1848c17cd75ee656805b85b37f3b4a901d9f12",
+  "validator_sha256": "1d3265a1ca522e72e462d005bc5cb6bcea81ae25afca93b49b04eba81e02a16c",
+  "local_instruction_location_total": 103,
+  "local_instruction_location_observed": 103,
+  "local_unobserved_locations": [],
+  "validation": {
+    "status": "passed",
+    "rom_cpu_case_count": 256,
+    "original_complete_case_count": 256,
+    "original_prefix_case_count": 0,
+    "source_guard_case_count": 3,
+    "failed_count": 0,
+    "counts": {
+      "scenario_clear_and_two_templates_rng_rejections": 256
+    },
+    "comparison": {
+      "RAM_bytes": 2048,
+      "SRAM_bytes": 8192,
+      "free_CPU_stack_residue": "included",
+      "registers": "AXYP/SP/PC",
+      "ordered_IO_ports": true,
+      "all_mapper_banks": true,
+      "hardware_reads": 0
+    }
+  },
+  "contracts": {
+    "APIs": [
+      "ScenarioInitialization(memory,ScenarioData.from_rom(rom),services=None)",
+      "scenario_init() generator owned by run_entry",
+      "run_entry(entry=A018,registers)",
+      "__call__(ServiceCall)",
+      "resume()"
+    ],
+    "entry_mapping": {
+      "physical_public_bank": 29,
+      "public": 40984,
+      "public_bytes": "4C8BDD",
+      "physical_body_bank": 30,
+      "body": 56715,
+      "end_exclusive": 56958
+    },
+    "caller": "Actual29/30pair and existingRTS frame; original globalmain11 E42F callsA018. Lower4KiBSRAM must be writable under caller mapper protection; service makes noF800 protection request.",
+    "input_fields": {
+      "6F43": "saved before6000..6FFFclear, restored unchanged",
+      "0050": "original table RNG cursor, may advance repeatedly on rejected sample&7>=5",
+      "0051": "original RNG saved X scratch",
+      "source16": "960citytemplatebytes at8C00",
+      "source17": "2880officerpooltemplatebytes at8000"
+    },
+    "effects": [
+      "Clear6000..6FFF only; preserve6F43 and leave7000..7FFF unchanged.",
+      "Reject RNG low3bits5..7; store accepted0..4 at6F45.",
+      "Set6F04/6FE2=FF and citymain0400=11/sub0401=0.",
+      "F25F selector48 mapsphysical16; copy960bytes8C00..8FBF→6000..63BF.",
+      "F25F selector49 mapsphysical17; copy2880bytes8000..8B3F→63C0..6EFF.",
+      "Set6F00=59hex(decimal89),6F01=0,6F83..6F89=FF,6F8A=0."
+    ],
+    "template_note": "Original2880byte officer pool copy is240 twelvebyte slots; only237 IDs have confirmed officer identities. No invented identities are assigned to trailing three slots.",
+    "scope": "Persistent record producer only. Subsequent title/ruler selection, scenario customization, background rendering and globalUI controller calls remain their actual owners.",
+    "services": {
+      "E87A": "independentSceneSharedServices/ControlHelpers exact RNG/table flags and actualstack",
+      "F25F": "independent exact mapper window request"
+    },
+    "verification": "ExplicitCPUfixtures initialize allRAM/SRAM, RNG cursor/saved byte, callerflags/stack. Compareall2048RAM includingstack,all8192SRAM,AXYP/SP/PC,orderedE000 writes and finalbanks. No nativeframe orpixel/PPUclaim."
+  }
+}

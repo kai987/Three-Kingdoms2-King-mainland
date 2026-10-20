@@ -1,0 +1,2963 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"evidence_id\":\"ev_0c2d49b08368991db43fc64b8ddb6d8d843a5844818b0bce6a789d88d951f3ae\",\"subject\":{\"name\":\"image.bin\",\"digest\":{\"sha256\":\"3244e255d13fba088e03a4b76cbf416fcfeff9d332d3797de6c9065f1a3f56be\"},\"format\":\"raw-binary\",\"architecture\":\"6502\",\"local_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/image.bin\"},\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"analysis_profile\":{\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"parameters\":{\"target_kind\":\"executable\",\"target_format\":\"raw-binary\",\"architecture\":\"6502\",\"available_architectures\":[\"6502\"],\"import_mode\":\"ephemeral-source-immutable\",\"annotation_policy\":\"atomic-function-entry-metadata-v1\",\"load_image_observations\":\"source-mappings-entry-context-v2\",\"function_body_evidence\":\"complete-inclusive-ranges-v1\",\"function_references\":\"complete-body-and-entry-reference-manager-v2\",\"call_relationship_coverage\":\"resolved-call-reference-diagnostics-v1\",\"string_inventory_evidence\":\"defined-data-coverage-v1\",\"location_resolution\":\"explicit-address-exact-entry-symbol-first-v3\",\"instruction_flow_evidence\":\"decoded-return-pcode-v1\",\"instruction_references\":\"exact-address-incoming-v1\",\"function_boundary_observations\":\"ghidra-terminal-call-limitations-v1\",\"no_return_repair\":\"returning-imports-decoded-return-v2\",\"process_launch\":\"inspected-jvm-launch-support-v1\",\"load_image_evidence\":\"independent-raw-mapping-context-v2\",\"jump_table_evidence\":\"typed-case-default-blocks-v1\",\"decompiler_jump_loads\":true,\"loader\":\"BinaryLoader\",\"language_id\":\"6502:LE:16:default\",\"compiler_spec_id\":\"default\",\"language_selection\":\"caller-supplied-v1\",\"entry_point\":\"0xa000\",\"entry_seed\":\"external-entry-and-function-before-analysis-v1\",\"analyzer_preset\":\"ghidra-default\",\"analysis_seeds\":{\"format\":\"rea-ghidra-seeds-v1\",\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/seeds.tsv\",\"configured_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/seeds.tsv\",\"sha256\":\"46ad7312979fb79e854af39dff4b90bd7ea96c6fdaa3a7a60bd35f1594b88bef\",\"entries\":{\"function\":10,\"code\":0,\"label\":0}}},\"digest\":\"223c54b9c6dee56df912417238c8f21c7765e082572d81f39da55ae64aed0b68\"},\"predicate_type\":\"rea.analysis\",\"operation\":\"list_procedures\",\"parameters\":{},\"raw_result\":[{\"address\":\"0xa000\",\"value\":\"bank10_entry_00\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xa00f\"}},{\"address\":\"0xa003\",\"value\":\"thunk_FUN_d717\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xd717\"}},{\"address\":\"0xa006\",\"value\":\"thunk_FUN_cf3f\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xcf3f\"}},{\"address\":\"0xa009\",\"value\":\"thunk_FUN_cf7c\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xcf7c\"}},{\"address\":\"0xa00c\",\"value\":\"thunk_FUN_d00c\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xd00c\"}},{\"address\":\"0xa00f\",\"value\":\"FUN_a00f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa01b\",\"value\":\"thunk_FUN_a8d7\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xa8d7\"}},{\"address\":\"0xa01e\",\"value\":\"FUN_a01e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa024\",\"value\":\"FUN_a024\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa03f\",\"value\":\"FUN_a03f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa045\",\"value\":\"FUN_a045\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa0d3\",\"value\":\"FUN_a0d3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa8d7\",\"value\":\"FUN_a8d7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa91f\",\"value\":\"FUN_a91f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa9cc\",\"value\":\"FUN_a9cc\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaa2d\",\"value\":\"FUN_aa2d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaa80\",\"value\":\"FUN_aa80\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaade\",\"value\":\"FUN_aade\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xab10\",\"value\":\"FUN_ab10\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xab71\",\"value\":\"FUN_ab71\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaba3\",\"value\":\"FUN_aba3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xac67\",\"value\":\"FUN_ac67\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaebf\",\"value\":\"FUN_aebf\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaf9c\",\"value\":\"FUN_af9c\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xb067\",\"value\":\"FUN_b067\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xbec7\",\"value\":\"FUN_bec7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xbee6\",\"value\":\"FUN_bee6\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc1a7\",\"value\":\"FUN_c1a7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc1c0\",\"value\":\"FUN_c1c0\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc1e0\",\"value\":\"FUN_c1e0\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc248\",\"value\":\"FUN_c248\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc298\",\"value\":\"FUN_c298\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc2eb\",\"value\":\"FUN_c2eb\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc337\",\"value\":\"FUN_c337\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc3a4\",\"value\":\"FUN_c3a4\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc3ff\",\"value\":\"FUN_c3ff\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc451\",\"value\":\"FUN_c451\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc50e\",\"value\":\"FUN_c50e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc5b9\",\"value\":\"FUN_c5b9\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc5d2\",\"value\":\"FUN_c5d2\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc66f\",\"value\":\"FUN_c66f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc6cc\",\"value\":\"FUN_c6cc\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc79a\",\"value\":\"FUN_c79a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc80a\",\"value\":\"FUN_c80a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc84d\",\"value\":\"FUN_c84d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc86a\",\"value\":\"FUN_c86a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc885\",\"value\":\"FUN_c885\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc8c3\",\"value\":\"FUN_c8c3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc8e6\",\"value\":\"FUN_c8e6\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc917\",\"value\":\"FUN_c917\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc97a\",\"value\":\"FUN_c97a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc98f\",\"value\":\"FUN_c98f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc9a5\",\"value\":\"FUN_c9a5\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xca19\",\"value\":\"FUN_ca19\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xca68\",\"value\":\"FUN_ca68\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xca87\",\"value\":\"FUN_ca87\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcaad\",\"value\":\"FUN_caad\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcb05\",\"value\":\"FUN_cb05\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcb52\",\"value\":\"FUN_cb52\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcb81\",\"value\":\"FUN_cb81\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcba3\",\"value\":\"FUN_cba3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcc12\",\"value\":\"FUN_cc12\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xccf8\",\"value\":\"FUN_ccf8\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcd68\",\"value\":\"FUN_cd68\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcd9a\",\"value\":\"FUN_cd9a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcdb9\",\"value\":\"FUN_cdb9\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xce1b\",\"value\":\"FUN_ce1b\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xce67\",\"value\":\"FUN_ce67\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcedd\",\"value\":\"FUN_cedd\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcf3f\",\"value\":\"FUN_cf3f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcf7c\",\"value\":\"FUN_cf7c\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd00c\",\"value\":\"FUN_d00c\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd105\",\"value\":\"FUN_d105\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd140\",\"value\":\"FUN_d140\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd152\",\"value\":\"FUN_d152\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd165\",\"value\":\"FUN_d165\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd1a4\",\"value\":\"FUN_d1a4\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd249\",\"value\":\"FUN_d249\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd283\",\"value\":\"FUN_d283\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd2ab\",\"value\":\"FUN_d2ab\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd2d3\",\"value\":\"FUN_d2d3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd304\",\"value\":\"FUN_d304\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd307\",\"value\":\"FUN_d307\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd319\",\"value\":\"FUN_d319\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd336\",\"value\":\"FUN_d336\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd36f\",\"value\":\"FUN_d36f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd3a9\",\"value\":\"FUN_d3a9\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd3dd\",\"value\":\"FUN_d3dd\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd40f\",\"value\":\"FUN_d40f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd438\",\"value\":\"FUN_d438\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd471\",\"value\":\"FUN_d471\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd494\",\"value\":\"FUN_d494\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd4ad\",\"value\":\"FUN_d4ad\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd4bb\",\"value\":\"FUN_d4bb\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd4cb\",\"value\":\"FUN_d4cb\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd53e\",\"value\":\"FUN_d53e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd583\",\"value\":\"FUN_d583\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd5e7\",\"value\":\"FUN_d5e7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd61e\",\"value\":\"FUN_d61e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd69d\",\"value\":\"FUN_d69d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd6e5\",\"value\":\"FUN_d6e5\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd717\",\"value\":\"FUN_d717\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xdd34\",\"value\":\"FUN_dd34\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xdd53\",\"value\":\"FUN_dd53\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe000\",\"value\":\"reset_dispatch\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe370\",\"value\":\"FUN_e370\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe4da\",\"value\":\"FUN_e4da\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe51f\",\"value\":\"FUN_e51f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe57f\",\"value\":\"FUN_e57f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe590\",\"value\":\"FUN_e590\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe5f3\",\"value\":\"FUN_e5f3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe5fa\",\"value\":\"FUN_e5fa\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe609\",\"value\":\"FUN_e609\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe673\",\"value\":\"FUN_e673\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe6c6\",\"value\":\"FUN_e6c6\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe70e\",\"value\":\"FUN_e70e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe749\",\"value\":\"FUN_e749\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe74d\",\"value\":\"FUN_e74d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe753\",\"value\":\"FUN_e753\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe768\",\"value\":\"FUN_e768\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe7b5\",\"value\":\"FUN_e7b5\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe7df\",\"value\":\"FUN_e7df\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe823\",\"value\":\"FUN_e823\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe830\",\"value\":\"FUN_e830\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe88a\",\"value\":\"FUN_e88a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe89a\",\"value\":\"FUN_e89a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xeade\",\"value\":\"tail_dispatch_inline_table\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xeaf7\",\"value\":\"FUN_eaf7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xec67\",\"value\":\"FUN_ec67\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xecbf\",\"value\":\"FUN_ecbf\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xee07\",\"value\":\"far_call_inline_word\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xee53\",\"value\":\"FUN_ee53\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xef0b\",\"value\":\"FUN_ef0b\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xef71\",\"value\":\"FUN_ef71\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xefc0\",\"value\":\"FUN_efc0\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf028\",\"value\":\"FUN_f028\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf077\",\"value\":\"FUN_f077\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf1ad\",\"value\":\"FUN_f1ad\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf206\",\"value\":\"FUN_f206\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf237\",\"value\":\"FUN_f237\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf25f\",\"value\":\"FUN_f25f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf266\",\"value\":\"FUN_f266\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf2af\",\"value\":\"region_address\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf2d7\",\"value\":\"officer_address\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf3bd\",\"value\":\"FUN_f3bd\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf422\",\"value\":\"FUN_f422\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf43f\",\"value\":\"FUN_f43f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf458\",\"value\":\"FUN_f458\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf468\",\"value\":\"FUN_f468\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf8af\",\"value\":\"FUN_f8af\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfa97\",\"value\":\"switchD_f878::caseD_0\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfaa9\",\"value\":\"FUN_faa9\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfabf\",\"value\":\"FUN_fabf\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfad5\",\"value\":\"FUN_fad5\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfb0b\",\"value\":\"FUN_fb0b\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfb28\",\"value\":\"FUN_fb28\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfb2d\",\"value\":\"FUN_fb2d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xff62\",\"value\":\"FUN_ff62\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xff9b\",\"value\":\"FUN_ff9b\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}}],\"normalized_result\":[{\"address\":\"0xa000\",\"value\":\"bank10_entry_00\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xa00f\"}},{\"address\":\"0xa003\",\"value\":\"thunk_FUN_d717\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xd717\"}},{\"address\":\"0xa006\",\"value\":\"thunk_FUN_cf3f\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xcf3f\"}},{\"address\":\"0xa009\",\"value\":\"thunk_FUN_cf7c\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xcf7c\"}},{\"address\":\"0xa00c\",\"value\":\"thunk_FUN_d00c\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xd00c\"}},{\"address\":\"0xa00f\",\"value\":\"FUN_a00f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa01b\",\"value\":\"thunk_FUN_a8d7\",\"procedure\":{\"external\":false,\"thunk\":true,\"thunk_target\":\"0xa8d7\"}},{\"address\":\"0xa01e\",\"value\":\"FUN_a01e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa024\",\"value\":\"FUN_a024\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa03f\",\"value\":\"FUN_a03f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa045\",\"value\":\"FUN_a045\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa0d3\",\"value\":\"FUN_a0d3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa8d7\",\"value\":\"FUN_a8d7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa91f\",\"value\":\"FUN_a91f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xa9cc\",\"value\":\"FUN_a9cc\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaa2d\",\"value\":\"FUN_aa2d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaa80\",\"value\":\"FUN_aa80\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaade\",\"value\":\"FUN_aade\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xab10\",\"value\":\"FUN_ab10\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xab71\",\"value\":\"FUN_ab71\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaba3\",\"value\":\"FUN_aba3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xac67\",\"value\":\"FUN_ac67\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaebf\",\"value\":\"FUN_aebf\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xaf9c\",\"value\":\"FUN_af9c\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xb067\",\"value\":\"FUN_b067\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xbec7\",\"value\":\"FUN_bec7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xbee6\",\"value\":\"FUN_bee6\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc1a7\",\"value\":\"FUN_c1a7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc1c0\",\"value\":\"FUN_c1c0\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc1e0\",\"value\":\"FUN_c1e0\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc248\",\"value\":\"FUN_c248\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc298\",\"value\":\"FUN_c298\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc2eb\",\"value\":\"FUN_c2eb\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc337\",\"value\":\"FUN_c337\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc3a4\",\"value\":\"FUN_c3a4\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc3ff\",\"value\":\"FUN_c3ff\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc451\",\"value\":\"FUN_c451\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc50e\",\"value\":\"FUN_c50e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc5b9\",\"value\":\"FUN_c5b9\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc5d2\",\"value\":\"FUN_c5d2\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc66f\",\"value\":\"FUN_c66f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc6cc\",\"value\":\"FUN_c6cc\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc79a\",\"value\":\"FUN_c79a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc80a\",\"value\":\"FUN_c80a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc84d\",\"value\":\"FUN_c84d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc86a\",\"value\":\"FUN_c86a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc885\",\"value\":\"FUN_c885\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc8c3\",\"value\":\"FUN_c8c3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc8e6\",\"value\":\"FUN_c8e6\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc917\",\"value\":\"FUN_c917\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc97a\",\"value\":\"FUN_c97a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc98f\",\"value\":\"FUN_c98f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xc9a5\",\"value\":\"FUN_c9a5\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xca19\",\"value\":\"FUN_ca19\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xca68\",\"value\":\"FUN_ca68\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xca87\",\"value\":\"FUN_ca87\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcaad\",\"value\":\"FUN_caad\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcb05\",\"value\":\"FUN_cb05\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcb52\",\"value\":\"FUN_cb52\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcb81\",\"value\":\"FUN_cb81\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcba3\",\"value\":\"FUN_cba3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcc12\",\"value\":\"FUN_cc12\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xccf8\",\"value\":\"FUN_ccf8\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcd68\",\"value\":\"FUN_cd68\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcd9a\",\"value\":\"FUN_cd9a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcdb9\",\"value\":\"FUN_cdb9\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xce1b\",\"value\":\"FUN_ce1b\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xce67\",\"value\":\"FUN_ce67\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcedd\",\"value\":\"FUN_cedd\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcf3f\",\"value\":\"FUN_cf3f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xcf7c\",\"value\":\"FUN_cf7c\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd00c\",\"value\":\"FUN_d00c\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd105\",\"value\":\"FUN_d105\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd140\",\"value\":\"FUN_d140\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd152\",\"value\":\"FUN_d152\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd165\",\"value\":\"FUN_d165\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd1a4\",\"value\":\"FUN_d1a4\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd249\",\"value\":\"FUN_d249\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd283\",\"value\":\"FUN_d283\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd2ab\",\"value\":\"FUN_d2ab\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd2d3\",\"value\":\"FUN_d2d3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd304\",\"value\":\"FUN_d304\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd307\",\"value\":\"FUN_d307\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd319\",\"value\":\"FUN_d319\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd336\",\"value\":\"FUN_d336\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd36f\",\"value\":\"FUN_d36f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd3a9\",\"value\":\"FUN_d3a9\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd3dd\",\"value\":\"FUN_d3dd\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd40f\",\"value\":\"FUN_d40f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd438\",\"value\":\"FUN_d438\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd471\",\"value\":\"FUN_d471\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd494\",\"value\":\"FUN_d494\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd4ad\",\"value\":\"FUN_d4ad\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd4bb\",\"value\":\"FUN_d4bb\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd4cb\",\"value\":\"FUN_d4cb\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd53e\",\"value\":\"FUN_d53e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd583\",\"value\":\"FUN_d583\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd5e7\",\"value\":\"FUN_d5e7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd61e\",\"value\":\"FUN_d61e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd69d\",\"value\":\"FUN_d69d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd6e5\",\"value\":\"FUN_d6e5\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xd717\",\"value\":\"FUN_d717\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xdd34\",\"value\":\"FUN_dd34\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xdd53\",\"value\":\"FUN_dd53\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe000\",\"value\":\"reset_dispatch\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe370\",\"value\":\"FUN_e370\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe4da\",\"value\":\"FUN_e4da\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe51f\",\"value\":\"FUN_e51f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe57f\",\"value\":\"FUN_e57f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe590\",\"value\":\"FUN_e590\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe5f3\",\"value\":\"FUN_e5f3\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe5fa\",\"value\":\"FUN_e5fa\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe609\",\"value\":\"FUN_e609\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe673\",\"value\":\"FUN_e673\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe6c6\",\"value\":\"FUN_e6c6\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe70e\",\"value\":\"FUN_e70e\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe749\",\"value\":\"FUN_e749\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe74d\",\"value\":\"FUN_e74d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe753\",\"value\":\"FUN_e753\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe768\",\"value\":\"FUN_e768\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe7b5\",\"value\":\"FUN_e7b5\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe7df\",\"value\":\"FUN_e7df\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe823\",\"value\":\"FUN_e823\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe830\",\"value\":\"FUN_e830\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe88a\",\"value\":\"FUN_e88a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xe89a\",\"value\":\"FUN_e89a\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xeade\",\"value\":\"tail_dispatch_inline_table\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xeaf7\",\"value\":\"FUN_eaf7\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xec67\",\"value\":\"FUN_ec67\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xecbf\",\"value\":\"FUN_ecbf\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xee07\",\"value\":\"far_call_inline_word\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xee53\",\"value\":\"FUN_ee53\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xef0b\",\"value\":\"FUN_ef0b\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xef71\",\"value\":\"FUN_ef71\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xefc0\",\"value\":\"FUN_efc0\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf028\",\"value\":\"FUN_f028\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf077\",\"value\":\"FUN_f077\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf1ad\",\"value\":\"FUN_f1ad\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf206\",\"value\":\"FUN_f206\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf237\",\"value\":\"FUN_f237\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf25f\",\"value\":\"FUN_f25f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf266\",\"value\":\"FUN_f266\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf2af\",\"value\":\"region_address\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf2d7\",\"value\":\"officer_address\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf3bd\",\"value\":\"FUN_f3bd\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf422\",\"value\":\"FUN_f422\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf43f\",\"value\":\"FUN_f43f\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf458\",\"value\":\"FUN_f458\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf468\",\"value\":\"FUN_f468\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xf8af\",\"value\":\"FUN_f8af\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfa97\",\"value\":\"switchD_f878::caseD_0\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfaa9\",\"value\":\"FUN_faa9\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfabf\",\"value\":\"FUN_fabf\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfad5\",\"value\":\"FUN_fad5\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfb0b\",\"value\":\"FUN_fb0b\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfb28\",\"value\":\"FUN_fb28\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xfb2d\",\"value\":\"FUN_fb2d\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xff62\",\"value\":\"FUN_ff62\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}},{\"address\":\"0xff9b\",\"value\":\"FUN_ff9b\",\"procedure\":{\"external\":false,\"thunk\":false,\"thunk_target\":null}}],\"confidence\":\"observed\",\"authority\":\"shipped-artifact\",\"environment\":null,\"limitations\":[\"The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.\",\"The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.\",\"Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.\",\"Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.\",\"External functions and local thunks are distinct; procedure metadata identifies both and preserves a thunk target when Ghidra resolves one.\",\"macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.\",\"Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.\",\"Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.\",\"Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.\",\"Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/seeds.tsv (sha256 46ad7312979fb79e854af39dff4b90bd7ea96c6fdaa3a7a60bd35f1594b88bef: 10 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.\",\"Seed outcome: 9 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory.\"],\"relationship_coverage\":null,\"locations\":[],\"evidence_links\":[]}"
+    }
+  ],
+  "structuredContent": {
+    "evidence_id": "ev_0c2d49b08368991db43fc64b8ddb6d8d843a5844818b0bce6a789d88d951f3ae",
+    "subject": {
+      "name": "image.bin",
+      "digest": {
+        "sha256": "3244e255d13fba088e03a4b76cbf416fcfeff9d332d3797de6c9065f1a3f56be"
+      },
+      "format": "raw-binary",
+      "architecture": "6502",
+      "local_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/image.bin"
+    },
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "analysis_profile": {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "parameters": {
+        "target_kind": "executable",
+        "target_format": "raw-binary",
+        "architecture": "6502",
+        "available_architectures": [
+          "6502"
+        ],
+        "import_mode": "ephemeral-source-immutable",
+        "annotation_policy": "atomic-function-entry-metadata-v1",
+        "load_image_observations": "source-mappings-entry-context-v2",
+        "function_body_evidence": "complete-inclusive-ranges-v1",
+        "function_references": "complete-body-and-entry-reference-manager-v2",
+        "call_relationship_coverage": "resolved-call-reference-diagnostics-v1",
+        "string_inventory_evidence": "defined-data-coverage-v1",
+        "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+        "instruction_flow_evidence": "decoded-return-pcode-v1",
+        "instruction_references": "exact-address-incoming-v1",
+        "function_boundary_observations": "ghidra-terminal-call-limitations-v1",
+        "no_return_repair": "returning-imports-decoded-return-v2",
+        "process_launch": "inspected-jvm-launch-support-v1",
+        "load_image_evidence": "independent-raw-mapping-context-v2",
+        "jump_table_evidence": "typed-case-default-blocks-v1",
+        "decompiler_jump_loads": true,
+        "loader": "BinaryLoader",
+        "language_id": "6502:LE:16:default",
+        "compiler_spec_id": "default",
+        "language_selection": "caller-supplied-v1",
+        "entry_point": "0xa000",
+        "entry_seed": "external-entry-and-function-before-analysis-v1",
+        "analyzer_preset": "ghidra-default",
+        "analysis_seeds": {
+          "format": "rea-ghidra-seeds-v1",
+          "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/seeds.tsv",
+          "configured_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/seeds.tsv",
+          "sha256": "46ad7312979fb79e854af39dff4b90bd7ea96c6fdaa3a7a60bd35f1594b88bef",
+          "entries": {
+            "function": 10,
+            "code": 0,
+            "label": 0
+          }
+        }
+      },
+      "digest": "223c54b9c6dee56df912417238c8f21c7765e082572d81f39da55ae64aed0b68"
+    },
+    "predicate_type": "rea.analysis",
+    "operation": "list_procedures",
+    "parameters": {},
+    "raw_result": [
+      {
+        "address": "0xa000",
+        "value": "bank10_entry_00",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xa00f"
+        }
+      },
+      {
+        "address": "0xa003",
+        "value": "thunk_FUN_d717",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xd717"
+        }
+      },
+      {
+        "address": "0xa006",
+        "value": "thunk_FUN_cf3f",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xcf3f"
+        }
+      },
+      {
+        "address": "0xa009",
+        "value": "thunk_FUN_cf7c",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xcf7c"
+        }
+      },
+      {
+        "address": "0xa00c",
+        "value": "thunk_FUN_d00c",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xd00c"
+        }
+      },
+      {
+        "address": "0xa00f",
+        "value": "FUN_a00f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa01b",
+        "value": "thunk_FUN_a8d7",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xa8d7"
+        }
+      },
+      {
+        "address": "0xa01e",
+        "value": "FUN_a01e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa024",
+        "value": "FUN_a024",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa03f",
+        "value": "FUN_a03f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa045",
+        "value": "FUN_a045",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa0d3",
+        "value": "FUN_a0d3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa8d7",
+        "value": "FUN_a8d7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa91f",
+        "value": "FUN_a91f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa9cc",
+        "value": "FUN_a9cc",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaa2d",
+        "value": "FUN_aa2d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaa80",
+        "value": "FUN_aa80",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaade",
+        "value": "FUN_aade",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xab10",
+        "value": "FUN_ab10",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xab71",
+        "value": "FUN_ab71",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaba3",
+        "value": "FUN_aba3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xac67",
+        "value": "FUN_ac67",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaebf",
+        "value": "FUN_aebf",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaf9c",
+        "value": "FUN_af9c",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xb067",
+        "value": "FUN_b067",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xbec7",
+        "value": "FUN_bec7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xbee6",
+        "value": "FUN_bee6",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc1a7",
+        "value": "FUN_c1a7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc1c0",
+        "value": "FUN_c1c0",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc1e0",
+        "value": "FUN_c1e0",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc248",
+        "value": "FUN_c248",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc298",
+        "value": "FUN_c298",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc2eb",
+        "value": "FUN_c2eb",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc337",
+        "value": "FUN_c337",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc3a4",
+        "value": "FUN_c3a4",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc3ff",
+        "value": "FUN_c3ff",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc451",
+        "value": "FUN_c451",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc50e",
+        "value": "FUN_c50e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc5b9",
+        "value": "FUN_c5b9",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc5d2",
+        "value": "FUN_c5d2",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc66f",
+        "value": "FUN_c66f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc6cc",
+        "value": "FUN_c6cc",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc79a",
+        "value": "FUN_c79a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc80a",
+        "value": "FUN_c80a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc84d",
+        "value": "FUN_c84d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc86a",
+        "value": "FUN_c86a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc885",
+        "value": "FUN_c885",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc8c3",
+        "value": "FUN_c8c3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc8e6",
+        "value": "FUN_c8e6",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc917",
+        "value": "FUN_c917",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc97a",
+        "value": "FUN_c97a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc98f",
+        "value": "FUN_c98f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc9a5",
+        "value": "FUN_c9a5",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xca19",
+        "value": "FUN_ca19",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xca68",
+        "value": "FUN_ca68",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xca87",
+        "value": "FUN_ca87",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcaad",
+        "value": "FUN_caad",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcb05",
+        "value": "FUN_cb05",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcb52",
+        "value": "FUN_cb52",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcb81",
+        "value": "FUN_cb81",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcba3",
+        "value": "FUN_cba3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcc12",
+        "value": "FUN_cc12",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xccf8",
+        "value": "FUN_ccf8",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcd68",
+        "value": "FUN_cd68",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcd9a",
+        "value": "FUN_cd9a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcdb9",
+        "value": "FUN_cdb9",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xce1b",
+        "value": "FUN_ce1b",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xce67",
+        "value": "FUN_ce67",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcedd",
+        "value": "FUN_cedd",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcf3f",
+        "value": "FUN_cf3f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcf7c",
+        "value": "FUN_cf7c",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd00c",
+        "value": "FUN_d00c",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd105",
+        "value": "FUN_d105",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd140",
+        "value": "FUN_d140",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd152",
+        "value": "FUN_d152",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd165",
+        "value": "FUN_d165",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd1a4",
+        "value": "FUN_d1a4",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd249",
+        "value": "FUN_d249",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd283",
+        "value": "FUN_d283",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd2ab",
+        "value": "FUN_d2ab",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd2d3",
+        "value": "FUN_d2d3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd304",
+        "value": "FUN_d304",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd307",
+        "value": "FUN_d307",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd319",
+        "value": "FUN_d319",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd336",
+        "value": "FUN_d336",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd36f",
+        "value": "FUN_d36f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd3a9",
+        "value": "FUN_d3a9",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd3dd",
+        "value": "FUN_d3dd",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd40f",
+        "value": "FUN_d40f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd438",
+        "value": "FUN_d438",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd471",
+        "value": "FUN_d471",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd494",
+        "value": "FUN_d494",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd4ad",
+        "value": "FUN_d4ad",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd4bb",
+        "value": "FUN_d4bb",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd4cb",
+        "value": "FUN_d4cb",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd53e",
+        "value": "FUN_d53e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd583",
+        "value": "FUN_d583",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd5e7",
+        "value": "FUN_d5e7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd61e",
+        "value": "FUN_d61e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd69d",
+        "value": "FUN_d69d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd6e5",
+        "value": "FUN_d6e5",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd717",
+        "value": "FUN_d717",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xdd34",
+        "value": "FUN_dd34",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xdd53",
+        "value": "FUN_dd53",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe000",
+        "value": "reset_dispatch",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe370",
+        "value": "FUN_e370",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe4da",
+        "value": "FUN_e4da",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe51f",
+        "value": "FUN_e51f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe57f",
+        "value": "FUN_e57f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe590",
+        "value": "FUN_e590",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe5f3",
+        "value": "FUN_e5f3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe5fa",
+        "value": "FUN_e5fa",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe609",
+        "value": "FUN_e609",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe673",
+        "value": "FUN_e673",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe6c6",
+        "value": "FUN_e6c6",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe70e",
+        "value": "FUN_e70e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe749",
+        "value": "FUN_e749",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe74d",
+        "value": "FUN_e74d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe753",
+        "value": "FUN_e753",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe768",
+        "value": "FUN_e768",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe7b5",
+        "value": "FUN_e7b5",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe7df",
+        "value": "FUN_e7df",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe823",
+        "value": "FUN_e823",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe830",
+        "value": "FUN_e830",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe88a",
+        "value": "FUN_e88a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe89a",
+        "value": "FUN_e89a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xeade",
+        "value": "tail_dispatch_inline_table",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xeaf7",
+        "value": "FUN_eaf7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xec67",
+        "value": "FUN_ec67",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xecbf",
+        "value": "FUN_ecbf",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xee07",
+        "value": "far_call_inline_word",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xee53",
+        "value": "FUN_ee53",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xef0b",
+        "value": "FUN_ef0b",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xef71",
+        "value": "FUN_ef71",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xefc0",
+        "value": "FUN_efc0",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf028",
+        "value": "FUN_f028",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf077",
+        "value": "FUN_f077",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf1ad",
+        "value": "FUN_f1ad",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf206",
+        "value": "FUN_f206",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf237",
+        "value": "FUN_f237",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf25f",
+        "value": "FUN_f25f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf266",
+        "value": "FUN_f266",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf2af",
+        "value": "region_address",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf2d7",
+        "value": "officer_address",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf3bd",
+        "value": "FUN_f3bd",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf422",
+        "value": "FUN_f422",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf43f",
+        "value": "FUN_f43f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf458",
+        "value": "FUN_f458",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf468",
+        "value": "FUN_f468",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf8af",
+        "value": "FUN_f8af",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfa97",
+        "value": "switchD_f878::caseD_0",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfaa9",
+        "value": "FUN_faa9",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfabf",
+        "value": "FUN_fabf",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfad5",
+        "value": "FUN_fad5",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfb0b",
+        "value": "FUN_fb0b",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfb28",
+        "value": "FUN_fb28",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfb2d",
+        "value": "FUN_fb2d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xff62",
+        "value": "FUN_ff62",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xff9b",
+        "value": "FUN_ff9b",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      }
+    ],
+    "normalized_result": [
+      {
+        "address": "0xa000",
+        "value": "bank10_entry_00",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xa00f"
+        }
+      },
+      {
+        "address": "0xa003",
+        "value": "thunk_FUN_d717",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xd717"
+        }
+      },
+      {
+        "address": "0xa006",
+        "value": "thunk_FUN_cf3f",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xcf3f"
+        }
+      },
+      {
+        "address": "0xa009",
+        "value": "thunk_FUN_cf7c",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xcf7c"
+        }
+      },
+      {
+        "address": "0xa00c",
+        "value": "thunk_FUN_d00c",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xd00c"
+        }
+      },
+      {
+        "address": "0xa00f",
+        "value": "FUN_a00f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa01b",
+        "value": "thunk_FUN_a8d7",
+        "procedure": {
+          "external": false,
+          "thunk": true,
+          "thunk_target": "0xa8d7"
+        }
+      },
+      {
+        "address": "0xa01e",
+        "value": "FUN_a01e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa024",
+        "value": "FUN_a024",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa03f",
+        "value": "FUN_a03f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa045",
+        "value": "FUN_a045",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa0d3",
+        "value": "FUN_a0d3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa8d7",
+        "value": "FUN_a8d7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa91f",
+        "value": "FUN_a91f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xa9cc",
+        "value": "FUN_a9cc",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaa2d",
+        "value": "FUN_aa2d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaa80",
+        "value": "FUN_aa80",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaade",
+        "value": "FUN_aade",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xab10",
+        "value": "FUN_ab10",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xab71",
+        "value": "FUN_ab71",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaba3",
+        "value": "FUN_aba3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xac67",
+        "value": "FUN_ac67",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaebf",
+        "value": "FUN_aebf",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xaf9c",
+        "value": "FUN_af9c",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xb067",
+        "value": "FUN_b067",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xbec7",
+        "value": "FUN_bec7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xbee6",
+        "value": "FUN_bee6",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc1a7",
+        "value": "FUN_c1a7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc1c0",
+        "value": "FUN_c1c0",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc1e0",
+        "value": "FUN_c1e0",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc248",
+        "value": "FUN_c248",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc298",
+        "value": "FUN_c298",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc2eb",
+        "value": "FUN_c2eb",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc337",
+        "value": "FUN_c337",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc3a4",
+        "value": "FUN_c3a4",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc3ff",
+        "value": "FUN_c3ff",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc451",
+        "value": "FUN_c451",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc50e",
+        "value": "FUN_c50e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc5b9",
+        "value": "FUN_c5b9",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc5d2",
+        "value": "FUN_c5d2",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc66f",
+        "value": "FUN_c66f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc6cc",
+        "value": "FUN_c6cc",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc79a",
+        "value": "FUN_c79a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc80a",
+        "value": "FUN_c80a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc84d",
+        "value": "FUN_c84d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc86a",
+        "value": "FUN_c86a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc885",
+        "value": "FUN_c885",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc8c3",
+        "value": "FUN_c8c3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc8e6",
+        "value": "FUN_c8e6",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc917",
+        "value": "FUN_c917",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc97a",
+        "value": "FUN_c97a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc98f",
+        "value": "FUN_c98f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xc9a5",
+        "value": "FUN_c9a5",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xca19",
+        "value": "FUN_ca19",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xca68",
+        "value": "FUN_ca68",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xca87",
+        "value": "FUN_ca87",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcaad",
+        "value": "FUN_caad",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcb05",
+        "value": "FUN_cb05",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcb52",
+        "value": "FUN_cb52",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcb81",
+        "value": "FUN_cb81",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcba3",
+        "value": "FUN_cba3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcc12",
+        "value": "FUN_cc12",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xccf8",
+        "value": "FUN_ccf8",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcd68",
+        "value": "FUN_cd68",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcd9a",
+        "value": "FUN_cd9a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcdb9",
+        "value": "FUN_cdb9",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xce1b",
+        "value": "FUN_ce1b",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xce67",
+        "value": "FUN_ce67",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcedd",
+        "value": "FUN_cedd",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcf3f",
+        "value": "FUN_cf3f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xcf7c",
+        "value": "FUN_cf7c",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd00c",
+        "value": "FUN_d00c",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd105",
+        "value": "FUN_d105",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd140",
+        "value": "FUN_d140",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd152",
+        "value": "FUN_d152",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd165",
+        "value": "FUN_d165",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd1a4",
+        "value": "FUN_d1a4",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd249",
+        "value": "FUN_d249",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd283",
+        "value": "FUN_d283",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd2ab",
+        "value": "FUN_d2ab",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd2d3",
+        "value": "FUN_d2d3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd304",
+        "value": "FUN_d304",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd307",
+        "value": "FUN_d307",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd319",
+        "value": "FUN_d319",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd336",
+        "value": "FUN_d336",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd36f",
+        "value": "FUN_d36f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd3a9",
+        "value": "FUN_d3a9",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd3dd",
+        "value": "FUN_d3dd",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd40f",
+        "value": "FUN_d40f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd438",
+        "value": "FUN_d438",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd471",
+        "value": "FUN_d471",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd494",
+        "value": "FUN_d494",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd4ad",
+        "value": "FUN_d4ad",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd4bb",
+        "value": "FUN_d4bb",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd4cb",
+        "value": "FUN_d4cb",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd53e",
+        "value": "FUN_d53e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd583",
+        "value": "FUN_d583",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd5e7",
+        "value": "FUN_d5e7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd61e",
+        "value": "FUN_d61e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd69d",
+        "value": "FUN_d69d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd6e5",
+        "value": "FUN_d6e5",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xd717",
+        "value": "FUN_d717",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xdd34",
+        "value": "FUN_dd34",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xdd53",
+        "value": "FUN_dd53",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe000",
+        "value": "reset_dispatch",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe370",
+        "value": "FUN_e370",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe4da",
+        "value": "FUN_e4da",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe51f",
+        "value": "FUN_e51f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe57f",
+        "value": "FUN_e57f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe590",
+        "value": "FUN_e590",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe5f3",
+        "value": "FUN_e5f3",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe5fa",
+        "value": "FUN_e5fa",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe609",
+        "value": "FUN_e609",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe673",
+        "value": "FUN_e673",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe6c6",
+        "value": "FUN_e6c6",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe70e",
+        "value": "FUN_e70e",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe749",
+        "value": "FUN_e749",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe74d",
+        "value": "FUN_e74d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe753",
+        "value": "FUN_e753",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe768",
+        "value": "FUN_e768",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe7b5",
+        "value": "FUN_e7b5",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe7df",
+        "value": "FUN_e7df",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe823",
+        "value": "FUN_e823",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe830",
+        "value": "FUN_e830",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe88a",
+        "value": "FUN_e88a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xe89a",
+        "value": "FUN_e89a",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xeade",
+        "value": "tail_dispatch_inline_table",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xeaf7",
+        "value": "FUN_eaf7",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xec67",
+        "value": "FUN_ec67",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xecbf",
+        "value": "FUN_ecbf",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xee07",
+        "value": "far_call_inline_word",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xee53",
+        "value": "FUN_ee53",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xef0b",
+        "value": "FUN_ef0b",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xef71",
+        "value": "FUN_ef71",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xefc0",
+        "value": "FUN_efc0",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf028",
+        "value": "FUN_f028",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf077",
+        "value": "FUN_f077",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf1ad",
+        "value": "FUN_f1ad",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf206",
+        "value": "FUN_f206",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf237",
+        "value": "FUN_f237",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf25f",
+        "value": "FUN_f25f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf266",
+        "value": "FUN_f266",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf2af",
+        "value": "region_address",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf2d7",
+        "value": "officer_address",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf3bd",
+        "value": "FUN_f3bd",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf422",
+        "value": "FUN_f422",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf43f",
+        "value": "FUN_f43f",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf458",
+        "value": "FUN_f458",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf468",
+        "value": "FUN_f468",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xf8af",
+        "value": "FUN_f8af",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfa97",
+        "value": "switchD_f878::caseD_0",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfaa9",
+        "value": "FUN_faa9",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfabf",
+        "value": "FUN_fabf",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfad5",
+        "value": "FUN_fad5",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfb0b",
+        "value": "FUN_fb0b",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfb28",
+        "value": "FUN_fb28",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xfb2d",
+        "value": "FUN_fb2d",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xff62",
+        "value": "FUN_ff62",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      },
+      {
+        "address": "0xff9b",
+        "value": "FUN_ff9b",
+        "procedure": {
+          "external": false,
+          "thunk": false,
+          "thunk_target": null
+        }
+      }
+    ],
+    "confidence": "observed",
+    "authority": "shipped-artifact",
+    "environment": null,
+    "limitations": [
+      "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+      "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+      "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+      "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+      "External functions and local thunks are distinct; procedure metadata identifies both and preserves a thunk target when Ghidra resolves one.",
+      "macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+      "Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.",
+      "Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.",
+      "Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.",
+      "Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-10/seeds.tsv (sha256 46ad7312979fb79e854af39dff4b90bd7ea96c6fdaa3a7a60bd35f1594b88bef: 10 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.",
+      "Seed outcome: 9 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory."
+    ],
+    "relationship_coverage": null,
+    "locations": [],
+    "evidence_links": []
+  }
+}

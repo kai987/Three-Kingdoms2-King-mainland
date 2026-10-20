@@ -1,0 +1,81 @@
+{
+  "status": "passed",
+  "case_count": 14080,
+  "results": [
+    {
+      "routine": "knowledge_tier",
+      "cases": 256
+    },
+    {
+      "routine": "special_ai_gate",
+      "cases": 4096
+    },
+    {
+      "routine": "strategy_threshold",
+      "cases": 1024
+    },
+    {
+      "routine": "conversion_threshold",
+      "cases": 1024
+    },
+    {
+      "routine": "damage_B070",
+      "cases": 512
+    },
+    {
+      "routine": "damage_B0EB",
+      "cases": 512
+    },
+    {
+      "routine": "damage_B188",
+      "cases": 512
+    },
+    {
+      "routine": "damage_B1E3",
+      "cases": 512
+    },
+    {
+      "routine": "damage_B4C6",
+      "cases": 512
+    },
+    {
+      "routine": "damage_B55C",
+      "cases": 512
+    },
+    {
+      "routine": "health_loss_core",
+      "cases": 1024
+    },
+    {
+      "routine": "experience",
+      "cases": 1024
+    },
+    {
+      "routine": "troop_loss_distinct_records",
+      "cases": 1024
+    },
+    {
+      "routine": "rng_bounded",
+      "cases": 1536
+    }
+  ],
+  "compiler_command": [
+    "cc",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-O2",
+    "-shared",
+    "-fPIC",
+    "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/source/readable_c/game_recovered.c",
+    "-o",
+    "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/build/libgame_recovered.dylib"
+  ],
+  "source_sha256": "2621e66de6b98795b80877903c384e66ca3f6433ec7e623daaeec43608085d42",
+  "oracle": "compiled C vs reconstructed Python; Python is separately compared with actual ROM instructions",
+  "limitations": [
+    "This C API supports distinct actor/target records only.",
+    "Action suitability, rendering and complete battle/AI state machines are not implemented."
+  ]
+}

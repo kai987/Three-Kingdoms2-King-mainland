@@ -1,0 +1,7 @@
+# G033 原调用输入
+
+两份输入直接来自本轮独立被动观察核心在真实 C5D2/D471 指令入口的稀疏捕获：完整2048B RAM、8192B SRAM、AXYP/SP/PC、实际四个PRG页及已有JSR返回帧。母档为冻结第22阶段原核心自然月轮保存点；无新增游戏字节准备、无新增中断、未伪造PC或caller。原固定核心与被动核本路线逐帧五buffer相等另见runtime回执，这不是所有输入下的核心等价定理。
+
+没有捕获瞬时N163/PPU/APU。每份context明确 `N163_origin=explicit_shared_fixture_not_Native_snapshot`，共同给Source/原CPU128B非零模式、address127/autoincrementTrue及显式端口模型；不能称它为原机当时音频图像。Source矩阵与Root整合将分别对照这些软件入口；这里导出不增加Source案例数。
+
+自然实际ID152读取发生在city3、pointer8B58、Y0，physical17。该帧末pointer8B6C属于后续重用，不能倒推为ID152读取地址。前期从14569原REG继续但不插入NMI的CPU探针未复现录用成功，仍只保留为选择分析中的独立probe。

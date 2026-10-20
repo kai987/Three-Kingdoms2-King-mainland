@@ -1,0 +1,57 @@
+{
+  "relations": [
+    {
+      "raw_id": "W:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:off0072:rom036082",
+      "raw_locator": "/windows/249",
+      "raw_hex": "39 A0 60",
+      "typed_data_consumers": [
+        "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEE1F:rom03EE2F",
+        "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEE25:rom03EE35"
+      ],
+      "data_addresses": [
+        41074,
+        41075
+      ],
+      "continuation_id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA074:rom036084",
+      "continuation_opcode_executed": false,
+      "downstream_typed_id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuBCBF:rom03BCCF",
+      "downstream_typed_access_executed": false,
+      "classification_migration": false,
+      "shared_semantic_root": null,
+      "role": "Mixed window: two inline destination bytes consumed as data; third byte is original RTS, reached before opcode execution."
+    },
+    {
+      "raw_id": "W:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:off007A:rom03608A",
+      "raw_locator": "/windows/250",
+      "raw_hex": "1E A0 60",
+      "typed_data_consumers": [
+        "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEE1F:rom03EE2F",
+        "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEE25:rom03EE35"
+      ],
+      "data_addresses": [
+        41082,
+        41083
+      ],
+      "continuation_id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA07C:rom03608C",
+      "continuation_opcode_executed": false,
+      "downstream_typed_id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC443:rom034453",
+      "downstream_typed_access_executed": false,
+      "classification_migration": false,
+      "shared_semantic_root": null,
+      "role": "Mixed window: two inline destination bytes consumed as data; third byte is original RTS, reached before opcode execution."
+    }
+  ],
+  "field_classification_changes": 0,
+  "raw_classification_changes": 0,
+  "counts": {
+    "total": 1526,
+    "conditional_disjoint": 1203,
+    "possible": 80,
+    "unknown": 243,
+    "remaining": 323,
+    "raw_total": 345,
+    "raw_operand": 104,
+    "raw_data": 13,
+    "raw_unproved_entry": 228
+  }
+}

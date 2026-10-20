@@ -1,0 +1,43 @@
+{
+  "case": "player-defeat-successor",
+  "label": "player-loss-A1",
+  "frame": 6466,
+  "native_snapshot": "analysis/phase16/runtime/player-defeat-successor/player-loss-A1",
+  "initial_registers": {
+    "a": 76,
+    "x": 0,
+    "y": 57,
+    "p": 32,
+    "sp": 248,
+    "pc": 40972
+  },
+  "actual_banks": [
+    2,
+    25,
+    26,
+    31
+  ],
+  "actual_return_PC": 61005,
+  "actual_return_SP": 250,
+  "preparation": [
+    {
+      "entry": 61958,
+      "Y": null,
+      "instructions": 17
+    },
+    {
+      "entry": 62047,
+      "Y": 34,
+      "instructions": 3
+    },
+    {
+      "entry": 62007,
+      "Y": 59,
+      "instructions": 11
+    }
+  ],
+  "original_city_callback_prefix_instructions": 2063,
+  "callback_entry": 40960,
+  "A000_cadence_returned_before_dispatch": false,
+  "provenance": "FrozenNativeRAM/SRAM, declaredoriginalCPU A000 callback or exact A01F dispatchsuffix after cadenceRTS, real F206/F25F/F237, genuine27A067 EE07 A00C frame; notNativeinternalCPUtrace"
+}

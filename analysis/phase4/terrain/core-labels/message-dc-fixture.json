@@ -1,0 +1,290 @@
+{
+  "rom_modified": false,
+  "natural_gameplay": false,
+  "parent_state": "analysis/runtime/phase3/battle-tactics-true.state",
+  "parent_state_sha256": "af7f2175a19e81527b15d87416458bf364fdc9484ea6db3abac424ad92e0ad70",
+  "runtime_ram_changes": [
+    {
+      "address": 1280,
+      "old": 5,
+      "new": 0
+    },
+    {
+      "address": 1281,
+      "old": 3,
+      "new": 3
+    },
+    {
+      "address": 1290,
+      "old": 10,
+      "new": 3
+    },
+    {
+      "address": 1291,
+      "old": 10,
+      "new": 2
+    },
+    {
+      "address": 1344,
+      "old": 0,
+      "new": 131
+    },
+    {
+      "address": 1345,
+      "old": 142,
+      "new": 0
+    },
+    {
+      "address": 784,
+      "old": 255,
+      "new": 5
+    },
+    {
+      "address": 785,
+      "old": 255,
+      "new": 220
+    },
+    {
+      "address": 1068,
+      "old": 131,
+      "new": 131
+    },
+    {
+      "address": 1069,
+      "old": 3,
+      "new": 47
+    },
+    {
+      "address": 1070,
+      "old": 0,
+      "new": 30
+    },
+    {
+      "address": 1071,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1072,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1073,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1074,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1075,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1076,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1077,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1078,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1079,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1080,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1081,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1082,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1083,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1084,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1085,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1086,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1087,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 1360,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1361,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1362,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1363,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1364,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1365,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1366,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1367,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1368,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1369,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1370,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1371,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1372,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1373,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1374,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1375,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1376,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1377,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1378,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1379,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 124,
+      "old": 84,
+      "new": 0
+    },
+    {
+      "address": 126,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 768,
+      "old": 255,
+      "new": 0
+    },
+    {
+      "address": 772,
+      "old": 255,
+      "new": 255
+    },
+    {
+      "address": 786,
+      "old": 255,
+      "new": 255
+    },
+    {
+      "address": 787,
+      "old": 255,
+      "new": 255
+    },
+    {
+      "address": 1060,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1061,
+      "old": 0,
+      "new": 0
+    }
+  ],
+  "capture_frames": 240,
+  "purpose": "Render original menu/message with explicitly initialized control and name-list inputs"
+}

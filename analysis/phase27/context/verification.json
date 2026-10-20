@@ -1,0 +1,224 @@
+{
+  "schema": "phase27-G106-context-validation-v1",
+  "status": "passed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "checks": [
+    {
+      "test": "current_pin:scripts/analyze_settlement_context_phase27.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/deployment_pointer_integration.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/deployment_pointer_services.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/scene_coordinator.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/battle_setup_ai.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/battle_scene_controller.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/tactical_cooperation_controller.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/battle_state_machine.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/game_engine.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/scene_shared_services.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/postbattle_resource_services.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:source/recovered/postbattle_resource_integration.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:scripts/analyze_service_gaps_phase25.py",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase26/verification.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase26/fields-static/analysis-summary.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase26/fields-static/all-indirect-accesses.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase26/acceptance/requirements.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase25/services/verification.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase25/services/owner-route-catalog.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase18/control/instruction-atlas.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/battle_fsm/state-catalog.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/battle_fsm/validation.json",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/battle_fsm/README.md",
+      "status": "passed"
+    },
+    {
+      "test": "current_pin:analysis/phase5/domestic-ai/city-schema.json",
+      "status": "passed"
+    },
+    {
+      "test": "all_trusted_original_positions_plus16",
+      "status": "passed"
+    },
+    {
+      "test": "immutable_rate_threshold_data_plus16",
+      "status": "passed"
+    },
+    {
+      "test": "no_declared_exact_owner_in_frozen26_bounded_model",
+      "status": "passed"
+    },
+    {
+      "test": "new27_exact_four_callees_only",
+      "status": "passed"
+    },
+    {
+      "test": "parent_not_closed_and_deployment_five_retained",
+      "status": "passed"
+    },
+    {
+      "test": "A006_BAB3_dispatch_complete_bounded_table",
+      "status": "passed"
+    },
+    {
+      "test": "actual_BB96_caller",
+      "status": "passed"
+    },
+    {
+      "test": "four_BF9E_JSRs_and_one_tail_JMP",
+      "status": "passed"
+    },
+    {
+      "test": "separate_byte11_entry_and_word_threshold_read_callers",
+      "status": "passed"
+    },
+    {
+      "test": "F2AF_output_copied_to1A_1B_rawbytes",
+      "status": "passed"
+    },
+    {
+      "test": "F25F_not_F266_save_contract",
+      "status": "passed"
+    },
+    {
+      "test": "seven_candidate_contracts_intersection_recomputed_and_non_authority",
+      "status": "passed"
+    },
+    {
+      "test": "old512_SRAM_semantics_not_new_CPU_equivalence",
+      "status": "passed"
+    },
+    {
+      "test": "six_old_named_fields_not_target_aux_names",
+      "status": "passed"
+    },
+    {
+      "test": "frozen1526_baseline_and_selected_seven_unchanged",
+      "status": "passed"
+    },
+    {
+      "test": "raw345_partition_kept",
+      "status": "passed"
+    },
+    {
+      "test": "all_ten_statuses_are_explicit_frozen26_not_phase27_pass",
+      "status": "passed"
+    },
+    {
+      "test": "context_has_no_new_execution_or_coverage",
+      "status": "passed"
+    },
+    {
+      "test": "no_CPU_recovered_Source_or_core_execution_in_context_scripts",
+      "status": "passed"
+    }
+  ],
+  "check_count": 43,
+  "Source_CPU_cases": 0,
+  "original_CPU_cases": 0,
+  "Native_runs": 0,
+  "source_and_validator_sha256": {
+    "scripts/analyze_settlement_context_phase27.py": "c40419e72687e8e2dbb06980aa065d1b1782aed233fbbcf2155913f3039bd705",
+    "source/recovered/deployment_pointer_integration.py": "600c5411d155fa414f6d00f7ac02313224846cc24bcb01bb5aba9e85821e419c",
+    "source/recovered/deployment_pointer_services.py": "98e6a65b92f2a162b75fc922e73ea18913621d44b5316e37c2bdaab70541120b",
+    "source/recovered/scene_coordinator.py": "3c80cddcfdd4400d2f41fd93bc5442a4d9886b8fec356f85e94d9c3aa2bd8bab",
+    "source/recovered/battle_setup_ai.py": "b08fa8bedddf2a4f3ba49acccdc6176c78b0698bc3ac93691a7718afb9985fbb",
+    "source/recovered/battle_scene_controller.py": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781",
+    "source/recovered/tactical_cooperation_controller.py": "d509bc950949246a627fd3b3d2368789175cd143b77848a5a1149e1bfa081fb9",
+    "source/recovered/battle_state_machine.py": "7c67a8adef29ff925915184c3f7b17652e7b089107b75a3a362cab50c58d3b21",
+    "source/recovered/game_engine.py": "a79bc84323b07b0854561233a2c73a087ceba1cee1b7db58fa59f87ffaa0302d",
+    "source/recovered/scene_shared_services.py": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76",
+    "source/recovered/postbattle_resource_services.py": "b823aa7f69e49592e4d25b7e6091eea7f2a70295606a7195af98653ce6105926",
+    "source/recovered/postbattle_resource_integration.py": "fc6fe0a0d4fd9cba72727583bf9f393aa89d809f24208c82c50d9bcc9f445aa2",
+    "scripts/verify_settlement_context_phase27.py": "a06978002aa460f4e6e7b1a063dc47d3b5f46346cecee8acc1f2f78242c6d19c"
+  },
+  "artifact_and_dependency_sha256": {
+    "scripts/analyze_service_gaps_phase25.py": "56c8d92c7e3a7e08d6ab6568f9fdaea6572c6b9a90e68f1339d8f15c23cbe5b6",
+    "analysis/phase26/verification.json": "91dda198dbd978eaa76a0b3a98b1bcf6cf40032c622594416f5d90e3ef778577",
+    "analysis/phase26/fields-static/analysis-summary.json": "7f90e03bd86f2a9f050dcbef0a3917f9e930640126eb0d2a8d63063d7e293b56",
+    "analysis/phase26/fields-static/all-indirect-accesses.json": "aa1611fc8ed2256efa7cc769bd4ba4607fa0110015ba7877aae3fe31f00acf73",
+    "analysis/phase26/acceptance/requirements.json": "717031d60f975c64c0e270a6c81ba770261c77abcd9809a1fe18218a2048aaac",
+    "analysis/phase25/services/verification.json": "35686c04628417e03e347fac7e9809fa7d705f845106307f2ad5bab08e79f5fc",
+    "analysis/phase25/services/owner-route-catalog.json": "b055bd52c2f5b0c314cc9c95fe122465126915d113cf3afbd481f55c36d3b839",
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/battle_fsm/state-catalog.json": "b7e7c170dfcda5868918627bd7a26e504114e8cc15be73e46f838cd8e4ea3e84",
+    "analysis/battle_fsm/validation.json": "35a95bad0de1c5b49115fa0fd2572a8ccc66d892a4082e7ac844e411849541aa",
+    "analysis/battle_fsm/README.md": "6b09a6c79391509231d65b2b7996e96e50d720ea00213f54ef23059b93ed9ae5",
+    "analysis/phase5/domestic-ai/city-schema.json": "3f377e79f5c464d7f5b7992c816fa8bd15bae5e03f9acaa4d33d37c7fea8b209",
+    "analysis/phase27/context/pointer-and-field-context.json": "b4b1c2cb88b2330b8fb96273ddd28a875f0bca27513b85d2d43264a3c5089921",
+    "analysis/phase27/context/analysis-summary.json": "e0882b30a3788c964e49b4dd86292bb9c7f44d8e3792f69d69b0fa6705284465",
+    "analysis/phase27/context/owner-and-caller-chain.json": "51d499f383aa830abe883975632918dc053dc5049af5813ab42983cb78566534",
+    "analysis/phase27/context/stable-denominators-and-acceptance.json": "2f815a68d16c2158154dfc3602b217b444a79cbcc5640380173582d53d14ceb4",
+    "analysis/phase27/context/README.md": "37287aa9bd377baab872634916b1bd74b6e26e109b96b647154eae40edb0fc20",
+    "analysis/phase27/context/semantic-deduplication.json": "57efc1d41b9b6986c7c21d134f7d341a464f2fcb83e1fd1d09aa72b8ad771a7b",
+    "analysis/phase27/context/current27-owner-scope.json": "150f6998b5e45ad07aede4ad94b27fa1f3c43c51a265aedd9bab2720007919ab",
+    "analysis/phase27/context/original-ranges.asm": "f086f38a5f881d314a2c77930a65a741e3464d2b97c9b0f07082b6af0a519399"
+  },
+  "limits": [
+    "Finite AST/rawbyte/candidate contract audit, not dynamic reachability or whole-game closure.",
+    "New27 production/source/Native facts are independently owned, not pregranted here."
+  ]
+}

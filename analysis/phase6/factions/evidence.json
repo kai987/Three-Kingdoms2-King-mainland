@@ -1,0 +1,419 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ranges": [
+    {
+      "name": "calendar_leader_skip_and_pool_threshold",
+      "bank": 25,
+      "cpu_start": 41025,
+      "cpu_end_exclusive": 41125,
+      "file": 204881,
+      "raw_hex": "A9 F0 8D 41 6F EE 04 6F AD 04 6F C9 07 90 1B A9 00 8D 04 6F 8D 06 6F AC 01 6F C8 C0 0C 90 05 A0 00 EE 00 6F 8C 01 6F 20 09 A2 AD 45 6F 0A 0A 0A 0D 04 6F A8 B9 04 A1 8D 03 6F 0A A8 B9 D6 A0 8D EE 00 B9 D7 A0 8D EF 00 A0 00 B1 EE C9 FF F0 B0 20 40 A2 AD 11 00 C9 1E B0 0A A9 03 8D 01 04 A9 D5 4C 8B F2",
+      "sha256": "b4339be7b7578b75f24329a17501ee74d48d813708011495b36cc2f760c68acf"
+    },
+    {
+      "name": "pool_warning_reset_gate",
+      "bank": 25,
+      "cpu_start": 41350,
+      "cpu_end_exclusive": 41375,
+      "file": 205206,
+      "raw_hex": "AD 00 03 C9 FF D0 11 AD 04 03 C9 FF D0 0A AD 81 00 29 01 F0 03 4C 00 E0 60",
+      "sha256": "5c83258ad9689e702c749ec07b88299fdd96f59ddda0284889aa9ad2284681aa"
+    },
+    {
+      "name": "surviving_officer_pool",
+      "bank": 25,
+      "cpu_start": 41536,
+      "cpu_end_exclusive": 41622,
+      "file": 205392,
+      "raw_hex": "A0 31 20 5F F2 A0 00 A2 00 B9 07 6F 9D 2C 04 E8 8A 0A 0A 0A A8 E0 07 90 F0 AE 03 6F A9 FF 9D 2C 04 A9 00 8D 10 00 8D 11 00 A2 00 BD 2C 04 CD 10 00 F0 18 E8 E0 07 90 F3 AD 10 00 20 D7 F2 A0 0B B1 00 29 03 C9 03 F0 03 EE 11 00 EE 10 00 AD 10 00 C9 ED 90 D4 60",
+      "sha256": "53805de204c8dff96f624efc68164e982a25d90fe37952b60987b641c0230ad2"
+    },
+    {
+      "name": "retirement_and_human_extinction_end",
+      "bank": 26,
+      "cpu_start": 50054,
+      "cpu_end_exclusive": 50229,
+      "file": 213910,
+      "raw_hex": "AC 0A 04 B9 BB C3 8D 2D 04 A9 C3 20 8B F2 AD 0A 04 20 68 F3 A0 00 B1 00 8D 2C 04 A9 FF 91 00 A0 03 B1 00 29 03 C9 03 D0 08 EE 02 04 A9 00 8D D0 04 EE 02 04 60 AD 08 83 8A DE DC B6 AD 00 03 C9 FF D0 11 AD 04 03 C9 FF D0 0A 20 C2 A1 AD 81 00 29 03 D0 01 60 AD 0C 04 C9 FF F0 07 20 68 F3 A0 00 B1 00 8D 2E 04 AD 00 6F 18 69 64 8D 2F 04 A9 00 69 00 8D 30 04 AD 01 6F 18 69 01 8D 32 04 A9 00 8D 31 04 8D 33 04 8D 34 04 A9 0D 8D 7A 00 A9 00 8D 41 05 8D CA 04 60 EE D0 04 D0 11 AD 72 04 8D 00 04 AD 73 04 8D 01 04 A9 00 8D 02 04 60",
+      "sha256": "54d58c02dbdea12ae9e903f46cb853a5a4036872498c366649fb4acfce6721c7"
+    },
+    {
+      "name": "victory_score_and_acceptance",
+      "bank": 26,
+      "cpu_start": 50241,
+      "cpu_end_exclusive": 50726,
+      "file": 214097,
+      "raw_hex": "A0 00 B1 EE 8D 2C 04 A2 00 8E 10 00 8E 11 00 8E 12 00 8E 13 00 8E 14 00 8A 20 AF F2 AD 00 00 8D 0A 00 AD 01 00 8D 0B 00 A0 0B B1 0A 18 6D 12 00 8D 12 00 A9 00 6D 13 00 8D 13 00 A0 11 98 48 B1 0A C9 FF F0 1E CD 2C 04 F0 19 20 D7 F2 A0 03 B1 00 18 6D 10 00 8D 10 00 A9 00 6D 11 00 8D 11 00 EE 14 00 68 A8 C8 C0 1B 90 D3 E8 E0 1E 90 A9 A9 00 8D 35 04 8D 36 04 8D 37 04 AD 10 00 8D 01 00 AD 11 00 8D 02 00 AD 14 00 8D 03 00 A9 00 8D 04 00 20 9A C5 AD 14 00 8D 00 00 A9 00 8D 01 00 8D 02 00 A9 64 8D 03 00 20 E9 EB AD 06 00 8D 01 00 AD 07 00 8D 02 00 A9 82 8D 03 00 A9 00 8D 04 00 20 9A C5 AD 12 00 8D 01 00 AD 13 00 8D 02 00 A9 1E 8D 03 00 A9 00 8D 04 00 20 9A C5 AD 35 04 8D 00 00 AD 36 04 8D 01 00 AD 37 04 8D 02 00 A9 03 8D 03 00 A9 00 8D 04 00 20 A5 EA AD 00 00 8D 35 04 AD 01 00 8D 36 04 AD 02 00 8D 37 04 AD 00 6F 38 E9 59 8D 4C 04 A9 00 8D 4D 04 8D 4E 04 AD 00 6F 18 69 64 8D 2F 04 A9 00 69 00 8D 30 04 A9 00 8D 31 04 AD 01 6F 18 69 01 8D 32 04 A9 00 8D 33 04 8D 34 04 AD 02 6F 18 69 01 8D 4F 04 A9 00 8D 50 04 8D 51 04 EE 01 04 60 20 7C EA AD 01 00 18 6D 35 04 8D 35 04 AD 02 00 6D 36 04 8D 36 04 A9 00 6D 37 04 8D 37 04 60 AD 7E 00 F0 01 60 20 26 C6 AD 10 00 8D 2D 04 8D 00 00 A0 3D 20 07 EE 2A A0 A9 03 8D A4 00 EE 01 04 A9 DF 4C 6D F2 AD 2D 04 8D 00 00 A9 A7 8D 0A 00 A2 00 20 1F CE AD 00 03 C9 FF D0 2F AD 04 03 C9 FF D0 28 20 C2 A1 AD 81 00 4A 90 1F A9 0D 8D 7A 00 A2 01 AD 35 04 C9 46 B0 06 E8 C9 28 B0 01 E8 8E 41 05 A9 00 8D C9 04 8D CA 04 60",
+      "sha256": "aca665ae9c4b97e079c8bb51a002ff414b67011c1ecbb3b28ae5b31ccc8c0181"
+    },
+    {
+      "name": "summary_intellect_selection",
+      "bank": 26,
+      "cpu_start": 50726,
+      "cpu_end_exclusive": 50812,
+      "file": 214582,
+      "raw_hex": "A2 00 8E 10 00 8E 11 00 8A 20 AF F2 A0 00 B1 00 29 07 CD 03 6F D0 03 20 46 C6 E8 E0 1E 90 E9 60 AD 00 00 8D 0A 00 AD 01 00 8D 0B 00 A0 11 98 48 B1 0A C9 FF F0 18 8D 02 00 20 D7 F2 A0 02 B1 00 CD 11 00 90 09 8D 11 00 AD 02 00 8D 10 00 68 A8 C8 C0 1B 90 D9 60",
+      "sha256": "912c042778f76e488c4846161e60e81b7211365603f3464854c858576c930cfd"
+    },
+    {
+      "name": "FB_prompt",
+      "bank": 26,
+      "cpu_start": 51483,
+      "cpu_end_exclusive": 51514,
+      "file": 215339,
+      "raw_hex": "AD 38 00 8D 2C 04 AC 40 00 B9 3A C9 8D 2D 04 A9 C3 20 8B F2 A9 0C 8D 01 04 A9 00 8D 0C 04 60",
+      "sha256": "fdd71ca2aa90612f1aa4e66dff50c891f049cb08eb2bd2a72eb7adb0948ff38c"
+    },
+    {
+      "name": "FC_FB_real_ack_timers",
+      "bank": 26,
+      "cpu_start": 52095,
+      "cpu_end_exclusive": 52163,
+      "file": 215951,
+      "raw_hex": "EE 0C 04 AD 0C 04 C9 F0 90 13 AD 27 00 8D 2C 04 A9 C2 20 8B F2 EE 01 04 A9 00 8D 0C 04 60 EE 0C 04 AD 0C 04 C9 F0 90 1B A9 BB 20 8B F2 A0 00 B1 EE 8D 2C 04 A9 01 8D 01 04 A9 00 8D 0C 04 A9 01 8D 8B 6F 60",
+      "sha256": "e14dad6daa83ca7c0aae3c1e33c2209ded947b0f525b2e1e52467acb9022df41"
+    },
+    {
+      "name": "all30_city_victory_prefix",
+      "bank": 27,
+      "cpu_start": 41097,
+      "cpu_end_exclusive": 41136,
+      "file": 221337,
+      "raw_hex": "A9 00 8D 70 04 8D 71 04 8D 72 04 8D A4 00 8D E4 04 AD 03 6F 8D 10 00 20 BF DD AD 11 00 C9 1E D0 06 A9 0F 8D 00 04 60",
+      "sha256": "77b151121b035caafc9892b94ea34aee05d0e51e6eb6f40cc6ac3eb1239f3d6c"
+    },
+    {
+      "name": "owner_low3_city_count",
+      "bank": 28,
+      "cpu_start": 56767,
+      "cpu_end_exclusive": 56796,
+      "file": 237007,
+      "raw_hex": "A2 00 8E 11 00 8A 20 AF F2 A0 00 B1 00 29 07 CD 10 00 D0 03 EE 11 00 E8 E0 1E 90 E9 60",
+      "sha256": "f59e429c8e7b39548dbbaf4029fa03a1b08c83d0884b02fb24f849163930558d"
+    },
+    {
+      "name": "AI_no_successor_only_leaderFF_and_FB",
+      "bank": 11,
+      "cpu_start": 51828,
+      "cpu_end_exclusive": 51847,
+      "file": 92804,
+      "raw_hex": "A0 00 A9 FF 91 24 A9 FB 8D 8B 6F AD 8B 6F C9 01 D0 F9 60",
+      "sha256": "a793a95188932a70ef520f5991ceff67a3acc02b5f54c6ae02dc8310581d41a7"
+    },
+    {
+      "name": "after_ack_city_chiefs_and_external_domestic_continuation",
+      "bank": 11,
+      "cpu_start": 51794,
+      "cpu_end_exclusive": 51816,
+      "file": 92770,
+      "raw_hex": "AD 40 00 20 8F C9 EE 40 00 AD 40 00 C9 07 90 BC 20 49 D2 4C C7 BE",
+      "sha256": "d6383697b677027603a9dd6147b22de80321b8213b3ede7572c2deac59b0ec36"
+    },
+    {
+      "name": "loss_reset_or_restore_parent",
+      "bank": 24,
+      "cpu_start": 55082,
+      "cpu_end_exclusive": 55125,
+      "file": 202554,
+      "raw_hex": "AD 81 00 29 01 F0 20 AD 43 6F F0 1C A9 00 8D 43 6F AD 72 04 8D 00 04 AD 73 04 8D 01 04 A9 00 8D 02 04 A9 01 8D 7A 00 60 4C 00 E0",
+      "sha256": "4f096a8b6b5a14ea672db5a97610d17b6f8c4c19913b99fc53f48aabf7d4fff5"
+    },
+    {
+      "name": "credits_officer_buffer_with_byte_index",
+      "bank": 24,
+      "cpu_start": 55774,
+      "cpu_end_exclusive": 55873,
+      "file": 203246,
+      "raw_hex": "A0 30 20 5F F2 A9 FE 8D 10 04 AD 2C 04 8D 11 04 A2 00 A9 02 85 02 8A 48 20 AF F2 A0 11 B1 00 C9 FF F0 0C CD 11 04 F0 07 A6 02 9D 10 04 E6 02 C8 C0 1B 90 E9 68 AA E8 E0 1E 90 DB A9 FE A6 02 9D 10 04 E8 A9 FF 9D 10 04 A9 00 8D 0C 04 8D 0D 04 8D 01 04 A9 C0 8D 43 05 A9 06 8D 42 05 A9 F1 20 8B F2 60",
+      "sha256": "1258dc1e454116ceba2baf4492936340cf6bbc0f7b6f1c8871d9acd84a653f73"
+    },
+    {
+      "name": "global13_ending_setup_external",
+      "bank": 31,
+      "cpu_start": 58474,
+      "cpu_end_exclusive": 58586,
+      "file": 255098,
+      "raw_hex": "20 DA E4 A9 08 8D 78 00 A9 0D 20 70 E3 A0 36 20 5F F2 A9 92 8D 0A 00 A9 9B 8D 0B 00 A9 00 8D 00 00 A9 20 8D 01 00 A0 37 20 37 F2 20 03 A0 A0 3D 20 37 F2 A9 0D 8D 00 00 20 15 A0 20 F7 EA A0 3D 20 37 F2 A9 05 20 45 A0 A9 A0 8D 98 00 A9 02 20 1F E5 EE 7A 00 AC 41 05 D0 08 A9 98 20 73 E6 4C D1 E4 A9 AA 20 7B E6 20 49 E7 20 53 E7 4C 66 E0",
+      "sha256": "744d12a47ca39537682e258f3fa85b80bfb490dca236761afe3fced1db21fefd"
+    },
+    {
+      "name": "NMI8_original_pair23_callback",
+      "bank": 31,
+      "cpu_start": 64083,
+      "cpu_end_exclusive": 64151,
+      "file": 260707,
+      "raw_hex": "20 53 EE 20 06 F2 20 0B FB 20 67 EC A0 2E 20 37 F2 20 03 A0 A9 00 85 81 A0 3D 20 37 F2 20 03 A0 A9 4C 85 A5 8D 00 F8 20 C6 E6 20 A9 FA A0 37 20 37 F2 20 1E A0 20 BF FA 20 62 FF 20 30 E8 20 28 FB 4C 8D F8",
+      "sha256": "ec7774a91ac302d3d29f7027f322e602e12c4356414b02be7a4ceafacb606bb1"
+    }
+  ],
+  "data_tables": [
+    {
+      "name": "five_turn_orders_stride8_seven_slots",
+      "bank": 25,
+      "cpu": 41220,
+      "file": 205076,
+      "size": 40,
+      "raw_hex": "00 01 02 03 06 05 04 00 01 04 06 00 02 03 05 00 03 02 04 06 05 00 01 00 05 06 04 03 00 01 02 00 04 02 03 00 01 05 06 00"
+    },
+    {
+      "name": "original_leader_name_substitutions_retirement",
+      "bank": 26,
+      "cpu": 50107,
+      "file": 213963,
+      "size": 7,
+      "raw_hex": "AD 08 83 8A DE DC B6"
+    },
+    {
+      "name": "original_leader_name_substitutions_FB",
+      "bank": 26,
+      "cpu": 51514,
+      "file": 215370,
+      "size": 7,
+      "raw_hex": "AD 08 83 8A DE DC B6"
+    },
+    {
+      "name": "city_main16_table_including_victory15_bridge",
+      "bank": 27,
+      "cpu": 40997,
+      "file": 221237,
+      "size": 32,
+      "raw_hex": "7D A0 8B A1 95 A2 F2 AD 59 B7 B7 BF DF CA 7D A0 7D A0 55 A0 5D A0 45 A0 4D A0 65 A0 6D A0 75 A0"
+    }
+  ],
+  "ending": {
+    "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+    "entry": 54931,
+    "mode_field": 1345,
+    "sub_field": 1346,
+    "primary_count": 6,
+    "legal_mode_sub_combinations": 17,
+    "main_modes": [
+      {
+        "id": 0,
+        "entry": 54954,
+        "name": "mode0_loss_or_faction_extinction",
+        "substates": null
+      },
+      {
+        "id": 1,
+        "entry": 55195,
+        "name": "mode1_score_lowbyte_ge70",
+        "substates": null
+      },
+      {
+        "id": 2,
+        "entry": 55354,
+        "name": "mode2_score_lowbyte40_to69",
+        "substates": null
+      },
+      {
+        "id": 3,
+        "entry": 55497,
+        "name": "mode3_score_lowbyte_lt40",
+        "substates": null
+      },
+      {
+        "id": 4,
+        "entry": 55754,
+        "name": "mode4_officer_credits",
+        "substates": [
+          55774,
+          55873,
+          55943,
+          55990,
+          56032,
+          56208,
+          56282
+        ]
+      },
+      {
+        "id": 5,
+        "entry": 55584,
+        "name": "mode5_final_text",
+        "substates": [
+          55602,
+          55632,
+          55642,
+          55670,
+          55732,
+          55746
+        ]
+      }
+    ],
+    "dispatches": [
+      {
+        "call_pc": 54939,
+        "table_cpu": 54942,
+        "bank": 24,
+        "file": 202414,
+        "count": 6,
+        "targets": [
+          54954,
+          55195,
+          55354,
+          55497,
+          55754,
+          55584
+        ],
+        "raw_hex": "AA D6 9B D7 3A D8 C9 D8 CA D9 20 D9",
+        "boundary": "Lastword is followed immediately by the first handler."
+      },
+      {
+        "call_pc": 55587,
+        "table_cpu": 55590,
+        "bank": 24,
+        "file": 203062,
+        "count": 6,
+        "targets": [
+          55602,
+          55632,
+          55642,
+          55670,
+          55732,
+          55746
+        ],
+        "raw_hex": "32 D9 50 D9 5A D9 76 D9 B4 D9 C2 D9",
+        "boundary": "Lastword is followed immediately by the first handler."
+      },
+      {
+        "call_pc": 55757,
+        "table_cpu": 55760,
+        "bank": 24,
+        "file": 203232,
+        "count": 7,
+        "targets": [
+          55774,
+          55873,
+          55943,
+          55990,
+          56032,
+          56208,
+          56282
+        ],
+        "raw_hex": "DE D9 41 DA 87 DA B6 DA E0 DA 90 DB DA DB",
+        "boundary": "Lastword is followed immediately by the first handler."
+      }
+    ],
+    "instruction_count": 668,
+    "external_calls": {
+      "F25F": [
+        54933,
+        55776,
+        56341
+      ],
+      "E000": [
+        55751,
+        55122
+      ],
+      "ECEE": [
+        55739,
+        55471,
+        55313
+      ],
+      "F28B": [
+        55635,
+        55869,
+        55535,
+        55392,
+        55493,
+        55248,
+        55350,
+        54989
+      ],
+      "EE07": [
+        56151,
+        55992,
+        56011,
+        55957,
+        55875
+      ],
+      "F2AF": [
+        55798
+      ],
+      "ECBF": [
+        55538,
+        55395,
+        55251,
+        54992
+      ],
+      "F1AD": [
+        56336
+      ]
+    },
+    "reset_PCs": [
+      55122,
+      55751
+    ],
+    "scope": "Fourunnested modes plus7credits and6finaltext substates. No wholeglobalE46A/PPU/NMI completion claim."
+  },
+  "faction_record": {
+    "base": 28423,
+    "stride": 8,
+    "count": 7,
+    "byte0": "leaderID,FFabsent",
+    "byte1": "residence",
+    "byte3": "controller",
+    "bytes4to7": "packed diplomacy nibbles"
+  },
+  "distinct_conditions": [
+    "leaderFF does not itself rewrite cityowner/roster/diplomacy",
+    "cityowner7 does not itself clear leader",
+    "FB is no-successor event; not a universal cityneutralization transaction",
+    "A240availableofficerpool<30 warns nationwideunification impossible",
+    "A0A6currentrulerownerlow3citycount==30 starts victoryscore"
+  ],
+  "entry_inputs": {
+    "owner_count_DDBF": {
+      "ruler": "RAM0010"
+    },
+    "victory_prefix_A089": {
+      "ruler": "RAM6F03",
+      "normal_parent": "citymain0/sub0"
+    },
+    "officer_pool_A240": {
+      "ruler": "RAM6F03"
+    },
+    "commit_AI_no_successor_CA74": {
+      "pointer": "RAM24/25 fromD319(0040)",
+      "ruler": "RAM0040"
+    },
+    "FB_prompt_C91B": {
+      "ruler": "RAM0040",
+      "old_leader": "RAM0038"
+    },
+    "retire_faction_C386": {
+      "ruler": "RAM040A"
+    },
+    "human_extinction_C3DB": {
+      "other_ruler_or_FF": "RAM040C",
+      "existing_oldleader_names": "RAM042C/042D"
+    },
+    "victory_score_C441": {
+      "ruler_record_pointer": "RAM00EE/00EF"
+    },
+    "best_intellect_C626": {
+      "ruler": "RAM6F03"
+    },
+    "loss_exit_D72A": {
+      "parent_condition": "mode0 animation04CB alreadyFE",
+      "input": "RAM0081bit0"
+    }
+  },
+  "external_after_AI_ack": {
+    "bank": 11,
+    "wait_cpu": 51839,
+    "next": "CA52 C98F fixescitychiefs; then7-rulerouterloop,D249,andBEC7 remain in their own controllers"
+  },
+  "rendered_message_evidence": {
+    "path": "analysis/phase6/runtime/messages",
+    "D5_transcription": [
+      "もはや このニンズウでは",
+      "ゼンコクトウイツは フカノウです"
+    ],
+    "C3_transcription": [
+      "ソウソウが シボウして",
+      "ソウソウいちぞくは めつぼうしました"
+    ],
+    "scope": "Originalcore controlled messagefixtures, not naturalcampaign reachability."
+  }
+}

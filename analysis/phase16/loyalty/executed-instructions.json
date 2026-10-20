@@ -1,0 +1,728 @@
+[
+  {
+    "physical_bank": 10,
+    "cpu_address": 40969,
+    "rom_offset": 81945,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53116,
+    "rom_offset": 94092,
+    "visits": 2472
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53118,
+    "rom_offset": 94094,
+    "visits": 2472
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53119,
+    "rom_offset": 94095,
+    "visits": 2472
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53120,
+    "rom_offset": 94096,
+    "visits": 2472
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53123,
+    "rom_offset": 94099,
+    "visits": 2472
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53125,
+    "rom_offset": 94101,
+    "visits": 2472
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53128,
+    "rom_offset": 94104,
+    "visits": 2472
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53130,
+    "rom_offset": 94106,
+    "visits": 2472
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53132,
+    "rom_offset": 94108,
+    "visits": 12875
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53133,
+    "rom_offset": 94109,
+    "visits": 12875
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53135,
+    "rom_offset": 94111,
+    "visits": 12875
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53137,
+    "rom_offset": 94113,
+    "visits": 12875
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53139,
+    "rom_offset": 94115,
+    "visits": 10427
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53141,
+    "rom_offset": 94117,
+    "visits": 10427
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53143,
+    "rom_offset": 94119,
+    "visits": 24
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53144,
+    "rom_offset": 94120,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53146,
+    "rom_offset": 94122,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53148,
+    "rom_offset": 94124,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53151,
+    "rom_offset": 94127,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53153,
+    "rom_offset": 94129,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53155,
+    "rom_offset": 94131,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53157,
+    "rom_offset": 94133,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53159,
+    "rom_offset": 94135,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53161,
+    "rom_offset": 94137,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53163,
+    "rom_offset": 94139,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53166,
+    "rom_offset": 94142,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53168,
+    "rom_offset": 94144,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53169,
+    "rom_offset": 94145,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53171,
+    "rom_offset": 94147,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53173,
+    "rom_offset": 94149,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53176,
+    "rom_offset": 94152,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53178,
+    "rom_offset": 94154,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53180,
+    "rom_offset": 94156,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53182,
+    "rom_offset": 94158,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53184,
+    "rom_offset": 94160,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53186,
+    "rom_offset": 94162,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53188,
+    "rom_offset": 94164,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53191,
+    "rom_offset": 94167,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53192,
+    "rom_offset": 94168,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53193,
+    "rom_offset": 94169,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53195,
+    "rom_offset": 94171,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53197,
+    "rom_offset": 94173,
+    "visits": 1096
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53199,
+    "rom_offset": 94175,
+    "visits": 1096
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53201,
+    "rom_offset": 94177,
+    "visits": 1096
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53203,
+    "rom_offset": 94179,
+    "visits": 1096
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53206,
+    "rom_offset": 94182,
+    "visits": 1096
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53207,
+    "rom_offset": 94183,
+    "visits": 1096
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53209,
+    "rom_offset": 94185,
+    "visits": 1096
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53212,
+    "rom_offset": 94188,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53214,
+    "rom_offset": 94190,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53215,
+    "rom_offset": 94191,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53217,
+    "rom_offset": 94193,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53219,
+    "rom_offset": 94195,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53221,
+    "rom_offset": 94197,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53223,
+    "rom_offset": 94199,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53226,
+    "rom_offset": 94202,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53227,
+    "rom_offset": 94203,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53229,
+    "rom_offset": 94205,
+    "visits": 1352
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53231,
+    "rom_offset": 94207,
+    "visits": 52
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53233,
+    "rom_offset": 94209,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53234,
+    "rom_offset": 94210,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53236,
+    "rom_offset": 94212,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53238,
+    "rom_offset": 94214,
+    "visits": 166
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53240,
+    "rom_offset": 94216,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53242,
+    "rom_offset": 94218,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53244,
+    "rom_offset": 94220,
+    "visits": 788
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53246,
+    "rom_offset": 94222,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53248,
+    "rom_offset": 94224,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53250,
+    "rom_offset": 94226,
+    "visits": 217
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53252,
+    "rom_offset": 94228,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53254,
+    "rom_offset": 94230,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53256,
+    "rom_offset": 94232,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53259,
+    "rom_offset": 94235,
+    "visits": 2448
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53931,
+    "rom_offset": 94907,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53933,
+    "rom_offset": 94909,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53935,
+    "rom_offset": 94911,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53937,
+    "rom_offset": 94913,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53938,
+    "rom_offset": 94914,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53940,
+    "rom_offset": 94916,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53941,
+    "rom_offset": 94917,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53943,
+    "rom_offset": 94919,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53944,
+    "rom_offset": 94920,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53946,
+    "rom_offset": 94922,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53948,
+    "rom_offset": 94924,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53950,
+    "rom_offset": 94926,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53951,
+    "rom_offset": 94927,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53952,
+    "rom_offset": 94928,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53954,
+    "rom_offset": 94930,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53955,
+    "rom_offset": 94931,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53957,
+    "rom_offset": 94933,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53958,
+    "rom_offset": 94934,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53960,
+    "rom_offset": 94936,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53962,
+    "rom_offset": 94938,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53964,
+    "rom_offset": 94940,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53966,
+    "rom_offset": 94942,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53968,
+    "rom_offset": 94944,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 53970,
+    "rom_offset": 94946,
+    "visits": 7344
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54287,
+    "rom_offset": 95263,
+    "visits": 4896
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54289,
+    "rom_offset": 95265,
+    "visits": 4896
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54291,
+    "rom_offset": 95267,
+    "visits": 4896
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54293,
+    "rom_offset": 95269,
+    "visits": 4896
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54295,
+    "rom_offset": 95271,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54297,
+    "rom_offset": 95273,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54299,
+    "rom_offset": 95275,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54301,
+    "rom_offset": 95277,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54303,
+    "rom_offset": 95279,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54305,
+    "rom_offset": 95281,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54306,
+    "rom_offset": 95282,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54308,
+    "rom_offset": 95284,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54310,
+    "rom_offset": 95286,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54312,
+    "rom_offset": 95288,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54314,
+    "rom_offset": 95290,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54316,
+    "rom_offset": 95292,
+    "visits": 11052
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54318,
+    "rom_offset": 95294,
+    "visits": 11052
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54320,
+    "rom_offset": 95296,
+    "visits": 11052
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54322,
+    "rom_offset": 95298,
+    "visits": 11052
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54324,
+    "rom_offset": 95300,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54325,
+    "rom_offset": 95301,
+    "visits": 78336
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54327,
+    "rom_offset": 95303,
+    "visits": 4896
+  },
+  {
+    "physical_bank": 11,
+    "cpu_address": 54814,
+    "rom_offset": 95790,
+    "visits": 2448
+  }
+]

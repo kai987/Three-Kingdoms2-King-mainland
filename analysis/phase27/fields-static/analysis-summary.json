@@ -1,0 +1,53 @@
+{
+  "schema": "phase27-G106-resource-pointer-summary-v1",
+  "status": "analyzed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "analyzer_path": "scripts/analyze_unknown_pointer_phase27.py",
+  "analyzer_sha256": "a22dc9bed791ffb60cb747194e59d090f2a90e8ef203c5733a082e643e181092",
+  "artifact_sha256": {
+    "scripts/analyze_unknown_pointer_phase26.py": "ec246ac7c983cc0725e61599aa7f958bc2e17edee9dce05909482440ac123f1d",
+    "analysis/phase26/fields-static/all-indirect-accesses.json": "aa1611fc8ed2256efa7cc769bd4ba4607fa0110015ba7877aae3fe31f00acf73",
+    "analysis/phase26/fields-static/verification.json": "52c4f88b2d16c8c81c8a95910a2874a28b3b78d008728eae9a4f030ca8998535",
+    "source/recovered/battle_state_machine.py": "7c67a8adef29ff925915184c3f7b17652e7b089107b75a3a362cab50c58d3b21"
+  },
+  "source_CPU_cases": 0,
+  "selected_group": "G106",
+  "all_indirect_access_count": 1526,
+  "all_indirect_classification_counts": {
+    "proved_disjoint_auxiliary_address_domain": 1198,
+    "unresolved_pointer_or_index_contract": 247,
+    "possible_city_auxiliary_alias": 81
+  },
+  "previous_candidate_count": 335,
+  "remaining_access_count": 328,
+  "pre_phase27_unknown_access_count": 254,
+  "remaining_unknown_access_count": 247,
+  "newly_proved_disjoint_all_count": 7,
+  "finite_refinement_rounds": [
+    {
+      "round": 1,
+      "original_instruction_transfers": 331146,
+      "new_non_ZP_store_proofs": 57,
+      "return_contract_count": 560
+    },
+    {
+      "round": 2,
+      "original_instruction_transfers": 331419,
+      "new_non_ZP_store_proofs": 0,
+      "return_contract_count": 560
+    }
+  ],
+  "complete_analysis_fixed_point_proven": false,
+  "official_target_field_names": {
+    "city_plus1": null,
+    "city_plus28": null,
+    "city_plus29": null,
+    "city_plus30": null,
+    "city_plus31": null
+  },
+  "limits": [
+    "Whole typed pointercopy plus normal binary no-interrupt return. Bare helper pointers outside6000+32*rawbyte are not preserved by this contract.",
+    "Raw helperY permits6000..80DF including mapper addresses; this is a pointer/address invariant, not successful hardware-side execution or a menu eligibility theorem.",
+    "A006/BAB3 exact parent and its ECEE barrier remain separate missing owners."
+  ]
+}

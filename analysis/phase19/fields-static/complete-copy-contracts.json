@@ -1,0 +1,398 @@
+{
+  "schema": "phase19-original-complete-pair-copy-contracts-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "copies": [
+    {
+      "physical_bank": 25,
+      "cpu": 48292,
+      "rom_offset": 212148,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 29,
+      "raw_hex": "8D 1D 00",
+      "destination_pair_base": 28,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 42040,
+      "rom_offset": 205896,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 42493,
+      "rom_offset": 206349,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 43993,
+      "rom_offset": 207849,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 11,
+      "raw_hex": "8D 0B 00",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 29,
+      "cpu": 47557,
+      "rom_offset": 244181,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 29,
+      "raw_hex": "8D 1D 00",
+      "destination_pair_base": 28,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 26,
+      "cpu": 49208,
+      "rom_offset": 213064,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 48932,
+      "rom_offset": 73524,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 27,
+      "raw_hex": "8D 1B 00",
+      "destination_pair_base": 26,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 26,
+      "cpu": 50278,
+      "rom_offset": 214134,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 11,
+      "raw_hex": "8D 0B 00",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 48137,
+      "rom_offset": 72729,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 11,
+      "raw_hex": "8D 0B 00",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 24,
+      "cpu": 53657,
+      "rom_offset": 201129,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 27,
+      "cpu": 43593,
+      "rom_offset": 223833,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 26,
+      "cpu": 49861,
+      "rom_offset": 213717,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 26,
+      "cpu": 49702,
+      "rom_offset": 213558,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 3,
+      "raw_hex": "8D 03 00",
+      "destination_pair_base": 2,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 26,
+      "cpu": 50767,
+      "rom_offset": 214623,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 11,
+      "raw_hex": "8D 0B 00",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 42883,
+      "rom_offset": 206739,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 13,
+      "raw_hex": "8D 0D 00",
+      "destination_pair_base": 12,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 42898,
+      "rom_offset": 206754,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 11,
+      "raw_hex": "8D 0B 00",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 43572,
+      "rom_offset": 207428,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 11,
+      "raw_hex": "8D 0B 00",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 43587,
+      "rom_offset": 207443,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 11,
+      "raw_hex": "8D 0B 00",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 27,
+      "cpu": 47736,
+      "rom_offset": 227976,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 28,
+      "cpu": 56471,
+      "rom_offset": 236711,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 12,
+      "cpu": 46962,
+      "rom_offset": 104322,
+      "op": "STA",
+      "mode": "zp",
+      "operand": 11,
+      "raw_hex": "85 0B",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 28,
+      "cpu": 55696,
+      "rom_offset": 235936,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 42995,
+      "rom_offset": 206851,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 11,
+      "raw_hex": "8D 0B 00",
+      "destination_pair_base": 10,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 25,
+      "cpu": 46294,
+      "rom_offset": 210150,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 17,
+      "raw_hex": "8D 11 00",
+      "destination_pair_base": 16,
+      "current_source_pair_bases": [
+        0
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 10,
+      "cpu": 41702,
+      "rom_offset": 82678,
+      "op": "STA",
+      "mode": "zp",
+      "operand": 35,
+      "raw_hex": "85 23",
+      "destination_pair_base": 34,
+      "current_source_pair_bases": [
+        36
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 10,
+      "cpu": 46010,
+      "rom_offset": 86986,
+      "op": "STA",
+      "mode": "zp",
+      "operand": 35,
+      "raw_hex": "85 23",
+      "destination_pair_base": 34,
+      "current_source_pair_bases": [
+        32
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 28,
+      "cpu": 55789,
+      "rom_offset": 236029,
+      "op": "STA",
+      "mode": "ab",
+      "operand": 1,
+      "raw_hex": "8D 01 00",
+      "destination_pair_base": 0,
+      "current_source_pair_bases": [
+        16
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    },
+    {
+      "physical_bank": 10,
+      "cpu": 45805,
+      "rom_offset": 86781,
+      "op": "STA",
+      "mode": "zp",
+      "operand": 41,
+      "raw_hex": "85 29",
+      "destination_pair_base": 40,
+      "current_source_pair_bases": [
+        32
+      ],
+      "relationship": "Both destination half copies refer to the same currently intact source pair; any possible source write invalidates every pending/register/stack reference."
+    }
+  ]
+}

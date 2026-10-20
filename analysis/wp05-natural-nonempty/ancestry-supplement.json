@@ -1,0 +1,37 @@
+{
+  "schema": "wp05-cold-origin-supplement-v1",
+  "status": "verified_frozen_provenance_not_new_coldboot",
+  "cold_validation": {
+    "path": "analysis/phase14/runtime/cold-city-domestic-cycle/validation.json",
+    "bytes": 314113,
+    "sha256": "475e69739070fe1491eda52db47de8705fca92529874af5da0b405ae72b0b33f"
+  },
+  "cold_checkpoint_manifest": {
+    "path": "analysis/phase14/runtime/cold-city-domestic-cycle/checkpoints.json",
+    "bytes": 644041,
+    "sha256": "becb4c136bffdba1fdd659229412da1e90289b2af86c9fdb6c8066ebeaee89b1"
+  },
+  "cold_checkpoint": {
+    "path": "analysis/phase14/runtime/cold-city-domestic-cycle/city-commands.state",
+    "bytes": 13794,
+    "sha256": "3217a7b652f32611ca931e9dbf04e0a68417d5f41c31f44651579b587d3f90cf"
+  },
+  "cold_checkpoint_frame": 2922,
+  "imported22_validation": {
+    "path": "analysis/phase22/runtime/original-control/validation.json",
+    "bytes": 183551,
+    "sha256": "9bec1018085683371996afe44e396aa398b118e5ea8bb8f8d53eca4687314ed5"
+  },
+  "documented_cold_start": {
+    "state_imports": 0,
+    "battery_file_imports": 0,
+    "initial_SRAM_all_zero": true,
+    "additional_memory_writes": 0
+  },
+  "inherited_documented_preparation_count": 0,
+  "controlled19byte_or_older_unknown_route_used": false,
+  "later_six_segment_single_run_frames": 88463,
+  "new_window_state_imports": 4,
+  "new_window_cold_boots": 0,
+  "limits": "These frozen provenance receipts support a natural zero-write content chain. They do not turn segmented single runs/imports into an uninterrupted or four-fresh cold campaign. The captured ancestry null for unrecorded preparation is a scope limit, not an imported controlled19-byte route."
+}

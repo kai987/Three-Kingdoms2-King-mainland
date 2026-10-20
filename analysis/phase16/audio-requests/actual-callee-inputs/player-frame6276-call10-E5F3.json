@@ -1,0 +1,25 @@
+{
+  "registers": {
+    "a": 240,
+    "x": 100,
+    "y": 3,
+    "p": 161,
+    "sp": 240,
+    "pc": 58867
+  },
+  "banks": [
+    2,
+    25,
+    26,
+    31
+  ],
+  "call_pc": 58876,
+  "call_bank": 31,
+  "n163_address": 32,
+  "n163_autoincrement": true,
+  "return_PC": 58879,
+  "return_SP": 242,
+  "n163_hex": "ff00000000000000ffff000000000000ffffffffffffffffff00ff00ff00ff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "source_parent": "analysis/phase16/succession/actual-callee-inputs/player-defeat-successor-observed-g02-n02-city-013-004.json",
+  "provenance": "GenuineoriginalJSR inside controlledoriginalCPU A00C consumer from frozenNativeRAM; notNativeinternaltrace"
+}

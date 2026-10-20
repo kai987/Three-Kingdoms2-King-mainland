@@ -1,0 +1,71 @@
+; main=4 sub=4: 移动
+; entry bank12 $A535; file $018545
+; Direct calls within bank12/13 execute recovered local IR; fixed/far calls are explicit dependencies.
+018545 b12:$A535 AD 8B 6F       LDA  $6F8B
+018548 b12:$A538 C9 FF          CMP  #$FF
+01854A b12:$A53A F0 01          BEQ  $A53D
+01854C b12:$A53C 60             RTS
+01854D b12:$A53D AD 8F 6F       LDA  $6F8F
+018550 b12:$A540 F0 03          BEQ  $A545
+018552 b12:$A542 4C 34 A6       JMP  $A634
+018555 b12:$A545 EE 01 05       INC  $0501
+018558 b12:$A548 AD 2C 04       LDA  $042C
+01855B b12:$A54B 85 0B          STA  $0B
+01855D b12:$A54D AD 2D 04       LDA  $042D
+018560 b12:$A550 85 0C          STA  $0C
+018562 b12:$A552 A0 04          LDY  #$04
+018564 b12:$A554 AD 04 05       LDA  $0504
+018567 b12:$A557 10 02          BPL  $A55B
+018569 b12:$A559 A0 00          LDY  #$00
+01856B b12:$A55B B9 D8 04       LDA  $04D8,Y
+01856E b12:$A55E A8             TAY
+01856F b12:$A55F B9 64 06       LDA  $0664,Y
+018572 b12:$A562 85 0A          STA  $0A
+018574 b12:$A564 20 D7 F2       JSR  $F2D7 ; officer_record_pointer
+018577 b12:$A567 A0 0B          LDY  #$0B
+018579 b12:$A569 B1 00          LDA  ($00),Y
+01857B b12:$A56B 29 F0          AND  #$F0
+01857D b12:$A56D 8D 2C 05       STA  $052C
+018580 b12:$A570 A0 01          LDY  #$01
+018582 b12:$A572 B1 00          LDA  ($00),Y
+018584 b12:$A574 8D 2E 05       STA  $052E
+018587 b12:$A577 A0 2E          LDY  #$2E
+018589 b12:$A579 20 07 EE       JSR  $EE07 ; far_A006
+; inline .word $A006, resumes $A57E
+01858E b12:$A57E 20 03 DB       JSR  $DB03 ; cpu_DB03
+018591 b12:$A581 AD 09 05       LDA  $0509
+018594 b12:$A584 8D 0A 05       STA  $050A
+018597 b12:$A587 AC 8C 6F       LDY  $6F8C
+01859A b12:$A58A B9 A1 6F       LDA  $6FA1,Y
+01859D b12:$A58D C9 FF          CMP  #$FF
+01859F b12:$A58F F0 19          BEQ  $A5AA
+0185A1 b12:$A591 A0 04          LDY  #$04
+0185A3 b12:$A593 AD 04 05       LDA  $0504
+0185A6 b12:$A596 10 02          BPL  $A59A
+0185A8 b12:$A598 A0 00          LDY  #$00
+0185AA b12:$A59A B9 D8 04       LDA  $04D8,Y
+0185AD b12:$A59D 8D 09 05       STA  $0509
+0185B0 b12:$A5A0 A9 04          LDA  #$04
+0185B2 b12:$A5A2 8D A4 00       STA  $00A4
+0185B5 b12:$A5A5 A9 B9          LDA  #$B9
+0185B7 b12:$A5A7 4C B6 A5       JMP  $A5B6
+0185BA b12:$A5AA A9 03          LDA  #$03
+0185BC b12:$A5AC 8D A4 00       STA  $00A4
+0185BF b12:$A5AF A9 00          LDA  #$00
+0185C1 b12:$A5B1 8D 2E 05       STA  $052E
+0185C4 b12:$A5B4 A9 B8          LDA  #$B8
+0185C6 b12:$A5B6 20 83 F2       JSR  $F283 ; queue_message_job_1
+0185C9 b12:$A5B9 A0 3D          LDY  #$3D
+0185CB b12:$A5BB 20 07 EE       JSR  $EE07 ; far_A027
+; inline .word $A027, resumes $A5C0
+0185D0 b12:$A5C0 AD 09 05       LDA  $0509
+0185D3 b12:$A5C3 AA             TAX
+0185D4 b12:$A5C4 AD 0A 05       LDA  $050A
+0185D7 b12:$A5C7 8D 09 05       STA  $0509
+0185DA b12:$A5CA 8E 0A 05       STX  $050A
+0185DD b12:$A5CD 60             RTS
+018644 b12:$A634 A9 00          LDA  #$00
+018646 b12:$A636 8D 00 05       STA  $0500
+018649 b12:$A639 8D 01 05       STA  $0501
+01864C b12:$A63C 20 F7 A1       JSR  $A1F7 ; reset_command_cursor
+01864F b12:$A63F 60             RTS

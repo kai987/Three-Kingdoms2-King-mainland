@@ -1,0 +1,632 @@
+[
+  {
+    "tick": 0,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 7,
+      "x": 2,
+      "y": 1,
+      "p": 32,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 0,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 30057
+  },
+  {
+    "tick": 1,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 0,
+      "x": 1,
+      "y": 7,
+      "p": 50,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 64053
+  },
+  {
+    "tick": 2,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 69709
+  },
+  {
+    "tick": 3,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 75365
+  },
+  {
+    "tick": 4,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 81292
+  },
+  {
+    "tick": 5,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 86947
+  },
+  {
+    "tick": 6,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 92526
+  },
+  {
+    "tick": 7,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 97912
+  },
+  {
+    "tick": 8,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 103298
+  },
+  {
+    "tick": 9,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 108684
+  },
+  {
+    "tick": 10,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 114076
+  },
+  {
+    "tick": 11,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 119118
+  },
+  {
+    "tick": 12,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 124110
+  },
+  {
+    "tick": 13,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 128756
+  },
+  {
+    "tick": 14,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 133407
+  },
+  {
+    "tick": 15,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 138062
+  },
+  {
+    "tick": 16,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 142717
+  },
+  {
+    "tick": 17,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 147372
+  },
+  {
+    "tick": 18,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 152027
+  },
+  {
+    "tick": 19,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 156682
+  },
+  {
+    "tick": 20,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 161608
+  },
+  {
+    "tick": 21,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 166254
+  },
+  {
+    "tick": 22,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 170905
+  },
+  {
+    "tick": 23,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 175560
+  },
+  {
+    "tick": 24,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 180215
+  },
+  {
+    "tick": 25,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 184870
+  },
+  {
+    "tick": 26,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 189525
+  },
+  {
+    "tick": 27,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 194180
+  },
+  {
+    "tick": 28,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 198998
+  },
+  {
+    "tick": 29,
+    "kind": "main_E066_boundary",
+    "registers": {
+      "a": 255,
+      "x": 1,
+      "y": 42,
+      "p": 176,
+      "sp": 255,
+      "pc": 57446
+    },
+    "global_main": 2,
+    "ruler": 1,
+    "request": 255,
+    "city_controller": [
+      9,
+      1,
+      0
+    ],
+    "step": 203653
+  }
+]

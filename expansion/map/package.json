@@ -1,0 +1,9 @@
+{
+  "name": "three-kingdoms-map-tools",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Optional local map rendering and report checks",
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

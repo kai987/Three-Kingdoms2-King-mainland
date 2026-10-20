@@ -1,0 +1,1770 @@
+{
+  "started_at": "2026-10-15T20:40:32.867Z",
+  "checks": [
+    {
+      "name": "frozen_HTML",
+      "status": "passed",
+      "detail": "Final builder output"
+    },
+    {
+      "name": "route_0_point_count",
+      "status": "passed",
+      "detail": {
+        "points": 22
+      }
+    },
+    {
+      "name": "native_0_frame_1",
+      "status": "passed",
+      "detail": {
+        "frame": 1,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_2",
+      "status": "passed",
+      "detail": {
+        "frame": 2,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_3",
+      "status": "passed",
+      "detail": {
+        "frame": 3,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_4",
+      "status": "passed",
+      "detail": {
+        "frame": 4,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_5",
+      "status": "passed",
+      "detail": {
+        "frame": 5,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_6",
+      "status": "passed",
+      "detail": {
+        "frame": 6,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_7",
+      "status": "passed",
+      "detail": {
+        "frame": 7,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_8",
+      "status": "passed",
+      "detail": {
+        "frame": 8,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_9",
+      "status": "passed",
+      "detail": {
+        "frame": 9,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_10",
+      "status": "passed",
+      "detail": {
+        "frame": 10,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_11",
+      "status": "passed",
+      "detail": {
+        "frame": 11,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_12",
+      "status": "passed",
+      "detail": {
+        "frame": 12,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_13",
+      "status": "passed",
+      "detail": {
+        "frame": 13,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_14",
+      "status": "passed",
+      "detail": {
+        "frame": 14,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_15",
+      "status": "passed",
+      "detail": {
+        "frame": 15,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_16",
+      "status": "passed",
+      "detail": {
+        "frame": 16,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_17",
+      "status": "passed",
+      "detail": {
+        "frame": 17,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_18",
+      "status": "passed",
+      "detail": {
+        "frame": 18,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_19",
+      "status": "passed",
+      "detail": {
+        "frame": 19,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_20",
+      "status": "passed",
+      "detail": {
+        "frame": 20,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_21",
+      "status": "passed",
+      "detail": {
+        "frame": 21,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_0_frame_22",
+      "status": "passed",
+      "detail": {
+        "frame": 22,
+        "status152": 2,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "point_end_0",
+      "status": "passed",
+      "detail": "Last formal frame disables forward step"
+    },
+    {
+      "name": "audio_0_0",
+      "status": "passed",
+      "detail": {
+        "duration": 0.366063,
+        "error": null,
+        "ready": 4,
+        "src": "runtime/natural-appearance-pointer/original-control/full-audio.wav"
+      }
+    },
+    {
+      "name": "audio_0_1",
+      "status": "passed",
+      "detail": {
+        "duration": 0.366063,
+        "error": null,
+        "ready": 4,
+        "src": "runtime/natural-appearance-pointer/observer/full-audio.wav"
+      }
+    },
+    {
+      "name": "route_1_point_count",
+      "status": "passed",
+      "detail": {
+        "points": 84
+      }
+    },
+    {
+      "name": "native_1_frame_1",
+      "status": "passed",
+      "detail": {
+        "frame": 1,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_2",
+      "status": "passed",
+      "detail": {
+        "frame": 2,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_3",
+      "status": "passed",
+      "detail": {
+        "frame": 3,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_4",
+      "status": "passed",
+      "detail": {
+        "frame": 4,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_5",
+      "status": "passed",
+      "detail": {
+        "frame": 5,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_6",
+      "status": "passed",
+      "detail": {
+        "frame": 6,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_7",
+      "status": "passed",
+      "detail": {
+        "frame": 7,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_8",
+      "status": "passed",
+      "detail": {
+        "frame": 8,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_9",
+      "status": "passed",
+      "detail": {
+        "frame": 9,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_10",
+      "status": "passed",
+      "detail": {
+        "frame": 10,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_11",
+      "status": "passed",
+      "detail": {
+        "frame": 11,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_12",
+      "status": "passed",
+      "detail": {
+        "frame": 12,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_13",
+      "status": "passed",
+      "detail": {
+        "frame": 13,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_14",
+      "status": "passed",
+      "detail": {
+        "frame": 14,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_15",
+      "status": "passed",
+      "detail": {
+        "frame": 15,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_16",
+      "status": "passed",
+      "detail": {
+        "frame": 16,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_17",
+      "status": "passed",
+      "detail": {
+        "frame": 17,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_18",
+      "status": "passed",
+      "detail": {
+        "frame": 18,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_19",
+      "status": "passed",
+      "detail": {
+        "frame": 19,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_20",
+      "status": "passed",
+      "detail": {
+        "frame": 20,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_21",
+      "status": "passed",
+      "detail": {
+        "frame": 21,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_22",
+      "status": "passed",
+      "detail": {
+        "frame": 22,
+        "status152": 1,
+        "reserve": 9999
+      }
+    },
+    {
+      "name": "native_1_frame_23",
+      "status": "passed",
+      "detail": {
+        "frame": 23,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_24",
+      "status": "passed",
+      "detail": {
+        "frame": 24,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_25",
+      "status": "passed",
+      "detail": {
+        "frame": 25,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_26",
+      "status": "passed",
+      "detail": {
+        "frame": 26,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_27",
+      "status": "passed",
+      "detail": {
+        "frame": 27,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_28",
+      "status": "passed",
+      "detail": {
+        "frame": 28,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_29",
+      "status": "passed",
+      "detail": {
+        "frame": 29,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_30",
+      "status": "passed",
+      "detail": {
+        "frame": 30,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_31",
+      "status": "passed",
+      "detail": {
+        "frame": 31,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_32",
+      "status": "passed",
+      "detail": {
+        "frame": 32,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_33",
+      "status": "passed",
+      "detail": {
+        "frame": 33,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_34",
+      "status": "passed",
+      "detail": {
+        "frame": 34,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_35",
+      "status": "passed",
+      "detail": {
+        "frame": 35,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_36",
+      "status": "passed",
+      "detail": {
+        "frame": 36,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_37",
+      "status": "passed",
+      "detail": {
+        "frame": 37,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_38",
+      "status": "passed",
+      "detail": {
+        "frame": 38,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_39",
+      "status": "passed",
+      "detail": {
+        "frame": 39,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_40",
+      "status": "passed",
+      "detail": {
+        "frame": 40,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_41",
+      "status": "passed",
+      "detail": {
+        "frame": 41,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_42",
+      "status": "passed",
+      "detail": {
+        "frame": 42,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_43",
+      "status": "passed",
+      "detail": {
+        "frame": 43,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_44",
+      "status": "passed",
+      "detail": {
+        "frame": 44,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_45",
+      "status": "passed",
+      "detail": {
+        "frame": 45,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_46",
+      "status": "passed",
+      "detail": {
+        "frame": 46,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_47",
+      "status": "passed",
+      "detail": {
+        "frame": 47,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_48",
+      "status": "passed",
+      "detail": {
+        "frame": 48,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_49",
+      "status": "passed",
+      "detail": {
+        "frame": 49,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_50",
+      "status": "passed",
+      "detail": {
+        "frame": 50,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_51",
+      "status": "passed",
+      "detail": {
+        "frame": 51,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_52",
+      "status": "passed",
+      "detail": {
+        "frame": 52,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_53",
+      "status": "passed",
+      "detail": {
+        "frame": 53,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_54",
+      "status": "passed",
+      "detail": {
+        "frame": 54,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_55",
+      "status": "passed",
+      "detail": {
+        "frame": 55,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_56",
+      "status": "passed",
+      "detail": {
+        "frame": 56,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_57",
+      "status": "passed",
+      "detail": {
+        "frame": 57,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_58",
+      "status": "passed",
+      "detail": {
+        "frame": 58,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_59",
+      "status": "passed",
+      "detail": {
+        "frame": 59,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_60",
+      "status": "passed",
+      "detail": {
+        "frame": 60,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_61",
+      "status": "passed",
+      "detail": {
+        "frame": 61,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_62",
+      "status": "passed",
+      "detail": {
+        "frame": 62,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_63",
+      "status": "passed",
+      "detail": {
+        "frame": 63,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_64",
+      "status": "passed",
+      "detail": {
+        "frame": 64,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_65",
+      "status": "passed",
+      "detail": {
+        "frame": 65,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_66",
+      "status": "passed",
+      "detail": {
+        "frame": 66,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_67",
+      "status": "passed",
+      "detail": {
+        "frame": 67,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_68",
+      "status": "passed",
+      "detail": {
+        "frame": 68,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_69",
+      "status": "passed",
+      "detail": {
+        "frame": 69,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_70",
+      "status": "passed",
+      "detail": {
+        "frame": 70,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_71",
+      "status": "passed",
+      "detail": {
+        "frame": 71,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_72",
+      "status": "passed",
+      "detail": {
+        "frame": 72,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_73",
+      "status": "passed",
+      "detail": {
+        "frame": 73,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_74",
+      "status": "passed",
+      "detail": {
+        "frame": 74,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_75",
+      "status": "passed",
+      "detail": {
+        "frame": 75,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_76",
+      "status": "passed",
+      "detail": {
+        "frame": 76,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_77",
+      "status": "passed",
+      "detail": {
+        "frame": 77,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_78",
+      "status": "passed",
+      "detail": {
+        "frame": 78,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_79",
+      "status": "passed",
+      "detail": {
+        "frame": 79,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_80",
+      "status": "passed",
+      "detail": {
+        "frame": 80,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_81",
+      "status": "passed",
+      "detail": {
+        "frame": 81,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_82",
+      "status": "passed",
+      "detail": {
+        "frame": 82,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_83",
+      "status": "passed",
+      "detail": {
+        "frame": 83,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "native_1_frame_84",
+      "status": "passed",
+      "detail": {
+        "frame": 84,
+        "status152": 1,
+        "reserve": 9899
+      }
+    },
+    {
+      "name": "point_end_1",
+      "status": "passed",
+      "detail": "Last formal frame disables forward step"
+    },
+    {
+      "name": "audio_1_0",
+      "status": "passed",
+      "detail": {
+        "duration": 1.397708,
+        "error": null,
+        "ready": 4,
+        "src": "runtime/natural-nonzero-reserve-submit/original-control/full-audio.wav"
+      }
+    },
+    {
+      "name": "audio_1_1",
+      "status": "passed",
+      "detail": {
+        "duration": 1.397708,
+        "error": null,
+        "ready": 4,
+        "src": "runtime/natural-nonzero-reserve-submit/observer/full-audio.wav"
+      }
+    },
+    {
+      "name": "event_0_2429",
+      "status": "passed",
+      "detail": {
+        "sequence": 2429,
+        "frame": 4,
+        "PC": 50680,
+        "address": 50680,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2430",
+      "status": "passed",
+      "detail": {
+        "sequence": 2430,
+        "frame": 4,
+        "PC": 50689,
+        "address": 50689,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2431",
+      "status": "passed",
+      "detail": {
+        "sequence": 2431,
+        "frame": 4,
+        "PC": 54385,
+        "address": 54385,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2434",
+      "status": "passed",
+      "detail": {
+        "sequence": 2434,
+        "frame": 4,
+        "PC": 50702,
+        "address": 50702,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2435",
+      "status": "passed",
+      "detail": {
+        "sequence": 2435,
+        "frame": 4,
+        "PC": 50702,
+        "address": 34,
+        "kind": "write_attempt",
+        "value": 88,
+        "scope": "write attempt; backing field is separate；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2436",
+      "status": "passed",
+      "detail": {
+        "sequence": 2436,
+        "frame": 4,
+        "PC": 50708,
+        "address": 50708,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2437",
+      "status": "passed",
+      "detail": {
+        "sequence": 2437,
+        "frame": 4,
+        "PC": 50708,
+        "address": 35,
+        "kind": "write_attempt",
+        "value": 139,
+        "scope": "write attempt; backing field is separate；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2439",
+      "status": "passed",
+      "detail": {
+        "sequence": 2439,
+        "frame": 4,
+        "PC": 50719,
+        "address": 50719,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2440",
+      "status": "passed",
+      "detail": {
+        "sequence": 2440,
+        "frame": 4,
+        "PC": 50719,
+        "address": 35672,
+        "kind": "read",
+        "value": 152,
+        "scope": "logical ROM read；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2441",
+      "status": "passed",
+      "detail": {
+        "sequence": 2441,
+        "frame": 4,
+        "PC": 50724,
+        "address": 50724,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2442",
+      "status": "passed",
+      "detail": {
+        "sequence": 2442,
+        "frame": 4,
+        "PC": 50724,
+        "address": 35673,
+        "kind": "read",
+        "value": 189,
+        "scope": "logical ROM read；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2443",
+      "status": "passed",
+      "detail": {
+        "sequence": 2443,
+        "frame": 4,
+        "PC": 50777,
+        "address": 50777,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2444",
+      "status": "passed",
+      "detail": {
+        "sequence": 2444,
+        "frame": 4,
+        "PC": 50777,
+        "address": 27371,
+        "kind": "write_attempt",
+        "value": 26,
+        "scope": "write attempt; backing field is separate；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2448",
+      "status": "passed",
+      "detail": {
+        "sequence": 2448,
+        "frame": 4,
+        "PC": 50796,
+        "address": 50796,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2449",
+      "status": "passed",
+      "detail": {
+        "sequence": 2449,
+        "frame": 4,
+        "PC": 50796,
+        "address": 24694,
+        "kind": "write_attempt",
+        "value": 152,
+        "scope": "write attempt; backing field is separate；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2455",
+      "status": "passed",
+      "detail": {
+        "sequence": 2455,
+        "frame": 4,
+        "PC": 50680,
+        "address": 50680,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2456",
+      "status": "passed",
+      "detail": {
+        "sequence": 2456,
+        "frame": 4,
+        "PC": 50689,
+        "address": 50689,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2457",
+      "status": "passed",
+      "detail": {
+        "sequence": 2457,
+        "frame": 4,
+        "PC": 54385,
+        "address": 54385,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2460",
+      "status": "passed",
+      "detail": {
+        "sequence": 2460,
+        "frame": 4,
+        "PC": 50702,
+        "address": 50702,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2461",
+      "status": "passed",
+      "detail": {
+        "sequence": 2461,
+        "frame": 4,
+        "PC": 50702,
+        "address": 34,
+        "kind": "write_attempt",
+        "value": 108,
+        "scope": "write attempt; backing field is separate；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2462",
+      "status": "passed",
+      "detail": {
+        "sequence": 2462,
+        "frame": 4,
+        "PC": 50708,
+        "address": 50708,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2463",
+      "status": "passed",
+      "detail": {
+        "sequence": 2463,
+        "frame": 4,
+        "PC": 50708,
+        "address": 35,
+        "kind": "write_attempt",
+        "value": 139,
+        "scope": "write attempt; backing field is separate；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2465",
+      "status": "passed",
+      "detail": {
+        "sequence": 2465,
+        "frame": 4,
+        "PC": 50719,
+        "address": 50719,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2466",
+      "status": "passed",
+      "detail": {
+        "sequence": 2466,
+        "frame": 4,
+        "PC": 50719,
+        "address": 35692,
+        "kind": "read",
+        "value": 68,
+        "scope": "logical ROM read；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2467",
+      "status": "passed",
+      "detail": {
+        "sequence": 2467,
+        "frame": 4,
+        "PC": 50724,
+        "address": 50724,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2468",
+      "status": "passed",
+      "detail": {
+        "sequence": 2468,
+        "frame": 4,
+        "PC": 50724,
+        "address": 35693,
+        "kind": "read",
+        "value": 189,
+        "scope": "logical ROM read；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2470",
+      "status": "passed",
+      "detail": {
+        "sequence": 2470,
+        "frame": 4,
+        "PC": 50719,
+        "address": 50719,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2471",
+      "status": "passed",
+      "detail": {
+        "sequence": 2471,
+        "frame": 4,
+        "PC": 50719,
+        "address": 35694,
+        "kind": "read",
+        "value": 56,
+        "scope": "logical ROM read；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2472",
+      "status": "passed",
+      "detail": {
+        "sequence": 2472,
+        "frame": 4,
+        "PC": 50724,
+        "address": 50724,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_0_2473",
+      "status": "passed",
+      "detail": {
+        "sequence": 2473,
+        "frame": 4,
+        "PC": 50724,
+        "address": 35695,
+        "kind": "read",
+        "value": 190,
+        "scope": "logical ROM read；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_last_0",
+      "status": "passed",
+      "detail": {
+        "events": 30
+      }
+    },
+    {
+      "name": "event_previous_0",
+      "status": "passed",
+      "detail": "Previous recorded event selected"
+    },
+    {
+      "name": "event_1_843",
+      "status": "passed",
+      "detail": {
+        "sequence": 843,
+        "frame": 23,
+        "PC": 46129,
+        "address": 46129,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_1_847",
+      "status": "passed",
+      "detail": {
+        "sequence": 847,
+        "frame": 23,
+        "PC": 46145,
+        "address": 46145,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_1_863",
+      "status": "passed",
+      "detail": {
+        "sequence": 863,
+        "frame": 23,
+        "PC": 46153,
+        "address": 46153,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_1_864",
+      "status": "passed",
+      "detail": {
+        "sequence": 864,
+        "frame": 23,
+        "PC": 46153,
+        "address": 24940,
+        "kind": "read",
+        "value": 15,
+        "scope": "STA (zp),Y unconditional dummy read；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_1_865",
+      "status": "passed",
+      "detail": {
+        "sequence": 865,
+        "frame": 23,
+        "PC": 46153,
+        "address": 24940,
+        "kind": "write_attempt",
+        "value": 171,
+        "scope": "write attempt; backing field is separate；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_1_866",
+      "status": "passed",
+      "detail": {
+        "sequence": 866,
+        "frame": 23,
+        "PC": 46159,
+        "address": 46159,
+        "kind": "opcode_boundary",
+        "value": 0,
+        "scope": "opcode boundary or other raw bus event；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_1_867",
+      "status": "passed",
+      "detail": {
+        "sequence": 867,
+        "frame": 23,
+        "PC": 46159,
+        "address": 24941,
+        "kind": "read",
+        "value": 39,
+        "scope": "STA (zp),Y unconditional dummy read；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_1_868",
+      "status": "passed",
+      "detail": {
+        "sequence": 868,
+        "frame": 23,
+        "PC": 46159,
+        "address": 24941,
+        "kind": "write_attempt",
+        "value": 38,
+        "scope": "write attempt; backing field is separate；这里只展示保存的原事件，不替代完整逻辑与硬件合同。"
+      }
+    },
+    {
+      "name": "event_last_1",
+      "status": "passed",
+      "detail": {
+        "events": 8
+      }
+    },
+    {
+      "name": "event_previous_1",
+      "status": "passed",
+      "detail": "Previous recorded event selected"
+    },
+    {
+      "name": "service_level_existing_execution",
+      "status": "passed",
+      "detail": {
+        "count": 157,
+        "text": "筛选 157 条上下文／静态／语法索引项；不是唯一未知服务数量。",
+        "rows": 15
+      }
+    },
+    {
+      "name": "service_level_trusted_static",
+      "status": "passed",
+      "detail": {
+        "count": 2014,
+        "text": "筛选 2014 条上下文／静态／语法索引项；不是唯一未知服务数量。",
+        "rows": 15
+      }
+    },
+    {
+      "name": "service_level_syntax_only",
+      "status": "passed",
+      "detail": {
+        "count": 1660,
+        "text": "筛选 1660 条上下文／静态／语法索引项；不是唯一未知服务数量。",
+        "rows": 15
+      }
+    },
+    {
+      "name": "service_level_all",
+      "status": "passed",
+      "detail": {
+        "count": 3831,
+        "text": "筛选 3831 条上下文／静态／语法索引项；不是唯一未知服务数量。",
+        "rows": 15
+      }
+    },
+    {
+      "name": "service_D471_owner_and_scope",
+      "status": "passed",
+      "detail": "Expanded current owner and bounded execution source, not a closure claim"
+    },
+    {
+      "name": "executed_context_pagination",
+      "status": "passed",
+      "detail": {
+        "rows": 157,
+        "pages": 11
+      }
+    },
+    {
+      "name": "service_previous_page",
+      "status": "passed",
+      "detail": "Previous page preserves filtered context set"
+    },
+    {
+      "name": "service_empty_search",
+      "status": "passed",
+      "detail": "Empty search does not fabricate fallback rows"
+    },
+    {
+      "name": "service_submit_search",
+      "status": "passed",
+      "detail": [
+        "bank27:B431 · 现有执行回执",
+        "bank31:ED19 · 现有执行回执",
+        "bank31:EDF5 · 现有执行回执",
+        "bank31:F2AF · 现有执行回执"
+      ]
+    },
+    {
+      "name": "acceptance_A01",
+      "status": "passed",
+      "detail": {
+        "status": "已验：原字节与资源身份；语义完成另项待验",
+        "verified": 3,
+        "remaining": 2
+      }
+    },
+    {
+      "name": "acceptance_A02",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：存储行为；城市辅助字段和地形1正式名待验",
+        "verified": 5,
+        "remaining": 3
+      }
+    },
+    {
+      "name": "acceptance_A03",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：2处新增有条件不交；339候选及raw入口待验",
+        "verified": 5,
+        "remaining": 4
+      }
+    },
+    {
+      "name": "acceptance_A04",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：选定服务和owner协议；整款服务闭包待验",
+        "verified": 5,
+        "remaining": 3
+      }
+    },
+    {
+      "name": "acceptance_A05",
+      "status": "passed",
+      "detail": {
+        "status": "未列为用户必需目标：独立可玩重制；现有可执行恢复范围另列A04",
+        "verified": 2,
+        "remaining": 2
+      }
+    },
+    {
+      "name": "acceptance_A06",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：声明的等待/reset/返回协议；全部交错待验",
+        "verified": 4,
+        "remaining": 3
+      }
+    },
+    {
+      "name": "acceptance_A07",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：原核心完整音画等同及软件服务；全场景待验",
+        "verified": 3,
+        "remaining": 3
+      }
+    },
+    {
+      "name": "acceptance_A08",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：所列自然和受控场景；未覆盖组合继续待验",
+        "verified": 5,
+        "remaining": 3
+      }
+    },
+    {
+      "name": "acceptance_A09",
+      "status": "passed",
+      "detail": {
+        "status": "部分已验：历史归档及本轮分项来源；最终总审计与封包另见回执",
+        "verified": 3,
+        "remaining": 2
+      }
+    },
+    {
+      "name": "acceptance_A10",
+      "status": "passed",
+      "detail": {
+        "status": "尚未整体完成：字段、闭包和覆盖缺口明确待验",
+        "verified": 3,
+        "remaining": 2
+      }
+    },
+    {
+      "name": "source_full_appearance_pointer_services.py",
+      "status": "passed",
+      "detail": {
+        "UTF8_bytes": 1967,
+        "sha256": "2776a29dd5a4b060f3526a47db6ed7da19cc6a97c3d29375271ceda7c3a0fb29"
+      }
+    },
+    {
+      "name": "source_full_appearance_pointer_integration.py",
+      "status": "passed",
+      "detail": {
+        "UTF8_bytes": 3616,
+        "sha256": "b23757194388241bb210889f7ab32c599cf743bf3b61804c2f7b417afbf6a503"
+      }
+    },
+    {
+      "name": "scope_and_viewport",
+      "status": "passed",
+      "detail": {
+        "viewport": 1280,
+        "document": 1265
+      }
+    },
+    {
+      "name": "console_errors",
+      "status": "passed",
+      "detail": []
+    },
+    {
+      "name": "proof_native_view",
+      "status": "passed",
+      "detail": [
+        {
+          "complete": true,
+          "h": 240,
+          "src": "runtime/natural-appearance-pointer/original-control/frame-004.png",
+          "w": 256
+        },
+        {
+          "complete": true,
+          "h": 240,
+          "src": "runtime/natural-appearance-pointer/observer/frame-004.png",
+          "w": 256
+        }
+      ]
+    }
+  ],
+  "console_errors": [],
+  "schema": "phase25-browser-DOM-media-evidence-validation-v1",
+  "status": "passed",
+  "check_count": 181,
+  "HTML_sha256": "164c85834ba414601596560be95590f0fabd6d07d344121902fc15f3cebbca43",
+  "screenshot": {
+    "path": "analysis/phase25/browser-native-proof.jpg",
+    "sha256": "90e06a51d2ec2426e870eea2b661b97483300d1096f44f28b529ce9c855318df",
+    "bytes": 93436,
+    "format": "JPEG",
+    "unaltered_browser_capture": true
+  },
+  "URL": "http://127.0.0.1:8765/analysis/phase25/index.html#native",
+  "finished_at": "2026-10-15T20:44:39.075Z",
+  "limits": [
+    "Browser DOM/media/interaction validation only; zero CPU or Native gameplay cases.",
+    "All106 formal point field dictionaries and image paths,38 displayed raw events,4 WAVs,execution-context pagination,three evidence tiers,ten acceptance deltas and two Source bodies are checked."
+  ]
+}

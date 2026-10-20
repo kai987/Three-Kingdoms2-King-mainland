@@ -1,0 +1,85 @@
+{
+  "schema": "nes-closure-formal-phase31-inventory-v1",
+  "status": "formal_frozen_baseline_receipts_current_hash_verified",
+  "audit": {
+    "path": "analysis/phase31/verification.json",
+    "sha256": "717bc872656ca43617e20888a921951fa086634672a7bbbad1ac148a445341ac",
+    "bytes": 28909644,
+    "phase": 31,
+    "evidence_kind": "receipt_read_current_hash_not_reexecuted",
+    "locator": null
+  },
+  "package_receipt": {
+    "path": "analysis/phase31/package-receipt.json",
+    "sha256": "7e079e1de8239e36c4f56d5a37a6abec828e750a38041d0eb7705d74cf18e8b7",
+    "bytes": 1521,
+    "phase": 31,
+    "evidence_kind": "receipt_read_current_hash_not_reexecuted",
+    "locator": null
+  },
+  "archive": {
+    "path": "build/三国志2超级版-逆向分析-v31增量.zip",
+    "sha256": "f3d208962ac264508cac4a65992b1adbcf23a831868bf28f196444813bbc09e5",
+    "bytes": 334143286,
+    "phase": 31,
+    "evidence_kind": "receipt_read_current_hash_not_reexecuted",
+    "locator": null
+  },
+  "CPU_contracts": {
+    "receipt": {
+      "path": "analysis/phase31/fields-static/verification.json",
+      "sha256": "e1cd2d69bcf7808e2a2cb23a2525298b5e79d35c0a52bc34427351bdc1ebea08",
+      "bytes": 82673986,
+      "phase": 31,
+      "evidence_kind": "receipt_read_current_hash_not_reexecuted",
+      "locator": null
+    },
+    "original_CPU_cases": 13998,
+    "actual_RTS": 13992,
+    "explicit_prefixes": 6,
+    "models": 29
+  },
+  "Source": {
+    "receipt": {
+      "path": "analysis/phase31/player-disposition/validation.json",
+      "sha256": "e8d98529702e42d8aa515f5e655421af6f05b625040c0caea59c915aa0dec1db",
+      "bytes": 10604356,
+      "phase": 31,
+      "evidence_kind": "receipt_read_current_hash_not_reexecuted",
+      "locator": null
+    },
+    "parent_cases": 325,
+    "RTS": 317,
+    "strict_prefixes": 8,
+    "guards": 0,
+    "per_case_new_Engine": true,
+    "continuous_single_instance_UI": false
+  },
+  "Native": {
+    "receipt": {
+      "path": "analysis/phase31/runtime/validation.json",
+      "sha256": "0b8263c5ae8534cf9e731c2343ad8d1e9aee56fc4160af87ed66268e3254b473",
+      "bytes": 1154,
+      "phase": 31,
+      "evidence_kind": "receipt_read_current_hash_not_reexecuted",
+      "locator": null
+    },
+    "counts": {
+      "routes": 4,
+      "fresh_process_runs": 16,
+      "first_original_frames": 2204,
+      "all_control_frames": 8816,
+      "nonempty_repeat_checks": 18639,
+      "PNG_checks": 4408,
+      "WAV_checks": 8,
+      "observer_events": 1376552,
+      "software_snapshots": 297,
+      "cold_boots": 0,
+      "state_imports": 16
+    },
+    "natural13_all_seven_phases_continuous": true,
+    "human14_phase1_to6": false,
+    "natural_mode2_temporary_list_nonempty": false
+  },
+  "statement": "Historical CPU/Source/Native receipt results are preserved and hash-checked, not reexecuted by this audit."
+}

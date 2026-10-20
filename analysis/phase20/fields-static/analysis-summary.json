@@ -1,0 +1,131 @@
+{
+  "schema": "phase20-city-auxiliary-context-summary-v1",
+  "status": "analyzed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "analyzer_path": "scripts/analyze_city_auxiliary_contexts.py",
+  "analyzer_sha256": "38513d26e475e75c15ae39dac5d84096fdc61e99617077124b75da9ffbf95570",
+  "artifact_sha256": {
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/phase18/control/control-contracts.json": "ae6a120f18bace5b2c88855373b3f6037d21d47803d568fca1776ce88abf06e5",
+    "analysis/phase18/fields-static/all-indirect-accesses.json": "1b85ad930f003f7fcd1297c249a74e0a38aae7be267ae13fe96e2c97ec722f28",
+    "analysis/phase18/fields-static/call-effect-summaries.json": "329aaf3403591bfcfeb214fe271789161f88b0279c05795546ad7f89343208eb",
+    "analysis/phase18/fields-static/indexed-store-proofs.json": "e66173eb89a9b89a26787fbb8f0d63ca2c8e39c31b4d2012b8cf438e1be9b782",
+    "analysis/phase18/fields-static/pointer-preserving-store-proofs.json": "fcc96b107f7bd0e850f0c13a647326a2bdabf8c14d390bda5b19e924f458bcd2",
+    "analysis/phase17/fields/alias-refinement.json": "de4fe395668d24aeae6c0a4fdf6bce698ffe8bc8538f8252a76aa230bc61ddea",
+    "analysis/phase17/fields/pointer-accesses.json": "b732f6bb882ae0c58b01cffd0aa2bc95f2b0630df034791f875f49ec1b4c3a62",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up.png": "92f412ba7648f46ef06f9164f4d90f57480f6afc6f6b3636aec3319a97252f9c",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up.json": "82b04b05f0ab58430247b07de0659a8728fad734f28e1f150a0de71ff37ef613",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up-ram.bin": "e8a3e8afb3d728daafba78f72db582da2fccbf8622d11966e351001cf2c4ed90",
+    "analysis/phase19/runtime/resource-transfer-baseline/transfer-gold-after-up-sram.bin": "b9c4200c1a9543db7bd879729bf5ab90da8a45b0093b48de585f8f7a9ffa658d",
+    "analysis/phase19/runtime/resource-transfer-baseline/validation.json": "20e74b20a48839afdbc4c8ad6d89c84a571d1a4ec5de2a45f10ed02c23dc5dc1",
+    "analysis/phase18/fields-static/access-contracts.json": "ce61a14c828657c3c01e3e8a7b740e5cc1f40339a93de2e585f2a95fc3562d64",
+    "analysis/phase18/fields-static/new-indirect-accesses.json": "eb9cbd8f1b235f5cfce76cfa4865cbe2409c163b655f8c9720036db96155076c",
+    "scripts/analyze_city_pointer_provenance.py": "a935a413156a463d376eef37e2028a29dc188e2d71724331f7f253708e1c7e5c",
+    "analysis/phase19/fields-static/all-indirect-accesses.json": "6c303c5a22ddcf8dbe8376ba58790fe11902908b3f7ebd004f6de40888fc94ae",
+    "analysis/phase19/fields-static/analysis-summary.json": "99b3dd6fea141ac408b507c57eb2f5b66b0483a4ea62739f4bf436c6b5fbeb77",
+    "analysis/phase19/fields-static/verification.json": "61d4e7e240a63b59eabfa3a7356c93c0fe76920a1317e516373f36cb386c8943"
+  },
+  "instruction_count": 48754,
+  "original_instruction_bytes_verified": 48754,
+  "original_instruction_byte_comparisons": 146262,
+  "source_CPU_cases": 0,
+  "constructor_template_count": 691,
+  "universal_return_contract_count": 620,
+  "universal_return_pair_contract_count": 330,
+  "universal_numeric_only_return_contract_count": 290,
+  "finite_numeric_domain_limit": 32,
+  "structured_original_copy_loop_count": 3,
+  "return_contract_evaluations": 5433,
+  "return_local_instruction_transfers": 1650478,
+  "global_instruction_transfers": 232411,
+  "finite_proof_refinement_rounds": [
+    {
+      "round": 1,
+      "new_complete_pair_non_ZP_store_proofs": 75,
+      "total_additional_non_ZP_store_proofs": 75,
+      "return_contract_count": 618,
+      "return_pair_contract_count": 326,
+      "instruction_transfers": 232392,
+      "write_effect_update_applied": true
+    },
+    {
+      "round": 2,
+      "new_complete_pair_non_ZP_store_proofs": 1,
+      "total_additional_non_ZP_store_proofs": 76,
+      "return_contract_count": 620,
+      "return_pair_contract_count": 330,
+      "instruction_transfers": 232411,
+      "write_effect_update_applied": true
+    },
+    {
+      "round": 3,
+      "new_complete_pair_non_ZP_store_proofs": null,
+      "total_additional_non_ZP_store_proofs": 76,
+      "return_contract_count": 620,
+      "return_pair_contract_count": 330,
+      "instruction_transfers": 232411,
+      "write_effect_update_applied": false
+    }
+  ],
+  "complete_analysis_fixed_point_proven": false,
+  "initial_unknown_root_count": 49,
+  "fallback_unknown_position_count": 50,
+  "classification_counts": {
+    "proved_disjoint_auxiliary_address_domain": 239,
+    "unresolved_pointer_or_index_contract": 258,
+    "possible_city_auxiliary_alias": 92
+  },
+  "all_indirect_classification_counts": {
+    "proved_disjoint_auxiliary_address_domain": 1146,
+    "unresolved_pointer_or_index_contract": 274,
+    "possible_city_auxiliary_alias": 106
+  },
+  "new_indirect_classification_counts": {
+    "proved_disjoint_auxiliary_address_domain": 37,
+    "possible_city_auxiliary_alias": 1,
+    "unresolved_pointer_or_index_contract": 7
+  },
+  "all_indirect_access_count": 1526,
+  "baseline_candidate_count": 589,
+  "new_indirect_access_count": 45,
+  "newly_proved_disjoint_all_count": 21,
+  "newly_proved_disjoint_old589_count": 15,
+  "phase19_remaining_count": 401,
+  "remaining_access_count": 380,
+  "remaining_by_bank": {
+    "8": 15,
+    "9": 4,
+    "10": 23,
+    "11": 49,
+    "12": 4,
+    "13": 16,
+    "14": 7,
+    "15": 19,
+    "23": 26,
+    "24": 8,
+    "25": 55,
+    "26": 23,
+    "27": 20,
+    "28": 26,
+    "29": 45,
+    "30": 11,
+    "31": 29
+  },
+  "official_target_field_names": {
+    "city_plus1": null,
+    "city_plus28": null,
+    "city_plus29": null,
+    "city_plus30": null,
+    "city_plus31": null
+  },
+  "explicit_inherited_authority_selection_count": 20,
+  "inherited_authority_with_broader_candidate_count": 5,
+  "limitations": [
+    "No source gameplay execution or whole-ROM reachability theorem.",
+    "Scalar registers use a finite32-value domain, widened to unknown above32; compare/branch refinement requires the unique actual preceding immediate compare and excludes zero-displacement common edges.",
+    "All same-index ROM constructor prefixes keep raw index0..255. Unresolved8000 mappings are not guessed.",
+    "Return facts start from universally unknown caller input and include every declared local RTS; unresolved computed exits reject a return contract.",
+    "The proof closure adds established output invariants; it is not iterative re-joining of independent low/high bytes.",
+    "No official unused/reserved/padding meaning is inferred from zeros or finite execution."
+  ]
+}

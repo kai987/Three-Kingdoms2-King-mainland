@@ -1,0 +1,606 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "case_count": 13340,
+  "function_cases": {
+    "ai_stage_0": 500,
+    "ai_stage_1": 500,
+    "ai_stage_2": 500,
+    "ai_stage_3": 500,
+    "ai_stage_4": 500,
+    "choose_ai_action": 1200,
+    "AI_formula_0xb7dd": 512,
+    "AI_formula_0xb816": 512,
+    "AI_formula_0xb851": 512,
+    "AI_formula_0xb89b": 512,
+    "advance_turn": 1024,
+    "attempt_status_effect": 2048,
+    "negotiation_choice": 816,
+    "action1_hp_penalty": 512,
+    "action1_response_gate": 512,
+    "action1_exit_result": 14,
+    "action1_exit_zero_hp": 2,
+    "strike": 1536,
+    "commit_confirmed_hp": 256,
+    "check_strike_result": 200,
+    "negotiation_outcome": 72,
+    "finish_action3": 24,
+    "reward_after_zero_hp": 576
+  },
+  "branch_observations": {
+    "AI:low_hp_check_not_selected": 184,
+    "AI:category6_not_selected": 447,
+    "AI:category2_not_selected": 474,
+    "AI:tactical_actions_not_selected": 488,
+    "AI:B760_hp_weighted_table": 500,
+    "AI:B816_gate": 26,
+    "AI:skip_low_hp_checks": 316,
+    "AI:B7DD_gate": 53,
+    "AI:B89B_gate_and_status_flags": 1,
+    "AI:B851_gate": 11,
+    "AI_final:7": 180,
+    "AI_final:2": 478,
+    "AI_final:8": 123,
+    "AI_final:0": 399,
+    "AI_final:6": 20,
+    "status:False": 1676,
+    "status:True": 372,
+    "reward:False": 338,
+    "reward:True": 238
+  },
+  "negotiation_cells_verified": 216,
+  "samples": [
+    {
+      "function": "ai_stage_0",
+      "entry": "0xb5d8",
+      "outcome": {
+        "selected": null,
+        "reason": "low_hp_check_not_selected",
+        "original_half": 41
+      },
+      "rng_cursor": 0,
+      "rom_instructions": 48
+    },
+    {
+      "function": "ai_stage_1",
+      "entry": "0xb626",
+      "outcome": {
+        "selected": null,
+        "reason": "category6_not_selected"
+      },
+      "rng_cursor": 2,
+      "rom_instructions": 72
+    },
+    {
+      "function": "ai_stage_2",
+      "entry": "0xb659",
+      "outcome": {
+        "selected": null,
+        "reason": "category2_not_selected",
+        "hp_derived_read": 50
+      },
+      "rng_cursor": 3,
+      "rom_instructions": 95
+    },
+    {
+      "function": "ai_stage_3",
+      "entry": "0xb689",
+      "outcome": {
+        "selected": null,
+        "reason": "tactical_actions_not_selected"
+      },
+      "rng_cursor": 3,
+      "rom_instructions": 7
+    },
+    {
+      "function": "ai_stage_4",
+      "entry": "0xb719",
+      "outcome": {
+        "selected": 2,
+        "reason": "B760_hp_weighted_table",
+        "next_state": 1,
+        "next_substate": 3
+      },
+      "rng_cursor": 5,
+      "rom_instructions": 44
+    },
+    {
+      "function": "ai_stage_0",
+      "entry": "0xb5d8",
+      "outcome": {
+        "selected": null,
+        "reason": "low_hp_check_not_selected",
+        "original_half": 28
+      },
+      "rng_cursor": 5,
+      "rom_instructions": 48
+    },
+    {
+      "function": "ai_stage_1",
+      "entry": "0xb626",
+      "outcome": {
+        "selected": null,
+        "reason": "category6_not_selected"
+      },
+      "rng_cursor": 6,
+      "rom_instructions": 13
+    },
+    {
+      "function": "ai_stage_2",
+      "entry": "0xb659",
+      "outcome": {
+        "selected": null,
+        "reason": "category2_not_selected",
+        "hp_derived_read": 49
+      },
+      "rng_cursor": 7,
+      "rom_instructions": 12
+    },
+    {
+      "function": "ai_stage_3",
+      "entry": "0xb689",
+      "outcome": {
+        "selected": null,
+        "reason": "tactical_actions_not_selected"
+      },
+      "rng_cursor": 8,
+      "rom_instructions": 7
+    },
+    {
+      "function": "ai_stage_4",
+      "entry": "0xb719",
+      "outcome": {
+        "selected": 2,
+        "reason": "B760_hp_weighted_table",
+        "next_state": 1,
+        "next_substate": 3
+      },
+      "rng_cursor": 10,
+      "rom_instructions": 37
+    },
+    {
+      "function": "ai_stage_0",
+      "entry": "0xb5d8",
+      "outcome": {
+        "selected": null,
+        "reason": "low_hp_check_not_selected",
+        "original_half": 35
+      },
+      "rng_cursor": 10,
+      "rom_instructions": 206
+    },
+    {
+      "function": "ai_stage_1",
+      "entry": "0xb626",
+      "outcome": {
+        "selected": null,
+        "reason": "category6_not_selected"
+      },
+      "rng_cursor": 12,
+      "rom_instructions": 71
+    },
+    {
+      "function": "ai_stage_2",
+      "entry": "0xb659",
+      "outcome": {
+        "selected": 2,
+        "reason": "B816_gate",
+        "next_state": 1,
+        "next_substate": 3
+      },
+      "rng_cursor": 14,
+      "rom_instructions": 112
+    },
+    {
+      "function": "ai_stage_3",
+      "entry": "0xb689",
+      "outcome": {
+        "selected": null,
+        "reason": "tactical_actions_not_selected"
+      },
+      "rng_cursor": 13,
+      "rom_instructions": 7
+    },
+    {
+      "function": "ai_stage_4",
+      "entry": "0xb719",
+      "outcome": {
+        "selected": 2,
+        "reason": "B760_hp_weighted_table",
+        "next_state": 1,
+        "next_substate": 3
+      },
+      "rng_cursor": 15,
+      "rom_instructions": 34
+    },
+    {
+      "function": "ai_stage_0",
+      "entry": "0xb5d8",
+      "outcome": {
+        "selected": null,
+        "reason": "skip_low_hp_checks",
+        "original_half": 28
+      },
+      "rng_cursor": 15,
+      "rom_instructions": 47
+    },
+    {
+      "function": "ai_stage_1",
+      "entry": "0xb626",
+      "outcome": {
+        "selected": null,
+        "reason": "category6_not_selected"
+      },
+      "rng_cursor": 16,
+      "rom_instructions": 13
+    },
+    {
+      "function": "ai_stage_2",
+      "entry": "0xb659",
+      "outcome": {
+        "selected": 2,
+        "reason": "B816_gate",
+        "next_state": 1,
+        "next_substate": 3
+      },
+      "rng_cursor": 27,
+      "rom_instructions": 184
+    },
+    {
+      "function": "ai_stage_3",
+      "entry": "0xb689",
+      "outcome": {
+        "selected": null,
+        "reason": "tactical_actions_not_selected"
+      },
+      "rng_cursor": 18,
+      "rom_instructions": 7
+    },
+    {
+      "function": "ai_stage_4",
+      "entry": "0xb719",
+      "outcome": {
+        "selected": 0,
+        "reason": "B760_hp_weighted_table",
+        "next_state": 1,
+        "next_substate": 3
+      },
+      "rng_cursor": 20,
+      "rom_instructions": 44
+    },
+    {
+      "function": "ai_stage_0",
+      "entry": "0xb5d8",
+      "outcome": {
+        "selected": null,
+        "reason": "low_hp_check_not_selected",
+        "original_half": 35
+      },
+      "rng_cursor": 20,
+      "rom_instructions": 206
+    },
+    {
+      "function": "ai_stage_1",
+      "entry": "0xb626",
+      "outcome": {
+        "selected": null,
+        "reason": "category6_not_selected"
+      },
+      "rng_cursor": 21,
+      "rom_instructions": 13
+    },
+    {
+      "function": "ai_stage_2",
+      "entry": "0xb659",
+      "outcome": {
+        "selected": null,
+        "reason": "category2_not_selected",
+        "hp_derived_read": null
+      },
+      "rng_cursor": 22,
+      "rom_instructions": 6
+    },
+    {
+      "function": "ai_stage_3",
+      "entry": "0xb689",
+      "outcome": {
+        "selected": null,
+        "reason": "tactical_actions_not_selected"
+      },
+      "rng_cursor": 23,
+      "rom_instructions": 7
+    },
+    {
+      "function": "ai_stage_4",
+      "entry": "0xb719",
+      "outcome": {
+        "selected": 2,
+        "reason": "B760_hp_weighted_table",
+        "next_state": 1,
+        "next_substate": 3
+      },
+      "rng_cursor": 25,
+      "rom_instructions": 44
+    },
+    {
+      "function": "ai_stage_0",
+      "entry": "0xb5d8",
+      "outcome": {
+        "selected": null,
+        "reason": "skip_low_hp_checks",
+        "original_half": 28
+      },
+      "rng_cursor": 25,
+      "rom_instructions": 47
+    },
+    {
+      "function": "ai_stage_1",
+      "entry": "0xb626",
+      "outcome": {
+        "selected": null,
+        "reason": "category6_not_selected"
+      },
+      "rng_cursor": 27,
+      "rom_instructions": 72
+    },
+    {
+      "function": "ai_stage_2",
+      "entry": "0xb659",
+      "outcome": {
+        "selected": null,
+        "reason": "category2_not_selected",
+        "hp_derived_read": null
+      },
+      "rng_cursor": 27,
+      "rom_instructions": 6
+    },
+    {
+      "function": "ai_stage_3",
+      "entry": "0xb689",
+      "outcome": {
+        "selected": null,
+        "reason": "tactical_actions_not_selected"
+      },
+      "rng_cursor": 28,
+      "rom_instructions": 7
+    },
+    {
+      "function": "ai_stage_4",
+      "entry": "0xb719",
+      "outcome": {
+        "selected": 0,
+        "reason": "B760_hp_weighted_table",
+        "next_state": 1,
+        "next_substate": 3
+      },
+      "rng_cursor": 30,
+      "rom_instructions": 48
+    },
+    {
+      "function": "AI_formula_0xb7dd",
+      "entry": "0xb7dd",
+      "outcome": {
+        "threshold": 0,
+        "roll": 62
+      },
+      "rng_cursor": 1,
+      "rom_instructions": 55
+    },
+    {
+      "function": "AI_formula_0xb816",
+      "entry": "0xb816",
+      "outcome": {
+        "threshold": 50,
+        "roll": 62
+      },
+      "rng_cursor": 1,
+      "rom_instructions": 80
+    },
+    {
+      "function": "AI_formula_0xb851",
+      "entry": "0xb851",
+      "outcome": {
+        "threshold": 26,
+        "roll": 62
+      },
+      "rng_cursor": 1,
+      "rom_instructions": 86
+    },
+    {
+      "function": "AI_formula_0xb89b",
+      "entry": "0xb89b",
+      "outcome": {
+        "threshold": 0,
+        "roll": 62
+      },
+      "rng_cursor": 1,
+      "rom_instructions": 52
+    },
+    {
+      "function": "advance_turn",
+      "entry": "0xb361",
+      "outcome": {
+        "next": "computer_action",
+        "actor": 0,
+        "remaining_effect": 0
+      },
+      "rng_cursor": 6,
+      "rom_instructions": 100
+    },
+    {
+      "function": "attempt_status_effect",
+      "entry": "0xc08a",
+      "outcome": {
+        "succeeded": false,
+        "threshold_input": 42,
+        "target_duration": 152,
+        "pending_dialogue_ids": [
+          45,
+          47
+        ]
+      },
+      "rng_cursor": 4,
+      "rom_instructions": 134
+    },
+    {
+      "function": "negotiation_choice",
+      "entry": "0xbe86",
+      "outcome": {
+        "outcome": 1,
+        "table_index": 0,
+        "uses_permanent_hp": true,
+        "pending_dialogue_ids": [
+          48,
+          52
+        ]
+      },
+      "rng_cursor": 13,
+      "rom_instructions": 115
+    },
+    {
+      "function": "action1_hp_penalty",
+      "entry": "0xbb5b",
+      "outcome": {
+        "applied_parameter": 8,
+        "target_side": 1,
+        "permanent_hp": 0,
+        "pending_dialogue_id": 61
+      },
+      "rng_cursor": 4,
+      "rom_instructions": 101
+    },
+    {
+      "function": "action1_response_gate",
+      "entry": "0xbb18",
+      "outcome": {
+        "skipped_penalty": false,
+        "roll": 62,
+        "threshold": 0,
+        "pending_dialogue_id": 0
+      },
+      "rng_cursor": 1,
+      "rom_instructions": 33
+    },
+    {
+      "function": "action1_exit_result",
+      "entry": "0xbc16",
+      "outcome": {
+        "result_code": 1,
+        "result_side": 1,
+        "result_offset": 2,
+        "next_state": 15
+      },
+      "rng_cursor": 83,
+      "rom_instructions": 17
+    },
+    {
+      "function": "action1_exit_zero_hp",
+      "entry": "0xbbd0",
+      "outcome": {
+        "result_code": 2,
+        "result_side": 1,
+        "next_state": 14
+      },
+      "rng_cursor": 83,
+      "rom_instructions": 22
+    },
+    {
+      "function": "strike",
+      "entry": "0xb8d3",
+      "outcome": {
+        "actor_health": 37,
+        "target_health": 194,
+        "message": 34,
+        "reported_damage": 25,
+        "roll": 82,
+        "pending_dialogue_id": 34,
+        "category": 0,
+        "action_name": "けんせい"
+      },
+      "rng_cursor": 4,
+      "rom_instructions": 474
+    },
+    {
+      "function": "commit_confirmed_hp",
+      "entry": "0xb9a5",
+      "outcome": {
+        "waiting": true
+      },
+      "rng_cursor": 83,
+      "rom_instructions": 11
+    },
+    {
+      "function": "check_strike_result",
+      "entry": "0xb9c8",
+      "outcome": {
+        "next": "zero_hp_animation",
+        "defeated_side": 0
+      },
+      "rng_cursor": 83,
+      "rom_instructions": 23
+    },
+    {
+      "function": "negotiation_outcome",
+      "entry": "0xbf43",
+      "outcome": {
+        "waiting": false,
+        "result_codes": [
+          0,
+          1
+        ],
+        "next_state": 15
+      },
+      "rng_cursor": 83,
+      "rom_instructions": 17
+    },
+    {
+      "function": "finish_action3",
+      "entry": "0xbe3f",
+      "outcome": {
+        "waiting": true
+      },
+      "rng_cursor": 83,
+      "rom_instructions": 1426
+    },
+    {
+      "function": "reward_after_zero_hp",
+      "entry": "0xc35d",
+      "outcome": {
+        "awarded": false,
+        "winner_id": 0,
+        "defeated_id": 47
+      },
+      "rng_cursor": 31,
+      "rom_instructions": 137
+    }
+  ],
+  "executed_unique_original_instruction_locations": 1411,
+  "compared_scope": "Declared game fields, whole SRAM and RNG cursor0; flags/registers/stack/mapper/display effects explicitly excluded",
+  "source_original_code_calls": 0,
+  "source_ir_execution": false,
+  "source_rendering_noops": false,
+  "host_input_contract_checks": [
+    {
+      "method": "commit_confirmed_hp",
+      "missing_host_inputs": "raises TypeError",
+      "memory_unchanged": true
+    },
+    {
+      "method": "finish_surrender",
+      "missing_host_inputs": "raises TypeError",
+      "memory_unchanged": true
+    },
+    {
+      "method": "finish_action3",
+      "missing_host_inputs": "raises TypeError",
+      "memory_unchanged": true
+    },
+    {
+      "method": "negotiation_outcome_sub3",
+      "missing_host_inputs": "raises TypeError",
+      "memory_unchanged": true
+    }
+  ],
+  "oracle_scope": "Actual unmodified ROM instructions and all called helpers; CPU-only bus with explicit IO assumptions, not a full video-frame test",
+  "original_rom_unchanged": true
+}

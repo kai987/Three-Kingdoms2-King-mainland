@@ -1,0 +1,85 @@
+{
+  "rom_modified": false,
+  "natural_gameplay": false,
+  "parent_state": "analysis/duel_fsm/runtime/injected-core/fixture-state-16.state",
+  "parent_state_sha256": "091fa1aebd00526151867b0c8936bde8c51e9a7f33f687172686f3696641862d",
+  "runtime_ram_changes": [
+    {
+      "address": 1192,
+      "old": 16,
+      "new": 1
+    },
+    {
+      "address": 1193,
+      "old": 0,
+      "new": 5
+    },
+    {
+      "address": 1215,
+      "old": 0,
+      "new": 4
+    },
+    {
+      "address": 1205,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1206,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 784,
+      "old": 4,
+      "new": 0
+    },
+    {
+      "address": 785,
+      "old": 35,
+      "new": 44
+    },
+    {
+      "address": 124,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 126,
+      "old": 1,
+      "new": 0
+    },
+    {
+      "address": 768,
+      "old": 1,
+      "new": 0
+    },
+    {
+      "address": 772,
+      "old": 0,
+      "new": 255
+    },
+    {
+      "address": 786,
+      "old": 255,
+      "new": 255
+    },
+    {
+      "address": 787,
+      "old": 255,
+      "new": 255
+    },
+    {
+      "address": 1060,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "address": 1061,
+      "old": 0,
+      "new": 0
+    }
+  ],
+  "capture_frames": 240,
+  "purpose": "Render original menu/message with explicitly initialized control and name-list inputs"
+}

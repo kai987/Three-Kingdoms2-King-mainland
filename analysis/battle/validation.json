@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "oracle": "py65 1.2.0 executing original machine bytes through mapper19 Bus; no ROM patch or dependency stub",
+  "case_count": 35699,
+  "counts": {
+    "grid_distance": 14641,
+    "strategy_gate": 2048,
+    "conversion_gate": 2048,
+    "experience_from_accumulated_loss": 5000,
+    "troop_loss": 189,
+    "troop_loss_alias": 189,
+    "health_loss_core_prefix": 64,
+    "damage_B070_prefix": 512,
+    "damage_B0EB_prefix": 512,
+    "damage_B188_prefix": 512,
+    "damage_B1E3_prefix": 512,
+    "damage_B4C6_prefix": 512,
+    "damage_B55C_prefix": 512,
+    "duel_parameter_seed": 512,
+    "duel_strike_sample": 1024,
+    "duel_health_strike": 1536,
+    "duel_strike_effect": 1024,
+    "duel_attack_parameters": 4352
+  },
+  "examples": [
+    {
+      "routine": "damage_B070",
+      "actor_record_hex": "645af83c46000000bc020050",
+      "cursor": 0,
+      "result": 121,
+      "next_cursor": 4
+    },
+    {
+      "routine": "damage_B070",
+      "actor_record_hex": "64fdfe3c46000000bc020090",
+      "cursor": 1,
+      "result": 168,
+      "next_cursor": 4
+    },
+    {
+      "routine": "damage_B0EB",
+      "actor_record_hex": "64d6843c46000000bc0200a0",
+      "cursor": 0,
+      "result": 11,
+      "next_cursor": 12
+    },
+    {
+      "routine": "damage_B0EB",
+      "actor_record_hex": "6433ee3c46000000bc020090",
+      "cursor": 1,
+      "result": 7,
+      "next_cursor": 12
+    },
+    {
+      "routine": "damage_B188",
+      "actor_record_hex": "6475ef3c46000000bc020030",
+      "cursor": 0,
+      "result": 198,
+      "next_cursor": 4
+    },
+    {
+      "routine": "damage_B188",
+      "actor_record_hex": "64273a3c46000000bc0200c0",
+      "cursor": 1,
+      "result": 66,
+      "next_cursor": 4
+    },
+    {
+      "routine": "damage_B1E3",
+      "actor_record_hex": "64fbd73c46000000bc020030",
+      "cursor": 0,
+      "result": 504,
+      "next_cursor": 4
+    },
+    {
+      "routine": "damage_B1E3",
+      "actor_record_hex": "641ab93c46000000bc020050",
+      "cursor": 1,
+      "result": 437,
+      "next_cursor": 4
+    },
+    {
+      "routine": "damage_B4C6",
+      "actor_record_hex": "64aa6b3c46000000bc020070",
+      "cursor": 0,
+      "result": 222,
+      "next_cursor": 1
+    },
+    {
+      "routine": "damage_B4C6",
+      "actor_record_hex": "6401ff3c46000000bc0200d0",
+      "cursor": 1,
+      "result": 228,
+      "next_cursor": 2
+    },
+    {
+      "routine": "damage_B55C",
+      "actor_record_hex": "6413293c46000000bc0200f0",
+      "cursor": 0,
+      "result": 135,
+      "next_cursor": 4
+    },
+    {
+      "routine": "damage_B55C",
+      "actor_record_hex": "6424cc3c46000000bc0200c0",
+      "cursor": 1,
+      "result": 673,
+      "next_cursor": 4
+    }
+  ],
+  "limits": [
+    "CPU function harnesses; no PPU, NMI/IRQ timing, audio, complete game flow or hardware validation.",
+    "Damage prefixes intentionally stop before target application; health core stops before removal/death dependencies.",
+    "Troop-loss harness separately executes its complete real far-call/experience path with distinct and aliased records.",
+    "Duel strike buffers are linked to actual C926/C991 producer; full duel state machine, animation and result writeback remain to be recovered.",
+    "Officers use synthetic byte/boundary inputs plus this ROM's actual RNG/correction tables."
+  ]
+}

@@ -1,0 +1,819 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "record_size": 12,
+  "record_count": 237,
+  "fields": [
+    {
+      "offset": 0,
+      "size": 1,
+      "name": "health",
+      "ui_label": "体",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 29,
+          "cpu_address": "0xBB70",
+          "rom_offset": "0x03BB80",
+          "raw_hex": "B1 1C 8D 01 00 C9 64 D0 07 C0 03 D0 03 4C 32 BC 20 BA E9 AE 14 00 20 40 B0 AD 14 00 18 69 03 8D 14 00 C8 C0 04 90 D1 AD",
+          "description": "Offsets0..3 rendered sequentially at RAM018B,018E,0191,0194"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "offset": 1,
+      "size": 1,
+      "name": "martial_strength",
+      "ui_label": "武",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 29,
+          "cpu_address": "0xBB70",
+          "rom_offset": "0x03BB80",
+          "raw_hex": "B1 1C 8D 01 00 C9 64 D0 07 C0 03 D0 03 4C 32 BC 20 BA E9 AE 14 00 20 40 B0 AD 14 00 18 69 03 8D 14 00 C8 C0 04 90 D1 AD",
+          "description": "Offsets0..3 rendered sequentially at RAM018B,018E,0191,0194"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "offset": 2,
+      "size": 1,
+      "name": "intellect",
+      "ui_label": "知",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 29,
+          "cpu_address": "0xBB70",
+          "rom_offset": "0x03BB80",
+          "raw_hex": "B1 1C 8D 01 00 C9 64 D0 07 C0 03 D0 03 4C 32 BC 20 BA E9 AE 14 00 20 40 B0 AD 14 00 18 69 03 8D 14 00 C8 C0 04 90 D1 AD",
+          "description": "Offsets0..3 rendered sequentially at RAM018B,018E,0191,0194"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "offset": 3,
+      "size": 1,
+      "name": "loyalty",
+      "ui_label": "忠",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 29,
+          "cpu_address": "0xBB70",
+          "rom_offset": "0x03BB80",
+          "raw_hex": "B1 1C 8D 01 00 C9 64 D0 07 C0 03 D0 03 4C 32 BC 20 BA E9 AE 14 00 20 40 B0 AD 14 00 18 69 03 8D 14 00 C8 C0 04 90 D1 AD",
+          "description": "Offsets0..3 rendered sequentially at RAM018B,018E,0191,0194"
+        }
+      ],
+      "notes": [
+        "Loyalty100 is rendered as -- at bank29 BC32 and bank25 B627."
+      ]
+    },
+    {
+      "offset": 4,
+      "size": 1,
+      "name": "virtue",
+      "ui_label": "徳",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 29,
+          "cpu_address": "0xBBA4",
+          "rom_offset": "0x03BBB4",
+          "raw_hex": "A0 04 B1 1C 8D 01 00 20 BA E9 A2 37 20 40 B0",
+          "description": "Offset4 rendered at RAM0197"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "offset": 5,
+      "size": 1,
+      "name": "roaming_city_id",
+      "status": "strong inference",
+      "evidence": [
+        {
+          "bank": 8,
+          "cpu_address": "0xBD2B",
+          "rom_offset": "0x011D3B",
+          "raw_hex": "A0 0B B1 00 29 FC 91 00 A0 30 20 66 F2 AD 0E 05 0A 0A 0A 8D 02 00 20 56 E8 18 6D 02 00 A8 B9 72 9D 10 03 AD 0E 05 A0 05 91 00 E8 4C",
+          "description": "Clear status low2 and assign byte5 from city/adjacent-city selection"
+        },
+        {
+          "bank": 26,
+          "cpu_address": "0xC099",
+          "rom_offset": "0x0340A9",
+          "raw_hex": "A0 0B B1 00 29 FC 91 00 A0 05 AD 0E 04 91 00",
+          "description": "Clear status low2 and store city index $040E into byte5"
+        },
+        {
+          "bank": 25,
+          "cpu_address": "0xBA14",
+          "rom_offset": "0x033A24",
+          "raw_hex": "A0 0B B1 00 29 03 F0 10 EE 04 00 AD 04 00 C9 ED 90 E8 A9 80 8D 11 00 60 AD 04 00 8D 72 04 A0 05 B1 00 CD 02 04 F0 F0 8D 05 00 A2 00 BD 60 01 CD 05 00 F0 E3 E8 E0 08 90 F3 4C 1C BA 6D 04 70 04 56",
+          "description": "Search status0 officers; exclude byte5 matching current/neighbor city"
+        }
+      ],
+      "notes": [
+        "Initial byte5 is0 for every officer. The location becomes meaningful in status0 transitions."
+      ]
+    },
+    {
+      "offset": 6,
+      "size": 2,
+      "name": "experience_raw",
+      "ui_label": "経",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 29,
+          "cpu_address": "0xBBB3",
+          "rom_offset": "0x03BBC3",
+          "raw_hex": "A0 06 B1 1C 8D 01 00 C8 B1 1C 8D 02 00 A9 00 8D 03 00 0E 01 00 2E 02 00 2E 03 00 20 BA E9 AD 08 00 8D 07 00 AD 09 00 8D 08 00 A9 03 8D 13 00 A2 37 AD 79 04 D0 08",
+          "description": "Read LE16, multiply by2, discard low2 decimal digits for display"
+        },
+        {
+          "bank": 15,
+          "cpu_address": "0xD807",
+          "rom_offset": "0x01F817",
+          "raw_hex": "A0 06 B1 00 18 6D 0B 00 8D 0D 00 91 00 C8 B1 00 6D 0C 00 8D 0E 00 91 00 A0 06 B1 00 38 E9 4F C8 B1 00 E9 C3 90 0B A0 06 A9 4F 91 00 C8 A9 C3 91 00 A0 0B B1 00 29 F0 4A 4A 4A C9 0E B0 10 A8 AD 0D 00 38 F9 5B D8 AD 0E 00 F9 5C D8 B0 14 A9 00 8D 0F 00 60 E8 03 D0 07 AC 0D 88 13 4C 1D 10 27 98 3A 98 4A 18 69 01 0A 0A 0A 0A 8D 0F 00 A0 0B B1 00 29 F0 CD 0F 00 B0 D5 A0 0B B1 00 29 0F 0D",
+          "description": "Add reward/2 to experience, update experience tier and martial strength"
+        }
+      ],
+      "notes": [
+        "Displayed experience = floor(raw/50) for normal raw0..49999. The three-digit UI drops higher digits for abnormal values. Shared experience helper is reconstructed and tested in battle.py."
+      ]
+    },
+    {
+      "offset": 8,
+      "size": 2,
+      "name": "troops_raw",
+      "ui_label": "兵",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 29,
+          "cpu_address": "0xBBF4",
+          "rom_offset": "0x03BC04",
+          "raw_hex": "A0 08 B1 1C 8D 01 00 C8 B1 1C 29 03 8D 02 00 A9 00 8D 03 00 20 BA E9 A9 04 8D 13 00 A2 3B 20 40 B0",
+          "description": "Display byte8 plus low2 bits of byte9"
+        },
+        {
+          "bank": 25,
+          "cpu_address": "0xB663",
+          "rom_offset": "0x033673",
+          "raw_hex": "A0 08 B1 10 8D 01 00 A0 09 B1 10 29 03 8D 02 00 A9 00 8D 03 00 20 BA E9 A2 00 A0 00 AD 08 00 20 19 B7 AD 08 00 20 1D B7 AD 07 00 20 19 B7 AD 07 00 29 0F 20 27 B7",
+          "description": "Render the same masked soldier count"
+        }
+      ],
+      "notes": [
+        "Officer-list display is low10; readers/writers differ by path. See phase5 troop evidence."
+      ]
+    },
+    {
+      "offset": 9,
+      "bits": "2..7",
+      "name": "troops_upper_unresolved_bits",
+      "status": "unresolved",
+      "evidence": [
+        {
+          "bank": 25,
+          "cpu_address": "0xB66A",
+          "rom_offset": "0x03367A",
+          "raw_hex": "A0 09 B1 10 29 03 8D 02 00",
+          "description": "Read byte9 and mask upper6 bits out of displayed troop count"
+        }
+      ],
+      "notes": [
+        "Original garrison allocation can produce raw1098 (0x044A), displayed low10=74 and upper6=1.",
+        "Upper bits are preserved by some writers, cleared by others and treated as full16-bit numeric storage by reserve/attrition paths.",
+        "No independent training or status flag name is assigned."
+      ],
+      "mechanical_semantics": "Confirmed numeric-overflow producer and path-dependent preserve/clear/raw16 consumers; no independent training/status flag name established.",
+      "phase5_evidence": "../phase5/troops/evidence.json",
+      "phase5_core_fixture": "../phase5/troops/core-fixture/validation.json",
+      "semantic_status": "numeric overflow producer confirmed; independent flag semantics unresolved"
+    },
+    {
+      "offset": 10,
+      "bits": "0..4",
+      "name": "weapon_id",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 25,
+          "cpu_address": "0xB730",
+          "rom_offset": "0x033740",
+          "raw_hex": "A0 0A B1 10 8D 15 00 29 1F 20 C1 B7 A9 00 A2 0E A0 01 20 A2 B7 A0 00 B1 12 8D 0E 04 AD 15 00 2A 2A 2A 2A 29 07 18 69 18 20 C1 B7 A9 40 A2 1A A0 01 20 A2 B7 A0 00 B1 12 8D 0F 04 A0 31 4C 5F F2 A0 0A B1 10 8D 15 00",
+          "description": "Use low5 to select equipment records0..23"
+        },
+        {
+          "bank": 25,
+          "cpu_address": "0xB7C1",
+          "rom_offset": "0x0337D1",
+          "raw_hex": "0A AA A0 30 20 5F F2 BD 12 9B 8D 12 00 E8 BD 12 9B 18 69 80 8D 13 00 60",
+          "description": "Equipment pointer table bank16 $9B12"
+        }
+      ],
+      "notes": [
+        "Decoded item glyph records contain swords, blades and polearms. Raw low5 values24..31 have no confirmed weapon meaning."
+      ]
+    },
+    {
+      "offset": 10,
+      "bits": "5..7",
+      "name": "armor_id",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 25,
+          "cpu_address": "0xB74C",
+          "rom_offset": "0x03375C",
+          "raw_hex": "AD 15 00 2A 2A 2A 2A 29 07 18 69 18 20 C1 B7 A9 40 A2 1A A0 01 20 A2 B7 A0 00 B1 12 8D 0F 04 A0 31 4C 5F F2 A0 0A B1 10 8D 15 00 29 1F 20 C1",
+          "description": "Extract high3, add24 and select armor equipment record"
+        }
+      ],
+      "notes": [
+        "Items24..31 visually read as armor/headgear/clothing; not horses."
+      ]
+    },
+    {
+      "offset": 11,
+      "bits": "0..1",
+      "name": "status_code",
+      "status": "strong inference",
+      "encoding_status": "confirmed",
+      "evidence": [
+        {
+          "bank": 25,
+          "cpu_address": "0xAF00",
+          "rom_offset": "0x032F10",
+          "raw_hex": "B1 00 29 03 C9 01 F0 05 E8 E8 4C F0 AE E8 8A A8 B1 10 CD 00 6F F0 08 90 06 A9 03 8D 01 04",
+          "description": "Status1 waits for scripted year eligibility"
+        },
+        {
+          "bank": 25,
+          "cpu_address": "0xAF3F",
+          "rom_offset": "0x032F4F",
+          "raw_hex": "AD 12 00 91 00 AD 12 00 20 D7 F2 A0 0B B1 00 29 FC 09 02 91 00 A0",
+          "description": "Insert officer into city roster then set status2"
+        },
+        {
+          "bank": 26,
+          "cpu_address": "0xC099",
+          "rom_offset": "0x0340A9",
+          "raw_hex": "A0 0B B1 00 29 FC 91 00 A0 05 AD 0E 04 91 00",
+          "description": "Remove affiliation and set status0 with location"
+        },
+        {
+          "bank": 25,
+          "cpu_address": "0xBDC6",
+          "rom_offset": "0x033DD6",
+          "raw_hex": "A0 0B B1 00 09 03 91 00",
+          "description": "Set status3 before removal from city roster"
+        }
+      ],
+      "interpretation": {
+        "0": "unaffiliated / roaming",
+        "1": "pending scripted appearance",
+        "2": "assigned to city roster",
+        "3": "removed / defeated / unavailable"
+      },
+      "notes": [
+        "Status3 is used after defeat and removal; permanent death vs recoverable removal is context dependent."
+      ]
+    },
+    {
+      "offset": 11,
+      "bits": "2..3",
+      "name": "terrain_affinity_code",
+      "status": "strong inference",
+      "glyph_status": "confirmed",
+      "evidence": [
+        {
+          "bank": 25,
+          "cpu_address": "0xB630",
+          "rom_offset": "0x033640",
+          "raw_hex": "A0 0B B1 10 4A 4A 29 03 0A A8 B9 47 B6 8D 8B 03 B9 48 B6 8D 8C 03 60 62 63 64 65 60 61",
+          "description": "Select top glyph tiles62/64/60 by bits2..3"
+        },
+        {
+          "bank": 25,
+          "cpu_address": "0xB64D",
+          "rom_offset": "0x03365D",
+          "raw_hex": "A0 0B B1 10 4A 4A 29 03 0A A8 B9 13 B7 8D 8B 03 B9 14 B7 8D 8C 03",
+          "description": "Select bottom glyph tiles72/74/70"
+        }
+      ],
+      "glyph_mapping": {
+        "0": "平",
+        "1": "山",
+        "2": "水"
+      },
+      "notes": [
+        "Code3 is unused in initial table and runs beyond the3-entry UI selector. These are terrain categories, not cavalry/archer IDs."
+      ]
+    },
+    {
+      "offset": 11,
+      "bits": "4..7",
+      "name": "experience_tier",
+      "ui_label": "レベル",
+      "status": "confirmed",
+      "evidence": [
+        {
+          "bank": 25,
+          "cpu_address": "0xB5A6",
+          "rom_offset": "0x0335B6",
+          "raw_hex": "A0 0B B1 10 4A 4A 4A 4A 18 69 01 8D 01 00 A9 00 8D 02 00 8D 03 00 20 BA E9 AD 07 00 29 0F 18 69 76 8D 91 03",
+          "description": "Display (byte11>>4)+1"
+        },
+        {
+          "bank": 15,
+          "cpu_address": "0xD838",
+          "rom_offset": "0x01F848",
+          "raw_hex": "A0 0B B1 00 29 F0 4A 4A 4A C9 0E B0 10 A8 AD 0D 00 38 F9 5B D8 AD 0E 00 F9 5C D8 B0 14 A9 00 8D 0F 00 60 E8 03 D0 07 AC 0D 88 13 4C 1D 10 27 98 3A 98 4A 18 69 01 0A 0A 0A 0A 8D 0F 00 A0 0B B1 00 29 F0 CD 0F 00 B0 D5 A0 0B B1 00 29 0F 0D 0F 00 91 00 A0 01 B1 00 A0 06 C9 33 90 12 A0 05 C9 47 90 0C A0 04 C9 51 90 06 A0 02 C9 5A B0 08 98 A0 01 18 71 00 91 00 60",
+          "description": "Read current experience tier, compare thresholds and preserve low4 when incrementing"
+        }
+      ],
+      "notes": [
+        "Internal tier0 means displayed level1. Thresholds1000,2000,3500,5000,7500,10000,15000; at most one tier gained per helper invocation."
+      ]
+    }
+  ],
+  "label_template_evidence": [
+    {
+      "bank": 29,
+      "cpu_address": "0xB909",
+      "rom_offset": "0x03B919",
+      "raw_hex": "01 01 01 01 01 01 01 01 01 01 01 80 81 01 84 85 01 82 83 01 88 89 01 86 87 01 01 8A 8B 01 01 01 01 01 01 01 01 01 01 01 01 01 01 90 91 01 94 95 01 92 93 01 98 99 01 96 97 01 01 9A 9B 01 01 01",
+      "description": "Columns11,14,17,20,23,26 label offsets0,1,2,3,4,6 as体武知忠徳経"
+    },
+    {
+      "bank": 29,
+      "cpu_address": "0xB849",
+      "rom_offset": "0x03B859",
+      "raw_hex": "01 01 01 01 01 01 01 01 01 01 01 80 81 01 84 85 01 82 83 01 88 89 01 01 8A 8B 01 01 A6 A7 01 01 01 01 01 01 01 01 01 01 01 01 01 90 91 01 94 95 01 92 93 01 98 99 01 01 9A 9B 01 01 A8 A9 01 01",
+      "description": "Alternative mode columns label体武知忠経兵"
+    }
+  ],
+  "equipment": [
+    {
+      "item_id": 0,
+      "kind": "weapon",
+      "observed_name": "短剣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 0,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B22",
+      "record_rom_offset": "0x021B62",
+      "cpu_address": "0x9B52",
+      "chr_1k_bank": 4,
+      "raw_hex": "04 90 91 92 93 01 01 01 01 A0 A1 A2 A3 01 01 01 01",
+      "image": "equipment-00.png"
+    },
+    {
+      "item_id": 1,
+      "kind": "weapon",
+      "observed_name": "飛剣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 1,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B24",
+      "record_rom_offset": "0x021B73",
+      "cpu_address": "0x9B63",
+      "chr_1k_bank": 4,
+      "raw_hex": "04 94 95 92 93 01 01 01 01 A4 A5 A2 A3 01 01 01 01",
+      "image": "equipment-01.png"
+    },
+    {
+      "item_id": 2,
+      "kind": "weapon",
+      "observed_name": "長剣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 2,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B26",
+      "record_rom_offset": "0x021B84",
+      "cpu_address": "0x9B74",
+      "chr_1k_bank": 4,
+      "raw_hex": "04 96 97 92 93 01 01 01 01 A6 A7 A2 A3 01 01 01 01",
+      "image": "equipment-02.png"
+    },
+    {
+      "item_id": 3,
+      "kind": "weapon",
+      "observed_name": "破斬剣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 3,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B28",
+      "record_rom_offset": "0x021B95",
+      "cpu_address": "0x9B85",
+      "chr_1k_bank": 4,
+      "raw_hex": "04 98 99 9A 9B 92 93 01 01 A8 A9 AA AB A2 A3 01 01",
+      "image": "equipment-03.png"
+    },
+    {
+      "item_id": 4,
+      "kind": "weapon",
+      "observed_name": "大剣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 4,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B2A",
+      "record_rom_offset": "0x021BA6",
+      "cpu_address": "0x9B96",
+      "chr_1k_bank": 4,
+      "raw_hex": "04 9C 9D 92 93 01 01 01 01 AC AD A2 A3 01 01 01 01",
+      "image": "equipment-04.png"
+    },
+    {
+      "item_id": 5,
+      "kind": "weapon",
+      "observed_name": "青釭の剣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 5,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B2C",
+      "record_rom_offset": "0x021BB7",
+      "cpu_address": "0x9BA7",
+      "chr_1k_bank": 4,
+      "raw_hex": "04 9E 9F B0 B1 01 92 93 01 AE AF B2 B3 8C A2 A3 01",
+      "image": "equipment-05.png"
+    },
+    {
+      "item_id": 6,
+      "kind": "weapon",
+      "observed_name": "倚天の剣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 6,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B2E",
+      "record_rom_offset": "0x021BC8",
+      "cpu_address": "0x9BB8",
+      "chr_1k_bank": 4,
+      "raw_hex": "04 B4 B5 B8 B9 01 92 93 01 B6 B7 BA BB 8C A2 A3 01",
+      "image": "equipment-06.png"
+    },
+    {
+      "item_id": 7,
+      "kind": "weapon",
+      "observed_name": "七星宝剣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 7,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B30",
+      "record_rom_offset": "0x021BD9",
+      "cpu_address": "0x9BC9",
+      "chr_1k_bank": 13,
+      "raw_hex": "0D A9 AA AB AC AD AE AF B0 B9 BA BB BC BD BE BF B1",
+      "image": "equipment-07.png"
+    },
+    {
+      "item_id": 8,
+      "kind": "weapon",
+      "observed_name": "薙刀",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 8,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B32",
+      "record_rom_offset": "0x021BEA",
+      "cpu_address": "0x9BDA",
+      "chr_1k_bank": 84,
+      "raw_hex": "54 80 81 82 83 01 01 01 01 90 91 92 93 01 01 01 01",
+      "image": "equipment-08.png"
+    },
+    {
+      "item_id": 9,
+      "kind": "weapon",
+      "observed_name": "眉尖刀",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 9,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B34",
+      "record_rom_offset": "0x021BFB",
+      "cpu_address": "0x9BEB",
+      "chr_1k_bank": 84,
+      "raw_hex": "54 84 85 86 87 82 83 01 01 94 95 96 97 92 93 01 01",
+      "image": "equipment-09.png"
+    },
+    {
+      "item_id": 10,
+      "kind": "weapon",
+      "observed_name": "三尖刀",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 10,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B36",
+      "record_rom_offset": "0x021C0C",
+      "cpu_address": "0x9BFC",
+      "chr_1k_bank": 84,
+      "raw_hex": "54 88 89 86 87 82 83 01 01 98 99 96 97 92 93 01 01",
+      "image": "equipment-10.png"
+    },
+    {
+      "item_id": 11,
+      "kind": "weapon",
+      "observed_name": "鈎鎌刀",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 11,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B38",
+      "record_rom_offset": "0x021C1D",
+      "cpu_address": "0x9C0D",
+      "chr_1k_bank": 84,
+      "raw_hex": "54 8A 8B 8C 8D 82 83 01 01 9A 9B 9C 9D 92 93 01 01",
+      "image": "equipment-11.png"
+    },
+    {
+      "item_id": 12,
+      "kind": "weapon",
+      "observed_name": "偃月刀",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 12,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B3A",
+      "record_rom_offset": "0x021C2E",
+      "cpu_address": "0x9C1E",
+      "chr_1k_bank": 84,
+      "raw_hex": "54 8E 8F A0 A1 82 83 01 01 9E 9F B0 B1 92 93 01 01",
+      "image": "equipment-12.png"
+    },
+    {
+      "item_id": 13,
+      "kind": "weapon",
+      "observed_name": "鳳嘴刀",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 13,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B3C",
+      "record_rom_offset": "0x021C3F",
+      "cpu_address": "0x9C2F",
+      "chr_1k_bank": 84,
+      "raw_hex": "54 A2 A3 A4 A5 82 83 01 01 B2 B3 B4 B5 92 93 01 01",
+      "image": "equipment-13.png"
+    },
+    {
+      "item_id": 14,
+      "kind": "weapon",
+      "observed_name": "龍牙刀",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 14,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B3E",
+      "record_rom_offset": "0x021C50",
+      "cpu_address": "0x9C40",
+      "chr_1k_bank": 84,
+      "raw_hex": "54 A6 A7 A8 A9 82 83 01 01 B6 B7 B8 B9 92 93 01 01",
+      "image": "equipment-14.png"
+    },
+    {
+      "item_id": 15,
+      "kind": "weapon",
+      "observed_name": "関王刀",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 15,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B40",
+      "record_rom_offset": "0x021C61",
+      "cpu_address": "0x9C51",
+      "chr_1k_bank": 84,
+      "raw_hex": "54 AA AB AC AD 82 83 01 01 BA BB BC BD 92 93 01 01",
+      "image": "equipment-15.png"
+    },
+    {
+      "item_id": 16,
+      "kind": "weapon",
+      "observed_name": "矛",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 16,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B42",
+      "record_rom_offset": "0x021C72",
+      "cpu_address": "0x9C62",
+      "chr_1k_bank": 86,
+      "raw_hex": "56 82 83 01 01 01 01 01 01 92 93 01 01 01 01 01 01",
+      "image": "equipment-16.png"
+    },
+    {
+      "item_id": 17,
+      "kind": "weapon",
+      "observed_name": "双戟",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 17,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B44",
+      "record_rom_offset": "0x021C83",
+      "cpu_address": "0x9C73",
+      "chr_1k_bank": 86,
+      "raw_hex": "56 A4 A5 A2 A3 01 01 01 01 B4 B5 B2 B3 01 01 01 01",
+      "image": "equipment-17.png"
+    },
+    {
+      "item_id": 18,
+      "kind": "weapon",
+      "observed_name": "単鈎槍",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 18,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B46",
+      "record_rom_offset": "0x021C94",
+      "cpu_address": "0x9C84",
+      "chr_1k_bank": 86,
+      "raw_hex": "56 84 85 86 87 88 89 01 01 94 95 96 97 98 99 01 01",
+      "image": "equipment-18.png"
+    },
+    {
+      "item_id": 19,
+      "kind": "weapon",
+      "observed_name": "戦斧",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 19,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B48",
+      "record_rom_offset": "0x021CA5",
+      "cpu_address": "0x9C95",
+      "chr_1k_bank": 86,
+      "raw_hex": "56 AC AD AE AF 01 01 01 01 BC BD BE BF 01 01 01 01",
+      "image": "equipment-19.png"
+    },
+    {
+      "item_id": 20,
+      "kind": "weapon",
+      "observed_name": "雙鈎槍",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 20,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B4A",
+      "record_rom_offset": "0x021CB6",
+      "cpu_address": "0x9CA6",
+      "chr_1k_bank": 86,
+      "raw_hex": "56 8A 8B 86 87 88 89 01 01 9A 9B 96 97 98 99 01 01",
+      "image": "equipment-20.png"
+    },
+    {
+      "item_id": 21,
+      "kind": "weapon",
+      "observed_name": "方天画戟",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 21,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B4C",
+      "record_rom_offset": "0x021CC7",
+      "cpu_address": "0x9CB7",
+      "chr_1k_bank": 86,
+      "raw_hex": "56 8C 8D 8E 8F A0 A1 A2 A3 9C 9D 9E 9F B0 B1 B2 B3",
+      "image": "equipment-21.png"
+    },
+    {
+      "item_id": 22,
+      "kind": "weapon",
+      "observed_name": "狼牙槍",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 22,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B4E",
+      "record_rom_offset": "0x021CD8",
+      "cpu_address": "0x9CC8",
+      "chr_1k_bank": 86,
+      "raw_hex": "56 AA AB A8 A9 88 89 01 01 BA BB B8 B9 98 99 01 01",
+      "image": "equipment-22.png"
+    },
+    {
+      "item_id": 23,
+      "kind": "weapon",
+      "observed_name": "蛇矛",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": 23,
+      "armor_id": null,
+      "pointer_rom_offset": "0x021B50",
+      "record_rom_offset": "0x021CE9",
+      "cpu_address": "0x9CD9",
+      "chr_1k_bank": 86,
+      "raw_hex": "56 80 81 82 83 01 01 01 01 90 91 92 93 01 01 01 01",
+      "image": "equipment-23.png"
+    },
+    {
+      "item_id": 24,
+      "kind": "armor",
+      "observed_name": "絹巾",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": null,
+      "armor_id": 0,
+      "pointer_rom_offset": "0x021B52",
+      "record_rom_offset": "0x021CFA",
+      "cpu_address": "0x9CEA",
+      "chr_1k_bank": 85,
+      "raw_hex": "55 80 81 82 83 01 01 01 01 90 91 92 93 01 01 01 01",
+      "image": "equipment-24.png"
+    },
+    {
+      "item_id": 25,
+      "kind": "armor",
+      "observed_name": "籠手",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": null,
+      "armor_id": 1,
+      "pointer_rom_offset": "0x021B54",
+      "record_rom_offset": "0x021D0B",
+      "cpu_address": "0x9CFB",
+      "chr_1k_bank": 85,
+      "raw_hex": "55 84 85 86 87 01 01 01 01 94 95 96 97 01 01 01 01",
+      "image": "equipment-25.png"
+    },
+    {
+      "item_id": 26,
+      "kind": "armor",
+      "observed_name": "兜",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": null,
+      "armor_id": 2,
+      "pointer_rom_offset": "0x021B56",
+      "record_rom_offset": "0x021D1C",
+      "cpu_address": "0x9D0C",
+      "chr_1k_bank": 85,
+      "raw_hex": "55 AE AF 01 01 01 01 01 01 BE BF 01 01 01 01 01 01",
+      "image": "equipment-26.png"
+    },
+    {
+      "item_id": 27,
+      "kind": "armor",
+      "observed_name": "硬皮",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": null,
+      "armor_id": 3,
+      "pointer_rom_offset": "0x021B58",
+      "record_rom_offset": "0x021D2D",
+      "cpu_address": "0x9D1D",
+      "chr_1k_bank": 85,
+      "raw_hex": "55 88 89 8A 8B 01 01 01 01 98 99 9A 9B 01 01 01 01",
+      "image": "equipment-27.png"
+    },
+    {
+      "item_id": 28,
+      "kind": "armor",
+      "observed_name": "鶴氅",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": null,
+      "armor_id": 4,
+      "pointer_rom_offset": "0x021B5A",
+      "record_rom_offset": "0x021D3E",
+      "cpu_address": "0x9D2E",
+      "chr_1k_bank": 85,
+      "raw_hex": "55 8C 8D 8E 8F 01 01 01 01 9C 9D 9E 9F 01 01 01 01",
+      "image": "equipment-28.png"
+    },
+    {
+      "item_id": 29,
+      "kind": "armor",
+      "observed_name": "甲冑",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": null,
+      "armor_id": 5,
+      "pointer_rom_offset": "0x021B5C",
+      "record_rom_offset": "0x021D4F",
+      "cpu_address": "0x9D3F",
+      "chr_1k_bank": 16,
+      "raw_hex": "10 B6 B7 BA BB 01 01 01 01 B8 B9 BC BD 01 01 01 01",
+      "image": "equipment-29.png"
+    },
+    {
+      "item_id": 30,
+      "kind": "armor",
+      "observed_name": "聖者の衣",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": null,
+      "armor_id": 6,
+      "pointer_rom_offset": "0x021B5E",
+      "record_rom_offset": "0x021D60",
+      "cpu_address": "0x9D50",
+      "chr_1k_bank": 85,
+      "raw_hex": "55 A0 A1 A2 A3 01 A4 A5 01 B0 B1 B2 B3 BC B4 B5 01",
+      "image": "equipment-30.png"
+    },
+    {
+      "item_id": 31,
+      "kind": "armor",
+      "observed_name": "竜鱗の鎧",
+      "transcription_status": "manually transcribed from rendered ROM glyphs; original pixels retained",
+      "weapon_id": null,
+      "armor_id": 7,
+      "pointer_rom_offset": "0x021B60",
+      "record_rom_offset": "0x021D71",
+      "cpu_address": "0x9D61",
+      "chr_1k_bank": 85,
+      "raw_hex": "55 A6 A7 A8 A9 01 AA AB 01 B6 B7 B8 B9 BC BA BB 01",
+      "image": "equipment-31.png"
+    }
+  ],
+  "limitations": [
+    "Labels are extracted from original CHR pixels; script does not use OCR to invent names.",
+    "Synthetic py65 field mutation tests are separate from unchanged-ROM Nestopia screenshots.",
+    "Byte5 semantics, status labels and terrain affinity interpretation retain explicit inference status."
+  ]
+}

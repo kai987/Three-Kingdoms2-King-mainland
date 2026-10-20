@@ -1,0 +1,113 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"evidence_id\":\"ev_691bc7a66662717f3bb44bd68b83d36ef07e0e3a98df701952a641d143378bcd\",\"subject\":{\"name\":\"image.bin\",\"digest\":{\"sha256\":\"63c0bce6720222c67b0c732a5b16212d864b130d7ea68863dfe3d9f7b638a7d5\"},\"format\":\"raw-binary\",\"architecture\":\"6502\",\"local_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/image.bin\"},\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"analysis_profile\":{\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"parameters\":{\"target_kind\":\"executable\",\"target_format\":\"raw-binary\",\"architecture\":\"6502\",\"available_architectures\":[\"6502\"],\"import_mode\":\"ephemeral-source-immutable\",\"annotation_policy\":\"atomic-function-entry-metadata-v1\",\"load_image_observations\":\"source-mappings-entry-context-v2\",\"function_body_evidence\":\"complete-inclusive-ranges-v1\",\"function_references\":\"complete-body-and-entry-reference-manager-v2\",\"call_relationship_coverage\":\"resolved-call-reference-diagnostics-v1\",\"string_inventory_evidence\":\"defined-data-coverage-v1\",\"location_resolution\":\"explicit-address-exact-entry-symbol-first-v3\",\"instruction_flow_evidence\":\"decoded-return-pcode-v1\",\"instruction_references\":\"exact-address-incoming-v1\",\"function_boundary_observations\":\"ghidra-terminal-call-limitations-v1\",\"no_return_repair\":\"returning-imports-decoded-return-v2\",\"process_launch\":\"inspected-jvm-launch-support-v1\",\"load_image_evidence\":\"independent-raw-mapping-context-v2\",\"jump_table_evidence\":\"typed-case-default-blocks-v1\",\"decompiler_jump_loads\":true,\"loader\":\"BinaryLoader\",\"language_id\":\"6502:LE:16:default\",\"compiler_spec_id\":\"default\",\"language_selection\":\"caller-supplied-v1\",\"entry_point\":\"0xa000\",\"entry_seed\":\"external-entry-and-function-before-analysis-v1\",\"analyzer_preset\":\"ghidra-default\",\"analysis_seeds\":{\"format\":\"rea-ghidra-seeds-v1\",\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv\",\"configured_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv\",\"sha256\":\"84d0238e728b8735aad1d9dac0c407a406371a7a209c30a944cdadf181d92eb5\",\"entries\":{\"function\":9,\"code\":0,\"label\":0}}},\"digest\":\"cbb920562d5cb4777b7143d587a47ffb80ae2bf051660c2711f1284274d6ea44\"},\"predicate_type\":\"rea.analysis\",\"operation\":\"procedure_assembly\",\"parameters\":{\"procedure\":\"0xd64a\"},\"raw_result\":{\"value\":\"0xd64a: LDA 0x0425\\n0xd64d: STA 0x0013\\n0xd650: LDA #0x4c\\n0xd652: STA 0x0010\\n0xd655: LDA #0xd7\\n0xd657: STA 0x0011\\n0xd65a: LDA #0x0\\n0xd65c: STA 0x0012\\n0xd65f: JSR 0xed19\\n0xd662: LDA 0x0012\\n0xd665: CMP 0x047b\\n0xd668: BEQ 0xd67c\\n0xd66a: BCC 0xd67c\\n0xd66c: LDX 0x047b\\n0xd66f: LDA 0x0013\\n0xd672: BEQ 0xd676\\n0xd674: LDX #0x0\\n0xd676: STX 0x0012\\n0xd679: STX 0x0425\\n0xd67c: LDA #0x58\\n0xd67e: STA 0x0010\\n0xd681: LDA #0xd7\\n0xd683: STA 0x0011\\n0xd686: LDA #0x6e\\n0xd688: STA 0x0000\\n0xd68b: LDA #0xd7\\n0xd68d: STA 0x0001\\n0xd690: LDA 0x0012\\n0xd693: STA 0x047a\\n0xd696: JSR 0xedf5\\n0xd699: JSR 0xddad\\n0xd69c: BCC 0xd6b9\\n0xd69e: LDA 0x047c\\n0xd6a1: CMP #0x10\\n0xd6a3: BNE 0xd6a8\\n0xd6a5: JMP 0xd7c5\\n0xd6a8: LDA 0x0081\\n0xd6ab: LSR A\\n0xd6ac: BCS 0xd6ba\\n0xd6ae: LSR A\\n0xd6af: BCC 0xd6b9\\n0xd6b1: LDA #0x90\\n0xd6b3: STA 0x047c\\n0xd6b6: JMP 0xd7a8\\n0xd6b9: RTS\\n0xd6ba: LDA 0x047c\\n0xd6bd: CMP #0xf\\n0xd6bf: BEQ 0xd6f6\\n0xd6c1: LDA 0x0012\\n0xd6c4: CMP 0x047b\\n0xd6c7: BNE 0xd6f6\\n0xd6c9: LDX #0x0\\n0xd6cb: LDY #0x0\\n0xd6cd: LDA 0x481,Y\\n0xd6d0: CMP #0xff\\n0xd6d2: BEQ 0xd6e5\\n0xd6d4: STA 0x481,X\\n0xd6d7: STX 0x0000\\n0xd6da: CPY 0x0000\\n0xd6dd: BEQ 0xd6e4\\n0xd6df: LDA #0xff\\n0xd6e1: STA 0x481,Y\\n0xd6e4: INX\\n0xd6e5: INY\\n0xd6e6: CPY #0xa\\n0xd6e8: BCC 0xd6cd\\n0xd6ea: CPX #0x0\\n0xd6ec: BEQ 0xd6b9\\n0xd6ee: LDA #0x81\\n0xd6f0: STA 0x047c\\n0xd6f3: JMP 0xd7a8\\n0xd6f6: LDY 0x0012\\n0xd6f9: LDA 0x047c\\n0xd6fc: CMP #0xf\\n0xd6fe: BEQ 0xd72d\\n0xd700: LDA 0x481,Y\\n0xd703: CMP #0xff\\n0xd705: BNE 0xd71d\\n0xd707: LDA 0x047c\\n0xd70a: BEQ 0xd6b9\\n0xd70c: LDA 0x151,Y\\n0xd70f: STA 0x481,Y\\n0xd712: DEC 0x047c\\n0xd715: LDA #0x3e\\n0xd717: JSR 0xd773\\n0xd71a: JMP 0xd6b9\\n0xd71d: LDA #0xff\\n0xd71f: STA 0x481,Y\\n0xd722: INC 0x047c\\n0xd725: LDA #0x1\\n0xd727: JSR 0xd773\\n0xd72a: JMP 0xd6b9\\n0xd72d: LDA 0x151,Y\\n0xd730: STA 0x0481\\n0xd733: LDA 0x0402\\n0xd736: JSR 0xdd4f\\n0xd739: CMP 0x0481\\n0xd73c: BEQ 0xd746\\n0xd73e: LDA #0x80\\n0xd740: STA 0x047c\\n0xd743: JMP 0xd7a8\\n0xd746: LDA #0x81\\n0xd748: STA 0x047c\\n0xd74b: RTS\",\"limitations\":[\"Ghidra Listing reports a terminal call at 0xd6a5 to 0xd7c5 FUN_d7c5 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\",\"Ghidra Listing reports a terminal call at 0xd6b6 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\",\"Ghidra Listing reports a terminal call at 0xd6f3 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\",\"Ghidra Listing reports a terminal call at 0xd743 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\"]},\"normalized_result\":\"0xd64a: LDA 0x0425\\n0xd64d: STA 0x0013\\n0xd650: LDA #0x4c\\n0xd652: STA 0x0010\\n0xd655: LDA #0xd7\\n0xd657: STA 0x0011\\n0xd65a: LDA #0x0\\n0xd65c: STA 0x0012\\n0xd65f: JSR 0xed19\\n0xd662: LDA 0x0012\\n0xd665: CMP 0x047b\\n0xd668: BEQ 0xd67c\\n0xd66a: BCC 0xd67c\\n0xd66c: LDX 0x047b\\n0xd66f: LDA 0x0013\\n0xd672: BEQ 0xd676\\n0xd674: LDX #0x0\\n0xd676: STX 0x0012\\n0xd679: STX 0x0425\\n0xd67c: LDA #0x58\\n0xd67e: STA 0x0010\\n0xd681: LDA #0xd7\\n0xd683: STA 0x0011\\n0xd686: LDA #0x6e\\n0xd688: STA 0x0000\\n0xd68b: LDA #0xd7\\n0xd68d: STA 0x0001\\n0xd690: LDA 0x0012\\n0xd693: STA 0x047a\\n0xd696: JSR 0xedf5\\n0xd699: JSR 0xddad\\n0xd69c: BCC 0xd6b9\\n0xd69e: LDA 0x047c\\n0xd6a1: CMP #0x10\\n0xd6a3: BNE 0xd6a8\\n0xd6a5: JMP 0xd7c5\\n0xd6a8: LDA 0x0081\\n0xd6ab: LSR A\\n0xd6ac: BCS 0xd6ba\\n0xd6ae: LSR A\\n0xd6af: BCC 0xd6b9\\n0xd6b1: LDA #0x90\\n0xd6b3: STA 0x047c\\n0xd6b6: JMP 0xd7a8\\n0xd6b9: RTS\\n0xd6ba: LDA 0x047c\\n0xd6bd: CMP #0xf\\n0xd6bf: BEQ 0xd6f6\\n0xd6c1: LDA 0x0012\\n0xd6c4: CMP 0x047b\\n0xd6c7: BNE 0xd6f6\\n0xd6c9: LDX #0x0\\n0xd6cb: LDY #0x0\\n0xd6cd: LDA 0x481,Y\\n0xd6d0: CMP #0xff\\n0xd6d2: BEQ 0xd6e5\\n0xd6d4: STA 0x481,X\\n0xd6d7: STX 0x0000\\n0xd6da: CPY 0x0000\\n0xd6dd: BEQ 0xd6e4\\n0xd6df: LDA #0xff\\n0xd6e1: STA 0x481,Y\\n0xd6e4: INX\\n0xd6e5: INY\\n0xd6e6: CPY #0xa\\n0xd6e8: BCC 0xd6cd\\n0xd6ea: CPX #0x0\\n0xd6ec: BEQ 0xd6b9\\n0xd6ee: LDA #0x81\\n0xd6f0: STA 0x047c\\n0xd6f3: JMP 0xd7a8\\n0xd6f6: LDY 0x0012\\n0xd6f9: LDA 0x047c\\n0xd6fc: CMP #0xf\\n0xd6fe: BEQ 0xd72d\\n0xd700: LDA 0x481,Y\\n0xd703: CMP #0xff\\n0xd705: BNE 0xd71d\\n0xd707: LDA 0x047c\\n0xd70a: BEQ 0xd6b9\\n0xd70c: LDA 0x151,Y\\n0xd70f: STA 0x481,Y\\n0xd712: DEC 0x047c\\n0xd715: LDA #0x3e\\n0xd717: JSR 0xd773\\n0xd71a: JMP 0xd6b9\\n0xd71d: LDA #0xff\\n0xd71f: STA 0x481,Y\\n0xd722: INC 0x047c\\n0xd725: LDA #0x1\\n0xd727: JSR 0xd773\\n0xd72a: JMP 0xd6b9\\n0xd72d: LDA 0x151,Y\\n0xd730: STA 0x0481\\n0xd733: LDA 0x0402\\n0xd736: JSR 0xdd4f\\n0xd739: CMP 0x0481\\n0xd73c: BEQ 0xd746\\n0xd73e: LDA #0x80\\n0xd740: STA 0x047c\\n0xd743: JMP 0xd7a8\\n0xd746: LDA #0x81\\n0xd748: STA 0x047c\\n0xd74b: RTS\",\"confidence\":\"observed\",\"authority\":\"shipped-artifact\",\"environment\":null,\"limitations\":[\"The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.\",\"The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.\",\"Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.\",\"Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.\",\"Assembly is Ghidra Listing text and does not claim textual equivalence with Hopper output.\",\"Ghidra Listing reports a terminal call at 0xd6a5 to 0xd7c5 FUN_d7c5 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\",\"Ghidra Listing reports a terminal call at 0xd6b6 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\",\"Ghidra Listing reports a terminal call at 0xd6f3 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\",\"Ghidra Listing reports a terminal call at 0xd743 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.\",\"macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.\",\"Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.\",\"Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.\",\"Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.\",\"Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv (sha256 84d0238e728b8735aad1d9dac0c407a406371a7a209c30a944cdadf181d92eb5: 9 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.\",\"Seed outcome: 8 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory.\"],\"relationship_coverage\":null,\"locations\":[],\"evidence_links\":[]}"
+    }
+  ],
+  "structuredContent": {
+    "evidence_id": "ev_691bc7a66662717f3bb44bd68b83d36ef07e0e3a98df701952a641d143378bcd",
+    "subject": {
+      "name": "image.bin",
+      "digest": {
+        "sha256": "63c0bce6720222c67b0c732a5b16212d864b130d7ea68863dfe3d9f7b638a7d5"
+      },
+      "format": "raw-binary",
+      "architecture": "6502",
+      "local_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/image.bin"
+    },
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "analysis_profile": {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "parameters": {
+        "target_kind": "executable",
+        "target_format": "raw-binary",
+        "architecture": "6502",
+        "available_architectures": [
+          "6502"
+        ],
+        "import_mode": "ephemeral-source-immutable",
+        "annotation_policy": "atomic-function-entry-metadata-v1",
+        "load_image_observations": "source-mappings-entry-context-v2",
+        "function_body_evidence": "complete-inclusive-ranges-v1",
+        "function_references": "complete-body-and-entry-reference-manager-v2",
+        "call_relationship_coverage": "resolved-call-reference-diagnostics-v1",
+        "string_inventory_evidence": "defined-data-coverage-v1",
+        "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+        "instruction_flow_evidence": "decoded-return-pcode-v1",
+        "instruction_references": "exact-address-incoming-v1",
+        "function_boundary_observations": "ghidra-terminal-call-limitations-v1",
+        "no_return_repair": "returning-imports-decoded-return-v2",
+        "process_launch": "inspected-jvm-launch-support-v1",
+        "load_image_evidence": "independent-raw-mapping-context-v2",
+        "jump_table_evidence": "typed-case-default-blocks-v1",
+        "decompiler_jump_loads": true,
+        "loader": "BinaryLoader",
+        "language_id": "6502:LE:16:default",
+        "compiler_spec_id": "default",
+        "language_selection": "caller-supplied-v1",
+        "entry_point": "0xa000",
+        "entry_seed": "external-entry-and-function-before-analysis-v1",
+        "analyzer_preset": "ghidra-default",
+        "analysis_seeds": {
+          "format": "rea-ghidra-seeds-v1",
+          "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv",
+          "configured_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv",
+          "sha256": "84d0238e728b8735aad1d9dac0c407a406371a7a209c30a944cdadf181d92eb5",
+          "entries": {
+            "function": 9,
+            "code": 0,
+            "label": 0
+          }
+        }
+      },
+      "digest": "cbb920562d5cb4777b7143d587a47ffb80ae2bf051660c2711f1284274d6ea44"
+    },
+    "predicate_type": "rea.analysis",
+    "operation": "procedure_assembly",
+    "parameters": {
+      "procedure": "0xd64a"
+    },
+    "raw_result": {
+      "value": "0xd64a: LDA 0x0425\n0xd64d: STA 0x0013\n0xd650: LDA #0x4c\n0xd652: STA 0x0010\n0xd655: LDA #0xd7\n0xd657: STA 0x0011\n0xd65a: LDA #0x0\n0xd65c: STA 0x0012\n0xd65f: JSR 0xed19\n0xd662: LDA 0x0012\n0xd665: CMP 0x047b\n0xd668: BEQ 0xd67c\n0xd66a: BCC 0xd67c\n0xd66c: LDX 0x047b\n0xd66f: LDA 0x0013\n0xd672: BEQ 0xd676\n0xd674: LDX #0x0\n0xd676: STX 0x0012\n0xd679: STX 0x0425\n0xd67c: LDA #0x58\n0xd67e: STA 0x0010\n0xd681: LDA #0xd7\n0xd683: STA 0x0011\n0xd686: LDA #0x6e\n0xd688: STA 0x0000\n0xd68b: LDA #0xd7\n0xd68d: STA 0x0001\n0xd690: LDA 0x0012\n0xd693: STA 0x047a\n0xd696: JSR 0xedf5\n0xd699: JSR 0xddad\n0xd69c: BCC 0xd6b9\n0xd69e: LDA 0x047c\n0xd6a1: CMP #0x10\n0xd6a3: BNE 0xd6a8\n0xd6a5: JMP 0xd7c5\n0xd6a8: LDA 0x0081\n0xd6ab: LSR A\n0xd6ac: BCS 0xd6ba\n0xd6ae: LSR A\n0xd6af: BCC 0xd6b9\n0xd6b1: LDA #0x90\n0xd6b3: STA 0x047c\n0xd6b6: JMP 0xd7a8\n0xd6b9: RTS\n0xd6ba: LDA 0x047c\n0xd6bd: CMP #0xf\n0xd6bf: BEQ 0xd6f6\n0xd6c1: LDA 0x0012\n0xd6c4: CMP 0x047b\n0xd6c7: BNE 0xd6f6\n0xd6c9: LDX #0x0\n0xd6cb: LDY #0x0\n0xd6cd: LDA 0x481,Y\n0xd6d0: CMP #0xff\n0xd6d2: BEQ 0xd6e5\n0xd6d4: STA 0x481,X\n0xd6d7: STX 0x0000\n0xd6da: CPY 0x0000\n0xd6dd: BEQ 0xd6e4\n0xd6df: LDA #0xff\n0xd6e1: STA 0x481,Y\n0xd6e4: INX\n0xd6e5: INY\n0xd6e6: CPY #0xa\n0xd6e8: BCC 0xd6cd\n0xd6ea: CPX #0x0\n0xd6ec: BEQ 0xd6b9\n0xd6ee: LDA #0x81\n0xd6f0: STA 0x047c\n0xd6f3: JMP 0xd7a8\n0xd6f6: LDY 0x0012\n0xd6f9: LDA 0x047c\n0xd6fc: CMP #0xf\n0xd6fe: BEQ 0xd72d\n0xd700: LDA 0x481,Y\n0xd703: CMP #0xff\n0xd705: BNE 0xd71d\n0xd707: LDA 0x047c\n0xd70a: BEQ 0xd6b9\n0xd70c: LDA 0x151,Y\n0xd70f: STA 0x481,Y\n0xd712: DEC 0x047c\n0xd715: LDA #0x3e\n0xd717: JSR 0xd773\n0xd71a: JMP 0xd6b9\n0xd71d: LDA #0xff\n0xd71f: STA 0x481,Y\n0xd722: INC 0x047c\n0xd725: LDA #0x1\n0xd727: JSR 0xd773\n0xd72a: JMP 0xd6b9\n0xd72d: LDA 0x151,Y\n0xd730: STA 0x0481\n0xd733: LDA 0x0402\n0xd736: JSR 0xdd4f\n0xd739: CMP 0x0481\n0xd73c: BEQ 0xd746\n0xd73e: LDA #0x80\n0xd740: STA 0x047c\n0xd743: JMP 0xd7a8\n0xd746: LDA #0x81\n0xd748: STA 0x047c\n0xd74b: RTS",
+      "limitations": [
+        "Ghidra Listing reports a terminal call at 0xd6a5 to 0xd7c5 FUN_d7c5 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+        "Ghidra Listing reports a terminal call at 0xd6b6 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+        "Ghidra Listing reports a terminal call at 0xd6f3 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+        "Ghidra Listing reports a terminal call at 0xd743 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation."
+      ]
+    },
+    "normalized_result": "0xd64a: LDA 0x0425\n0xd64d: STA 0x0013\n0xd650: LDA #0x4c\n0xd652: STA 0x0010\n0xd655: LDA #0xd7\n0xd657: STA 0x0011\n0xd65a: LDA #0x0\n0xd65c: STA 0x0012\n0xd65f: JSR 0xed19\n0xd662: LDA 0x0012\n0xd665: CMP 0x047b\n0xd668: BEQ 0xd67c\n0xd66a: BCC 0xd67c\n0xd66c: LDX 0x047b\n0xd66f: LDA 0x0013\n0xd672: BEQ 0xd676\n0xd674: LDX #0x0\n0xd676: STX 0x0012\n0xd679: STX 0x0425\n0xd67c: LDA #0x58\n0xd67e: STA 0x0010\n0xd681: LDA #0xd7\n0xd683: STA 0x0011\n0xd686: LDA #0x6e\n0xd688: STA 0x0000\n0xd68b: LDA #0xd7\n0xd68d: STA 0x0001\n0xd690: LDA 0x0012\n0xd693: STA 0x047a\n0xd696: JSR 0xedf5\n0xd699: JSR 0xddad\n0xd69c: BCC 0xd6b9\n0xd69e: LDA 0x047c\n0xd6a1: CMP #0x10\n0xd6a3: BNE 0xd6a8\n0xd6a5: JMP 0xd7c5\n0xd6a8: LDA 0x0081\n0xd6ab: LSR A\n0xd6ac: BCS 0xd6ba\n0xd6ae: LSR A\n0xd6af: BCC 0xd6b9\n0xd6b1: LDA #0x90\n0xd6b3: STA 0x047c\n0xd6b6: JMP 0xd7a8\n0xd6b9: RTS\n0xd6ba: LDA 0x047c\n0xd6bd: CMP #0xf\n0xd6bf: BEQ 0xd6f6\n0xd6c1: LDA 0x0012\n0xd6c4: CMP 0x047b\n0xd6c7: BNE 0xd6f6\n0xd6c9: LDX #0x0\n0xd6cb: LDY #0x0\n0xd6cd: LDA 0x481,Y\n0xd6d0: CMP #0xff\n0xd6d2: BEQ 0xd6e5\n0xd6d4: STA 0x481,X\n0xd6d7: STX 0x0000\n0xd6da: CPY 0x0000\n0xd6dd: BEQ 0xd6e4\n0xd6df: LDA #0xff\n0xd6e1: STA 0x481,Y\n0xd6e4: INX\n0xd6e5: INY\n0xd6e6: CPY #0xa\n0xd6e8: BCC 0xd6cd\n0xd6ea: CPX #0x0\n0xd6ec: BEQ 0xd6b9\n0xd6ee: LDA #0x81\n0xd6f0: STA 0x047c\n0xd6f3: JMP 0xd7a8\n0xd6f6: LDY 0x0012\n0xd6f9: LDA 0x047c\n0xd6fc: CMP #0xf\n0xd6fe: BEQ 0xd72d\n0xd700: LDA 0x481,Y\n0xd703: CMP #0xff\n0xd705: BNE 0xd71d\n0xd707: LDA 0x047c\n0xd70a: BEQ 0xd6b9\n0xd70c: LDA 0x151,Y\n0xd70f: STA 0x481,Y\n0xd712: DEC 0x047c\n0xd715: LDA #0x3e\n0xd717: JSR 0xd773\n0xd71a: JMP 0xd6b9\n0xd71d: LDA #0xff\n0xd71f: STA 0x481,Y\n0xd722: INC 0x047c\n0xd725: LDA #0x1\n0xd727: JSR 0xd773\n0xd72a: JMP 0xd6b9\n0xd72d: LDA 0x151,Y\n0xd730: STA 0x0481\n0xd733: LDA 0x0402\n0xd736: JSR 0xdd4f\n0xd739: CMP 0x0481\n0xd73c: BEQ 0xd746\n0xd73e: LDA #0x80\n0xd740: STA 0x047c\n0xd743: JMP 0xd7a8\n0xd746: LDA #0x81\n0xd748: STA 0x047c\n0xd74b: RTS",
+    "confidence": "observed",
+    "authority": "shipped-artifact",
+    "environment": null,
+    "limitations": [
+      "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+      "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+      "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+      "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+      "Assembly is Ghidra Listing text and does not claim textual equivalence with Hopper output.",
+      "Ghidra Listing reports a terminal call at 0xd6a5 to 0xd7c5 FUN_d7c5 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+      "Ghidra Listing reports a terminal call at 0xd6b6 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+      "Ghidra Listing reports a terminal call at 0xd6f3 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+      "Ghidra Listing reports a terminal call at 0xd743 to 0xd7a8 FUN_d7a8 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+      "macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+      "Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.",
+      "Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.",
+      "Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.",
+      "Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-27/seeds.tsv (sha256 84d0238e728b8735aad1d9dac0c407a406371a7a209c30a944cdadf181d92eb5: 9 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.",
+      "Seed outcome: 8 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory."
+    ],
+    "relationship_coverage": null,
+    "locations": [],
+    "evidence_links": []
+  }
+}

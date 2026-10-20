@@ -1,0 +1,7002 @@
+[
+  {
+    "physical_bank": 12,
+    "cpu_address": 45168,
+    "prg_offset": 102512,
+    "rom_offset": 102528,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45171,
+    "prg_offset": 102515,
+    "rom_offset": 102531,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45174,
+    "prg_offset": 102518,
+    "rom_offset": 102534,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45177,
+    "prg_offset": 102521,
+    "rom_offset": 102537,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45179,
+    "prg_offset": 102523,
+    "rom_offset": 102539,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45181,
+    "prg_offset": 102525,
+    "rom_offset": 102541,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45182,
+    "prg_offset": 102526,
+    "rom_offset": 102542,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45183,
+    "prg_offset": 102527,
+    "rom_offset": 102543,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45184,
+    "prg_offset": 102528,
+    "rom_offset": 102544,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45185,
+    "prg_offset": 102529,
+    "rom_offset": 102545,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45186,
+    "prg_offset": 102530,
+    "rom_offset": 102546,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45188,
+    "prg_offset": 102532,
+    "rom_offset": 102548,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45189,
+    "prg_offset": 102533,
+    "rom_offset": 102549,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45190,
+    "prg_offset": 102534,
+    "rom_offset": 102550,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45191,
+    "prg_offset": 102535,
+    "rom_offset": 102551,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45193,
+    "prg_offset": 102537,
+    "rom_offset": 102553,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45194,
+    "prg_offset": 102538,
+    "rom_offset": 102554,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45196,
+    "prg_offset": 102540,
+    "rom_offset": 102556,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45198,
+    "prg_offset": 102542,
+    "rom_offset": 102558,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45200,
+    "prg_offset": 102544,
+    "rom_offset": 102560,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45202,
+    "prg_offset": 102546,
+    "rom_offset": 102562,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45204,
+    "prg_offset": 102548,
+    "rom_offset": 102564,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45206,
+    "prg_offset": 102550,
+    "rom_offset": 102566,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45208,
+    "prg_offset": 102552,
+    "rom_offset": 102568,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45211,
+    "prg_offset": 102555,
+    "rom_offset": 102571,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45212,
+    "prg_offset": 102556,
+    "rom_offset": 102572,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45214,
+    "prg_offset": 102558,
+    "rom_offset": 102574,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45216,
+    "prg_offset": 102560,
+    "rom_offset": 102576,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45219,
+    "prg_offset": 102563,
+    "rom_offset": 102579,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45221,
+    "prg_offset": 102565,
+    "rom_offset": 102581,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45223,
+    "prg_offset": 102567,
+    "rom_offset": 102583,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45225,
+    "prg_offset": 102569,
+    "rom_offset": 102585,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45227,
+    "prg_offset": 102571,
+    "rom_offset": 102587,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45229,
+    "prg_offset": 102573,
+    "rom_offset": 102589,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45231,
+    "prg_offset": 102575,
+    "rom_offset": 102591,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45233,
+    "prg_offset": 102577,
+    "rom_offset": 102593,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45235,
+    "prg_offset": 102579,
+    "rom_offset": 102595,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45238,
+    "prg_offset": 102582,
+    "rom_offset": 102598,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45239,
+    "prg_offset": 102583,
+    "rom_offset": 102599,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45240,
+    "prg_offset": 102584,
+    "rom_offset": 102600,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45242,
+    "prg_offset": 102586,
+    "rom_offset": 102602,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45244,
+    "prg_offset": 102588,
+    "rom_offset": 102604,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45246,
+    "prg_offset": 102590,
+    "rom_offset": 102606,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45248,
+    "prg_offset": 102592,
+    "rom_offset": 102608,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45250,
+    "prg_offset": 102594,
+    "rom_offset": 102610,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45251,
+    "prg_offset": 102595,
+    "rom_offset": 102611,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45253,
+    "prg_offset": 102597,
+    "rom_offset": 102613,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45255,
+    "prg_offset": 102599,
+    "rom_offset": 102615,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45257,
+    "prg_offset": 102601,
+    "rom_offset": 102617,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45259,
+    "prg_offset": 102603,
+    "rom_offset": 102619,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45291,
+    "prg_offset": 102635,
+    "rom_offset": 102651,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45294,
+    "prg_offset": 102638,
+    "rom_offset": 102654,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45297,
+    "prg_offset": 102641,
+    "rom_offset": 102657,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45300,
+    "prg_offset": 102644,
+    "rom_offset": 102660,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45302,
+    "prg_offset": 102646,
+    "rom_offset": 102662,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45304,
+    "prg_offset": 102648,
+    "rom_offset": 102664,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45305,
+    "prg_offset": 102649,
+    "rom_offset": 102665,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45306,
+    "prg_offset": 102650,
+    "rom_offset": 102666,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45307,
+    "prg_offset": 102651,
+    "rom_offset": 102667,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45308,
+    "prg_offset": 102652,
+    "rom_offset": 102668,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45309,
+    "prg_offset": 102653,
+    "rom_offset": 102669,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45311,
+    "prg_offset": 102655,
+    "rom_offset": 102671,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45313,
+    "prg_offset": 102657,
+    "rom_offset": 102673,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45314,
+    "prg_offset": 102658,
+    "rom_offset": 102674,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45316,
+    "prg_offset": 102660,
+    "rom_offset": 102676,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45318,
+    "prg_offset": 102662,
+    "rom_offset": 102678,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45320,
+    "prg_offset": 102664,
+    "rom_offset": 102680,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45322,
+    "prg_offset": 102666,
+    "rom_offset": 102682,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45324,
+    "prg_offset": 102668,
+    "rom_offset": 102684,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45326,
+    "prg_offset": 102670,
+    "rom_offset": 102686,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45328,
+    "prg_offset": 102672,
+    "rom_offset": 102688,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45330,
+    "prg_offset": 102674,
+    "rom_offset": 102690,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45333,
+    "prg_offset": 102677,
+    "rom_offset": 102693,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45334,
+    "prg_offset": 102678,
+    "rom_offset": 102694,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45335,
+    "prg_offset": 102679,
+    "rom_offset": 102695,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45337,
+    "prg_offset": 102681,
+    "rom_offset": 102697,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45339,
+    "prg_offset": 102683,
+    "rom_offset": 102699,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45341,
+    "prg_offset": 102685,
+    "rom_offset": 102701,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45343,
+    "prg_offset": 102687,
+    "rom_offset": 102703,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45345,
+    "prg_offset": 102689,
+    "rom_offset": 102705,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45347,
+    "prg_offset": 102691,
+    "rom_offset": 102707,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45350,
+    "prg_offset": 102694,
+    "rom_offset": 102710,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45351,
+    "prg_offset": 102695,
+    "rom_offset": 102711,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45353,
+    "prg_offset": 102697,
+    "rom_offset": 102713,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45355,
+    "prg_offset": 102699,
+    "rom_offset": 102715,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45358,
+    "prg_offset": 102702,
+    "rom_offset": 102718,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45360,
+    "prg_offset": 102704,
+    "rom_offset": 102720,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45362,
+    "prg_offset": 102706,
+    "rom_offset": 102722,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45364,
+    "prg_offset": 102708,
+    "rom_offset": 102724,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45366,
+    "prg_offset": 102710,
+    "rom_offset": 102726,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45368,
+    "prg_offset": 102712,
+    "rom_offset": 102728,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45370,
+    "prg_offset": 102714,
+    "rom_offset": 102730,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45372,
+    "prg_offset": 102716,
+    "rom_offset": 102732,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45374,
+    "prg_offset": 102718,
+    "rom_offset": 102734,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45377,
+    "prg_offset": 102721,
+    "rom_offset": 102737,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45379,
+    "prg_offset": 102723,
+    "rom_offset": 102739,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45448,
+    "prg_offset": 102792,
+    "rom_offset": 102808,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45451,
+    "prg_offset": 102795,
+    "rom_offset": 102811,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45454,
+    "prg_offset": 102798,
+    "rom_offset": 102814,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45457,
+    "prg_offset": 102801,
+    "rom_offset": 102817,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45459,
+    "prg_offset": 102803,
+    "rom_offset": 102819,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45461,
+    "prg_offset": 102805,
+    "rom_offset": 102821,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45463,
+    "prg_offset": 102807,
+    "rom_offset": 102823,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45465,
+    "prg_offset": 102809,
+    "rom_offset": 102825,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45467,
+    "prg_offset": 102811,
+    "rom_offset": 102827,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45469,
+    "prg_offset": 102813,
+    "rom_offset": 102829,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45471,
+    "prg_offset": 102815,
+    "rom_offset": 102831,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45474,
+    "prg_offset": 102818,
+    "rom_offset": 102834,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45475,
+    "prg_offset": 102819,
+    "rom_offset": 102835,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45477,
+    "prg_offset": 102821,
+    "rom_offset": 102837,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45479,
+    "prg_offset": 102823,
+    "rom_offset": 102839,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45482,
+    "prg_offset": 102826,
+    "rom_offset": 102842,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45484,
+    "prg_offset": 102828,
+    "rom_offset": 102844,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45486,
+    "prg_offset": 102830,
+    "rom_offset": 102846,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45488,
+    "prg_offset": 102832,
+    "rom_offset": 102848,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45490,
+    "prg_offset": 102834,
+    "rom_offset": 102850,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45492,
+    "prg_offset": 102836,
+    "rom_offset": 102852,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45494,
+    "prg_offset": 102838,
+    "rom_offset": 102854,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45496,
+    "prg_offset": 102840,
+    "rom_offset": 102856,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45498,
+    "prg_offset": 102842,
+    "rom_offset": 102858,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45501,
+    "prg_offset": 102845,
+    "rom_offset": 102861,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45503,
+    "prg_offset": 102847,
+    "rom_offset": 102863,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45505,
+    "prg_offset": 102849,
+    "rom_offset": 102865,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45507,
+    "prg_offset": 102851,
+    "rom_offset": 102867,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45539,
+    "prg_offset": 102883,
+    "rom_offset": 102899,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45542,
+    "prg_offset": 102886,
+    "rom_offset": 102902,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45545,
+    "prg_offset": 102889,
+    "rom_offset": 102905,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45548,
+    "prg_offset": 102892,
+    "rom_offset": 102908,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45550,
+    "prg_offset": 102894,
+    "rom_offset": 102910,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45552,
+    "prg_offset": 102896,
+    "rom_offset": 102912,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45553,
+    "prg_offset": 102897,
+    "rom_offset": 102913,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45554,
+    "prg_offset": 102898,
+    "rom_offset": 102914,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45555,
+    "prg_offset": 102899,
+    "rom_offset": 102915,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45556,
+    "prg_offset": 102900,
+    "rom_offset": 102916,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45557,
+    "prg_offset": 102901,
+    "rom_offset": 102917,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45559,
+    "prg_offset": 102903,
+    "rom_offset": 102919,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45561,
+    "prg_offset": 102905,
+    "rom_offset": 102921,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45563,
+    "prg_offset": 102907,
+    "rom_offset": 102923,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45565,
+    "prg_offset": 102909,
+    "rom_offset": 102925,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45567,
+    "prg_offset": 102911,
+    "rom_offset": 102927,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45569,
+    "prg_offset": 102913,
+    "rom_offset": 102929,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45571,
+    "prg_offset": 102915,
+    "rom_offset": 102931,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45574,
+    "prg_offset": 102918,
+    "rom_offset": 102934,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45575,
+    "prg_offset": 102919,
+    "rom_offset": 102935,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45577,
+    "prg_offset": 102921,
+    "rom_offset": 102937,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45579,
+    "prg_offset": 102923,
+    "rom_offset": 102939,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45582,
+    "prg_offset": 102926,
+    "rom_offset": 102942,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45584,
+    "prg_offset": 102928,
+    "rom_offset": 102944,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45586,
+    "prg_offset": 102930,
+    "rom_offset": 102946,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45588,
+    "prg_offset": 102932,
+    "rom_offset": 102948,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45590,
+    "prg_offset": 102934,
+    "rom_offset": 102950,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45592,
+    "prg_offset": 102936,
+    "rom_offset": 102952,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45594,
+    "prg_offset": 102938,
+    "rom_offset": 102954,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45596,
+    "prg_offset": 102940,
+    "rom_offset": 102956,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45598,
+    "prg_offset": 102942,
+    "rom_offset": 102958,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45601,
+    "prg_offset": 102945,
+    "rom_offset": 102961,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45602,
+    "prg_offset": 102946,
+    "rom_offset": 102962,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45603,
+    "prg_offset": 102947,
+    "rom_offset": 102963,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45605,
+    "prg_offset": 102949,
+    "rom_offset": 102965,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45607,
+    "prg_offset": 102951,
+    "rom_offset": 102967,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45609,
+    "prg_offset": 102953,
+    "rom_offset": 102969,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45611,
+    "prg_offset": 102955,
+    "rom_offset": 102971,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45613,
+    "prg_offset": 102957,
+    "rom_offset": 102973,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45615,
+    "prg_offset": 102959,
+    "rom_offset": 102975,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 45617,
+    "prg_offset": 102961,
+    "rom_offset": 102977,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46278,
+    "prg_offset": 103622,
+    "rom_offset": 103638,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46281,
+    "prg_offset": 103625,
+    "rom_offset": 103641,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46284,
+    "prg_offset": 103628,
+    "rom_offset": 103644,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46287,
+    "prg_offset": 103631,
+    "rom_offset": 103647,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46289,
+    "prg_offset": 103633,
+    "rom_offset": 103649,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46291,
+    "prg_offset": 103635,
+    "rom_offset": 103651,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46293,
+    "prg_offset": 103637,
+    "rom_offset": 103653,
+    "executions": 660
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46296,
+    "prg_offset": 103640,
+    "rom_offset": 103656,
+    "executions": 660
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46298,
+    "prg_offset": 103642,
+    "rom_offset": 103658,
+    "executions": 660
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46300,
+    "prg_offset": 103644,
+    "rom_offset": 103660,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46301,
+    "prg_offset": 103645,
+    "rom_offset": 103661,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46303,
+    "prg_offset": 103647,
+    "rom_offset": 103663,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46305,
+    "prg_offset": 103649,
+    "rom_offset": 103665,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46307,
+    "prg_offset": 103651,
+    "rom_offset": 103667,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46309,
+    "prg_offset": 103653,
+    "rom_offset": 103669,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46311,
+    "prg_offset": 103655,
+    "rom_offset": 103671,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46313,
+    "prg_offset": 103657,
+    "rom_offset": 103673,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46315,
+    "prg_offset": 103659,
+    "rom_offset": 103675,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46316,
+    "prg_offset": 103660,
+    "rom_offset": 103676,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46318,
+    "prg_offset": 103662,
+    "rom_offset": 103678,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46320,
+    "prg_offset": 103664,
+    "rom_offset": 103680,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46321,
+    "prg_offset": 103665,
+    "rom_offset": 103681,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46322,
+    "prg_offset": 103666,
+    "rom_offset": 103682,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46324,
+    "prg_offset": 103668,
+    "rom_offset": 103684,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46326,
+    "prg_offset": 103670,
+    "rom_offset": 103686,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46328,
+    "prg_offset": 103672,
+    "rom_offset": 103688,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46330,
+    "prg_offset": 103674,
+    "rom_offset": 103690,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46428,
+    "prg_offset": 103772,
+    "rom_offset": 103788,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46431,
+    "prg_offset": 103775,
+    "rom_offset": 103791,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46434,
+    "prg_offset": 103778,
+    "rom_offset": 103794,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46437,
+    "prg_offset": 103781,
+    "rom_offset": 103797,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46439,
+    "prg_offset": 103783,
+    "rom_offset": 103799,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46442,
+    "prg_offset": 103786,
+    "rom_offset": 103802,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46443,
+    "prg_offset": 103787,
+    "rom_offset": 103803,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46445,
+    "prg_offset": 103789,
+    "rom_offset": 103805,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46447,
+    "prg_offset": 103791,
+    "rom_offset": 103807,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46449,
+    "prg_offset": 103793,
+    "rom_offset": 103809,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46451,
+    "prg_offset": 103795,
+    "rom_offset": 103811,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46453,
+    "prg_offset": 103797,
+    "rom_offset": 103813,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46455,
+    "prg_offset": 103799,
+    "rom_offset": 103815,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46457,
+    "prg_offset": 103801,
+    "rom_offset": 103817,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46459,
+    "prg_offset": 103803,
+    "rom_offset": 103819,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46462,
+    "prg_offset": 103806,
+    "rom_offset": 103822,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46464,
+    "prg_offset": 103808,
+    "rom_offset": 103824,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46466,
+    "prg_offset": 103810,
+    "rom_offset": 103826,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46468,
+    "prg_offset": 103812,
+    "rom_offset": 103828,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46470,
+    "prg_offset": 103814,
+    "rom_offset": 103830,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46472,
+    "prg_offset": 103816,
+    "rom_offset": 103832,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46474,
+    "prg_offset": 103818,
+    "rom_offset": 103834,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46476,
+    "prg_offset": 103820,
+    "rom_offset": 103836,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46478,
+    "prg_offset": 103822,
+    "rom_offset": 103838,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46481,
+    "prg_offset": 103825,
+    "rom_offset": 103841,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46483,
+    "prg_offset": 103827,
+    "rom_offset": 103843,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46485,
+    "prg_offset": 103829,
+    "rom_offset": 103845,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46487,
+    "prg_offset": 103831,
+    "rom_offset": 103847,
+    "executions": 512
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46552,
+    "prg_offset": 103896,
+    "rom_offset": 103912,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46554,
+    "prg_offset": 103898,
+    "rom_offset": 103914,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46556,
+    "prg_offset": 103900,
+    "rom_offset": 103916,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46558,
+    "prg_offset": 103902,
+    "rom_offset": 103918,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46559,
+    "prg_offset": 103903,
+    "rom_offset": 103919,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46561,
+    "prg_offset": 103905,
+    "rom_offset": 103921,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46563,
+    "prg_offset": 103907,
+    "rom_offset": 103923,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46565,
+    "prg_offset": 103909,
+    "rom_offset": 103925,
+    "executions": 28
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46567,
+    "prg_offset": 103911,
+    "rom_offset": 103927,
+    "executions": 28
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46569,
+    "prg_offset": 103913,
+    "rom_offset": 103929,
+    "executions": 28
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46571,
+    "prg_offset": 103915,
+    "rom_offset": 103931,
+    "executions": 28
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46573,
+    "prg_offset": 103917,
+    "rom_offset": 103933,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46575,
+    "prg_offset": 103919,
+    "rom_offset": 103935,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46577,
+    "prg_offset": 103921,
+    "rom_offset": 103937,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46579,
+    "prg_offset": 103923,
+    "rom_offset": 103939,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46581,
+    "prg_offset": 103925,
+    "rom_offset": 103941,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46584,
+    "prg_offset": 103928,
+    "rom_offset": 103944,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46586,
+    "prg_offset": 103930,
+    "rom_offset": 103946,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46589,
+    "prg_offset": 103933,
+    "rom_offset": 103949,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46592,
+    "prg_offset": 103936,
+    "rom_offset": 103952,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46594,
+    "prg_offset": 103938,
+    "rom_offset": 103954,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46597,
+    "prg_offset": 103941,
+    "rom_offset": 103957,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46599,
+    "prg_offset": 103943,
+    "rom_offset": 103959,
+    "executions": 64
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46601,
+    "prg_offset": 103945,
+    "rom_offset": 103961,
+    "executions": 36
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46603,
+    "prg_offset": 103947,
+    "rom_offset": 103963,
+    "executions": 36
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46605,
+    "prg_offset": 103949,
+    "rom_offset": 103965,
+    "executions": 36
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46607,
+    "prg_offset": 103951,
+    "rom_offset": 103967,
+    "executions": 36
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46658,
+    "prg_offset": 104002,
+    "rom_offset": 104018,
+    "executions": 28
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46731,
+    "prg_offset": 104075,
+    "rom_offset": 104091,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46733,
+    "prg_offset": 104077,
+    "rom_offset": 104093,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46735,
+    "prg_offset": 104079,
+    "rom_offset": 104095,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46737,
+    "prg_offset": 104081,
+    "rom_offset": 104097,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46738,
+    "prg_offset": 104082,
+    "rom_offset": 104098,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46740,
+    "prg_offset": 104084,
+    "rom_offset": 104100,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46742,
+    "prg_offset": 104086,
+    "rom_offset": 104102,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46744,
+    "prg_offset": 104088,
+    "rom_offset": 104104,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46746,
+    "prg_offset": 104090,
+    "rom_offset": 104106,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46747,
+    "prg_offset": 104091,
+    "rom_offset": 104107,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46749,
+    "prg_offset": 104093,
+    "rom_offset": 104109,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46751,
+    "prg_offset": 104095,
+    "rom_offset": 104111,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46753,
+    "prg_offset": 104097,
+    "rom_offset": 104113,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46755,
+    "prg_offset": 104099,
+    "rom_offset": 104115,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46757,
+    "prg_offset": 104101,
+    "rom_offset": 104117,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46759,
+    "prg_offset": 104103,
+    "rom_offset": 104119,
+    "executions": 180
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46761,
+    "prg_offset": 104105,
+    "rom_offset": 104121,
+    "executions": 180
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46763,
+    "prg_offset": 104107,
+    "rom_offset": 104123,
+    "executions": 180
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46765,
+    "prg_offset": 104109,
+    "rom_offset": 104125,
+    "executions": 180
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46767,
+    "prg_offset": 104111,
+    "rom_offset": 104127,
+    "executions": 180
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46769,
+    "prg_offset": 104113,
+    "rom_offset": 104129,
+    "executions": 180
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46771,
+    "prg_offset": 104115,
+    "rom_offset": 104131,
+    "executions": 180
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46773,
+    "prg_offset": 104117,
+    "rom_offset": 104133,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46775,
+    "prg_offset": 104119,
+    "rom_offset": 104135,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46777,
+    "prg_offset": 104121,
+    "rom_offset": 104137,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46779,
+    "prg_offset": 104123,
+    "rom_offset": 104139,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46780,
+    "prg_offset": 104124,
+    "rom_offset": 104140,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46782,
+    "prg_offset": 104126,
+    "rom_offset": 104142,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46784,
+    "prg_offset": 104128,
+    "rom_offset": 104144,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46786,
+    "prg_offset": 104130,
+    "rom_offset": 104146,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46787,
+    "prg_offset": 104131,
+    "rom_offset": 104147,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46790,
+    "prg_offset": 104134,
+    "rom_offset": 104150,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46793,
+    "prg_offset": 104137,
+    "rom_offset": 104153,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46795,
+    "prg_offset": 104139,
+    "rom_offset": 104155,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46798,
+    "prg_offset": 104142,
+    "rom_offset": 104158,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46801,
+    "prg_offset": 104145,
+    "rom_offset": 104161,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46803,
+    "prg_offset": 104147,
+    "rom_offset": 104163,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46806,
+    "prg_offset": 104150,
+    "rom_offset": 104166,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46809,
+    "prg_offset": 104153,
+    "rom_offset": 104169,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46812,
+    "prg_offset": 104156,
+    "rom_offset": 104172,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46814,
+    "prg_offset": 104158,
+    "rom_offset": 104174,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46817,
+    "prg_offset": 104161,
+    "rom_offset": 104177,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46819,
+    "prg_offset": 104163,
+    "rom_offset": 104179,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46822,
+    "prg_offset": 104166,
+    "rom_offset": 104182,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46824,
+    "prg_offset": 104168,
+    "rom_offset": 104184,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46826,
+    "prg_offset": 104170,
+    "rom_offset": 104186,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46831,
+    "prg_offset": 104175,
+    "rom_offset": 104191,
+    "executions": 378
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46891,
+    "prg_offset": 104235,
+    "rom_offset": 104251,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46894,
+    "prg_offset": 104238,
+    "rom_offset": 104254,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46896,
+    "prg_offset": 104240,
+    "rom_offset": 104256,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46898,
+    "prg_offset": 104242,
+    "rom_offset": 104258,
+    "executions": 1576
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46901,
+    "prg_offset": 104245,
+    "rom_offset": 104261,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46904,
+    "prg_offset": 104248,
+    "rom_offset": 104264,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46907,
+    "prg_offset": 104251,
+    "rom_offset": 104267,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46910,
+    "prg_offset": 104254,
+    "rom_offset": 104270,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46912,
+    "prg_offset": 104256,
+    "rom_offset": 104272,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46914,
+    "prg_offset": 104258,
+    "rom_offset": 104274,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46916,
+    "prg_offset": 104260,
+    "rom_offset": 104276,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46917,
+    "prg_offset": 104261,
+    "rom_offset": 104277,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46918,
+    "prg_offset": 104262,
+    "rom_offset": 104278,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46919,
+    "prg_offset": 104263,
+    "rom_offset": 104279,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46920,
+    "prg_offset": 104264,
+    "rom_offset": 104280,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46922,
+    "prg_offset": 104266,
+    "rom_offset": 104282,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46924,
+    "prg_offset": 104268,
+    "rom_offset": 104284,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46926,
+    "prg_offset": 104270,
+    "rom_offset": 104286,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46928,
+    "prg_offset": 104272,
+    "rom_offset": 104288,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46930,
+    "prg_offset": 104274,
+    "rom_offset": 104290,
+    "executions": 350
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46931,
+    "prg_offset": 104275,
+    "rom_offset": 104291,
+    "executions": 350
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46933,
+    "prg_offset": 104277,
+    "rom_offset": 104293,
+    "executions": 350
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46935,
+    "prg_offset": 104279,
+    "rom_offset": 104295,
+    "executions": 252
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46936,
+    "prg_offset": 104280,
+    "rom_offset": 104296,
+    "executions": 252
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46938,
+    "prg_offset": 104282,
+    "rom_offset": 104298,
+    "executions": 252
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46940,
+    "prg_offset": 104284,
+    "rom_offset": 104300,
+    "executions": 154
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46941,
+    "prg_offset": 104285,
+    "rom_offset": 104301,
+    "executions": 154
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46942,
+    "prg_offset": 104286,
+    "rom_offset": 104302,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46945,
+    "prg_offset": 104289,
+    "rom_offset": 104305,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46947,
+    "prg_offset": 104291,
+    "rom_offset": 104307,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46950,
+    "prg_offset": 104294,
+    "rom_offset": 104310,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46953,
+    "prg_offset": 104297,
+    "rom_offset": 104313,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46956,
+    "prg_offset": 104300,
+    "rom_offset": 104316,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46958,
+    "prg_offset": 104302,
+    "rom_offset": 104318,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46960,
+    "prg_offset": 104304,
+    "rom_offset": 104320,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46962,
+    "prg_offset": 104306,
+    "rom_offset": 104322,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46964,
+    "prg_offset": 104308,
+    "rom_offset": 104324,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46966,
+    "prg_offset": 104310,
+    "rom_offset": 104326,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46968,
+    "prg_offset": 104312,
+    "rom_offset": 104328,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46969,
+    "prg_offset": 104313,
+    "rom_offset": 104329,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46970,
+    "prg_offset": 104314,
+    "rom_offset": 104330,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46971,
+    "prg_offset": 104315,
+    "rom_offset": 104331,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46972,
+    "prg_offset": 104316,
+    "rom_offset": 104332,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46973,
+    "prg_offset": 104317,
+    "rom_offset": 104333,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46975,
+    "prg_offset": 104319,
+    "rom_offset": 104335,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46977,
+    "prg_offset": 104321,
+    "rom_offset": 104337,
+    "executions": 137
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46979,
+    "prg_offset": 104323,
+    "rom_offset": 104339,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46980,
+    "prg_offset": 104324,
+    "rom_offset": 104340,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46982,
+    "prg_offset": 104326,
+    "rom_offset": 104342,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46984,
+    "prg_offset": 104328,
+    "rom_offset": 104344,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46986,
+    "prg_offset": 104330,
+    "rom_offset": 104346,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46988,
+    "prg_offset": 104332,
+    "rom_offset": 104348,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46990,
+    "prg_offset": 104334,
+    "rom_offset": 104350,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46992,
+    "prg_offset": 104336,
+    "rom_offset": 104352,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46993,
+    "prg_offset": 104337,
+    "rom_offset": 104353,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46995,
+    "prg_offset": 104339,
+    "rom_offset": 104355,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46997,
+    "prg_offset": 104341,
+    "rom_offset": 104357,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 46999,
+    "prg_offset": 104343,
+    "rom_offset": 104359,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47001,
+    "prg_offset": 104345,
+    "rom_offset": 104361,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47003,
+    "prg_offset": 104347,
+    "rom_offset": 104363,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47005,
+    "prg_offset": 104349,
+    "rom_offset": 104365,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47007,
+    "prg_offset": 104351,
+    "rom_offset": 104367,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47010,
+    "prg_offset": 104354,
+    "rom_offset": 104370,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47012,
+    "prg_offset": 104356,
+    "rom_offset": 104372,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47013,
+    "prg_offset": 104357,
+    "rom_offset": 104373,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47015,
+    "prg_offset": 104359,
+    "rom_offset": 104375,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47017,
+    "prg_offset": 104361,
+    "rom_offset": 104377,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47019,
+    "prg_offset": 104363,
+    "rom_offset": 104379,
+    "executions": 788
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47022,
+    "prg_offset": 104366,
+    "rom_offset": 104382,
+    "executions": 788
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47024,
+    "prg_offset": 104368,
+    "rom_offset": 104384,
+    "executions": 788
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47026,
+    "prg_offset": 104370,
+    "rom_offset": 104386,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47028,
+    "prg_offset": 104372,
+    "rom_offset": 104388,
+    "executions": 318
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47030,
+    "prg_offset": 104374,
+    "rom_offset": 104390,
+    "executions": 1713
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47031,
+    "prg_offset": 104375,
+    "rom_offset": 104391,
+    "executions": 1713
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47032,
+    "prg_offset": 104376,
+    "rom_offset": 104392,
+    "executions": 181
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47033,
+    "prg_offset": 104377,
+    "rom_offset": 104393,
+    "executions": 181
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47038,
+    "prg_offset": 104382,
+    "rom_offset": 104398,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47041,
+    "prg_offset": 104385,
+    "rom_offset": 104401,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47044,
+    "prg_offset": 104388,
+    "rom_offset": 104404,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47047,
+    "prg_offset": 104391,
+    "rom_offset": 104407,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47049,
+    "prg_offset": 104393,
+    "rom_offset": 104409,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47051,
+    "prg_offset": 104395,
+    "rom_offset": 104411,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47053,
+    "prg_offset": 104397,
+    "rom_offset": 104413,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47055,
+    "prg_offset": 104399,
+    "rom_offset": 104415,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47057,
+    "prg_offset": 104401,
+    "rom_offset": 104417,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47058,
+    "prg_offset": 104402,
+    "rom_offset": 104418,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47059,
+    "prg_offset": 104403,
+    "rom_offset": 104419,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47060,
+    "prg_offset": 104404,
+    "rom_offset": 104420,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47061,
+    "prg_offset": 104405,
+    "rom_offset": 104421,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47063,
+    "prg_offset": 104407,
+    "rom_offset": 104423,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47066,
+    "prg_offset": 104410,
+    "rom_offset": 104426,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47069,
+    "prg_offset": 104413,
+    "rom_offset": 104429,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47072,
+    "prg_offset": 104416,
+    "rom_offset": 104432,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47074,
+    "prg_offset": 104418,
+    "rom_offset": 104434,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47076,
+    "prg_offset": 104420,
+    "rom_offset": 104436,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47078,
+    "prg_offset": 104422,
+    "rom_offset": 104438,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47080,
+    "prg_offset": 104424,
+    "rom_offset": 104440,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47082,
+    "prg_offset": 104426,
+    "rom_offset": 104442,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47083,
+    "prg_offset": 104427,
+    "rom_offset": 104443,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47084,
+    "prg_offset": 104428,
+    "rom_offset": 104444,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47085,
+    "prg_offset": 104429,
+    "rom_offset": 104445,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47086,
+    "prg_offset": 104430,
+    "rom_offset": 104446,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47088,
+    "prg_offset": 104432,
+    "rom_offset": 104448,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47090,
+    "prg_offset": 104434,
+    "rom_offset": 104450,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47091,
+    "prg_offset": 104435,
+    "rom_offset": 104451,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47093,
+    "prg_offset": 104437,
+    "rom_offset": 104453,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47095,
+    "prg_offset": 104439,
+    "rom_offset": 104455,
+    "executions": 991
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47097,
+    "prg_offset": 104441,
+    "rom_offset": 104457,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47099,
+    "prg_offset": 104443,
+    "rom_offset": 104459,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47101,
+    "prg_offset": 104445,
+    "rom_offset": 104461,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47102,
+    "prg_offset": 104446,
+    "rom_offset": 104462,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47104,
+    "prg_offset": 104448,
+    "rom_offset": 104464,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47106,
+    "prg_offset": 104450,
+    "rom_offset": 104466,
+    "executions": 909
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47108,
+    "prg_offset": 104452,
+    "rom_offset": 104468,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47109,
+    "prg_offset": 104453,
+    "rom_offset": 104469,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47111,
+    "prg_offset": 104455,
+    "rom_offset": 104471,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47114,
+    "prg_offset": 104458,
+    "rom_offset": 104474,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47115,
+    "prg_offset": 104459,
+    "rom_offset": 104475,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47117,
+    "prg_offset": 104461,
+    "rom_offset": 104477,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47119,
+    "prg_offset": 104463,
+    "rom_offset": 104479,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47122,
+    "prg_offset": 104466,
+    "rom_offset": 104482,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47124,
+    "prg_offset": 104468,
+    "rom_offset": 104484,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47126,
+    "prg_offset": 104470,
+    "rom_offset": 104486,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47129,
+    "prg_offset": 104473,
+    "rom_offset": 104489,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47131,
+    "prg_offset": 104475,
+    "rom_offset": 104491,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47133,
+    "prg_offset": 104477,
+    "rom_offset": 104493,
+    "executions": 123
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47136,
+    "prg_offset": 104480,
+    "rom_offset": 104496,
+    "executions": 123
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47138,
+    "prg_offset": 104482,
+    "rom_offset": 104498,
+    "executions": 123
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47140,
+    "prg_offset": 104484,
+    "rom_offset": 104500,
+    "executions": 123
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47142,
+    "prg_offset": 104486,
+    "rom_offset": 104502,
+    "executions": 123
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47144,
+    "prg_offset": 104488,
+    "rom_offset": 104504,
+    "executions": 123
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47146,
+    "prg_offset": 104490,
+    "rom_offset": 104506,
+    "executions": 123
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47148,
+    "prg_offset": 104492,
+    "rom_offset": 104508,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47150,
+    "prg_offset": 104494,
+    "rom_offset": 104510,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47152,
+    "prg_offset": 104496,
+    "rom_offset": 104512,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47153,
+    "prg_offset": 104497,
+    "rom_offset": 104513,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47155,
+    "prg_offset": 104499,
+    "rom_offset": 104515,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47156,
+    "prg_offset": 104500,
+    "rom_offset": 104516,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47158,
+    "prg_offset": 104502,
+    "rom_offset": 104518,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47159,
+    "prg_offset": 104503,
+    "rom_offset": 104519,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47161,
+    "prg_offset": 104505,
+    "rom_offset": 104521,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47163,
+    "prg_offset": 104507,
+    "rom_offset": 104523,
+    "executions": 80
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47165,
+    "prg_offset": 104509,
+    "rom_offset": 104525,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47167,
+    "prg_offset": 104511,
+    "rom_offset": 104527,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47169,
+    "prg_offset": 104513,
+    "rom_offset": 104529,
+    "executions": 35
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47171,
+    "prg_offset": 104515,
+    "rom_offset": 104531,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47173,
+    "prg_offset": 104517,
+    "rom_offset": 104533,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47175,
+    "prg_offset": 104519,
+    "rom_offset": 104535,
+    "executions": 122
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47177,
+    "prg_offset": 104521,
+    "rom_offset": 104537,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47179,
+    "prg_offset": 104523,
+    "rom_offset": 104539,
+    "executions": 1176
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47182,
+    "prg_offset": 104526,
+    "rom_offset": 104542,
+    "executions": 1176
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47184,
+    "prg_offset": 104528,
+    "rom_offset": 104544,
+    "executions": 1176
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47186,
+    "prg_offset": 104530,
+    "rom_offset": 104546,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47188,
+    "prg_offset": 104532,
+    "rom_offset": 104548,
+    "executions": 472
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47190,
+    "prg_offset": 104534,
+    "rom_offset": 104550,
+    "executions": 1884
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47191,
+    "prg_offset": 104535,
+    "rom_offset": 104551,
+    "executions": 1884
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47192,
+    "prg_offset": 104536,
+    "rom_offset": 104552,
+    "executions": 164
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47193,
+    "prg_offset": 104537,
+    "rom_offset": 104553,
+    "executions": 164
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47200,
+    "prg_offset": 104544,
+    "rom_offset": 104560,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47203,
+    "prg_offset": 104547,
+    "rom_offset": 104563,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47206,
+    "prg_offset": 104550,
+    "rom_offset": 104566,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47208,
+    "prg_offset": 104552,
+    "rom_offset": 104568,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47210,
+    "prg_offset": 104554,
+    "rom_offset": 104570,
+    "executions": 10175
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47212,
+    "prg_offset": 104556,
+    "rom_offset": 104572,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47214,
+    "prg_offset": 104558,
+    "rom_offset": 104574,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47217,
+    "prg_offset": 104561,
+    "rom_offset": 104577,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47220,
+    "prg_offset": 104564,
+    "rom_offset": 104580,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47222,
+    "prg_offset": 104566,
+    "rom_offset": 104582,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47224,
+    "prg_offset": 104568,
+    "rom_offset": 104584,
+    "executions": 10083
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47226,
+    "prg_offset": 104570,
+    "rom_offset": 104586,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47227,
+    "prg_offset": 104571,
+    "rom_offset": 104587,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47229,
+    "prg_offset": 104573,
+    "rom_offset": 104589,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47231,
+    "prg_offset": 104575,
+    "rom_offset": 104591,
+    "executions": 8466
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47233,
+    "prg_offset": 104577,
+    "rom_offset": 104593,
+    "executions": 8466
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47234,
+    "prg_offset": 104578,
+    "rom_offset": 104594,
+    "executions": 8466
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47236,
+    "prg_offset": 104580,
+    "rom_offset": 104596,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47238,
+    "prg_offset": 104582,
+    "rom_offset": 104598,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47241,
+    "prg_offset": 104585,
+    "rom_offset": 104601,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47244,
+    "prg_offset": 104588,
+    "rom_offset": 104604,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47245,
+    "prg_offset": 104589,
+    "rom_offset": 104605,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47248,
+    "prg_offset": 104592,
+    "rom_offset": 104608,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47251,
+    "prg_offset": 104595,
+    "rom_offset": 104611,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47253,
+    "prg_offset": 104597,
+    "rom_offset": 104613,
+    "executions": 8599
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47255,
+    "prg_offset": 104599,
+    "rom_offset": 104615,
+    "executions": 8599
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47256,
+    "prg_offset": 104600,
+    "rom_offset": 104616,
+    "executions": 8599
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47258,
+    "prg_offset": 104602,
+    "rom_offset": 104618,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47260,
+    "prg_offset": 104604,
+    "rom_offset": 104620,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47262,
+    "prg_offset": 104606,
+    "rom_offset": 104622,
+    "executions": 8494
+  },
+  {
+    "physical_bank": 12,
+    "cpu_address": 47264,
+    "prg_offset": 104608,
+    "rom_offset": 104624,
+    "executions": 18737
+  },
+  {
+    "physical_bank": 14,
+    "cpu_address": 40966,
+    "prg_offset": 114694,
+    "rom_offset": 114710,
+    "executions": 378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51601,
+    "prg_offset": 125329,
+    "rom_offset": 125345,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51603,
+    "prg_offset": 125331,
+    "rom_offset": 125347,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51605,
+    "prg_offset": 125333,
+    "rom_offset": 125349,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51606,
+    "prg_offset": 125334,
+    "rom_offset": 125350,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51608,
+    "prg_offset": 125336,
+    "rom_offset": 125352,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51610,
+    "prg_offset": 125338,
+    "rom_offset": 125354,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51612,
+    "prg_offset": 125340,
+    "rom_offset": 125356,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51614,
+    "prg_offset": 125342,
+    "rom_offset": 125358,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51616,
+    "prg_offset": 125344,
+    "rom_offset": 125360,
+    "executions": 3840
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51618,
+    "prg_offset": 125346,
+    "rom_offset": 125362,
+    "executions": 3840
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51620,
+    "prg_offset": 125348,
+    "rom_offset": 125364,
+    "executions": 3840
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51622,
+    "prg_offset": 125350,
+    "rom_offset": 125366,
+    "executions": 3328
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51624,
+    "prg_offset": 125352,
+    "rom_offset": 125368,
+    "executions": 3328
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51626,
+    "prg_offset": 125354,
+    "rom_offset": 125370,
+    "executions": 3328
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51628,
+    "prg_offset": 125356,
+    "rom_offset": 125372,
+    "executions": 2816
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51630,
+    "prg_offset": 125358,
+    "rom_offset": 125374,
+    "executions": 2816
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51632,
+    "prg_offset": 125360,
+    "rom_offset": 125376,
+    "executions": 2816
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51634,
+    "prg_offset": 125362,
+    "rom_offset": 125378,
+    "executions": 2304
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51636,
+    "prg_offset": 125364,
+    "rom_offset": 125380,
+    "executions": 2304
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51638,
+    "prg_offset": 125366,
+    "rom_offset": 125382,
+    "executions": 2304
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51640,
+    "prg_offset": 125368,
+    "rom_offset": 125384,
+    "executions": 1792
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51642,
+    "prg_offset": 125370,
+    "rom_offset": 125386,
+    "executions": 1792
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51644,
+    "prg_offset": 125372,
+    "rom_offset": 125388,
+    "executions": 1792
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51646,
+    "prg_offset": 125374,
+    "rom_offset": 125390,
+    "executions": 1280
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51648,
+    "prg_offset": 125376,
+    "rom_offset": 125392,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51651,
+    "prg_offset": 125379,
+    "rom_offset": 125395,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51654,
+    "prg_offset": 125382,
+    "rom_offset": 125398,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51656,
+    "prg_offset": 125384,
+    "rom_offset": 125400,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51659,
+    "prg_offset": 125387,
+    "rom_offset": 125403,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51662,
+    "prg_offset": 125390,
+    "rom_offset": 125406,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51665,
+    "prg_offset": 125393,
+    "rom_offset": 125409,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51668,
+    "prg_offset": 125396,
+    "rom_offset": 125412,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51671,
+    "prg_offset": 125399,
+    "rom_offset": 125415,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51674,
+    "prg_offset": 125402,
+    "rom_offset": 125418,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51677,
+    "prg_offset": 125405,
+    "rom_offset": 125421,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51679,
+    "prg_offset": 125407,
+    "rom_offset": 125423,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51682,
+    "prg_offset": 125410,
+    "rom_offset": 125426,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51684,
+    "prg_offset": 125412,
+    "rom_offset": 125428,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51687,
+    "prg_offset": 125415,
+    "rom_offset": 125431,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51690,
+    "prg_offset": 125418,
+    "rom_offset": 125434,
+    "executions": 7616
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51693,
+    "prg_offset": 125421,
+    "rom_offset": 125437,
+    "executions": 7616
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51695,
+    "prg_offset": 125423,
+    "rom_offset": 125439,
+    "executions": 7616
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51697,
+    "prg_offset": 125425,
+    "rom_offset": 125441,
+    "executions": 7616
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51699,
+    "prg_offset": 125427,
+    "rom_offset": 125443,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51702,
+    "prg_offset": 125430,
+    "rom_offset": 125446,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51705,
+    "prg_offset": 125433,
+    "rom_offset": 125449,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51706,
+    "prg_offset": 125434,
+    "rom_offset": 125450,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51708,
+    "prg_offset": 125436,
+    "rom_offset": 125452,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51709,
+    "prg_offset": 125437,
+    "rom_offset": 125453,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51712,
+    "prg_offset": 125440,
+    "rom_offset": 125456,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51716,
+    "prg_offset": 125444,
+    "rom_offset": 125460,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51719,
+    "prg_offset": 125447,
+    "rom_offset": 125463,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51720,
+    "prg_offset": 125448,
+    "rom_offset": 125464,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51721,
+    "prg_offset": 125449,
+    "rom_offset": 125465,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51723,
+    "prg_offset": 125451,
+    "rom_offset": 125467,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51724,
+    "prg_offset": 125452,
+    "rom_offset": 125468,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51727,
+    "prg_offset": 125455,
+    "rom_offset": 125471,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51728,
+    "prg_offset": 125456,
+    "rom_offset": 125472,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51729,
+    "prg_offset": 125457,
+    "rom_offset": 125473,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51730,
+    "prg_offset": 125458,
+    "rom_offset": 125474,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51731,
+    "prg_offset": 125459,
+    "rom_offset": 125475,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51732,
+    "prg_offset": 125460,
+    "rom_offset": 125476,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51733,
+    "prg_offset": 125461,
+    "rom_offset": 125477,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51734,
+    "prg_offset": 125462,
+    "rom_offset": 125478,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51735,
+    "prg_offset": 125463,
+    "rom_offset": 125479,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51738,
+    "prg_offset": 125466,
+    "rom_offset": 125482,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51739,
+    "prg_offset": 125467,
+    "rom_offset": 125483,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 51742,
+    "prg_offset": 125470,
+    "rom_offset": 125486,
+    "executions": 4352
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55291,
+    "prg_offset": 129019,
+    "rom_offset": 129035,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55294,
+    "prg_offset": 129022,
+    "rom_offset": 129038,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55297,
+    "prg_offset": 129025,
+    "rom_offset": 129041,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55300,
+    "prg_offset": 129028,
+    "rom_offset": 129044,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55303,
+    "prg_offset": 129031,
+    "rom_offset": 129047,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55305,
+    "prg_offset": 129033,
+    "rom_offset": 129049,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55307,
+    "prg_offset": 129035,
+    "rom_offset": 129051,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55308,
+    "prg_offset": 129036,
+    "rom_offset": 129052,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55311,
+    "prg_offset": 129039,
+    "rom_offset": 129055,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55314,
+    "prg_offset": 129042,
+    "rom_offset": 129058,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55316,
+    "prg_offset": 129044,
+    "rom_offset": 129060,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55317,
+    "prg_offset": 129045,
+    "rom_offset": 129061,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55319,
+    "prg_offset": 129047,
+    "rom_offset": 129063,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55322,
+    "prg_offset": 129050,
+    "rom_offset": 129066,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55325,
+    "prg_offset": 129053,
+    "rom_offset": 129069,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55327,
+    "prg_offset": 129055,
+    "rom_offset": 129071,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55329,
+    "prg_offset": 129057,
+    "rom_offset": 129073,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55331,
+    "prg_offset": 129059,
+    "rom_offset": 129075,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55332,
+    "prg_offset": 129060,
+    "rom_offset": 129076,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55334,
+    "prg_offset": 129062,
+    "rom_offset": 129078,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55335,
+    "prg_offset": 129063,
+    "rom_offset": 129079,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55337,
+    "prg_offset": 129065,
+    "rom_offset": 129081,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55339,
+    "prg_offset": 129067,
+    "rom_offset": 129083,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55341,
+    "prg_offset": 129069,
+    "rom_offset": 129085,
+    "executions": 600
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55343,
+    "prg_offset": 129071,
+    "rom_offset": 129087,
+    "executions": 600
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55345,
+    "prg_offset": 129073,
+    "rom_offset": 129089,
+    "executions": 600
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55347,
+    "prg_offset": 129075,
+    "rom_offset": 129091,
+    "executions": 600
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55348,
+    "prg_offset": 129076,
+    "rom_offset": 129092,
+    "executions": 600
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55350,
+    "prg_offset": 129078,
+    "rom_offset": 129094,
+    "executions": 600
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55352,
+    "prg_offset": 129080,
+    "rom_offset": 129096,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55354,
+    "prg_offset": 129082,
+    "rom_offset": 129098,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55356,
+    "prg_offset": 129084,
+    "rom_offset": 129100,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55358,
+    "prg_offset": 129086,
+    "rom_offset": 129102,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55359,
+    "prg_offset": 129087,
+    "rom_offset": 129103,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55360,
+    "prg_offset": 129088,
+    "rom_offset": 129104,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55361,
+    "prg_offset": 129089,
+    "rom_offset": 129105,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55363,
+    "prg_offset": 129091,
+    "rom_offset": 129107,
+    "executions": 5378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55365,
+    "prg_offset": 129093,
+    "rom_offset": 129109,
+    "executions": 3378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55366,
+    "prg_offset": 129094,
+    "rom_offset": 129110,
+    "executions": 3378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55369,
+    "prg_offset": 129097,
+    "rom_offset": 129113,
+    "executions": 3378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55370,
+    "prg_offset": 129098,
+    "rom_offset": 129114,
+    "executions": 3378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55373,
+    "prg_offset": 129101,
+    "rom_offset": 129117,
+    "executions": 3378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55376,
+    "prg_offset": 129104,
+    "rom_offset": 129120,
+    "executions": 3378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55379,
+    "prg_offset": 129107,
+    "rom_offset": 129123,
+    "executions": 3378
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55381,
+    "prg_offset": 129109,
+    "rom_offset": 129125,
+    "executions": 3042
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55383,
+    "prg_offset": 129111,
+    "rom_offset": 129127,
+    "executions": 3042
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55386,
+    "prg_offset": 129114,
+    "rom_offset": 129130,
+    "executions": 3042
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55401,
+    "prg_offset": 129129,
+    "rom_offset": 129145,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55402,
+    "prg_offset": 129130,
+    "rom_offset": 129146,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55403,
+    "prg_offset": 129131,
+    "rom_offset": 129147,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55404,
+    "prg_offset": 129132,
+    "rom_offset": 129148,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55406,
+    "prg_offset": 129134,
+    "rom_offset": 129150,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55407,
+    "prg_offset": 129135,
+    "rom_offset": 129151,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55408,
+    "prg_offset": 129136,
+    "rom_offset": 129152,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55409,
+    "prg_offset": 129137,
+    "rom_offset": 129153,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55410,
+    "prg_offset": 129138,
+    "rom_offset": 129154,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55413,
+    "prg_offset": 129141,
+    "rom_offset": 129157,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55415,
+    "prg_offset": 129143,
+    "rom_offset": 129159,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55417,
+    "prg_offset": 129145,
+    "rom_offset": 129161,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55419,
+    "prg_offset": 129147,
+    "rom_offset": 129163,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55422,
+    "prg_offset": 129150,
+    "rom_offset": 129166,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55424,
+    "prg_offset": 129152,
+    "rom_offset": 129168,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55426,
+    "prg_offset": 129154,
+    "rom_offset": 129170,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55428,
+    "prg_offset": 129156,
+    "rom_offset": 129172,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55430,
+    "prg_offset": 129158,
+    "rom_offset": 129174,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55433,
+    "prg_offset": 129161,
+    "rom_offset": 129177,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55435,
+    "prg_offset": 129163,
+    "rom_offset": 129179,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55437,
+    "prg_offset": 129165,
+    "rom_offset": 129181,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55439,
+    "prg_offset": 129167,
+    "rom_offset": 129183,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55441,
+    "prg_offset": 129169,
+    "rom_offset": 129185,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55443,
+    "prg_offset": 129171,
+    "rom_offset": 129187,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55445,
+    "prg_offset": 129173,
+    "rom_offset": 129189,
+    "executions": 1918
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55447,
+    "prg_offset": 129175,
+    "rom_offset": 129191,
+    "executions": 1918
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55449,
+    "prg_offset": 129177,
+    "rom_offset": 129193,
+    "executions": 1918
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55451,
+    "prg_offset": 129179,
+    "rom_offset": 129195,
+    "executions": 1500
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55453,
+    "prg_offset": 129181,
+    "rom_offset": 129197,
+    "executions": 1500
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55455,
+    "prg_offset": 129183,
+    "rom_offset": 129199,
+    "executions": 1500
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55457,
+    "prg_offset": 129185,
+    "rom_offset": 129201,
+    "executions": 959
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55459,
+    "prg_offset": 129187,
+    "rom_offset": 129203,
+    "executions": 959
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55461,
+    "prg_offset": 129189,
+    "rom_offset": 129205,
+    "executions": 959
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55463,
+    "prg_offset": 129191,
+    "rom_offset": 129207,
+    "executions": 1918
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55464,
+    "prg_offset": 129192,
+    "rom_offset": 129208,
+    "executions": 1918
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55466,
+    "prg_offset": 129194,
+    "rom_offset": 129210,
+    "executions": 1918
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55467,
+    "prg_offset": 129195,
+    "rom_offset": 129211,
+    "executions": 1918
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55469,
+    "prg_offset": 129197,
+    "rom_offset": 129213,
+    "executions": 1918
+  },
+  {
+    "physical_bank": 15,
+    "cpu_address": 55471,
+    "prg_offset": 129199,
+    "rom_offset": 129215,
+    "executions": 2336
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45616,
+    "prg_offset": 193072,
+    "rom_offset": 193088,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45618,
+    "prg_offset": 193074,
+    "rom_offset": 193090,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45621,
+    "prg_offset": 193077,
+    "rom_offset": 193093,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45624,
+    "prg_offset": 193080,
+    "rom_offset": 193096,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45626,
+    "prg_offset": 193082,
+    "rom_offset": 193098,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45628,
+    "prg_offset": 193084,
+    "rom_offset": 193100,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45631,
+    "prg_offset": 193087,
+    "rom_offset": 193103,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45632,
+    "prg_offset": 193088,
+    "rom_offset": 193104,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45633,
+    "prg_offset": 193089,
+    "rom_offset": 193105,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45634,
+    "prg_offset": 193090,
+    "rom_offset": 193106,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45635,
+    "prg_offset": 193091,
+    "rom_offset": 193107,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45636,
+    "prg_offset": 193092,
+    "rom_offset": 193108,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45637,
+    "prg_offset": 193093,
+    "rom_offset": 193109,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45639,
+    "prg_offset": 193095,
+    "rom_offset": 193111,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45642,
+    "prg_offset": 193098,
+    "rom_offset": 193114,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45645,
+    "prg_offset": 193101,
+    "rom_offset": 193117,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45647,
+    "prg_offset": 193103,
+    "rom_offset": 193119,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45650,
+    "prg_offset": 193106,
+    "rom_offset": 193122,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45651,
+    "prg_offset": 193107,
+    "rom_offset": 193123,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45654,
+    "prg_offset": 193110,
+    "rom_offset": 193126,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45657,
+    "prg_offset": 193113,
+    "rom_offset": 193129,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45660,
+    "prg_offset": 193116,
+    "rom_offset": 193132,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45663,
+    "prg_offset": 193119,
+    "rom_offset": 193135,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45664,
+    "prg_offset": 193120,
+    "rom_offset": 193136,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45667,
+    "prg_offset": 193123,
+    "rom_offset": 193139,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45670,
+    "prg_offset": 193126,
+    "rom_offset": 193142,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45672,
+    "prg_offset": 193128,
+    "rom_offset": 193144,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45674,
+    "prg_offset": 193130,
+    "rom_offset": 193146,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45677,
+    "prg_offset": 193133,
+    "rom_offset": 193149,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45679,
+    "prg_offset": 193135,
+    "rom_offset": 193151,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45681,
+    "prg_offset": 193137,
+    "rom_offset": 193153,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45682,
+    "prg_offset": 193138,
+    "rom_offset": 193154,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45685,
+    "prg_offset": 193141,
+    "rom_offset": 193157,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45688,
+    "prg_offset": 193144,
+    "rom_offset": 193160,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45690,
+    "prg_offset": 193146,
+    "rom_offset": 193162,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45693,
+    "prg_offset": 193149,
+    "rom_offset": 193165,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45696,
+    "prg_offset": 193152,
+    "rom_offset": 193168,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45698,
+    "prg_offset": 193154,
+    "rom_offset": 193170,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45701,
+    "prg_offset": 193157,
+    "rom_offset": 193173,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45704,
+    "prg_offset": 193160,
+    "rom_offset": 193176,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45707,
+    "prg_offset": 193163,
+    "rom_offset": 193179,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45708,
+    "prg_offset": 193164,
+    "rom_offset": 193180,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45710,
+    "prg_offset": 193166,
+    "rom_offset": 193182,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45711,
+    "prg_offset": 193167,
+    "rom_offset": 193183,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45714,
+    "prg_offset": 193170,
+    "rom_offset": 193186,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45717,
+    "prg_offset": 193173,
+    "rom_offset": 193189,
+    "executions": 1520
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45720,
+    "prg_offset": 193176,
+    "rom_offset": 193192,
+    "executions": 1520
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45722,
+    "prg_offset": 193178,
+    "rom_offset": 193194,
+    "executions": 1520
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45724,
+    "prg_offset": 193180,
+    "rom_offset": 193196,
+    "executions": 1520
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45726,
+    "prg_offset": 193182,
+    "rom_offset": 193198,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45729,
+    "prg_offset": 193185,
+    "rom_offset": 193201,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45732,
+    "prg_offset": 193188,
+    "rom_offset": 193204,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45733,
+    "prg_offset": 193189,
+    "rom_offset": 193205,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45735,
+    "prg_offset": 193191,
+    "rom_offset": 193207,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45737,
+    "prg_offset": 193193,
+    "rom_offset": 193209,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45739,
+    "prg_offset": 193195,
+    "rom_offset": 193211,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45742,
+    "prg_offset": 193198,
+    "rom_offset": 193214,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45745,
+    "prg_offset": 193201,
+    "rom_offset": 193217,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45747,
+    "prg_offset": 193203,
+    "rom_offset": 193219,
+    "executions": 254
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45748,
+    "prg_offset": 193204,
+    "rom_offset": 193220,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45751,
+    "prg_offset": 193207,
+    "rom_offset": 193223,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45753,
+    "prg_offset": 193209,
+    "rom_offset": 193225,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45756,
+    "prg_offset": 193212,
+    "rom_offset": 193228,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 45759,
+    "prg_offset": 193215,
+    "rom_offset": 193231,
+    "executions": 512
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47315,
+    "prg_offset": 194771,
+    "rom_offset": 194787,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47318,
+    "prg_offset": 194774,
+    "rom_offset": 194790,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47321,
+    "prg_offset": 194777,
+    "rom_offset": 194793,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47324,
+    "prg_offset": 194780,
+    "rom_offset": 194796,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47327,
+    "prg_offset": 194783,
+    "rom_offset": 194799,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47329,
+    "prg_offset": 194785,
+    "rom_offset": 194801,
+    "executions": 1024
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47331,
+    "prg_offset": 194787,
+    "rom_offset": 194803,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47334,
+    "prg_offset": 194790,
+    "rom_offset": 194806,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47335,
+    "prg_offset": 194791,
+    "rom_offset": 194807,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47337,
+    "prg_offset": 194793,
+    "rom_offset": 194809,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47340,
+    "prg_offset": 194796,
+    "rom_offset": 194812,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47343,
+    "prg_offset": 194799,
+    "rom_offset": 194815,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47344,
+    "prg_offset": 194800,
+    "rom_offset": 194816,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47345,
+    "prg_offset": 194801,
+    "rom_offset": 194817,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47348,
+    "prg_offset": 194804,
+    "rom_offset": 194820,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47351,
+    "prg_offset": 194807,
+    "rom_offset": 194823,
+    "executions": 3940
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47354,
+    "prg_offset": 194810,
+    "rom_offset": 194826,
+    "executions": 3940
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47356,
+    "prg_offset": 194812,
+    "rom_offset": 194828,
+    "executions": 3940
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47358,
+    "prg_offset": 194814,
+    "rom_offset": 194830,
+    "executions": 3326
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47360,
+    "prg_offset": 194816,
+    "rom_offset": 194832,
+    "executions": 3326
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47363,
+    "prg_offset": 194819,
+    "rom_offset": 194835,
+    "executions": 3326
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47366,
+    "prg_offset": 194822,
+    "rom_offset": 194838,
+    "executions": 3326
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47369,
+    "prg_offset": 194825,
+    "rom_offset": 194841,
+    "executions": 1085
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47372,
+    "prg_offset": 194828,
+    "rom_offset": 194844,
+    "executions": 1085
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47374,
+    "prg_offset": 194830,
+    "rom_offset": 194846,
+    "executions": 205
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47377,
+    "prg_offset": 194833,
+    "rom_offset": 194849,
+    "executions": 205
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47379,
+    "prg_offset": 194835,
+    "rom_offset": 194851,
+    "executions": 205
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47381,
+    "prg_offset": 194837,
+    "rom_offset": 194853,
+    "executions": 20
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47384,
+    "prg_offset": 194840,
+    "rom_offset": 194856,
+    "executions": 185
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47386,
+    "prg_offset": 194842,
+    "rom_offset": 194858,
+    "executions": 185
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47389,
+    "prg_offset": 194845,
+    "rom_offset": 194861,
+    "executions": 185
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47391,
+    "prg_offset": 194847,
+    "rom_offset": 194863,
+    "executions": 185
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47394,
+    "prg_offset": 194850,
+    "rom_offset": 194866,
+    "executions": 185
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47397,
+    "prg_offset": 194853,
+    "rom_offset": 194869,
+    "executions": 185
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47400,
+    "prg_offset": 194856,
+    "rom_offset": 194872,
+    "executions": 185
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47403,
+    "prg_offset": 194859,
+    "rom_offset": 194875,
+    "executions": 880
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47405,
+    "prg_offset": 194861,
+    "rom_offset": 194877,
+    "executions": 880
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47407,
+    "prg_offset": 194863,
+    "rom_offset": 194879,
+    "executions": 266
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47410,
+    "prg_offset": 194866,
+    "rom_offset": 194882,
+    "executions": 266
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47412,
+    "prg_offset": 194868,
+    "rom_offset": 194884,
+    "executions": 266
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47414,
+    "prg_offset": 194870,
+    "rom_offset": 194886,
+    "executions": 48
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47417,
+    "prg_offset": 194873,
+    "rom_offset": 194889,
+    "executions": 48
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47418,
+    "prg_offset": 194874,
+    "rom_offset": 194890,
+    "executions": 48
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47421,
+    "prg_offset": 194877,
+    "rom_offset": 194893,
+    "executions": 48
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47424,
+    "prg_offset": 194880,
+    "rom_offset": 194896,
+    "executions": 218
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47427,
+    "prg_offset": 194883,
+    "rom_offset": 194899,
+    "executions": 218
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47429,
+    "prg_offset": 194885,
+    "rom_offset": 194901,
+    "executions": 218
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47431,
+    "prg_offset": 194887,
+    "rom_offset": 194903,
+    "executions": 218
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47433,
+    "prg_offset": 194889,
+    "rom_offset": 194905,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47435,
+    "prg_offset": 194891,
+    "rom_offset": 194907,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47438,
+    "prg_offset": 194894,
+    "rom_offset": 194910,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47441,
+    "prg_offset": 194897,
+    "rom_offset": 194913,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47444,
+    "prg_offset": 194900,
+    "rom_offset": 194916,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47445,
+    "prg_offset": 194901,
+    "rom_offset": 194917,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47448,
+    "prg_offset": 194904,
+    "rom_offset": 194920,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47450,
+    "prg_offset": 194906,
+    "rom_offset": 194922,
+    "executions": 72
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47452,
+    "prg_offset": 194908,
+    "rom_offset": 194924,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47455,
+    "prg_offset": 194911,
+    "rom_offset": 194927,
+    "executions": 157
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47458,
+    "prg_offset": 194914,
+    "rom_offset": 194930,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47461,
+    "prg_offset": 194917,
+    "rom_offset": 194933,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47464,
+    "prg_offset": 194920,
+    "rom_offset": 194936,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47467,
+    "prg_offset": 194923,
+    "rom_offset": 194939,
+    "executions": 614
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47469,
+    "prg_offset": 194925,
+    "rom_offset": 194941,
+    "executions": 702
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47472,
+    "prg_offset": 194928,
+    "rom_offset": 194944,
+    "executions": 702
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47474,
+    "prg_offset": 194930,
+    "rom_offset": 194946,
+    "executions": 368
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47476,
+    "prg_offset": 194932,
+    "rom_offset": 194948,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47479,
+    "prg_offset": 194935,
+    "rom_offset": 194951,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47481,
+    "prg_offset": 194937,
+    "rom_offset": 194953,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47482,
+    "prg_offset": 194938,
+    "rom_offset": 194954,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47485,
+    "prg_offset": 194941,
+    "rom_offset": 194957,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47486,
+    "prg_offset": 194942,
+    "rom_offset": 194958,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47489,
+    "prg_offset": 194945,
+    "rom_offset": 194961,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47491,
+    "prg_offset": 194947,
+    "rom_offset": 194963,
+    "executions": 72
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47493,
+    "prg_offset": 194949,
+    "rom_offset": 194965,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47496,
+    "prg_offset": 194952,
+    "rom_offset": 194968,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47499,
+    "prg_offset": 194955,
+    "rom_offset": 194971,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47502,
+    "prg_offset": 194958,
+    "rom_offset": 194974,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47504,
+    "prg_offset": 194960,
+    "rom_offset": 194976,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47507,
+    "prg_offset": 194963,
+    "rom_offset": 194979,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47510,
+    "prg_offset": 194966,
+    "rom_offset": 194982,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47512,
+    "prg_offset": 194968,
+    "rom_offset": 194984,
+    "executions": 349
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47515,
+    "prg_offset": 194971,
+    "rom_offset": 194987,
+    "executions": 353
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47517,
+    "prg_offset": 194973,
+    "rom_offset": 194989,
+    "executions": 353
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47520,
+    "prg_offset": 194976,
+    "rom_offset": 194992,
+    "executions": 322
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47522,
+    "prg_offset": 194978,
+    "rom_offset": 194994,
+    "executions": 322
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47637,
+    "prg_offset": 195093,
+    "rom_offset": 195109,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47640,
+    "prg_offset": 195096,
+    "rom_offset": 195112,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47643,
+    "prg_offset": 195099,
+    "rom_offset": 195115,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47645,
+    "prg_offset": 195101,
+    "rom_offset": 195117,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47648,
+    "prg_offset": 195104,
+    "rom_offset": 195120,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47651,
+    "prg_offset": 195107,
+    "rom_offset": 195123,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47654,
+    "prg_offset": 195110,
+    "rom_offset": 195126,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47658,
+    "prg_offset": 195114,
+    "rom_offset": 195130,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47661,
+    "prg_offset": 195117,
+    "rom_offset": 195133,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47664,
+    "prg_offset": 195120,
+    "rom_offset": 195136,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47667,
+    "prg_offset": 195123,
+    "rom_offset": 195139,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47668,
+    "prg_offset": 195124,
+    "rom_offset": 195140,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47671,
+    "prg_offset": 195127,
+    "rom_offset": 195143,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47672,
+    "prg_offset": 195128,
+    "rom_offset": 195144,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47675,
+    "prg_offset": 195131,
+    "rom_offset": 195147,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47676,
+    "prg_offset": 195132,
+    "rom_offset": 195148,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47678,
+    "prg_offset": 195134,
+    "rom_offset": 195150,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47679,
+    "prg_offset": 195135,
+    "rom_offset": 195151,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47682,
+    "prg_offset": 195138,
+    "rom_offset": 195154,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47685,
+    "prg_offset": 195141,
+    "rom_offset": 195157,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47688,
+    "prg_offset": 195144,
+    "rom_offset": 195160,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47689,
+    "prg_offset": 195145,
+    "rom_offset": 195161,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47692,
+    "prg_offset": 195148,
+    "rom_offset": 195164,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47695,
+    "prg_offset": 195151,
+    "rom_offset": 195167,
+    "executions": 3112
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47698,
+    "prg_offset": 195154,
+    "rom_offset": 195170,
+    "executions": 3112
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47700,
+    "prg_offset": 195156,
+    "rom_offset": 195172,
+    "executions": 3112
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47702,
+    "prg_offset": 195158,
+    "rom_offset": 195174,
+    "executions": 3112
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47704,
+    "prg_offset": 195160,
+    "rom_offset": 195176,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47705,
+    "prg_offset": 195161,
+    "rom_offset": 195177,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47707,
+    "prg_offset": 195163,
+    "rom_offset": 195179,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47710,
+    "prg_offset": 195166,
+    "rom_offset": 195182,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47713,
+    "prg_offset": 195169,
+    "rom_offset": 195185,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47714,
+    "prg_offset": 195170,
+    "rom_offset": 195186,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47717,
+    "prg_offset": 195173,
+    "rom_offset": 195189,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47719,
+    "prg_offset": 195175,
+    "rom_offset": 195191,
+    "executions": 982
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47721,
+    "prg_offset": 195177,
+    "rom_offset": 195193,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47724,
+    "prg_offset": 195180,
+    "rom_offset": 195196,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47963,
+    "prg_offset": 195419,
+    "rom_offset": 195435,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47965,
+    "prg_offset": 195421,
+    "rom_offset": 195437,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47968,
+    "prg_offset": 195424,
+    "rom_offset": 195440,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47969,
+    "prg_offset": 195425,
+    "rom_offset": 195441,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47971,
+    "prg_offset": 195427,
+    "rom_offset": 195443,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47974,
+    "prg_offset": 195430,
+    "rom_offset": 195446,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47976,
+    "prg_offset": 195432,
+    "rom_offset": 195448,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47979,
+    "prg_offset": 195435,
+    "rom_offset": 195451,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47982,
+    "prg_offset": 195438,
+    "rom_offset": 195454,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47985,
+    "prg_offset": 195441,
+    "rom_offset": 195457,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47987,
+    "prg_offset": 195443,
+    "rom_offset": 195459,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47988,
+    "prg_offset": 195444,
+    "rom_offset": 195460,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47991,
+    "prg_offset": 195447,
+    "rom_offset": 195463,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47994,
+    "prg_offset": 195450,
+    "rom_offset": 195466,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47997,
+    "prg_offset": 195453,
+    "rom_offset": 195469,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 47999,
+    "prg_offset": 195455,
+    "rom_offset": 195471,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 48001,
+    "prg_offset": 195457,
+    "rom_offset": 195473,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 48002,
+    "prg_offset": 195458,
+    "rom_offset": 195474,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 48005,
+    "prg_offset": 195461,
+    "rom_offset": 195477,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 48007,
+    "prg_offset": 195463,
+    "rom_offset": 195479,
+    "executions": 768
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 48009,
+    "prg_offset": 195465,
+    "rom_offset": 195481,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 48011,
+    "prg_offset": 195467,
+    "rom_offset": 195483,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 48014,
+    "prg_offset": 195470,
+    "rom_offset": 195486,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 23,
+    "cpu_address": 48016,
+    "prg_offset": 195472,
+    "rom_offset": 195488,
+    "executions": 1536
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59459,
+    "prg_offset": 256067,
+    "rom_offset": 256083,
+    "executions": 5120
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59462,
+    "prg_offset": 256070,
+    "rom_offset": 256086,
+    "executions": 5120
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59464,
+    "prg_offset": 256072,
+    "rom_offset": 256088,
+    "executions": 5120
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59466,
+    "prg_offset": 256074,
+    "rom_offset": 256090,
+    "executions": 2048
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59490,
+    "prg_offset": 256098,
+    "rom_offset": 256114,
+    "executions": 4096
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59492,
+    "prg_offset": 256100,
+    "rom_offset": 256116,
+    "executions": 4096
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59494,
+    "prg_offset": 256102,
+    "rom_offset": 256118,
+    "executions": 4096
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59496,
+    "prg_offset": 256104,
+    "rom_offset": 256120,
+    "executions": 10530
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59499,
+    "prg_offset": 256107,
+    "rom_offset": 256123,
+    "executions": 10530
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59501,
+    "prg_offset": 256109,
+    "rom_offset": 256125,
+    "executions": 10530
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59503,
+    "prg_offset": 256111,
+    "rom_offset": 256127,
+    "executions": 10530
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59505,
+    "prg_offset": 256113,
+    "rom_offset": 256129,
+    "executions": 4096
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59514,
+    "prg_offset": 256122,
+    "rom_offset": 256138,
+    "executions": 30740
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59517,
+    "prg_offset": 256125,
+    "rom_offset": 256141,
+    "executions": 30740
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59520,
+    "prg_offset": 256128,
+    "rom_offset": 256144,
+    "executions": 30740
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59523,
+    "prg_offset": 256131,
+    "rom_offset": 256147,
+    "executions": 30740
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59526,
+    "prg_offset": 256134,
+    "rom_offset": 256150,
+    "executions": 30740
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 59529,
+    "prg_offset": 256137,
+    "rom_offset": 256153,
+    "executions": 30740
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60028,
+    "prg_offset": 256636,
+    "rom_offset": 256652,
+    "executions": 8951
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60030,
+    "prg_offset": 256638,
+    "rom_offset": 256654,
+    "executions": 8951
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60032,
+    "prg_offset": 256640,
+    "rom_offset": 256656,
+    "executions": 8951
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60034,
+    "prg_offset": 256642,
+    "rom_offset": 256658,
+    "executions": 8951
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60036,
+    "prg_offset": 256644,
+    "rom_offset": 256660,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60038,
+    "prg_offset": 256646,
+    "rom_offset": 256662,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60040,
+    "prg_offset": 256648,
+    "rom_offset": 256664,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60042,
+    "prg_offset": 256650,
+    "rom_offset": 256666,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60044,
+    "prg_offset": 256652,
+    "rom_offset": 256668,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60046,
+    "prg_offset": 256654,
+    "rom_offset": 256670,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60047,
+    "prg_offset": 256655,
+    "rom_offset": 256671,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60049,
+    "prg_offset": 256657,
+    "rom_offset": 256673,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60051,
+    "prg_offset": 256659,
+    "rom_offset": 256675,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60053,
+    "prg_offset": 256661,
+    "rom_offset": 256677,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60055,
+    "prg_offset": 256663,
+    "rom_offset": 256679,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60057,
+    "prg_offset": 256665,
+    "rom_offset": 256681,
+    "executions": 28384
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60059,
+    "prg_offset": 256667,
+    "rom_offset": 256683,
+    "executions": 28384
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60061,
+    "prg_offset": 256669,
+    "rom_offset": 256685,
+    "executions": 28384
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60063,
+    "prg_offset": 256671,
+    "rom_offset": 256687,
+    "executions": 28384
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60065,
+    "prg_offset": 256673,
+    "rom_offset": 256689,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60066,
+    "prg_offset": 256674,
+    "rom_offset": 256690,
+    "executions": 143216
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60068,
+    "prg_offset": 256676,
+    "rom_offset": 256692,
+    "executions": 8951
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60393,
+    "prg_offset": 257001,
+    "rom_offset": 257017,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60395,
+    "prg_offset": 257003,
+    "rom_offset": 257019,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60397,
+    "prg_offset": 257005,
+    "rom_offset": 257021,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60399,
+    "prg_offset": 257007,
+    "rom_offset": 257023,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60401,
+    "prg_offset": 257009,
+    "rom_offset": 257025,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60403,
+    "prg_offset": 257011,
+    "rom_offset": 257027,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60405,
+    "prg_offset": 257013,
+    "rom_offset": 257029,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60407,
+    "prg_offset": 257015,
+    "rom_offset": 257031,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60409,
+    "prg_offset": 257017,
+    "rom_offset": 257033,
+    "executions": 55296
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60411,
+    "prg_offset": 257019,
+    "rom_offset": 257035,
+    "executions": 55296
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60413,
+    "prg_offset": 257021,
+    "rom_offset": 257037,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60415,
+    "prg_offset": 257023,
+    "rom_offset": 257039,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60416,
+    "prg_offset": 257024,
+    "rom_offset": 257040,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60418,
+    "prg_offset": 257026,
+    "rom_offset": 257042,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60420,
+    "prg_offset": 257028,
+    "rom_offset": 257044,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60422,
+    "prg_offset": 257030,
+    "rom_offset": 257046,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60424,
+    "prg_offset": 257032,
+    "rom_offset": 257048,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60426,
+    "prg_offset": 257034,
+    "rom_offset": 257050,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60428,
+    "prg_offset": 257036,
+    "rom_offset": 257052,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60430,
+    "prg_offset": 257038,
+    "rom_offset": 257054,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60432,
+    "prg_offset": 257040,
+    "rom_offset": 257056,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60434,
+    "prg_offset": 257042,
+    "rom_offset": 257058,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60436,
+    "prg_offset": 257044,
+    "rom_offset": 257060,
+    "executions": 21736
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60438,
+    "prg_offset": 257046,
+    "rom_offset": 257062,
+    "executions": 55296
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60440,
+    "prg_offset": 257048,
+    "rom_offset": 257064,
+    "executions": 55296
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60442,
+    "prg_offset": 257050,
+    "rom_offset": 257066,
+    "executions": 55296
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60444,
+    "prg_offset": 257052,
+    "rom_offset": 257068,
+    "executions": 55296
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60446,
+    "prg_offset": 257054,
+    "rom_offset": 257070,
+    "executions": 55296
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60447,
+    "prg_offset": 257055,
+    "rom_offset": 257071,
+    "executions": 55296
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60449,
+    "prg_offset": 257057,
+    "rom_offset": 257073,
+    "executions": 6912
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60935,
+    "prg_offset": 257543,
+    "rom_offset": 257559,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60938,
+    "prg_offset": 257546,
+    "rom_offset": 257562,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60941,
+    "prg_offset": 257549,
+    "rom_offset": 257565,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60944,
+    "prg_offset": 257552,
+    "rom_offset": 257568,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60945,
+    "prg_offset": 257553,
+    "rom_offset": 257569,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60946,
+    "prg_offset": 257554,
+    "rom_offset": 257570,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60948,
+    "prg_offset": 257556,
+    "rom_offset": 257572,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60951,
+    "prg_offset": 257559,
+    "rom_offset": 257575,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60952,
+    "prg_offset": 257560,
+    "rom_offset": 257576,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60954,
+    "prg_offset": 257562,
+    "rom_offset": 257578,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60957,
+    "prg_offset": 257565,
+    "rom_offset": 257581,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60959,
+    "prg_offset": 257567,
+    "rom_offset": 257583,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60961,
+    "prg_offset": 257569,
+    "rom_offset": 257585,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60964,
+    "prg_offset": 257572,
+    "rom_offset": 257588,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60965,
+    "prg_offset": 257573,
+    "rom_offset": 257589,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60967,
+    "prg_offset": 257575,
+    "rom_offset": 257591,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60970,
+    "prg_offset": 257578,
+    "rom_offset": 257594,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60973,
+    "prg_offset": 257581,
+    "rom_offset": 257597,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60976,
+    "prg_offset": 257584,
+    "rom_offset": 257600,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60979,
+    "prg_offset": 257587,
+    "rom_offset": 257603,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60984,
+    "prg_offset": 257592,
+    "rom_offset": 257608,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60987,
+    "prg_offset": 257595,
+    "rom_offset": 257611,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60988,
+    "prg_offset": 257596,
+    "rom_offset": 257612,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60991,
+    "prg_offset": 257599,
+    "rom_offset": 257615,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60992,
+    "prg_offset": 257600,
+    "rom_offset": 257616,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60995,
+    "prg_offset": 257603,
+    "rom_offset": 257619,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60996,
+    "prg_offset": 257604,
+    "rom_offset": 257620,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60998,
+    "prg_offset": 257606,
+    "rom_offset": 257622,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 60999,
+    "prg_offset": 257607,
+    "rom_offset": 257623,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61001,
+    "prg_offset": 257609,
+    "rom_offset": 257625,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61002,
+    "prg_offset": 257610,
+    "rom_offset": 257626,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61005,
+    "prg_offset": 257613,
+    "rom_offset": 257629,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61006,
+    "prg_offset": 257614,
+    "rom_offset": 257630,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61007,
+    "prg_offset": 257615,
+    "rom_offset": 257631,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 61010,
+    "prg_offset": 257618,
+    "rom_offset": 257634,
+    "executions": 378
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62007,
+    "prg_offset": 258615,
+    "rom_offset": 258631,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62010,
+    "prg_offset": 258618,
+    "rom_offset": 258634,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62011,
+    "prg_offset": 258619,
+    "rom_offset": 258635,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62014,
+    "prg_offset": 258622,
+    "rom_offset": 258638,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62017,
+    "prg_offset": 258625,
+    "rom_offset": 258641,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62018,
+    "prg_offset": 258626,
+    "rom_offset": 258642,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62019,
+    "prg_offset": 258627,
+    "rom_offset": 258643,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62020,
+    "prg_offset": 258628,
+    "rom_offset": 258644,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62022,
+    "prg_offset": 258630,
+    "rom_offset": 258646,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62025,
+    "prg_offset": 258633,
+    "rom_offset": 258649,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62026,
+    "prg_offset": 258634,
+    "rom_offset": 258650,
+    "executions": 756
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62061,
+    "prg_offset": 258669,
+    "rom_offset": 258685,
+    "executions": 322
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62064,
+    "prg_offset": 258672,
+    "rom_offset": 258688,
+    "executions": 322
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62066,
+    "prg_offset": 258674,
+    "rom_offset": 258690,
+    "executions": 2560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62069,
+    "prg_offset": 258677,
+    "rom_offset": 258693,
+    "executions": 2560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62071,
+    "prg_offset": 258679,
+    "rom_offset": 258695,
+    "executions": 2560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62074,
+    "prg_offset": 258682,
+    "rom_offset": 258698,
+    "executions": 2560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62077,
+    "prg_offset": 258685,
+    "rom_offset": 258701,
+    "executions": 2560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62079,
+    "prg_offset": 258687,
+    "rom_offset": 258703,
+    "executions": 2560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62082,
+    "prg_offset": 258690,
+    "rom_offset": 258706,
+    "executions": 2560
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62091,
+    "prg_offset": 258699,
+    "rom_offset": 258715,
+    "executions": 2238
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62094,
+    "prg_offset": 258702,
+    "rom_offset": 258718,
+    "executions": 2238
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62096,
+    "prg_offset": 258704,
+    "rom_offset": 258720,
+    "executions": 2238
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62167,
+    "prg_offset": 258775,
+    "rom_offset": 258791,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62169,
+    "prg_offset": 258777,
+    "rom_offset": 258793,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62172,
+    "prg_offset": 258780,
+    "rom_offset": 258796,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62175,
+    "prg_offset": 258783,
+    "rom_offset": 258799,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62176,
+    "prg_offset": 258784,
+    "rom_offset": 258800,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62179,
+    "prg_offset": 258787,
+    "rom_offset": 258803,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62180,
+    "prg_offset": 258788,
+    "rom_offset": 258804,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62183,
+    "prg_offset": 258791,
+    "rom_offset": 258807,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62184,
+    "prg_offset": 258792,
+    "rom_offset": 258808,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62187,
+    "prg_offset": 258795,
+    "rom_offset": 258811,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62189,
+    "prg_offset": 258797,
+    "rom_offset": 258813,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62192,
+    "prg_offset": 258800,
+    "rom_offset": 258816,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62193,
+    "prg_offset": 258801,
+    "rom_offset": 258817,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62194,
+    "prg_offset": 258802,
+    "rom_offset": 258818,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62197,
+    "prg_offset": 258805,
+    "rom_offset": 258821,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62198,
+    "prg_offset": 258806,
+    "rom_offset": 258822,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62201,
+    "prg_offset": 258809,
+    "rom_offset": 258825,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62202,
+    "prg_offset": 258810,
+    "rom_offset": 258826,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62204,
+    "prg_offset": 258812,
+    "rom_offset": 258828,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62207,
+    "prg_offset": 258815,
+    "rom_offset": 258831,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62210,
+    "prg_offset": 258818,
+    "rom_offset": 258834,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62212,
+    "prg_offset": 258820,
+    "rom_offset": 258836,
+    "executions": 15896
+  },
+  {
+    "physical_bank": 31,
+    "cpu_address": 62215,
+    "prg_offset": 258823,
+    "rom_offset": 258839,
+    "executions": 15896
+  }
+]

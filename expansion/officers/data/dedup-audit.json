@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "official_rows": 1000,
+  "official_unique_ordinals": 1000,
+  "unique_traditional_name_strings": 994,
+  "unique_simplified_name_strings": 994,
+  "same_name_groups": 5,
+  "same_name_people": 11,
+  "text_only_dedup_would_wrongly_remove": 6,
+  "confirmed_duplicate_person_entries_removed": 0,
+  "candidate_people_after_entity_aware_dedup": 1000,
+  "chronology_rows_first_table": 1000,
+  "chronology_rows_second_table": 1000,
+  "second_table_not_counted_as_new_people": true,
+  "chronology_triples_agree_between_tables": 1000,
+  "official_to_chronology_exact_name_and_order": 996,
+  "explicit_name_discrepancy_crosswalks": [
+    {
+      "official_list_number": 797,
+      "official_name": "閔純",
+      "chronology_name": "關純",
+      "reason": "name_variant_requires_historical_review",
+      "join_basis": "same ordinal; all 996 other rows match names; both tables agree",
+      "historically_verified_alias": false
+    },
+    {
+      "official_list_number": 875,
+      "official_name": "羊衜",
+      "chronology_name": "羊",
+      "reason": "third_party_name_truncated",
+      "join_basis": "same ordinal; all 996 other rows match names; both tables agree",
+      "historically_verified_alias": false
+    },
+    {
+      "official_list_number": 876,
+      "official_name": "楊白",
+      "chronology_name": "楊柏",
+      "reason": "name_variant_requires_historical_review",
+      "join_basis": "same ordinal; all 996 other rows match names; both tables agree",
+      "historically_verified_alias": false
+    },
+    {
+      "official_list_number": 990,
+      "official_name": "綸直",
+      "chronology_name": "倫直",
+      "reason": "name_variant_requires_historical_review",
+      "join_basis": "same ordinal; all 996 other rows match names; both tables agree",
+      "historically_verified_alias": false
+    }
+  ],
+  "proper_name_simplification_overrides": {
+    "孫乾": "孙乾"
+  },
+  "historical_birth_death_individually_verified": 0,
+  "game_year_triplets_available_from_secondary_source": 1000,
+  "homonyms": [
+    {
+      "name": "韓忠",
+      "count": 2,
+      "action": "retain_distinct_people",
+      "members": [
+        {
+          "person_id": "san14-candidate-0173",
+          "official_list_number": 173,
+          "disambiguator": "黄巾军，第三方设定151—184",
+          "birth": 151,
+          "death": 184
+        },
+        {
+          "person_id": "san14-candidate-0174",
+          "official_list_number": 174,
+          "disambiguator": "辽东公孙氏，第三方设定170—213",
+          "birth": 170,
+          "death": 213
+        }
+      ]
+    },
+    {
+      "name": "張承",
+      "count": 2,
+      "action": "retain_distinct_people",
+      "members": [
+        {
+          "person_id": "san14-candidate-0634",
+          "official_list_number": 634,
+          "disambiguator": "孙吴系，第三方设定178—244",
+          "birth": 178,
+          "death": 244
+        },
+        {
+          "person_id": "san14-candidate-0635",
+          "official_list_number": 635,
+          "disambiguator": "东汉、曹操系，第三方设定156—215",
+          "birth": 156,
+          "death": 215
+        }
+      ]
+    },
+    {
+      "name": "張南",
+      "count": 2,
+      "action": "retain_distinct_people",
+      "members": [
+        {
+          "person_id": "san14-candidate-0651",
+          "official_list_number": 651,
+          "disambiguator": "袁绍、曹操系，第三方设定168—208",
+          "birth": 168,
+          "death": 208
+        },
+        {
+          "person_id": "san14-candidate-0652",
+          "official_list_number": 652,
+          "disambiguator": "蜀汉刘备系，第三方设定187—222",
+          "birth": 187,
+          "death": 222
+        }
+      ]
+    },
+    {
+      "name": "馬忠",
+      "count": 2,
+      "action": "retain_distinct_people",
+      "members": [
+        {
+          "person_id": "san14-candidate-0767",
+          "official_list_number": 767,
+          "disambiguator": "孙吴系，第三方设定186—222",
+          "birth": 186,
+          "death": 222
+        },
+        {
+          "person_id": "san14-candidate-0768",
+          "official_list_number": 768,
+          "disambiguator": "蜀汉系，第三方设定187—249",
+          "birth": 187,
+          "death": 249
+        }
+      ]
+    },
+    {
+      "name": "李豐",
+      "count": 3,
+      "action": "retain_distinct_people",
+      "members": [
+        {
+          "person_id": "san14-candidate-0917",
+          "official_list_number": 917,
+          "disambiguator": "蜀汉系，第三方设定202—260",
+          "birth": 202,
+          "death": 260
+        },
+        {
+          "person_id": "san14-candidate-0918",
+          "official_list_number": 918,
+          "disambiguator": "曹魏系，第三方设定204—254",
+          "birth": 204,
+          "death": 254
+        },
+        {
+          "person_id": "san14-candidate-0919",
+          "official_list_number": 919,
+          "disambiguator": "袁术系，第三方设定158—199",
+          "birth": 158,
+          "death": 199
+        }
+      ]
+    }
+  ],
+  "early_appearance_flags": [
+    {
+      "person_id": "san14-candidate-0113",
+      "name": "夏侯榮",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 10
+    },
+    {
+      "person_id": "san14-candidate-0120",
+      "name": "夏侯氏",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 12
+    },
+    {
+      "person_id": "san14-candidate-0303",
+      "name": "胡綜",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 13
+    },
+    {
+      "person_id": "san14-candidate-0352",
+      "name": "司馬攸",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 5
+    },
+    {
+      "person_id": "san14-candidate-0435",
+      "name": "諸葛尚",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 7
+    },
+    {
+      "person_id": "san14-candidate-0436",
+      "name": "諸葛靚",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 12
+    },
+    {
+      "person_id": "san14-candidate-0503",
+      "name": "曹奐",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 7
+    },
+    {
+      "person_id": "san14-candidate-0523",
+      "name": "曹沖",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 11
+    },
+    {
+      "person_id": "san14-candidate-0526",
+      "name": "曹丕",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 13
+    },
+    {
+      "person_id": "san14-candidate-0529",
+      "name": "曹芳",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 7
+    },
+    {
+      "person_id": "san14-candidate-0530",
+      "name": "曹髦",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 12
+    },
+    {
+      "person_id": "san14-candidate-0554",
+      "name": "孫皓",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 11
+    },
+    {
+      "person_id": "san14-candidate-0578",
+      "name": "孫亮",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 10
+    },
+    {
+      "person_id": "san14-candidate-0741",
+      "name": "董白",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 13
+    },
+    {
+      "person_id": "san14-candidate-0769",
+      "name": "馬超",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 13
+    },
+    {
+      "person_id": "san14-candidate-0775",
+      "name": "萬彧",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 13
+    },
+    {
+      "person_id": "san14-candidate-0804",
+      "name": "傅幹",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 12
+    },
+    {
+      "person_id": "san14-candidate-0898",
+      "name": "陸鬱生",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 12
+    },
+    {
+      "person_id": "san14-candidate-0930",
+      "name": "劉基",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 13
+    },
+    {
+      "person_id": "san14-candidate-0946",
+      "name": "劉琮",
+      "flag": "early_appearance_in_source_setting",
+      "age_at_game_appearance": 12
+    }
+  ],
+  "interpretation": "1000 candidate people in the official base roster; 994 distinct name strings. Same-name people must not be collapsed. Game chronology is provisional secondary-source data, not certified historical dates."
+}

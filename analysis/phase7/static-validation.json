@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "html_sha256": "96e8fdddd1ab7f4aaeed2c7f3b3bd0dfb2c7505352469b022f7a76f8c1d775c1",
+  "html_bytes": 70554,
+  "strategy_options": 8,
+  "predicate_options": 16,
+  "checkpoint_options": 13,
+  "all_local_links_and_images_exist": true,
+  "unique_ids": 40,
+  "collapsed_details": 6,
+  "node_script_syntax": "passed",
+  "data_source_receipts": {
+    "controller": {
+      "case_count": 7361,
+      "status": "passed"
+    },
+    "decisions": {
+      "case_count": 2042,
+      "status": "passed"
+    },
+    "exchange": {
+      "case_count": 655,
+      "status": "passed"
+    },
+    "integration": {
+      "case_count": 44,
+      "status": "passed"
+    }
+  },
+  "limits": [
+    "Static structure/link/JS syntax verification only; browser interaction/rendering is separately validated.",
+    "No emulator or native core is run by this HTML page."
+  ]
+}

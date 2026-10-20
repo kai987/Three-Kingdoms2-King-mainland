@@ -1,0 +1,492 @@
+[
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 4,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $BE04",
+    "source_PC": 48644
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 4,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $BE04",
+    "source_PC": 48644
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 4,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $BE04",
+    "source_PC": 48644
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 5,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $C135",
+    "source_PC": 49461
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 5,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $C135",
+    "source_PC": 49461
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 5,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $C135",
+    "source_PC": 49461
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 6,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $C37D",
+    "source_PC": 50045
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 6,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $C37D",
+    "source_PC": 50045
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 44420,
+    "preparation": {
+      "0x401": 6,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $C37D",
+    "source_PC": 50045
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 6,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $A3E8",
+    "source_PC": 41960
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 6,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $A3E8",
+    "source_PC": 41960
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 6,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $A3E8",
+    "source_PC": 41960
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 7,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $A5AD",
+    "source_PC": 42413
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 7,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $A5AD",
+    "source_PC": 42413
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 7,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $A5AD",
+    "source_PC": 42413
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 8,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $A6F2",
+    "source_PC": 42738
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 8,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $A6F2",
+    "source_PC": 42738
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 8,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $A6F2",
+    "source_PC": 42738
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 9,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $A9A3",
+    "source_PC": 43427
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 9,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $A9A3",
+    "source_PC": 43427
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 9,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $A9A3",
+    "source_PC": 43427
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 10,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $AEC3",
+    "source_PC": 44739
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 10,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $AEC3",
+    "source_PC": 44739
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 10,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $AEC3",
+    "source_PC": 44739
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 11,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $BC83",
+    "source_PC": 48259
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 11,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $BC83",
+    "source_PC": 48259
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 11,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $BC83",
+    "source_PC": 48259
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 12,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $BE04",
+    "source_PC": 48644
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 12,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $BE04",
+    "source_PC": 48644
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 12,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $BE04",
+    "source_PC": 48644
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 13,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $C135",
+    "source_PC": 49461
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 13,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $C135",
+    "source_PC": 49461
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 13,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $C135",
+    "source_PC": 49461
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 14,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $C37D",
+    "source_PC": 50045
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 14,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $C37D",
+    "source_PC": 50045
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 14,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $C37D",
+    "source_PC": 50045
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 15,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $AB18",
+    "source_PC": 43800
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 15,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $AB18",
+    "source_PC": 43800
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41625,
+    "preparation": {
+      "0x401": 15,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $AB18",
+    "source_PC": 43800
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 14,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $CBD6",
+    "source_PC": 52182
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 14,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $CBD6",
+    "source_PC": 52182
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 14,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $CBD6",
+    "source_PC": 52182
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 15,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $CC39",
+    "source_PC": 52281
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 15,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $CC39",
+    "source_PC": 52281
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 15,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $CC39",
+    "source_PC": 52281
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 16,
+      "0x81": 0
+    },
+    "error": "Original bounded dispatch index 11 at $CC8C",
+    "source_PC": 52364
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 16,
+      "0x81": 1
+    },
+    "error": "Original bounded dispatch index 11 at $CC8C",
+    "source_PC": 52364
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 51062,
+    "preparation": {
+      "0x401": 16,
+      "0x81": 2
+    },
+    "error": "Original bounded dispatch index 11 at $CC8C",
+    "source_PC": 52364
+  },
+  {
+    "group": "all_bounded_dispatch_arms",
+    "entry": 41014,
+    "preparation": {
+      "0x401": 3,
+      "0x81": 1
+    },
+    "error": "External callback budget $E3EB from $E000",
+    "source_PC": 57344
+  }
+]

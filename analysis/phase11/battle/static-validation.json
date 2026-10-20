@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "runtime_IR_loading": false,
+  "runtime_original_CPU_execution": false,
+  "runtime_PC_dictionary": false,
+  "one_time_entry_selection": true,
+  "method_count": 276,
+  "Python_if_count": 3208,
+  "Python_while_count": 75,
+  "hand_written_structured_procedures": [
+    41054
+  ],
+  "source_sha256": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781"
+}

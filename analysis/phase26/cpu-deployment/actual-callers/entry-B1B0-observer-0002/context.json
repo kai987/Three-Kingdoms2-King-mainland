@@ -1,0 +1,68 @@
+{
+  "schema": "phase26-passive-deployment-caller-with-device-fixture-v1",
+  "origin": "passive_Native_callee_capture_with_explicit_N163_fixture",
+  "registers": {
+    "a": 0,
+    "x": 3,
+    "y": 3,
+    "p": 39,
+    "sp": 251,
+    "pc": 45488
+  },
+  "physical_banks": [
+    1,
+    8,
+    9,
+    31
+  ],
+  "existing_return_PC": 45422,
+  "N163_address": 127,
+  "N163_autoincrement": true,
+  "N163_origin": "explicit_shared_fixture_not_Native_snapshot",
+  "explicit_N163_fixture": {
+    "bytes": 128,
+    "sha256": "0aedd4856f8eba0963627336ad5144a9a7dbe12498e6066f0165fc97d8ddee4c",
+    "pattern": "(11+37*i)&255",
+    "address": 127,
+    "autoincrement": true,
+    "scope": "Common Source/originalCPU fixture; instantaneous device image was not captured"
+  },
+  "prepared_numeric_bytes": [],
+  "additional_CPU_prepared_numeric_bytes": [],
+  "inherited_Native_preparation": [],
+  "controller_buttons": [
+    0,
+    0
+  ],
+  "injected_new_NMI": 0,
+  "injected_new_IRQ": 0,
+  "hardware_events": [
+    {
+      "kind": "explicit_model_port_inputs",
+      "PPUSTATUS": 0,
+      "APU_status": 0,
+      "Namco_IRQ": 127,
+      "controller_buttons": [
+        0,
+        0
+      ]
+    }
+  ],
+  "passive_capture": {
+    "metadata": "analysis/phase26/runtime/observer/callee-0002-B1B0.json",
+    "metadata_sha256": "e43656ad3780862117c18705477bdc76f99ccae4b1ef64edc1bc778c3303dede",
+    "frame": 139,
+    "snapshot_sequence": 2,
+    "event_sequence": 21922,
+    "RAM_path": "analysis/phase26/runtime/observer/callee-0002-B1B0-ram.bin",
+    "RAM_sha256": "62707344611e38dc8ea9068d6dcb2ee90dfc6ec7b06081d3a395d7474cd24f40",
+    "SRAM_path": "analysis/phase26/runtime/observer/callee-0002-B1B0-sram.bin",
+    "SRAM_sha256": "b8cd47dfddeaa361b2d7a913ecfb2f681c90171fc6c995a0f64eca378e1cf95b",
+    "manifest": "analysis/phase26/runtime/evidence.json",
+    "manifest_sha256": "7e7a95b87bcb7248820c837097bf69ff3ced48b0d94cffe621e464b58a18c2e9"
+  },
+  "actual_software_state_captured": true,
+  "synthetic_caller_PC_or_stack": false,
+  "unmodified_core_internal_trace": false,
+  "observer_scope": "Separate passive core sparse entry capture; this one-route five-buffer parity is not a global equivalence theorem"
+}

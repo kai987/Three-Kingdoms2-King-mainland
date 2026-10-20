@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_path": "source/recovered/boot_initialization.py",
+  "source_sha256": "46bc08d06e246485e83650911e8355cc4b122a1de8cb6e02a77ec4092505a9a8",
+  "analyzer_path": "scripts/verify_boot_initialization.py",
+  "analyzer_sha256": "d0c6b9df0af2d7ce4cb369bb4ce274f5eaecda1199d0de0799098856b5dbcd91",
+  "ranges": [
+    {
+      "physical_bank": 31,
+      "cpu_start": 57344,
+      "cpu_end_exclusive": 57446,
+      "rom_offset": 253968,
+      "byte_count": 102,
+      "raw_hex": "78d8a9008d00208d0120a002ad022010fbad022030fb8810f3a9008d1040a90f8d1540a9c08d1740a9008d00208d0120a004ad022010fbad022030fb8810f3a2ff9aa9048d0100a0008c0200989101ee0100d0f8ee0200ad0200c90890ee20bdf3a9008d7a00",
+      "sha256": "464f8a2462ad761adc6dac1a4ea3ce26fda450d7144b39be997a36a7565d0ff0"
+    },
+    {
+      "physical_bank": 31,
+      "cpu_start": 62397,
+      "cpu_end_exclusive": 62583,
+      "rom_offset": 259021,
+      "byte_count": 186,
+      "raw_hex": "a9008d00508d0058a9e08d00c08d00d0a9e18d00c88d00d8a200bdbdf329018d01008d1640ad17404a49ff2901cd0100d032e8e046d0e3a9408d00f8a2012022f4f00ca237203ff42022f4f002a216a93f8d0620a0008c06208e0720c8c020d0f84c1ef4602058f4b102cd0000d0122068f4c8d0f3ee0300ad0300c980d0e9a900602058f4ad000091022068f4c8d0f5ee0300ad0300c980d0eb60a0008c0200a9608d0300a9aa8d000060ad00000a0a386d00008d0000f0f260",
+      "sha256": "930ad78a9d2a1e55a1f1e074e22023253a8ac6d6b3dd8705197bc0c85d45ea26"
+    }
+  ],
+  "REA_archive": "analysis/rea/pairs/pair-27",
+  "REA_functions": [
+    "analysis/rea/mcp/functions/0xe000.asm",
+    "analysis/rea/mcp/functions/0xf3bd.asm",
+    "analysis/rea/mcp/functions/0xf422.asm",
+    "analysis/rea/mcp/functions/0xf43f.asm",
+    "analysis/rea/mcp/functions/0xf458.asm",
+    "analysis/rea/mcp/functions/0xf468.asm"
+  ],
+  "source_original_CPU_callbacks": 0,
+  "source_IR_interpretation": false,
+  "limits": [
+    "Controlled explicit status/4017 inputs are not native internal hardware traces.",
+    "Direct SRAM helper fixtures declare all8K writable; the full diagnostic selects actualF800=40 before writes.",
+    "The third diagnostic case uses an explicit single-address SRAM write-fault environment, not an observed native hardware fault.",
+    "E000 software begins after the hardware RESET entry sequence and transfers to nextE066, not a callerRTS."
+  ],
+  "source_and_validator_sha256": {
+    "source/recovered/boot_initialization.py": "46bc08d06e246485e83650911e8355cc4b122a1de8cb6e02a77ec4092505a9a8",
+    "scripts/verify_boot_initialization.py": "d0c6b9df0af2d7ce4cb369bb4ce274f5eaecda1199d0de0799098856b5dbcd91",
+    "source/recovered/battle_nmi_services.py": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1",
+    "analysis/rea/mcp/functions/0xe000.asm": "2abe4de24eea918480b05fa1360df6d5d79108fad6a5cf098377665530386a5d",
+    "analysis/rea/mcp/functions/0xf3bd.asm": "f2a4e958a78b6bf15b429d8b367f8d1ee01c53a43bfa5a1f777fa27ed9bcf1d7",
+    "analysis/rea/mcp/functions/0xf422.asm": "a5f548ba79412f27153eb1c996aa0db20d22445c9c6ce21b6d1c8e90773370a8",
+    "analysis/rea/mcp/functions/0xf43f.asm": "8d6cd743c7fdcdc0b26f308df732ceb1f0c9aa7b087454c395000f12a415a524",
+    "analysis/rea/mcp/functions/0xf458.asm": "107284e5a6076270afde8e9246f4346186520fb97839922ec4a2619a692de0cb",
+    "analysis/rea/mcp/functions/0xf468.asm": "4b3777c074a8f3997e1b596bfdc9fb23ff49ab23c2552d7242bf829b2b5cbda1"
+  }
+}

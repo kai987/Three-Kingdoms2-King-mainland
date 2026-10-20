@@ -1,0 +1,85 @@
+{
+  "original_rom_unchanged": true,
+  "natural_gameplay": false,
+  "parent": "message-df.state",
+  "continuation_frames": 600,
+  "states": [
+    {
+      "frame": 181,
+      "queue": [
+        255,
+        16,
+        4,
+        3,
+        0,
+        3
+      ]
+    },
+    {
+      "frame": 182,
+      "queue": [
+        255,
+        17,
+        4,
+        3,
+        0,
+        3
+      ]
+    },
+    {
+      "frame": 186,
+      "queue": [
+        255,
+        18,
+        4,
+        3,
+        0,
+        3
+      ]
+    },
+    {
+      "frame": 190,
+      "queue": [
+        255,
+        19,
+        4,
+        3,
+        0,
+        3
+      ]
+    },
+    {
+      "frame": 194,
+      "queue": [
+        255,
+        20,
+        4,
+        3,
+        0,
+        3
+      ]
+    },
+    {
+      "frame": 198,
+      "queue": [
+        255,
+        21,
+        4,
+        3,
+        0,
+        3
+      ]
+    },
+    {
+      "frame": 202,
+      "queue": [
+        255,
+        255,
+        4,
+        3,
+        0,
+        3
+      ]
+    }
+  ]
+}

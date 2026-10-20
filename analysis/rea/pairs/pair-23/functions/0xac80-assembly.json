@@ -1,0 +1,104 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"evidence_id\":\"ev_f517ff3a422bff1557bf1bd348f6c1701aa1a1a6dcac202aac2ebc2ef22e711b\",\"subject\":{\"name\":\"image.bin\",\"digest\":{\"sha256\":\"70442cc6c717692afbd76404aa4758619bc109de8b623bd888521b0808580e48\"},\"format\":\"raw-binary\",\"architecture\":\"6502\",\"local_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-23/image.bin\"},\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"analysis_profile\":{\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"parameters\":{\"target_kind\":\"executable\",\"target_format\":\"raw-binary\",\"architecture\":\"6502\",\"available_architectures\":[\"6502\"],\"import_mode\":\"ephemeral-source-immutable\",\"annotation_policy\":\"atomic-function-entry-metadata-v1\",\"load_image_observations\":\"source-mappings-entry-context-v2\",\"function_body_evidence\":\"complete-inclusive-ranges-v1\",\"function_references\":\"complete-body-and-entry-reference-manager-v2\",\"call_relationship_coverage\":\"resolved-call-reference-diagnostics-v1\",\"string_inventory_evidence\":\"defined-data-coverage-v1\",\"location_resolution\":\"explicit-address-exact-entry-symbol-first-v3\",\"instruction_flow_evidence\":\"decoded-return-pcode-v1\",\"instruction_references\":\"exact-address-incoming-v1\",\"function_boundary_observations\":\"ghidra-terminal-call-limitations-v1\",\"no_return_repair\":\"returning-imports-decoded-return-v2\",\"process_launch\":\"inspected-jvm-launch-support-v1\",\"load_image_evidence\":\"independent-raw-mapping-context-v2\",\"jump_table_evidence\":\"typed-case-default-blocks-v1\",\"decompiler_jump_loads\":true,\"loader\":\"BinaryLoader\",\"language_id\":\"6502:LE:16:default\",\"compiler_spec_id\":\"default\",\"language_selection\":\"caller-supplied-v1\",\"entry_point\":\"0xa000\",\"entry_seed\":\"external-entry-and-function-before-analysis-v1\",\"analyzer_preset\":\"ghidra-default\",\"analysis_seeds\":{\"format\":\"rea-ghidra-seeds-v1\",\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-23/seeds.tsv\",\"configured_path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-23/seeds.tsv\",\"sha256\":\"28a4627cef2f302e001c9a7e242f2a208cf631716fcbed0a2b9ebfd2bff5455c\",\"entries\":{\"function\":19,\"code\":0,\"label\":0}}},\"digest\":\"fb287dc2ea81704d0282aa30ad6819862d095ef238864192c5a3f65b2ef61ecf\"},\"predicate_type\":\"rea.analysis\",\"operation\":\"procedure_assembly\",\"parameters\":{\"procedure\":\"0xac80\"},\"raw_result\":{\"value\":\"0xac80: LDA 0x009c\\n0xac83: ASL A\\n0xac84: BPL 0xacf4\\n0xac86: LDA 0x000c\\n0xac89: AND #0x10\\n0xac8b: BNE 0xacb8\\n0xac8d: LDA 0x0006\\n0xac90: CMP #0x8\\n0xac92: BNE 0xacb0\\n0xac94: LDA 0x000e\\n0xac97: AND #0x10\\n0xac99: BEQ 0xacb0\\n0xac9b: LDA 0x018a\\n0xac9e: AND #0xf0\\n0xaca0: STA 0x018a\\n0xaca3: LDA 0x0002\\n0xaca6: AND #0xf\\n0xaca8: ORA 0x018a\\n0xacab: STA 0x018a\\n0xacae: INX\\n0xacaf: RTS\\n0xacb0: LDA 0x0002\\n0xacb3: STA 0x18a,X\\n0xacb6: INX\\n0xacb7: RTS\\n0xacb8: LDA 0x0006\\n0xacbb: CMP #0x8\\n0xacbd: BNE 0xacdf\\n0xacbf: LDA 0x018a\\n0xacc2: AND #0xf0\\n0xacc4: STA 0x018a\\n0xacc7: LDA 0x0002\\n0xacca: AND #0xc\\n0xaccc: STA 0x0002\\n0xaccf: LDA 0x0003\\n0xacd2: AND #0x3\\n0xacd4: ORA 0x0002\\n0xacd7: ORA 0x018a\\n0xacda: STA 0x018a\\n0xacdd: INX\\n0xacde: RTS\\n0xacdf: LDA 0x0002\\n0xace2: AND #0xcc\\n0xace4: STA 0x0002\\n0xace7: LDA 0x0003\\n0xacea: AND #0x33\\n0xacec: ORA 0x0002\\n0xacef: STA 0x18a,X\\n0xacf2: INX\\n0xacf3: RTS\\n0xacf4: LDA 0x000c\\n0xacf7: AND #0x10\\n0xacf9: BEQ 0xad26\\n0xacfb: LDA 0x0006\\n0xacfe: CMP #0x8\\n0xad00: BNE 0xad1e\\n0xad02: LDA 0x000e\\n0xad05: AND #0x10\\n0xad07: BEQ 0xad1e\\n0xad09: LDA 0x018a\\n0xad0c: AND #0xf0\\n0xad0e: STA 0x018a\\n0xad11: LDA 0x0002\\n0xad14: AND #0xf\\n0xad16: ORA 0x018a\\n0xad19: STA 0x018a\\n0xad1c: INX\\n0xad1d: RTS\\n0xad1e: LDA 0x0002\\n0xad21: STA 0x18a,X\\n0xad24: INX\\n0xad25: RTS\\n0xad26: LDA 0x0006\\n0xad29: CMP #0x8\\n0xad2b: BNE 0xad54\\n0xad2d: LDA 0x000e\\n0xad30: AND #0x10\\n0xad32: BEQ 0xad54\\n0xad34: LDA 0x018a\\n0xad37: AND #0xf0\\n0xad39: STA 0x018a\\n0xad3c: LDA 0x0002\\n0xad3f: AND #0x3\\n0xad41: STA 0x0002\\n0xad44: LDA 0x0003\\n0xad47: AND #0xc\\n0xad49: ORA 0x0002\\n0xad4c: ORA 0x018a\\n0xad4f: STA 0x018a\\n0xad52: INX\\n0xad53: RTS\\n0xad54: LDA 0x0002\\n0xad57: AND #0x33\\n0xad59: STA 0x0002\\n0xad5c: LDA 0x0003\\n0xad5f: AND #0xcc\\n0xad61: ORA 0x0002\\n0xad64: STA 0x18a,X\\n0xad67: INX\\n0xad68: RTS\",\"limitations\":[]},\"normalized_result\":\"0xac80: LDA 0x009c\\n0xac83: ASL A\\n0xac84: BPL 0xacf4\\n0xac86: LDA 0x000c\\n0xac89: AND #0x10\\n0xac8b: BNE 0xacb8\\n0xac8d: LDA 0x0006\\n0xac90: CMP #0x8\\n0xac92: BNE 0xacb0\\n0xac94: LDA 0x000e\\n0xac97: AND #0x10\\n0xac99: BEQ 0xacb0\\n0xac9b: LDA 0x018a\\n0xac9e: AND #0xf0\\n0xaca0: STA 0x018a\\n0xaca3: LDA 0x0002\\n0xaca6: AND #0xf\\n0xaca8: ORA 0x018a\\n0xacab: STA 0x018a\\n0xacae: INX\\n0xacaf: RTS\\n0xacb0: LDA 0x0002\\n0xacb3: STA 0x18a,X\\n0xacb6: INX\\n0xacb7: RTS\\n0xacb8: LDA 0x0006\\n0xacbb: CMP #0x8\\n0xacbd: BNE 0xacdf\\n0xacbf: LDA 0x018a\\n0xacc2: AND #0xf0\\n0xacc4: STA 0x018a\\n0xacc7: LDA 0x0002\\n0xacca: AND #0xc\\n0xaccc: STA 0x0002\\n0xaccf: LDA 0x0003\\n0xacd2: AND #0x3\\n0xacd4: ORA 0x0002\\n0xacd7: ORA 0x018a\\n0xacda: STA 0x018a\\n0xacdd: INX\\n0xacde: RTS\\n0xacdf: LDA 0x0002\\n0xace2: AND #0xcc\\n0xace4: STA 0x0002\\n0xace7: LDA 0x0003\\n0xacea: AND #0x33\\n0xacec: ORA 0x0002\\n0xacef: STA 0x18a,X\\n0xacf2: INX\\n0xacf3: RTS\\n0xacf4: LDA 0x000c\\n0xacf7: AND #0x10\\n0xacf9: BEQ 0xad26\\n0xacfb: LDA 0x0006\\n0xacfe: CMP #0x8\\n0xad00: BNE 0xad1e\\n0xad02: LDA 0x000e\\n0xad05: AND #0x10\\n0xad07: BEQ 0xad1e\\n0xad09: LDA 0x018a\\n0xad0c: AND #0xf0\\n0xad0e: STA 0x018a\\n0xad11: LDA 0x0002\\n0xad14: AND #0xf\\n0xad16: ORA 0x018a\\n0xad19: STA 0x018a\\n0xad1c: INX\\n0xad1d: RTS\\n0xad1e: LDA 0x0002\\n0xad21: STA 0x18a,X\\n0xad24: INX\\n0xad25: RTS\\n0xad26: LDA 0x0006\\n0xad29: CMP #0x8\\n0xad2b: BNE 0xad54\\n0xad2d: LDA 0x000e\\n0xad30: AND #0x10\\n0xad32: BEQ 0xad54\\n0xad34: LDA 0x018a\\n0xad37: AND #0xf0\\n0xad39: STA 0x018a\\n0xad3c: LDA 0x0002\\n0xad3f: AND #0x3\\n0xad41: STA 0x0002\\n0xad44: LDA 0x0003\\n0xad47: AND #0xc\\n0xad49: ORA 0x0002\\n0xad4c: ORA 0x018a\\n0xad4f: STA 0x018a\\n0xad52: INX\\n0xad53: RTS\\n0xad54: LDA 0x0002\\n0xad57: AND #0x33\\n0xad59: STA 0x0002\\n0xad5c: LDA 0x0003\\n0xad5f: AND #0xcc\\n0xad61: ORA 0x0002\\n0xad64: STA 0x18a,X\\n0xad67: INX\\n0xad68: RTS\",\"confidence\":\"observed\",\"authority\":\"shipped-artifact\",\"environment\":null,\"limitations\":[\"The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.\",\"The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.\",\"Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.\",\"Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.\",\"Assembly is Ghidra Listing text and does not claim textual equivalence with Hopper output.\",\"macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.\",\"Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.\",\"Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.\",\"Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.\",\"Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-23/seeds.tsv (sha256 28a4627cef2f302e001c9a7e242f2a208cf631716fcbed0a2b9ebfd2bff5455c: 19 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.\",\"Seed outcome: 18 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory.\"],\"relationship_coverage\":null,\"locations\":[],\"evidence_links\":[]}"
+    }
+  ],
+  "structuredContent": {
+    "evidence_id": "ev_f517ff3a422bff1557bf1bd348f6c1701aa1a1a6dcac202aac2ebc2ef22e711b",
+    "subject": {
+      "name": "image.bin",
+      "digest": {
+        "sha256": "70442cc6c717692afbd76404aa4758619bc109de8b623bd888521b0808580e48"
+      },
+      "format": "raw-binary",
+      "architecture": "6502",
+      "local_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-23/image.bin"
+    },
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "analysis_profile": {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "parameters": {
+        "target_kind": "executable",
+        "target_format": "raw-binary",
+        "architecture": "6502",
+        "available_architectures": [
+          "6502"
+        ],
+        "import_mode": "ephemeral-source-immutable",
+        "annotation_policy": "atomic-function-entry-metadata-v1",
+        "load_image_observations": "source-mappings-entry-context-v2",
+        "function_body_evidence": "complete-inclusive-ranges-v1",
+        "function_references": "complete-body-and-entry-reference-manager-v2",
+        "call_relationship_coverage": "resolved-call-reference-diagnostics-v1",
+        "string_inventory_evidence": "defined-data-coverage-v1",
+        "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+        "instruction_flow_evidence": "decoded-return-pcode-v1",
+        "instruction_references": "exact-address-incoming-v1",
+        "function_boundary_observations": "ghidra-terminal-call-limitations-v1",
+        "no_return_repair": "returning-imports-decoded-return-v2",
+        "process_launch": "inspected-jvm-launch-support-v1",
+        "load_image_evidence": "independent-raw-mapping-context-v2",
+        "jump_table_evidence": "typed-case-default-blocks-v1",
+        "decompiler_jump_loads": true,
+        "loader": "BinaryLoader",
+        "language_id": "6502:LE:16:default",
+        "compiler_spec_id": "default",
+        "language_selection": "caller-supplied-v1",
+        "entry_point": "0xa000",
+        "entry_seed": "external-entry-and-function-before-analysis-v1",
+        "analyzer_preset": "ghidra-default",
+        "analysis_seeds": {
+          "format": "rea-ghidra-seeds-v1",
+          "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-23/seeds.tsv",
+          "configured_path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-23/seeds.tsv",
+          "sha256": "28a4627cef2f302e001c9a7e242f2a208cf631716fcbed0a2b9ebfd2bff5455c",
+          "entries": {
+            "function": 19,
+            "code": 0,
+            "label": 0
+          }
+        }
+      },
+      "digest": "fb287dc2ea81704d0282aa30ad6819862d095ef238864192c5a3f65b2ef61ecf"
+    },
+    "predicate_type": "rea.analysis",
+    "operation": "procedure_assembly",
+    "parameters": {
+      "procedure": "0xac80"
+    },
+    "raw_result": {
+      "value": "0xac80: LDA 0x009c\n0xac83: ASL A\n0xac84: BPL 0xacf4\n0xac86: LDA 0x000c\n0xac89: AND #0x10\n0xac8b: BNE 0xacb8\n0xac8d: LDA 0x0006\n0xac90: CMP #0x8\n0xac92: BNE 0xacb0\n0xac94: LDA 0x000e\n0xac97: AND #0x10\n0xac99: BEQ 0xacb0\n0xac9b: LDA 0x018a\n0xac9e: AND #0xf0\n0xaca0: STA 0x018a\n0xaca3: LDA 0x0002\n0xaca6: AND #0xf\n0xaca8: ORA 0x018a\n0xacab: STA 0x018a\n0xacae: INX\n0xacaf: RTS\n0xacb0: LDA 0x0002\n0xacb3: STA 0x18a,X\n0xacb6: INX\n0xacb7: RTS\n0xacb8: LDA 0x0006\n0xacbb: CMP #0x8\n0xacbd: BNE 0xacdf\n0xacbf: LDA 0x018a\n0xacc2: AND #0xf0\n0xacc4: STA 0x018a\n0xacc7: LDA 0x0002\n0xacca: AND #0xc\n0xaccc: STA 0x0002\n0xaccf: LDA 0x0003\n0xacd2: AND #0x3\n0xacd4: ORA 0x0002\n0xacd7: ORA 0x018a\n0xacda: STA 0x018a\n0xacdd: INX\n0xacde: RTS\n0xacdf: LDA 0x0002\n0xace2: AND #0xcc\n0xace4: STA 0x0002\n0xace7: LDA 0x0003\n0xacea: AND #0x33\n0xacec: ORA 0x0002\n0xacef: STA 0x18a,X\n0xacf2: INX\n0xacf3: RTS\n0xacf4: LDA 0x000c\n0xacf7: AND #0x10\n0xacf9: BEQ 0xad26\n0xacfb: LDA 0x0006\n0xacfe: CMP #0x8\n0xad00: BNE 0xad1e\n0xad02: LDA 0x000e\n0xad05: AND #0x10\n0xad07: BEQ 0xad1e\n0xad09: LDA 0x018a\n0xad0c: AND #0xf0\n0xad0e: STA 0x018a\n0xad11: LDA 0x0002\n0xad14: AND #0xf\n0xad16: ORA 0x018a\n0xad19: STA 0x018a\n0xad1c: INX\n0xad1d: RTS\n0xad1e: LDA 0x0002\n0xad21: STA 0x18a,X\n0xad24: INX\n0xad25: RTS\n0xad26: LDA 0x0006\n0xad29: CMP #0x8\n0xad2b: BNE 0xad54\n0xad2d: LDA 0x000e\n0xad30: AND #0x10\n0xad32: BEQ 0xad54\n0xad34: LDA 0x018a\n0xad37: AND #0xf0\n0xad39: STA 0x018a\n0xad3c: LDA 0x0002\n0xad3f: AND #0x3\n0xad41: STA 0x0002\n0xad44: LDA 0x0003\n0xad47: AND #0xc\n0xad49: ORA 0x0002\n0xad4c: ORA 0x018a\n0xad4f: STA 0x018a\n0xad52: INX\n0xad53: RTS\n0xad54: LDA 0x0002\n0xad57: AND #0x33\n0xad59: STA 0x0002\n0xad5c: LDA 0x0003\n0xad5f: AND #0xcc\n0xad61: ORA 0x0002\n0xad64: STA 0x18a,X\n0xad67: INX\n0xad68: RTS",
+      "limitations": []
+    },
+    "normalized_result": "0xac80: LDA 0x009c\n0xac83: ASL A\n0xac84: BPL 0xacf4\n0xac86: LDA 0x000c\n0xac89: AND #0x10\n0xac8b: BNE 0xacb8\n0xac8d: LDA 0x0006\n0xac90: CMP #0x8\n0xac92: BNE 0xacb0\n0xac94: LDA 0x000e\n0xac97: AND #0x10\n0xac99: BEQ 0xacb0\n0xac9b: LDA 0x018a\n0xac9e: AND #0xf0\n0xaca0: STA 0x018a\n0xaca3: LDA 0x0002\n0xaca6: AND #0xf\n0xaca8: ORA 0x018a\n0xacab: STA 0x018a\n0xacae: INX\n0xacaf: RTS\n0xacb0: LDA 0x0002\n0xacb3: STA 0x18a,X\n0xacb6: INX\n0xacb7: RTS\n0xacb8: LDA 0x0006\n0xacbb: CMP #0x8\n0xacbd: BNE 0xacdf\n0xacbf: LDA 0x018a\n0xacc2: AND #0xf0\n0xacc4: STA 0x018a\n0xacc7: LDA 0x0002\n0xacca: AND #0xc\n0xaccc: STA 0x0002\n0xaccf: LDA 0x0003\n0xacd2: AND #0x3\n0xacd4: ORA 0x0002\n0xacd7: ORA 0x018a\n0xacda: STA 0x018a\n0xacdd: INX\n0xacde: RTS\n0xacdf: LDA 0x0002\n0xace2: AND #0xcc\n0xace4: STA 0x0002\n0xace7: LDA 0x0003\n0xacea: AND #0x33\n0xacec: ORA 0x0002\n0xacef: STA 0x18a,X\n0xacf2: INX\n0xacf3: RTS\n0xacf4: LDA 0x000c\n0xacf7: AND #0x10\n0xacf9: BEQ 0xad26\n0xacfb: LDA 0x0006\n0xacfe: CMP #0x8\n0xad00: BNE 0xad1e\n0xad02: LDA 0x000e\n0xad05: AND #0x10\n0xad07: BEQ 0xad1e\n0xad09: LDA 0x018a\n0xad0c: AND #0xf0\n0xad0e: STA 0x018a\n0xad11: LDA 0x0002\n0xad14: AND #0xf\n0xad16: ORA 0x018a\n0xad19: STA 0x018a\n0xad1c: INX\n0xad1d: RTS\n0xad1e: LDA 0x0002\n0xad21: STA 0x18a,X\n0xad24: INX\n0xad25: RTS\n0xad26: LDA 0x0006\n0xad29: CMP #0x8\n0xad2b: BNE 0xad54\n0xad2d: LDA 0x000e\n0xad30: AND #0x10\n0xad32: BEQ 0xad54\n0xad34: LDA 0x018a\n0xad37: AND #0xf0\n0xad39: STA 0x018a\n0xad3c: LDA 0x0002\n0xad3f: AND #0x3\n0xad41: STA 0x0002\n0xad44: LDA 0x0003\n0xad47: AND #0xc\n0xad49: ORA 0x0002\n0xad4c: ORA 0x018a\n0xad4f: STA 0x018a\n0xad52: INX\n0xad53: RTS\n0xad54: LDA 0x0002\n0xad57: AND #0x33\n0xad59: STA 0x0002\n0xad5c: LDA 0x0003\n0xad5f: AND #0xcc\n0xad61: ORA 0x0002\n0xad64: STA 0x18a,X\n0xad67: INX\n0xad68: RTS",
+    "confidence": "observed",
+    "authority": "shipped-artifact",
+    "environment": null,
+    "limitations": [
+      "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+      "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+      "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+      "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+      "Assembly is Ghidra Listing text and does not claim textual equivalence with Hopper output.",
+      "macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+      "Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.",
+      "Local NES adapter additionally admits 6502:LE:16:default. Generic 6502 pseudocode does not model NES mapper/PPU/APU state or the 2A03 decimal-mode difference; each supplied image has a fixed mapping.",
+      "Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.",
+      "Ghidra analysis was seeded before auto-analysis from /Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-23/seeds.tsv (sha256 28a4627cef2f302e001c9a7e242f2a208cf631716fcbed0a2b9ebfd2bff5455c: 19 function, 0 code, 0 label entries). Seeded functions, code and names are caller assertions, not Ghidra discoveries.",
+      "Seed outcome: 18 functions created, 1 already present, 0 failed; 0 code seeds decoded, 0 failed; 0 labels applied, 0 failed; 0 seeds outside initialized memory."
+    ],
+    "relationship_coverage": null,
+    "locations": [],
+    "evidence_links": []
+  }
+}

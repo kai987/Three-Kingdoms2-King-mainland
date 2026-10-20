@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "original_and_rebuilt_identical": true,
+  "rom_cpu_case_count": 9806,
+  "rom_cpu_counts": {
+    "controller": 7113,
+    "decisions": 2038,
+    "exchange": 655
+  },
+  "source_guard_case_count": 255,
+  "source_guard_counts": {
+    "controller": 248,
+    "decisions": 4,
+    "exchange": 3
+  },
+  "controller_instruction_count": 2213,
+  "controller_static_byte_matches": 2213,
+  "controller_dynamic_instruction_count": 1315,
+  "strategy_count": 8,
+  "tactic_predicate_count": 16,
+  "controller_external_source_helpers": [
+    "F266"
+  ],
+  "integration_case_count": 44,
+  "integration_rom_cpu_comparisons": 43,
+  "integration_native_fields_comparisons": 1,
+  "natural_core_frames": 700,
+  "natural_core_checkpoints": 13,
+  "native_coordinate_commits": 4,
+  "native_RAM_SRAM_injections": 0,
+  "repeat_artifact_checks": 55,
+  "repeat_artifact_counts": {
+    "natural-turn": 52,
+    "cpu-call": 3
+  },
+  "synchronous_original_call_instructions": 8243,
+  "synchronous_call_field_comparisons": 8,
+  "secondary_cache_named_producer": "tactic11 十面埋伏",
+  "secondary_origin_sha256": "a71e3e175ba5353728466e6cac2a385d58f67da0359175483bcec475cd91b7ef",
+  "rea_retained_pair8_verified": true,
+  "rea_load_image_sha256": "7e25db769c199989464774a276cb236054bf6698522028a221f82212ca9cdad2",
+  "source_and_validator_sha256": {
+    "source/recovered/game_engine.py": "a79bc84323b07b0854561233a2c73a087ceba1cee1b7db58fa59f87ffaa0302d",
+    "source/recovered/tactical_ai_control.py": "ca22ddc6665f4e07a16b5a290617c326bd08d2cc5c9e8c0a0187c8147aaa26a3",
+    "source/recovered/tactical_decisions.py": "ea8ff96eac5544c212095e0a9a9287095ada12b5f6ded01fe3f70b3f0a850f6a",
+    "source/recovered/tactical_exchange.py": "82f9616c15f546d6af912455c6f87aa982890fc3ab178a4491746db895a76268",
+    "scripts/analyze_tactical_ai_control.py": "ad94a0fb016040397dae334c9a93daf3341b6e972bfcdfdeda3600717c974158",
+    "scripts/verify_tactical_ai_control.py": "146d3427c7cb4a96d5f495e502d233d674e061830e1feaf90799365f0e1364f7",
+    "scripts/analyze_tactical_decisions.py": "db3471f6ff779bd2531f29f5831e66198f889cc616eecde5860661cd4db2071e",
+    "scripts/verify_tactical_decisions.py": "a5b67990fca470b8fa77b560dc4f9dbb789609167d81ae6216ffd84516de4751",
+    "scripts/verify_tactical_exchange.py": "0ab2f2e0fdc05d076bf7d7f6823628ac5f9dbd34d3ef26e259822488345a61b8",
+    "scripts/verify_phase7_integration.py": "69f959f2004a8e57d9f8bfef95f94e422b154010d533d84e64d5dc4b438043d4",
+    "scripts/verify_phase7.py": "b883b2f9064d131d7d23abefdf4a0849e03070f8911972096db60b00fad7c53e",
+    "scripts/capture_tactical_ai.py": "80ce3f72896ab9302d6ac8aa789790b4f1e134d95d0015ddee93a9e08dcabffc",
+    "scripts/make_phase7_portal.py": "33ce66a2bac15f934296b9c5ef0e78822e6bf641f8a0cef231cd59369ece7029"
+  },
+  "receipt_sha256": {
+    "controller": "950002ebba7f8a38261f451579e1b2af10d3c6bb372081daaaa1091c2e648c56",
+    "decisions": "4d591afcaa96df2d2bb442acf76752cb36ba6eb07365ec8da9a555b0d89da88f",
+    "exchange": "86ea93f6ef177fe14adaf13b61a2fdb6fe6a076071cfb182d12d2de43f4ad27a"
+  },
+  "integration_sha256": "532b8b6b8d0f5d50aa0312fa10fe37e6a465ef08ebf6d6e1d6919528d43d7468",
+  "limits": [
+    "CPU cases include explicitly bounded prefixes/suffixes as well as complete returned routines; source guards are separate.",
+    "Full control IR recovers eight strategies; independent high-level rules cover only their documented segments.",
+    "1315 of2213 control instructions dynamically exercised; static byte parity is not branch-complete execution.",
+    "Natural core capture proves four movement proposals, AP charges and side switch; no successful tactic or phase1 core path is claimed.",
+    "Recorded8243-instruction CPU call is a separate seeded synchronous execution, not a Nestopia instruction recording or another full frame.",
+    "PPU/IRQ/audio and full game reconstruction remain incomplete."
+  ]
+}

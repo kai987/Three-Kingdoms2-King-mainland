@@ -1,0 +1,11 @@
+[
+  {
+    "start_software_cycle": 0,
+    "software_cycles": 27,
+    "pad_buttons": [
+      0,
+      0
+    ],
+    "origin": "Explicit software-cycle schedule with released pads; no Native timing claim"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "status": "producer_only_no_consumer_execution",
+  "palette_priority_flag": 58,
+  "actual_consumer_owner": "TextSceneServices A006/A11B; fixed EE53 services palette first while007D nonzero",
+  "minimal_WP07_contract": [
+    "Explicit entry/caller stack and scheduling: EE53 sees007D3A and must choose palette first",
+    "Explicit PPUSTATUS2002 read samples at actual requested positions and timing",
+    "Observe actual2000/2006/2007 writes; keep007D/7E software changes genuine",
+    "Only after real palette scheduling permits bit2 consumer may packet upload be claimed"
+  ],
+  "known_algorithm_missing": false,
+  "new_unknown_service_count": 0,
+  "Source_CPU_Native_executions": 0,
+  "consumer_or_full_WP08_closed": false
+}

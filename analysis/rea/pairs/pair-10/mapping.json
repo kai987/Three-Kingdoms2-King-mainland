@@ -1,0 +1,18 @@
+{
+  "physical_banks": [
+    10,
+    11,
+    31
+  ],
+  "cpu_base": "0xa000",
+  "file_offsets": [
+    81936,
+    90128,
+    253968
+  ],
+  "source": "exact concatenation from supplied ROM",
+  "limitations": [
+    "Static snapshot fixes A000/C000 banks; far-call targets switch that mapping.",
+    "Ghidra may decode inline return-address words as instructions."
+  ]
+}

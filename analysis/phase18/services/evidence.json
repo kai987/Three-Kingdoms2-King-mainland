@@ -1,0 +1,71 @@
+{
+  "schema": "phase18-city-auxiliary-readable-evidence-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_file": "source/recovered/city_auxiliary_services.py",
+  "source_sha256": {
+    "source/recovered/city_auxiliary_services.py": "9f8b9a725f8b7e06fa08a1f132db2dc110be214736fd39e1b4f248d521ca35f5",
+    "source/recovered/domestic_cooperation_controller.py": "e3f0e0f6bc5d85aa8a9bfb35d07ff99864f66384795319c86f1490ccc5074345",
+    "source/recovered/global_ui_controller.py": "21e49b6ece3261756f31254b1291da6a6b38f2d5025b752fbb222a0fa844449a",
+    "source/recovered/scene_shared_services.py": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76",
+    "source/recovered/battle_nmi_services.py": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15",
+    "source/recovered/controller_helpers.py": "54dba0ee606f3ce200c648700f908956273ff0a96cc0dbfb847fc4396bf79afb",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1",
+    "scripts/analyze_city_auxiliary_services.py": "f193303eaec5b98414affdcee56c007d8d3c4a525360a046e6243630600f26a4",
+    "scripts/verify_city_auxiliary_services.py": "5ea418a836ec855b1a0dee48f71003dceeca33ed88bd7823d8dd7549cdb7b262",
+    "scripts/trace_city_auxiliary_fields.py": "e6fb1099a08df9d7e9aba9386b8f81e70dfae32f081984c4158811c354b5bf6b"
+  },
+  "production_IR_interpretation": false,
+  "production_original_CPU_callbacks": 0,
+  "byte_catalog": {
+    "path": "analysis/phase18/services/static-catalog.json",
+    "sha256": "65a87bfa72af5189df958a937ff3a3912110eb576477f64f75762aab70614793"
+  },
+  "validation": {
+    "path": "analysis/phase18/services/validation.json",
+    "sha256": "264d0a9604dee5192b418fcdca81770552e0adedb00eea5e40afce6adf264750",
+    "status": "passed",
+    "rom_cpu_case_count": 192,
+    "complete_return_count": 191,
+    "strict_prefix_count": 1,
+    "source_guard_case_count": 9
+  },
+  "coverage": {
+    "static_new_body_instruction_positions": 739,
+    "dynamically_executed_new_body_positions": 267,
+    "not_dynamic": 472,
+    "static_byte_pin_is_not_dynamic_path_validation": true
+  },
+  "distinctions": {
+    "aux_byte1": "Opaque; exact LE16(city+1,city+2) original gate, not inferred official field name.",
+    "pointer": "10BD8D calls11D105;20/21 becomes6000+32*city. D105 caps true gold/grain first; no pointer+1 bias.",
+    "threshold": "Unsigned overlapping word>=300; sufficient reserve recruitment itself deducts no gold. Shortage fee is wrapping byte20 per100-block loop; not300.",
+    "selection": "All30cities, owner&7==ruler; all10roster bytes, skipFFholes; head score100, others officer武力; equality selects later entry/city.",
+    "troops": "Eligibility/need use low10. Only low10==1000 is skipped; raw low10>1000 underflows need. Commit writes full16-bit03E8, clearing former upper6.",
+    "purchase": "need>=reserve including exact equality enters purchase; first100 block bought even deficit0. Purchase loop stops on subtraction borrow, so exact multiples buy one extra block. Cost wraps8bit. D36F failure ignored by this caller.",
+    "budget": "Original charge2 occurs after reserve/rawtroop write. Zero or borrow discards its own JSR frame then returns through real parentcaller; no extra frame invented forBD7A/BEC7 tail.",
+    "waiting": "Missing fixed calls retain real callee frame, source refuses absent or non-returned service. SecondaryF8 busy branch retains original loop under explicit block budget; it is not automatically acknowledged.",
+    "source_scope": "New hand-written B49C sampling/two passes and BD7A selection/purchase/commit. Secondary B5FC branch copied as fixed direct Python from frozen parent; helpers and BEC7 development are reused existing source."
+  },
+  "natural_memory_context": {
+    "prefix": "analysis/phase15/runtime/cold-yearwrap/AI-ruler1-status00-frame34623",
+    "calendar": [
+      89,
+      6
+    ],
+    "display_date": "189year7month",
+    "natural_city4_reserve": 9499,
+    "target_head": 167,
+    "prepared_common": "realgold257 and officer167troops900",
+    "aux_cohort": [
+      0,
+      44
+    ],
+    "original_CPU_prefix_context": "E066 declared AXYP/SP, actual original main2 dispatch creates B49C caller",
+    "Native_internal_CPU_trace": false
+  },
+  "artifact_sha256": {
+    "analysis/phase18/services/static-catalog.json": "65a87bfa72af5189df958a937ff3a3912110eb576477f64f75762aab70614793",
+    "analysis/phase18/services/original.asm": "9d562e8ad6bcb2608e0852007fca4064c76dfaf10b42f3fdc0728588201f0ffc"
+  }
+}

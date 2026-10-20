@@ -1,0 +1,22 @@
+{
+  "provenance": "Controlled originalCPU E066 mainpaused, explicitNMI2, genuineF8CBJSR audio entry; notNativeinternaltrace",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "registers": {
+    "a": 0,
+    "x": 255,
+    "y": 46,
+    "p": 34,
+    "sp": 243,
+    "pc": 40963
+  },
+  "banks": [
+    17,
+    14,
+    15,
+    31
+  ],
+  "actual_return_PC": 63692,
+  "actual_return_SP": 245,
+  "heir": true,
+  "NMI": 4
+}

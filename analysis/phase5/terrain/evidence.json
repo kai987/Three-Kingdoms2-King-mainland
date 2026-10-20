@@ -1,0 +1,337 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "formal_name": null,
+  "formal_name_status": "unconfirmed",
+  "class1_profile": {
+    "class": 1,
+    "formal_name": null,
+    "formal_name_status": "unconfirmed",
+    "raw_tiles": [
+      1,
+      106,
+      107,
+      108,
+      109,
+      112,
+      116
+    ],
+    "normalization": "preserved as 1 in both player DB46 and AI B6E5",
+    "first_table_costs": [
+      4,
+      4,
+      4,
+      0
+    ],
+    "second_table_costs": [
+      3,
+      3,
+      3,
+      0
+    ],
+    "supported_affinities": [
+      0,
+      1,
+      2
+    ],
+    "undefined_affinity": 3,
+    "pure_terrain_gates": {
+      "fire_0_target": false,
+      "trap_virtual_raid_1_2_3_target": false,
+      "water_4_10_12_target": false,
+      "castle_6_target": false,
+      "mutual_attack_7_target": false,
+      "conversion_8_target": true,
+      "rock_9_target_or_actor": false,
+      "ambush_11_actor": false,
+      "crossbow_13_target_if_actor_castle": true,
+      "inferno_14_target": true,
+      "player_qimen_15_target": true
+    },
+    "effect_terrain_gates": {
+      "water_immobilization_B3FE": false,
+      "water_damage_B494": false,
+      "inferno_damage_B538": true,
+      "area_neighbor_discovery_B8FA": true
+    },
+    "gate_scope": "terrain component only; adjacency, side, stats and resources still apply"
+  },
+  "legal_cell_count": 335,
+  "city_counts": {
+    "5": 56,
+    "6": 117,
+    "7": 17,
+    "9": 105,
+    "29": 40
+  },
+  "raw_variants": [
+    {
+      "raw_tile": 1,
+      "classifier_file": 71516,
+      "class": 1,
+      "metatile_file": 259211,
+      "bg_quad": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "legal_cell_count": 197
+    },
+    {
+      "raw_tile": 106,
+      "classifier_file": 71621,
+      "class": 1,
+      "metatile_file": 259631,
+      "bg_quad": [
+        108,
+        1,
+        1,
+        1
+      ],
+      "legal_cell_count": 34
+    },
+    {
+      "raw_tile": 107,
+      "classifier_file": 71622,
+      "class": 1,
+      "metatile_file": 259635,
+      "bg_quad": [
+        1,
+        1,
+        124,
+        1
+      ],
+      "legal_cell_count": 15
+    },
+    {
+      "raw_tile": 108,
+      "classifier_file": 71623,
+      "class": 1,
+      "metatile_file": 259639,
+      "bg_quad": [
+        1,
+        109,
+        1,
+        1
+      ],
+      "legal_cell_count": 27
+    },
+    {
+      "raw_tile": 109,
+      "classifier_file": 71624,
+      "class": 1,
+      "metatile_file": 259643,
+      "bg_quad": [
+        1,
+        1,
+        1,
+        125
+      ],
+      "legal_cell_count": 37
+    },
+    {
+      "raw_tile": 112,
+      "classifier_file": 71627,
+      "class": 1,
+      "metatile_file": 259655,
+      "bg_quad": [
+        1,
+        109,
+        1,
+        125
+      ],
+      "legal_cell_count": 8
+    },
+    {
+      "raw_tile": 116,
+      "classifier_file": 71631,
+      "class": 1,
+      "metatile_file": 259671,
+      "bg_quad": [
+        1,
+        1,
+        124,
+        125
+      ],
+      "legal_cell_count": 17
+    }
+  ],
+  "evidence": [
+    {
+      "bank": 8,
+      "cpu": 46821,
+      "file": 71413,
+      "length": 10,
+      "hex": "20 EF B6 C9 06 90 02 A9 02 60",
+      "note": "AI B6E5 preserves class1; only raw>=6 normalizes to2"
+    },
+    {
+      "bank": 13,
+      "cpu": 56134,
+      "file": 113494,
+      "length": 10,
+      "hex": "20 50 DB C9 06 90 02 A9 02 60",
+      "note": "Player DB46 preserves class1; only raw>=6 normalizes to2"
+    },
+    {
+      "bank": 8,
+      "cpu": 42892,
+      "file": 67484,
+      "length": 65,
+      "hex": "48 AC 8C 6F B9 64 06 20 91 B4 A0 0B B1 20 4A 4A 29 03 8D 22 00 68 0A 0A 0D 22 00 AA A0 08 B1 20 38 E9 59 B1 20 E9 02 90 0C BD CD A7 A8 AD 05 05 38 FD CD A7 60 BD E9 A7 A8 AD 05 05 38 FD E9 A7 60",
+      "note": "AI cost computation, including repeated byte8 read A7AA/A7AF"
+    },
+    {
+      "bank": 12,
+      "cpu": 42983,
+      "file": 100343,
+      "length": 60,
+      "hex": "48 AC 09 05 B9 64 06 20 D7 F2 A0 0B B1 00 4A 4A 29 03 85 00 68 0A 0A 05 00 A8 AE 09 05 BD 3C 06 C9 06 90 0C B9 23 A8 AA AD 05 05 38 F9 23 A8 60 B9 3F A8 AA AD 05 05 38 F9 3F A8 60",
+      "note": "Player selector063C[slot]>=6, affinity and final AP subtraction"
+    },
+    {
+      "bank": 8,
+      "cpu": 42957,
+      "file": 67549,
+      "length": 56,
+      "hex": "03 05 05 00 04 04 04 00 02 03 03 00 05 06 03 00 05 03 06 00 06 06 06 00 06 06 06 00 02 03 03 00 03 03 03 00 01 02 02 00 03 05 02 00 03 02 04 00 04 04 04 00 04 04 04 00",
+      "note": "Exact AI first/second cost tables, identical to player A823/A83F"
+    },
+    {
+      "bank": 31,
+      "cpu": 61982,
+      "file": 258606,
+      "length": 25,
+      "hex": "AD B2 00 8D 00 A0 AD B3 00 8D 00 A8 AD B4 00 8D 00 B0 AD B5 00 8D 00 B8 60",
+      "note": "Top map BG four1KiB page write protocol; end-of-frame mapper banks differ"
+    },
+    {
+      "bank": 12,
+      "cpu": 41812,
+      "file": 99172,
+      "length": 20,
+      "hex": "AC 09 05 B9 00 06 85 10 B9 14 06 85 11 20 46 DB 8D 44 05 60",
+      "note": "Target normalized terrain from DB46 is written0544 for ordinary attack scene"
+    },
+    {
+      "bank": 12,
+      "cpu": 44492,
+      "file": 101852,
+      "length": 36,
+      "hex": "A5 0A F0 06 C9 02 F0 02 18 60 38 60 A5 0A F0 06 C9 04 F0 02 18 60 38 60 A5 0A C9 03 F0 02 18 60 38 60 AC 09",
+      "note": "Player fire targets0/2; trap/virtual/raid targets0/4; water targets3"
+    },
+    {
+      "bank": 12,
+      "cpu": 45085,
+      "file": 102445,
+      "length": 14,
+      "hex": "A4 0A C0 03 F0 06 C0 05 F0 02 38 60 18 60",
+      "note": "Player 奇門遁甲 terrain gate excludes3 and5, admits1"
+    },
+    {
+      "bank": 12,
+      "cpu": 46078,
+      "file": 103438,
+      "length": 20,
+      "hex": "A4 12 B9 00 06 85 10 B9 14 06 85 11 20 46 DB C9 03 D0 18 A9",
+      "note": "Water-only immobilization effect skips class1"
+    },
+    {
+      "bank": 12,
+      "cpu": 46228,
+      "file": 103588,
+      "length": 20,
+      "hex": "A4 12 B9 00 06 85 10 B9 14 06 85 11 20 46 DB C9 03 D0 10 A4",
+      "note": "Water-only troop damage effect skips class1"
+    },
+    {
+      "bank": 12,
+      "cpu": 46392,
+      "file": 103752,
+      "length": 22,
+      "hex": "A4 12 B9 00 06 85 10 B9 14 06 85 11 20 46 DB C9 05 F0 10 A4 12 AD",
+      "note": "劫火 damage effect skips only5, so terrain1 passes this gate"
+    },
+    {
+      "bank": 12,
+      "cpu": 47390,
+      "file": 104750,
+      "length": 19,
+      "hex": "84 14 B9 00 06 85 10 B9 14 06 85 11 20 46 DB C9 05 F0 18",
+      "note": "Area target discovery skips only castle5; class1 is included"
+    },
+    {
+      "bank": 14,
+      "cpu": 47249,
+      "file": 120993,
+      "length": 41,
+      "hex": "AD 44 05 48 48 A8 B9 48 BB A8 20 5F F2 68 0A A8 B9 1E BB 8D 00 00 B9 1F BB 8D 01 00 B9 2C BB 8D 02 00 B9 2D BB 8D 03 00 AD",
+      "note": "Ordinary-attack renderer indexes BB48/BB1E/BB2C by0544"
+    },
+    {
+      "bank": 15,
+      "cpu": 51961,
+      "file": 125705,
+      "length": 43,
+      "hex": "AD 44 05 48 A8 B9 48 BB A8 20 5F F2 68 0A A8 B9 1E BB 8D 02 00 B9 1F BB 8D 03 00 AD 01 00 0A 0A 0A 0A 0D 00 00 A8 B1 02 A8 B9 59",
+      "note": "Attack-scene cell lookup also uses0544 to select map resource"
+    },
+    {
+      "bank": 15,
+      "cpu": 53512,
+      "file": 127256,
+      "length": 32,
+      "hex": "AD 0C 00 20 D7 F2 A0 0B B1 00 4A 4A 29 03 0A 0A 0A 18 6D 44 05 A8 B9 B0 D1 8D 0D 00 AD 7A 05 C9",
+      "note": "Attack command template indexed by affinity*8+terrain; class1 is an index, not a name"
+    }
+  ],
+  "ordinary_attack_scene_tables": {
+    "selector_bank_table_cpu": 47944,
+    "selector_bank_table_file": 121688,
+    "selector_bank_ids": [
+      33,
+      33,
+      33,
+      33,
+      33,
+      33
+    ],
+    "first_pointer_cpu": 47902,
+    "first_pointer_file": 121646,
+    "first_pointers": [
+      33856,
+      34160,
+      34464,
+      34768,
+      35072,
+      35376
+    ],
+    "second_pointer_cpu": 47916,
+    "second_pointers": [
+      32768,
+      32768,
+      32768,
+      32768,
+      32768,
+      32768
+    ],
+    "scope": "Original indexed resource identity; no readable name association is implied"
+  },
+  "ai_selector_formula": "first_table iff officer.raw_byte8>=3; byte9 is ignored because Y is not incremented",
+  "player_selector_formula": "first_table iff RAM063C[slot]>=6; cache=(troopword&1023)//100",
+  "name_search_scope": "Reviewed original classifier, metatile/CHR, movement, tactical terrain gates, effect gates, attack-scene indexed consumers and existing decoded menu/message corpus. No direct class1 name pointer was found. This does not prove no name exists anywhere in ROM.",
+  "formal_name_primary_source_attempt": {
+    "url": "https://endlessfight.org/discuz/forum.php?mod=viewthread&tid=1261",
+    "page_title": "FC 三国志II 覇王の大陸 取扱説明書",
+    "result": "Public catalog found; scan is behind membership/points access. Contents were not retrieved or treated as evidence."
+  },
+  "visual_evidence": "visual-evidence.json",
+  "attack_background_evidence": "attack-background-evidence.json",
+  "limitations": [
+    "Smooth orange pixels alone do not establish road, desert, plain or another formal terrain name.",
+    "Costs for raw affinity3 are zero, but UI/domain evidence marks3 undefined.",
+    "Terrain gate acceptance is not complete tactic usability: adjacency, stats, team, resources and targeting still apply.",
+    "AI selector discrepancy is preserved from the supplied ROM; no correction or patch is applied."
+  ]
+}

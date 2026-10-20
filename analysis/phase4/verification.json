@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "original_and_rebuilt_identical": true,
+  "programs": {
+    "fixed services": {
+      "instruction_count": 482,
+      "sha256": "c032e30e5af43aab1dd517ef664b265710fbea956d6fc888a7386fcb3f583306",
+      "all_bytes_verified": true
+    },
+    "village services": {
+      "instruction_count": 799,
+      "sha256": "582aa746ad143dfb7adf075e226fed55a03993a53fd8a5e0b42d3ba2dfb0769e",
+      "all_bytes_verified": true
+    }
+  },
+  "differential_receipts": {
+    "duel": {
+      "status": "passed",
+      "case_count": 13340,
+      "compared_scope": "Declared game fields, whole SRAM and RNG cursor0; flags/registers/stack/mapper/display effects explicitly excluded",
+      "oracle_scope": "Actual unmodified ROM instructions and all called helpers; CPU-only bus with explicit IO assumptions, not a full video-frame test",
+      "source_original_code_calls": 0
+    },
+    "postbattle": {
+      "status": "passed",
+      "case_count": 9788,
+      "scope": "Independent high-level gameplay source versus original-ROM CPU oracle; full SRAM plus declared gameplay buffers/state. CPU scratch/flags/bank-register and UI queue encodings are not promised."
+    },
+    "services": {
+      "status": "passed",
+      "case_count": 14848,
+      "scope": "All registers/flags/SP/PC, complete RAM/SRAM and physical PRG mapper windows; explicit source services",
+      "limits": [
+        "PPU/audio synthesis and queue completion are not executed. Requests retain original queued state.",
+        "D flag is clear as in this NES game. Rejection bound0 cannot terminate and is excluded.",
+        "Menus use bounded, terminated matrix fixtures; not arbitrary corrupted pointer data."
+      ]
+    },
+    "terrain": {
+      "status": "passed",
+      "case_count": 27638,
+      "scope": "Original6502 code oracle with synthetic RAM; external drawing/input/far helpers execute original ROM explicitly. Complete-core menu screenshots are separately labeled synthetic fixtures.",
+      "service_controller_case_count": 120,
+      "service_instruction_coverage": 655,
+      "service_instruction_total": 799
+    }
+  },
+  "integration_case_count": 8,
+  "village_substate_count": 10,
+  "tactic_names": [
+    "火計",
+    "陥穽",
+    "虚兵",
+    "要撃",
+    "乱水",
+    "火箭",
+    "偽撃転殺",
+    "共殺",
+    "籠絡",
+    "落石",
+    "連環",
+    "十面埋伏",
+    "水攻",
+    "連弩",
+    "劫火",
+    "奇門遁甲"
+  ],
+  "rea_existing_verified_pairs": {
+    "8": {
+      "load_image": "verified",
+      "source": "analysis/rea/pairs/pair-08/inspect_native_load_image.json"
+    },
+    "23": {
+      "load_image": "verified",
+      "source": "analysis/rea/pairs/pair-23/inspect_native_load_image.json"
+    }
+  },
+  "source_and_validator_sha256": {
+    "source/recovered/game_engine.py": "0eb9f8b15d5aefa706a37ee3a46916804199cdefbcd5bed9d9c09ce30e8af006",
+    "source/recovered/duel_logic.py": "3cdedf383abf07adb2538296e0a67ed4d62f2b8353bb9751d70c2d57834a5e57",
+    "source/recovered/postbattle.py": "aa5c87c3f398b9600392dd87b78f786a003b0c2a02f2e4d6114aaa95cb8d2dff",
+    "source/recovered/terrain_rules.py": "fa385e98b7d62200df8af32399e47aaed6ca8db9281a8d32974955c5280fc8f8",
+    "source/recovered/map_service_machine.py": "f364cccb5faa545221427d2c6531c5291b0516c1df8cdaedf26d05b944300304",
+    "source/recovered/runtime_services.py": "9bb24aecc2f3824f8f974b1f9ac2b2d5a6358afd2cbda2a70c07f1490a5db6a2",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1",
+    "source/recovered/game_enums.py": "70c34d99d442ea40269507c306de680e1e1511baf5db1469764a63961c56963d",
+    "scripts/verify_duel_logic.py": "ffdc072fc8ee07e6b3a13d79750da865d8e7f3e663bae50afc0aeadc4e14d9de",
+    "scripts/verify_postbattle.py": "acad7bed31fbce91f12c197895e69baeaeeb09019a25288100ce0772cda846dd",
+    "scripts/verify_runtime_services.py": "dff86f2cfdeb87383836b451cee92f300846caf362d9a3be5816081cd8532dbd",
+    "scripts/verify_terrain_rules.py": "d1719605cd32a33a55beb02029fbcb0da201b1119ec29d91d5f94123b494344c",
+    "scripts/verify_source_integration.py": "23a2e78f04cf90b2e8baea627eb9205408a5d032f3410c5db5813b9a58438d02"
+  },
+  "limits": [
+    "Legal control-table coverage, executed instruction coverage, semantic-field equivalence and full NES frames are separate scopes.",
+    "Village and older controller IR tests may use explicitly declared original-ROM adapters for unresolved helpers.",
+    "GameEngine semantic APIs and fixed services contain no original-code adapters; graphics and asynchronous completion stay explicit.",
+    "Terrain1 formal name and independent troop upper6-bit meanings remain unresolved.",
+    "This reconstructed source is not the original source nor an independently playable complete game."
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "original_and_rebuilt_identical": true,
+  "rom_cpu_comparison_count": 18194,
+  "rom_cpu_counts": {
+    "ownership": 2176,
+    "factions": 9699,
+    "global": 6319
+  },
+  "source_only_guard_count": 251,
+  "source_only_guard_counts": {
+    "global": 248,
+    "ownership": 3
+  },
+  "programs": {
+    "global": {
+      "instruction_count": 1005,
+      "sha256": "eb0dbc074215887c201ee8b10a070cef1b17780700574754d40d1c4b54cf19a9",
+      "original_bytes_verified": true
+    },
+    "ending": {
+      "instruction_count": 668,
+      "sha256": "846be29c4aeb95aa24cd7657b8f63a79cb488a964035b2cf6b85480e3e561426",
+      "original_bytes_verified": true
+    }
+  },
+  "main_states": 15,
+  "nmi_scenes": 9,
+  "ending_modes": 6,
+  "legal_ending_mode_sub_combinations": 17,
+  "discovered_owner_writer_count": 13,
+  "ownership_code_ranges": 8,
+  "faction_code_ranges": 16,
+  "ending_terminations": {
+    "returned": 65,
+    "explicit_boundary": 3
+  },
+  "global_status_counts": {
+    "all120_main_masked_dispatch_aliases:boundary": 120,
+    "all144_nmi_masked_dispatch_aliases:boundary": 144,
+    "strict_all15_main_entries:dependency": 40,
+    "strict_all15_main_entries:boundary": 20,
+    "strict_all9_nmi_windows:dependency": 18,
+    "strict_all9_nmi_prefixes:dependency": 18,
+    "strict_post_reset_entry:dependency": 1,
+    "nmi_prefix_synchronous_io_contract:dependency": 18,
+    "oracle_assisted_main:boundary": 26,
+    "oracle_assisted_main:dependency": 6,
+    "oracle_assisted_nmi:boundary": 20,
+    "four_mapper_helpers_all_raw_selectors:returned": 4096,
+    "nmi_saved_registers_and_rti_stack:returned": 256
+  },
+  "integration_case_count": 55,
+  "integration_rom_cpu_comparisons": 53,
+  "integration_core_score_comparisons": 1,
+  "integration_source_guard_count": 1,
+  "integration_receipt_sha256": "a3cbd3df4b483eb9e66ca192e3483da1bd8cb42ba6c33e139fa3f72ef08290a2",
+  "original_core_repeat_artifact_checks": 38,
+  "original_core_repeat_counts": {
+    "messages": 20,
+    "ownership-commit": 8,
+    "unification-ending": 10
+  },
+  "unification_core_frames": 1204,
+  "original_core_score": 75,
+  "rea_verified_pairs": {
+    "8": "7e25db769c199989464774a276cb236054bf6698522028a221f82212ca9cdad2",
+    "10": "6a2c40b84a0e5b48c806d8e55ab5d6129a37a1fa021b3cb9d4e02dc9f029cb99",
+    "12": "55fd8f4e83ed7e4bbce7e2d3a7b1b0f84b6286c391b0284792285f763d00b121",
+    "14": "460d92d0737186f23287f59509ff185edbb7f7fc325b8a8f962b7918171ff3e8",
+    "23": "78681d301f0d16c751007f757e34771cff8e29a8f2b61c4636762edb465b826c",
+    "25": "9269f54ad77739f6c7999f3bd1bb14f43f7dc0ea670ebb8e04b33da709a7817c",
+    "27": "3232b33411ae8b64b5d6de22cbf83d6c63c2949e3b6e30133bf801f3d3cf90df",
+    "29": "0c8dd4e29589c9b4c5f0f64e8aa9a7e48e41083aaf73fbc41e0156903022af0a"
+  },
+  "rea_pair_candidate_procedure_count": 880,
+  "previous_phase5_rom_cpu_cases": 83702,
+  "previous_phase5_integration_cases": 989,
+  "source_and_validator_sha256": {
+    "source/recovered/game_engine.py": "a79bc84323b07b0854561233a2c73a087ceba1cee1b7db58fa59f87ffaa0302d",
+    "source/recovered/battle_state_machine.py": "7c67a8adef29ff925915184c3f7b17652e7b089107b75a3a362cab50c58d3b21",
+    "source/recovered/city_ownership.py": "0e99a8c311f112e9020aa44c66026a201d8dc8329f5470c20baed83cf0729cf6",
+    "source/recovered/faction_lifecycle.py": "b266bcd3adad9b7848a2dd644543142e7dc8dc62c84f134890627c49f1d1bec4",
+    "source/recovered/global_main_loop.py": "43ddff5d1fd389392f3959a6f85abc68a04ecf17d93e735865c70f803641394d",
+    "scripts/analyze_city_ownership.py": "9542026fdaebb78a35151de9e60961d9b21ea0a39005ac872936871296904f08",
+    "scripts/analyze_faction_lifecycle.py": "58b93425952c36bdf37031dd284200fcf5482baf8c42ff3bf3c8dee4e914c8d4",
+    "scripts/analyze_global_main_loop.py": "0d64c8aef34c7470f38d11753c40547412bf92a08710a87d7aa77a62b21bd15a",
+    "scripts/verify_city_ownership.py": "7081c3ee13064dc2f1b3fc445374c0edd387fe90e4d3119ba324bca7ab7bc1ce",
+    "scripts/verify_faction_lifecycle.py": "e81e7856252ea9f321813ed7664380eab812b683d16f368c8ee326521aa24908",
+    "scripts/verify_global_main_loop.py": "5751b3bc40713f1c9a3b52000f2d658b538807d624ca6efe7c28d7e290780863",
+    "scripts/verify_phase6_integration.py": "7603c109580f82bd275293ce31d3ac279653ffeeb96fb9029ea7a1a1abc10e52",
+    "scripts/verify_phase6.py": "87e9ba6bfd5e05c52d91630069a546e539505ae35f4354fc7ca48a3a768516d6",
+    "scripts/capture_faction_messages.py": "69e4d43fd39c96f2ebcef5d19e05d207f2b7c5a549f300283bc0604e2dd1f243",
+    "scripts/capture_ownership_commit.py": "75abc1c2bbbb5467f11a345c9fc62c5b185c787ecb40750cd8dec1c414263fd9",
+    "scripts/capture_unification_ending.py": "8222a410f64fb0e7e0c64acee33c0d0f3fcacbc27958376cf72e62c3841992a2",
+    "scripts/make_phase6_portal.py": "c2e53d74c2feb9c560dc2c8bbc19eeef667703dcbaacc4d2bbe54a1aa69aaa1c",
+    "scripts/make_portal.py": "9977cee25a1fae5986c28053d5d5f9b8fad2ac8418b4907427da141ebe152915"
+  },
+  "receipt_sha256": {
+    "ownership": "cba43b0a1ee8d661b4af2868d1f9a3992c2b1b61b68e1c7016a92d4d305a041f",
+    "factions": "deaa292f54a5dc0a2e53d43283f151cd041ebffd0ccb6d4069ae62334776471e",
+    "global": "cec5c9fdf545de55e6e5b8b40314faf35d1799e05248fa33b2f9bc2be7e24d73"
+  },
+  "limits": [
+    "CPU counts include bounded prefixes and declared external boundaries, not only complete returned functions.",
+    "Global source guards are separate from original CPU comparisons; core artifact checks are also separate.",
+    "Only known physical-pair source bridges are integrated; scene rendering, hardware/NMI/IRQ timing and audio remain explicit dependencies.",
+    "Original-core victory is a controlled30-owner SRAM fixture with ordinary B/A input, not a naturally played campaign.",
+    "Extinction events clear the leader byte only at the recovered commit; no full faction/city cleanup is inferred.",
+    "These are reconstructed readable rules and lifted control, not original source or a standalone playable remake."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rom/prg-banks/bank-31.bin\",\"format\":\"raw-binary\",\"kind\":\"executable\",\"sha256\":\"f8d8ff082c3fdefce41c05787ebff743e03855156d5f6f523c64423a4343e40f\",\"architecture\":\"6502\",\"entry_point\":\"0xe000\"}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rom/prg-banks/bank-31.bin",
+      "format": "raw-binary",
+      "kind": "executable",
+      "sha256": "f8d8ff082c3fdefce41c05787ebff743e03855156d5f6f523c64423a4343e40f",
+      "architecture": "6502",
+      "entry_point": "0xe000"
+    }
+  }
+}

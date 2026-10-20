@@ -1,0 +1,55 @@
+{
+  "schema": "phase27-local-incremental-delivery-v1",
+  "kind": "incremental_analysis_and_readable_source",
+  "base_archive": {
+    "path": "build/三国志2超级版-逆向分析-v26增量.zip",
+    "sha256": "ed9f9cbf4e1e7ced4a4ff03dc70793b37bce31ad94b38597db7759a430be3f23",
+    "included": false
+  },
+  "base_audit": {
+    "path": "analysis/phase26/verification.json",
+    "sha256": "91dda198dbd978eaa76a0b3a98b1bcf6cf40032c622594416f5d90e3ef778577",
+    "included": true
+  },
+  "foundational_archive": {
+    "path": "build/三国志2超级版-逆向分析-v22.zip",
+    "sha256": "9fd37c2ae0d7d857c787801e8bdc92ca43fb038099491f7dbe09f17b204cef80",
+    "included": false
+  },
+  "include_roots": [
+    "source/recovered",
+    "source/readable_c",
+    "scripts",
+    "analysis/phase27"
+  ],
+  "include_files": [
+    "requirements.txt",
+    "analysis/phase26/verification.json",
+    "analysis/phase26/delivery-manifest.json"
+  ],
+  "exclude": [
+    "exploratory*",
+    "__pycache__",
+    "*.pyc",
+    "analysis/phase27/package-receipt.json",
+    ".DS_Store"
+  ],
+  "original_ROM_included": false,
+  "rebuilt_ROM_included": false,
+  "full_ROM_byte_source_included": false,
+  "toolchain_included": false,
+  "old_large_evidence_copied": false,
+  "canonical_v22_archive_replaced": false,
+  "requires_separate_base_and_user_ROM_for_reproduction": true,
+  "external_publication": false,
+  "dependency_order": [
+    "v22 full frozen archive",
+    "v23 frozen supplement",
+    "v24 frozen supplement",
+    "v25 frozen supplement",
+    "v26 frozen supplement",
+    "v27 supplement",
+    "user-provided ROM and separately pinned original core/toolchain"
+  ],
+  "scope": "One G106 postbattle-resource pointer chain, exact callee protocol and actual store observations; natural and inherited-controlled input ancestry remain separate. No new A006 parent controller or standalone-remake claim."
+}

@@ -1,0 +1,1232 @@
+{
+  "schema": "safe-local-cleanup-v1",
+  "removed_file_count": 244,
+  "removed_bytes": 591299325,
+  "removed_files": [
+    {
+      "path": ".toolchain/ghidra.zip",
+      "bytes": 569649598,
+      "sha256": "ddac49f903da9d5bac833e5cc79395098b9c33cfd3279be5f31bd00387d2d4db",
+      "installed_file_parity": true
+    },
+    {
+      "path": ".DS_Store",
+      "bytes": 6148,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/postbattle_loyalty_bridge.cpython-313.pyc",
+      "bytes": 4021,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_auxiliary_integration.cpython-313.pyc",
+      "bytes": 4638,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/officer_details_ui_services.cpython-313.pyc",
+      "bytes": 74463,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/negotiation_integration.cpython-313.pyc",
+      "bytes": 4078,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/domestic_secondary_services.cpython-313.pyc",
+      "bytes": 51677,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/runtime_services.cpython-313.pyc",
+      "bytes": 8691,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/map_service_machine.cpython-313.pyc",
+      "bytes": 1986,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/domestic_secondary_integration.cpython-313.pyc",
+      "bytes": 5301,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_officer_details_controller.cpython-313.pyc",
+      "bytes": 59775,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactical_effects.cpython-313.pyc",
+      "bytes": 26670,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/field_semantics.cpython-313.pyc",
+      "bytes": 27068,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/officer_ui_services.cpython-313.pyc",
+      "bytes": 19206,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/officer_transfer.cpython-313.pyc",
+      "bytes": 27341,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle_nmi_services.cpython-313.pyc",
+      "bytes": 88734,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_action_bridges.cpython-313.pyc",
+      "bytes": 15445,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/global_main_loop.cpython-313.pyc",
+      "bytes": 21363,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle_scene_controller.cpython-313.pyc",
+      "bytes": 1204878,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle_setup_ai.cpython-313.pyc",
+      "bytes": 95733,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_field_contracts.cpython-313.pyc",
+      "bytes": 26594,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/deployment_pointer_services.cpython-313.pyc",
+      "bytes": 12284,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactic_individual_effects.cpython-313.pyc",
+      "bytes": 16757,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/title_intro_graphics.cpython-313.pyc",
+      "bytes": 26313,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/audio_services.cpython-313.pyc",
+      "bytes": 30375,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle.cpython-313.pyc",
+      "bytes": 20029,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_cooperation_ui_services.cpython-313.pyc",
+      "bytes": 13581,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/wild_recruitment_integration.cpython-313.pyc",
+      "bytes": 2215,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/ui_arithmetic_services.cpython-313.pyc",
+      "bytes": 4255,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/faction_lifecycle.cpython-313.pyc",
+      "bytes": 26177,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactical_decisions.cpython-313.pyc",
+      "bytes": 24722,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactical_exchange.cpython-313.pyc",
+      "bytes": 7083,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/terrain_semantics.cpython-313.pyc",
+      "bytes": 6302,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/ui_graphics_initialization.cpython-313.pyc",
+      "bytes": 18899,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/terrain_rules.cpython-313.pyc",
+      "bytes": 12076,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactical_cooperation_controller.cpython-313.pyc",
+      "bytes": 349649,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle_background_initialization.cpython-313.pyc",
+      "bytes": 27002,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_recruitment_services.cpython-313.pyc",
+      "bytes": 25808,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_threshold_integration.cpython-313.pyc",
+      "bytes": 4628,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/scenario_initialization.cpython-313.pyc",
+      "bytes": 12187,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/game_engine.cpython-313.pyc",
+      "bytes": 48451,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/scroll_graphics_services.cpython-313.pyc",
+      "bytes": 25325,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/scene_shared_services.cpython-313.pyc",
+      "bytes": 31228,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/controller_helpers.cpython-313.pyc",
+      "bytes": 3645,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/audio_scene_services.cpython-313.pyc",
+      "bytes": 109397,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_threshold_services.cpython-313.pyc",
+      "bytes": 10048,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/attack_state_machine.cpython-313.pyc",
+      "bytes": 19169,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/domestic_ai.cpython-313.pyc",
+      "bytes": 36603,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactical_effects_complete.cpython-313.pyc",
+      "bytes": 14899,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/domestic_cooperation_controller.cpython-313.pyc",
+      "bytes": 794196,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/service_memory.cpython-313.pyc",
+      "bytes": 9638,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/text_services.cpython-313.pyc",
+      "bytes": 23540,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle_presentation_services.cpython-313.pyc",
+      "bytes": 15027,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/extinction_scene_services.cpython-313.pyc",
+      "bytes": 1023,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/ai.cpython-313.pyc",
+      "bytes": 24040,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/postbattle_graphics.cpython-313.pyc",
+      "bytes": 9360,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_menu_navigation.cpython-313.pyc",
+      "bytes": 10839,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/scene_initialization.cpython-313.pyc",
+      "bytes": 32875,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/text_scene_services.cpython-313.pyc",
+      "bytes": 96414,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/scene_coordinator.cpython-313.pyc",
+      "bytes": 25495,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_auxiliary_services.cpython-313.pyc",
+      "bytes": 69755,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactical_ai_control.cpython-313.pyc",
+      "bytes": 8986,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/nestopia_context.cpython-313.pyc",
+      "bytes": 10848,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/record_fields.cpython-313.pyc",
+      "bytes": 24309,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/player_tactic_targeting.cpython-313.pyc",
+      "bytes": 16250,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactic_presentation_effects.cpython-313.pyc",
+      "bytes": 11491,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/game_algorithms.cpython-313.pyc",
+      "bytes": 5995,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/mapped_memory.cpython-313.pyc",
+      "bytes": 5654,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactic_area_conversion.cpython-313.pyc",
+      "bytes": 18045,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle_succession.cpython-313.pyc",
+      "bytes": 137696,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/game_enums.cpython-313.pyc",
+      "bytes": 7316,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/campaign_session.cpython-313.pyc",
+      "bytes": 10096,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/postbattle_release_services.cpython-313.pyc",
+      "bytes": 13499,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/tactical_strategy_ai.cpython-313.pyc",
+      "bytes": 37754,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle_state_machine.cpython-313.pyc",
+      "bytes": 33454,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_ownership.cpython-313.pyc",
+      "bytes": 17661,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/troop_fields.cpython-313.pyc",
+      "bytes": 9450,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/portrait_ui_services.cpython-313.pyc",
+      "bytes": 17147,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/boot_initialization.cpython-313.pyc",
+      "bytes": 18225,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/duel_logic.cpython-313.pyc",
+      "bytes": 26752,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/global_ui_controller.cpython-313.pyc",
+      "bytes": 585483,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/exact_audio_requests.cpython-313.pyc",
+      "bytes": 22516,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/officers.cpython-313.pyc",
+      "bytes": 9202,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_recruitment_integration.cpython-313.pyc",
+      "bytes": 5417,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/duel_state_machine.cpython-313.pyc",
+      "bytes": 22667,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/postbattle.cpython-313.pyc",
+      "bytes": 26269,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/attack_scene_controller.cpython-313.pyc",
+      "bytes": 715868,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/__init__.cpython-313.pyc",
+      "bytes": 215,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/duel_scene_controller.cpython-313.pyc",
+      "bytes": 523250,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/battle_graphics_services.cpython-313.pyc",
+      "bytes": 47365,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_panel_services.cpython-313.pyc",
+      "bytes": 475900,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/integrated_scene_services.cpython-313.pyc",
+      "bytes": 2621,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/negotiation_services.cpython-313.pyc",
+      "bytes": 25395,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/player_extinction.cpython-313.pyc",
+      "bytes": 25581,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "source/recovered/__pycache__/city_ui_controller.cpython-313.pyc",
+      "bytes": 707292,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_rom.cpython-313.pyc",
+      "bytes": 15239,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase30.cpython-313.pyc",
+      "bytes": 88634,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase14.cpython-313.pyc",
+      "bytes": 53722,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_battle.cpython-313.pyc",
+      "bytes": 25200,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_domestic_secondary_services.cpython-313.pyc",
+      "bytes": 25812,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_attack_fsm.cpython-313.pyc",
+      "bytes": 16044,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/build_phase18_browser.cpython-313.pyc",
+      "bytes": 21078,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_native_postbattle_pointer.cpython-313.pyc",
+      "bytes": 62444,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_field_semantics.cpython-313.pyc",
+      "bytes": 75863,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/write_phase3_report.cpython-313.pyc",
+      "bytes": 12385,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_native_pointer_lifecycle.cpython-313.pyc",
+      "bytes": 53788,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_nestopia_context.cpython-313.pyc",
+      "bytes": 11745,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/ui_structuring.cpython-313.pyc",
+      "bytes": 3542,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_succession_flows.cpython-313.pyc",
+      "bytes": 55199,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase3.cpython-313.pyc",
+      "bytes": 9355,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_ai.cpython-313.pyc",
+      "bytes": 9930,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_boot_cooperation_flows.cpython-313.pyc",
+      "bytes": 62292,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_service_gaps_phase25.cpython-313.pyc",
+      "bytes": 66153,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_player_extinction.cpython-313.pyc",
+      "bytes": 32111,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_native_postbattle_early.cpython-313.pyc",
+      "bytes": 61980,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_battle_graphics_services.cpython-313.pyc",
+      "bytes": 19694,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_recovered_algorithms.cpython-313.pyc",
+      "bytes": 16405,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_boot_initialization.cpython-313.pyc",
+      "bytes": 24338,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_city_officer_details_controller.cpython-313.pyc",
+      "bytes": 44095,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/replay_battle.cpython-313.pyc",
+      "bytes": 4834,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_global_ui_controller.cpython-313.pyc",
+      "bytes": 28395,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase13.cpython-313.pyc",
+      "bytes": 40319,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/trace_f8_eligibility.cpython-313.pyc",
+      "bytes": 21616,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/probe_defensive_complete_notices_phase31.cpython-313.pyc",
+      "bytes": 12160,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_player_extinction.cpython-313.pyc",
+      "bytes": 13409,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_tactic_area_conversion.cpython-313.pyc",
+      "bytes": 6981,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_record_fields.cpython-313.pyc",
+      "bytes": 24748,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_postbattle.cpython-313.pyc",
+      "bytes": 21778,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_global_ui_controller.cpython-313.pyc",
+      "bytes": 49196,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_domestic_secondary_flows.cpython-313.pyc",
+      "bytes": 14985,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_duel_fsm.cpython-313.pyc",
+      "bytes": 30694,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase12.cpython-313.pyc",
+      "bytes": 46464,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_battle_fsm.cpython-313.pyc",
+      "bytes": 33046,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_tactical_ai_control.cpython-313.pyc",
+      "bytes": 24369,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_city_recruitment_services.cpython-313.pyc",
+      "bytes": 20614,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_postbattle_services.cpython-313.pyc",
+      "bytes": 13948,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_domestic_ai.cpython-313.pyc",
+      "bytes": 35726,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase31.cpython-313.pyc",
+      "bytes": 102245,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/game_model_demo.cpython-313.pyc",
+      "bytes": 6683,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/make_portal.cpython-313.pyc",
+      "bytes": 9762,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_battle_scene_controller.cpython-313.pyc",
+      "bytes": 43643,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_city_auxiliary_watchpoints.cpython-313.pyc",
+      "bytes": 39390,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_game_engine_context.cpython-313.pyc",
+      "bytes": 6028,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase15.cpython-313.pyc",
+      "bytes": 62555,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_analysis.cpython-313.pyc",
+      "bytes": 7827,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase28.cpython-313.pyc",
+      "bytes": 72279,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/package_phase18_results.cpython-313.pyc",
+      "bytes": 7582,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_duel_logic.cpython-313.pyc",
+      "bytes": 27655,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_city_auxiliary_services.cpython-313.pyc",
+      "bytes": 27929,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/build_phase14_browser.cpython-313.pyc",
+      "bytes": 49649,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_record_fields.cpython-313.pyc",
+      "bytes": 23348,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/rebuild_rom.cpython-313.pyc",
+      "bytes": 3315,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase27.cpython-313.pyc",
+      "bytes": 77389,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/trace_startup.cpython-313.pyc",
+      "bytes": 27850,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_global_main_loop.cpython-313.pyc",
+      "bytes": 30000,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_terrain_semantics.cpython-313.pyc",
+      "bytes": 19516,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_duel_logic.cpython-313.pyc",
+      "bytes": 11274,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_native_wild_recruitment.cpython-313.pyc",
+      "bytes": 52784,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_native_city_threshold.cpython-313.pyc",
+      "bytes": 39548,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_officer_transfer.cpython-313.pyc",
+      "bytes": 29748,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_officer_fields.cpython-313.pyc",
+      "bytes": 14878,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/extract_assets.cpython-313.pyc",
+      "bytes": 30869,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_terrain_rules.cpython-313.pyc",
+      "bytes": 22073,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_readable_c.cpython-313.pyc",
+      "bytes": 11392,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_tactical_effects.cpython-313.pyc",
+      "bytes": 8220,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/nes_service_runtime.cpython-313.pyc",
+      "bytes": 6250,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_remaining_tactics.cpython-313.pyc",
+      "bytes": 29237,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_global_main_loop.cpython-313.pyc",
+      "bytes": 17155,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_officer_fields.cpython-313.pyc",
+      "bytes": 15420,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_domestic_cooperation_controller.cpython-313.pyc",
+      "bytes": 28072,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_terrain_semantics.cpython-313.pyc",
+      "bytes": 29773,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_officer_transfer.cpython-313.pyc",
+      "bytes": 14239,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/package_phase27_incremental.cpython-313.pyc",
+      "bytes": 13200,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_names_terrain.cpython-313.pyc",
+      "bytes": 16342,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase10.cpython-313.pyc",
+      "bytes": 23580,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_f8_native_flows.cpython-313.pyc",
+      "bytes": 61633,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_tactical_effects.cpython-313.pyc",
+      "bytes": 27405,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/write_phase18_report.cpython-313.pyc",
+      "bytes": 10910,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_city_field_contracts.cpython-313.pyc",
+      "bytes": 38599,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase17.cpython-313.pyc",
+      "bytes": 49339,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_title_intro_graphics.cpython-313.pyc",
+      "bytes": 18776,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_unknown_pointer_phase24.cpython-313.pyc",
+      "bytes": 35645,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_battle_fsm.cpython-313.pyc",
+      "bytes": 21993,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/build_phase26_report.cpython-313.pyc",
+      "bytes": 38300,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/package_phase28_incremental.cpython-313.pyc",
+      "bytes": 13204,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/build_phase19_browser.cpython-313.pyc",
+      "bytes": 12536,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_postbattle.cpython-313.pyc",
+      "bytes": 14754,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/write_phase15_report.cpython-313.pyc",
+      "bytes": 11655,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_city_ui_controller.cpython-313.pyc",
+      "bytes": 24456,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/build_phase16_browser.cpython-313.pyc",
+      "bytes": 40175,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/package_results.cpython-313.pyc",
+      "bytes": 45721,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_native_postbattle_completion.cpython-313.pyc",
+      "bytes": 89272,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase18.cpython-313.pyc",
+      "bytes": 38863,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_native_appearance_pointer.cpython-313.pyc",
+      "bytes": 47686,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase25.cpython-313.pyc",
+      "bytes": 60314,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase16.cpython-313.pyc",
+      "bytes": 69303,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_postbattle_services.cpython-313.pyc",
+      "bytes": 18435,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase9_integration.cpython-313.pyc",
+      "bytes": 29924,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_terrain_rules.cpython-313.pyc",
+      "bytes": 35518,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_city_ownership.cpython-313.pyc",
+      "bytes": 11051,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_city_auxiliary_accesses.cpython-313.pyc",
+      "bytes": 72880,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_campaign_flows.cpython-313.pyc",
+      "bytes": 77469,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase18_integration.cpython-313.pyc",
+      "bytes": 13794,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/game_engine_demo.cpython-313.pyc",
+      "bytes": 5031,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/nes_runtime.cpython-313.pyc",
+      "bytes": 19255,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/make_fsm_portal.cpython-313.pyc",
+      "bytes": 8376,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_tactical_ai.cpython-313.pyc",
+      "bytes": 25928,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/build_phase15_browser.cpython-313.pyc",
+      "bytes": 34267,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_ai.cpython-313.pyc",
+      "bytes": 32253,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_city_ownership.cpython-313.pyc",
+      "bytes": 18026,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/package_phase19_results.cpython-313.pyc",
+      "bytes": 7628,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_controller_helpers.cpython-313.pyc",
+      "bytes": 5621,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_names_terrain.cpython-313.pyc",
+      "bytes": 20817,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase19.cpython-313.pyc",
+      "bytes": 16729,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase24.cpython-313.pyc",
+      "bytes": 76252,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_city_pointer_provenance.cpython-313.pyc",
+      "bytes": 50343,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_title_intro_graphics.cpython-313.pyc",
+      "bytes": 43059,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/write_phase19_report.cpython-313.pyc",
+      "bytes": 16092,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_tactic_area_conversion.cpython-313.pyc",
+      "bytes": 22993,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_battle_scene_controller.cpython-313.pyc",
+      "bytes": 23273,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/build_phase20_browser.cpython-313.pyc",
+      "bytes": 35372,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/inspect_game_data.cpython-313.pyc",
+      "bytes": 15887,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_domestic_ai.cpython-313.pyc",
+      "bytes": 24650,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_audio_scene_services.cpython-313.pyc",
+      "bytes": 20824,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_city_auxiliary_phase23.cpython-313.pyc",
+      "bytes": 41712,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/capture_native_postbattle_parent.cpython-313.pyc",
+      "bytes": 77085,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_battle.cpython-313.pyc",
+      "bytes": 9094,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/trace_city_auxiliary_fields.cpython-313.pyc",
+      "bytes": 23222,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase9.cpython-313.pyc",
+      "bytes": 20365,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_duel_fsm.cpython-313.pyc",
+      "bytes": 30782,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase6_integration.cpython-313.pyc",
+      "bytes": 17988,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_attack_fsm.cpython-313.pyc",
+      "bytes": 16403,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/analyze_tactical_ai_control.cpython-313.pyc",
+      "bytes": 15521,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "scripts/__pycache__/verify_phase11.cpython-313.pyc",
+      "bytes": 33911,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "build/.DS_Store",
+      "bytes": 8196,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/scenarios-preview.png",
+      "bytes": 152382,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/roster-report-preview.png",
+      "bytes": 569092,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/dedup-preview.png",
+      "bytes": 303568,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/mapping-preview.png",
+      "bytes": 289711,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/sources-preview.png",
+      "bytes": 330455,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/千人武将候选名单与字段映射.xlsx.inspect.ndjson",
+      "bytes": 8148510,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/workbook-inspection.ndjson",
+      "bytes": 803,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/workbook-error-scan.ndjson",
+      "bytes": 60,
+      "reason": "generated_cache_or_inspection_preview"
+    },
+    {
+      "path": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/candidate-preview.png",
+      "bytes": 188764,
+      "reason": "generated_cache_or_inspection_preview"
+    }
+  ],
+  "frozen_archives_preserved": true,
+  "raw_emulator_evidence_preserved": true,
+  "original_rom_preserved": true,
+  "installed_toolchains_preserved": true
+}

@@ -1,0 +1,225 @@
+{
+  "schema": "nes-closure-work-packages-v1",
+  "packages": [
+    {
+      "work_package_id": "WP01",
+      "title": "固定本次审计边界与32草稿输入",
+      "dependencies": [],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [],
+      "status": "completed_by_this_audit",
+      "acceptance_artifacts": [
+        "本目录verification及完整输入hash清单；31正式与32草稿分列"
+      ],
+      "stop_conditions": [
+        "31任一pin改变、32残留输入漂移或scope不明时停止；不修旧文件。"
+      ],
+      "remaining_rounds_estimate": null,
+      "completion_receipt": "analysis/closure-audit-20261018/verification.json"
+    },
+    {
+      "work_package_id": "WP02",
+      "title": "闭合B517两个current-JSR合同",
+      "dependencies": [
+        "WP01"
+      ],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [
+        "G-B517"
+      ],
+      "status": "planned_not_executed_in_this_audit",
+      "acceptance_artifacts": [
+        "当前full原CPU合同回执、代际/反例/索引域、审阅后的逐行候选迁移表"
+      ],
+      "stop_conditions": [
+        "当前栈或中断前提未证、脚本pin不一致则不迁移；285/14093计划不能当执行数。"
+      ],
+      "remaining_rounds_estimate": null
+    },
+    {
+      "work_package_id": "WP03",
+      "title": "按producer/entry补足访问与raw窗口合同",
+      "dependencies": [
+        "WP01"
+      ],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [
+        "G-ACCESS-CONTRACTS",
+        "G-RAW-ENTRY"
+      ],
+      "status": "planned_not_executed_in_this_audit",
+      "acceptance_artifacts": [
+        "每个原行ID→当前依赖/合同/证据映射；确认或明确null的跨账本关系"
+      ],
+      "stop_conditions": [
+        "没有真实entry/producer证据就保留unknown；不把96容器当96真实服务。"
+      ],
+      "remaining_rounds_estimate": null
+    },
+    {
+      "work_package_id": "WP04",
+      "title": "证明城市辅助字段语义",
+      "dependencies": [
+        "WP01"
+      ],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [
+        "G-CITY-01",
+        "G-CITY-28",
+        "G-CITY-29",
+        "G-CITY-30",
+        "G-CITY-31"
+      ],
+      "status": "planned_not_executed_in_this_audit",
+      "acceptance_artifacts": [
+        "logical消费者/写者链、原机判别流程、逐offset字段表及可读源码命名"
+      ],
+      "stop_conditions": [
+        "只有dummy、字节默认值或有界未命中时保留null，不命名reserved。"
+      ],
+      "remaining_rounds_estimate": null
+    },
+    {
+      "work_package_id": "WP05",
+      "title": "配套观察核并验证自然非空mode2",
+      "dependencies": [
+        "WP01"
+      ],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [
+        "G-NONEMPTY-MODE2"
+      ],
+      "status": "planned_not_executed_in_this_audit",
+      "acceptance_artifacts": [
+        "原核/被动核构建来源一致性、合法母链、实际callee/栈/写日志及fresh五buffer回执"
+      ],
+      "stop_conditions": [
+        "32 producer仍绑定旧31核或观察核不一致时不运行；禁止制造结果命中。"
+      ],
+      "remaining_rounds_estimate": null
+    },
+    {
+      "work_package_id": "WP06",
+      "title": "建立自然多人human14路线",
+      "dependencies": [
+        "WP01"
+      ],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [
+        "G-HUMAN14"
+      ],
+      "status": "planned_not_executed_in_this_audit",
+      "acceptance_artifacts": [
+        "实际>=11 active+captives前置、phase1..6输入/列表/回城与fresh回执"
+      ],
+      "stop_conditions": [
+        "只有城市名册人数或phase0完成时不得通过；没有合法前置保留缺口。"
+      ],
+      "remaining_rounds_estimate": null
+    },
+    {
+      "work_package_id": "WP07",
+      "title": "梳理可达服务闭包与设备输入合同",
+      "dependencies": [
+        "WP01"
+      ],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [
+        "G-SERVICE-CLOSURE",
+        "G-DEVICE-BOUNDARY"
+      ],
+      "status": "planned_not_executed_in_this_audit",
+      "acceptance_artifacts": [
+        "真实owner/caller依赖图、strict prefix清单、明确端口/N163/IRQ输入合同"
+      ],
+      "stop_conditions": [
+        "未知服务保持prefix；不扩成独立硬件模拟器或重制项目。"
+      ],
+      "remaining_rounds_estimate": null
+    },
+    {
+      "work_package_id": "WP08",
+      "title": "单实例连续Source和关键中断验收",
+      "dependencies": [
+        "WP05",
+        "WP06",
+        "WP07"
+      ],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [
+        "G-SOURCE-CONTINUITY",
+        "G-INTERRUPT-BOUNDARIES"
+      ],
+      "status": "planned_not_executed_in_this_audit",
+      "acceptance_artifacts": [
+        "真实E066一次初态、完整natural13/非空mode2/human14计划、逐事件原CPU对照和有限边界矩阵"
+      ],
+      "stop_conditions": [
+        "不得中途回填下一Native RAM；无实际REG就标夹具；未支持nonlocal/reset不得称通过。"
+      ],
+      "remaining_rounds_estimate": null
+    },
+    {
+      "work_package_id": "WP09",
+      "title": "最终十维对照和交付评估",
+      "dependencies": [
+        "WP02",
+        "WP03",
+        "WP04",
+        "WP05",
+        "WP06",
+        "WP07",
+        "WP08"
+      ],
+      "dependency_kind": "proposed_planning_order_not_a_claim_of_logical_necessity",
+      "gap_ids": [
+        "G-ACCESS-CONTRACTS",
+        "G-B517",
+        "G-RAW-ENTRY",
+        "G-CITY-01",
+        "G-CITY-28",
+        "G-CITY-29",
+        "G-CITY-30",
+        "G-CITY-31",
+        "G-NONEMPTY-MODE2",
+        "G-HUMAN14",
+        "G-SOURCE-CONTINUITY",
+        "G-SERVICE-CLOSURE",
+        "G-INTERRUPT-BOUNDARIES",
+        "G-DEVICE-BOUNDARY"
+      ],
+      "status": "planned_not_executed_in_this_audit",
+      "acceptance_artifacts": [
+        "冻结十维逐项结论、仍未知范围、输入hash及按需小增量归档"
+      ],
+      "stop_conditions": [
+        "证据不足明确部分完成；不自动追加随机轮次或新硬件广度。"
+      ],
+      "remaining_rounds_estimate": null
+    }
+  ],
+  "ordered_topological_plan": [
+    "WP01",
+    "WP02",
+    "WP03",
+    "WP04",
+    "WP05",
+    "WP06",
+    "WP07",
+    "WP08",
+    "WP09"
+  ],
+  "parallel_after_freeze": [
+    [
+      "WP02",
+      "WP03",
+      "WP05",
+      "WP07"
+    ]
+  ],
+  "dependency_limits": "Edges describe a workable plan, not new universal prerequisites. Human14 acquisition may proceed independently of mode2; field-specific semantics need only the relevant proven consumer. Minimal Source routes may run once their own blockers and actual initial context are ready, while full global-service closure continues in parallel.",
+  "total_remaining_rounds_estimate": null,
+  "estimate_reason": "No measured per-obligation workload or legal-route acquisition rate supports an interval. Case counts are not remaining rounds.",
+  "current_audit_execution": "WP01 inventory only; no future package execution authorized by this report.",
+  "final_stop": "Stop after delivering this audit and work-package plan; parent assessment decides continuation."
+}

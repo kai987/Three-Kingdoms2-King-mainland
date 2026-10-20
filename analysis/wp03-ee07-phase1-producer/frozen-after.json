@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "label": "after",
+  "old_work_paths": 239489,
+  "missing_or_changed": [],
+  "ancestral_paths": 239445,
+  "prior_package_files": 39,
+  "prior_scripts": 5,
+  "frozen_manifest_sha256": "c608d0bc9f72a01c4bae524d732a5cfbf8116d6b1c179998ac69f5dbb302a38e",
+  "Source_CPU_Native_executions": 0,
+  "seconds": 68.833
+}

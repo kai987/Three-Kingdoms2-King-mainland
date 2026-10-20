@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-25/snapshot.json\",\"bytes\":1816914,\"primitive_entries\":0,\"workflow_entries\":0,\"evidence_records\":317}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/analysis/rea/pairs/pair-25/snapshot.json",
+      "bytes": 1816914,
+      "primitive_entries": 0,
+      "workflow_entries": 0,
+      "evidence_records": 317
+    }
+  }
+}

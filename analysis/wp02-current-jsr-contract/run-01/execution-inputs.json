@@ -1,0 +1,51 @@
+{
+  "matrix_sha256": "9223383ae4543ce06cfa8f280f437406120b91a433be4e3fed2dee7371b27043",
+  "acceptance_sha256": "25a991e628055cf87dadb715f538747b8300209b842443e7c8fd7c6577e9fc47",
+  "static_contract_sha256": "b5483b9d6399f3a67706814f310f32ee50359cd7cddfe2353afe7433ddd519da",
+  "script_sha256": {
+    "scripts/prepare_wp02_contract_matrix.py": "8606e7685988671c3d3fb78c264a91cae1dea3b73882c3f7bd77d642f23e2639",
+    "scripts/verify_wp02_current_jsr.py": "ac2c41ceb4e9a9cb9f60a873e3ba55a3803b7e29368ed3ab5eb5521c34dff902",
+    "scripts/verify_wp02_frozen_inputs.py": "51d2e3f5e4e403a3ce2a7f7122d78725e9de69f1861b4a436565ff03a194b5c9"
+  },
+  "runtime": {
+    "Python": "3.13.16 (v3.13.16:cbc944f4bc5, Sep 30 2026, 16:01:51) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13",
+    "executable_sha256": "64b562069c287361189cf3a821e552a3b043af178c8e988804b45dc3ecf846e5",
+    "py65_python_files": {
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/__init__.py": "4f6a41c619e2f0d6fc48eaf9fbc9ca31729365888c26df8c7750cf4c571ee8fc",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/assembler.py": "8e92b5249c1bedcbac26d03a64ab3d35852914dae005d5abf87a275a1d20a383",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/compat.py": "fc140526c2f0b41d5b8cd67415273093c156d6d4b9d98c3f9421aa7e0f0d82c4",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/devices/__init__.py": "4f6a41c619e2f0d6fc48eaf9fbc9ca31729365888c26df8c7750cf4c571ee8fc",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/devices/mpu6502.py": "15d93835b4f279b702270d9a0b417938291347ec57cc12d9e0307cd344d381fe",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/devices/mpu65c02.py": "dfc5adcd63b82aaa95e5a4ae2a000af1c19fe7188575f41d70212542ec7694fb",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/devices/mpu65org16.py": "9a2685c84444dac43873855b1bb5c54e30938368fcc89ba3a9a78b389044de72",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/disassembler.py": "b8cca0c23ef69dcf88b6dccb08582e4a4d088a561a04c833acb37b3742cdcccc",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/memory.py": "4bba749fe35ed9b9912a7da72eb74035d62a21a5b5895dd6c343f7ce25609cc8",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/monitor.py": "36cf20d850f9c5ab099814fe8f620f13f83faaacc0a14d827e1ff00e4ed5e11e",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/__init__.py": "4f6a41c619e2f0d6fc48eaf9fbc9ca31729365888c26df8c7750cf4c571ee8fc",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/devices/__init__.py": "4f6a41c619e2f0d6fc48eaf9fbc9ca31729365888c26df8c7750cf4c571ee8fc",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/devices/test_mpu6502.py": "0ca74be9e0702f15c9be52517c068c21bcd8460af7496d57e151304a13d83558",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/devices/test_mpu65c02.py": "920c1cbf296bab3caabda3ad779f4044ff6c8b806989e3c5282a3c8e77d10694",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/end_to_end.py": "83c5237875784d7a24b3c1600f9ef465db47d0b62667ef18795494a2544f289e",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/test_assembler.py": "41c10c74ad05020874c3a0b7e8430a0994b10eadb7c56c04aa526886a4ffd805",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/test_disassembler.py": "8e68441e33110fbdbe182de1e4be7d2c644ac1f35918b252154654331fd687be",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/test_memory.py": "86c5f48a03f4327fcc614841de8e4f835557980588c481e40c4d27dccb1940f7",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/test_monitor.py": "bcf7cb673853f75f219c3d0df7f4d0448f92fbf32de6f952da30d54478152c1b",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/utils/__init__.py": "4f6a41c619e2f0d6fc48eaf9fbc9ca31729365888c26df8c7750cf4c571ee8fc",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/utils/test_addressing.py": "45a118b610dc15a8529dd0dd401349f05c39bbd2172835f01c205d0158efcbcd",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/utils/test_console.py": "a07e911d2a1e6cc0439b8fb717c871dc2d651e041d5d4a511ce3acd90e90a063",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/utils/test_conversions.py": "691afa3f74134bdebef8087768222f4bebced78fd740d67a422c37e2f2bcfb52",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/tests/utils/test_devices.py": "8ab80e6da32609f0461eaa7270fde00d1fbd1b3d7a1b63e3444f176dad85ab67",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/utils/__init__.py": "4f6a41c619e2f0d6fc48eaf9fbc9ca31729365888c26df8c7750cf4c571ee8fc",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/utils/addressing.py": "3c5cb6555dc983a7990d4a739a5c4f08f7b7cd5549fafea77208fa740d6a46e1",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/utils/console.py": "2fb0386f87b82f541dcea6350654f1017d65cacf6ed7ea7335e0caa31201ee95",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/utils/conversions.py": "448b8aa2cc59aa71a6a644a5dd93051ab4b2def2ae720c4991c0e54f31a4eaa9",
+      "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/.venv-trace/lib/python3.13/site-packages/py65/utils/devices.py": "fca3864bebcf1db7dbc13014487ad7091499d85c8cb14ca7288c5fdc63de6a0e"
+    }
+  },
+  "actual_capture_origin": null,
+  "base_RAM_sha256": "746a9cf226f7181ddcab5f1bbb33011dccf455fea35811e9d8c96ba1c204252f",
+  "base_SRAM_sha256": "4c26b1c630dfbc3fc6f2f041bac349555bafb9efc80cefa2b5300f818c58c155",
+  "Native_runs": 0,
+  "Source_cases": 0
+}

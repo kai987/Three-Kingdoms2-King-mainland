@@ -1,0 +1,363 @@
+{
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_kind": "Independent readable semantic source; no IR/original CPU fallback",
+  "fully_recovered_effect_ids": [
+    0,
+    2,
+    3,
+    4,
+    6,
+    11,
+    13,
+    15
+  ],
+  "external_effect_ids": [
+    1,
+    5,
+    7,
+    8,
+    9,
+    10,
+    12,
+    14
+  ],
+  "player_AP_cost_table": {
+    "bank": 12,
+    "cpu": 43977,
+    "file": 101337,
+    "bytes": [
+      6,
+      5,
+      4,
+      6,
+      7,
+      8,
+      8,
+      8,
+      10,
+      9,
+      9,
+      10,
+      10,
+      8,
+      12,
+      10
+    ]
+  },
+  "AI_AP_cost_table": {
+    "bank": 13,
+    "cpu": 49220,
+    "file": 106580,
+    "bytes": [
+      6,
+      5,
+      4,
+      6,
+      7,
+      8,
+      8,
+      12,
+      10,
+      9,
+      9,
+      15,
+      14,
+      15,
+      25,
+      20
+    ],
+    "ID11_bypasses_this_table": true
+  },
+  "deployment": {
+    "tactic_id": 11,
+    "bank": 12,
+    "cpu": 46122,
+    "file": 103482,
+    "cache_groups": [
+      1240,
+      1244
+    ],
+    "cache_layout": [
+      "actor_slot",
+      "x",
+      "y",
+      "ttl"
+    ],
+    "ttl": 5,
+    "troop_word": "rawLE16 bytes8/9 subtract100 modulo65536",
+    "AI_AP_cost": 0,
+    "player_AP_cost": 10
+  },
+  "retreat_accounting": {
+    "bank": 13,
+    "cpu": 51486,
+    "file": 108846,
+    "end_cpu_inclusive": 51595,
+    "side_from": "0628[0509]&80",
+    "counts": [
+      1310,
+      1311
+    ],
+    "totals": [
+      1306,
+      1308
+    ],
+    "troop_word": "masked10bit +8/+9&3",
+    "count_subtraction": "modulo256,0->255",
+    "total_subtraction": "raw16 minus masked10, saturates0",
+    "following_commit": "bank12 BC2D..BC92 existing city_ownership.retreat_unit_to_city, UI prelude outside this semantic method"
+  },
+  "lifecycle": {
+    "expiry_entry": {
+      "bank": 9,
+      "cpu": 52768,
+      "file": 77360
+    },
+    "round_caller": "bank12 BDC0 side0->128 increments0506 and farcalls bank8A00F->bank9CD78; CE20 tail updates both rows",
+    "expiry": "FF skips; only decrement1->0 clears slot. 0->FF underflow preserved. XY untouched.",
+    "trigger_request": "bank12 A51F sees6F8BFF then request1 and actor0509 atA528/A52E; global4 bank8A02D branchesB933",
+    "trigger": "Opposite cache group: side0 -> group4; side80 -> group0. Radius2 or original exact shortcut, normalized class0 only. Preserve B965 reads0614[group] bug and discarded draw.",
+    "consume": "A535 waitsFF; status0 awards cached officer XP from042C/D and refreshes selectors; UI boundary atA5BB",
+    "clear_after_confirmation": "A5F5 clears opposite slot only; actual text-ready+confirmation prefix remains external",
+    "removal": "D6CD clears six unit arrays, strategy and first matching whole4B cache row; conversion/retreat/duel-transfer clear both matching slots only"
+  },
+  "declared_RAM_ranges": [
+    [
+      18,
+      19
+    ],
+    [
+      32,
+      48
+    ],
+    [
+      80,
+      81
+    ],
+    [
+      164,
+      165
+    ],
+    [
+      194,
+      198
+    ],
+    [
+      768,
+      769
+    ],
+    [
+      784,
+      788
+    ],
+    [
+      1060,
+      1062
+    ],
+    [
+      1068,
+      1077
+    ],
+    [
+      1224,
+      1225
+    ],
+    [
+      1240,
+      1248
+    ],
+    [
+      1280,
+      1282
+    ],
+    [
+      1285,
+      1286
+    ],
+    [
+      1289,
+      1292
+    ],
+    [
+      1306,
+      1312
+    ],
+    [
+      1324,
+      1325
+    ],
+    [
+      1326,
+      1327
+    ],
+    [
+      1347,
+      1349
+    ],
+    [
+      1536,
+      1656
+    ]
+  ],
+  "all_SRAM_window": [
+    24576,
+    32768
+  ],
+  "CPU_register_stack_mapper_scope": false,
+  "graphics_audio_readiness": "Returned exact dependencies; after_* APIs require the actual preceding service. Queue requests modify RAM but never complete rendering.",
+  "ranges": [
+    {
+      "name": "movement_secondary_request_and_consume",
+      "bank": 12,
+      "cpu_start": 42271,
+      "cpu_end_exclusive": 42519,
+      "file_start": 99631,
+      "raw_hex": "AD 8B 6F C9 FF D0 0E A9 01 8D 8B 6F AD 09 05 8D 8C 6F EE 01 05 60 AD 8B 6F C9 FF F0 01 60 AD 8F 6F F0 03 4C 34 A6 EE 01 05 AD 2C 04 85 0B AD 2D 04 85 0C A0 04 AD 04 05 10 02 A0 00 B9 D8 04 A8 B9 64 06 85 0A 20 D7 F2 A0 0B B1 00 29 F0 8D 2C 05 A0 01 B1 00 8D 2E 05 A0 2E 20 07 EE 06 A0 20 03 DB AD 09 05 8D 0A 05 AC 8C 6F B9 A1 6F C9 FF F0 19 A0 04 AD 04 05 10 02 A0 00 B9 D8 04 8D 09 05 A9 04 8D A4 00 A9 B9 4C B6 A5 A9 03 8D A4 00 A9 00 8D 2E 05 A9 B8 20 83 F2 A0 3D 20 07 EE 27 A0 AD 09 05 AA AD 0A 05 8D 09 05 8E 0A 05 60 A9 03 8D A4 00 AC 0A 05 20 36 DC 20 DE A1 20 27 DF 90 35 20 63 DC A5 81 29 03 F0 2C A0 04 AD 04 05 10 02 A0 00 A9 FF 99 D8 04 AD 2E 05 F0 37 AC 0A 05 B9 64 06 8D 2C 04 20 E9 DE 90 29 EE 01 05 20 7F E5 A9 7B 20 8B E6 60",
+      "sha256": "69846983693a8f00157de4aef71ff87f4e9bc8306d52bc9165601fd79b397b39"
+    },
+    {
+      "name": "player_animation_and_cast",
+      "bank": 12,
+      "cpu_start": 43583,
+      "cpu_end_exclusive": 43687,
+      "file_start": 100943,
+      "raw_hex": "EE 01 05 A9 89 85 C3 A9 8A 85 C4 A9 88 85 C5 85 C2 AC 09 05 A9 00 99 50 06 AD 43 05 18 69 01 8D C8 04 A9 05 8D 10 03 A9 00 8D 00 03 60 AD C8 04 D0 35 AC 0A 05 B9 64 06 20 D7 F2 A0 0B B1 00 29 F0 8D 2C 05 A0 01 B1 00 8D 2E 05 AC 43 05 B9 C9 AB 85 00 AD 05 05 38 E5 00 8D 05 05 20 2B B0 20 03 DB A9 00 8D 0B 05 60",
+      "sha256": "f880e5550d274fb50b8e1f47595b1887cb54fa57a95319b060a9eb93405a5c43"
+    },
+    {
+      "name": "player_ambush_eligibility",
+      "bank": 12,
+      "cpu_start": 44915,
+      "cpu_end_exclusive": 44961,
+      "file_start": 102275,
+      "raw_hex": "A5 0B D0 26 AC 0A 05 B9 64 06 20 D7 F2 A0 09 B1 00 D0 07 88 B1 00 C9 64 90 10 A0 00 AD 04 05 10 02 A0 04 B9 D8 04 C9 FF F0 02 18 60 38 60",
+      "sha256": "6909dfc46c048c36c50a70d38dbd0ccccc23c23da5f0e9f74b40006b9bf966e2"
+    },
+    {
+      "name": "effect_dispatch_prefix",
+      "bank": 12,
+      "cpu_start": 45099,
+      "cpu_end_exclusive": 45122,
+      "file_start": 102459,
+      "raw_hex": "A0 00 A9 00 99 2C 04 C8 C0 09 90 F8 8D 44 05 AD 43 05 29 0F 20 DE EA",
+      "sha256": "710591859785c5746c1a3d4f68eed2abcb466a59965ffbfae2b4e7bf515a55e8"
+    },
+    {
+      "name": "ambush_deployment",
+      "bank": 12,
+      "cpu_start": 46122,
+      "cpu_end_exclusive": 46182,
+      "file_start": 103482,
+      "raw_hex": "A2 00 AD 04 05 10 02 A2 04 AC 0A 05 B9 00 06 9D D9 04 B9 14 06 9D DA 04 A9 05 9D DB 04 98 9D D8 04 A8 B9 64 06 20 D7 F2 A0 08 B1 00 38 E9 64 91 00 C8 B1 00 E9 00 91 00 EE 01 05 60",
+      "sha256": "753088ae7f79bcce7618eabac5a60e65d5e5e03bab30c6395bc25bf86b5fe449"
+    },
+    {
+      "name": "AI_prepare",
+      "bank": 13,
+      "cpu_start": 49156,
+      "cpu_end_exclusive": 49220,
+      "file_start": 106516,
+      "raw_hex": "AD 8D 6F C9 0B D0 03 4C AF C1 AD 8E 6F 8D 09 05 A0 3D 20 07 EE 27 A0 AC 8D 6F AD 05 05 38 F9 44 C0 8D 05 05 AD 8D 6F 8D 2C 04 A9 00 8D 2D 04 8D 2E 04 A9 A1 20 83 F2 A9 65 20 9B E6 EE 01 05 60",
+      "sha256": "7976621976461b7b9298c1d3962242143b1af228ae310649b5a7d8373edac5e8"
+    },
+    {
+      "name": "AI_confirmation_and_cast",
+      "bank": 13,
+      "cpu_start": 49236,
+      "cpu_end_exclusive": 49408,
+      "file_start": 106596,
+      "raw_hex": "EE 2D 04 A9 00 8D A4 00 AC 8E 6F 20 36 DC AD 8C 6F 8D 09 05 20 DE A1 20 27 DF 90 0C 20 63 DC A5 81 29 03 F0 03 EE 01 05 60 AC 8E 6F 20 36 DC AD 8D 6F 8D 43 05 AD 8C 6F 8D 0A 05 AD 8E 6F 8D 09 05 AC 09 05 A9 00 99 50 06 20 2B B0 20 03 DB A9 01 85 12 20 CC D6 A9 0B 8D 01 05 AD 44 05 F0 0A A9 03 8D A4 00 A9 A2 4C 83 F2 A9 04 8D A4 00 AD 43 05 29 0F A8 C0 08 F0 2E C0 01 F0 10 C0 09 D0 20 AD 2C 04 D0 07 AD 2D 04 D0 02 A0 01 AD 32 04 C9 FF F0 0D 8D 2C 04 A9 0F 8D 01 05 A9 4E 4C 93 F2 B9 00 C1 4C 83 F2 A9 B7 4C 93 F2",
+      "sha256": "d976368d912035201d6b323bb86398bf6438fe244dff00e7a375077ee0dcaee8"
+    },
+    {
+      "name": "AI_ambush_bypass",
+      "bank": 13,
+      "cpu_start": 49583,
+      "cpu_end_exclusive": 49617,
+      "file_start": 106943,
+      "raw_hex": "AD 8D 6F 8D 43 05 AD 8C 6F 8D 09 05 8D 0A 05 20 2B B0 20 03 DB A9 01 85 12 20 CC D6 20 F7 A1 4C F0 C1",
+      "sha256": "8029db9220594097676e9e434023b9286d899694782fdd443082bd3d294cfaee"
+    },
+    {
+      "name": "round_expiry",
+      "bank": 9,
+      "cpu_start": 52768,
+      "cpu_end_exclusive": 52800,
+      "file_start": 77360,
+      "raw_hex": "A0 00 B9 DB 04 C9 FF F0 0D 38 E9 01 99 DB 04 D0 05 A9 FF 99 D8 04 C0 04 F0 05 A0 04 4C 22 CE 60",
+      "sha256": "81c7c0bb16b4a9c832aef0d934433f72734acafc5d81e25fc55f1eadbf5cc42e"
+    },
+    {
+      "name": "unit_removal_cache_clear",
+      "bank": 9,
+      "cpu_start": 54989,
+      "cpu_end_exclusive": 55055,
+      "file_start": 79581,
+      "raw_hex": "AC 00 00 A9 FF 99 00 06 99 14 06 99 28 06 99 3C 06 99 50 06 99 64 06 99 A1 6F A2 00 AD D8 04 CD 00 00 F0 0B A2 04 AD DC 04 CD 00 00 F0 01 60 8A 18 69 04 8D 01 00 A9 FF 9D D8 04 E8 EC 01 00 90 F7 60",
+      "sha256": "37426a611bf87158b1677c5f5e59fefa589f7ac3e8c7e2ba86c10aa61304da01"
+    },
+    {
+      "name": "conversion_cache_clear",
+      "bank": 12,
+      "cpu_start": 45889,
+      "cpu_end_exclusive": 45907,
+      "file_start": 103249,
+      "raw_hex": "A9 FF CC D8 04 D0 03 8D D8 04 CC DC 04 D0 03 8D DC 04",
+      "sha256": "6ff7f4a3fdfa15e3be0296735eea38e4f3fcedd1f47c6792192a31feeacec5a2"
+    },
+    {
+      "name": "retreat_cache_clear",
+      "bank": 12,
+      "cpu_start": 48222,
+      "cpu_end_exclusive": 48238,
+      "file_start": 105582,
+      "raw_hex": "EC D8 04 D0 03 8D D8 04 EC DC 04 D0 03 8D DC 04",
+      "sha256": "2c732dc08c2a9c85974c8134cc476f094efb98aad117ce562bb29597ec4430f0"
+    },
+    {
+      "name": "duel_or_transfer_cache_clear",
+      "bank": 13,
+      "cpu_start": 51242,
+      "cpu_end_exclusive": 51260,
+      "file_start": 108602,
+      "raw_hex": "A9 FF CC D8 04 D0 03 8D D8 04 CC DC 04 D0 03 8D DC 04",
+      "sha256": "6ff7f4a3fdfa15e3be0296735eea38e4f3fcedd1f47c6792192a31feeacec5a2"
+    },
+    {
+      "name": "level_popup_boundary",
+      "bank": 13,
+      "cpu_start": 57065,
+      "cpu_end_exclusive": 57127,
+      "file_start": 114425,
+      "raw_hex": "AD 2C 04 20 D7 F2 A0 0B B1 00 29 F0 CD 2C 05 F0 2B A0 01 B1 00 38 ED 2E 05 8D 2F 04 A9 00 8D 2D 04 8D 30 04 8D 31 04 A0 28 20 07 EE 18 A0 A9 4A AC 2F 04 D0 02 A9 4D 20 93 F2 38 60 18 60",
+      "sha256": "c940813e590829d1e3767aa795596e389382aed9a012c75d01f73a40b64219e3"
+    },
+    {
+      "name": "cursor_reset",
+      "bank": 12,
+      "cpu_start": 41463,
+      "cpu_end_exclusive": 41484,
+      "file_start": 98823,
+      "raw_hex": "A9 05 20 93 F2 A9 01 85 12 20 CC D6 A9 00 8D 24 04 8D 25 04 60",
+      "sha256": "8007c34c7af45a2d303701b712ddd11132ec980ab4e3a3562e588bdb75a8bbd4"
+    },
+    {
+      "name": "AI_return_to_unit_selection",
+      "bank": 13,
+      "cpu_start": 49648,
+      "cpu_end_exclusive": 49660,
+      "file_start": 107008,
+      "raw_hex": "A9 00 8D 00 05 8D 01 05 8D A4 00 60",
+      "sha256": "5de6b7af2d8566ff0f44fc7eab5e33f828e51bd5c3f9d9500f290707e978ab71"
+    },
+    {
+      "name": "retreat_detach_unit_accounting",
+      "bank": 13,
+      "cpu_start": 51486,
+      "cpu_end_exclusive": 51596,
+      "file_start": 108846,
+      "raw_hex": "AE 09 05 BD 28 06 30 34 CE 1E 05 BD 64 06 20 D7 F2 A0 08 B1 00 85 02 C8 B1 00 29 03 85 03 AD 1A 05 38 E5 02 8D 1A 05 AD 1B 05 E5 03 8D 1B 05 B0 3C A9 00 8D 1A 05 8D 1B 05 4C 8B C9 CE 1F 05 BD 64 06 20 D7 F2 A0 08 B1 00 85 02 C8 B1 00 29 03 85 03 AD 1C 05 38 E5 02 8D 1C 05 AD 1D 05 E5 03 8D 1D 05 B0 08 A9 00 8D 1C 05 8D 1D 05 60",
+      "sha256": "a3ae7c1e622a31389c7376b1a8018870e506dc9509c456ced06eef6589b00bea"
+    }
+  ]
+}

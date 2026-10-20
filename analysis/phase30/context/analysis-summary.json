@@ -1,0 +1,59 @@
+{
+  "schema": "phase30-postbattle-early-context-summary-v1",
+  "status": "indexed_read_only",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "Source_CPU_cases": 0,
+  "original_CPU_cases": 0,
+  "Native_runs": 0,
+  "BC46_actual_callers": [
+    47926,
+    48012
+  ],
+  "BC46_actual_return_PCs": [
+    47929,
+    48015
+  ],
+  "frozen29_baseline": {
+    "all_indirect": 1526,
+    "conditional_disjoint": 1198,
+    "possible": 81,
+    "unknown": 247,
+    "remaining": 328,
+    "raw345": {
+      "operand": 104,
+      "known_data": 13,
+      "no_control_entry": 228
+    }
+  },
+  "context_new_exclusions": 0,
+  "unknown_unique_services": null,
+  "official_city_auxiliary_names": {
+    "1": null,
+    "28": null,
+    "29": null,
+    "30": null,
+    "31": null
+  },
+  "full_game_closure": false,
+  "new_Source_early_scope_not_pregranted": true,
+  "source_and_validator_sha256": {
+    "scripts/analyze_postbattle_early_context_phase30.py": "28516c013452d825a18a485fcb89f7ecf8aec61928e1ef63b405dc3751ebcab6",
+    "source/recovered/battle_state_machine.py": "7c67a8adef29ff925915184c3f7b17652e7b089107b75a3a362cab50c58d3b21",
+    "source/recovered/postbattle.py": "aa5c87c3f398b9600392dd87b78f786a003b0c2a02f2e4d6114aaa95cb8d2dff",
+    "source/recovered/postbattle_completion_services.py": "1b8d7d20d71d8817053fc75d481739b192769f710fe95bed288f1cfe54e206b3",
+    "source/recovered/postbattle_completion_integration.py": "dd5b7e8a70d82a484ad8ca7a93182f87d8e9cb57eb63617f05e8e114a1bf3b13",
+    "source/recovered/battle_scene_controller.py": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781",
+    "source/recovered/postbattle_release_services.py": "2ac7e3e914018bd145b2ff831b7e1c3e72e554a4c65e12900a3b1777b2d45714"
+  },
+  "artifact_and_dependency_sha256": {
+    "analysis/phase29/verification.json": "177c7d2d27dc3f5fd9840f90802be752befa3dd7ae885e867e9c110432f68a15",
+    "analysis/phase29/context/CC29-name-draw-context.json": "4703aec5dbaf100e6698aad9a26005fd31adc30cdd61f81c842410f3e4ec7b2d",
+    "analysis/phase29/context/ownership-and-roster-contract.json": "fd648c54767ea49b41d9a37494c5ce52187a7dcf86afdd491ba4f6a76b58483f",
+    "analysis/phase29/completion-services/validation.json": "62395b07f2196892f316cf0e40dc5127cebc7b149d55655701cdf3835f182e93",
+    "analysis/phase29/source-integration.json": "4ad8ed0fe1fefc92febee923f8bb9fa800735bfe09b8b2962918b48a99340a96",
+    "analysis/phase4/postbattle/validation.json": "6ad3b34eda9a1feada3f18f6e66cb41418514b99d5f60488036db8f049db287a",
+    "analysis/battle_fsm/validation.json": "35a95bad0de1c5b49115fa0fd2572a8ccc66d892a4082e7ac844e411849541aa",
+    "analysis/phase18/control/instruction-atlas.json": "5cc6020d0e7b21b733525071db1b4ec75b0b385e06911089f53fb1642975dc7b",
+    "analysis/phase27/fields-static/analysis-summary.json": "3fc333e35f5207bbf7a0fdaa59b1f71922981d1f5efe28b0eff28835abbf6159"
+  }
+}

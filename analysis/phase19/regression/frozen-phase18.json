@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "prior_audit_sha256": "ec1a0ffb23f9db5cbceaf4a86ee69957fb65bebde8ddaf6d25d103de894e1f9b",
+  "prior_v18_archive_sha256": "013cc14299fa45a796d4497a7a6c6927f548fc4fcb3883d7a459133e00e759cf",
+  "preserved_dependency_count": 17506,
+  "new_validation_of_old_execution": false
+}

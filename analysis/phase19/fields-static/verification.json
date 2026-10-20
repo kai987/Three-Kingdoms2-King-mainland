@@ -1,0 +1,313 @@
+{
+  "schema": "phase19-city-pointer-provenance-validation-v1",
+  "status": "passed",
+  "failed_count": 0,
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_CPU_cases": 0,
+  "model_guard_check_count": 33,
+  "model_checks": [
+    {
+      "name": "two intact halves make complete copy",
+      "passed": true
+    },
+    {
+      "name": "high-first copy remains joint",
+      "passed": true
+    },
+    {
+      "name": "source reassignment kills register half capabilities",
+      "passed": true
+    },
+    {
+      "name": "source reassignment kills saved PHA half capability",
+      "passed": true
+    },
+    {
+      "name": "source reassignment kills pending half copies",
+      "passed": true
+    },
+    {
+      "name": "same-PC different dynamic generations cannot join",
+      "passed": true
+    },
+    {
+      "name": "mixed-generation counterexample actually aliases city1",
+      "passed": true
+    },
+    {
+      "name": "partial high write kills source pair",
+      "passed": true
+    },
+    {
+      "name": "old completed destination independently survives",
+      "passed": true
+    },
+    {
+      "name": "partial write kills pending refs even at another byte",
+      "passed": true
+    },
+    {
+      "name": "merge unions complete words only",
+      "passed": true
+    },
+    {
+      "name": "merge does not invent low/high cross product",
+      "passed": true
+    },
+    {
+      "name": "a predecessor without pair makes merge unknown",
+      "passed": true
+    },
+    {
+      "name": "halves from different live pairs cannot join",
+      "passed": true
+    },
+    {
+      "name": "RAM mirror partial write 0000 kills pair",
+      "passed": true
+    },
+    {
+      "name": "RAM mirror partial write 0001 kills pair",
+      "passed": true
+    },
+    {
+      "name": "RAM mirror partial write 0800 kills pair",
+      "passed": true
+    },
+    {
+      "name": "RAM mirror partial write 0801 kills pair",
+      "passed": true
+    },
+    {
+      "name": "RAM mirror partial write 1000 kills pair",
+      "passed": true
+    },
+    {
+      "name": "RAM mirror partial write 1001 kills pair",
+      "passed": true
+    },
+    {
+      "name": "RAM mirror partial write 1800 kills pair",
+      "passed": true
+    },
+    {
+      "name": "RAM mirror partial write 1801 kills pair",
+      "passed": true
+    },
+    {
+      "name": "indexed wrap example includes zero-page",
+      "passed": true
+    },
+    {
+      "name": "unknown store/call cannot retain pairs or half references",
+      "passed": true
+    },
+    {
+      "name": "actual ab write transfer kills all possible pair aliases",
+      "passed": true
+    },
+    {
+      "name": "actual abx write transfer kills all possible pair aliases",
+      "passed": true
+    },
+    {
+      "name": "actual aby write transfer kills all possible pair aliases",
+      "passed": true
+    },
+    {
+      "name": "actual zpx write transfer kills all possible pair aliases",
+      "passed": true
+    },
+    {
+      "name": "actual zpy write transfer kills all possible pair aliases",
+      "passed": true
+    },
+    {
+      "name": "actual unknown indirect store kills pair",
+      "passed": true
+    },
+    {
+      "name": "actual unknown call kills pair",
+      "passed": true
+    },
+    {
+      "name": "actual RAM-stack mirror store invalidates saved half refs",
+      "passed": true
+    },
+    {
+      "name": "cross-generation short traces",
+      "passed": true,
+      "finite_trace_count": 72
+    }
+  ],
+  "original_factory_contract_CPU_checks": 3584,
+  "original_factory_constructor_prefix_checks": 3328,
+  "original_factory_actual_caller_RTS_checks": 256,
+  "original_factory_checks": [
+    {
+      "physical_bank": 31,
+      "cpu": 62127,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 62166,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "3a74346bd08dd581b2f740f95e8453f15e7be0f9a255386444d01680ea2ac9c6"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62167,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 62215,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "b89e9d817fa08a64cf996e3b09e9587b781a6357edbea7dd096869ce8a943cdf"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62216,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 62278,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "4205360e3dac9d4149d5d9e18d655065ec78664135c7064353c1c88a334e6b60"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62312,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 62328,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "b7df70c0b12066b37ed5a060d3ddf60c367322e55a24cfe7165cbccc9f3e11f9"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62343,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 62396,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "b23f20fc0fc80d665b2e786c1103e905ccc747f5d10f9c5420ad2b1901417424"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 46185,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 46224,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "3a74346bd08dd581b2f740f95e8453f15e7be0f9a255386444d01680ea2ac9c6"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 46225,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 46273,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "b89e9d817fa08a64cf996e3b09e9587b781a6357edbea7dd096869ce8a943cdf"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 46274,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 46290,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "e2744adeee0c0aa2d5ac236fa2d86568a8b919292b9040049551ca9104c0eefd"
+    },
+    {
+      "physical_bank": 8,
+      "cpu": 46305,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 46358,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "b23f20fc0fc80d665b2e786c1103e905ccc747f5d10f9c5420ad2b1901417424"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 53509,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 53539,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "3a74346bd08dd581b2f740f95e8453f15e7be0f9a255386444d01680ea2ac9c6"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 53891,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 53928,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "b89e9d817fa08a64cf996e3b09e9587b781a6357edbea7dd096869ce8a943cdf"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 53931,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 53968,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "b89e9d817fa08a64cf996e3b09e9587b781a6357edbea7dd096869ce8a943cdf"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 54041,
+      "raw_A_count": 256,
+      "boundary": "constructor_complete_prefix",
+      "stop_pc": 54055,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "d67e1c9810907a21b988c0b0b036d10799fdeea12ed365efa96a1e464662019f"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 54020,
+      "raw_A_count": 256,
+      "boundary": "actual_caller_RTS",
+      "stop_pc": 1280,
+      "exact_pointer_and_ZP_footprint": true,
+      "addresses_sha256": "3a74346bd08dd581b2f740f95e8453f15e7be0f9a255386444d01680ea2ac9c6"
+    }
+  ],
+  "original_factory_CPU_scope": "Original-byte pointer/declared-ZP-write contract oracle only; no recovered gameplay source comparison, Native CPU trace, or whole-program execution claim.",
+  "original_nested_byte_ranges_verified": 37225,
+  "full_CFG_instruction_bytes_verified": 48754,
+  "source_and_validator_sha256": {
+    "scripts/analyze_city_pointer_provenance.py": "a935a413156a463d376eef37e2028a29dc188e2d71724331f7f253708e1c7e5c",
+    "scripts/verify_city_pointer_provenance.py": "e9843e387acc92c2da7d6a606b708d6b59a14ef8f9a727353e5d1e6629c6f329"
+  },
+  "artifact_sha256": {
+    "analysis/phase19/fields-static/complete-copy-contracts.json": "36041030572e5553aa39654a7386ec9c28347fdf559332961393ebdf4ea74029",
+    "analysis/phase19/fields-static/analysis-summary.json": "99b3dd6fea141ac408b507c57eb2f5b66b0483a4ea62739f4bf436c6b5fbeb77",
+    "analysis/phase19/fields-static/new-indirect-accesses.json": "ba33e7332490cfc91b9de7192c114b614247cd9e882f620449cab87f9ce6e108",
+    "analysis/phase19/fields-static/atomic-factory-contracts.json": "18eb208be463d003ab0013214fa4158ec5542222c8ff73adfb6222cd6e5950dd",
+    "analysis/phase19/fields-static/all-indirect-accesses.json": "6c303c5a22ddcf8dbe8376ba58790fe11902908b3f7ebd004f6de40888fc94ae",
+    "analysis/phase19/fields-static/city16-original-UI-link.json": "1b24c1a052993ab3f1f29f0fca2ba0d0637f4f9081a2f3c00998bc5d3248403a",
+    "analysis/phase19/fields-static/conditional-callee-contracts.json": "889fe9912f0cfd03aa60d9f9497ce6e1b9246d85612106ec90ca6bb7b111c6b0",
+    "analysis/phase19/fields-static/access-contracts.json": "87015232bb4386caa9217e06c44ea6bbdab8527241f26f25ab9f90ca7353cc30",
+    "analysis/phase19/fields-static/README.md": "f64949748c061ea19ed9634e133fa6453e14b31c285750968a14daf1997fe946"
+  },
+  "classifications": {
+    "old589": {
+      "unresolved_pointer_or_index_contract": 293,
+      "proved_disjoint_auxiliary_address_domain": 224,
+      "possible_city_auxiliary_alias": 72
+    },
+    "all1526": {
+      "unresolved_pointer_or_index_contract": 317,
+      "proved_disjoint_auxiliary_address_domain": 1125,
+      "possible_city_auxiliary_alias": 84
+    },
+    "new45": {
+      "proved_disjoint_auxiliary_address_domain": 35,
+      "unresolved_pointer_or_index_contract": 9,
+      "possible_city_auxiliary_alias": 1
+    }
+  },
+  "limitations": [
+    "Finite model counterexamples and exhaustive raw-A constructors validate key invariants, not a formal proof of the complete analyzer.",
+    "All pointer exclusions remain scoped to the frozen trusted CFG and inherited conservative index/write contracts."
+  ]
+}

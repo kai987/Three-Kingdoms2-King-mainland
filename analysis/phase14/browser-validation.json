@@ -1,0 +1,222 @@
+{
+  "schema": "phase14-CUA-evidence-browser-v1",
+  "status": "passed",
+  "url": "http://127.0.0.1:8765/analysis/phase14/index.html#native",
+  "title": "冷启动、复位与合作AI证据",
+  "viewport": [
+    599,
+    843
+  ],
+  "html_sha256": "0797e789f2957351401101580e822867b6f784aeb00d3a58a11359b9dae23740",
+  "screenshot_sha256": "cad2647f78daa2c70b6f0c76d30f48a731efe07e887b94c7c1bd071e13ac93ed",
+  "checks": {
+    "page_identity": true,
+    "nonblank": true,
+    "four_full_source_texts": true,
+    "all_three_native_image_pairs": true,
+    "three_original_WAVs_loaded_and_played": true,
+    "arbitrary_fields_update": true,
+    "arbitrary_fields_keep_original_checkpoint_PNGs": true,
+    "mixed_scope_and_non_RTS_boundaries_visible": true,
+    "no_horizontal_overflow": true,
+    "no_console_errors": true,
+    "audio_left_paused": true,
+    "original_February_screenshot_saved": true
+  },
+  "source_modules": [
+    {
+      "file": "boot_initialization.py",
+      "bytes": 8310,
+      "sha256": "46bc08d06e246485e83650911e8355cc4b122a1de8cb6e02a77ec4092505a9a8",
+      "full_source_equal": true
+    },
+    {
+      "file": "domestic_cooperation_controller.py",
+      "bytes": 684454,
+      "sha256": "e3f0e0f6bc5d85aa8a9bfb35d07ff99864f66384795319c86f1490ccc5074345",
+      "full_source_equal": true
+    },
+    {
+      "file": "tactical_cooperation_controller.py",
+      "bytes": 219618,
+      "sha256": "d509bc950949246a627fd3b3d2368789175cd143b77848a5a1149e1bfa081fb9",
+      "full_source_equal": true
+    },
+    {
+      "file": "city_cooperation_ui_services.py",
+      "bytes": 6685,
+      "sha256": "8b5b4553e0b2b90f90725299b8ff84c9aaf6fe82f7d6baf7cdb6c8298c231ffd",
+      "full_source_equal": true
+    }
+  ],
+  "native_cases": [
+    {
+      "audio": {
+        "duration": 208.588458,
+        "error": null,
+        "readyState": 4,
+        "src": "runtime/cold-city-domestic-cycle/full-flow.wav?sha=21eacb8b1b1abb59b41990313073e26b4bc57ecdbad7949c9a60de7a5d4eeb5f"
+      },
+      "case": "0",
+      "fields": "原字段\t前字段帧\t后字段帧\nglobal007A\t2\t2\nNMI0078\t2\t2\n本帧真正活跃controller\tcity\tcity\n活跃主态\t1\t0\n活跃phase\t1\t1\n原年值6F00（89在原图显示189年）\t89\t89\n原0-based月6F01\t0\t1\n当前君主6F03\t2\t2\n轮转slot6F04\t1\t1\n玩家／君主行动预算6F05\t3\t3\n原标志6F06（不猜角色）\t1\t1\n原合作请求6F8B（0/FF等）\t255\t255\n内政phase6F5B\t2\t2\n内政raw预算6F5D（原借位值保留）\t0\t12\n内政城市6F5E\t2\t29\n原菜单cursor0012\t0\t128\n原输入0081..86\t[ 0, 0, 0, 0, 0, 0 ]\t[ 0, 0, 0, 0, 0, 0 ]\n原PPU请求007E\t0\t0\n原NMI busy007B\t0\t0\n文字进度0300\t255\t255\n文字游标0304\t255\t255\n原0471:0470合字（仅标题intro时为计时）\t256\t0\n城市11原金word\t9999\t9959\n城市11预备兵raw16\t9999\t9899\n原征兵quantity raw单位（此次1=100兵）\t0\t1\nID5/30/131原12B记录及字段\t{ \"5\": { \"ID\": 5, \"raw\": \"4d4f38565600e803bc02481a\", \"health\": 77, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 700, \"troops_low10\": 700 }, \"30\": { \"ID\": 30, \"raw\": \"5e593c5c4400e80320035216\", \"health\": 94, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 800, \"troops_low10\": 800 }, \"131\": { \"ID\": 131, \"raw\": \"525459646100e803e803a316\", \"health\": 82, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 1000, \"troops_low10\": 1000 } }\t{ \"5\": { \"ID\": 5, \"raw\": \"4d4f38565600e8038403481a\", \"health\": 77, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 900, \"troops_low10\": 900 }, \"30\": { \"ID\": 30, \"raw\": \"5e593c5c4400e80384035216\", \"health\": 94, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 900, \"troops_low10\": 900 }, \"131\": { \"ID\": 131, \"raw\": \"525459646100e803e803a316\", \"health\": 82, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 1000, \"troops_low10\": 1000 } }\n该实际帧PCM样本对\t799\t799",
+      "figures": [
+        "首次玩家城市命令：189年1月／行动3 · 原frame2922 · city 1/1 · PNG e346b088fc99b93f…",
+        "189年2月玩家世界光标：行动恢复3 · 原frame12536 · city 0/1 · PNG fc473059aafec5de…"
+      ],
+      "images": [
+        {
+          "loaded": true,
+          "natural_dimensions": [
+            256,
+            240
+          ],
+          "src": "runtime/cold-city-domestic-cycle/city-commands.png?sha=e346b088fc99b93fa660b28632e797f2c89bfa5ccf9614f2b02baaf1167f279a"
+        },
+        {
+          "loaded": true,
+          "natural_dimensions": [
+            256,
+            240
+          ],
+          "src": "runtime/cold-city-domestic-cycle/next-player-world-return.png?sha=fc473059aafec5de537aa7e4e84c1c17248c1abda5441fac7b2bc1df1a62064c"
+        }
+      ]
+    },
+    {
+      "audio": {
+        "duration": null,
+        "error": null,
+        "readyState": 0,
+        "src": "runtime/core-reset-battery-retention/full-flow.wav?sha=8f10ef277b1366d6f994cb3a538190edc00d7f01f34d1436c12d1a692e5fa3a0"
+      },
+      "case": "1",
+      "fields": "原字段\t前字段帧\t后字段帧\nglobal007A\t2\t10\nNMI0078\t2\t6\n本帧真正活跃controller\tcity\ttitle\n活跃主态\t1\t1\n活跃phase\t1\t8\n原年值6F00（89在原图显示189年）\t89\t89\n原0-based月6F01\t0\t0\n当前君主6F03\t2\t2\n轮转slot6F04\t1\t1\n玩家／君主行动预算6F05\t3\t3\n原标志6F06（不猜角色）\t1\t1\n原合作请求6F8B（0/FF等）\t255\t255\n内政phase6F5B\t2\t2\n内政raw预算6F5D（原借位值保留）\t0\t0\n内政城市6F5E\t2\t2\n原菜单cursor0012\t0\t0\n原输入0081..86\t[ 0, 0, 0, 0, 0, 0 ]\t[ 0, 0, 0, 0, 0, 0 ]\n原PPU请求007E\t0\t0\n原NMI busy007B\t0\t0\n文字进度0300\t255\t255\n文字游标0304\t255\t255\n原0471:0470合字（仅标题intro时为计时）\t256\t1041\n城市11原金word\t9999\t9999\n城市11预备兵raw16\t9999\t9999\n原征兵quantity raw单位（此次1=100兵）\t0\t0\nID5/30/131原12B记录及字段\t{ \"5\": { \"ID\": 5, \"raw\": \"4d4f38565600e803bc02481a\", \"health\": 77, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 700, \"troops_low10\": 700 }, \"30\": { \"ID\": 30, \"raw\": \"5e593c5c4400e80320035216\", \"health\": 94, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 800, \"troops_low10\": 800 }, \"131\": { \"ID\": 131, \"raw\": \"525459646100e803e803a316\", \"health\": 82, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 1000, \"troops_low10\": 1000 } }\t{ \"5\": { \"ID\": 5, \"raw\": \"4d4f38565600e803bc02481a\", \"health\": 77, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 700, \"troops_low10\": 700 }, \"30\": { \"ID\": 30, \"raw\": \"5e593c5c4400e80320035216\", \"health\": 94, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 800, \"troops_low10\": 800 }, \"131\": { \"ID\": 131, \"raw\": \"525459646100e803e803a316\", \"health\": 82, \"status\": 2, \"experience_raw16\": 1000, \"troops_raw16\": 1000, \"troops_low10\": 1000 } }\n该实际帧PCM样本对\t799\t799",
+      "figures": [
+        "原核心复位前：真实城市画面 · 原frame2922 · city 1/1 · PNG e346b088fc99b93f…",
+        "原核心复位后：原标题重建 · 原frame4122 · title 1/8 · PNG 28b31833c918c387…"
+      ],
+      "images": [
+        {
+          "loaded": true,
+          "natural_dimensions": [
+            256,
+            240
+          ],
+          "src": "runtime/core-reset-battery-retention/before-core-reset.png?sha=e346b088fc99b93fa660b28632e797f2c89bfa5ccf9614f2b02baaf1167f279a"
+        },
+        {
+          "loaded": true,
+          "natural_dimensions": [
+            256,
+            240
+          ],
+          "src": "runtime/core-reset-battery-retention/post-core-reset-title.png?sha=28b31833c918c387558f8fddf79e05e043b5421b0f00c83aec54cc7d88a4e203"
+        }
+      ]
+    },
+    {
+      "audio": {
+        "duration": 66.555708,
+        "error": null,
+        "readyState": 1,
+        "src": "runtime/title-intro-software-restart/full-flow.wav?sha=9b5faa2b8af8012cc36898012358e5102cb3cb6447945ff5874e01bf20a1114e"
+      },
+      "case": "2",
+      "fields": "原字段\t前字段帧\t后字段帧\nglobal007A\t0\t10\nNMI0078\t0\t6\n本帧真正活跃controller\tnull\ttitle\n活跃主态\tnull\t1\n活跃phase\tnull\t8\n原年值6F00（89在原图显示189年）\t0\t0\n原0-based月6F01\t0\t0\n当前君主6F03\t0\t0\n轮转slot6F04\t0\t0\n玩家／君主行动预算6F05\t0\t0\n原标志6F06（不猜角色）\t0\t0\n原合作请求6F8B（0/FF等）\t0\t0\n内政phase6F5B\t0\t0\n内政raw预算6F5D（原借位值保留）\t0\t0\n内政城市6F5E\t0\t0\n原菜单cursor0012\t0\t0\n原输入0081..86\t[ 0, 0, 0, 0, 0, 0 ]\t[ 0, 0, 0, 0, 0, 0 ]\n原PPU请求007E\t0\t0\n原NMI busy007B\t0\t0\n文字进度0300\t0\t255\n文字游标0304\t0\t255\n原0471:0470合字（仅标题intro时为计时）\t0\t777\n城市11原金word\t0\t0\n城市11预备兵raw16\t0\t0\n原征兵quantity raw单位（此次1=100兵）\t0\t0\nID5/30/131原12B记录及字段\t{ \"5\": { \"ID\": 5, \"raw\": \"000000000000000000000000\", \"health\": 0, \"status\": 0, \"experience_raw16\": 0, \"troops_raw16\": 0, \"troops_low10\": 0 }, \"30\": { \"ID\": 30, \"raw\": \"000000000000000000000000\", \"health\": 0, \"status\": 0, \"experience_raw16\": 0, \"troops_raw16\": 0, \"troops_low10\": 0 }, \"131\": { \"ID\": 131, \"raw\": \"000000000000000000000000\", \"health\": 0, \"status\": 0, \"experience_raw16\": 0, \"troops_raw16\": 0, \"troops_low10\": 0 } }\t{ \"5\": { \"ID\": 5, \"raw\": \"000000000000000000000000\", \"health\": 0, \"status\": 0, \"experience_raw16\": 0, \"troops_raw16\": 0, \"troops_low10\": 0 }, \"30\": { \"ID\": 30, \"raw\": \"000000000000000000000000\", \"health\": 0, \"status\": 0, \"experience_raw16\": 0, \"troops_raw16\": 0, \"troops_low10\": 0 }, \"131\": { \"ID\": 131, \"raw\": \"000000000000000000000000\", \"health\": 0, \"status\": 0, \"experience_raw16\": 0, \"troops_raw16\": 0, \"troops_low10\": 0 } }\n该实际帧PCM样本对\t798\t799",
+      "figures": [
+        "原global0：软件重启实际帧3073 · 原frame3073 · 本帧无已标识活跃controller · PNG 179ac232ad73c167…",
+        "介绍超时软件重启后的原标题 · 原frame4000 · title 1/8 · PNG 28b31833c918c387…"
+      ],
+      "images": [
+        {
+          "loaded": true,
+          "natural_dimensions": [
+            256,
+            240
+          ],
+          "src": "runtime/title-intro-software-restart/software-restart-boot-frame-3073.png?sha=179ac232ad73c16707c2abea079f4abafd0e812838ee2a92693ab6f485a47cb6"
+        },
+        {
+          "loaded": true,
+          "natural_dimensions": [
+            256,
+            240
+          ],
+          "src": "runtime/title-intro-software-restart/software-restarted-title.png?sha=28b31833c918c387558f8fddf79e05e043b5421b0f00c83aec54cc7d88a4e203"
+        }
+      ]
+    }
+  ],
+  "audio_playback": [
+    {
+      "case": "2",
+      "duration": 66.555708,
+      "error": null,
+      "paused": false,
+      "readyState": 4,
+      "src": "runtime/title-intro-software-restart/full-flow.wav?sha=9b5faa2b8af8012cc36898012358e5102cb3cb6447945ff5874e01bf20a1114e",
+      "time": 6.291121
+    },
+    {
+      "case": "1",
+      "duration": 68.584354,
+      "error": null,
+      "paused": false,
+      "readyState": 4,
+      "src": "runtime/core-reset-battery-retention/full-flow.wav?sha=8f10ef277b1366d6f994cb3a538190edc00d7f01f34d1436c12d1a692e5fa3a0",
+      "time": 9.275516
+    },
+    {
+      "case": "0",
+      "duration": 208.588458,
+      "error": null,
+      "paused": false,
+      "readyState": 4,
+      "src": "runtime/cold-city-domestic-cycle/full-flow.wav?sha=21eacb8b1b1abb59b41990313073e26b4bc57ecdbad7949c9a60de7a5d4eeb5f",
+      "time": 20.940399
+    }
+  ],
+  "arbitrary_field_comparison": {
+    "frames": [
+      "9865",
+      "11283"
+    ],
+    "image_sources": [
+      "runtime/cold-city-domestic-cycle/city-commands.png?sha=e346b088fc99b93fa660b28632e797f2c89bfa5ccf9614f2b02baaf1167f279a",
+      "runtime/cold-city-domestic-cycle/next-player-world-return.png?sha=fc473059aafec5de537aa7e4e84c1c17248c1abda5441fac7b2bc1df1a62064c"
+    ],
+    "notice": "字段frame9865／11283；上方PNG仍为实际检查点frame2922／12536，没有给任意字段帧生成截图。",
+    "rows": [
+      "global007A\t2\t2",
+      "活跃主态\t3\t11",
+      "活跃phase\t11\t0",
+      "原0-based月6F01\t0\t1",
+      "玩家／君主行动预算6F05\t0\t0",
+      "帧\tglobal／NMI\t活跃controller main／phase\t年月（原值）\t君主／行动预算\t请求6F8B\t内政phase／预算"
+    ]
+  },
+  "final_DOM": {
+    "audio_paused": true,
+    "field_frames": [
+      "2922",
+      "12536"
+    ],
+    "final_case": "0",
+    "has_content": true,
+    "integration_text": "主循环E066边界、实际caller RTS和reset E066边界分开计数。两条同一主generator的继承等待序列通过真实NMI2写原ack后resume，固定比较1976B RAM（1972B＋实际4B suspended-main栈），公开旧audio inactive栈01EC差异：原56／source166；其它同步整合行含全部2048B。这些受控CPU硬件输入序列不是三案native输入或完整NES帧证明。",
+    "overflow": false,
+    "title": "冷启动、复位与合作AI证据",
+    "url": "http://127.0.0.1:8765/analysis/phase14/index.html#native",
+    "viewport": [
+      599,
+      843
+    ]
+  },
+  "console_errors": [],
+  "limits": [
+    "Default existing599x843 viewport only; no alternate viewport or browser claim.",
+    "Source viewer fetches UTF8 text and never executes it. Native RGB/PCM are pinned originalcore assets, not generated by recoveredsource.",
+    "Observed WAV playback and progress are checked; no subjective human listening acceptance claimed.",
+    "Two succession source interleaves use fixed1976B RAM contract with original idle-stack residue preserved; no wholeframe/cycle/PCM equivalence claim."
+  ]
+}

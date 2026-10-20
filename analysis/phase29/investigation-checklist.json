@@ -1,0 +1,125 @@
+{
+  "schema": "phase29-continuation-investigation-v1",
+  "status": "bounded_results_frozen_final_browser_audit_and_archive_separate",
+  "human_scope_reference": "analysis/phase29/acceptance/requirements.json",
+  "human_message_provenance_reference": "analysis/phase29/acceptance/request-provenance.json",
+  "continuation_source": {
+    "kind": "coordinator_delegation_report",
+    "source_thread_id": "01a140de-9956-751f-a58c-2fe952ee7017",
+    "not_verbatim_human_request": true,
+    "scope": "Physical8/9 BBA0 sign gate and BBB8/BC00 city ownership/roster completion, frozen stage2 and CC29/D4F0 actual parent composition; missingECEE/fakeReturned/samegenerator realShared regression in new Completion driver. Finish29 then await evaluation; no automatic30."
+  },
+  "baseline": {
+    "audit": "analysis/phase28/verification.json",
+    "audit_sha256": "898835c1f8872349057258ee970f0bb7e0299d9705517ee78e0ab659c9926feb",
+    "increment": "build/三国志2超级版-逆向分析-v28增量.zip",
+    "increment_sha256": "d85403fec9ad380c8490cfe93947605dacf1ef7981ebe83101ee0e466e468f7e",
+    "all_indirect_accesses": 1526,
+    "disjoint": 1198,
+    "possible": 81,
+    "unknown": 247,
+    "candidates": 328,
+    "Source_script_pins": 551,
+    "artifact_dependency_pins": 49452
+  },
+  "selection": {
+    "group": "postbattle_stage3_completion",
+    "reason": "Close sign-only stage3 and exact owner/roster protocol without inventing auxiliary names or natural victory.",
+    "new_Source_credit": "81positions166B exact protocol; old promote/finalize gameplay, CC29 drawing and D4F0 parent already exist; new actual full-parent composition is separate evidence."
+  },
+  "city_auxiliary_formal_names": {
+    "city_plus1": null,
+    "city_plus28": null,
+    "city_plus29": null,
+    "city_plus30": null,
+    "city_plus31": null
+  },
+  "work_domains": [
+    "Named Source and originalCPU full software-state comparisons",
+    "Original Nestopia paired/repeated frame observation with ancestry retained",
+    "Read-only remaining328 and eight previously disjoint sites; CC29 two linked sites still not exclusions",
+    "Ten acceptance dimensions and evidence-only browser presentation",
+    "Small exact-allowlist supplement and postZIP receipt"
+  ],
+  "constraints": [
+    "Freeze phase1..28 Source, scripts, cores, artifacts, audits and archives",
+    "No pushes, publication, ROM/core/full byte-source distribution",
+    "No Source/Native/static/reference aggregation into completion percentage",
+    "19 known controlled ancestor preparations; olderlegacy preparation incompletely established",
+    "Only0..6 legal ruler records; raw8..15 retain adjacent original machine bytes; neutral7 skips",
+    "Native six BC00 calls per route;14 same-value roster stores do not prove a natural nontrivial swap"
+  ],
+  "next_phase_automatic": false,
+  "results": {
+    "Source": {
+      "cases": 2853,
+      "counts": {
+        "actual_caller_RTS": 2847,
+        "strict_dependency_prefix": 6
+      },
+      "guards": 9,
+      "controlled_cases": 2827,
+      "passive_source_inputs": 26,
+      "new_regression_groups": {
+        "inherited_stage2_ECEE_protocol_in_completion_driver": 2
+      },
+      "integration_cases": 115,
+      "integration_counts": {
+        "actual_caller_RTS": 110,
+        "actual_nonlocal_return": 1,
+        "strict_dependency_prefix": 4
+      },
+      "integration_guards": 8,
+      "inherited_coordinator_regression_cases": 80,
+      "new_controlled_ECEE_regression_cases": 1,
+      "new_passive_software_inputs_unique": 34,
+      "child_uses_subset_of_same_inputs": 26,
+      "new_Native_inputs_not_doubled_for_two_Source_layers": true,
+      "instantaneous_N163_captured": false
+    },
+    "static_original_CPU": {
+      "new_cases": 0,
+      "new_conditional_exclusions": 0,
+      "classification": [
+        1198,
+        81,
+        247
+      ],
+      "remaining_candidates": 328,
+      "frozen_prior_receipt": "analysis/phase27/fields-static/verification.json"
+    },
+    "Native": {
+      "routes": 2,
+      "fresh_process_runs": 8,
+      "original_first_frames": 96,
+      "all_control_frames": 384,
+      "nonempty_artifact_repeat_checks": 1182,
+      "PNG_checks": 192,
+      "WAV_checks": 4,
+      "observer_events": 256197,
+      "full_software_snapshots": 120,
+      "completion_city_read_count": 77,
+      "completion_adjacency_read_count": 12,
+      "completion_leader_read_count": 12,
+      "completion_city_store_count": 15,
+      "completion_same_value_stores": 14,
+      "completion_changed_bytes": 1,
+      "completion_STA_dummy_read_count": 15,
+      "additional_core_memory_writes": 0,
+      "cold_boots": 0,
+      "state_imports": 8
+    },
+    "context": {
+      "checks": 58,
+      "new_Source_CPU_cases": 0,
+      "new_original_CPU_cases": 0,
+      "new_Native_runs": 0
+    },
+    "acceptance": {
+      "dimensions": 10,
+      "direct_human_quotes": 11,
+      "unknown_unique_services": null,
+      "overall_reverse_engineering_complete": false
+    }
+  }
+}

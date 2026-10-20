@@ -1,0 +1,91 @@
+{
+  "schema": "phase23-city-threshold-discriminating-investigation-v1",
+  "status": "completed_bounded_iteration_with_unknowns",
+  "baseline": {
+    "phase22_audit_path": "analysis/phase22/verification.json",
+    "phase22_audit_sha256": "ca94229cff060e16b25f8f3e92eb752a94121af730ae70d114ce4ddf3a6d8eb8",
+    "phase22_archive_path": "build/三国志2超级版-逆向分析-v22.zip",
+    "phase22_archive_sha256": "9fd37c2ae0d7d857c787801e8bdc92ca43fb038099491f7dbe09f17b204cef80",
+    "remaining_candidates": 368,
+    "raw_windows": {
+      "total": 345,
+      "inside_proved_instruction": 104,
+      "inside_declared_data": 13,
+      "no_proved_control_entry": 228
+    }
+  },
+  "questions": [
+    {
+      "question": "What complete caller conditions reach physical10:BD97 and how does its branch affect troop replenishment?",
+      "status": "confirmed_bounded_caller",
+      "evidence": "analysis/phase23/cpu-threshold/evidence.json"
+    },
+    {
+      "question": "Which proved dedicated producers, if any, write city+1 or +28..31?",
+      "status": "still_unknown",
+      "official_names": null,
+      "dedicated_natural_producer_confirmed": false
+    },
+    {
+      "question": "Which counterfactual distinguishes the overlapping +1/+2 gate from the ordinary +2/+3 gold word?",
+      "status": "completed_six_native_configurations",
+      "prepared_experiments_are_natural_campaign_evidence": false,
+      "results": "gold258 passes; gold512 rejects; fixed gold257 aux43 rejects and aux44 passes",
+      "evidence": "analysis/phase23/runtime/evidence.json"
+    },
+    {
+      "question": "Can the remaining 368 accesses be grouped by actual pointer producers and caller context?",
+      "status": "completed_conditional_grouping_and_refinement",
+      "unknowns_must_be_retained": true,
+      "groups": 110,
+      "unknown_producer_groups": 55,
+      "unknown_contract_accesses": 270,
+      "new_conditional_exclusions": 17,
+      "remaining_candidates": 351,
+      "evidence": "analysis/phase23/fields-static/verification.json"
+    },
+    {
+      "question": "Which remaining generated helpers can be replaced by named source under exact caller contracts?",
+      "status": "recovered_and_integrated",
+      "original_bytes": 149,
+      "original_instruction_positions": 85,
+      "source_CPU_cases": 3161,
+      "integration_CPU_cases": 38
+    }
+  ],
+  "limits": [
+    "No forced official name from common zeros, bulk copies, dummy bus reads, bounded nonobservation, or reused numerical values.",
+    "Logical effective address and addressing dummy bus reads have separate domains.",
+    "Guard contracts retain their complete-entry and no-additional-interrupt premises; bare-suffix counterexamples and raw selectors remain visible.",
+    "A classification ledger is not dynamic coverage or whole-ROM unreachability proof.",
+    "All phase1..22 evidence, old source/scripts, original ROM, fixed cores, and versioned archives remain frozen.",
+    "No push, publication, or external ROM distribution. New artifacts reference old evidence instead of duplicating large history."
+  ],
+  "validation_domains": {
+    "new_source_comparisons": 3199,
+    "source_guards": 8,
+    "native_configurations": 6,
+    "natural_native_configurations": 1,
+    "diagnostic_native_configurations": 5,
+    "native_fresh_runs": 24,
+    "native_control_frames": 180,
+    "native_logical_preparation_bytes": 12,
+    "native_physical_preparation_writes_all_runs": 48,
+    "additional_CPU_preparation_bytes_on_native_prefixes": 0,
+    "new_hardware_interrupts_on_native_prefixes": 0,
+    "static_original_CPU_contracts_not_Source": 5643,
+    "static_actual_caller_RTS": 4107,
+    "static_outward_scan_prefixes": 1024,
+    "static_two_instruction_NZ_prefixes": 512,
+    "static_model_guards": 19,
+    "source_readonly_formula_models": 1,
+    "source_readonly_formula_inputs": 65536
+  },
+  "remaining_unknowns": [
+    "Official names of city+1 and+28..31",
+    "A dedicated natural producer explaining city+1 use",
+    "351 remaining candidate accesses including270 unknown contracts",
+    "228 raw windows without a proved control entry",
+    "All hardware-interrupt interleavings and whole-ROM source equivalence"
+  ]
+}

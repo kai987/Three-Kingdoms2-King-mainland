@@ -1,0 +1,32 @@
+{
+  "schema": "phase26-exact-deployment-owner-overlap-v1",
+  "entry_pair": [
+    8,
+    9
+  ],
+  "new_PUBLIC_ENTRIES": [
+    40963,
+    45360,
+    45488,
+    45742,
+    45842
+  ],
+  "comparisons": [
+    {
+      "other_class": "TacticalCooperationController",
+      "entry_attribute": "LOCAL_ENTRIES",
+      "intersection": []
+    },
+    {
+      "other_class": "CityActionBridges",
+      "entry_attribute": "SHOP_ENTRIES",
+      "intersection": []
+    },
+    {
+      "other_class": "RulerSelectionUIController",
+      "entry_attribute": "PUBLIC_ENTRIES",
+      "intersection": []
+    }
+  ],
+  "scope": "Only these declared same-pair entry sets. Empty intersections are not a whole-program closure proof."
+}

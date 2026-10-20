@@ -1,0 +1,479 @@
+{
+  "schema": "phase15-record-field-static-catalog-v1",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "ranges": [
+    {
+      "name": "calendar_month_boundary_prefix",
+      "physical_pair": [
+        25,
+        26
+      ],
+      "physical_bank": 25,
+      "cpu": 41025,
+      "end_cpu_exclusive": 41064,
+      "rom_offset": 204881,
+      "byte_count": 39,
+      "raw_hex": "A9 F0 8D 41 6F EE 04 6F AD 04 6F C9 07 90 1B A9 00 8D 04 6F 8D 06 6F AC 01 6F C8 C0 0C 90 05 A0 00 EE 00 6F 8C 01 6F",
+      "scope": "new_direct_source"
+    },
+    {
+      "name": "monthly_event_gate",
+      "physical_pair": [
+        25,
+        26
+      ],
+      "physical_bank": 25,
+      "cpu": 41660,
+      "end_cpu_exclusive": 41740,
+      "rom_offset": 205516,
+      "byte_count": 80,
+      "raw_hex": "AD 00 03 C9 FF D0 16 AD 04 03 C9 FF D0 0F AD 7E 00 D0 0A AD 06 6F F0 06 A9 02 8D 01 04 60 EE 06 6F AD 01 6F C9 03 D0 0B A9 06 8D 01 04 A9 00 8D 02 04 60 AD 01 6F C9 09 D0 0B A9 07 8D 01 04 A9 00 8D 02 04 60 A9 0F 8D 01 04 A9 00 8D 02 04 60",
+      "scope": "new_direct_source"
+    },
+    {
+      "name": "adverse_event_candidate_scanner",
+      "physical_pair": [
+        25,
+        26
+      ],
+      "physical_bank": 25,
+      "cpu": 43813,
+      "end_cpu_exclusive": 43945,
+      "rom_offset": 207669,
+      "byte_count": 132,
+      "raw_hex": "AD 00 6F C9 59 D0 0D AD 01 6F C9 04 B0 06 A9 01 8D 01 04 60 A2 00 A9 00 9D 2C 04 E8 E0 1E 90 F8 A2 00 8A 20 AF F2 A0 00 B1 00 29 0F C9 07 F0 0B A0 1B B1 00 F0 13 38 E9 01 91 00 E8 E0 1E 90 E2 EE 02 04 A9 00 8D 03 04 60 A0 0B B1 00 C9 32 B0 EA A0 05 C9 28 B0 0E A0 0A C9 1E B0 08 A0 1E C9 14 B0 02 A0 32 8C 11 00 A9 64 20 62 E8 CD 11 00 90 03 4C 60 AB AD 11 00 9D 2C 04 A0 1B A9 06 91 00 4C 60 AB",
+      "scope": "new_direct_source"
+    },
+    {
+      "name": "candidate_consumer_and_type_dispatch_reference",
+      "physical_pair": [
+        25,
+        26
+      ],
+      "physical_bank": 25,
+      "cpu": 43945,
+      "end_cpu_exclusive": 44109,
+      "rom_offset": 207801,
+      "byte_count": 164,
+      "raw_hex": "AC 03 04 B9 2C 04 D0 18 EE 03 04 AD 03 04 C9 1E 90 0D A9 01 8D 01 04 A9 00 8D A4 00 20 8B F2 60 8D 70 04 98 20 AF F2 AD 00 00 8D 0A 00 AD 01 00 8D 0B 00 20 50 E8 F0 FB 8D 10 00 C9 01 D0 06 20 CD AC 4C FB AB C9 02 D0 06 20 E9 AC 4C FB AB 20 14 AD A0 00 B1 0A 20 68 F3 A0 03 B1 00 C9 03 D0 03 4C B1 AB 8D 44 6F EE 02 04 AD 03 04 8D 4C 04 8D 72 04 AD 10 00 8D 70 04 A9 FF 8D 71 04 AD 72 04 8D 0A 00 A0 3B 20 07 EE 09 A0 AD 0B 00 29 80 49 80 8D 50 01 A9 9F 8D D6 04 A9 1F 8D A0 04 A9 E8 4C 8B F2",
+      "scope": "reference_only"
+    },
+    {
+      "name": "three_resource_loss_effects_reference",
+      "physical_pair": [
+        25,
+        26
+      ],
+      "physical_bank": 25,
+      "cpu": 44237,
+      "end_cpu_exclusive": 44417,
+      "rom_offset": 208093,
+      "byte_count": 180,
+      "raw_hex": "A2 01 AD 70 04 C9 05 F0 0B E8 C9 0A F0 06 E8 C9 1E F0 01 E8 8E 03 00 A0 06 4C 3F AD A2 04 AD 70 04 C9 05 F0 0C E8 E8 C9 0A F0 06 E8 C9 1E F0 01 E8 8E 03 00 8E 0C 00 A0 02 20 3F AD AD 0C 00 8D 03 00 A0 04 4C 3F AD A2 04 AD 70 04 C9 05 F0 0C E8 E8 C9 0A F0 06 E8 C9 1E F0 01 E8 8E 03 00 8E 0C 00 A0 08 20 3F AD AD 0C 00 8D 03 00 A0 0E 4C 3F AD 8C 0D 00 B1 0A 8D 00 00 C8 B1 0A 8D 01 00 4E 01 00 6E 00 00 4E 01 00 6E 00 00 4E 01 00 6E 00 00 4E 01 00 6E 00 00 A9 00 8D 02 00 20 E9 EB AC 0D 00 B1 0A 38 ED 06 00 91 0A C8 B1 0A ED 07 00 91 0A 60",
+      "scope": "reference_only"
+    },
+    {
+      "name": "misaligned_city_word_assignment_gate_prefix",
+      "physical_pair": [
+        10,
+        11
+      ],
+      "physical_bank": 10,
+      "cpu": 48533,
+      "end_cpu_exclusive": 48547,
+      "rom_offset": 89509,
+      "byte_count": 14,
+      "raw_hex": "A0 01 B1 20 38 E9 2C C8 B1 20 E9 01 90 4B",
+      "scope": "new_direct_source"
+    },
+    {
+      "name": "recruitment_roster_append_prefix",
+      "physical_pair": [
+        27,
+        28
+      ],
+      "physical_bank": 27,
+      "cpu": 44272,
+      "end_cpu_exclusive": 44291,
+      "rom_offset": 224512,
+      "byte_count": 19,
+      "raw_hex": "AD 02 04 20 AF F2 20 6B DC 8A 18 69 11 A8 AD 72 04 91 00",
+      "scope": "new_direct_source"
+    },
+    {
+      "name": "ten_slot_occupied_roster_count",
+      "physical_pair": [
+        27,
+        28
+      ],
+      "physical_bank": 28,
+      "cpu": 56427,
+      "end_cpu_exclusive": 56444,
+      "rom_offset": 236667,
+      "byte_count": 17,
+      "raw_hex": "A0 11 A2 00 B1 00 C9 FF F0 01 E8 C8 C0 1B 90 F4 60",
+      "scope": "new_direct_source"
+    }
+  ],
+  "reference_closures": {
+    "city": {
+      "path": "analysis/phase13/city/static-control.json",
+      "sha256": "571363e4f0a03b0b2ee825a51e2ef4aef2c01eced2622866daba8fa1d1043c62",
+      "instruction_positions": 6330
+    },
+    "panels": {
+      "path": "analysis/phase13/panels/static-control.json",
+      "sha256": "a5a351977d8ebea05b17edce95338ad1fe7527446332e761f97ede1ea0bd9c8f",
+      "instruction_positions": 3841
+    },
+    "domestic": {
+      "path": "analysis/phase14/domestic/offline-control-graph.json",
+      "sha256": "cc70f074f98bacbebbe2d30c205a1dc7323d69466541a85e7dcf1e26480e5084",
+      "instruction_positions": 6053
+    }
+  },
+  "global_6F06_accesses": [
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 41045,
+      "rom_offset": 204901,
+      "op": "STA",
+      "raw_hex": "8D 06 6F"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 41679,
+      "rom_offset": 205535,
+      "op": "LDA",
+      "raw_hex": "AD 06 6F"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 41690,
+      "rom_offset": 205546,
+      "op": "INC",
+      "raw_hex": "EE 06 6F"
+    }
+  ],
+  "immediate_Y_field_candidates": [
+    {
+      "domain": "domestic",
+      "physical_bank": 10,
+      "cpu": 42999,
+      "rom_offset": 83975,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 83977,
+          "op": "LDA",
+          "pointer_zero_page": 34,
+          "raw_hex": "B1 22"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "domestic",
+      "physical_bank": 10,
+      "cpu": 43595,
+      "rom_offset": 84571,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 84573,
+          "op": "LDA",
+          "pointer_zero_page": 34,
+          "raw_hex": "B1 22"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "domestic",
+      "physical_bank": 10,
+      "cpu": 45289,
+      "rom_offset": 86265,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 86267,
+          "op": "LDA",
+          "pointer_zero_page": 34,
+          "raw_hex": "B1 22"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "domestic",
+      "physical_bank": 10,
+      "cpu": 45318,
+      "rom_offset": 86294,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 86297,
+          "op": "ADC",
+          "pointer_zero_page": 34,
+          "raw_hex": "71 22"
+        },
+        {
+          "rom_offset": 86299,
+          "op": "STA",
+          "pointer_zero_page": 34,
+          "raw_hex": "91 22"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "domestic",
+      "physical_bank": 10,
+      "cpu": 48533,
+      "rom_offset": 89509,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 89511,
+          "op": "LDA",
+          "pointer_zero_page": 32,
+          "raw_hex": "B1 20"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "domestic",
+      "physical_bank": 10,
+      "cpu": 48589,
+      "rom_offset": 89565,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 89567,
+          "op": "LDA",
+          "pointer_zero_page": 34,
+          "raw_hex": "B1 22"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 41159,
+      "rom_offset": 205015,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 205017,
+          "op": "STA",
+          "pointer_zero_page": 238,
+          "raw_hex": "91 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 41289,
+      "rom_offset": 205145,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 205147,
+          "op": "LDA",
+          "pointer_zero_page": 238,
+          "raw_hex": "B1 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 43861,
+      "rom_offset": 207717,
+      "Y": 27,
+      "candidates": [
+        {
+          "rom_offset": 207719,
+          "op": "LDA",
+          "pointer_zero_page": 0,
+          "raw_hex": "B1 00"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 43936,
+      "rom_offset": 207792,
+      "Y": 27,
+      "candidates": [
+        {
+          "rom_offset": 207796,
+          "op": "STA",
+          "pointer_zero_page": 0,
+          "raw_hex": "91 00"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 44696,
+      "rom_offset": 208552,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 208554,
+          "op": "STA",
+          "pointer_zero_page": 238,
+          "raw_hex": "91 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 44700,
+      "rom_offset": 208556,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 208558,
+          "op": "LDA",
+          "pointer_zero_page": 238,
+          "raw_hex": "B1 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 44831,
+      "rom_offset": 208687,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 208689,
+          "op": "LDA",
+          "pointer_zero_page": 238,
+          "raw_hex": "B1 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "panels",
+      "physical_bank": 25,
+      "cpu": 49053,
+      "rom_offset": 212909,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 212911,
+          "op": "STA",
+          "pointer_zero_page": 238,
+          "raw_hex": "91 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "city",
+      "physical_bank": 27,
+      "cpu": 44433,
+      "rom_offset": 224673,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 224678,
+          "op": "STA",
+          "pointer_zero_page": 238,
+          "raw_hex": "91 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "city",
+      "physical_bank": 27,
+      "cpu": 44740,
+      "rom_offset": 224980,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 224982,
+          "op": "LDA",
+          "pointer_zero_page": 238,
+          "raw_hex": "B1 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "city",
+      "physical_bank": 27,
+      "cpu": 46798,
+      "rom_offset": 227038,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 227040,
+          "op": "STA",
+          "pointer_zero_page": 238,
+          "raw_hex": "91 EE"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "city",
+      "physical_bank": 28,
+      "cpu": 49748,
+      "rom_offset": 229988,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 229990,
+          "op": "LDA",
+          "pointer_zero_page": 2,
+          "raw_hex": "B1 02"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    },
+    {
+      "domain": "city",
+      "physical_bank": 28,
+      "cpu": 51872,
+      "rom_offset": 232112,
+      "Y": 1,
+      "candidates": [
+        {
+          "rom_offset": 232114,
+          "op": "LDA",
+          "pointer_zero_page": 0,
+          "raw_hex": "B1 00"
+        }
+      ],
+      "limitation": "Immediate-Y syntactic candidate; pointer record identity requires manual/dataflow evidence"
+    }
+  ],
+  "absolute_city_auxiliary_candidates": [],
+  "negative_search_scope": "Only exact instruction starts in these three bounded closures; no claim that all dynamic offsets/all ROM code are resolved",
+  "source_path": "source/recovered/record_fields.py",
+  "source_sha256": "814072082693e20f7353e361fd7d45b5d47875791868bdee7e60aeef1a731341",
+  "analyzer_path": "scripts/analyze_record_fields.py",
+  "analyzer_sha256": "85010507089a0da4b5aa1ed944a46a7e7678eee721c9ca00ed0007999b92df34"
+}

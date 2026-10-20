@@ -1,0 +1,357 @@
+{
+  "schema": "wp08-offline-semantic-verification-v1",
+  "status": "passed",
+  "final_run": "run-05",
+  "complete_parent_cases": 2,
+  "compared_execution_boundaries": 193,
+  "fake_zero_progress_checks": 2,
+  "total_checked_operations": 195,
+  "full_output_buffer_pairs_compared": 579,
+  "final_run_original_CPU_instructions": 162728,
+  "facts": [
+    {
+      "case": "normal-same-actual-origin",
+      "software_cycles": 24,
+      "declared_cycle_upper_bound": 27,
+      "planned_two_pad_inputs": 27,
+      "consumed_two_pad_inputs": 24,
+      "compared_events": 96,
+      "original_CPU_instructions": 81364,
+      "software_logical_IO_count": 3728,
+      "fake_zero_progress_checks": 0,
+      "final_global_state": 1,
+      "final_PC": "E066",
+      "final_SP": 255,
+      "terminal_pending_empty": true,
+      "stage3_fresh_NMI_reads": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        255
+      ],
+      "ECEE_actual_resolution_count": 1,
+      "EE07_side_effects": [
+        {
+          "target": 60935,
+          "return_pc": 54522,
+          "expected_sp": 245,
+          "entry_banks": [
+            17,
+            12,
+            13,
+            31
+          ],
+          "status": "returned",
+          "before": {
+            "registers": {
+              "a": 110,
+              "x": 64,
+              "y": 40,
+              "p": 33,
+              "sp": 243,
+              "pc": 60935
+            },
+            "banks": [
+              17,
+              12,
+              13,
+              31
+            ],
+            "E1": 49,
+            "stack": "0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f2027170f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f20271721502a3a2a722232223246560e1e2e3e46562030140a0a2422322232223222320000c4c521502a2b2a2b626322232223222322232223222322232223222322061215260a0a0a0a0823d40000000040050100cde3e4e5cdddaaaaaaaa23d4000000000000405500000000000000000000baabacad0000000000000000000000000000000000000000000000000000000000000000003a3a83cc70355038073707dcb4a994b4a942b0ccb0b0ccb0cc9dcc0b6e56ccf7d41ca04ff92805ff2766e0"
+          },
+          "after": {
+            "registers": {
+              "a": 44,
+              "x": 2,
+              "y": 44,
+              "p": 32,
+              "sp": 245,
+              "pc": 54522
+            },
+            "banks": [
+              16,
+              12,
+              13,
+              31
+            ],
+            "E1": 48,
+            "stack": "0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f2027170f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f20271721502a3a2a722232223246560e1e2e3e46562030140a0a2422322232223222320000c4c521502a2b2a2b626322232223222322232223222322232223222322061215260a0a0a0a0823d40000000040050100cde3e4e5cdddaaaaaaaa23d4000000000000405500000000000000000000baabacad0000000000000000000000000000000000000000000000000000000000000000003a3a83cc70355038073707dcb4a994b4a942b0ccb0b090c990c09bbb2c51eef9d41ca04ff92805ff2766e0"
+          },
+          "controlled_ECEE_mode": "actual"
+        },
+        {
+          "target": 60935,
+          "return_pc": 54522,
+          "expected_sp": 245,
+          "entry_banks": [
+            17,
+            12,
+            13,
+            31
+          ],
+          "status": "returned",
+          "before": {
+            "registers": {
+              "a": 110,
+              "x": 64,
+              "y": 40,
+              "p": 33,
+              "sp": 243,
+              "pc": 60935
+            },
+            "banks": [
+              17,
+              12,
+              13,
+              31
+            ],
+            "E1": 49,
+            "stack": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f20271721502a3a2a722232223246560e1e2e3e46562030140a0a2422322232223222320000c4c521502a2b2a2b626322232223222322232223222322232223222322061215260a0a0a0a0823d40000000040050100cde3e4e5cdddaaaaaaaa23d4000000000000405500000000000000000000baabacad0000000000000000000000000000000000000000000000000000000000000000003a3a83cc70355038073707dcb4a994b4a942b0ccb0b0ccb0cc9dcc0b6e56ccf7d41ca04ff92805ff2766e0"
+          },
+          "after": {
+            "registers": {
+              "a": 44,
+              "x": 64,
+              "y": 44,
+              "p": 33,
+              "sp": 245,
+              "pc": 54522
+            },
+            "banks": [
+              16,
+              12,
+              13,
+              31
+            ],
+            "E1": 48,
+            "stack": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f20271721502a3a2a722232223246560e1e2e3e46562030140a0a2422322232223222320000c4c521502a2b2a2b626322232223222322232223222322232223222322061215260a0a0a0a0823d40000000040050100cde3e4e5cdddaaaaaaaa23d4000000000000405500000000000000000000baabacad0000000000000000000000000000000000000000000000000000000000000000003a3a83cc70355038073707dcb4a994b4a942b0ccb019bcf9bb5da7bb2c51eef9d41ca04ff92805ff2766e0"
+          },
+          "controlled_ECEE_mode": "actual"
+        }
+      ],
+      "Source_BDB8_commit": {
+        "address": 25108,
+        "before": 255,
+        "value": 67,
+        "PC": 48568,
+        "SP": 236,
+        "oracle_opcode_PC": null
+      },
+      "Source_and_CPU_BB39_SP": 240,
+      "complete_logical_RAM_SRAM_write_counts": {
+        "CPU": 21230,
+        "Source": 21224
+      },
+      "complete_RAM_write_trace_identical": false,
+      "matched_actual_current_JSR_push_pairs": {
+        "BB38": [
+          [
+            496,
+            495,
+            187,
+            56
+          ]
+        ],
+        "BD90": [
+          [
+            494,
+            493,
+            189,
+            144
+          ]
+        ]
+      }
+    },
+    {
+      "case": "withheld-ECEE-same-actual-origin",
+      "software_cycles": 24,
+      "declared_cycle_upper_bound": 27,
+      "planned_two_pad_inputs": 27,
+      "consumed_two_pad_inputs": 24,
+      "compared_events": 97,
+      "original_CPU_instructions": 81364,
+      "software_logical_IO_count": 3728,
+      "fake_zero_progress_checks": 2,
+      "final_global_state": 1,
+      "final_PC": "E066",
+      "final_SP": 255,
+      "terminal_pending_empty": true,
+      "stage3_fresh_NMI_reads": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        255
+      ],
+      "ECEE_actual_resolution_count": 1,
+      "EE07_side_effects": [
+        {
+          "target": 60935,
+          "return_pc": 54522,
+          "expected_sp": 245,
+          "entry_banks": [
+            17,
+            12,
+            13,
+            31
+          ],
+          "status": "returned",
+          "before": {
+            "registers": {
+              "a": 187,
+              "x": 64,
+              "y": 40,
+              "p": 32,
+              "sp": 238,
+              "pc": 60654
+            },
+            "banks": [
+              17,
+              8,
+              9,
+              31
+            ],
+            "E1": 49,
+            "stack": "0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f2027170f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f20271721502a3a2a722232223246560e1e2e3e46562030140a0a2422322232223222320000c4c521502a2b2a2b626322232223222322232223222322232223222322061215260a0a0a0a0823d40000000040050100cde3e4e5cdddaaaaaaaa23d4000000000000405500000000000000000000baabacad0000000000000000000000000000000000000000000000000000000000000000003a3a83cc70355038073707dcb4a994b4a942b0ccb0b0ccb0cc9d95bb4cee2cf9d41ca04ff92805ff2766e0"
+          },
+          "after": {
+            "registers": {
+              "a": 44,
+              "x": 2,
+              "y": 44,
+              "p": 32,
+              "sp": 245,
+              "pc": 54522
+            },
+            "banks": [
+              16,
+              12,
+              13,
+              31
+            ],
+            "E1": 48,
+            "stack": "0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f2027170f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f20271721502a3a2a722232223246560e1e2e3e46562030140a0a2422322232223222320000c4c521502a2b2a2b626322232223222322232223222322232223222322061215260a0a0a0a0823d40000000040050100cde3e4e5cdddaaaaaaaa23d4000000000000405500000000000000000000baabacad0000000000000000000000000000000000000000000000000000000000000000003a3a83cc70355038073707dcb4a994b4a942b0ccb0b090c990c09bbb2c51eef9d41ca04ff92805ff2766e0"
+          },
+          "controlled_ECEE_mode": "actual"
+        },
+        {
+          "target": 60935,
+          "return_pc": 54522,
+          "expected_sp": 245,
+          "entry_banks": [
+            17,
+            12,
+            13,
+            31
+          ],
+          "status": "returned",
+          "before": {
+            "registers": {
+              "a": 110,
+              "x": 64,
+              "y": 40,
+              "p": 33,
+              "sp": 243,
+              "pc": 60935
+            },
+            "banks": [
+              17,
+              12,
+              13,
+              31
+            ],
+            "E1": 49,
+            "stack": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f20271721502a3a2a722232223246560e1e2e3e46562030140a0a2422322232223222320000c4c521502a2b2a2b626322232223222322232223222322232223222322061215260a0a0a0a0823d40000000040050100cde3e4e5cdddaaaaaaaa23d4000000000000405500000000000000000000baabacad0000000000000000000000000000000000000000000000000000000000000000003a3a83cc70355038073707dcb4a994b4a942b0ccb0b0ccb0cc9dcc0b6e56ccf7d41ca04ff92805ff2766e0"
+          },
+          "after": {
+            "registers": {
+              "a": 44,
+              "x": 64,
+              "y": 44,
+              "p": 33,
+              "sp": 245,
+              "pc": 54522
+            },
+            "banks": [
+              16,
+              12,
+              13,
+              31
+            ],
+            "E1": 48,
+            "stack": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f27190a0f1912020f3620160f2020200f0f20160f0f27170f2027170f20271721502a3a2a722232223246560e1e2e3e46562030140a0a2422322232223222320000c4c521502a2b2a2b626322232223222322232223222322232223222322061215260a0a0a0a0823d40000000040050100cde3e4e5cdddaaaaaaaa23d4000000000000405500000000000000000000baabacad0000000000000000000000000000000000000000000000000000000000000000003a3a83cc70355038073707dcb4a994b4a942b0ccb019bcf9bb5da7bb2c51eef9d41ca04ff92805ff2766e0"
+          },
+          "controlled_ECEE_mode": "actual"
+        }
+      ],
+      "Source_BDB8_commit": {
+        "address": 25108,
+        "before": 255,
+        "value": 67,
+        "PC": 48568,
+        "SP": 236,
+        "oracle_opcode_PC": null
+      },
+      "Source_and_CPU_BB39_SP": 240,
+      "complete_logical_RAM_SRAM_write_counts": {
+        "CPU": 21230,
+        "Source": 21224
+      },
+      "complete_RAM_write_trace_identical": false,
+      "matched_actual_current_JSR_push_pairs": {
+        "BB38": [
+          [
+            496,
+            495,
+            187,
+            56
+          ]
+        ],
+        "BD90": [
+          [
+            494,
+            493,
+            189,
+            144
+          ]
+        ]
+      }
+    }
+  ],
+  "hardware_timing_or_native_frames_proven": false,
+  "all_microcycle_bus_equivalence_proven": false,
+  "human14_phases1_to6_proven": false,
+  "operable_city_UI_proven": false
+}

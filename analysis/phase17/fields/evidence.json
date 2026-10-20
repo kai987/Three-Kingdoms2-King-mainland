@@ -1,0 +1,236 @@
+{
+  "schema": "phase17-city-field-contracts-evidence-v1",
+  "status": "analyzed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_path": "source/recovered/city_field_contracts.py",
+  "source_sha256": "ae53621d06f7f517da05aa400417ef50a29e9540a862c21370b711052d97694f",
+  "analyzer_path": "scripts/analyze_city_field_contracts.py",
+  "analyzer_sha256": "61384f4d51656bc30517e5e79a6ee36181467a82af441385542eed8cda0a520f",
+  "source_and_validator_sha256": {
+    "source/recovered/city_field_contracts.py": "ae53621d06f7f517da05aa400417ef50a29e9540a862c21370b711052d97694f",
+    "scripts/analyze_city_field_contracts.py": "61384f4d51656bc30517e5e79a6ee36181467a82af441385542eed8cda0a520f",
+    "scripts/verify_city_field_contracts.py": "aa8ad0aa68c063527eb686d3546077ef3dbc19dfd8f9ecd28d859d37c1126348",
+    "scripts/analyze_field_semantics.py": "d8d54e46c2dc16e17bd51909bb11e1fee30b24546003ea17cae171bb1667481a",
+    "scripts/inspect_game_data.py": "c207763b67a5b81deb8b2fbc43a54004b8cf3ec5914c8bdb014c930ac00d66d4"
+  },
+  "artifact_and_dependency_sha256": {
+    "analysis/phase16/fields/all-bank-instruction-atlas.json": "2ae76d859eddff2dbbae21b565da876c382f1815b0e040593d92994c8a4b1fed",
+    "analysis/phase16/fields/city-tail-candidate-review.json": "491d6b61238326c666a53832984041a4d0b69a34d0870e6f565abd938fb75c58",
+    "analysis/phase16/fields/provenance/manifest.json": "4cfea4b38e0c1c9edd88bda74b0f38124fb1b26ffe6cce435474935ce4b451f2",
+    "analysis/phase16/fields/provenance/phase13-exploratory-action-quick-executed-instructions.json": "79d5fa15144fcce7d3ac845eed19bf87de98520d8fc91ddfea9e8d26399cc368",
+    "analysis/phase16/fields/provenance/phase13-exploratory-city-quick-executed-instructions.json": "b69c2479fc3e49422dfb3415eb982837f509d2fd65a134ae9dcc630d1a38f5ca",
+    "analysis/phase16/fields/provenance/phase13-exploratory-panels-quick-executed-instructions.json": "8ddc0ca1a48956096016ad2d3c34bf38547e44168eba3b6ecf558b3bc2089ef9",
+    "analysis/phase16/fields/provenance/phase14-exploratory-tactical-quick-executed-instructions.json": "7b298353b805ebf98c04680911bcac3a536e970ebf8c51fbf0c92b72fda31e9b",
+    "analysis/rea/pairs/pair-08/image.bin": "4a55a77b7b89adeb5503e5fc59016e17e0d62f7f0f7a08b85c57cde2a252b745",
+    "analysis/rea/pairs/pair-08/mapping.json": "65c3b92f9f8914b865396be8ce6b4fabd2c0c5998c37a234b3e49c2da5e0278f",
+    "analysis/rea/pairs/pair-10/image.bin": "3244e255d13fba088e03a4b76cbf416fcfeff9d332d3797de6c9065f1a3f56be",
+    "analysis/rea/pairs/pair-10/mapping.json": "4d63869c5ade39fb749049861223da6f0f38315d101d1e64287b7714ee3476ce",
+    "analysis/rea/pairs/pair-12/image.bin": "f337d9ccfbd80c74039d5d67a76ef7e4b3c77a7dd4435e96451b0d9553c85eed",
+    "analysis/rea/pairs/pair-12/mapping.json": "af70825187d09a513251029996143166465b23d25036e5c5cacaae931e82709e",
+    "analysis/rea/pairs/pair-14/image.bin": "3d253517fbe00fe6e497f693cdda99420d4c8bf1d5431b65e39fef53293ed439",
+    "analysis/rea/pairs/pair-14/mapping.json": "d2932f89af472e77609ac1b8957bfe67384c42320715c83effb0fa83e72145e9",
+    "analysis/rea/pairs/pair-23/image.bin": "70442cc6c717692afbd76404aa4758619bc109de8b623bd888521b0808580e48",
+    "analysis/rea/pairs/pair-23/mapping.json": "098b94628f153c14e34fb3e79e9ff878cfc65ded2f49c5fa176252134b349b8d",
+    "analysis/rea/pairs/pair-25/image.bin": "95c48af88217ede828c5060b543cc86259d0848ec6c1862914ca2fdf177f5a56",
+    "analysis/rea/pairs/pair-25/mapping.json": "71a81bd02d2c86260e16567fe66ee77e7f36f683a509c07e62e282139fbad74a",
+    "analysis/rea/pairs/pair-27/image.bin": "63c0bce6720222c67b0c732a5b16212d864b130d7ea68863dfe3d9f7b638a7d5",
+    "analysis/rea/pairs/pair-27/mapping.json": "dd5d4c4c3fbbf035b2406bf71b7679fb513985089f72a394320fb37f2ad7704d",
+    "analysis/rea/pairs/pair-29/image.bin": "85c81d2746e4dc0276dae47f87ffebe63bbee2cc477305bb4ceca08789b1fcd2",
+    "analysis/rea/pairs/pair-29/mapping.json": "9f62685ff30b9a98a79f345ff2488060f60df70306a1bc1e995cc004cfb18889",
+    "analysis/phase17/fields/validation.json": "8cf86babc42ca5a951357ff5b5a0d2c07cbcabd0c64c2eb5293dc18980421d43",
+    "analysis/phase17/fields/executed-instructions.json": "d41fdae6f5ff6f542c3f9d9b389bad002303efa7614e0d86bf0bcdeced939191",
+    "analysis/phase17/fields/legal-full-roster-origin.json": "4e4d757de70945eb57b76ebf4209751401b05cc97dcd8fb88358fab7ef4480d4"
+  },
+  "ranges": [
+    {
+      "physical_bank": 31,
+      "cpu": 62007,
+      "end_cpu_exclusive": 62061,
+      "rom_offset": 258631,
+      "raw_hex": "8C E2 00 C8 8C E3 00 8C 00 F0 88 48 98 09 C0 8D 00 E8 68 60 8C DF 00 C8 8C E0 00 8C 00 F0 88 48 98 09 C0 8D 00 E8 68 60 8C E1 00 8C 00 E0 60 8C DE 00 8C 00 E0 60",
+      "label": "explicit_mapper_pair_and_data_window_services"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 60935,
+      "end_cpu_exclusive": 61013,
+      "rom_offset": 257559,
+      "raw_hex": "AD E2 00 8D 58 00 8C 5D 00 68 18 69 01 8D 59 00 68 69 00 8D 5A 00 A0 00 B1 59 8D 5B 00 C8 B1 59 8D 5C 00 AC 5D 00 20 37 F2 EE 59 00 D0 03 EE 5A 00 AD 5A 00 48 AD 59 00 48 AD 58 00 48 A9 EE 48 A9 4C 48 6C 5B 00 68 A8 20 37 F2 60 AD 7D",
+      "label": "far_call_real_inline_word_and_pair_restore"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62127,
+      "end_cpu_exclusive": 62216,
+      "rom_offset": 258751,
+      "raw_hex": "A0 00 8C 01 00 0A 2E 01 00 0A 2E 01 00 0A 2E 01 00 0A 2E 01 00 0A 2E 01 00 18 69 00 8D 00 00 AD 01 00 69 60 8D 01 00 60 A0 00 8C 01 00 8D 00 00 0A 2E 01 00 18 6D 00 00 48 AD 01 00 69 00 8D 01 00 68 0A 2E 01 00 0A 2E 01 00 18 69 C0 8D 00 00 AD 01 00 69 63 8D 01 00 60",
+      "label": "fixed_city_and_officer_pointer_helpers"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62312,
+      "end_cpu_exclusive": 62397,
+      "rom_offset": 258936,
+      "raw_hex": "29 0F 0A A8 B9 79 F3 8D 00 00 B9 7A F3 8D 01 00 60 07 6F 0F 6F 17 6F 1F 6F 27 6F 2F 6F 37 6F A0 31 20 5F F2 A0 00 8C 01 00 8D 00 00 0A 2E 01 00 18 6D 00 00 48 AD 01 00 69 00 8D 01 00 68 0A 2E 01 00 0A 2E 01 00 18 69 00 8D 00 00 AD 01 00 69 80 8D 01 00 60",
+      "label": "ruler_and_original_record_pointer_boundaries"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 53509,
+      "end_cpu_exclusive": 53549,
+      "rom_offset": 94485,
+      "raw_hex": "A0 00 84 21 0A 26 21 0A 26 21 0A 26 21 0A 26 21 0A 26 21 18 69 00 85 20 A5 21 69 60 85 21 20 9D D6 A0 00 B1 20 29 07 60",
+      "label": "city_pointer_caps_and_owner"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 53891,
+      "end_cpu_exclusive": 53971,
+      "rom_offset": 94867,
+      "raw_hex": "A2 00 86 21 85 20 0A 26 21 18 65 20 48 A5 21 69 00 85 21 68 0A 26 21 0A 26 21 18 69 C0 85 20 A5 21 69 63 85 21 B1 20 60 A2 00 86 23 85 22 0A 26 23 18 65 22 48 A5 23 69 00 85 23 68 0A 26 23 0A 26 23 18 69 C0 85 22 A5 23 69 63 85 23 B1 22 60",
+      "label": "two_officer_pointer_read_helpers"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 54941,
+      "end_cpu_exclusive": 54992,
+      "rom_offset": 95917,
+      "raw_hex": "A0 02 B1 20 38 E9 10 C8 B1 20 E9 27 90 0B A0 02 A9 0F 91 20 C8 A9 27 91 20 A0 04 B1 20 38 E9 10 C8 B1 20 E9 27 90 0B A0 04 A9 0F 91 20 C8 A9 27 91 20 60",
+      "label": "gold_grain_caps"
+    },
+    {
+      "physical_bank": 10,
+      "cpu": 48533,
+      "end_cpu_exclusive": 48547,
+      "rom_offset": 89509,
+      "raw_hex": "A0 01 B1 20 38 E9 2C C8 B1 20 E9 01 90 4B",
+      "label": "overlapping_byte1_goldlow_gate"
+    },
+    {
+      "physical_bank": 10,
+      "cpu": 42050,
+      "end_cpu_exclusive": 42064,
+      "rom_offset": 83026,
+      "raw_hex": "A0 10 C8 B1 20 C9 FF D0 F9 AD 3C 00 91 20",
+      "label": "unbounded_AI_insert_prefix"
+    },
+    {
+      "physical_bank": 10,
+      "cpu": 41480,
+      "end_cpu_exclusive": 41529,
+      "rom_offset": 82456,
+      "raw_hex": "A9 00 8D 44 00 20 40 A2 EE 37 00 EE 37 00 EE 37 00 AD 37 00 C9 0A 90 05 A9 0A 8D 37 00 AD 3A 00 20 04 D3 CD 37 00 B0 03 20 03 A3 20 5C A4 20 BC A6",
+      "label": "war_transfer_goal_and_capacity_guard"
+    },
+    {
+      "physical_bank": 10,
+      "cpu": 45380,
+      "end_cpu_exclusive": 45431,
+      "rom_offset": 86356,
+      "raw_hex": "AD 40 00 38 E9 02 C9 10 90 02 A9 02 C9 02 B0 02 A9 02 18 69 02 8D 37 00 20 80 B1 AD 38 00 C9 FF F0 17 AD 3A 00 20 04 D3 CD 37 00 B0 03 20 03 A3 20 F9 B1",
+      "label": "peace_transfer_goal_and_capacity_guard"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 53376,
+      "end_cpu_exclusive": 53418,
+      "rom_offset": 94352,
+      "raw_hex": "85 2F A9 00 85 2A 85 2B 85 2C A5 2A 20 05 D1 29 07 C5 2F D0 0A 20 07 D3 18 65 2C 85 2C E6 2B E6 2A A5 2A C9 1E 90 E3 A5 2B 60",
+      "label": "bounded_ruler_city_counts"
+    },
+    {
+      "physical_bank": 11,
+      "cpu": 53306,
+      "end_cpu_exclusive": 53341,
+      "rom_offset": 94282,
+      "raw_hex": "AD 03 6F 20 80 D0 A5 2B 8D 3E 00 85 23 A5 2C 8D 3F 00 85 22 A9 00 85 21 85 24 20 0F D4 A5 22 8D 40 00 60",
+      "label": "mean_occupancy_inputs"
+    },
+    {
+      "physical_bank": 10,
+      "cpu": 41731,
+      "end_cpu_exclusive": 41926,
+      "rom_offset": 82707,
+      "raw_hex": "20 49 D2 8D 45 00 20 3A D0 AC 03 6F B9 C6 A3 8D 41 00 A9 00 8D 36 00 AD 36 00 CD 3A 00 F0 39 CD 45 00 F0 34 20 05 D1 CD 03 6F D0 2C 20 A4 D1 D0 27 AE 3A 00 AC 36 00 20 83 D5 C9 FF D0 1A AD 36 00 20 04 D3 CD 41 00 90 0F 20 D6 A3 AD 3A 00 20 04 D3 CD 37 00 90 C0 60 EE 36 00 AD 36 00 C9 1E 90 B5 AC 03 6F B9 CE A3 8D 41 00 A9 00 8D 36 00 AD 36 00 CD 3A 00 F0 3C 20 05 D1 CD 03 6F D0 34 AD 36 00 CD 45 00 F0 05 20 A4 D1 F0 27 AE 3A 00 AC 36 00 20 83 D5 C9 FF D0 1A AD 36 00 20 04 D3 CD 41 00 90 0F 20 D6 A3 AD 3A 00 20 04 D3 CD 37 00 90 BD 60 EE 36 00 AD 36 00 C9 1E 90 B2 68 68 4C 3D A2",
+      "label": "AI_transfer_callers_and_after_each_transfer_count"
+    },
+    {
+      "physical_bank": 27,
+      "cpu": 42764,
+      "end_cpu_exclusive": 42818,
+      "rom_offset": 223004,
+      "raw_hex": "8D 71 04 AD 10 00 C9 07 F0 05 CD 03 6F D0 5C AD 71 04 20 6B DC E0 0A F0 52 8E 7C 04 A9 0A 38 ED 7C 04 8D 7C 04 AD 70 04 20 AF F2 20 6B DC EC 7C 04 B0 03 8E 7C 04",
+      "label": "normal_player_transfer_capacity_guard"
+    },
+    {
+      "physical_bank": 27,
+      "cpu": 44353,
+      "end_cpu_exclusive": 44530,
+      "rom_offset": 224593,
+      "raw_hex": "AD 71 04 20 AF F2 A2 00 A0 11 B1 00 C9 FF F0 04 C8 4C 4B AD BD 81 04 C9 FF F0 08 91 00 E8 C8 E0 0A 90 F1 A0 00 B1 EE 8D 02 00 A0 11 B1 00 CD 02 00 F0 08 C8 C0 1B 90 F4 4C 98 AD 98 48 A0 11 B1 00 8D 03 00 AD 02 00 91 00 68 A8 AD 03 00 91 00 A0 01 AD 71 04 91 EE AD 70 04 20 AF F2 A2 00 BD 81 04 C9 FF F0 1C 8D 10 00 A0 11 B1 00 CD 10 00 D0 07 A9 FF 91 00 4C BE AD C8 4C AC AD E8 E0 0A 90 DD A2 00 A9 FF 9D 81 04 E8 E0 0A 90 F8 A0 11 A2 00 B1 00 C9 FF F0 04 9D 81 04 E8 C8 C0 1B 90 F1 A0 11 A2 00 BD 81 04 91 00 E8 C8 E0 0A 90 F5 60",
+      "label": "normal_same_owner_transfer"
+    },
+    {
+      "physical_bank": 26,
+      "cpu": 49627,
+      "end_cpu_exclusive": 49757,
+      "rom_offset": 213483,
+      "raw_hex": "A9 FF 8D 10 00 A2 00 8E 11 00 8A 20 AF F2 A0 00 B1 00 29 07 CD 0A 04 D0 03 20 1D C2 E8 E0 1E 90 E9 AD 10 00 C9 FF F0 0E 8D 0D 04 A9 80 8D 09 04 A9 03 8D 02 04 60 AD 71 04 8D 01 04 A9 00 8D 02 04 60 AD 00 00 8D 02 00 AD 01 00 8D 03 00 A0 11 8C 04 00 AC 04 00 B1 02 C9 FF F0 25 8D 12 00 20 D7 F2 A0 04 B1 00 CD 11 00 90 0C 8D 11 00 AD 12 00 8D 10 00 8E 0C 04 EE 04 00 AD 04 00 C9 1B 90 D2 60",
+      "label": "bounded_nomination_parent_and_ten_slot_callee"
+    }
+  ],
+  "tables": [
+    {
+      "physical_bank": 10,
+      "cpu": 41926,
+      "end_cpu_exclusive": 41942,
+      "rom_offset": 82902,
+      "raw_hex": "02 03 03 02 03 03 02 02 04 05 04 03 04 05 04 04",
+      "label": "two7entry_source_count_thresholds"
+    },
+    {
+      "physical_bank": 27,
+      "cpu": 42094,
+      "end_cpu_exclusive": 42097,
+      "rom_offset": 222334,
+      "raw_hex": "08 0E 06",
+      "label": "three_resource_offset_choices"
+    },
+    {
+      "physical_bank": 31,
+      "cpu": 62329,
+      "end_cpu_exclusive": 62361,
+      "rom_offset": 258953,
+      "raw_hex": "07 6F 0F 6F 17 6F 1F 6F 27 6F 2F 6F 37 6F A0 31 20 5F F2 A0 00 8C 01 00 8D 00 00 0A 2E 01 00 18",
+      "label": "seven_ruler_pointers_and_adjoining_machine_bytes"
+    }
+  ],
+  "source_original_CPU_callbacks": 0,
+  "source_control_IR_callbacks": 0,
+  "wholebank_inventory_path": "analysis/phase17/fields/dispatch-bank-inventory.json",
+  "alias_refinement_path": "analysis/phase17/fields/alias-refinement.json",
+  "original647_remaining_after_local_contracts": 589,
+  "excluded_prior_candidates": 58,
+  "prior647_is_not_confirmed_consumers": true,
+  "complete_helpers": [
+    "31F2AF",
+    "31F2D7",
+    "31F368",
+    "11D105",
+    "11D69D",
+    "11D283",
+    "11D2AB",
+    "26C21D"
+  ],
+  "prefixes": [
+    "10BD95",
+    "10A442",
+    "10B144",
+    "27A71B"
+  ],
+  "official_semantics_unresolved": [
+    "city+1",
+    "city+28..31"
+  ],
+  "no_unused_padding_assertion": true
+}

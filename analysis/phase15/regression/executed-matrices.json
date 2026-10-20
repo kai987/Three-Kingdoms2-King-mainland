@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "rows": [
+    {
+      "script": "verify_phase5_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase6_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase7_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase8_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase9_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase10_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase11_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_scene_initialization.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase12_attack_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase12_ui_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase13_city_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase14_boot_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase14_cooperation_integration.py",
+      "exit_code": 0
+    },
+    {
+      "script": "verify_phase10_terrain.py",
+      "exit_code": 0,
+      "ROM_CPU_cases": 40,
+      "source_guards": 2
+    }
+  ]
+}

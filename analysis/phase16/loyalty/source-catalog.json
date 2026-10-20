@@ -1,0 +1,16 @@
+{
+  "source": "source/recovered/postbattle_loyalty_bridge.py",
+  "public_entries": [
+    40969,
+    53116
+  ],
+  "source_sha256": "7db9351b975723435a7ace5ceb389da13bf3c6a68196fd85b8f4a7501933a236",
+  "procedures": [
+    "__init__",
+    "_entry",
+    "run_entry",
+    "__call__"
+  ],
+  "runtime_original_CPU": false,
+  "runtime_IR": false
+}

@@ -1,0 +1,134 @@
+{
+  "schema": "wp08-execution-ledger-v1",
+  "attempts": [
+    {
+      "run": "run-01",
+      "final_accepted": false,
+      "aggregate_receipt_exists": true,
+      "aggregate_status": "passed",
+      "spec_sha256_at_run": "04dd82c22b20eb203c825e9787cbb75b4133ec62a6ce3a9da8f0f02ecb8766be",
+      "runner_sha256_at_run": "85c71a50282e70c58bf9897dc34b4b48bd342d84555ab82f4bd65cdc7fe5e3ce",
+      "reason": "Exploratory pass before stronger device/read/fake checks; input plan not consumed.",
+      "parents": [
+        {
+          "case": "normal-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 96,
+          "final_case_receipt_exists": true,
+          "status": "passed_complete_continuous_software_suffix",
+          "original_CPU_instruction_count": 81364
+        },
+        {
+          "case": "withheld-ECEE-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 97,
+          "final_case_receipt_exists": true,
+          "status": "passed_complete_continuous_software_suffix",
+          "original_CPU_instruction_count": 81364
+        }
+      ]
+    },
+    {
+      "run": "run-02",
+      "final_accepted": false,
+      "aggregate_receipt_exists": true,
+      "aggregate_status": "blocked_or_incomplete",
+      "spec_sha256_at_run": "04dd82c22b20eb203c825e9787cbb75b4133ec62a6ce3a9da8f0f02ecb8766be",
+      "runner_sha256_at_run": "c76c720594b496698de47fd7d8e53be90d163a9c9f0e1dcc7875ea9b09cbaf56",
+      "reason": "Failed new checker: BBA0 full-route assertion was premature inside ECEE restoration.",
+      "parents": [
+        {
+          "case": "normal-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 96,
+          "final_case_receipt_exists": true,
+          "status": "passed_complete_continuous_software_suffix",
+          "original_CPU_instruction_count": 81364
+        },
+        {
+          "case": "withheld-ECEE-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 15,
+          "final_case_receipt_exists": true,
+          "status": "failed_or_incomplete",
+          "original_CPU_instruction_count": 14181
+        }
+      ]
+    },
+    {
+      "run": "run-03",
+      "final_accepted": false,
+      "aggregate_receipt_exists": false,
+      "aggregate_status": null,
+      "spec_sha256_at_run": "abe874ea5a07a56c9854a4698de3c7d985af926ebc36f4b511090856035775f6",
+      "runner_sha256_at_run": "b3cf39d2c519535c743e91c5702885c24e1b3e31e951daddcbb18a4a180b30f4",
+      "reason": "Incomplete attempt: final checker compared resumed current banks to caller banks; withheld has no final receipt.",
+      "parents": [
+        {
+          "case": "normal-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 96,
+          "final_case_receipt_exists": true,
+          "status": "passed_complete_continuous_software_suffix",
+          "original_CPU_instruction_count": 81364
+        },
+        {
+          "case": "withheld-ECEE-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 97,
+          "final_case_receipt_exists": false,
+          "status": null,
+          "original_CPU_instruction_count": null
+        }
+      ]
+    },
+    {
+      "run": "run-04",
+      "final_accepted": false,
+      "aggregate_receipt_exists": true,
+      "aggregate_status": "passed",
+      "spec_sha256_at_run": "abe874ea5a07a56c9854a4698de3c7d985af926ebc36f4b511090856035775f6",
+      "runner_sha256_at_run": "7902b7bf85a664452f65a32d193d03652d3fca018752c16c565fdf6741f156c3",
+      "reason": "Passed two cases; fake same-value write trace coverage strengthened in run05.",
+      "parents": [
+        {
+          "case": "normal-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 96,
+          "final_case_receipt_exists": true,
+          "status": "passed_complete_continuous_software_suffix",
+          "original_CPU_instruction_count": 81364
+        },
+        {
+          "case": "withheld-ECEE-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 97,
+          "final_case_receipt_exists": true,
+          "status": "passed_complete_continuous_software_suffix",
+          "original_CPU_instruction_count": 81364
+        }
+      ]
+    },
+    {
+      "run": "run-05",
+      "final_accepted": true,
+      "aggregate_receipt_exists": true,
+      "aggregate_status": "passed",
+      "spec_sha256_at_run": "abe874ea5a07a56c9854a4698de3c7d985af926ebc36f4b511090856035775f6",
+      "runner_sha256_at_run": "903e03602c365416dfb4129ae7459f8765f66633b7aa0e0503b547b2607fb369",
+      "reason": "Final accepted shortest-subpackage run; explicit input plan consumed and pinned.",
+      "parents": [
+        {
+          "case": "normal-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 96,
+          "final_case_receipt_exists": true,
+          "status": "passed_complete_continuous_software_suffix",
+          "original_CPU_instruction_count": 81364
+        },
+        {
+          "case": "withheld-ECEE-same-actual-origin",
+          "saved_compared_boundary_buffer_sets": 97,
+          "final_case_receipt_exists": true,
+          "status": "passed_complete_continuous_software_suffix",
+          "original_CPU_instruction_count": 81364
+        }
+      ]
+    }
+  ],
+  "Source_parent_executions": 10,
+  "final_accepted_parent_cases": 2,
+  "Native_new_executions": 0,
+  "no_backfilled_historical_source_hashes": true
+}

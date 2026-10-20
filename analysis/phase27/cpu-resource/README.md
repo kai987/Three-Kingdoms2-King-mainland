@@ -1,0 +1,9 @@
+# G106实际软件caller
+
+导出10个NEW4入口：自然退却BF0A早退1；受控祖先结算BF0A1、BF9E5、BFB3 1、BFEC2。完整BAB3/C027另外4份现场不计本owner输入。来源是独立被动核心实际opcode入口2K/8K/AXYP-SP-PC/四PRG/原caller栈，不是从保存PC强跳或原CPU补出的caller。
+
+每份context的ancestry_origin/ancestry_provenance区分自然退却与受控祖先。positive保留phase15已知19字节准备；更早phase3数值准备未完整建立，不能称零祖先准备。两路线本轮新增游戏字节写入均0。N163_origin为explicit_shared_fixture_not_Native_snapshot，瞬间N163/PPU/APU未捕，共同设备夹具不是原机现场。
+
+actual_call_kind和immediate_transfer_PC由watched opcode边界及对应原操作数字节事件确定。四个BF9E JSR与BF9B JMP分别保留；尾跳不增加栈帧，沿用实际BF0A返回BB99的原帧。完整事件文件有哈希，context保留所用边界/操作数事件；不由rawret−3猜caller。
+
+这些输入来源不额外计Source CPU案例；其后Source与原CPU对照另见../resources/validation.json。A006/BAB3完整父流程仍未由本owner闭合。

@@ -1,0 +1,811 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "source_path": "source/recovered/city_panel_services.py",
+  "source_sha256": "2b1ce76616e083ef07c0b65660136465612a9cba2419c4c5491ae9950f277b2a",
+  "analyzer_path": "scripts/analyze_city_panel_services.py",
+  "analyzer_sha256": "071565c28b6271333cd13adfa0b72de590e27664b06c8c4de6e0971a87610aa9",
+  "source_and_validator_sha256": {
+    "scripts/analyze_battle_scene_controller.py": "eaa93b23249d966afd686de4ef3b4cac6d08583c28d8f1adb8792b5663247a50",
+    "scripts/analyze_city_panel_services.py": "071565c28b6271333cd13adfa0b72de590e27664b06c8c4de6e0971a87610aa9",
+    "scripts/analyze_city_ui_controller.py": "6a642ffd664d81580a0368c1a2be2c8aa81bd7571b33038fcdcc1e66f08f6115",
+    "scripts/inspect_game_data.py": "c207763b67a5b81deb8b2fbc43a54004b8cf3ec5914c8bdb014c930ac00d66d4",
+    "scripts/ui_structuring.py": "ec8cdfd963aca244bd7cd88e87f2751a79b0c4cc19824cb082bedf90294ba2ff",
+    "scripts/verify_city_ui_source.py": "360c7ec3b8fd00963fdcc056a912ed9f3e836058ad5a766505f555cc4dabc02e",
+    "source/recovered/battle_nmi_services.py": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15"
+  },
+  "ranges": [
+    {
+      "physical_bank": 25,
+      "cpu_start": 40963,
+      "cpu_end_exclusive": 40975,
+      "rom_offset": 204819,
+      "byte_count": 12,
+      "raw_hex": "4c33a04c73c74c96a24c81ad",
+      "sha256": "0f69e7eb1ce75e7fa14f1e92e26039d69fbec7a6606c78f35a01dc4fb1f0c3cd"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 40981,
+      "cpu_end_exclusive": 40993,
+      "rom_offset": 204837,
+      "byte_count": 12,
+      "raw_hex": "4cd9b74cd7b84c64b94c35c4",
+      "sha256": "72f59bafeb35e23d2c7f31771a2c4ee8947a7e427a58b2636784a96140abb315"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 40996,
+      "cpu_end_exclusive": 41147,
+      "rom_offset": 204852,
+      "byte_count": 151,
+      "raw_hex": "4c70ba4c03bb4cdebb4c02bc4c73bbad010420deea41a02ca15ea186a1a9f08d416fee046fad046fc907901ba9008d046f8d066fac016fc8c00c9005a000ee006f8c016f2009a2ad456f0a0a0a0d046fa8b904a18d036f0aa8b9d6a08dee00b9d7a08def00a000b1eec9fff0b02040a2ad1100c91eb00aa9038d0104a9d54c8bf2ad036f2907209fa1ac0300b9e4a08d056fa03d2007ee",
+      "sha256": "4a6bc059e647f8a9c10fb0e81c23aa89e5c156d93b40daaa725b6ac43336126f"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 41149,
+      "cpu_end_exclusive": 41174,
+      "rom_offset": 205005,
+      "byte_count": 25,
+      "raw_hex": "a000b1ee8d0a0020eba1a00191eea90a8d0004a9008d010460",
+      "sha256": "861d17c801e6acdef79c2fce0f6ca1231a37a8f5131be8cfd247997535448b1d"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 41260,
+      "cpu_end_exclusive": 41315,
+      "rom_offset": 205116,
+      "byte_count": 55,
+      "raw_hex": "ee0104a920208bf2a000b1ee8d2c04ad056f8d2f04a9008d30048d3104a001b1eea8b937c78d3f6fb955c71869018d416f60a03d2007ee",
+      "sha256": "8f25f386adc5f14f688b11746cd79e74618c9f6f6cf38298f274045f14c328f9"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 41317,
+      "cpu_end_exclusive": 41446,
+      "rom_offset": 205173,
+      "byte_count": 129,
+      "raw_hex": "ad0003c9ffd019ad0403c9ffd01220c2a1ad81002901f008a9008d00048d010460ad0003c9ffd011ad0403c9ffd00aad81002901f0034c00e0608d0200a9008d0300a91d4820aff2a000b100290fcd0200d003ee03006838e90110e860ad5e002910d01ca9d88d0a00a9a08d0c00a9e68d0000a9a18d0100a9008d02004cadf160",
+      "sha256": "d2a62ba077c7488e284defea11c53d9e771a1eaa7fe3a1d7e41d885388456fe6"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 41451,
+      "cpu_end_exclusive": 42276,
+      "rom_offset": 205307,
+      "byte_count": 825,
+      "raw_hex": "a2008a20aff2a011b100cd0a00d0028a60c8c01b90f2e8e01e90e7a90060a9008d0200ad02002068f3a004b100290ff007b10038e9019100b10029f0f007b10038e9109100c8c00890e1ee0200ad0200c90790cf60a031205ff2a000a200b9076f9d2c04e88a0a0a0aa8e00790f0ae036fa9ff9d2c04a9008d10008d1100a200bd2c04cd1000f018e8e00790f3ad100020d7f2a00bb1002903c903f003ee1100ee1000ad1000c9ed90d460ad010420deeabca20ca33ca389a39ba363a3e5a3aaa5efa6a0a9c0ae80bc01be32c17ac315abad0003c9ffd016ad0403c9ffd00fad7e00d00aad066ff006a9028d010460ee066fad016fc903d00ba9068d0104a9008d020460ad016fc909d00ba9078d0104a9008d020460a90f8d0104a9008d020460ad016fc907f004c908d00ba9088d0104a9008d020460ad016fc904f004c905d00ba9098d0104a9008d020460ee010460ad036fc902901cc905f018c906d002a90538e9020a8d7004a90a8d0104a9008d020460ee010460a9008d7004a003b1eec903d00ba9098d0004a9008d0104608d446fa90b8d0004a9018d010460a000b1ee8d0b04a90b8d0104a9008d020460a000b1ee8d0b0420d7f2a00bb1002903c903d032a9058d7004a90e8d7104a90b8d7204a9008d7304ad036f8d0a04a9ff8d0c04a90c8d0104a9008d0204a003b1eec903f00160ee010460ad020420deeaf1a304a420a4a9bc208bf2ee0204a9a68dd604a9208da00460ada004d016ad4001d011ad0003c9ffd00aad0403c9ffd003ee020460a9018d01042029a460a91d4820aff2ad00008d1000ad01008d1100a006b11048c8b110297f48a00eb1108d0000c8b11029038d0100a9008d02008d0400ac026fb927a58d030020a5eaac026fad0000187924a58d0300ad010069008d0400688d0100688d0000a9008d02002022ecad06008d0000ad07008d0100ad08008d0200a9508d0300a9008d040020a5eaa00bb110297fa032c933901aa03cc9479014a046c951900ea050c95b9008a05ac9649002a0648c0300a9008d04002022ecad06008d0000ad07008d0100ad08008d0200a9648d0300a9008d040020a5eaa002b110186d00009110c8b1106d01009110a002202aa52040a52082a56838e90130034c2ba460",
+      "sha256": "a2af500199659f13ac175d7c68cb2bf5fe7cd1ebe4780629a6a3388aa1b6efc4"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 42282,
+      "cpu_end_exclusive": 42305,
+      "rom_offset": 206138,
+      "byte_count": 23,
+      "raw_hex": "b11038e910c8b110e9279009a927911088a90f91106060",
+      "sha256": "45c5da15718ed39407bde566a42714108a03bb94dfcc0586ff33f9fd13bad527"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 42370,
+      "cpu_end_exclusive": 42371,
+      "rom_offset": 206226,
+      "byte_count": 1,
+      "raw_hex": "60",
+      "sha256": "8d33f520a3c4cef80d2453aef81b612bfe1cb44c8b2025630ad38662763f13d3"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 42410,
+      "cpu_end_exclusive": 42729,
+      "rom_offset": 206266,
+      "byte_count": 319,
+      "raw_hex": "ad020420deeab6a5c9a5e5a5a9bd208bf2ee0204a9a68dd604a91d8da00460ada004d016ad4001d011ad0003c9ffd00aad0403c9ffd003ee020460a9018d010420eea560a91d4820aff2ad00008d1000ad01008d1100a006b11048c8b110297f48a008b1108d0000c8b11029038d0100a9008d02008d0400ac026fb9eca68d030020a5eaac026fad00001879e9a68d0300ad010069008d0400688d0100688d0000a9008d02002022ecad06008d0000ad07008d0100ad08008d0200a93c8d0300a9008d040020a5eaa00bb110297fa032c933901aa03cc9479014a046c951900ea050c95b9008a05ac9649002a0648c0300a9008d04002022ecad06008d0000ad07008d0100ad08008d0200a9648d0300a9008d040020a5eaa004b110186d00009110c8b1106d01009110a004202aa52040a52082a56838e90130034cf0a560",
+      "sha256": "163da5bfe65ad4f573d649221b62f082d7eb3c609f073f35c8cd1080e2695418"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 42735,
+      "cpu_end_exclusive": 43096,
+      "rom_offset": 206591,
+      "byte_count": 361,
+      "raw_hex": "ad020420deeafda620a741a75fa8a0002096a8ad0000d006a9028d010460a9be208bf2a99f8dd604a91c8da004ee020460ada004d01bad4001d016ad0003c9ffd00fad0403c9ffd008a9008d0304ee020460ac0304b92d04c9ffd018ee0304ad0304c910900da9028d0104a9008da400208bf26020aff2a000b1002907c907f0db20e0a8ad1000c90ad00fad00008d0c00ad01008d0d004c1ba8ad00008d0a00ad01008d0b00a006b10a8d0000c8b10a8d01004e01006e00004e01006e0000a006203ea9a008b10a8d0000c8b10a8d01004e01006e00004e01006e0000a008203ea9ad0a008d0c00ad0b008d0d00a0119848b10cc9fff02d20d7f2ad00008d0a00ad01008d0b00a008b10a8d0000c8b10a8d01004e01006e00004e01006e0000a008203ea968a8c8c01b90c4a000b10c2068f3a003b100c903d0034c4ba78d446fee0204ac0304b92d048d2c048d7204ad10008d7004ad11008d71048d0000a9048da400a03d2007ee",
+      "sha256": "603ddeb011faaa415c30108feedd5cbe3b52a853b76c5ab5ecd376da01c02744"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 43098,
+      "cpu_end_exclusive": 43200,
+      "rom_offset": 206954,
+      "byte_count": 102,
+      "raw_hex": "a93f4c6df22085a9ad0003c9ffd02cad0403c9ffd02520c2a1ad81004a901cad7004c90af006ce02044c4ba7a9008d7004a9038da400a94d206df260a210a9ff9d2c04ca10faa2008e00002056e8c906b0f9c900d009b9c0a89d2d04ee0000c8e8e01090e660",
+      "sha256": "ec5b32c1ad7aac0124eec2436bcd7130b714df89cc214f3d619eed4ec50c7710"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 43232,
+      "cpu_end_exclusive": 43730,
+      "rom_offset": 207088,
+      "byte_count": 498,
+      "raw_hex": "a00ab100a20aa00ac963f024a208a007c950b01ca206a005c932b014a204a001c914b00ca202a000c901b004a200a0008e10008c1100c000f01c2056e8c906b0f9186d1100d002a9018d1100a00ab10038ed11009100a011b1008d110060ad1000f0319848ad10008d0300a9008d020020e9ebad06008d0000ad07008d0100ad08008d0200a90a8d0300a9008d040020a5ea68a8b10a38ed0000910ac8b10aed0100910a60ad720420e7bbad7104c9fff00d8d0000a9a78d0a00a200201fce60ad020420deeaaea9d1a9f2a9deaaa0102096a8ad0000d006a9028d010460a9bf208bf2a99f8dd604a91e8da004ee020460ada004d01bad4001d016ad0003c9ffd00fad0403c9ffd008a9008d0304ee020460ac0304b92d04c9ffd018ee0304ad0304c910900da9028d0104a9008da400208bf26020aff2a000b1002907c907f0db20e0a8ad1000c90ad00fad00008d0a00ad01008d0b004c9aaaad00008d0a00ad01008d0b00a006b10a8d0000c8b10a8d01004e01006e00004e01006e0000a006203ea9a00eb10a8d0000c8b10a8d01004e01006e00004e01006e0000a00e203ea9a004b10a8d0000c8b10a8d01004e01006e0000a004203ea9a000b10a2068f3a003b100c903d0034cfca98d446fee0204ac0304b92d048d2c048d7204ad10008d7004ad11008d71048d0000a03d2007ee",
+      "sha256": "8e7e2bbe7a199834bf98a475b568a76bef5eefb4889b457e4a6c9c280bcc286e"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 43732,
+      "cpu_end_exclusive": 44082,
+      "rom_offset": 207588,
+      "byte_count": 350,
+      "raw_hex": "a9048da400a9454c6df22085a9ad0003c9ffd02cad0403c9ffd02520c2a1ad81004a901cad7004c90af006ce02044cfca9a9008d7004a9038da400a94d206df260ad020420deea25aba9ab4dac9aacbdacad006fc959d00dad016fc904b006a9018d010460a200a9009d2c04e8e01e90f8a2008a20aff2a000b100290fc907f00ba01bb100f01338e9019100e8e01e90e2ee0204a9008d030460a00bb100c932b0eaa005c928b00ea00ac91eb008a01ec914b002a0328c1100a9642062e8cd110090034c60abad11009d2c04a01ba90691004c60abac0304b92c04d018ee0304ad0304c91e900da9018d0104a9008da400208bf2608d70049820aff2ad00008d0a00ad01008d0b002050e8f0fb8d1000c901d00620cdac4cfbabc902d00620e9ac4cfbab2014ada000b10a2068f3a003b100c903d0034cb1ab8d446fee0204ad03048d4c048d7204ad10008d7004a9ff8d7104ad72048d0a00a03b2007ee",
+      "sha256": "f7d047e6c99679a15cc866f101379ace7659f90034531fef3c0096506261c965"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 44084,
+      "cpu_end_exclusive": 44175,
+      "rom_offset": 207940,
+      "byte_count": 91,
+      "raw_hex": "ad0b00298049808d5001a99f8dd604a91f8da004a9e84c8bf22085a9ada004d01cad4001d017ad0003c9ffd010ad0403c9ffd00920c2a1ad81004ab00160ee0204a9048da400ad720420aff2a011b1008d71048d0000a03d2007ee",
+      "sha256": "ef3ef4d2a25b87d8d1cc53754b460736644aa6bddae43e0c7ed9748a78210da0"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 44177,
+      "cpu_end_exclusive": 44452,
+      "rom_offset": 208033,
+      "byte_count": 275,
+      "raw_hex": "a9e8186d70044c6df22085a9ad0003c9ffd018ad0403c9ffd01120c2a1ad81004a9008ee0204a9004c8bf260ad0403c9ffd008a9018d02044cb1ab60a201ad7004c905f00be8c90af006e8c91ef001e88e0300a0064c3fada204ad7004c905f00ce8e8c90af006e8c91ef001e88e03008e0c00a002203fadad0c008d0300a0044c3fada204ad7004c905f00ce8e8c90af006e8c91ef001e88e03008e0c00a008203fadad0c008d0300a00e4c3fad8c0d00b10a8d0000c8b10a8d01004e01006e00004e01006e00004e01006e00004e01006e0000a9008d020020e9ebac0d00b10a38ed0600910ac8b10aed0700910a60ad010420deea95adaaad0dae51ae01be32c17ac3a9008de404a9f08d416fa03d2007ee",
+      "sha256": "8e3cd341afc4564f6707253b175954c8918b4ff49519ef0f2b5dc227f7d3b445"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 44454,
+      "cpu_end_exclusive": 44725,
+      "rom_offset": 208310,
+      "byte_count": 271,
+      "raw_hex": "ee010460ad7e00f00160ad07054a4a4a4a8d0c04ad0705290f8d0a042068f3a000b1008d0b0420d7f2a00bb1002903c903f004ee010460a9028d7004a9068d7104a90d8d7204a9038d7304a9048d0104a9008d0204ad0a042068f3a003b100c903f0d08d446f60ad0705290f8d0c04ad07054a4a4a4a8d0a042068f3a000b1008d0b0420d7f2a00bb1002903c903d017a9038d7004a9068d7104a90b8d7204a9008d73044cf1adee010460a9008d70048d7104a003b1eec903d02aa9bb208bf2a000b1ee8d2c04a9098d0004a9018d0104a9008d0c04a9008d8b6f8d5b6f8d5c6f8d626f608d446fa000b1ee8d0a0020eba1a00191eea001b1eea8b937c78d3f6fb955c71869018d416fa03d2007ee",
+      "sha256": "6752ccebc6a24d458b291a7d6cc630368e97394c3edab83223ec90e97661e608"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 44727,
+      "cpu_end_exclusive": 44974,
+      "rom_offset": 208583,
+      "byte_count": 247,
+      "raw_hex": "a9008d00048d010460ad020420deeaceae74af8bafb8afa031205ff2a9748d0000a98d8d0100ac7004b1008d1000c8b1001869608d1100a2008aa8b110c9fff0218d120020d7f2a00bb1002903c901f005e8e84cf0aee88aa8b110cd006ff0089006a9038d010460a001b1ee20aff2a011a200b100c9fff001e8c8c01b90f4e00af0df8a186911a8ad12009100ad120020d7f2a00bb10029fc09029100a003b1eec903f0bd8d446fad12008d2c04a000b1ee8d2d04ee0204a9004c8bf2ad0003c9ffd00fad0403c9ffd008ee0204a9304c6df260ad0003c9ffd010ad0403c9ffd00920c2a1ad81004ab00160ad2c048d0000a03d2007ee",
+      "sha256": "8d2e0f6d786d9cce0461d95a0ee1dfe928648a85695f23ea6a1f1e75b6d60141"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 44976,
+      "cpu_end_exclusive": 45029,
+      "rom_offset": 208832,
+      "byte_count": 53,
+      "raw_hex": "ee0204a9394c6df2ad2c048d0000a9a78d0a00a200201fcead0003c9ffd015ad0403c9ffd00e20c2a1ad81004a9005a9038d010460",
+      "sha256": "bf855bbe0c991b5a430e6cfa4ca1eb1ebc0a29a7fcedaa97a129329e21d3292e"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 47065,
+      "cpu_end_exclusive": 47696,
+      "rom_offset": 210921,
+      "byte_count": 631,
+      "raw_hex": "ad710420aff2a002a226b1009d0005a9009100c8e8e028d002a222c00690eba000b1008d0705ad00001869118d0000ad010069008d0100a009b100996406a9ff91008810f4a00aad8104996406c8a200e00a9005a9ff4c3ab8bd5101cd8104f004996406c8e8c01490e6ad020420aff2a000b1000a0a0a0a0d07058d0705a200bd5101c9fff0198d0200a011b100cd0200f004c84c65b8a9ff9100e8e00a90e0a011a9108d0300b1008d0200a9ff9100ad0200c9fff00f98aaee0300ac0300ad020091008aa8c8c01b90dca011b100c9ffd006a907a0009100a002b10038ed2f049100c8b100ed30049100a004b10038ed32049100c8b100ed3304910060ad700420aff2a002b1008d9804c8b1008d9904a004b1008d9a04c8b1008d9b04a010b1008d9c04a9008d9d04ad710420aff2a002a90f38f1008d1000c8a927f1008d1100a0002048b9a004a90f38f1008d1000c8a927f1008d1100a0022048b9a010a96338f1008d1000a9008d1100a004ad100038f99804ad1100f99904b00cad1000999804ad110099990460a031205ff2ad02048d0000a9008d01008d0200a9148d030020e9ebad060018691c8d0200ad0700698b8d0300a9008d0400ac0400b1028d7204c9ffd0034ceab920d7f2a00bb1002903c901f009ee0400ee04004c95b9ee0400ac0400b10238e964cd006ff002b01ea000b950bacd7204f007c8c8c02490f260c8b950ba8d7304a9078d700460a030205ff2ad02040a0a0aa8a200b9729d9d6001c8e8e00890f4a031205ff2a9008d0400ad040020d7f2a00bb1002903f010ee0400ad0400c9ed90e8a9808d110060ad04008d7204a005b100cd0204f0f08d0500a200bd6001cd0500f0e3e8e00890f34c1cba",
+      "sha256": "4507dd293f74d8caff6a2ac18b1e4375d06f1e0722d9c6b1944c1dd6383b9fa2"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 47728,
+      "cpu_end_exclusive": 47839,
+      "rom_offset": 211584,
+      "byte_count": 111,
+      "raw_hex": "a27fad7004f008a288c901f002a2918e71042056e8c905b0f98d1000ad810420d7f2a002b100c951b013c933b0034cb6baad10001869028d10004cb6baad10001869048d1000ad1000186d71048d7104ac1000b9dfba8d7204ad70040a0a0a186d7004186d1000a8b9e8ba8da20460",
+      "sha256": "0da85402e505af510775858aeae02a58c6252a81c33466c775818274ae3e25ba"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 47875,
+      "cpu_end_exclusive": 48122,
+      "rom_offset": 211731,
+      "byte_count": 247,
+      "raw_hex": "ad020420aff2a002b100990000c8c00590f6ad020038ed04008d0600ad0300ed0500900cd005ad0600f007a0034c35bba0078c2d04a0f0a90a2062e8cd2d049001c88c2d04a96438ed2f048d0000a9008d01008d0200a9048d030020e9ebad06008d2f04ad07008d3004a9008d310460ad020420aff2a002ad2d04c9f0f002a004b10038ed2f048d0200c8b100ed3004b00cad2d048d2e04a9008d2d0460910088ad02009100ad2c048d0a0020eba1a002ad2d04c9f0f002a004b100186d2f049100c8b1006d30049100ad00008d1000ad01008d110088202aa560ade404d00160ad0204482907aa684a4a4aa8b9e0041dfabb99e00460",
+      "sha256": "7399e62f35f37df638cd51515aa6bf56a5ab4a97243194bb2f4ad0aa711c8595"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 48130,
+      "cpu_end_exclusive": 48480,
+      "rom_offset": 211986,
+      "byte_count": 350,
+      "raw_hex": "a9408da5008d00f8a9498dfc6fa9448dfd6fa9008d00008d02008d04008d0500a9608d0100a9708d0300a000b1009102186d04008d0400ad050069008d0500c8d0eaee0100ee0300ad0100c96f90dba000b1009102186d04008d0400ad050069008d0500c8c0fed0e8ad04008dfe7fad05008dff7fa94c8da5008d00f860ad020420deea8cbc95bc67bda9008d0804ee020460ad080420aff2ad00008d1c00ad01008d1d00a000b11c2907cd036fd04ca0118c0904ac0904b11cc9fff034cd0b04d00fad08048d1e00ad09048d1f004cf4bc8d0a042028bd9018a003b1ee2903c903f00eee0204ad0a048d2c04a9c14c8bf2ee0904ad0904c91b90b9ee0804ad0804c91e908dad0b048d0a04ad1e008d0804ad1f008d09042028bda9048d0104a9008d020460a031205ff2a9588d0200a99c8d0300ac0a04ad006f38f1029017c9069002a906a8b960bd8d0c00a9c82062e8cd0c009002186020bbbd3860",
+      "sha256": "22e6701febaa6d6772ddbb34fee60a79e247a60149cb22106a5a6508cd74f3c0"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 48487,
+      "cpu_end_exclusive": 48869,
+      "rom_offset": 212343,
+      "byte_count": 382,
+      "raw_hex": "ad0003c9ffd017ad0403c9ffd01020c2a1ad81002903f006ce02044cf4bc60a200a9ff9d8005e8e01090f8ad080420aff2a011a200b100c9fff0049d8005e8c8c01b90f1a011a200bd80059100c8e8c01b90f560a031205ff2ad0a0420d7f2a00bb10009039100a030205ff2ad080420aff2ac0904a9ff91002086bda011a200b100c9fff001e8c8c01b90f48ad00aa000b10029f80907910060ad020420deea17be2ebe83bed1be2fbfb9bf1ec0e5c0ad0b048d2c04ee0204a9c1208bf2207fe5a9082083e660ad0003c9ffd04dad0403c9ffd04620c2a1ad81002903f03ca2008a20aff2a000b1002907cd0a04d008a011b100c9ffd011e8e01e90e4ad71048d0104a9008d020460ee0204a9808d3f6fa9418d416fa9d04c8bf260207cc6ad0003c9ffd039ad0403c9ffd032ad81002901f02b2008c7c0fff0258c0c049820aff2a000b1002907cd0a04d018ee0204a9828d7804a90f8d7c04a9d14c6df260a9214c6df2a9224c6df2ad7804d026ad020448ad0c048d0204a03b2007ee",
+      "sha256": "488d4c0faa0227820af0a991c31c72398dd8bc97bfe0e7818ff050bec750d367"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 48871,
+      "cpu_end_exclusive": 49068,
+      "rom_offset": 212727,
+      "byte_count": 197,
+      "raw_hex": "688d0204ad7c04100cc990d009ce0204a9d04c6df260a9008d8f00a9038d6100a9008db200a9058db300a9098db400ee0204ad81048d2c048d0d04a9008d24048d2504a9d24c8bf2ad0003c9ffd04ead0403c9ffd047a9ac8d1000a9bf8d1100a9008d1200201eeda9b08d1000a9bf8d1100a9b48d0000a9bf8d0100ad120020f5edad81004ab0164a9012a9828d7804a90f8d7c04ce0204a9d1206df260ad1200d0e8ad0a042068f3ad0d048d2c04a0009100ad0c04a00191ee2001c1ee0204a9d34c8bf2",
+      "sha256": "80596e8680b5097807c8a710a927b8affbca3e438d97a08472f9e86b29e48c37"
+    },
+    {
+      "physical_bank": 25,
+      "cpu_start": 49081,
+      "cpu_end_exclusive": 49153,
+      "rom_offset": 212937,
+      "byte_count": 72,
+      "raw_hex": "ad0003c9ffd05dad0403c9ffd05620c2a1ad81002903f04cad0a040a0a0aa81869088d1000b942c3c9ffd00ea9008d0e04a9118d0f04ee020460cd0d04f006c8cc100090e0ad0d04",
+      "sha256": "9540d5afbb9c2a7e16e0844a738738c4db995c5820e521f64cf15299ac997411"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 49153,
+      "cpu_end_exclusive": 49246,
+      "rom_offset": 213009,
+      "byte_count": 93,
+      "raw_hex": "20d7f2a003a9649100ad70048d0104a9008d0204207fe5a9812073e660ad0e0420aff2a000b1002907cd0a04d050ad00008d1000ad01008d1100ac0f04b110c9fff03b8d3100ad0d048d3000ad0a048d3200ad0b048d3300a02a2007ee",
+      "sha256": "820d68f5a8d066cd159a35a1e440856d364e0755f8c5c128c3a80d75071bca4f"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 49248,
+      "cpu_end_exclusive": 49901,
+      "rom_offset": 213104,
+      "byte_count": 653,
+      "raw_hex": "ad310020d7f2a003b100c91fb0072043e8c914901cee0f04ac0f04c01b90bfee0e04a9118d0f04ad0e04c91e90904cfebfad3100cd0d04f0dca00bb10029fc9100a005ad0e049100ac0f04c01af00ac8b110889110c84cabc0a9ff9110a200a011b110c9fff001e8c8c01b90f4e000d006a000a9079110ee0204ad31008d2c04a9d44c8bf2ad0003c9ffd014ad0403c9ffd00d20c2a1ad81002903f003ce020460ad0c0420aff2ad0d048d0200a011b100cd0200f006c8c01b90f4609848a011b1008d0300ad0200910068a8ad0300910060ad020420deea44c158c1dbc15dc280c289c2ee0204a9008dd004ad0b048d2c04a9c1208bf260eed004d0faad0a040a0a0a8d1000a942186d10008d1000a9c369008d1100a0008c1200ac1200b110c9fff0198d0d0420a1c1b006ee12004c7bc1a9008d0904a9038d020460ee020460a2008a20aff2a000b1002907cd0a04d022a0118c0400ac0400b100cd0d04d0058e0c043860c9fff00aee0400ad0400c91b90e3e8e01e90ca1860a9ff8d1000a2008e11008a20aff2a000b1002907cd0a04d003201dc2e8e01e90e9ad1000c9fff00e8d0d04a9808d0904a9038d020460ad71048d0104a9008d020460ad00008d0200ad01008d0300a0118c0400ac0400b102c9fff0258d120020d7f2a004b100cd1100900c8d1100ad12008d10008e0c04ee0400ad0400c91b90d260ad0a042068f3a000ad0d0491002001c1ee0204ad0d048d2c04a9008dd004a9c24c8bf2eed004d003ee020460ad09043018ad0d0420d7f2a003a9649100ad70048d0104a9008d020460a9008d1200ad120020aff2a000b1002907cd0a04d04fad00008d1000ad01008d1100a0118c1300b110c9fff0388d3100ad0d048d3000ad0a048d3200ad0b048d3300a02a2007ee",
+      "sha256": "263ec1c413b70d16a56b23e33fca09411604c7414ef5d69e4339307576cf58c1"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 49903,
+      "cpu_end_exclusive": 49986,
+      "rom_offset": 213759,
+      "byte_count": 83,
+      "raw_hex": "a003b122c91fb00a2043e8c914b0032018c3ee1300ac1300c01b90c2ee1200ad1200c91e90964c8ec2ad3100cd0d04d00160a00bb12229fc9122ac1300c01af00ac8b110889110c84c2cc3a9ff9110ce130060",
+      "sha256": "3939550ec5a5b183cb98ab3bb4f5c5ff29942f1de1c970db4dd853e8c754ac05"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 50042,
+      "cpu_end_exclusive": 50107,
+      "rom_offset": 213898,
+      "byte_count": 65,
+      "raw_hex": "ad020420deea86c3c2c31ec4ac0a04b9bbc38d2d04a9c3208bf2ad0a042068f3a000b1008d2c04a9ff9100a003b1002903c903d008ee0204a9008dd004ee020460",
+      "sha256": "77fcf5e748062b57226b89dee6d1600b24f3b438e5fbd41061db43223c39f4c9"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 50114,
+      "cpu_end_exclusive": 50640,
+      "rom_offset": 213970,
+      "byte_count": 526,
+      "raw_hex": "ad0003c9ffd011ad0403c9ffd00a20c2a1ad81002903d00160ad0c04c9fff0072068f3a000b1008d2e04ad006f1869648d2f04a90069008d3004ad016f1869018d3204a9008d31048d33048d3404a90d8d7a00a9008d41058dca0460eed004d011ad72048d0004ad73048d0104a9008d020460ad010420deea41c4b9c5dfc5a000b1ee8d2c04a2008e10008e11008e12008e13008e14008a20aff2ad00008d0a00ad01008d0b00a00bb10a186d12008d1200a9006d13008d1300a0119848b10ac9fff01ecd2c04f01920d7f2a003b100186d10008d1000a9006d11008d1100ee140068a8c8c01b90d3e8e01e90a9a9008d35048d36048d3704ad10008d0100ad11008d0200ad14008d0300a9008d0400209ac5ad14008d0000a9008d01008d0200a9648d030020e9ebad06008d0100ad07008d0200a9828d0300a9008d0400209ac5ad12008d0100ad13008d0200a91e8d0300a9008d0400209ac5ad35048d0000ad36048d0100ad37048d0200a9038d0300a9008d040020a5eaad00008d3504ad01008d3604ad02008d3704ad006f38e9598d4c04a9008d4d048d4e04ad006f1869648d2f04a90069008d3004a9008d3104ad016f1869018d3204a9008d33048d3404ad026f1869018d4f04a9008d50048d5104ee010460207ceaad0100186d35048d3504ad02006d36048d3604a9006d37048d370460ad7e00f001602026c6ad10008d2d048d0000a03d2007ee",
+      "sha256": "54fe00f57cdc925a9955563b4af24d87c031a3005b82cf44ffc7afcce479b3eb"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 50642,
+      "cpu_end_exclusive": 50999,
+      "rom_offset": 214498,
+      "byte_count": 357,
+      "raw_hex": "a9038da400ee0104a9df4c6df2ad2d048d0000a9a78d0a00a200201fcead0003c9ffd02fad0403c9ffd02820c2a1ad81004a901fa90d8d7a00a201ad3504c946b006e8c928b001e88e4105a9008dc9048dca0460a2008e10008e11008a20aff2a000b1002907cd036fd0032046c6e8e01e90e960ad00008d0a00ad01008d0b00a0119848b10ac9fff0188d020020d7f2a002b100cd110090098d1100ad02008d100068a8c8c01b90d960ad18038d0000ad830029f08d1803f01ccd0000d01dee1903ad1903c90f900ca90f8d1903ad5e002903f00c60a9008d190360a9008d1903ad83001012ae3f6fe0f8b00b48ad3f6f1869088d3f6f680a1012ae3f6fe010900b48ad3f6f38e9088d3f6f680a1012ae416fe094b00b48ad416f1869088d416f680a1010ae416fe0109009ad416f38e9088d416f60ad3f6fc920b00aad416fc920b003a0ff60a01ead3f6f38f937c7c910b00bad416f38f955c7c91090058810e7a0ff60",
+      "sha256": "ca5f665efb4f5befc0ffeb6625223c9d8fa0bbd7e969e5589520a31379256a2f"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51059,
+      "cpu_end_exclusive": 51148,
+      "rom_offset": 214915,
+      "byte_count": 89,
+      "raw_hex": "ad010420deea9bc7e0c7e0c7e0c7d2c942ca42ca42ca84cad4ca2fcb7fcb9dcb7fcbc3cb26cc89cca9bb208bf2a000b1ee8d2c04a9f08d416fee0104a9008d0c04ac056fb9ccc78d5d6fa9008d8b6f8d5b6f8d5c6f8d626f60",
+      "sha256": "f9238c547f08c6f1f2a4057957117f1d5f179c8254fa5065dd090e1d6e205222"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51168,
+      "cpu_end_exclusive": 51219,
+      "rom_offset": 215024,
+      "byte_count": 51,
+      "raw_hex": "208ccdad0c04d033ad0403c9ffd029ad0003c9ffd022ad036f2068f3a000b1008d0b00a9008d0a00ad0c048d0c00a03d2007ee",
+      "sha256": "a694c14f8edb32e246ddb93cf28313af51a65e39fead1b51a70c8d0562ecfbe1"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51221,
+      "cpu_end_exclusive": 51256,
+      "rom_offset": 215077,
+      "byte_count": 35,
+      "raw_hex": "ee0c044c98c8ad036f2068f3a000b1008d0b00a9008d0a00ad0c048d0c00a03d2007ee",
+      "sha256": "1af155d939c76e964ca8e731a24febc6fd77a698e3a7955c2349ec67eec47cad"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51258,
+      "cpu_end_exclusive": 51350,
+      "rom_offset": 215114,
+      "byte_count": 92,
+      "raw_hex": "ad8b6fc9fef058c9fdd0034ccfc8c9fcd0034c05c9c9fbd0034c1bc9c9fad0034c42c9c9f9d0034c7dc9c9f8d0034cabc9c9ffd029ee0c04ad0c04c920901fa9008d00048d01048d056fa9ff8d0b008d0a00a9008d0c00a03d2007ee",
+      "sha256": "5dcf16380c6b711cf8602af74318c690caf49b3a99e2652a361715fa2a199e0f"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51352,
+      "cpu_end_exclusive": 51384,
+      "rom_offset": 215208,
+      "byte_count": 32,
+      "raw_hex": "60202acaad036f2068f3a000b1008d0b00a9018d0a00a9008d0c00a03d2007ee",
+      "sha256": "736f583c6604c5055c9ee0abc6c358eb800232c2676dd245e8c003451d086926"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51386,
+      "cpu_end_exclusive": 51438,
+      "rom_offset": 215242,
+      "byte_count": 52,
+      "raw_hex": "a9098da004a9478dd604a9048d0104a9008d0c0460202acaad036f2068f3a000b1008d0b00a9018d0a00a9008d0c00a03d2007ee",
+      "sha256": "66d249876db20b395d5150770fa8860bfb29f97916dec91d2dfc7b38861a3774"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51440,
+      "cpu_end_exclusive": 51514,
+      "rom_offset": 215296,
+      "byte_count": 74,
+      "raw_hex": "a9098da004a9a28dd604a9088d0104a9008d0c0460ad38008d2c04a9c1208bf2a90b8d0104a9008d0c0460ad38008d2c04ac4000b93ac98d2d04a9c3208bf2a90c8d0104a9008d0c0460",
+      "sha256": "cd3631fbc52f96a2307dae854536d38978d02ea2b56d2eee4bf05f767d88d804"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51522,
+      "cpu_end_exclusive": 51550,
+      "rom_offset": 215378,
+      "byte_count": 28,
+      "raw_hex": "ad41008d2c04ad40008d2d04a9e6206df2ad3d008d0000a03d2007ee",
+      "sha256": "fcaf1ae90ff5953ead5b275fea545f08edcfb332fcc7dcbe04dee6c0972deab5"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51552,
+      "cpu_end_exclusive": 51609,
+      "rom_offset": 215408,
+      "byte_count": 57,
+      "raw_hex": "a90e8d0104a9008d0204a9008d0c04ad42002068f3a003b1008d446f60ad3a008d2c04ad39008d2d04a9e6206df2ad3d008d0000a03d2007ee",
+      "sha256": "1140e950f39487731500fbc81e117c713769d5e89126e28d1fc289a94d9f5a16"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51611,
+      "cpu_end_exclusive": 51697,
+      "rom_offset": 215467,
+      "byte_count": 86,
+      "raw_hex": "a90f8d0104a9008d0204a9008d0c0460ad41008d2c04ad40008d2d04ad42008d2e04a9e2208bf2a9108d0104a9008d0204a9008d0c04602002caad036f2068f3a000b1008d0b00a9018d0a00a9018d0c00a03d2007ee",
+      "sha256": "ea1c48d989fe94d11ee6657e1917dc2b3c17db1272879b76fefd3cc2ec53c758"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51699,
+      "cpu_end_exclusive": 51746,
+      "rom_offset": 215555,
+      "byte_count": 47,
+      "raw_hex": "ada0040d4001d00620eeecee010460ad0e05200fcaad3a00200fca60482907aa684a4a4aa8b9e0041d22ca99e00460",
+      "sha256": "bd137eb4a1a96f9fbd2b6c460aa93bae3b505b533da308bd286bc04c4bd6bad2"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51754,
+      "cpu_end_exclusive": 51765,
+      "rom_offset": 215610,
+      "byte_count": 11,
+      "raw_hex": "ad3a008d0a00a03b2007ee",
+      "sha256": "8ab5405f305aef13d1cd566f16cf46ca573685b6f32023d2be46531f6852c410"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51767,
+      "cpu_end_exclusive": 51841,
+      "rom_offset": 215623,
+      "byte_count": 74,
+      "raw_hex": "ad0b00298049808d5001602002caad87001039a9038d7a00a9008d10058d11058d12058d1305a90a8d0005a9008d01058d02058d0305a9808d0405a9008d0505a9008d0605a02c2007ee",
+      "sha256": "48d2bb1e75a2a9a601e5254185c1bebafb7b9b0061d2e97da162d91078b8da6f"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51843,
+      "cpu_end_exclusive": 51875,
+      "rom_offset": 215699,
+      "byte_count": 32,
+      "raw_hex": "602002caad036f2068f3a000b1008d0b00a9018d0a00a9018d0c00a03d2007ee",
+      "sha256": "250661f2880ec18e6b0e0e1596cd1230cc14edbf018393351457a30349c300cc"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51877,
+      "cpu_end_exclusive": 51913,
+      "rom_offset": 215733,
+      "byte_count": 36,
+      "raw_hex": "ada0040d4001d026ad036f2068f3a000b1008d0b00a9028d0a00a9008d0c00a03d2007ee",
+      "sha256": "c7342ba79a2c7a0843d271d9a82e0d01adad62542a1486d53fc1824d763199b9"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51915,
+      "cpu_end_exclusive": 51955,
+      "rom_offset": 215771,
+      "byte_count": 40,
+      "raw_hex": "a9058da004ee0104602002caad036f2068f3a000b1008d0b00a9018d0a00a9018d0c00a03d2007ee",
+      "sha256": "f25ff176f9dc547c710804cf720b05e5f608a344e15bb0027db8c04837b1a29b"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 51957,
+      "cpu_end_exclusive": 52004,
+      "rom_offset": 215813,
+      "byte_count": 47,
+      "raw_hex": "ada0040d4001d031ad0705ac8c6fd0044a4a4a4a29072068f3a000b1008d0b00a9038d0a00a9008d0c00a03d2007ee",
+      "sha256": "fe850a721f1ab7dd313591e600fece8e41307a192740653cb4dab01191a01d34"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 52006,
+      "cpu_end_exclusive": 52057,
+      "rom_offset": 215862,
+      "byte_count": 51,
+      "raw_hex": "a9068da004ee0104602002caad0705ac8c6fd0044a4a4a4a29072068f3a000b1008d0b00a9018d0a00a9018d0c00a03d2007ee",
+      "sha256": "6e25348a84ddd89b031bd81785c3b34d5dc0e62cd84fa0bf9a205d88d816a40e"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 52059,
+      "cpu_end_exclusive": 52437,
+      "rom_offset": 215915,
+      "byte_count": 378,
+      "raw_hex": "ada0040d4001d0cba9bb208bf2a000b1ee8d2c04a9018d0104a9008d0c04a9018d8b6f60ee0c04ad0c04c9f09013ad27008d2c04a9c2208bf2ee0104a9008d0c0460ee0c04ad0c04c9f0901ba9bb208bf2a000b1ee8d2c04a9018d0104a9008d0c04a9018d8b6f60ad3d008d0000a9a78d0a00a200201fcead020420deeaddcb0accad0003c9ffd025ad0403c9ffd01e20c2a1ad81002903f014ad43008d2c04ad40008d2d04a9e0206df2ee020460ad0003c9ffd014ad0403c9ffd00d20c2a1ad81002903f003206fcd60ad3d008d0000a9a78d0a00a200201fcead020420deea40cc6dccad0003c9ffd025ad0403c9ffd01e20c2a1ad81002903f014ad37008d2c04ad39008d2d04a9e1206df2ee020460ad0003c9ffd014ad0403c9ffd00d20c2a1ad81002903f003206fcd60ad020420deea95ccd8cc53cdad0003c9ffd03bad0403c9ffd03420c2a1ad81002903f02aad41008d2c04a9e3ac3900f002a9ee206df2ee0204a9008d24048d2504ad42008d0000a03d2007ee",
+      "sha256": "3b5f9ec9ed74a1725cee21a2208cc749bee5a1a4ed5454fc31ae3e65308522b1"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 52439,
+      "cpu_end_exclusive": 52550,
+      "rom_offset": 216295,
+      "byte_count": 111,
+      "raw_hex": "60ad42008d0000a9a78d0a00a200201fcea9468d1000a9cd8d1100a9008d1200201eeda94a8d1000a9cd8d1100a94e8d0000a9cd8d0100ad120020f5edad0003c9ffd02aad0403c9ffd023ad81002903f0aead40008d2c04ee0204ad12008d0c04d006a9e4208bf260a9e5208bf260",
+      "sha256": "a91d35408a9205a31d7367740859b6f96ceb494fed9b636da25b8a283d1857e5"
+    },
+    {
+      "physical_bank": 26,
+      "cpu_start": 52563,
+      "cpu_end_exclusive": 52767,
+      "rom_offset": 216419,
+      "byte_count": 204,
+      "raw_hex": "ad0003c9ffd014ad0403c9ffd00d20c2a1ad81002903f003206fcd60a9bb208bf2a000b1ee8d2c04ad0c048d8b6fa9018d0104a9008d0c0460adf9ffc9ffd049ad83002908f042ad81002901f03ba9622093e6ade26fc9fff030ade26f8d0a6fade36f8d126fade46f8d1a6fade56f8d226fade66f8d2a6fade76f8d326fade86f8d3a6fa9ff8de26f60ad0a6f8de26fad126f8de36fad1a6f8de46fad226f8de56fad2a6f8de66fad326f8de76fad3a6f8de86fa9038d0a6f8d126f8d1a6f8d226f8d2a6f8d326f8d3a6f60",
+      "sha256": "176ebb1d60f120c88d9b1e14716350c4d669bd1608853023a77717658ea83978"
+    }
+  ],
+  "dispatch_tables": [
+    {
+      "call_pc": 50232,
+      "physical_bank": 26,
+      "cpu_address": 50235,
+      "rom_offset": 214091,
+      "count": 3,
+      "targets": [
+        50241,
+        50617,
+        50655
+      ],
+      "raw_hex": "41c4b9c5dfc5",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 44420,
+      "physical_bank": 25,
+      "cpu_address": 44423,
+      "rom_offset": 208279,
+      "count": 7,
+      "targets": [
+        44437,
+        44458,
+        44557,
+        44625,
+        48641,
+        49458,
+        50042
+      ],
+      "raw_hex": "95adaaad0dae51ae01be32c17ac3",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 50045,
+      "physical_bank": 26,
+      "cpu_address": 50048,
+      "rom_offset": 213904,
+      "count": 3,
+      "targets": [
+        50054,
+        50114,
+        50206
+      ],
+      "raw_hex": "86c3c2c31ec4",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 49461,
+      "physical_bank": 26,
+      "cpu_address": 49464,
+      "rom_offset": 213320,
+      "count": 6,
+      "targets": [
+        49476,
+        49496,
+        49627,
+        49757,
+        49792,
+        49801
+      ],
+      "raw_hex": "44c158c1dbc15dc280c289c2",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 48644,
+      "physical_bank": 25,
+      "cpu_address": 48647,
+      "rom_offset": 212503,
+      "count": 8,
+      "targets": [
+        48663,
+        48686,
+        48771,
+        48849,
+        48943,
+        49081,
+        49182,
+        49381
+      ],
+      "raw_hex": "17be2ebe83bed1be2fbfb9bf1ec0e5c0",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 41625,
+      "physical_bank": 25,
+      "cpu_address": 41628,
+      "rom_offset": 205484,
+      "count": 16,
+      "targets": [
+        41660,
+        41740,
+        41788,
+        41865,
+        41883,
+        41827,
+        41957,
+        42410,
+        42735,
+        43424,
+        44736,
+        48256,
+        48641,
+        49458,
+        50042,
+        43797
+      ],
+      "raw_hex": "bca20ca33ca389a39ba363a3e5a3aaa5efa6a0a9c0ae80bc01be32c17ac315ab",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 43800,
+      "physical_bank": 25,
+      "cpu_address": 43803,
+      "rom_offset": 207659,
+      "count": 5,
+      "targets": [
+        43813,
+        43945,
+        44109,
+        44186,
+        44221
+      ],
+      "raw_hex": "25aba9ab4dac9aacbdac",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 48259,
+      "physical_bank": 25,
+      "cpu_address": 48262,
+      "rom_offset": 212118,
+      "count": 3,
+      "targets": [
+        48268,
+        48277,
+        48487
+      ],
+      "raw_hex": "8cbc95bc67bd",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 44739,
+      "physical_bank": 25,
+      "cpu_address": 44742,
+      "rom_offset": 208598,
+      "count": 4,
+      "targets": [
+        44750,
+        44916,
+        44939,
+        44984
+      ],
+      "raw_hex": "ceae74af8bafb8af",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 43427,
+      "physical_bank": 25,
+      "cpu_address": 43430,
+      "rom_offset": 207286,
+      "count": 4,
+      "targets": [
+        43438,
+        43473,
+        43506,
+        43742
+      ],
+      "raw_hex": "aea9d1a9f2a9deaa",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 42738,
+      "physical_bank": 25,
+      "cpu_address": 42741,
+      "rom_offset": 206597,
+      "count": 4,
+      "targets": [
+        42749,
+        42784,
+        42817,
+        43103
+      ],
+      "raw_hex": "fda620a741a75fa8",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 42413,
+      "physical_bank": 25,
+      "cpu_address": 42416,
+      "rom_offset": 206272,
+      "count": 3,
+      "targets": [
+        42422,
+        42441,
+        42469
+      ],
+      "raw_hex": "b6a5c9a5e5a5",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 41960,
+      "physical_bank": 25,
+      "cpu_address": 41963,
+      "rom_offset": 205819,
+      "count": 3,
+      "targets": [
+        41969,
+        41988,
+        42016
+      ],
+      "raw_hex": "f1a304a420a4",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 51062,
+      "physical_bank": 26,
+      "cpu_address": 51065,
+      "rom_offset": 214921,
+      "count": 17,
+      "targets": [
+        51099,
+        51168,
+        51168,
+        51168,
+        51666,
+        51778,
+        51778,
+        51778,
+        51844,
+        51924,
+        52015,
+        52095,
+        52125,
+        52095,
+        52163,
+        52262,
+        52361
+      ],
+      "raw_hex": "9bc7e0c7e0c7e0c7d2c942ca42ca42ca84cad4ca2fcb7fcb9dcb7fcbc3cb26cc89cc",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 52364,
+      "physical_bank": 26,
+      "cpu_address": 52367,
+      "rom_offset": 216223,
+      "count": 3,
+      "targets": [
+        52373,
+        52440,
+        52563
+      ],
+      "raw_hex": "95ccd8cc53cd",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 52281,
+      "physical_bank": 26,
+      "cpu_address": 52284,
+      "rom_offset": 216140,
+      "count": 2,
+      "targets": [
+        52288,
+        52333
+      ],
+      "raw_hex": "40cc6dcc",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 52182,
+      "physical_bank": 26,
+      "cpu_address": 52185,
+      "rom_offset": 216041,
+      "count": 2,
+      "targets": [
+        52189,
+        52234
+      ],
+      "raw_hex": "ddcb0acc",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    },
+    {
+      "call_pc": 41014,
+      "physical_bank": 25,
+      "cpu_address": 41017,
+      "rom_offset": 204873,
+      "count": 4,
+      "targets": [
+        41025,
+        41260,
+        41310,
+        41350
+      ],
+      "raw_hex": "41a02ca15ea186a1",
+      "extent_basis": "nearest forward arm code boundary; retained for independent CPU checking"
+    }
+  ],
+  "original_instruction_count": 3841,
+  "executed_local_instruction_positions": 2402,
+  "unexecuted_local_instruction_positions": 1439,
+  "validation_path": "analysis/phase13/panels/validation.json",
+  "validation_sha256": "bf2b5642012d2146cfcc0e4c52a29843f98f48dd8585c5170f31c56d678f53f8",
+  "static_control_path": "analysis/phase13/panels/static-control.json",
+  "static_control_sha256": "a5a351977d8ebea05b17edce95338ad1fe7527446332e761f97ede1ea0bd9c8f",
+  "source_catalog_path": "analysis/phase13/panels/source-catalog.json",
+  "source_catalog_sha256": "7fcafea9cf64a46f09e8a40155465143e8a1c566d74b783a0e13ea78881faa5f",
+  "REA_archive": "analysis/rea/pairs/pair-25",
+  "source_original_CPU_callbacks": 0,
+  "source_IR_interpretation": false,
+  "comparison_scope": "Local readable control against original CPU; external helper CPU exists only inside the validator. Pure owner integration has a separate receipt.",
+  "limitations": [
+    "Unexecuted local instruction positions are not path coverage claims.",
+    "Nearest-forward-arm inline-table extents are explicit analysis candidates, retained with exact raw words and validated on bounded legal inputs.",
+    "Invalid or nonterminating prepared panel fixtures are excluded, never successful cases."
+  ]
+}

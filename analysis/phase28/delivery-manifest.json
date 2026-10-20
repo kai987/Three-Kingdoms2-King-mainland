@@ -1,0 +1,56 @@
+{
+  "schema": "phase28-local-incremental-delivery-v1",
+  "kind": "incremental_analysis_and_readable_source",
+  "base_archive": {
+    "path": "build/三国志2超级版-逆向分析-v27增量.zip",
+    "sha256": "40912603f488059fdc693e8437d7565b0b89b0c52eda66081c24ed328891f351",
+    "included": false
+  },
+  "base_audit": {
+    "path": "analysis/phase27/verification.json",
+    "sha256": "5a23dab645793d3f905a53d90d2fabe8f8f46a35e0dd7e814402afca2e387954",
+    "included": true
+  },
+  "foundational_archive": {
+    "path": "build/三国志2超级版-逆向分析-v22.zip",
+    "sha256": "9fd37c2ae0d7d857c787801e8bdc92ca43fb038099491f7dbe09f17b204cef80",
+    "included": false
+  },
+  "include_roots": [
+    "source/recovered",
+    "source/readable_c",
+    "scripts",
+    "analysis/phase28"
+  ],
+  "include_files": [
+    "requirements.txt",
+    "analysis/phase27/verification.json",
+    "analysis/phase27/delivery-manifest.json"
+  ],
+  "exclude": [
+    "exploratory*",
+    "__pycache__",
+    "*.pyc",
+    "analysis/phase28/package-receipt.json",
+    ".DS_Store"
+  ],
+  "original_ROM_included": false,
+  "rebuilt_ROM_included": false,
+  "full_ROM_byte_source_included": false,
+  "toolchain_included": false,
+  "old_large_evidence_copied": false,
+  "canonical_v22_archive_replaced": false,
+  "requires_separate_base_and_user_ROM_for_reproduction": true,
+  "external_publication": false,
+  "dependency_order": [
+    "v22 full frozen archive",
+    "v23 frozen supplement",
+    "v24 frozen supplement",
+    "v25 frozen supplement",
+    "v26 frozen supplement",
+    "v27 frozen supplement",
+    "v28 supplement",
+    "user-provided ROM and separately pinned original core/toolchain"
+  ],
+  "scope": "Exact stage2 postbattle parent, C027 protocol and the D4F5 far-return midpoint. ECEE initialization and subsequent native NMI fade gate are distinct. No stage0/1/3 Source closure or independent remake claim."
+}

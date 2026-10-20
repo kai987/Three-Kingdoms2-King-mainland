@@ -1,0 +1,3396 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "case_count": 1406,
+  "rom_cpu_case_count": 1392,
+  "source_guard_case_count": 14,
+  "failed_count": 0,
+  "complete_effect_cpu_case_count": 750,
+  "complete_helper_cpu_case_count": 642,
+  "prefix_cpu_case_count": 0,
+  "counts": {
+    "full_effect_body": 640,
+    "repeated_loss_experience_and_alias": 96,
+    "C886_full_accounting_helper": 512,
+    "B8A1_full_candidate_helper": 128,
+    "cross_slot_order_and_row_skip": 8,
+    "B8A1_twenty_slot_capacity": 2,
+    "continuous_conversion_both_sides": 6
+  },
+  "supported_ids": [
+    7,
+    8,
+    10,
+    12,
+    14
+  ],
+  "effect_outcomes": {
+    "7": {
+      "success": 89,
+      "failure": 39
+    },
+    "8": {
+      "success": 65,
+      "failure": 63
+    },
+    "10": {
+      "success": 89,
+      "failure": 39
+    },
+    "12": {
+      "success": 89,
+      "failure": 39
+    },
+    "14": {
+      "success": 89,
+      "failure": 39
+    }
+  },
+  "all_SRAM_compared_bytes": 8192,
+  "declared_RAM_ranges": [
+    [
+      18,
+      19
+    ],
+    [
+      48,
+      51
+    ],
+    [
+      80,
+      81
+    ],
+    [
+      1068,
+      1077
+    ],
+    [
+      1240,
+      1248
+    ],
+    [
+      1281,
+      1282
+    ],
+    [
+      1289,
+      1290
+    ],
+    [
+      1306,
+      1312
+    ],
+    [
+      1576,
+      1596
+    ],
+    [
+      1616,
+      1636
+    ],
+    [
+      1348,
+      1349
+    ]
+  ],
+  "native_instruction_locations": 1144,
+  "source_sha256": "9be1b452b77e4f69e64cc819deffd6c4e329ffc5e6f5fab3cf6586afcedd0d28",
+  "validator_sha256": "415f6397ea35968d12a9f053d30c8a1b226fea75432eecb00e26825a273e827b",
+  "evidence_sha256": "16743d2d3354a59fb8c0cf0d78b397606c5c0083443896261bca2e02dc77f72e",
+  "dependency_source_sha256": {
+    "battle.py": "e5f7da08d5b318676f319720bb54af147b6e589ce8c31ed4bc47d4b0ab0f5434",
+    "game_algorithms.py": "8ddb91b72997759b905d3812447d11975641adda12775f3d5351e3ad7a9bb902",
+    "tactical_decisions.py": "ea8ff96eac5544c212095e0a9a9287095ada12b5f6ded01fe3f70b3f0a850f6a",
+    "officer_transfer.py": "abb329b1aa6562e214ff3a0e9cc162414957d582d3392ffba60ebd0f4ec07c2f"
+  },
+  "fixture_source": "analysis/runtime/phase3/attack-intro-7",
+  "fixture_sha256": {
+    "-ram.bin": "9fa774acb5028728a51d9164c8cf9c213546a81131037b1d9f0813478813e201",
+    "-sram.bin": "59cb62b5d2f4411d7cabfdb87b182907d27c12d77f8135b30aa10e67d1382a7b"
+  },
+  "fixture_inputs": "Synthetic CPU inputs from original coreRAM/SRAM: slots/coords/records/side/RNG/resultreset/counts/rosters unchanged unless declared. True original map resource suppliesclasses, no terrain or readiness injection.",
+  "source_IR_or_original_CPU": false,
+  "graphics_or_readiness_ack": false,
+  "rows": [
+    {
+      "group": "full_effect_body",
+      "entry": 45773,
+      "native_instructions": 117,
+      "notes": {
+        "tactic": 7,
+        "variant": 0,
+        "center": [
+          8,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 7,
+          "threshold": null,
+          "sample": null
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45773,
+      "native_instructions": 2354,
+      "notes": {
+        "tactic": 7,
+        "variant": 1,
+        "center": [
+          0,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 0
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 228,
+            "actual_loss": 1,
+            "new_accumulated_loss": 1,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 199,
+            "actual_loss": 1,
+            "new_accumulated_loss": 2,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 1,
+            "new_accumulated_loss": 3,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45773,
+      "native_instructions": 2347,
+      "notes": {
+        "tactic": 7,
+        "variant": 2,
+        "center": [
+          0,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 8
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 218,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45773,
+      "native_instructions": 149,
+      "notes": {
+        "tactic": 7,
+        "variant": 3,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 95
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45773,
+      "native_instructions": 2420,
+      "notes": {
+        "tactic": 7,
+        "variant": 18,
+        "center": [
+          8,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45852,
+      "native_instructions": 34,
+      "notes": {
+        "tactic": 8,
+        "variant": 0,
+        "center": [
+          8,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 7,
+          "threshold": null,
+          "sample": null
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45852,
+      "native_instructions": 842,
+      "notes": {
+        "tactic": 8,
+        "variant": 1,
+        "center": [
+          0,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 90,
+          "sample": 0
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 0,
+          "masked_troops": 1,
+          "before": {
+            "donor_total": 255,
+            "receiver_total": 255,
+            "donor_count": 1,
+            "receiver_count": 254
+          },
+          "after": {
+            "donor_total": 254,
+            "receiver_total": 256,
+            "donor_count": 0,
+            "receiver_count": 255
+          }
+        },
+        "slot": 1,
+        "new_ruler": 2,
+        "new_leader": 131,
+        "old_leader": 8,
+        "loyalty": {
+          "value": 48,
+          "cpu_a": 48,
+          "before": 30,
+          "raw_subtraction": 48,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45852,
+      "native_instructions": 843,
+      "notes": {
+        "tactic": 8,
+        "variant": 2,
+        "center": [
+          0,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 58,
+          "sample": 8
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 128,
+          "masked_troops": 99,
+          "before": {
+            "donor_total": 65534,
+            "receiver_total": 65534,
+            "donor_count": 253,
+            "receiver_count": 2
+          },
+          "after": {
+            "donor_total": 65435,
+            "receiver_total": 97,
+            "donor_count": 252,
+            "receiver_count": 3
+          }
+        },
+        "slot": 1,
+        "new_ruler": 1,
+        "new_leader": 8,
+        "old_leader": 131,
+        "loyalty": {
+          "value": 47,
+          "cpu_a": 47,
+          "before": 31,
+          "raw_subtraction": 47,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45852,
+      "native_instructions": 368,
+      "notes": {
+        "tactic": 8,
+        "variant": 3,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 3,
+          "threshold": 56,
+          "sample": 95
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 45852,
+      "native_instructions": 843,
+      "notes": {
+        "tactic": 8,
+        "variant": 18,
+        "center": [
+          8,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 58,
+          "sample": 1
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 128,
+          "masked_troops": 99,
+          "before": {
+            "donor_total": 65534,
+            "receiver_total": 65534,
+            "donor_count": 237,
+            "receiver_count": 18
+          },
+          "after": {
+            "donor_total": 65435,
+            "receiver_total": 97,
+            "donor_count": 236,
+            "receiver_count": 19
+          }
+        },
+        "slot": 1,
+        "new_ruler": 1,
+        "new_leader": 8,
+        "old_leader": 131,
+        "loyalty": {
+          "value": 47,
+          "cpu_a": 47,
+          "before": 31,
+          "raw_subtraction": 47,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46032,
+      "native_instructions": 117,
+      "notes": {
+        "tactic": 10,
+        "variant": 0,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 10,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 7,
+          "threshold": null,
+          "sample": null
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46032,
+      "native_instructions": 5875,
+      "notes": {
+        "tactic": 10,
+        "variant": 1,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 10,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 0
+        },
+        "candidates": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "terrain": 3,
+            "condition": 5,
+            "sample": 1
+          },
+          {
+            "slot": 3,
+            "terrain": 3,
+            "condition": 5,
+            "sample": 1
+          },
+          {
+            "slot": 5,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 0
+          },
+          {
+            "slot": 6,
+            "terrain": 3,
+            "condition": 5,
+            "sample": 1
+          },
+          {
+            "slot": 8,
+            "terrain": 3,
+            "condition": 5,
+            "sample": 1
+          },
+          {
+            "slot": 7,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 0
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46032,
+      "native_instructions": 6578,
+      "notes": {
+        "tactic": 10,
+        "variant": 2,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 10,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 8
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "terrain": 3,
+            "condition": 3,
+            "sample": 0
+          },
+          {
+            "slot": 3,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 1
+          },
+          {
+            "slot": 5,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 1
+          },
+          {
+            "slot": 6,
+            "terrain": 3,
+            "condition": 3,
+            "sample": 0
+          },
+          {
+            "slot": 8,
+            "terrain": 3,
+            "condition": 3,
+            "sample": 0
+          },
+          {
+            "slot": 7,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 1
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46032,
+      "native_instructions": 149,
+      "notes": {
+        "tactic": 10,
+        "variant": 3,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 10,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 95
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46032,
+      "native_instructions": 6618,
+      "notes": {
+        "tactic": 10,
+        "variant": 18,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 10,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "terrain": 3,
+            "condition": 3,
+            "sample": 0
+          },
+          {
+            "slot": 3,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 1
+          },
+          {
+            "slot": 5,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 1
+          },
+          {
+            "slot": 6,
+            "terrain": 3,
+            "condition": 3,
+            "sample": 0
+          },
+          {
+            "slot": 8,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 1
+          },
+          {
+            "slot": 7,
+            "terrain": 3,
+            "condition": 4,
+            "sample": 1
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46182,
+      "native_instructions": 117,
+      "notes": {
+        "tactic": 12,
+        "variant": 0,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 7,
+          "threshold": null,
+          "sample": null
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46182,
+      "native_instructions": 9226,
+      "notes": {
+        "tactic": 12,
+        "variant": 1,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 0
+        },
+        "candidates": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 251,
+            "actual_loss": 1,
+            "new_accumulated_loss": 1,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 261,
+            "actual_loss": 1,
+            "new_accumulated_loss": 2,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 221,
+            "actual_loss": 1,
+            "new_accumulated_loss": 3,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 221,
+            "actual_loss": 1,
+            "new_accumulated_loss": 4,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 261,
+            "actual_loss": 1,
+            "new_accumulated_loss": 5,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 231,
+            "actual_loss": 1,
+            "new_accumulated_loss": 6,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46182,
+      "native_instructions": 10080,
+      "notes": {
+        "tactic": 12,
+        "variant": 2,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 8
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 241,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 212,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 221,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 241,
+            "actual_loss": 99,
+            "new_accumulated_loss": 396,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 241,
+            "actual_loss": 99,
+            "new_accumulated_loss": 495,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 221,
+            "actual_loss": 99,
+            "new_accumulated_loss": 594,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46182,
+      "native_instructions": 149,
+      "notes": {
+        "tactic": 12,
+        "variant": 3,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 95
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46182,
+      "native_instructions": 10064,
+      "notes": {
+        "tactic": 12,
+        "variant": 18,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 212,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 251,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 261,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 221,
+            "actual_loss": 99,
+            "new_accumulated_loss": 396,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 221,
+            "actual_loss": 99,
+            "new_accumulated_loss": 495,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 261,
+            "actual_loss": 99,
+            "new_accumulated_loss": 594,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46348,
+      "native_instructions": 117,
+      "notes": {
+        "tactic": 14,
+        "variant": 0,
+        "center": [
+          8,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 7,
+          "threshold": null,
+          "sample": null
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46348,
+      "native_instructions": 9266,
+      "notes": {
+        "tactic": 14,
+        "variant": 1,
+        "center": [
+          0,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 0
+        },
+        "candidates": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 336,
+            "actual_loss": 1,
+            "new_accumulated_loss": 1,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 346,
+            "actual_loss": 1,
+            "new_accumulated_loss": 2,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 306,
+            "actual_loss": 1,
+            "new_accumulated_loss": 3,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 306,
+            "actual_loss": 1,
+            "new_accumulated_loss": 4,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 346,
+            "actual_loss": 1,
+            "new_accumulated_loss": 5,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 316,
+            "actual_loss": 1,
+            "new_accumulated_loss": 6,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46348,
+      "native_instructions": 9301,
+      "notes": {
+        "tactic": 14,
+        "variant": 2,
+        "center": [
+          0,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 8
+        },
+        "candidates": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 326,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 297,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 306,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 326,
+            "actual_loss": 99,
+            "new_accumulated_loss": 396,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 326,
+            "actual_loss": 99,
+            "new_accumulated_loss": 495,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 306,
+            "actual_loss": 99,
+            "new_accumulated_loss": 594,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46348,
+      "native_instructions": 149,
+      "notes": {
+        "tactic": 14,
+        "variant": 3,
+        "center": [
+          20,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": false,
+        "gate": {
+          "passed": false,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 95
+        },
+        "hits": []
+      },
+      "passed": true
+    },
+    {
+      "group": "full_effect_body",
+      "entry": 46348,
+      "native_instructions": 10577,
+      "notes": {
+        "tactic": 14,
+        "variant": 18,
+        "center": [
+          8,
+          0
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 297,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 336,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 2,
+            "officer_id": 191,
+            "requested_loss": 346,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 306,
+            "actual_loss": 99,
+            "new_accumulated_loss": 396,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 306,
+            "actual_loss": 99,
+            "new_accumulated_loss": 495,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 346,
+            "actual_loss": 99,
+            "new_accumulated_loss": 594,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 316,
+            "actual_loss": 99,
+            "new_accumulated_loss": 693,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 45773,
+      "native_instructions": 3109,
+      "notes": {
+        "tactic": 7,
+        "variant": 0,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 119,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 2,
+            "officer_id": 191,
+            "requested_loss": 158,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 129,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 129,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 45773,
+      "native_instructions": 2458,
+      "notes": {
+        "tactic": 7,
+        "variant": 1,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 129,
+            "actual_loss": 1,
+            "new_accumulated_loss": 2,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 168,
+            "actual_loss": 1,
+            "new_accumulated_loss": 3,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 139,
+            "actual_loss": 1,
+            "new_accumulated_loss": 4,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 45773,
+      "native_instructions": 2454,
+      "notes": {
+        "tactic": 7,
+        "variant": 2,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 139,
+            "actual_loss": 99,
+            "new_accumulated_loss": 354,
+            "level_marker": 48,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 188,
+            "actual_loss": 99,
+            "new_accumulated_loss": 453,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 159,
+            "actual_loss": 99,
+            "new_accumulated_loss": 552,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 45773,
+      "native_instructions": 2454,
+      "notes": {
+        "tactic": 7,
+        "variant": 3,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 149,
+            "actual_loss": 100,
+            "new_accumulated_loss": 99,
+            "level_marker": 64,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 198,
+            "actual_loss": 100,
+            "new_accumulated_loss": 199,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 169,
+            "actual_loss": 100,
+            "new_accumulated_loss": 299,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 46182,
+      "native_instructions": 10055,
+      "notes": {
+        "tactic": 12,
+        "variant": 0,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 205,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 244,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 254,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 214,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 214,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 254,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 46182,
+      "native_instructions": 9261,
+      "notes": {
+        "tactic": 12,
+        "variant": 1,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 206,
+            "actual_loss": 1,
+            "new_accumulated_loss": 2,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 245,
+            "actual_loss": 1,
+            "new_accumulated_loss": 3,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 255,
+            "actual_loss": 1,
+            "new_accumulated_loss": 4,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 215,
+            "actual_loss": 1,
+            "new_accumulated_loss": 5,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 215,
+            "actual_loss": 1,
+            "new_accumulated_loss": 6,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 255,
+            "actual_loss": 1,
+            "new_accumulated_loss": 7,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 46182,
+      "native_instructions": 10132,
+      "notes": {
+        "tactic": 12,
+        "variant": 2,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 207,
+            "actual_loss": 99,
+            "new_accumulated_loss": 354,
+            "level_marker": 48,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 247,
+            "actual_loss": 99,
+            "new_accumulated_loss": 453,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 257,
+            "actual_loss": 99,
+            "new_accumulated_loss": 552,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 217,
+            "actual_loss": 99,
+            "new_accumulated_loss": 651,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 217,
+            "actual_loss": 99,
+            "new_accumulated_loss": 750,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 257,
+            "actual_loss": 99,
+            "new_accumulated_loss": 849,
+            "level_marker": 64,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 46182,
+      "native_instructions": 9311,
+      "notes": {
+        "tactic": 12,
+        "variant": 3,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 208,
+            "actual_loss": 100,
+            "new_accumulated_loss": 99,
+            "level_marker": 64,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 248,
+            "actual_loss": 100,
+            "new_accumulated_loss": 199,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 258,
+            "actual_loss": 100,
+            "new_accumulated_loss": 299,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 218,
+            "actual_loss": 100,
+            "new_accumulated_loss": 399,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 218,
+            "actual_loss": 100,
+            "new_accumulated_loss": 499,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 258,
+            "actual_loss": 100,
+            "new_accumulated_loss": 599,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 46348,
+      "native_instructions": 10569,
+      "notes": {
+        "tactic": 14,
+        "variant": 0,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 297,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 336,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 2,
+            "officer_id": 191,
+            "requested_loss": 346,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 306,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 306,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 346,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 316,
+            "actual_loss": 0,
+            "new_accumulated_loss": 0,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 46348,
+      "native_instructions": 9190,
+      "notes": {
+        "tactic": 14,
+        "variant": 1,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 297,
+            "actual_loss": 1,
+            "new_accumulated_loss": 2,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 336,
+            "actual_loss": 1,
+            "new_accumulated_loss": 3,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 346,
+            "actual_loss": 1,
+            "new_accumulated_loss": 4,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 306,
+            "actual_loss": 1,
+            "new_accumulated_loss": 5,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 306,
+            "actual_loss": 1,
+            "new_accumulated_loss": 6,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 346,
+            "actual_loss": 1,
+            "new_accumulated_loss": 7,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 46348,
+      "native_instructions": 10646,
+      "notes": {
+        "tactic": 14,
+        "variant": 2,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          2,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 297,
+            "actual_loss": 99,
+            "new_accumulated_loss": 354,
+            "level_marker": 48,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 336,
+            "actual_loss": 99,
+            "new_accumulated_loss": 453,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 2,
+            "officer_id": 191,
+            "requested_loss": 346,
+            "actual_loss": 99,
+            "new_accumulated_loss": 552,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 306,
+            "actual_loss": 99,
+            "new_accumulated_loss": 651,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 306,
+            "actual_loss": 99,
+            "new_accumulated_loss": 750,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 346,
+            "actual_loss": 99,
+            "new_accumulated_loss": 849,
+            "level_marker": 64,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 316,
+            "actual_loss": 99,
+            "new_accumulated_loss": 948,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "repeated_loss_experience_and_alias",
+      "entry": 46348,
+      "native_instructions": 9240,
+      "notes": {
+        "tactic": 14,
+        "variant": 3,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "candidates": [
+          1,
+          3,
+          5,
+          6,
+          8,
+          7
+        ],
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 297,
+            "actual_loss": 100,
+            "new_accumulated_loss": 99,
+            "level_marker": 64,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 336,
+            "actual_loss": 100,
+            "new_accumulated_loss": 199,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 346,
+            "actual_loss": 100,
+            "new_accumulated_loss": 299,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 6,
+            "officer_id": 108,
+            "requested_loss": 306,
+            "actual_loss": 100,
+            "new_accumulated_loss": 399,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 8,
+            "officer_id": 121,
+            "requested_loss": 306,
+            "actual_loss": 100,
+            "new_accumulated_loss": 499,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 7,
+            "officer_id": 166,
+            "requested_loss": 346,
+            "actual_loss": 100,
+            "new_accumulated_loss": 599,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "B8A1_full_candidate_helper",
+      "entry": 47265,
+      "native_instructions": 5016,
+      "notes": {
+        "variant": 0,
+        "sample": true
+      },
+      "result": [
+        1,
+        3,
+        2,
+        5,
+        6,
+        8,
+        7
+      ],
+      "passed": true
+    },
+    {
+      "group": "B8A1_full_candidate_helper",
+      "entry": 47265,
+      "native_instructions": 4518,
+      "notes": {
+        "variant": 1,
+        "sample": true
+      },
+      "result": [
+        1,
+        3,
+        5,
+        6,
+        8,
+        7
+      ],
+      "passed": true
+    },
+    {
+      "group": "B8A1_full_candidate_helper",
+      "entry": 47265,
+      "native_instructions": 4518,
+      "notes": {
+        "variant": 2,
+        "sample": true
+      },
+      "result": [
+        1,
+        3,
+        5,
+        6,
+        8,
+        7
+      ],
+      "passed": true
+    },
+    {
+      "group": "B8A1_full_candidate_helper",
+      "entry": 47265,
+      "native_instructions": 4388,
+      "notes": {
+        "variant": 3,
+        "sample": true
+      },
+      "result": [
+        1,
+        3,
+        5,
+        6,
+        8,
+        7
+      ],
+      "passed": true
+    },
+    {
+      "group": "cross_slot_order_and_row_skip",
+      "entry": 45773,
+      "native_instructions": 3100,
+      "notes": {
+        "tactic": 7,
+        "center": [
+          0,
+          14
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 4,
+            "officer_id": 167,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 396,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "cross_slot_order_and_row_skip",
+      "entry": 45773,
+      "native_instructions": 2474,
+      "notes": {
+        "tactic": 7,
+        "center": [
+          0,
+          16
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "cross_slot_order_and_row_skip",
+      "entry": 45773,
+      "native_instructions": 3168,
+      "notes": {
+        "tactic": 7,
+        "center": [
+          1,
+          14
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 4,
+            "officer_id": 167,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 396,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "cross_slot_order_and_row_skip",
+      "entry": 45773,
+      "native_instructions": 2542,
+      "notes": {
+        "tactic": 7,
+        "center": [
+          1,
+          16
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "cross_slot_order_and_row_skip",
+      "entry": 45773,
+      "native_instructions": 3168,
+      "notes": {
+        "tactic": 7,
+        "center": [
+          8,
+          14
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 4,
+            "officer_id": 167,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 396,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "cross_slot_order_and_row_skip",
+      "entry": 45773,
+      "native_instructions": 2542,
+      "notes": {
+        "tactic": 7,
+        "center": [
+          8,
+          16
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "cross_slot_order_and_row_skip",
+      "entry": 45773,
+      "native_instructions": 3168,
+      "notes": {
+        "tactic": 7,
+        "center": [
+          30,
+          14
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 0,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 4,
+            "officer_id": 167,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 396,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "cross_slot_order_and_row_skip",
+      "entry": 45773,
+      "native_instructions": 2545,
+      "notes": {
+        "tactic": 7,
+        "center": [
+          30,
+          16
+        ],
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 0,
+          "threshold": 95,
+          "sample": 1
+        },
+        "hits": [
+          {
+            "slot": 1,
+            "officer_id": 8,
+            "requested_loss": 189,
+            "actual_loss": 99,
+            "new_accumulated_loss": 99,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 3,
+            "officer_id": 51,
+            "requested_loss": 228,
+            "actual_loss": 99,
+            "new_accumulated_loss": 198,
+            "level_marker": 0,
+            "same_record": false
+          },
+          {
+            "slot": 5,
+            "officer_id": 131,
+            "requested_loss": 199,
+            "actual_loss": 99,
+            "new_accumulated_loss": 297,
+            "level_marker": 0,
+            "same_record": false
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "group": "B8A1_twenty_slot_capacity",
+      "entry": 47265,
+      "native_instructions": 18494,
+      "notes": {
+        "side": 0,
+        "sample": true
+      },
+      "result": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "passed": true
+    },
+    {
+      "group": "B8A1_twenty_slot_capacity",
+      "entry": 47265,
+      "native_instructions": 18494,
+      "notes": {
+        "side": 128,
+        "sample": true
+      },
+      "result": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "passed": true
+    },
+    {
+      "group": "continuous_conversion_both_sides",
+      "entry": 45852,
+      "native_instructions": 841,
+      "notes": {
+        "tactic": 8,
+        "scenario": 0,
+        "tick": 0,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 88,
+          "sample": 1
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 128,
+          "masked_troops": 99,
+          "before": {
+            "donor_total": 1000,
+            "receiver_total": 3500,
+            "donor_count": 1,
+            "receiver_count": 4
+          },
+          "after": {
+            "donor_total": 901,
+            "receiver_total": 3599,
+            "donor_count": 0,
+            "receiver_count": 5
+          }
+        },
+        "slot": 1,
+        "new_ruler": 1,
+        "new_leader": 8,
+        "old_leader": 131,
+        "loyalty": {
+          "value": 48,
+          "cpu_a": 48,
+          "before": 30,
+          "raw_subtraction": 48,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    },
+    {
+      "group": "continuous_conversion_both_sides",
+      "entry": 45852,
+      "native_instructions": 846,
+      "notes": {
+        "tactic": 8,
+        "scenario": 0,
+        "tick": 1,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 1,
+          "threshold": 58,
+          "sample": 1
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 0,
+          "masked_troops": 99,
+          "before": {
+            "donor_total": 3599,
+            "receiver_total": 901,
+            "donor_count": 5,
+            "receiver_count": 0
+          },
+          "after": {
+            "donor_total": 3500,
+            "receiver_total": 1000,
+            "donor_count": 4,
+            "receiver_count": 1
+          }
+        },
+        "slot": 1,
+        "new_ruler": 2,
+        "new_leader": 131,
+        "old_leader": 8,
+        "loyalty": {
+          "value": 30,
+          "cpu_a": 30,
+          "before": 48,
+          "raw_subtraction": 30,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    },
+    {
+      "group": "continuous_conversion_both_sides",
+      "entry": 45852,
+      "native_instructions": 839,
+      "notes": {
+        "tactic": 8,
+        "scenario": 0,
+        "tick": 2,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 88,
+          "sample": 1
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 128,
+          "masked_troops": 99,
+          "before": {
+            "donor_total": 1000,
+            "receiver_total": 3500,
+            "donor_count": 1,
+            "receiver_count": 4
+          },
+          "after": {
+            "donor_total": 901,
+            "receiver_total": 3599,
+            "donor_count": 0,
+            "receiver_count": 5
+          }
+        },
+        "slot": 1,
+        "new_ruler": 1,
+        "new_leader": 8,
+        "old_leader": 131,
+        "loyalty": {
+          "value": 48,
+          "cpu_a": 48,
+          "before": 30,
+          "raw_subtraction": 48,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    },
+    {
+      "group": "continuous_conversion_both_sides",
+      "entry": 45852,
+      "native_instructions": 842,
+      "notes": {
+        "tactic": 8,
+        "scenario": 1,
+        "tick": 0,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 88,
+          "sample": 1
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 128,
+          "masked_troops": 99,
+          "before": {
+            "donor_total": 1000,
+            "receiver_total": 3500,
+            "donor_count": 1,
+            "receiver_count": 4
+          },
+          "after": {
+            "donor_total": 901,
+            "receiver_total": 3599,
+            "donor_count": 0,
+            "receiver_count": 5
+          }
+        },
+        "slot": 1,
+        "new_ruler": 1,
+        "new_leader": 8,
+        "old_leader": 131,
+        "loyalty": {
+          "value": 48,
+          "cpu_a": 48,
+          "before": 30,
+          "raw_subtraction": 48,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    },
+    {
+      "group": "continuous_conversion_both_sides",
+      "entry": 45852,
+      "native_instructions": 845,
+      "notes": {
+        "tactic": 8,
+        "scenario": 1,
+        "tick": 1,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 1,
+          "threshold": 58,
+          "sample": 1
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 0,
+          "masked_troops": 99,
+          "before": {
+            "donor_total": 3599,
+            "receiver_total": 901,
+            "donor_count": 5,
+            "receiver_count": 0
+          },
+          "after": {
+            "donor_total": 3500,
+            "receiver_total": 1000,
+            "donor_count": 4,
+            "receiver_count": 1
+          }
+        },
+        "slot": 1,
+        "new_ruler": 2,
+        "new_leader": 131,
+        "old_leader": 8,
+        "loyalty": {
+          "value": 30,
+          "cpu_a": 30,
+          "before": 48,
+          "raw_subtraction": 30,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    },
+    {
+      "group": "continuous_conversion_both_sides",
+      "entry": 45852,
+      "native_instructions": 840,
+      "notes": {
+        "tactic": 8,
+        "scenario": 1,
+        "tick": 2,
+        "sample": true
+      },
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "success": true,
+        "gate": {
+          "passed": true,
+          "distance": 3,
+          "threshold": 88,
+          "sample": 1
+        },
+        "accounting": {
+          "slot": 1,
+          "donor_side": 128,
+          "masked_troops": 99,
+          "before": {
+            "donor_total": 1000,
+            "receiver_total": 3500,
+            "donor_count": 1,
+            "receiver_count": 4
+          },
+          "after": {
+            "donor_total": 901,
+            "receiver_total": 3599,
+            "donor_count": 0,
+            "receiver_count": 5
+          }
+        },
+        "slot": 1,
+        "new_ruler": 1,
+        "new_leader": 8,
+        "old_leader": 131,
+        "loyalty": {
+          "value": 48,
+          "cpu_a": 48,
+          "before": 30,
+          "raw_subtraction": 48,
+          "changed": true,
+          "cpu_flags": {
+            "C": true,
+            "V": false,
+            "N": false,
+            "Z": false
+          }
+        },
+        "city_rosters_changed": false,
+        "officer_location_status_changed": false
+      },
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "limitations": [
+    "Full effect bodies assume actual B02B reset and preceding UI/animation complete; no AP/graphics/frame claim.",
+    "AllSRAM+declaredRAM compared; CPU pointers/registers/stack/mapper outside semantic contract.",
+    "Conversion mutates battle counts/sign/cache/strategy and loyalty only, no immediate city membership/status/location update.",
+    "Helper and full-effect cases are separately counted; no prefix stand-in is reported as a complete effect."
+  ]
+}

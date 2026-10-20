@@ -1,0 +1,43 @@
+; Physical pair8/9, export $A01E; original immutable bytes.
+b08:A01E file01002E  4c51c8   JMP $C851
+b09:C851 file012861  ad0000   LDA $0000
+b09:C854 file012864  0a       ASL A
+b09:C855 file012865  0a       ASL A
+b09:C856 file012866  0a       ASL A
+b09:C857 file012867  0a       ASL A
+b09:C858 file012868  8d0000   STA $0000
+b09:C85B file01286B  ad1200   LDA $0012
+b09:C85E file01286E  0a       ASL A
+b09:C85F file01286F  0a       ASL A
+b09:C860 file012870  18       CLC 
+b09:C861 file012871  6d0000   ADC $0000
+b09:C864 file012874  a8       TAY 
+b09:C865 file012875  a200     LDX $0000
+b09:C867 file012877  b9dec8   LDA $C8DE
+b09:C86A file01287A  9d4c04   STA $044C
+b09:C86D file01287D  0a       ASL A
+b09:C86E file01287E  8d0000   STA $0000
+b09:C871 file012881  98       TYA 
+b09:C872 file012882  48       PHA 
+b09:C873 file012883  8e0100   STX $0001
+b09:C876 file012886  8a       TXA 
+b09:C877 file012887  0a       ASL A
+b09:C878 file012888  18       CLC 
+b09:C879 file012889  6d0100   ADC $0001
+b09:C87C file01288C  aa       TAX 
+b09:C87D file01288D  ac0000   LDY $0000
+b09:C880 file012890  b99ec8   LDA $C89E
+b09:C883 file012893  9d2c04   STA $042C
+b09:C886 file012896  c8       INY 
+b09:C887 file012897  b99ec8   LDA $C89E
+b09:C88A file01289A  9d2d04   STA $042D
+b09:C88D file01289D  a900     LDA $0000
+b09:C88F file01289F  9d2e04   STA $042E
+b09:C892 file0128A2  ae0100   LDX $0001
+b09:C895 file0128A5  68       PLA 
+b09:C896 file0128A6  a8       TAY 
+b09:C897 file0128A7  c8       INY 
+b09:C898 file0128A8  e8       INX 
+b09:C899 file0128A9  e004     CPX $0004
+b09:C89B file0128AB  90ca     BCC $C867
+b09:C89D file0128AD  60       RTS 

@@ -1,0 +1,44 @@
+01BB56 b13:$DB46 20 50 DB       JSR  $DB50
+01BB59 b13:$DB49 C9 06          CMP  #$06
+01BB5B b13:$DB4B 90 02          BCC  $DB4F
+01BB5D b13:$DB4D A9 02          LDA  #$02
+01BB5F b13:$DB4F 60             RTS
+01BB60 b13:$DB50 A0 00          LDY  #$00
+01BB62 b13:$DB52 AD 10 00       LDA  $0010
+01BB65 b13:$DB55 C9 10          CMP  #$10
+01BB67 b13:$DB57 90 02          BCC  $DB5B
+01BB69 b13:$DB59 A0 01          LDY  #$01
+01BB6B b13:$DB5B AD 11 00       LDA  $0011
+01BB6E b13:$DB5E C9 10          CMP  #$10
+01BB70 b13:$DB60 90 04          BCC  $DB66
+01BB72 b13:$DB62 98             TYA
+01BB73 b13:$DB63 09 02          ORA  #$02
+01BB75 b13:$DB65 A8             TAY
+01BB76 b13:$DB66 B1 A8          LDA  ($A8),Y
+01BB78 b13:$DB68 8D 00 00       STA  $0000
+01BB7B b13:$DB6B A0 37          LDY  #$37
+01BB7D b13:$DB6D 20 07 EE       JSR  $EE07
+01BB80 b13:$DB70 .word $A012 ; EE07 inline target, resumes $DB72
+01BB82 b13:$DB72 A9 9E          LDA  #$9E
+01BB84 b13:$DB74 8D 02 00       STA  $0002
+01BB87 b13:$DB77 A9 DB          LDA  #$DB
+01BB89 b13:$DB79 8D 03 00       STA  $0003
+01BB8C b13:$DB7C AD 10 00       LDA  $0010
+01BB8F b13:$DB7F 29 0F          AND  #$0F
+01BB91 b13:$DB81 8D 08 00       STA  $0008
+01BB94 b13:$DB84 A2 00          LDX  #$00
+01BB96 b13:$DB86 AD 11 00       LDA  $0011
+01BB99 b13:$DB89 0A             ASL  A
+01BB9A b13:$DB8A 0A             ASL  A
+01BB9B b13:$DB8B 0A             ASL  A
+01BB9C b13:$DB8C 0A             ASL  A
+01BB9D b13:$DB8D 0D 08 00       ORA  $0008
+01BBA0 b13:$DB90 A8             TAY
+01BBA1 b13:$DB91 B1 00          LDA  ($00),Y
+01BBA3 b13:$DB93 A8             TAY
+01BBA4 b13:$DB94 C9 80          CMP  #$80
+01BBA6 b13:$DB96 90 03          BCC  $DB9B
+01BBA8 b13:$DB98 A9 00          LDA  #$00
+01BBAA b13:$DB9A 60             RTS
+01BBAB b13:$DB9B B1 02          LDA  ($02),Y
+01BBAD b13:$DB9D 60             RTS

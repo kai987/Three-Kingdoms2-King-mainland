@@ -1,0 +1,388 @@
+{
+  "parent_cases": [
+    {
+      "parent": "missing_first_then_resume",
+      "missing": {
+        "PC": 59158,
+        "flags": [
+          58,
+          5
+        ],
+        "same_owner_call_generator_and_position": true,
+        "no_duplicate_IO_or_software_writes": true,
+        "CPU_preinstruction_gate_no_PC_repair": true
+      },
+      "advances": [
+        {
+          "Source": {
+            "status": "dependency",
+            "mode": "controlled_actual_F8B5_JSR",
+            "registers": {
+              "a": 208,
+              "x": 0,
+              "y": 59,
+              "sp": 254,
+              "p": 176,
+              "pc": 59158
+            },
+            "dependency": {
+              "category": "hardware_read",
+              "pc": 59158,
+              "address": 8194,
+              "value": null,
+              "reason": "Explicit read sequence exhausted at $2002",
+              "expected_sp": 254
+            },
+            "events": [
+              {
+                "kind": "call",
+                "pc": 63669,
+                "target": 61011,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              }
+            ]
+          },
+          "CPU": {
+            "status": "dependency",
+            "PC": 59158,
+            "instructions": 7
+          }
+        },
+        {
+          "Source": {
+            "status": "dependency",
+            "mode": "controlled_actual_F8B5_JSR",
+            "registers": {
+              "a": 208,
+              "x": 0,
+              "y": 59,
+              "sp": 254,
+              "p": 176,
+              "pc": 59158
+            },
+            "dependency": {
+              "category": "hardware_read",
+              "pc": 59158,
+              "address": 8194,
+              "value": null,
+              "reason": "Explicit read sequence exhausted at $2002",
+              "expected_sp": 254
+            },
+            "events": [
+              {
+                "kind": "call",
+                "pc": 63669,
+                "target": 61011,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              }
+            ]
+          },
+          "CPU": {
+            "status": "dependency",
+            "PC": 59158,
+            "instructions": 7
+          }
+        },
+        {
+          "Source": {
+            "status": "returned",
+            "mode": "controlled_actual_F8B5_JSR",
+            "registers": {
+              "a": 0,
+              "x": 0,
+              "y": 32,
+              "sp": 0,
+              "p": 51,
+              "pc": 63672
+            },
+            "dependency": null,
+            "events": [
+              {
+                "kind": "call",
+                "pc": 63669,
+                "target": 61011,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              }
+            ]
+          },
+          "CPU": {
+            "status": "returned",
+            "instructions": 148
+          }
+        }
+      ],
+      "replenishments": [
+        {
+          "after_one_strict_retry": true,
+          "next_ordinal": 1,
+          "values": [
+            128,
+            0
+          ],
+          "only_device_input_queue_modified": true
+        }
+      ]
+    },
+    {
+      "parent": "exhausted_second_then_resume",
+      "missing": {
+        "PC": 41261,
+        "flags": [
+          0,
+          1
+        ],
+        "same_owner_call_generator_and_position": true,
+        "no_duplicate_IO_or_software_writes": true,
+        "CPU_preinstruction_gate_no_PC_repair": true
+      },
+      "advances": [
+        {
+          "Source": {
+            "status": "dependency",
+            "mode": "controlled_actual_F8B5_JSR",
+            "registers": {
+              "a": 3,
+              "x": 0,
+              "y": 61,
+              "sp": 254,
+              "p": 48,
+              "pc": 41261
+            },
+            "dependency": {
+              "category": "external_call",
+              "target": 40966,
+              "return_pc": 63672,
+              "kind": "tail",
+              "entry_banks": [
+                16,
+                29,
+                30,
+                31
+              ],
+              "expected_sp": 0
+            },
+            "events": [
+              {
+                "kind": "call",
+                "pc": 63669,
+                "target": 61011,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              },
+              {
+                "kind": "call",
+                "pc": 61128,
+                "target": 62007,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              }
+            ],
+            "callback": {
+              "status": "dependency",
+              "source_owner": "text_cpu_protocol",
+              "body": {
+                "status": "dependency",
+                "before": [
+                  17,
+                  133,
+                  225
+                ],
+                "after": [
+                  17,
+                  133,
+                  225
+                ],
+                "control_blocks": 2,
+                "events": [],
+                "pending": {
+                  "category": "hardware_read",
+                  "pc": 41261,
+                  "address": 8194,
+                  "reason": "Explicit read sequence exhausted at $2002",
+                  "expected_sp": null
+                }
+              },
+              "reason": "Callee has not completed its actual caller PC/SP"
+            }
+          },
+          "CPU": {
+            "status": "dependency",
+            "PC": 41261,
+            "instructions": 40
+          }
+        },
+        {
+          "Source": {
+            "status": "dependency",
+            "mode": "controlled_actual_F8B5_JSR",
+            "registers": {
+              "a": 3,
+              "x": 0,
+              "y": 61,
+              "sp": 254,
+              "p": 48,
+              "pc": 41261
+            },
+            "dependency": {
+              "category": "external_call",
+              "target": 40966,
+              "return_pc": 63672,
+              "kind": "tail",
+              "entry_banks": [
+                16,
+                29,
+                30,
+                31
+              ],
+              "expected_sp": 0
+            },
+            "events": [
+              {
+                "kind": "call",
+                "pc": 63669,
+                "target": 61011,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              },
+              {
+                "kind": "call",
+                "pc": 61128,
+                "target": 62007,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              }
+            ],
+            "callback": {
+              "status": "dependency",
+              "source_owner": "text_cpu_protocol",
+              "body": {
+                "status": "dependency",
+                "before": [
+                  17,
+                  133,
+                  225
+                ],
+                "after": [
+                  17,
+                  133,
+                  225
+                ],
+                "control_blocks": 2,
+                "events": [],
+                "pending": {
+                  "category": "hardware_read",
+                  "pc": 41261,
+                  "address": 8194,
+                  "reason": "Explicit read sequence exhausted at $2002",
+                  "expected_sp": null
+                }
+              },
+              "reason": "Callee has not completed its actual caller PC/SP"
+            }
+          },
+          "CPU": {
+            "status": "dependency",
+            "PC": 41261,
+            "instructions": 40
+          }
+        },
+        {
+          "Source": {
+            "status": "returned",
+            "mode": "controlled_actual_F8B5_JSR",
+            "registers": {
+              "a": 255,
+              "x": 0,
+              "y": 67,
+              "sp": 0,
+              "p": 51,
+              "pc": 63672
+            },
+            "dependency": null,
+            "events": [
+              {
+                "kind": "call",
+                "pc": 63669,
+                "target": 61011,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              },
+              {
+                "kind": "call",
+                "pc": 61128,
+                "target": 62007,
+                "banks": [
+                  16,
+                  27,
+                  28,
+                  31
+                ]
+              },
+              {
+                "kind": "callback_return",
+                "target": 40966,
+                "return_pc": 63672
+              }
+            ]
+          },
+          "CPU": {
+            "status": "returned",
+            "instructions": 378
+          }
+        }
+      ],
+      "replenishments": [
+        {
+          "after_one_strict_retry": true,
+          "next_ordinal": 2,
+          "values": [
+            255
+          ],
+          "only_device_input_queue_modified": true
+        }
+      ]
+    }
+  ],
+  "missing_boundaries": 2,
+  "zero_progress_retries": 2,
+  "Source_same_owner_call_generator_positions_asserted": true,
+  "CPU_gates_before_instruction": true,
+  "host_PC_SP_repairs": 0,
+  "inputs_only_appended_from_prelocked_plans": true,
+  "actual_game_executions_in_this_audit": 0
+}

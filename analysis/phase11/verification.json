@@ -1,0 +1,418 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_cpu_case_count": 23077,
+  "source_guard_case_count": 37,
+  "total_complete_return_CPU_cases": 22418,
+  "total_strict_prefix_CPU_cases": 659,
+  "areas": {
+    "battle": {
+      "status": "passed",
+      "rom_cpu_case_count": 2745,
+      "source_guard_case_count": 10,
+      "complete_return_CPU_cases": 2232,
+      "strict_prefix_CPU_cases": 513
+    },
+    "attack": {
+      "status": "passed",
+      "rom_cpu_case_count": 780,
+      "source_guard_case_count": 11,
+      "complete_return_CPU_cases": 637,
+      "strict_prefix_CPU_cases": 143
+    },
+    "duel": {
+      "status": "passed",
+      "rom_cpu_case_count": 6044,
+      "source_guard_case_count": 4,
+      "complete_return_CPU_cases": 6044,
+      "strict_prefix_CPU_cases": 0
+    },
+    "shared": {
+      "status": "passed",
+      "rom_cpu_case_count": 10844,
+      "source_guard_case_count": 4,
+      "complete_return_CPU_cases": 10844,
+      "strict_prefix_CPU_cases": 0
+    },
+    "initialization": {
+      "status": "passed",
+      "rom_cpu_case_count": 111,
+      "source_guard_case_count": 1,
+      "complete_return_CPU_cases": 111,
+      "strict_prefix_CPU_cases": 0
+    },
+    "setup-ai": {
+      "status": "passed",
+      "rom_cpu_case_count": 2326,
+      "source_guard_case_count": 4,
+      "complete_return_CPU_cases": 2326,
+      "strict_prefix_CPU_cases": 0
+    },
+    "background": {
+      "status": "passed",
+      "rom_cpu_case_count": 227,
+      "source_guard_case_count": 3,
+      "complete_return_CPU_cases": 224,
+      "strict_prefix_CPU_cases": 3
+    }
+  },
+  "source_integration_ROM_CPU_cases": 26,
+  "source_integration_guard_cases": 7,
+  "source_integration_complete_return_CPU_cases": 26,
+  "source_integration_strict_prefix_CPU_cases": 0,
+  "integration_rom_cpu_case_count": 26,
+  "integration_source_guard_case_count": 7,
+  "all_CPU_cases_including_integration": 23103,
+  "all_source_guards_including_integration": 44,
+  "all_complete_return_CPU_cases_including_integration": 22444,
+  "all_strict_prefix_CPU_cases_including_integration": 659,
+  "source_and_validator_sha256": {
+    "scripts/verify_phase11.py": "c3bd8a9ddc2369b534dbe92c5471643e93b1b2b4b2e874a3410bc7726b156549",
+    "scripts/package_results.py": "b5e51e3456958b80cb1fd27837c925a1e6920d38c7526adca10b249b3994e013",
+    "source/recovered/battle_scene_controller.py": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781",
+    "scripts/verify_battle_scene_controller.py": "8b39440a783dbd85ca7817d8f5fc1f98387bf27bcdcfd16d5ff6142710b8e9aa",
+    "source/recovered/scene_shared_services.py": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76",
+    "scripts/analyze_battle_scene_controller.py": "eaa93b23249d966afd686de4ef3b4cac6d08583c28d8f1adb8792b5663247a50",
+    "source/recovered/battle_nmi_services.py": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15",
+    "source/recovered/mapped_memory.py": "9c576ca9cb3df2088d40464d2be7c0f18c7a0b12debc0f9233271c5971d850e1",
+    "source/recovered/attack_scene_controller.py": "a4b0d4c1023fad7141a680772391edc88944197012e7c2fe755190cbf1c74929",
+    "scripts/analyze_attack_scene_controller.py": "362b65df37b4a64b066fe91b4487ad79ec56f5027161f77722ba64a0e2a3ae74",
+    "scripts/verify_attack_scene_controller.py": "9f94f19b53dd0dd41712177543a8bc337407de1fb637a5f63d508d8738711fe9",
+    "source/recovered/duel_scene_controller.py": "253fa2d3102989673c1913cd11062e49329a958debabdfa374ecd047e1075ec1",
+    "scripts/verify_duel_scene_controller.py": "4922c8e20ca76ae7e31765ff32c33401c21d5672f6e7ebe578736aad3162c921",
+    "scripts/analyze_duel_scene_controller.py": "38be2df7ff906a707c8c7f3210bd9e86051b11969beab60127242640a7f78e08",
+    "source/recovered/controller_helpers.py": "54dba0ee606f3ce200c648700f908956273ff0a96cc0dbfb847fc4396bf79afb",
+    "source/recovered/duel_logic.py": "3cdedf383abf07adb2538296e0a67ed4d62f2b8353bb9751d70c2d57834a5e57",
+    "source/recovered/audio_services.py": "d6d476419a177ef096aa51ad3b78304b51589d1b954a2b78cd8034d6a71fcab4",
+    "source/recovered/battle_graphics_services.py": "368c052e350d0e42b0c411e5e80a4ede88889935553d7c425c143d58c610dac0",
+    "scripts/verify_scene_shared_services.py": "fa968562e10ccddf87ee9d80fefc03f495eb1e01ac010added0f8c6de6d6be39",
+    "source/recovered/service_memory.py": "e12e2222110e177d2896c08a4c657c59bed031b30681f1e8875efc8022f65920",
+    "scripts/analyze_scene_prerequisites.py": "c546bbf5890165c588bc14887cd7aa55c27ca1cc74f52b1a6f841489c8ebd659",
+    "source/recovered/scene_coordinator.py": "3c80cddcfdd4400d2f41fd93bc5442a4d9886b8fec356f85e94d9c3aa2bd8bab",
+    "source/recovered/game_engine.py": "a79bc84323b07b0854561233a2c73a087ceba1cee1b7db58fa59f87ffaa0302d",
+    "source/recovered/battle_setup_ai.py": "b08fa8bedddf2a4f3ba49acccdc6176c78b0698bc3ac93691a7718afb9985fbb",
+    "source/recovered/battle_background_initialization.py": "4f9060b63d5df392833da7cb689b56f5438427f432c3f8de45bb324d2499fdc6",
+    "source/recovered/scene_initialization.py": "87dcdffebdc8f2a71eacb02bfc8e0c6476d2edb0a793aea35ffdde8bbc5ef30d",
+    "scripts/verify_scene_initialization.py": "da766afdc1f726b41d841b5911c92c4e9b65b516508f2f30499918f82f3f1a5a",
+    "scripts/verify_battle_setup_ai.py": "29746712e54b62b153c90c7d22c04e02c2fb0d70a56e2b7a22d6586f002f2f8d",
+    "scripts/analyze_battle_setup_ai.py": "036a41f738d93f0c934e608bb5d63dccbb91c89200e3afb986cc90f825e05446",
+    "source/recovered/scroll_graphics_services.py": "bea82c16e88233285a2d8559736de0ed6525e5fa5b2da6f0230f46a9aca1ed08",
+    "source/recovered/text_services.py": "2924050828d9a6484a55a03c96542a6b09527980d9f11462c771e5aa262ffeff",
+    "scripts/verify_battle_background_initialization.py": "cd426deadce5614a3d45501ad6db53e07fabbd9f89417b36608f001df7d8b6a6",
+    "scripts/analyze_battle_background_initialization.py": "5273044668f17e7dd186ecad50f79c069cb8f01e321c6cc582b1dbdbc0be52ea",
+    "scripts/verify_phase11_integration.py": "4455d14d7692b99a25c6b4f13a24f378c9d2a364046cf7bbba1ba9436011e03a",
+    "scripts/capture_scene_controller_flows.py": "33b58e5307479287ef5b045645f2899afa3cef78cbff30727c6e0fa32d5d17ff",
+    "scripts/nes_service_runtime.py": "f3e10f0296126f24a47b9f9cc8a8b170726e0b929969d88ba02ce5084a552124",
+    "scripts/nes_runtime.py": "ad4d093646f2f87621f4cfa29c79bffb8dfda2ba67ee86850f99bee099e0fc2e"
+  },
+  "artifact_and_dependency_sha256": {
+    "analysis/battle_fsm/program.json": "285843cd5de3a87b27e1986f53cf10fb2ea5e4f52704251a5e97eb075293feeb",
+    "analysis/battle_fsm/state-catalog.json": "b7e7c170dfcda5868918627bd7a26e504114e8cc15be73e46f838cd8e4ea3e84",
+    "analysis/rea/pairs/pair-14/image.bin": "3d253517fbe00fe6e497f693cdda99420d4c8bf1d5431b65e39fef53293ed439",
+    "analysis/rea/pairs/pair-14/evidence-bundle.json": "66e329df1303a56904768094f5cd85dfcbeb3a1ad8cbe5b96a51f14bf7124843",
+    "analysis/rea/pairs/pair-14/mapping.json": "d2932f89af472e77609ac1b8957bfe67384c42320715c83effb0fa83e72145e9",
+    "analysis/phase11/duel/evidence.json": "51a51b11e4efd94e28d36413c19f448c6fa9079d8514d3bd453a63c7c5076b4a",
+    "analysis/rea/pairs/pair-23/functions/0xb100.asm": "d47ebba89e6bf3d2561bbae186755b534b9688e996e582c8b10f3f33a041d086",
+    "analysis/rea/pairs/pair-23/functions/0xb100.c": "355bc1f03053b4a9ea8987ce00384097bdb971cca4b4b131a9c7acba612dae54",
+    "analysis/phase11/duel/original-ranges.asm": "40a179b149f5059523dd91b906df8ac662ac223ced6e337c0ebbce4f862566b4",
+    "analysis/phase11/background/evidence.json": "2b344a36da138ea6035e2d8611453b0446704e8584b9656b5f490ac117ace6ba",
+    "analysis/phase11/background/original-ranges.asm": "56e218f6da1e82b61d3ec4992bdb0baabc552502a41f40308aad7b33dbb934ba",
+    "analysis/rea/pairs/pair-12/image.bin": "f337d9ccfbd80c74039d5d67a76ef7e4b3c77a7dd4435e96451b0d9553c85eed",
+    "analysis/rea/pairs/pair-12/evidence-bundle.json": "cb39f11141eccddebc487e650166230a5b08454294c25c4d51acedd4abf2238a",
+    "analysis/rea/pairs/pair-12/mapping.json": "af70825187d09a513251029996143166465b23d25036e5c5cacaae931e82709e",
+    "analysis/rea/pairs/pair-23/image.bin": "70442cc6c717692afbd76404aa4758619bc109de8b623bd888521b0808580e48",
+    "analysis/rea/pairs/pair-23/evidence-bundle.json": "fb92a5be018da4d8176c314ae4e378046f8211f978b481fc490d59949c8724b3",
+    "analysis/rea/pairs/pair-23/mapping.json": "098b94628f153c14e34fb3e79e9ff878cfc65ded2f49c5fa176252134b349b8d",
+    ".toolchain/nestopia/nestopia_libretro.dylib": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a",
+    "analysis/runtime/phase3/injected-adjacent-attack/scene/attack-scene-enter.state": "78412e7701de9ced5b266eabcb8ce3f48a649b3ededc53dd7a68922f0d538a29",
+    "analysis/runtime/phase3/injected-adjacent-attack/fixture.json": "4a46c421835d799fed48249fe2e721967de8515011ce141d37c574cf96dc36da",
+    "analysis/duel_fsm/runtime/injected-core/fixture-entry.state": "ceef58eb9ca658eccbfdfa8188c6b98e0ab7e8a5d687ce2e0383a0d9f2ee661f",
+    "analysis/duel_fsm/runtime/injected-core/validation.json": "23dc48437a02d20ccbb96f9c1d5090381f06d3abd6025ded6ef2724d8e164a08",
+    "analysis/phase11/index.html": "52180d8180c1b6a36c4553a099aebb59fa450afb8a978cfe1a632b9e6a6a8702"
+  },
+  "receipt_sha256": {
+    "battle": "7f6d9e1d2773ba5880122525e50fd9adcb30ed08eda9d71e7adfa45b716daef3",
+    "attack": "1c18bfe3254e1271f9cd2f1ba81c9c56550af27675c460c3607f8cb683d2d319",
+    "duel": "56dcbb561139f3681ea19b2f4503842813c25e49356ee0ed8658019f2f734922",
+    "shared": "a4414d737055a9043304257cf648e07c902eec06b77e472dc65e6c469b3b4eaf",
+    "initialization": "36b62e676983ff86ced8c0da70c54a5f12a5f4e8b9d21ef0f9c8d0a683e88539",
+    "setup-ai": "92aef101ff26be6ba3c0b3e1d1f3b5400b6d1960707c17eb6881d746ff89ebbd",
+    "background": "de568c6e47314e17de4530d87e0eb7250c24dacd522fd31b9f3ef599a01f8baf",
+    "source-integration": "e6a28d89bc1de3e5cd1b4b0f0abcc6b6335f9ec2d7db213e56fa92768c671e07",
+    "native": "f37ddeeacdb82922ac19dc46a0b37533fad1f4e5667ac630f2dc3b2d33d5256e"
+  },
+  "evidence_sha256": {
+    "battle": "f25e811c0a0b9fee1fab17d59d349b7a92283bc9be8542067603cb0379845363",
+    "attack": "41f77a0c7e2e994d50f079774152381742bf2c5e91b5467acd440cf46b9c49ff",
+    "duel": "51a51b11e4efd94e28d36413c19f448c6fa9079d8514d3bd453a63c7c5076b4a",
+    "shared": "f3707b4f99d5d2a645b14027eaa5b937c75fbcee6f9c46e9b034b1ebe55937e5",
+    "initialization": "d33898a83ee4b6ebcb77d3438df7eea90fb121f6f9c621d9c8b7e823827bb7ef",
+    "setup-ai": "ec8d6cc26dc62f52e9a1ed25e152e0d05c8b106559ede525795c6297f12283b3",
+    "background": "2b344a36da138ea6035e2d8611453b0446704e8584b9656b5f490ac117ace6ba",
+    "native": "c0a95e6832b9fe17ff7ecf5c8491b1c3e6dfec6f92502ce88bca5cda4dd14d2f"
+  },
+  "raw_object_count": 7674,
+  "raw_bytes_checked": 55737,
+  "REA_archives": [
+    {
+      "path": "analysis/rea/pairs/pair-14",
+      "files": {
+        "image.bin": "3d253517fbe00fe6e497f693cdda99420d4c8bf1d5431b65e39fef53293ed439",
+        "evidence-bundle.json": "66e329df1303a56904768094f5cd85dfcbeb3a1ad8cbe5b96a51f14bf7124843",
+        "mapping.json": "d2932f89af472e77609ac1b8957bfe67384c42320715c83effb0fa83e72145e9"
+      }
+    },
+    {
+      "path": "analysis/rea/pairs/pair-23/functions/0xb100.asm",
+      "sha256": "d47ebba89e6bf3d2561bbae186755b534b9688e996e582c8b10f3f33a041d086",
+      "bytes": 175
+    },
+    {
+      "path": "analysis/rea/pairs/pair-23/functions/0xb100.c",
+      "sha256": "355bc1f03053b4a9ea8987ce00384097bdb971cca4b4b131a9c7acba612dae54",
+      "bytes": 299
+    },
+    {
+      "path": "analysis/rea/pairs/pair-12",
+      "files": {
+        "image.bin": "f337d9ccfbd80c74039d5d67a76ef7e4b3c77a7dd4435e96451b0d9553c85eed",
+        "evidence-bundle.json": "cb39f11141eccddebc487e650166230a5b08454294c25c4d51acedd4abf2238a",
+        "mapping.json": "af70825187d09a513251029996143166465b23d25036e5c5cacaae931e82709e"
+      }
+    },
+    {
+      "path": "analysis/rea/pairs/pair-23",
+      "files": {
+        "image.bin": "70442cc6c717692afbd76404aa4758619bc109de8b623bd888521b0808580e48",
+        "evidence-bundle.json": "fb92a5be018da4d8176c314ae4e378046f8211f978b481fc490d59949c8724b3",
+        "mapping.json": "098b94628f153c14e34fb3e79e9ff878cfc65ded2f49c5fa176252134b349b8d"
+      }
+    }
+  ],
+  "source_AST": [
+    {
+      "path": "source/recovered/battle_scene_controller.py",
+      "sha256": "6af446393521e0cd04d4129d79e3218e27e687e0d8d77d66c2dbf346832a4781",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "battle_nmi_services",
+        "mapped_memory"
+      ],
+      "functions": 276,
+      "if_statements": 3208,
+      "loops": 75
+    },
+    {
+      "path": "source/recovered/attack_scene_controller.py",
+      "sha256": "a4b0d4c1023fad7141a680772391edc88944197012e7c2fe755190cbf1c74929",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "battle_nmi_services",
+        "mapped_memory"
+      ],
+      "functions": 194,
+      "if_statements": 1564,
+      "loops": 57
+    },
+    {
+      "path": "source/recovered/duel_scene_controller.py",
+      "sha256": "253fa2d3102989673c1913cd11062e49329a958debabdfa374ecd047e1075ec1",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "battle_nmi_services",
+        "controller_helpers",
+        "duel_logic",
+        "audio_services",
+        "battle_graphics_services"
+      ],
+      "functions": 148,
+      "if_statements": 364,
+      "loops": 28
+    },
+    {
+      "path": "source/recovered/scene_shared_services.py",
+      "sha256": "6e55c3b05b2b6b93b79925d7d1110abf12515340d46591c6b45f1f7bea10dc76",
+      "imports": [
+        "hashlib",
+        "battle_nmi_services",
+        "battle_graphics_services",
+        "audio_services",
+        "controller_helpers",
+        "officers"
+      ],
+      "functions": 16,
+      "if_statements": 68,
+      "loops": 27
+    },
+    {
+      "path": "source/recovered/scene_initialization.py",
+      "sha256": "87dcdffebdc8f2a71eacb02bfc8e0c6476d2edb0a793aea35ffdde8bbc5ef30d",
+      "imports": [
+        "scene_shared_services",
+        "battle_nmi_services"
+      ],
+      "functions": 20,
+      "if_statements": 25,
+      "loops": 17
+    },
+    {
+      "path": "source/recovered/battle_setup_ai.py",
+      "sha256": "b08fa8bedddf2a4f3ba49acccdc6176c78b0698bc3ac93691a7718afb9985fbb",
+      "imports": [
+        "dataclasses",
+        "hashlib",
+        "battle_nmi_services",
+        "mapped_memory"
+      ],
+      "functions": 49,
+      "if_statements": 179,
+      "loops": 19
+    },
+    {
+      "path": "source/recovered/battle_background_initialization.py",
+      "sha256": "4f9060b63d5df392833da7cb689b56f5438427f432c3f8de45bb324d2499fdc6",
+      "imports": [
+        "battle_nmi_services",
+        "battle_graphics_services",
+        "scroll_graphics_services",
+        "mapped_memory"
+      ],
+      "functions": 21,
+      "if_statements": 45,
+      "loops": 12
+    },
+    {
+      "path": "source/recovered/scene_coordinator.py",
+      "sha256": "3c80cddcfdd4400d2f41fd93bc5442a4d9886b8fec356f85e94d9c3aa2bd8bab",
+      "imports": [
+        "scene_initialization",
+        "battle_scene_controller",
+        "attack_scene_controller",
+        "duel_scene_controller",
+        "battle_setup_ai",
+        "battle_background_initialization",
+        "portrait_ui_services",
+        "officer_ui_services",
+        "text_scene_services",
+        "officer_details_ui_services",
+        "city_ui_controller",
+        "city_panel_services",
+        "global_ui_controller",
+        "city_action_bridges",
+        "ui_arithmetic_services",
+        "city_menu_navigation",
+        "boot_initialization",
+        "domestic_cooperation_controller",
+        "tactical_cooperation_controller",
+        "city_cooperation_ui_services",
+        "audio_scene_services",
+        "postbattle_loyalty_bridge",
+        "postbattle_graphics",
+        "exact_audio_requests",
+        "battle_succession",
+        "player_extinction",
+        "extinction_scene_services",
+        "integrated_scene_services",
+        "ui_graphics_initialization",
+        "scenario_initialization",
+        "city_officer_details_controller",
+        "title_intro_graphics",
+        "battle_nmi_services",
+        "service_memory"
+      ],
+      "functions": 20,
+      "if_statements": 54,
+      "loops": 0
+    }
+  ],
+  "rebuilt_byte_identical": true,
+  "native": {
+    "schema": "phase11-native-scene-flows-v1",
+    "status": "passed",
+    "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+    "native_case_count": 3,
+    "frames_first_run": 11435,
+    "frames_both_runs": 22870,
+    "checkpoint_count": 91,
+    "nonempty_repeat_artifact_checks": 387,
+    "formal_JSON_repeat_checks": 18,
+    "excluded_empty_VRAM": 91,
+    "excluded_snapshot_metadata_JSON": 91,
+    "PCM_stereo_sample_frames_first_run": 9132895,
+    "PCM_stereo_sample_frames_both_runs": 18265790,
+    "sample_rate": 48000,
+    "additional_core_memory_writes": 0,
+    "failed_count": 0,
+    "native_internal_CPU_trace": false,
+    "source_CPU_comparisons_in_this_receipt": 0,
+    "evidence_sha256": "c0a95e6832b9fe17ff7ecf5c8491b1c3e6dfec6f92502ce88bca5cda4dd14d2f",
+    "cases": [
+      {
+        "case": "cold-battle",
+        "status": "passed",
+        "natural_gameplay": true,
+        "controlled_fixture": false,
+        "frames": 7920
+      },
+      {
+        "case": "ordinary-attack-return",
+        "status": "passed",
+        "natural_gameplay": false,
+        "controlled_fixture": true,
+        "frames": 2401
+      },
+      {
+        "case": "duel-return",
+        "status": "passed",
+        "natural_gameplay": false,
+        "controlled_fixture": true,
+        "frames": 1114
+      }
+    ]
+  },
+  "regressions": {
+    "5": {
+      "status": "passed",
+      "verification_sha256": "e3ab1e66b927f0fffeb9107aa95a93fa6c720c44b48d32e3471e9e3f60112a84",
+      "current_GameEngine_pin": true
+    },
+    "6": {
+      "status": "passed",
+      "verification_sha256": "3f5ea1ec626f5751dbb9541441a2cb94f5e10460428450c500bae8bf753d4b05",
+      "current_GameEngine_pin": true
+    },
+    "7": {
+      "status": "passed",
+      "verification_sha256": "808f5a785abe3998453ae91bed42f5bddb0d1c76a9e5b00b832d82a812f589ac",
+      "current_GameEngine_pin": true
+    },
+    "8": {
+      "status": "passed",
+      "verification_sha256": "2ab2182773a0101748f073d90bc5f350501fb903f7b51ffec70347959db358e0",
+      "current_GameEngine_pin": true
+    },
+    "9": {
+      "status": "passed",
+      "verification_sha256": "5c051a145bbc3eff7413c747d393e875825da72683d825f5e2e7766e742c64c7",
+      "current_GameEngine_pin": true
+    },
+    "10": {
+      "status": "passed",
+      "verification_sha256": "20c129d5116172e8489f950f4434f908b1e31af0ba002e601d6f72e64041a79d",
+      "current_GameEngine_pin": true
+    }
+  },
+  "browser_status": "passed",
+  "browser_receipt_sha256": "85744bb5bdb730fa75aee14ba34e88c0ff5c6fd1e100fee101ee565d92963c5c",
+  "limitations": [
+    "Complete return, strict prefix and source-only guards are separate counts.",
+    "Top-level ROM/source counts describe the seven areas; integration counts are additional and explicitly labeled.",
+    "Validator-only original CPU callbacks do not constitute production source fallback.",
+    "AST checks cover the seven new production modules and scene coordinator, not retained historical GameEngine APIs.",
+    "Native RGB/PCM frames are original core observations, not source hardware synthesis or native CPU trace.",
+    "Unknown presentation/controller bodies remain explicit dependencies."
+  ]
+}

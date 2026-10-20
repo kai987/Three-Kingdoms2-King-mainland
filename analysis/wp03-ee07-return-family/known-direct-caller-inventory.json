@@ -1,0 +1,937 @@
+{
+  "count": 155,
+  "callers": [
+    {
+      "bank": 14,
+      "pc": 41262,
+      "rom_offset": 115006,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuA12E:rom01C13E"
+    },
+    {
+      "bank": 14,
+      "pc": 41287,
+      "rom_offset": 115031,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuA147:rom01C157"
+    },
+    {
+      "bank": 14,
+      "pc": 43573,
+      "rom_offset": 117317,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuAA35:rom01CA45"
+    },
+    {
+      "bank": 14,
+      "pc": 43754,
+      "rom_offset": 117498,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuAAEA:rom01CAFA"
+    },
+    {
+      "bank": 14,
+      "pc": 43921,
+      "rom_offset": 117665,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuAB91:rom01CBA1"
+    },
+    {
+      "bank": 14,
+      "pc": 43948,
+      "rom_offset": 117692,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuABAC:rom01CBBC"
+    },
+    {
+      "bank": 14,
+      "pc": 44247,
+      "rom_offset": 117991,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuACD7:rom01CCE7"
+    },
+    {
+      "bank": 14,
+      "pc": 45566,
+      "rom_offset": 119310,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuB1FE:rom01D20E"
+    },
+    {
+      "bank": 15,
+      "pc": 52821,
+      "rom_offset": 126565,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b15:cpuCE55:rom01EE65"
+    },
+    {
+      "bank": 15,
+      "pc": 52855,
+      "rom_offset": 126599,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b15:cpuCE77:rom01EE87"
+    },
+    {
+      "bank": 15,
+      "pc": 52925,
+      "rom_offset": 126669,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b15:cpuCEBD:rom01EECD"
+    },
+    {
+      "bank": 15,
+      "pc": 53170,
+      "rom_offset": 126914,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b15:cpuCFB2:rom01EFC2"
+    },
+    {
+      "bank": 15,
+      "pc": 53201,
+      "rom_offset": 126945,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b15:cpuCFD1:rom01EFE1"
+    },
+    {
+      "bank": 15,
+      "pc": 53271,
+      "rom_offset": 127015,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b15:cpuD017:rom01F027"
+    },
+    {
+      "bank": 15,
+      "pc": 55101,
+      "rom_offset": 128845,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b15:cpuD73D:rom01F74D"
+    },
+    {
+      "bank": 15,
+      "pc": 55153,
+      "rom_offset": 128897,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b15:cpuD771:rom01F781"
+    },
+    {
+      "bank": 12,
+      "pc": 48652,
+      "rom_offset": 106012,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuBE0C:rom019E1C"
+    },
+    {
+      "bank": 12,
+      "pc": 48745,
+      "rom_offset": 106105,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuBE69:rom019E79"
+    },
+    {
+      "bank": 12,
+      "pc": 41192,
+      "rom_offset": 98552,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA0E8:rom0180F8"
+    },
+    {
+      "bank": 12,
+      "pc": 41559,
+      "rom_offset": 98919,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA257:rom018267"
+    },
+    {
+      "bank": 12,
+      "pc": 41570,
+      "rom_offset": 98930,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA262:rom018272"
+    },
+    {
+      "bank": 12,
+      "pc": 42192,
+      "rom_offset": 99552,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA4D0:rom0184E0"
+    },
+    {
+      "bank": 12,
+      "pc": 42361,
+      "rom_offset": 99721,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA579:rom018589"
+    },
+    {
+      "bank": 12,
+      "pc": 42427,
+      "rom_offset": 99787,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA5BB:rom0185CB"
+    },
+    {
+      "bank": 12,
+      "pc": 43195,
+      "rom_offset": 100555,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA8BB:rom0188CB"
+    },
+    {
+      "bank": 12,
+      "pc": 43741,
+      "rom_offset": 101101,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuAADD:rom018AED"
+    },
+    {
+      "bank": 12,
+      "pc": 48376,
+      "rom_offset": 105736,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuBCF8:rom019D08"
+    },
+    {
+      "bank": 12,
+      "pc": 49056,
+      "rom_offset": 106416,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuBFA0:rom019FB0"
+    },
+    {
+      "bank": 13,
+      "pc": 49174,
+      "rom_offset": 106534,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC016:rom01A026"
+    },
+    {
+      "bank": 13,
+      "pc": 49496,
+      "rom_offset": 106856,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC158:rom01A168"
+    },
+    {
+      "bank": 13,
+      "pc": 49662,
+      "rom_offset": 107022,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC1FE:rom01A20E"
+    },
+    {
+      "bank": 13,
+      "pc": 50016,
+      "rom_offset": 107376,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC360:rom01A370"
+    },
+    {
+      "bank": 13,
+      "pc": 50076,
+      "rom_offset": 107436,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC39C:rom01A3AC"
+    },
+    {
+      "bank": 13,
+      "pc": 51005,
+      "rom_offset": 108365,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC73D:rom01A74D"
+    },
+    {
+      "bank": 13,
+      "pc": 54517,
+      "rom_offset": 111877,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuD4F5:rom01B505"
+    },
+    {
+      "bank": 13,
+      "pc": 55086,
+      "rom_offset": 112446,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuD72E:rom01B73E"
+    },
+    {
+      "bank": 13,
+      "pc": 55221,
+      "rom_offset": 112581,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuD7B5:rom01B7C5"
+    },
+    {
+      "bank": 13,
+      "pc": 55264,
+      "rom_offset": 112624,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuD7E0:rom01B7F0"
+    },
+    {
+      "bank": 13,
+      "pc": 55335,
+      "rom_offset": 112695,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuD827:rom01B837"
+    },
+    {
+      "bank": 13,
+      "pc": 55367,
+      "rom_offset": 112727,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuD847:rom01B857"
+    },
+    {
+      "bank": 12,
+      "pc": 45997,
+      "rom_offset": 103357,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuB3AD:rom0193BD"
+    },
+    {
+      "bank": 12,
+      "pc": 46826,
+      "rom_offset": 104186,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuB6EA:rom0196FA"
+    },
+    {
+      "bank": 13,
+      "pc": 56173,
+      "rom_offset": 113533,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuDB6D:rom01BB7D"
+    },
+    {
+      "bank": 12,
+      "pc": 46634,
+      "rom_offset": 103994,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuB62A:rom01963A"
+    },
+    {
+      "bank": 12,
+      "pc": 46653,
+      "rom_offset": 104013,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuB63D:rom01964D"
+    },
+    {
+      "bank": 13,
+      "pc": 56389,
+      "rom_offset": 113749,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuDC45:rom01BC55"
+    },
+    {
+      "bank": 13,
+      "pc": 57106,
+      "rom_offset": 114466,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuDF12:rom01BF22"
+    },
+    {
+      "bank": 26,
+      "pc": 54247,
+      "rom_offset": 218103,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuD3E7:rom0353F7"
+    },
+    {
+      "bank": 14,
+      "pc": 40998,
+      "rom_offset": 114742,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuA026:rom01C036"
+    },
+    {
+      "bank": 14,
+      "pc": 41037,
+      "rom_offset": 114781,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuA04D:rom01C05D"
+    },
+    {
+      "bank": 14,
+      "pc": 41060,
+      "rom_offset": 114804,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b14:cpuA064:rom01C074"
+    },
+    {
+      "bank": 23,
+      "pc": 45994,
+      "rom_offset": 193466,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b23:cpuB3AA:rom02F3BA"
+    },
+    {
+      "bank": 23,
+      "pc": 47770,
+      "rom_offset": 195242,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b23:cpuBA9A:rom02FAAA"
+    },
+    {
+      "bank": 23,
+      "pc": 47856,
+      "rom_offset": 195328,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b23:cpuBAF0:rom02FB00"
+    },
+    {
+      "bank": 23,
+      "pc": 48237,
+      "rom_offset": 195709,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b23:cpuBC6D:rom02FC7D"
+    },
+    {
+      "bank": 23,
+      "pc": 48398,
+      "rom_offset": 195870,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b23:cpuBD0E:rom02FD1E"
+    },
+    {
+      "bank": 24,
+      "pc": 49460,
+      "rom_offset": 196932,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuC134:rom030144"
+    },
+    {
+      "bank": 24,
+      "pc": 49471,
+      "rom_offset": 196943,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuC13F:rom03014F"
+    },
+    {
+      "bank": 24,
+      "pc": 49655,
+      "rom_offset": 197127,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuC1F7:rom030207"
+    },
+    {
+      "bank": 24,
+      "pc": 49681,
+      "rom_offset": 197153,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuC211:rom030221"
+    },
+    {
+      "bank": 24,
+      "pc": 53622,
+      "rom_offset": 201094,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuD176:rom031186"
+    },
+    {
+      "bank": 29,
+      "pc": 43163,
+      "rom_offset": 239787,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuA89B:rom03A8AB"
+    },
+    {
+      "bank": 25,
+      "pc": 45052,
+      "rom_offset": 208908,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuAFFC:rom03300C"
+    },
+    {
+      "bank": 25,
+      "pc": 41144,
+      "rom_offset": 205000,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuA0B8:rom0320C8"
+    },
+    {
+      "bank": 25,
+      "pc": 44449,
+      "rom_offset": 208305,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuADA1:rom032DB1"
+    },
+    {
+      "bank": 27,
+      "pc": 40980,
+      "rom_offset": 221220,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA014:rom036024"
+    },
+    {
+      "bank": 27,
+      "pc": 41031,
+      "rom_offset": 221271,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA047:rom036057"
+    },
+    {
+      "bank": 27,
+      "pc": 41039,
+      "rom_offset": 221279,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA04F:rom03605F"
+    },
+    {
+      "bank": 27,
+      "pc": 41047,
+      "rom_offset": 221287,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA057:rom036067"
+    },
+    {
+      "bank": 27,
+      "pc": 41055,
+      "rom_offset": 221295,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA05F:rom03606F"
+    },
+    {
+      "bank": 27,
+      "pc": 41063,
+      "rom_offset": 221303,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA067:rom036077"
+    },
+    {
+      "bank": 27,
+      "pc": 41071,
+      "rom_offset": 221311,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA06F:rom03607F"
+    },
+    {
+      "bank": 27,
+      "pc": 41079,
+      "rom_offset": 221319,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA077:rom036087"
+    },
+    {
+      "bank": 27,
+      "pc": 41188,
+      "rom_offset": 221428,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA0E4:rom0360F4"
+    },
+    {
+      "bank": 27,
+      "pc": 42152,
+      "rom_offset": 222392,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA4A8:rom0364B8"
+    },
+    {
+      "bank": 27,
+      "pc": 42182,
+      "rom_offset": 222422,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA4C6:rom0364D6"
+    },
+    {
+      "bank": 27,
+      "pc": 42270,
+      "rom_offset": 222510,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA51E:rom03652E"
+    },
+    {
+      "bank": 27,
+      "pc": 42326,
+      "rom_offset": 222566,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA556:rom036566"
+    },
+    {
+      "bank": 27,
+      "pc": 43263,
+      "rom_offset": 223503,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuA8FF:rom03690F"
+    },
+    {
+      "bank": 27,
+      "pc": 43925,
+      "rom_offset": 224165,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuAB95:rom036BA5"
+    },
+    {
+      "bank": 27,
+      "pc": 44088,
+      "rom_offset": 224328,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuAC38:rom036C48"
+    },
+    {
+      "bank": 27,
+      "pc": 44267,
+      "rom_offset": 224507,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuACEB:rom036CFB"
+    },
+    {
+      "bank": 27,
+      "pc": 45655,
+      "rom_offset": 225895,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuB257:rom037267"
+    },
+    {
+      "bank": 27,
+      "pc": 46618,
+      "rom_offset": 226858,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuB61A:rom03762A"
+    },
+    {
+      "bank": 28,
+      "pc": 54818,
+      "rom_offset": 235058,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuD622:rom039632"
+    },
+    {
+      "bank": 28,
+      "pc": 56682,
+      "rom_offset": 236922,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuDD6A:rom039D7A"
+    },
+    {
+      "bank": 27,
+      "pc": 44338,
+      "rom_offset": 224578,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuAD32:rom036D42"
+    },
+    {
+      "bank": 27,
+      "pc": 46531,
+      "rom_offset": 226771,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuB5C3:rom0375D3"
+    },
+    {
+      "bank": 27,
+      "pc": 47211,
+      "rom_offset": 227451,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuB86B:rom03787B"
+    },
+    {
+      "bank": 27,
+      "pc": 48131,
+      "rom_offset": 228371,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuBC03:rom037C13"
+    },
+    {
+      "bank": 27,
+      "pc": 48952,
+      "rom_offset": 229192,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:cpuBF38:rom037F48"
+    },
+    {
+      "bank": 28,
+      "pc": 50618,
+      "rom_offset": 230858,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuC5BA:rom0385CA"
+    },
+    {
+      "bank": 28,
+      "pc": 50674,
+      "rom_offset": 230914,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuC5F2:rom038602"
+    },
+    {
+      "bank": 28,
+      "pc": 50915,
+      "rom_offset": 231155,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuC6E3:rom0386F3"
+    },
+    {
+      "bank": 28,
+      "pc": 50938,
+      "rom_offset": 231178,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuC6FA:rom03870A"
+    },
+    {
+      "bank": 28,
+      "pc": 51115,
+      "rom_offset": 231355,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuC7AB:rom0387BB"
+    },
+    {
+      "bank": 28,
+      "pc": 51683,
+      "rom_offset": 231923,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuC9E3:rom0389F3"
+    },
+    {
+      "bank": 28,
+      "pc": 52578,
+      "rom_offset": 232818,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuCD62:rom038D72"
+    },
+    {
+      "bank": 28,
+      "pc": 52812,
+      "rom_offset": 233052,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuCE4C:rom038E5C"
+    },
+    {
+      "bank": 28,
+      "pc": 52885,
+      "rom_offset": 233125,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuCE95:rom038EA5"
+    },
+    {
+      "bank": 28,
+      "pc": 53555,
+      "rom_offset": 233795,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuD133:rom039143"
+    },
+    {
+      "bank": 28,
+      "pc": 53678,
+      "rom_offset": 233918,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuD1AE:rom0391BE"
+    },
+    {
+      "bank": 28,
+      "pc": 53905,
+      "rom_offset": 234145,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuD291:rom0392A1"
+    },
+    {
+      "bank": 28,
+      "pc": 54380,
+      "rom_offset": 234620,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuD46C:rom03947C"
+    },
+    {
+      "bank": 28,
+      "pc": 54826,
+      "rom_offset": 235066,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuD62A:rom03963A"
+    },
+    {
+      "bank": 28,
+      "pc": 56344,
+      "rom_offset": 236584,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b28:cpuDC18:rom039C28"
+    },
+    {
+      "bank": 25,
+      "pc": 44079,
+      "rom_offset": 207935,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuAC2F:rom032C3F"
+    },
+    {
+      "bank": 26,
+      "pc": 50637,
+      "rom_offset": 214493,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC5CD:rom0345DD"
+    },
+    {
+      "bank": 26,
+      "pc": 51216,
+      "rom_offset": 215072,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC810:rom034820"
+    },
+    {
+      "bank": 9,
+      "pc": 55471,
+      "rom_offset": 80063,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b9:cpuD8AF:rom0138BF"
+    },
+    {
+      "bank": 9,
+      "pc": 55539,
+      "rom_offset": 80131,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b9:cpuD8F3:rom013903"
+    },
+    {
+      "bank": 9,
+      "pc": 55599,
+      "rom_offset": 80191,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b9:cpuD92F:rom01393F"
+    },
+    {
+      "bank": 9,
+      "pc": 55613,
+      "rom_offset": 80205,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b9:cpuD93D:rom01394D"
+    },
+    {
+      "bank": 11,
+      "pc": 55084,
+      "rom_offset": 96060,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b11:cpuD72C:rom01773C"
+    },
+    {
+      "bank": 24,
+      "pc": 55875,
+      "rom_offset": 203347,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuDA43:rom031A53"
+    },
+    {
+      "bank": 24,
+      "pc": 55957,
+      "rom_offset": 203429,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuDA95:rom031AA5"
+    },
+    {
+      "bank": 24,
+      "pc": 55992,
+      "rom_offset": 203464,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuDAB8:rom031AC8"
+    },
+    {
+      "bank": 24,
+      "pc": 56011,
+      "rom_offset": 203483,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuDACB:rom031ADB"
+    },
+    {
+      "bank": 24,
+      "pc": 56151,
+      "rom_offset": 203623,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b24:cpuDB57:rom031B67"
+    },
+    {
+      "bank": 30,
+      "pc": 51549,
+      "rom_offset": 248173,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b30:cpuC95D:rom03C96D"
+    },
+    {
+      "bank": 25,
+      "pc": 41312,
+      "rom_offset": 205168,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuA160:rom032170"
+    },
+    {
+      "bank": 25,
+      "pc": 44172,
+      "rom_offset": 208028,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuAC8C:rom032C9C"
+    },
+    {
+      "bank": 25,
+      "pc": 44722,
+      "rom_offset": 208578,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuAEB2:rom032EC2"
+    },
+    {
+      "bank": 25,
+      "pc": 44971,
+      "rom_offset": 208827,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuAFAB:rom032FBB"
+    },
+    {
+      "bank": 25,
+      "pc": 48866,
+      "rom_offset": 212722,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuBEE2:rom033EF2"
+    },
+    {
+      "bank": 26,
+      "pc": 51694,
+      "rom_offset": 215550,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC9EE:rom0349FE"
+    },
+    {
+      "bank": 26,
+      "pc": 51872,
+      "rom_offset": 215728,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuCAA0:rom034AB0"
+    },
+    {
+      "bank": 26,
+      "pc": 51910,
+      "rom_offset": 215766,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuCAC6:rom034AD6"
+    },
+    {
+      "bank": 26,
+      "pc": 51952,
+      "rom_offset": 215808,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuCAF0:rom034B00"
+    },
+    {
+      "bank": 26,
+      "pc": 52001,
+      "rom_offset": 215857,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuCB21:rom034B31"
+    },
+    {
+      "bank": 26,
+      "pc": 52054,
+      "rom_offset": 215910,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuCB56:rom034B66"
+    },
+    {
+      "bank": 26,
+      "pc": 52434,
+      "rom_offset": 216290,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuCCD2:rom034CE2"
+    },
+    {
+      "bank": 25,
+      "pc": 43093,
+      "rom_offset": 206949,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuA855:rom032865"
+    },
+    {
+      "bank": 25,
+      "pc": 43727,
+      "rom_offset": 207583,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b25:cpuAACF:rom032ADF"
+    },
+    {
+      "bank": 26,
+      "pc": 49243,
+      "rom_offset": 213099,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC05B:rom03406B"
+    },
+    {
+      "bank": 26,
+      "pc": 49898,
+      "rom_offset": 213754,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC2EA:rom0342FA"
+    },
+    {
+      "bank": 26,
+      "pc": 51253,
+      "rom_offset": 215109,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC835:rom034845"
+    },
+    {
+      "bank": 26,
+      "pc": 51347,
+      "rom_offset": 215203,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC893:rom0348A3"
+    },
+    {
+      "bank": 26,
+      "pc": 51381,
+      "rom_offset": 215237,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC8B5:rom0348C5"
+    },
+    {
+      "bank": 26,
+      "pc": 51435,
+      "rom_offset": 215291,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC8EB:rom0348FB"
+    },
+    {
+      "bank": 26,
+      "pc": 51547,
+      "rom_offset": 215403,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC95B:rom03496B"
+    },
+    {
+      "bank": 26,
+      "pc": 51606,
+      "rom_offset": 215462,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuC996:rom0349A6"
+    },
+    {
+      "bank": 26,
+      "pc": 51762,
+      "rom_offset": 215618,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuCA32:rom034A42"
+    },
+    {
+      "bank": 26,
+      "pc": 51838,
+      "rom_offset": 215694,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b26:cpuCA7E:rom034A8E"
+    },
+    {
+      "bank": 9,
+      "pc": 49660,
+      "rom_offset": 74252,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b9:cpuC1FC:rom01220C"
+    },
+    {
+      "bank": 9,
+      "pc": 49873,
+      "rom_offset": 74465,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b9:cpuC2D1:rom0122E1"
+    },
+    {
+      "bank": 9,
+      "pc": 55446,
+      "rom_offset": 80038,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b9:cpuD896:rom0138A6"
+    },
+    {
+      "bank": 12,
+      "pc": 40974,
+      "rom_offset": 98334,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA00E:rom01801E"
+    },
+    {
+      "bank": 12,
+      "pc": 40981,
+      "rom_offset": 98341,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA015:rom018025"
+    },
+    {
+      "bank": 12,
+      "pc": 40994,
+      "rom_offset": 98354,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b12:cpuA022:rom018032"
+    },
+    {
+      "bank": 9,
+      "pc": 52763,
+      "rom_offset": 77355,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b9:cpuCE1B:rom012E2B"
+    },
+    {
+      "bank": 13,
+      "pc": 51119,
+      "rom_offset": 108479,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC7AF:rom01A7BF"
+    },
+    {
+      "bank": 13,
+      "pc": 51221,
+      "rom_offset": 108581,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC815:rom01A825"
+    },
+    {
+      "bank": 13,
+      "pc": 51157,
+      "rom_offset": 108517,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC7D5:rom01A7E5"
+    },
+    {
+      "bank": 13,
+      "pc": 51328,
+      "rom_offset": 108688,
+      "id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b13:cpuC880:rom01A890"
+    }
+  ],
+  "not_selected": 153,
+  "meaning": "Only direct JSR EE07 in frozen atlas; 153 outside this package is not a count of all unresolved game services."
+}

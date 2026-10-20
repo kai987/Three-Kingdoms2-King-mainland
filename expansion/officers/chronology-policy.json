@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "created_date": "2026-10-21",
+  "date_system": "公元年；整数；未知为null或CSV空白，不以0代替",
+  "source_date_grain": "表中生/登/卒年只有年；剧本有年/月",
+  "source_is": "secondary transcription of SAN14 game settings, not primary historical attestation",
+  "game_and_history_separate": {
+    "game_fields": [
+      "san14_game_birth_year",
+      "san14_game_appearance_year",
+      "san14_game_death_year"
+    ],
+    "history_fields": [
+      "history_birth_year",
+      "history_birth_precision",
+      "history_death_year",
+      "history_death_precision",
+      "history_sources"
+    ],
+    "history_values_populated": false,
+    "rule": "游戏年的证据不足时不得标记为史实；诸如演义人物保留source_is_fiction标志，待单独审核。"
+  },
+  "join_policy": {
+    "identity_key": "官方名单独立条目稳定person_id；不是name",
+    "exact_name_is_not_sufficient_for_homonyms": true,
+    "source_row_and_official_id_preserved": true,
+    "four_name_discrepancies": "由名单表单独列出并保留别名；不能强行字符串等号",
+    "ambiguous_matches": "保留候选与疑点，禁止随机按同名首条覆盖"
+  },
+  "scenario_year_filter": {
+    "birth_boundary": "birth_year <= scenario_year，包括生年当年；只说明年度候选，不代表该年可出仕",
+    "appearance_boundary": "appearance_year <= scenario_year，包括登场年当年",
+    "death_boundary": "scenario_year <= death_year，卒年当年保留为boundary_uncertain；若scenario_year > death_year排除",
+    "missing_year": "资格为unknown，不自动纳入或排除；需要剧本明确覆盖规则",
+    "same_death_year": "只能确定同年，月份未知；可用来源剧本状态覆盖年度估算并保留来源",
+    "not_counted_as_active": "未出生、未登场、未知资格分别统计；不是库中缺失人物",
+    "age_estimate": "只展示year-birth_year的年差，非已确认实岁；不用于自动生成登场年",
+    "default_appearance_formula": null,
+    "do_not_infer_birth_plus_15": true
+  },
+  "lifespan_modes": {
+    "historical_setting": "采用有来源的游戏寿命/历史卒年配置，不能把待验证表当真实史事",
+    "fictional": "可关闭寿命和出生限制；例如来源251英雄列，不加入历史年份可用人数统计",
+    "legacy_nes": "保留原移除状态/事件与原出现表，不让新历史年表自动改旧流程"
+  },
+  "source_scenario_status": {
+    "(-)": "not_yet_appeared",
+    "(未)": "undiscovered",
+    "(野)": "free_officer",
+    "x": "dead_per_source_scenario",
+    "other": "serving_named_ruler；不等于任职城市"
+  },
+  "import_schema_minimum": {
+    "person_id": "string, stable identity",
+    "source_reference": "url + source_row + content_hash + source_name_raw",
+    "runtime_officer_id": "uint16 <=1199, initially null",
+    "legacy_nes_officer_id": "uint8 0..236 or null",
+    "birth_year/appearance_year/death_year": "nullable integer; source-prefixed game values",
+    "history_dates": "nullable with confidence and source",
+    "scenario_membership": "one row per person/scenario; raw+parsed status, nullable city/faction IDs",
+    "san14_stats": "five nullable ints with source/version; not populated from name list",
+    "nes_profile": "nullable conversion result plus original/raw evidence; no default guessed as verified"
+  },
+  "validation_rules": [
+    "birth<=death when both known",
+    "appearance>=birth when both known; violations reviewed, never silently repaired",
+    "source two table year triplets agree before merge",
+    "no random assignment of homonym chronology",
+    "record exact/alias/order-based match classes separately",
+    "official candidate count remains distinct-entity count, not name-string count",
+    "source game dates and proposed gameplay defaults have separate columns",
+    "unknowns do not become0 or invented15-year appearance",
+    "late heroes remain in whole database and appear only per scenario rules"
+  ],
+  "next_phase_blocks": [
+    "确定主剧本起始年和寿命模式",
+    "取得五维能力的可复查逐行来源",
+    "完成人物与原237人身份对照",
+    "新增人物体/徳/适性/装备/技能配置",
+    "16位ID替换名册、战场槽、继承/亲族/AI白名单和所有FF哨兵后再谈运行导入"
+  ],
+  "mapping_applied_to_game": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "wp02-authoritative-contract-samevalue-addendum-v1",
+  "main_current_JSR_contract": {
+    "path": "analysis/wp02-current-jsr-contract/current-jsr-contract.json",
+    "sha256": "3dc5e094ab3be01cf95ed8f1a4107447da993bba2ecf71538be66d3f0b977373",
+    "bytes": 38728
+  },
+  "appendix_plan": {
+    "path": "analysis/wp02-current-jsr-contract/samevalue-appendix/plan.json",
+    "sha256": "6a20e505fa26501b9103281f452e50519869d7a0488bf05cea5a87ce9eb19142",
+    "bytes": 1726
+  },
+  "appendix_actual_CPU_receipt": {
+    "path": "analysis/wp02-current-jsr-contract/samevalue-appendix/run-01/validation.json",
+    "sha256": "181c450c39ac6b2821ab176df6911398ca39fa0cc6016eec06a2ff42041b71c9",
+    "bytes": 9803
+  },
+  "conclusion": "Numeric stack-word equality is insufficient. A same-value external high-byte write invalidates current-generation provenance while all observed numeric ROM results can remain correct.",
+  "main_CPU_parent_cases": 17207,
+  "appendix_CPU_parent_cases": 4,
+  "combined_CPU_parent_cases": 17211,
+  "main_instructions": 752661,
+  "appendix_instructions": 64,
+  "combined_instructions": 752725,
+  "combined_prefix_segments": 17219,
+  "current_frame_valid_segments": 17190,
+  "invalid_or_bare_segments": 29,
+  "original_main_receipt_unchanged": true,
+  "Source_cases": 0,
+  "Native_runs": 0,
+  "actual_capture_origin": null
+}

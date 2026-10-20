@@ -1,0 +1,50 @@
+{
+  "typed_id": "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b29:cpuBCBF:rom03BCCF",
+  "full_locator": "/accesses/1474",
+  "remaining_locator": "/accesses/282",
+  "locked_source_bases": [
+    34816,
+    34880,
+    34944,
+    35008,
+    35056,
+    35072,
+    35136,
+    35200,
+    35264,
+    35328,
+    35392,
+    35456,
+    35520,
+    35584,
+    35648,
+    35712,
+    35776,
+    40944
+  ],
+  "actual_reads_per_side": 1600,
+  "physical_bank_read_counts": {
+    "16": 1552,
+    "29": 48
+  },
+  "address_rule": "Each BCBF uses live whole00/01 + Y, Y0..63; F25F maps8000 tophysical16; A000 slot remainsphysical29.",
+  "ROM_only_for_this_locked_subset": true,
+  "all_possible_pointer_inputs_closed": false,
+  "classification_change": false,
+  "raw_inline_window": "W:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b27:off0072:rom036082",
+  "inline_typed_ids": [
+    "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEE1F:rom03EE2F",
+    "I:26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82:b31:cpuEE25:rom03EE35"
+  ],
+  "inline_reads_new_package": 50,
+  "relation": "Same A06F entry as the previous phase0 package now reaches BCBF phase1; two inline bytes select A039. 9FF0 cross-window values from29:A000..A02F are data reads only.",
+  "continuation_A074_executed": false,
+  "raw_window_start_opcode_execution_proven": false,
+  "shared_semantic_root": null,
+  "A077_C443_executed": false,
+  "new_callers": 0,
+  "known_callers": 155,
+  "covered_callers_across_the_two_packages": 2,
+  "inventory_not_covered": 153,
+  "global_remaining_services": null
+}

@@ -1,0 +1,3239 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rom_cpu_case_count": 2148,
+  "original_complete_case_count": 2070,
+  "original_prefix_case_count": 78,
+  "source_guard_case_count": 6,
+  "failed_count": 0,
+  "counts": {
+    "predicate_suffix": 1600,
+    "neighbor_side_gap_suffix": 256,
+    "ambush_raw16_cache_suffix": 60,
+    "full_AD80": 128,
+    "ROM_descriptor_full_AD80": 16,
+    "cursor_AA03_prefix": 64,
+    "cursor_enemy_filter_prefix": 4,
+    "native_confirmed_full_AD80": 10,
+    "native_cursor_AA03_prefix": 10
+  },
+  "failures": [],
+  "samples": [
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 1,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        2
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        3
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 3,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        4
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        5
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 5,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 6,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        7
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 7,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        8
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 8,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        0,
+        255
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 255,
+        "target_terrain": 0,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        1,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 1,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        1,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 1,
+        "target_terrain": 1,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        1,
+        2
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 1,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        1,
+        3
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 3,
+        "target_terrain": 1,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        1,
+        4
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 1,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "predicate_suffix",
+      "tactic": 0,
+      "input": [
+        1,
+        5
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 5,
+        "target_terrain": 1,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "same",
+        false
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": false,
+        "carry": false,
+        "reason": "actor_not_orthogonally_adjacent",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "same",
+        true
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": false,
+        "carry": false,
+        "reason": "actor_not_orthogonally_adjacent",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "right",
+        false
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "right",
+        true
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "left",
+        false
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "left",
+        true
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "down",
+        false
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "down",
+        true
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "up",
+        false
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "up",
+        true
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "gap_down",
+        false
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "gap_down",
+        true
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "corner",
+        false
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "corner",
+        true
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "far",
+        false
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": false,
+        "carry": false,
+        "reason": "actor_not_orthogonally_adjacent",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "neighbor_side_gap_suffix",
+      "tactic": 6,
+      "input": [
+        0,
+        "far",
+        true
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": false,
+        "carry": false,
+        "reason": "actor_not_orthogonally_adjacent",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 5,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        0,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        0,
+        19
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        0,
+        255
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        1,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        1,
+        19
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        1,
+        255
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        99,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        99,
+        19
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        99,
+        255
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "caster_raw_troops_below100",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        100,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "own_ambush_cache_occupied",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        100,
+        19
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "own_ambush_cache_occupied",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        100,
+        255
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        101,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "own_ambush_cache_occupied",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        101,
+        19
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "own_ambush_cache_occupied",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        101,
+        255
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ambush_raw16_cache_suffix",
+      "tactic": 11,
+      "input": [
+        0,
+        255,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "own_ambush_cache_occupied",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 0,
+        "target_terrain": 0,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 0,
+      "input": [
+        [
+          19,
+          14
+        ],
+        [
+          18,
+          14
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 4,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 0,
+      "input": [
+        [
+          19,
+          14
+        ],
+        [
+          20,
+          14
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 5,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 0,
+      "input": [
+        [
+          5,
+          16
+        ],
+        [
+          4,
+          16
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 3,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 0,
+      "input": [
+        [
+          2,
+          16
+        ],
+        [
+          3,
+          17
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 0,
+      "input": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 0,
+      "input": [
+        [
+          31,
+          19
+        ],
+        [
+          30,
+          19
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 3,
+        "target_terrain": 3,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 0,
+      "input": [
+        [
+          16,
+          16
+        ],
+        [
+          15,
+          14
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 0,
+      "input": [
+        [
+          128,
+          255
+        ],
+        [
+          255,
+          128
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 1,
+        "target_terrain": 3,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 1,
+      "input": [
+        [
+          19,
+          14
+        ],
+        [
+          18,
+          14
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 4,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 1,
+      "input": [
+        [
+          19,
+          14
+        ],
+        [
+          20,
+          14
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 5,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 1,
+      "input": [
+        [
+          5,
+          16
+        ],
+        [
+          4,
+          16
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 3,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 1,
+      "input": [
+        [
+          2,
+          16
+        ],
+        [
+          3,
+          17
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 1,
+      "input": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 1,
+      "input": [
+        [
+          31,
+          19
+        ],
+        [
+          30,
+          19
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 3,
+        "target_terrain": 3,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 1,
+      "input": [
+        [
+          16,
+          16
+        ],
+        [
+          15,
+          14
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "full_AD80",
+      "tactic": 1,
+      "input": [
+        [
+          128,
+          255
+        ],
+        [
+          255,
+          128
+        ]
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 1,
+        "target_terrain": 3,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 0,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_2",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 1,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 2,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 2,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 4,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 3,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 3,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 4,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 4,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 7,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 5,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 5,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_not_army_first_slot",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 6,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 6,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_5",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 7,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 8,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 9,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 9,
+        "eligible": false,
+        "carry": false,
+        "reason": "actor_terrain_not_4_or_5",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 9,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 10,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 10,
+        "eligible": false,
+        "carry": false,
+        "reason": "no_enemy_terrain3_neighbor",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 9,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 11,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 11,
+        "eligible": false,
+        "carry": false,
+        "reason": "actor_terrain_not_0",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 12,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "eligible": false,
+        "carry": false,
+        "reason": "no_enemy_terrain3_neighbor",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 13,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 13,
+        "eligible": false,
+        "carry": false,
+        "reason": "actor_terrain_not_5",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 14,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "eligible": false,
+        "carry": false,
+        "reason": "no_enemy_non5_neighbor",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 12,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "ROM_descriptor_full_AD80",
+      "tactic": 15,
+      "input": [
+        32832,
+        6
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 15,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_3_or_5",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 0,
+      "input": [
+        0,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 0
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 0,
+      "input": [
+        1,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 1
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 0,
+      "input": [
+        5,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 0,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 5
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 0,
+      "input": [
+        6,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "eligible": false,
+        "carry": false,
+        "reason": "cursor_distance_at_least6",
+        "distance": 6,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 43561
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 1,
+      "input": [
+        0,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 0
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 1,
+      "input": [
+        1,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 1
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 1,
+      "input": [
+        5,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 5
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 1,
+      "input": [
+        6,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "eligible": false,
+        "carry": false,
+        "reason": "cursor_distance_at_least6",
+        "distance": 6,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 43561
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 2,
+      "input": [
+        0,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 2,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 4,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 0
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 2,
+      "input": [
+        1,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 2,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 4,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 1
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 2,
+      "input": [
+        5,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 2,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 4,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 5
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 2,
+      "input": [
+        6,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "eligible": false,
+        "carry": false,
+        "reason": "cursor_distance_at_least6",
+        "distance": 6,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 43561
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 3,
+      "input": [
+        0,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 3,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 0
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 3,
+      "input": [
+        1,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 3,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 1
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 3,
+      "input": [
+        5,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 3,
+        "eligible": false,
+        "carry": false,
+        "reason": "target_terrain_not_0_or_4",
+        "actor_slot": 0,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 2,
+        "player_AP_cost": 6,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 5
+      },
+      "original_end_pc": 43538
+    },
+    {
+      "group": "cursor_AA03_prefix",
+      "tactic": 3,
+      "input": [
+        6,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "eligible": false,
+        "carry": false,
+        "reason": "cursor_distance_at_least6",
+        "distance": 6,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 43561
+    },
+    {
+      "group": "cursor_enemy_filter_prefix",
+      "tactic": 9,
+      "input": [
+        0,
+        0,
+        2
+      ],
+      "result": {
+        "status": "returned",
+        "eligible": false,
+        "carry": false,
+        "reason": "cursor_target_same_side",
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 43560
+    },
+    {
+      "group": "cursor_enemy_filter_prefix",
+      "tactic": 9,
+      "input": [
+        0,
+        127,
+        2
+      ],
+      "result": {
+        "status": "returned",
+        "eligible": false,
+        "carry": false,
+        "reason": "cursor_target_same_side",
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 43560
+    },
+    {
+      "group": "cursor_enemy_filter_prefix",
+      "tactic": 9,
+      "input": [
+        128,
+        128,
+        2
+      ],
+      "result": {
+        "status": "returned",
+        "eligible": false,
+        "carry": false,
+        "reason": "cursor_target_same_side",
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 43560
+    },
+    {
+      "group": "cursor_enemy_filter_prefix",
+      "tactic": 9,
+      "input": [
+        128,
+        255,
+        2
+      ],
+      "result": {
+        "status": "returned",
+        "eligible": false,
+        "carry": false,
+        "reason": "cursor_target_same_side",
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 43560
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 1,
+      "input": [
+        1,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 1,
+      "input": [
+        1,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 3
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 5,
+      "input": [
+        5,
+        "cast-confirmation",
+        10,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 5,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 0,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 5,
+      "input": [
+        5,
+        "target-cursor",
+        10,
+        0
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 5,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 0,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 3
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 7,
+      "input": [
+        7,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 7,
+      "input": [
+        7,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 7,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 8,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 3
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 8,
+      "input": [
+        8,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 8,
+      "input": [
+        8,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 8,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 3
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 9,
+      "input": [
+        9,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 9,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 4,
+        "player_AP_cost": 9,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 9,
+      "input": [
+        9,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 9,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 4,
+        "player_AP_cost": 9,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 1
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 10,
+      "input": [
+        10,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 10,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 9,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 10,
+      "input": [
+        10,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 10,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 9,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 2
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 12,
+      "input": [
+        12,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 12,
+      "input": [
+        12,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 12,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 3,
+        "player_AP_cost": 10,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 2
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 14,
+      "input": [
+        14,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 12,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 14,
+      "input": [
+        14,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 14,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 12,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 3
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 1,
+      "input": [
+        1,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 1,
+      "input": [
+        1,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 1,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 2,
+        "target_terrain": 4,
+        "player_AP_cost": 5,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 3
+      },
+      "original_end_pc": 43549
+    },
+    {
+      "group": "native_confirmed_full_AD80",
+      "tactic": 9,
+      "input": [
+        9,
+        "cast-confirmation",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 9,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 4,
+        "player_AP_cost": 9,
+        "AP_charged": false,
+        "effect_probability_tested": false
+      },
+      "original_end_pc": 512
+    },
+    {
+      "group": "native_cursor_AA03_prefix",
+      "tactic": 9,
+      "input": [
+        9,
+        "target-cursor",
+        10,
+        1
+      ],
+      "result": {
+        "status": "returned",
+        "tactic_id": 9,
+        "eligible": true,
+        "carry": true,
+        "reason": null,
+        "actor_slot": 10,
+        "target_slot": 1,
+        "actor_terrain": 4,
+        "target_terrain": 4,
+        "player_AP_cost": 9,
+        "AP_charged": false,
+        "effect_probability_tested": false,
+        "distance": 1
+      },
+      "original_end_pc": 43549
+    }
+  ],
+  "guards": [
+    "ID16",
+    "IDnegative",
+    "slot20",
+    "unknown_ROM_descriptor",
+    "chunk120",
+    "bank32"
+  ],
+  "native_snapshot_inputs": [
+    {
+      "tactic_id": 1,
+      "case": "tactic-01",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-01/cast-confirmation.json",
+      "header_sha256": "b07ad083cc158ca8e82461c94128d4bbcd38da26441895c4cf1bcda291cf1fc0",
+      "RAM_path": "analysis/phase9/runtime/tactic-01/cast-confirmation-ram.bin",
+      "RAM_sha256": "16568fdfaca9dc68cf5cf24c87cf1bad50331ad092fe31438d714cde3fcda5d0",
+      "SRAM_path": "analysis/phase9/runtime/tactic-01/cast-confirmation-sram.bin",
+      "SRAM_sha256": "9e89efe6b1d6e84f1d9b320ee1dfedd52b82f52faca335d902c5e84418aa2bc7",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 1,
+      "case": "tactic-01",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-01/target-cursor.json",
+      "header_sha256": "eb688102dc4bbd0c433e5ecf63e7673152a7dde277684d3ec516154d0bb19d4d",
+      "RAM_path": "analysis/phase9/runtime/tactic-01/target-cursor-ram.bin",
+      "RAM_sha256": "94c9e4a2a8655773de0c5319ef66034155076bf56d3b71dd7cd7259a5604aba6",
+      "SRAM_path": "analysis/phase9/runtime/tactic-01/target-cursor-sram.bin",
+      "SRAM_sha256": "9e89efe6b1d6e84f1d9b320ee1dfedd52b82f52faca335d902c5e84418aa2bc7",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 5,
+      "case": "tactic-05",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-05/cast-confirmation.json",
+      "header_sha256": "8ef8b043744d52a796bf49e5ae72bb90bb39da8a8df7a91d9985138b4fac89d7",
+      "RAM_path": "analysis/phase9/runtime/tactic-05/cast-confirmation-ram.bin",
+      "RAM_sha256": "41eeebc492d91b73bb0a7535c49b46efb13decfa27d75bfca61be7ebeab27cad",
+      "SRAM_path": "analysis/phase9/runtime/tactic-05/cast-confirmation-sram.bin",
+      "SRAM_sha256": "aedcd27e8312f8ef1d3f1b63ff328daf8a0a09a1e35cad44b313ee9622fdf9e4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 0
+    },
+    {
+      "tactic_id": 5,
+      "case": "tactic-05",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-05/target-cursor.json",
+      "header_sha256": "f8c10b95128defdfbdfc6ad0c1bab6be8169bcc8b8df6cdde2f52fe1021b9eac",
+      "RAM_path": "analysis/phase9/runtime/tactic-05/target-cursor-ram.bin",
+      "RAM_sha256": "0189ee13103a307dd6d5df44752ab682cce6282bc051a13c385759b74c3c4f26",
+      "SRAM_path": "analysis/phase9/runtime/tactic-05/target-cursor-sram.bin",
+      "SRAM_sha256": "aedcd27e8312f8ef1d3f1b63ff328daf8a0a09a1e35cad44b313ee9622fdf9e4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 0
+    },
+    {
+      "tactic_id": 7,
+      "case": "tactic-07",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-07/cast-confirmation.json",
+      "header_sha256": "65fbc8ad8f069d8283b2f2129a2e79cbef2c97c272794390de4dcb95615b08bd",
+      "RAM_path": "analysis/phase9/runtime/tactic-07/cast-confirmation-ram.bin",
+      "RAM_sha256": "30bb9189d789051982a2a0124c20a4af8ed9bc8bb7e8a39ab07249d32127c122",
+      "SRAM_path": "analysis/phase9/runtime/tactic-07/cast-confirmation-sram.bin",
+      "SRAM_sha256": "93a781f2be1d59048404f746b27b8063244b593b9ccd27831c7d6238d422eb6e",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 7,
+      "case": "tactic-07",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-07/target-cursor.json",
+      "header_sha256": "e89ac3cab3e0a6609b2636dc4999d39dc765fab9f9756a8abd9e9b55f70f5fde",
+      "RAM_path": "analysis/phase9/runtime/tactic-07/target-cursor-ram.bin",
+      "RAM_sha256": "be7fa8e781ab142f9e0cefe2b041ef09d2c68ea71aa5c519cd5d6caadac6fe0c",
+      "SRAM_path": "analysis/phase9/runtime/tactic-07/target-cursor-sram.bin",
+      "SRAM_sha256": "93a781f2be1d59048404f746b27b8063244b593b9ccd27831c7d6238d422eb6e",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 8,
+      "case": "tactic-08",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-08/cast-confirmation.json",
+      "header_sha256": "4d4029c6c1eb744c9422ca2947c8dca321fece8f91994588b5302c300f5d6e6b",
+      "RAM_path": "analysis/phase9/runtime/tactic-08/cast-confirmation-ram.bin",
+      "RAM_sha256": "3da3940364d43cb4278be172313a45137236ddeb44e9f6a220843dfa7f1db05a",
+      "SRAM_path": "analysis/phase9/runtime/tactic-08/cast-confirmation-sram.bin",
+      "SRAM_sha256": "7549e53011e4a078d67391ec260aa7db216303d19379c5a54b08142d6475062a",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 8,
+      "case": "tactic-08",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-08/target-cursor.json",
+      "header_sha256": "c9d5949821384fdd6ddf7e00ebb5a7389e722d4ec6f6f794475cb7aa2575072f",
+      "RAM_path": "analysis/phase9/runtime/tactic-08/target-cursor-ram.bin",
+      "RAM_sha256": "760352cef51e78cb6fdc2a884cbc8f5463328539b3d6e77d9cec5d4e548f3be7",
+      "SRAM_path": "analysis/phase9/runtime/tactic-08/target-cursor-sram.bin",
+      "SRAM_sha256": "7549e53011e4a078d67391ec260aa7db216303d19379c5a54b08142d6475062a",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 9,
+      "case": "tactic-09",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-09/cast-confirmation.json",
+      "header_sha256": "957009bae0454abf767ab859b79c9d87927c13b8f5a2a402ec65786a969af5b8",
+      "RAM_path": "analysis/phase9/runtime/tactic-09/cast-confirmation-ram.bin",
+      "RAM_sha256": "fd72a118277bf828c60569148b1d9b1c4c006a65546955689c30cbc380ca2138",
+      "SRAM_path": "analysis/phase9/runtime/tactic-09/cast-confirmation-sram.bin",
+      "SRAM_sha256": "1af8f3f242321f3e44e49a81222aba571e7df24a29e7ad3aebc41fa8e10d6143",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 9,
+      "case": "tactic-09",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-09/target-cursor.json",
+      "header_sha256": "464e516f5ad47aefa32e2876382df9c6625265b04cd0602c47bcf4fb1bdfc18b",
+      "RAM_path": "analysis/phase9/runtime/tactic-09/target-cursor-ram.bin",
+      "RAM_sha256": "c272c605e0410f74dac4af2fb8034e417b9437f497d83af00a1c05df9a2c4cf7",
+      "SRAM_path": "analysis/phase9/runtime/tactic-09/target-cursor-sram.bin",
+      "SRAM_sha256": "1af8f3f242321f3e44e49a81222aba571e7df24a29e7ad3aebc41fa8e10d6143",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 10,
+      "case": "tactic-10",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-10/cast-confirmation.json",
+      "header_sha256": "b450e334810440b3db7be62090973ee7dad48ffe8eccf0367bc1d23f8eb38778",
+      "RAM_path": "analysis/phase9/runtime/tactic-10/cast-confirmation-ram.bin",
+      "RAM_sha256": "8c93b8f09ef0ab31ab38893e7a1912f98c466ac09f63a0f4bac42d69d4c2a7e9",
+      "SRAM_path": "analysis/phase9/runtime/tactic-10/cast-confirmation-sram.bin",
+      "SRAM_sha256": "0498a20606fa89b9e1e928f477c2d7af88f5c0674bff7e7822357fa3d2d9dfc4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 10,
+      "case": "tactic-10",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-10/target-cursor.json",
+      "header_sha256": "ea26567f997c15ddc1ddb611654dc6e3cd32f2f9ff79b72f9ec0da9b41d23bfa",
+      "RAM_path": "analysis/phase9/runtime/tactic-10/target-cursor-ram.bin",
+      "RAM_sha256": "8c3ef28d28f8763555ea4e30ae1f9a294e437f7e691aaa034dfc374eabc5fe09",
+      "SRAM_path": "analysis/phase9/runtime/tactic-10/target-cursor-sram.bin",
+      "SRAM_sha256": "0498a20606fa89b9e1e928f477c2d7af88f5c0674bff7e7822357fa3d2d9dfc4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 12,
+      "case": "tactic-12",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-12/cast-confirmation.json",
+      "header_sha256": "8d86a71e1c7ed8483d018490cba70649608b8b3fb3e92a36d1854eab41584e9c",
+      "RAM_path": "analysis/phase9/runtime/tactic-12/cast-confirmation-ram.bin",
+      "RAM_sha256": "1143971281961ddcfb45d161faf86c18b92b5135d866e2796f75a0987fa9391e",
+      "SRAM_path": "analysis/phase9/runtime/tactic-12/cast-confirmation-sram.bin",
+      "SRAM_sha256": "0498a20606fa89b9e1e928f477c2d7af88f5c0674bff7e7822357fa3d2d9dfc4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 12,
+      "case": "tactic-12",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-12/target-cursor.json",
+      "header_sha256": "0d935b345c5d319f6d1d2db17fa48f39d6622c9313ee119fc54bf88874daff6c",
+      "RAM_path": "analysis/phase9/runtime/tactic-12/target-cursor-ram.bin",
+      "RAM_sha256": "6bf1fbeb009036bbe1599b43bf1d0bb7e98b1364bd39d47dbf4996ffd97179d7",
+      "SRAM_path": "analysis/phase9/runtime/tactic-12/target-cursor-sram.bin",
+      "SRAM_sha256": "0498a20606fa89b9e1e928f477c2d7af88f5c0674bff7e7822357fa3d2d9dfc4",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 14,
+      "case": "tactic-14",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-14/cast-confirmation.json",
+      "header_sha256": "6ca335e0cd5a6c4094c30b36f182ae4179a7c6c92e95f62d98e1ae836f3c80ab",
+      "RAM_path": "analysis/phase9/runtime/tactic-14/cast-confirmation-ram.bin",
+      "RAM_sha256": "0d92b3c95bd202feb989879da210e94b227b2fca3d9e038ee367a136d334536c",
+      "SRAM_path": "analysis/phase9/runtime/tactic-14/cast-confirmation-sram.bin",
+      "SRAM_sha256": "93a781f2be1d59048404f746b27b8063244b593b9ccd27831c7d6238d422eb6e",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 14,
+      "case": "tactic-14",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-14/target-cursor.json",
+      "header_sha256": "f68ea75c02377f0dc0aaacd179977d9c8544b15d5fafe1b1d0c624e5bb72681f",
+      "RAM_path": "analysis/phase9/runtime/tactic-14/target-cursor-ram.bin",
+      "RAM_sha256": "616881efc7a7234f91b2d8f4b7144fddc8b40932024bdc40de2ff6a57041a89c",
+      "SRAM_path": "analysis/phase9/runtime/tactic-14/target-cursor-sram.bin",
+      "SRAM_sha256": "93a781f2be1d59048404f746b27b8063244b593b9ccd27831c7d6238d422eb6e",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 1,
+      "case": "tactic-01-death",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-01-death/cast-confirmation.json",
+      "header_sha256": "b07ad083cc158ca8e82461c94128d4bbcd38da26441895c4cf1bcda291cf1fc0",
+      "RAM_path": "analysis/phase9/runtime/tactic-01-death/cast-confirmation-ram.bin",
+      "RAM_sha256": "16568fdfaca9dc68cf5cf24c87cf1bad50331ad092fe31438d714cde3fcda5d0",
+      "SRAM_path": "analysis/phase9/runtime/tactic-01-death/cast-confirmation-sram.bin",
+      "SRAM_sha256": "d87d20e83dcdf9bf7e282a8a6cbc616ed4855ce78921ef054b645a76945b5e82",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 1,
+      "case": "tactic-01-death",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-01-death/target-cursor.json",
+      "header_sha256": "eb688102dc4bbd0c433e5ecf63e7673152a7dde277684d3ec516154d0bb19d4d",
+      "RAM_path": "analysis/phase9/runtime/tactic-01-death/target-cursor-ram.bin",
+      "RAM_sha256": "94c9e4a2a8655773de0c5319ef66034155076bf56d3b71dd7cd7259a5604aba6",
+      "SRAM_path": "analysis/phase9/runtime/tactic-01-death/target-cursor-sram.bin",
+      "SRAM_sha256": "d87d20e83dcdf9bf7e282a8a6cbc616ed4855ce78921ef054b645a76945b5e82",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 9,
+      "case": "tactic-09-levelup",
+      "label": "cast-confirmation",
+      "header_path": "analysis/phase9/runtime/tactic-09-levelup/cast-confirmation.json",
+      "header_sha256": "957009bae0454abf767ab859b79c9d87927c13b8f5a2a402ec65786a969af5b8",
+      "RAM_path": "analysis/phase9/runtime/tactic-09-levelup/cast-confirmation-ram.bin",
+      "RAM_sha256": "998834cdcfd5b392955475338c3c72e93475d053f6492a9665595390bb3c198a",
+      "SRAM_path": "analysis/phase9/runtime/tactic-09-levelup/cast-confirmation-sram.bin",
+      "SRAM_sha256": "70ff94f033fb263237b53090b906413b564a62d5780f4cfb614e47fc668f9672",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    },
+    {
+      "tactic_id": 9,
+      "case": "tactic-09-levelup",
+      "label": "target-cursor",
+      "header_path": "analysis/phase9/runtime/tactic-09-levelup/target-cursor.json",
+      "header_sha256": "464e516f5ad47aefa32e2876382df9c6625265b04cd0602c47bcf4fb1bdfc18b",
+      "RAM_path": "analysis/phase9/runtime/tactic-09-levelup/target-cursor-ram.bin",
+      "RAM_sha256": "24b9f1e4b0d62c0dceb67c464fd48a5b623bc552af57929c8ae3894320df9b29",
+      "SRAM_path": "analysis/phase9/runtime/tactic-09-levelup/target-cursor-sram.bin",
+      "SRAM_sha256": "70ff94f033fb263237b53090b906413b564a62d5780f4cfb614e47fc668f9672",
+      "current_data_bank": 6,
+      "actor_slot": 10,
+      "confirmed_target_slot": 1
+    }
+  ],
+  "compared_SRAM_bytes": 8192,
+  "declared_RAM_ranges": [
+    [
+      10,
+      12
+    ],
+    [
+      16,
+      18
+    ],
+    [
+      1289,
+      1291
+    ],
+    [
+      1347,
+      1348
+    ]
+  ],
+  "original_instruction_locations": 523,
+  "source_sha256": "384b62ac62a8aebbdba2f9169b66cafc5525c21d949fb12267c910cd681e6009",
+  "validator_sha256": "a8a5e601805330d23b632585368691e951b4dae620a71c5294deb3be5a2dd771",
+  "contract": "All8KSRAM plus declaredRAM and originalreturnedcarry; CPUotherflags/registers/mapper/stack/arithmeticwork excluded; AA03prefix stops beforeactualUI messages",
+  "effects_probability_or_AP_consumption": false
+}

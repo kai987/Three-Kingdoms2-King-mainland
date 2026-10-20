@@ -1,0 +1,66 @@
+{
+  "schema": "nes-closure-output-hashes-v1",
+  "files": {
+    "analysis/closure-audit-20261018/README.md": {
+      "sha256": "7ec7718a4dcad5ad37ce5070ccaa2f107e797ad54caff42c93c7443a01e87a9e",
+      "bytes": 4175
+    },
+    "analysis/closure-audit-20261018/acceptance-table.md": {
+      "sha256": "07e8519b9b22542ad8079ed07c6073a7cf6fb3d42f5d82053f1682716b24b71c",
+      "bytes": 2025
+    },
+    "analysis/closure-audit-20261018/audit.py": {
+      "sha256": "832a85ef2b9d393a855dee2490051a3c9e26b2115b730216fe848bdaf7a2e5f7",
+      "bytes": 59557
+    },
+    "analysis/closure-audit-20261018/coverage-comparison.json": {
+      "sha256": "c62abc6b38301256baee14eb0679a85956dd3354b87df0ecf1c1e6b6adc55e2e",
+      "bytes": 51688
+    },
+    "analysis/closure-audit-20261018/coverage-table.md": {
+      "sha256": "84d8939050aab14b54b0d4c7585b307724d83da39980be030cf97488dd6e52ca",
+      "bytes": 995
+    },
+    "analysis/closure-audit-20261018/formal-phase31-inventory.json": {
+      "sha256": "04965aaca298e2e53706ad630a205363768c3d03a068cbba16774652514e18c2",
+      "bytes": 2830
+    },
+    "analysis/closure-audit-20261018/frozen-acceptance-matrix.json": {
+      "sha256": "a18733c1f7cc01b3808f9bf40acad0045f264ec5e4049981af95c7e81f3e516a",
+      "bytes": 81949
+    },
+    "analysis/closure-audit-20261018/gap-table.md": {
+      "sha256": "2fc2aa60befd34542d57f383102d0a57756cfd5496c55a617c70891e93e590be",
+      "bytes": 3464
+    },
+    "analysis/closure-audit-20261018/input-hash-manifest.json": {
+      "sha256": "867143b67be69a100afc1ea84e5a187d1a34ddf8607b04ef62b6a3436531c3dc",
+      "bytes": 29694168
+    },
+    "analysis/closure-audit-20261018/phase32-residue-inventory.json": {
+      "sha256": "20d57c56d489e298d305ae3ff158f3a0e31a069d3374ca919974e143fe337ac8",
+      "bytes": 989370
+    },
+    "analysis/closure-audit-20261018/scope-provenance.json": {
+      "sha256": "3712ac0e4e8d4c01d4244f2f8c768b719c0b8de2fade89bb614458d5ce7c3bf3",
+      "bytes": 2227
+    },
+    "analysis/closure-audit-20261018/unique-gap-register.json": {
+      "sha256": "791356d690ed8998901ef60621eb3a3af44fd2ef0bcc48c63fbd8716883af4a4",
+      "bytes": 2151111
+    },
+    "analysis/closure-audit-20261018/work-packages.json": {
+      "sha256": "315887f579c4abbe6503d4ca59d1a9137770b0993e9089e56c24bb8b99d2e92e",
+      "bytes": 7657
+    },
+    "analysis/closure-audit-20261018/work-packages.md": {
+      "sha256": "00fc39bb795f64b03d31b8d0a359dfdc2fb3229afe153b400af2bcee5f556cdb",
+      "bytes": 2591
+    }
+  },
+  "excluded": [
+    "output-hash-manifest.json",
+    "verification.json"
+  ],
+  "reason": "Avoid self-referential digest cycle; verification pins this manifest."
+}

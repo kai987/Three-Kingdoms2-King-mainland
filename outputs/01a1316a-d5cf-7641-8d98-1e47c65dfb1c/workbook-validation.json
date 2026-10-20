@@ -1,0 +1,44 @@
+{
+  "output": "/Users/paulasmith/Documents/Codex/Three-Kingdoms2-King-mainland/outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/千人武将候选名单与字段映射.xlsx",
+  "officers": 1000,
+  "uniqueNames": 994,
+  "homonymPeople": 11,
+  "mappingRows": 29,
+  "scenarioCells": 10000,
+  "yearFilterTests": [
+    {
+      "year": 184,
+      "counts": {
+        "未出生": 377,
+        "未登场": 336,
+        "年表可登场": 276,
+        "卒年边界待核": 11
+      }
+    },
+    {
+      "year": null,
+      "counts": {
+        "参考年待填": 1000
+      }
+    },
+    {
+      "year": 0,
+      "counts": {
+        "参考年待填": 1000
+      }
+    },
+    {
+      "year": 230,
+      "counts": {
+        "已过卒年": 540,
+        "年表可登场": 326,
+        "未登场": 84,
+        "未出生": 38,
+        "卒年边界待核": 12
+      }
+    }
+  ],
+  "remainingLegacyIdentities": 229,
+  "originalGameModified": false,
+  "formulaErrorScan": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}"
+}

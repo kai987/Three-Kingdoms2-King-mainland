@@ -1,0 +1,41 @@
+{
+  "schema": "phase24-one-G086-independent-source-evidence-v1",
+  "status": "passed",
+  "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "selected_unknown_producer_group": "G086",
+  "new_manual_positions": 379,
+  "new_manual_code_bytes": 913,
+  "immutable_data_bytes": 39,
+  "dynamic_new_positions": 379,
+  "not_dynamic_positions": 0,
+  "all_paths_or_inputs_proven": false,
+  "recovered_scope": "Named selection/input/pointer save/borrow/restore/record update/numeric packet protocol. Frozen arithmetic and other group bodies are not counted as new semantic discoveries.",
+  "validation": {
+    "path": "analysis/phase24/lifecycle/validation.json",
+    "sha256": "3d29c16a2f882cdc7a3e3a56dee771843c814554fe3007568d2a225da2284a75",
+    "original_CPU_parent_cases": 1038,
+    "counts": {
+      "actual_caller_RTS": 1036,
+      "strict_missing_dependency_prefix": 2
+    },
+    "source_guard_count": 5
+  },
+  "production_original_CPU_callbacks": 0,
+  "production_IR_interpretation": false,
+  "production_runtime_codegen": false,
+  "original_Native_internal_CPU_trace": false,
+  "source_sha256": {
+    "source/recovered/pointer_lifecycle_services.py": "421a12466121ae825d2729c9fd3094f72cf69d307468219e7ceb7f52cd28f2a8",
+    "source/recovered/pointer_lifecycle_integration.py": "4f1514eb66c5f41df2d132c3063b9c112b166b1e4741d23166478d7ca8bde043",
+    "source/recovered/city_ui_controller.py": "8685e223907b1ecb9ffc1e46d14cd170fd0c362c69940f3e1f7fe0f82a6680fa",
+    "source/recovered/troop_fields.py": "68af655697369085f79616cddabb656550872807fa82e7bb0ea03fc027522ca7",
+    "scripts/analyze_pointer_lifecycle_services.py": "8fb6a29974894d14468c8be9e2d5f1996d809dd5316c338d9c0eebf884596f1f",
+    "scripts/verify_pointer_lifecycle_services.py": "d83a215bd9eaf8d5c595e831b19476c23f1ab9ca9bfe4a1d5649c26e7196cdf8"
+  },
+  "artifact_sha256": {
+    "analysis/phase24/lifecycle/static-catalog.json": "aa897ecf04e3b0307a3e9387f30426a437c3dd08ca47804d24285e8bf3b5a7ab",
+    "analysis/phase24/lifecycle/original.asm": "ce4cf92eca4209f060b7c8cc366b60b498b087bf92416c16d92ab361b6451d88",
+    "analysis/phase24/lifecycle/pointer-lifetime.json": "1b84cb35f97495b88badabb10bb4a001cc17732c474e591851cd7fa4fe0d35ec"
+  },
+  "exported_caller_inputs": 4
+}

@@ -1,0 +1,113 @@
+{
+  "schema": "WP07-unexecuted-continuation-static-premise-v1",
+  "actual_first_returns": [
+    {
+      "point": "zero_samples/call1-advance1-returned",
+      "snapshot_offset": 79872,
+      "actual_87_88_89_8A": [
+        92,
+        121,
+        150,
+        179
+      ],
+      "actual_7D_7E": [
+        0,
+        5
+      ]
+    },
+    {
+      "point": "mixed_status_nonzero_latch/call1-advance1-returned",
+      "snapshot_offset": 292864,
+      "actual_87_88_89_8A": [
+        92,
+        121,
+        150,
+        179
+      ],
+      "actual_7D_7E": [
+        0,
+        5
+      ]
+    },
+    {
+      "point": "other_status_bits/call1-advance1-returned",
+      "snapshot_offset": 505856,
+      "actual_87_88_89_8A": [
+        92,
+        121,
+        150,
+        179
+      ],
+      "actual_7D_7E": [
+        0,
+        5
+      ]
+    },
+    {
+      "point": "missing_first_then_resume/call1-real-resume-return",
+      "snapshot_offset": 772096,
+      "actual_87_88_89_8A": [
+        92,
+        121,
+        150,
+        179
+      ],
+      "actual_7D_7E": [
+        0,
+        5
+      ]
+    },
+    {
+      "point": "exhausted_second_then_resume/call1-advance1-returned",
+      "snapshot_offset": 985088,
+      "actual_87_88_89_8A": [
+        92,
+        121,
+        150,
+        179
+      ],
+      "actual_7D_7E": [
+        0,
+        5
+      ]
+    }
+  ],
+  "next_original_calls": [
+    {
+      "PC": 63672,
+      "target": 61958
+    },
+    {
+      "PC": 63675,
+      "target": 64267
+    },
+    {
+      "PC": 63678,
+      "target": 60519
+    }
+  ],
+  "original_bytes": "2006f2200bfb2067ec",
+  "Source_method": "BattleNMIServices.palette_fade",
+  "Source_sha256": "cb9d9a5477b768b0cc208c93665abb30643b5e7f792a021b4109f03313067a15",
+  "conditional_static_derivation": "If actual continuation reaches EC67 with these fields unchanged:8A B3->B2 negative, reload8A=96;7D=1;87 nonzero makes88 79->7A,>=4 sets87=FF. Then existing palette loop runs.",
+  "predicted_fields_before_palette_loop": {
+    "87": 255,
+    "88": 122,
+    "89": 150,
+    "8A": 150,
+    "7D": 1
+  },
+  "actual_continuation_executed": false,
+  "Source_CPU_Native_executions": 0,
+  "consequence": "Controlled second entry intentionally bypasses this unexecuted continuation. Natural nextEE53 is not proved to choosebit2;palette priority may be reasserted.",
+  "required_next_scope": "Real F8B8->F206->FB0B->EC67 scheduling with its explicit hardware inputs and incoming context, before any natural nextconsumer claim.",
+  "F206_role": "Existing CHR configuration:8 register writes;notpalette_fade anddoesnot reassert7D",
+  "additional_status_gate": {
+    "PC": 64290,
+    "instruction": "BIT2002/BVS",
+    "condition": "Repeatwhilebit6 set",
+    "input_contract_declared_in_this_package": false,
+    "return_assumed": false
+  },
+  "palette_write_stack_premise": "EC67 also writes active0100..011F;SP00 frame alias and actualreturn remain unexecuted andmustbe checked,notassumed."
+}

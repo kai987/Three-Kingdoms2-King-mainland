@@ -1,0 +1,1552 @@
+{
+  "schema": "phase31-passive-player-disposition-caller-with-device-fixture-v1",
+  "origin": "passive_Native_callee_capture_with_explicit_N163_fixture",
+  "ancestry_origin": "natural_ancestry",
+  "controlled_ancestry": false,
+  "natural_ordinary_input_route": true,
+  "registers": {
+    "a": 0,
+    "x": 220,
+    "y": 44,
+    "p": 35,
+    "sp": 245,
+    "pc": 40960
+  },
+  "physical_banks": [
+    2,
+    12,
+    13,
+    31
+  ],
+  "existing_return_PC": 63824,
+  "N163_address": 127,
+  "N163_autoincrement": true,
+  "N163_origin": "explicit_shared_fixture_not_Native_snapshot",
+  "explicit_N163_fixture": {
+    "bytes": 128,
+    "sha256": "0aedd4856f8eba0963627336ad5144a9a7dbe12498e6066f0165fc97d8ddee4c",
+    "pattern": "(11+37*i)&255",
+    "address": 127,
+    "autoincrement": true,
+    "scope": "Common Source/originalCPU fixture; not instantaneous Native device capture"
+  },
+  "prepared_numeric_bytes": [],
+  "additional_CPU_prepared_numeric_bytes": [],
+  "inherited_Native_preparation": [],
+  "known_inherited_preparation_byte_writes": 0,
+  "ancestry_provenance": {
+    "schema": "phase31-natural-AI-ordinary-segmented-ancestry-v1",
+    "status": "verified_content_lineage_not_fresh_repeat",
+    "ROM_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+    "natural_ordinary_input_route": true,
+    "controlled_ancestry": false,
+    "known_inherited_preparation_byte_writes": 0,
+    "known_inherited_preparation": [],
+    "earlier_ancestor_cold_boot": true,
+    "additional_preparation": [],
+    "additional_core_memory_writes": 0,
+    "new_case_state_imported": true,
+    "new_case_cold_boot": false,
+    "segments": [
+      {
+        "index": 1,
+        "name": "natural-AI-defence-search12",
+        "frames": 48681,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-01/initial.state",
+          "sha256": "3f7f5a993791af234557e47141dfd58d0ad4c1bc4c28b839b9890b4033cdcea8",
+          "bytes": 13803
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-01/final.state",
+          "sha256": "0f9e4dc2b049e9e09fb4a276d121009d8f6270bfd974014051761b00d75a0db2",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-01/final-ram.bin",
+          "sha256": "3cde41040f3eddd9a74f92514f5b5ff4d9cc4e9718f03a8e80c37f5bdf64af8c",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-01/final-sram.bin",
+          "sha256": "49fa4a202113fa7f2e993b42de64a90ef6c36366380076af1279e92d2d6e58eb",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-01/input-plan.json",
+          "sha256": "9adf69328d7405c9328dca79c32b3dcfc7151ac2ce40784b8fed8099998ab586",
+          "bytes": 982129
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-01/frame-buffer-hashes.json",
+          "sha256": "ad7863058eca1c17d44e424fb50a2cff44aebc548273cd57beb24c819408aa7f",
+          "bytes": 46921955
+        },
+        "source_script": {
+          "path": "scripts/probe_ai_defence_phase31.py",
+          "sha256": "3838ee125b66e757a537f288f8b538b09d19b347820db78a8a1cf3650411b346",
+          "bytes": 3505
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-01/original-probe-receipt.json",
+          "sha256": "a8e2d82b6b768f28cd9324ecdb393fc944e451bf7356420bfef7eab64beddd00",
+          "bytes": 1304
+        },
+        "observed_final_CPU_registers": {
+          "a": 255,
+          "x": 11,
+          "y": 38,
+          "p": 36,
+          "sp": 244,
+          "pc": 43372
+        },
+        "observed_final_PRG_banks": [
+          3,
+          23,
+          24,
+          31
+        ]
+      },
+      {
+        "index": 2,
+        "name": "natural-defence-reveal",
+        "frames": 400,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-02/initial.state",
+          "sha256": "0f9e4dc2b049e9e09fb4a276d121009d8f6270bfd974014051761b00d75a0db2",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-02/final.state",
+          "sha256": "ceb6cb19bb1e07ecf173b60ce981aa8f780409b68f65bcaae4f920e494031fda",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-02/final-ram.bin",
+          "sha256": "34463df7f435bf7546a8e79c2875be886d1500c10a13bc3b56536e6c445beaea",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-02/final-sram.bin",
+          "sha256": "f468d2643561be9e489ce3099307a8bf4e45c648ac2d10e335408c58a83b2e80",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-02/input-plan.json",
+          "sha256": "6ed44c8dea6d335277d88031d79882106fa945c52246f5de7f0a4bded524cfae",
+          "bytes": 231
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-02/frame-buffer-hashes.json",
+          "sha256": "8459e8c9c45e0d318f6fe8b3fe4f77e73537be8f74de8ae76c4c9812a058b0a4",
+          "bytes": 8224891
+        },
+        "source_script": {
+          "path": "scripts/probe_postbattle_continuity_phase31.py",
+          "sha256": "7056208f14e1ad3a468a8630ef9bef83fdbe5145443a20c213b96a38d381ca26",
+          "bytes": 3053
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-02/original-probe-receipt.json",
+          "sha256": "cce0be71d53c688a1831f3563db1174cad9fc7f616e444d50905c3032e979276",
+          "bytes": 1923
+        },
+        "observed_final_CPU_registers": {
+          "a": 205,
+          "x": 10,
+          "y": 41,
+          "p": 36,
+          "sp": 253,
+          "pc": 62034
+        },
+        "observed_final_PRG_banks": [
+          3,
+          8,
+          9,
+          31
+        ]
+      },
+      {
+        "index": 3,
+        "name": "natural-defence-place",
+        "frames": 1338,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-03/initial.state",
+          "sha256": "ceb6cb19bb1e07ecf173b60ce981aa8f780409b68f65bcaae4f920e494031fda",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-03/final.state",
+          "sha256": "a425dd1806b528f4bf44a0791dd7112c6674346de3cca061cade514f75d1de2b",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-03/final-ram.bin",
+          "sha256": "ab9e6499f3591a17f804eb77218641a435675958a0a8cdd09b0e2c0befe44cd9",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-03/final-sram.bin",
+          "sha256": "25a7cf29ad8303959da2317806f60bc45e9ff9ea10f56e3ed9347279f767ec6b",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-03/input-plan.json",
+          "sha256": "2c2b8bc6be9335b3735661be72270ec8655cf5217fbb2e46c1bc2ebd5001752b",
+          "bytes": 12904
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-03/frame-buffer-hashes.json",
+          "sha256": "3f31be465e5bc66f9389d3cac368772c8f1a6a27941354f120328fe86ce3b2cc",
+          "bytes": 27514128
+        },
+        "source_script": {
+          "path": "scripts/probe_postbattle_continuity_phase31.py",
+          "sha256": "7056208f14e1ad3a468a8630ef9bef83fdbe5145443a20c213b96a38d381ca26",
+          "bytes": 3053
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-03/original-probe-receipt.json",
+          "sha256": "00fff6ef20b8eafd1ccb506ad07d4eb5413f774742fbcb0b7d27e11c9ac90f41",
+          "bytes": 12011
+        },
+        "observed_final_CPU_registers": {
+          "a": 232,
+          "x": 10,
+          "y": 40,
+          "p": 164,
+          "sp": 252,
+          "pc": 62042
+        },
+        "observed_final_PRG_banks": [
+          3,
+          8,
+          9,
+          31
+        ]
+      },
+      {
+        "index": 4,
+        "name": "natural-defence-confirm",
+        "frames": 302,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-04/initial.state",
+          "sha256": "a425dd1806b528f4bf44a0791dd7112c6674346de3cca061cade514f75d1de2b",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-04/final.state",
+          "sha256": "1652fb6fdfb08feec245b102eb92da29dbd35ff23e098533e0f6122e20cabc91",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-04/final-ram.bin",
+          "sha256": "046a66f0d68e2ef868ee7ad81e444751dfdc2790ddb894325085b9dd40434acb",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-04/final-sram.bin",
+          "sha256": "3f2a5f12a8a10e1ebc954f7e98555a504dfdefba8c2406310496a07e363fa5b3",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-04/input-plan.json",
+          "sha256": "f67c8693172311ce7bf54b4f9189e2e89d2b4bd74396ea4f37628ec118067638",
+          "bytes": 431
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-04/frame-buffer-hashes.json",
+          "sha256": "bbf79490cd9f6c78c56070c7520fb38efdf843e4664ebdbf4322e90ee339e8c9",
+          "bytes": 6208485
+        },
+        "source_script": {
+          "path": "scripts/probe_postbattle_continuity_phase31.py",
+          "sha256": "7056208f14e1ad3a468a8630ef9bef83fdbe5145443a20c213b96a38d381ca26",
+          "bytes": 3053
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-04/original-probe-receipt.json",
+          "sha256": "76d8c599df65267b750e1413a7d72815558a4b3f6337ca6120c3ef47102ecb16",
+          "bytes": 10580
+        },
+        "observed_final_CPU_registers": {
+          "a": 75,
+          "x": 2,
+          "y": 40,
+          "p": 36,
+          "sp": 253,
+          "pc": 62027
+        },
+        "observed_final_PRG_banks": [
+          3,
+          8,
+          9,
+          31
+        ]
+      },
+      {
+        "index": 5,
+        "name": "natural-defensive-all-notices",
+        "frames": 30132,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-05/initial.state",
+          "sha256": "1652fb6fdfb08feec245b102eb92da29dbd35ff23e098533e0f6122e20cabc91",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-05/final.state",
+          "sha256": "c1b2998e6f20076497544c193951b408c21358056873c061da023342fc85ee33",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-05/final-ram.bin",
+          "sha256": "e514c0e8de1076e90cd70ef58a6be80e26d815eeca56558e5be8b16bbdaabdd5",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-05/final-sram.bin",
+          "sha256": "3cca6fd98c2efede3b3983e842943582585ccb9d9b94dbe2550ff6b50ef794f0",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-05/input-plan.json",
+          "sha256": "4e17e6c1c91fb934c2db2762d5a9dc81ee9c7a3a582dcc8f57c3e5f9845ec635",
+          "bytes": 83888
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-05/frame-buffer-hashes.json",
+          "sha256": "dbe480972f9ba490946cef72ebe0752c3214cbd57845e6ce9646c2e085a6f2ea",
+          "bytes": 34112353
+        },
+        "source_script": {
+          "path": "scripts/probe_defensive_wait_all_notices_phase31.py",
+          "sha256": "d80927e7b9603c5156132853d8f673a15a9792a61fb2ec0b9c277ef0f7b594c2",
+          "bytes": 4199
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-05/original-probe-receipt.json",
+          "sha256": "c9c99846419ee801d456fee589b443bb702314e4431444b3a269e38cb0c0c609",
+          "bytes": 14989
+        },
+        "observed_final_CPU_registers": {
+          "a": 70,
+          "x": 222,
+          "y": 8,
+          "p": 164,
+          "sp": 253,
+          "pc": 59526
+        },
+        "observed_final_PRG_banks": [
+          3,
+          8,
+          9,
+          31
+        ]
+      },
+      {
+        "index": 6,
+        "name": "natural-defensive-completion",
+        "frames": 45132,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-06/initial.state",
+          "sha256": "c1b2998e6f20076497544c193951b408c21358056873c061da023342fc85ee33",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-06/final.state",
+          "sha256": "9d7429e40af85fd38b7bd5a52cad3d97fe107dc4392c615e8ce7f96fab7388ad",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-06/final-ram.bin",
+          "sha256": "c148068a2a80e04d182856c141fb5b978111c9d038d492d999fdc10629273be4",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-06/final-sram.bin",
+          "sha256": "bb53e16004fadbb09c2605c2000218f9093c568b213e0e097ebdcada27d8be40",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-06/input-plan.json",
+          "sha256": "95620c12273953a6d5b3c0c5e267a931eb1561dbef52815482e0eeb4f65cccd2",
+          "bytes": 131907
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-06/frame-buffer-hashes.json",
+          "sha256": "e468cb85dccdda2d1b85fe6e61aab1cb51ea06f991a84de973f3819b80718edb",
+          "bytes": 51101808
+        },
+        "source_script": {
+          "path": "scripts/probe_defensive_complete_notices_phase31.py",
+          "sha256": "76464e9496ca465e99e8e5986cb302eaf76f1276e7a44c44a5771e77551f8e42",
+          "bytes": 4205
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-06/original-probe-receipt.json",
+          "sha256": "158ecfe5474544328f70ff22f13ed49275f1dd3919ff8e874a6f1602d9758afa",
+          "bytes": 14987
+        },
+        "observed_final_CPU_registers": {
+          "a": 134,
+          "x": 199,
+          "y": 8,
+          "p": 164,
+          "sp": 253,
+          "pc": 59526
+        },
+        "observed_final_PRG_banks": [
+          3,
+          8,
+          9,
+          31
+        ]
+      },
+      {
+        "index": 7,
+        "name": "natural-defence-move-adjacent",
+        "frames": 922,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-07/initial.state",
+          "sha256": "9d7429e40af85fd38b7bd5a52cad3d97fe107dc4392c615e8ce7f96fab7388ad",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-07/final.state",
+          "sha256": "2ec70a396673287cedf1e0f867243e94feec8d8508d520f31bd3e3c44f466117",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-07/final-ram.bin",
+          "sha256": "1fb3851cba93dc5d5e228381f02a2abc7b8fcc21928f257edb4b86115f918b10",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-07/final-sram.bin",
+          "sha256": "374674c69291f8307f444a97ee1d19acb6debcf87da2532d8419b8e7c0cefb34",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-07/input-plan.json",
+          "sha256": "dc17aaec61f1486bda13eb7cd03aef11731efa24d73e698d73f743888c08a95e",
+          "bytes": 2577
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-07/frame-buffer-hashes.json",
+          "sha256": "7db2d724e54fe8f0055dd6971cfe5e47d040bf25dfaeb2c93019189a16697438",
+          "bytes": 18939763
+        },
+        "source_script": {
+          "path": "scripts/probe_postbattle_continuity_phase31.py",
+          "sha256": "7056208f14e1ad3a468a8630ef9bef83fdbe5145443a20c213b96a38d381ca26",
+          "bytes": 3053
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-07/original-probe-receipt.json",
+          "sha256": "97a56f22bca6f5ec194f229e92620ff26c874487e163ce5f71aaa3e997c0024f",
+          "bytes": 5494
+        },
+        "observed_final_CPU_registers": {
+          "a": 81,
+          "x": 0,
+          "y": 8,
+          "p": 38,
+          "sp": 253,
+          "pc": 59529
+        },
+        "observed_final_PRG_banks": [
+          3,
+          8,
+          9,
+          31
+        ]
+      },
+      {
+        "index": 8,
+        "name": "natural-defence-attack",
+        "frames": 1042,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-08/initial.state",
+          "sha256": "2ec70a396673287cedf1e0f867243e94feec8d8508d520f31bd3e3c44f466117",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-08/final.state",
+          "sha256": "cc8cb1f2731ae0e08d0e34484ab69db01f918ec14df9061e715198ba836b4c5b",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-08/final-ram.bin",
+          "sha256": "27d5e843fc1daf19f77361eb64fba7fce9115705c0f71b732cbbe3656b183e48",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-08/final-sram.bin",
+          "sha256": "97cfcde58684b7a1fdf4a241278677d9db7c003524205f95674a5e1d2932bd04",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-08/input-plan.json",
+          "sha256": "cc0f26e2ed0b12f752ec9389ab40a45462b499c7c214d98768f2086f19229a44",
+          "bytes": 2746
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-08/frame-buffer-hashes.json",
+          "sha256": "d7d1edbfcea9ecffa3e7c1173609ee410d89522d895058c862f127f24d62f425",
+          "bytes": 21406598
+        },
+        "source_script": {
+          "path": "scripts/probe_postbattle_continuity_phase31.py",
+          "sha256": "7056208f14e1ad3a468a8630ef9bef83fdbe5145443a20c213b96a38d381ca26",
+          "bytes": 3053
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-08/original-probe-receipt.json",
+          "sha256": "4822706c68d38b6457fd9b4100c7770cf428278d644946a797cb47ec9ac32a30",
+          "bytes": 4783
+        },
+        "observed_final_CPU_registers": {
+          "a": 34,
+          "x": 10,
+          "y": 12,
+          "p": 100,
+          "sp": 255,
+          "pc": 58085
+        },
+        "observed_final_PRG_banks": [
+          3,
+          8,
+          9,
+          31
+        ]
+      },
+      {
+        "index": 9,
+        "name": "natural-defence-normal-combat",
+        "frames": 12476,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-09/initial.state",
+          "sha256": "cc8cb1f2731ae0e08d0e34484ab69db01f918ec14df9061e715198ba836b4c5b",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-09/final.state",
+          "sha256": "cb2a4e5468d57ed4ffa6b8aae211d735958bc7c6d1639515b82744031ffd43ab",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-09/final-ram.bin",
+          "sha256": "576b545d89087f0e7297846c1b54cc79593f73f27db8632e3a89343726b8d611",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-09/final-sram.bin",
+          "sha256": "e7c93e583f533661b7f14c36bc397e4f31cc08a49db7f885c1cca922810ada47",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-09/input-plan.json",
+          "sha256": "6eecdf97eb8e2df1a9c7d9d7f2f0310dc8ac5b024dd129f23bb315cc9b7e8c68",
+          "bytes": 65029
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-09/frame-buffer-hashes.json",
+          "sha256": "75f5daaee4c685eb30b3d69aa0905c105d5dc2d48ec261bd50cd1ababb37b161",
+          "bytes": 14090515
+        },
+        "source_script": {
+          "path": "scripts/probe_ordinary_defence_attack_phase31.py",
+          "sha256": "528a60a1e41b7468da50da3c7715dfbdffbb3898f8df33b2559aff2add7e9079",
+          "bytes": 1656
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-09/original-probe-receipt.json",
+          "sha256": "66f2bb5a43f8afce54e8862adcafb09fb7d3a60ac37e8dbfbfa8ae1bb8c6be5d",
+          "bytes": 14327
+        },
+        "observed_final_CPU_registers": {
+          "a": 227,
+          "x": 2,
+          "y": 16,
+          "p": 228,
+          "sp": 253,
+          "pc": 59514
+        },
+        "observed_final_PRG_banks": [
+          3,
+          8,
+          9,
+          31
+        ]
+      },
+      {
+        "index": 10,
+        "name": "natural-defence-duel-result",
+        "frames": 1211,
+        "state_import_at_start": true,
+        "new_preparation": [],
+        "additional_core_memory_writes": 0,
+        "initial_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-10/initial.state",
+          "sha256": "cb2a4e5468d57ed4ffa6b8aae211d735958bc7c6d1639515b82744031ffd43ab",
+          "bytes": 13783
+        },
+        "final_state": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-10/final.state",
+          "sha256": "e87307982a56f14ab0aac39655dc1bec094d91ec9b710dff4b8e54af12386a5c",
+          "bytes": 13783
+        },
+        "final_RAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-10/final-ram.bin",
+          "sha256": "8462a1da0a71681bc173298c6c3967b8fb2bf21b4bb38700cf302b4efa636478",
+          "bytes": 2048
+        },
+        "final_SRAM": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-10/final-sram.bin",
+          "sha256": "0ab61205349d4cd8569e9e79f89f708b07ad21cd04aa26f043edd509106b1086",
+          "bytes": 8192
+        },
+        "input_plan": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-10/input-plan.json",
+          "sha256": "9267e191858065196b9b3ac16a2078a05a5193d68253837b34f25a5a25105522",
+          "bytes": 6741
+        },
+        "complete_frame_hash_log": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-10/frame-buffer-hashes.json",
+          "sha256": "49c90196c8b474d59ba78fab1f1a0ef0131dffa3db7eb06282d79e36418d9a58",
+          "bytes": 1364962
+        },
+        "source_script": {
+          "path": "scripts/probe_duel_result_phase31.py",
+          "sha256": "5db6882cb6d3ba11a5b66dd909b9d6a8f783fae67b486d658ae8c14b0a49f505",
+          "bytes": 1663
+        },
+        "original_result": {
+          "path": "analysis/phase31/ancestry/natural-AI-mode2/segment-10/original-probe-receipt.json",
+          "sha256": "4caf78774661088157e09728864836eb1aec0f2e160a4e028c15c12a0c082a85",
+          "bytes": 14648
+        },
+        "observed_final_CPU_registers": {
+          "a": 232,
+          "x": 35,
+          "y": 40,
+          "p": 228,
+          "sp": 252,
+          "pc": 62045
+        },
+        "observed_final_PRG_banks": [
+          2,
+          8,
+          9,
+          31
+        ]
+      }
+    ],
+    "segmented_upstream_frames": 141636,
+    "upstream_original_core_runs": 10,
+    "upstream_fresh_repeat_claim": false,
+    "upstream_internal_CPU_trace": false,
+    "root_frozen_ancestor": {
+      "path": "analysis/phase22/runtime/original-control/validation.json",
+      "sha256": "9bec1018085683371996afe44e396aa398b118e5ea8bb8f8d53eca4687314ed5",
+      "bytes": 183551
+    },
+    "parent_checkpoints": {
+      "path": "analysis/phase31/ancestry/natural-AI-mode2/mother/checkpoints.json",
+      "sha256": "91bc90e3c370d1c83ae66bba51b528e3e25c594040ee5f799cb0cf29c8489e22",
+      "bytes": 219
+    },
+    "mother": {
+      "path": "analysis/phase31/ancestry/natural-AI-mode2/mother/AI-result-mother.state",
+      "bytes": 13783,
+      "sha256": "e87307982a56f14ab0aac39655dc1bec094d91ec9b710dff4b8e54af12386a5c"
+    },
+    "input_sha256": {
+      "analysis/phase31/ancestry/natural-AI-mode2/formal-input-plan.json": "1354ffdb3491a46ecb8390cd47a6c11636c11ac2dfaf5a10372f36aae001173f",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/input-plan.json": "cc0f26e2ed0b12f752ec9389ab40a45462b499c7c214d98768f2086f19229a44",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/final.png": "7706199cec61049086dfa7db82b1687580a45925596e23ac77c940d737f45c2f",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/final-ram.bin": "27d5e843fc1daf19f77361eb64fba7fce9115705c0f71b732cbbe3656b183e48",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/original-input-plan.json": "e9086aa5d446016e590ebd87f6ca34d2d544e1869f555699a9b15f6050e3272e",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/final.state": "cc8cb1f2731ae0e08d0e34484ab69db01f918ec14df9061e715198ba836b4c5b",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/original-probe-receipt.json": "4822706c68d38b6457fd9b4100c7770cf428278d644946a797cb47ec9ac32a30",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/final-sram.bin": "97cfcde58684b7a1fdf4a241278677d9db7c003524205f95674a5e1d2932bd04",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/frame-buffer-hashes.json": "d7d1edbfcea9ecffa3e7c1173609ee410d89522d895058c862f127f24d62f425",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-08/initial.state": "2ec70a396673287cedf1e0f867243e94feec8d8508d520f31bd3e3c44f466117",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/input-plan.json": "9adf69328d7405c9328dca79c32b3dcfc7151ac2ce40784b8fed8099998ab586",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/final.png": "179ac232ad73c16707c2abea079f4abafd0e812838ee2a92693ab6f485a47cb6",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/final-ram.bin": "3cde41040f3eddd9a74f92514f5b5ff4d9cc4e9718f03a8e80c37f5bdf64af8c",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/original-input-plan.json": "a48d0bb9c4c9ff0bc1115837bd53c111e09e7e6e77cb9356d9c5fdfdfee08133",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/final.state": "0f9e4dc2b049e9e09fb4a276d121009d8f6270bfd974014051761b00d75a0db2",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/original-probe-receipt.json": "a8e2d82b6b768f28cd9324ecdb393fc944e451bf7356420bfef7eab64beddd00",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/final-sram.bin": "49fa4a202113fa7f2e993b42de64a90ef6c36366380076af1279e92d2d6e58eb",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/frame-buffer-hashes.json": "ad7863058eca1c17d44e424fb50a2cff44aebc548273cd57beb24c819408aa7f",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-01/initial.state": "3f7f5a993791af234557e47141dfd58d0ad4c1bc4c28b839b9890b4033cdcea8",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/input-plan.json": "95620c12273953a6d5b3c0c5e267a931eb1561dbef52815482e0eeb4f65cccd2",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/final.png": "a842cf9d99c3376b3c231caa91d20e89db9fc403893cb65df2054054b4824658",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/final-ram.bin": "c148068a2a80e04d182856c141fb5b978111c9d038d492d999fdc10629273be4",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/original-input-plan.json": "c5678253f4000af6e1b9e3d2b93727da1956f928781218fa7fdbcc75368c3d66",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/final.state": "9d7429e40af85fd38b7bd5a52cad3d97fe107dc4392c615e8ce7f96fab7388ad",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/original-probe-receipt.json": "158ecfe5474544328f70ff22f13ed49275f1dd3919ff8e874a6f1602d9758afa",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/final-sram.bin": "bb53e16004fadbb09c2605c2000218f9093c568b213e0e097ebdcada27d8be40",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/frame-buffer-hashes.json": "e468cb85dccdda2d1b85fe6e61aab1cb51ea06f991a84de973f3819b80718edb",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-06/initial.state": "c1b2998e6f20076497544c193951b408c21358056873c061da023342fc85ee33",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/input-plan.json": "dc17aaec61f1486bda13eb7cd03aef11731efa24d73e698d73f743888c08a95e",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/final.png": "09ecba2afd0bbd5822f694c11c01248e6746459e4c1544970f73f9c01aa7c5f8",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/final-ram.bin": "1fb3851cba93dc5d5e228381f02a2abc7b8fcc21928f257edb4b86115f918b10",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/original-input-plan.json": "91e55ae9e2dcd8802a282e3406434fb3453f10d3f515507980add63b0985474e",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/final.state": "2ec70a396673287cedf1e0f867243e94feec8d8508d520f31bd3e3c44f466117",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/original-probe-receipt.json": "97a56f22bca6f5ec194f229e92620ff26c874487e163ce5f71aaa3e997c0024f",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/final-sram.bin": "374674c69291f8307f444a97ee1d19acb6debcf87da2532d8419b8e7c0cefb34",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/frame-buffer-hashes.json": "7db2d724e54fe8f0055dd6971cfe5e47d040bf25dfaeb2c93019189a16697438",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-07/initial.state": "9d7429e40af85fd38b7bd5a52cad3d97fe107dc4392c615e8ce7f96fab7388ad",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/input-plan.json": "6eecdf97eb8e2df1a9c7d9d7f2f0310dc8ac5b024dd129f23bb315cc9b7e8c68",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/final.png": "2ef40769377bfbdf7ef9dafb399058a6b838a17c08df0c0b5c6b4bfb92c7be67",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/final-ram.bin": "576b545d89087f0e7297846c1b54cc79593f73f27db8632e3a89343726b8d611",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/original-input-plan.json": "16d284707c9c2cc12432681a4b2e72de0853ee241954cdb541b815e35cf531c3",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/final.state": "cb2a4e5468d57ed4ffa6b8aae211d735958bc7c6d1639515b82744031ffd43ab",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/original-probe-receipt.json": "66f2bb5a43f8afce54e8862adcafb09fb7d3a60ac37e8dbfbfa8ae1bb8c6be5d",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/final-sram.bin": "e7c93e583f533661b7f14c36bc397e4f31cc08a49db7f885c1cca922810ada47",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/frame-buffer-hashes.json": "75f5daaee4c685eb30b3d69aa0905c105d5dc2d48ec261bd50cd1ababb37b161",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-09/initial.state": "cc8cb1f2731ae0e08d0e34484ab69db01f918ec14df9061e715198ba836b4c5b",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/input-plan.json": "4e17e6c1c91fb934c2db2762d5a9dc81ee9c7a3a582dcc8f57c3e5f9845ec635",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/final.png": "4a77b9977fee0c64bbe4447bd836161d3d5693fbaead0d555ff9471afb5da3a2",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/final-ram.bin": "e514c0e8de1076e90cd70ef58a6be80e26d815eeca56558e5be8b16bbdaabdd5",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/original-input-plan.json": "3a72f60ee1f58cea40a66ab3240a9de5310967488248508f6b5663c3ef251e3b",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/final.state": "c1b2998e6f20076497544c193951b408c21358056873c061da023342fc85ee33",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/original-probe-receipt.json": "c9c99846419ee801d456fee589b443bb702314e4431444b3a269e38cb0c0c609",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/final-sram.bin": "3cca6fd98c2efede3b3983e842943582585ccb9d9b94dbe2550ff6b50ef794f0",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/frame-buffer-hashes.json": "dbe480972f9ba490946cef72ebe0752c3214cbd57845e6ce9646c2e085a6f2ea",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-05/initial.state": "1652fb6fdfb08feec245b102eb92da29dbd35ff23e098533e0f6122e20cabc91",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/input-plan.json": "6ed44c8dea6d335277d88031d79882106fa945c52246f5de7f0a4bded524cfae",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/final.png": "244e65f1c75ece8097fd2c36266c3331766f1edde8f87f4f226f4bbc37e65d31",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/final-ram.bin": "34463df7f435bf7546a8e79c2875be886d1500c10a13bc3b56536e6c445beaea",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/original-input-plan.json": "b202241c760b21b56212979e7eba4a756bbf704f163b13782ba77eea3ee4aed5",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/final.state": "ceb6cb19bb1e07ecf173b60ce981aa8f780409b68f65bcaae4f920e494031fda",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/original-probe-receipt.json": "cce0be71d53c688a1831f3563db1174cad9fc7f616e444d50905c3032e979276",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/final-sram.bin": "f468d2643561be9e489ce3099307a8bf4e45c648ac2d10e335408c58a83b2e80",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/frame-buffer-hashes.json": "8459e8c9c45e0d318f6fe8b3fe4f77e73537be8f74de8ae76c4c9812a058b0a4",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-02/initial.state": "0f9e4dc2b049e9e09fb4a276d121009d8f6270bfd974014051761b00d75a0db2",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/input-plan.json": "2c2b8bc6be9335b3735661be72270ec8655cf5217fbb2e46c1bc2ebd5001752b",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/final.png": "6aa3cd01a5cd370964d07abe427d65af8a8996b030d658a7fcd8b70d8aa30da4",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/final-ram.bin": "ab9e6499f3591a17f804eb77218641a435675958a0a8cdd09b0e2c0befe44cd9",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/original-input-plan.json": "c672b91e6f02063cabd5e88c60c69de3ca3c8e06cb533ef01534c8b989a95567",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/final.state": "a425dd1806b528f4bf44a0791dd7112c6674346de3cca061cade514f75d1de2b",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/original-probe-receipt.json": "00fff6ef20b8eafd1ccb506ad07d4eb5413f774742fbcb0b7d27e11c9ac90f41",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/final-sram.bin": "25a7cf29ad8303959da2317806f60bc45e9ff9ea10f56e3ed9347279f767ec6b",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/frame-buffer-hashes.json": "3f31be465e5bc66f9389d3cac368772c8f1a6a27941354f120328fe86ce3b2cc",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-03/initial.state": "ceb6cb19bb1e07ecf173b60ce981aa8f780409b68f65bcaae4f920e494031fda",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/input-plan.json": "f67c8693172311ce7bf54b4f9189e2e89d2b4bd74396ea4f37628ec118067638",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/final.png": "aa849a767d859cdf38c7275bba70c8a9d646714c7a3b00bf1fcbf08144d862f8",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/final-ram.bin": "046a66f0d68e2ef868ee7ad81e444751dfdc2790ddb894325085b9dd40434acb",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/original-input-plan.json": "896d79acdb662e875a11192133ee9dab7cb70ccd78240e0525beff53d4b662d5",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/final.state": "1652fb6fdfb08feec245b102eb92da29dbd35ff23e098533e0f6122e20cabc91",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/original-probe-receipt.json": "76d8c599df65267b750e1413a7d72815558a4b3f6337ca6120c3ef47102ecb16",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/final-sram.bin": "3f2a5f12a8a10e1ebc954f7e98555a504dfdefba8c2406310496a07e363fa5b3",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/frame-buffer-hashes.json": "bbf79490cd9f6c78c56070c7520fb38efdf843e4664ebdbf4322e90ee339e8c9",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-04/initial.state": "a425dd1806b528f4bf44a0791dd7112c6674346de3cca061cade514f75d1de2b",
+      "analysis/phase31/ancestry/natural-AI-mode2/mother/AI-result-mother.png": "179ac232ad73c16707c2abea079f4abafd0e812838ee2a92693ab6f485a47cb6",
+      "analysis/phase31/ancestry/natural-AI-mode2/mother/checkpoints.json": "91bc90e3c370d1c83ae66bba51b528e3e25c594040ee5f799cb0cf29c8489e22",
+      "analysis/phase31/ancestry/natural-AI-mode2/mother/AI-result-mother-ram.bin": "8462a1da0a71681bc173298c6c3967b8fb2bf21b4bb38700cf302b4efa636478",
+      "analysis/phase31/ancestry/natural-AI-mode2/mother/AI-result-mother-sram.bin": "0ab61205349d4cd8569e9e79f89f708b07ad21cd04aa26f043edd509106b1086",
+      "analysis/phase31/ancestry/natural-AI-mode2/mother/AI-result-mother.state": "e87307982a56f14ab0aac39655dc1bec094d91ec9b710dff4b8e54af12386a5c",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/input-plan.json": "9267e191858065196b9b3ac16a2078a05a5193d68253837b34f25a5a25105522",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/final.png": "179ac232ad73c16707c2abea079f4abafd0e812838ee2a92693ab6f485a47cb6",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/final-ram.bin": "8462a1da0a71681bc173298c6c3967b8fb2bf21b4bb38700cf302b4efa636478",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/original-input-plan.json": "b01a7d0276b01142cb326587ca7132e14dd01cff5b450bcec51e60002b7a09c5",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/final.state": "e87307982a56f14ab0aac39655dc1bec094d91ec9b710dff4b8e54af12386a5c",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/original-probe-receipt.json": "4caf78774661088157e09728864836eb1aec0f2e160a4e028c15c12a0c082a85",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/final-sram.bin": "0ab61205349d4cd8569e9e79f89f708b07ad21cd04aa26f043edd509106b1086",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/frame-buffer-hashes.json": "49c90196c8b474d59ba78fab1f1a0ef0131dffa3db7eb06282d79e36418d9a58",
+      "analysis/phase31/ancestry/natural-AI-mode2/segment-10/initial.state": "cb2a4e5468d57ed4ffa6b8aae211d735958bc7c6d1639515b82744031ffd43ab",
+      "analysis/phase22/runtime/validation.json": "be9dc9faeed9dad1d0fadba3ff5a44cad9d04f49d64e1981247ea32e2745c0e7",
+      "analysis/phase22/runtime/evidence.json": "3ff68baf6352e7cc0023081b1e1af0d78f37277c254de16dc015fa8a9d13d64c",
+      "analysis/phase22/runtime/original-control/validation.json": "9bec1018085683371996afe44e396aa398b118e5ea8bb8f8d53eca4687314ed5",
+      "analysis/phase22/runtime/original-control/final.state": "3f7f5a993791af234557e47141dfd58d0ad4c1bc4c28b839b9890b4033cdcea8",
+      "scripts/nes_runtime.py": "ad4d093646f2f87621f4cfa29c79bffb8dfda2ba67ee86850f99bee099e0fc2e",
+      "scripts/nes_service_runtime.py": "f3e10f0296126f24a47b9f9cc8a8b170726e0b929969d88ba02ce5084a552124",
+      "scripts/freeze_ai_ancestry_phase31.py": "e9c0f186cc67b575e9968e4165bd00d94740e2fe627ca4474ad273f096b9944e"
+    },
+    "limits": [
+      "Ten actual ordinary-input segments with imports at their boundaries; no new emulated memory, PC, RNG, result or ready preparation.",
+      "Upstream original-core observations are single-run ancestry, not formal four-run Native evidence. Complete used-prefix frame hashes and actual boundary states are retained.",
+      "Deployment8,5 was an input intention; later actual RAM positions were Cao12,10 and AI27,10. Later movement actually produced14,10 and15,10.",
+      "Wait-command counters count openings/attempts; actual day and phase counters remain separately recorded.",
+      "The selected mother still has0514=131 from duel context. New war outcome must be established by actual DD72 write events."
+    ],
+    "parent_checkpoint": {
+      "label": "AI-result-mother",
+      "frame": 1211,
+      "state": "AI-result-mother.state",
+      "RAM": "AI-result-mother-ram.bin",
+      "SRAM": "AI-result-mother-sram.bin",
+      "image": "AI-result-mother.png"
+    }
+  },
+  "controller_buttons": [
+    0,
+    0
+  ],
+  "injected_new_NMI": 0,
+  "injected_new_IRQ": 0,
+  "hardware_events": [
+    {
+      "kind": "explicit_model_port_inputs",
+      "PPUSTATUS": 0,
+      "APU_status": 0,
+      "Namco_IRQ": 127,
+      "controller_buttons": [
+        0,
+        0
+      ]
+    }
+  ],
+  "actual_call_kind": "unknown",
+  "immediate_transfer_PC": null,
+  "immediate_transfer_proof": {
+    "callee_opcode_boundary": {
+      "sequence": 341090,
+      "frame": 503,
+      "cycle": 67512,
+      "kind": "opcode_boundary",
+      "opcode_PC": 40960,
+      "bus_PC": 40960,
+      "physical_bank": 12,
+      "actual_PRG_banks": [
+        2,
+        12,
+        13,
+        31
+      ],
+      "rom_offset": 98320,
+      "address": 40960,
+      "value": 0,
+      "A": 0,
+      "X": 220,
+      "Y": 44,
+      "P": 35,
+      "SP": 245,
+      "ZP_0000_0023": [
+        254,
+        248,
+        16,
+        20,
+        0,
+        0,
+        195,
+        148,
+        0,
+        0,
+        24,
+        64,
+        0,
+        1,
+        168,
+        0,
+        128,
+        40,
+        128,
+        6,
+        5,
+        163,
+        20,
+        252,
+        24,
+        4,
+        0,
+        184,
+        79,
+        184,
+        80,
+        0,
+        25,
+        173,
+        172,
+        243
+      ],
+      "pointer_0000_0001": 63742,
+      "saved_pointer_0010_0011": 10368,
+      "scratch_0053_0054": [
+        4,
+        66
+      ],
+      "pointer_0022_0023": 62380,
+      "working_0036_0039": [
+        30,
+        1,
+        11,
+        4
+      ],
+      "city_state_0400_0403": [
+        9,
+        5,
+        16,
+        30
+      ],
+      "row_0012": 128,
+      "row_047A": 1,
+      "end_row_047B": 1,
+      "mode_047C": 128,
+      "working_reserve_042C_042D": 138,
+      "stack_above_SP_4bytes": [
+        79,
+        249,
+        8,
+        35
+      ],
+      "stack_top_word_raw": 63823,
+      "full_snapshot_sequence": 15,
+      "last_CPU_opcode_field": 32,
+      "bus_internal": 160,
+      "bus_external": 160,
+      "raw_UI_cache_0151_plus_row": null,
+      "NMI_scene_0078": 3,
+      "global_main_007A": 4,
+      "new_buttons_0081": 0,
+      "CHR_cache_00C2": 8,
+      "target_type": "opcode_boundary",
+      "WRAM_readable": true,
+      "WRAM_writable": true,
+      "physical_storage_byte_after_event": null,
+      "city_index": null,
+      "city_offset": null,
+      "ZP_0000_002F": [
+        254,
+        248,
+        16,
+        20,
+        0,
+        0,
+        195,
+        148,
+        0,
+        0,
+        24,
+        64,
+        0,
+        1,
+        168,
+        0,
+        128,
+        40,
+        128,
+        6,
+        5,
+        163,
+        20,
+        252,
+        24,
+        4,
+        0,
+        184,
+        79,
+        184,
+        80,
+        0,
+        25,
+        173,
+        172,
+        243,
+        172,
+        183,
+        15,
+        172,
+        5,
+        3,
+        4,
+        0,
+        5,
+        3,
+        0,
+        0
+      ],
+      "product_002A_002B": 4,
+      "raw_officer_ID_0024": 172,
+      "current_city_0036": 30,
+      "appearance_pair_index_0037": 1,
+      "year_raw_6F00": 90,
+      "ruler_6F03": 3,
+      "domestic_phase_6F5B": 255,
+      "request_6F8B": 255,
+      "officer_index": null,
+      "strategy_side_6F91": 2,
+      "noncommander_count_6F94": 0,
+      "raw_bank_selector_DE": 35,
+      "raw_bank_selector_DF": 40,
+      "profile_counts_6F99_6FA0": [
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_physical_bank": null,
+      "data_ROM_offset": null,
+      "pointer_001A_001B": 47104,
+      "battle_0506_0507_050E_0514": [
+        28,
+        50,
+        11,
+        1
+      ],
+      "RAM0500_0503": [
+        15,
+        1,
+        0,
+        0
+      ],
+      "RAM0514_0517": [
+        1,
+        0,
+        67,
+        2
+      ],
+      "RAM0518_051B": [
+        255,
+        0,
+        11,
+        3
+      ],
+      "storage_byte_before_write": null,
+      "logical_G106_city_read": false,
+      "G106_STA_dummy_read": false,
+      "logical_G106_city_store": false,
+      "fade_0087_008A": [
+        255,
+        0,
+        4,
+        4
+      ],
+      "ppu_flags_007D_0080": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "palette_active_0100_011F": [
+        15,
+        39,
+        25,
+        10,
+        15,
+        25,
+        18,
+        2,
+        15,
+        54,
+        32,
+        22,
+        15,
+        32,
+        32,
+        32,
+        15,
+        15,
+        32,
+        22,
+        15,
+        15,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23
+      ],
+      "palette_backup_0120_013F": [
+        15,
+        39,
+        25,
+        10,
+        15,
+        25,
+        18,
+        2,
+        15,
+        54,
+        32,
+        22,
+        15,
+        32,
+        32,
+        32,
+        15,
+        15,
+        32,
+        22,
+        15,
+        15,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23
+      ],
+      "shadow_bank_bytes_00DE_00E5": [
+        35,
+        40,
+        41,
+        34,
+        44,
+        45,
+        0,
+        0
+      ],
+      "captured_RAM_byte_after_write": null,
+      "saved_city_pointer_000A_000B": 16408,
+      "logical_completion_city_read": false,
+      "logical_completion_leader_read": false,
+      "logical_completion_adjacency_read": false,
+      "logical_completion_city_store": false,
+      "completion_STA_dummy_bus_read": false,
+      "logical_CC29_profile_ROM_read": false,
+      "postbattle_mode_6F91": 2,
+      "early_controller_byte_read": false,
+      "early_BC46_JSR_boundary": false,
+      "early_mode_dispatch_target": false,
+      "early_SRAM_write": false,
+      "buttons_0081_0086": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "side_0504": 128,
+      "raw_050B": 0,
+      "UI_0540_0547": [
+        5,
+        2,
+        0,
+        0,
+        3,
+        0,
+        3,
+        0
+      ],
+      "human_disposition_entry": false,
+      "title_Start_bypass": false,
+      "ruler_controller_write": false,
+      "postbattle_allocation_commit": false,
+      "commander_outcome_producer": false
+    },
+    "previous_watched_opcode_boundary": {
+      "sequence": 341085,
+      "frame": 503,
+      "cycle": 66996,
+      "kind": "opcode_boundary",
+      "opcode_PC": 62007,
+      "bus_PC": 62007,
+      "physical_bank": 31,
+      "actual_PRG_banks": [
+        2,
+        25,
+        26,
+        31
+      ],
+      "rom_offset": 258631,
+      "address": 62007,
+      "value": 0,
+      "A": 0,
+      "X": 220,
+      "Y": 44,
+      "P": 33,
+      "SP": 245,
+      "ZP_0000_0023": [
+        254,
+        248,
+        16,
+        20,
+        0,
+        0,
+        195,
+        148,
+        0,
+        0,
+        24,
+        64,
+        0,
+        1,
+        168,
+        0,
+        128,
+        40,
+        128,
+        6,
+        5,
+        163,
+        20,
+        252,
+        24,
+        4,
+        0,
+        184,
+        79,
+        184,
+        80,
+        0,
+        25,
+        173,
+        172,
+        243
+      ],
+      "pointer_0000_0001": 63742,
+      "saved_pointer_0010_0011": 10368,
+      "scratch_0053_0054": [
+        4,
+        66
+      ],
+      "pointer_0022_0023": 62380,
+      "working_0036_0039": [
+        30,
+        1,
+        11,
+        4
+      ],
+      "city_state_0400_0403": [
+        9,
+        5,
+        16,
+        30
+      ],
+      "row_0012": 128,
+      "row_047A": 1,
+      "end_row_047B": 1,
+      "mode_047C": 128,
+      "working_reserve_042C_042D": 138,
+      "stack_above_SP_4bytes": [
+        76,
+        249,
+        8,
+        35
+      ],
+      "stack_top_word_raw": 63820,
+      "full_snapshot_sequence": null,
+      "last_CPU_opcode_field": 32,
+      "bus_internal": 242,
+      "bus_external": 242,
+      "raw_UI_cache_0151_plus_row": null,
+      "NMI_scene_0078": 3,
+      "global_main_007A": 4,
+      "new_buttons_0081": 0,
+      "CHR_cache_00C2": 8,
+      "target_type": "opcode_boundary",
+      "WRAM_readable": true,
+      "WRAM_writable": true,
+      "physical_storage_byte_after_event": null,
+      "city_index": null,
+      "city_offset": null,
+      "ZP_0000_002F": [
+        254,
+        248,
+        16,
+        20,
+        0,
+        0,
+        195,
+        148,
+        0,
+        0,
+        24,
+        64,
+        0,
+        1,
+        168,
+        0,
+        128,
+        40,
+        128,
+        6,
+        5,
+        163,
+        20,
+        252,
+        24,
+        4,
+        0,
+        184,
+        79,
+        184,
+        80,
+        0,
+        25,
+        173,
+        172,
+        243,
+        172,
+        183,
+        15,
+        172,
+        5,
+        3,
+        4,
+        0,
+        5,
+        3,
+        0,
+        0
+      ],
+      "product_002A_002B": 4,
+      "raw_officer_ID_0024": 172,
+      "current_city_0036": 30,
+      "appearance_pair_index_0037": 1,
+      "year_raw_6F00": 90,
+      "ruler_6F03": 3,
+      "domestic_phase_6F5B": 255,
+      "request_6F8B": 255,
+      "officer_index": null,
+      "strategy_side_6F91": 2,
+      "noncommander_count_6F94": 0,
+      "raw_bank_selector_DE": 35,
+      "raw_bank_selector_DF": 40,
+      "profile_counts_6F99_6FA0": [
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "data_physical_bank": null,
+      "data_ROM_offset": null,
+      "pointer_001A_001B": 47104,
+      "battle_0506_0507_050E_0514": [
+        28,
+        50,
+        11,
+        1
+      ],
+      "RAM0500_0503": [
+        15,
+        1,
+        0,
+        0
+      ],
+      "RAM0514_0517": [
+        1,
+        0,
+        67,
+        2
+      ],
+      "RAM0518_051B": [
+        255,
+        0,
+        11,
+        3
+      ],
+      "storage_byte_before_write": null,
+      "logical_G106_city_read": false,
+      "G106_STA_dummy_read": false,
+      "logical_G106_city_store": false,
+      "fade_0087_008A": [
+        255,
+        0,
+        4,
+        4
+      ],
+      "ppu_flags_007D_0080": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "palette_active_0100_011F": [
+        15,
+        39,
+        25,
+        10,
+        15,
+        25,
+        18,
+        2,
+        15,
+        54,
+        32,
+        22,
+        15,
+        32,
+        32,
+        32,
+        15,
+        15,
+        32,
+        22,
+        15,
+        15,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23
+      ],
+      "palette_backup_0120_013F": [
+        15,
+        39,
+        25,
+        10,
+        15,
+        25,
+        18,
+        2,
+        15,
+        54,
+        32,
+        22,
+        15,
+        32,
+        32,
+        32,
+        15,
+        15,
+        32,
+        22,
+        15,
+        15,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23,
+        15,
+        32,
+        39,
+        23
+      ],
+      "shadow_bank_bytes_00DE_00E5": [
+        35,
+        40,
+        41,
+        34,
+        57,
+        58,
+        0,
+        0
+      ],
+      "captured_RAM_byte_after_write": null,
+      "saved_city_pointer_000A_000B": 16408,
+      "logical_completion_city_read": false,
+      "logical_completion_leader_read": false,
+      "logical_completion_adjacency_read": false,
+      "logical_completion_city_store": false,
+      "completion_STA_dummy_bus_read": false,
+      "logical_CC29_profile_ROM_read": false,
+      "postbattle_mode_6F91": 2,
+      "early_controller_byte_read": false,
+      "early_BC46_JSR_boundary": false,
+      "early_mode_dispatch_target": false,
+      "early_SRAM_write": false,
+      "buttons_0081_0086": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "side_0504": 128,
+      "raw_050B": 0,
+      "UI_0540_0547": [
+        5,
+        2,
+        0,
+        0,
+        3,
+        0,
+        3,
+        0
+      ],
+      "human_disposition_entry": false,
+      "title_Start_bypass": false,
+      "ruler_controller_write": false,
+      "postbattle_allocation_commit": false,
+      "commander_outcome_producer": false
+    },
+    "not_inferred_from_return_stack": true,
+    "scope": "Watched sparse boundaries; not a globally unbroken CPU trace",
+    "previous_ROM_bytes": "8C E2 00",
+    "cycle_ticks": 516
+  },
+  "real_return_frame_owner": {
+    "kind": "captured_existing_frame_creator_not_fully_observed",
+    "existing_stack_word": 63823,
+    "return_PC": 63824,
+    "SP": 245,
+    "creation_PC": null,
+    "not_inferred_from_return_word_minus3": true
+  },
+  "state": 15,
+  "phase": 1,
+  "mode": null,
+  "side": 128,
+  "original_queue_ready": true,
+  "original_new_A": false,
+  "fade_87": 255,
+  "fade_negative_if_stage3": null,
+  "passive_capture": {
+    "metadata": "analysis/phase31/runtime/natural-AI-mode2/observer/callee-0015-A000.json",
+    "metadata_sha256": "d001c1d4dca6f57a399645bf910e8548ebfff5a43a4048eb8e36cacc430a52be",
+    "frame": 503,
+    "snapshot_sequence": 15,
+    "event_sequence": 341090,
+    "RAM_path": "analysis/phase31/runtime/natural-AI-mode2/observer/callee-0015-A000-ram.bin",
+    "RAM_sha256": "2e867d74138617df3fd3121fd330155084b16af9cfc1f1597be706548a9ef971",
+    "SRAM_path": "analysis/phase31/runtime/natural-AI-mode2/observer/callee-0015-A000-sram.bin",
+    "SRAM_sha256": "a05807eb770547b3929890d4cdc879113c8bf92108b7bae17ff57e6f0e072a44",
+    "manifest": "analysis/phase31/runtime/evidence.json",
+    "manifest_sha256": "2cc85bccf1c1807f2a5a61e214b4e10ff9545652e87486753116e2863de2e5fb",
+    "events_path": "analysis/phase31/runtime/natural-AI-mode2/observer/events.jsonl",
+    "events_sha256": "16b4e54f3e3d0afcdf93a259136357a87ddc7b1233e2ac3cf4da6e1c90f0286c",
+    "preparation_path": "analysis/phase31/runtime/natural-AI-mode2/observer/preparation.json",
+    "preparation_sha256": "3b2c089c0ec820e2ef731d672c58fed0cd6dbf9c500a434b2a53f7ac5fec42ab"
+  },
+  "actual_software_state_captured": true,
+  "synthetic_caller_PC_or_stack": false,
+  "unmodified_core_internal_trace": false
+}

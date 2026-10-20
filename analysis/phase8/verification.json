@@ -1,0 +1,90 @@
+{
+  "status": "passed",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "rebuilt_byte_identical": true,
+  "rom_cpu_case_count": 5779,
+  "source_guard_case_count": 11,
+  "integration_rom_cpu_case_count": 46,
+  "integration_source_guard_case_count": 2,
+  "native_core_field_comparison_count": 5,
+  "native_core_case_count": 2,
+  "native_core_frame_count": 4168,
+  "native_core_checkpoint_count": 24,
+  "native_core_repeat_artifact_checks": 102,
+  "repeat_artifact_checks": 108,
+  "independent_actual_CPU_protocol_cases": 1,
+  "independent_actual_CPU_expiry_prefix_calls": 5,
+  "native_internal_CPU_trace": false,
+  "source_original_code_calls": 0,
+  "semantic_source_IR_interpretation": false,
+  "verified_code_ranges": 39,
+  "verified_code_range_bytes": 4613,
+  "verified_strategy_data_bytes": 3444,
+  "fully_recovered_effect_ids": [
+    0,
+    2,
+    3,
+    4,
+    6,
+    11,
+    13,
+    15
+  ],
+  "external_effect_ids": [
+    1,
+    5,
+    7,
+    8,
+    9,
+    10,
+    12,
+    14
+  ],
+  "source_and_validator_sha256": {
+    "source/recovered/game_engine.py": "a79bc84323b07b0854561233a2c73a087ceba1cee1b7db58fa59f87ffaa0302d",
+    "source/recovered/tactical_strategy_ai.py": "db799e7be1a1dbc2224a1a0aeac0739a4a26d91c8c7d5488a8de7ada0e157cf7",
+    "source/recovered/tactical_effects.py": "c01f7771608cf926c52c44d5b7b9d29b63b3472ee96e7d76e6742d28245486ed",
+    "source/recovered/tactical_decisions.py": "ea8ff96eac5544c212095e0a9a9287095ada12b5f6ded01fe3f70b3f0a850f6a",
+    "source/recovered/tactical_exchange.py": "82f9616c15f546d6af912455c6f87aa982890fc3ab178a4491746db895a76268",
+    "source/recovered/ai.py": "2a305990521c62e44ac2bcb38fb110ce89d3fc0a51b20f0b1be560e63c55b02c",
+    "source/recovered/battle.py": "e5f7da08d5b318676f319720bb54af147b6e589ce8c31ed4bc47d4b0ab0f5434",
+    "source/recovered/city_ownership.py": "0e99a8c311f112e9020aa44c66026a201d8dc8329f5470c20baed83cf0729cf6",
+    "source/recovered/game_algorithms.py": "8ddb91b72997759b905d3812447d11975641adda12775f3d5351e3ad7a9bb902",
+    "scripts/analyze_tactical_strategy_ai.py": "739ec5f3d44a7968256e9f26ca18ba0b4b88a20aa0910467725058f9d8135ff4",
+    "scripts/verify_tactical_strategy_ai.py": "040c205e091a775978b9a37b0ca854c701ad48997b756d91f5b71914dd618c27",
+    "scripts/analyze_tactical_effects.py": "e3fda7f44b1aec1ee78e713e382f4a286a57daa5d67d178c9581688bcfc95c9d",
+    "scripts/verify_tactical_effects.py": "c0223722d8e3cdb73fcad5ee8aa2d33fe7b163587a2f976d667cc2a7fc147787",
+    "scripts/capture_tactical_effects.py": "9466b98abc95434453e514817156ffc09942797940ba4b7c9e49713ac6f029fd",
+    "scripts/verify_phase8_integration.py": "5dc7427bdad9d2b8bd1ee3f5bad9bb0b6c5741564bef3d2fee54f4ee62432f11",
+    "scripts/verify_phase8.py": "06c0616f12ec9129c388917508bcc050eece168199af46a485b9b1562e8d7899",
+    "scripts/build_phase8_browser.py": "301cdc18ea327c80f52077a7c3464724d40f1091f1d7a57307f0da72b4288d3e",
+    "scripts/nes_runtime.py": "ad4d093646f2f87621f4cfa29c79bffb8dfda2ba67ee86850f99bee099e0fc2e"
+  },
+  "receipt_sha256": {
+    "strategies": "79131c9b81f8fc675d1de9c39e862190fd8c3792351ddf13c1d4288bb15528bb",
+    "effects": "41b2b462a694781c51d1c48511c9a2d547a18ce8cde8063dd09752adbcd280cf"
+  },
+  "evidence_sha256": {
+    "strategies": "57076f22d0f513e19776d76a67de8708b943a4b1afc785857941f53bb0a5ef13",
+    "effects": "ad5076f4ee02497667701a996586f35502733d1cd8eb97c4423be829f695130a"
+  },
+  "runtime_validation_sha256": {
+    "ambush-chain": "3a20d66d7551ec31bd58781b6d11e681845e05c631d82dd92479ebbc82e5a5ea",
+    "ordinary-cast": "d93fa1079b36490f2c7ccfc2bb5b9b08409146b8c93bb5ac8cf1767dcfc4a149",
+    "cpu-call": "1a3e57facca5ba5f63987ced7a6fec95adce76065080b156a37a50e84ab752cc",
+    "cpu-expiry": "b72d02384d4be74d01b8d234f27cb7081af41ca788217d1e799302b32631bf00"
+  },
+  "integration_sha256": "8b94fed03ed392617e02c6a0188ce906dc775f2a68a2b9de54a32482db36cfa0",
+  "browser_sha256": "5d815e10c197802b745b65182a332c8212f5797eea09cbad665cbd15a5d152a8",
+  "regressions": {
+    "5": "e3ab1e66b927f0fffeb9107aa95a93fa6c720c44b48d32e3471e9e3f60112a84",
+    "6": "3f5ea1ec626f5751dbb9541441a2cb94f5e10460428450c500bae8bf753d4b05",
+    "7": "808f5a785abe3998453ae91bed42f5bddb0d1c76a9e5b00b832d82a812f589ac"
+  },
+  "limits": [
+    "Semantic source comparison covers declared RAM/allSRAM, not CPU registers/stack/mapper or NES timing.",
+    "CPU protocol/expiry captures are independent original-code evidence, not more source differential or native frames.",
+    "Two native cases have explicit legal preparation fields; no natural campaign reachability claim.",
+    "8 effect bodies remain external, as do real graphics/audio/input prerequisites."
+  ]
+}

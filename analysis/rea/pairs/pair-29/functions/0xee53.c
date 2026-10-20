@@ -1,0 +1,69 @@
+
+byte FUN_ee53(void)
+
+{
+  byte bVar1;
+  byte bStack0000;
+  
+  if (DAT_007d == '\0') {
+    if ((char)DAT_007e < '\0') {
+      bStack0000 = DAT_007e;
+      DAT_007e = DAT_007e & 0x7f;
+      FUN_ef0b();
+      return bStack0000;
+    }
+    bStack0000 = DAT_007e << 1;
+    if ((char)bStack0000 < '\0') {
+      DAT_007e = DAT_007e & 0xbf;
+      FUN_ef71();
+      return bStack0000;
+    }
+    if ((char)(DAT_007e << 2) < '\0') {
+      DAT_007e = DAT_007e & 0xdf;
+      bVar1 = FUN_efc0();
+      return bVar1;
+    }
+    if ((char)(DAT_007e << 3) < '\0') {
+      DAT_007e = DAT_007e & 0xef;
+      bVar1 = FUN_f028();
+      return bVar1;
+    }
+    if ((char)(DAT_007e << 4) < '\0') {
+      bStack0000 = 0xee;
+      FUN_f237(0x3d);
+      DAT_007e = DAT_007e & 0xf7;
+      bVar1 = thunk_FUN_b29f();
+      return bVar1;
+    }
+    if ((char)(DAT_007e << 5) < '\0') {
+      DAT_007e = DAT_007e & 0xfb;
+      bStack0000 = 0xee;
+      FUN_f237(0x3d);
+      bVar1 = thunk_FUN_a11b();
+      return bVar1;
+    }
+    if ((char)(DAT_007e << 6) < '\0') {
+      DAT_007e = DAT_007e & 0xfd;
+      bStack0000 = 0xee;
+      FUN_f237(0x3d);
+      bVar1 = thunk_FUN_bc41();
+      return bVar1;
+    }
+    if ((char)(DAT_007e << 7) < '\0') {
+      bStack0000 = 0xee;
+      FUN_f237(DAT_007e << 7,0x3d);
+      bVar1 = bank29_entry_00();
+      return bVar1;
+    }
+  }
+  DAT_2000 = DAT_008b & 0xfb;
+  bVar1 = 0;
+  DAT_007d = 0;
+  do {
+    DAT_2007 = (&DAT_0101)[bVar1];
+    bVar1 = bVar1 + 2;
+  } while (bVar1 < 0x20);
+  DAT_2006 = 0;
+  return 0;
+}
+

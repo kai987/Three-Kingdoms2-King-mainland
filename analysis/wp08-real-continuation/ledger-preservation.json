@@ -1,0 +1,43 @@
+{
+  "ledger_sources": [
+    {
+      "path": "analysis/wp07-palette-packet-consumer/all-indirect-accesses.json",
+      "bytes": 33378797,
+      "sha256": "3fc1008506f1ab66996d5f0247ea9bb658c1d7da9f88887a5479a9938d5221ef"
+    },
+    {
+      "path": "analysis/wp07-palette-packet-consumer/remaining-accesses.json",
+      "bytes": 3579835,
+      "sha256": "8f13eead0b96009b0a2d405f2044c68090f3959c6b04d1ff11a3fb30f6d2f789"
+    },
+    {
+      "path": "analysis/wp07-palette-packet-consumer/raw345-executability-ledger.json",
+      "bytes": 1698391,
+      "sha256": "b22a1b08a52a60ac7b5d899b0e98f971a2c8814e13ce4f640f1c0f5294ef0f7e"
+    }
+  ],
+  "full_objects_preserved_by_freeze": true,
+  "total1526": {
+    "conditional": 1203,
+    "possible": 80,
+    "unknown": 243,
+    "remaining": 323
+  },
+  "raw345": {
+    "operand": 104,
+    "data": 13,
+    "unproved": 228
+  },
+  "migrations": 0,
+  "official_city_names": {
+    "1": null,
+    "28": null,
+    "29": null,
+    "30": null,
+    "31": null
+  },
+  "EE07_known_callers": 155,
+  "EE07_combined_covered": 2,
+  "EE07_outside_packages": 153,
+  "outside_callers_are_not_global_unknown_services": true
+}
