@@ -149,8 +149,8 @@ def convert_profile(*, san14_stats=None, legacy=None, health_max=None,
     """Explicit SAN14 strength/intellect override a verified legacy fallback.
 
     Legacy values remain available when SAN14 abilities are not yet sourced.
-    Only a source-backed configured virtue design is active; a draft is retained
-    in external data but never silently replaces a legacy attribute.
+    A sourced design or an explicitly authorized default can supply virtue.
+    Drafts never silently replace a legacy attribute.
     """
     raw = dict(san14_stats or {})
     old = dict(legacy or {})
@@ -175,6 +175,19 @@ def convert_profile(*, san14_stats=None, legacy=None, health_max=None,
             raise ValueError('Configured virtue requires source references')
         virtue = virtue_score(virtue_design['dimensions'])
         basis['virtue'] = 'history_informed_game_design; not a historical fact'
+    elif virtue_design is not None and virtue_design.get('status') == 'configured_default':
+        if (virtue_design.get('policy_id') != 'virtue-default-60-2026-10-21'
+                or type(virtue_design.get('virtue')) is not int
+                or virtue_design['virtue'] != 60
+                or virtue_design.get('authority') != 'explicit_user_instruction'
+                or virtue_design.get('is_historical_fact') is not False
+                or virtue_design.get('dimensions') is not None
+                or virtue_design.get('sources') != []):
+            raise ValueError('Default virtue requires the explicit60 policy and truthful provenance')
+        if virtue is not None:
+            raise ValueError('Default virtue may not overwrite an existing score')
+        virtue = 60
+        basis['virtue'] = 'explicit_user_default60; not a historical rating'
     elif virtue is not None:
         basis['virtue'] = 'verified_legacy_record; historical redesign pending'
     basis['health_max'] = 'explicit_game_profile' if health_max is not None else 'legacy_or_missing'

@@ -9,7 +9,7 @@
     "2": "水地"
   },
   "override": "Explicit per-person career-based terrain entries in officer-batch2.json and existing designs; not SAN14 province or faction conversion.",
-  "virtue": "null until an individually sourced four-dimension authorial design is present; never use charisma or a blanket50.",
+  "virtue": "Released v2-v4 retain null without an individual design. From v5 use game/config/virtue-completion.json: explicit per-person ratings or user-authorized60 with separate provenance. Never derive virtue from charisma.",
   "birth_service_death": "source SAN14 chronology; separate from independently certified historical dates",
   "initial_free": {
     "loyalty": 0,

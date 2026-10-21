@@ -49,3 +49,9 @@ jobs:
           git diff --exit-code -- game/assets/city-positions.json
           python game/build_main_scenarios.py
           git diff --exit-code -- game/data/main-scenarios
+      - name: Rebuild completed virtue profiles and eleven v5 campaigns offline
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_virtue_completion.py
+          git diff --exit-code -- game/data/main-scenarios-v5 expansion/officers/data/virtue-completion-audit.json

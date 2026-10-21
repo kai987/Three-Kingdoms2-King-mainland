@@ -1,3 +1,5 @@
+> 本页开局人数与验收记录是已发布v4快照。当前v5已补齐千人德值，最新人数及默认值说明见[德值配置](virtue-completion.md)；v4文件保留原样用于旧存档。
+
 # Web本篇剧本与原版画面风格
 
 本版新增11个可开局的本篇年代，采用30人驻城容量，出战仍为每方10人。剧本名称与年月按[原版官方目录](https://www.gamecity.com.tw/sangokushi14/scenario.html)和[威力加强版官方目录](https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html)核对。本次范围是原版7篇与PK内置追加4篇，不含DLC、特典、幻想和称霸战记。

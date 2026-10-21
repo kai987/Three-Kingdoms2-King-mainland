@@ -20,6 +20,7 @@ class CampaignSession:
         with self.lock:
             result=self.game.view()
             result['catalog']['scenario_id']=self.game.catalog.data['id']
+            latest=max(c.data.get('content_generation',0) for c in self.catalogs.values())
             result['catalog']['scenarios']=[{'id':c.data['id'],'title':c.data['title'],
                                            'cities':len(c.data['active_cities']),
                                            'year':c.data['start_year'],'month':c.data['start_month'],
@@ -28,6 +29,7 @@ class CampaignSession:
                                            'serving':len(c.data['initial_officers']),
                                            'free':len(c.data.get('initial_free_officers',[])),
                                            'main_scenario':c.data.get('main_scenario'),
+                                           'archived':c.data.get('content_generation',0)<latest,
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]
             return result
 

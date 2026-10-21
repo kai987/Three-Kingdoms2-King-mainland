@@ -67,11 +67,15 @@ def resolve_memberships(base, snapshots, era, roster):
     return proofs
 
 
-def build_all():
+def build_all(*, generation=4, complete_profiles=None):
+    if generation not in (4,5) or (generation==4) != (complete_profiles is None):
+        raise ValueError('Released v4 stays frozen; v5 requires an explicit profile completion')
+    folder='main-scenarios' if generation==4 else 'main-scenarios-v5'
     spec=read('game/config/main-scenarios.json')
     old_spec=read('game/config/campaign-generation-v3.json')
     snapshots={e['year']:read(f'game/data/eras-v3/{e["year"]}.json') for e in old_spec['eras']}
     base=deepcopy(snapshots[217]);extend_profiles(base)
+    if complete_profiles is not None:complete_profiles(base)
     anchors=read('game/assets/city-positions.json')
     image_path=Path(__file__).resolve().parent/'assets/map.png'
     if hashlib.sha256(image_path.read_bytes()).hexdigest()!=anchors['map_sha256']:
@@ -100,8 +104,8 @@ def build_all():
                 if row['year_state'] in ('available','death_year_review'):
                     row.update(status='pending_history',city=None,placement_basis=None,
                                reason='No reviewed transition or bracketing agreement at this date; not spawned.')
-        ident=f'mainland{era["year"]}-{era["month"]:02d}-v4'
-        data.update(id=ident,content_generation=4,title=f'{era["year"]}年{era["month"]}月 · {era["title"]}')
+        ident=f'mainland{era["year"]}-{era["month"]:02d}-v{generation}'
+        data.update(id=ident,content_generation=generation,title=f'{era["year"]}年{era["month"]}月 · {era["title"]}')
         configured=sum(p['profile']['virtue'] is not None for p in data['people'])
         data['coverage'].update(configured_profiles=configured,pending_profiles=1000-configured,
             history_designs_total=configured-1,new_history_profiles=1,
@@ -122,22 +126,33 @@ def build_all():
             '出生、出仕、卒年来自候选库游戏年份；同年死亡的开局在世情况单独解决。后续不强制历史转属与战果。',
             '驻城、96节点疆界和游戏数值属于本作玩法配置，未声称完整复刻三国志14的领地、事件或战斗系统。',
             '已发布的17份旧目录保持原样，旧存档仍沿用20人规则；新开本篇战役启用30人。']
+        if generation==5:
+            defaults=sum((p.get('virtue_design') or {}).get('status')=='configured_default' for p in data['people'])
+            reviewed=sum((p.get('virtue_design') or {}).get('status')=='configured_design' for p in data['people'])
+            data['coverage'].update(history_designs_total=reviewed,new_history_profiles=16,
+                default_virtue_profiles=defaults,reused_profiles=269,
+                virtue='individual authorial ratings or explicit user default60; provenance kept separate')
+            data['main_scenario']['profiles_complete']=configured==1000
+            data['main_scenario']['virtue_default_policy']='virtue-default-60-2026-10-21'
+            data['design_notes'][2]=f'总人物库1000人属性齐全；{reviewed}人参考史料设计、{defaults}人按用户指示默认德60，另1人保留原作基线。入场仍受年代、归属、驻城和容量限制。'
+            data['design_notes'][-1]='已发布的28份目录保持原样，旧存档数值与规则保持原版本；新开v5战役使用补齐后的千人属性库。'
         counts=Counter(data['initial_owners'][r['city']] for r in data['initial_officers'])
         for f in data['factions']:
             leader=next(p for p in data['people'] if p['name']==f['captain'])
             if not any(r['person_id']==leader['person_id'] and r.get('ruler') for r in data['initial_officers']):
                 raise ValueError(f'Missing playable ruler: {ident} {f["captain"]}')
             f['initial_officers']=counts[f['id']]
-        filename=f'main-scenarios/{era["year"]}-{era["month"]:02d}.json'
+        filename=f'{folder}/{era["year"]}-{era["month"]:02d}.json'
         catalogs.append(filename)
         summary.append({'id':ident,'year':era['year'],'month':era['month'],'title':era['title'],'group':era['group'],
             'factions':len(data['factions']),'serving':len(data['initial_officers']),'free':len(data['initial_free_officers']),
             'pending_history':data['coverage']['pending_history'],'configured_profiles':configured})
         write('game/data/'+filename,data)
     # Last catalog determines the initial screen; select the established217 era.
-    catalogs.sort(key=lambda p:p=='main-scenarios/217-07.json')
-    index={'schema':'main-scenario-index-v1','catalogs':catalogs,'default':spec['default'],'summary':summary}
-    write('game/data/main-scenarios/index.json',index)
+    catalogs.sort(key=lambda p:p==f'{folder}/217-07.json')
+    default=spec['default'] if generation==4 else spec['default'].replace('-v4','-v5')
+    index={'schema':'main-scenario-index-v1','catalogs':catalogs,'default':default,'summary':summary}
+    write(f'game/data/{folder}/index.json',index)
     return index
 
 
