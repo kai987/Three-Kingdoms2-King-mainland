@@ -176,7 +176,11 @@ class HazardCampaignTests(unittest.TestCase):
         self.assertNotEqual(expected['wu'],faction_resources(game.catalog)['wu'])
 
     def test_rebuild_keeps_old107_files_and_v10_saves_with111_loaded_catalogs(self):
-        paths=list((ROOT/'game/data').rglob('*.json'))
+        # This is the released v11 namespace. Newer optional generations have
+        # their own preservation tests and must not alter this111-catalog gate.
+        paths=[p for p in (ROOT/'game/data').rglob('*.json')
+               if not (p.parent.name.startswith('main-scenarios-v') and
+                       int(p.parent.name.rsplit('v',1)[1])>11)]
         prior=[p for p in paths if p.parent.name!='main-scenarios-v11']
         self.assertEqual(len(prior),107)
         hashes={p:hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}

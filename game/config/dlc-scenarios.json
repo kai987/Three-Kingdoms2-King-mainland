@@ -1,0 +1,1202 @@
+{
+  "schema": "dlc-scenarios-v12",
+  "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
+  "sources": [
+    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html",
+    "https://www.gamecity.ne.jp/sangokushi14/scenario.html"
+  ],
+  "chronology_policy": "All births/service/deaths stay in force. Only per-catalog explicit story/official-game exceptions listed below apply; future IF death boundaries are authorial and not claimed official.",
+  "membership_policy": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.",
+  "entries": [
+    {
+      "year": 188,
+      "month": 6,
+      "title_i18n": {
+        "zh-Hant": "漢朝搖搖欲墜",
+        "ja": "揺らぐ漢朝"
+      },
+      "group": "dlc",
+      "fictional": false,
+      "base": "184-02",
+      "summary_i18n": {
+        "zh-Hant": "漢廷政爭與西涼、幽州、長沙叛亂並起；地方漢郡不一概視作何進直轄。",
+        "ja": "漢の政争と西涼・幽州・長沙の反乱を描く。地方の漢郡をすべて何進の直轄とはしない。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "liu_yu",
+          "captain": "刘虞",
+          "city": "yan",
+          "color": "#90d820"
+        },
+        {
+          "id": "han_sui",
+          "captain": "韩遂",
+          "city": "wuwei",
+          "color": "#ff8a00"
+        },
+        {
+          "id": "zhang_chun",
+          "captain": "张纯",
+          "city": "liaoxi",
+          "color": "#00d8f0"
+        },
+        {
+          "id": "ou_xing",
+          "captain": "区星",
+          "city": "changsha",
+          "color": "#b840f0"
+        },
+        {
+          "id": "liu_yan",
+          "captain": "刘焉",
+          "city": "shujun",
+          "color": "#786985"
+        }
+      ],
+      "owner_map": {
+        "yellow_turban": "neutral",
+        "wu": "han",
+        "gongsun_zan": "liu_yu",
+        "ma_teng": "han_sui"
+      },
+      "owners": {
+        "xiapi": "neutral",
+        "yan": "liu_yu",
+        "yuyang": "zhang_chun",
+        "liaoxi": "zhang_chun",
+        "changsha": "ou_xing",
+        "shujun": "liu_yan",
+        "wuwei": "han_sui",
+        "jincheng": "han_sui"
+      },
+      "members": {
+        "han": [
+          "孙坚",
+          "程普",
+          "黄盖",
+          "韩当",
+          "朱治",
+          "孙贲"
+        ],
+        "zhang_chun": [
+          "张纯",
+          "张举"
+        ],
+        "han_sui": [
+          "韩遂",
+          "马腾",
+          "阎行",
+          "成公英"
+        ],
+        "ou_xing": [
+          "区星",
+          "周朝",
+          "郭石"
+        ],
+        "liu_yu": [
+          "刘虞",
+          "鲜于辅",
+          "鲜于银",
+          "齐周",
+          "阎柔"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {
+        "区星": {
+          "death_year": 188,
+          "basis": "official_scenario_alive_at_188_conflicts_with_library_death_187",
+          "is_historical_correction": false
+        }
+      },
+      "remove_factions": [
+        "yellow_turban",
+        "wu",
+        "gongsun_zan",
+        "ma_teng"
+      ]
+    },
+    {
+      "year": 196,
+      "month": 6,
+      "title_i18n": {
+        "zh-Hant": "曹操得勢",
+        "ja": "曹操の台頭"
+      },
+      "group": "dlc",
+      "fictional": false,
+      "base": "194-06",
+      "summary_i18n": {
+        "zh-Hant": "曹操與呂布爭奪中原，孫策經略江東，獻帝返回洛陽。",
+        "ja": "曹操と呂布が中原で争い、孫策が江東に進出し、献帝が洛陽へ帰還する。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "shu",
+          "captain": "刘备",
+          "city": "xiapi",
+          "color": "#786985"
+        },
+        {
+          "id": "lubu",
+          "captain": "吕布",
+          "city": "qiao",
+          "color": "#786985"
+        },
+        {
+          "id": "wu",
+          "captain": "孙策",
+          "city": "danyang",
+          "color": "#9b4b3d"
+        },
+        {
+          "id": "liu_you",
+          "captain": "刘繇",
+          "city": "yuzhang",
+          "color": "#8a8054"
+        }
+      ],
+      "owner_map": {
+        "tao_qian": "shu"
+      },
+      "owners": {
+        "dongjun": "wei",
+        "qiao": "lubu",
+        "xiapi": "shu",
+        "danyang": "wu",
+        "wujun": "wu",
+        "lujiang": "wu",
+        "yuzhang": "liu_you"
+      },
+      "members": {
+        "wu": [
+          "孙策",
+          "孙权",
+          "周瑜",
+          "张昭",
+          "张纮",
+          "程普",
+          "韩当",
+          "黄盖",
+          "朱治",
+          "孙贲",
+          "吴景",
+          "孙静",
+          "吕范",
+          "陈武",
+          "董袭",
+          "蒋钦",
+          "周泰"
+        ],
+        "shu": [
+          "刘备",
+          "关羽",
+          "张飞",
+          "简雍",
+          "糜竺",
+          "糜芳",
+          "孙乾",
+          "陈登"
+        ],
+        "lubu": [
+          "吕布",
+          "陈宫",
+          "张辽",
+          "高顺",
+          "臧霸",
+          "侯成",
+          "宋宪",
+          "魏续",
+          "曹性"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {
+        "张杨": {
+          "death_year": 199,
+          "basis": "Book_of_Later_Han_volume72_dates_murder_to_Jianan4; source_game_year195_reviewed",
+          "is_historical_correction": true,
+          "sources": [
+            "https://zh.wikisource.org/wiki/後漢書/卷72"
+          ]
+        }
+      },
+      "remove_factions": [
+        "tao_qian"
+      ]
+    },
+    {
+      "year": 197,
+      "month": 7,
+      "title_i18n": {
+        "zh-Hant": "皇帝呂布",
+        "ja": "皇帝呂布"
+      },
+      "group": "if",
+      "fictional": true,
+      "base": "194-06",
+      "summary_i18n": {
+        "zh-Hant": "袁術提前身亡，呂布接收其軍與帝位；其他群雄仍各據一方。",
+        "ja": "袁術の急死を受けて呂布が軍と帝位を継承する仮想の展開。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "lubu",
+          "captain": "吕布",
+          "city": "jiujiang",
+          "color": "#786985"
+        },
+        {
+          "id": "shu",
+          "captain": "刘备",
+          "city": "qiao",
+          "color": "#786985"
+        },
+        {
+          "id": "wu",
+          "captain": "孙策",
+          "city": "danyang",
+          "color": "#9b4b3d"
+        },
+        {
+          "id": "liu_you",
+          "captain": "刘繇",
+          "city": "yuzhang",
+          "color": "#8a8054"
+        }
+      ],
+      "owner_map": {
+        "yuan_shu": "lubu",
+        "tao_qian": "shu"
+      },
+      "owners": {
+        "dongjun": "wei",
+        "jiujiang": "lubu",
+        "xiapi": "lubu",
+        "qiao": "shu",
+        "danyang": "wu",
+        "wujun": "wu",
+        "lujiang": "lubu",
+        "yuzhang": "liu_you"
+      },
+      "members": {
+        "lubu": [
+          "吕布",
+          "陈宫",
+          "张辽",
+          "高顺",
+          "纪灵",
+          "阎象",
+          "杨弘",
+          "袁涣"
+        ],
+        "wu": [
+          "孙策",
+          "孙权",
+          "周瑜",
+          "张昭",
+          "张纮",
+          "程普",
+          "韩当",
+          "黄盖",
+          "朱治",
+          "吕范",
+          "陈武",
+          "周泰"
+        ],
+        "shu": [
+          "刘备",
+          "关羽",
+          "张飞",
+          "简雍",
+          "糜竺",
+          "孙乾"
+        ]
+      },
+      "excluded_people": [
+        "袁术"
+      ],
+      "chronology_overrides": {
+        "张杨": {
+          "death_year": 199,
+          "basis": "Book_of_Later_Han_volume72_dates_murder_to_Jianan4; source_game_year195_reviewed",
+          "is_historical_correction": true,
+          "sources": [
+            "https://zh.wikisource.org/wiki/後漢書/卷72"
+          ]
+        }
+      },
+      "remove_factions": [
+        "yuan_shu",
+        "tao_qian"
+      ]
+    },
+    {
+      "year": 201,
+      "month": 5,
+      "title_i18n": {
+        "zh-Hant": "華北霸者・袁紹",
+        "ja": "華北の覇者・袁紹"
+      },
+      "group": "if",
+      "fictional": true,
+      "base": "200-01",
+      "summary_i18n": {
+        "zh-Hant": "袁紹勝官渡；劉備取得許昌、馬騰取得長安，曹操退據宛城。",
+        "ja": "袁紹が官渡に勝利し、劉備は許昌、馬騰は長安を得る。曹操は宛へ退く。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "yuan_shao",
+          "captain": "袁绍",
+          "city": "wei",
+          "color": "#786985"
+        },
+        {
+          "id": "wei",
+          "captain": "曹操",
+          "city": "nanyang",
+          "color": "#786985"
+        },
+        {
+          "id": "shu",
+          "captain": "刘备",
+          "city": "yingchuan",
+          "color": "#786985"
+        },
+        {
+          "id": "wu",
+          "captain": "孙权",
+          "city": "wujun",
+          "color": "#9b4b3d"
+        }
+      ],
+      "owner_map": {},
+      "owners": {
+        "nanyang": "wei",
+        "runan": "wei",
+        "yingchuan": "shu",
+        "chenliu": "shu",
+        "xiapi": "yuan_shao",
+        "jingzhao": "ma_teng",
+        "fufeng": "ma_teng",
+        "hongnong": "ma_teng"
+      },
+      "members": {
+        "yuan_shao": [
+          "袁绍",
+          "袁谭",
+          "袁尚",
+          "袁熙",
+          "颜良",
+          "文丑",
+          "张郃",
+          "高览",
+          "沮授",
+          "田丰",
+          "许攸",
+          "逢纪",
+          "审配",
+          "郭图"
+        ],
+        "shu": [
+          "刘备",
+          "关羽",
+          "张飞",
+          "简雍",
+          "孙乾",
+          "糜竺",
+          "糜芳"
+        ],
+        "wu": [
+          "孙权",
+          "周瑜",
+          "张昭",
+          "鲁肃"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {},
+      "takeover": [
+        {
+          "owner": "wei",
+          "to": "yuan_shao"
+        }
+      ]
+    },
+    {
+      "year": 209,
+      "month": 6,
+      "title_i18n": {
+        "zh-Hant": "志在千里",
+        "ja": "志在千里"
+      },
+      "group": "if",
+      "fictional": true,
+      "base": "208-10",
+      "summary_i18n": {
+        "zh-Hant": "曹操勝赤壁，取得江南大部；孫權與劉備在南方重整軍勢。",
+        "ja": "曹操が赤壁に勝ち、江南の大部分を掌握する。孫権と劉備は南方で再起を図る。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "shu",
+          "captain": "刘备",
+          "city": "lingling",
+          "color": "#786985"
+        },
+        {
+          "id": "wu",
+          "captain": "孙权",
+          "city": "kuaiji",
+          "color": "#9b4b3d"
+        }
+      ],
+      "owner_map": {},
+      "owners": {
+        "jiangxia": "wei",
+        "nanjun": "wei",
+        "xiangyang": "wei",
+        "changsha": "wei",
+        "danyang": "wei",
+        "wujun": "wei",
+        "jiujiang": "wei",
+        "lujiang": "wei",
+        "lingling": "shu",
+        "guiyang": "shu",
+        "wuling": "shu",
+        "kuaiji": "wu",
+        "yuzhang": "wu",
+        "luling": "wu"
+      },
+      "members": {
+        "shu": [
+          "刘备",
+          "关羽",
+          "张飞",
+          "赵云",
+          "诸葛亮",
+          "简雍",
+          "孙乾",
+          "糜竺",
+          "糜芳",
+          "马良",
+          "马谡"
+        ],
+        "wu": [
+          "孙权",
+          "周瑜",
+          "鲁肃",
+          "吕蒙",
+          "张昭",
+          "张纮",
+          "陆逊"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {}
+    },
+    {
+      "year": 210,
+      "month": 11,
+      "title_i18n": {
+        "zh-Hant": "二分天下之計",
+        "ja": "天下二分計"
+      },
+      "group": "if",
+      "fictional": true,
+      "base": "208-10",
+      "summary_i18n": {
+        "zh-Hant": "周瑜取江陵後入蜀，兼併劉璋及張魯；劉備留在荊南。",
+        "ja": "周瑜が江陵から蜀へ進み、劉璋と張魯を併合する。劉備は荊南にとどまる。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "wu",
+          "captain": "孙权",
+          "city": "wujun",
+          "color": "#9b4b3d"
+        },
+        {
+          "id": "shu",
+          "captain": "刘备",
+          "city": "changsha",
+          "color": "#786985"
+        },
+        {
+          "id": "gongsun",
+          "captain": "公孙恭",
+          "city": "liaodong",
+          "color": "#786985"
+        }
+      ],
+      "owner_map": {
+        "liu_zhang": "wu",
+        "zhang_lu": "wu"
+      },
+      "owners": {
+        "nanjun": "wu",
+        "jiangxia": "wu",
+        "changsha": "shu",
+        "guiyang": "shu",
+        "lingling": "shu",
+        "wuling": "shu",
+        "shujun": "wu",
+        "hanzhong": "wu"
+      },
+      "members": {
+        "wu": [
+          "周瑜",
+          "鲁肃",
+          "吕蒙",
+          "刘璋",
+          "张鲁",
+          "张任",
+          "严颜",
+          "黄权",
+          "法正",
+          "孟达",
+          "吴懿",
+          "李严",
+          "李恢"
+        ],
+        "shu": [
+          "刘备",
+          "关羽",
+          "张飞",
+          "赵云",
+          "诸葛亮",
+          "黄忠",
+          "魏延",
+          "马良",
+          "马谡"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {
+        "周瑜": {
+          "death_year": 220,
+          "basis": "official_IF_survives_210; authorial_ten_year_future_lifespan",
+          "is_historical_correction": false
+        }
+      },
+      "remove_factions": [
+        "liu_zhang",
+        "zhang_lu"
+      ]
+    },
+    {
+      "year": 211,
+      "month": 7,
+      "title_i18n": {
+        "zh-Hant": "入蜀爭奪戰",
+        "ja": "入蜀争奪戦"
+      },
+      "group": "custom",
+      "fictional": false,
+      "base": "208-10",
+      "summary_i18n": {
+        "zh-Hant": "劉備據荊南，受劉璋邀請入蜀；漢中張魯與關中馬超構成本作同時期戰局。",
+        "ja": "荊南を得た劉備が劉璋の招きで蜀へ入る時期を、本作の全土戦役として構成する。"
+      },
+      "source_urls": [
+        "https://www.gamecity.ne.jp/sangokushi14/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/product-dlc.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "shu",
+          "captain": "刘备",
+          "city": "nanjun",
+          "color": "#786985"
+        },
+        {
+          "id": "ma_teng",
+          "captain": "马超",
+          "city": "wuwei",
+          "color": "#786985"
+        },
+        {
+          "id": "gongsun",
+          "captain": "公孙恭",
+          "city": "liaodong",
+          "color": "#786985"
+        },
+        {
+          "id": "wu",
+          "captain": "孙权",
+          "city": "wujun",
+          "color": "#9b4b3d"
+        }
+      ],
+      "owner_map": {},
+      "owners": {
+        "jiangxia": "wu",
+        "nanjun": "shu",
+        "changsha": "shu",
+        "lingling": "shu",
+        "guiyang": "shu",
+        "wuling": "shu"
+      },
+      "members": {
+        "shu": [
+          "刘备",
+          "关羽",
+          "张飞",
+          "赵云",
+          "诸葛亮",
+          "庞统",
+          "黄忠",
+          "魏延",
+          "简雍",
+          "孙乾",
+          "马良",
+          "马谡"
+        ],
+        "ma_teng": [
+          "马超",
+          "马岱",
+          "庞德",
+          "韩遂",
+          "成公英",
+          "阎行"
+        ],
+        "liu_zhang": [
+          "刘璋",
+          "张任",
+          "严颜",
+          "黄权",
+          "法正",
+          "孟达",
+          "吴懿",
+          "李严",
+          "李恢"
+        ]
+      },
+      "excluded_people": [
+        "马腾"
+      ],
+      "chronology_overrides": {},
+      "official_source": null,
+      "user_custom": true,
+      "official_same_date_title": {
+        "zh-Hant": "潼關之戰",
+        "ja": "潼関の戦い"
+      },
+      "scope_note": "用戶指定211年7月完整戰役；不是官方211年6月戰記制霸「劉備入蜀」，也不把自訂標題冒充官方本篇。"
+    },
+    {
+      "year": 212,
+      "month": 6,
+      "title_i18n": {
+        "zh-Hant": "錦馬超展翅高飛",
+        "ja": "錦馬超飛翔"
+      },
+      "group": "if",
+      "fictional": true,
+      "base": "208-10",
+      "summary_i18n": {
+        "zh-Hant": "馬超於潼關取勝，進軍洛陽；曹丕繼位、曹彰舉兵，荀彧護送獻帝脫出。",
+        "ja": "馬超が潼関で勝ち洛陽へ進む。曹丕の継承に曹彰が反発し、荀彧は献帝の脱出を助ける。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "wei",
+          "captain": "曹丕",
+          "city": "wei",
+          "color": "#786985"
+        },
+        {
+          "id": "cao_zhang",
+          "captain": "曹彰",
+          "city": "taiyuan",
+          "color": "#00c8a0"
+        },
+        {
+          "id": "ma_teng",
+          "captain": "马超",
+          "city": "henan",
+          "color": "#786985"
+        },
+        {
+          "id": "shu",
+          "captain": "刘备",
+          "city": "nanjun",
+          "color": "#786985"
+        },
+        {
+          "id": "gongsun",
+          "captain": "公孙恭",
+          "city": "liaodong",
+          "color": "#786985"
+        }
+      ],
+      "owner_map": {},
+      "owners": {
+        "jingzhao": "ma_teng",
+        "fufeng": "ma_teng",
+        "hongnong": "ma_teng",
+        "henan": "ma_teng",
+        "anding": "ma_teng",
+        "fengyi": "ma_teng",
+        "taiyuan": "cao_zhang",
+        "shangdang": "cao_zhang",
+        "xihe": "cao_zhang",
+        "nanjun": "shu",
+        "changsha": "shu",
+        "lingling": "shu",
+        "guiyang": "shu",
+        "wuling": "shu"
+      },
+      "members": {
+        "wei": [
+          "曹丕",
+          "司马懿",
+          "曹植",
+          "曹真",
+          "曹休",
+          "贾诩"
+        ],
+        "cao_zhang": [
+          "曹彰",
+          "田豫",
+          "牵招",
+          "梁习"
+        ],
+        "ma_teng": [
+          "马超",
+          "马岱",
+          "庞德",
+          "韩遂",
+          "成公英",
+          "阎行",
+          "荀彧"
+        ],
+        "shu": [
+          "刘备",
+          "关羽",
+          "张飞",
+          "赵云",
+          "诸葛亮",
+          "庞统",
+          "黄忠",
+          "魏延"
+        ]
+      },
+      "excluded_people": [
+        "曹操",
+        "马腾"
+      ],
+      "chronology_overrides": {}
+    },
+    {
+      "year": 225,
+      "month": 7,
+      "title_i18n": {
+        "zh-Hant": "征伐南蠻",
+        "ja": "南蛮征伐"
+      },
+      "group": "dlc",
+      "fictional": false,
+      "base": "221-07",
+      "summary_i18n": {
+        "zh-Hant": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
+        "ja": "劉禅の即位後、諸葛亮が南征する。孟獲ら南中勢力は建寧・雲南と周辺に拠る。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "shu",
+          "captain": "刘禅",
+          "city": "shujun",
+          "color": "#4c7650"
+        },
+        {
+          "id": "nanman",
+          "captain": "孟获",
+          "city": "jianning",
+          "color": "#e0a020",
+          "name": "南中勢力"
+        }
+      ],
+      "owner_map": {},
+      "owners": {
+        "jianning": "nanman",
+        "yunnan": "nanman",
+        "xinggu": "nanman",
+        "zangke": "nanman"
+      },
+      "members": {
+        "shu": [
+          "刘禅",
+          "诸葛亮",
+          "赵云",
+          "马谡",
+          "马岱",
+          "李恢",
+          "吕凯",
+          "王平",
+          "张翼",
+          "张嶷",
+          "费祎",
+          "蒋琬",
+          "邓芝"
+        ],
+        "nanman": [
+          "孟获",
+          "祝融",
+          "孟优",
+          "高定",
+          "带来洞主",
+          "朵思大王",
+          "兀突骨",
+          "木鹿大王",
+          "阿会喃",
+          "金环三结",
+          "董荼那",
+          "忙牙长",
+          "杨锋"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {},
+      "homonym_members": {
+        "san14-candidate-0768": "shu"
+      }
+    },
+    {
+      "year": 234,
+      "month": 2,
+      "title_i18n": {
+        "zh-Hant": "秋風五丈原",
+        "ja": "秋風五丈原"
+      },
+      "group": "bonus",
+      "fictional": false,
+      "base": "238-01",
+      "summary_i18n": {
+        "zh-Hant": "諸葛亮在五丈原最後一次北伐，魏方由司馬懿督軍；此時諸葛亮尚在世。",
+        "ja": "諸葛亮が最後の北伐を開始し、魏では司馬懿が迎え撃つ。開幕時の諸葛亮は存命。"
+      },
+      "source_urls": [
+        "https://www.gamecity.ne.jp/sangokushi14/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "wei",
+          "captain": "曹叡",
+          "city": "henan",
+          "color": "#916a47",
+          "name": "曹魏"
+        },
+        {
+          "id": "shu",
+          "captain": "刘禅",
+          "city": "shujun",
+          "color": "#4c7650",
+          "name": "蜀漢"
+        },
+        {
+          "id": "wu",
+          "captain": "孙权",
+          "city": "danyang",
+          "color": "#9b4b3d",
+          "name": "孫吳"
+        }
+      ],
+      "owner_map": {},
+      "owners": {},
+      "members": {
+        "shu": [
+          "刘禅",
+          "诸葛亮",
+          "姜维",
+          "魏延",
+          "杨仪",
+          "王平",
+          "马岱",
+          "廖化",
+          "张嶷",
+          "张翼",
+          "费祎",
+          "蒋琬",
+          "董允",
+          "邓芝"
+        ],
+        "wei": [
+          "曹叡",
+          "司马懿",
+          "郭淮",
+          "张郃",
+          "孙礼",
+          "辛毗",
+          "满宠",
+          "曹真",
+          "夏侯霸"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {}
+    },
+    {
+      "year": 235,
+      "month": 1,
+      "title_i18n": {
+        "zh-Hant": "越過秋風",
+        "ja": "秋風越えて"
+      },
+      "group": "if",
+      "fictional": true,
+      "base": "238-01",
+      "summary_i18n": {
+        "zh-Hant": "諸葛亮延壽並取得長安，曹叡遷都鄴；其餘三國戰局沿本作地圖展開。",
+        "ja": "諸葛亮は命を延ばして長安を占領し、曹叡は鄴へ遷都する。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "wei",
+          "captain": "曹叡",
+          "city": "wei",
+          "color": "#916a47",
+          "name": "曹魏"
+        },
+        {
+          "id": "shu",
+          "captain": "刘禅",
+          "city": "shujun",
+          "color": "#4c7650",
+          "name": "蜀漢"
+        },
+        {
+          "id": "wu",
+          "captain": "孙权",
+          "city": "danyang",
+          "color": "#9b4b3d",
+          "name": "孫吳"
+        }
+      ],
+      "owner_map": {},
+      "owners": {
+        "jingzhao": "shu",
+        "fufeng": "shu"
+      },
+      "members": {
+        "shu": [
+          "诸葛亮",
+          "刘禅",
+          "姜维",
+          "魏延",
+          "杨仪",
+          "王平",
+          "马岱",
+          "廖化",
+          "张嶷",
+          "张翼",
+          "费祎",
+          "蒋琬",
+          "董允",
+          "邓芝"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {
+        "诸葛亮": {
+          "death_year": 245,
+          "basis": "official_IF_survives_235; authorial_ten_year_future_lifespan",
+          "is_historical_correction": false
+        },
+        "魏延": {
+          "death_year": 245,
+          "basis": "IF_Northern_Expedition_victory_avoids_234_retreat_crisis; authorial_ten_year_future_lifespan",
+          "is_historical_correction": false
+        }
+      }
+    },
+    {
+      "year": 263,
+      "month": 5,
+      "title_i18n": {
+        "zh-Hant": "蜀漢滅亡",
+        "ja": "蜀漢の滅亡"
+      },
+      "group": "bonus",
+      "fictional": false,
+      "base": "249-01",
+      "summary_i18n": {
+        "zh-Hant": "司馬昭主導伐蜀，鍾會、鄧艾出兵；蜀由劉禪、姜維等守禦，吳主為孫休。",
+        "ja": "司馬昭の主導で鍾会と鄧艾が蜀へ進む。劉禅・姜維らが守り、呉では孫休が治める。"
+      },
+      "source_urls": [
+        "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+        "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+      ],
+      "faction_upserts": [
+        {
+          "id": "wei",
+          "captain": "曹奂",
+          "city": "henan",
+          "color": "#916a47",
+          "name": "曹魏"
+        },
+        {
+          "id": "shu",
+          "captain": "刘禅",
+          "city": "shujun",
+          "color": "#4c7650",
+          "name": "蜀漢"
+        },
+        {
+          "id": "wu",
+          "captain": "孙休",
+          "city": "danyang",
+          "color": "#9b4b3d",
+          "name": "孫吳"
+        }
+      ],
+      "owner_map": {},
+      "owners": {},
+      "members": {
+        "wei": [
+          "曹奂",
+          "司马昭",
+          "司马炎",
+          "钟会",
+          "邓艾",
+          "诸葛绪",
+          "卫瓘",
+          "羊祜",
+          "杜预",
+          "王濬",
+          "陈骞",
+          "胡烈",
+          "师纂",
+          "牵弘",
+          "杨欣",
+          "田续",
+          "王颀",
+          "邵悌",
+          "许仪",
+          "刘寔",
+          "贾充",
+          "荀勗",
+          "裴秀",
+          "王祥",
+          "王昶",
+          "荀顗",
+          "张华",
+          "石苞",
+          "邓忠"
+        ],
+        "shu": [
+          "刘禅",
+          "姜维",
+          "诸葛瞻",
+          "诸葛尚",
+          "廖化",
+          "张翼",
+          "董厥",
+          "樊建",
+          "黄皓",
+          "蒋舒",
+          "傅佥",
+          "霍弋",
+          "罗宪",
+          "阎宇",
+          "刘谌",
+          "邓良",
+          "孟光",
+          "郤正",
+          "李密",
+          "谯周"
+        ],
+        "wu": [
+          "孙休",
+          "孙皓",
+          "丁奉",
+          "陆抗",
+          "诸葛靓",
+          "濮阳兴",
+          "张布",
+          "钟离牧",
+          "陶璜",
+          "陆凯",
+          "丁封",
+          "朱绩",
+          "虞汜"
+        ]
+      },
+      "excluded_people": [],
+      "chronology_overrides": {},
+      "member_sources": [
+        {
+          "names": [
+            "羊祜",
+            "杜预"
+          ],
+          "url": "https://zh.wikisource.org/wiki/晉書/卷034",
+          "basis": "魏末仕歷；本作只據以定陣營，不宣稱263年實際駐城"
+        },
+        {
+          "names": [
+            "司马炎"
+          ],
+          "url": "https://zh.wikisource.org/wiki/晉書/卷003",
+          "basis": "晉武帝即位前魏廷仕歷；非將265稱帝事件提前"
+        },
+        {
+          "names": [
+            "钟会",
+            "邓艾",
+            "邓忠"
+          ],
+          "url": "https://zh.wikisource.org/wiki/三國志/卷28",
+          "basis": "鍾會與鄧艾伐蜀及鄧忠隨軍；駐城為玩法分配"
+        },
+        {
+          "names": [
+            "孙休"
+          ],
+          "url": "https://zh.wikisource.org/wiki/三國志/卷48",
+          "basis": "永安年間吳主，未提前改為孫皓"
+        }
+      ]
+    }
+  ]
+}

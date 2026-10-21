@@ -53,10 +53,16 @@ def main():
     unified_index = json.loads((HERE / 'data/main-scenarios-v9/index.json').read_text())
     southern_index = json.loads((HERE / 'data/main-scenarios-v10/index.json').read_text())
     hazard_index = json.loads((HERE / 'data/main-scenarios-v11/index.json').read_text())
+    dlc_index = json.loads((HERE / 'data/main-scenarios-v12/index.json').read_text())
     game = CampaignSession([HERE / 'data/demo.json', HERE / 'data/mainland.json'] +
-                           [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs'] + main_index['catalogs'] + complete_index['catalogs'] + city_index['catalogs'] + travel_index['catalogs'] + northern_index['catalogs'] + unified_index['catalogs'] + southern_index['catalogs'] + hazard_index['catalogs']])
+                           [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs'] + main_index['catalogs'] + complete_index['catalogs'] + city_index['catalogs'] + travel_index['catalogs'] + northern_index['catalogs'] + unified_index['catalogs'] + southern_index['catalogs'] + hazard_index['catalogs'] + dlc_index['catalogs']])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
+              '/i18n.js': ('i18n.js', 'text/javascript; charset=utf-8'),
+              '/locales/zh-hant.json': ('locales/zh-hant.json', 'application/json; charset=utf-8'),
+              '/locales/ui-ja.json': ('locales/ui-ja.json', 'application/json; charset=utf-8'),
+              '/locales/messages-ja.json': ('locales/messages-ja.json', 'application/json; charset=utf-8'),
+              '/locales/opencc/LICENSE': ('locales/opencc/LICENSE', 'text/plain; charset=utf-8'),
               '/style.css': ('style.css', 'text/css; charset=utf-8'),
               '/assets/map.png': ('assets/map.png', 'image/png'),
               '/assets/map-clean.png': ('assets/map-clean.png', 'image/png'),

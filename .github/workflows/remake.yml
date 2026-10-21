@@ -32,7 +32,10 @@ jobs:
           python game/build_eras.py
           git diff --exit-code -- game/data/eras expansion/officers/data/era-configuration-audit.json
       - name: Browser script syntax
-        run: node --check game/app.js
+        run: |
+          node --check game/app.js
+          node --check game/i18n.js
+          node tests/test_remake_i18n_runtime.cjs
       - name: Rebuild current officer batch and historical campaigns offline
         env:
           PYTHONDONTWRITEBYTECODE: '1'
@@ -97,3 +100,16 @@ jobs:
         run: |
           python game/build_hazard_campaigns.py
           git diff --exit-code -- game/data/main-scenarios-v11
+      - name: Rebuild DLC and supplemental campaigns offline
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_dlc_campaigns.py
+          git diff --exit-code -- game/data/main-scenarios-v12
+      - name: Rebuild Traditional Chinese and Japanese display dictionaries offline
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_message_locales.py
+          python game/build_locales.py
+          git diff --exit-code -- game/locales

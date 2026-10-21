@@ -1,34 +1,36 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>三国·大陆战役</title>
+  <title>三國·大陸戰役</title>
   <link rel="stylesheet" href="/style.css">
+  <script src="/i18n.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
   <header class="topbar">
-    <h1>三国·大陆战役</h1>
-    <p id="date">选择势力</p>
-    <nav aria-label="进度与规则">
-      <button id="main-menu" aria-controls="inspector" aria-expanded="false" disabled>返回主菜单</button>
-      <button id="save" disabled>保存进度</button>
-      <button id="load">读取进度</button>
-      <button id="rules">规则说明</button>
-      <button id="library">人物库</button>
+    <h1>三國·大陸戰役</h1>
+    <p id="date">選擇勢力</p>
+    <nav aria-label="進度與規則">
+      <label class="language-picker">語言<select id="language" aria-label="切換語言"><option value="zh-Hant">繁體中文</option><option value="ja">日本語</option></select></label>
+      <button id="main-menu" aria-controls="inspector" aria-expanded="false" disabled>返回主選單</button>
+      <button id="save" disabled>儲存進度</button>
+      <button id="load">讀取進度</button>
+      <button id="rules">規則說明</button>
+      <button id="library">人物庫</button>
     </nav>
   </header>
   <p id="notice" role="status" aria-live="polite"></p>
   <main>
-    <section id="stage" aria-label="战役地图"></section>
-    <aside id="inspector" aria-label="当前操作"><p>正在准备战役……</p></aside>
+    <section id="stage" aria-label="戰役地圖"></section>
+    <aside id="inspector" aria-label="目前操作"><p>正在準備戰役……</p></aside>
     <section class="journal" aria-labelledby="journal-title">
-      <div class="journal-heading"><h2 id="journal-title">战报</h2><button id="restart">重开战役</button></div>
-      <ol id="journal"><li>选择势力后开始。</li></ol>
+      <div class="journal-heading"><h2 id="journal-title">戰報</h2><button id="restart">重開戰役</button></div>
+      <ol id="journal"><li>選擇勢力後開始。</li></ol>
     </section>
   </main>
   <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
-  <noscript>请启用浏览器JavaScript后开始战役。</noscript>
+  <noscript>請啟用瀏覽器JavaScript後開始戰役。</noscript>
 </body>
 </html>

@@ -1,0 +1,34 @@
+{
+  "project": "OpenCC",
+  "version": "ver.1.1.9",
+  "revision": "556ed22496d650bd0b13b6c163be9814637970ae",
+  "license": "Apache-2.0",
+  "project_url": "https://github.com/BYVoid/OpenCC",
+  "files": {
+    "STCharacters.txt": {
+      "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/556ed22496d650bd0b13b6c163be9814637970ae/data/dictionary/STCharacters.txt",
+      "sha256": "ed1d268e0ad028511dcf5b0089faed0a980ad332449ec11d481ceefde6879f41",
+      "bytes": 34353
+    },
+    "STPhrases.txt": {
+      "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/556ed22496d650bd0b13b6c163be9814637970ae/data/dictionary/STPhrases.txt",
+      "sha256": "17fece21a28f3db2dc32397abd73d21ae73261c3f295fa6a3fe64b5e8d8b554b",
+      "bytes": 1004897
+    },
+    "TWVariants.txt": {
+      "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/556ed22496d650bd0b13b6c163be9814637970ae/data/dictionary/TWVariants.txt",
+      "sha256": "30e6f8395edbfdd74e293fd8b9c62105d787c849fbb208d2a7832eac696734d7",
+      "bytes": 312
+    },
+    "LICENSE": {
+      "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/556ed22496d650bd0b13b6c163be9814637970ae/LICENSE",
+      "sha256": "b534e465949558eec2597b04f5092b5e161236a68dfbfd04d547592ac3964308",
+      "bytes": 9165
+    },
+    "s2tw.json": {
+      "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/556ed22496d650bd0b13b6c163be9814637970ae/data/config/s2tw.json",
+      "sha256": "67ce1f5aa3d6b21ebb523084b40e66f80bec27bb2dc6b540d44dac2e27f7194e",
+      "bytes": 505
+    }
+  }
+}
