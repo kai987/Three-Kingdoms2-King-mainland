@@ -1,0 +1,97 @@
+{
+  "schema": "city-name-overrides-v1",
+  "approved_on": "2026-10-21",
+  "policy": "User-approved settlement labels for ten existing board nodes. Keep original commandery IDs, coordinates and released catalogs; these labels do not simulate all changes of commandery seats or foundation dates. Familiarity is a display choice, not a measured historical fact.",
+  "cities": {
+    "liaodong": {
+      "displayName": "襄平",
+      "settlementName": "襄平县",
+      "administrativeName": "辽东郡",
+      "aliases": ["襄平", "襄平县", "辽东", "辽东郡"],
+      "detail": "襄平县 · 原郡名：辽东郡",
+      "source": "https://zh.wikisource.org/zh-hant/後漢書/卷113#幽州",
+      "evidence": "《后汉书·郡国五》辽东郡条列襄平；当前节点沿用辽阳一带的位置。"
+    },
+    "bohai": {
+      "displayName": "南皮",
+      "settlementName": "南皮县",
+      "administrativeName": "渤海郡",
+      "aliases": ["南皮", "南皮县", "渤海", "渤海郡", "勃海郡"],
+      "detail": "南皮县 · 原郡名：渤海郡",
+      "source": "https://zh.wikisource.org/zh-hant/後漢書/卷110#勃海郡",
+      "evidence": "《后汉书·郡国二》勃海郡条列南皮；按现有南皮节点选取城名，不外推到西汉等其他时期。"
+    },
+    "dongjun": {
+      "displayName": "濮阳",
+      "settlementName": "濮阳县",
+      "administrativeName": "东郡",
+      "aliases": ["濮阳", "濮阳县", "东郡"],
+      "detail": "濮阳县 · 原郡名：东郡",
+      "source": "https://zh.wikisource.org/zh-hant/後漢書/卷111#東郡",
+      "evidence": "《后汉书·郡国三》东郡条列濮阳；当前节点沿用濮阳一带的位置。"
+    },
+    "nanyang": {
+      "displayName": "宛城",
+      "settlementName": "宛县",
+      "administrativeName": "南阳郡",
+      "aliases": ["宛城", "宛", "宛县", "南阳", "南阳郡"],
+      "detail": "宛县 · 原郡名：南阳郡",
+      "source": "https://zh.wikisource.org/zh-hant/後漢書/卷112#南陽郡",
+      "evidence": "《后汉书·郡国四》南阳郡条列宛；宛城为该县城的游戏显示名称。"
+    },
+    "yuzhang": {
+      "displayName": "南昌",
+      "settlementName": "南昌县",
+      "administrativeName": "豫章郡",
+      "aliases": ["南昌", "南昌县", "豫章", "豫章郡"],
+      "detail": "南昌县 · 原郡名：豫章郡",
+      "source": "https://zh.wikisource.org/zh-hant/後漢書/卷112#豫章郡",
+      "evidence": "《后汉书·郡国四》豫章郡条列南昌；替代历史地图资料中误指福建南安的来源链接。"
+    },
+    "wujun": {
+      "displayName": "吴",
+      "settlementName": "吴县",
+      "administrativeName": "吴郡",
+      "aliases": ["吴", "吴县", "吴郡"],
+      "detail": "吴县 · 吴郡治",
+      "source": "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_32054",
+      "evidence": "CHGIS吴郡条明确记载治吴县，并列《后汉书》《吴郡图经续记》出处；地图简称吴，详情保留县名。"
+    },
+    "kuaiji": {
+      "displayName": "山阴",
+      "settlementName": "山阴县",
+      "administrativeName": "会稽郡",
+      "aliases": ["山阴", "山阴县", "会稽", "会稽郡"],
+      "detail": "山阴县 · 原郡名：会稽郡",
+      "source": "https://zh.wikisource.org/zh-hant/後漢書/卷112#會稽郡",
+      "evidence": "《后汉书·郡国四》会稽条记本治吴，分置吴郡后移山阴。"
+    },
+    "bajun": {
+      "displayName": "江州",
+      "settlementName": "江州县",
+      "administrativeName": "巴郡",
+      "aliases": ["江州", "江州县", "巴郡"],
+      "detail": "江州县 · 原郡名：巴郡",
+      "source": "https://zh.wikisource.org/zh-hant/華陽國志/卷一#巴郡",
+      "evidence": "《华阳国志·巴志》巴郡条明载江州县，郡治；对应现有重庆主城一带节点。"
+    },
+    "baxi": {
+      "displayName": "阆中",
+      "settlementName": "阆中县",
+      "administrativeName": "巴西郡",
+      "aliases": ["阆中", "阆中县", "巴西", "巴西郡"],
+      "detail": "阆中县 · 原郡名：巴西郡",
+      "source": "https://zh.wikisource.org/zh-hant/華陽國志/卷一#巴西郡",
+      "evidence": "《华阳国志·巴志》巴西郡条明载阆中县，郡治；早期剧本仍使用既定96城节点，不据此声称巴西郡已设立。"
+    },
+    "guanghan": {
+      "displayName": "雒城",
+      "settlementName": "雒县",
+      "administrativeName": "广汉郡",
+      "aliases": ["雒城", "雒", "雒县", "广汉", "广汉郡"],
+      "detail": "雒县 · 原郡名：广汉郡",
+      "source": "https://zh.wikisource.org/zh-hant/後漢書/卷113#益州",
+      "evidence": "《后汉书·郡国五》广汉条列雒，刺史治；雒城是县城的显示称呼，不声称所有剧本年代均为益州治所。"
+    }
+  }
+}

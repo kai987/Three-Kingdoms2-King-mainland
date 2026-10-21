@@ -19,6 +19,8 @@ def build():
     names['yingchuan']={'displayName':'许昌','before221':'许县','aliases':['许昌','许县','许都','颍川'],
         'role':'沿用既有许昌坐标节点，保留颍川内部ID；汉末城名为许县，221年改许昌',
         'source':'https://xuchang.gov.cn/zjxc/walkIntoXC.html'}
+    approved=json.loads((ROOT/'game/config/city-name-overrides.json').read_text())
+    names.update(approved['cities'])
     # This is the existing native eight-pixel sprite, enlarged to32px. Only
     # its white interior pixels are recolored; the original outline stays.
     pixels=[[x*4-16,y*4-16] for y,row in enumerate(plan['originalSprite']['rows'])
@@ -32,7 +34,7 @@ def build():
         liu_you='#f8d8f8',wang_lang='#f8b8f8',zhang_lu='#c8c8c8',neutral='#ffffff')
     refinement=json.loads((ROOT/'game/config/city-map-refinement.json').read_text())
     result={'schema':'map-presentation-v1','city_names':names,'colors':colors,'castle_fill_pixels':pixels,
-        'name_policy':'Use the approved board state-seat city labels; retain commandery IDs and original catalog names. These labels do not simulate every relocation of a provincial government.',
+        'name_policy':'Use approved state-seat and settlement labels for the existing board nodes; retain commandery IDs and original catalog names. These labels do not simulate every administrative foundation or relocation.',
         'date_policy':'Match the original single-line year/month frame; preview chapter dates before starting.',
         'labelled_city_ids':list(names)+['yinping'],
         'added_land_roads':[refinement['road']],
