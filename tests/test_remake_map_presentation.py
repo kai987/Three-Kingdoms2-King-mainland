@@ -35,6 +35,9 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(names['yizhou'],'夷洲')
         for year,expected_name in ((190,'秣陵'),(211,'秣陵'),(212,'建业'),(238,'建业')):
             self.assertEqual(city_names(s.game.catalog,year)['danyang'],expected_name)
+        self.assertEqual(s.game.catalog.map_cities['yingchuan']['name'],'颍川')
+        for year,expected_name in ((184,'许县'),(220,'许县'),(221,'许昌'),(238,'许昌')):
+            self.assertEqual(city_names(s.game.catalog,year)['yingchuan'],expected_name)
 
     def test_all39_previews_use_their_own_opening_ownership_and_active_domain(self):
         s=CampaignSession(self.paths);view=s.view()
@@ -61,7 +64,9 @@ class MapPresentationTests(unittest.TestCase):
 
     def test_background_and_native_mask_are_auditable_and_rebuild_is_deterministic(self):
         meta=presentation()
-        self.assertEqual(meta['background_sha256'],hashlib.sha256((ROOT/'game/assets/map-clean.png').read_bytes()).hexdigest())
+        self.assertEqual(meta['colors']['neutral'],'#ffffff')
+        self.assertTrue({'danyang','yingchuan','shujun','yinping'}<=set(meta['labelled_city_ids']))
+        self.assertEqual(meta['background_sha256'],hashlib.sha256((ROOT/'game'/meta['background'].lstrip('/')).read_bytes()).hexdigest())
         self.assertEqual(hashlib.sha256((ROOT/'game/assets/map.png').read_bytes()).hexdigest(),
                          '30946ef6877db09f7fb44c7d0cfe729614983613619095428ff3a270c0881edd')
         plan=json.loads((ROOT/'expansion/map/city-map-city-sea-plan-v42.json').read_text())

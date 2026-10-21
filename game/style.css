@@ -772,3 +772,9 @@ stroke-width:1;
 stroke-dasharray:none
 }
 .map-toolbar button.selected:hover:not(:disabled){background:#000;color:var(--paper)}
+
+/* Native empty castles stay white and have no faction ownership bar. */
+.road-underlay,.road-line{fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.road-underlay{stroke:#e4b45e;stroke-width:4.1}
+.road-line{stroke:#704518;stroke-width:1.9}
+.map-city-name{font:16px Unifont,monospace;fill:#fcfcfc;stroke:#000;stroke-width:3px;paint-order:stroke;stroke-linejoin:round;pointer-events:none}

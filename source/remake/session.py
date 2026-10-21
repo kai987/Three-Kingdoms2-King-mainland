@@ -24,6 +24,9 @@ class CampaignSession:
             result['catalog']['cities']=[dict(c,name=names[c['id']],administrative_name=c['name'])
                                          for c in result['catalog']['cities']]
             result['catalog']['map_presentation']=presentation()
+            result['catalog']['city_profiles']=self.game.catalog.data.get('city_profiles',{})
+            result['catalog']['city_income']=self.game.catalog.data.get('city_income',{})
+            result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
             result['catalog']['scenario_id']=self.game.catalog.data['id']
             latest=max(c.data.get('content_generation',0) for c in self.catalogs.values())
             result['catalog']['scenarios']=[{'id':c.data['id'],'title':c.data['title'],
@@ -38,6 +41,7 @@ class CampaignSession:
                                            'initial_owners':dict(c.data['initial_owners']),
                                            'active_cities':list(c.data['active_cities']),
                                            'city_names':city_names(c,c.data['start_year']),
+                                           'road_additions':c.data.get('road_additions',[]),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]
             return result
 

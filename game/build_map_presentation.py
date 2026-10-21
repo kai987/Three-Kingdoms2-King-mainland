@@ -16,6 +16,9 @@ def build():
         'source':'https://jnmz.jining.gov.cn/art/2019/9/10/art_9455_2033181.html'}
     names['danyang']['before212']='秣陵'
     names['danyang']['name_source']='https://dfz.nanjing.gov.cn/gzdt/202403/t20240315_4186987.html'
+    names['yingchuan']={'displayName':'许昌','before221':'许县','aliases':['许昌','许县','许都','颍川'],
+        'role':'沿用既有许昌坐标节点，保留颍川内部ID；汉末城名为许县，221年改许昌',
+        'source':'https://xuchang.gov.cn/zjxc/walkIntoXC.html'}
     # This is the existing native eight-pixel sprite, enlarged to32px. Only
     # its white interior pixels are recolored; the original outline stays.
     pixels=[[x*4-16,y*4-16] for y,row in enumerate(plan['originalSprite']['rows'])
@@ -26,12 +29,15 @@ def build():
         gongsun='#b8f818',gongsun_zan='#b8f818',liu_yu='#58d854',dong_zhuo='#f83800',
         li_jue='#f83800',sun_jian='#f85898',lubu='#f87858',zhang_chao='#fc7460',
         shi_xie='#94b0fc',zhang_yang='#d8b8f8',kong_rong='#58f898',tao_qian='#fcbcb0',
-        liu_you='#f8d8f8',wang_lang='#f8b8f8',zhang_lu='#c8c8c8',neutral='#9c9c9c')
+        liu_you='#f8d8f8',wang_lang='#f8b8f8',zhang_lu='#c8c8c8',neutral='#ffffff')
+    refinement=json.loads((ROOT/'game/config/city-map-refinement.json').read_text())
     result={'schema':'map-presentation-v1','city_names':names,'colors':colors,'castle_fill_pixels':pixels,
         'name_policy':'Use the approved board state-seat city labels; retain commandery IDs and original catalog names. These labels do not simulate every relocation of a provincial government.',
         'date_policy':'Match the original single-line year/month frame; preview chapter dates before starting.',
-        'background':'/assets/map-clean.png',
-        'background_sha256':hashlib.sha256((ROOT/'game/assets/map-clean.png').read_bytes()).hexdigest(),
+        'labelled_city_ids':list(names)+['yinping'],
+        'added_land_roads':[refinement['road']],
+        'background':'/assets/map-basin.png',
+        'background_sha256':hashlib.sha256((ROOT/'game/assets/map-basin.png').read_bytes()).hexdigest(),
         'source_html_sha256':hashlib.sha256((ROOT/'expansion/map/city-map-city-sea-preview-v42.html').read_bytes()).hexdigest()}
     (ROOT/'game/assets/map-presentation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     return result

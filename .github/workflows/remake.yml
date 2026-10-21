@@ -61,3 +61,9 @@ jobs:
         run: |
           python game/build_map_presentation.py
           git diff --exit-code -- game/assets/map-presentation.json
+      - name: Rebuild size-based city economy and Yinping-Chengdu campaigns
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_city_campaigns.py
+          git diff --exit-code -- game/data/main-scenarios-v6

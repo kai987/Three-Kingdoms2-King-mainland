@@ -121,7 +121,7 @@ class Campaign(ExpandedCampaign):
         d = self.catalog.data
         state = CampaignState(faction, seed, SeedRng(seed), d['start_year'], d['start_month'], d['start_year'])
         for key in d['active_cities']:
-            resources = d['initial_resources']
+            resources = d.get('initial_city_resources',{}).get(key,d['initial_resources'])
             state.cities[key] = City(key, d['initial_owners'][key],
                                      CityRoster(key, rules=self.catalog.rules), **resources)
         for row in d['initial_officers']:
@@ -417,15 +417,22 @@ class Campaign(ExpandedCampaign):
         for city in state.cities.values():
             city.action_used = False
             if city.owner != 'neutral':
-                city.gold += r['monthly_gold_income']
-                city.grain += r['monthly_grain_income']
+                income=self.catalog.data.get('city_income',{}).get(city.id,
+                    {'gold':r['monthly_gold_income'],'grain':r['monthly_grain_income'],'reserves':0})
+                city.gold += income['gold']
+                city.grain += income['grain']
+                city.reserves += income['reserves']
+                state.soldiers['recruited'] += income['reserves']
         state.turn += 1
         state.phase = 'city'
         if not any(c.owner == state.player for c in state.cities.values()) or not any(o.alive and o.faction_id == state.player for o in state.officers.values()):
             state.phase = 'finished'
             self._note(state, '本方已无可用驻军，本次演练结束。')
         else:
-            self._note(state, f'电脑行动完成，轮到本方。各城收获金钱{r["monthly_gold_income"]}、粮食{r["monthly_grain_income"]}。')
+            if self.catalog.data.get('city_income'):
+                self._note(state,'电脑行动完成，轮到本方。各城按规模获得金钱、粮食与预备兵收入。')
+            else:
+                self._note(state, f'电脑行动完成，轮到本方。各城收获金钱{r["monthly_gold_income"]}、粮食{r["monthly_grain_income"]}。')
 
     def export_save(self):
         with self.lock:

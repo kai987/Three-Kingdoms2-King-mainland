@@ -16,5 +16,7 @@ def city_names(catalog,year):
     for city in catalog.data['cities']:
         row=overrides.get(city['id'],{})
         label=row.get('displayName',city['name'])
-        names[city['id']]=row.get('before212',label) if year<212 else label
+        if year<212:label=row.get('before212',label)
+        if year<221:label=row.get('before221',label)
+        names[city['id']]=label
     return names

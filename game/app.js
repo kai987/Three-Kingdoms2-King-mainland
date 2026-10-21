@@ -1,14 +1,16 @@
 'use strict';
-let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, showLegacy=false, mapPositions=null, setupPreview=null;
+let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, showLegacy=false, mapPositions=null, setupPreview=null, cityLabels='major';
 const $=s=>document.querySelector(s), dialog=$('#dialog');
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=id=>view.catalog.names[String(id)]||'武将';
-const faction=id=>view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
+const faction=id=>id==='neutral'?'无主':view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
 const capacity=()=>view.catalog.rules.city_officer_capacity;
 const mapPosition=c=>mapPositions?.positions[c.id]||c.position;
-const cityName=id=>setupPreview?.city_names[id]||view.catalog.cities.find(c=>c.id===id)?.name||id;
+const periodCityName=id=>setupPreview?.city_names[id]||view.catalog.cities.find(c=>c.id===id)?.name||id;
+const cityName=id=>view.catalog.map_presentation.city_names[id]?.displayName||periodCityName(id);
+const cityCaption=id=>cityName(id)===periodCityName(id)?cityName(id):`${cityName(id)}（${periodCityName(id)}）`;
 const mapColor=id=>view.catalog.map_presentation.colors[id]||view.catalog.map_presentation.colors.neutral;
-const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==c.name).reduce((s,c)=>s.replaceAll(c.administrative_name,c.name),text);
+const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);}
 function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;}
 async function request(path,body){
@@ -68,7 +70,7 @@ function selectFaction(){
 function renderMap(){
  const game=view.game,preview=setupPreview,owners=preview?.initial_owners||Object.fromEntries(Object.values(game?.cities||{}).map(c=>[c.id,c.owner]));
  const active=view.catalog.cities.filter(c=>(preview?.active_cities||view.catalog.active_cities).includes(c.id));
- const factions=preview?.factions||view.catalog.factions,ownerName=id=>factions.find(f=>f.id===id)?.name||'守备军';
+ const factions=preview?.factions||view.catalog.factions,ownerName=id=>id==='neutral'?'无主':factions.find(f=>f.id===id)?.name||'守备军';
  const focused=preview?.focus||selectedCity,selected=view.catalog.cities.find(c=>c.id===focused),center=selected?mapPosition(selected):[760,440];
  const box=mapMode==='region'?`${Math.max(0,Math.min(922,center[0]-215))} ${Math.max(0,Math.min(674,center[1]-175))} 430 350`:'0 0 1352 1024';
  const date=preview||game||view.catalog.scenarios.find(s=>s.id===view.catalog.scenario_id);
@@ -76,21 +78,35 @@ function renderMap(){
  const castles=active.map(c=>{
   const [x,y]=mapPosition(c),owner=owners[c.id]||'neutral';
   const colored=view.catalog.map_presentation.castle_fill_pixels.map(([dx,dy])=>`<rect class="castle-fill" x="${x+dx}" y="${y+dy}" width="4" height="4" fill="${mapColor(owner)}"/>`).join('');
-  return `<g role="button" tabindex="0" class="city-hit ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''}" data-city="${c.id}" data-owner="${owner}" aria-label="${escapeHtml(cityName(c.id))}，${escapeHtml(ownerName(owner))}"><title>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owner))}</title>${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/><rect class="owner-marker" x="${x-8}" y="${y+18}" width="16" height="3" fill="${mapColor(owner)}"/></g>`;
+  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''}" data-city="${c.id}" data-owner="${owner}" aria-label="${escapeHtml(cityCaption(c.id))}，${escapeHtml(ownerName(owner))}"><title>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owner))}</title>${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/>${owner==='neutral'?'':`<rect class="owner-marker" x="${x-8}" y="${y+18}" width="16" height="3" fill="${mapColor(owner)}"/>`}</g>`;
  }).join('');
- $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owners[c.id]))}</option>`).join('')}</select></label></div>
- <svg id="world-map" viewBox="${box}" aria-label="96城地图，${active.length}城开放"><image href="${view.catalog.map_presentation.background}" x="0" y="0" width="1352" height="1024"/>${castles}</svg>
+ const extras=preview?.road_additions||view.catalog.road_additions;
+ const roads=view.catalog.map_presentation.added_land_roads.filter(r=>extras.some(e=>e.includes(r.from)&&e.includes(r.to))).map(r=>{
+  const ps=r.new_branch;let d=`M${ps[0].join(' ')}`;
+  for(let i=1;i<ps.length-1;i++)d+=`Q${ps[i].join(' ')} ${(ps[i][0]+ps[i+1][0])/2} ${(ps[i][1]+ps[i+1][1])/2}`;
+  d+=`L${ps.at(-1).join(' ')}`;
+  return `<g data-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
+ }).join('');
+ const labels=cityLabels==='none'?'':active.filter(c=>cityLabels==='all'||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused).map(c=>{
+  const [x,y]=mapPosition(c);return `<text class="map-city-name" x="${x}" y="${y-24}" text-anchor="middle" data-city-label="${c.id}">${escapeHtml(cityName(c.id))}</text>`;
+ }).join('');
+ $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id]))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</button></div>
+ <svg id="world-map" viewBox="${box}" aria-label="96城地图，${active.length}城开放"><image href="${view.catalog.map_presentation.background}" x="0" y="0" width="1352" height="1024"/>${roads}${castles}${labels}</svg>
  <time id="map-date" datetime="${String(date.year).padStart(4,'0')}-${String(date.month).padStart(2,'0')}" aria-label="${date.year}年${date.month}月">${date.year}年<span>${date.month}月</span></time>`;
  const choose=id=>{if(busy)return;if(preview){preview.focus=id;renderMap();return;}selectedCity=id;if(game.phase==='city')renderCity();renderMap();};
  $('#region').onclick=()=>{mapMode='region';renderMap();};$('#all-map').onclick=()=>{mapMode='all';renderMap();};
  $('#city-jump').onchange=()=>choose($('#city-jump').value);
+ $('#map-labels').onclick=()=>{cityLabels={major:'all',all:'none',none:'major'}[cityLabels];renderMap();};
  document.querySelectorAll('[data-city]').forEach(el=>{el.onclick=()=>choose(el.dataset.city);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(el.dataset.city);}};});
 }
 
 function rosterRows(city){return city.roster.officer_ids.map(id=>{const o=view.game.officers[id];return `<tr title="体${o.health}，德${o.profile.virtue}，忠${o.loyalty}，经验${o.experience}"><td>${escapeHtml(name(id))}</td><td>${o.profile.martial_strength}</td><td>${o.profile.intellect}</td><td>${o.troops}</td></tr>`;}).join('');}
 function renderCity(){
  const game=view.game,city=game.cities[selectedCity],owned=city.owner===game.player;
+ const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id];
  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>${escapeHtml(cityName(city.id))}</h2><span class="owner">${faction(city.owner)}</span></div>
+ ${periodCityName(city.id)!==cityName(city.id)?`<p class="small">本年代地名：${escapeHtml(periodCityName(city.id))}。</p>`:''}
+ <p class="small city-scale">${scale?`${escapeHtml(scale.label)} · ${city.owner==='neutral'?'无主城暂无月收入':`每月金${income.gold} / 粮${income.grain} / 预备兵${income.reserves}`}`:'旧版战役：沿用原有资源规则。'}</p>
  <dl class="resources"><dt>金钱</dt><dd>${city.gold}</dd><dt>粮食</dt><dd>${city.grain}</dd><dt>预备兵</dt><dd>${city.reserves}</dd></dl>
  <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>武</th><th>知</th><th>兵</th></tr></thead><tbody>${rosterRows(city)||'<tr><td colspan="4">暂无驻军</td></tr>'}</tbody></table></div>
  <p class="small">驻城 ${city.roster.officer_ids.length}/${capacity()}；每方出战上限10人。${city.action_used?'本城本回合已行动。':''}</p>

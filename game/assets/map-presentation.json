@@ -91,6 +91,18 @@
       "state": "兖州",
       "role": "汉末兖州治所；只更改显示城名，不模拟此后的州治迁移",
       "source": "https://jnmz.jining.gov.cn/art/2019/9/10/art_9455_2033181.html"
+    },
+    "yingchuan": {
+      "displayName": "许昌",
+      "before221": "许县",
+      "aliases": [
+        "许昌",
+        "许县",
+        "许都",
+        "颍川"
+      ],
+      "role": "沿用既有许昌坐标节点，保留颍川内部ID；汉末城名为许县，221年改许昌",
+      "source": "https://xuchang.gov.cn/zjxc/walkIntoXC.html"
     }
   },
   "colors": {
@@ -122,7 +134,7 @@
     "liu_you": "#f8d8f8",
     "wang_lang": "#f8b8f8",
     "zhang_lu": "#c8c8c8",
-    "neutral": "#9c9c9c"
+    "neutral": "#ffffff"
   },
   "castle_fill_pixels": [
     [
@@ -192,7 +204,84 @@
   ],
   "name_policy": "Use the approved board state-seat city labels; retain commandery IDs and original catalog names. These labels do not simulate every relocation of a provincial government.",
   "date_policy": "Match the original single-line year/month frame; preview chapter dates before starting.",
-  "background": "/assets/map-clean.png",
-  "background_sha256": "bbe033c944ba1547ca12c7d0cbd50d930c8a49befce5fbcc767cf5afbfc77c7e",
+  "labelled_city_ids": [
+    "shujun",
+    "jingzhao",
+    "henan",
+    "danyang",
+    "taiyuan",
+    "qi",
+    "wuwei",
+    "jiujiang",
+    "nanjun",
+    "nanhai",
+    "yan",
+    "anping",
+    "wei",
+    "shanyang",
+    "yingchuan",
+    "yinping"
+  ],
+  "added_land_roads": [
+    {
+      "from": "yinping",
+      "to": "shujun",
+      "names": [
+        "阴平",
+        "成都"
+      ],
+      "shared_prefix": [
+        [
+          250,
+          402
+        ],
+        [
+          260,
+          408
+        ],
+        [
+          258,
+          418
+        ],
+        [
+          264,
+          412
+        ],
+        [
+          272,
+          420
+        ],
+        [
+          244,
+          448
+        ]
+      ],
+      "new_branch": [
+        [
+          244,
+          448
+        ],
+        [
+          238,
+          456
+        ],
+        [
+          226,
+          474
+        ],
+        [
+          216,
+          490
+        ],
+        [
+          214,
+          502
+        ]
+      ],
+      "drawing_policy": "Reuse the existing Yinping-Wenshan northern approach; paint only the branch after its junction, no parallel duplicate."
+    }
+  ],
+  "background": "/assets/map-basin.png",
+  "background_sha256": "c90171f28cc5d839038c59348b9c734906d661954f5a01f77ec76698e094fa18",
   "source_html_sha256": "bf3684b48772332a1dd8084cb0f33c61cbe034e5d4642b13ae648682aa6233d1"
 }
