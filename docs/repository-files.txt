@@ -7088,9 +7088,6 @@ game/data/eras/227.json
 game/data/eras/249.json
 game/data/eras/index.json
 game/data/mainland.json
-game/design/README.md
-game/design/concept.png
-game/design/prompt.txt
 game/index.html
 game/serve.py
 game/style.css

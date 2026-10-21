@@ -152,11 +152,13 @@ function renderMap(){
  const box=`${world.x} ${world.y||0} ${world.width} ${world.height}`;
  const date=preview||game||view.catalog.scenarios.find(s=>s.id===view.catalog.scenario_id);
  if(preview)$('#date').textContent=`${date.year}年${date.month}月 · 选择势力`;
+ const spritePixels=pixels=>pixels.map(([x,y])=>`<rect x="${x}" y="${y}" width="4" height="4"/>`).join('');
+ const spriteDefs=`<g id="castle-fill-pixels">${spritePixels(view.catalog.map_presentation.castle_fill_pixels)}</g><g id="castle-outline-pixels">${spritePixels(view.catalog.map_presentation.castle_outline_pixels)}</g>`;
  const castles=active.map(c=>{
   const [x,y]=mapPosition(c),owner=owners[c.id]||'neutral';
   // Cover the baked outline too: every pixel of an unowned castle is white.
-  const outline=owner==='neutral'||added.includes(c.id)||view.catalog.map_presentation.new_city_ids?.includes(c.id)?view.catalog.map_presentation.castle_outline_pixels.map(([dx,dy])=>`<rect class="castle-border" x="${x+dx}" y="${y+dy}" width="4" height="4" fill="${owner==='neutral'?'#fff':'#000'}"/>`).join(''):'';
-  const colored=view.catalog.map_presentation.castle_fill_pixels.map(([dx,dy])=>`<rect class="castle-fill" x="${x+dx}" y="${y+dy}" width="4" height="4" fill="${mapColor(owner)}"/>`).join('');
+  const outline=owner==='neutral'||added.includes(c.id)||view.catalog.map_presentation.new_city_ids?.includes(c.id)?`<use class="castle-border" href="#castle-outline-pixels" x="${x}" y="${y}" fill="${owner==='neutral'?'#fff':'#000'}"/>`:'';
+  const colored=`<use class="castle-fill" href="#castle-fill-pixels" x="${x}" y="${y}" fill="${mapColor(owner)}"/>`;
   return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''}" data-city="${c.id}" data-owner="${owner}" aria-label="${escapeHtml(cityCaption(c.id))}，${escapeHtml(ownerName(owner,c.id))}"><title>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owner,c.id))}</title>${outline}${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/></g>`;
  }).join('');
  const extras=preview?.road_additions||view.catalog.road_additions;
@@ -192,7 +194,7 @@ function renderMap(){
   const [x,y]=mapPosition(c),[dx,dy,anchor]=offsets[c.id]||[0,-24,'middle'];return `<text class="map-city-name" x="${x+dx}" y="${y+dy}" text-anchor="${anchor}" data-city-label="${c.id}" aria-hidden="true">${escapeHtml(cityName(c.id))}</text>`;
  }).join('');
  $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</button></div>
- <svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs><marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${world.background}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
+ <svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${world.background}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
  <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
  <time id="map-date" datetime="${String(date.year).padStart(4,'0')}-${String(date.month).padStart(2,'0')}" aria-label="${date.year}年${date.month}月">${date.year}年<span>${date.month}月</span></time>`;

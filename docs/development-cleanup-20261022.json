@@ -1,0 +1,104 @@
+{
+  "schema": "development-cleanup-result-v1",
+  "deleted_files": 17504,
+  "deleted_logical_bytes": 439173138,
+  "items": [
+    {
+      "path": "tools/rea/node_modules",
+      "files": 14054,
+      "bytes": 346346748,
+      "reason": "Installed historical REA npm dependencies; current stdlib Python web game and global Playwright do not load this tree.",
+      "restore": "npm --prefix tools/rea ci (Node compatible with package engines; lockfile retained)"
+    },
+    {
+      "path": "build/remake-workbook-checks",
+      "files": 6,
+      "bytes": 827238,
+      "reason": "Regenerable workbook inspection scratch copy, screenshots and inspection NDJSON. Final XLSX/export validation remain under outputs/.",
+      "restore": "node expansion/officers/build_workbook.mjs (workspace document dependencies required)"
+    },
+    {
+      "path": "build/report-checks",
+      "files": 3,
+      "bytes": 1744455,
+      "reason": "Regenerable browser screenshots of historical roster report. Source report and validation stay in expansion/officers/.",
+      "restore": "node expansion/officers/verify_report.cjs (Playwright/Chrome required)"
+    },
+    {
+      "path": "source/recovered/__pycache__",
+      "files": 0,
+      "bytes": 0,
+      "reason": "Python bytecode cache, not source.",
+      "restore": "Regenerated automatically by Python when bytecode writing is enabled"
+    },
+    {
+      "path": "source/remake/__pycache__",
+      "files": 9,
+      "bytes": 272636,
+      "reason": "Python bytecode cache, not source.",
+      "restore": "Regenerated automatically by Python when bytecode writing is enabled"
+    },
+    {
+      "path": "tests/__pycache__",
+      "files": 1,
+      "bytes": 24011,
+      "reason": "Python bytecode cache, not source.",
+      "restore": "Regenerated automatically by Python when bytecode writing is enabled"
+    },
+    {
+      "path": "game/__pycache__",
+      "files": 3,
+      "bytes": 41499,
+      "reason": "Python bytecode cache, not source.",
+      "restore": "Regenerated automatically by Python when bytecode writing is enabled"
+    },
+    {
+      "path": "scripts/__pycache__",
+      "files": 0,
+      "bytes": 0,
+      "reason": "Python bytecode cache, not source.",
+      "restore": "Regenerated automatically by Python when bytecode writing is enabled"
+    },
+    {
+      "path": "expansion/officers/__pycache__",
+      "files": 1,
+      "bytes": 26534,
+      "reason": "Python bytecode cache, not source.",
+      "restore": "Regenerated automatically by Python when bytecode writing is enabled"
+    },
+    {
+      "path": ".toolchain/**/*.o excluding phase32-observer",
+      "files": 3424,
+      "bytes": 87740448,
+      "reason": "Intermediate compiler objects; sources, Makefiles, source patches, build logs and final observer/decompiler libraries retained.",
+      "restore": "Run corresponding preserved Makefile/build command; game runtime never uses these objects."
+    },
+    {
+      "path": "game/design",
+      "files": 3,
+      "bytes": 2149569,
+      "reason": "Historical2MiB concept, prompt and original design notes describe obsolete beige/brown UI; only internalREADME and docs/repository-files.txt inventory refer to it; no game/build/test/runtime input. Git preserves recovery.",
+      "restore": "git restore --source=9bf4aea -- game/design"
+    }
+  ],
+  "preserved": [
+    "Unique reverse-engineering evidence and archives",
+    "All161 immutable campaign catalogs and source data",
+    "ROM and source/compiledfinalbinaries",
+    "Phase32 frozen observer closure object files"
+  ],
+  "full_candidate_manifest_sha256": "a80cf6d35b07d5cef97ea723958e99d22df688712544abfdc80d958f555ff195",
+  "archive_deduplication": {
+    "operation": "APFS clonefile copy-on-write deduplication",
+    "source": "build/三国志2超级版-逆向分析-v22.zip",
+    "target": "build/三国志2超级版-逆向分析.zip",
+    "file_bytes": 1395099758,
+    "sha256": "9fd37c2ae0d7d857c787801e8bdc92ca43fb038099491f7dbe09f17b204cef80",
+    "independent_regular_files": true,
+    "path_and_contents_preserved": true,
+    "available_bytes_before": 41987751936,
+    "available_bytes_after": 43383451648,
+    "available_bytes_delta": 1395699712
+  },
+  "date": "2026-10-22"
+}

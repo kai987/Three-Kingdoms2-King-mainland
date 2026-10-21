@@ -48,6 +48,7 @@ class CampaignSession:
         self.catalogs={c.data['id']:c for c in catalogs}
         self.game=Campaign(catalogs[-1])
         self.lock=RLock()
+        self._opening_previews=None
 
     @property
     def revision(self): return self.game.revision
@@ -74,8 +75,20 @@ class CampaignSession:
             result['catalog']['travel_hazards']=self.game.catalog.data.get('travel_hazards')
             for field in ('added_city_ids','regional_roads','city_label_offsets','city_history'):
                 result['catalog'][field]=self.game.catalog.data.get(field,[] if field in ('added_city_ids','regional_roads') else {})
+            result['catalog']['scenarios']=self._scenario_previews()
+            return result
+
+    def _scenario_previews(self):
+        """Build immutable opening summaries once, retaining fresh view containers.
+
+        Catalog files are fixed for the lifetime of a session. Opening names,
+        ownership and membership never depend on the live month or command.
+        Lists/maps built by the old view remain per-response copies, so callers
+        cannot poison a later preview by editing one of those containers.
+        """
+        if self._opening_previews is None:
             latest=max(c.data.get('content_generation',0) for c in self.catalogs.values())
-            result['catalog']['scenarios']=[{'id':c.data['id'],'title':c.data['title'],
+            self._opening_previews=[{'id':c.data['id'],'title':c.data['title'],
                                            'cities':len(c.data['active_cities']),
                                            'year':c.data['start_year'],'month':c.data['start_month'],
                                            'configured':c.data.get('coverage',{}).get('configured_profiles',8),
@@ -100,7 +113,15 @@ class CampaignSession:
                                            'travel_hazards':c.data.get('travel_hazards'),
                                            'sea_routes':c.data.get('sea_routes',[]),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]
-            return result
+        return [dict(row,
+            initial_owners=dict(row['initial_owners']),
+            active_cities=list(row['active_cities']),
+            city_names=dict(row['city_names']),
+            map_cities=list(row['map_cities']),
+            faction_resources={key:dict(values) for key,values in row['faction_resources'].items()},
+            faction_officers=dict(row['faction_officers']),
+            faction_colors=dict(row['faction_colors']),
+            factions=list(row['factions'])) for row in self._opening_previews]
 
     def command(self, kind, payload, revision):
         with self.lock:
