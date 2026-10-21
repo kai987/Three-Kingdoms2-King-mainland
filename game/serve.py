@@ -48,14 +48,16 @@ def main():
     main_index = json.loads((HERE / 'data/main-scenarios/index.json').read_text())
     complete_index = json.loads((HERE / 'data/main-scenarios-v5/index.json').read_text())
     city_index = json.loads((HERE / 'data/main-scenarios-v6/index.json').read_text())
+    travel_index = json.loads((HERE / 'data/main-scenarios-v7/index.json').read_text())
     game = CampaignSession([HERE / 'data/demo.json', HERE / 'data/mainland.json'] +
-                           [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs'] + main_index['catalogs'] + complete_index['catalogs'] + city_index['catalogs']])
+                           [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs'] + main_index['catalogs'] + complete_index['catalogs'] + city_index['catalogs'] + travel_index['catalogs']])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/style.css': ('style.css', 'text/css; charset=utf-8'),
               '/assets/map.png': ('assets/map.png', 'image/png'),
               '/assets/map-clean.png': ('assets/map-clean.png', 'image/png'),
               '/assets/map-basin.png': ('assets/map-basin.png', 'image/png'),
+              '/assets/map-campaign.png': ('assets/map-campaign.png', 'image/png'),
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
 

@@ -21,10 +21,15 @@ def build():
         'source':'https://xuchang.gov.cn/zjxc/walkIntoXC.html'}
     approved=json.loads((ROOT/'game/config/city-name-overrides.json').read_text())
     names.update(approved['cities'])
+    travel=json.loads((ROOT/'game/config/travel-map.json').read_text())
+    for city in travel['cities']:
+        names[city['id']]={'displayName':city['name'],'detail':city['seat']+'；新增西北节点。'}
     # This is the existing native eight-pixel sprite, enlarged to32px. Only
     # its white interior pixels are recolored; the original outline stays.
     pixels=[[x*4-16,y*4-16] for y,row in enumerate(plan['originalSprite']['rows'])
             for x,value in enumerate(row) if value==6]
+    outline=[[x*4-16,y*4-16] for y,row in enumerate(plan['originalSprite']['rows'])
+             for x,value in enumerate(row) if value==2]
     colors=dict(wei='#fcfcfc',shu='#f8b800',wu='#f85898',han='#fcfcfc',yellow_turban='#f8b800',
         yuan_shao='#a4e4fc',han_fu='#3cbcfc',liu_biao='#b8b8f8',liu_dai='#f878f8',
         liu_zhang='#00e8d8',liu_yan='#00e8d8',ma_teng='#fca044',yuan_shu='#f8d878',
@@ -38,8 +43,12 @@ def build():
         'date_policy':'Match the original single-line year/month frame; preview chapter dates before starting.',
         'labelled_city_ids':list(names)+['yinping'],
         'added_land_roads':[refinement['road']],
+        'expansion_connections':travel['connections'],
+        'new_city_ids':[c['id'] for c in travel['cities']]+list(travel['city_moves']),
+        'castle_outline_pixels':outline,
         'background':'/assets/map-basin.png',
         'background_sha256':hashlib.sha256((ROOT/'game/assets/map-basin.png').read_bytes()).hexdigest(),
+        'campaign_background_sha256':hashlib.sha256((ROOT/'game/assets/map-campaign.png').read_bytes()).hexdigest(),
         'source_html_sha256':hashlib.sha256((ROOT/'expansion/map/city-map-city-sea-preview-v42.html').read_bytes()).hexdigest()}
     (ROOT/'game/assets/map-presentation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     return result

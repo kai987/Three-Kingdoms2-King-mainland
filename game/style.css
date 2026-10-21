@@ -757,19 +757,10 @@ padding:4px 8px
 stroke:none;
 fill:transparent
 }
-.city-hit .owner-marker{
-stroke:#000;
-stroke-width:1
-}
 .city-hit.selected .city-outline,.city-hit:hover .city-outline,.city-hit:focus-visible .city-outline{
 stroke:#fff;
 stroke-width:3;
 stroke-dasharray:7 3
-}
-.city-hit.selected .owner-marker,.city-hit:hover .owner-marker{
-stroke:#000;
-stroke-width:1;
-stroke-dasharray:none
 }
 .map-toolbar button.selected:hover:not(:disabled){background:#000;color:var(--paper)}
 
@@ -781,3 +772,7 @@ stroke-dasharray:none
 .city-information{display:grid;gap:12px}
 .city-information p{margin:0}
 .city-information .roster-scroll{max-height:260px;flex:none}
+.coastal-lane{fill:none;stroke:#f8d878;stroke-width:2.4;stroke-dasharray:9 7;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.travel-estimate{border:2px solid #000;padding:10px;font-size:16px;line-height:1.55}
+.marches{border-top:3px double #000;margin-top:20px;padding-top:8px;font-size:15px;overflow-wrap:anywhere}
+.marches h3{font-size:18px;margin:4px 0 12px}.marches p{margin:10px 0}

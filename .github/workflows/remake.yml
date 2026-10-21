@@ -67,3 +67,9 @@ jobs:
         run: |
           python game/build_city_campaigns.py
           git diff --exit-code -- game/data/main-scenarios-v6
+      - name: Rebuild100-city campaigns and geographic monthly marches
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_travel_campaigns.py
+          git diff --exit-code -- game/data/main-scenarios-v7

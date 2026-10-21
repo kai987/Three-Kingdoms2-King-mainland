@@ -14,6 +14,7 @@ from threading import RLock
 
 from .errors import GameError
 from .campaign_expansion import ExpandedCampaign
+from .travel import TravelCampaign
 from .officers import (CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
                        initialize_officer, integer, select_deployment, year_state)
@@ -96,13 +97,13 @@ class Catalog:
         self.factions = {f['id']: f for f in self.data['factions']}
         self.map_cities = {c['id']: c for c in self.data['cities']}
         self.links = {frozenset(e) for e in self.data['links']}
-        assert len(self.definitions) == 1000 and len(self.map_cities) == 96
+        assert len(self.definitions) == 1000 and len(self.map_cities) == (100 if self.data.get('travel_rules') else 96)
 
     def name(self, ident):
         return self.by_id[ident]['name']
 
 
-class Campaign(ExpandedCampaign):
+class Campaign(TravelCampaign, ExpandedCampaign):
     def __init__(self, catalog: Catalog):
         self.catalog = catalog
         self.state: CampaignState | None = None
@@ -137,6 +138,8 @@ class Campaign(ExpandedCampaign):
         state.soldiers['initial'] = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
         if self.expanded:
             self._initialize_expansion(state)
+        if self.travelling:
+            state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False)
         self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
 
@@ -159,7 +162,7 @@ class Campaign(ExpandedCampaign):
                                 'links': self.catalog.data['links'], 'rules': self.catalog.data['rules'],
                                 'notes': self.catalog.data['design_notes'], 'library_count': 1000,
                                 'year_available': available,
-                                **self._expanded_catalog_view(state),
+                                **self._expanded_catalog_view(state), **self._travel_view(state),
                                 'names': {str(i): self.catalog.name(i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
@@ -185,7 +188,7 @@ class Campaign(ExpandedCampaign):
                            'tactic': self._tactic, 'duel_start': self._duel_start, 'duel_action': self._duel_action,
                            'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
                            'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
-                           'end_turn': self._end_turn, 'ai': self._ai}
+                           'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals}
                 if kind not in methods:
                     raise GameError('未提供这项操作。')
                 methods[kind](candidate, payload)
@@ -213,6 +216,8 @@ class Campaign(ExpandedCampaign):
         troops = integer(payload.get('troops'), 0, 999, 'troops')
         if ident not in city.roster.officer_ids:
             raise GameError('武将不在本城。')
+        if ident in self._march_ids(state):
+            raise GameError('武将正在行军，不能编兵。')
         officer = state.officers[ident]
         change = troops - officer.troops
         if change > city.reserves:
@@ -246,6 +251,9 @@ class Campaign(ExpandedCampaign):
             raise GameError('出征名单无效。')
         if self.expanded:
             for ident in ids: self._personnel_actor(state, source, ident)
+            if self.travelling:
+                self._queue_march(state, source, target, ids, 'attack', payload.get('route_mode','fastest'))
+                return
             self._start_expanded_battle(state, source, target, ids)
             return
         selected = select_deployment(source.roster, ids, state.officers)
@@ -425,6 +433,10 @@ class Campaign(ExpandedCampaign):
                 state.soldiers['recruited'] += income['reserves']
         state.turn += 1
         state.phase = 'city'
+        if self.travelling:
+            self._prune_marches(state)
+            if any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
+                state.phase = 'arrivals'
         if not any(c.owner == state.player for c in state.cities.values()) or not any(o.alive and o.faction_id == state.player for o in state.officers.values()):
             state.phase = 'finished'
             self._note(state, '本方已无可用驻军，本次演练结束。')
@@ -482,7 +494,7 @@ class Campaign(ExpandedCampaign):
 
     def validate(self, state):
         self._validate_expansion(state)
-        if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished'}:
+        if state.player not in self.catalog.factions or state.phase not in ({'city', 'battle', 'result', 'ai', 'finished'} | ({'arrivals'} if self.travelling else set())):
             raise ValueError('campaign phase/player')
         integer(state.year, 1, 400, 'year')
         integer(state.month, 1, 12, 'month')

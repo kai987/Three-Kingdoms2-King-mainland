@@ -75,6 +75,7 @@ class ExpandedCampaign:
 
     def _personnel_actor(self, state, city, ident):
         integer(ident, 0, self.catalog.rules.runtime_capacity - 1, 'officer')
+        if ident in self._march_ids(state): raise GameError('这名武将正在行军。')
         if ident not in city.roster.officer_ids or not state.officers[ident].alive or state.officers[ident].health < 1:
             raise GameError('请选择本城健康的武将。')
         if state.extension['officer_actions'].get(str(ident)) == state.turn:
@@ -118,6 +119,7 @@ class ExpandedCampaign:
         return [ident for key in sorted(neighbors) for ident in state.cities[key].roster.officer_ids
                 if state.cities[key].owner not in {city.owner,'neutral'}
                 and state.officers[ident].alive and state.officers[ident].loyalty<100
+                and ident not in self._march_ids(state)
                 and ident not in state.extension['leaders'].values()]
 
     def _persuade_officer(self,state,payload):
@@ -157,6 +159,9 @@ class ExpandedCampaign:
         if source.id==destination.id or not isinstance(ids,list) or not ids or len(ids)!=len(set(ids)):
             raise GameError('请选择不同的目的城和不重复的调动名单。')
         for ident in ids: self._personnel_actor(state,source,ident)
+        if self.travelling:
+            self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
+            return
         path=self._friendly_path(state,source.id,destination.id,state.player)
         if not path: raise GameError('两城之间没有连续的本方道路。')
         fee=(len(path)-1)*len(ids)*5
@@ -166,11 +171,12 @@ class ExpandedCampaign:
         state.extension['officer_actions'].update({str(i):state.turn for i in ids})
         self._note(state,f'{len(ids)}名武将调往{self.catalog.map_cities[destination.id]["name"]}，经{len(path)-1}段道路，耗粮{fee}。')
 
-    def _start_expanded_battle(self,state,source,target,ids):
+    def _start_expanded_battle(self,state,source,target,ids,*,paid=False):
         selected=select_deployment(source.roster,ids,state.officers)
         cost=max(1,sum(state.officers[i].troops for i in selected)//25)
-        if source.grain<cost: raise GameError('出征粮食不足。')
-        defenders=sorted((i for i in target.roster.officer_ids if state.officers[i].troops>0 and state.officers[i].health>0),key=lambda i:(-state.officers[i].troops,i))[:10]
+        if not paid and source.grain<cost: raise GameError('出征粮食不足。')
+        marching=self._march_ids(state)
+        defenders=sorted((i for i in target.roster.officer_ids if i not in marching and state.officers[i].troops>0 and state.officers[i].health>0),key=lambda i:(-state.officers[i].troops,i))[:10]
         def units(ids): return [{'id':i,'troops':state.officers[i].troops,'start':state.officers[i].troops,'martial':state.officers[i].profile.martial_strength} for i in ids]
         support={str(i):{'health':state.officers[i].health,'energy':18,'stunned':0,'guard':0} for i in [*selected,*defenders]}
         state.battle_counter+=1
@@ -178,7 +184,8 @@ class ExpandedCampaign:
                       'attackers':units(selected),'defenders':units(defenders),'used':[],'round':1,'outcome':None,'supply_cost':cost,
                       'log':[f'{self.catalog.map_cities[source.id]["name"]}向{self.catalog.map_cities[target.id]["name"]}出征。'],
                       'extended':{'support':support,'duel':None,'duel_history':[],'ambush':None,'surrenders':{},'withdrawn':None}}
-        source.grain-=cost;source.action_used=True;state.phase='battle'
+        if not paid: source.grain-=cost;source.action_used=True
+        state.phase='battle'
         state.extension['officer_actions'].update({str(i):state.turn for i in selected})
         self._note(state,state.battle['log'][0])
         if not defenders: state.battle['outcome']='victory';state.phase='result'
@@ -385,6 +392,11 @@ class ExpandedCampaign:
         incoming=b['attacker']!=state.player
         self._note(state,f'战果已结算，合计损兵{lost}，劝降兵员{sum(x["surrenders"].values())}入城。')
         state.battle=None;state.phase='ai' if incoming else 'city'
+        if self.travelling:
+            travel=state.extension['travel']
+            if travel['battle_arrival']:
+                travel['battle_arrival']=False;state.phase='arrivals'
+            self._prune_marches(state)
         self._reconcile_factions(state)
 
     def _reconcile_factions(self,state):
@@ -403,7 +415,7 @@ class ExpandedCampaign:
         if state.player in x['ended_factions']:
             state.phase='finished';x['outcome']='defeat'
         elif all(c.owner==state.player for c in state.cities.values()):
-            state.phase='finished';x['outcome']='victory';self._note(state,'九十六城归一，战役胜利。')
+            state.phase='finished';x['outcome']='victory';self._note(state,f'{len(state.cities)}城归一，战役胜利。')
 
     def _report_ai(self,state,city,action,target=None):
         state.extension['ai_reports'].append({'turn':state.turn,'city':city.id,'faction':city.owner,'action':action,'target':target})
@@ -418,15 +430,15 @@ class ExpandedCampaign:
         while x['ai_cursor']<len(x['ai_queue']):
             key=x['ai_queue'][x['ai_cursor']];x['ai_cursor']+=1;city=state.cities[key]
             if city.owner in {state.player,'neutral'} or city.action_used:continue
-            ids=city.roster.officer_ids
+            ids=[i for i in city.roster.officer_ids if i not in self._march_ids(state)] if self.travelling else city.roster.officer_ids
             free=self._free_candidates(state,city)
-            if ids and free and len(ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
+            if ids and free and len(city.roster.officer_ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
                 # Same success formula/loyalty as the player; failure costs gold.
                 recruiter=max(ids,key=lambda i:state.officers[i].profile.virtue);actor=state.officers[recruiter];ident=free[0];o=state.officers[ident]
                 chance=max(15,min(95,35+actor.profile.virtue//2+actor.profile.intellect//5-o.profile.virtue//5))
                 city.gold-=r['recruit_officer_gold']
                 if state.rng.next()%100<chance:
-                    o.faction_id=city.owner;o.loyalty=recruitment_loyalty(actor.profile.virtue,o.loyalty);ids.append(ident);x['free_locations'].pop(str(ident),None)
+                    o.faction_id=city.owner;o.loyalty=recruitment_loyalty(actor.profile.virtue,o.loyalty);city.roster.officer_ids.append(ident);x['free_locations'].pop(str(ident),None)
                 x['officer_actions'][str(recruiter)]=state.turn
                 x['officer_actions'][str(ident)]=state.turn
                 self._report_ai(state,city,'recruit_officer',str(ident));city.action_used=True;continue
@@ -444,6 +456,9 @@ class ExpandedCampaign:
             target=next((c for c in targets if strength>=max(150,sum(state.officers[i].troops for i in c.roster.officer_ids)*13//10)),None)
             if army and target and x['ai_attacks']<r['ai_max_attacks_per_turn'] and city.grain>=max(1,strength//25):
                 x['ai_attacks']+=1;self._report_ai(state,city,'attack',target.id)
+                if self.travelling:
+                    self._queue_march(state,city,target,army,'attack')
+                    continue
                 self._start_expanded_battle(state,city,target,army)
                 if target.owner==state.player:return  # Player controls the defending side.
                 # AI-v-AI / empty-city combat uses the same troop formula and
@@ -460,7 +475,7 @@ class ExpandedCampaign:
                 self._expanded_settle(state,{'battle_id':b['id']})
                 if state.phase=='finished':return
                 state.phase='ai'
-            elif any(x['officer_actions'].get(str(i))!=state.turn for i in ids) and len(ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['persuade_officer_gold'] and self._persuadable(state,city) and not any(report['turn']==state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
+            elif any(x['officer_actions'].get(str(i))!=state.turn for i in ids) and len(city.roster.officer_ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['persuade_officer_gold'] and self._persuadable(state,city) and not any(report['turn']==state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
                 actor=max((state.officers[i] for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda o:o.profile.virtue)
                 target=min(self._persuadable(state,city),key=lambda i:state.officers[i].loyalty)
                 self._attempt_defection(state,city,actor,target)
@@ -471,7 +486,9 @@ class ExpandedCampaign:
                 friends=[state.cities[k] for k in self._neighbors(key) if state.cities[k].owner==city.owner and len(state.cities[k].roster.officer_ids)<self.catalog.rules.city_officer_capacity]
                 friends.sort(key=lambda c:(len(c.roster.officer_ids),c.id))
                 if friends and len(friends[0].roster.officer_ids)<len(ids)-1 and city.grain>=5:
-                    ident=min((i for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda i:state.officers[i].troops);transfer_officers(city.roster,friends[0].roster,[ident]);city.grain-=5
+                    ident=min((i for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda i:state.officers[i].troops)
+                    if self.travelling:self._queue_march(state,city,friends[0],[ident],'transfer')
+                    else:transfer_officers(city.roster,friends[0].roster,[ident]);city.grain-=5
                     x['officer_actions'][str(ident)]=state.turn
                     self._report_ai(state,city,'transfer',friends[0].id)
             city.action_used=True
@@ -508,8 +525,9 @@ class ExpandedCampaign:
         if not self.expanded:
             if x!={}:raise ValueError('unexpected expanded data in legacy slice')
             return
-        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome'}
+        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome'} | ({'travel'} if self.travelling else set())
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
+        self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')
         for key,city in x['free_locations'].items():
             ident=int(key)
