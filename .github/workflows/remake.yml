@@ -27,6 +27,7 @@ jobs:
           cargo test --manifest-path crates/march-core/Cargo.toml --locked
           python game/build_march_core.py --check
           node tests/march_wasm_parity.cjs
+          MARCH_WASM_PATH=build/march-core-target/wasm32-unknown-unknown/release/march_core.wasm node tests/march_wasm_parity.cjs
       - name: Officer and campaign behavior
         env:
           PYTHONDONTWRITEBYTECODE: '1'

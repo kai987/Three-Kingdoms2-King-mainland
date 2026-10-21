@@ -12,7 +12,7 @@ RUSTUP_TOOLCHAIN=1.93.0 python3 game/build_march_core.py
 MARCH_CORE_BACKEND=rust python3 -I -S -B game/serve.py --port 8878
 ```
 
-`build/march-core/`內的原生庫與CLI依作業系統重建，不加入Git；`game/wasm/`保存已編譯的WASM與來源／二進位SHA256清單。鎖定依賴、編譯器及路徑重映射，使CI可用`--check`逐位元組核對WASM。不得用重新產生劇本來「修正」相容性測試。
+`build/march-core/`內的原生庫與CLI依作業系統重建，不加入Git；`game/wasm/`保存已編譯的WASM與來源／二進位SHA256清單。鎖定依賴、編譯器及路徑重映射，manifest另記錄建置宿主。`--check`檢查來源與既有檔案SHA；同宿主要求逐位元組重建相同，跨宿主則由CI分別對隨附與重建WASM執行完整差分測試。Rust不同宿主產生的WASM不保證位元組相同。不得用重新產生劇本來「修正」相容性測試。
 
 預設`auto`在有原生庫時使用Rust；缺少原生庫時使用保留的Python實作。`MARCH_CORE_BACKEND=rust`要求原生庫存在且ABI正確，否則明確失敗；`python`可供差分重播。切換不寫入存檔，也不影響目錄校驗值。`GET /api/march-status`供本機驗證實際後端與呼叫次數。
 
@@ -40,6 +40,7 @@ cargo clippy --manifest-path crates/march-core/Cargo.toml --locked --all-targets
 cargo test --manifest-path crates/march-core/Cargo.toml --locked
 python3 game/build_march_core.py --check
 node tests/march_wasm_parity.cjs
+MARCH_WASM_PATH=build/march-core-target/wasm32-unknown-unknown/release/march_core.wasm node tests/march_wasm_parity.cjs
 node tests/test_remake_march_worker.cjs
 MARCH_CORE_BACKEND=rust PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_remake_*.py' -v
 ```

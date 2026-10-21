@@ -1,5 +1,7 @@
 {
   "abi": 1,
+  "build_host": "aarch64-apple-darwin",
+  "builder_sha256": "e2c581a185539df582541cbd0b9a8060d79e68b570ef96dc27abaa43a170989a",
   "bytes": 343022,
   "crate": "march-core",
   "file": "march_core.wasm",

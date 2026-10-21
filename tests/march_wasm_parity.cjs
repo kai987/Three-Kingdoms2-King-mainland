@@ -9,7 +9,7 @@ const {createJsonClient}=require('../game/march-worker.js');
 
 (async()=>{
  const root=path.resolve(__dirname,'..');
- const bytes=fs.readFileSync(path.join(root,'game/wasm/march_core.wasm'));
+ const bytes=fs.readFileSync(path.resolve(root,process.env.MARCH_WASM_PATH||'game/wasm/march_core.wasm'));
  const {instance}=await WebAssembly.instantiate(bytes,{}),call=createJsonClient(instance);
  assert.equal(instance.exports.march_version(),1);
  const process_=spawn(process.env.PYTHON||'python3',['-B','tests/test_remake_march_core.py','--wasm-vectors'],

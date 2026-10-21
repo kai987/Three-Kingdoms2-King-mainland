@@ -38,9 +38,11 @@ def replace_bytes(path, content, mode=0o644):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--check', action='store_true', help='compare rebuilt WASM and manifest with committed files')
+    parser.add_argument('--check', action='store_true', help='verify source/artifact integrity; require byte equality on the recorded build host')
     args = parser.parse_args()
-    version = subprocess.check_output(['rustc', '--version'], text=True).split()[1]
+    compiler = subprocess.check_output(['rustc', '-vV'], text=True)
+    version = next(line.split(': ', 1)[1] for line in compiler.splitlines() if line.startswith('release: '))
+    host = next(line.split(': ', 1)[1] for line in compiler.splitlines() if line.startswith('host: '))
     if version != '1.93.0':
         raise SystemExit('Use Rust1.93.0 for reproducible marching artifacts')
     common = ('--manifest-path', str(CRATE / 'Cargo.toml'), '--target-dir', str(TARGET), '--locked', '--release')
@@ -54,6 +56,7 @@ def main():
     run('cargo', 'build', *common, '--target', 'wasm32-unknown-unknown', '--lib')
     binary = (TARGET / 'wasm32-unknown-unknown' / 'release' / 'march_core.wasm').read_bytes()
     manifest = dict(abi=1, crate='march-core', rust='1.93.0', target='wasm32-unknown-unknown',
+                    build_host=host, builder_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                     file='march_core.wasm', bytes=len(binary), sha256=hashlib.sha256(binary).hexdigest(),
                     sources_sha256={str(p.relative_to(CRATE)): hashlib.sha256(p.read_bytes()).hexdigest()
                                     for p in sorted([CRATE / 'Cargo.toml', CRATE / 'Cargo.lock'] +
@@ -62,8 +65,20 @@ def main():
     encoded = (json.dumps(manifest, indent=2, sort_keys=True) + '\n').encode()
     output = ROOT / 'game' / 'wasm'
     if args.check:
-        if (output / 'march_core.wasm').read_bytes() != binary or (output / 'manifest.json').read_bytes() != encoded:
-            raise SystemExit('Committed marching WASM/manifest differs; run python3 game/build_march_core.py with Rust1.93.0')
+        committed = (output / 'march_core.wasm').read_bytes()
+        recorded = json.loads((output / 'manifest.json').read_bytes())
+        if len(committed) != recorded.get('bytes') or hashlib.sha256(committed).hexdigest() != recorded.get('sha256'):
+            raise SystemExit('Committed marching WASM does not match its integrity manifest')
+        portable = set(manifest) - {'build_host', 'bytes', 'sha256'}
+        if set(recorded) != set(manifest) or any(recorded[key] != manifest[key] for key in portable):
+            raise SystemExit('Marching sources/toolchain differ from the committed artifact manifest')
+        if recorded['build_host'] == host:
+            if committed != binary or (output / 'manifest.json').read_bytes() != encoded:
+                raise SystemExit('Same-host marching rebuild is not byte-identical')
+        else:
+            print(json.dumps(dict(cross_host=True, recorded_host=recorded['build_host'], build_host=host,
+                                  committed_sha256=recorded['sha256'], rebuilt_sha256=manifest['sha256'],
+                                  next_check='Run parity against BOTH committed and rebuilt WASM')))
     else:
         output.mkdir(parents=True, exist_ok=True)
         replace_bytes(output / 'march_core.wasm', binary)
