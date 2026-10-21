@@ -777,7 +777,7 @@ stroke-dasharray:none
 .road-underlay,.road-line{fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .road-underlay{stroke:#e4b45e;stroke-width:4.1}
 .road-line{stroke:#704518;stroke-width:1.9}
-.map-city-name{font:16px Unifont,monospace;fill:#fcfcfc;stroke:#000;stroke-width:3px;paint-order:stroke;stroke-linejoin:round;pointer-events:none}
+.map-city-name{font:16px Unifont,monospace;fill:#fcfcfc;stroke:#000;stroke-width:3px;paint-order:stroke;stroke-linejoin:round;cursor:pointer}
 .city-information{display:grid;gap:12px}
 .city-information p{margin:0}
 .city-information .roster-scroll{max-height:260px;flex:none}

@@ -90,7 +90,7 @@ function renderMap(){
   return `<g data-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  }).join('');
  const labels=cityLabels==='none'?'':active.filter(c=>cityLabels==='all'||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused).map(c=>{
-  const [x,y]=mapPosition(c);return `<text class="map-city-name" x="${x}" y="${y-24}" text-anchor="middle" data-city-label="${c.id}">${escapeHtml(cityName(c.id))}</text>`;
+  const [x,y]=mapPosition(c);return `<text class="map-city-name" x="${x}" y="${y-24}" text-anchor="middle" data-city-label="${c.id}" aria-hidden="true">${escapeHtml(cityName(c.id))}</text>`;
  }).join('');
  $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id]))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</button></div>
  <svg id="world-map" viewBox="${box}" aria-label="96城地图，${active.length}城开放"><image href="${view.catalog.map_presentation.background}" x="0" y="0" width="1352" height="1024"/>${roads}${castles}${labels}</svg>
@@ -106,7 +106,7 @@ function renderMap(){
  $('#region').onclick=()=>{mapMode='region';renderMap();};$('#all-map').onclick=()=>{mapMode='all';renderMap();};
  $('#city-jump').onchange=()=>choose($('#city-jump').value);
  $('#map-labels').onclick=()=>{cityLabels={major:'all',all:'none',none:'major'}[cityLabels];renderMap();};
- document.querySelectorAll('[data-city]').forEach(el=>{el.onclick=()=>choose(el.dataset.city,true);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(el.dataset.city,true);}};});
+ document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=()=>choose(id,true);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(id,true);}};});
 }
 
 async function showCityInformation(id){
