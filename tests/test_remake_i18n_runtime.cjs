@@ -35,6 +35,12 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
   ['元データ説明','元データ説明'],['关羽','関羽'],['张辽','張遼'],['许昌','許昌'],
   ['钱 123 · 粮 456 · 预备兵 789','資金 123 · 兵糧 456 · 予備兵 789'],
   ['关羽攻击张辽，损兵17。','関羽が張遼を攻撃。17の兵力損耗。'],
+  ['钱 123 · 粮 456 · 预备兵 789 · 武将 42人','資金 123 · 兵糧 456 · 予備兵 789 · 武将 42人'],
+  ['曹操势力合计：钱 123 · 粮 456 · 预备兵 789 · 武将 42人','曹操勢力の合計：資金 123 · 兵糧 456 · 予備兵 789 · 武将 42人'],
+  ['1023人武将库','武将名鑑・1023人'],['全部1023人','全1023人'],
+  ['荀勖','荀勗'],['施績','朱績'],
+  ['容量不足，尚未登场','都市の定員不足・未登場'],
+  ['武 40 / 知 70 / 德 60。武知为参考生涯的本作设计值，并非《三国志14》原始能力。年代含游戏估计，详见来源。','武 40 / 知 70 / 徳 60。武力・知力は事績を参考にした本作独自の設定値で、『三國志14』の原能力値ではありません。年代にはゲーム用の推定を含みます。根拠は出典を参照してください。'],
  ];
  for(const[source,expected]of cases){const translated=i18n.t(source,'ja');assert.equal(translated,expected,source);assert.equal(i18n.t(translated,'ja'),expected,'Japanese translation must be idempotent: '+source);}
  for(const row of rows){const once=i18n.t(row.title,'ja');assert.equal(i18n.t(once,'ja'),once,row.title);assert(!once.includes('の戦いの戦い'),row.title);}

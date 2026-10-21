@@ -1,0 +1,1643 @@
+{
+  "schema": "reviewed-memberships-v13-v1",
+  "policy": {
+    "apply_only_statuses": [
+      "pending_history",
+      "pending_faction",
+      "free"
+    ],
+    "require_existing_faction": true,
+    "respect_scenario_excluded": true,
+    "respect_birth_service_death": true,
+    "never_override_existing_other_faction": true,
+    "never_change_ruler": true,
+    "never_rewrite_v12": true,
+    "if_policy": "Only if this faction remains enabled and no explicit IF membership/exclusion conflicts; otherwise skip and audit.",
+    "from_to_precision": "Intervals are bounded remake placement decisions informed by sources, not attested month-by-month employment."
+  },
+  "entries": [
+    {
+      "person_id": "san14-candidate-0632",
+      "name": "张松",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷31"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷31",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 170,
+        "service": 189,
+        "death": 212
+      }
+    },
+    {
+      "person_id": "san14-candidate-0827",
+      "name": "法正",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷37"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷37",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 176,
+        "service": 195,
+        "death": 220
+      }
+    },
+    {
+      "person_id": "san14-candidate-0250",
+      "name": "黄权",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷43"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷43",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 167,
+        "service": 186,
+        "death": 240
+      }
+    },
+    {
+      "person_id": "san14-candidate-0241",
+      "name": "吴懿",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷34",
+        "https://zh.wikisource.org/wiki/三國志/卷45"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷34",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 165,
+        "service": 185,
+        "death": 237
+      }
+    },
+    {
+      "person_id": "san14-candidate-0719",
+      "name": "董和",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷39"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷39",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 168,
+        "service": 187,
+        "death": 219
+      }
+    },
+    {
+      "person_id": "san14-candidate-0854",
+      "name": "杨怀",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷37"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷37",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 167,
+        "service": 186,
+        "death": 212
+      }
+    },
+    {
+      "person_id": "san14-candidate-0274",
+      "name": "高沛",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷37"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷37",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 170,
+        "service": 189,
+        "death": 212
+      }
+    },
+    {
+      "person_id": "san14-candidate-0637",
+      "name": "张任",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷32"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷32",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 169,
+        "service": 188,
+        "death": 214
+      }
+    },
+    {
+      "person_id": "san14-candidate-0928",
+      "name": "刘璝",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷32"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷32",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 165,
+        "service": 189,
+        "death": 214
+      }
+    },
+    {
+      "person_id": "san14-candidate-0992",
+      "name": "冷苞",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷32"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷32",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 176,
+        "service": 205,
+        "death": 214
+      }
+    },
+    {
+      "person_id": "san14-candidate-0937",
+      "name": "刘循",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷32"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷32",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 184,
+        "service": 198,
+        "death": 239
+      }
+    },
+    {
+      "person_id": "san14-candidate-0823",
+      "name": "庞羲",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷31"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷31",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 153,
+        "service": 184,
+        "death": 218
+      }
+    },
+    {
+      "person_id": "san14-candidate-0600",
+      "name": "张裔",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷41"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷41",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 166,
+        "service": 194,
+        "death": 230
+      }
+    },
+    {
+      "person_id": "san14-candidate-0079",
+      "name": "王连",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷41"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷41",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 175,
+        "service": 201,
+        "death": 224
+      }
+    },
+    {
+      "person_id": "san14-candidate-0791",
+      "name": "费诗",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷41"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷41",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 176,
+        "service": 195,
+        "death": 240
+      }
+    },
+    {
+      "person_id": "san14-candidate-0849",
+      "name": "孟达",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷37",
+        "https://zh.wikisource.org/wiki/三國志/卷40"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷37",
+      "basis": "原典記其在劉璋治下任職、出使或守蜀；207年既有快照亦屬劉璋。208～212未具逐月任命記錄，採有限連續任職推定；已明列轉屬劉備者不覆寫，城池僅依本作防務分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 172,
+        "service": 191,
+        "death": 228
+      }
+    },
+    {
+      "person_id": "san14-candidate-0078",
+      "name": "王累",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        210,
+        12
+      ],
+      "faction": "liu_zhang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷31"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷31",
+      "basis": "原典記劉璋從事王累反對迎劉備；207年快照劉璋屬，208～210為連續州屬推定。211年自縊事件月不明，這條規則不安排211開局。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 173,
+        "service": 192,
+        "death": 211
+      }
+    },
+    {
+      "person_id": "san14-candidate-0038",
+      "name": "阎圃",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        214,
+        12
+      ],
+      "faction": "zhang_lu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷08",
+      "basis": "閻圃為張魯功曹並隨其降曹；張衛為張魯弟，215年守陽平關。207快照已隸張魯，208～214以既有快照與原典後續事蹟作連續任職推定，不將降曹後身分提前套用。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 163,
+        "service": 187,
+        "death": 231
+      }
+    },
+    {
+      "person_id": "san14-candidate-0597",
+      "name": "张卫",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        214,
+        12
+      ],
+      "faction": "zhang_lu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷08",
+      "basis": "閻圃為張魯功曹並隨其降曹；張衛為張魯弟，215年守陽平關。207快照已隸張魯，208～214以既有快照與原典後續事蹟作連續任職推定，不將降曹後身分提前套用。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 172,
+        "service": 191,
+        "death": 215
+      }
+    },
+    {
+      "person_id": "san14-candidate-0862",
+      "name": "杨昂",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        214,
+        12
+      ],
+      "faction": "zhang_lu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷25",
+        "https://zh.wikisource.org/wiki/三國志/卷01"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷25",
+      "basis": "原典載張魯遣大將楊昂援馬超，並與張衛守陽平關；207快照已屬張魯。208～214的逐月連續任職為本作有限推定，並非逐城史實駐軍。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 172,
+        "service": 191,
+        "death": 215
+      }
+    },
+    {
+      "person_id": "san14-candidate-0769",
+      "name": "马超",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "ma_teng",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36",
+        "https://zh.wikisource.org/wiki/三國志/卷18"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷36",
+      "basis": "原典記馬超統其父馬騰舊部，龐德曾從馬騰並隨馬超，馬岱為馬超從弟並後隨入蜀；207快照同隸西涼集團。ma_teng是本作西涼父子集團ID；208～212逐月編組屬玩法推定，只補無已審定歸屬者。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 176,
+        "service": 189,
+        "death": 226
+      }
+    },
+    {
+      "person_id": "san14-candidate-0830",
+      "name": "庞德",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "ma_teng",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36",
+        "https://zh.wikisource.org/wiki/三國志/卷18"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷36",
+      "basis": "原典記馬超統其父馬騰舊部，龐德曾從馬騰並隨馬超，馬岱為馬超從弟並後隨入蜀；207快照同隸西涼集團。ma_teng是本作西涼父子集團ID；208～212逐月編組屬玩法推定，只補無已審定歸屬者。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 170,
+        "service": 184,
+        "death": 219
+      }
+    },
+    {
+      "person_id": "san14-candidate-0766",
+      "name": "马岱",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        212,
+        12
+      ],
+      "faction": "ma_teng",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36",
+        "https://zh.wikisource.org/wiki/三國志/卷18"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷36",
+      "basis": "原典記馬超統其父馬騰舊部，龐德曾從馬騰並隨馬超，馬岱為馬超從弟並後隨入蜀；207快照同隸西涼集團。ma_teng是本作西涼父子集團ID；208～212逐月編組屬玩法推定，只補無已審定歸屬者。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 183,
+        "service": 197,
+        "death": 246
+      }
+    },
+    {
+      "person_id": "san14-candidate-0760",
+      "name": "马休",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        210,
+        12
+      ],
+      "faction": "ma_teng",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷36",
+      "basis": "馬超傳注記馬騰子休、鐵隨父入朝的家族關係；列為本作西涼集團編制延續，並非聲稱仍在西涼前線。僅補208～210，現庫卒211不展延。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 178,
+        "service": 192,
+        "death": 211
+      }
+    },
+    {
+      "person_id": "san14-candidate-0770",
+      "name": "马铁",
+      "from_date": [
+        208,
+        1
+      ],
+      "to_date": [
+        210,
+        12
+      ],
+      "faction": "ma_teng",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷36",
+      "basis": "馬超傳注記馬騰子休、鐵隨父入朝的家族關係；列為本作西涼集團編制延續，並非聲稱仍在西涼前線。僅補208～210，現庫卒211不展延。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 179,
+        "service": 193,
+        "death": 211
+      }
+    },
+    {
+      "person_id": "san14-candidate-0893",
+      "name": "李傕",
+      "from_date": [
+        190,
+        1
+      ],
+      "to_date": [
+        191,
+        12
+      ],
+      "faction": "dong_zhuo",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06",
+        "https://zh.wikisource.org/wiki/三國志/卷07"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷06",
+      "basis": "原典董卓、呂布傳明載董卓集團將領與宗屬；190既有快照亦已隸董卓。191以前董卓仍在，不能僅因194分裂/死亡快照不同而把其屬將全部留為待考；編制與駐城仍屬本作分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 148,
+        "service": 184,
+        "death": 198
+      }
+    },
+    {
+      "person_id": "san14-candidate-0097",
+      "name": "郭汜",
+      "from_date": [
+        190,
+        1
+      ],
+      "to_date": [
+        191,
+        12
+      ],
+      "faction": "dong_zhuo",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06",
+        "https://zh.wikisource.org/wiki/三國志/卷07"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷06",
+      "basis": "原典董卓、呂布傳明載董卓集團將領與宗屬；190既有快照亦已隸董卓。191以前董卓仍在，不能僅因194分裂/死亡快照不同而把其屬將全部留為待考；編制與駐城仍屬本作分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 146,
+        "service": 184,
+        "death": 197
+      }
+    },
+    {
+      "person_id": "san14-candidate-0199",
+      "name": "牛辅",
+      "from_date": [
+        190,
+        1
+      ],
+      "to_date": [
+        191,
+        12
+      ],
+      "faction": "dong_zhuo",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06",
+        "https://zh.wikisource.org/wiki/三國志/卷07"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷06",
+      "basis": "原典董卓、呂布傳明載董卓集團將領與宗屬；190既有快照亦已隸董卓。191以前董卓仍在，不能僅因194分裂/死亡快照不同而把其屬將全部留為待考；編制與駐城仍屬本作分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 159,
+        "service": 184,
+        "death": 192
+      }
+    },
+    {
+      "person_id": "san14-candidate-0743",
+      "name": "董旻",
+      "from_date": [
+        190,
+        1
+      ],
+      "to_date": [
+        191,
+        12
+      ],
+      "faction": "dong_zhuo",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06",
+        "https://zh.wikisource.org/wiki/三國志/卷07"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷06",
+      "basis": "原典董卓、呂布傳明載董卓集團將領與宗屬；190既有快照亦已隸董卓。191以前董卓仍在，不能僅因194分裂/死亡快照不同而把其屬將全部留為待考；編制與駐城仍屬本作分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 149,
+        "service": 184,
+        "death": 192
+      }
+    },
+    {
+      "person_id": "san14-candidate-0727",
+      "name": "董璜",
+      "from_date": [
+        190,
+        1
+      ],
+      "to_date": [
+        191,
+        12
+      ],
+      "faction": "dong_zhuo",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06",
+        "https://zh.wikisource.org/wiki/三國志/卷07"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷06",
+      "basis": "原典董卓、呂布傳明載董卓集團將領與宗屬；190既有快照亦已隸董卓。191以前董卓仍在，不能僅因194分裂/死亡快照不同而把其屬將全部留為待考；編制與駐城仍屬本作分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 168,
+        "service": 185,
+        "death": 192
+      }
+    },
+    {
+      "person_id": "san14-candidate-0987",
+      "name": "吕布",
+      "from_date": [
+        190,
+        1
+      ],
+      "to_date": [
+        191,
+        12
+      ],
+      "faction": "dong_zhuo",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷06",
+        "https://zh.wikisource.org/wiki/三國志/卷07"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷06",
+      "basis": "原典董卓、呂布傳明載董卓集團將領與宗屬；190既有快照亦已隸董卓。191以前董卓仍在，不能僅因194分裂/死亡快照不同而把其屬將全部留為待考；編制與駐城仍屬本作分配。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 156,
+        "service": 184,
+        "death": 198
+      }
+    },
+    {
+      "person_id": "san14-candidate-0744",
+      "name": "董扶",
+      "from_date": [
+        190,
+        1
+      ],
+      "to_date": [
+        191,
+        12
+      ],
+      "faction": "liu_yan",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷31",
+        "https://zh.wikisource.org/wiki/三國志/卷34"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷31",
+      "basis": "董扶隨劉焉入蜀、吳壹舉家隨劉焉入蜀有原典記載；189以後仍屬益州集團，191具體任職、駐城不詳，僅沿用原190快照編制。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 111,
+        "service": 184,
+        "death": 192
+      }
+    },
+    {
+      "person_id": "san14-candidate-0241",
+      "name": "吴懿",
+      "from_date": [
+        190,
+        1
+      ],
+      "to_date": [
+        191,
+        12
+      ],
+      "faction": "liu_yan",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷34",
+        "https://zh.wikisource.org/wiki/三國志/卷45"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷34",
+      "basis": "董扶隨劉焉入蜀、吳壹舉家隨劉焉入蜀有原典記載；189以後仍屬益州集團，191具體任職、駐城不詳，僅沿用原190快照編制。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 165,
+        "service": 185,
+        "death": 237
+      }
+    },
+    {
+      "person_id": "san14-candidate-0842",
+      "name": "满宠",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷26"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷26",
+      "basis": "滿寵於明帝朝都督揚州諸軍，牽招任雁門太守並經營北邊，原典有連續魏臣生涯。230～238只補開局未入籍者，實際駐城依本作邊防均分。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 170,
+        "service": 189,
+        "death": 242
+      }
+    },
+    {
+      "person_id": "san14-candidate-0236",
+      "name": "牵招",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷26"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷26",
+      "basis": "滿寵於明帝朝都督揚州諸軍，牽招任雁門太守並經營北邊，原典有連續魏臣生涯。230～238只補開局未入籍者，實際駐城依本作邊防均分。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 168,
+        "service": 189,
+        "death": 244
+      }
+    },
+    {
+      "person_id": "san14-candidate-0615",
+      "name": "赵俨",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷23"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷23",
+      "basis": "趙儼歷魏尚書、軍師、大司農；裴潛於明帝朝任尚書、河南尹、大司農等，原典明載其魏官生涯。230～238為任職跨年度延續推定，沒有任意改屬。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 171,
+        "service": 195,
+        "death": 245
+      }
+    },
+    {
+      "person_id": "san14-candidate-0756",
+      "name": "裴潜",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷23"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷23",
+      "basis": "趙儼歷魏尚書、軍師、大司農；裴潛於明帝朝任尚書、河南尹、大司農等，原典明載其魏官生涯。230～238為任職跨年度延續推定，沒有任意改屬。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 183,
+        "service": 202,
+        "death": 244
+      }
+    },
+    {
+      "person_id": "san14-candidate-0328",
+      "name": "崔林",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷24"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷24",
+      "basis": "崔林在文帝、明帝朝為魏官，明帝時任光祿勳、司隸校尉；原典可證並未因後期快照缺席而成為無歸屬。230～238個別月任免未擬真。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 177,
+        "service": 196,
+        "death": 244
+      }
+    },
+    {
+      "person_id": "san14-candidate-0879",
+      "name": "杨阜",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷25"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷25",
+      "basis": "楊阜以魏臣守隴右、歷武都太守與少府，原典明載明帝朝直諫；230～238編制延續而非逐年精確郡守地點。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 178,
+        "service": 197,
+        "death": 239
+      }
+    },
+    {
+      "person_id": "san14-candidate-0465",
+      "name": "辛毘",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        234,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷25"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷25",
+      "basis": "青龍二年原典明載辛毗持節節制司馬懿軍；以此補234五丈原開局。原庫卒240晚於常見史年，這條規則限至234，不擅自把他延至238。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 171,
+        "service": 189,
+        "death": 240
+      }
+    },
+    {
+      "person_id": "san14-candidate-0273",
+      "name": "高堂隆",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        236,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷25"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷25",
+      "basis": "高堂隆在明帝朝為魏官並諫宮室，原典明載。為避免原庫卒244的不確定性，本條只補230～236，不由此在238復活。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 190,
+        "service": 210,
+        "death": 244
+      }
+    },
+    {
+      "person_id": "san14-candidate-0171",
+      "name": "阚泽",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷53"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷53",
+      "basis": "闞澤嘉禾中任中書令，嚴畯歷吳衛尉、尚書令，薛綜黃龍三年後歷長史、尚書等；原典直接證明吳官身分。230～238任職連續為有限推定，駐城非逐城史實。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 182,
+        "service": 201,
+        "death": 243
+      }
+    },
+    {
+      "person_id": "san14-candidate-0235",
+      "name": "严畯",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷53"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷53",
+      "basis": "闞澤嘉禾中任中書令，嚴畯歷吳衛尉、尚書令，薛綜黃龍三年後歷長史、尚書等；原典直接證明吳官身分。230～238任職連續為有限推定，駐城非逐城史實。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 169,
+        "service": 188,
+        "death": 246
+      }
+    },
+    {
+      "person_id": "san14-candidate-0484",
+      "name": "薛综",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷53"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷53",
+      "basis": "闞澤嘉禾中任中書令，嚴畯歷吳衛尉、尚書令，薛綜黃龍三年後歷長史、尚書等；原典直接證明吳官身分。230～238任職連續為有限推定，駐城非逐城史實。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 187,
+        "service": 206,
+        "death": 243
+      }
+    },
+    {
+      "person_id": "san14-candidate-0303",
+      "name": "胡综",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷62"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷62",
+      "basis": "胡綜在孫權稱尊號後進鄉侯、偏將軍，與是儀、徐詳分掌事務；原典可證其吳廷編制，234～238不應因249去世快照而整批排除。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 183,
+        "service": 196,
+        "death": 243
+      }
+    },
+    {
+      "person_id": "san14-candidate-0293",
+      "name": "吾粲",
+      "from_date": [
+        232,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷57"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷57",
+      "basis": "吾粲黃武初已從呂範等出征、後任少府與太子太傅；陸瑁嘉禾元年徵為議郎、選曹尚書，赤烏二年卒。232～238為已有吳官生涯的有限續存推定。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 181,
+        "service": 206,
+        "death": 245
+      }
+    },
+    {
+      "person_id": "san14-candidate-0903",
+      "name": "陆瑁",
+      "from_date": [
+        232,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷57"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷57",
+      "basis": "吾粲黃武初已從呂範等出征、後任少府與太子太傅；陸瑁嘉禾元年徵為議郎、選曹尚書，赤烏二年卒。232～238為已有吳官生涯的有限續存推定。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 188,
+        "service": 207,
+        "death": 239
+      }
+    },
+    {
+      "person_id": "san14-candidate-0378",
+      "name": "周鲂",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        1
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷60"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷60",
+      "basis": "周魴任吳鄱陽太守並設計破曹休，原典證其吳臣身分。現庫卒238、原典未詳月，238年1月按既定卒年開局暫在世政策，不能宣稱已證一月實際仍任。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 191,
+        "service": 210,
+        "death": 238
+      }
+    },
+    {
+      "person_id": "san14-candidate-0381",
+      "name": "朱桓",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        1
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷56"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷56",
+      "basis": "朱桓明載吳將軍、石亭功臣；現庫卒238，238年1月僅按既定卒年開局政策暫在世，無逐月史實駐城主張。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 177,
+        "service": 196,
+        "death": 238
+      }
+    },
+    {
+      "person_id": "san14-candidate-0562",
+      "name": "孙韶",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷51"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷51",
+      "basis": "孫韶在孫權朝領軍江北、官至鎮北將軍，原典有歷年吳官生涯；230～238為限定編制續存。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 188,
+        "service": 207,
+        "death": 241
+      }
+    },
+    {
+      "person_id": "san14-candidate-0570",
+      "name": "孙登",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷59"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷59",
+      "basis": "孫登229年吳帝即位後立太子，至241年卒；234～238保持吳宗室編制，以本作可用人物統一計數，不聲稱是獨立野戰將領。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 209,
+        "service": 223,
+        "death": 241
+      }
+    },
+    {
+      "person_id": "san14-candidate-0634",
+      "name": "张承",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷52"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷52",
+      "basis": "這是張昭之子張承，吳奮威將軍、濡須督，與魏臣張承不同。原典證其吳軍職；使用穩定person_id避免同名合併。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 178,
+        "service": 197,
+        "death": 244
+      }
+    },
+    {
+      "person_id": "san14-candidate-0610",
+      "name": "张休",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷52"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷52",
+      "basis": "張休、顧譚曾為孫登僚友、東宮四友，後領吳廷官職；234～238補吳編制，保留其流放退場的現庫終年，不安排未證實具體駐城。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 205,
+        "service": 221,
+        "death": 245
+      }
+    },
+    {
+      "person_id": "san14-candidate-0304",
+      "name": "顾谭",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷52"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷52",
+      "basis": "張休、顧譚曾為孫登僚友、東宮四友，後領吳廷官職；234～238補吳編制，保留其流放退場的現庫終年，不安排未證實具體駐城。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 205,
+        "service": 219,
+        "death": 246
+      }
+    },
+    {
+      "person_id": "san14-candidate-0766",
+      "name": "马岱",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "shu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷36",
+        "https://zh.wikisource.org/wiki/三國志/卷41",
+        "https://zh.wikisource.org/wiki/三國志/卷45"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷36",
+      "basis": "馬岱為蜀將；向寵典宿衛、費詩與姚伷及輔匡均有蜀臣記錄。230～238為原227快照與原典後續生涯的有限延續，未證每月任職地點，依現有生卒和出仕門檻再過濾。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 183,
+        "service": 197,
+        "death": 246
+      }
+    },
+    {
+      "person_id": "san14-candidate-0419",
+      "name": "向宠",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "shu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷41"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷41",
+      "basis": "馬岱為蜀將；向寵典宿衛、費詩與姚伷及輔匡均有蜀臣記錄。230～238為原227快照與原典後續生涯的有限延續，未證每月任職地點，依現有生卒和出仕門檻再過濾。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 195,
+        "service": 214,
+        "death": 240
+      }
+    },
+    {
+      "person_id": "san14-candidate-0791",
+      "name": "费诗",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "shu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷41"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷41",
+      "basis": "馬岱為蜀將；向寵典宿衛、費詩與姚伷及輔匡均有蜀臣記錄。230～238為原227快照與原典後續生涯的有限延續，未證每月任職地點，依現有生卒和出仕門檻再過濾。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 176,
+        "service": 195,
+        "death": 240
+      }
+    },
+    {
+      "person_id": "san14-candidate-0872",
+      "name": "姚伷",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "shu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷45"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷45",
+      "basis": "馬岱為蜀將；向寵典宿衛、費詩與姚伷及輔匡均有蜀臣記錄。230～238為原227快照與原典後續生涯的有限延續，未證每月任職地點，依現有生卒和出仕門檻再過濾。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 184,
+        "service": 203,
+        "death": 242
+      }
+    },
+    {
+      "person_id": "san14-candidate-0834",
+      "name": "辅匡",
+      "from_date": [
+        230,
+        1
+      ],
+      "to_date": [
+        238,
+        12
+      ],
+      "faction": "shu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷45"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷45",
+      "basis": "馬岱為蜀將；向寵典宿衛、費詩與姚伷及輔匡均有蜀臣記錄。230～238為原227快照與原典後續生涯的有限延續，未證每月任職地點，依現有生卒和出仕門檻再過濾。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 175,
+        "service": 194,
+        "death": 244
+      }
+    },
+    {
+      "person_id": "san14-candidate-0788",
+      "name": "卑衍",
+      "from_date": [
+        234,
+        1
+      ],
+      "to_date": [
+        238,
+        1
+      ],
+      "faction": "gongsun",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷08",
+      "basis": "公孫淵傳明載其將軍卑衍、楊祚在238年6月率軍守遼隧。238年1月開局沿用同年軍事集團；向前至234屬本作有限連續服務推定，並非已證四年內每月任命。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 196,
+        "service": 215,
+        "death": 238
+      }
+    },
+    {
+      "person_id": "san14-candidate-0871",
+      "name": "杨祚",
+      "from_date": [
+        234,
+        1
+      ],
+      "to_date": [
+        238,
+        1
+      ],
+      "faction": "gongsun",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷08"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷08",
+      "basis": "公孫淵傳明載其將軍卑衍、楊祚在238年6月率軍守遼隧。238年1月開局沿用同年軍事集團；向前至234屬本作有限連續服務推定，並非已證四年內每月任命。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 202,
+        "service": 221,
+        "death": 256
+      }
+    },
+    {
+      "person_id": "san14-candidate-0087",
+      "name": "华核",
+      "from_date": [
+        263,
+        1
+      ],
+      "to_date": [
+        263,
+        12
+      ],
+      "faction": "wu",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷65"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷65",
+      "basis": "華核在蜀亡時向孫休上表有原典直接記錄，曾為秘府郎、中書丞；263年5月按同年吳官編制補入，具體月任命未擬真。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 217,
+        "service": 236,
+        "death": 278
+      }
+    },
+    {
+      "person_id": "san14-candidate-0058",
+      "name": "王戎",
+      "from_date": [
+        260,
+        1
+      ],
+      "to_date": [
+        263,
+        12
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷043"
+      ],
+      "source": "https://zh.wikisource.org/wiki/晉書/卷043",
+      "basis": "王戎在司馬文王時辟為掾、歷吏部及黃門等魏官，再入晉；原249快照在野不能直接延用到263。260～263為既有魏官生涯的年段配置，不當作原遊戲出場資料。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 234,
+        "service": 253,
+        "death": 305
+      }
+    },
+    {
+      "person_id": "san14-candidate-0238",
+      "name": "阮籍",
+      "from_date": [
+        254,
+        1
+      ],
+      "to_date": [
+        263,
+        5
+      ],
+      "faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/晉書/卷049"
+      ],
+      "source": "https://zh.wikisource.org/wiki/晉書/卷049",
+      "basis": "阮籍在司馬氏輔魏時為從事中郎、散騎常侍等，景元四年卒；263年5月按既定卒年開局暫在世政策，並保留其官職屬魏、非擅自統兵的史料界線。",
+      "basis_kind": "attested_affiliation_with_bounded_continuity_inference",
+      "existing_chronology": {
+        "birth": 210,
+        "service": 225,
+        "death": 263
+      }
+    }
+  ],
+  "historical_transfers": [
+    {
+      "person_id": "san14-candidate-0242",
+      "name": "句安",
+      "from_date": [
+        263,
+        5
+      ],
+      "to_date": [
+        263,
+        5
+      ],
+      "from_faction": "shu",
+      "to_faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷26"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷26",
+      "basis": "《郭淮傳》嘉平元年（249）明載郭淮、陳泰合策降蜀牙門將句安等於翅上。263年5月位於此事之後，不能繼續沿用249年初尚屬蜀的名冊。僅改新開局歸屬，具體駐城為本作分配，不強制戰役中歷史倒戈。",
+      "basis_kind": "attested_historical_transfer_before_opening",
+      "applies_to_fictional": false,
+      "require_existing_from_faction": true,
+      "require_nonruler": true
+    },
+    {
+      "person_id": "san14-candidate-0730",
+      "name": "唐咨",
+      "from_date": [
+        263,
+        5
+      ],
+      "to_date": [
+        263,
+        5
+      ],
+      "from_faction": "wu",
+      "to_faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷28"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷28",
+      "basis": "《鍾會傳》敘壽春之破後唐咨被獲，受魏封侯並預聞國事；景元三年（262）伐蜀籌備時又令唐咨製造浮海大船。因此263年5月應屬魏，不能沿用249吳籍。",
+      "basis_kind": "attested_historical_transfer_before_opening",
+      "applies_to_fictional": false,
+      "require_existing_from_faction": true,
+      "require_nonruler": true
+    },
+    {
+      "person_id": "san14-candidate-0491",
+      "name": "全怿",
+      "from_date": [
+        263,
+        5
+      ],
+      "to_date": [
+        263,
+        5
+      ],
+      "from_faction": "wu",
+      "to_faction": "wei",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷28"
+      ],
+      "source": "https://zh.wikisource.org/wiki/三國志/卷28",
+      "basis": "《鍾會傳》明載壽春之役（257）鍾會以全輝、全儀書誘全懌等出東門率軍降魏，皆受封寵。263年5月在此事之後，不能沿用249吳籍。全懌的具體新駐城依本作容量與邊防分配。",
+      "basis_kind": "attested_historical_transfer_before_opening",
+      "applies_to_fictional": false,
+      "require_existing_from_faction": true,
+      "require_nonruler": true
+    }
+  ]
+}

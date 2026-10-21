@@ -23,6 +23,25 @@ def faction_resources(catalog, state=None):
     return totals
 
 
+def faction_officer_counts(catalog, state=None):
+    """Count current living members once, including marching/battle officers.
+
+    There is no separate captive pool: a personnel transfer is reflected by
+    faction_id. Free, neutral, dead and not-yet-instantiated people do not count.
+    Opening previews use actual starting rosters, not planned era assignments.
+    """
+    members={key:set() for key in catalog.factions}
+    if state is not None:
+        for officer in state.officers.values():
+            if officer.alive and officer.faction_id in members:
+                members[officer.faction_id].add(officer.person_id)
+    else:
+        for row in catalog.data['initial_officers']:
+            owner=catalog.data['initial_owners'][row['city']]
+            if owner in members:members[owner].add(row['person_id'])
+    return {key:len(people) for key,people in members.items()}
+
+
 class CampaignSession:
     def __init__(self, paths):
         catalogs=[Catalog(path) for path in paths]
@@ -49,6 +68,7 @@ class CampaignSession:
             result['catalog']['world']=self.game.catalog.data.get('world')
             result['catalog']['scenario_id']=self.game.catalog.data['id']
             result['catalog']['faction_resources']=faction_resources(self.game.catalog,self.game.state)
+            result['catalog']['faction_officers']=faction_officer_counts(self.game.catalog,self.game.state)
             result['catalog']['sea_routes']=self.game.catalog.data.get('sea_routes',[])
             result['catalog']['travel_hazards']=self.game.catalog.data.get('travel_hazards')
             for field in ('added_city_ids','regional_roads','city_label_offsets','city_history'):
@@ -74,6 +94,7 @@ class CampaignSession:
                                            'city_label_offsets':c.data.get('city_label_offsets',{}),
                                            'city_history':c.data.get('city_history',{}),
                                            'faction_resources':faction_resources(c),
+                                           'faction_officers':faction_officer_counts(c),
                                            'travel_hazards':c.data.get('travel_hazards'),
                                            'sea_routes':c.data.get('sea_routes',[]),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]

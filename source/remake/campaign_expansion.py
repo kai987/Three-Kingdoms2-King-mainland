@@ -54,9 +54,21 @@ class ExpandedCampaign:
                 continue
             person = self.catalog.definitions[row['person_id']]
             city = self.catalog.data['appearance_locations'].get(person.person_id)
-            if year_state(person, state.year) != YearState.AVAILABLE or city not in state.cities:
+            windows = self.catalog.data.get('appearance_windows', {}).get(person.person_id)
+            resolve_death_year = False
+            if windows is not None:
+                current = next((w for w in windows if tuple(w['start']) <=
+                    (state.year, state.month) <= tuple(w['end'])), None)
+                if current is None:
+                    continue
+                city = current['city']
+                resolve_death_year = current.get('resolve_death_year') is True
+            ys = year_state(person, state.year)
+            if (ys != YearState.AVAILABLE and not (ys == YearState.DEATH_YEAR_REVIEW
+                    and resolve_death_year)) or city not in state.cities:
                 continue
-            state.officers[ident] = initialize_officer(person, ident, self.catalog.profiles[ident], year=state.year, rules=self.catalog.rules)
+            state.officers[ident] = initialize_officer(person, ident, self.catalog.profiles[ident],
+                year=state.year, rules=self.catalog.rules, resolve_death_year=resolve_death_year)
             state.extension['free_locations'][str(ident)] = city
             self._note(state, f'{person.name}已到登场年代，在{self.catalog.map_cities[city]["name"]}待访。')
 
@@ -521,7 +533,11 @@ class ExpandedCampaign:
                             'location':state.extension['free_locations'].get(str(ident)) if state else self.catalog.data['appearance_locations'].get(person.person_id),
                             'martial':profile.martial_strength,'intellect':profile.intellect,'virtue':profile.virtue,
                             'health_max':profile.health_max,'affinity':profile.terrain_affinity,
-                            'aliases':row.get('aliases',[]),'configuration':row.get('configuration',{}),
+                            'aliases':sorted(set(row.get('aliases',[])+self.catalog.data.get(
+                                'additional_person_aliases',{}).get(person.person_id,[]))),
+                            'configuration':row.get('configuration',{}),
+                            'ability_source':row.get('ability_source',{}),'chronology_basis':row.get('chronology_basis'),
+                            'chronology_design':row.get('chronology_design'),
                             'virtue_design':row.get('virtue_design'),
                             'era_assignment':self.catalog.data.get('era_assignments',{}).get(person.person_id)})
         return {'coverage':self.catalog.data['coverage'],'library':library,

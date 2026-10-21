@@ -115,3 +115,9 @@ jobs:
           python game/build_message_locales.py
           python game/build_locales.py
           git diff --exit-code -- game/locales
+      - name: Rebuild additional officers and reviewed career windows offline
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_officer_expansion.py
+          git diff --exit-code -- game/data/main-scenarios-v13

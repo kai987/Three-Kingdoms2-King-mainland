@@ -99,7 +99,9 @@ class Catalog:
         self.links = {frozenset(e) for e in self.data['links']}
         expected = self.data.get('city_count', 100 if self.data.get('travel_rules') else 96)
         assert type(expected) is int and expected > 0
-        assert len(self.definitions) == 1000 and len(self.map_cities) == expected
+        expected_people = self.data.get('officer_count', 1000)
+        integer(expected_people, 1, self.rules.runtime_capacity, 'catalog officer count')
+        assert len(self.definitions) == expected_people and len(self.map_cities) == expected
 
     def active_city_ids(self, year, month=1):
         opened = set(self.data['active_cities'])
@@ -173,7 +175,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                     state.year if state else self.catalog.data['start_year'],
                                     state.month if state else self.catalog.data['start_month']),
                                 'links': self.catalog.data['links'], 'rules': self.catalog.data['rules'],
-                                'notes': self.catalog.data['design_notes'], 'library_count': 1000,
+                                'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
                                 'year_available': available,
                                 **self._expanded_catalog_view(state), **self._travel_view(state),
                                 'names': {str(i): self.catalog.name(i) for i in state.officers} if state else {}}}

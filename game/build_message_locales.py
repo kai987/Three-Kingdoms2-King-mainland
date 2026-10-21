@@ -371,6 +371,15 @@ SCENARIOS = pairs('''
 
 
 def build():
+    EXACT.update({
+        '人物庫保留原有1000人，追加有原典身分依據的人物；同人異名不重複計數。': '既存1000人を保持し、原典で人物を確認した新規武将を追加しています。同一人物の別名は重複計上しません。',
+        '追加人物的武、知、體力與適性為本作設計值；未具充分德行記錄者沿用用戶指定德60。': '追加人物の武力・知力・体力・適性は本作独自の設定です。徳行の記録が十分でない人物は指定の徳60とします。',
+        '新增年表含明列的遊戲估計；退場年不冒充史實卒年，原典記載與估計分開保存。': '追加年表には明記したゲーム用の推定を含みます。退場年と史実の没年を区別し、原典の記録と推定を分けて記録しています。',
+        '逐篇補入有來源的任職窗口；連續任職及IF延續屬本作推定，駐城仍按容量及邊境防務分配。': '出典のある仕官期間を各シナリオに補っています。仕官の継続やIFでの所属継続は本作の推定で、配属都市は定員と国境防衛の規則で決まります。',
+        '在籍、在野、未到出仕年、歸屬待考及容量不足分開統計；沒有把總人物庫全部塞入開局。': '在籍・在野・未登場・所属未確認・定員不足を別々に集計します。武将名鑑の全員が開始時に登場するわけではありません。',
+        '新增人物僅在本篇已啟用勢力的生涯窗口內登場；未來以在野待訪，不強制歷史轉屬。': '追加人物は本シナリオに存在する勢力の活動期間内だけ登場します。将来の登場は在野となり、歴史通りの所属変更は強制しません。',
+        '新增資料只用於新開v13戰役；每城30人、出戰10人、地圖及既有存檔保持原規則。': '追加データはv13の新規戦役に適用します。都市定員30人、出陣10人、地図と既存セーブの規則は維持します。',
+    })
     data = json.loads((ROOT / 'game/data/main-scenarios-v11/217-07.json').read_text())
     names = {}
     for person in data['people']:
@@ -381,6 +390,19 @@ def build():
             if previous and previous != japanese:
                 raise ValueError('Ambiguous localized spelling: ' + label)
             names[label] = japanese
+    expansion = ROOT / 'game/config/officer-expansion-v13.json'
+    if expansion.exists():
+        extra = json.loads(expansion.read_text())
+        for person in extra['people']:
+            japanese = person['name_japanese']
+            for label in [person['name'], japanese, *person.get('aliases', [])]:
+                previous = names.get(label)
+                if previous and previous != japanese:
+                    raise ValueError('Ambiguous expansion spelling: ' + label)
+                names[label] = japanese
+        originals = {p['person_id']: p for p in data['people']}
+        for duplicate in extra.get('excluded_duplicates', []):
+            names[duplicate['name']] = originals[duplicate['existing_person_id']]['ability_source']['source_name']
     city_labels = {city['name'] for city in data['cities']}
     presentation = json.loads((ROOT / 'game/assets/map-presentation.json').read_text())
     for row in presentation['city_names'].values():

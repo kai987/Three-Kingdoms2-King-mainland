@@ -1,0 +1,1646 @@
+{
+  "schema": "officer-expansion-v13-v1",
+  "batch": "primary_text_missing_people_23",
+  "reviewed_on": "2026-10-22",
+  "base_library": "game/data/main-scenarios-v12/217-07.json",
+  "base_count": 1000,
+  "new_count": 23,
+  "policy": {
+    "profile_source": "Independent remake ratings inferred from recorded roles; not SAN14 values or historical measurements.",
+    "insufficient_virtue": 60,
+    "health_default": 80,
+    "birth_and_service_precision": "Explicit per-field estimates remain estimates; ancient texts seldom supply exact service dates.",
+    "unknown_death": "No invented historical death date. retirement_year is an authorial gameplay boundary mapped separately by builder.",
+    "membership": "Windows are authored playable eligibility grounded in dated career records; city mappings are regional proxies, not exact monthly garrisons. No force spawn outside windows.",
+    "dedup": "Original1000 name/alias comparison plus semantic review of family names, variant characters and biographies. 施績/朱績 and 荀勖/荀勗 are existing identities, not additions."
+  },
+  "excluded_duplicates": [
+    {
+      "name": "施績",
+      "existing_name": "朱績",
+      "reason": "朱然之子朱績復本姓施，已在千人庫；不能因改姓重複加人。",
+      "existing_person_id": "san14-candidate-0388"
+    },
+    {
+      "name": "荀勖",
+      "existing_name": "荀勗",
+      "existing_person_id": "san14-candidate-0397",
+      "reason": "勖／勗異體；同字公曾、同卒289年與《晉書》卷39生涯，屬同一人，不因生年設定不同而拆成兩人。"
+    }
+  ],
+  "people": [
+    {
+      "person_id": "historical-expansion-0001",
+      "name": "鲜于银",
+      "name_japanese": "鮮于銀",
+      "aliases": [
+        "鮮于銀",
+        "鲜于银"
+      ],
+      "identity_note": "鮮于銀為鮮于輔同時出現的另一人，不與既有鮮于輔合併；不把失去記載年當作卒年。",
+      "chronology": {
+        "birth_year": 158,
+        "service_year": 188,
+        "death_year": null,
+        "retirement_year": 220,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial188_backcast_from_post193_Liu_Yu_service_record",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生卒不詳；158生與220退場只是本作生涯邊界，220不宣稱卒年。188出仕為向前配置以配合劉虞年代開局；原典可確證193年後報仇行動，不能據此認為188已任騎都尉。",
+        "last_attested_year": null
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 68,
+        "intellect": 57,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            188,
+            6
+          ],
+          "to": [
+            193,
+            12
+          ],
+          "faction": "liu_yu",
+          "city": "yuyang",
+          "membership_basis": "劉虞舊部，騎都尉；劉虞遇害後與鮮于輔、齊周等率幽州兵攻公孫瓚。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷08",
+          "scope": "primary_text_identity_career",
+          "note": "劉虞舊部，騎都尉；劉虞遇害後與鮮于輔、齊周等率幽州兵攻公孫瓚。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0002",
+      "name": "齐周",
+      "name_japanese": "斉周",
+      "aliases": [
+        "斉周",
+        "齊周",
+        "齐周"
+      ],
+      "identity_note": "齊周為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 160,
+        "service_year": 188,
+        "death_year": null,
+        "retirement_year": 220,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial188_backcast_from_post193_Liu_Yu_service_record",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生卒不詳；160生與220退場均為本作估計，220非史實卒年。188出仕為配合劉虞年代的向前配置，原典明文是193年後舊部行動。",
+        "last_attested_year": null
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 46,
+        "intellect": 65,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            188,
+            6
+          ],
+          "to": [
+            193,
+            12
+          ],
+          "faction": "liu_yu",
+          "city": "yan",
+          "membership_basis": "劉虞從事，與鮮于輔、鮮于銀等擁立閻柔，協同反抗公孫瓚。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷08",
+          "scope": "primary_text_identity_career",
+          "note": "劉虞從事，與鮮于輔、鮮于銀等擁立閻柔，協同反抗公孫瓚。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0003",
+      "name": "刘寔",
+      "name_japanese": "劉寔",
+      "aliases": [
+        "刘寔",
+        "劉寔"
+      ],
+      "identity_note": "劉寔為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 220,
+        "service_year": 250,
+        "death_year": 310,
+        "retirement_year": 310,
+        "precision": {
+          "birth_year": "derived_or_attested_year",
+          "service_year": "authorial_estimate_before_attested263_Wei_service",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "310卒、年91可回推220生；初仕年月不詳，250為本作估計，263年伐蜀前在魏有明文。洛陽為朝官配置節點，非指定某場戰役駐軍。",
+        "last_attested_year": 310
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 31,
+        "intellect": 83,
+        "virtue": 86,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 86,
+        "dimensions": {
+          "care": 82,
+          "fairness": 87,
+          "integrity": 91,
+          "trust": 84
+        },
+        "basis": "劉寔字子真，入洛為河南尹丞、尚書郎等，參司馬昭相國軍事；傳記記清儉、賑恤親故並著崇讓論。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            250,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wei",
+          "city": "henan",
+          "membership_basis": "劉寔字子真，入洛為河南尹丞、尚書郎等，參司馬昭相國軍事；傳記記清儉、賑恤親故並著崇讓論。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/晉書/卷041",
+          "scope": "primary_text_identity_career",
+          "note": "劉寔字子真，入洛為河南尹丞、尚書郎等，參司馬昭相國軍事；傳記記清儉、賑恤親故並著崇讓論。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0004",
+      "name": "裴楷",
+      "name_japanese": "裴楷",
+      "aliases": [
+        "裴楷"
+      ],
+      "identity_note": "裴楷為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 237,
+        "service_year": 260,
+        "death_year": 291,
+        "retirement_year": 291,
+        "precision": {
+          "birth_year": "derived_or_attested_year",
+          "service_year": "authorial_estimate_within_256_264_recommendation_window",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "291年事後卒、年55回推237生；司馬昭府初仕確年未詳，260為本作配置年，不稱精確任官年月。",
+        "last_attested_year": 291
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 29,
+        "intellect": 82,
+        "virtue": 82,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 82,
+        "dimensions": {
+          "care": 85,
+          "fairness": 82,
+          "integrity": 76,
+          "trust": 81
+        },
+        "basis": "裴楷字叔則，鍾會薦入司馬昭府、任尚書郎及吏部郎；傳記記寬厚、散財周濟窮乏。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            260,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wei",
+          "city": "henan",
+          "membership_basis": "裴楷字叔則，鍾會薦入司馬昭府、任尚書郎及吏部郎；傳記記寬厚、散財周濟窮乏。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/晉書/卷035",
+          "scope": "primary_text_identity_career",
+          "note": "裴楷字叔則，鍾會薦入司馬昭府、任尚書郎及吏部郎；傳記記寬厚、散財周濟窮乏。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0005",
+      "name": "任恺",
+      "name_japanese": "任愷",
+      "aliases": [
+        "任恺",
+        "任愷"
+      ],
+      "identity_note": "任愷為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 223,
+        "service_year": 245,
+        "death_year": null,
+        "retirement_year": 284,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_estimate_within_Wei_court_service",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "223生、284退場暫採本作常見年代，原典記年61而未直繫公元，生卒仍標估計；245為魏任官窗內的配置年。",
+        "last_attested_year": null
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 38,
+        "intellect": 78,
+        "virtue": 81,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 81,
+        "dimensions": {
+          "care": 75,
+          "fairness": 84,
+          "integrity": 86,
+          "trust": 79
+        },
+        "basis": "任愷字元褒，仕魏中書侍郎、員外散騎常侍，晉國建時為侍中；傳記記忠直勤公，後與賈充交惡。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            245,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wei",
+          "city": "henan",
+          "membership_basis": "任愷字元褒，仕魏中書侍郎、員外散騎常侍，晉國建時為侍中；傳記記忠直勤公，後與賈充交惡。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/晉書/卷045",
+          "scope": "primary_text_identity_career",
+          "note": "任愷字元褒，仕魏中書侍郎、員外散騎常侍，晉國建時為侍中；傳記記忠直勤公，後與賈充交惡。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0007",
+      "name": "傅玄",
+      "name_japanese": "傅玄",
+      "aliases": [
+        "傅玄"
+      ],
+      "identity_note": "傅玄為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 217,
+        "service_year": 240,
+        "death_year": 278,
+        "retirement_year": 278,
+        "precision": {
+          "birth_year": "derived_or_attested_year",
+          "service_year": "authorial_estimate_within_recorded_Wei_career",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "卒於景獻皇后喪後、年62，按278退場回推217生。初仕年未詳，240為本作估計；弘農任職在魏末可證但任期年月不詳。",
+        "last_attested_year": 278
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 35,
+        "intellect": 82,
+        "virtue": 81,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 81,
+        "dimensions": {
+          "care": 81,
+          "fairness": 80,
+          "integrity": 87,
+          "trust": 78
+        },
+        "basis": "傅玄字休奕，仕魏著作、參軍、弘農太守，所居稱職且數陳政務；傳記記剛勁亮直、議政規諫。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            240,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wei",
+          "city": "hongnong",
+          "membership_basis": "傅玄字休奕，仕魏著作、參軍、弘農太守，所居稱職且數陳政務；傳記記剛勁亮直、議政規諫。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/晉書/卷047",
+          "scope": "primary_text_identity_career",
+          "note": "傅玄字休奕，仕魏著作、參軍、弘農太守，所居稱職且數陳政務；傳記記剛勁亮直、議政規諫。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0008",
+      "name": "山涛",
+      "name_japanese": "山濤",
+      "aliases": [
+        "山涛",
+        "山濤"
+      ],
+      "identity_note": "山濤為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 205,
+        "service_year": 244,
+        "death_year": 283,
+        "retirement_year": 283,
+        "precision": {
+          "birth_year": "derived_or_attested_year",
+          "service_year": "attested_or_bounded_service_window_for_game",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "太康四年卒、年79回推205生；傳記年40始仕換算244為年粒度配置（虛歲），不強定月份。河內為籍貫與初任區域節點。",
+        "last_attested_year": 283
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 36,
+        "intellect": 81,
+        "virtue": 87,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 87,
+        "dimensions": {
+          "care": 85,
+          "fairness": 89,
+          "integrity": 85,
+          "trust": 88
+        },
+        "basis": "山濤字巨源，年四十始為郡主簿、功曹，後仕司馬氏，居選舉而薦拔人才；傳記記守正持平。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            244,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wei",
+          "city": "henei",
+          "membership_basis": "山濤字巨源，年四十始為郡主簿、功曹，後仕司馬氏，居選舉而薦拔人才；傳記記守正持平。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/晉書/卷043",
+          "scope": "primary_text_identity_career",
+          "note": "山濤字巨源，年四十始為郡主簿、功曹，後仕司馬氏，居選舉而薦拔人才；傳記記守正持平。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0009",
+      "name": "杜恕",
+      "name_japanese": "杜恕",
+      "aliases": [
+        "杜恕"
+      ],
+      "identity_note": "杜恕為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 198,
+        "service_year": 232,
+        "death_year": 252,
+        "retirement_year": 252,
+        "precision": {
+          "birth_year": "derived_or_attested_year",
+          "service_year": "attested_or_bounded_service_window_for_game",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "嘉平四年252卒，年55回推198生；太和中任官，232為本作太和末配置，249後去職不再作開局在籍。洛陽為早期朝官節點；晚期幽州職沒有混稱全程居洛。",
+        "last_attested_year": 252
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 42,
+        "intellect": 80,
+        "virtue": 82,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 82,
+        "dimensions": {
+          "care": 80,
+          "fairness": 83,
+          "integrity": 87,
+          "trust": 80
+        },
+        "basis": "杜恕字務伯，杜畿之子，魏朝黃門侍郎、郡守、幽州刺史，屢陳朝政得失，後免官徙章武。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            232,
+            1
+          ],
+          "to": [
+            249,
+            12
+          ],
+          "faction": "wei",
+          "city": "henan",
+          "membership_basis": "杜恕字務伯，杜畿之子，魏朝黃門侍郎、郡守、幽州刺史，屢陳朝政得失，後免官徙章武。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷16",
+          "scope": "primary_text_identity_career",
+          "note": "杜恕字務伯，杜畿之子，魏朝黃門侍郎、郡守、幽州刺史，屢陳朝政得失，後免官徙章武。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0010",
+      "name": "华表",
+      "name_japanese": "華表",
+      "aliases": [
+        "华表",
+        "華表"
+      ],
+      "identity_note": "華表為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 204,
+        "service_year": 223,
+        "death_year": 275,
+        "retirement_year": 275,
+        "precision": {
+          "birth_year": "derived_or_attested_year",
+          "service_year": "derived_from_attested_age20",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "咸寧元年275卒、年72回推204生；傳記記年20拜散騎黃門郎，按虛歲換算223啟用，不強定月份。",
+        "last_attested_year": 275
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 27,
+        "intellect": 75,
+        "virtue": 81,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 81,
+        "dimensions": {
+          "care": 76,
+          "fairness": 81,
+          "integrity": 90,
+          "trust": 82
+        },
+        "basis": "華表字偉容，華歆之子，入仕魏散騎黃門郎、侍中、尚書等；傳記記清靜廉潔、家貧。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            223,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wei",
+          "city": "henan",
+          "membership_basis": "華表字偉容，華歆之子，入仕魏散騎黃門郎、侍中、尚書等；傳記記清靜廉潔、家貧。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/晉書/卷044",
+          "scope": "primary_text_identity_career",
+          "note": "華表字偉容，華歆之子，入仕魏散騎黃門郎、侍中、尚書等；傳記記清靜廉潔、家貧。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0011",
+      "name": "卢钦",
+      "name_japanese": "盧欽",
+      "aliases": [
+        "卢钦",
+        "盧欽"
+      ],
+      "identity_note": "盧欽為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 215,
+        "service_year": 240,
+        "death_year": 278,
+        "retirement_year": 278,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_estimate_within_Cao_Shuang239_249_service",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "生年未詳，215為本作估計；240置曹爽239～249任內。咸寧四年為278卒。洛陽節點用於魏府任官，並非聲稱其全部年代都駐洛陽。",
+        "last_attested_year": 278
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 59,
+        "intellect": 79,
+        "virtue": 86,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 86,
+        "dimensions": {
+          "care": 84,
+          "fairness": 87,
+          "integrity": 88,
+          "trust": 84
+        },
+        "basis": "盧欽字子若，曹爽辟為掾，後任郡守與淮北都督；傳記記文武稱績、廉平、不營產業。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            240,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wei",
+          "city": "henan",
+          "membership_basis": "盧欽字子若，曹爽辟為掾，後任郡守與淮北都督；傳記記文武稱績、廉平、不營產業。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/晉書/卷044",
+          "scope": "primary_text_identity_career",
+          "note": "盧欽字子若，曹爽辟為掾，後任郡守與淮北都督；傳記記文武稱績、廉平、不營產業。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0012",
+      "name": "羊琇",
+      "name_japanese": "羊琇",
+      "aliases": [
+        "羊琇"
+      ],
+      "identity_note": "羊琇為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 236,
+        "service_year": 260,
+        "death_year": null,
+        "retirement_year": 283,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_estimate_before_attested263_campaign",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生年未詳，236為本作估計；260為263伐蜀前的任官配置年。卒年傳記未繫公元，依通鑑齊王攸出鎮事件採283為遊戲退場界線，避免混把282彈劾年當死亡。",
+        "last_attested_year": 283
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 53,
+        "intellect": 79,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            260,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wei",
+          "city": "henan",
+          "membership_basis": "羊琇字稚舒，參鍾會軍事並從伐蜀，鍾會反時勸阻，後親近司馬炎；亦有奢侈犯法等記錄。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/晉書/卷093",
+          "scope": "primary_text_identity_career",
+          "note": "羊琇字稚舒，參鍾會軍事並從伐蜀，鍾會反時勸阻，後親近司馬炎；亦有奢侈犯法等記錄。"
+        },
+        {
+          "url": "https://zh.wikisource.org/zh-hant/資治通鑑/卷081",
+          "scope": "primary_text_identity_career",
+          "note": "羊琇字稚舒，參鍾會軍事並從伐蜀，鍾會反時勸阻，後親近司馬炎；亦有奢侈犯法等記錄。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0013",
+      "name": "邓良",
+      "name_japanese": "鄧良",
+      "aliases": [
+        "邓良",
+        "鄧良"
+      ],
+      "identity_note": "蜀漢鄧芝之子鄧良，非其他時代同名者；《後主傳》降使與鄧芝傳之子按同人整合，不新增兩筆。",
+      "chronology": {
+        "birth_year": 225,
+        "service_year": 258,
+        "death_year": null,
+        "retirement_year": 285,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_lower_bound_of_Jingyao258_263_era",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生卒未詳；225生、285退場為本作估計。258出仕是景耀258～263年間的下界配置，不等同精確初仕年。",
+        "last_attested_year": null
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 39,
+        "intellect": 68,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            258,
+            1
+          ],
+          "to": [
+            263,
+            12
+          ],
+          "faction": "shu",
+          "city": "shujun",
+          "membership_basis": "鄧良為鄧芝之子，襲爵，景耀中尚書左選郎，蜀降時奉璽綬使鄧艾，入晉為廣漢太守。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷45",
+          "scope": "primary_text_identity_career",
+          "note": "鄧良為鄧芝之子，襲爵，景耀中尚書左選郎，蜀降時奉璽綬使鄧艾，入晉為廣漢太守。"
+        },
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷33",
+          "scope": "primary_text_identity_career",
+          "note": "鄧良為鄧芝之子，襲爵，景耀中尚書左選郎，蜀降時奉璽綬使鄧艾，入晉為廣漢太守。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0014",
+      "name": "王含",
+      "name_japanese": "王含",
+      "aliases": [
+        "王含"
+      ],
+      "identity_note": "此為蜀漢樂城監軍王含，不與東晉王敦兄長王含（另一人）合併。",
+      "chronology": {
+        "birth_year": 225,
+        "service_year": 258,
+        "death_year": null,
+        "retirement_year": 285,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_defense_reform_year_estimate_before263_attestation",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生卒未詳；225生、285退場為遊戲估計。258為漢中防務改革的年粒度配置；以漢中節點代樂城，非新增城池。",
+        "last_attested_year": 263
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 65,
+        "intellect": 62,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            258,
+            1
+          ],
+          "to": [
+            263,
+            12
+          ],
+          "faction": "shu",
+          "city": "hanzhong",
+          "membership_basis": "蜀監軍王含守樂城，與守漢城的蔣斌配合姜維收斂外圍的漢中防務部署。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷44",
+          "scope": "primary_text_identity_career",
+          "note": "蜀監軍王含守樂城，與守漢城的蔣斌配合姜維收斂外圍的漢中防務部署。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0015",
+      "name": "习隆",
+      "name_japanese": "習隆",
+      "aliases": [
+        "习隆",
+        "習隆"
+      ],
+      "identity_note": "習隆為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 225,
+        "service_year": 263,
+        "death_year": null,
+        "retirement_year": 285,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_directly_dated263_role_for_conservative_game_eligibility",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生卒未詳；225生、285退場僅遊戲估計。最保守自263立廟記錄年啟用，不回填成234年已任步兵校尉。",
+        "last_attested_year": 263
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 54,
+        "intellect": 64,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            263,
+            1
+          ],
+          "to": [
+            263,
+            12
+          ],
+          "faction": "shu",
+          "city": "shujun",
+          "membership_basis": "步兵校尉習隆與中書郎向充上表請為諸葛亮於沔陽立廟，屬蜀漢末期具名官員。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷35",
+          "scope": "primary_text_identity_career",
+          "note": "步兵校尉習隆與中書郎向充上表請為諸葛亮於沔陽立廟，屬蜀漢末期具名官員。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0016",
+      "name": "向充",
+      "name_japanese": "向充",
+      "aliases": [
+        "向充"
+      ],
+      "identity_note": "向充是向寵之弟，與現有向寵為兩人；不把相似姓名視作別名重複加入。",
+      "chronology": {
+        "birth_year": 205,
+        "service_year": 263,
+        "death_year": null,
+        "retirement_year": 285,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_directly_dated263_role_for_conservative_game_eligibility",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生卒與初仕年未詳；205生、285退場為本作估計，自263具名記錄啟用，不推定此前全部職官年次。",
+        "last_attested_year": 263
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 43,
+        "intellect": 71,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            263,
+            1
+          ],
+          "to": [
+            263,
+            12
+          ],
+          "faction": "shu",
+          "city": "shujun",
+          "membership_basis": "向充為向寵之弟，蜀中書郎，與習隆請立諸葛亮廟；後歷射聲校尉、尚書。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷35",
+          "scope": "primary_text_identity_career",
+          "note": "向充為向寵之弟，蜀中書郎，與習隆請立諸葛亮廟；後歷射聲校尉、尚書。"
+        },
+        {
+          "url": "https://zh.wikisource.org/zh-hant/襄陽記",
+          "scope": "primary_text_identity_career",
+          "note": "向充為向寵之弟，蜀中書郎，與習隆請立諸葛亮廟；後歷射聲校尉、尚書。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0017",
+      "name": "李球",
+      "name_japanese": "李球",
+      "aliases": [
+        "李球"
+      ],
+      "identity_note": "蜀漢李恢之侄，排除遼代及其他朝代同名李球。",
+      "chronology": {
+        "birth_year": 230,
+        "service_year": 263,
+        "death_year": 263,
+        "retirement_year": 263,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "first_directly_dated263_role_for_conservative_game_eligibility",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "生年未詳，230為本作估計；初仕年月未知，保守自263有具名官職年啟用。綿竹戰場對應廣漢節點，非稱全年固定駐軍。",
+        "last_attested_year": 263
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 71,
+        "intellect": 53,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            263,
+            1
+          ],
+          "to": [
+            263,
+            12
+          ],
+          "faction": "shu",
+          "city": "guanghan",
+          "membership_basis": "李恢之弟的兒子李球，官羽林右部督，隨諸葛瞻抗鄧艾，263年死於綿竹。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷43",
+          "scope": "primary_text_identity_career",
+          "note": "李恢之弟的兒子李球，官羽林右部督，隨諸葛瞻抗鄧艾，263年死於綿竹。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0018",
+      "name": "卫继",
+      "name_japanese": "衛継",
+      "aliases": [
+        "卫继",
+        "衛継",
+        "衛繼"
+      ],
+      "identity_note": "衛繼幼時曾被張姓縣長收養，後復本姓；只留一筆衛繼身分，不另立張繼。",
+      "chronology": {
+        "birth_year": 220,
+        "service_year": 250,
+        "death_year": 264,
+        "retirement_year": 264,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_estimate_before_attested264_death",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "生與初仕年未詳；220生、250出仕為本作估計，非原典精確年。264鍾會亂遇害年明確；成都為晚期任職與遇害節點。",
+        "last_attested_year": 264
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 34,
+        "intellect": 74,
+        "virtue": 80,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 80,
+        "dimensions": {
+          "care": 77,
+          "fairness": 78,
+          "integrity": 83,
+          "trust": 90
+        },
+        "basis": "衛繼字子業，漢嘉人，歷奉車都尉、大尚書，為人忠篤信厚，鍾會亂時遇害成都。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            250,
+            1
+          ],
+          "to": [
+            263,
+            12
+          ],
+          "faction": "shu",
+          "city": "shujun",
+          "membership_basis": "衛繼字子業，漢嘉人，歷奉車都尉、大尚書，為人忠篤信厚，鍾會亂時遇害成都。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷45",
+          "scope": "primary_text_identity_career",
+          "note": "衛繼字子業，漢嘉人，歷奉車都尉、大尚書，為人忠篤信厚，鍾會亂時遇害成都。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0019",
+      "name": "马承",
+      "name_japanese": "馬承",
+      "aliases": [
+        "馬承",
+        "马承"
+      ],
+      "identity_note": "馬超之子馬承，與馬岱、馬超均不同人；史料僅載嗣爵，能力與可出戰設計不冒稱史實戰績。",
+      "chronology": {
+        "birth_year": 205,
+        "service_year": 222,
+        "death_year": null,
+        "retirement_year": 270,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "attested222_noble_inheritance_not_military_appointment",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生卒不詳；205生、270退場為本作估計。222嗣爵是可證身分節點，不代表曾任歷史軍職；可玩武將屬本作擴展。",
+        "last_attested_year": 222
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 58,
+        "intellect": 46,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            222,
+            1
+          ],
+          "to": [
+            263,
+            12
+          ],
+          "faction": "shu",
+          "city": "shujun",
+          "membership_basis": "馬承為馬超之子，父亡後嗣爵，為蜀漢馬氏爵位承繼的具名人物。222～263年的爵位連續在籍為本作推定；原典沒有逐年續載，不能當作已證實任軍職。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "scope": "primary_text_identity_career",
+          "note": "馬承為馬超之子，父亡後嗣爵，為蜀漢馬氏爵位承繼的具名人物。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0020",
+      "name": "贺邵",
+      "name_japanese": "賀邵",
+      "aliases": [
+        "賀邵",
+        "贺邵"
+      ],
+      "identity_note": "賀邵為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 227,
+        "service_year": 258,
+        "death_year": 275,
+        "retirement_year": 275,
+        "precision": {
+          "birth_year": "derived_or_attested_year",
+          "service_year": "attested_Sun_Xiu_accession258_role_month10_game_mapping",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "天冊元年275年遇害、年49回推227生。258孫休即位後啟用，最保守不強定較早初仕年。建業為朝官配置節點。",
+        "last_attested_year": 275
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 36,
+        "intellect": 80,
+        "virtue": 85,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 85,
+        "dimensions": {
+          "care": 82,
+          "fairness": 84,
+          "integrity": 91,
+          "trust": 85
+        },
+        "basis": "賀邵字興伯，孫休時散騎中常侍，後任吳郡太守、左典軍、中書令，屢諫孫皓而遇害。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            258,
+            10
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wu",
+          "city": "danyang",
+          "membership_basis": "賀邵字興伯，孫休時散騎中常侍，後任吳郡太守、左典軍、中書令，屢諫孫皓而遇害。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷65",
+          "scope": "primary_text_identity_career",
+          "note": "賀邵字興伯，孫休時散騎中常侍，後任吳郡太守、左典軍、中書令，屢諫孫皓而遇害。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0021",
+      "name": "朱熊",
+      "name_japanese": "朱熊",
+      "aliases": [
+        "朱熊"
+      ],
+      "identity_note": "朱熊為原典具名人物，與原千人庫逐一比較姓名及別名後新增。",
+      "chronology": {
+        "birth_year": 220,
+        "service_year": 252,
+        "death_year": 258,
+        "retirement_year": 258,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "attested_Sun_Liang_reign_start252_commission_month5_game_mapping",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "生年未詳，220為本作估計；252孫亮即位後依復領兵記錄啟用，258年政變前退出。虎林未設城，以建業區域節點代理。",
+        "last_attested_year": 258
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 61,
+        "intellect": 48,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            252,
+            5
+          ],
+          "to": [
+            258,
+            8
+          ],
+          "faction": "wu",
+          "city": "danyang",
+          "membership_basis": "朱據之子朱熊，孫亮時復領兵、任虎林督，後在258年被孫亮令丁奉殺於虎林。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷57",
+          "scope": "primary_text_identity_career",
+          "note": "朱據之子朱熊，孫亮時復領兵、任虎林督，後在258年被孫亮令丁奉殺於虎林。"
+        },
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷64",
+          "scope": "primary_text_identity_career",
+          "note": "朱據之子朱熊，孫亮時復領兵、任虎林督，後在258年被孫亮令丁奉殺於虎林。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0022",
+      "name": "朱损",
+      "name_japanese": "朱損",
+      "aliases": [
+        "朱损",
+        "朱損"
+      ],
+      "identity_note": "朱損與兄朱熊為兩名具名人物；不與朱據、朱宣合併。",
+      "chronology": {
+        "birth_year": 222,
+        "service_year": 252,
+        "death_year": 258,
+        "retirement_year": 258,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "attested_Sun_Liang_reign_start252_commission_month5_game_mapping",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "生年未詳，222為本作估計；252孫亮即位後配置，258政變前退出。",
+        "last_attested_year": 258
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 57,
+        "intellect": 50,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            252,
+            5
+          ],
+          "to": [
+            258,
+            8
+          ],
+          "faction": "wu",
+          "city": "danyang",
+          "membership_basis": "朱據之子、朱熊之弟朱損，孫亮時復領兵、任外部督，258年被孫亮令丁奉殺於建業。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷57",
+          "scope": "primary_text_identity_career",
+          "note": "朱據之子、朱熊之弟朱損，孫亮時復領兵、任外部督，258年被孫亮令丁奉殺於建業。"
+        },
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷64",
+          "scope": "primary_text_identity_career",
+          "note": "朱據之子、朱熊之弟朱損，孫亮時復領兵、任外部督，258年被孫亮令丁奉殺於建業。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0023",
+      "name": "虞忠",
+      "name_japanese": "虞忠",
+      "aliases": [
+        "虞忠"
+      ],
+      "identity_note": "虞翻第五子，與第四子虞汜、六子虞聳、八子虞昺不同人。",
+      "chronology": {
+        "birth_year": 220,
+        "service_year": 260,
+        "death_year": 280,
+        "retirement_year": 280,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_backcast_from_attested280_Wu_office",
+          "death_year": "attested_year",
+          "retirement_year": "historical_death_year"
+        },
+        "basis": "生與初仕年未詳；220生、260出仕／宜都任職開始為本作區域配置，280年宜都守死是原典明文；不稱260已確任太守。",
+        "last_attested_year": 280
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 65,
+        "intellect": 65,
+        "virtue": 76,
+        "terrain_affinity": 1,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "history_informed_authorial_design"
+        }
+      },
+      "virtue_design": {
+        "virtue": 76,
+        "dimensions": {
+          "care": 73,
+          "fairness": 72,
+          "integrity": 78,
+          "trust": 86
+        },
+        "basis": "虞翻第五子虞忠，字世方，任宜都太守，280年晉伐吳時與陸晏、陸景堅守，城陷被殺。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            260,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wu",
+          "city": "yidu",
+          "membership_basis": "虞翻第五子虞忠，字世方，任宜都太守，280年晉伐吳時與陸晏、陸景堅守，城陷被殺。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷57",
+          "scope": "primary_text_identity_career",
+          "note": "虞翻第五子虞忠，字世方，任宜都太守，280年晉伐吳時與陸晏、陸景堅守，城陷被殺。"
+        }
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0024",
+      "name": "虞昺",
+      "name_japanese": "虞昺",
+      "aliases": [
+        "虞昺"
+      ],
+      "identity_note": "虞昺又見字形虞昞時須先核對，不另立重複人；與虞忠、虞汜不同人。",
+      "chronology": {
+        "birth_year": 225,
+        "service_year": 260,
+        "death_year": null,
+        "retirement_year": 295,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_backcast_from_attested280_Wu_office",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "生卒及初仕年不詳；225生、260出仕、295退場都是遊戲估計。武昌都督任命是280戰時事，260～263以武昌作區域節點屬遊戲配置，不能當作當時都督已任。",
+        "last_attested_year": 280
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 49,
+        "intellect": 76,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "basis": {
+          "health_max": "remake_default80",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60_when_insufficient_evidence"
+        }
+      },
+      "virtue_design": {
+        "virtue": 60,
+        "dimensions": null,
+        "basis": "具名與任職記錄不足以獨立判定四項德行，依用戶規則暫設60，不把官階或親屬關係當成德值。"
+      },
+      "membership_windows": [
+        {
+          "from": [
+            260,
+            1
+          ],
+          "to": [
+            265,
+            12
+          ],
+          "faction": "wu",
+          "city": "wuchang",
+          "membership_basis": "虞翻第八子虞昺，字世文，仕吳黃門郎、尚書侍中，晉軍來時督武昌以上諸軍，後入晉任濟陰太守。",
+          "city_basis": "本作115城區域／首都節點映射；非逐月史實駐軍認定。"
+        }
+      ],
+      "opening_policy": "membership_window_only_no_automatic_free_spawn_outside_evidence_window",
+      "sources": [
+        {
+          "url": "https://zh.wikisource.org/zh-hant/三國志/卷57",
+          "scope": "primary_text_identity_career",
+          "note": "虞翻第八子虞昺，字世文，仕吳黃門郎、尚書侍中，晉軍來時督武昌以上諸軍，後入晉任濟陰太守。"
+        }
+      ]
+    }
+  ]
+}
