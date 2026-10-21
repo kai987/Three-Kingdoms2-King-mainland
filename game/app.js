@@ -1,5 +1,5 @@
 'use strict';
-let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, showLegacy=false, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
+let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
 const $=s=>document.querySelector(s), dialog=$('#dialog');
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=id=>view.catalog.names[String(id)]||'武将';
@@ -21,7 +21,7 @@ const mapPosition=c=>(setupPreview?setupPreview.world:view.catalog.world)?c.posi
 const periodCityName=id=>setupPreview?.city_names[id]||view.catalog.cities.find(c=>c.id===id)?.name||id;
 const cityName=id=>(setupPreview?setupPreview.city_history:view.catalog.city_history)?.[id]?periodCityName(id):view.catalog.map_presentation.city_names[id]?.displayName||periodCityName(id);
 const cityCaption=id=>cityName(id)===periodCityName(id)?cityName(id):`${cityName(id)}（${periodCityName(id)}）`;
-const mapColor=id=>view.catalog.map_presentation.colors[id]||view.catalog.map_presentation.colors.neutral;
+const mapColor=id=>view.catalog.map_presentation.colors[id]||(setupPreview?.factions||view.catalog.factions).find(f=>f.id===id)?.color||view.catalog.map_presentation.colors.neutral;
 const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);}
 function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;}
@@ -48,19 +48,23 @@ function openDialog(title,body,actions){
 }
 function selectFaction(){
  const current=view.catalog.scenario_id;
+ const currentOption=view.catalog.scenarios.find(x=>x.id===current);
+ const scenarios=[...new Map(view.catalog.scenarios.filter(x=>x.main_scenario&&!x.archived).map(x=>[`${x.year}-${x.month}`,x])).values()];
+ const initial=scenarios.find(x=>x.id===current)||scenarios.find(x=>x.year===currentOption?.year&&x.month===currentOption?.month)||scenarios[0];
  $('#main-menu').disabled=true;$('#main-menu').setAttribute('aria-expanded','true');
  if(dialog.open)dialog.close();
  const draw=(scenario)=>{
-  const option=view.catalog.scenarios.find(x=>x.id===scenario), expanded=option.cities>=96;
-  const preferred=scenario===current&&option.factions.some(f=>f.id===view.game?.player)?view.game.player:option.factions.some(f=>f.id==='shu')?'shu':option.factions[0].id;
+  const option=scenarios.find(x=>x.id===scenario), expanded=option.cities>=96;
+  const preferred=option.factions.some(f=>f.id===view.game?.player)?view.game.player:option.factions.some(f=>f.id==='shu')?'shu':option.factions[0].id;
   setupPreview={...option,faction:preferred,focus:option.factions.find(f=>f.id===preferred).city};
-  const groups=[['base','原版本篇 · 7剧本'],['pk','威力加强版本篇 · 4剧本'],['legacy','旧版目录 · 存档兼容']];
-  const legacy=showLegacy||!option.main_scenario||option.archived;
-  const options=groups.map(([group,label])=>{const rows=view.catalog.scenarios.filter(x=>(x.main_scenario&&!x.archived?x.main_scenario.group:'legacy')===group&&(group!=='legacy'||legacy)).sort((a,b)=>a.year-b.year||a.month-b.month);return rows.length?`<optgroup label="${label}">${rows.map(x=>`<option value="${x.id}" ${x.id===scenario?'selected':''}>${escapeHtml(x.title)}${x.archived?'（旧版）':''}</option>`).join('')}</optgroup>`:'';}).join('');
-  const content=`<label class="field" for="scenario">选择剧本<select id="scenario">${options}</select></label><label class="legacy-choice"><input id="legacy-choice" type="checkbox" ${legacy?'checked':''}>显示旧版战役</label><p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary><p>${escapeHtml(option.main_scenario.summary)}</p><p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p><a href="${escapeHtml(option.main_scenario.official_source)}" target="_blank" rel="noopener noreferrer">查看官方剧本目录</a></details>`:''}
+  const groups=[['base','原版本篇'],['pk','威力加强版本篇'],['supplement','补充年代']];
+  const options=groups.map(([group,label])=>{const rows=scenarios.filter(x=>x.main_scenario.group===group).sort((a,b)=>a.year-b.year||a.month-b.month);return rows.length?`<optgroup label="${label} · ${rows.length}剧本">${rows.map(x=>`<option value="${x.id}" ${x.id===scenario?'selected':''}>${escapeHtml(x.title)}</option>`).join('')}</optgroup>`:'';}).join('');
+  const scenarioSource=option.main_scenario?.official_source?`<a href="${escapeHtml(option.main_scenario.official_source)}" target="_blank" rel="noopener noreferrer">查看官方剧本目录</a>`:'<p>补充年代沿用旧版战役配置，并合并本版城池与驻将规则。</p>';
+  const content=`<label class="field" for="scenario">选择剧本<select id="scenario">${options}</select></label><p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary><p>${escapeHtml(option.main_scenario.summary)}</p><p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p>${scenarioSource}</details>`:''}
   ${option.main_scenario?.city_chronology_note?`<p class="small">${escapeHtml(option.main_scenario.city_chronology_note)}</p>`:''}<div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg>${escapeHtml(f.name)}<span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></label>`).join('')}</div>
-  <p id="setup-summary" class="small" aria-live="polite"></p><label class="seed-label" for="seed">战局编号<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026"></label>`;
-  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>主菜单</h2></div>${content}${view.game?'<p class="small">当前战役保持原进度，可直接继续。</p>':''}<div class="actions">${view.game?`<button class="primary" id="cancel-setup">${view.game.phase==='finished'?'返回战役结果':'继续当前战役'}</button>`:''}<button class="${view.game?'':'primary'}" id="begin">${view.game?'开始新战役':'开始战役'}</button></div>`;
+  <p id="setup-summary" class="small" aria-live="polite"></p><label class="seed-label" for="seed">随机种子<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026" aria-describedby="seed-help"></label><p id="seed-help" class="small">控制招募、战斗等随机判定；相同种子与操作可重现战局。</p>`;
+  $('#inspector').classList.add('setup-menu');
+  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>主菜单</h2></div>${content}${view.game?'<p class="small">旧存档可继续，进度保持不变。</p>':''}<div class="actions">${view.game?`<button class="primary" id="cancel-setup">${view.game.phase==='finished'?'返回战役结果':'继续当前战役'}</button>`:''}<button class="${view.game?'':'primary'}" id="begin">${view.game?'开始新战役':'开始战役'}</button></div>`;
   const refreshPreview=()=>{
    const chosen=option.factions.find(f=>f.id===setupPreview.faction),count=Object.values(option.initial_owners).filter(owner=>owner===chosen.id).length;
    $('#setup-summary').textContent=`${chosen.name} · ${count}座城池 · 根据地${cityName(chosen.city)}。地图已预览本剧本归属，开始后才建立新战役。`;
@@ -70,17 +74,16 @@ function selectFaction(){
   if($('#cancel-setup'))$('#cancel-setup').onclick=()=>{setupPreview=null;render();$('#main-menu').focus();};
   refreshPreview();
   $('#scenario').onchange=()=>draw($('#scenario').value);
-  $('#legacy-choice').onchange=()=>{showLegacy=$('#legacy-choice').checked;draw(!showLegacy&&(!option.main_scenario||option.archived)?view.catalog.scenarios.find(x=>x.main_scenario&&!x.archived)?.id:scenario);};
   $('#begin').onclick=async()=>{
    const f=document.querySelector('input[name=faction]:checked')?.value,seed=Number($('#seed').value);
-   if(!Number.isInteger(seed)||seed<1||seed>4294967295)return notice('战局编号请填写1到4294967295之间的整数。',true);
+   if(!Number.isInteger(seed)||seed<1||seed>4294967295)return notice('随机种子请填写1到4294967295之间的整数。',true);
    const pending=setupPreview;setupPreview=null;
    if(await command('new',{faction:f,seed,scenario})){
     selectedCity=view.catalog.factions.find(x=>x.id===f).city;actor=target=null;mapMode=expanded?'all':'region';dialog.close();render();
    }else{setupPreview=pending;renderMap();}
   };
  };
- draw(current);
+ draw(initial.id);
  $('#scenario').focus();
 }
 function renderMap(){
@@ -152,12 +155,14 @@ async function showCityInformation(id){
   if(!dialog.open||generation!==dialogGeneration||preview!==setupPreview)return;
   const c=data.city,naming=view.catalog.map_presentation.city_names[id],history=c.history,troops=c.officers.reduce((n,o)=>n+o.troops,0);
   const rows=c.officers.map(o=>`<tr><td>${escapeHtml(o.name)}</td><td>${o.martial_strength}</td><td>${o.intellect}</td><td>${o.troops}</td></tr>`).join('');
+  const garrisonLabels={attested_yanmen_post_227:'史料任职',reviewed_SAN14_source_city_to_board:'攻略驻城参考',retained_faction_ruler_seat:'君主营地'};
+  const historySources=(history?.sources||[]).map((source,i)=>{const url=typeof source==='string'?source:source?.url,label=typeof source==='object'&&source?.note?source.note:`参考资料${i+1}`;return typeof url==='string'&&url?`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`:`<span>${escapeHtml(label)}</span>`;}).join(' · ');
   openDialog(title,`<div class="city-information" data-inspected-city="${id}" data-information-mode="${preview?'preview':'live'}">
    <p class="small">${preview?'剧本开局预览':'当前战役'} · ${data.year}年${data.month}月</p>
    <p class="city-information-owner">归属：${escapeHtml(c.owner_name)}</p>
    ${period!==cityName(id)?`<p class="small">本年代地名：${escapeHtml(period)}</p>`:''}
    ${naming?.detail?`<p class="small">${escapeHtml(naming.detail)}</p>`:''}
-   ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary><p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening.note)}</p><p>除单独注明史料任职者外，驻将为同势力区域防务调配，不代表史实郡守任命。</p>${history.garrisons?.length?`<p>开局驻防：${history.garrisons.map(g=>`${escapeHtml(g.name)}（${g.basis==='attested_yanmen_post_227'?'史料任职':'区域防务调配'}）`).join('、')}</p>`:'<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>'}${history.sources.map((url,i)=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">史料${i+1}</a>`).join(' · ')}</details>`:''}
+   ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary><p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening.note)}</p><p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${history.garrisons?.length?`<p>开局驻防：${history.garrisons.map(g=>`${escapeHtml(g.name)}（${garrisonLabels[g.basis]||'区域防务调配'}）`).join('、')}</p>`:'<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>'}${historySources}</details>`:''}
    <p class="small">${escapeHtml(c.profile?.label||'旧版城市')} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
    <dl class="resources"><dt>金钱</dt><dd>${c.gold}</dd><dt>粮食</dt><dd>${c.grain}</dd><dt>预备兵</dt><dd>${c.reserves}</dd></dl>
    ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
@@ -274,6 +279,7 @@ function renderBattle(){
 }
 function render(){
  if(!view)return;
+ $('#inspector').classList.remove('setup-menu');
  const game=view.game;
  $('#library').disabled=!view.catalog.library;
  $('#save').disabled=!game;
@@ -288,7 +294,7 @@ function render(){
  if(game.extension?.travel)$('#inspector').insertAdjacentHTML('beforeend',renderMarches());
  $('#journal').innerHTML=game.log.slice(-5).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('');
 }
-$('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每城${capacity()}人；每方出战最多10人，包含主将。</p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。战局编号决定随机序列，保存会保留其进度。</p></div>`,'<button data-cancel>返回战役</button>');
+$('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每城${capacity()}人；每方出战最多10人，包含主将。</p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。随机种子决定招募、战斗等判定的随机序列；相同种子与操作可重现战局，保存会保留随机序列进度。</p></div>`,'<button data-cancel>返回战役</button>');
 $('#library').onclick=showLibrary;
 $('#main-menu').onclick=()=>{if(!busy)selectFaction();};
 $('#restart').onclick=()=>selectFaction();

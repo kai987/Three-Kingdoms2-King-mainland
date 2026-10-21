@@ -34,8 +34,8 @@ font:16px/1.5 var(--ui);
 height:100dvh;
 max-width:1600px;
 display:grid;
-grid-template-rows:minmax(72px,auto) auto minmax(0,1fr) 144px;
-grid-template-areas:"header" "notice" "main" "journal";
+grid-template-rows:minmax(72px,auto) auto minmax(0,1fr);
+grid-template-areas:"header" "notice" "main";
 gap:0;
 padding:8px 16px 16px
 }
@@ -133,10 +133,13 @@ grid-area:main;
 min-height:0;
 display:grid;
 grid-template-columns:minmax(0,2fr) minmax(352px,1fr);
+grid-template-rows:minmax(0,1fr) 144px;
+grid-template-areas:"stage inspector" "journal inspector";
 gap:8px;
 margin-top:8px
 }
 #stage{
+grid-area:stage;
 min-height:0;
 border:4px double var(--paper);
 outline:2px solid #000;
@@ -186,6 +189,7 @@ vector-effect:non-scaling-stroke;
 shape-rendering:crispEdges
 }
 #inspector{
+grid-area:inspector;
 border:4px double #000;
 outline:2px solid var(--paper);
 outline-offset:-2px;
@@ -292,7 +296,7 @@ outline-offset:-2px;
 overflow:auto;
 min-height:0;
 background:var(--paper);
-margin-top:8px
+margin-top:0
 }
 .journal-heading{
 display:flex;
@@ -318,9 +322,16 @@ font:16px/1.5 var(--ui)
 }
 .choice-list{
 display:grid;
-max-height:320px;
 overflow:auto;
 border-top:2px solid #000
+}
+#inspector.setup-menu > *{
+flex-shrink:0
+}
+#inspector.setup-menu .choice-list{
+flex:1 0 128px;
+min-height:128px;
+align-content:start
 }
 .faction-choice{
 display:flex;
@@ -356,17 +367,6 @@ width:144px
 }
 .intro{
 font-size:16px
-}
-.legacy-choice{
-font-size:16px;
-display:flex;
-gap:8px;
-align-items:center
-}
-.legacy-choice input{
-width:16px;
-height:16px;
-accent-color:#000
 }
 .scenario-notes{
 font-size:16px;
@@ -742,7 +742,11 @@ dialog{
 padding:16px
 }
 .choice-list{
+height:288px;
 max-height:288px
+}
+#inspector.setup-menu .choice-list{
+flex:none
 }
 .map-toolbar button{
 min-width:56px;

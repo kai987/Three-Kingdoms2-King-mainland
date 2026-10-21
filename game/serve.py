@@ -50,8 +50,9 @@ def main():
     city_index = json.loads((HERE / 'data/main-scenarios-v6/index.json').read_text())
     travel_index = json.loads((HERE / 'data/main-scenarios-v7/index.json').read_text())
     northern_index = json.loads((HERE / 'data/main-scenarios-v8/index.json').read_text())
+    unified_index = json.loads((HERE / 'data/main-scenarios-v9/index.json').read_text())
     game = CampaignSession([HERE / 'data/demo.json', HERE / 'data/mainland.json'] +
-                           [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs'] + main_index['catalogs'] + complete_index['catalogs'] + city_index['catalogs'] + travel_index['catalogs'] + northern_index['catalogs']])
+                           [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs'] + main_index['catalogs'] + complete_index['catalogs'] + city_index['catalogs'] + travel_index['catalogs'] + northern_index['catalogs'] + unified_index['catalogs']])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/style.css': ('style.css', 'text/css; charset=utf-8'),
