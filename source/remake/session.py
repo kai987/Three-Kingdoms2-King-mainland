@@ -4,6 +4,25 @@ from .campaign import Campaign, Catalog, GameError
 from .map_presentation import city_names,presentation
 
 
+def faction_resources(catalog, state=None):
+    totals={key:dict(gold=0,grain=0,reserves=0,cities=0) for key in catalog.factions}
+    if state:
+        rows=[(city.owner,city) for city in state.cities.values()]
+        for owner,city in rows:
+            if owner not in totals:continue
+            totals[owner]['cities']+=1
+            for field in ('gold','grain','reserves'):totals[owner][field]+=getattr(city,field)
+    else:
+        data=catalog.data
+        for key in data['active_cities']:
+            owner=data['initial_owners'][key]
+            if owner not in totals:continue
+            totals[owner]['cities']+=1
+            values=data.get('initial_city_resources',{}).get(key,data['initial_resources'])
+            for field in ('gold','grain','reserves'):totals[owner][field]+=values[field]
+    return totals
+
+
 class CampaignSession:
     def __init__(self, paths):
         catalogs=[Catalog(path) for path in paths]
@@ -29,6 +48,9 @@ class CampaignSession:
             result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
             result['catalog']['world']=self.game.catalog.data.get('world')
             result['catalog']['scenario_id']=self.game.catalog.data['id']
+            result['catalog']['faction_resources']=faction_resources(self.game.catalog,self.game.state)
+            result['catalog']['sea_routes']=self.game.catalog.data.get('sea_routes',[])
+            result['catalog']['travel_hazards']=self.game.catalog.data.get('travel_hazards')
             for field in ('added_city_ids','regional_roads','city_label_offsets','city_history'):
                 result['catalog'][field]=self.game.catalog.data.get(field,[] if field in ('added_city_ids','regional_roads') else {})
             latest=max(c.data.get('content_generation',0) for c in self.catalogs.values())
@@ -51,6 +73,9 @@ class CampaignSession:
                                            'regional_roads':c.data.get('regional_roads',[]),
                                            'city_label_offsets':c.data.get('city_label_offsets',{}),
                                            'city_history':c.data.get('city_history',{}),
+                                           'faction_resources':faction_resources(c),
+                                           'travel_hazards':c.data.get('travel_hazards'),
+                                           'sea_routes':c.data.get('sea_routes',[]),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]
             return result
 

@@ -149,6 +149,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             self._initialize_expansion(state)
         if self.travelling:
             state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False)
+            if self.catalog.data.get('travel_hazards'):
+                state.extension['travel']['discovered'] = []
         self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
 
@@ -252,7 +254,15 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _depart(self, state, payload):
         source = self._owned_city(state, payload.get('source'), action=True)
         target_key = payload.get('target')
-        if target_key not in state.cities or frozenset((source.id, target_key)) not in self.catalog.links:
+        hazard_rules = self.catalog.data.get('travel_hazards')
+        if hazard_rules:
+            adjacent = target_key in self._neighbors(source.id,state)
+            exploring = (payload.get('route_mode') == 'explore' and
+                         self._exploration_route(source.id,target_key) is not None)
+        else:
+            adjacent = frozenset((source.id,target_key)) in self.catalog.links
+            exploring = False
+        if target_key not in state.cities or not (adjacent or exploring):
             raise GameError('请选择相邻且已开放的城池。')
         target = state.cities[target_key]
         if target.owner == state.player:
@@ -608,7 +618,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             integer(battle['supply_cost'], 1, 10000, 'supply cost')
             if not isinstance(battle['log'], list) or len(battle['log']) > 80 or any(not isinstance(t, str) or len(t) > 500 for t in battle['log']):
                 raise ValueError('battle log')
-            if battle['source'] == battle['target'] or frozenset((battle['source'], battle['target'])) not in self.catalog.links or battle['id'] in state.settled_battles:
+            connected = (battle['target'] in self._neighbors(battle['source'], state)
+                         if self.hazardous_travel else
+                         frozenset((battle['source'], battle['target'])) in self.catalog.links)
+            if battle['source'] == battle['target'] or not connected or battle['id'] in state.settled_battles:
                 raise ValueError('battle location/receipt')
             if (not self.expanded and battle['attacker'] != state.player) or battle['attacker'] not in self.catalog.factions or state.cities[battle['source']].owner != battle['attacker'] or state.cities[battle['target']].owner != battle['defender']:
                 raise ValueError('battle faction')

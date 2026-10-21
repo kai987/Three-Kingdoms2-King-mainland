@@ -91,3 +91,9 @@ jobs:
         run: |
           python game/build_southern_campaigns.py
           git diff --exit-code -- game/data/main-scenarios-v10
+      - name: Rebuild dangerous routes and discoverable navigation offline
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_hazard_campaigns.py
+          git diff --exit-code -- game/data/main-scenarios-v11

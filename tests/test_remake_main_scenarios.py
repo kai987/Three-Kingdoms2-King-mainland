@@ -183,7 +183,7 @@ class MainScenarioTests(unittest.TestCase):
             ids=[donor.roster.officer_ids.pop()];source.roster.officer_ids+=ids
         # Isolate one escape route, without corrupting city/officer ownership.
         neighbors=g._neighbors
-        g._neighbors=lambda key:['shujun'] if key==target.id else neighbors(key)
+        g._neighbors=lambda key,state=None:['shujun'] if key==target.id else neighbors(key,state)
         g._start_expanded_battle(g.state,source,target,ids)
         g.state.battle['outcome']='victory';g.state.phase='result'
         g._expanded_settle(g.state,{'battle_id':g.state.battle['id']})

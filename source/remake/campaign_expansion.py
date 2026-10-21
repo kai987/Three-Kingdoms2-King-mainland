@@ -60,7 +60,16 @@ class ExpandedCampaign:
             state.extension['free_locations'][str(ident)] = city
             self._note(state, f'{person.name}已到登场年代，在{self.catalog.map_cities[city]["name"]}待访。')
 
-    def _neighbors(self, city):
+    def _neighbors(self, city, state=None):
+        if self.catalog.data.get('travel_hazards'):
+            from .route_hazards import route_allowed
+            neighbors=set()
+            routes=self._known_routes(state) if state else self.catalog.data['travel_routes']
+            for route in routes:
+                if city not in (route['from'],route['to']):continue
+                target=route['to'] if city==route['from'] else route['from']
+                if route_allowed(self.catalog.data,route,city,target):neighbors.add(target)
+            return sorted(neighbors)
         return sorted(next(iter(edge - {city})) for edge in self.catalog.links if city in edge)
 
     def _friendly_path(self, state, source, target, owner):
@@ -68,7 +77,7 @@ class ExpandedCampaign:
         while queue:
             path = queue.popleft()
             if path[-1] == target: return path
-            for nxt in self._neighbors(path[-1]):
+            for nxt in self._neighbors(path[-1],state):
                 if nxt not in seen and nxt in state.cities and state.cities[nxt].owner == owner:
                     seen.add(nxt); queue.append(path + [nxt])
         return None
@@ -83,7 +92,7 @@ class ExpandedCampaign:
         return state.officers[ident]
 
     def _free_candidates(self, state, city):
-        near = {city.id} | {k for k in self._neighbors(city.id) if k in state.cities and state.cities[k].owner in {city.owner, 'neutral'}}
+        near = {city.id} | {k for k in self._neighbors(city.id,state) if k in state.cities and state.cities[k].owner in {city.owner, 'neutral'}}
         return [i for i, o in state.officers.items() if o.alive and o.faction_id is None
                 and year_state(self.catalog.definitions[o.person_id],state.year) in {YearState.AVAILABLE, YearState.DEATH_YEAR_REVIEW}
                 and state.extension['free_locations'].get(str(i)) in near]
@@ -115,7 +124,7 @@ class ExpandedCampaign:
         self._note(state,f'{self.catalog.name(actor.runtime_id)}寻访{self.catalog.name(ident)}，招募{"成功" if success else "未获应允"}，花费{fee}金。')
 
     def _persuadable(self,state,city):
-        neighbors=set(self._neighbors(city.id)) & set(state.cities)
+        neighbors=set(self._neighbors(city.id,state)) & set(state.cities)
         return [ident for key in sorted(neighbors) for ident in state.cities[key].roster.officer_ids
                 if state.cities[key].owner not in {city.owner,'neutral'}
                 and state.officers[ident].alive and state.officers[ident].loyalty<100
@@ -378,7 +387,7 @@ class ExpandedCampaign:
             # Defenders escape to the nearest adjacent friendly city with room.
             for ident in list(target.roster.officer_ids):
                 o=state.officers[ident]
-                homes=[state.cities[k] for k in self._neighbors(target.id) if k in state.cities and k!=source.id and state.cities[k].owner==target.owner and len(state.cities[k].roster.officer_ids)<self.catalog.rules.city_officer_capacity]
+                homes=[state.cities[k] for k in self._neighbors(target.id,state) if k in state.cities and k!=source.id and state.cities[k].owner==target.owner and len(state.cities[k].roster.officer_ids)<self.catalog.rules.city_officer_capacity]
                 if homes:
                     home=homes[0];home.roster.officer_ids.append(ident)
                 else:
@@ -450,7 +459,7 @@ class ExpandedCampaign:
                 if amount>0 and city.gold>=4 and city.grain>=8:
                     o.troops+=amount;city.reserves-=amount;city.gold-=4;city.grain-=8
             army=sorted((i for i in ids if state.officers[i].troops>0 and state.officers[i].health>0 and x['officer_actions'].get(str(i))!=state.turn),key=lambda i:(-state.officers[i].troops,i))[:10]
-            targets=[state.cities[k] for k in self._neighbors(key) if k in state.cities and state.cities[k].owner!=city.owner]
+            targets=[state.cities[k] for k in self._neighbors(key,state) if k in state.cities and state.cities[k].owner!=city.owner]
             targets.sort(key=lambda c:(sum(state.officers[i].troops for i in c.roster.officer_ids),c.id))
             strength=sum(state.officers[i].troops for i in army)
             target=next((c for c in targets if strength>=max(150,sum(state.officers[i].troops for i in c.roster.officer_ids)*13//10)),None)
@@ -483,7 +492,7 @@ class ExpandedCampaign:
                 self._reconcile_factions(state)
                 if state.phase=='finished':return
             elif len([i for i in ids if x['officer_actions'].get(str(i))!=state.turn])>1:
-                friends=[state.cities[k] for k in self._neighbors(key) if k in state.cities and state.cities[k].owner==city.owner and len(state.cities[k].roster.officer_ids)<self.catalog.rules.city_officer_capacity]
+                friends=[state.cities[k] for k in self._neighbors(key,state) if k in state.cities and state.cities[k].owner==city.owner and len(state.cities[k].roster.officer_ids)<self.catalog.rules.city_officer_capacity]
                 friends.sort(key=lambda c:(len(c.roster.officer_ids),c.id))
                 if friends and len(friends[0].roster.officer_ids)<len(ids)-1 and city.grain>=5:
                     ident=min((i for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda i:state.officers[i].troops)

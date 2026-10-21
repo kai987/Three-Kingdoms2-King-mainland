@@ -1,0 +1,71 @@
+{
+  "schema": "hazardous-marches-v1",
+  "yinping": {
+    "from": "yinping",
+    "to": "shujun",
+    "time_multiplier": 2,
+    "survival_numerator": 1,
+    "survival_denominator": 3
+  },
+  "ziwu": {
+    "from": "hanzhong",
+    "to": "jingzhao",
+    "rain_months": [
+      7,
+      8,
+      9
+    ],
+    "rain_time_multiplier": 4,
+    "dry_time_multiplier": 2,
+    "rain_loss_percent": 50,
+    "dry_loss_percent": 20
+  },
+  "monsoon": {
+    "southwest_months": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "northeast_months": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "tailwind_speed_multiplier": 4,
+    "headwind_speed_divisor": 4,
+    "storm_loss_percent": [
+      80,
+      90
+    ],
+    "source": "https://www.hko.gov.hk/en/publica/gen_pub/sms.htm",
+    "scope": "Seasonal prevailing direction is a simplified game calendar. Speeds, certainty of storms and casualty rates are explicit user rules, not historical measurements or weather forecasts."
+  },
+  "coastal_cities": [
+    "liaodong",
+    "liaoxi",
+    "bohai",
+    "donghai",
+    "beihai",
+    "lelang",
+    "daifang",
+    "wujun",
+    "kuaiji",
+    "linhai",
+    "nanhai",
+    "gaoliang",
+    "hepu",
+    "jiaozhi",
+    "jiuzhen",
+    "rinan",
+    "zhuya",
+    "yizhou"
+  ],
+  "discovery_policy": "Active coastal board cities only; unknown sea crossings are optional exploration. Reveal a route after a surviving force reaches land, even before a subsequent enemy-city siege. Zero troop survivors/cancelled marches reveal nothing.",
+  "casualty_policy": "Soldiers only; generals are retained. Army survivors use total floor plus largest remainders, not per-general independent rounding. One sea-storm draw per complete voyage; terrain hazards can additionally apply.",
+  "timing_policy": "Departure month fixes forecast and severity roll; quote is read-only. Known-route lengths use geographic waypoints; special land times use plain-road baseline rather than multiply the old mountain time."
+}

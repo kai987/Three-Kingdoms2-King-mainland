@@ -337,7 +337,7 @@ align-content:start
 display:flex;
 align-items:center;
 gap:8px;
-padding:8px 4px;
+padding:9px 4px;
 cursor:pointer;
 font-size:16px
 }
@@ -354,6 +354,29 @@ margin:0 4px
 .faction-choice span{
 margin-left:auto;
 font-size:16px
+}
+.faction-choice .faction-choice-body{
+display:grid;
+gap:4px;
+min-width:0;
+flex:1;
+margin:0
+}
+.faction-choice .faction-choice-heading{
+display:flex;
+gap:8px;
+justify-content:space-between;
+flex-wrap:wrap;
+margin:0
+}
+.faction-choice .faction-choice-heading span{
+margin:0
+}
+.faction-choice .faction-choice-resources{
+font-size:14px;
+line-height:1.45;
+margin:0;
+overflow-wrap:anywhere
 }
 .seed-label{
 display:flex;
@@ -782,5 +805,14 @@ stroke-dasharray:7 3
 .city-information .roster-scroll{max-height:260px;flex:none}
 .coastal-lane{fill:none;stroke:#f8d878;stroke-width:2.4;stroke-dasharray:9 7;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .travel-estimate{border:2px solid #000;padding:10px;font-size:16px;line-height:1.55}
+.route-risks{border-left:4px solid #000;padding:0 0 0 10px;margin:12px 0;font-size:15px;line-height:1.55}
+.route-risks p{margin:6px 0}
+.faction-total{padding:8px;border:2px solid #000;overflow-wrap:anywhere}
+.faction-ledger{border-top:3px double #000;margin-top:12px;padding-top:10px;font-size:15px;min-width:0;max-width:100%}
+.faction-ledger summary{cursor:pointer;font-size:17px}
+.faction-ledger-scroll{overflow:auto;max-height:280px;margin-top:10px;min-width:0;max-width:100%}
+.faction-ledger table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+.faction-ledger th,.faction-ledger td{padding:6px 4px;border-bottom:1px solid #000;text-align:right;white-space:nowrap}
+.faction-ledger th:first-child{text-align:left}
 .marches{border-top:3px double #000;margin-top:20px;padding-top:8px;font-size:15px;overflow-wrap:anywhere}
 .marches h3{font-size:18px;margin:4px 0 12px}.marches p{margin:10px 0}

@@ -6,12 +6,49 @@ const name=id=>view.catalog.names[String(id)]||'武将';
 const faction=id=>id==='neutral'?'无主':view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
 const capacity=()=>view.catalog.rules.city_officer_capacity;
 const marching=()=>new Set((view.game?.extension?.travel?.marches||[]).flatMap(r=>r.officers));
-const routeModeSelect='<label class="field">行军路线<select id="route-mode"><option value="fastest">最快路线（可用海陆联运）</option><option value="land">仅走陆路</option></select></label>';
+const routeModes=()=>[['fastest','最快路线（可用海陆联运）'],['land','仅走陆路'],...(view.catalog.travel_hazards?[['special','险道直达（阴平道／子午谷）'],['sea','已知直达海路'],['explore','探索未知海路（仅沿海城池）']]:[])];
+const routeModeSelect=(mode='fastest')=>`<label class="field">行军路线<select id="route-mode">${routeModes().map(([id,label])=>`<option value="${id}" ${id===mode?'selected':''}>${label}</option>`).join('')}</select></label>`;
+const travelQuote=(source,target,mode='fastest')=>view.catalog.travel_quotes?.[`${source}:${target}:${mode}`];
+const availableRouteModes=(source,target)=>routeModes().filter(([mode])=>travelQuote(source,target,mode));
+function syncRouteModes(source,target,preferred='fastest'){
+ const select=$('#route-mode');if(!select)return 'fastest';
+ const available=availableRouteModes(source,target).map(([mode])=>mode);
+ for(const option of select.options)option.disabled=!available.includes(option.value);
+ select.value=available.includes(preferred)?preferred:available[0]||'fastest';
+ return select.value;
+}
+function factionResources(id,preview=setupPreview){
+ const supplied=(preview?.faction_resources||(!preview&&view.catalog.faction_resources))?.[id];
+ if(supplied)return supplied;
+ if(preview)return null;
+ const cities=Object.values(view.game?.cities||{}).filter(c=>c.owner===id);
+ return cities.reduce((r,c)=>({gold:r.gold+c.gold,grain:r.grain+c.grain,reserves:r.reserves+c.reserves,cities:r.cities+1}),{gold:0,grain:0,reserves:0,cities:0});
+}
+function resourceSummary(id,preview=setupPreview){
+ const r=factionResources(id,preview);
+ return r?`钱 ${r.gold} · 粮 ${r.grain} · 预备兵 ${r.reserves}`:'资源资料待载入';
+}
+function factionLedger(){
+ return `<details class="faction-ledger"><summary>各势力资源</summary><p class="small">按当前所属城池合计，不含武将带兵。</p><div class="faction-ledger-scroll"><table><thead><tr><th>势力</th><th>钱</th><th>粮</th><th>预备兵</th></tr></thead><tbody>${view.catalog.factions.map(f=>{const r=factionResources(f.id,null);return `<tr data-faction-resources="${f.id}"><th>${escapeHtml(f.name)}</th><td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;}).join('')}</tbody></table></div></details>`;
+}
+function routeRisk(quote){
+ const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{
+  const h=r.hazard,lo=h.loss_percent_min,hi=h.loss_percent_max;
+  const percent=value=>Number.isInteger(value)?String(value):value.toFixed(1);
+  const loss=typeof lo==='number'?(lo===hi?`${percent(lo)}%`:`${percent(lo)}—${percent(hi)}%`):null;
+  const detail=h.label||`行军损耗${loss?'：减员'+loss:''}`;
+  return `${escapeHtml(detail)}${typeof h.speed_km_per_day==='number'?` · 航速${h.speed_km_per_day}公里/日`:typeof r.base_days==='number'?` · 平地基准${r.base_days}日，本段${r.days}日`:''}`;
+ });
+ if(view.catalog.travel_hazards&&(quote.routes||[]).some(r=>r.mode==='sea'&&!r.hazard))lines.push('季风过渡期：本次海段不叠加季风暴风雨减员。');
+ if((quote.routes||[]).some(r=>r.exploration))lines.push('未知海路：成功完成航行后才会显示在地图上。');
+ if((quote.routes||[]).some(r=>r.hazard?.kind==='monsoon_storm'))lines.push('暴风雨减员按整次航行结算一次，不按海路分段重复扣减。');
+ return lines.length?`<div class="route-risks" role="note">${[...new Set(lines)].map(line=>`<p>${line}</p>`).join('')}<p>损耗从行军武将的带兵中结算；确认前不抽取事件结果、不扣兵。</p></div>`:'';
+}
 function travelEstimate(source,target,mode='fastest'){
- const q=view.catalog.travel_quotes?.[`${source}:${target}:${mode}`];
+ const q=travelQuote(source,target,mode);
  if(!q)return '<p class="small">没有符合条件的路线。</p>';
  const month=view.game.month-1+q.months,year=view.game.year+Math.floor(month/12);
- return `<p class="travel-estimate">${q.path.map(id=>escapeHtml(cityName(id))).join(' → ')}<br>约${q.distance_km}公里 · 估算${q.days}日 · ${q.months}个月回合<br>预计${year}年${month%12+1}月到达。${q.modes.includes('sea')?'含海路及上岸接驳。':'陆路行军。'}</p>`;
+ return `<p class="travel-estimate">${q.path.map(id=>escapeHtml(cityName(id))).join(' → ')}<br>约${q.distance_km}公里 · 估算${q.days}日 · ${q.months}个月回合<br>预计${year}年${month%12+1}月到达。${q.modes.includes('sea')?'含海路及上岸接驳。':'陆路行军。'}</p>${routeRisk(q)}`;
 }
 function renderMarches(){
  const rows=view.game?.extension?.travel?.marches||[];
@@ -22,6 +59,13 @@ const periodCityName=id=>setupPreview?.city_names[id]||view.catalog.cities.find(
 const cityName=id=>(setupPreview?setupPreview.city_history:view.catalog.city_history)?.[id]?periodCityName(id):view.catalog.map_presentation.city_names[id]?.displayName||periodCityName(id);
 const cityCaption=id=>cityName(id)===periodCityName(id)?cityName(id):`${cityName(id)}（${periodCityName(id)}）`;
 const mapColor=id=>view.catalog.map_presentation.colors[id]||(setupPreview?.factions||view.catalog.factions).find(f=>f.id===id)?.color||view.catalog.map_presentation.colors.neutral;
+function smoothMapPath(points){
+ if(!Array.isArray(points)||points.length<2)return '';
+ let d=`M${points[0].join(' ')}`;
+ for(let i=1;i<points.length-1;i++)d+=`Q${points[i].join(' ')} ${(points[i][0]+points[i+1][0])/2} ${(points[i][1]+points[i+1][1])/2}`;
+ return d+`L${points.at(-1).join(' ')}`;
+}
+const mapAccessKey=points=>[points[0].join(','),points.at(-1).join(',')].sort().join(':');
 const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);}
 function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;}
@@ -61,13 +105,13 @@ function selectFaction(){
   const options=groups.map(([group,label])=>{const rows=scenarios.filter(x=>x.main_scenario.group===group).sort((a,b)=>a.year-b.year||a.month-b.month);return rows.length?`<optgroup label="${label} · ${rows.length}剧本">${rows.map(x=>`<option value="${x.id}" ${x.id===scenario?'selected':''}>${escapeHtml(x.title)}</option>`).join('')}</optgroup>`:'';}).join('');
   const scenarioSource=option.main_scenario?.official_source?`<a href="${escapeHtml(option.main_scenario.official_source)}" target="_blank" rel="noopener noreferrer">查看官方剧本目录</a>`:'<p>补充年代沿用旧版战役配置，并合并本版城池与驻将规则。</p>';
   const content=`<label class="field" for="scenario">选择剧本<select id="scenario">${options}</select></label><p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary><p>${escapeHtml(option.main_scenario.summary)}</p><p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p>${scenarioSource}</details>`:''}
-  ${option.main_scenario?.city_chronology_note?`<p class="small">${escapeHtml(option.main_scenario.city_chronology_note)}</p>`:''}<div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg>${escapeHtml(f.name)}<span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></label>`).join('')}</div>
+  ${option.main_scenario?.city_chronology_note?`<p class="small">${escapeHtml(option.main_scenario.city_chronology_note)}</p>`:''}<div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg><span class="faction-choice-body"><span class="faction-choice-heading"><span>${escapeHtml(f.name)}</span><span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></span><span class="faction-choice-resources" data-faction-resources="${f.id}">${resourceSummary(f.id,option)}</span></span></label>`).join('')}</div>
   <p id="setup-summary" class="small" aria-live="polite"></p><label class="seed-label" for="seed">随机种子<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026" aria-describedby="seed-help"></label><p id="seed-help" class="small">控制招募、战斗等随机判定；相同种子与操作可重现战局。</p>`;
   $('#inspector').classList.add('setup-menu');
   $('#inspector').innerHTML=`<div class="inspector-heading"><h2>主菜单</h2></div>${content}${view.game?'<p class="small">旧存档可继续，进度保持不变。</p>':''}<div class="actions">${view.game?`<button class="primary" id="cancel-setup">${view.game.phase==='finished'?'返回战役结果':'继续当前战役'}</button>`:''}<button class="${view.game?'':'primary'}" id="begin">${view.game?'开始新战役':'开始战役'}</button></div>`;
   const refreshPreview=()=>{
    const chosen=option.factions.find(f=>f.id===setupPreview.faction),count=Object.values(option.initial_owners).filter(owner=>owner===chosen.id).length;
-   $('#setup-summary').textContent=`${chosen.name} · ${count}座城池 · 根据地${cityName(chosen.city)}。地图已预览本剧本归属，开始后才建立新战役。`;
+   $('#setup-summary').textContent=`${chosen.name} · ${count}座城池 · 根据地${cityName(chosen.city)}。${resourceSummary(chosen.id,option)}。地图已预览本剧本归属，开始后才建立新战役。`;
    $('#library').disabled=true;renderMap();
   };
   document.querySelectorAll('input[name=faction]').forEach(input=>input.onchange=()=>{setupPreview.faction=input.value;setupPreview.focus=option.factions.find(f=>f.id===input.value).city;refreshPreview();});
@@ -105,13 +149,27 @@ function renderMap(){
   return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''}" data-city="${c.id}" data-owner="${owner}" aria-label="${escapeHtml(cityCaption(c.id))}，${escapeHtml(ownerName(owner,c.id))}"><title>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owner,c.id))}</title>${outline}${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/></g>`;
  }).join('');
  const extras=preview?.road_additions||view.catalog.road_additions;
+ const hazardous=!!(preview?preview.travel_hazards:view.catalog.travel_hazards);
  const roads=view.catalog.map_presentation.added_land_roads.filter(r=>extras.some(e=>e.includes(r.from)&&e.includes(r.to))).map(r=>{
   const ps=r.new_branch;let d=`M${ps[0].join(' ')}`;
   for(let i=1;i<ps.length-1;i++)d+=`Q${ps[i].join(' ')} ${(ps[i][0]+ps[i+1][0])/2} ${(ps[i][1]+ps[i+1][1])/2}`;
   d+=`L${ps.at(-1).join(' ')}`;
-  return `<g data-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
+  const oneway=hazardous&&r.from==='yinping'&&r.to==='shujun';
+  return `<g data-road="${r.from}-${r.to}"${oneway?' data-oneway="yinping-shujun"':''}><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"${oneway?' marker-end="url(#oneway-road-arrow)"':''}/></g>`;
  }).join('');
- const expansionRoads=preview?.world||!preview&&view.catalog.world?view.catalog.map_presentation.expansion_connections.filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.map((part,index)=>{const d=part.points.map((p,i)=>(i?'L':'M')+p.join(' ')).join(' ');return part.mode==='sea'?`<path class="coastal-lane" d="${d}" data-coastal-route="${r.from}-${r.to}"/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;})).join(''):'';
+ const drawnAccess=new Set();
+ const firstAccess=part=>{if(part.mode==='sea')return true;const key=mapAccessKey(part.points);if(drawnAccess.has(key))return false;drawnAccess.add(key);return true;};
+ const expansionRoads=preview?.world||!preview&&view.catalog.world?view.catalog.map_presentation.expansion_connections.filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.filter(part=>!hazardous||part.mode!=='sea'&&firstAccess(part)).map((part,index)=>{const d=part.points.map((p,i)=>(i?'L':'M')+p.join(' ')).join(' ');return part.mode==='sea'?`<path class="coastal-lane" d="${d}" data-coastal-route="${r.from}-${r.to}"/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;})).join(''):'';
+ const seaRoutes=hazardous?[...(preview?.sea_routes||view.catalog.sea_routes||[]),...(!preview?view.catalog.discovered_routes||[]:[])]:[];
+ const discoveredIds=new Set(!preview?(view.catalog.discovered_routes||[]).map(r=>r.id||[r.from,r.to].sort().join(':')):[]);
+ const seaPairs=new Set();
+ const navigableSeas=seaRoutes.filter(r=>{
+  const key=[r.from,r.to].sort().join(':');if(seaPairs.has(key)||!activeIds.has(r.from)||!activeIds.has(r.to))return false;seaPairs.add(key);return true;
+ }).flatMap(r=>(r.draw||[]).filter(firstAccess).map((part,index)=>{
+  const d=smoothMapPath(part.points);if(!d)return '';
+  const discovered=discoveredIds.has(r.id||[r.from,r.to].sort().join(':'));
+  return part.mode==='sea'?`<path class="coastal-lane${discovered?' discovered-lane':''}" d="${d}" data-coastal-route="${r.from}-${r.to}" data-sea-route="${escapeHtml(r.id||r.from+'-'+r.to)}"${discovered?' data-discovered-route="'+escapeHtml(r.id||r.from+'-'+r.to)+'"':''}/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
+ })).join('');
  const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.map(part=>{
   const ps=part.points;let d=`M${ps[0].join(' ')}`;
   for(let i=1;i<ps.length-1;i++)d+=`Q${ps[i].join(' ')} ${(ps[i][0]+ps[i+1][0])/2} ${(ps[i][1]+ps[i+1][1])/2}`;
@@ -123,7 +181,7 @@ function renderMap(){
   const [x,y]=mapPosition(c),[dx,dy,anchor]=offsets[c.id]||[0,-24,'middle'];return `<text class="map-city-name" x="${x+dx}" y="${y+dy}" text-anchor="${anchor}" data-city-label="${c.id}" aria-hidden="true">${escapeHtml(cityName(c.id))}</text>`;
  }).join('');
  $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</button></div>
- <svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放"><image href="${world.background}" x="${world.x}" y="0" width="${world.width}" height="1024"/>${roads}${expansionRoads}${regionalRoads}${castles}${labels}</svg>
+ <svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放"><defs><marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${world.background}" x="${world.x}" y="0" width="${world.width}" height="1024"/>${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
  <time id="map-date" datetime="${String(date.year).padStart(4,'0')}-${String(date.month).padStart(2,'0')}" aria-label="${date.year}年${date.month}月">${date.year}年<span>${date.month}月</span></time>`;
  const choose=(id,inspect=false)=>{
   if(busy)return;
@@ -177,6 +235,7 @@ function renderCity(){
  const game=view.game,city=game.cities[selectedCity],owned=city.owner===game.player;
  const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id],naming=view.catalog.map_presentation.city_names[city.id];
  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>${escapeHtml(cityName(city.id))}</h2><span class="owner">${faction(city.owner)}</span></div>
+ ${city.owner!=='neutral'?`<p class="small faction-total">${escapeHtml(faction(city.owner))}合计：${resourceSummary(city.owner,null)}</p>`:''}
  ${periodCityName(city.id)!==cityName(city.id)?`<p class="small">本年代地名：${escapeHtml(periodCityName(city.id))}。</p>`:''}
  ${naming?.detail?`<p class="small city-name-detail">${escapeHtml(naming.detail)}</p>`:''}
  <p class="small city-scale">${scale?`${escapeHtml(scale.label)} · ${city.owner==='neutral'?'无主城暂无月收入':`每月金${income.gold} / 粮${income.grain} / 预备兵${income.reserves}`}`:'旧版战役：沿用原有资源规则。'}</p>
@@ -199,14 +258,14 @@ function allocate(city){
  $('#confirm-allocation').onclick=async()=>{const id=Number($('#allocation-officer').value),troops=Number($('#allocation-troops').value);if(await command('allocate',{city:city.id,officer:id,troops}))dialog.close();};
 }
 function departure(city){
- const targets=Object.values(view.game.cities).filter(c=>c.owner!==view.game.player&&view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id)));
- if(!targets.length)return notice('没有相邻的敌方城池。');
+ const targets=Object.values(view.game.cities).filter(c=>c.owner!==view.game.player&&(view.catalog.travel_hazards?availableRouteModes(city.id,c.id).length:view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id))));
+ if(!targets.length)return notice(view.catalog.travel_hazards?'没有可出征的陆路或沿海城池。':'没有相邻的敌方城池。');
  const draft={source:city.id,target:targets[0].id,officers:[],route_mode:'fastest'};
  const pick=()=>{
   openDialog('选择出征名单',`<label class="field" for="departure-target">目标城池<select id="departure-target">${targets.map(c=>`<option value="${c.id}" ${draft.target===c.id?'selected':''}>${escapeHtml(cityName(c.id))} · ${faction(c.owner)}</option>`).join('')}</select></label><p>选择1—10名武将，第一位为主将。</p><div class="officer-picker">${city.roster.officer_ids.map(i=>{const o=view.game.officers[i];return `<label><input type="checkbox" name="depart-officer" value="${i}" ${draft.officers.includes(i)?'checked':''} ${o.troops===0||marching().has(i)||view.game.extension?.officer_actions?.[i]===view.game.turn?'disabled':''}>${escapeHtml(name(i))}　${o.troops}兵</label>`;}).join('')}</div>`, '<button data-cancel>取消出征</button><button id="review-departure" class="primary">下一步</button>');
   $('#review-departure').onclick=()=>{draft.target=$('#departure-target').value;draft.officers=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>Number(x.value));if(!draft.officers.length||draft.officers.length>10)return notice('请选择1到10名有兵力的武将。',true);confirm();};
  };
- const confirm=()=>{const troops=draft.officers.reduce((n,i)=>n+view.game.officers[i].troops,0),cost=Math.max(1,Math.floor(troops/25));openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p><p>${draft.officers.map(i=>escapeHtml(name(i))).join('、')}，共${troops}兵，耗粮${cost}。</p>${view.catalog.travel_rules?routeModeSelect+`<div id="departure-estimate">${travelEstimate(city.id,draft.target,draft.route_mode)}</div>`:''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');if($('#route-mode')){$('#route-mode').value=draft.route_mode;$('#route-mode').onchange=()=>{draft.route_mode=$('#route-mode').value;$('#departure-estimate').innerHTML=travelEstimate(city.id,draft.target,draft.route_mode);};}$('#back-to-pick').onclick=pick;$('#confirm-departure').onclick=async()=>{actor=target=null;if(await command('depart',draft))dialog.close();};};
+ const confirm=()=>{const troops=draft.officers.reduce((n,i)=>n+view.game.officers[i].troops,0),cost=Math.max(1,Math.floor(troops/25));openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p><p>${draft.officers.map(i=>escapeHtml(name(i))).join('、')}，共${troops}兵，耗粮${cost}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+`<div id="departure-estimate"></div>`:''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');const refresh=()=>{draft.route_mode=syncRouteModes(city.id,draft.target,draft.route_mode);$('#departure-estimate').innerHTML=travelEstimate(city.id,draft.target,draft.route_mode);$('#confirm-departure').disabled=!travelQuote(city.id,draft.target,draft.route_mode);};if($('#route-mode')){$('#route-mode').onchange=()=>{draft.route_mode=$('#route-mode').value;refresh();};refresh();}$('#back-to-pick').onclick=pick;$('#confirm-departure').onclick=async()=>{actor=target=null;if(await command('depart',draft))dialog.close();};};
  pick();
 }
 
@@ -220,8 +279,9 @@ function recruitOfficer(city){
 }
 function transferCity(city){
  const destinations=Object.values(view.game.cities).filter(c=>c.id!==city.id&&c.owner===view.game.player);
- openDialog('调动武将',`<p>沿连续的本方道路调动，费用为每人每段道路5粮。消耗出发城行动，目的城仍最多${capacity()}人。</p>${view.catalog.travel_rules?routeModeSelect+'<div id="transfer-estimate"></div>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${c.roster.officer_ids.length}/${capacity()}人</option>`).join('')}</select></label><div class="officer-picker">${city.roster.officer_ids.map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${(marching().has(i)||view.game.extension?.officer_actions?.[i]===view.game.turn)?'disabled':''}>${escapeHtml(name(i))} · ${view.game.officers[i].troops}兵</label>`).join('')}</div>`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
- const updateEstimate=()=>{if($('#transfer-estimate'))$('#transfer-estimate').innerHTML=travelEstimate(city.id,$('#transfer-city').value,$('#route-mode').value);};
+ if(!destinations.length)return notice('没有其他本方城池可接收武将。');
+ openDialog('调动武将',`<p>沿连续的本方路线调动，费用为每人每段道路5粮。消耗出发城行动，目的城仍最多${capacity()}人。</p>${view.catalog.travel_rules?routeModeSelect()+'<div id="transfer-estimate"></div>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${c.roster.officer_ids.length}/${capacity()}人</option>`).join('')}</select></label><div class="officer-picker">${city.roster.officer_ids.map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${(marching().has(i)||view.game.extension?.officer_actions?.[i]===view.game.turn)?'disabled':''}>${escapeHtml(name(i))} · ${view.game.officers[i].troops}兵</label>`).join('')}</div>`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
+ const updateEstimate=()=>{if($('#transfer-estimate')){const mode=syncRouteModes(city.id,$('#transfer-city').value,$('#route-mode').value);$('#transfer-estimate').innerHTML=travelEstimate(city.id,$('#transfer-city').value,mode);$('#confirm-transfer').disabled=!travelQuote(city.id,$('#transfer-city').value,mode);}};
  $('#transfer-city').onchange=updateEstimate;if($('#route-mode'))$('#route-mode').onchange=updateEstimate;updateEstimate();
  $('#confirm-transfer').onclick=async()=>{const ids=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>Number(e.value));if(await command('transfer',{source:city.id,target:$('#transfer-city').value,officers:ids,route_mode:$('#route-mode')?.value||'fastest'}))dialog.close();};
 }
@@ -292,6 +352,7 @@ function render(){
  if(game.phase==='battle'||game.phase==='result')renderBattle();
  else{renderMap();if(game.phase==='city')renderCity();else if(game.phase==='arrivals'){$('#inspector').innerHTML='<h2>行军到达</h2><p>部队已到达预计月份。处理到达后入城或进入战斗；满城、易主和路线中断会重新核对。</p><div class="actions"><button id="process-arrivals" class="primary">处理到达部队</button></div>';$('#process-arrivals').onclick=()=>command('arrivals');}else if(game.phase==='ai'){$('#inspector').innerHTML='<div class="inspector-heading"><h2>电脑回合</h2></div><p>电脑处理人事、调兵和出征。遭到攻击时由本方操作守军；接收战果后继续电脑行动，再推进年月。</p><div class="actions"><button id="run-ai" class="primary">执行电脑行动</button></div>';$('#run-ai').onclick=()=>command('ai',{turn:game.turn});}else{$('#inspector').innerHTML=`<h2>${game.extension?.outcome==='victory'?'天下归一':'战役结束'}</h2><p>本次战役已结算，可保存或重新选择势力。</p><div class="actions"><button id="play-again" class="primary">重新选择势力</button></div>`;$('#play-again').onclick=()=>selectFaction();}}
  if(game.extension?.travel)$('#inspector').insertAdjacentHTML('beforeend',renderMarches());
+ if(game.extension)$('#inspector').insertAdjacentHTML('beforeend',factionLedger());
  $('#journal').innerHTML=game.log.slice(-5).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('');
 }
 $('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每城${capacity()}人；每方出战最多10人，包含主将。</p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。随机种子决定招募、战斗等判定的随机序列；相同种子与操作可重现战局，保存会保留随机序列进度。</p></div>`,'<button data-cancel>返回战役</button>');

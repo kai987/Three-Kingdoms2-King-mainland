@@ -38,7 +38,8 @@ const root=path.resolve(__dirname,'..'),read=f=>JSON.parse(fs.readFileSync(path.
   },{spec,terrain:'data:image/png;base64,'+fs.readFileSync(path.join(root,spec.sourceTerrain)).toString('base64'),ground:'data:image/png;base64,'+fs.readFileSync(path.join(root,spec.ground)).toString('base64')});
   assert.equal(result.sourcePixels,result.destinationPixels);assert.equal(result.outsideChanges,0);assert.equal(result.translatedMismatches,0);
   assert(result.cityPositionsUnchanged&&result.riversRoadsAndCityVectorsUnchanged);
-  const travel=process.argv.includes('--travel');
+  const hazards=process.argv.includes('--hazards');
+  const travel=process.argv.includes('--travel')||hazards;
   if(travel){
    const edited=await p.evaluate(()=>{
     const terrain=document.querySelector('#map canvas').style.backgroundImage;
@@ -53,7 +54,15 @@ const root=path.resolve(__dirname,'..'),read=f=>JSON.parse(fs.readFileSync(path.
    });
    assert(edited.terrainUnchanged);Object.assign(result,edited);
   }
-  await p.screenshot({path:path.join(__dirname,travel?'assets/map-campaign.png':'assets/map-basin.png')});
+  if(hazards){
+   const removedSeaPaths=await p.evaluate(()=>{
+    const paths=[...document.querySelectorAll('svg path[stroke-dasharray]')];
+    for(const path of paths)path.remove();
+    return paths.length;
+   });
+   assert.equal(removedSeaPaths,1);result.removedBakedSeaPaths=removedSeaPaths;
+  }
+  await p.screenshot({path:path.join(__dirname,hazards?'assets/map-navigation.png':travel?'assets/map-campaign.png':'assets/map-basin.png')});
   console.log(JSON.stringify(result));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
