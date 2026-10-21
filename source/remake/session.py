@@ -61,6 +61,28 @@ class CampaignSession:
     def export_save(self):
         with self.lock:return self.game.export_save()
 
+    def preview_city(self, scenario, city):
+        """Read opening data for one city without creating a game or drawing RNG."""
+        with self.lock:
+            if not isinstance(scenario,str) or scenario not in self.catalogs:
+                raise GameError('请选择有效的战役。')
+            c=self.catalogs[scenario];d=c.data
+            if not isinstance(city,str) or city not in d['active_cities']:
+                raise GameError('请选择本剧本开放的城池。')
+            officers=[]
+            for row in d['initial_officers']:
+                if row['city']!=city:continue
+                ident=c.ids[row['person_id']];profile=c.profiles[ident]
+                officers.append(dict(id=ident,name=c.name(ident),martial_strength=profile.martial_strength,
+                                     intellect=profile.intellect,troops=row['troops']))
+            owner=d['initial_owners'][city]
+            return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
+                capacity=c.rules.city_officer_capacity,
+                city=dict(id=city,owner=owner,owner_name=c.factions[owner]['name'] if owner!='neutral' else '无主',
+                    terrain=c.map_cities[city].get('terrain'),officers=officers,
+                    profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),
+                    **d.get('initial_city_resources',{}).get(city,d['initial_resources'])))
+
     def load_save(self, save, revision):
         with self.lock:
             if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)

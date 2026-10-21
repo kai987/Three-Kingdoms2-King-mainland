@@ -1,5 +1,5 @@
 'use strict';
-let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, showLegacy=false, mapPositions=null, setupPreview=null, cityLabels='major';
+let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, showLegacy=false, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
 const $=s=>document.querySelector(s), dialog=$('#dialog');
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=id=>view.catalog.names[String(id)]||'武将';
@@ -28,9 +28,11 @@ async function command(kind,payload={}){
 }
 function openDialog(title,body,actions){
  if(busy)return;
+ const generation=++dialogGeneration;
  dialog.innerHTML=`<h2 id="dialog-title">${escapeHtml(title)}</h2>${body}<div class="dialog-actions">${actions}</div>`;
  if(!dialog.open)dialog.showModal();
  dialog.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>dialog.close());
+ return generation;
 }
 function selectFaction(){
  const current=view.catalog.scenario_id;
@@ -93,11 +95,48 @@ function renderMap(){
  $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id]))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</button></div>
  <svg id="world-map" viewBox="${box}" aria-label="96城地图，${active.length}城开放"><image href="${view.catalog.map_presentation.background}" x="0" y="0" width="1352" height="1024"/>${roads}${castles}${labels}</svg>
  <time id="map-date" datetime="${String(date.year).padStart(4,'0')}-${String(date.month).padStart(2,'0')}" aria-label="${date.year}年${date.month}月">${date.year}年<span>${date.month}月</span></time>`;
- const choose=id=>{if(busy)return;if(preview){preview.focus=id;renderMap();return;}selectedCity=id;if(game.phase==='city')renderCity();renderMap();};
+ const choose=(id,inspect=false)=>{
+  if(busy)return;
+  if(preview)preview.focus=id;
+  else{selectedCity=id;if(game.phase==='city'){$('#inspector').scrollTop=0;renderCity();}}
+  renderMap();
+  if(inspect)$(`[data-city="${id}"]`).focus({preventScroll:true});
+  if(inspect||preview||game.phase!=='city')showCityInformation(id);
+ };
  $('#region').onclick=()=>{mapMode='region';renderMap();};$('#all-map').onclick=()=>{mapMode='all';renderMap();};
  $('#city-jump').onchange=()=>choose($('#city-jump').value);
  $('#map-labels').onclick=()=>{cityLabels={major:'all',all:'none',none:'major'}[cityLabels];renderMap();};
- document.querySelectorAll('[data-city]').forEach(el=>{el.onclick=()=>choose(el.dataset.city);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(el.dataset.city);}};});
+ document.querySelectorAll('[data-city]').forEach(el=>{el.onclick=()=>choose(el.dataset.city,true);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(el.dataset.city,true);}};});
+}
+
+async function showCityInformation(id){
+ const preview=setupPreview,title=cityName(id)+' · 城池资料',period=periodCityName(id),close='<button data-cancel autofocus>关闭资料</button>';
+ const generation=openDialog(title,'<p>正在读取城池资料……</p>',close);
+ if(generation===undefined)return;
+ try{
+  let data;
+  if(preview)data=await request('/api/city-preview?'+new URLSearchParams({scenario:preview.id,city:id}));
+  else{
+   const c=view.game.cities[id],def=view.catalog.cities.find(c=>c.id===id);
+   data={title:view.catalog.title,year:view.game.year,month:view.game.month,capacity:capacity(),city:{...c,
+    owner_name:faction(c.owner),terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],
+    officers:c.roster.officer_ids.map(i=>{const o=view.game.officers[i];return {id:i,name:name(i),martial_strength:o.profile.martial_strength,intellect:o.profile.intellect,troops:o.troops};})}};
+  }
+  if(!dialog.open||generation!==dialogGeneration||preview!==setupPreview)return;
+  const c=data.city,naming=view.catalog.map_presentation.city_names[id],troops=c.officers.reduce((n,o)=>n+o.troops,0);
+  const rows=c.officers.map(o=>`<tr><td>${escapeHtml(o.name)}</td><td>${o.martial_strength}</td><td>${o.intellect}</td><td>${o.troops}</td></tr>`).join('');
+  openDialog(title,`<div class="city-information" data-inspected-city="${id}" data-information-mode="${preview?'preview':'live'}">
+   <p class="small">${preview?'剧本开局预览':'当前战役'} · ${data.year}年${data.month}月</p>
+   <p class="city-information-owner">归属：${escapeHtml(c.owner_name)}</p>
+   ${period!==cityName(id)?`<p class="small">本年代地名：${escapeHtml(period)}</p>`:''}
+   ${naming?.detail?`<p class="small">${escapeHtml(naming.detail)}</p>`:''}
+   <p class="small">${escapeHtml(c.profile?.label||'旧版城市')} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
+   <dl class="resources"><dt>金钱</dt><dd>${c.gold}</dd><dt>粮食</dt><dd>${c.grain}</dd><dt>预备兵</dt><dd>${c.reserves}</dd></dl>
+   ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
+   <p class="city-information-strength">驻城 ${c.officers.length}/${data.capacity}人 · 武将带兵合计 ${troops}</p>
+   <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>武</th><th>知</th><th>兵</th></tr></thead><tbody>${rows||'<tr><td colspan="4">暂无驻军</td></tr>'}</tbody></table></div>
+   </div>`,close);
+ }catch(e){if(dialog.open&&generation===dialogGeneration)openDialog(title,`<p role="alert">${escapeHtml(e.message)}</p>`,close);}
 }
 
 function rosterRows(city){return city.roster.officer_ids.map(id=>{const o=view.game.officers[id];return `<tr title="体${o.health}，德${o.profile.virtue}，忠${o.loyalty}，经验${o.experience}"><td>${escapeHtml(name(id))}</td><td>${o.profile.martial_strength}</td><td>${o.profile.intellect}</td><td>${o.troops}</td></tr>`;}).join('');}

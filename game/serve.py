@@ -11,6 +11,7 @@ import signal
 import sys
 import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'game'
@@ -81,6 +82,14 @@ def main():
                     return self.send(200, game.view())
                 if self.path == '/api/save':
                     return self.send(200, game.export_save())
+                if urlsplit(self.path).path == '/api/city-preview':
+                    try:
+                        query=parse_qs(urlsplit(self.path).query,keep_blank_values=True,max_num_fields=2)
+                    except ValueError:
+                        raise GameError('城池查询参数无效。')
+                    if set(query)!={'scenario','city'} or any(len(v)!=1 for v in query.values()):
+                        raise GameError('城池查询参数无效。')
+                    return self.send(200,game.preview_city(query['scenario'][0],query['city'][0]))
                 if self.path == '/favicon.ico':
                     return self.send(204, b'', 'image/x-icon')
                 if self.path in static:
