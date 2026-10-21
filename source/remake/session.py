@@ -1,7 +1,7 @@
 """Atomic scenario switching. Failed new/load requests retain the current game."""
 from threading import RLock
 from .campaign import Campaign, Catalog, GameError
-from .map_presentation import city_names,presentation
+from .map_presentation import city_names,presentation,faction_colors
 
 
 def faction_resources(catalog, state=None):
@@ -69,6 +69,7 @@ class CampaignSession:
             result['catalog']['scenario_id']=self.game.catalog.data['id']
             result['catalog']['faction_resources']=faction_resources(self.game.catalog,self.game.state)
             result['catalog']['faction_officers']=faction_officer_counts(self.game.catalog,self.game.state)
+            result['catalog']['faction_colors']=faction_colors(self.game.catalog)
             result['catalog']['sea_routes']=self.game.catalog.data.get('sea_routes',[])
             result['catalog']['travel_hazards']=self.game.catalog.data.get('travel_hazards')
             for field in ('added_city_ids','regional_roads','city_label_offsets','city_history'):
@@ -95,6 +96,7 @@ class CampaignSession:
                                            'city_history':c.data.get('city_history',{}),
                                            'faction_resources':faction_resources(c),
                                            'faction_officers':faction_officer_counts(c),
+                                           'faction_colors':faction_colors(c),
                                            'travel_hazards':c.data.get('travel_hazards'),
                                            'sea_routes':c.data.get('sea_routes',[]),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]

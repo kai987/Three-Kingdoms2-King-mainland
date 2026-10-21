@@ -32,7 +32,7 @@ function resourceSummary(id,preview=setupPreview){
  return r?`钱 ${r.gold} · 粮 ${r.grain} · 预备兵 ${r.reserves} · 武将 ${r.officers}人`:'资源资料待载入';
 }
 function factionLedger(){
- return `<details class="faction-ledger"><summary>各势力资源</summary><p class="small">按当前所属城池合计，不含武将带兵。</p><p class="small">武将按当前在籍人数计，含在途；不含在野和已退场人物。</p><div class="faction-ledger-scroll"><table><thead><tr><th>势力</th><th>武将数</th><th>钱</th><th>粮</th><th>预备兵</th></tr></thead><tbody>${view.catalog.factions.map(f=>{const r=factionResources(f.id,null);return `<tr data-faction-resources="${f.id}"><th>${escapeHtml(f.name)}</th><td data-faction-officers="${f.id}">${r.officers}</td><td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;}).join('')}</tbody></table></div></details>`;
+ return `<details class="faction-ledger"><summary>各势力资源</summary><p class="small">按当前所属城池合计，不含武将带兵。</p><p class="small">武将按当前在籍人数计，含在途；不含在野和已退场人物。</p><div class="faction-ledger-scroll"><table><thead><tr><th>势力</th><th>武将数</th><th>钱</th><th>粮</th><th>预备兵</th></tr></thead><tbody>${view.catalog.factions.map(f=>{const r=factionResources(f.id,null);return `<tr data-faction-resources="${f.id}"><th><svg class="faction-swatch ledger-swatch" width="12" height="12" aria-hidden="true"><rect width="12" height="12" fill="${mapColor(f.id)}"/></svg>${escapeHtml(f.name)}</th><td data-faction-officers="${f.id}">${r.officers}</td><td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;}).join('')}</tbody></table></div></details>`;
 }
 function routeRisk(quote){
  const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{
@@ -61,7 +61,7 @@ const mapPosition=c=>(setupPreview?setupPreview.world:view.catalog.world)?c.posi
 const periodCityName=id=>setupPreview?.city_names[id]||view.catalog.cities.find(c=>c.id===id)?.name||id;
 const cityName=id=>(setupPreview?setupPreview.city_history:view.catalog.city_history)?.[id]?periodCityName(id):view.catalog.map_presentation.city_names[id]?.displayName||periodCityName(id);
 const cityCaption=id=>cityName(id)===periodCityName(id)?cityName(id):`${cityName(id)}（${periodCityName(id)}）`;
-const mapColor=id=>view.catalog.map_presentation.colors[id]||(setupPreview?.factions||view.catalog.factions).find(f=>f.id===id)?.color||view.catalog.map_presentation.colors.neutral;
+const mapColor=id=>(setupPreview?setupPreview.faction_colors:view.catalog.faction_colors)?.[id]||view.catalog.map_presentation.colors[id]||(setupPreview?.factions||view.catalog.factions).find(f=>f.id===id)?.color||view.catalog.map_presentation.colors.neutral;
 function smoothMapPath(points){
  if(!Array.isArray(points)||points.length<2)return '';
  let d=`M${points[0].join(' ')}`;
@@ -403,4 +403,4 @@ $('#save').onclick=async()=>{
 };
 async function loadSave(save){if(busy)return;setBusy(true);try{view=await request('/api/load',{save,revision:view.revision});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');}catch(e){notice(e.message,true);}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
 $('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-demo-save');openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>`,'<button data-cancel>取消</button>');$('#load-local').onclick=()=>{try{loadSave(JSON.parse(saved));}catch(e){notice('存档无效，当前进度未改变。',true);}};$('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(JSON.parse(await file.text()));}catch(e){notice('存档无效，当前进度未改变。',true);}};};
-GameI18n.ready.then(()=>Promise.all([request('/api/state'),request('/assets/city-positions.json')])).then(([value,positions])=>{view=value;mapPositions=positions;render();}).catch(e=>notice('游戏未能载入，请确认本地服务正在运行。',true));
+GameI18n.ready.then(()=>Promise.all([request('/api/state'),request('/assets/city-positions.json')])).then(([value,positions])=>{view=value;mapPositions=positions;render();if(view.game)selectFaction();}).catch(e=>notice('游戏未能载入，请确认本地服务正在运行。',true));

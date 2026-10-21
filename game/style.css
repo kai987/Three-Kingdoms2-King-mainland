@@ -833,6 +833,7 @@ stroke-dasharray:7 3
 .faction-ledger table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
 .faction-ledger th,.faction-ledger td{padding:6px 4px;border-bottom:1px solid #000;text-align:right;white-space:nowrap}
 .faction-ledger th:first-child{text-align:left}
+.ledger-swatch{margin-right:6px;vertical-align:-1px}
 .marches{border-top:3px double #000;margin-top:20px;padding-top:8px;font-size:15px;overflow-wrap:anywhere}
 .marches h3{font-size:18px;margin:4px 0 12px}.marches p{margin:10px 0}
 
