@@ -1,12 +1,14 @@
 'use strict';
-let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, showLegacy=false, mapPositions=null;
+let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, showLegacy=false, mapPositions=null, setupPreview=null;
 const $=s=>document.querySelector(s), dialog=$('#dialog');
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=id=>view.catalog.names[String(id)]||'武将';
 const faction=id=>view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
 const capacity=()=>view.catalog.rules.city_officer_capacity;
 const mapPosition=c=>mapPositions?.positions[c.id]||c.position;
-const cityName=id=>view.catalog.cities.find(c=>c.id===id)?.name||id;
+const cityName=id=>setupPreview?.city_names[id]||view.catalog.cities.find(c=>c.id===id)?.name||id;
+const mapColor=id=>view.catalog.map_presentation.colors[id]||view.catalog.map_presentation.colors.neutral;
+const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==c.name).reduce((s,c)=>s.replaceAll(c.administrative_name,c.name),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);}
 function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;}
 async function request(path,body){
@@ -28,43 +30,63 @@ function openDialog(title,body,actions){
  if(!dialog.open)dialog.showModal();
  dialog.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>dialog.close());
 }
-function selectFaction(inDialog=false){
+function selectFaction(){
  const current=view.catalog.scenario_id;
+ if(dialog.open)dialog.close();
  const draw=(scenario)=>{
   const option=view.catalog.scenarios.find(x=>x.id===scenario), expanded=option.cities===96;
   const preferred=option.factions.some(f=>f.id==='shu')?'shu':option.factions[0].id;
+  setupPreview={...option,faction:preferred,focus:option.factions.find(f=>f.id===preferred).city};
   const groups=[['base','原版本篇 · 7剧本'],['pk','威力加强版本篇 · 4剧本'],['legacy','旧版目录 · 存档兼容']];
   const legacy=showLegacy||!option.main_scenario||option.archived;
   const options=groups.map(([group,label])=>{const rows=view.catalog.scenarios.filter(x=>(x.main_scenario&&!x.archived?x.main_scenario.group:'legacy')===group&&(group!=='legacy'||legacy)).sort((a,b)=>a.year-b.year||a.month-b.month);return rows.length?`<optgroup label="${label}">${rows.map(x=>`<option value="${x.id}" ${x.id===scenario?'selected':''}>${escapeHtml(x.title)}${x.archived?'（旧版）':''}</option>`).join('')}</optgroup>`:'';}).join('');
   const content=`<label class="field" for="scenario">选择剧本<select id="scenario">${options}</select></label><label class="legacy-choice"><input id="legacy-choice" type="checkbox" ${legacy?'checked':''}>显示旧版战役</label><p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary><p>${escapeHtml(option.main_scenario.summary)}</p><p>本作96城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p><a href="${escapeHtml(option.main_scenario.official_source)}" target="_blank" rel="noopener noreferrer">查看官方剧本目录</a></details>`:''}
-  <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}>${escapeHtml(f.name)}<span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></label>`).join('')}</div>
-  <label class="seed-label" for="seed">战局编号<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026"></label>`;
-  if(inDialog)openDialog('选择新战役',content,'<button data-cancel>取消</button><button class="primary" id="begin">开始战役</button>');
-  else $('#inspector').innerHTML=`<div class="inspector-heading"><h2>选择势力</h2></div>${content}<div class="actions"><button class="primary" id="begin">开始战役</button></div>`;
+  <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg>${escapeHtml(f.name)}<span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></label>`).join('')}</div>
+  <p id="setup-summary" class="small" aria-live="polite"></p><label class="seed-label" for="seed">战局编号<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026"></label>`;
+  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>选择势力</h2></div>${content}<div class="actions"><button class="primary" id="begin">开始战役</button>${view.game?'<button id="cancel-setup">返回当前战役</button>':''}</div>`;
+  const refreshPreview=()=>{
+   const chosen=option.factions.find(f=>f.id===setupPreview.faction),count=Object.values(option.initial_owners).filter(owner=>owner===chosen.id).length;
+   $('#setup-summary').textContent=`${chosen.name} · ${count}座城池 · 根据地${cityName(chosen.city)}。地图已预览本剧本归属，开始后才建立新战役。`;
+   $('#library').disabled=true;renderMap();
+  };
+  document.querySelectorAll('input[name=faction]').forEach(input=>input.onchange=()=>{setupPreview.faction=input.value;setupPreview.focus=option.factions.find(f=>f.id===input.value).city;refreshPreview();});
+  if($('#cancel-setup'))$('#cancel-setup').onclick=()=>{setupPreview=null;render();};
+  refreshPreview();
   $('#scenario').onchange=()=>draw($('#scenario').value);
   $('#legacy-choice').onchange=()=>{showLegacy=$('#legacy-choice').checked;draw(!showLegacy&&(!option.main_scenario||option.archived)?view.catalog.scenarios.find(x=>x.main_scenario&&!x.archived)?.id:scenario);};
   $('#begin').onclick=async()=>{
    const f=document.querySelector('input[name=faction]:checked')?.value,seed=Number($('#seed').value);
    if(!Number.isInteger(seed)||seed<1||seed>4294967295)return notice('战局编号请填写1到4294967295之间的整数。',true);
+   const pending=setupPreview;setupPreview=null;
    if(await command('new',{faction:f,seed,scenario})){
     selectedCity=view.catalog.factions.find(x=>x.id===f).city;actor=target=null;mapMode=expanded?'all':'region';dialog.close();render();
-   }
+   }else{setupPreview=pending;renderMap();}
   };
  };
  draw(current);
 }
 function renderMap(){
- const game=view.game,active=view.catalog.cities.filter(c=>view.catalog.active_cities.includes(c.id));
- const selected=view.catalog.cities.find(c=>c.id===selectedCity),center=selected?mapPosition(selected):[760,440];
+ const game=view.game,preview=setupPreview,owners=preview?.initial_owners||Object.fromEntries(Object.values(game?.cities||{}).map(c=>[c.id,c.owner]));
+ const active=view.catalog.cities.filter(c=>(preview?.active_cities||view.catalog.active_cities).includes(c.id));
+ const factions=preview?.factions||view.catalog.factions,ownerName=id=>factions.find(f=>f.id===id)?.name||'守备军';
+ const focused=preview?.focus||selectedCity,selected=view.catalog.cities.find(c=>c.id===focused),center=selected?mapPosition(selected):[760,440];
  const box=mapMode==='region'?`${Math.max(0,Math.min(922,center[0]-215))} ${Math.max(0,Math.min(674,center[1]-175))} 430 350`:'0 0 1352 1024';
- $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button>${game?`<label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===selectedCity?'selected':''}>${escapeHtml(c.name)} · ${faction(game.cities[c.id].owner)}</option>`).join('')}</select></label>`:''}</div>
- <svg id="world-map" viewBox="${box}" aria-label="96城地图，${active.length}城开放"><image href="/assets/map.png" x="0" y="0" width="1352" height="1024"/>
- ${game?active.map(c=>`<g role="button" tabindex="0" class="city-hit faction-${game.cities[c.id].owner} ${selectedCity===c.id?'selected':''}" data-city="${c.id}" aria-label="${escapeHtml(c.name)}，${faction(game.cities[c.id].owner)}"><title>${escapeHtml(c.name)} · ${faction(game.cities[c.id].owner)}</title><rect class="city-outline" x="${mapPosition(c)[0]-21}" y="${mapPosition(c)[1]-21}" width="42" height="42"/><rect class="owner-marker" x="${mapPosition(c)[0]-8}" y="${mapPosition(c)[1]+18}" width="16" height="3"/></g>`).join(''):''}</svg>`;
- const choose=id=>{if(busy)return;selectedCity=id;if(view.game.phase==='city')renderCity();renderMap();};
+ const date=preview||game||view.catalog.scenarios.find(s=>s.id===view.catalog.scenario_id);
+ if(preview)$('#date').textContent=`${date.year}年${date.month}月 · 选择势力`;
+ const castles=active.map(c=>{
+  const [x,y]=mapPosition(c),owner=owners[c.id]||'neutral';
+  const colored=view.catalog.map_presentation.castle_fill_pixels.map(([dx,dy])=>`<rect class="castle-fill" x="${x+dx}" y="${y+dy}" width="4" height="4" fill="${mapColor(owner)}"/>`).join('');
+  return `<g role="button" tabindex="0" class="city-hit ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''}" data-city="${c.id}" data-owner="${owner}" aria-label="${escapeHtml(cityName(c.id))}，${escapeHtml(ownerName(owner))}"><title>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owner))}</title>${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/><rect class="owner-marker" x="${x-8}" y="${y+18}" width="16" height="3" fill="${mapColor(owner)}"/></g>`;
+ }).join('');
+ $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityName(c.id))} · ${escapeHtml(ownerName(owners[c.id]))}</option>`).join('')}</select></label></div>
+ <svg id="world-map" viewBox="${box}" aria-label="96城地图，${active.length}城开放"><image href="${view.catalog.map_presentation.background}" x="0" y="0" width="1352" height="1024"/>${castles}</svg>
+ <time id="map-date" datetime="${String(date.year).padStart(4,'0')}-${String(date.month).padStart(2,'0')}" aria-label="${date.year}年${date.month}月">${date.year}年<span>${date.month}月</span></time>`;
+ const choose=id=>{if(busy)return;if(preview){preview.focus=id;renderMap();return;}selectedCity=id;if(game.phase==='city')renderCity();renderMap();};
  $('#region').onclick=()=>{mapMode='region';renderMap();};$('#all-map').onclick=()=>{mapMode='all';renderMap();};
- if($('#city-jump'))$('#city-jump').onchange=()=>choose($('#city-jump').value);
+ $('#city-jump').onchange=()=>choose($('#city-jump').value);
  document.querySelectorAll('[data-city]').forEach(el=>{el.onclick=()=>choose(el.dataset.city);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(el.dataset.city);}};});
 }
+
 function rosterRows(city){return city.roster.officer_ids.map(id=>{const o=view.game.officers[id];return `<tr title="体${o.health}，德${o.profile.virtue}，忠${o.loyalty}，经验${o.experience}"><td>${escapeHtml(name(id))}</td><td>${o.profile.martial_strength}</td><td>${o.profile.intellect}</td><td>${o.troops}</td></tr>`;}).join('');}
 function renderCity(){
  const game=view.game,city=game.cities[selectedCity],owned=city.owner===game.player;
@@ -173,16 +195,16 @@ function render(){
  if(!game){renderMap();selectFaction();return;}
  if(!selectedCity||!game.cities[selectedCity])selectedCity=Object.values(game.cities).find(c=>c.owner===game.player)?.id||view.catalog.active_cities[0];
  if(game.phase==='battle'||game.phase==='result')renderBattle();
- else{renderMap();if(game.phase==='city')renderCity();else if(game.phase==='ai'){$('#inspector').innerHTML='<div class="inspector-heading"><h2>电脑回合</h2></div><p>电脑处理人事、调兵和出征。遭到攻击时由本方操作守军；接收战果后继续电脑行动，再推进年月。</p><div class="actions"><button id="run-ai" class="primary">执行电脑行动</button></div>';$('#run-ai').onclick=()=>command('ai',{turn:game.turn});}else{$('#inspector').innerHTML=`<h2>${game.extension?.outcome==='victory'?'天下归一':'战役结束'}</h2><p>本次战役已结算，可保存或重新选择势力。</p><div class="actions"><button id="play-again" class="primary">重新选择势力</button></div>`;$('#play-again').onclick=()=>selectFaction(true);}}
- $('#journal').innerHTML=game.log.slice(-5).map(t=>`<li>${escapeHtml(t)}</li>`).join('');
+ else{renderMap();if(game.phase==='city')renderCity();else if(game.phase==='ai'){$('#inspector').innerHTML='<div class="inspector-heading"><h2>电脑回合</h2></div><p>电脑处理人事、调兵和出征。遭到攻击时由本方操作守军；接收战果后继续电脑行动，再推进年月。</p><div class="actions"><button id="run-ai" class="primary">执行电脑行动</button></div>';$('#run-ai').onclick=()=>command('ai',{turn:game.turn});}else{$('#inspector').innerHTML=`<h2>${game.extension?.outcome==='victory'?'天下归一':'战役结束'}</h2><p>本次战役已结算，可保存或重新选择势力。</p><div class="actions"><button id="play-again" class="primary">重新选择势力</button></div>`;$('#play-again').onclick=()=>selectFaction();}}
+ $('#journal').innerHTML=game.log.slice(-5).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('');
 }
 $('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每城${capacity()}人；每方出战最多10人，包含主将。</p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。战局编号决定随机序列，保存会保留其进度。</p></div>`,'<button data-cancel>返回战役</button>');
 $('#library').onclick=showLibrary;
-$('#restart').onclick=()=>selectFaction(true);
+$('#restart').onclick=()=>selectFaction();
 $('#save').onclick=async()=>{
  if(busy)return;
  try{const save=await request('/api/save');localStorage.setItem('three-kingdoms-demo-save',JSON.stringify(save));const blob=new Blob([JSON.stringify(save,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=view.catalog.title+'存档.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。');}catch(e){notice(e.message,true);}
 };
-async function loadSave(save){if(busy)return;setBusy(true);try{view=await request('/api/load',{save,revision:view.revision});selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');}catch(e){notice(e.message,true);}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
+async function loadSave(save){if(busy)return;setBusy(true);try{view=await request('/api/load',{save,revision:view.revision});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');}catch(e){notice(e.message,true);}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
 $('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-demo-save');openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>`,'<button data-cancel>取消</button>');$('#load-local').onclick=()=>{try{loadSave(JSON.parse(saved));}catch(e){notice('存档无效，当前进度未改变。',true);}};$('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(JSON.parse(await file.text()));}catch(e){notice('存档无效，当前进度未改变。',true);}};};
 Promise.all([request('/api/state'),request('/assets/city-positions.json')]).then(([value,positions])=>{view=value;mapPositions=positions;render();}).catch(e=>notice('游戏未能载入，请确认本地服务正在运行。',true));

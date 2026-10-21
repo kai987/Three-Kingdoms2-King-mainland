@@ -10,6 +10,10 @@ python3 -I -S -B game/serve.py --port 8878
 
 新版采用原游戏的浅粉信息底、黑色方框菜单、像素字体和鲜明地图色彩；96城地图、32×32原版城标及7条城际海路保持既有文件原样。中文字体使用本地GNU Unifont，出处与许可证在`assets/unifont-source.json`及相邻许可文件中。浏览器中的布局为扩展地图和鼠标/触屏调整，并非256×240原画面的逐像素复制；原版战斗动画与音效尚未重现。
 
+城池显示接入州治城名：成都、长安、洛阳、建业、邺、昌邑、晋阳、临淄、姑臧、寿春、江陵、番禺、蓟和信都。原郡名与稳定城池ID保留在目录中，坐标不变；这些名称沿用既定地图节点，不模拟每次州治迁移。建业在212年前显示秣陵，依据[南京市地方志资料](https://dfz.nanjing.gov.cn/gzdt/202403/t20240315_4186987.html)。
+
+选择剧本时地图实时预览该年代开局归属；选择势力时显示其城池颜色、根据地和城池数量。城标沿用原版32×32像素轮廓，仅着色内部。重开选择使用地图旁的操作栏，可返回原战役；确认开始前不改变当前进度。右下角道路示意已移除，替换为原版单行风格的年月框，随选择和游戏月份更新。
+
 新开本篇战役**每城最多30人，每方出战最多10人，包含主将**。招募、劝降、调动、AI和战后撤离共用目录容量。已发布的28份目录按原版本规则读取旧存档（其中17份每城20人、v4的11份每城30人）；选择页勾选“显示旧版战役”可重开旧版本。
 
 ## 剧本
@@ -51,6 +55,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 game/build_mainland.py
 PYTHONDONTWRITEBYTECODE=1 python3 game/build_eras.py
 PYTHONDONTWRITEBYTECODE=1 python3 game/build_campaigns.py
 PYTHONDONTWRITEBYTECODE=1 python3 game/build_map_anchors.py
+PYTHONDONTWRITEBYTECODE=1 python3 game/build_map_presentation.py
 PYTHONDONTWRITEBYTECODE=1 python3 game/build_main_scenarios.py
 PYTHONDONTWRITEBYTECODE=1 python3 game/build_virtue_completion.py
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_remake_*.py' -v

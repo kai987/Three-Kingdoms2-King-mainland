@@ -55,3 +55,9 @@ jobs:
         run: |
           python game/build_virtue_completion.py
           git diff --exit-code -- game/data/main-scenarios-v5 expansion/officers/data/virtue-completion-audit.json
+      - name: Rebuild presentation-only city names and native castle colors
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_map_presentation.py
+          git diff --exit-code -- game/assets/map-presentation.json

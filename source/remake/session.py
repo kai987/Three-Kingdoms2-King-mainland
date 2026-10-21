@@ -1,6 +1,7 @@
 """Atomic scenario switching. Failed new/load requests retain the current game."""
 from threading import RLock
 from .campaign import Campaign, Catalog, GameError
+from .map_presentation import city_names,presentation
 
 
 class CampaignSession:
@@ -19,6 +20,10 @@ class CampaignSession:
     def view(self):
         with self.lock:
             result=self.game.view()
+            names=city_names(self.game.catalog,self.game.state.year if self.game.state else self.game.catalog.data['start_year'])
+            result['catalog']['cities']=[dict(c,name=names[c['id']],administrative_name=c['name'])
+                                         for c in result['catalog']['cities']]
+            result['catalog']['map_presentation']=presentation()
             result['catalog']['scenario_id']=self.game.catalog.data['id']
             latest=max(c.data.get('content_generation',0) for c in self.catalogs.values())
             result['catalog']['scenarios']=[{'id':c.data['id'],'title':c.data['title'],
@@ -30,6 +35,9 @@ class CampaignSession:
                                            'free':len(c.data.get('initial_free_officers',[])),
                                            'main_scenario':c.data.get('main_scenario'),
                                            'archived':c.data.get('content_generation',0)<latest,
+                                           'initial_owners':dict(c.data['initial_owners']),
+                                           'active_cities':list(c.data['active_cities']),
+                                           'city_names':city_names(c,c.data['start_year']),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]
             return result
 

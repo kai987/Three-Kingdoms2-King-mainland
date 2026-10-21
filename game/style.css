@@ -177,7 +177,7 @@ background:#000
 cursor:pointer;
 outline:none
 }
-.city-hit rect{
+.city-hit .city-outline{
 fill:transparent;
 stroke:var(--neutral);
 stroke-width:2;
@@ -747,63 +747,17 @@ padding:4px 8px
 
 }
 
-/* Keep the original castle silhouettes visible;
- only the cursor has a frame. */
-.city-hit{
---city-color:#747474
-}
-.city-hit.faction-wei{
---city-color:#fcfcfc
-}
-.city-hit.faction-shu{
---city-color:#f8b800
-}
-.city-hit.faction-wu{
---city-color:#f85898
-}
-.city-hit.faction-yuan_shao,.city-hit.faction-han_fu{
---city-color:#a4e4fc
-}
-.city-hit.faction-liu_biao,.city-hit.faction-liu_dai{
---city-color:#b8b8f8
-}
-.city-hit.faction-liu_zhang,.city-hit.faction-liu_yan{
---city-color:#00e8d8
-}
-.city-hit.faction-ma_teng,.city-hit.faction-yuan_shu{
---city-color:#fca044
-}
-.city-hit.faction-gongsun,.city-hit.faction-gongsun_zan,.city-hit.faction-liu_yu{
---city-color:#b8f818
-}
-.city-hit.faction-dong_zhuo,.city-hit.faction-li_jue{
---city-color:#f83800
-}
-.city-hit.faction-sun_jian{
---city-color:#f85898
-}
-.city-hit.faction-lubu,.city-hit.faction-zhang_chao{
---city-color:#f878f8
-}
-.city-hit.faction-han{
---city-color:#fcfcfc
-}
-.city-hit.faction-yellow_turban{
---city-color:#f8b800
-}
-.city-hit.faction-shi_xie,.city-hit.faction-zhang_yang{
---city-color:#f8d878
-}
-.city-hit.faction-kong_rong,.city-hit.faction-tao_qian,.city-hit.faction-liu_you,.city-hit.faction-wang_lang,.city-hit.faction-zhang_lu{
---city-color:#58f898
-}
+/* Recolor only the native castle interior; keep its32px silhouette. */
+.city-hit .castle-fill{stroke:none;shape-rendering:crispEdges}
+.faction-swatch{flex:none;border:1px solid #000;image-rendering:pixelated}
+#map-date{position:absolute;right:14px;bottom:14px;z-index:2;display:flex;gap:20px;padding:3px 8px;border:4px double #000;background:var(--paper);color:#000;font:20px/1.2 var(--display);white-space:nowrap;box-shadow:0 0 0 2px var(--paper);pointer-events:none}
+@media(max-width:600px){#map-date{right:8px;bottom:8px;gap:14px;font-size:16px}}
 
 .city-hit .city-outline{
 stroke:none;
 fill:transparent
 }
 .city-hit .owner-marker{
-fill:var(--city-color);
 stroke:#000;
 stroke-width:1
 }

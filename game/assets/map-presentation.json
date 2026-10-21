@@ -1,0 +1,198 @@
+{
+  "schema": "map-presentation-v1",
+  "city_names": {
+    "shujun": {
+      "displayName": "成都",
+      "state": "益州",
+      "polity": "蜀汉",
+      "role": "益州治所、蜀汉国都"
+    },
+    "jingzhao": {
+      "displayName": "长安",
+      "state": "雍州",
+      "polity": "曹魏",
+      "role": "雍州治所"
+    },
+    "henan": {
+      "displayName": "洛阳",
+      "state": "司隶",
+      "polity": "曹魏",
+      "role": "司隶治所、曹魏国都；沿用通行写法洛阳，古籍亦作雒阳"
+    },
+    "danyang": {
+      "displayName": "建业",
+      "state": "扬州",
+      "polity": "孙吴",
+      "role": "孙吴扬州治所、229年以后国都",
+      "source": "https://zh.wikisource.org/zh-hant/三國志/卷47",
+      "before212": "秣陵",
+      "name_source": "https://dfz.nanjing.gov.cn/gzdt/202403/t20240315_4186987.html"
+    },
+    "taiyuan": {
+      "displayName": "晋阳",
+      "state": "并州",
+      "polity": "曹魏",
+      "role": "并州治所"
+    },
+    "qi": {
+      "displayName": "临淄",
+      "state": "青州",
+      "polity": "曹魏",
+      "role": "青州治所"
+    },
+    "wuwei": {
+      "displayName": "姑臧",
+      "state": "凉州",
+      "polity": "曹魏",
+      "role": "凉州治所"
+    },
+    "jiujiang": {
+      "displayName": "寿春",
+      "state": "扬州",
+      "polity": "曹魏",
+      "role": "曹魏扬州治所；233年迁合肥新城的记载保留为后续剧本年代分支",
+      "source": "https://www.huainan.gov.cn/zjhn/hngk/"
+    },
+    "nanjun": {
+      "displayName": "江陵",
+      "state": "荆州",
+      "polity": "孙吴",
+      "role": "孙吴荆州治所"
+    },
+    "nanhai": {
+      "displayName": "番禺",
+      "state": "交州",
+      "polity": "孙吴",
+      "role": "交州治所；约230年交广合治，保留南海郡行政名称",
+      "source": "https://www.yuexiu.gov.cn/zjyx/yxgk/jzyg/"
+    },
+    "yan": {
+      "displayName": "蓟",
+      "state": "幽州",
+      "polity": "曹魏",
+      "role": "幽州治所；行政名称为燕郡",
+      "source": "https://zh.wikipedia.org/wiki/曹魏行政區劃"
+    },
+    "anping": {
+      "displayName": "信都",
+      "state": "冀州",
+      "polity": "曹魏",
+      "role": "冀州治所；行政名称为安平郡",
+      "source": "https://zh.wikipedia.org/wiki/曹魏行政區劃"
+    },
+    "wei": {
+      "displayName": "邺",
+      "state": "冀州",
+      "role": "汉末冀州治所、曹操魏王都；保留魏郡节点",
+      "source": "https://whly.hebei.gov.cn/c/2023-07-26/573174.html"
+    },
+    "shanyang": {
+      "displayName": "昌邑",
+      "state": "兖州",
+      "role": "汉末兖州治所；只更改显示城名，不模拟此后的州治迁移",
+      "source": "https://jnmz.jining.gov.cn/art/2019/9/10/art_9455_2033181.html"
+    }
+  },
+  "colors": {
+    "wei": "#fcfcfc",
+    "shu": "#f8b800",
+    "wu": "#f85898",
+    "han": "#fcfcfc",
+    "yellow_turban": "#f8b800",
+    "yuan_shao": "#a4e4fc",
+    "han_fu": "#3cbcfc",
+    "liu_biao": "#b8b8f8",
+    "liu_dai": "#f878f8",
+    "liu_zhang": "#00e8d8",
+    "liu_yan": "#00e8d8",
+    "ma_teng": "#fca044",
+    "yuan_shu": "#f8d878",
+    "gongsun": "#b8f818",
+    "gongsun_zan": "#b8f818",
+    "liu_yu": "#58d854",
+    "dong_zhuo": "#f83800",
+    "li_jue": "#f83800",
+    "sun_jian": "#f85898",
+    "lubu": "#f87858",
+    "zhang_chao": "#fc7460",
+    "shi_xie": "#94b0fc",
+    "zhang_yang": "#d8b8f8",
+    "kong_rong": "#58f898",
+    "tao_qian": "#fcbcb0",
+    "liu_you": "#f8d8f8",
+    "wang_lang": "#f8b8f8",
+    "zhang_lu": "#c8c8c8",
+    "neutral": "#9c9c9c"
+  },
+  "castle_fill_pixels": [
+    [
+      -4,
+      -4
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      -12,
+      4
+    ],
+    [
+      -8,
+      4
+    ],
+    [
+      -4,
+      4
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      4,
+      4
+    ],
+    [
+      8,
+      4
+    ],
+    [
+      -12,
+      8
+    ],
+    [
+      -8,
+      8
+    ],
+    [
+      -4,
+      8
+    ],
+    [
+      0,
+      8
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      8,
+      8
+    ]
+  ],
+  "name_policy": "Use the approved board state-seat city labels; retain commandery IDs and original catalog names. These labels do not simulate every relocation of a provincial government.",
+  "date_policy": "Match the original single-line year/month frame; preview chapter dates before starting.",
+  "background": "/assets/map-clean.png",
+  "background_sha256": "bbe033c944ba1547ca12c7d0cbd50d930c8a49befce5fbcc767cf5afbfc77c7e",
+  "source_html_sha256": "bf3684b48772332a1dd8084cb0f33c61cbe034e5d4642b13ae648682aa6233d1"
+}

@@ -52,6 +52,7 @@ def main():
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/style.css': ('style.css', 'text/css; charset=utf-8'),
               '/assets/map.png': ('assets/map.png', 'image/png'),
+              '/assets/map-clean.png': ('assets/map-clean.png', 'image/png'),
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
 
