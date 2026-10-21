@@ -34,6 +34,17 @@ class ExpandedCampaign:
                            'leaders': dict(self.catalog.data['faction_rulers']),
                            'ended_factions': [], 'ai_queue': [], 'ai_cursor': 0,
                            'ai_attacks': 0, 'ai_reports': [], 'outcome': None}
+        # A dated source snapshot can resolve the otherwise ambiguous death year
+        # at scenario start. Later entry still uses the normal annual rules.
+        for row in self.catalog.data.get('initial_free_officers', []):
+            pid = row['person_id']; ident = self.catalog.ids[pid]
+            if ident in state.officers or row['city'] not in state.cities:
+                raise ValueError('duplicate or unlocated initial free officer')
+            state.officers[ident] = initialize_officer(
+                self.catalog.definitions[pid], ident, self.catalog.profiles[ident],
+                year=state.year, rules=self.catalog.rules,
+                resolve_death_year=row.get('resolve_death_year', False))
+            state.extension['free_locations'][str(ident)] = row['city']
         self._spawn_eligible(state)
 
     def _spawn_eligible(self, state):
@@ -481,7 +492,11 @@ class ExpandedCampaign:
                             'year_state':year_state(person,state.year if state else self.catalog.data['start_year']).value,
                             'faction':officer.faction_id if officer else None,'alive':officer.alive if officer else None,
                             'location':state.extension['free_locations'].get(str(ident)) if state else self.catalog.data['appearance_locations'].get(person.person_id),
-                            'martial':profile.martial_strength,'intellect':profile.intellect,'virtue':profile.virtue})
+                            'martial':profile.martial_strength,'intellect':profile.intellect,'virtue':profile.virtue,
+                            'health_max':profile.health_max,'affinity':profile.terrain_affinity,
+                            'aliases':row.get('aliases',[]),'configuration':row.get('configuration',{}),
+                            'virtue_design':row.get('virtue_design'),
+                            'era_assignment':self.catalog.data.get('era_assignments',{}).get(person.person_id)})
         return {'coverage':self.catalog.data['coverage'],'library':library,
                 'tactics':[{'id':i,'name':t[0],'cost':t[1],'description':t[3]} for i,t in enumerate(TACTICS)],
                 'persuadable':{c.id:self._persuadable(state,c) for c in state.cities.values() if c.owner==state.player} if state else {},

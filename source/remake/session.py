@@ -22,6 +22,7 @@ class CampaignSession:
             result['catalog']['scenario_id']=self.game.catalog.data['id']
             result['catalog']['scenarios']=[{'id':c.data['id'],'title':c.data['title'],
                                            'cities':len(c.data['active_cities']),
+                                           'year':c.data['start_year'],'month':c.data['start_month'],
                                            'configured':c.data.get('coverage',{}).get('configured_profiles',8),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]
             return result

@@ -1,0 +1,116 @@
+{
+  "schema": "era-postings-v1",
+  "scope": "Documented career regions mapped onto fixed96-city board; membership is still selected by dated source snapshots; never overrides hostile city ownership.",
+  "postings": [
+    {
+      "person_id": "san14-candidate-0114",
+      "name": "夏侯渊",
+      "start_year": 217,
+      "end_year": 217,
+      "city": "hanzhong",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷09",
+      "note": "夏侯渊督汉中军的战区安排"
+    },
+    {
+      "person_id": "san14-candidate-0618",
+      "name": "张郃",
+      "start_year": 217,
+      "end_year": 217,
+      "city": "hanzhong",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷17",
+      "note": "张郃汉中、巴西战事的汉中战区安排"
+    },
+    {
+      "person_id": "san14-candidate-0111",
+      "name": "郭淮",
+      "start_year": 217,
+      "end_year": 217,
+      "city": "hanzhong",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷26",
+      "note": "夏侯渊司马、汉中军中职务的区域安排"
+    },
+    {
+      "person_id": "san14-candidate-0147",
+      "name": "关羽",
+      "start_year": 217,
+      "end_year": 217,
+      "city": "nanjun",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷36",
+      "note": "留镇荆州、江陵守备的区域安排"
+    },
+    {
+      "person_id": "san14-candidate-0656",
+      "name": "张飞",
+      "start_year": 217,
+      "end_year": 217,
+      "city": "baxi",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷36",
+      "note": "领巴西太守、宕渠战事的区域安排"
+    },
+    {
+      "person_id": "san14-candidate-0904",
+      "name": "李严",
+      "start_year": 217,
+      "end_year": 217,
+      "city": "qianwei",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷40",
+      "note": "受署犍为太守的区域安排"
+    },
+    {
+      "person_id": "san14-candidate-0189",
+      "name": "魏延",
+      "start_year": 221,
+      "end_year": 249,
+      "city": "hanzhong",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷40",
+      "note": "受任镇汉中及后续北伐的战区安排"
+    },
+    {
+      "person_id": "san14-candidate-0814",
+      "name": "文聘",
+      "start_year": 217,
+      "end_year": 249,
+      "city": "jiangxia",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷18",
+      "note": "守江夏北部的区域提示；若地图江夏为吴，只能留在魏方相邻区域，不能篡改势力"
+    },
+    {
+      "person_id": "san14-candidate-0631",
+      "name": "张昭",
+      "start_year": 200,
+      "end_year": 227,
+      "city": "danyang",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷52",
+      "note": "吴中枢文务的宏观驻城配置"
+    },
+    {
+      "person_id": "san14-candidate-0562",
+      "name": "孙韶",
+      "start_year": 221,
+      "end_year": 249,
+      "city": "danyang",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷51",
+      "note": "镇京口的丹阳郡节点映射"
+    },
+    {
+      "person_id": "san14-candidate-0203",
+      "name": "姜维",
+      "start_year": 249,
+      "end_year": 249,
+      "city": "hanzhong",
+      "basis": "curated_career_region_not_exact_camp",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷44",
+      "note": "北伐汉中战区配置，不是精确营寨考证"
+    }
+  ]
+}

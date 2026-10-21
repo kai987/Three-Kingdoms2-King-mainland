@@ -6980,6 +6980,8 @@ docs/publication-inventory.json
 docs/remake-campaign-rules.md
 docs/remake-implementation-plan.md
 docs/remake-module-audit.md
+docs/remake-officer-eras-validation.json
+docs/remake-officer-eras.md
 docs/repository-files.txt
 docs/repository-scope.md
 docs/repository-validation.json
@@ -7020,6 +7022,7 @@ expansion/officers/chronology-policy.json
 expansion/officers/data/chronology-candidates.csv
 expansion/officers/data/chronology-candidates.json
 expansion/officers/data/dedup-audit.json
+expansion/officers/data/era-configuration-audit.json
 expansion/officers/data/original-overlap-audit.json
 expansion/officers/data/remake-profiles.csv
 expansion/officers/data/remake-profiles.json
@@ -7054,9 +7057,20 @@ game/README.md
 game/app.js
 game/assets/map.png
 game/build_data.py
+game/build_eras.py
 game/build_mainland.py
+game/config/era-postings.json
+game/config/initialization-policy.json
+game/config/officer-batch2.json
 game/config/officer-designs.json
 game/data/demo.json
+game/data/eras/200.json
+game/data/eras/207.json
+game/data/eras/217.json
+game/data/eras/221.json
+game/data/eras/227.json
+game/data/eras/249.json
+game/data/eras/index.json
 game/data/mainland.json
 game/design/README.md
 game/design/concept.png
@@ -7622,5 +7636,6 @@ source/remake/errors.py
 source/remake/officers.py
 source/remake/session.py
 tests/test_remake_campaign.py
+tests/test_remake_eras.py
 tests/test_remake_mainland.py
 tests/test_remake_officers.py

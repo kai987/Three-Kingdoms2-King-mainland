@@ -42,7 +42,9 @@ def main():
     sys.path.insert(0, str(ROOT / 'source'))
     from remake.campaign import GameError
     from remake.session import CampaignSession
-    game = CampaignSession([HERE / 'data/demo.json', HERE / 'data/mainland.json'])
+    era_index = json.loads((HERE / 'data/eras/index.json').read_text())
+    game = CampaignSession([HERE / 'data/demo.json', HERE / 'data/mainland.json'] +
+                           [HERE / 'data' / name for name in era_index['catalogs']])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/style.css': ('style.css', 'text/css; charset=utf-8'),

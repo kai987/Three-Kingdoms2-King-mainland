@@ -25,6 +25,12 @@ jobs:
         run: |
           python game/build_mainland.py
           git diff --exit-code -- game/data/mainland.json
+      - name: Rebuild era profiles and placements offline
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_eras.py
+          git diff --exit-code -- game/data/eras expansion/officers/data/era-configuration-audit.json
       - name: Browser script syntax
         run: node --check game/app.js
       - name: Changed-file whitespace

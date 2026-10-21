@@ -130,7 +130,8 @@ class Campaign(ExpandedCampaign):
             officer = initialize_officer(self.catalog.definitions[row['person_id']], ident,
                          self.catalog.profiles[ident], year=state.year, faction_id=city.owner,
                          is_ruler=row.get('ruler', False), loyalty=100 if row.get('ruler') else 80,
-                         troops=row['troops'], rules=self.catalog.rules)
+                         troops=row['troops'], rules=self.catalog.rules,
+                         resolve_death_year=row.get('resolve_death_year', False))
             state.officers[ident] = officer
             city.roster.officer_ids.append(ident)
         state.soldiers['initial'] = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
