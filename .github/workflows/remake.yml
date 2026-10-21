@@ -41,3 +41,11 @@ jobs:
           git diff --exit-code -- game/data/eras-v3 expansion/officers/data/era-configuration-v3-audit.json
       - name: Changed-file whitespace
         run: git diff --check
+      - name: Rebuild eleven historical main chapters offline
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_map_anchors.py
+          git diff --exit-code -- game/assets/city-positions.json
+          python game/build_main_scenarios.py
+          git diff --exit-code -- game/data/main-scenarios

@@ -24,6 +24,10 @@ class CampaignSession:
                                            'cities':len(c.data['active_cities']),
                                            'year':c.data['start_year'],'month':c.data['start_month'],
                                            'configured':c.data.get('coverage',{}).get('configured_profiles',8),
+                                           'capacity':c.rules.city_officer_capacity,
+                                           'serving':len(c.data['initial_officers']),
+                                           'free':len(c.data.get('initial_free_officers',[])),
+                                           'main_scenario':c.data.get('main_scenario'),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]
             return result
 

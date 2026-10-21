@@ -1,0 +1,19 @@
+{
+  "person_id": "san14-candidate-0262",
+  "name": "公孙渊",
+  "display_alias": "公孙渊",
+  "status": "configured_design",
+  "dimensions": {"care": 24, "fairness": 25, "integrity": 20, "trust": 15},
+  "virtue": 22,
+  "design_rationale": "据卷08正文夺叔父位、对魏吴反复及杀使等行为，公允、诚信取低档；不因割据成败直接加减德。抚民方面材料有限，低置信初评。",
+  "is_historical_fact": false,
+  "confidence": "low",
+  "calibration": {"person_id": "san14-candidate-0736", "name": "董卓", "virtue": 12, "difference": 10, "method": "individual_evidence_then_compare_existing_anchor", "explanation": "参照董卓既有低档评分校准；未据魅力或胜败转换。"},
+  "sources": [{"work": "三国志", "volume": 8, "section": "公孫度附公孫淵", "url": "https://zh.wikisource.org/wiki/三國志/卷08", "layer": "正文；史事与作者数值判断分开", "retrieved": "2026-10-21"}],
+  "home_city": "liaodong",
+  "home_basis": "liaodong_chapter_region_not_exact_residence",
+  "health_max": 80,
+  "terrain_affinity": 0,
+  "rating_scope": "career_composite_authorial_design",
+  "balance_status": "initial_requires_playtesting"
+}

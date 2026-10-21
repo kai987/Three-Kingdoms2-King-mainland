@@ -1,0 +1,10 @@
+{
+  "name": "GNU Unifont",
+  "version": "18.0.01",
+  "source": "https://unifoundry.com/pub/unifont/unifont-18.0.01/font-builds/unifont-18.0.01.otf",
+  "source_sha256": "88d0a14d4aa9a96419720b39ba5da921a59560d76d4ec7d523acc06ed85cd3c2",
+  "file_sha256": "47bb83afaf7c6e1e686987535a72c66537f751e6eee0ca804e61803891d3c8fe",
+  "conversion": "OpenType to WOFF lossless container conversion; all glyphs retained",
+  "license": "SIL OFL 1.1 (dual licensed GPL2+ with font embedding exception)",
+  "upstream": "https://unifoundry.com/unifont/index.html"
+}

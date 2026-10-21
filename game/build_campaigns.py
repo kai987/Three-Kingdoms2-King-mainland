@@ -53,6 +53,8 @@ def make_owners(cities,factions):
 
 def build_era(base, roster, era, spec, postings):
     data=deepcopy(base);year=era['year'];sid=era['source_scenario']
+    capacity=spec.get('city_capacity',20)
+    data['rules']['city_officer_capacity']=capacity
     cities={c['id']:c for c in data['cities']};factions={}
     for i,f in enumerate(era['factions']):
         name=f.get('name',f['captain']+'势力')
@@ -89,19 +91,19 @@ def build_era(base, roster, era, spec, postings):
                 posting=next((r for r in postings if r['person_id']==pid and r['start_year']<=year<=r['end_year']
                               and owners[r['city']]==faction),None)
                 preferred=factions[faction]['city'] if p['name'] in rulers else posting['city'] if posting else city or factions[faction]['city']
-                options=[c for c,o in owners.items() if o==faction and counts[c]<20]
+                options=[c for c,o in owners.items() if o==faction and counts[c]<capacity]
                 if options:
                     xy=cities[preferred]['position']
                     city=min(options,key=lambda c:(c!=preferred,(cities[c]['position'][0]-xy[0])**2+(cities[c]['position'][1]-xy[1])**2,c))
                     counts[city]+=1
-                    basis='authored_leader_seat' if p['name'] in rulers else 'authored_faction_region_capacity20'
+                    basis='authored_leader_seat' if p['name'] in rulers else f'authored_faction_region_capacity{capacity}'
                     if posting and city==posting['city']:basis=posting['basis']
                     status='serving' if ready else 'pending_profile'
                     if ready:initial.append(dict(person_id=pid,city=city,troops=300,ruler=p['name'] in rulers,resolve_death_year=ys==YearState.DEATH_YEAR_REVIEW))
                 else:
                     # A small historical camp may have only one board node.
                     # Never invent extra territory or silently overflow20 slots.
-                    city=None;basis=None;status='pending_capacity';reason='Source faction exceeds available20-person board seats; pending assignment, never spawned free.'
+                    city=None;basis=None;status='pending_capacity';reason=f'Source faction exceeds available{capacity}-person board seats; pending assignment, never spawned free.'
             elif src['status']=='serving':
                 status='pending_faction' if ready else 'pending_profile';reason='Source faction is not enabled; preserve original affiliation.'
             elif city:

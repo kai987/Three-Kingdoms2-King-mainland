@@ -95,7 +95,7 @@ class ExpandedCampaign:
         if ident not in self._free_candidates(state, city):
             raise GameError('目标尚未登场、已仕官，或不在本城及可访问的邻城。')
         if len(city.roster.officer_ids) >= self.catalog.rules.city_officer_capacity:
-            raise GameError('本城已满20人，招募未执行。')
+            raise GameError(f'本城已满{self.catalog.rules.city_officer_capacity}人，招募未执行。')
         fee = self.catalog.data['rules']['recruit_officer_gold']
         if city.gold < fee: raise GameError('招募金钱不足。')
         candidate = state.officers[ident]
@@ -126,7 +126,8 @@ class ExpandedCampaign:
         actor=self._personnel_actor(state,city,payload.get('actor'))
         ident=integer(payload.get('officer'),0,self.catalog.rules.runtime_capacity-1,'target officer')
         if ident not in self._persuadable(state,city):raise GameError('只能劝降邻城的非君主敌将。')
-        if len(city.roster.officer_ids)>=20:raise GameError('本城已满20人，劝降未执行。')
+        if len(city.roster.officer_ids)>=self.catalog.rules.city_officer_capacity:
+            raise GameError(f'本城已满{self.catalog.rules.city_officer_capacity}人，劝降未执行。')
         fee=self.catalog.data['rules']['persuade_officer_gold']
         if city.gold<fee:raise GameError('劝降金钱不足。')
         self._attempt_defection(state,city,actor,ident)
@@ -370,7 +371,7 @@ class ExpandedCampaign:
             # Defenders escape to the nearest adjacent friendly city with room.
             for ident in list(target.roster.officer_ids):
                 o=state.officers[ident]
-                homes=[state.cities[k] for k in self._neighbors(target.id) if k!=source.id and state.cities[k].owner==target.owner and len(state.cities[k].roster.officer_ids)<20]
+                homes=[state.cities[k] for k in self._neighbors(target.id) if k!=source.id and state.cities[k].owner==target.owner and len(state.cities[k].roster.officer_ids)<self.catalog.rules.city_officer_capacity]
                 if homes:
                     home=homes[0];home.roster.officer_ids.append(ident)
                 else:
@@ -419,7 +420,7 @@ class ExpandedCampaign:
             if city.owner in {state.player,'neutral'} or city.action_used:continue
             ids=city.roster.officer_ids
             free=self._free_candidates(state,city)
-            if ids and free and len(ids)<20 and city.gold>=r['recruit_officer_gold']:
+            if ids and free and len(ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
                 # Same success formula/loyalty as the player; failure costs gold.
                 recruiter=max(ids,key=lambda i:state.officers[i].profile.virtue);actor=state.officers[recruiter];ident=free[0];o=state.officers[ident]
                 chance=max(15,min(95,35+actor.profile.virtue//2+actor.profile.intellect//5-o.profile.virtue//5))
@@ -459,7 +460,7 @@ class ExpandedCampaign:
                 self._expanded_settle(state,{'battle_id':b['id']})
                 if state.phase=='finished':return
                 state.phase='ai'
-            elif any(x['officer_actions'].get(str(i))!=state.turn for i in ids) and len(ids)<20 and city.gold>=r['persuade_officer_gold'] and self._persuadable(state,city) and not any(report['turn']==state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
+            elif any(x['officer_actions'].get(str(i))!=state.turn for i in ids) and len(ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['persuade_officer_gold'] and self._persuadable(state,city) and not any(report['turn']==state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
                 actor=max((state.officers[i] for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda o:o.profile.virtue)
                 target=min(self._persuadable(state,city),key=lambda i:state.officers[i].loyalty)
                 self._attempt_defection(state,city,actor,target)
@@ -467,7 +468,7 @@ class ExpandedCampaign:
                 self._reconcile_factions(state)
                 if state.phase=='finished':return
             elif len([i for i in ids if x['officer_actions'].get(str(i))!=state.turn])>1:
-                friends=[state.cities[k] for k in self._neighbors(key) if state.cities[k].owner==city.owner and len(state.cities[k].roster.officer_ids)<20]
+                friends=[state.cities[k] for k in self._neighbors(key) if state.cities[k].owner==city.owner and len(state.cities[k].roster.officer_ids)<self.catalog.rules.city_officer_capacity]
                 friends.sort(key=lambda c:(len(c.roster.officer_ids),c.id))
                 if friends and len(friends[0].roster.officer_ids)<len(ids)-1 and city.grain>=5:
                     ident=min((i for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda i:state.officers[i].troops);transfer_officers(city.roster,friends[0].roster,[ident]);city.grain-=5
