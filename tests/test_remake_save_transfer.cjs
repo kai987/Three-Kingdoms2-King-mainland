@@ -1,0 +1,11 @@
+'use strict';
+const assert=require('node:assert/strict'),{loadBody}=require('../game/save-transfer.js');
+const raw=' {"distance":315.0,"other":-0.0,"fraction":1.25,"large":9007199254740993,"text":"引号\\\"、\\\\与中文"} ';
+const body=loadBody(raw,7);
+assert.equal(body,'{"save":'+raw+',"revision":7}');
+assert.notEqual(JSON.stringify(JSON.parse(raw)),raw.trim());
+assert.equal(JSON.parse(body).revision,7);
+for(const raw of ['',null,[], 'null','1','[]','{} {}','{invalid','{"x":NaN}'])assert.throws(()=>loadBody(raw,1),/存档无效/);
+for(const rev of [-1,1.5,NaN,Infinity,'1',Number.MAX_SAFE_INTEGER+1])assert.throws(()=>loadBody('{}',rev));
+assert.throws(()=>loadBody(JSON.stringify({text:'字'.repeat(800000)}),1));
+console.log('save transfer: legacy number spelling, exact JSON payload, UTF-8 bounds and invalid-document rejection passed');

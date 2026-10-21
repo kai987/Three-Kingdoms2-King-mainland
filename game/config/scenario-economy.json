@@ -1,0 +1,2807 @@
+{
+  "schema": "dated-scenario-economy-v1",
+  "scope": "Authorial city/date/region balance adaptation. No numerical value is a historical stock count or SAN14 scenario export.",
+  "previous_generation": 13,
+  "generation": 14,
+  "calendar_policy": "Only new-scenario opening stocks and its monthly production profile; never reset ongoing campaign stocks to historical values.",
+  "soldier_policy": "Keep each initial officer at released300 troops; date-dependent reserves are separate from roster-dependent garrison totals.",
+  "arithmetic": {
+    "rule": "integer_rational_product_round_half_up_to_quantum",
+    "stock_quantum": {
+      "gold": 10,
+      "grain": 25,
+      "reserves": 10
+    },
+    "income_quantum": {
+      "gold": 1,
+      "grain": 1,
+      "reserves": 1
+    },
+    "minimum": 1
+  },
+  "sources": [
+    {
+      "id": "luoyang_190",
+      "url": "https://www.dpm.org.cn/collection/impres/231915.html",
+      "kind": "museum_historical_collection",
+      "supports": "190年董卓焚燒洛陽宮廟、遷都長安；只支持破壞事件，不提供本作資源數值。",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "id": "xuchang_196",
+      "url": "https://xuchang.gov.cn/zjxc/walkIntoXC.html",
+      "kind": "municipal_history",
+      "supports": "196年八月獻帝遷都許縣；221年改名許昌。僅支持年代與都城地位。",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "id": "jianye_229",
+      "url": "https://tb.nanjing.gov.cn/njjj/lsyg/",
+      "kind": "municipal_history",
+      "supports": "229年孫權建都南京／建業。未提供本作錢糧兵或確切建都月份。",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "id": "hanzhong_campaigns",
+      "url": "https://hzdqw.hanzhong.gov.cn/hzdfz/zjsy/202608/ca8a0e6df08c465985a51202e338b581.shtml",
+      "kind": "municipal_local_chronicle",
+      "supports": "215年曹操取漢中、218至219年曹劉爭奪、227年諸葛亮屯兵漢中。只支持軍事階段，消耗與積蓄數字為本作推定。",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "id": "dong_zhuo_annal",
+      "url": "https://zh.wikisource.org/wiki/三國志/卷06",
+      "kind": "primary_historical_text",
+      "supports": "《三國志》卷六載初平元年二月徙天子都長安並焚燒洛陽宮室。古代紀年月份直接作遊戲月界，並非公曆日期換算。",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "id": "wu_jianye_annal",
+      "url": "https://zh.wikisource.org/wiki/三國志/卷47",
+      "kind": "primary_historical_text",
+      "supports": "《三國志》卷四十七載建安十六年徙治秣陵、次年改建業，黃龍元年秋九月遷都建業；只支持日期與都城地位。",
+      "retrieved": "2026-10-22"
+    }
+  ],
+  "production_profiles": {
+    "balanced": {
+      "label": "一般均衡",
+      "label_ja": "標準型",
+      "percent": {
+        "gold": 100,
+        "grain": 100,
+        "reserves": 100
+      }
+    },
+    "agrarian": {
+      "label": "農業取向",
+      "label_ja": "農業型",
+      "percent": {
+        "gold": 95,
+        "grain": 120,
+        "reserves": 100
+      }
+    },
+    "trade": {
+      "label": "商業取向",
+      "label_ja": "商業型",
+      "percent": {
+        "gold": 125,
+        "grain": 90,
+        "reserves": 90
+      }
+    },
+    "river_port": {
+      "label": "水運取向",
+      "label_ja": "水運型",
+      "percent": {
+        "gold": 115,
+        "grain": 110,
+        "reserves": 100
+      }
+    },
+    "military": {
+      "label": "軍事取向",
+      "label_ja": "軍事型",
+      "percent": {
+        "gold": 90,
+        "grain": 90,
+        "reserves": 120
+      }
+    },
+    "mountain": {
+      "label": "山地供應",
+      "label_ja": "山地型",
+      "percent": {
+        "gold": 85,
+        "grain": 90,
+        "reserves": 85
+      }
+    },
+    "frontier": {
+      "label": "邊境供應",
+      "label_ja": "辺境型",
+      "percent": {
+        "gold": 85,
+        "grain": 80,
+        "reserves": 105
+      }
+    },
+    "island": {
+      "label": "海島供應",
+      "label_ja": "離島型",
+      "percent": {
+        "gold": 75,
+        "grain": 75,
+        "reserves": 65
+      }
+    },
+    "capital": {
+      "label": "都會取向",
+      "label_ja": "都城型",
+      "percent": {
+        "gold": 120,
+        "grain": 110,
+        "reserves": 115
+      }
+    },
+    "basin": {
+      "label": "盆地農業",
+      "label_ja": "盆地農業型",
+      "percent": {
+        "gold": 110,
+        "grain": 130,
+        "reserves": 110
+      }
+    }
+  },
+  "city_production": {
+    "liaodong": "trade",
+    "fanyang": "trade",
+    "taiyuan": "trade",
+    "qi": "agrarian",
+    "wei": "agrarian",
+    "xihe": "frontier",
+    "wuwei": "frontier",
+    "anding": "frontier",
+    "jingzhao": "capital",
+    "jincheng": "frontier",
+    "donghai": "agrarian",
+    "shanyang": "agrarian",
+    "henan": "capital",
+    "yiyang": "balanced",
+    "yingchuan": "agrarian",
+    "danyang": "river_port",
+    "jiujiang": "river_port",
+    "yuzhang": "agrarian",
+    "jiaozhi": "river_port",
+    "yulin": "balanced",
+    "jiangxia": "river_port",
+    "nanjun": "river_port",
+    "cangwu": "river_port",
+    "changsha": "agrarian",
+    "lingling": "agrarian",
+    "hanzhong": "military",
+    "shujun": "basin",
+    "bajun": "river_port",
+    "yunnan": "mountain",
+    "yongchang": "mountain",
+    "xincheng": "military",
+    "nanyang": "military",
+    "bohai": "trade",
+    "tianshui": "military",
+    "lujiang": "river_port",
+    "guiyang": "agrarian",
+    "beihai": "agrarian",
+    "dongjun": "agrarian",
+    "chenliu": "agrarian",
+    "runan": "agrarian",
+    "qiao": "agrarian",
+    "xiapi": "agrarian",
+    "wudu": "frontier",
+    "badong": "river_port",
+    "wujun": "river_port",
+    "wuling": "balanced",
+    "kuaiji": "river_port",
+    "yizhou": "island",
+    "lelang": "frontier",
+    "daifang": "frontier",
+    "zitong": "mountain",
+    "guanghan": "agrarian",
+    "wenshan": "mountain",
+    "baxi": "mountain",
+    "qianwei": "agrarian",
+    "jiangyang": "river_port",
+    "hanjia": "mountain",
+    "zhuti": "mountain",
+    "yuexi": "mountain",
+    "zangke": "mountain",
+    "jianning": "mountain",
+    "xinggu": "mountain",
+    "yinping": "frontier",
+    "fuling": "river_port",
+    "xindu": "balanced",
+    "poyang": "agrarian",
+    "luling": "agrarian",
+    "yidu": "river_port",
+    "qichun": "military",
+    "linhe": "balanced",
+    "nanhai": "river_port",
+    "gaoliang": "balanced",
+    "hepu": "river_port",
+    "jiuzhen": "river_port",
+    "rinan": "river_port",
+    "yan": "balanced",
+    "yuyang": "frontier",
+    "shanggu": "frontier",
+    "dai": "frontier",
+    "liaoxi": "frontier",
+    "changshan": "agrarian",
+    "zhongshan": "agrarian",
+    "anping": "agrarian",
+    "pingyuan": "agrarian",
+    "jinan": "agrarian",
+    "jiyin": "agrarian",
+    "dongping": "agrarian",
+    "henei": "military",
+    "hedong": "military",
+    "hongnong": "trade",
+    "fengyi": "military",
+    "fufeng": "military",
+    "longxi": "frontier",
+    "shangdang": "military",
+    "xiangyang": "river_port",
+    "zhuya": "island",
+    "xiping": "frontier",
+    "zhangye": "frontier",
+    "jiuquan": "frontier",
+    "dunhuang": "frontier",
+    "zhao": "agrarian",
+    "julu": "agrarian",
+    "hejian": "trade",
+    "qinghe": "agrarian",
+    "yanmen": "frontier",
+    "xinxing": "balanced",
+    "wuchang": "river_port",
+    "linhai": "balanced",
+    "linchuan": "balanced",
+    "jianan": "mountain",
+    "wuxing": "balanced",
+    "jiameng": "military",
+    "fuxian": "agrarian",
+    "dangqu": "mountain",
+    "nanguang": "mountain"
+  },
+  "regions": {
+    "hebei": {
+      "label": "河北與遼東",
+      "label_ja": "河北・遼東",
+      "cities": [
+        "liaodong",
+        "fanyang",
+        "bohai",
+        "lelang",
+        "daifang",
+        "yan",
+        "yuyang",
+        "shanggu",
+        "dai",
+        "liaoxi",
+        "changshan",
+        "zhongshan",
+        "anping",
+        "pingyuan",
+        "zhao",
+        "julu",
+        "hejian",
+        "qinghe"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "河北與遼東・漢末開局基準",
+          "label_ja": "河北・遼東・漢末の初期基準",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 110,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 110,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "河北與遼東・群雄戰亂期",
+          "label_ja": "河北・遼東・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 95,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 95,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            200,
+            1
+          ],
+          "label": "河北與遼東・前線動員期",
+          "label_ja": "河北・遼東・前線の動員期",
+          "stock_percent": {
+            "gold": 85,
+            "grain": 80,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 85,
+            "grain": 80,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            207,
+            1
+          ],
+          "label": "河北與遼東・整合與恢復期",
+          "label_ja": "河北・遼東・統合と復興期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 115,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 115,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "label": "河北與遼東・發展與積蓄期",
+          "label_ja": "河北・遼東・発展と備蓄期",
+          "stock_percent": {
+            "gold": 120,
+            "grain": 130,
+            "reserves": 120
+          },
+          "income_percent": {
+            "gold": 120,
+            "grain": 130,
+            "reserves": 120
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "河北與遼東・發展與積蓄期",
+          "label_ja": "河北・遼東・発展と備蓄期",
+          "stock_percent": {
+            "gold": 130,
+            "grain": 130,
+            "reserves": 125
+          },
+          "income_percent": {
+            "gold": 130,
+            "grain": 130,
+            "reserves": 125
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "河北與遼東・後期軍需負擔期",
+          "label_ja": "河北・遼東・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 125,
+            "grain": 125,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 125,
+            "grain": 125,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "guanzhong_hexi": {
+      "label": "關中與河西",
+      "label_ja": "関中・河西",
+      "cities": [
+        "wuwei",
+        "anding",
+        "jingzhao",
+        "jincheng",
+        "tianshui",
+        "fengyi",
+        "fufeng",
+        "longxi",
+        "xiping",
+        "zhangye",
+        "jiuquan",
+        "dunhuang"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "關中與河西・漢末開局基準",
+          "label_ja": "関中・河西・漢末の初期基準",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 100,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 100,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "關中與河西・群雄戰亂期",
+          "label_ja": "関中・河西・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 90,
+            "reserves": 85
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 90,
+            "reserves": 85
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            196,
+            1
+          ],
+          "label": "關中與河西・群雄戰亂期",
+          "label_ja": "関中・河西・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 75,
+            "grain": 70,
+            "reserves": 85
+          },
+          "income_percent": {
+            "gold": 75,
+            "grain": 70,
+            "reserves": 85
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            211,
+            1
+          ],
+          "label": "關中與河西・前線動員期",
+          "label_ja": "関中・河西・前線の動員期",
+          "stock_percent": {
+            "gold": 85,
+            "grain": 95,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 85,
+            "grain": 95,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "label": "關中與河西・戰後恢復期",
+          "label_ja": "関中・河西・戦後の復興期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 110,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 110,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            227,
+            1
+          ],
+          "label": "關中與河西・前線動員期",
+          "label_ja": "関中・河西・前線の動員期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 105,
+            "reserves": 125
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 105,
+            "reserves": 125
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "關中與河西・整合與恢復期",
+          "label_ja": "関中・河西・統合と復興期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 110,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 110,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "關中與河西・後期軍需負擔期",
+          "label_ja": "関中・河西・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 95,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 95,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "bingzhou": {
+      "label": "并州",
+      "label_ja": "并州",
+      "cities": [
+        "taiyuan",
+        "xihe",
+        "hedong",
+        "shangdang",
+        "yanmen",
+        "xinxing"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "并州・漢末開局基準",
+          "label_ja": "并州・漢末の初期基準",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 80,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 80,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "并州・群雄戰亂期",
+          "label_ja": "并州・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 80,
+            "grain": 80,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 80,
+            "grain": 80,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            200,
+            1
+          ],
+          "label": "并州・整合與恢復期",
+          "label_ja": "并州・統合と復興期",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 85,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 85,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            215,
+            1
+          ],
+          "label": "并州・戰後恢復期",
+          "label_ja": "并州・戦後の復興期",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 100,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 100,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            235,
+            1
+          ],
+          "label": "并州・發展與積蓄期",
+          "label_ja": "并州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 110,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 110,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "并州・發展與積蓄期",
+          "label_ja": "并州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 110,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 110,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "并州・後期軍需負擔期",
+          "label_ja": "并州・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 100,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 100,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "central": {
+      "label": "中原",
+      "label_ja": "中原",
+      "cities": [
+        "wei",
+        "henan",
+        "yingchuan",
+        "shanyang",
+        "dongjun",
+        "chenliu",
+        "runan",
+        "qiao",
+        "yiyang",
+        "nanyang",
+        "henei",
+        "hongnong"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "中原・漢末開局基準",
+          "label_ja": "中原・漢末の初期基準",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 100,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 100,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "中原・群雄戰亂期",
+          "label_ja": "中原・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 85,
+            "grain": 80,
+            "reserves": 90
+          },
+          "income_percent": {
+            "gold": 85,
+            "grain": 80,
+            "reserves": 90
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            200,
+            1
+          ],
+          "label": "中原・整合與恢復期",
+          "label_ja": "中原・統合と復興期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            211,
+            1
+          ],
+          "label": "中原・發展與積蓄期",
+          "label_ja": "中原・発展と備蓄期",
+          "stock_percent": {
+            "gold": 115,
+            "grain": 125,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 115,
+            "grain": 125,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "label": "中原・發展與積蓄期",
+          "label_ja": "中原・発展と備蓄期",
+          "stock_percent": {
+            "gold": 125,
+            "grain": 130,
+            "reserves": 120
+          },
+          "income_percent": {
+            "gold": 125,
+            "grain": 130,
+            "reserves": 120
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            235,
+            1
+          ],
+          "label": "中原・發展與積蓄期",
+          "label_ja": "中原・発展と備蓄期",
+          "stock_percent": {
+            "gold": 125,
+            "grain": 130,
+            "reserves": 125
+          },
+          "income_percent": {
+            "gold": 125,
+            "grain": 130,
+            "reserves": 125
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "中原・發展與積蓄期",
+          "label_ja": "中原・発展と備蓄期",
+          "stock_percent": {
+            "gold": 130,
+            "grain": 135,
+            "reserves": 125
+          },
+          "income_percent": {
+            "gold": 130,
+            "grain": 135,
+            "reserves": 125
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "中原・後期軍需負擔期",
+          "label_ja": "中原・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 125,
+            "grain": 130,
+            "reserves": 120
+          },
+          "income_percent": {
+            "gold": 125,
+            "grain": 130,
+            "reserves": 120
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "qing_xu": {
+      "label": "青徐",
+      "label_ja": "青州・徐州",
+      "cities": [
+        "qi",
+        "donghai",
+        "beihai",
+        "xiapi",
+        "jinan",
+        "jiyin",
+        "dongping"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "青徐・漢末開局基準",
+          "label_ja": "青州・徐州・漢末の初期基準",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "青徐・群雄戰亂期",
+          "label_ja": "青州・徐州・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 95,
+            "grain": 90,
+            "reserves": 95
+          },
+          "income_percent": {
+            "gold": 95,
+            "grain": 90,
+            "reserves": 95
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            194,
+            1
+          ],
+          "label": "青徐・群雄戰亂期",
+          "label_ja": "青州・徐州・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 80,
+            "grain": 75,
+            "reserves": 90
+          },
+          "income_percent": {
+            "gold": 80,
+            "grain": 75,
+            "reserves": 90
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            200,
+            1
+          ],
+          "label": "青徐・戰後恢復期",
+          "label_ja": "青州・徐州・戦後の復興期",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 105,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 105,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            211,
+            1
+          ],
+          "label": "青徐・發展與積蓄期",
+          "label_ja": "青州・徐州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 120,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 120,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "label": "青徐・發展與積蓄期",
+          "label_ja": "青州・徐州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 120,
+            "grain": 125,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 120,
+            "grain": 125,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "青徐・發展與積蓄期",
+          "label_ja": "青州・徐州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 125,
+            "grain": 130,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 125,
+            "grain": 130,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "青徐・後期軍需負擔期",
+          "label_ja": "青州・徐州・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 120,
+            "grain": 125,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 120,
+            "grain": 125,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "jiangdong": {
+      "label": "江東與淮南",
+      "label_ja": "江東・淮南",
+      "cities": [
+        "danyang",
+        "jiujiang",
+        "yuzhang",
+        "lujiang",
+        "wujun",
+        "kuaiji",
+        "xindu",
+        "poyang",
+        "luling",
+        "qichun",
+        "linhai",
+        "linchuan",
+        "jianan",
+        "wuxing",
+        "yizhou"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "江東與淮南・漢末開局基準",
+          "label_ja": "江東・淮南・漢末の初期基準",
+          "stock_percent": {
+            "gold": 85,
+            "grain": 90,
+            "reserves": 85
+          },
+          "income_percent": {
+            "gold": 85,
+            "grain": 90,
+            "reserves": 85
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "江東與淮南・整合與恢復期",
+          "label_ja": "江東・淮南・統合と復興期",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 95,
+            "reserves": 90
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 95,
+            "reserves": 90
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            200,
+            1
+          ],
+          "label": "江東與淮南・發展與積蓄期",
+          "label_ja": "江東・淮南・発展と備蓄期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            211,
+            1
+          ],
+          "label": "江東與淮南・發展與積蓄期",
+          "label_ja": "江東・淮南・発展と備蓄期",
+          "stock_percent": {
+            "gold": 115,
+            "grain": 125,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 115,
+            "grain": 125,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "label": "江東與淮南・前線動員期",
+          "label_ja": "江東・淮南・前線の動員期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 110,
+            "reserves": 120
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 110,
+            "reserves": 120
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            235,
+            1
+          ],
+          "label": "江東與淮南・發展與積蓄期",
+          "label_ja": "江東・淮南・発展と備蓄期",
+          "stock_percent": {
+            "gold": 125,
+            "grain": 135,
+            "reserves": 125
+          },
+          "income_percent": {
+            "gold": 125,
+            "grain": 135,
+            "reserves": 125
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "江東與淮南・發展與積蓄期",
+          "label_ja": "江東・淮南・発展と備蓄期",
+          "stock_percent": {
+            "gold": 130,
+            "grain": 140,
+            "reserves": 125
+          },
+          "income_percent": {
+            "gold": 130,
+            "grain": 140,
+            "reserves": 125
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "江東與淮南・後期軍需負擔期",
+          "label_ja": "江東・淮南・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 115,
+            "grain": 120,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 115,
+            "grain": 120,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "jingzhou": {
+      "label": "荊州",
+      "label_ja": "荊州",
+      "cities": [
+        "jiangxia",
+        "nanjun",
+        "changsha",
+        "lingling",
+        "xincheng",
+        "guiyang",
+        "wuling",
+        "xiangyang",
+        "yidu",
+        "wuchang"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "荊州・漢末開局基準",
+          "label_ja": "荊州・漢末の初期基準",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 120,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 120,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "荊州・發展與積蓄期",
+          "label_ja": "荊州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 125,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 125,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            200,
+            1
+          ],
+          "label": "荊州・發展與積蓄期",
+          "label_ja": "荊州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 115,
+            "grain": 130,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 115,
+            "grain": 130,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            208,
+            1
+          ],
+          "label": "荊州・前線動員期",
+          "label_ja": "荊州・前線の動員期",
+          "stock_percent": {
+            "gold": 80,
+            "grain": 75,
+            "reserves": 90
+          },
+          "income_percent": {
+            "gold": 80,
+            "grain": 75,
+            "reserves": 90
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            211,
+            1
+          ],
+          "label": "荊州・戰後恢復期",
+          "label_ja": "荊州・戦後の復興期",
+          "stock_percent": {
+            "gold": 95,
+            "grain": 90,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 95,
+            "grain": 90,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            219,
+            1
+          ],
+          "label": "荊州・前線動員期",
+          "label_ja": "荊州・前線の動員期",
+          "stock_percent": {
+            "gold": 70,
+            "grain": 65,
+            "reserves": 85
+          },
+          "income_percent": {
+            "gold": 70,
+            "grain": 65,
+            "reserves": 85
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "label": "荊州・前線動員期",
+          "label_ja": "荊州・前線の動員期",
+          "stock_percent": {
+            "gold": 75,
+            "grain": 70,
+            "reserves": 90
+          },
+          "income_percent": {
+            "gold": 75,
+            "grain": 70,
+            "reserves": 90
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            225,
+            1
+          ],
+          "label": "荊州・戰後恢復期",
+          "label_ja": "荊州・戦後の復興期",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 90,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 90,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            235,
+            1
+          ],
+          "label": "荊州・發展與積蓄期",
+          "label_ja": "荊州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "荊州・發展與積蓄期",
+          "label_ja": "荊州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 120,
+            "reserves": 115
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 120,
+            "reserves": 115
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "荊州・後期軍需負擔期",
+          "label_ja": "荊州・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 105,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 105,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "bashu": {
+      "label": "巴蜀與漢中",
+      "label_ja": "巴蜀・漢中",
+      "cities": [
+        "hanzhong",
+        "shujun",
+        "bajun",
+        "wudu",
+        "badong",
+        "zitong",
+        "guanghan",
+        "wenshan",
+        "baxi",
+        "qianwei",
+        "jiangyang",
+        "hanjia",
+        "yinping",
+        "fuling",
+        "jiameng",
+        "fuxian",
+        "dangqu",
+        "nanguang"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "巴蜀與漢中・漢末開局基準",
+          "label_ja": "巴蜀・漢中・漢末の初期基準",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 125,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 125,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "巴蜀與漢中・發展與積蓄期",
+          "label_ja": "巴蜀・漢中・発展と備蓄期",
+          "stock_percent": {
+            "gold": 115,
+            "grain": 130,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 115,
+            "grain": 130,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            211,
+            1
+          ],
+          "label": "巴蜀與漢中・前線動員期",
+          "label_ja": "巴蜀・漢中・前線の動員期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 115,
+            "reserves": 120
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 115,
+            "reserves": 120
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            219,
+            1
+          ],
+          "label": "巴蜀與漢中・前線動員期",
+          "label_ja": "巴蜀・漢中・前線の動員期",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 95,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 95,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "label": "巴蜀與漢中・戰後恢復期",
+          "label_ja": "巴蜀・漢中・戦後の復興期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 105,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 105,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            227,
+            1
+          ],
+          "label": "巴蜀與漢中・前線動員期",
+          "label_ja": "巴蜀・漢中・前線の動員期",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 100,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 100,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            235,
+            1
+          ],
+          "label": "巴蜀與漢中・戰後恢復期",
+          "label_ja": "巴蜀・漢中・戦後の復興期",
+          "stock_percent": {
+            "gold": 95,
+            "grain": 100,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 95,
+            "grain": 100,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "巴蜀與漢中・後期軍需負擔期",
+          "label_ja": "巴蜀・漢中・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 95,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 95,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "巴蜀與漢中・後期軍需負擔期",
+          "label_ja": "巴蜀・漢中・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 80,
+            "grain": 85,
+            "reserves": 95
+          },
+          "income_percent": {
+            "gold": 80,
+            "grain": 85,
+            "reserves": 95
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "nanzhong": {
+      "label": "南中",
+      "label_ja": "南中",
+      "cities": [
+        "yunnan",
+        "yongchang",
+        "zhuti",
+        "yuexi",
+        "zangke",
+        "jianning",
+        "xinggu"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "南中・漢末開局基準",
+          "label_ja": "南中・漢末の初期基準",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 80,
+            "reserves": 85
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 80,
+            "reserves": 85
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "南中・整合與恢復期",
+          "label_ja": "南中・統合と復興期",
+          "stock_percent": {
+            "gold": 95,
+            "grain": 90,
+            "reserves": 85
+          },
+          "income_percent": {
+            "gold": 95,
+            "grain": 90,
+            "reserves": 85
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            211,
+            1
+          ],
+          "label": "南中・發展與積蓄期",
+          "label_ja": "南中・発展と備蓄期",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 95,
+            "reserves": 90
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 95,
+            "reserves": 90
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            221,
+            1
+          ],
+          "label": "南中・群雄戰亂期",
+          "label_ja": "南中・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 80,
+            "reserves": 90
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 80,
+            "reserves": 90
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            225,
+            1
+          ],
+          "label": "南中・前線動員期",
+          "label_ja": "南中・前線の動員期",
+          "stock_percent": {
+            "gold": 75,
+            "grain": 65,
+            "reserves": 80
+          },
+          "income_percent": {
+            "gold": 75,
+            "grain": 65,
+            "reserves": 80
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            227,
+            1
+          ],
+          "label": "南中・戰後恢復期",
+          "label_ja": "南中・戦後の復興期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            235,
+            1
+          ],
+          "label": "南中・發展與積蓄期",
+          "label_ja": "南中・発展と備蓄期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 120,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 120,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "南中・發展與積蓄期",
+          "label_ja": "南中・発展と備蓄期",
+          "stock_percent": {
+            "gold": 115,
+            "grain": 120,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 115,
+            "grain": 120,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "南中・後期軍需負擔期",
+          "label_ja": "南中・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 105,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 105,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    },
+    "lingnan": {
+      "label": "嶺南與交州",
+      "label_ja": "嶺南・交州",
+      "cities": [
+        "jiaozhi",
+        "yulin",
+        "cangwu",
+        "linhe",
+        "nanhai",
+        "gaoliang",
+        "hepu",
+        "jiuzhen",
+        "rinan",
+        "zhuya"
+      ],
+      "periods": [
+        {
+          "from_date": [
+            184,
+            1
+          ],
+          "label": "嶺南與交州・漢末開局基準",
+          "label_ja": "嶺南・交州・漢末の初期基準",
+          "stock_percent": {
+            "gold": 80,
+            "grain": 90,
+            "reserves": 80
+          },
+          "income_percent": {
+            "gold": 80,
+            "grain": 90,
+            "reserves": 80
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            190,
+            1
+          ],
+          "label": "嶺南與交州・發展與積蓄期",
+          "label_ja": "嶺南・交州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 85,
+            "grain": 95,
+            "reserves": 85
+          },
+          "income_percent": {
+            "gold": 85,
+            "grain": 95,
+            "reserves": 85
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            200,
+            1
+          ],
+          "label": "嶺南與交州・發展與積蓄期",
+          "label_ja": "嶺南・交州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 90,
+            "grain": 100,
+            "reserves": 90
+          },
+          "income_percent": {
+            "gold": 90,
+            "grain": 100,
+            "reserves": 90
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            211,
+            1
+          ],
+          "label": "嶺南與交州・發展與積蓄期",
+          "label_ja": "嶺南・交州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 95,
+            "grain": 105,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 95,
+            "grain": 105,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            225,
+            1
+          ],
+          "label": "嶺南與交州・發展與積蓄期",
+          "label_ja": "嶺南・交州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 100,
+            "grain": 110,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 100,
+            "grain": 110,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            227,
+            1
+          ],
+          "label": "嶺南與交州・群雄戰亂期",
+          "label_ja": "嶺南・交州・群雄の戦乱期",
+          "stock_percent": {
+            "gold": 95,
+            "grain": 90,
+            "reserves": 95
+          },
+          "income_percent": {
+            "gold": 95,
+            "grain": 90,
+            "reserves": 95
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            235,
+            1
+          ],
+          "label": "嶺南與交州・戰後恢復期",
+          "label_ja": "嶺南・交州・戦後の復興期",
+          "stock_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 105
+          },
+          "income_percent": {
+            "gold": 105,
+            "grain": 115,
+            "reserves": 105
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            249,
+            1
+          ],
+          "label": "嶺南與交州・發展與積蓄期",
+          "label_ja": "嶺南・交州・発展と備蓄期",
+          "stock_percent": {
+            "gold": 110,
+            "grain": 120,
+            "reserves": 110
+          },
+          "income_percent": {
+            "gold": 110,
+            "grain": 120,
+            "reserves": 110
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        },
+        {
+          "from_date": [
+            263,
+            1
+          ],
+          "label": "嶺南與交州・後期軍需負擔期",
+          "label_ja": "嶺南・交州・後期の軍需負担期",
+          "stock_percent": {
+            "gold": 95,
+            "grain": 100,
+            "reserves": 100
+          },
+          "income_percent": {
+            "gold": 95,
+            "grain": 100,
+            "reserves": 100
+          },
+          "basis": "authored_regional_balance_phase",
+          "date_precision": "game_year_boundary_not_an_attested_economic_transition"
+        }
+      ]
+    }
+  },
+  "city_events": {
+    "henan": [
+      {
+        "from_date": [
+          190,
+          2
+        ],
+        "label": "洛陽受毀後供應低谷",
+        "label_ja": "洛陽焼失後の供給低下",
+        "stock_percent": {
+          "gold": 35,
+          "grain": 25,
+          "reserves": 45
+        },
+        "income_percent": {
+          "gold": 45,
+          "grain": 40,
+          "reserves": 55
+        },
+        "sources": [
+          "luoyang_190",
+          "dong_zhuo_annal"
+        ],
+        "date_precision": "attested_year_annal_month_adaptation",
+        "basis": "190年破壞事件作低谷依據；二月採傳統紀年遊戲月界，幅度為本作設計。"
+      },
+      {
+        "from_date": [
+          200,
+          1
+        ],
+        "label": "洛陽逐步恢復",
+        "label_ja": "洛陽の段階的復興",
+        "stock_percent": {
+          "gold": 55,
+          "grain": 55,
+          "reserves": 65
+        },
+        "income_percent": {
+          "gold": 65,
+          "grain": 70,
+          "reserves": 75
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          220,
+          10
+        ],
+        "label": "魏都洛陽恢復供應",
+        "label_ja": "魏都洛陽の供給回復",
+        "stock_percent": {
+          "gold": 110,
+          "grain": 105,
+          "reserves": 110
+        },
+        "income_percent": {
+          "gold": 115,
+          "grain": 110,
+          "reserves": 110
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          249,
+          1
+        ],
+        "label": "洛陽後期積蓄",
+        "label_ja": "洛陽の後期備蓄",
+        "stock_percent": {
+          "gold": 115,
+          "grain": 110,
+          "reserves": 115
+        },
+        "income_percent": {
+          "gold": 115,
+          "grain": 115,
+          "reserves": 110
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      }
+    ],
+    "yingchuan": [
+      {
+        "from_date": [
+          196,
+          8
+        ],
+        "label": "許都建置與屯糧配置",
+        "label_ja": "許都の建設と兵糧備蓄",
+        "stock_percent": {
+          "gold": 135,
+          "grain": 145,
+          "reserves": 130
+        },
+        "income_percent": {
+          "gold": 120,
+          "grain": 135,
+          "reserves": 120
+        },
+        "sources": [
+          "xuchang_196"
+        ],
+        "date_precision": "attested_annal_month",
+        "basis": "196年八月都許為史料年代；增量與屯糧強度為本作平衡。"
+      },
+      {
+        "from_date": [
+          221,
+          1
+        ],
+        "label": "許昌都城轉型後供應",
+        "label_ja": "許昌の都城転換後の供給",
+        "stock_percent": {
+          "gold": 115,
+          "grain": 125,
+          "reserves": 110
+        },
+        "income_percent": {
+          "gold": 110,
+          "grain": 115,
+          "reserves": 105
+        },
+        "sources": [
+          "xuchang_196"
+        ],
+        "date_precision": "attested_year_game_january_boundary",
+        "basis": "221年改名許昌有據，資源回落與一月邊界為本作配置。"
+      }
+    ],
+    "danyang": [
+      {
+        "from_date": [
+          211,
+          1
+        ],
+        "label": "建業發展期",
+        "label_ja": "建業の発展期",
+        "stock_percent": {
+          "gold": 110,
+          "grain": 110,
+          "reserves": 110
+        },
+        "income_percent": {
+          "gold": 110,
+          "grain": 110,
+          "reserves": 110
+        },
+        "sources": [
+          "wu_jianye_annal"
+        ],
+        "date_precision": "attested_year_game_january_boundary",
+        "basis": "211年徙治秣陵有原典，未載確月；一月為遊戲年界，資源幅度為本作設計。"
+      },
+      {
+        "from_date": [
+          229,
+          9
+        ],
+        "label": "建業定都後積蓄",
+        "label_ja": "建業遷都後の備蓄",
+        "stock_percent": {
+          "gold": 135,
+          "grain": 130,
+          "reserves": 125
+        },
+        "income_percent": {
+          "gold": 130,
+          "grain": 125,
+          "reserves": 120
+        },
+        "sources": [
+          "jianye_229",
+          "wu_jianye_annal"
+        ],
+        "date_precision": "attested_annal_month",
+        "basis": "原典載229年秋九月遷都建業；古代紀年直接作遊戲月界，資源增量為本作設計。"
+      },
+      {
+        "from_date": [
+          263,
+          1
+        ],
+        "label": "建業後期軍需負擔",
+        "label_ja": "建業の後期軍需負担",
+        "stock_percent": {
+          "gold": 110,
+          "grain": 105,
+          "reserves": 110
+        },
+        "income_percent": {
+          "gold": 110,
+          "grain": 110,
+          "reserves": 105
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      }
+    ],
+    "hanzhong": [
+      {
+        "from_date": [
+          215,
+          1
+        ],
+        "label": "漢中易主與整備",
+        "label_ja": "漢中の支配交代と整備",
+        "stock_percent": {
+          "gold": 85,
+          "grain": 80,
+          "reserves": 105
+        },
+        "income_percent": {
+          "gold": 90,
+          "grain": 90,
+          "reserves": 105
+        },
+        "sources": [
+          "hanzhong_campaigns"
+        ],
+        "date_precision": "attested_year_game_january_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          217,
+          1
+        ],
+        "label": "漢中爭奪與軍需集中",
+        "label_ja": "漢中争奪と軍需集中",
+        "stock_percent": {
+          "gold": 95,
+          "grain": 70,
+          "reserves": 125
+        },
+        "income_percent": {
+          "gold": 95,
+          "grain": 90,
+          "reserves": 120
+        },
+        "sources": [
+          "hanzhong_campaigns"
+        ],
+        "date_precision": "authored_campaign_lead_in_boundary",
+        "basis": "218至219年爭奪有據，217年劇本準備期與數值為本作推定。"
+      },
+      {
+        "from_date": [
+          219,
+          7
+        ],
+        "label": "漢中戰後消耗",
+        "label_ja": "漢中戦後の消耗",
+        "stock_percent": {
+          "gold": 70,
+          "grain": 55,
+          "reserves": 75
+        },
+        "income_percent": {
+          "gold": 85,
+          "grain": 80,
+          "reserves": 90
+        },
+        "sources": [
+          "hanzhong_campaigns"
+        ],
+        "date_precision": "authored_scenario_boundary_with_attested_campaign_year",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          221,
+          1
+        ],
+        "label": "漢中戰後補給恢復",
+        "label_ja": "漢中の戦後補給回復",
+        "stock_percent": {
+          "gold": 90,
+          "grain": 95,
+          "reserves": 95
+        },
+        "income_percent": {
+          "gold": 95,
+          "grain": 100,
+          "reserves": 100
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          227,
+          2
+        ],
+        "label": "漢中北伐動員",
+        "label_ja": "漢中の北伐動員",
+        "stock_percent": {
+          "gold": 90,
+          "grain": 85,
+          "reserves": 130
+        },
+        "income_percent": {
+          "gold": 100,
+          "grain": 105,
+          "reserves": 125
+        },
+        "sources": [
+          "hanzhong_campaigns"
+        ],
+        "date_precision": "attested_year_authored_february_scenario_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          235,
+          1
+        ],
+        "label": "漢中戰後再整備",
+        "label_ja": "漢中の戦後再編",
+        "stock_percent": {
+          "gold": 85,
+          "grain": 75,
+          "reserves": 110
+        },
+        "income_percent": {
+          "gold": 100,
+          "grain": 100,
+          "reserves": 110
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          249,
+          1
+        ],
+        "label": "漢中長期前線負擔",
+        "label_ja": "漢中の長期前線負担",
+        "stock_percent": {
+          "gold": 80,
+          "grain": 70,
+          "reserves": 115
+        },
+        "income_percent": {
+          "gold": 95,
+          "grain": 100,
+          "reserves": 120
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          263,
+          5
+        ],
+        "label": "漢中末期防務動員",
+        "label_ja": "漢中末期の防衛動員",
+        "stock_percent": {
+          "gold": 70,
+          "grain": 55,
+          "reserves": 100
+        },
+        "income_percent": {
+          "gold": 90,
+          "grain": 85,
+          "reserves": 100
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      }
+    ],
+    "shujun": [
+      {
+        "from_date": [
+          211,
+          7
+        ],
+        "label": "成都入蜀爭奪準備",
+        "label_ja": "成都の入蜀争奪準備",
+        "stock_percent": {
+          "gold": 105,
+          "grain": 95,
+          "reserves": 115
+        },
+        "income_percent": {
+          "gold": 100,
+          "grain": 100,
+          "reserves": 110
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          214,
+          6
+        ],
+        "label": "成都支配交代後整備",
+        "label_ja": "成都の支配交代後の整備",
+        "stock_percent": {
+          "gold": 95,
+          "grain": 100,
+          "reserves": 100
+        },
+        "income_percent": {
+          "gold": 95,
+          "grain": 100,
+          "reserves": 100
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          221,
+          1
+        ],
+        "label": "成都立國積蓄",
+        "label_ja": "成都の建国期備蓄",
+        "stock_percent": {
+          "gold": 115,
+          "grain": 120,
+          "reserves": 115
+        },
+        "income_percent": {
+          "gold": 110,
+          "grain": 115,
+          "reserves": 105
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          227,
+          2
+        ],
+        "label": "成都北方軍需支援",
+        "label_ja": "成都の北方軍需支援",
+        "stock_percent": {
+          "gold": 105,
+          "grain": 95,
+          "reserves": 115
+        },
+        "income_percent": {
+          "gold": 110,
+          "grain": 115,
+          "reserves": 105
+        },
+        "sources": [
+          "hanzhong_campaigns"
+        ],
+        "date_precision": "authored_supply_hinterland_inference",
+        "basis": "227年漢中動員有據，成都供應壓力為本作推定，不是史實庫存數字。"
+      },
+      {
+        "from_date": [
+          249,
+          1
+        ],
+        "label": "成都後期供應負擔",
+        "label_ja": "成都の後期供給負担",
+        "stock_percent": {
+          "gold": 100,
+          "grain": 95,
+          "reserves": 100
+        },
+        "income_percent": {
+          "gold": 105,
+          "grain": 110,
+          "reserves": 100
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          263,
+          5
+        ],
+        "label": "成都末期防務配置",
+        "label_ja": "成都末期の防衛配置",
+        "stock_percent": {
+          "gold": 90,
+          "grain": 85,
+          "reserves": 100
+        },
+        "income_percent": {
+          "gold": 95,
+          "grain": 100,
+          "reserves": 95
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      }
+    ],
+    "jingzhao": [
+      {
+        "from_date": [
+          190,
+          2
+        ],
+        "label": "長安遷都整備",
+        "label_ja": "長安の遷都整備",
+        "stock_percent": {
+          "gold": 115,
+          "grain": 105,
+          "reserves": 110
+        },
+        "income_percent": {
+          "gold": 105,
+          "grain": 105,
+          "reserves": 105
+        },
+        "sources": [
+          "luoyang_190",
+          "dong_zhuo_annal"
+        ],
+        "date_precision": "attested_year_annal_month_adaptation",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          192,
+          1
+        ],
+        "label": "長安混亂期",
+        "label_ja": "長安の混乱期",
+        "stock_percent": {
+          "gold": 75,
+          "grain": 70,
+          "reserves": 85
+        },
+        "income_percent": {
+          "gold": 80,
+          "grain": 80,
+          "reserves": 85
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          196,
+          1
+        ],
+        "label": "長安供應低谷",
+        "label_ja": "長安の供給低下",
+        "stock_percent": {
+          "gold": 65,
+          "grain": 60,
+          "reserves": 75
+        },
+        "income_percent": {
+          "gold": 80,
+          "grain": 85,
+          "reserves": 80
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          211,
+          7
+        ],
+        "label": "關中前線配置",
+        "label_ja": "関中の前線配置",
+        "stock_percent": {
+          "gold": 75,
+          "grain": 70,
+          "reserves": 105
+        },
+        "income_percent": {
+          "gold": 85,
+          "grain": 85,
+          "reserves": 100
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          227,
+          2
+        ],
+        "label": "長安西線防務",
+        "label_ja": "長安の西部防衛",
+        "stock_percent": {
+          "gold": 100,
+          "grain": 95,
+          "reserves": 120
+        },
+        "income_percent": {
+          "gold": 110,
+          "grain": 105,
+          "reserves": 120
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      },
+      {
+        "from_date": [
+          249,
+          1
+        ],
+        "label": "長安恢復積蓄",
+        "label_ja": "長安の復興と備蓄",
+        "stock_percent": {
+          "gold": 110,
+          "grain": 110,
+          "reserves": 115
+        },
+        "income_percent": {
+          "gold": 110,
+          "grain": 115,
+          "reserves": 110
+        },
+        "sources": [],
+        "date_precision": "authored_game_phase_boundary",
+        "basis": "日期與幅度為本作階段平衡，非史實資源統計。"
+      }
+    ]
+  },
+  "notes": [
+    "本篇繼承v13人物庫與年代安排，僅新增v14城市經濟配置。",
+    "本作按城池特色、劇本年月及戰亂／恢復階段設定錢糧與預備兵；數值為遊戲平衡設計，非史實人口或《三國志14》開局匯出。",
+    "各劇本的月收入依開局年代配置；遊玩後依實際內政、招兵、行軍與戰鬥增減，不按歷史事件強制重設資源。",
+    "本次保留武將每人300兵的初始化規則；城市駐軍總數取決於當篇實際駐將，預備兵另按年代配置。",
+    "年代經濟僅套用新開v14戰役；既有存檔沿用原目錄與規則。"
+  ]
+}

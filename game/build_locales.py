@@ -39,7 +39,7 @@ def corpus():
     paths = [HERE / 'index.html', HERE / 'app.js']
     paths += sorted((ROOT / 'source/remake').glob('*.py'))
     paths += sorted((HERE / 'config').glob('*.json'))
-    latest = next(path for path in (HERE / f'data/main-scenarios-v{n}' for n in (13, 12, 11)) if path.exists())
+    latest = next(path for path in (HERE / f'data/main-scenarios-v{n}' for n in (14, 13, 12, 11)) if path.exists())
     paths += sorted(latest.glob('*.json'))
     # Locale keys can contain UI text added outside app.js.
     paths += sorted((HERE / 'locales').glob('*-ja.json'))

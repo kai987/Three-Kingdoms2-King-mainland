@@ -89,9 +89,9 @@ const mapAccessKey=points=>[points[0].join(','),points.at(-1).join(',')].sort().
 const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);}
 function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;}
-async function request(path,body){
- const response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
- const value=await response.json();
+async function request(path,body,{raw=false,text=false}={}){
+ const response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:raw?body:JSON.stringify(body)});
+ const value=text&&response.ok?await response.text():await response.json();
  if(!response.ok){if(response.status===409){view=await request('/api/state');render();}throw new Error(value.error||'操作未完成。');}
  return value;
 }
@@ -265,12 +265,19 @@ async function showCityInformation(id){
    ${naming?.detail?`<p class="small">${escapeHtml(naming.detail)}</p>`:''}
    ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening.note)}</p>${historySources}`,'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${history.garrisons?.length?`<p>开局驻防：${history.garrisons.map(g=>`${escapeHtml(g.name)}（${garrisonLabels[g.basis]||'区域防务调配'}）`).join('、')}</p>`:'<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>'}</details>`:''}
    <p class="small">${escapeHtml(c.profile?.label||'旧版城市')} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
+   ${cityEconomyNote(c.profile)}
    <dl class="resources"><dt>金钱</dt><dd>${c.gold}</dd><dt>粮食</dt><dd>${c.grain}</dd><dt>预备兵</dt><dd>${c.reserves}</dd></dl>
    ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
    <p class="city-information-strength">驻城 ${c.officers.length}/${data.capacity}人 · 武将带兵合计 ${troops}</p>
    <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>武</th><th>知</th><th>兵</th></tr></thead><tbody>${rows||'<tr><td colspan="4">暂无驻军</td></tr>'}</tbody></table></div>
    </div>`,close);
  }catch(e){if(dialog.open&&generation===dialogGeneration)openDialog(title,`<p role="alert">${escapeHtml(e.message)}</p>`,close);}
+}
+
+function cityEconomyNote(profile){
+ if(!profile?.economy_reference_date)return '';
+ const [year,month]=profile.economy_reference_date,tc=escapeHtml(profile.economy_period_label_tc||''),ja=escapeHtml(profile.economy_period_label_ja||'');
+ return `<p class="small city-economy-note" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">開局經濟：${year}年${month}月 · ${tc}。資源數值為本作平衡設定，開局後隨實際戰役增減。</p><p class="small city-economy-note" data-locale-only="ja" data-l10n-native="ja">開始時の経済：${year}年${month}月 · ${ja}。資源量は本作の調整値で、開始後は実際の戦況に応じて増減します。</p>`;
 }
 
 function rosterRows(city){return city.roster.officer_ids.map(id=>{const o=view.game.officers[id];return `<tr title="体${o.health}，德${o.profile.virtue}，忠${o.loyalty}，经验${o.experience}"><td>${escapeHtml(name(id))}${marching().has(id)?'（在途）':''}</td><td>${o.profile.martial_strength}</td><td>${o.profile.intellect}</td><td>${o.troops}</td></tr>`;}).join('');}
@@ -282,6 +289,7 @@ function renderCity(){
  ${periodCityName(city.id)!==cityName(city.id)?`<p class="small">本年代地名：${escapeHtml(periodCityName(city.id))}。</p>`:''}
  ${naming?.detail?`<p class="small city-name-detail">${escapeHtml(naming.detail)}</p>`:''}
  <p class="small city-scale">${scale?`${escapeHtml(scale.label)} · ${city.owner==='neutral'?'无主城暂无月收入':`每月金${income.gold} / 粮${income.grain} / 预备兵${income.reserves}`}`:'旧版战役：沿用原有资源规则。'}</p>
+ ${cityEconomyNote(scale)}
  <dl class="resources"><dt>金钱</dt><dd>${city.gold}</dd><dt>粮食</dt><dd>${city.grain}</dd><dt>预备兵</dt><dd>${city.reserves}</dd></dl>
  <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>武</th><th>知</th><th>兵</th></tr></thead><tbody>${rosterRows(city)||'<tr><td colspan="4">暂无驻军</td></tr>'}</tbody></table></div>
  <p class="small">驻城 ${city.roster.officer_ids.length}/${capacity()}；每方出战上限10人。${city.action_used?'本城本回合已行动。':''}</p>
@@ -328,6 +336,41 @@ function transferCity(city){
  $('#transfer-city').onchange=updateEstimate;if($('#route-mode'))$('#route-mode').onchange=updateEstimate;dialog.querySelectorAll('input[name=transfer-officer]').forEach(input=>input.onchange=updateEstimate);watchRouteDialog(updateEstimate);updateEstimate();
  $('#confirm-transfer').onclick=async()=>{const ids=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>Number(e.value));if(await command('transfer',{source:city.id,target:$('#transfer-city').value,officers:ids,route_mode:$('#route-mode')?.value||'fastest'}))dialog.close();};
 }
+// Classify actual runtime entry before consulting immutable opening plans.
+function libraryEntryStatus(p){
+ if(p.alive===true)return p.faction?'serving':'free';
+ if(p.alive===false||p.year_state==='dead')return 'retired';
+ if(p.year_state==='not_born'||p.year_state==='not_appeared')return p.year_state;
+ if(p.missing.length)return 'missing';
+ if(['pending_history','pending_capacity','pending_faction','scenario_excluded'].includes(p.era_assignment?.status))return p.era_assignment.status;
+ if(p.year_state==='death_year_review'&&!p.era_assignment?.death_year_resolved)return 'death_review';
+ return p.year_state==='unknown'?'unknown':'unentered';
+}
+function libraryEntryCounts(people){
+ const counts={serving:0,free:0,not_born:0,not_appeared:0,retired:0,death_review:0,pending_history:0,pending_capacity:0,pending_faction:0,scenario_excluded:0,missing:0,unknown:0,unentered:0};
+ for(const p of people)counts[libraryEntryStatus(p)]++;
+ return counts;
+}
+function libraryPlacementFilter(p,filter){
+ const status=libraryEntryStatus(p);
+ return filter==='entry:not_yet'?['not_born','not_appeared'].includes(status):filter==='entry:unentered'?['missing','unknown','unentered'].includes(status):filter==='entry:'+status;
+}
+const libraryEntryLabels={serving:['已登場在籍','登場済み・仕官中'],not_yet:['未出生／未出仕','未出生・未登場'],pending_history:['歸屬待考','所属未確定'],pending_capacity:['容量不足未入局','定員不足で未登場'],pending_faction:['本篇勢力待配置','所属勢力が未設定'],scenario_excluded:['本劇本排除','本シナリオ対象外'],death_review:['卒年邊界待核','没年の境界を要確認'],retired:['已退出／已過卒年','退場済み・没年経過'],unentered:['其他尚未入局','その他の未登場']};
+function libraryEntryOptions(){
+ return Object.entries(libraryEntryLabels).map(([key,labels])=>`<option value="entry:${key}" data-library-entry="${key}" data-l10n-native="${GameI18n.locale}">${escapeHtml(labels[GameI18n.locale==='ja'?1:0])}</option>`).join('');
+}
+function refreshLibraryEntryLabels(){
+ for(const option of document.querySelectorAll('#library-filter [data-library-entry]')){
+  option.dataset.l10nNative=GameI18n.locale;
+  option.textContent=libraryEntryLabels[option.dataset.libraryEntry][GameI18n.locale==='ja'?1:0];
+ }
+}
+function libraryEntrySummary(people,game){
+ if(!game)return '<div class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">尚未開始戰役。總人物庫與開局規劃不等於實際駐城；開始後可查看本局在籍與在野人數。</div><div class="small" data-locale-only="ja" data-l10n-native="ja">戦役はまだ始まっていません。人物総数と開始時の配置計画は、実際の所属人数とは異なります。開始後に仕官中・在野の人数を確認できます。</div>';
+ const c=libraryEntryCounts(people),actual=c.serving+c.free,other=c.missing+c.unknown+c.unentered;
+ return `<div class="library-entry-summary" data-locale-only="zh-Hant" data-l10n-native="zh-Hant"><p>${game.year}年${game.month}月本局：在籍 <strong data-entry-count="serving">${c.serving}</strong> 人，在野 <strong data-entry-count="free">${c.free}</strong> 人；已登場 ${actual}／總庫 ${people.length} 人。</p><p class="small">未出生 ${c.not_born}、未出仕 ${c.not_appeared}、已退出／過卒年 ${c.retired}、卒年待核 ${c.death_review}；歸屬待考 ${c.pending_history}、勢力待配置 ${c.pending_faction}、容量不足 ${c.pending_capacity}、劇本排除 ${c.scenario_excluded}、其他未入局 ${other}。</p><p class="small">在籍包含行軍中的武將；在野者有所在地，但不佔城內名冊。待考或容量不足者不計入各城在籍，開局規劃不代表已經安置。</p></div><div class="library-entry-summary" data-locale-only="ja" data-l10n-native="ja"><p>${game.year}年${game.month}月の戦役：仕官中 <strong data-entry-count="serving">${c.serving}</strong> 人、在野 <strong data-entry-count="free">${c.free}</strong> 人。登場済み ${actual}／人物総数 ${people.length} 人。</p><p class="small">未出生 ${c.not_born}、登場前 ${c.not_appeared}、退場・没年経過 ${c.retired}、没年要確認 ${c.death_review}。所属未確定 ${c.pending_history}、勢力未設定 ${c.pending_faction}、定員不足 ${c.pending_capacity}、シナリオ対象外 ${c.scenario_excluded}、その他未登場 ${other}。</p><p class="small">仕官中には行軍中の武将も含みます。在野武将には現在地がありますが、都市の所属名簿には入りません。所属未確定・定員不足の人物は都市の人数に含めず、開始時の計画を実際の配置とはみなしません。</p></div>`;
+}
+document.addEventListener('game-language-change',refreshLibraryEntryLabels);
 function personStatus(p){
  if(p.missing.length)return '待补：'+p.missing.map(k=>({health_max:'体力',martial_strength:'武',intellect:'知',virtue:'德',terrain_affinity:'适性'})[k]).join('、');
  if(p.alive===false)return '已退出';
@@ -339,9 +382,9 @@ function personStatus(p){
 function showLibrary(){
  if(!view.catalog.library)return notice('请进入扩展战役查看人物配置状态。');
  const total=view.catalog.library.length;
- openDialog(`${total}人武将库`,`<p>${view.catalog.coverage.configured_profiles}人属性齐全，${view.catalog.coverage.pending_profiles}人待配置。${view.catalog.coverage.default_virtue_profiles?`${view.catalog.coverage.history_designs_total}人参考史料评分，${view.catalog.coverage.default_virtue_profiles}人默认德60，1人沿用原作基线。`:view.catalog.coverage.health_configured?'体力与适性已按人物库配置；缺德者仍待配置。':''}点击姓名查看评分依据与本年代驻城安排。</p><div class="library-tools"><input id="library-search" aria-label="检索武将" placeholder="姓名、别名或人物编号"><select id="library-filter" aria-label="人物筛选"><option value="all">全部${total}人</option><option value="ready">属性齐全</option><option value="rated">史料参考德</option><option value="default60">默认德60</option><option value="available">年表资格合格</option><option value="free">已登场在野</option><option value="missing">待配置</option></select></div><div id="library-results"></div>${view.catalog.library.some(p=>p.chronology_design?.death_year===null)?'<p class="small">＊为本作退场年，并非已知卒年；新增人物的估计年代可查看来源。</p>':''}<div class="library-tools"><button id="library-prev">上一页</button><span id="library-count"></span><button id="library-next">下一页</button></div>`,'<button data-cancel>返回战役</button>');
+ openDialog(`${total}人武将库`,`<p>${view.catalog.coverage.configured_profiles}人属性齐全，${view.catalog.coverage.pending_profiles}人待配置。${view.catalog.coverage.default_virtue_profiles?`${view.catalog.coverage.history_designs_total}人参考史料评分，${view.catalog.coverage.default_virtue_profiles}人默认德60，1人沿用原作基线。`:view.catalog.coverage.health_configured?'体力与适性已按人物库配置；缺德者仍待配置。':''}点击姓名查看评分依据与本年代驻城安排。</p>${libraryEntrySummary(view.catalog.library,view.game)}<div class="library-tools"><input id="library-search" aria-label="检索武将" placeholder="姓名、别名或人物编号"><select id="library-filter" aria-label="人物筛选"><option value="all">全部${total}人</option><option value="ready">属性齐全</option><option value="rated">史料参考德</option><option value="default60">默认德60</option><option value="available">年表资格合格</option><option value="free">已登场在野</option><option value="missing">待配置</option>${libraryEntryOptions()}</select></div><div id="library-results"></div>${view.catalog.library.some(p=>p.chronology_design?.death_year===null)?'<p class="small">＊为本作退场年，并非已知卒年；新增人物的估计年代可查看来源。</p>':''}<div class="library-tools"><button id="library-prev">上一页</button><span id="library-count"></span><button id="library-next">下一页</button></div>`,'<button data-cancel>返回战役</button>');
  let page=0;
- const draw=()=>{const q=$('#library-search').value.trim(),filter=$('#library-filter').value;const people=view.catalog.library.filter(p=>(!q||[p.name,p.person_id,...p.aliases].some(s=>[s,GameI18n.t(s,'zh-Hant'),GameI18n.t(s,'ja')].some(label=>label.includes(q))))&&(filter==='all'||filter==='ready'&&!p.missing.length||filter==='available'&&p.year_state==='available'||filter==='free'&&p.alive&&p.faction===null||filter==='missing'&&p.missing.length||filter==='rated'&&p.virtue_design?.status==='configured_design'||filter==='default60'&&p.virtue_design?.status==='configured_default'));const max=Math.max(0,Math.ceil(people.length/12)-1);page=Math.min(page,max);
+ const draw=()=>{const q=$('#library-search').value.trim(),filter=$('#library-filter').value;const people=view.catalog.library.filter(p=>(!q||[p.name,p.person_id,...p.aliases].some(s=>[s,GameI18n.t(s,'zh-Hant'),GameI18n.t(s,'ja')].some(label=>label.includes(q))))&&(filter==='all'||filter.startsWith('entry:')&&libraryPlacementFilter(p,filter)||filter==='ready'&&!p.missing.length||filter==='available'&&p.year_state==='available'||filter==='free'&&p.alive&&p.faction===null||filter==='missing'&&p.missing.length||filter==='rated'&&p.virtue_design?.status==='configured_design'||filter==='default60'&&p.virtue_design?.status==='configured_default'));const max=Math.max(0,Math.ceil(people.length/12)-1);page=Math.min(page,max);
  $('#library-results').innerHTML=`<table class="library-table"><thead><tr><th>武将</th><th>生/仕/卒</th><th>武/知/德</th><th>状态</th></tr></thead><tbody>${people.slice(page*12,(page+1)*12).map(p=>`<tr><td><button class="person-detail" data-person="${p.id}">${escapeHtml(p.name)}</button></td><td>${p.birth}/${p.service}/${p.death}${p.chronology_design?.death_year===null?'＊':''}</td><td>${p.martial??'待填'}/${p.intellect??'待填'}/${p.virtue??'待填'}${p.virtue_design?.status==='configured_default'?'（默认）':''}</td><td>${personStatus(p)}</td></tr>`).join('')}</tbody></table>`;
  dialog.querySelectorAll('[data-person]').forEach(el=>el.onclick=()=>showPerson(Number(el.dataset.person)));
  $('#library-count').textContent=`${people.length}人 · ${page+1}/${max+1}页`;$('#library-prev').disabled=page===0;$('#library-next').disabled=page===max;};
@@ -419,8 +462,8 @@ $('#main-menu').onclick=()=>{if(!busy)selectFaction();};
 $('#restart').onclick=()=>selectFaction();
 $('#save').onclick=async()=>{
  if(busy)return;
- try{const save=await request('/api/save');localStorage.setItem('three-kingdoms-demo-save',JSON.stringify(save));const blob=new Blob([JSON.stringify(save,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。');}catch(e){notice(e.message,true);}
+ try{const save=await request('/api/save',undefined,{text:true});localStorage.setItem('three-kingdoms-demo-save',save);const blob=new Blob([save],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。');}catch(e){notice(e.message,true);}
 };
-async function loadSave(save){if(busy)return;setBusy(true);try{view=await request('/api/load',{save,revision:view.revision});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');}catch(e){notice(e.message,true);}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
-$('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-demo-save');openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>`,'<button data-cancel>取消</button>');$('#load-local').onclick=()=>{try{loadSave(JSON.parse(saved));}catch(e){notice('存档无效，当前进度未改变。',true);}};$('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(JSON.parse(await file.text()));}catch(e){notice('存档无效，当前进度未改变。',true);}};};
+async function loadSave(save){if(busy)return;setBusy(true);try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');}catch(e){notice(e.message,true);}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
+$('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-demo-save');openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>`,'<button data-cancel>取消</button>');$('#load-local').onclick=()=>{try{loadSave(saved);}catch(e){notice('存档无效，当前进度未改变。',true);}};$('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(await file.text());}catch(e){notice('存档无效，当前进度未改变。',true);}};};
 GameI18n.ready.then(()=>Promise.all([request('/api/state'),request('/assets/city-positions.json')])).then(([value,positions])=>{view=value;mapPositions=positions;render();if(view.game)selectFaction();}).catch(e=>notice('游戏未能载入，请确认本地服务正在运行。',true));
