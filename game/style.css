@@ -751,8 +751,8 @@ padding:4px 8px
 
 }
 
-/* Recolor only the native castle interior; keep its32px silhouette. */
-.city-hit .castle-fill{stroke:none;shape-rendering:crispEdges}
+/* Keep the native32px silhouette; unowned castles cover the baked black border in white. */
+.city-hit .castle-fill,.city-hit .castle-border{stroke:none;shape-rendering:crispEdges}
 .faction-swatch{flex:none;border:1px solid #000;image-rendering:pixelated}
 #map-date{position:absolute;right:14px;bottom:14px;z-index:2;display:flex;gap:20px;padding:3px 8px;border:4px double #000;background:var(--paper);color:#000;font:20px/1.2 var(--display);white-space:nowrap;box-shadow:0 0 0 2px var(--paper);pointer-events:none}
 @media(max-width:600px){#map-date{right:8px;bottom:8px;gap:14px;font-size:16px}}
@@ -768,7 +768,7 @@ stroke-dasharray:7 3
 }
 .map-toolbar button.selected:hover:not(:disabled){background:#000;color:var(--paper)}
 
-/* Native empty castles stay white and have no faction ownership bar. */
+/* Unowned castles are solid white and have no faction ownership bar. */
 .road-underlay,.road-line{fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .road-underlay{stroke:#e4b45e;stroke-width:4.1}
 .road-line{stroke:#704518;stroke-width:1.9}

@@ -95,7 +95,8 @@ function renderMap(){
  if(preview)$('#date').textContent=`${date.year}年${date.month}月 · 选择势力`;
  const castles=active.map(c=>{
   const [x,y]=mapPosition(c),owner=owners[c.id]||'neutral';
-  const outline=view.catalog.map_presentation.new_city_ids?.includes(c.id)?view.catalog.map_presentation.castle_outline_pixels.map(([dx,dy])=>`<rect x="${x+dx}" y="${y+dy}" width="4" height="4" fill="#000"/>`).join(''):'';
+  // Cover the baked outline too: every pixel of an unowned castle is white.
+  const outline=owner==='neutral'||view.catalog.map_presentation.new_city_ids?.includes(c.id)?view.catalog.map_presentation.castle_outline_pixels.map(([dx,dy])=>`<rect class="castle-border" x="${x+dx}" y="${y+dy}" width="4" height="4" fill="${owner==='neutral'?'#fff':'#000'}"/>`).join(''):'';
   const colored=view.catalog.map_presentation.castle_fill_pixels.map(([dx,dy])=>`<rect class="castle-fill" x="${x+dx}" y="${y+dy}" width="4" height="4" fill="${mapColor(owner)}"/>`).join('');
   return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''}" data-city="${c.id}" data-owner="${owner}" aria-label="${escapeHtml(cityCaption(c.id))}，${escapeHtml(ownerName(owner))}"><title>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owner))}</title>${outline}${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/></g>`;
  }).join('');
