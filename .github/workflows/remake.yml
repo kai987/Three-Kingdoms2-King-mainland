@@ -85,3 +85,9 @@ jobs:
         run: |
           python game/build_unified_campaigns.py
           git diff --exit-code -- game/data/main-scenarios-v9
+      - name: Rebuild dated Shu and Wu city expansion
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_southern_campaigns.py
+          git diff --exit-code -- game/data/main-scenarios-v10

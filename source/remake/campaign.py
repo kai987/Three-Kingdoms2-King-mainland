@@ -101,10 +101,10 @@ class Catalog:
         assert type(expected) is int and expected > 0
         assert len(self.definitions) == 1000 and len(self.map_cities) == expected
 
-    def active_city_ids(self, year):
+    def active_city_ids(self, year, month=1):
         opened = set(self.data['active_cities'])
         for key, rule in self.data.get('city_foundings', {}).items():
-            if year >= rule['year']: opened.add(key)
+            if (year,month) >= (rule['year'],rule.get('month',1)): opened.add(key)
             else: opened.discard(key)
         return [key for key in self.map_cities if key in opened]
 
@@ -167,7 +167,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             return {'revision': self.revision, 'game': self.to_dict(),
                     'catalog': {'title': self.catalog.data['title'], 'factions': list(self.catalog.factions.values()),
                                 'cities': list(self.catalog.map_cities.values()),
-                                'active_cities': self.catalog.active_city_ids(state.year if state else self.catalog.data['start_year']),
+                                'active_cities': self.catalog.active_city_ids(
+                                    state.year if state else self.catalog.data['start_year'],
+                                    state.month if state else self.catalog.data['start_month']),
                                 'links': self.catalog.data['links'], 'rules': self.catalog.data['rules'],
                                 'notes': self.catalog.data['design_notes'], 'library_count': 1000,
                                 'year_available': available,
@@ -404,14 +406,19 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _open_dated_cities(self, state):
         """Split an existing actual territory; do not replay historical conquest."""
         for key, rule in self.catalog.data.get('city_foundings', {}).items():
-            if state.year < rule['year'] or key in state.cities: continue
+            if (state.year,state.month) < (rule['year'],rule.get('month',1)) or key in state.cities: continue
             parent = state.cities[rule['parent']]
             resources = {}
             for field in ('gold','grain','reserves'):
                 resources[field] = getattr(parent,field) // rule['resource_divisor']
                 setattr(parent,field,getattr(parent,field)-resources[field])
             state.cities[key] = City(key,parent.owner,CityRoster(key,rules=self.catalog.rules),**resources)
-            self._note(state,f'{self.catalog.map_cities[key]["name"]}建郡，承接晋阳当时归属与部分资源；未新增兵员或强制转属。')
+            if key == 'xinxing' and 'month' not in rule:
+                # Keep the released year-only event text and replay output.
+                self._note(state,f'{self.catalog.map_cities[key]["name"]}建郡，承接晋阳当时归属与部分资源；未新增兵员或强制转属。')
+            else:
+                parent_name = self.catalog.map_cities[rule['parent']]['name']
+                self._note(state,f'{self.catalog.map_cities[key]["name"]}建置，承接{parent_name}当时归属与部分资源；未新增兵员或强制转属。')
 
     def _complete_month(self, state):
         r = self.catalog.data['rules']
@@ -525,7 +532,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         integer(state.rng.state, 1, 0xffffffff, 'rng state')
         integer(state.rng.draws, 0, 100000000, 'rng draws')
         elapsed = (state.year - self.catalog.data['start_year']) * 12 + state.month - self.catalog.data['start_month']
-        if state.calendar_cursor != state.year or elapsed != state.turn - 1 or set(state.cities) != set(self.catalog.active_city_ids(state.year)):
+        if state.calendar_cursor != state.year or elapsed != state.turn - 1 or set(state.cities) != set(self.catalog.active_city_ids(state.year,state.month)):
             raise ValueError('calendar/city domain')
         if any(type(v) is not int or not 0 <= v <= 100000000 for v in state.soldiers.values()) or set(state.soldiers) != {'initial', 'recruited', 'lost'}:
             raise ValueError('soldier ledger')
