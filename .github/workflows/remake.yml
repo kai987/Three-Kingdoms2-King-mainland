@@ -35,7 +35,9 @@ jobs:
         run: |
           node --check game/app.js
           node --check game/i18n.js
+          node --check game/map-navigation.js
           node tests/test_remake_i18n_runtime.cjs
+          node tests/test_remake_map_navigation.cjs
       - name: Rebuild current officer batch and historical campaigns offline
         env:
           PYTHONDONTWRITEBYTECODE: '1'

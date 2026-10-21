@@ -1,5 +1,6 @@
 'use strict';
 let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
+let mapNavigation=null,mapCamera=null,mapCameraKey='';
 const $=s=>document.querySelector(s), dialog=$('#dialog');
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=id=>view.catalog.names[String(id)]||'武将';
@@ -143,7 +144,10 @@ function renderMap(){
  const added=preview?.added_city_ids||view.catalog.added_city_ids||[],activeIds=new Set(active.map(c=>c.id));
  const focused=preview?.focus||selectedCity,selected=board.find(c=>c.id===focused),center=selected?mapPosition(selected):[760,440];
  const world=(preview?preview.world:view.catalog.world)||{x:0,y:0,width:1352,height:1024,background:view.catalog.map_presentation.background};
- const box=mapMode==='region'?`${Math.max(world.x,Math.min(world.x+world.width-430,center[0]-215))} ${Math.max(0,Math.min(674,center[1]-175))} 430 350`:`${world.x} 0 ${world.width} 1024`;
+ const cameraKey=[world.x,world.y||0,world.width,world.height,world.background].join(':');
+ if(mapNavigation){mapNavigation.destroy();mapNavigation=null;}
+ if(cameraKey!==mapCameraKey){mapCamera=null;mapCameraKey=cameraKey;}
+ const box=`${world.x} ${world.y||0} ${world.width} ${world.height}`;
  const date=preview||game||view.catalog.scenarios.find(s=>s.id===view.catalog.scenario_id);
  if(preview)$('#date').textContent=`${date.year}年${date.month}月 · 选择势力`;
  const castles=active.map(c=>{
@@ -186,20 +190,33 @@ function renderMap(){
   const [x,y]=mapPosition(c),[dx,dy,anchor]=offsets[c.id]||[0,-24,'middle'];return `<text class="map-city-name" x="${x+dx}" y="${y+dy}" text-anchor="${anchor}" data-city-label="${c.id}" aria-hidden="true">${escapeHtml(cityName(c.id))}</text>`;
  }).join('');
  $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</button></div>
- <svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放"><defs><marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${world.background}" x="${world.x}" y="0" width="${world.width}" height="1024"/>${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
+ <svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs><marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${world.background}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
+ <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
+ <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
  <time id="map-date" datetime="${String(date.year).padStart(4,'0')}-${String(date.month).padStart(2,'0')}" aria-label="${date.year}年${date.month}月">${date.year}年<span>${date.month}月</span></time>`;
  const choose=(id,inspect=false)=>{
   if(busy)return;
   if(preview)preview.focus=id;
   else{selectedCity=id;if(game.phase==='city'){$('#inspector').scrollTop=0;renderCity();}}
+  if(!inspect){const city=board.find(c=>c.id===id);if(city)mapNavigation.focus(...mapPosition(city),mapCamera?.zoom||1);}
   renderMap();
   if(inspect)$(`[data-city="${id}"]`).focus({preventScroll:true});
   if(inspect||preview||game.phase!=='city')showCityInformation(id);
  };
- $('#region').onclick=()=>{mapMode='region';renderMap();};$('#all-map').onclick=()=>{mapMode='all';renderMap();};
+ const navigationControls=()=>{
+  const zoom=mapCamera.zoom;
+  $('#map-zoom').textContent=`${Math.round(zoom*100)}%`;
+  $('#map-zoom-out').disabled=zoom<=1+1e-6;$('#map-zoom-in').disabled=zoom>=4-1e-6;
+  for(const[id,selected]of [['region',mapMode==='region'],['all-map',zoom<=1+1e-6]]){$('#'+id).classList.toggle('selected',selected);$('#'+id).setAttribute('aria-pressed',String(selected));}
+ };
+ let initialCameraUpdate=true;
+ mapNavigation=MapNavigation.attach($('#world-map'),{world,initial:mapCamera||(mapMode==='region'?{x:center[0],y:center[1],zoom:3}:null),onChange:camera=>{mapCamera=camera;if(!initialCameraUpdate)mapMode=camera.zoom<=1+1e-6?'all':'custom';initialCameraUpdate=false;navigationControls();}});
+ $('#region').onclick=()=>{mapNavigation.focus(center[0],center[1],3);mapMode='region';navigationControls();};
+ $('#all-map').onclick=()=>mapNavigation.reset();
+ $('#map-zoom-out').onclick=()=>mapNavigation.zoomBy(1/1.25);$('#map-zoom-in').onclick=()=>mapNavigation.zoomBy(1.25);
  $('#city-jump').onchange=()=>choose($('#city-jump').value);
  $('#map-labels').onclick=()=>{cityLabels={major:'all',all:'none',none:'major'}[cityLabels];renderMap();};
- document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=()=>choose(id,true);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(id,true);}};});
+ document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=e=>{if(!mapNavigation.shouldSuppressClick(e))choose(id,true);};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(id,true);}};});
 }
 
 async function showCityInformation(id){
@@ -329,6 +346,7 @@ function renderDuel(b){
  for(const move of ['strike','guard','feint','withdraw'])$('#duel-'+move).onclick=()=>command('duel_action',{battle_id:b.id,move});
 }
 function renderBattle(){
+ if(mapNavigation){mapNavigation.destroy();mapNavigation=null;}
  const game=view.game,b=game.battle;
  if(b.extended?.duel)return renderDuel(b);
  const own=b.attacker===game.player?'attackers':'defenders',foe=own==='attackers'?'defenders':'attackers',friendly=b[own],hostile=b[foe];

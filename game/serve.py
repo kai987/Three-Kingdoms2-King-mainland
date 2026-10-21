@@ -59,6 +59,7 @@ def main():
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/i18n.js': ('i18n.js', 'text/javascript; charset=utf-8'),
+              '/map-navigation.js': ('map-navigation.js', 'text/javascript; charset=utf-8'),
               '/locales/zh-hant.json': ('locales/zh-hant.json', 'application/json; charset=utf-8'),
               '/locales/ui-ja.json': ('locales/ui-ja.json', 'application/json; charset=utf-8'),
               '/locales/messages-ja.json': ('locales/messages-ja.json', 'application/json; charset=utf-8'),
