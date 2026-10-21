@@ -19,7 +19,8 @@ class FactionPaletteTests(unittest.TestCase):
         for path in sorted((ROOT/'game/data').rglob('*.json')):
             data=json.loads(path.read_text())
             if isinstance(data,dict) and isinstance(data.get('factions'),list):
-                cls.catalogs[data['id']]=SimpleNamespace(data=data,
+                cls.catalogs[data['id']]=SimpleNamespace(
+                    data={'id':data['id'],'content_generation':data.get('content_generation')},
                     factions={row['id']:row for row in data['factions']})
 
     def test_every_released_scenario_has_separated_visible_fills(self):
