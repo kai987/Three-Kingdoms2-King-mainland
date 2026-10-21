@@ -1,0 +1,196 @@
+{
+  "schema": "era-postings-v3",
+  "scope": "Career-region hints and explicit fixed-board proxies; faction ownership takes precedence.",
+  "postings": [
+    {
+      "person_id": "san14-candidate-0608",
+      "name": "张既",
+      "start_year": 217,
+      "end_year": 227,
+      "city": "jingzhao",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷16",
+      "note": "京兆尹及雍凉军事治理的区域安排，非精确常驻营寨"
+    },
+    {
+      "person_id": "san14-candidate-0956",
+      "name": "刘馥",
+      "start_year": 207,
+      "end_year": 207,
+      "city": "jiujiang",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷15",
+      "note": "治合肥的九江郡节点映射，不再放入吴方"
+    },
+    {
+      "person_id": "san14-candidate-0814",
+      "name": "文聘",
+      "start_year": 217,
+      "end_year": 227,
+      "city": "yiyang",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷18",
+      "note": "江夏北部魏方守区代理到义阳，地图江夏节点为吴侧；不改投吴"
+    },
+    {
+      "person_id": "san14-candidate-0715",
+      "name": "田豫",
+      "start_year": 227,
+      "end_year": 249,
+      "city": "runan",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷26",
+      "note": "汝南太守及其晚期活动区域，日期为战役安排"
+    },
+    {
+      "person_id": "san14-candidate-0513",
+      "name": "仓慈",
+      "start_year": 227,
+      "end_year": 227,
+      "city": "wuwei",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷16",
+      "note": "敦煌在地图外，暂由武威表示河西治理；不是敦煌同城"
+    },
+    {
+      "person_id": "san14-candidate-0617",
+      "name": "张纮",
+      "start_year": 200,
+      "end_year": 207,
+      "city": "danyang",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷53",
+      "note": "江东文务中枢区域"
+    },
+    {
+      "person_id": "san14-candidate-0314",
+      "name": "顾雍",
+      "start_year": 217,
+      "end_year": 227,
+      "city": "danyang",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷52",
+      "note": "吴中枢文务区域"
+    },
+    {
+      "person_id": "san14-candidate-0586",
+      "name": "太史慈",
+      "start_year": 200,
+      "end_year": 200,
+      "city": "yuzhang",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷49",
+      "note": "领建昌都尉的豫章郡映射"
+    },
+    {
+      "person_id": "san14-candidate-0250",
+      "name": "黄权",
+      "start_year": 221,
+      "end_year": 221,
+      "city": "bajun",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷43",
+      "note": "夷陵前蜀方巴郡军旅区域"
+    },
+    {
+      "person_id": "san14-candidate-0250",
+      "name": "黄权",
+      "start_year": 227,
+      "end_year": 227,
+      "city": "henan",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷43",
+      "note": "入魏后京师任职区域，不按原阵营重复出现"
+    },
+    {
+      "person_id": "san14-candidate-0110",
+      "name": "霍弋",
+      "start_year": 249,
+      "end_year": 249,
+      "city": "jianning",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷41",
+      "note": "南中建宁军政区域，非精确官署地点"
+    },
+    {
+      "person_id": "san14-candidate-0892",
+      "name": "李恢",
+      "start_year": 221,
+      "end_year": 227,
+      "city": "jianning",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷43",
+      "note": "受任庲降都督南中区域"
+    },
+    {
+      "person_id": "san14-candidate-0977",
+      "name": "吕凯",
+      "start_year": 221,
+      "end_year": 221,
+      "city": "yongchang",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷43",
+      "note": "守永昌地区"
+    },
+    {
+      "person_id": "san14-candidate-0897",
+      "name": "陆胤",
+      "start_year": 249,
+      "end_year": 249,
+      "city": "jiaozhi",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷61",
+      "note": "赤乌十一年之后任交州刺史的交趾区域；征发与招抚另记"
+    },
+    {
+      "person_id": "san14-candidate-0079",
+      "name": "王连",
+      "start_year": 217,
+      "end_year": 221,
+      "city": "shujun",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷41",
+      "note": "盐铁财务与中枢任职区域"
+    },
+    {
+      "person_id": "san14-candidate-0872",
+      "name": "姚伷",
+      "start_year": 227,
+      "end_year": 227,
+      "city": "guanghan",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷45",
+      "note": "广汉太守及诸葛亮北驻汉中前后的区域提示"
+    },
+    {
+      "person_id": "san14-candidate-0780",
+      "name": "潘濬",
+      "start_year": 221,
+      "end_year": 227,
+      "city": "jiangxia",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷61",
+      "note": "归吴后的荆州军政区域，非精确营地"
+    },
+    {
+      "person_id": "san14-candidate-0748",
+      "name": "杜畿",
+      "start_year": 217,
+      "end_year": 221,
+      "city": "hedong",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷16",
+      "note": "河东治理区域"
+    },
+    {
+      "person_id": "san14-candidate-0774",
+      "name": "马良",
+      "start_year": 217,
+      "end_year": 221,
+      "city": "nanjun",
+      "basis": "curated_career_region_with_board_proxy",
+      "source": "https://zh.wikisource.org/wiki/三國志/卷39",
+      "note": "荆州及刘备中枢军政区域代理"
+    }
+  ]
+}

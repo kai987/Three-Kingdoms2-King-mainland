@@ -11,7 +11,7 @@ OUT=ROOT/'outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c'
 read=lambda f:json.loads((HERE/f).read_text())
 roster=read('data/roster-candidates.json');audit=read('data/dedup-audit.json');original=read('data/original-overlap-audit.json');mapping=read('field-mapping.json');scenarios=read('data/scenario-availability-summary.json')
 remake=read('remake-summary.json');virtue_designs=read('virtue-designs.json')['profiles']
-mainland=json.loads((ROOT/'game/data/eras/217.json').read_text())['coverage']
+mainland=json.loads((ROOT/'game/data/eras-v3/217.json').read_text())['coverage']
 links=json.loads((MAP/'city-map-city-sea-links-v42.json').read_text())
 source=(MAP/'city-map-city-sea-preview-v42.html').read_text()
 maphtml=re.search(r'<div id="map">.*</div></body>',source,re.S).group(0).removesuffix('</body>')
@@ -56,7 +56,7 @@ html{scroll-behavior:smooth}.map-viewport{max-width:1356px;width:100%}.section-l
 <p>新登场人物0兵、基础短剣和絹巾、经验0；体力按明确人物基准满值初始化。在野忠诚0、君主100，仕官者用剧本配置，招募与俘虏分别使用原规则。体力、适性或能力缺失时列为待配置。</p>
 <p class="warning">阶段1的原版基线仍为8人；扩展战役现已整理1000人的SAN14第三方数值资料，__MAINLAND_READY__人属性齐全，__MAINLAND_PENDING__人仍待配置，217年7月开局__MAINLAND_SERVING__人仕官；体力和适性已覆盖1000人，剩余缺项为德。<a href="http://127.0.0.1:8878/">打开本地96城战役</a>；须先按仓库说明启动游戏服务。该试制版尚非完整千人正式战役。</p>
 <details><summary>首批5人的德设计与史料依据</summary><p>按恤民35%、公正30%、操守20%、信义15%加权。维度与分值是游戏设计解释，使用生涯综合档，不是史料给出的客观数值，也不直接等同魅力。其余人物不自动补分。</p><div class="table-wrap"><table id="virtue-design-table"><thead><tr><th>人物</th><th>德</th><th>设计说明</th><th>史料</th></tr></thead><tbody>__VIRTUE_ROWS__</tbody></table></div></details>
-<div class="downloads"><a href="../../game/data/eras/217.json">当前战役人物配置</a><a href="data/san14-abilities.json">千人武力与智力来源表</a><a href="__REMAKE_RULES__">重制版规则</a><a href="__REMAKE_PROFILES__">1000人初始化资料</a><a href="__REMAKE_CSV__">初始化资料CSV</a><a href="__REMAKE_YEARS__">年度人数</a><a href="__REMAKE_PLAN__">分阶段实现计划</a></div>
+<div class="downloads"><a href="../../game/data/eras-v3/217.json">当前战役人物配置</a><a href="data/san14-abilities.json">千人武力与智力来源表</a><a href="__REMAKE_RULES__">重制版规则</a><a href="__REMAKE_PROFILES__">1000人初始化资料</a><a href="__REMAKE_CSV__">初始化资料CSV</a><a href="__REMAKE_YEARS__">年度人数</a><a href="__REMAKE_PLAN__">分阶段实现计划</a></div>
 <h2 id="map-section">城池—陆路—航道—陆路—城池</h2>
 <nav><label><input id="river-toggle" type="checkbox" checked> 河流</label><label><input id="land-toggle" type="checkbox" checked> 陆路与岸边接驳</label><label><input id="sea-toggle" type="checkbox" checked> 海上航道</label><a href="__MAP_PNG__">完整样图</a></nav>
 <div class="map-viewport">__MAP_HTML__</div>

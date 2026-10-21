@@ -43,8 +43,9 @@ def main():
     from remake.campaign import GameError
     from remake.session import CampaignSession
     era_index = json.loads((HERE / 'data/eras/index.json').read_text())
+    current_index = json.loads((HERE / 'data/eras-v3/index.json').read_text())
     game = CampaignSession([HERE / 'data/demo.json', HERE / 'data/mainland.json'] +
-                           [HERE / 'data' / name for name in era_index['catalogs']])
+                           [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs']])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/style.css': ('style.css', 'text/css; charset=utf-8'),

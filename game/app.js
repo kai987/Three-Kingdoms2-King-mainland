@@ -6,6 +6,7 @@ const name=id=>view.catalog.names[String(id)]||'武将';
 const faction=id=>view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
 const cityName=id=>view.catalog.cities.find(c=>c.id===id)?.name||id;
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);}
+function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;}
 async function request(path,body){
  const response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
  const value=await response.json();
@@ -14,10 +15,10 @@ async function request(path,body){
 }
 async function command(kind,payload={}){
  if(busy)return false;
- busy=true;document.body.classList.add('busy');notice();
+ setBusy(true);notice();
  try{view=await request('/api/command',{kind,payload,revision:view.revision});render();return true;}
  catch(e){notice(e.message,true);return false;}
- finally{await new Promise(resolve=>setTimeout(resolve,180));busy=false;document.body.classList.remove('busy');}
+ finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}
 }
 function openDialog(title,body,actions){
  if(busy)return;
@@ -30,7 +31,7 @@ function selectFaction(inDialog=false){
  const draw=(scenario)=>{
   const option=view.catalog.scenarios.find(x=>x.id===scenario), expanded=option.cities===96;
   const preferred=option.factions.some(f=>f.id==='shu')?'shu':option.factions[0].id;
-  const content=`<label class="field" for="scenario">战役<select id="scenario">${view.catalog.scenarios.map(x=>`<option value="${x.id}" ${x.id===scenario?'selected':''}>${escapeHtml(x.title)} · ${x.cities}城</option>`).join('')}</select></label><p class="intro">${option.year}年${option.month}月开局，${option.configured}人属性齐全。${expanded?'96城全部开放；年代势力参考来源快照，驻城为本作战役配置。':'荆襄四城，七名武将的演练。'}</p>
+  const content=`<label class="field" for="scenario">战役<select id="scenario">${view.catalog.scenarios.map(x=>`<option value="${x.id}" ${x.id===scenario?'selected':''}>${escapeHtml(x.title)} · ${x.configured}人 · ${x.cities}城</option>`).join('')}</select></label><p class="intro">${option.year}年${option.month}月开局，${option.configured}人属性齐全。${expanded?'96城全部开放；年代势力参考来源快照，驻城为本作战役配置。':'荆襄四城，七名武将的演练。'}</p>
   <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}>${escapeHtml(f.name)}<span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></label>`).join('')}</div>
   <label class="seed-label" for="seed">战局编号<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026"></label>`;
   if(inDialog)openDialog('选择新战役',content,'<button data-cancel>取消</button><button class="primary" id="begin">开始战役</button>');
@@ -50,7 +51,7 @@ function renderMap(){
  const game=view.game,active=view.catalog.cities.filter(c=>view.catalog.active_cities.includes(c.id));
  const center=view.catalog.cities.find(c=>c.id===selectedCity)?.position||[760,440];
  const box=mapMode==='region'?`${Math.max(0,Math.min(922,center[0]-215))} ${Math.max(0,Math.min(674,center[1]-175))} 430 350`:'0 0 1352 1024';
- $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button>${game?`<label class="city-jump">城池 <select id="city-jump" aria-label="选择城池">${active.map(c=>`<option value="${c.id}" ${c.id===selectedCity?'selected':''}>${escapeHtml(c.name)} · ${faction(game.cities[c.id].owner)}</option>`).join('')}</select></label>`:''}</div>
+ $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button>${game?`<label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===selectedCity?'selected':''}>${escapeHtml(c.name)} · ${faction(game.cities[c.id].owner)}</option>`).join('')}</select></label>`:''}</div>
  <svg id="world-map" viewBox="${box}" aria-label="96城地图，${active.length}城开放"><image href="/assets/map.png" x="0" y="0" width="1352" height="1024"/>
  ${game?active.map(c=>`<g role="button" tabindex="0" class="city-hit faction-${game.cities[c.id].owner} ${selectedCity===c.id?'selected':''}" data-city="${c.id}" aria-label="${escapeHtml(c.name)}，${faction(game.cities[c.id].owner)}"><title>${escapeHtml(c.name)} · ${faction(game.cities[c.id].owner)}</title><rect x="${c.position[0]-21}" y="${c.position[1]-21}" width="42" height="42" rx="1"/></g>`).join(''):''}</svg>`;
  const choose=id=>{if(busy)return;selectedCity=id;if(view.game.phase==='city')renderCity();renderMap();};
@@ -121,7 +122,7 @@ function showPerson(id){
  const affinity={0:'平地',1:'山地',2:'水地'};
  const sourceState={serving:'仕官',free:'在野',undiscovered:'未发现',not_appeared:'尚未登场',dead:'已故'};
  const current=view.game?Object.values(view.game.cities).find(c=>c.roster.officer_ids.includes(id))?.id:null;
- openDialog(`${p.name} · 人物配置`,`<p class="small">${escapeHtml(p.person_id)} · 独立编号 ${id}</p><p>体力上限 ${p.health_max??'待配置'}；适性 ${affinity[p.affinity]??'待配置'}。体力与适性是本作初始化规则。</p><p>武 ${p.martial??'待填'} / 知 ${p.intellect??'待填'} / 德 ${p.virtue??'待考'}。武知来自第三方SAN14数值转写，年代为来源游戏设定。</p>${d?`<p>${escapeHtml(d.design_rationale||d.notes||'逐人史料参考设计。')}</p><p>恤民 ${d.dimensions.care} · 公正 ${d.dimensions.fairness} · 操守 ${d.dimensions.integrity} · 信义 ${d.dimensions.trust}。${d.confidence==='low'?'史料有限，低置信初评；':''}德是生涯综合游戏评分。</p><ul>${d.sources.map(s=>`<li><a href="${escapeHtml(s.url)}" target="_blank" rel="noreferrer">${escapeHtml(s.work+' · '+s.section)}</a></li>`).join('')}</ul>`:`<p>${p.virtue===null?'史料与独立德评分尚待补齐，当前不进入战局。':'沿用原版人物基线，历史德重评待补。'}</p>`}${a?`<p>开局来源：${escapeHtml(a.source_ruler||sourceState[a.source_status]||'状态待核')}。开局规划：${escapeHtml(a.city?cityName(a.city):'驻城待考')}；${escapeHtml(a.faction?faction(a.faction):a.source_status==='dead'?'不登场':a.source_status==='not_appeared'?'尚未登场':a.source_status==='serving'?'势力待接入':'在野')}。</p><p class="small">来源身份与驻城分开记录。驻城使用地名映射或本作区域配置，不能当作已考证的历史驻军地点。${a.death_year_resolved?'本次快照确认卒年开局仍登场。':''}</p>`:''}${p.alive?`<p>当前战局：${escapeHtml(p.faction?faction(p.faction):'在野')} · ${escapeHtml(cityName(current||p.location||'待归城'))}</p>`:''}`,'<button id="back-library">返回武将库</button><button data-cancel>返回战役</button>');
+ openDialog(`${p.name} · 人物配置`,`<p class="small">${escapeHtml(p.person_id)} · 独立编号 ${id}</p><p>体力上限 ${p.health_max??'待配置'}；适性 ${affinity[p.affinity]??'待配置'}。体力与适性是本作初始化规则。</p><p>武 ${p.martial??'待填'} / 知 ${p.intellect??'待填'} / 德 ${p.virtue??'待考'}。武知来自第三方SAN14数值转写，年代为来源游戏设定。</p>${d?`<p>${escapeHtml(d.design_rationale||d.notes||'逐人史料参考设计。')}</p>${d.calibration?`<p>尺度对照：${escapeHtml(d.calibration.name)}（德${d.calibration.virtue}）。本人的四维按所列事迹独立评分。</p>`:''}<p>恤民 ${d.dimensions.care} · 公正 ${d.dimensions.fairness} · 操守 ${d.dimensions.integrity} · 信义 ${d.dimensions.trust}。${d.confidence==='low'?'史料有限，低置信初评；':''}德是生涯综合游戏评分。</p><ul>${d.sources.map(s=>`<li><a href="${escapeHtml(s.url)}" target="_blank" rel="noreferrer">${escapeHtml(s.work+' · '+s.section)}</a></li>`).join('')}</ul>`:`<p>${p.virtue===null?'史料与独立德评分尚待补齐，当前不进入战局。':'沿用原版人物基线，历史德重评待补。'}</p>`}${a?`${a.membership_revision?`<p>历史与分组修订：${escapeHtml(a.membership_revision.reason)}</p>`:''}<p>开局来源：${escapeHtml(a.source_ruler||sourceState[a.source_status]||'状态待核')}。开局规划：${escapeHtml(a.city?cityName(a.city):'驻城待考')}；${escapeHtml(a.faction?faction(a.faction):a.source_status==='dead'?'不登场':a.source_status==='not_appeared'?'尚未登场':a.source_status==='serving'?'势力待接入':'在野')}。</p><p class="small">来源身份与驻城分开记录。驻城使用地名映射或本作区域配置，不能当作已考证的历史驻军地点。${a.death_year_resolved?'本次快照确认卒年开局仍登场。':''}</p>`:''}${p.alive?`<p>当前战局：${escapeHtml(p.faction?faction(p.faction):'在野')} · ${escapeHtml(cityName(current||p.location||'待归城'))}</p>`:''}`,'<button id="back-library">返回武将库</button><button data-cancel>返回战役</button>');
  $('#back-library').onclick=showLibrary;
 }
 function tactics(b){
@@ -170,6 +171,6 @@ $('#save').onclick=async()=>{
  if(busy)return;
  try{const save=await request('/api/save');localStorage.setItem('three-kingdoms-demo-save',JSON.stringify(save));const blob=new Blob([JSON.stringify(save,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=view.catalog.title+'存档.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。');}catch(e){notice(e.message,true);}
 };
-async function loadSave(save){if(busy)return;busy=true;document.body.classList.add('busy');try{view=await request('/api/load',{save,revision:view.revision});selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');}catch(e){notice(e.message,true);}finally{await new Promise(resolve=>setTimeout(resolve,180));busy=false;document.body.classList.remove('busy');}}
+async function loadSave(save){if(busy)return;setBusy(true);try{view=await request('/api/load',{save,revision:view.revision});selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');}catch(e){notice(e.message,true);}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
 $('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-demo-save');openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>`,'<button data-cancel>取消</button>');$('#load-local').onclick=()=>{try{loadSave(JSON.parse(saved));}catch(e){notice('存档无效，当前进度未改变。',true);}};$('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(JSON.parse(await file.text()));}catch(e){notice('存档无效，当前进度未改变。',true);}};};
 request('/api/state').then(value=>{view=value;render();}).catch(e=>notice('游戏未能载入，请确认本地服务正在运行。',true));

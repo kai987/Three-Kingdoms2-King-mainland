@@ -31,19 +31,23 @@
   "mainland_campaign": {
     "library": 1000,
     "san14_abilities": 1000,
-    "configured_profiles": 148,
-    "pending_profiles": 852,
-    "initial_serving": 102,
+    "configured_profiles": 268,
+    "pending_profiles": 732,
+    "initial_serving": 164,
     "source_years": "third-party SAN14 settings; historical verification separate",
     "virtue": "individually history-informed authorial game ratings, not SAN14 charisma",
     "health_configured": 1000,
     "affinity_configured": 1000,
-    "new_history_profiles": 96,
-    "initial_free": 5,
+    "new_history_profiles": 120,
+    "initial_free": 7,
     "source_scenario": "san14-217-07",
     "planned_serving": 361,
     "planned_max_city_roster": 20,
-    "pending_factions": []
+    "pending_factions": [
+      "孟獲"
+    ],
+    "history_designs_total": 267,
+    "pending_capacity": 0
   },
   "workbook": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/千人武将候选名单与字段映射.xlsx",
   "report": "expansion/officers/index.html"

@@ -33,5 +33,11 @@ jobs:
           git diff --exit-code -- game/data/eras expansion/officers/data/era-configuration-audit.json
       - name: Browser script syntax
         run: node --check game/app.js
+      - name: Rebuild current officer batch and historical campaigns offline
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_campaigns.py
+          git diff --exit-code -- game/data/eras-v3 expansion/officers/data/era-configuration-v3-audit.json
       - name: Changed-file whitespace
         run: git diff --check
