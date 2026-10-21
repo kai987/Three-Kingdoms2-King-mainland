@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "created_date": "2026-10-21",
   "date_system": "公元年；整数；未知为null或CSV空白，不以0代替",
   "source_date_grain": "表中生/登/卒年只有年；剧本有年/月",
@@ -73,11 +73,22 @@
     "late heroes remain in whole database and appear only per scenario rules"
   ],
   "next_phase_blocks": [
-    "确定主剧本起始年和寿命模式",
+    "主剧本起始年与精确死亡日期/剧本覆盖仍需配置；总库与年表已分开",
     "取得五维能力的可复查逐行来源",
     "完成人物与原237人身份对照",
     "新增人物体/徳/适性/装备/技能配置",
     "16位ID替换名册、战场槽、继承/亲族/AI白名单和所有FF哨兵后再谈运行导入"
   ],
-  "mapping_applied_to_game": false
+  "mapping_applied_to_game": false,
+  "independent_remake": {
+    "implemented_module": "source/remake/officers.py",
+    "whole_library_kept": true,
+    "candidate_count": 1000,
+    "city_officer_capacity": 20,
+    "battle_officers_per_side": 10,
+    "service_year_semantics": "来源SAN14登场/出仕设定；不是已考证历史首次任官年",
+    "death_year_runtime_policy": "年内保留独立待核状态；只有明确剧本覆盖才能初始化，缺月份时进入次年移除；不会复活战死者",
+    "automatic_faction_assignment": false,
+    "fictional251": "来源剧本单独处理，不套史实年表"
+  }
 }

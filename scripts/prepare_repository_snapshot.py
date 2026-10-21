@@ -49,7 +49,8 @@ def main():
                     omitted_static.append({'path': rel.as_posix(), 'bytes': size,
                                            'sha256': sha(path), 'reason': 'large_static_evidence_retained_locally'})
 
-    for folder in ('source/recovered', 'source/readable_c', 'scripts', 'expansion', 'docs'):
+    for folder in ('source/recovered', 'source/readable_c', 'source/remake',
+                   'tests', 'game', 'scripts', 'expansion', 'docs'):
         for base, dirs, files in os.walk(ROOT / folder, followlinks=False):
             dirs[:] = [d for d in dirs if d not in {'node_modules', '__pycache__', '.git'}
                        and not (Path(base) / d).is_symlink()]
@@ -61,7 +62,8 @@ def main():
     chosen.update({'README.md', 'LICENSE', '.gitignore', '.gitattributes',
                    'requirements.txt', 'source/README.md'})
     for path in (ROOT / 'outputs').rglob('*'):
-        if path.is_file() and (path.suffix == '.xlsx' or path.name == 'workbook-validation.json'):
+        if path.is_file() and (path.suffix == '.xlsx' or path.name in {
+                'workbook-validation.json', 'workbook-remake-validation.json'}):
             chosen.add(path.relative_to(ROOT).as_posix())
 
     inventory = {

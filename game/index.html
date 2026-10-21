@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>三国·演练战役</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>三国·演练战役</h1>
+    <p id="date">选择势力</p>
+    <nav aria-label="进度与规则">
+      <button id="save" disabled>保存进度</button>
+      <button id="load">读取进度</button>
+      <button id="rules">规则说明</button>
+    </nav>
+  </header>
+  <p id="notice" role="status" aria-live="polite"></p>
+  <main>
+    <section id="stage" aria-label="战役地图"></section>
+    <aside id="inspector" aria-label="当前操作"><p>正在准备演练……</p></aside>
+  </main>
+  <section class="journal" aria-labelledby="journal-title">
+    <div class="journal-heading"><h2 id="journal-title">战报</h2><button id="restart">重开演练</button></div>
+    <ol id="journal"><li>选择势力后开始。</li></ol>
+  </section>
+  <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+  <noscript>请启用浏览器JavaScript后开始本地演练。</noscript>
+</body>
+</html>

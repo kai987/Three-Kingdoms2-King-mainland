@@ -11,6 +11,23 @@
   "confirmed_net_new_people": null,
   "map_relations": 7,
   "game_runtime_modified": false,
+  "remake_rules": {
+    "library_people": 1000,
+    "city_capacity": 20,
+    "battle_per_side": 10,
+    "battle_total": 20,
+    "runtime_capacity": 1200,
+    "san14_abilities_sourced": 0,
+    "verified_legacy_profile_crosswalks": 8,
+    "history_informed_virtue_designs": 5,
+    "base_attributes_complete": 8,
+    "base_attributes_incomplete": 992,
+    "playable_scenario_memberships_configured": 0,
+    "original_rom_modified": false,
+    "recovered_legacy_source_modified": false,
+    "independent_data_model_implemented": true,
+    "standalone_playable_loop_implemented": false
+  },
   "workbook": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/千人武将候选名单与字段映射.xlsx",
   "report": "expansion/officers/index.html"
 }

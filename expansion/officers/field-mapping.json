@@ -1,15 +1,19 @@
 {
-  "version": 1,
+  "version": 2,
   "created_date": "2026-10-21",
-  "scope": "千人候选资料及下一阶段独立引擎导入设计；未修改ROM/恢复源码/游戏存档",
+  "scope": "独立重制版规则与导入模型；未修改原ROM或封存恢复源码",
   "source_stats_imported": false,
   "mapping_applied_to_game": false,
   "capacity": {
     "original_valid_officers": 237,
     "proposed_runtime_capacity": 1200,
     "runtime_id_bits": 16,
-    "runtime_empty_id": 65535,
-    "canonical_id_not_runtime_index": true
+    "canonical_id_not_runtime_index": true,
+    "city_officer_capacity": 20,
+    "battle_officers_per_side": 10,
+    "battle_total_slots": 20,
+    "runtime_empty_reference": null,
+    "legacy_nes_empty_byte": 255
   },
   "status_legend": {
     "direct_metadata": "可保留的资料字段",
@@ -21,7 +25,8 @@
     "identity_crosswalk_required": "须独立人物身份核对",
     "unresolved_preserve_raw": "未命名原始值保留",
     "new_schema_proposal": "独立引擎新结构提议",
-    "asset_work_required": "后续资源工作"
+    "asset_work_required": "后续资源工作",
+    "confirmed_remake_rule": "已确定的重制版规则，逐人来源仍须齐全"
   },
   "fields": [
     {
@@ -44,13 +49,13 @@
       "source_field": "person_id",
       "target_field": "runtime_officer_id",
       "original_storage": "8-bit ID；FF为空槽；有效记录0..236",
-      "conversion": "分配16位运行ID；计划容量1200，取值0..1199；FFFF为空；人物身份与数组索引分开。",
+      "conversion": "分配16位运行ID，容量预留1200，取值0..1199；现代空引用用null，255是有效ID；人物身份与运行索引分开。",
       "status": "new_schema_proposal",
       "evidence": [
         "source/recovered/game_algorithms.py:28",
         "source/recovered/officers.py:95"
       ],
-      "notes": "这不是原ROM已可支持1200人的证明。",
+      "notes": "重制模型已验证ID255与999有效，未将千人写入原ROM。",
       "example": null
     },
     {
@@ -87,7 +92,7 @@
       "source_field": "SAN14通常武将基础表无直接对应个人体力字段",
       "target_field": "health",
       "original_storage": "byte0；初始有效记录30..99",
-      "conversion": "重合人物保留NES体；新增人物暂null，另做游戏平衡配置后赋值。",
+      "conversion": "按本作人物基准体力满值初始化；已核对原版人物用原体，新增人物须明确配置health_max，无来源不从统率或武力猜值。",
       "status": "manual_design_required",
       "evidence": [
         "source/recovered/officers.py:30"
@@ -101,8 +106,8 @@
       "source_field": "SAN14武力",
       "target_field": "martial_strength",
       "original_storage": "byte1；初始有效记录18..99",
-      "conversion": "保留SAN14原始武力；候选转换提议clamp(武力,1,99)，逐人与原版237人校准后启用。",
-      "status": "proposed_not_applied",
+      "conversion": "已确定SAN14武力对应武；兼容目标1..99，100映射99且保留来源原值。未取得逐人武力前保持null；已核对原版记录可作为带来源的基线。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officers.py:32",
         "official-sortie"
@@ -116,8 +121,8 @@
       "source_field": "SAN14智力",
       "target_field": "intellect",
       "original_storage": "byte2；初始有效记录8..99",
-      "conversion": "保留SAN14原始智力；候选转换提议clamp(智力,1,99)，校准计略成功率与AI知阈值后启用。",
-      "status": "proposed_not_applied",
+      "conversion": "已确定SAN14智力对应知；兼容目标1..99，100映射99且保留来源原值。未取得逐人智力前保持null；不以政治替代。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officers.py:34",
         "source/recovered/ai.py:194",
@@ -132,8 +137,8 @@
       "source_field": "剧本所属、亲族、关系；非固定全人物常量",
       "target_field": "loyalty",
       "original_storage": "byte3；100原显示--",
-      "conversion": "从剧本关系配置；重合人物可保留原值；招入/继承按原不同服务计算。",
-      "status": "scenario_rule_required",
+      "conversion": "在野0；君主100保留原哨兵；仕官按剧本配置0..99。招募CF3F与俘虏D00C独立公式，不按个人魅力生成永久忠诚。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officers.py:36",
         "source/recovered/officer_transfer.py:58",
@@ -145,17 +150,19 @@
     {
       "key": "virtue",
       "label_zh": "徳",
-      "source_field": "SAN14魅力可作人工参考；无严格等价字段",
+      "source_field": "《三国志》等史料行为与本作德的玩法语义",
       "target_field": "virtue",
       "original_storage": "byte4；初始有效记录10..99",
-      "conversion": "重合人物保留NES徳；新增人物暂null并独立设定，保留参考魅力。",
+      "conversion": "按virtue-rubric.json独立设定：恤民35%、公正30%、操守20%、信义15%，四维0..100加权四舍五入并限10..99。逐人附史料和争议；无据留null，不直接用魅力。",
       "status": "manual_design_required",
       "evidence": [
         "source/recovered/officers.py:38",
         "source/recovered/domestic_ai.py:101",
-        "source/recovered/officer_transfer.py:66"
+        "source/recovered/officer_transfer.py:66",
+        "expansion/officers/virtue-rubric.json",
+        "expansion/officers/virtue-designs.json"
       ],
-      "notes": "徳参与招募忠诚、太守/继承等；不能直接改称魅力或照搬魅力。",
+      "notes": "首批5人为史料参考的游戏设计值，不是客观史实分数；其余不自动补50。",
       "example": null
     },
     {
@@ -223,8 +230,8 @@
       "source_field": "各剧本势力/城市状态",
       "target_field": "scenario_membership",
       "original_storage": "城市名册/君主记录，而不是武将byte5",
-      "conversion": "按剧本时间、势力、城市映射单独入表；原city roster10槽不能直接装入千人。",
-      "status": "new_schema_proposal",
+      "conversion": "重制版用独立势力/城市关系与每城20人名册；稳定身份与16位运行ID分开。战场每方最多10人含主将，不随驻城扩到20。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officer_transfer.py:139",
         "source/recovered/officer_transfer.py:167"
@@ -238,8 +245,8 @@
       "source_field": "SAN14无同量纲直接值",
       "target_field": "experience_raw",
       "original_storage": "byte6..7 LE16；normal cap49999",
-      "conversion": "重合人物保留NES原值；新登场拟初始0，再按剧情年龄/资历独立配置。",
-      "status": "proposed_not_applied",
+      "conversion": "新登场经验0；剧本可明配0..49999，重合人物可按原记录配置。不得用年龄、官职或统率自动造经验。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officers.py:42"
       ],
@@ -252,8 +259,8 @@
       "source_field": "SAN14无原版经验档对应",
       "target_field": "experience_tier",
       "original_storage": "byte11高4位；显示tier+1",
-      "conversion": "与经验阈值联动；新登场拟tier0且XP0；资深人物由剧本配置。",
-      "status": "proposed_not_applied",
+      "conversion": "新登场tier0；初始经验档按1000/2000/3500/5000/7500/10000/15000阈值一致配置。战斗中升级仍保留原算法每次最多升一档。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officers.py:71"
       ],
@@ -266,8 +273,8 @@
       "source_field": "SAN14剧本据点/部队兵数",
       "target_field": "troops_effective",
       "original_storage": "byte8..9；显示低10位；多路径读取完整LE16",
-      "conversion": "作为剧本资源分配，不属于人物固有属性；保留原版单将兵规模。",
-      "status": "scenario_rule_required",
+      "conversion": "新登场0兵；剧本按本作兵规模明确分配0..999。带兵是资源状态，不是固有能力；不照搬SAN14万级兵数。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officers.py:46",
         "source/recovered/troop_fields.py:1"
@@ -296,8 +303,8 @@
       "source_field": "SAN14名品与人物关系",
       "target_field": "weapon_id",
       "original_storage": "byte10低5位；有效命名0..23",
-      "conversion": "名品与原24种武器逐项人工对照，暂无匹配则待配置；不按数值序号搬运。",
-      "status": "manual_design_required",
+      "conversion": "新登场默认原作0短剣；有已核原版记录或明确剧本配置时覆盖为0..23。名品需逐项对照，不搬SAN14物品ID。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officers.py:57"
       ],
@@ -310,8 +317,8 @@
       "source_field": "SAN14名品与人物关系",
       "target_field": "armor_id",
       "original_storage": "byte10高3位；0..7",
-      "conversion": "人工对照原8种防具；没有对应项留null等待默认装备配置。",
-      "status": "manual_design_required",
+      "conversion": "新登场默认原作0絹巾；有已核原版记录或明确剧本配置时覆盖为0..7；坐骑不能写入防具。",
+      "status": "confirmed_remake_rule",
       "evidence": [
         "source/recovered/officers.py:59"
       ],
@@ -472,5 +479,6 @@
       "sha256": "d0672c0c14dbbfb955c9d7d346b535116b276751603a3965244127c74acf54b7",
       "role": "玩家整理1000条游戏生/登/卒年及10剧本位置；不是官方数据导出或历史史料"
     }
-  }
+  },
+  "independent_rules_implemented": true
 }

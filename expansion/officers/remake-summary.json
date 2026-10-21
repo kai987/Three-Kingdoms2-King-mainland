@@ -1,0 +1,17 @@
+{
+  "library_people": 1000,
+  "city_capacity": 20,
+  "battle_per_side": 10,
+  "battle_total": 20,
+  "runtime_capacity": 1200,
+  "san14_abilities_sourced": 0,
+  "verified_legacy_profile_crosswalks": 8,
+  "history_informed_virtue_designs": 5,
+  "base_attributes_complete": 8,
+  "base_attributes_incomplete": 992,
+  "playable_scenario_memberships_configured": 0,
+  "original_rom_modified": false,
+  "recovered_legacy_source_modified": false,
+  "independent_data_model_implemented": true,
+  "standalone_playable_loop_implemented": false
+}

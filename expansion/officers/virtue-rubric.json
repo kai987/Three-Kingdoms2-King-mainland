@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "field": "德",
+  "meaning": "原作招募、任用与继承所用的人望/操守属性的独立重制设计",
+  "range": [
+    10,
+    99
+  ],
+  "dimensions": {
+    "care": {
+      "label": "恤民与克制伤害",
+      "weight": 35
+    },
+    "fairness": {
+      "label": "用人及赏罚公正",
+      "weight": 30
+    },
+    "integrity": {
+      "label": "廉洁与操守",
+      "weight": 20
+    },
+    "trust": {
+      "label": "信义与群体信任",
+      "weight": 15
+    }
+  },
+  "formula": "max(10,min(99,floor((35*care+30*fairness+20*integrity+15*trust+50)/100)))",
+  "dimension_range": [
+    0,
+    100
+  ],
+  "score_is_historical_fact": false,
+  "charisma_direct_mapping": false,
+  "insufficient_evidence": "null;不以50或魅力自动填满",
+  "required_evidence": [
+    "史料名称/卷次与链接",
+    "正文与裴注层次",
+    "正反行为及争议说明",
+    "作者游戏化判断与数值分开"
+  ],
+  "career_scope": "初版使用生涯综合档，不声称为任意当年的史实评价；以后可按事件修改",
+  "fictional_people": "有演义依据时使用单独fiction_design并标来源；缺史料不能伪装史实评分"
+}

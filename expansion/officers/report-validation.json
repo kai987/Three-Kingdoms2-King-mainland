@@ -4,6 +4,9 @@
   "candidateCount": 1000,
   "distinctNameStrings": 994,
   "mappingFields": 29,
+  "remakeCityCapacity": 20,
+  "battlePerSide": 10,
+  "historyInformedVirtueDesigns": 5,
   "searchTests": [
     {
       "query": "马忠",
@@ -37,7 +40,7 @@
   "fantasy251AllCandidates": true,
   "paginationPassed": true,
   "mapTogglesPassed": 3,
-  "localLinksChecked": 18,
+  "localLinksChecked": 23,
   "responsive": [
     {
       "width": 1440,

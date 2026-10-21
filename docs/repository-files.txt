@@ -1,3 +1,4 @@
+"outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/\345\215\203\344\272\272\346\255\246\345\260\206\345\200\231\351\200\211\345\220\215\345\215\225\344\270\216\345\255\227\346\256\265\346\230\240\345\260\204.xlsx"
 .gitattributes
 .gitignore
 LICENSE
@@ -6975,6 +6976,8 @@ docs/licenses/REA-MIT.txt
 docs/licenses/README.md
 docs/local-cleanup.json
 docs/publication-inventory.json
+docs/remake-implementation-plan.md
+docs/remake-module-audit.md
 docs/repository-files.txt
 docs/repository-scope.md
 docs/repository-validation.json
@@ -7007,6 +7010,7 @@ expansion/map/requirements.txt
 expansion/map/river-natural-validation-v41.json
 expansion/map/road-natural-validation-v41.json
 expansion/officers/README.md
+expansion/officers/build_remake.py
 expansion/officers/build_report.py
 expansion/officers/build_roster.py
 expansion/officers/build_workbook.mjs
@@ -7015,6 +7019,9 @@ expansion/officers/data/chronology-candidates.csv
 expansion/officers/data/chronology-candidates.json
 expansion/officers/data/dedup-audit.json
 expansion/officers/data/original-overlap-audit.json
+expansion/officers/data/remake-profiles.csv
+expansion/officers/data/remake-profiles.json
+expansion/officers/data/remake-year-populations.json
 expansion/officers/data/roster-candidates.csv
 expansion/officers/data/roster-candidates.json
 expansion/officers/data/scenario-availability-summary.json
@@ -7025,6 +7032,9 @@ expansion/officers/field-mapping.csv
 expansion/officers/field-mapping.json
 expansion/officers/index.html
 expansion/officers/mapping-evidence.md
+expansion/officers/remake-rules.json
+expansion/officers/remake-summary.json
+expansion/officers/remake-validation.json
 expansion/officers/report-validation.json
 expansion/officers/source/opencc-LICENSE
 expansion/officers/source/opencc-TSCharacters.txt
@@ -7034,8 +7044,21 @@ expansion/officers/source/san14-official-tw-officers-list.html
 expansion/officers/source/san14-source-manifest.json
 expansion/officers/source/san14-xgodgame-chronology.html
 expansion/officers/verify_report.cjs
+expansion/officers/virtue-designs.json
+expansion/officers/virtue-rubric.json
+game/README.md
+game/app.js
+game/assets/map.png
+game/build_data.py
+game/data/demo.json
+game/design/README.md
+game/design/concept.png
+game/design/prompt.txt
+game/index.html
+game/serve.py
+game/style.css
+outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/workbook-remake-validation.json
 outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/workbook-validation.json
-outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/千人武将候选名单与字段映射.xlsx
 requirements.txt
 scripts/analyze_ai.py
 scripts/analyze_appearance_pointer_phase25.py
@@ -7584,3 +7607,9 @@ source/recovered/troop_fields.py
 source/recovered/ui_arithmetic_services.py
 source/recovered/ui_graphics_initialization.py
 source/recovered/wild_recruitment_integration.py
+source/remake/README.md
+source/remake/__init__.py
+source/remake/campaign.py
+source/remake/officers.py
+tests/test_remake_campaign.py
+tests/test_remake_officers.py

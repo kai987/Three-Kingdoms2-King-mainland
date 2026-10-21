@@ -1,6 +1,6 @@
 {
   "schema": "source-publication-v1",
-  "scope": "readable source, selected static evidence, v42 map and officer candidate handoff",
+  "scope": "recovered source, selected static evidence, v42 map,1000-person candidate data and independent phase1/phase2 playable slice",
   "raw_evidence_deleted": false,
   "game_runtime_modified": false,
   "original_rom_included": false,
@@ -1157,5 +1157,7 @@
       "files": 4931,
       "bytes": 91074097
     }
-  }
+  },
+  "independent_remake_runtime_added": true,
+  "game_runtime_modified_note": "original recovered runtime unchanged; independent remake added under source/remake and game"
 }

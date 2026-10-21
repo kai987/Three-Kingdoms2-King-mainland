@@ -1,13 +1,48 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {Workbook,SpreadsheetFile} from '@oai/artifact-tool';
+import {Workbook,SpreadsheetFile,FileBlob} from '@oai/artifact-tool';
 
 const base=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(base,'../..');
 const out=path.join(root,'outputs','01a1316a-d5cf-7641-8d98-1e47c65dfb1c');
 await fs.mkdir(out,{recursive:true});
 const read=async f=>JSON.parse(await fs.readFile(path.join(base,f),'utf8'));
+if(process.argv.includes('--preview-mapping')||process.argv.includes('--update-mapping-only')){
+ const target=path.join(out,'千人武将候选名单与字段映射.xlsx');
+ const existing=await SpreadsheetFile.importXlsx(await FileBlob.load(target));
+ const mapping=await read('field-mapping.json'),fields=existing.worksheets.getItem('字段映射');
+ const checks=path.join(root,'build/remake-workbook-checks');await fs.mkdir(checks,{recursive:true});
+ if(process.argv.includes('--preview-mapping')){
+  const detail=process.argv.includes('--detail');
+  const preview=await existing.render({sheetName:'字段映射',range:detail?'A14:H19':'A1:F13',scale:1,format:'png'});
+  const file=path.join(checks,detail?'mapping-detail.png':'mapping-before.png');
+  await fs.writeFile(file,new Uint8Array(await preview.arrayBuffer()));
+  console.log(JSON.stringify({preview:file}));process.exit(0);
+ }
+ const preservedNames=['候选名单','剧本年代','去重与来源'];
+ const signature=()=>JSON.stringify(preservedNames.map(n=>{const r=existing.worksheets.getItem(n).getUsedRange();return{name:n,values:r.values,formulas:r.formulas};}));
+ const before=signature();
+ fields.getRange('A4').values=[['每城20人；战场每方10人含主将。总人物库与当年出生、出仕、死亡状态分开。']];
+ fields.getRange('A5').values=[['武力对应武，智力对应知；德依史料独立设定；其他初始值按本作人物与剧本配置。']];
+ const width=[20,28,32,34,65,26,60,62],weight=s=>[...String(s)].reduce((n,c)=>n+(c.charCodeAt(0)>255?2:1),0);
+ mapping.fields.forEach((f,i)=>{
+  const values=[f.label_zh,f.source_field,f.target_field,f.original_storage,f.conversion,mapping.status_legend[f.status]||f.status,f.notes||'',f.evidence.join('\n')];
+  fields.getRange('A'+(i+9)+':H'+(i+9)).values=[values];
+  const lines=Math.max(...values.map((v,j)=>String(v).split('\n').reduce((n,line)=>n+Math.max(1,Math.ceil(weight(line)/(width[j]-2))),0)));
+  fields.getRange('A'+(i+9)+':H'+(i+9)).format.rowHeight=Math.max(34,lines*15+9);
+ });
+ await existing.recalculate();
+ if(signature()!==before)throw new Error('Unrelated sheet values/formulas changed');
+ const errors=await existing.inspect({kind:'match',searchTerm:'#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A|#NUM!|#NULL!|#SPILL!|#CALC!',options:{useRegex:true,maxResults:30},maxChars:1400});
+ const snapshot=await existing.inspect({kind:'table',range:'字段映射!A4:F19',include:'values',tableMaxRows:16,tableMaxCols:6,maxChars:3000});
+ await fs.writeFile(path.join(checks,'mapping-inspection.ndjson'),snapshot.ndjson);
+ const preview=await existing.render({sheetName:'字段映射',range:'A1:F13',scale:1,format:'png'});
+ await fs.writeFile(path.join(checks,'mapping-after.png'),new Uint8Array(await preview.arrayBuffer()));
+ const output=await SpreadsheetFile.exportXlsx(existing);await output.save(target);
+ await fs.writeFile(path.join(out,'workbook-remake-validation.json'),JSON.stringify({mappingRows:mapping.fields.length,cityCapacity:20,battlePerSide:10,unrelatedSheetValuesAndFormulasPreserved:true,formulaErrorScan:errors.ndjson,sourceStatsImported:false},null,2)+'\n');
+ console.log(JSON.stringify({mappingRows:mapping.fields.length,unrelatedSheetsPreserved:true,formulaErrorScan:errors.ndjson}));process.exit(0);
+}
 const data=await read('data/roster-candidates.json'),audit=await read('data/dedup-audit.json'),legacy=await read('data/original-overlap-audit.json'),mapping=await read('field-mapping.json'),scenarioSummary=await read('data/scenario-availability-summary.json');
 const people=data.officers,legacyByPerson=new Map(legacy.matches.map(r=>[r.candidate_person_id,r.original_officer_id]));
 const wb=Workbook.create();
@@ -56,8 +91,8 @@ widths(scenarios,{A:10,B:13,C:17,D:17,E:17,F:17,G:17,H:17,I:17,J:17,K:17,L:22});
 scenarios.getRange('A9:A1008').setNumberFormat('0');scenarios.freezePanes.freezeRows(8);scenarios.freezePanes.freezeColumns(2);
 
 setup(fields,'H40');title(fields,'字段映射与导入边界');
-fields.getRange('A4').values=[['本表为转换方案，尚未执行数值导入。保留原作12字节语义，不把SAN14魅力直接写入徳。']];
-fields.getRange('A5').values=[['扩展容量建议1200，运行ID采用16位。新增体、徳、适性与装备仍需逐人配置。']];
+fields.getRange('A4').values=[['每城20人；战场每方10人含主将。总人物库与当年出生、出仕、死亡状态分开。']];
+fields.getRange('A5').values=[['武力对应武，智力对应知；德依史料独立设定；其他初始值按本作人物与剧本配置。']];
 fields.getRange('A8:H8').values=[['字段','来源字段','目标字段','原版存储','转换规则','方案状态','备注','证据']];
 fields.getRange('A9:H'+(8+mapping.fields.length)).values=mapping.fields.map(f=>[f.label_zh,f.source_field,f.target_field,f.original_storage,f.conversion,mapping.status_legend[f.status]||f.status,f.notes||'',f.evidence.join('\n')]);
 table(fields,'A8:H'+(8+mapping.fields.length),'FieldMapping');heading(fields,'A8:H8');

@@ -1,0 +1,91 @@
+{
+  "status": "passed",
+  "scope": "independent officer model and candidate handoff; not a playable game or new native-emulator proof",
+  "behavioral_tests": 19,
+  "test_command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_remake_officers.py -v",
+  "loyalty_formula_comparisons": {
+    "recruitment": 9999,
+    "capture": 101,
+    "reference": "source/recovered/officer_transfer.py pure methods; no ROM/CPU executed"
+  },
+  "runtime_isolation": "source/remake imported and executed in a temp directory containing no ROM/core/IR",
+  "city_capacity": 20,
+  "battle_per_side_including_commander": 10,
+  "battle_total_slots": 20,
+  "stable_id255_and999": "passed",
+  "atomic_full_city_transfer": "passed",
+  "birth_service_death_and_no_revival": "passed",
+  "data_rebuild_byte_identical": true,
+  "map_and_legacy_source_preserved": true,
+  "browser": {
+    "verified": true,
+    "cityCount": 96,
+    "candidateCount": 1000,
+    "distinctNameStrings": 994,
+    "mappingFields": 29,
+    "remakeCityCapacity": 20,
+    "battlePerSide": 10,
+    "historyInformedVirtueDesigns": 5,
+    "searchTests": [
+      {
+        "query": "马忠",
+        "count": 2
+      },
+      {
+        "query": "李丰",
+        "count": 3
+      },
+      {
+        "query": "孙乾",
+        "count": 1
+      },
+      {
+        "query": "孙干",
+        "count": 1
+      },
+      {
+        "query": "san14-candidate-0875",
+        "count": 1
+      }
+    ],
+    "year230": {
+      "available": 326,
+      "deathBoundary": 12
+    },
+    "year184": {
+      "available": 276
+    },
+    "blankAndZeroYearHandled": true,
+    "fantasy251AllCandidates": true,
+    "paginationPassed": true,
+    "mapTogglesPassed": 3,
+    "localLinksChecked": 23,
+    "responsive": [
+      {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "cityCount": 96,
+        "imagesLoaded": true
+      },
+      {
+        "width": 390,
+        "scrollWidth": 390,
+        "cityCount": 96,
+        "imagesLoaded": true
+      }
+    ],
+    "pageErrors": []
+  },
+  "workbook": {
+    "mappingRows": 29,
+    "cityCapacity": 20,
+    "battlePerSide": 10,
+    "unrelatedSheetValuesAndFormulasPreserved": true,
+    "formulaErrorScan": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}",
+    "sourceStatsImported": false
+  },
+  "native_xlsx_tables_and_freeze_panes_preserved": true,
+  "standalone_playable_loop": false,
+  "committed": false,
+  "pushed": false
+}

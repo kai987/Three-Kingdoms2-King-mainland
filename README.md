@@ -1,3 +1,5 @@
+> **本地可试玩演练已加入：**[启动与操作说明](game/README.md)。在项目根目录运行 `python3 -I -S -B game/serve.py --port 8878`，打开 http://127.0.0.1:8878/ 。四城、七人，完成选势力至下一回合的独立闭环；尚非完整战役。人物与名册基础、独立演练及跨年边界修复已纳入源码。
+>
 > GitHub源码与开发资料已整理：请先查看[仓库范围与使用说明](docs/repository-scope.md)。
 >
 > 最新交付：[96城地图 v42](expansion/map/README.md)、[地图与千人武将交互页](expansion/officers/index.html)、[候选名单与29项字段映射](expansion/officers/README.md)。候选人物1000位、姓名文本994种；净新增人数仍待原237人的身份对照。
