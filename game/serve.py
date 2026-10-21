@@ -43,6 +43,7 @@ def main():
     sys.path.insert(0, str(ROOT / 'source'))
     from remake.campaign import GameError
     from remake.session import CampaignSession
+    from remake.march_core import backend_status, config_for
     era_index = json.loads((HERE / 'data/eras/index.json').read_text())
     current_index = json.loads((HERE / 'data/eras-v3/index.json').read_text())
     main_index = json.loads((HERE / 'data/main-scenarios/index.json').read_text())
@@ -60,6 +61,11 @@ def main():
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/i18n.js': ('i18n.js', 'text/javascript; charset=utf-8'),
+              '/march-core.js': ('march-core.js', 'text/javascript; charset=utf-8'),
+              '/march-worker.js': ('march-worker.js', 'text/javascript; charset=utf-8'),
+              '/wasm/march_core.wasm': ('wasm/march_core.wasm', 'application/wasm'),
+              '/wasm/THIRD-PARTY-LICENSES.txt': ('wasm/THIRD-PARTY-LICENSES.txt', 'text/plain; charset=utf-8'),
+              '/wasm/manifest.json': ('wasm/manifest.json', 'application/json; charset=utf-8'),
               '/map-navigation.js': ('map-navigation.js', 'text/javascript; charset=utf-8'),
               '/locales/zh-hant.json': ('locales/zh-hant.json', 'application/json; charset=utf-8'),
               '/locales/ui-ja.json': ('locales/ui-ja.json', 'application/json; charset=utf-8'),
@@ -86,7 +92,7 @@ def main():
             self.send_header('Content-Length', str(len(data)))
             self.send_header('Cache-Control', 'no-store')
             self.send_header('X-Content-Type-Options', 'nosniff')
-            self.send_header('Content-Security-Policy', "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'")
+            self.send_header('Content-Security-Policy', "default-src 'self'; img-src 'self' data:; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'")
             self.end_headers()
             self.wfile.write(data)
             audit['requests'].append({'method': self.command, 'path': self.path, 'status': status, 'bytes': len(data)})
@@ -95,6 +101,19 @@ def main():
             try:
                 if self.path == '/api/state':
                     return self.send(200, game.view())
+                if self.path == '/api/march-status':
+                    return self.send(200, backend_status())
+                if urlsplit(self.path).path == '/api/march-config':
+                    try:
+                        query = parse_qs(urlsplit(self.path).query, keep_blank_values=True, max_num_fields=1)
+                    except ValueError:
+                        raise GameError('行军查询参数无效。')
+                    if set(query) != {'scenario'} or len(query['scenario']) != 1:
+                        raise GameError('行军查询参数无效。')
+                    catalog = game.catalogs.get(query['scenario'][0])
+                    if catalog is None:
+                        raise GameError('未找到这个剧本。')
+                    return self.send(200, config_for(catalog.data))
                 if self.path == '/api/save':
                     return self.send(200, game.export_save())
                 if urlsplit(self.path).path == '/api/city-preview':

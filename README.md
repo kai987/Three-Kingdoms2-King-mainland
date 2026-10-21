@@ -3,23 +3,27 @@
 原版像素風格的Web戰略遊戲：**最多115城、每城30人、25個劇本、1023名人物，繁體中文／日本語切換**。現有開局依年代開放109～114城，後續新城按年月開放；每方出戰最多10人。
 
 ```sh
+# 已安裝Rust1.93.0與wasm32-unknown-unknown目標時，先建置原生核心
+python3 game/build_march_core.py
 python3 -I -S -B game/serve.py --port 8878
 ```
 
-開啟 [本機遊戲](http://127.0.0.1:8878/)。需要Python3.10以上，執行遊戲無需原ROM、原模擬器或額外套件；目前只監聽本機。
+開啟 [本機遊戲](http://127.0.0.1:8878/)。需要Python3.10以上，無需原ROM或原模擬器；目前只監聽本機。已建置的原生行軍核心會自動啟用；沒有Rust工具鏈時可直接執行第二行，以Python相容後端啟動。瀏覽器的行軍預覽使用隨附WASM，失敗時採用伺服器報價。
 
 載入頁面先預覽最新劇本地圖，確認開始後才建立新戰役；可繼續原存檔。地圖支援滑鼠／觸控拖曳及1～4倍縮放，勢力配色、城名與介面可即時切換語言。
 
 - [啟動、操作、存取與規則](game/README.md)
 - [人物擴充、任職名冊與待考範圍](docs/officer-expansion-v13.md)
 - [劇本日期與配置來源](docs/dlc-scenarios.md)
+- [行軍Rust／WASM建置、相容契約與驗證](docs/marching-rust-wasm.md)
 - [程式優化、清理結果與Rust遷移順序](docs/code-optimization-and-rust.md)
 
 ## 程式與資料
 
 | 路徑 | 用途 |
 | --- | --- |
-| `source/remake/` | Python戰役、人物、戰鬥、計略、單挑、AI、行軍與存檔規則 |
+| `source/remake/` | Python戰役、人物、戰鬥、計略、單挑、AI、存檔及Rust行軍適配器 |
+| `crates/march-core/`、`game/wasm/` | 共用Rust行軍核心、WASM及可重現建置清單 |
 | `game/app.js`、`i18n.js`、`map-navigation.js` | HTML／SVG介面、繁中／日文、地圖手勢 |
 | `game/serve.py` | 本機HTTP服務，僅公開明列的遊戲資產與API |
 | `game/data/` | 161份戰役目錄及索引；25份最新版，其餘供舊存檔驗證 |

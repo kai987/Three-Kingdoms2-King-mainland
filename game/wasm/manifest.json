@@ -1,0 +1,18 @@
+{
+  "abi": 1,
+  "bytes": 343022,
+  "crate": "march-core",
+  "file": "march_core.wasm",
+  "rust": "1.93.0",
+  "sha256": "97d1aaf6607b6fb9d9bcd8f1df039825e6381f0058262b5aaa3d3f01c8a19316",
+  "sources_sha256": {
+    "Cargo.lock": "9b51622445815199b04aea76b6983d42616f85f19d8963fabc3932d8b25223a2",
+    "Cargo.toml": "79fa9377cbafc659413f7e05d212b2a0379fc5f2058e470f567cb9f4c6e2192d",
+    "src/hazards.rs": "d7c3a9003fdb85d1725f8b92f3df5b355d9ada417b6e4ae3e47cb466dd047bb4",
+    "src/lib.rs": "fcffab7aece196a73a37696fef79211e5769198e97cc900b1a1e83b808a30644",
+    "src/main.rs": "eef1ba77e410ff8726503e1727c2a414b28d3291d62c722ce709882fe632a04a",
+    "src/paths.rs": "98836e35fb879bd15dbf852676eec039936c3162cc3ad9e96a66c61ecf8d07c4",
+    "tests/protocol.rs": "dcf35f1108b3ea3fd8282a8462c7a355d68059ae6c618831393d0c9e8fae20a8"
+  },
+  "target": "wasm32-unknown-unknown"
+}

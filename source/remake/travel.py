@@ -90,6 +90,16 @@ class TravelCampaign:
                     grain_per_officer=5*len(legs),modes=sorted({row['mode'] for row in legs}))
 
     def _travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False):
+        from .march_core import enabled, invoke, state_input
+        if enabled():
+            if mode not in self._travel_modes():
+                raise GameError('请选择有效的行军路线。')
+            return invoke('path', data=self.catalog.data, **state_input(state),
+                          source=source, target=target, owner=owner, mode=mode,
+                          adjacent=adjacent)
+        return self._python_travel_path(state, source, target, owner, mode, adjacent=adjacent)
+
+    def _python_travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False):
         if not self.hazardous_travel:
             return self._legacy_travel_path(state,source,target,owner,mode,adjacent=adjacent)
         from .route_hazards import evaluate_leg, route_allowed
@@ -328,6 +338,24 @@ class TravelCampaign:
         self._expanded_settle(state,{'battle_id':battle['id']})
 
     def _travel_view(self, state):
+        from .march_core import enabled, invoke, state_input
+        if not self.travelling or not enabled():
+            return self._python_travel_view(state)
+        if self.hazardous_travel:
+            # Reuse metadata construction without doing a second route search.
+            result = self._hazard_travel_view(None)
+        else:
+            result = dict(travel_rules=self.catalog.data['travel_rules'], travel_quotes={})
+        if state is not None:
+            if self.hazardous_travel:
+                discovered = set(state.extension['travel']['discovered'])
+                result['discovered_routes'] = [row for row in self.catalog.data.get('exploration_routes', [])
+                                               if row['id'] in discovered]
+            result['travel_quotes'] = invoke('batch', data=self.catalog.data,
+                                            **state_input(state), player=state.player)
+        return result
+
+    def _python_travel_view(self, state):
         if not self.travelling: return {}
         if self.hazardous_travel:
             return self._hazard_travel_view(state)

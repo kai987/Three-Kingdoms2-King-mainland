@@ -1,7 +1,7 @@
 'use strict';
 let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
-let mapNavigation=null,mapCamera=null,mapCameraKey='';
-const $=s=>document.querySelector(s), dialog=$('#dialog');
+let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null;
+const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=id=>view.catalog.names[String(id)]||'武将';
 const faction=id=>id==='neutral'?'无主':view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
@@ -9,7 +9,7 @@ const capacity=()=>view.catalog.rules.city_officer_capacity;
 const marching=()=>new Set((view.game?.extension?.travel?.marches||[]).flatMap(r=>r.officers));
 const routeModes=()=>[['fastest','最快路线（可用海陆联运）'],['land','仅走陆路'],...(view.catalog.travel_hazards?[['special','险道直达（阴平道／子午谷）'],['sea','已知直达海路'],['explore','探索未知海路（仅沿海城池）']]:[])];
 const routeModeSelect=(mode='fastest')=>`<label class="field">行军路线<select id="route-mode">${routeModes().map(([id,label])=>`<option value="${id}" ${id===mode?'selected':''}>${label}</option>`).join('')}</select></label>`;
-const travelQuote=(source,target,mode='fastest')=>view.catalog.travel_quotes?.[`${source}:${target}:${mode}`];
+const travelQuote=(source,target,mode='fastest')=>(MarchCore.quotesFor(view)??view.catalog.travel_quotes)?.[`${source}:${target}:${mode}`];
 const availableRouteModes=(source,target)=>routeModes().filter(([mode])=>travelQuote(source,target,mode));
 function syncRouteModes(source,target,preferred='fastest'){
  const select=$('#route-mode');if(!select)return 'fastest';
@@ -53,6 +53,23 @@ function travelEstimate(source,target,mode='fastest'){
  const month=view.game.month-1+q.months,year=view.game.year+Math.floor(month/12);
  return `<p class="travel-estimate">${q.path.map(id=>escapeHtml(cityName(id))).join(' → ')}<br>约${q.distance_km}公里 · 估算${q.days}日 · ${q.months}个月回合<br>预计${year}年${month%12+1}月到达。${q.modes.includes('sea')?'含海路及上岸接驳。':'陆路行军。'}</p>${routeRisk(q)}`;
 }
+function previewSurvivors(element,quote,ids){
+ if(!element)return;
+ const token={};survivorPreviews.set(element,token);
+ if(!quote||(quote.routes||[]).every(r=>!r.hazard)||!ids.length)return;
+ const generation=dialogGeneration,counts=ids.map(id=>view.game.officers[id].troops),requestView=view;
+ MarchCore.survivalPreview(requestView,quote,counts).then(result=>{
+  if(!result||view!==requestView||!element.isConnected||generation!==dialogGeneration||survivorPreviews.get(element)!==token)return;
+  const total=rows=>rows.reduce((sum,n)=>sum+n,0),lo=total(result.minimum),hi=total(result.maximum),range=lo===hi?lo:`${lo}—${hi}`;
+  element.insertAdjacentHTML('beforeend',`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">預計抵達兵力：${range}兵（行軍損耗區間）。</p><p class="small" data-locale-only="ja" data-l10n-native="ja">到着時の兵力見込み：${range}（行軍損耗の範囲）。</p>`);
+  GameI18n.apply();
+ });
+}
+function watchRouteDialog(refresh){
+ const generation=dialogGeneration;
+ refreshRouteDialog=()=>{if(dialog.open&&generation===dialogGeneration)refresh();};
+}
+MarchCore.subscribe(()=>refreshRouteDialog?.());
 function renderMarches(){
  const rows=view.game?.extension?.travel?.marches||[];
  return rows.length?`<div class="marches"><h3>在途部队</h3>${rows.filter(r=>r.owner===view.game.player).map(r=>`<p data-march="${r.id}">${escapeHtml(cityName(r.source))} → ${escapeHtml(cityName(r.target))}<br>${r.officers.map(i=>escapeHtml(name(i))).join('、')} · ${r.quote.distance_km}公里<br>${r.arrival_turn<=view.game.turn?'已抵达，等待处理':`还需${r.arrival_turn-view.game.turn}个月回合`}</p>`).join('')||'<p>本方暂无在途部队。</p>'}<p class="small">在途者保留出发城编制与容量，不参加守城，不能再次行动。月回合按30日结算。</p></div>`:'';
@@ -87,7 +104,7 @@ async function command(kind,payload={}){
 }
 function openDialog(title,body,actions){
  if(busy)return;
- const generation=++dialogGeneration;
+ const generation=++dialogGeneration;refreshRouteDialog=null;
  dialog.innerHTML=`<div class="dialog-heading"><h2 id="dialog-title">${escapeHtml(title)}</h2><label class="language-picker">語言<select id="dialog-language" data-language-picker aria-label="切換語言"><option value="zh-Hant" ${GameI18n.locale==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${GameI18n.locale==='ja'?'selected':''}>日本語</option></select></label></div>${body}<div class="dialog-actions">${actions}</div>`;
  if(!dialog.open)dialog.showModal();
  dialog.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>dialog.close());
@@ -291,7 +308,7 @@ function departure(city){
   openDialog('选择出征名单',`<label class="field" for="departure-target">目标城池<select id="departure-target">${targets.map(c=>`<option value="${c.id}" ${draft.target===c.id?'selected':''}>${escapeHtml(cityName(c.id))} · ${faction(c.owner)}</option>`).join('')}</select></label><p>选择1—10名武将，第一位为主将。</p><div class="officer-picker">${city.roster.officer_ids.map(i=>{const o=view.game.officers[i];return `<label><input type="checkbox" name="depart-officer" value="${i}" ${draft.officers.includes(i)?'checked':''} ${o.troops===0||marching().has(i)||view.game.extension?.officer_actions?.[i]===view.game.turn?'disabled':''}>${escapeHtml(name(i))}　${o.troops}兵</label>`;}).join('')}</div>`, '<button data-cancel>取消出征</button><button id="review-departure" class="primary">下一步</button>');
   $('#review-departure').onclick=()=>{draft.target=$('#departure-target').value;draft.officers=[...dialog.querySelectorAll('input[name=depart-officer]:checked')].map(x=>Number(x.value));if(!draft.officers.length||draft.officers.length>10)return notice('请选择1到10名有兵力的武将。',true);confirm();};
  };
- const confirm=()=>{const troops=draft.officers.reduce((n,i)=>n+view.game.officers[i].troops,0),cost=Math.max(1,Math.floor(troops/25));openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p><p>${draft.officers.map(i=>escapeHtml(name(i))).join('、')}，共${troops}兵，耗粮${cost}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+`<div id="departure-estimate"></div>`:''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');const refresh=()=>{draft.route_mode=syncRouteModes(city.id,draft.target,draft.route_mode);$('#departure-estimate').innerHTML=travelEstimate(city.id,draft.target,draft.route_mode);$('#confirm-departure').disabled=!travelQuote(city.id,draft.target,draft.route_mode);};if($('#route-mode')){$('#route-mode').onchange=()=>{draft.route_mode=$('#route-mode').value;refresh();};refresh();}$('#back-to-pick').onclick=pick;$('#confirm-departure').onclick=async()=>{actor=target=null;if(await command('depart',draft))dialog.close();};};
+ const confirm=()=>{const troops=draft.officers.reduce((n,i)=>n+view.game.officers[i].troops,0),cost=Math.max(1,Math.floor(troops/25));openDialog('出征确认',`<p>${escapeHtml(cityName(city.id))}出发，目标${escapeHtml(cityName(draft.target))}。</p><p>${draft.officers.map(i=>escapeHtml(name(i))).join('、')}，共${troops}兵，耗粮${cost}。</p>${view.catalog.travel_rules?routeModeSelect(draft.route_mode)+`<div id="departure-estimate"></div>`:''}<p class="small">${view.catalog.travel_rules?'确认后部队进入行军，到达后才战斗。':'确认后才出征。'}现在取消不会扣粮或消耗行动。</p>`,'<button data-cancel>取消出征</button><button id="back-to-pick">返回名单</button><button id="confirm-departure" class="primary">确认出征</button>');const refresh=()=>{draft.route_mode=syncRouteModes(city.id,draft.target,draft.route_mode);const estimate=$('#departure-estimate'),quote=travelQuote(city.id,draft.target,draft.route_mode);estimate.innerHTML=travelEstimate(city.id,draft.target,draft.route_mode);previewSurvivors(estimate,quote,draft.officers);$('#confirm-departure').disabled=!quote;};if($('#route-mode')){$('#route-mode').onchange=()=>{draft.route_mode=$('#route-mode').value;refresh();};watchRouteDialog(refresh);refresh();}$('#back-to-pick').onclick=pick;$('#confirm-departure').onclick=async()=>{actor=target=null;if(await command('depart',draft))dialog.close();};};
  pick();
 }
 
@@ -307,8 +324,8 @@ function transferCity(city){
  const destinations=Object.values(view.game.cities).filter(c=>c.id!==city.id&&c.owner===view.game.player);
  if(!destinations.length)return notice('没有其他本方城池可接收武将。');
  openDialog('调动武将',`<p>沿连续的本方路线调动，费用为每人每段道路5粮。消耗出发城行动，目的城仍最多${capacity()}人。</p>${view.catalog.travel_rules?routeModeSelect()+'<div id="transfer-estimate"></div>':''}<label class="field">目的城<select id="transfer-city">${destinations.map(c=>`<option value="${c.id}">${escapeHtml(cityName(c.id))} · ${c.roster.officer_ids.length}/${capacity()}人</option>`).join('')}</select></label><div class="officer-picker">${city.roster.officer_ids.map(i=>`<label><input type="checkbox" name="transfer-officer" value="${i}" ${(marching().has(i)||view.game.extension?.officer_actions?.[i]===view.game.turn)?'disabled':''}>${escapeHtml(name(i))} · ${view.game.officers[i].troops}兵</label>`).join('')}</div>`,'<button data-cancel>取消</button><button id="confirm-transfer" class="primary">确认调动</button>');
- const updateEstimate=()=>{if($('#transfer-estimate')){const mode=syncRouteModes(city.id,$('#transfer-city').value,$('#route-mode').value);$('#transfer-estimate').innerHTML=travelEstimate(city.id,$('#transfer-city').value,mode);$('#confirm-transfer').disabled=!travelQuote(city.id,$('#transfer-city').value,mode);}};
- $('#transfer-city').onchange=updateEstimate;if($('#route-mode'))$('#route-mode').onchange=updateEstimate;updateEstimate();
+ const updateEstimate=()=>{if($('#transfer-estimate')){const destination=$('#transfer-city').value,mode=syncRouteModes(city.id,destination,$('#route-mode').value),estimate=$('#transfer-estimate'),quote=travelQuote(city.id,destination,mode),ids=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>Number(e.value));estimate.innerHTML=travelEstimate(city.id,destination,mode);previewSurvivors(estimate,quote,ids);$('#confirm-transfer').disabled=!quote;}};
+ $('#transfer-city').onchange=updateEstimate;if($('#route-mode'))$('#route-mode').onchange=updateEstimate;dialog.querySelectorAll('input[name=transfer-officer]').forEach(input=>input.onchange=updateEstimate);watchRouteDialog(updateEstimate);updateEstimate();
  $('#confirm-transfer').onclick=async()=>{const ids=[...dialog.querySelectorAll('input[name=transfer-officer]:checked')].map(e=>Number(e.value));if(await command('transfer',{source:city.id,target:$('#transfer-city').value,officers:ids,route_mode:$('#route-mode')?.value||'fastest'}))dialog.close();};
 }
 function personStatus(p){
@@ -378,6 +395,7 @@ function renderBattle(){
 }
 function render(){
  if(!view)return;
+ MarchCore.update(view);
  GameI18n.registerScenarios(view.catalog.scenarios);
  $('#inspector').classList.remove('setup-menu');
  const game=view.game;

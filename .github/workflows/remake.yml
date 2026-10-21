@@ -8,6 +8,9 @@ permissions:
 jobs:
   rules-and-data:
     runs-on: ubuntu-latest
+    env:
+      RUSTUP_TOOLCHAIN: '1.93.0'
+      MARCH_CORE_BACKEND: rust
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -15,6 +18,15 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: '3.13'
+      - name: Install pinned marching-core toolchain
+        run: rustup toolchain install 1.93.0 --profile minimal --component clippy,rustfmt --target wasm32-unknown-unknown
+      - name: Rust rules and reproducible native/WASM build
+        run: |
+          cargo fmt --manifest-path crates/march-core/Cargo.toml --check
+          cargo clippy --manifest-path crates/march-core/Cargo.toml --locked --all-targets -- -D warnings
+          cargo test --manifest-path crates/march-core/Cargo.toml --locked
+          python game/build_march_core.py --check
+          node tests/march_wasm_parity.cjs
       - name: Officer and campaign behavior
         env:
           PYTHONDONTWRITEBYTECODE: '1'
@@ -36,6 +48,9 @@ jobs:
           node --check game/app.js
           node --check game/i18n.js
           node --check game/map-navigation.js
+          node --check game/march-core.js
+          node --check game/march-worker.js
+          node tests/test_remake_march_worker.cjs
           node tests/test_remake_i18n_runtime.cjs
           node tests/test_remake_map_navigation.cjs
       - name: Rebuild current officer batch and historical campaigns offline

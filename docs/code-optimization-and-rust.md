@@ -34,6 +34,8 @@
 
 ## 現行Web遊戲的Rust遷移評估
 
+後續已實作第一階段：[行軍Rust／WASM核心](marching-rust-wasm.md)。下列評估保留當時基準，後續實作、建置及驗證以新文件為準。
+
 檢查基準：目前`source/remake/`的獨立戰役與`game/`的HTML／JavaScript介面，人物庫1023、最多115城；本次只做評估，未新增Rust執行碼，也未宣稱Rust已帶來效能提升。
 
 ## 建議結論

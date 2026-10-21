@@ -26,3 +26,6 @@ node_modules
 /outputs/**/*-preview.png
 /outputs/**/*.ndjson
 /outputs/**/sources-preview.png
+
+# Regenerable marching-core compiler outputs (web WASM is committed).
+/crates/march-core/target/

@@ -1,0 +1,21 @@
+[package]
+name = "march-core"
+version = "0.1.0"
+edition = "2021"
+description = "Deterministic campaign route and troop survival calculations"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "march-core-json"
+path = "src/main.rs"
+
+[dependencies]
+serde_json = { version = "=1.0.149", features = ["float_roundtrip"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = "debuginfo"

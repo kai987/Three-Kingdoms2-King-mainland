@@ -161,3 +161,32 @@ def allocate_survivors(troops, numerator, denominator):
     for index in order[:missing]:
         result[index] += 1
     return result
+
+
+# Keep the released reference available for fallback and differential replay.
+_python_route_allowed = route_allowed
+_python_evaluate_leg = evaluate_leg
+_python_allocate_survivors = allocate_survivors
+
+
+def route_allowed(data, route, source, target):
+    from .march_core import enabled, invoke
+    if enabled():
+        return invoke('allowed', data=data, route=route, source=source, target=target)
+    return _python_route_allowed(data, route, source, target)
+
+
+def evaluate_leg(data, route, source, target, departure_month):
+    from .march_core import enabled, invoke
+    if enabled():
+        return invoke('evaluate_leg', data=data, route=route, source=source,
+                      target=target, month=departure_month)
+    return _python_evaluate_leg(data, route, source, target, departure_month)
+
+
+def allocate_survivors(troops, numerator, denominator):
+    from .march_core import enabled, invoke
+    if enabled():
+        return invoke('allocate', troops=list(troops), numerator=numerator,
+                      denominator=denominator)
+    return _python_allocate_survivors(troops, numerator, denominator)
