@@ -73,3 +73,9 @@ jobs:
         run: |
           python game/build_travel_campaigns.py
           git diff --exit-code -- game/data/main-scenarios-v7
+      - name: Rebuild dated106-city northern campaigns
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python game/build_northern_campaigns.py
+          git diff --exit-code -- game/data/main-scenarios-v8

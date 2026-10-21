@@ -18,5 +18,7 @@ def city_names(catalog,year):
         label=row.get('displayName',city['name'])
         if year<212:label=row.get('before212',label)
         if year<221:label=row.get('before221',label)
+        for period in catalog.data.get('city_history',{}).get(city['id'],{}).get('names',[]):
+            if period['start']<=year<=period['end']:label=period['name']
         names[city['id']]=label
     return names

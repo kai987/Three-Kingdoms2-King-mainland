@@ -208,7 +208,7 @@ class TravelCampaign:
             if not isinstance(quote,dict) or set(quote)!={'path','routes','days','months','distance_km','grain_per_officer','modes'}: raise ValueError('march quote')
             for key in ('days','months','grain_per_officer'): integer(quote[key],1,1000000,'march '+key)
             path, legs = quote['path'], quote['routes']
-            if not isinstance(path,list) or not path or len(path)!=len(set(path)) or path[0]!=row['source'] or path[-1]!=row['target'] or len(legs)!=len(path)-1: raise ValueError('march path')
+            if not isinstance(path,list) or not path or len(path)!=len(set(path)) or any(key not in state.cities for key in path) or path[0]!=row['source'] or path[-1]!=row['target'] or len(legs)!=len(path)-1: raise ValueError('march path')
             if row['mode'] not in {'fastest','land'}: raise ValueError('march mode')
             for a,b,leg in zip(path,path[1:],legs):
                 if leg not in self.catalog.data['travel_routes'] or {leg['from'],leg['to']}!={a,b} or row['mode']=='land' and leg['mode']=='sea': raise ValueError('march leg')

@@ -29,6 +29,8 @@ class CampaignSession:
             result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
             result['catalog']['world']=self.game.catalog.data.get('world')
             result['catalog']['scenario_id']=self.game.catalog.data['id']
+            for field in ('added_city_ids','regional_roads','city_label_offsets','city_history'):
+                result['catalog'][field]=self.game.catalog.data.get(field,[] if field in ('added_city_ids','regional_roads') else {})
             latest=max(c.data.get('content_generation',0) for c in self.catalogs.values())
             result['catalog']['scenarios']=[{'id':c.data['id'],'title':c.data['title'],
                                            'cities':len(c.data['active_cities']),
@@ -45,6 +47,10 @@ class CampaignSession:
                                            'map_cities':list(c.map_cities.values()),
                                            'world':c.data.get('world'),
                                            'road_additions':c.data.get('road_additions',[]),
+                                           'added_city_ids':c.data.get('added_city_ids',[]),
+                                           'regional_roads':c.data.get('regional_roads',[]),
+                                           'city_label_offsets':c.data.get('city_label_offsets',{}),
+                                           'city_history':c.data.get('city_history',{}),
                                            'factions':list(c.factions.values())} for c in self.catalogs.values()]
             return result
 
@@ -81,9 +87,10 @@ class CampaignSession:
             owner=d['initial_owners'][city]
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,
-                city=dict(id=city,owner=owner,owner_name=c.factions[owner]['name'] if owner!='neutral' else '无主',
+                city=dict(id=city,owner=owner,owner_name=c.factions[owner]['name'] if owner!='neutral' else
+                    '地方汉郡（中立）' if d.get('city_history',{}).get(city,{}).get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主',
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
-                    profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),
+                    profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),history=d.get('city_history',{}).get(city),
                     **d.get('initial_city_resources',{}).get(city,d['initial_resources'])))
 
     def load_save(self, save, revision):

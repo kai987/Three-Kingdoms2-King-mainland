@@ -97,7 +97,16 @@ class Catalog:
         self.factions = {f['id']: f for f in self.data['factions']}
         self.map_cities = {c['id']: c for c in self.data['cities']}
         self.links = {frozenset(e) for e in self.data['links']}
-        assert len(self.definitions) == 1000 and len(self.map_cities) == (100 if self.data.get('travel_rules') else 96)
+        expected = self.data.get('city_count', 100 if self.data.get('travel_rules') else 96)
+        assert type(expected) is int and expected > 0
+        assert len(self.definitions) == 1000 and len(self.map_cities) == expected
+
+    def active_city_ids(self, year):
+        opened = set(self.data['active_cities'])
+        for key, rule in self.data.get('city_foundings', {}).items():
+            if year >= rule['year']: opened.add(key)
+            else: opened.discard(key)
+        return [key for key in self.map_cities if key in opened]
 
     def name(self, ident):
         return self.by_id[ident]['name']
@@ -158,7 +167,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             return {'revision': self.revision, 'game': self.to_dict(),
                     'catalog': {'title': self.catalog.data['title'], 'factions': list(self.catalog.factions.values()),
                                 'cities': list(self.catalog.map_cities.values()),
-                                'active_cities': self.catalog.data['active_cities'],
+                                'active_cities': self.catalog.active_city_ids(state.year if state else self.catalog.data['start_year']),
                                 'links': self.catalog.data['links'], 'rules': self.catalog.data['rules'],
                                 'notes': self.catalog.data['design_notes'], 'library_count': 1000,
                                 'year_available': available,
@@ -392,6 +401,18 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 self._note(state, f'{self.catalog.map_cities[city.id]["name"]}守军休整。')
         self._complete_month(state)
 
+    def _open_dated_cities(self, state):
+        """Split an existing actual territory; do not replay historical conquest."""
+        for key, rule in self.catalog.data.get('city_foundings', {}).items():
+            if state.year < rule['year'] or key in state.cities: continue
+            parent = state.cities[rule['parent']]
+            resources = {}
+            for field in ('gold','grain','reserves'):
+                resources[field] = getattr(parent,field) // rule['resource_divisor']
+                setattr(parent,field,getattr(parent,field)-resources[field])
+            state.cities[key] = City(key,parent.owner,CityRoster(key,rules=self.catalog.rules),**resources)
+            self._note(state,f'{self.catalog.map_cities[key]["name"]}建郡，承接晋阳当时归属与部分资源；未新增兵员或强制转属。')
+
     def _complete_month(self, state):
         r = self.catalog.data['rules']
         state.completed_ai_turns.append(state.turn)
@@ -399,6 +420,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if state.month == 13:
             state.month = 1
             state.year += 1
+        self._open_dated_cities(state)
         if state.year > state.calendar_cursor:
             events = advance_year(self.catalog.definitions.values(), state.officers,
                                   [c.roster for c in state.cities.values()], state.calendar_cursor, state.year)
@@ -503,7 +525,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         integer(state.rng.state, 1, 0xffffffff, 'rng state')
         integer(state.rng.draws, 0, 100000000, 'rng draws')
         elapsed = (state.year - self.catalog.data['start_year']) * 12 + state.month - self.catalog.data['start_month']
-        if state.calendar_cursor != state.year or elapsed != state.turn - 1 or set(state.cities) != set(self.catalog.data['active_cities']):
+        if state.calendar_cursor != state.year or elapsed != state.turn - 1 or set(state.cities) != set(self.catalog.active_city_ids(state.year)):
             raise ValueError('calendar/city domain')
         if any(type(v) is not int or not 0 <= v <= 100000000 for v in state.soldiers.values()) or set(state.soldiers) != {'initial', 'recruited', 'lost'}:
             raise ValueError('soldier ledger')
