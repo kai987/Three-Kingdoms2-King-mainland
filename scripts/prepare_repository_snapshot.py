@@ -49,7 +49,7 @@ def main():
                     omitted_static.append({'path': rel.as_posix(), 'bytes': size,
                                            'sha256': sha(path), 'reason': 'large_static_evidence_retained_locally'})
 
-    for folder in ('source/recovered', 'source/readable_c', 'source/remake',
+    for folder in ('.github', 'source/recovered', 'source/readable_c', 'source/remake',
                    'tests', 'game', 'scripts', 'expansion', 'docs'):
         for base, dirs, files in os.walk(ROOT / folder, followlinks=False):
             dirs[:] = [d for d in dirs if d not in {'node_modules', '__pycache__', '.git'}
@@ -68,7 +68,8 @@ def main():
 
     inventory = {
         'schema': 'source-publication-v1',
-        'scope': 'readable source, selected static evidence, v42 map and officer candidate handoff',
+        'scope': 'recovered source, selected evidence, v42 map and independent96-city remake campaign',
+        'independent_remake_runtime_added': True,
         'raw_evidence_deleted': False,
         'game_runtime_modified': False,
         'original_rom_included': False,

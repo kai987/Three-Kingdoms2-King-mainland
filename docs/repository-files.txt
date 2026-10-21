@@ -1,5 +1,6 @@
 "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/\345\215\203\344\272\272\346\255\246\345\260\206\345\200\231\351\200\211\345\220\215\345\215\225\344\270\216\345\255\227\346\256\265\346\230\240\345\260\204.xlsx"
 .gitattributes
+.github/workflows/remake.yml
 .gitignore
 LICENSE
 README.md
@@ -6976,6 +6977,7 @@ docs/licenses/REA-MIT.txt
 docs/licenses/README.md
 docs/local-cleanup.json
 docs/publication-inventory.json
+docs/remake-campaign-rules.md
 docs/remake-implementation-plan.md
 docs/remake-module-audit.md
 docs/repository-files.txt
@@ -7024,12 +7026,14 @@ expansion/officers/data/remake-profiles.json
 expansion/officers/data/remake-year-populations.json
 expansion/officers/data/roster-candidates.csv
 expansion/officers/data/roster-candidates.json
+expansion/officers/data/san14-abilities.json
 expansion/officers/data/scenario-availability-summary.json
 expansion/officers/data/scenario-states.csv
 expansion/officers/data/scenario-states.json
 expansion/officers/delivery-summary.json
 expansion/officers/field-mapping.csv
 expansion/officers/field-mapping.json
+expansion/officers/import_abilities.py
 expansion/officers/index.html
 expansion/officers/mapping-evidence.md
 expansion/officers/remake-rules.json
@@ -7050,7 +7054,10 @@ game/README.md
 game/app.js
 game/assets/map.png
 game/build_data.py
+game/build_mainland.py
+game/config/officer-designs.json
 game/data/demo.json
+game/data/mainland.json
 game/design/README.md
 game/design/concept.png
 game/design/prompt.txt
@@ -7610,6 +7617,10 @@ source/recovered/wild_recruitment_integration.py
 source/remake/README.md
 source/remake/__init__.py
 source/remake/campaign.py
+source/remake/campaign_expansion.py
+source/remake/errors.py
 source/remake/officers.py
+source/remake/session.py
 tests/test_remake_campaign.py
+tests/test_remake_mainland.py
 tests/test_remake_officers.py

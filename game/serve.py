@@ -40,9 +40,9 @@ def main():
     if args.audit_log:
         sys.addaudithook(audit_hook)
     sys.path.insert(0, str(ROOT / 'source'))
-    from remake.campaign import Campaign, Catalog, GameError
-    catalog = Catalog(HERE / 'data/demo.json')
-    game = Campaign(catalog)
+    from remake.campaign import GameError
+    from remake.session import CampaignSession
+    game = CampaignSession([HERE / 'data/demo.json', HERE / 'data/mainland.json'])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/style.css': ('style.css', 'text/css; charset=utf-8'),

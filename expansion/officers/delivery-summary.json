@@ -28,6 +28,15 @@
     "independent_data_model_implemented": true,
     "standalone_playable_loop_implemented": false
   },
+  "mainland_campaign": {
+    "library": 1000,
+    "san14_abilities": 1000,
+    "configured_profiles": 52,
+    "pending_profiles": 948,
+    "initial_serving": 41,
+    "source_years": "third-party SAN14 settings; historical verification separate",
+    "virtue": "individually history-informed authorial game ratings, not SAN14 charisma"
+  },
   "workbook": "outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/千人武将候选名单与字段映射.xlsx",
   "report": "expansion/officers/index.html"
 }

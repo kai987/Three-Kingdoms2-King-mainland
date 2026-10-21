@@ -17,7 +17,7 @@ python3 expansion/officers/build_roster.py
 python3 expansion/officers/build_report.py
 ```
 
-这两项不依赖原ROM。名单来源快照及SHA-256保存在 `expansion/officers/source/`。原NES的237人仍有229人缺少完整身份对照，尚不能据此确认净新增人数。新增人物的体、徳、适性、装备及统率／政治如何融入玩法仍待配置。
+这两项不依赖原ROM。名单来源快照及SHA-256保存在 `expansion/officers/source/`。原NES的237人仍有229人缺少完整身份对照，尚不能据此确认净新增人数。新增人物的体、徳与适性等逐批配置。当前96城战役具备52份完整属性配置，948人仍待补齐；武、知已整理千人的第三方来源数值。独立战役启动见`game/README.md`，不需要原ROM。
 
 ## 逆向分析的外部输入
 

@@ -7,6 +7,9 @@
   "remakeCityCapacity": 20,
   "battlePerSide": 10,
   "historyInformedVirtueDesigns": 5,
+  "mainlandConfiguredProfiles": 52,
+  "mainlandPendingProfiles": 948,
+  "san14AbilitiesSourced": 1000,
   "searchTests": [
     {
       "query": "马忠",
@@ -40,7 +43,7 @@
   "fantasy251AllCandidates": true,
   "paginationPassed": true,
   "mapTogglesPassed": 3,
-  "localLinksChecked": 23,
+  "localLinksChecked": 25,
   "responsive": [
     {
       "width": 1440,

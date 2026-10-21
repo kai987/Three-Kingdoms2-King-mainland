@@ -11,6 +11,7 @@ OUT=ROOT/'outputs/01a1316a-d5cf-7641-8d98-1e47c65dfb1c'
 read=lambda f:json.loads((HERE/f).read_text())
 roster=read('data/roster-candidates.json');audit=read('data/dedup-audit.json');original=read('data/original-overlap-audit.json');mapping=read('field-mapping.json');scenarios=read('data/scenario-availability-summary.json')
 remake=read('remake-summary.json');virtue_designs=read('virtue-designs.json')['profiles']
+mainland=json.loads((ROOT/'game/data/mainland.json').read_text())['coverage']
 links=json.loads((MAP/'city-map-city-sea-links-v42.json').read_text())
 source=(MAP/'city-map-city-sea-preview-v42.html').read_text()
 maphtml=re.search(r'<div id="map">.*</div></body>',source,re.S).group(0).removesuffix('</body>')
@@ -53,9 +54,9 @@ html{scroll-behavior:smooth}.map-viewport{max-width:1356px;width:100%}.section-l
 <p class="count-line" data-remake-capacity="20">每城 <b>20 人</b>，战场每方 <b>10 人（含主将）</b>，全场最多20人。总库1000人，按出生、出仕/登场、死亡年份分别管理。</p>
 <p>武力对应原作“武”，智力对应“知”；兼容数值1—99，来源100保留原值并映射99。德独立参考史料设定；其余初始值按本作人物与剧本配置。来源“登场年”是SAN14游戏设定，不能当成已证实的首次任官年份。</p>
 <p>新登场人物0兵、基础短剣和絹巾、经验0；体力按明确人物基准满值初始化。在野忠诚0、君主100，仕官者用剧本配置，招募与俘虏分别使用原规则。体力、适性或能力缺失时列为待配置。</p>
-<p class="warning">目前仅8个人物有已核对的完整原版属性基线；SAN14逐人能力值尚未采集，992人的必要属性仍不完整，任职城与势力也未配置。本页及人物模型不是已完成的可玩游戏。</p>
+<p class="warning">阶段1的原版基线仍为8人；扩展战役现已整理1000人的SAN14第三方数值资料，__MAINLAND_READY__人属性齐全，__MAINLAND_PENDING__人仍待配置，217年开局__MAINLAND_SERVING__人仕官。<a href="http://127.0.0.1:8878/">打开本地96城战役</a>；须先按仓库说明启动游戏服务。该试制版尚非完整千人正式战役。</p>
 <details><summary>首批5人的德设计与史料依据</summary><p>按恤民35%、公正30%、操守20%、信义15%加权。维度与分值是游戏设计解释，使用生涯综合档，不是史料给出的客观数值，也不直接等同魅力。其余人物不自动补分。</p><div class="table-wrap"><table id="virtue-design-table"><thead><tr><th>人物</th><th>德</th><th>设计说明</th><th>史料</th></tr></thead><tbody>__VIRTUE_ROWS__</tbody></table></div></details>
-<div class="downloads"><a href="__REMAKE_RULES__">重制版规则</a><a href="__REMAKE_PROFILES__">1000人初始化资料</a><a href="__REMAKE_CSV__">初始化资料CSV</a><a href="__REMAKE_YEARS__">年度人数</a><a href="__REMAKE_PLAN__">分阶段实现计划</a></div>
+<div class="downloads"><a href="../../game/data/mainland.json">当前战役人物配置</a><a href="data/san14-abilities.json">千人武力与智力来源表</a><a href="__REMAKE_RULES__">重制版规则</a><a href="__REMAKE_PROFILES__">1000人初始化资料</a><a href="__REMAKE_CSV__">初始化资料CSV</a><a href="__REMAKE_YEARS__">年度人数</a><a href="__REMAKE_PLAN__">分阶段实现计划</a></div>
 <h2 id="map-section">城池—陆路—航道—陆路—城池</h2>
 <nav><label><input id="river-toggle" type="checkbox" checked> 河流</label><label><input id="land-toggle" type="checkbox" checked> 陆路与岸边接驳</label><label><input id="sea-toggle" type="checkbox" checked> 海上航道</label><a href="__MAP_PNG__">完整样图</a></nav>
 <div class="map-viewport">__MAP_HTML__</div>
@@ -99,6 +100,7 @@ document.querySelector('#result-count').textContent='符合条件 '+filtered.len
 search.addEventListener('input',()=>{page=0;render();});year.addEventListener('input',()=>{page=0;render();});status.addEventListener('change',()=>{page=0;render();});scenario.addEventListener('change',setupMode);document.querySelector('#prev-page').addEventListener('click',()=>{page--;render();});document.querySelector('#next-page').addEventListener('click',()=>{page++;render();});setupMode();
 </script></html>'''
 replacements={
+ '__MAINLAND_READY__':str(mainland['configured_profiles']),'__MAINLAND_PENDING__':str(mainland['pending_profiles']),'__MAINLAND_SERVING__':str(mainland['initial_serving']),
  '__STYLE__':style,'__MAP_HTML__':maphtml,'__PEOPLE_JSON__':json_script(payload),'__SCENARIOS_JSON__':json_script(roster['scenarios']),
  '__MAPPING_ROWS__':''.join(mappingrows),'__HOMONYM_ROWS__':''.join(homonyms),
  '__VIRTUE_ROWS__':''.join(virtue_rows),'__REMAKE_RULES__':uri(HERE/'remake-rules.json'),
@@ -119,7 +121,7 @@ summary={'candidate_people':len(payload),'distinct_name_strings':audit['unique_t
  'chronology_records':len(payload),'scenario_cells':10000,'field_mapping_rows':len(mapping['fields']),
  'original_count':237,'original_identified_matches':8,'original_pending':229,'confirmed_net_new_people':None,
  'map_relations':links['checks']['cityToCityRelations'],'game_runtime_modified':False,
- 'remake_rules':remake,
+ 'remake_rules':remake,'mainland_campaign':mainland,
  'workbook':str((OUT/'千人武将候选名单与字段映射.xlsx').relative_to(ROOT)),'report':str((HERE/'index.html').relative_to(ROOT))}
 (HERE/'delivery-summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(summary,ensure_ascii=False))

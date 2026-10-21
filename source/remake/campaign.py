@@ -12,15 +12,11 @@ import json
 from pathlib import Path
 from threading import RLock
 
+from .errors import GameError
+from .campaign_expansion import ExpandedCampaign
 from .officers import (CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
                        initialize_officer, integer, select_deployment, year_state)
-
-
-class GameError(ValueError):
-    def __init__(self, message, status=400):
-        super().__init__(message)
-        self.status = status
 
 
 def canonical(value):
@@ -75,6 +71,7 @@ class CampaignState:
     completed_ai_turns: list[int] = field(default_factory=list)
     year_events: list[str] = field(default_factory=list)
     log: list[str] = field(default_factory=list)
+    extension: dict = field(default_factory=dict)
     soldiers: dict = field(default_factory=lambda: {'initial': 0, 'recruited': 0, 'lost': 0})
 
 
@@ -83,7 +80,7 @@ class Catalog:
         raw = Path(path).read_bytes()
         self.sha256 = hashlib.sha256(raw).hexdigest()
         self.data = json.loads(raw)
-        assert self.data['schema'] == 'standalone-demo-data-v1'
+        assert self.data['schema'] in {'standalone-demo-data-v1', 'standalone-mainland-data-v1'}
         r = self.data['rules']
         self.rules = GameRules(r['city_officer_capacity'], r['battle_officers_per_side'], r['runtime_capacity'])
         self.by_id, self.definitions, self.profiles = {}, {}, {}
@@ -105,7 +102,7 @@ class Catalog:
         return self.by_id[ident]['name']
 
 
-class Campaign:
+class Campaign(ExpandedCampaign):
     def __init__(self, catalog: Catalog):
         self.catalog = catalog
         self.state: CampaignState | None = None
@@ -137,7 +134,9 @@ class Campaign:
             state.officers[ident] = officer
             city.roster.officer_ids.append(ident)
         state.soldiers['initial'] = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
-        self._note(state, f'开始荆襄演练，选择{self.catalog.factions[faction]["name"]}。')
+        if self.expanded:
+            self._initialize_expansion(state)
+        self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
 
     def to_dict(self, state=None):
@@ -159,6 +158,7 @@ class Campaign:
                                 'links': self.catalog.data['links'], 'rules': self.catalog.data['rules'],
                                 'notes': self.catalog.data['design_notes'], 'library_count': 1000,
                                 'year_available': available,
+                                **self._expanded_catalog_view(state),
                                 'names': {str(i): self.catalog.name(i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
@@ -180,7 +180,9 @@ class Campaign:
                 if self.state is None:
                     raise GameError('请先选择势力。')
                 candidate = deepcopy(self.state)
-                methods = {'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
+                methods = {'persuade_officer': self._persuade_officer, 'recruit_officer': self._recruit_officer, 'transfer': self._transfer,
+                           'tactic': self._tactic, 'duel_start': self._duel_start, 'duel_action': self._duel_action,
+                           'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
                            'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
                            'end_turn': self._end_turn, 'ai': self._ai}
                 if kind not in methods:
@@ -241,6 +243,10 @@ class Campaign:
         ids = payload.get('officers')
         if not isinstance(ids, list) or any(type(i) is not int for i in ids):
             raise GameError('出征名单无效。')
+        if self.expanded:
+            for ident in ids: self._personnel_actor(state, source, ident)
+            self._start_expanded_battle(state, source, target, ids)
+            return
         selected = select_deployment(source.roster, ids, state.officers)
         cost = max(1, sum(state.officers[i].troops for i in selected) // 25)
         if source.grain < cost:
@@ -269,6 +275,8 @@ class Campaign:
         return min(defender['troops'], max(1, base // ((defender['martial'] + 80) * 10000)))
 
     def _attack(self, state, payload):
+        if self.expanded:
+            return self._expanded_attack(state, payload)
         battle = state.battle
         if state.phase != 'battle' or not battle or payload.get('battle_id') != battle['id']:
             raise GameError('当前没有可操作的战斗。')
@@ -298,12 +306,16 @@ class Campaign:
         battle['log'][:] = battle['log'][-80:]
 
     def _retreat(self, state, payload):
+        if self.expanded:
+            return self._expanded_retreat(state, payload)
         if state.phase != 'battle' or not state.battle or payload.get('battle_id') != state.battle['id']:
             raise GameError('当前不能退却。')
         state.battle['outcome'] = 'retreat'
         state.phase = 'result'
 
     def _settle(self, state, payload):
+        if self.expanded:
+            return self._expanded_settle(state, payload)
         battle = state.battle
         if state.phase != 'result' or not battle or payload.get('battle_id') != battle['id']:
             raise GameError('没有待接收的战果。')
@@ -349,6 +361,8 @@ class Campaign:
         state.phase = 'ai'
 
     def _ai(self, state, payload):
+        if self.expanded:
+            return self._expanded_ai(state, payload)
         if state.phase != 'ai' or payload.get('turn') != state.turn:
             raise GameError('当前不是待处理的电脑回合。')
         r = self.catalog.data['rules']
@@ -367,6 +381,10 @@ class Campaign:
                 self._note(state, f'{self.catalog.factions[city.owner]["name"]}在{self.catalog.map_cities[city.id]["name"]}整备，{self.catalog.name(ident)}补兵{amount}。')
             else:
                 self._note(state, f'{self.catalog.map_cities[city.id]["name"]}守军休整。')
+        self._complete_month(state)
+
+    def _complete_month(self, state):
+        r = self.catalog.data['rules']
         state.completed_ai_turns.append(state.turn)
         state.month += 1
         if state.month == 13:
@@ -455,6 +473,7 @@ class Campaign:
             return self.view()
 
     def validate(self, state):
+        self._validate_expansion(state)
         if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished'}:
             raise ValueError('campaign phase/player')
         integer(state.year, 1, 400, 'year')
@@ -531,7 +550,8 @@ class Campaign:
         if state.settled_battles != [f'battle-{i}' for i in range(1, receipt_count + 1)]:
             raise ValueError('settlement receipt sequence')
         if battle:
-            if set(battle) != {'id', 'source', 'target', 'attacker', 'defender', 'attackers', 'defenders', 'used', 'round', 'outcome', 'supply_cost', 'log'}:
+            base_fields = {'id', 'source', 'target', 'attacker', 'defender', 'attackers', 'defenders', 'used', 'round', 'outcome', 'supply_cost', 'log'}
+            if set(battle) != base_fields | ({'extended'} if self.expanded else set()):
                 raise ValueError('battle fields')
             if battle['id'] != f'battle-{state.battle_counter}' or battle['outcome'] not in {None, 'victory', 'defeat', 'retreat'}:
                 raise ValueError('battle identity/outcome')
@@ -541,7 +561,7 @@ class Campaign:
                 raise ValueError('battle log')
             if battle['source'] == battle['target'] or frozenset((battle['source'], battle['target'])) not in self.catalog.links or battle['id'] in state.settled_battles:
                 raise ValueError('battle location/receipt')
-            if battle['attacker'] != state.player or state.cities[battle['source']].owner != state.player or state.cities[battle['target']].owner != battle['defender']:
+            if (not self.expanded and battle['attacker'] != state.player) or battle['attacker'] not in self.catalog.factions or state.cities[battle['source']].owner != battle['attacker'] or state.cities[battle['target']].owner != battle['defender']:
                 raise ValueError('battle faction')
             if (state.phase == 'result') != (battle['outcome'] in {'victory', 'defeat', 'retreat'}):
                 raise ValueError('battle outcome')
@@ -560,13 +580,14 @@ class Campaign:
                         raise ValueError('deployed/reserved membership')
                     integer(unit['troops'], 0, unit['start'], 'battle troops')
                     all_ids.append(unit['id'])
-            if len(all_ids) != len(set(all_ids)) or len(battle['used']) != len(set(battle['used'])) or not set(battle['used']) <= {u['id'] for u in battle['attackers']}:
+            if len(all_ids) != len(set(all_ids)) or len(battle['used']) != len(set(battle['used'])) or not set(battle['used']) <= {u['id'] for u in battle[self._player_sides(state)[0] if self.expanded else 'attackers']}:
                 raise ValueError('battle duplicate/turn ownership')
             attacking = any(u['troops'] > 0 for u in battle['attackers'])
             defending = any(u['troops'] > 0 for u in battle['defenders'])
             if state.phase == 'battle' and not (attacking and defending):
                 raise ValueError('battle without active sides')
-            if battle['outcome'] == 'victory' and (defending or not attacking):
+            withdrew = self.expanded and battle['extended']['withdrawn'] == 'defenders'
+            if battle['outcome'] == 'victory' and ((defending and not withdrew) or not attacking):
                 raise ValueError('victory before defenders rout')
             if battle['outcome'] == 'defeat' and (attacking or not defending):
                 raise ValueError('defeat before attackers rout')
