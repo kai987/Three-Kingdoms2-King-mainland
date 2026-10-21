@@ -24,7 +24,7 @@ const cityCaption=id=>cityName(id)===periodCityName(id)?cityName(id):`${cityName
 const mapColor=id=>view.catalog.map_presentation.colors[id]||view.catalog.map_presentation.colors.neutral;
 const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);}
-function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;}
+function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;}
 async function request(path,body){
  const response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
  const value=await response.json();
@@ -48,10 +48,11 @@ function openDialog(title,body,actions){
 }
 function selectFaction(){
  const current=view.catalog.scenario_id;
+ $('#main-menu').disabled=true;$('#main-menu').setAttribute('aria-expanded','true');
  if(dialog.open)dialog.close();
  const draw=(scenario)=>{
   const option=view.catalog.scenarios.find(x=>x.id===scenario), expanded=option.cities>=96;
-  const preferred=option.factions.some(f=>f.id==='shu')?'shu':option.factions[0].id;
+  const preferred=scenario===current&&option.factions.some(f=>f.id===view.game?.player)?view.game.player:option.factions.some(f=>f.id==='shu')?'shu':option.factions[0].id;
   setupPreview={...option,faction:preferred,focus:option.factions.find(f=>f.id===preferred).city};
   const groups=[['base','原版本篇 · 7剧本'],['pk','威力加强版本篇 · 4剧本'],['legacy','旧版目录 · 存档兼容']];
   const legacy=showLegacy||!option.main_scenario||option.archived;
@@ -59,14 +60,14 @@ function selectFaction(){
   const content=`<label class="field" for="scenario">选择剧本<select id="scenario">${options}</select></label><label class="legacy-choice"><input id="legacy-choice" type="checkbox" ${legacy?'checked':''}>显示旧版战役</label><p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary><p>${escapeHtml(option.main_scenario.summary)}</p><p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p><a href="${escapeHtml(option.main_scenario.official_source)}" target="_blank" rel="noopener noreferrer">查看官方剧本目录</a></details>`:''}
   <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg>${escapeHtml(f.name)}<span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></label>`).join('')}</div>
   <p id="setup-summary" class="small" aria-live="polite"></p><label class="seed-label" for="seed">战局编号<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026"></label>`;
-  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>选择势力</h2></div>${content}<div class="actions"><button class="primary" id="begin">开始战役</button>${view.game?'<button id="cancel-setup">返回当前战役</button>':''}</div>`;
+  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>主菜单</h2></div>${content}${view.game?'<p class="small">当前战役保持原进度，可直接继续。</p>':''}<div class="actions">${view.game?`<button class="primary" id="cancel-setup">${view.game.phase==='finished'?'返回战役结果':'继续当前战役'}</button>`:''}<button class="${view.game?'':'primary'}" id="begin">${view.game?'开始新战役':'开始战役'}</button></div>`;
   const refreshPreview=()=>{
    const chosen=option.factions.find(f=>f.id===setupPreview.faction),count=Object.values(option.initial_owners).filter(owner=>owner===chosen.id).length;
    $('#setup-summary').textContent=`${chosen.name} · ${count}座城池 · 根据地${cityName(chosen.city)}。地图已预览本剧本归属，开始后才建立新战役。`;
    $('#library').disabled=true;renderMap();
   };
   document.querySelectorAll('input[name=faction]').forEach(input=>input.onchange=()=>{setupPreview.faction=input.value;setupPreview.focus=option.factions.find(f=>f.id===input.value).city;refreshPreview();});
-  if($('#cancel-setup'))$('#cancel-setup').onclick=()=>{setupPreview=null;render();};
+  if($('#cancel-setup'))$('#cancel-setup').onclick=()=>{setupPreview=null;render();$('#main-menu').focus();};
   refreshPreview();
   $('#scenario').onchange=()=>draw($('#scenario').value);
   $('#legacy-choice').onchange=()=>{showLegacy=$('#legacy-choice').checked;draw(!showLegacy&&(!option.main_scenario||option.archived)?view.catalog.scenarios.find(x=>x.main_scenario&&!x.archived)?.id:scenario);};
@@ -80,6 +81,7 @@ function selectFaction(){
   };
  };
  draw(current);
+ $('#scenario').focus();
 }
 function renderMap(){
  const game=view.game,preview=setupPreview,owners=preview?.initial_owners||Object.fromEntries(Object.values(game?.cities||{}).map(c=>[c.id,c.owner]));
@@ -266,6 +268,8 @@ function render(){
  $('#library').disabled=!view.catalog.library;
  $('#save').disabled=!game;
  $('#restart').disabled=!game;
+ $('#main-menu').disabled=busy||!game||!!setupPreview;
+ $('#main-menu').setAttribute('aria-expanded',String(!!setupPreview));
  $('#date').textContent=game?`${game.year}年${game.month}月　第${game.turn}回合`:'选择势力';
  if(!game){renderMap();selectFaction();return;}
  if(!selectedCity||!game.cities[selectedCity])selectedCity=Object.values(game.cities).find(c=>c.owner===game.player)?.id||view.catalog.active_cities[0];
@@ -276,6 +280,7 @@ function render(){
 }
 $('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每城${capacity()}人；每方出战最多10人，包含主将。</p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。战局编号决定随机序列，保存会保留其进度。</p></div>`,'<button data-cancel>返回战役</button>');
 $('#library').onclick=showLibrary;
+$('#main-menu').onclick=()=>{if(!busy)selectFaction();};
 $('#restart').onclick=()=>selectFaction();
 $('#save').onclick=async()=>{
  if(busy)return;

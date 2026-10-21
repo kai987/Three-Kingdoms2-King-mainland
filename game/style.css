@@ -34,7 +34,7 @@ font:16px/1.5 var(--ui);
 height:100dvh;
 max-width:1600px;
 display:grid;
-grid-template-rows:72px auto minmax(0,1fr) 144px;
+grid-template-rows:minmax(72px,auto) auto minmax(0,1fr) 144px;
 grid-template-areas:"header" "notice" "main" "journal";
 gap:0;
 padding:8px 16px 16px
@@ -91,6 +91,7 @@ opacity:.8
 .topbar{
 grid-area:header;
 display:flex;
+flex-wrap:wrap;
 align-items:center;
 justify-content:space-between;
 gap:16px;
@@ -668,6 +669,9 @@ gap:4px
 .topbar nav button{
 min-width:0;
 font-size:16px
+}
+.topbar #main-menu{
+grid-column:1 / -1
 }
 main{
 display:flex;
