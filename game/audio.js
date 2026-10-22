@@ -41,6 +41,8 @@
   defeat:[['triangle',64,0,.18,.7],['triangle',62,.2,.18,.7],['triangle',60,.4,.18,.7],['triangle',57,.6,.32,.7]],
   turn:[['triangle',60,0,.1,.7],['square',67,.12,.08,.35],['square',72,.22,.18,.4]]
  });
+ const EFFECT_ALIASES=Object.freeze({attack_impact:'attack',tactic_prepare:'tactic',duel_start:'confirm',duel_refused:'cancel',duel_strike:'attack',duel_guard:'attack',duel_feint:'attack',duel_withdraw:'cancel',tactic_88:'tactic',tactic_8d:'tactic',tactic_91:'tactic',tactic_95:'tactic'});
+ const effectIds=Object.freeze([...Object.keys(EFFECTS),...Object.keys(EFFECT_ALIASES)]);
  const volume=(value,fallback)=>typeof value==='number'&&Number.isFinite(value)?Math.min(1,Math.max(0,value)):fallback;
  function create(options={}){
   const doc=options.document===undefined?root.document:options.document;
@@ -50,6 +52,7 @@
   const fetcher=options.fetch===undefined?root.fetch?.bind(root):options.fetch;
   const startInterval=options.setInterval||root.setInterval.bind(root);
   const stopInterval=options.clearInterval||root.clearInterval.bind(root);
+  const later=options.setTimeout||root.setTimeout.bind(root),cancelLater=options.clearTimeout||root.clearTimeout.bind(root);
   let settings={...DEFAULTS};
   try{
    const saved=JSON.parse(storage?.getItem(STORAGE_KEY)||'null');
@@ -58,9 +61,11 @@
   let context=null,musicBus=null,effectsBus=null,compressor=null,timer=null;
   let scene='menu',step=0,nextTime=0,unlocked=false,disposed=false,hidden=!!doc?.hidden,suspension=null;
   let manifestPromise=null,originalVoice=null,originalResume=null;
+  let effectsManifestPromise=null,effectsManifest=null,effectsUnavailable=false,effectsPreloaded=false,effectSequence=0,effectRequestSequence=0,lastEffect=null;
+  const effectBuffers=new Map(),effectLoads=new Map(),effectAssets=new Map(),pendingEffects=new Set(),effectCounts={original:0,synthesized:0};
   const originalBuffers=new Map(),originalLoads=new Map();
   const voices=new Set();
-  const status=()=>({supported:typeof AudioCtor==='function',unlocked,scene,playing:timer!==null||originalVoice!==null,musicSource:originalVoice?'original':timer!==null?'synthesized':null,originalTracks:originalBuffers.size,hidden,activeVoices:voices.size,disposed});
+  const status=()=>({supported:typeof AudioCtor==='function',unlocked,scene,playing:timer!==null||originalVoice!==null,musicSource:originalVoice?'original':timer!==null?'synthesized':null,originalTracks:originalBuffers.size,originalEffects:effectBuffers.size,pendingEffects:pendingEffects.size,effectRequestSequence,lastEffect:lastEffect?{...lastEffect}:null,effectCounts:{...effectCounts},hidden,activeVoices:voices.size,disposed});
   function gains(){
    if(!context)return;
    musicBus.gain.setValueAtTime(settings.muted?0:settings.bgmVolume*.12,context.currentTime);
@@ -97,6 +102,7 @@
   }
   function pause(){
    if(timer!==null){stopInterval(timer);timer=null;}
+   cancelPendingEffects();
    stopVoices(undefined,true);
   }
   function restartMusic(){
@@ -125,6 +131,72 @@
     }catch{/* Unavailable/unsupported recordings keep the authored fallback. */}
    })();
    originalLoads.set(value,task);return task;
+  }
+  function canLoadEffects(){return !!fetcher&&!!context&&typeof context.decodeAudioData==='function';}
+  async function loadEffectsManifest(){
+   if(!canLoadEffects()||disposed)return null;
+   if(!effectsManifestPromise)effectsManifestPromise=(async()=>{
+    try{
+     const response=await fetcher('/assets/audio/effects.json');
+     if(!response.ok)throw Error('Effects index unavailable');
+     const value=await response.json();
+     if(value.schema!=='tk2-original-effects-v1'||!value.effects||typeof value.effects!=='object')throw Error('Invalid effects index');
+     effectsManifest=value;return value;
+    }catch{effectsUnavailable=true;return null;}
+   })();
+   return effectsManifestPromise;
+  }
+  async function loadOriginalEffect(id){
+   if(!canLoadEffects()||disposed)return null;
+   if(effectLoads.has(id))return effectLoads.get(id);
+   const task=(async()=>{
+    try{
+     const manifest=await loadEffectsManifest(),row=manifest?.effects[id];
+     if(disposed||!row||row.kind!=='original_rom_capture'||!/^\/assets\/audio\/original\/effects\/[a-z0-9-]+\.wav$/.test(row.path))return null;
+     if(!effectAssets.has(row.path))effectAssets.set(row.path,(async()=>{
+      const response=await fetcher(row.path);if(!response.ok)throw Error('Original effect unavailable');
+      const buffer=await context.decodeAudioData(await response.arrayBuffer());
+      if(!Number.isFinite(buffer.duration)||buffer.duration<=0||buffer.duration>15)throw Error('Invalid original effect duration');
+      return buffer;
+     })());
+     const buffer=await effectAssets.get(row.path);if(disposed)return null;
+     const original={buffer,row};effectBuffers.set(id,original);return original;
+    }catch{return null;}
+   })();
+   effectLoads.set(id,task);return task;
+  }
+  function prepareEffects(){
+   if(!canLoadEffects()||disposed||effectsPreloaded)return;
+   effectsPreloaded=true;
+   void loadEffectsManifest().then(manifest=>{
+    if(!manifest||disposed)return;
+    for(const id of effectIds)if(Object.hasOwn(manifest.effects,id))void loadOriginalEffect(id);
+   });
+  }
+  function cancelPendingEffects(){
+   for(const pending of pendingEffects){pending.active=false;cancelLater(pending.timer);}
+   pendingEffects.clear();
+  }
+  function recordEffect(id,source,row=null){
+   lastEffect={sequence:++effectSequence,id,source,requestId:row?.request?.id??null,path:row?.path??null};
+   effectCounts[source]++;
+   try{options.onEffect?.({...lastEffect});}catch{/* Diagnostics never alter game interaction. */}
+  }
+  function canPlayEffect(){return unlocked&&context&&!disposed&&!hidden&&!settings.muted&&settings.sfxVolume>0&&context.state==='running';}
+  function startEffect(id,original=null){
+   if(!canPlayEffect())return false;
+   if([...voices].filter(voice=>voice.kind==='effect').length>24)stopVoices('effect');
+   if(original){
+    const source=context.createBufferSource(),envelope=context.createGain();
+    source.buffer=original.buffer;source.loop=false;
+    const gain=Number.isFinite(original.row.playback_gain)?Math.max(.1,Math.min(4,original.row.playback_gain)):4;
+    envelope.gain.setValueAtTime(gain,context.currentTime);source.connect(envelope);envelope.connect(effectsBus);
+    const voice={osc:source,envelope,kind:'effect'};voices.add(voice);source.onended=()=>removeVoice(voice);
+    source.start(context.currentTime+.005);recordEffect(id,'original',original.row);return true;
+   }
+   const notes=EFFECTS[EFFECT_ALIASES[id]||id];
+   for(const[wave,midi,offset,duration,level]of notes)note(wave,midi,context.currentTime+.005+offset,duration,level,'effect');
+   recordEffect(id,'synthesized');return true;
   }
   function schedule(){
    if(!context||disposed||hidden||settings.muted||settings.bgmVolume===0)return;
@@ -167,7 +239,7 @@
     if(disposed||hidden)return false;
     if(context.state!=='running'&&context.state!=='closed')await context.resume();
     if(disposed||hidden){if(!disposed&&context.state==='running')void context.suspend().catch(()=>{});return false;}
-    unlocked=context.state==='running';startMusic();return unlocked;
+    unlocked=context.state==='running';prepareEffects();startMusic();return unlocked;
    }catch{return false;}
   }
   function setScene(value){
@@ -182,16 +254,23 @@
    settings.sfxVolume=volume(value.sfxVolume,settings.sfxVolume);
    try{storage?.setItem(STORAGE_KEY,JSON.stringify(settings));}catch{/* Optional storage. */}
    gains();
+   if(settings.sfxVolume===0){cancelPendingEffects();stopVoices('effect');}
    if(settings.muted)pause();
    else if(settings.bgmVolume===0){if(timer!==null){stopInterval(timer);timer=null;}stopVoices('music',true);}
    else startMusic();
    return{...settings};
   }
   function play(effect){
-   if(!unlocked||!context||disposed||hidden||settings.muted||settings.sfxVolume===0||context.state!=='running'||!Object.hasOwn(EFFECTS,effect))return false;
-   // Rapid pointer events cannot leave an unbounded queue of sound sources.
-   if([...voices].filter(voice=>voice.kind==='effect').length>24)stopVoices('effect');
-   for(const[wave,midi,offset,duration,level]of EFFECTS[effect])note(wave,midi,context.currentTime+.005+offset,duration,level,'effect');
+   if(!canPlayEffect()||!effectIds.includes(effect))return false;
+   effectRequestSequence++;
+   if(effectBuffers.has(effect))return startEffect(effect,effectBuffers.get(effect));
+   if(!canLoadEffects()||effectsUnavailable||effectsManifest&&!Object.hasOwn(effectsManifest.effects,effect))return startEffect(effect);
+   // Keep the first gesture responsive without playing a fallback then the original twice.
+   if(pendingEffects.size>=16){const oldest=pendingEffects.values().next().value;oldest.active=false;cancelLater(oldest.timer);pendingEffects.delete(oldest);}
+   const pending={active:true,timer:null};pendingEffects.add(pending);
+   const finish=original=>{if(!pending.active)return;pending.active=false;cancelLater(pending.timer);pendingEffects.delete(pending);startEffect(effect,original);};
+   pending.timer=later(()=>finish(null),160);
+   void loadOriginalEffect(effect).then(finish);
    return true;
   }
   function visibility(){

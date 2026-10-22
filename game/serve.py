@@ -16,6 +16,14 @@ from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'game'
+ORIGINAL_EFFECT_CUES = ('5a', '5d', '5e', '60', '61', '62', '65', '68', '69', '88', '8d', '91', '95')
+
+
+def audio_effect_static_assets():
+    """Only explicitly shipped short original cues are public, not a directory."""
+    return {f'/assets/audio/original/effects/seq-{cue}.wav':
+            (f'assets/audio/original/effects/seq-{cue}.wav', 'audio/wav')
+            for cue in ORIGINAL_EFFECT_CUES}
 
 
 class GameHTTPServer(ThreadingHTTPServer):
@@ -116,6 +124,7 @@ def main():
               '/calendar.js': ('calendar.js', 'text/javascript; charset=utf-8'),
               '/audio.js': ('audio.js', 'text/javascript; charset=utf-8'),
               '/assets/audio/index.json': ('assets/audio/index.json', 'application/json; charset=utf-8'),
+              '/assets/audio/effects.json': ('assets/audio/effects.json', 'application/json; charset=utf-8'),
               '/assets/audio/original/title.mp3': ('assets/audio/original/title.mp3', 'audio/mpeg'),
               '/assets/audio/original/strategy.mp3': ('assets/audio/original/strategy.mp3', 'audio/mpeg'),
               '/assets/audio/original/battle.mp3': ('assets/audio/original/battle.mp3', 'audio/mpeg'),
@@ -139,6 +148,7 @@ def main():
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
     static.update(portrait_static_assets())
+    static.update(audio_effect_static_assets())
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *unused):

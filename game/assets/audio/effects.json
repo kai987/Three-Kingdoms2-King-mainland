@@ -1,0 +1,1900 @@
+{
+  "schema": "tk2-original-effects-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "core": {
+    "name": "Nestopia",
+    "version": "2.0.0 135dfa6",
+    "sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+  },
+  "AV": {
+    "fps": 60.098813897440515,
+    "sample_rate": 48000.0
+  },
+  "effects": {
+    "click": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-60.wav",
+      "request": {
+        "id": 96,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.5324583333333334,
+      "bytes": 102276,
+      "sha256": "4b272a62287c1e47040fc582100d61dbf571472b4045c6bc671f5203aa387017",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "8e9717984f45024c792bb998f1effd4cb5ed1a8c2c7e85879cc5912d227164f9",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9602009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          66
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 213,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 193,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "40571ea61818d2d32b61dfe2f0db5c08afa457e0e37ebf91238667d17aea861a",
+          "40571ea61818d2d32b61dfe2f0db5c08afa457e0e37ebf91238667d17aea861a"
+        ],
+        "source_cue_pcm_sha256": "ca10080673b1ad51d90eb92f7a1d7aa93f03897d492eae977655617b6a87e333",
+        "exported_pcm_sha256": "9e4412d5c3a7f4a3ae261cb1452ecb33f232cd242557457377cb3420f5f1d33f",
+        "repeat_frame_trace_sha256": [
+          "eafa34fcf5aab54efbe9e876a323c76e4ba0f5b63245862ff0e4bf1e74d23254",
+          "eafa34fcf5aab54efbe9e876a323c76e4ba0f5b63245862ff0e4bf1e74d23254"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 96,
+            "entry": 58889,
+            "rom_offset": 200448,
+            "rom_call_offset": 200450,
+            "bytes": "a9 60 20 09 e6",
+            "original_role": "duel character motion"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑人物移動音，重製版用於選擇"
+    },
+    "confirm": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-62.wav",
+      "request": {
+        "id": 98,
+        "entry": 59027,
+        "descriptor_count": 3
+      },
+      "duration": 1.1813958333333334,
+      "bytes": 226872,
+      "sha256": "7de0bbdd2d9b0821ffa2c05578074e4b95f5c8ebd828218850b6feb258008217",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "f5d13ee2369621eb4f04fc87143d2fab8a2e16b200311d8eb8777b64b7f64edb",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9622093e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          0,
+          22,
+          44
+        ],
+        "requested_channels": [
+          0,
+          1,
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 252,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 232,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "852ee73bcc1b6b2fcaf2dc84665ac13fd8ff30aba555af2eeeba0537165153bf",
+          "852ee73bcc1b6b2fcaf2dc84665ac13fd8ff30aba555af2eeeba0537165153bf"
+        ],
+        "source_cue_pcm_sha256": "565b61256242079649e07c7bba44a7494386dc1e91728a128ef0d3fa2c801e74",
+        "exported_pcm_sha256": "f8e16427a6841dbd82d7eb22edb9ecdd0f04784573d38b1a87f9a99b346f79b2",
+        "repeat_frame_trace_sha256": [
+          "08c670cad761635c183c465ede9c68364381065ea9c05197516a8d6f2f457c27",
+          "08c670cad761635c183c465ede9c68364381065ea9c05197516a8d6f2f457c27"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 98,
+            "entry": 59027,
+            "rom_offset": 216497,
+            "rom_call_offset": 216499,
+            "bytes": "a9 62 20 93 e6",
+            "original_role": "city panel A-button response"
+          },
+          {
+            "sequence_id": 98,
+            "entry": 59027,
+            "rom_offset": 198209,
+            "rom_call_offset": 198211,
+            "bytes": "a9 62 20 93 e6",
+            "original_role": "duel action0 motion phase 5"
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版城池面板A鍵確認提示音"
+    },
+    "cancel": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-60.wav",
+      "request": {
+        "id": 96,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.5324583333333334,
+      "bytes": 102276,
+      "sha256": "4b272a62287c1e47040fc582100d61dbf571472b4045c6bc671f5203aa387017",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "8e9717984f45024c792bb998f1effd4cb5ed1a8c2c7e85879cc5912d227164f9",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9602009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          66
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 213,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 193,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "40571ea61818d2d32b61dfe2f0db5c08afa457e0e37ebf91238667d17aea861a",
+          "40571ea61818d2d32b61dfe2f0db5c08afa457e0e37ebf91238667d17aea861a"
+        ],
+        "source_cue_pcm_sha256": "ca10080673b1ad51d90eb92f7a1d7aa93f03897d492eae977655617b6a87e333",
+        "exported_pcm_sha256": "9e4412d5c3a7f4a3ae261cb1452ecb33f232cd242557457377cb3420f5f1d33f",
+        "repeat_frame_trace_sha256": [
+          "eafa34fcf5aab54efbe9e876a323c76e4ba0f5b63245862ff0e4bf1e74d23254",
+          "eafa34fcf5aab54efbe9e876a323c76e4ba0f5b63245862ff0e4bf1e74d23254"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 96,
+            "entry": 58889,
+            "rom_offset": 200448,
+            "rom_call_offset": 200450,
+            "bytes": "a9 60 20 09 e6",
+            "original_role": "duel character motion"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑人物移動音，重製版用於取消；未確認獨立原版取消音"
+    },
+    "error": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-61.wav",
+      "request": {
+        "id": 97,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.6988541666666667,
+      "bytes": 134224,
+      "sha256": "631726bbb900bc3706e3c663a2a27e89aeeaadf2e7b1368ffe7cfee708d7ba49",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "13a4a5ce90a51f73dbaf5a8f7aa605bb23654b82e61a7bf50ec20cf65337d5de",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9612009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          44
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 223,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 203,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "72b1c6c386eefcca8f97f746bd68988021cfb38ee22f857c533b170938e8ac69",
+          "72b1c6c386eefcca8f97f746bd68988021cfb38ee22f857c533b170938e8ac69"
+        ],
+        "source_cue_pcm_sha256": "11a2e34e40eff69ae6f5f9155f3858a25eda01314f3c801c48a8cf0c31839732",
+        "exported_pcm_sha256": "2c26a0149eab96e0c677e94a8cd72f9f9b18cb1b0be30b03eae756f616b75def",
+        "repeat_frame_trace_sha256": [
+          "2f36840ae03727af1117617668c05dcf68e9480f0c75083d8c0668e5cb30614b",
+          "2f36840ae03727af1117617668c05dcf68e9480f0c75083d8c0668e5cb30614b"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 97,
+            "entry": 58889,
+            "rom_offset": 198607,
+            "rom_call_offset": 198609,
+            "bytes": "a9 61 20 09 e6",
+            "original_role": "duel action2 motion phase 4"
+          },
+          {
+            "sequence_id": 97,
+            "entry": 58889,
+            "rom_offset": 199237,
+            "rom_call_offset": 199239,
+            "bytes": "a9 61 20 09 e6",
+            "original_role": "duel action6 motion"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑動作音，重製版用於無效操作"
+    },
+    "march": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-5a.wav",
+      "request": {
+        "id": 90,
+        "entry": 59035,
+        "descriptor_count": 2
+      },
+      "duration": 0.7820625,
+      "bytes": 150200,
+      "sha256": "e3915e22c314cdae907e36ec0e3b6a3148f6c6db3ac32925c8bdf596d7fc9b4c",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "34d179c1d9c077f392fe593833e948eb29bedd6e38a33da33c743bad172c6a32",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a95a209be6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          44,
+          66
+        ],
+        "requested_channels": [
+          1,
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 228,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 208,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "4444fde1bc26834a79859f5b758684c37f7e69d2d09e0222bcc2dee8c35f7163",
+          "4444fde1bc26834a79859f5b758684c37f7e69d2d09e0222bcc2dee8c35f7163"
+        ],
+        "source_cue_pcm_sha256": "16b4f3399d6fd46d2cfb65bf44ce32c3e18072aea091593d224d4f79d3aa972d",
+        "exported_pcm_sha256": "4e7102bf07a44412d411ea327df1d5e01dacbbff4a061207d98c9db9aa6761c8",
+        "repeat_frame_trace_sha256": [
+          "aecd92ff1fe53b05eee196b1bae79662f522668e0422024dcaf5401ed494ac9f",
+          "aecd92ff1fe53b05eee196b1bae79662f522668e0422024dcaf5401ed494ac9f"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 90,
+            "entry": 59035,
+            "rom_offset": 116536,
+            "rom_call_offset": 116538,
+            "bytes": "a9 5a 20 9b e6",
+            "original_role": "ordinary attack object action phase 6"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版普通攻擊移動階段音，重製版用於出發"
+    },
+    "attack": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-5e.wav",
+      "request": {
+        "id": 94,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.5990208333333333,
+      "bytes": 115056,
+      "sha256": "2da90ddcc77d3f0ca3c5e47debf1b616750103c9b0fe249a30708e7a9e439c0c",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "39acf19a3a1e08311af6fd055f2d57476d650e90d328e036f8267da38ec97b13",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a95e2009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          22
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 217,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 197,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "1e662c9f29dd4d7084fb94c1f3e3d680170fa8a8a94b276f7a7307bf3b36d0b7",
+          "1e662c9f29dd4d7084fb94c1f3e3d680170fa8a8a94b276f7a7307bf3b36d0b7"
+        ],
+        "source_cue_pcm_sha256": "ab3e06deb9f75f3cb80a28ac22ea3a774d0e18bbf319bb96411125ebc8e171fe",
+        "exported_pcm_sha256": "8d34373341a0c6bf2f2b7a8ca0efd82014b47d45646b3ed6428782d070873302",
+        "repeat_frame_trace_sha256": [
+          "96b99dc3b1e40c2e665c603ea27bf54bbf55181617aba5c24279fe2d4eb45f5a",
+          "96b99dc3b1e40c2e665c603ea27bf54bbf55181617aba5c24279fe2d4eb45f5a"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 94,
+            "entry": 58889,
+            "rom_offset": 116318,
+            "rom_call_offset": 116320,
+            "bytes": "a9 5e 20 09 e6",
+            "original_role": "ordinary attack object action phase 3"
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版普通攻擊動作階段3"
+    },
+    "attack_impact": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-5d.wav",
+      "request": {
+        "id": 93,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.4159791666666667,
+      "bytes": 79912,
+      "sha256": "b6d490b7b63f30821a4a103f47b99a1475351e8da5f95832178a35219c3c5a4d",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "f8ff57fe6a3e64e51c3b1d2df1d8a0c2e96323b804cf7618f9cbb1155c739571",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a95d2009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          0
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 206,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 186,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "edf35db0dc9fccdf64cc3dbaf686d5a8df2fb12aa3a64556b6ef057e543115aa",
+          "edf35db0dc9fccdf64cc3dbaf686d5a8df2fb12aa3a64556b6ef057e543115aa"
+        ],
+        "source_cue_pcm_sha256": "96a90a4092937c479670c07e97d95c6c8a6090bab8b9db29673a23cfe6f7d564",
+        "exported_pcm_sha256": "49ec02c93a8c23585111a6cf8c050b2fc9e08af2fba84b066fff711b1898291c",
+        "repeat_frame_trace_sha256": [
+          "eedbbd9f635243deb66f5a64a1d6af9d8eb446dd15834beba984bf6db2fdb3a1",
+          "eedbbd9f635243deb66f5a64a1d6af9d8eb446dd15834beba984bf6db2fdb3a1"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 93,
+            "entry": 58889,
+            "rom_offset": 116564,
+            "rom_call_offset": 116566,
+            "bytes": "a9 5d 20 09 e6",
+            "original_role": "ordinary attack object action phase 7"
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版普通攻擊動作階段7"
+    },
+    "tactic_prepare": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-65.wav",
+      "request": {
+        "id": 101,
+        "entry": 59035,
+        "descriptor_count": 2
+      },
+      "duration": 2.013354166666667,
+      "bytes": 386608,
+      "sha256": "41392c7915dfeb07807adb03458671e9a4f3d6155a113e1b4fd4b96682b1baca",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "b0e9b682dc106ab7c5ac98726cadf0ee1412d9c2a6e02c8e60e28c2b2f700419",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a965209be6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          0,
+          22
+        ],
+        "requested_channels": [
+          1,
+          4
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 302,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 282,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "f581f933137593eb27db113e0a3c6c80c07bbbcad16b1ea2a9d78d7bdc57fbc5",
+          "f581f933137593eb27db113e0a3c6c80c07bbbcad16b1ea2a9d78d7bdc57fbc5"
+        ],
+        "source_cue_pcm_sha256": "e6a8806e4109733a566bb3d04e637edf5f28344bd6b088c6ad07932e6a3617b0",
+        "exported_pcm_sha256": "9e63e1ea661b38beea2f0e75e18fc9cc1b24aca7cfec785121a39f84b70466e1",
+        "repeat_frame_trace_sha256": [
+          "595e295d85d4e10e2bac4712d5d101872bb621a0dafa8189d4f16c99d590cea1",
+          "595e295d85d4e10e2bac4712d5d101872bb621a0dafa8189d4f16c99d590cea1"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 101,
+            "entry": 59035,
+            "rom_offset": 106571,
+            "rom_call_offset": 106573,
+            "bytes": "a9 65 20 9b e6",
+            "original_role": "tactic preparation"
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版計略準備提示"
+    },
+    "tactic": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-88.wav",
+      "request": {
+        "id": 136,
+        "entry": 59011,
+        "descriptor_count": 5
+      },
+      "duration": 2.5458125,
+      "bytes": 488840,
+      "sha256": "066dcfa156283126d1eeb05743bb409d71412f0d561b29dbe0c763479a9f945d",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "8078878c83574e0dbcf712345bb57d63947234fc5bbc860ab6db6fde7804dbf1",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9882083e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          132,
+          154,
+          176,
+          198,
+          220
+        ],
+        "requested_channels": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 334,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 314,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "f2d542ca4834866c81a73f04f810d31eca76be64227e82cec15519566ac38614",
+          "f2d542ca4834866c81a73f04f810d31eca76be64227e82cec15519566ac38614"
+        ],
+        "source_cue_pcm_sha256": "8dc3e1e1aca393bb65fbd67bc9439f221b222740bcfdf3f2057ec8a8c74f55dd",
+        "exported_pcm_sha256": "30f3fd9b0b51e45c2da1210c42c028b7e2fc6b563cdaf5a108260376219a86a6",
+        "repeat_frame_trace_sha256": [
+          "e15517bba97aa6bd307ecc1de41416d3b2e813c3bcc42fb7d72b63fa2620fb42",
+          "e15517bba97aa6bd307ecc1de41416d3b2e813c3bcc42fb7d72b63fa2620fb42"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 136,
+            "entry": 59011,
+            "rom_offset": 218951,
+            "bytes": "20 7f e5 ac c9 04 b9 51 d7 c9 88 f0 0a c9 95 f0 03 4c 8b e6 4c 93 e6 4c 83 e6",
+            "original_role": "table-driven original tactic sound dispatcher",
+            "selector_table_rom_offset": 218977,
+            "visual_classes": [
+              1,
+              2,
+              7,
+              9
+            ],
+            "tactic_ids": [
+              0,
+              4,
+              5,
+              6,
+              12,
+              13,
+              14
+            ]
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版計略效果音88組"
+    },
+    "tactic_88": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-88.wav",
+      "request": {
+        "id": 136,
+        "entry": 59011,
+        "descriptor_count": 5
+      },
+      "duration": 2.5458125,
+      "bytes": 488840,
+      "sha256": "066dcfa156283126d1eeb05743bb409d71412f0d561b29dbe0c763479a9f945d",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "8078878c83574e0dbcf712345bb57d63947234fc5bbc860ab6db6fde7804dbf1",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9882083e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          132,
+          154,
+          176,
+          198,
+          220
+        ],
+        "requested_channels": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 334,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 314,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "f2d542ca4834866c81a73f04f810d31eca76be64227e82cec15519566ac38614",
+          "f2d542ca4834866c81a73f04f810d31eca76be64227e82cec15519566ac38614"
+        ],
+        "source_cue_pcm_sha256": "8dc3e1e1aca393bb65fbd67bc9439f221b222740bcfdf3f2057ec8a8c74f55dd",
+        "exported_pcm_sha256": "30f3fd9b0b51e45c2da1210c42c028b7e2fc6b563cdaf5a108260376219a86a6",
+        "repeat_frame_trace_sha256": [
+          "e15517bba97aa6bd307ecc1de41416d3b2e813c3bcc42fb7d72b63fa2620fb42",
+          "e15517bba97aa6bd307ecc1de41416d3b2e813c3bcc42fb7d72b63fa2620fb42"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 136,
+            "entry": 59011,
+            "rom_offset": 218951,
+            "bytes": "20 7f e5 ac c9 04 b9 51 d7 c9 88 f0 0a c9 95 f0 03 4c 8b e6 4c 93 e6 4c 83 e6",
+            "original_role": "table-driven original tactic sound dispatcher",
+            "selector_table_rom_offset": 218977,
+            "visual_classes": [
+              1,
+              2,
+              7,
+              9
+            ],
+            "tactic_ids": [
+              0,
+              4,
+              5,
+              6,
+              12,
+              13,
+              14
+            ]
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版計略效果音88組"
+    },
+    "tactic_8d": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-8d.wav",
+      "request": {
+        "id": 141,
+        "entry": 59019,
+        "descriptor_count": 4
+      },
+      "duration": 2.462625,
+      "bytes": 472868,
+      "sha256": "6e048238343d28b3c544e8735df1c88d4a379b99ec75ca5211e4664f155251d0",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "4892f966e77b8651a7f1b6029ce2985267436abab3f53ba4551c1a72b0e9c360",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a98d208be6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          0,
+          22,
+          44,
+          66
+        ],
+        "requested_channels": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 329,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 309,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "b88ac76712de3976e0120da8ec32d1cf91a6a953523d47d9ad6aa1ca988a64c0",
+          "b88ac76712de3976e0120da8ec32d1cf91a6a953523d47d9ad6aa1ca988a64c0"
+        ],
+        "source_cue_pcm_sha256": "41b2b779e88b642b0e7f60fb1af148bd818eb65b5b601244a3c1bc95e76cbbda",
+        "exported_pcm_sha256": "bee384b847babd1b0e083d43ff901669dc117257da32a74a7cc69ac8020dea3a",
+        "repeat_frame_trace_sha256": [
+          "780a384cbaec86336ff086fc7bf04222284162c5104aa179cd7d1633046c290d",
+          "780a384cbaec86336ff086fc7bf04222284162c5104aa179cd7d1633046c290d"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 141,
+            "entry": 59019,
+            "rom_offset": 218951,
+            "bytes": "20 7f e5 ac c9 04 b9 51 d7 c9 88 f0 0a c9 95 f0 03 4c 8b e6 4c 93 e6 4c 83 e6",
+            "original_role": "table-driven original tactic sound dispatcher",
+            "selector_table_rom_offset": 218977,
+            "visual_classes": [
+              3,
+              4,
+              5
+            ],
+            "tactic_ids": [
+              2,
+              3,
+              7,
+              10,
+              11
+            ]
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版計略效果音8D組"
+    },
+    "tactic_91": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-91.wav",
+      "request": {
+        "id": 145,
+        "entry": 59019,
+        "descriptor_count": 4
+      },
+      "duration": 2.6789375,
+      "bytes": 514400,
+      "sha256": "ad50e61f5fe95a31f80d3e3347e2ae9732c59e77ea14ca017f30052a811333fb",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "8a5592b142f05381a7224c2f52b568403b58247bdb7d8a84c587fd2cb298f9c8",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a991208be6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          0,
+          22,
+          44,
+          66
+        ],
+        "requested_channels": [
+          0,
+          1,
+          4,
+          5
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 342,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 322,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "0b993ec62c284d40da5205d217be26e0e652865ffcf2f6ab4c535f41042e1c55",
+          "0b993ec62c284d40da5205d217be26e0e652865ffcf2f6ab4c535f41042e1c55"
+        ],
+        "source_cue_pcm_sha256": "d9410957a57c66731d04b9dbfdfbfe9acb23b769e3fa83742b19c396b3030437",
+        "exported_pcm_sha256": "685f931127b6b026d9366f863614ae2d1cbf9fcaafd5fc76c0e77f9a051a481b",
+        "repeat_frame_trace_sha256": [
+          "18ec902f4ca788e42bddf3ffaa48563e8834af8f4f3ec850c44304daaa8d57af",
+          "18ec902f4ca788e42bddf3ffaa48563e8834af8f4f3ec850c44304daaa8d57af"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 145,
+            "entry": 59019,
+            "rom_offset": 218951,
+            "bytes": "20 7f e5 ac c9 04 b9 51 d7 c9 88 f0 0a c9 95 f0 03 4c 8b e6 4c 93 e6 4c 83 e6",
+            "original_role": "table-driven original tactic sound dispatcher",
+            "selector_table_rom_offset": 218977,
+            "visual_classes": [
+              6
+            ],
+            "tactic_ids": [
+              8
+            ]
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版計略效果音91組"
+    },
+    "tactic_95": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-95.wav",
+      "request": {
+        "id": 149,
+        "entry": 59027,
+        "descriptor_count": 3
+      },
+      "duration": 3.0117083333333334,
+      "bytes": 578292,
+      "sha256": "262c7d006382e766ccb8c2fd4f845843ee620d5f31958dbcbae840953e66f32b",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "002ea28308c513c90a4d96346ebd917818f358c7c8bcf368b5bd2b9b18c30a59",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9952093e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          0,
+          22,
+          44
+        ],
+        "requested_channels": [
+          0,
+          1,
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 362,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 342,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "e5bc9f2b343172f22101a3671d5b84e92ba8c3825208537699611f6916897b4e",
+          "e5bc9f2b343172f22101a3671d5b84e92ba8c3825208537699611f6916897b4e"
+        ],
+        "source_cue_pcm_sha256": "8f39717441592420cd75a7afb3dcbc11ae9a6dcddcff45cedfdb25c80a5c4b85",
+        "exported_pcm_sha256": "8722f4a9062b9900861f17e4ff5a5291349e9763b115f52fd790ea02fcb2e73d",
+        "repeat_frame_trace_sha256": [
+          "13595d6ad1ed78ba888e6b8feacf3867a76ab7d53434cedb72bc8bf6190767a2",
+          "13595d6ad1ed78ba888e6b8feacf3867a76ab7d53434cedb72bc8bf6190767a2"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 149,
+            "entry": 59027,
+            "rom_offset": 218951,
+            "bytes": "20 7f e5 ac c9 04 b9 51 d7 c9 88 f0 0a c9 95 f0 03 4c 8b e6 4c 93 e6 4c 83 e6",
+            "original_role": "table-driven original tactic sound dispatcher",
+            "selector_table_rom_offset": 218977,
+            "visual_classes": [
+              0,
+              8,
+              10
+            ],
+            "tactic_ids": [
+              1,
+              9,
+              15
+            ]
+          }
+        ]
+      },
+      "adoption_kind": "original_context",
+      "label": "原版計略效果音95組"
+    },
+    "duel_start": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-62.wav",
+      "request": {
+        "id": 98,
+        "entry": 59027,
+        "descriptor_count": 3
+      },
+      "duration": 1.1813958333333334,
+      "bytes": 226872,
+      "sha256": "7de0bbdd2d9b0821ffa2c05578074e4b95f5c8ebd828218850b6feb258008217",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "f5d13ee2369621eb4f04fc87143d2fab8a2e16b200311d8eb8777b64b7f64edb",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9622093e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          0,
+          22,
+          44
+        ],
+        "requested_channels": [
+          0,
+          1,
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 252,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 232,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "852ee73bcc1b6b2fcaf2dc84665ac13fd8ff30aba555af2eeeba0537165153bf",
+          "852ee73bcc1b6b2fcaf2dc84665ac13fd8ff30aba555af2eeeba0537165153bf"
+        ],
+        "source_cue_pcm_sha256": "565b61256242079649e07c7bba44a7494386dc1e91728a128ef0d3fa2c801e74",
+        "exported_pcm_sha256": "f8e16427a6841dbd82d7eb22edb9ecdd0f04784573d38b1a87f9a99b346f79b2",
+        "repeat_frame_trace_sha256": [
+          "08c670cad761635c183c465ede9c68364381065ea9c05197516a8d6f2f457c27",
+          "08c670cad761635c183c465ede9c68364381065ea9c05197516a8d6f2f457c27"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 98,
+            "entry": 59027,
+            "rom_offset": 216497,
+            "rom_call_offset": 216499,
+            "bytes": "a9 62 20 93 e6",
+            "original_role": "city panel A-button response"
+          },
+          {
+            "sequence_id": 98,
+            "entry": 59027,
+            "rom_offset": 198209,
+            "rom_call_offset": 198211,
+            "bytes": "a9 62 20 93 e6",
+            "original_role": "duel action0 motion phase 5"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑動作0提示音，重製版用於接受挑戰"
+    },
+    "duel_refused": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-60.wav",
+      "request": {
+        "id": 96,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.5324583333333334,
+      "bytes": 102276,
+      "sha256": "4b272a62287c1e47040fc582100d61dbf571472b4045c6bc671f5203aa387017",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "8e9717984f45024c792bb998f1effd4cb5ed1a8c2c7e85879cc5912d227164f9",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9602009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          66
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 213,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 193,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "40571ea61818d2d32b61dfe2f0db5c08afa457e0e37ebf91238667d17aea861a",
+          "40571ea61818d2d32b61dfe2f0db5c08afa457e0e37ebf91238667d17aea861a"
+        ],
+        "source_cue_pcm_sha256": "ca10080673b1ad51d90eb92f7a1d7aa93f03897d492eae977655617b6a87e333",
+        "exported_pcm_sha256": "9e4412d5c3a7f4a3ae261cb1452ecb33f232cd242557457377cb3420f5f1d33f",
+        "repeat_frame_trace_sha256": [
+          "eafa34fcf5aab54efbe9e876a323c76e4ba0f5b63245862ff0e4bf1e74d23254",
+          "eafa34fcf5aab54efbe9e876a323c76e4ba0f5b63245862ff0e4bf1e74d23254"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 96,
+            "entry": 58889,
+            "rom_offset": 200448,
+            "rom_call_offset": 200450,
+            "bytes": "a9 60 20 09 e6",
+            "original_role": "duel character motion"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑人物移動音，重製版用於拒絕挑戰"
+    },
+    "duel_strike": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-61.wav",
+      "request": {
+        "id": 97,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.6988541666666667,
+      "bytes": 134224,
+      "sha256": "631726bbb900bc3706e3c663a2a27e89aeeaadf2e7b1368ffe7cfee708d7ba49",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "13a4a5ce90a51f73dbaf5a8f7aa605bb23654b82e61a7bf50ec20cf65337d5de",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9612009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          44
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 223,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 203,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "72b1c6c386eefcca8f97f746bd68988021cfb38ee22f857c533b170938e8ac69",
+          "72b1c6c386eefcca8f97f746bd68988021cfb38ee22f857c533b170938e8ac69"
+        ],
+        "source_cue_pcm_sha256": "11a2e34e40eff69ae6f5f9155f3858a25eda01314f3c801c48a8cf0c31839732",
+        "exported_pcm_sha256": "2c26a0149eab96e0c677e94a8cd72f9f9b18cb1b0be30b03eae756f616b75def",
+        "repeat_frame_trace_sha256": [
+          "2f36840ae03727af1117617668c05dcf68e9480f0c75083d8c0668e5cb30614b",
+          "2f36840ae03727af1117617668c05dcf68e9480f0c75083d8c0668e5cb30614b"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 97,
+            "entry": 58889,
+            "rom_offset": 198607,
+            "rom_call_offset": 198609,
+            "bytes": "a9 61 20 09 e6",
+            "original_role": "duel action2 motion phase 4"
+          },
+          {
+            "sequence_id": 97,
+            "entry": 58889,
+            "rom_offset": 199237,
+            "rom_call_offset": 199239,
+            "bytes": "a9 61 20 09 e6",
+            "original_role": "duel action6 motion"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑動作2／6音，對應本作突擊操作"
+    },
+    "duel_guard": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-68.wav",
+      "request": {
+        "id": 104,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.8153333333333334,
+      "bytes": 156588,
+      "sha256": "087bc1866a817f1e3acce531ffcfbdf88323611cb7643826495b37c5e11ca955",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "38fa1da7aaa387e99abdc277ed4c20cb6ca88e1042ff308cd2a357ba552f1c22",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9682009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          22
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 230,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 210,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "5c1e13c115a904fa53d0d82cc8dd4072438466fde2f2c42f983c313e4bdd0a0c",
+          "5c1e13c115a904fa53d0d82cc8dd4072438466fde2f2c42f983c313e4bdd0a0c"
+        ],
+        "source_cue_pcm_sha256": "348246367c1df4c693eb8d6c949275bfd742d98bab0e233983ed7abe47081e51",
+        "exported_pcm_sha256": "c2b19f8f7356aa7e722bb409a450d99e29ac65c7e9577e64cdbe59496475aac5",
+        "repeat_frame_trace_sha256": [
+          "9dc9bbb5073fa01b4ca16d97c07881c826bd0d9c2b2cea04643e1ec2204b149c",
+          "9dc9bbb5073fa01b4ca16d97c07881c826bd0d9c2b2cea04643e1ec2204b149c"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 104,
+            "entry": 58889,
+            "rom_offset": 199502,
+            "rom_call_offset": 199504,
+            "bytes": "a9 68 20 09 e6",
+            "original_role": "duel action8 motion"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑動作8音，對應本作防守操作"
+    },
+    "duel_feint": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-69.wav",
+      "request": {
+        "id": 105,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.6988541666666667,
+      "bytes": 134224,
+      "sha256": "f909444125fd2cdac734641c30290bed279cbc6032a22eb1ffb726f59b69808c",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "ae28fbefb8454671bacbccdf7c765e76536ee21d34290a5d20fa4bc50d347c3c",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9692009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          22
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 223,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 203,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "e0ccd093325b7ae11a1c9a3fce701f6df476b68998610d3b837db97a453831fc",
+          "e0ccd093325b7ae11a1c9a3fce701f6df476b68998610d3b837db97a453831fc"
+        ],
+        "source_cue_pcm_sha256": "42a00198601a9266067a7d553c7d6c45e37bc9142759302756bb51abc2c8f942",
+        "exported_pcm_sha256": "647d6eb33fd022c5c57bbc1f2dc4d37ff599d874d753c2f720c0f88b3f777d06",
+        "repeat_frame_trace_sha256": [
+          "4256f31f17c09431a63e090548bcc764965585168f96d27b7dec910110b276ad",
+          "4256f31f17c09431a63e090548bcc764965585168f96d27b7dec910110b276ad"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 105,
+            "entry": 58889,
+            "rom_offset": 198862,
+            "rom_call_offset": 198864,
+            "bytes": "a9 69 20 09 e6",
+            "original_role": "duel action2 motion phase 7"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑動作2第二段音，對應本作佯攻操作"
+    },
+    "duel_withdraw": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-60.wav",
+      "request": {
+        "id": 96,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.5324583333333334,
+      "bytes": 102276,
+      "sha256": "4b272a62287c1e47040fc582100d61dbf571472b4045c6bc671f5203aa387017",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "8e9717984f45024c792bb998f1effd4cb5ed1a8c2c7e85879cc5912d227164f9",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9602009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          66
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 213,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 193,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "40571ea61818d2d32b61dfe2f0db5c08afa457e0e37ebf91238667d17aea861a",
+          "40571ea61818d2d32b61dfe2f0db5c08afa457e0e37ebf91238667d17aea861a"
+        ],
+        "source_cue_pcm_sha256": "ca10080673b1ad51d90eb92f7a1d7aa93f03897d492eae977655617b6a87e333",
+        "exported_pcm_sha256": "9e4412d5c3a7f4a3ae261cb1452ecb33f232cd242557457377cb3420f5f1d33f",
+        "repeat_frame_trace_sha256": [
+          "eafa34fcf5aab54efbe9e876a323c76e4ba0f5b63245862ff0e4bf1e74d23254",
+          "eafa34fcf5aab54efbe9e876a323c76e4ba0f5b63245862ff0e4bf1e74d23254"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 96,
+            "entry": 58889,
+            "rom_offset": 200448,
+            "rom_call_offset": 200450,
+            "bytes": "a9 60 20 09 e6",
+            "original_role": "duel character motion"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "原版單挑人物移動音，重製版用於退出"
+    },
+    "victory": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-62.wav",
+      "request": {
+        "id": 98,
+        "entry": 59027,
+        "descriptor_count": 3
+      },
+      "duration": 1.1813958333333334,
+      "bytes": 226872,
+      "sha256": "7de0bbdd2d9b0821ffa2c05578074e4b95f5c8ebd828218850b6feb258008217",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "f5d13ee2369621eb4f04fc87143d2fab8a2e16b200311d8eb8777b64b7f64edb",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9622093e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          0,
+          22,
+          44
+        ],
+        "requested_channels": [
+          0,
+          1,
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 252,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 232,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "852ee73bcc1b6b2fcaf2dc84665ac13fd8ff30aba555af2eeeba0537165153bf",
+          "852ee73bcc1b6b2fcaf2dc84665ac13fd8ff30aba555af2eeeba0537165153bf"
+        ],
+        "source_cue_pcm_sha256": "565b61256242079649e07c7bba44a7494386dc1e91728a128ef0d3fa2c801e74",
+        "exported_pcm_sha256": "f8e16427a6841dbd82d7eb22edb9ecdd0f04784573d38b1a87f9a99b346f79b2",
+        "repeat_frame_trace_sha256": [
+          "08c670cad761635c183c465ede9c68364381065ea9c05197516a8d6f2f457c27",
+          "08c670cad761635c183c465ede9c68364381065ea9c05197516a8d6f2f457c27"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 98,
+            "entry": 59027,
+            "rom_offset": 216497,
+            "rom_call_offset": 216499,
+            "bytes": "a9 62 20 93 e6",
+            "original_role": "city panel A-button response"
+          },
+          {
+            "sequence_id": 98,
+            "entry": 59027,
+            "rom_offset": 198209,
+            "rom_call_offset": 198211,
+            "bytes": "a9 62 20 93 e6",
+            "original_role": "duel action0 motion phase 5"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "本作戰果短提示，複用原版確認音；非原版6C長曲"
+    },
+    "defeat": {
+      "kind": "original_rom_capture",
+      "path": "/assets/audio/original/effects/seq-61.wav",
+      "request": {
+        "id": 97,
+        "entry": 58889,
+        "descriptor_count": 1
+      },
+      "duration": 0.6988541666666667,
+      "bytes": 134224,
+      "sha256": "631726bbb900bc3706e3c663a2a27e89aeeaadf2e7b1368ffe7cfee708d7ba49",
+      "sample_rate": 48000,
+      "channels": 2,
+      "provenance": {
+        "capture_kind": "isolated_original_driver_fixture",
+        "not_natural_gameplay": true,
+        "rom_modified": false,
+        "emulator_code_modified": false,
+        "base_state": "analysis/runtime/map-ready.state",
+        "base_state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "fixture_sha256": "13a4a5ce90a51f73dbaf5a8f7aa605bb23654b82e61a7bf50ec20cf65337d5de",
+        "cpu_registers": {
+          "pc": 1536,
+          "sp": 253,
+          "a": 0,
+          "x": 0,
+          "y": 0,
+          "p": 36
+        },
+        "ram_caller_address": 1536,
+        "ram_caller_hex": "78a901857b207fe5a2b4acf907ccf907f0fbcad0f5a9612009e6a9018df0064c1f06",
+        "marker_address": 1776,
+        "original_reset": 58751,
+        "warmup_original_nmi_ticks": 180,
+        "original_nmi_busy_flag": {
+          "address": 123,
+          "value": 1
+        },
+        "driver_tick": "original busy NMI calls A003/D8D4 once per frame",
+        "only_requested_slots_active": true,
+        "requested_slot_offsets": [
+          44
+        ],
+        "requested_channels": [
+          3
+        ],
+        "pre_cue_silence_peak_int16": 0,
+        "captured_frames": 223,
+        "cue_queued_frame": 181,
+        "all_slots_inactive_frame": 203,
+        "tail_frames": 20,
+        "seam_fade_ms": 4,
+        "pcm_source": "unchanged original ROM driver and Nestopia APU/N163 audio callbacks",
+        "source_loop": false,
+        "repeat_full_pcm_sha256": [
+          "72b1c6c386eefcca8f97f746bd68988021cfb38ee22f857c533b170938e8ac69",
+          "72b1c6c386eefcca8f97f746bd68988021cfb38ee22f857c533b170938e8ac69"
+        ],
+        "source_cue_pcm_sha256": "11a2e34e40eff69ae6f5f9155f3858a25eda01314f3c801c48a8cf0c31839732",
+        "exported_pcm_sha256": "2c26a0149eab96e0c677e94a8cd72f9f9b18cb1b0be30b03eae756f616b75def",
+        "repeat_frame_trace_sha256": [
+          "2f36840ae03727af1117617668c05dcf68e9480f0c75083d8c0668e5cb30614b",
+          "2f36840ae03727af1117617668c05dcf68e9480f0c75083d8c0668e5cb30614b"
+        ],
+        "original_callers": [
+          {
+            "sequence_id": 97,
+            "entry": 58889,
+            "rom_offset": 198607,
+            "rom_call_offset": 198609,
+            "bytes": "a9 61 20 09 e6",
+            "original_role": "duel action2 motion phase 4"
+          },
+          {
+            "sequence_id": 97,
+            "entry": 58889,
+            "rom_offset": 199237,
+            "rom_call_offset": 199239,
+            "bytes": "a9 61 20 09 e6",
+            "original_role": "duel action6 motion"
+          }
+        ]
+      },
+      "adoption_kind": "authorial_ui_reuse",
+      "label": "本作戰果短提示，複用原版單挑動作音；非原版71長曲"
+    }
+  },
+  "original_tactic_tables": [
+    {
+      "name": "tactic_sound_dispatcher",
+      "rom_offset": 218951,
+      "bytes": "20 7f e5 ac c9 04 b9 51 d7 c9 88 f0 0a c9 95 f0 03 4c 8b e6 4c 93 e6 4c 83 e6",
+      "sha256": "bf0f6203dcf225a3606e75129f1cb591fc558b457b44295afe513ac5e3842966"
+    },
+    {
+      "name": "tactic_visual_to_sound",
+      "rom_offset": 218977,
+      "bytes": "95 88 88 8d 8d 8d 91 88 95 88 95",
+      "sha256": "2b2110fac8d224c2e86401b4ef4427864265f1e6eb7900a553ddce887ce34cf7"
+    },
+    {
+      "name": "tactic_id_to_visual",
+      "rom_offset": 218457,
+      "bytes": "02 10 06 08 04 02 0e 08 0c 14 0a 08 04 12 02 00",
+      "sha256": "4e6c9a620b0438050408c2d2e3f6eaccd28fe2632e7539306bea74173bd8de50"
+    }
+  ],
+  "tactic_index_sequence_ids": [
+    136,
+    149,
+    141,
+    141,
+    136,
+    136,
+    136,
+    141,
+    145,
+    149,
+    141,
+    141,
+    136,
+    136,
+    136,
+    149
+  ],
+  "tactic_effect_keys": [
+    "tactic_88",
+    "tactic_95",
+    "tactic_8d",
+    "tactic_8d",
+    "tactic_88",
+    "tactic_88",
+    "tactic_88",
+    "tactic_8d",
+    "tactic_91",
+    "tactic_95",
+    "tactic_8d",
+    "tactic_8d",
+    "tactic_88",
+    "tactic_88",
+    "tactic_88",
+    "tactic_95"
+  ],
+  "unadapted_original_long_cues": {
+    "victory": {
+      "request": {
+        "id": 108,
+        "entry": 59011,
+        "descriptor_count": 5
+      },
+      "original_caller": {
+        "rom_offset": 195910,
+        "bytes": "a9 6c 20 83 e6"
+      },
+      "native_frame_budget": 600,
+      "warmup_original_nmi_ticks": 180,
+      "all_slots_inactive_not_observed": true,
+      "exported": false,
+      "note": "Original counterpart exists; its long-form cue is not truncated. The web short result cue is an explicitly labelled reuse of another original sound."
+    },
+    "defeat": {
+      "request": {
+        "id": 113,
+        "entry": 59011,
+        "descriptor_count": 5
+      },
+      "original_caller": {
+        "rom_offset": 197181,
+        "bytes": "a9 71 20 83 e6"
+      },
+      "native_frame_budget": 600,
+      "warmup_original_nmi_ticks": 180,
+      "all_slots_inactive_not_observed": true,
+      "exported": false,
+      "note": "Original counterpart exists; its long-form cue is not truncated. The web short result cue is an explicitly labelled reuse of another original sound."
+    }
+  },
+  "rights": "Original ROM sound recordings retain original game rights. Newly assigned UI meanings are marked authorial_ui_reuse; no dedicated original cancel routine is claimed.",
+  "tool_sha256": "d20b54cfe27d264a07d0509c264970ddb5a61bd8a264bb6d48fe3435396858b5",
+  "recorder_sha256": "bef2aef51b90994b3be54a2c60ad303e3d816d590e1e63c27213fb8e1dc12580"
+}

@@ -11,8 +11,15 @@ dialog.addEventListener('cancel',()=>gameAudio.play('cancel'));
 document.addEventListener('click',event=>{
  if(!event.isTrusted)return;
  const button=event.target.closest('button');
- if(button&&!button.disabled)gameAudio.play(button.matches('[data-cancel]')?'cancel':'click');
-});
+ if(!button||button.disabled)return;
+ const before=gameAudio.getStatus().effectRequestSequence;
+ // Command/error feedback takes precedence over the generic selection sound.
+ setTimeout(()=>{
+  if(busy||gameAudio.getStatus().effectRequestSequence!==before)return;
+  const back=button.matches('[data-cancel],#back-to-pick,#back-library,#cancel-setup,#home');
+  gameAudio.play(back?'cancel':button.matches('#review-departure')?'confirm':'click');
+ },0);
+},{capture:true});
 document.addEventListener('change',event=>{if(event.isTrusted&&event.target.matches('select,input[type=checkbox],input[type=radio]'))gameAudio.play('click');});
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=id=>view.catalog.names[String(id)]||'武将';
@@ -112,10 +119,26 @@ async function command(kind,payload={}){
  if(busy)return false;
  setBusy(true);notice();
  try{
-  const previousTurn=view.game?.turn;
+  const previousTurn=view.game?.turn,previousOutcome=audioOutcome,previousBattleLog=view.game?.battle?.log||[];
   view=await request('/api/command',{kind,payload,revision:view.revision});render();
-  const sounds={depart:'march',transfer:'march',attack:'attack',tactic:'tactic',duel_start:'attack',duel_action:payload.move==='withdraw'?'cancel':'attack',retreat:'cancel',end_turn:'turn'};
-  gameAudio.play(previousTurn!==undefined&&view.game?.turn>previousTurn?'turn':sounds[kind]||'confirm');
+  if(!audioOutcome||audioOutcome===previousOutcome){
+   let sound={depart:'march',transfer:'march',attack:'attack',retreat:'cancel'}[kind]||'confirm';
+   if(kind==='duel_start')sound=view.game.battle?.extended?.duel?'duel_start':'duel_refused';
+   if(kind==='duel_action')sound='duel_'+payload.move;
+   if(kind==='tactic'){
+    const originalFamilies=['88','95','8d','8d','88','88','88','8d','91','95','8d','8d','88','88','88','95'];
+    const log=view.game.battle?.log||[];
+    // Battle logs retain 80 rows: compare the preserved suffix after older rows roll off.
+    let overlap=Math.min(previousBattleLog.length,log.length);
+    while(overlap&&!previousBattleLog.slice(-overlap).every((line,index)=>line===log[index]))overlap--;
+    const added=log.slice(overlap);
+    // A repeated full log is possible when identical actions fill the rolling window.
+    const failed=(added.length?added:log).some(line=>line.includes('未能奏效'));
+    sound=failed?'error':'tactic_'+(originalFamilies[payload.tactic]||'88');
+   }
+   if(previousTurn!==undefined&&view.game?.turn>previousTurn)sound='turn';
+   gameAudio.play(sound);
+  }
   return true;
  }
  catch(e){notice(e.message,true);return false;}
@@ -544,7 +567,7 @@ $('#library').onclick=showLibrary;
 $('#audio-settings').onclick=()=>{
  const settings=gameAudio.getSettings();
  const row=(id,label,value)=>`<label class="audio-volume" for="${id}"><span>${label}</span><output id="${id}-value" for="${id}">${Math.round(value*100)}%</output><input id="${id}" type="range" min="0" max="100" step="1" value="${Math.round(value*100)}"></label>`;
- if(openDialog('音樂設定',`<p>優先播放原版標題、戰略、戰鬥與單挑配樂；無原曲時使用原創像素風配樂。</p><label><input id="audio-muted" type="checkbox" ${settings.muted?'checked':''}>全部靜音</label>${row('audio-bgm','背景音樂',settings.bgmVolume)}${row('audio-sfx','操作音效',settings.sfxVolume)}<p class="small">操作音效為原創像素風音效。</p><p class="small">點擊或按鍵後開始播放。切換到其他分頁時暫停；音量設定保存在本機。</p>${gameAudio.getStatus().supported?'':'<p>此瀏覽器不支援音訊播放。</p>'}`,'<button id="audio-test">試聽音效</button><button data-cancel>關閉</button>')===undefined)return;
+ if(openDialog('音樂設定',`<p>優先播放原版標題、戰略、戰鬥與單挑配樂；無原曲時使用原創像素風配樂。</p><label><input id="audio-muted" type="checkbox" ${settings.muted?'checked':''}>全部靜音</label>${row('audio-bgm','背景音樂',settings.bgmVolume)}${row('audio-sfx','操作音效',settings.sfxVolume)}<p class="small">操作音效優先使用原版錄音；選擇、取消等網頁操作復用原版短提示音，無對應音效時才使用本作補充音效。</p><p class="small">點擊或按鍵後開始播放。切換到其他分頁時暫停；音量設定保存在本機。</p>${gameAudio.getStatus().supported?'':'<p>此瀏覽器不支援音訊播放。</p>'}`,'<button id="audio-test">試聽音效</button><button data-cancel>關閉</button>')===undefined)return;
  $('#audio-muted').onchange=()=>gameAudio.configure({muted:$('#audio-muted').checked});
  for(const [id,key]of [['audio-bgm','bgmVolume'],['audio-sfx','sfxVolume']]){
   const input=$('#'+id);

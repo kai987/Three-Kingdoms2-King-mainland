@@ -98,7 +98,7 @@ const settle=()=>new Promise(resolve=>setImmediate(resolve));
  const original=fixture(null,{AudioContext:BufferContext,fetch:async path=>{requests.push(path);return path.endsWith('.json')?{ok:true,json:async()=>manifest}:{ok:true,arrayBuffer:async()=>new ArrayBuffer(8)};}});
  assert.equal(requests.length,0,'Original assets also wait for the first audio unlock');
  assert(await original.audio.unlock());await settle();
- assert.deepEqual(requests,['/assets/audio/index.json','/assets/audio/original/title.mp3']);
+ assert.deepEqual(requests,['/assets/audio/effects.json','/assets/audio/index.json','/assets/audio/original/title.mp3']);
  assert.equal(original.audio.getStatus().musicSource,'original');assert.equal(original.timers.size,0);
  const bc=Context.instances.at(-1),titleSource=bc.oscillators.at(-1);
  assert.equal(titleSource.loop,true);assert.equal(titleSource.loopStart,0);assert.equal(titleSource.loopEnd,2);assert.equal(titleSource.offset,0);
@@ -118,5 +118,33 @@ const settle=()=>new Promise(resolve=>setImmediate(resolve));
  const late=fixture(null,{AudioContext:BufferContext,fetch:async path=>path.endsWith('.json')?{ok:true,json:async()=>manifest}:{ok:true,arrayBuffer:()=>new Promise(resolve=>{release=resolve;})}});
  await late.audio.unlock();await settle();late.audio.dispose();release(new ArrayBuffer(8));await settle();
  assert.equal(late.audio.getStatus().activeVoices,0);assert.equal(late.timers.size,0,'Late decoding must not restart disposed music');
- console.log('audio: original ROM buffers/loop/playhead, authored fallback and ten effects, gesture unlock, volume persistence, scene/visibility cleanup, bounded voices and optional storage passed');
+ // Original one-shots take priority, share decoded assets across aliases and never loop.
+ const effectRow=(cue,id)=>({kind:'original_rom_capture',path:'/assets/audio/original/effects/seq-'+cue+'.wav',request:{id}});
+ const effects={schema:'tk2-original-effects-v1',effects:{click:effectRow('60',0x60),confirm:effectRow('62',0x62),cancel:effectRow('61',0x61),duel_withdraw:effectRow('61',0x61),tactic_88:effectRow('88',0x88),duel_strike:effectRow('68',0x68),error:{...effectRow('60',0x60),path:'https://other.invalid/error.wav'}}};
+ const fetched=[],heard=[];
+ const fetchEffects=async url=>{fetched.push(url);return url==='/assets/audio/effects.json'?{ok:true,json:async()=>effects}:url==='/assets/audio/index.json'?{ok:true,json:async()=>manifest}:{ok:true,arrayBuffer:async()=>new ArrayBuffer(8)};};
+ const fx=fixture(null,{AudioContext:BufferContext,fetch:fetchEffects,onEffect:row=>heard.push(row)});
+ await fx.audio.unlock();await settle();
+ for(const id of ['click','confirm','cancel','duel_withdraw','tactic_88','duel_strike']){
+  assert(fx.audio.play(id));assert.equal(fx.audio.getStatus().lastEffect.id,id);assert.equal(fx.audio.getStatus().lastEffect.source,'original');
+  assert.equal(Context.instances.at(-1).oscillators.at(-1).loop,false);
+ }
+ assert.equal(fetched.filter(path=>path.endsWith('seq-61.wav')).length,1,'Aliases reuse one decoded original asset');
+ assert.equal(fx.audio.getStatus().effectCounts.original,6);assert.equal(heard.length,6);
+ fx.audio.play('turn');assert.equal(fx.audio.getStatus().lastEffect.source,'synthesized','New game interactions can use authored additions');
+ fx.audio.play('error');await settle();assert.equal(fx.audio.getStatus().lastEffect.source,'synthesized');assert(!fetched.some(path=>path.startsWith('https:')));
+ const originalCount=fx.audio.getStatus().effectCounts.original;fx.audio.configure({muted:true});assert.equal(fx.audio.play('confirm'),false);assert.equal(fx.audio.getStatus().effectCounts.original,originalCount);
+ fx.audio.dispose();
+ // A slow first recording uses one prompt fallback, never a delayed second sound.
+ let resolveWave;const deadlines=new Map();let nextDeadline=0;
+ const slow=fixture(null,{AudioContext:BufferContext,setTimeout:fn=>{deadlines.set(++nextDeadline,fn);return nextDeadline;},clearTimeout:key=>deadlines.delete(key),fetch:async url=>url==='/assets/audio/effects.json'?{ok:true,json:async()=>({schema:effects.schema,effects:{confirm:effects.effects.confirm}})}:url==='/assets/audio/index.json'?{ok:false}:{ok:true,arrayBuffer:()=>new Promise(resolve=>{resolveWave=resolve;})}});
+ await slow.audio.unlock();await settle();assert(slow.audio.play('confirm'));assert.equal(slow.audio.getStatus().pendingEffects,1);
+ [...deadlines.values()][0]();assert.equal(slow.audio.getStatus().lastEffect.source,'synthesized');assert.equal(slow.audio.getStatus().lastEffect.sequence,1);
+ resolveWave(new ArrayBuffer(8));await settle();assert.equal(slow.audio.getStatus().lastEffect.sequence,1,'Late decode must not double-play the interaction');
+ slow.audio.play('confirm');assert.equal(slow.audio.getStatus().lastEffect.source,'original');assert.equal(slow.audio.getStatus().lastEffect.sequence,2);slow.audio.dispose();
+ // Muting while a decode is pending cancels the queued interaction permanently.
+ let finishWave;const pending=fixture(null,{AudioContext:BufferContext,fetch:async url=>url==='/assets/audio/effects.json'?{ok:true,json:async()=>({schema:effects.schema,effects:{confirm:effects.effects.confirm}})}:url==='/assets/audio/index.json'?{ok:false}:{ok:true,arrayBuffer:()=>new Promise(resolve=>{finishWave=resolve;})}});
+ await pending.audio.unlock();await settle();pending.audio.play('confirm');pending.audio.configure({sfxVolume:0});assert.equal(pending.audio.getStatus().pendingEffects,0);
+ finishWave(new ArrayBuffer(8));await settle();assert.equal(pending.audio.getStatus().lastEffect,null);pending.audio.dispose();
+ console.log('audio: original music and one-shots, bounded first-cue loading without doubles, alias caching, authored fallback, mute/disposal and read-only diagnostics passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});
