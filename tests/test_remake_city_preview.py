@@ -37,6 +37,9 @@ class CityPreviewTests(unittest.TestCase):
                                  (city.owner,city.gold,city.grain,city.reserves))
                 expected=[(i,c.by_id[i]['person_id'],c.name(i),g.state.officers[i].troops) for i in city.roster.officer_ids]
                 self.assertEqual([(o['id'],o['person_id'],o['name'],o['troops']) for o in row['officers']],expected)
+                self.assertEqual([(o['experience'],o['tier']) for o in row['officers']],
+                                 [(g.state.officers[i].experience,g.state.officers[i].tier)
+                                  for i in city.roster.officer_ids])
                 count+=1
         self.assertEqual(count,sum(len(c.data['active_cities']) for c in s.catalogs.values()))
         self.assertGreaterEqual(count,2700)

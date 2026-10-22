@@ -1,7 +1,8 @@
 /* Presentation adapter; the server remains authoritative for commands/saves. */
 'use strict';
 (function(root){
- const stateKey=view=>view?.game&&view.catalog?.travel_rules?JSON.stringify([view.catalog.scenario_id,view.revision,view.game.player]):null;
+ const geometryKey=view=>view.catalog.travel_rules.geometry_sha256||'';
+ const stateKey=view=>view?.game&&view.catalog?.travel_rules?JSON.stringify([view.catalog.scenario_id,geometryKey(view),view.revision,view.game.player]):null;
  function createMarchCore({workerFactory=()=>new Worker('/march-worker.js'),fetcher=(...args)=>fetch(...args),timeout=30000}={}){
   let worker=null,failed=false,sequence=0,key=null,quotes=null,pendingUpdate=null,engine='idle',lastError=null;
   const requests=new Map(),contexts=new Map(),subscribers=new Set();
@@ -31,19 +32,20 @@
     });
    }catch(error){stop(error);return Promise.reject(error);}
   }
-  function context(scenario){
-   if(contexts.has(scenario)){
-    const cached=contexts.get(scenario);contexts.delete(scenario);contexts.set(scenario,cached);return cached;
+  function context(scenario,geometry){
+   const graphKey=JSON.stringify([scenario,geometry]);
+   if(contexts.has(graphKey)){
+    const cached=contexts.get(graphKey);contexts.delete(graphKey);contexts.set(graphKey,cached);return cached;
    }
    let pending;
    pending=(async()=>{
     const response=await fetcher('/api/march-config?scenario='+encodeURIComponent(scenario));
     if(!response.ok)throw new Error('March configuration unavailable');
     const configuration=await response.json();
-    if(contexts.get(scenario)!==pending)return null;
+    if(contexts.get(graphKey)!==pending)return null;
     return call({op:'register',data:configuration.data||configuration});
    })();
-   contexts.set(scenario,pending);
+   contexts.set(graphKey,pending);
    // A campaign browser may visit many scenarios. Retain eight immutable
    // graphs. Evicted fetches skip registration; registrations already sent
    // release their own ID even if the scenario has since been opened again.
@@ -60,10 +62,10 @@
    if(!next){engine=failed?'fallback':'idle';return Promise.resolve();}
    if(failed)return Promise.resolve();
    engine='loading';
-   const snapshot={scenario:view.catalog.scenario_id,cities:Object.values(view.game.cities).map(({id,owner})=>({id,owner})),month:view.game.month,discovered:[...(view.game.extension?.travel?.discovered||[])],player:view.game.player};
+   const snapshot={scenario:view.catalog.scenario_id,geometry:geometryKey(view),cities:Object.values(view.game.cities).map(({id,owner})=>({id,owner})),month:view.game.month,discovered:[...(view.game.extension?.travel?.discovered||[])],player:view.game.player};
    pendingUpdate=(async()=>{
     try{
-     const contextId=await context(snapshot.scenario);
+     const contextId=await context(snapshot.scenario,snapshot.geometry);
      if(key!==next)return;
      const result=await call({op:'batch',context:contextId,cities:snapshot.cities,month:snapshot.month,discovered:snapshot.discovered,player:snapshot.player});
      if(key!==next)return;

@@ -1,0 +1,70 @@
+{
+  "schema": "tk2-portrait-original-white-cells-sample-v1",
+  "person_id": "san14-candidate-0440",
+  "runtime_id": 439,
+  "name": "諸葛亮",
+  "baseline": {
+    "path": "../zhuge-liang-preserved-v7/portrait-128x160.png",
+    "sha256": "2cc91c781fe4c9aa25ec10de89ca0eb204744a163da90ed12db8cfd1c6da7183",
+    "preserved": true
+  },
+  "original": {
+    "path": "game/assets/portraits/original/109.png",
+    "sha256": "00ab7c41fc86e84deeede6f42ddf5510b928f7e9ede998ba853836936eb7306c",
+    "preserved": true
+  },
+  "source": {
+    "path": "generation-source.png",
+    "sha256": "581c611f83200690a96a5d961efd15eaf90baec84f7b0577fcc2eba239f279cb",
+    "prompt": "prompt.txt",
+    "method": "built-in image_gen"
+  },
+  "output": {
+    "path": "portrait-128x160.png",
+    "sha256": "d6690b5f41fa7b6dae4a9e6445df572832f7b0f5aded4061e4fd80b1e509e514"
+  },
+  "method": "Original-verified pure-white correction restricted to two 4x4 rectangles; generated changes elsewhere are discarded",
+  "proof": {
+    "size": [
+      128,
+      160
+    ],
+    "editedRegions": [
+      {
+        "x": 32,
+        "y": 8,
+        "width": 4,
+        "height": 4
+      },
+      {
+        "x": 92,
+        "y": 8,
+        "width": 4,
+        "height": 4
+      }
+    ],
+    "originalSourceCells": [
+      {
+        "x": 8,
+        "y": 2
+      },
+      {
+        "x": 23,
+        "y": 2
+      }
+    ],
+    "restoredColor": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "matchesOriginalWhiteCells": true,
+    "changedPixels": 32,
+    "changedOutsideRegions": 0,
+    "allRemainingPixelsUnchanged": true,
+    "pngRoundtripExact": true
+  },
+  "formalGameIdentityMapUnchanged": true,
+  "sampleOnly": true
+}

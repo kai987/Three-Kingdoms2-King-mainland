@@ -55,8 +55,8 @@ class HazardJsonTests(unittest.TestCase):
             # Both monsoon speeds, with a real known and unknown sea chart.
             ('wu', 7, 'hepu', 'zhuya', 'sea', 'depart', 7.5),
             ('wu', 7, 'hepu', 'yizhou', 'explore', 'depart', 120),
-            # A published 315.0 km land leg and 315.0 km quote total.
-            ('wu', 7, 'changsha', 'guiyang', 'land', 'transfer', 315),
+            # A current whole-valued land leg and quote total.
+            ('wu', 7, 'changsha', 'guiyang', 'land', 'transfer', 391),
         ]
         for faction, month, source, target, mode, command, expected in cases:
             with self.subTest(month=month, source=source, target=target, mode=mode):
@@ -79,11 +79,11 @@ class HazardJsonTests(unittest.TestCase):
         data = self.catalog.data
         legs = [evaluate_leg(data, next(r for r in data['travel_routes'] if r['id'] == ident),
             source, target, 7) for ident, source, target in [
-                ('anding:fufeng:land', 'anding', 'fufeng'),
-                ('fufeng:hanzhong:land', 'fufeng', 'hanzhong')]]
-        self.assertEqual([r['distance_km'] for r in legs], [278.4, 274.6])
-        quote = Campaign._quote(['anding', 'fufeng', 'hanzhong'], legs)
-        self.assertEqual(quote['distance_km'], 553)
+                ('anding:fufeng:land', 'fufeng', 'anding'),
+                ('anding:xihe:land', 'anding', 'xihe')]]
+        self.assertEqual([r['distance_km'] for r in legs], [391.8, 668.2])
+        quote = Campaign._quote(['fufeng', 'anding', 'xihe'], legs)
+        self.assertEqual(quote['distance_km'], 1060)
         self.assertIs(type(quote['distance_km']), int)
         self.assertEqual(digest(browser_numbers(quote)), digest(quote))
 

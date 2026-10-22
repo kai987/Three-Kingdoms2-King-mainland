@@ -154,7 +154,8 @@ class CampaignSession:
                 if row['city']!=city:continue
                 ident=c.ids[row['person_id']];profile=c.profiles[ident]
                 officers.append(dict(id=ident,person_id=row['person_id'],name=c.name(ident),martial_strength=profile.martial_strength,
-                                     intellect=profile.intellect,virtue=profile.virtue,troops=row['troops']))
+                                     intellect=profile.intellect,virtue=profile.virtue,troops=row['troops'],
+                                     experience=0,tier=0))
             owner=d['initial_owners'][city]
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,

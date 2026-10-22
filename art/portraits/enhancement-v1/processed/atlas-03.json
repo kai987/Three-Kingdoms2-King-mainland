@@ -1,0 +1,2486 @@
+{
+  "schema": "tk2-portrait-enhancement-batch-v1",
+  "atlas_id": "atlas-03",
+  "study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+  "people": {
+    "san14-candidate-0130": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0130.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0130.png",
+      "source_sha256": "98d4464528ad870057f8a15277307c9a03f61cf34147221092803d0935168cd1",
+      "sha256": "0580a56e44ee95e13979094db165a92a7b2b9d621fa05fe6e05ae8e8e17a2ef3",
+      "pixel_sha256": "4e37265b2b067bff3b652a896c6baa1462a90aec8ba6f4e6bf0490f84e915e8b",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "90f38c838c468c4d",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0130.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "e29cee3e8f88f305e0feef801b3d5275f71952156072080318520e394962c51f",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11592,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 2556,
+          "protectedFacialBrownPixels": 659,
+          "paletteSize": 13,
+          "changedPixels": 3307,
+          "changedPercent": 16.15,
+          "strongChangedPixels": 3307,
+          "originalSkinPixels": 3295,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0131": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0131.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0131.png",
+      "source_sha256": "7340e9713040d7ffd72d8c9ce0e848d2f740c6ff377000580f325bfcfbbb4686",
+      "sha256": "9fea17cbce553551583a3a48278d55b4c41a1eaa92e70a7dfd5e3d98484e607c",
+      "pixel_sha256": "f5c6e6263c15655785d9d104b8be422e82e36250a9a306f7cad7ee3115006a22",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "48b5835a23f4b834",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0131.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "328db952faeb338001790c13b4db8cde913c922ccbc61a0d336829904f9c8110",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12161,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 2030,
+          "protectedFacialBrownPixels": 599,
+          "paletteSize": 13,
+          "changedPixels": 3372,
+          "changedPercent": 16.46,
+          "strongChangedPixels": 3372,
+          "originalSkinPixels": 3622,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0132": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0132.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0132.png",
+      "source_sha256": "ac983a9844bbdc254a3e29800794e142bc2e13ee5f7ccf418f1c81084a435c73",
+      "sha256": "50e8d6cf2f569e3a1da04741ef13a689884f221726e267c9f6e0e38bf0c61584",
+      "pixel_sha256": "fc905a98e757e5b9364e1eac624cf7e730cc0701a0256f3119b361c8b4117440",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "a423d81f0922b1b4",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0132.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "1fd9f0d554d08ebe78fdaa99038bde58f7a8931732c3d216b4c6face652938fe",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11098,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 870,
+          "protectedFacialBrownPixels": 683,
+          "paletteSize": 15,
+          "changedPixels": 3718,
+          "changedPercent": 18.15,
+          "strongChangedPixels": 3718,
+          "originalSkinPixels": 3500,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0133": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0133.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0133.png",
+      "source_sha256": "1bf09630db0a177c516cf12142b7ffbc3fc62b7f8c3626854f551893402520d3",
+      "sha256": "9590e719c1f55bffc4468c2a83099e6d1a8dcc962c90cc9289ef494813498cd8",
+      "pixel_sha256": "1c1311fe99b83833b80e4c991c7bcca006ad1ee963580cbedc092996213e2017",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "dbdbe73d4885fc58",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0133.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "d3d4f01e3cada5608c1853d9854749041564278bea6b72e8a44a70ba73fab676",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 13272,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1309,
+          "protectedFacialBrownPixels": 446,
+          "paletteSize": 13,
+          "changedPixels": 3743,
+          "changedPercent": 18.28,
+          "strongChangedPixels": 3743,
+          "originalSkinPixels": 3729,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0134": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0134.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0134.png",
+      "source_sha256": "290109df0d7f77f8858eec0e40c1ebc2e74fb175762d4b8dbb113fd6eead715b",
+      "sha256": "1894512cb99ef5e00263eee53b341c1f77224376da2671c21b9b66ae1666b6bc",
+      "pixel_sha256": "6ca97b0fe0f0367f5e889b4dda79a30d7fbd1dc9aea3764a769adbc6da761c77",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "daeda5aee814dfaf",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0134.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "d7d285e74b72f8e45646c1cffbeb1e6a6b69e0f3709fc9b5ce17fd9bc435c82b",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11475,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 2246,
+          "protectedFacialBrownPixels": 421,
+          "paletteSize": 13,
+          "changedPixels": 3506,
+          "changedPercent": 17.12,
+          "strongChangedPixels": 3506,
+          "originalSkinPixels": 3495,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0135": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0135.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0135.png",
+      "source_sha256": "05c8b71aed6a632a7dd825275193bfc688d97db8ceaffdb5c9293956d5f7ac05",
+      "sha256": "49f1313aea9973764030a7499e243ed77c62266847b5aec69c96919e418944bb",
+      "pixel_sha256": "473e3e654ab92156230c867a76f66dfc09b2bcd494f3a22d95d715ba80eb18ce",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "31338a55cd3e6454",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0135.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "65248c9ea67ec07af997ebed229b2a5d6c47fe982612200509275f4c5ed998ed",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12967,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1026,
+          "protectedFacialBrownPixels": 418,
+          "paletteSize": 13,
+          "changedPixels": 3758,
+          "changedPercent": 18.35,
+          "strongChangedPixels": 3758,
+          "originalSkinPixels": 4161,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0136": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0136.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0136.png",
+      "source_sha256": "12c71b9c0c204d0a7e45a72fcd15acfaf936e126779502d9a79988fc7020dd14",
+      "sha256": "3a6bcebd4edf17d379f72504cbcb3cc6d99818fe3d44c0d8c417939ab1249497",
+      "pixel_sha256": "cfd159de222ca1e7285a5270332c55ce6c78fc91114127034fda72136a762784",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "762483e4c06e5df9",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0136.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "3c19b6ff7f10084f8c85b65726c53b5051203c1239908cead4130fa9a9940504",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12168,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 2692,
+          "protectedFacialBrownPixels": 367,
+          "paletteSize": 13,
+          "changedPixels": 3324,
+          "changedPercent": 16.23,
+          "strongChangedPixels": 3324,
+          "originalSkinPixels": 3598,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0137": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0137.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0137.png",
+      "source_sha256": "f9bfd08c4456c022820349cb1a29f44c3ccd14c73d56842f1de5a6f9d1aed4d3",
+      "sha256": "e40e16de6178cf7fe85395af45118b0914db73faa07e665c83f06f5e51bbae5e",
+      "pixel_sha256": "b24c27f2820f2541d4cecb8946b9f8056ae4f201bf8560b3ca940d4d7622f3d3",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "dea6bc689de91a72",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0137.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "bd4f4a9c3145e9c0ba5b3907069acb733c0d979541e0725cb5eb244d29ecfca7",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12006,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 676,
+          "protectedFacialBrownPixels": 874,
+          "paletteSize": 13,
+          "changedPixels": 3702,
+          "changedPercent": 18.08,
+          "strongChangedPixels": 3702,
+          "originalSkinPixels": 2827,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0138": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0138.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/034.png",
+      "source_sha256": "56ecba331dd8aef115840d2bc61c07902d40ecf5ea13723a6b9e121a981b44f0",
+      "sha256": "90584f61c65f20a413dc61ba6cd0687091569d641ef4479c462cbcf96d32ce27",
+      "pixel_sha256": "41bca9adef3cfac260b9df9bcba7d566209a63b532d9a5b3ec07a189279e9658",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "af5e93326a656985",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0138.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "bcff0db8d684e75ee7ae65aa3cef47203d36d5aa97e9e298c36bb7c9582a7ede",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 6938,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 4980,
+          "protectedFacialBrownPixels": 1036,
+          "paletteSize": 13,
+          "changedPixels": 3942,
+          "changedPercent": 19.25,
+          "strongChangedPixels": 3942,
+          "originalSkinPixels": 3704,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0139": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0139.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0139.png",
+      "source_sha256": "c3030f6f31e06db3051b8f899a31176f33488ee0847ac064140579ef578fb4af",
+      "sha256": "b23a50ae052b353d0d8f450b05d33936c87ddc68e34cb9f89f48f0ccb0cda1da",
+      "pixel_sha256": "d346903a99ee0429413165af7fdf2dbf3f6fb6aea440f7188d4d00658987ffab",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "a1c554da187237e1",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0139.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "367ceccec8d2db266aa21282fe72a50e919a7039cb6332ef12332b733be56526",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 13168,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 567,
+          "protectedFacialBrownPixels": 930,
+          "paletteSize": 13,
+          "changedPixels": 3195,
+          "changedPercent": 15.6,
+          "strongChangedPixels": 3195,
+          "originalSkinPixels": 2799,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0141": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0141.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0141.png",
+      "source_sha256": "5ab059a8d8a157307cee91bcfbefdd5d83329cfa59346d5df9ee75e93744558d",
+      "sha256": "2f6adf41aa52b0faf29e4dfaa2be3448cb002b5d44cbe8e9af002c52df3aeaf1",
+      "pixel_sha256": "102dad49d8f3ec524e4a526d5f7083b2e0d8e293d36540fc80445c2e7fdb5065",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "d43b8b327a846314",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0141.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "4407f84069d6ec033e85c58dd71e2f84c3855d7e04047f5abf5ffbb38f915330",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11834,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 656,
+          "protectedFacialBrownPixels": 830,
+          "paletteSize": 13,
+          "changedPixels": 3248,
+          "changedPercent": 15.86,
+          "strongChangedPixels": 3248,
+          "originalSkinPixels": 2740,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0142": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0142.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0142.png",
+      "source_sha256": "dfdee9bdc70b6ec6e89abb70f5e83bd94c1a5a6cd8a286459457ad2c1e69477a",
+      "sha256": "d2f4cf14a7bd56693ed531af9a3beaee98f5b53ef2c0e51b29da4152d84c161e",
+      "pixel_sha256": "db1bd66cfd0163034df01452466d0f48be505b405370b24e640c11583c0cec9c",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "ff315a806e449efa",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0142.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "ae310359bc434c1c2cf4bccfbe0e4338672b8125510291d9813eee0fd2c2b15f",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12556,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 652,
+          "protectedFacialBrownPixels": 659,
+          "paletteSize": 13,
+          "changedPixels": 3647,
+          "changedPercent": 17.81,
+          "strongChangedPixels": 3647,
+          "originalSkinPixels": 3057,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0143": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0143.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0143.png",
+      "source_sha256": "10d1b5990d04dc604a2068d3d51936749067673eaf58b0fa80f39f12dd7301ab",
+      "sha256": "231b70a904a04c1bd8da0782b48174dbb163de190ac42986a0cb7ebb8fb2c378",
+      "pixel_sha256": "cc1b5754f63e28648ef33e878b08c6b09182a4e1cc0c42bbc0228ec04e2d02a3",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "0ecbfc87eea0b67a",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0143.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "da5c98330cf8dc31186bc02ff8ae96ae65980c75275fe4c5a866c188fbe02d55",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12912,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1,
+          "protectedFacialBrownPixels": 600,
+          "paletteSize": 13,
+          "changedPixels": 3937,
+          "changedPercent": 19.22,
+          "strongChangedPixels": 3937,
+          "originalSkinPixels": 3208,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0144": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0144.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/037.png",
+      "source_sha256": "6596c71903caf945bbda9f161a7134ce068fde2954acdd96fb46a3a5b4422a76",
+      "sha256": "311dd973d9ddbcf64333f6c0421a684363588aca1cb136e9f5cec494449a8dff",
+      "pixel_sha256": "2011bd7b7c55c6012e02f8e60347a594ba106dd8b14c84c97c98d6b11ac0d7e0",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "43cc7432114b7813",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0144.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "c94a818f435aaa9500353a00b6a10678407d7482ba04b982650bbfb4583bb2f7",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 8620,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 4724,
+          "protectedFacialBrownPixels": 562,
+          "paletteSize": 13,
+          "changedPixels": 3564,
+          "changedPercent": 17.4,
+          "strongChangedPixels": 3564,
+          "originalSkinPixels": 3746,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0515": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0515.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/127.png",
+      "source_sha256": "6596c71903caf945bbda9f161a7134ce068fde2954acdd96fb46a3a5b4422a76",
+      "sha256": "311dd973d9ddbcf64333f6c0421a684363588aca1cb136e9f5cec494449a8dff",
+      "pixel_sha256": "2011bd7b7c55c6012e02f8e60347a594ba106dd8b14c84c97c98d6b11ac0d7e0",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "43cc7432114b7813",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0144.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "c94a818f435aaa9500353a00b6a10678407d7482ba04b982650bbfb4583bb2f7",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 8620,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 4724,
+          "protectedFacialBrownPixels": 562,
+          "paletteSize": 13,
+          "changedPixels": 3564,
+          "changedPercent": 17.4,
+          "strongChangedPixels": 3564,
+          "originalSkinPixels": 3746,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0145": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0145.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0145.png",
+      "source_sha256": "79fca5cc2cc18442c946fd04b7a508200e7306c379ea79cb44d846d76bcc1513",
+      "sha256": "00024b794cc4e328b32e450ccfdb230e3406b16e21c761121d9454aecdd6ec76",
+      "pixel_sha256": "b73e3241efe9d091cfd22e0c6321c1dec1682bb230a9d46d176543d14d01a9bb",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "07135018d4642c58",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0145.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "cc1f4e9660941f32e9f670e38b442b05e4378753fb806b4026aca5304c413f70",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12728,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 993,
+          "protectedFacialBrownPixels": 670,
+          "paletteSize": 13,
+          "changedPixels": 3852,
+          "changedPercent": 18.81,
+          "strongChangedPixels": 3852,
+          "originalSkinPixels": 3787,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0146": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0146.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0146.png",
+      "source_sha256": "3bb52b5d93a856ed508835b8433184eba2062de68a107dc5745aa6b77bfaff16",
+      "sha256": "84265b946a6767e5c753dc6e5c4d750b89edbd0e18b7b5e19629b871ee085a27",
+      "pixel_sha256": "8258ef99d43693429d490214db6dc0da4f433a7c39f47fb9dc2cb2e663c2dbe6",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "19980e0461815f33",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0146.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "3f35a7de0f0769efaa583d0b669c1cff74804b31e4d3c096e29b3ef823b1be09",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12753,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 740,
+          "protectedFacialBrownPixels": 797,
+          "paletteSize": 13,
+          "changedPixels": 3582,
+          "changedPercent": 17.49,
+          "strongChangedPixels": 3582,
+          "originalSkinPixels": 3122,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0147": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0147.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/038.png",
+      "source_sha256": "ed62ebbfaa83bb307feeed8efe8b63fbb813138de1887d4b0a6ec3f55826b2b7",
+      "sha256": "1d0cf61cb4d44a2974fb34791221eb2dea84b6fd2b5901efa21d40369c2c1f8b",
+      "pixel_sha256": "a979b82dbfd49712cebbc6064aadc7f0c2ec10c26c2db454dc8b500ff6d0a4f4",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "2c9763aa26f2b8fc",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0147.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "dd8b6ce6263c92b3a426e71879c42f6e9162eb53090072fbefed76d32206a1f2",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 9484,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5432,
+          "protectedFacialBrownPixels": 456,
+          "paletteSize": 13,
+          "changedPixels": 2947,
+          "changedPercent": 14.39,
+          "strongChangedPixels": 2947,
+          "originalSkinPixels": 2706,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0148": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0148.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0148.png",
+      "source_sha256": "4161c07c38ba177564b3a5b2eae176f4032205a5f36e60e231029b25ea6b20e8",
+      "sha256": "0ed534740391b3dea559a736f886a34d1c3129c56d2b299ffc4a7156138d4c5c",
+      "pixel_sha256": "210db2841b60ada816c5cbef24277378fd084d95a9f06301a5dc5963171d0baf",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "042bac9b99c699ca",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0148.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "bcd1dbf4ed7226d5c5b40b2ddcfad905207480095fb06602baed4af5e49e4a4f",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12435,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 844,
+          "protectedFacialBrownPixels": 820,
+          "paletteSize": 13,
+          "changedPixels": 3150,
+          "changedPercent": 15.38,
+          "strongChangedPixels": 3150,
+          "originalSkinPixels": 3183,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0149": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0149.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0149.png",
+      "source_sha256": "1734889408caf96d3cd40d738b369b986adf4caf3940ff792f950fc99d7325d2",
+      "sha256": "bf4c5b9edf4d3ff61556f2ecd1ff37c0b56e19defa77850e8ef0372848d12c69",
+      "pixel_sha256": "dad0d4377b1431327b69426d4714fa68567cbdacc212c7e29f41a557def36bca",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "1ccc794559cab70d",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0149.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "782db73c51d24fda346b7ccdc2b630658693bf9a4530696f5fb17f13fbb0d0e6",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11846,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 870,
+          "protectedFacialBrownPixels": 467,
+          "paletteSize": 13,
+          "changedPixels": 3981,
+          "changedPercent": 19.44,
+          "strongChangedPixels": 3981,
+          "originalSkinPixels": 3867,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0150": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0150.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0150.png",
+      "source_sha256": "917306750a021103edb0b482b076c21dabd318d23840030a0458b06bc0c0a1bf",
+      "sha256": "6506a8023563a1afe6a7d4c57425bceeca1fbef106779ac3527918f653e93b40",
+      "pixel_sha256": "acb0aa082571506cb86ffd73706bf37c1a2db732539bcc2b44a1ebaffe996fb6",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "b10a7dc9d1946250",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0150.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "1eaf3faa5c83ff4ff73220183878b35a4f65e99d36c435cc53839d204fea29e9",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12105,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 862,
+          "protectedFacialBrownPixels": 461,
+          "paletteSize": 13,
+          "changedPixels": 3711,
+          "changedPercent": 18.12,
+          "strongChangedPixels": 3711,
+          "originalSkinPixels": 3477,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0151": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0151.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0151.png",
+      "source_sha256": "0abb7f4f80f95466c0d58c6ee5430922ff4338eed759b6478b62ccd2832df434",
+      "sha256": "71afa5925797c802170358b56c3631b7715c65d341cf70abb29ec15c9470d0c3",
+      "pixel_sha256": "b45b349053705ddac5ef40a1d2d6701383e1ffc6068ad25a514e800e312e1e17",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "fbaefa7c9a667c1a",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0151.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "ecb57b06a82ce66b5a6d63a47dc565372ced9ada34d642f149ef5ebe4fcea51d",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 13260,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 686,
+          "protectedFacialBrownPixels": 441,
+          "paletteSize": 13,
+          "changedPixels": 4039,
+          "changedPercent": 19.72,
+          "strongChangedPixels": 4039,
+          "originalSkinPixels": 4277,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0152": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0152.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0152.png",
+      "source_sha256": "b92fe3d61b459f39ca29973bf766a1e98eb6ace7625a59c34f2d5b5f5cbc5440",
+      "sha256": "b66c6e59ccecbfcbe5ebd6bf8189d6f065d5b4ccd77512118f9ea00b4d88023d",
+      "pixel_sha256": "ec1abd1b86228d86eca3a70cd82ab1ff0cc9464b24d2a9c579bac67a68e18c03",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "dc183dbaa08c88e9",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0152.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "6c78e918d2365843efc9c87c871bd0448b9cf018fbd3462bb5bd45c2a6a66e4a",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12241,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 486,
+          "protectedFacialBrownPixels": 679,
+          "paletteSize": 13,
+          "changedPixels": 3954,
+          "changedPercent": 19.31,
+          "strongChangedPixels": 3954,
+          "originalSkinPixels": 3720,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0153": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0153.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0153.png",
+      "source_sha256": "8a5b02a7871c88a0894475389314cafcf2a119f740a60538c3f99ae466aa4af2",
+      "sha256": "3327f1a65772d787e9a95732f5be1ba5291f7a692c1edd65ed38c85f86c5b49f",
+      "pixel_sha256": "27057f159df53af0011ca11e159d57e80552544da1b5daae3cda59c58714362b",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "e25196ec35b65115",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0153.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "66b0e2e194d7a2ea97a99f3fd374496648a79aa8cb49b7c7ae0b4e570ba3e20b",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12225,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 387,
+          "protectedFacialBrownPixels": 711,
+          "paletteSize": 13,
+          "changedPixels": 3764,
+          "changedPercent": 18.38,
+          "strongChangedPixels": 3764,
+          "originalSkinPixels": 3313,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0154": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0154.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0154.png",
+      "source_sha256": "9b239b5d81795879cbc0cf80795ada35720d473de0bb45ee6c77cc0819e33814",
+      "sha256": "2676f72be589c3d3a2ab5a5b6df0354325ce076036f9d8a046bff1174a888ada",
+      "pixel_sha256": "c5cc35a49ce6c553b1ea3bb63ef0a07863036448adb922fe171d0f2e4845891a",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "867ddf9b8f002a5b",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0154.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "7fc24a0705022f8f8f732671ea31939a039dd4f3fe66a34c9babd9f88fd8b59e",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12582,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 895,
+          "protectedFacialBrownPixels": 467,
+          "paletteSize": 14,
+          "changedPixels": 3660,
+          "changedPercent": 17.87,
+          "strongChangedPixels": 3660,
+          "originalSkinPixels": 3843,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0155": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0155.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0155.png",
+      "source_sha256": "fef2117479392303ffa544106ee7240b3bbe0e17e3887d44ed514ba3da42e237",
+      "sha256": "c11bddf0f5b16a885c67da768225a893f85a474ae00b6f939937e841b97a3622",
+      "pixel_sha256": "f321c933c9cbd90d6d2da1f42756d1df02010897726ac3400e63cd9832d67aaf",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "67f580074f768c76",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0155.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "f1338db9ffd56c34d7b898356877d71d7390c59ec2680ff82dcec8db4c995f3c",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12013,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 547,
+          "protectedFacialBrownPixels": 390,
+          "paletteSize": 13,
+          "changedPixels": 4665,
+          "changedPercent": 22.78,
+          "strongChangedPixels": 4665,
+          "originalSkinPixels": 4773,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0156": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0156.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0156.png",
+      "source_sha256": "6f40afe51ae27acb0556cd38a71c050873e7be051976610b265766012a617e02",
+      "sha256": "8abcb90bc3f291ab45279f33c232c8a0f1b1533346eb652a16c7abfac89b14ed",
+      "pixel_sha256": "0c6b99c424abaf62532b942ca9f085590632f19b45d2b8e71c62ee9745d61898",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "0fc60f81df088038",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0156.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "ae8aaa7493bfc4fb28542bed57defb088a21f32eefa9e46b7fee7e9e33e21550",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 13382,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1008,
+          "protectedFacialBrownPixels": 416,
+          "paletteSize": 13,
+          "changedPixels": 4046,
+          "changedPercent": 19.76,
+          "strongChangedPixels": 4046,
+          "originalSkinPixels": 4692,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0157": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0157.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0157.png",
+      "source_sha256": "2ab14d65b92fba36e166531509804bae111bf71fbddf59925eb1f8655939b219",
+      "sha256": "ea270c241233ae790e5d55a1c6a5cdcf241bdc50fd79e6dbaf85a6164ea1f0b1",
+      "pixel_sha256": "43f5f6dc9b14a690f3672308cea22bdc7b7d312c954a90a44d377ce00cc278d3",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "e81b006228fe3949",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0157.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "16bacc120ecf62593d82ae017af7a42df332a6b79c5efe81dde52ad710502bc2",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 13437,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 177,
+          "protectedFacialBrownPixels": 346,
+          "paletteSize": 13,
+          "changedPixels": 3871,
+          "changedPercent": 18.9,
+          "strongChangedPixels": 3871,
+          "originalSkinPixels": 3532,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0158": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0158.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/041.png",
+      "source_sha256": "ef751798ca8bd31e534ad53e78deaf1565b2bae66c34ad1157b8e495700947c1",
+      "sha256": "b16d346ce46e3e86c0cd7d0667e8b10fc538dcb8106deb074da9ee6d2eddb852",
+      "pixel_sha256": "79af9754c9773cf2b792ef82069edcab56b41e4692ea71b56bbc23382bcbfc85",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "54b0ef9ed797bf1a",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0158.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "65231833b7c4d09ebd5fb11d09e211b06a5a6dea71de9ff0c35aa6b608bc0b6d",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 8340,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 6172,
+          "protectedFacialBrownPixels": 676,
+          "paletteSize": 13,
+          "changedPixels": 3389,
+          "changedPercent": 16.55,
+          "strongChangedPixels": 3389,
+          "originalSkinPixels": 4418,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0159": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0159.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0159.png",
+      "source_sha256": "7208e3e27475087e1f63555eb7b451c26cfb362cc000af613f77b8c685dd1c8b",
+      "sha256": "86217b72e752f9f87145814305510efe79b62ce109ad3ce342fe4559e750679d",
+      "pixel_sha256": "463478a4ee336ce0af520c3acba7efe88e91b00143b9c113a4a107959ae7ca01",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "827011eb4dadeab6",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0159.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "c09c326b11ff0918a90d390748ccaebe2d569ac6c2f5de2e914f429c74f5070b",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12050,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 931,
+          "protectedFacialBrownPixels": 666,
+          "paletteSize": 13,
+          "changedPixels": 3468,
+          "changedPercent": 16.93,
+          "strongChangedPixels": 3468,
+          "originalSkinPixels": 3355,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0160": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0160.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0160.png",
+      "source_sha256": "d26cc6acb600964610c2100bd828c4cc0e9538064556ad841de0e53415d924da",
+      "sha256": "4c2905a73a1e3d5d07d1b97dd23796aebc474d323b0fb55eb04ffd7695483f13",
+      "pixel_sha256": "41072e622ee0a7e87807c9a740ca126d77265c84102c1d4efd5b21b2e4382b76",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "01488a3a5fbe0ad1",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0160.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "2edef325a2d054f3ec5f651208cfaae7c9e6527dc6ebfc39a05ed553a8099d4d",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12480,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 665,
+          "protectedFacialBrownPixels": 553,
+          "paletteSize": 13,
+          "changedPixels": 3883,
+          "changedPercent": 18.96,
+          "strongChangedPixels": 3883,
+          "originalSkinPixels": 3688,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0161": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0161.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/042.png",
+      "source_sha256": "945d8fc388ede973df5d4615b7b39c0d25b81d167cc15964e1204af3c154e9fd",
+      "sha256": "2ea544c65be2af3fdb43459bf54db9b69a0bd8a2cca422038cd14bfac53d126a",
+      "pixel_sha256": "24fa7470a2b83fe8dbb2b549694f79838cb913aa97714e236c9fbcaac79b04cd",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "435ed73bdba932ee",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0161.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "d5d1541f05486c8670e2c3a533a4f184fdef98b187a1adf4771ec6ea7dbb7d04",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 6800,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 4812,
+          "protectedFacialBrownPixels": 636,
+          "paletteSize": 13,
+          "changedPixels": 4465,
+          "changedPercent": 21.8,
+          "strongChangedPixels": 4465,
+          "originalSkinPixels": 5028,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0162": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0162.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/043.png",
+      "source_sha256": "fdf2049e5221be0fbc6dbcf9766d20d26d093501864cb47087f324000dda2e58",
+      "sha256": "3ad33ff6d77fa0167e87e254ea5242ac835d880f216fbf67021442c0e1d786eb",
+      "pixel_sha256": "c51f7db0842ef12966c90c8329b8ed83f31c7e3a13068f0b5a7f526d3219767a",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "4571d2b6c4f402aa",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0162.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "9baa1810b8754c55130293d1dd78f6b2cfc44093775b75b216d70acc04bb612f",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 7020,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5784,
+          "protectedFacialBrownPixels": 962,
+          "paletteSize": 11,
+          "changedPixels": 3189,
+          "changedPercent": 15.57,
+          "strongChangedPixels": 3189,
+          "originalSkinPixels": 3250,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0163": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0163.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0163.png",
+      "source_sha256": "1ab5e8f01e7056632ffce509407ca35514d22e1e7ae91da3a01d33e603da5ca1",
+      "sha256": "d2136673ad62e1e950af722c944a019df955abb58e7ff35dfa31d0a2bb1d3983",
+      "pixel_sha256": "8465533a885caed880573ae75617c528a87742ac7c3dbacbe34a602ffc25951b",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "7841c1d1e68927ba",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0163.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "e261455a35428c4dae9fef051d2817786beddc66bc1dd62635f26412d8726293",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 13161,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 178,
+          "protectedFacialBrownPixels": 323,
+          "paletteSize": 13,
+          "changedPixels": 3889,
+          "changedPercent": 18.99,
+          "strongChangedPixels": 3889,
+          "originalSkinPixels": 3458,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0164": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0164.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0164.png",
+      "source_sha256": "116a64a40cf3719a83b139c70a2b6a7bd087221bb21ee13741b74a485d42137d",
+      "sha256": "d0a7aef3822ccc946709f7e0531a363e74a92f1607e8970ad2769c36b39a6426",
+      "pixel_sha256": "e7bdb9678cdc55cca84110f7f66d7de46c896f6af9336f7e06e4cbc076138e93",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "ac66b03f38bcc4fd",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0164.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "fb31b2165f3485523f0c82438f0dc5388c05251f2a2041d2eaa3ced08d78c35a",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 13154,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 0,
+          "protectedFacialBrownPixels": 447,
+          "paletteSize": 13,
+          "changedPixels": 3834,
+          "changedPercent": 18.72,
+          "strongChangedPixels": 3834,
+          "originalSkinPixels": 3762,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0165": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0165.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0165.png",
+      "source_sha256": "b2dac5d40822cec8ac0454d31fe602c06cfe73fbef09d7183cb103c19beecaf3",
+      "sha256": "f60dfb995c320c139b82f5dfbb7a1d8ccdbe5c3a4faf7b9f74950f7494ad1f2d",
+      "pixel_sha256": "23cd72a675749723fa5f9288aaa6d5459aa015a982d2c8146f9b6ec543d1b70e",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "d1bf861f5bca3fc7",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0165.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "558a27916a4ccb6ebc2770fd0401ba777267e5cfc7b75c9a8dd6b2d8eacabc8b",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12272,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 764,
+          "protectedFacialBrownPixels": 417,
+          "paletteSize": 13,
+          "changedPixels": 3944,
+          "changedPercent": 19.26,
+          "strongChangedPixels": 3944,
+          "originalSkinPixels": 4231,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0166": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0166.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/044.png",
+      "source_sha256": "d99b61ea83661533bb0afec64e990069a68195f5e042982957cc63a6a52caec2",
+      "sha256": "e43d45d6f8f6776c41d97206750a7e76a0b0ef47281b88984ec6ad24ac8dcf56",
+      "pixel_sha256": "650327f62f3403dfb2a3f4f12c42537bbaee78be0595759e5a71200ab50a1a0e",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "8d4aefd0c299f553",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0166.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "dcf8f8a678a944b1a61cca1e621d90d45acc431612be9d5f89b55523ca169135",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 8050,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5054,
+          "protectedFacialBrownPixels": 938,
+          "paletteSize": 13,
+          "changedPixels": 4209,
+          "changedPercent": 20.55,
+          "strongChangedPixels": 4209,
+          "originalSkinPixels": 5026,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0781": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0781.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/185.png",
+      "source_sha256": "d99b61ea83661533bb0afec64e990069a68195f5e042982957cc63a6a52caec2",
+      "sha256": "e43d45d6f8f6776c41d97206750a7e76a0b0ef47281b88984ec6ad24ac8dcf56",
+      "pixel_sha256": "650327f62f3403dfb2a3f4f12c42537bbaee78be0595759e5a71200ab50a1a0e",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "8d4aefd0c299f553",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0166.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "dcf8f8a678a944b1a61cca1e621d90d45acc431612be9d5f89b55523ca169135",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 8050,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5054,
+          "protectedFacialBrownPixels": 938,
+          "paletteSize": 13,
+          "changedPixels": 4209,
+          "changedPercent": 20.55,
+          "strongChangedPixels": 4209,
+          "originalSkinPixels": 5026,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0167": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0167.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0167.png",
+      "source_sha256": "bcac855cee4a9dd59f4454cc8b3b796f402dc3e3463478f6db755b0a055fc0e2",
+      "sha256": "c281dda7aa533c21f1772139fb1d17ead7c68ce51d55462abfbe9ae18065c235",
+      "pixel_sha256": "10cd5c4ceade397c87ddcdb22924f11e0bf1922dd7e0e4dc48b57ab28ee2535b",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "f2683a1d820fe541",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0167.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "9cf88aa802d17f62a8e16f618164ed715851bbf1c5136bfe7735f3a074edf7ee",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12146,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1050,
+          "protectedFacialBrownPixels": 680,
+          "paletteSize": 13,
+          "changedPixels": 3300,
+          "changedPercent": 16.11,
+          "strongChangedPixels": 3300,
+          "originalSkinPixels": 3352,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0168": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0168.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0168.png",
+      "source_sha256": "597ce5f63033ca792067869075d9e8ee5d83c370277a119f4abe463f8de74ddb",
+      "sha256": "ae24f585790989147b8f8f97a90ff2f0be3b4a0c3e810b89067b35ab4afc17ae",
+      "pixel_sha256": "c26cbf8de1be08b5e140fd43ce477222eea4e2cc486d7ffb3a82cd1c9cb9c24c",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "0183242c83cea777",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0168.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "3761c3b67838b4a5dd1eaf9dd1b72114540101feea0a92082030a6c7f98ec17c",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12000,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 511,
+          "protectedFacialBrownPixels": 602,
+          "paletteSize": 13,
+          "changedPixels": 3858,
+          "changedPercent": 18.84,
+          "strongChangedPixels": 3858,
+          "originalSkinPixels": 4020,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0169": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0169.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0169.png",
+      "source_sha256": "bc5b97387a3b9272d8e1d1525f18c348f64ac083e7c54b8454814931fde679c7",
+      "sha256": "cf8f2c70678fd4f712e39d7713485690e6d9c8186dff526a102232328e4490f6",
+      "pixel_sha256": "9151d4f961bcb7763f3c7862492c80dfca1c5cc16f017e6043aebf0f7a61c625",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "b2415c23e15c1be3",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0169.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "c2b75b716608b33ee71bdabb95ec7db61c28ca66e14cba2d14409079caac1f49",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12892,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 472,
+          "protectedFacialBrownPixels": 339,
+          "paletteSize": 13,
+          "changedPixels": 4191,
+          "changedPercent": 20.46,
+          "strongChangedPixels": 4191,
+          "originalSkinPixels": 4401,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0170": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0170.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0170.png",
+      "source_sha256": "2d05eaf90765088142318c55a37ea42f310f130c50b04659119e890eba6c8cb3",
+      "sha256": "5d2a97e2a5f95862723d09ae18a867e9adbe0ef201cdad8220e1762c4b40fbe7",
+      "pixel_sha256": "e48d4b8cbe313d57ce8767e98eee0660c2ac6e3221d32ac2ed411d017f087120",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "0204f71d2026c69c",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0170.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "5d5045c6a2d2cb2cfc64a6fed384087b6269ad1e7e5dff26b14e92afed56946e",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12648,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1296,
+          "protectedFacialBrownPixels": 595,
+          "paletteSize": 13,
+          "changedPixels": 4066,
+          "changedPercent": 19.85,
+          "strongChangedPixels": 4066,
+          "originalSkinPixels": 4853,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0171": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0171.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0171.png",
+      "source_sha256": "07d17beda9f1de0bae002777b42d85166f538ee7157895bbfa61b5d0d182a18e",
+      "sha256": "1b1f2e9ad5101745a159d532f8e13e4d403745ad4457f89c3643b8b124453552",
+      "pixel_sha256": "06b2a2279d638deb67b02c7a775dd4caa94e5ee95f92ddafeb9772e9212c46ac",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "abf5f73daa7cba25",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0171.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "e2147213879fcbe61791e3115c0511ac723e5412cab42cfbf25a6fb0d60ab354",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12404,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 374,
+          "protectedFacialBrownPixels": 532,
+          "paletteSize": 13,
+          "changedPixels": 4171,
+          "changedPercent": 20.37,
+          "strongChangedPixels": 4171,
+          "originalSkinPixels": 3891,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0172": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0172.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0172.png",
+      "source_sha256": "ec74b8897e45739224a78418183d340bd4d2394cdf00fb0709e38984983ce4f0",
+      "sha256": "c8d877ffd04b29e8ef5d964f8f16bb5b33d85d4222e022708b90190db45147ef",
+      "pixel_sha256": "d27fbb3b41b43fca410f20fe7ac8209b32bc8e2c1eb08c1cc91ce582737f2832",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "148b876ae182910f",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0172.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "889538857f5ab956e529aafb400d0e2633960fa90197ea33d648d607ea45583f",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11657,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 725,
+          "protectedFacialBrownPixels": 681,
+          "paletteSize": 13,
+          "changedPixels": 4283,
+          "changedPercent": 20.91,
+          "strongChangedPixels": 4283,
+          "originalSkinPixels": 4133,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0173": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0173.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0173.png",
+      "source_sha256": "0b04ea9f5c19a127b5e2050533110f0ecac1a9cbaecb5fec85ba3646ef907c80",
+      "sha256": "71d5eb2c70062d03d649f7e6e3626329d078d2cc4a93a7dd6a697fa896b02dd9",
+      "pixel_sha256": "3fd9d0723d0f9fe8558d405524e7a270f8278c44b9780c1eb0483d34a8df97cc",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "09db7ad9d915d472",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0173.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "df45531b876f4768668e3e8ca6ea3d3096cc35d59e1923575b7047b932499ca1",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11558,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1102,
+          "protectedFacialBrownPixels": 783,
+          "paletteSize": 13,
+          "changedPixels": 3633,
+          "changedPercent": 17.74,
+          "strongChangedPixels": 3633,
+          "originalSkinPixels": 3625,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0174": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0174.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0174.png",
+      "source_sha256": "d9bcfe1ff272d9e3433bfc09d91f9ea69628df6cea824cef5af5fe37218dfeb0",
+      "sha256": "938602b0aaebaab3d9eaccc44dc9e6a581adcf4f498ab39f9ad4b052f2feed11",
+      "pixel_sha256": "4a7dc97169855b24e99c6d5fadb444a1d4cf97a9250fdf56e6aa77813699f5f0",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "0f4fd850d6ad99da",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0174.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "f5954337489c0cb6c4cd904379235f478ad07bfaa3ba60b84efa2a8d1c9dfa88",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12838,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1020,
+          "protectedFacialBrownPixels": 429,
+          "paletteSize": 13,
+          "changedPixels": 4277,
+          "changedPercent": 20.88,
+          "strongChangedPixels": 4277,
+          "originalSkinPixels": 4293,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0175": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0175.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0175.png",
+      "source_sha256": "51471d3e40d76c183e054f3fc4632ebcab107bf2883dd6b22e80d85d501e4abd",
+      "sha256": "72beeaa862ab673276ae695e50a5b2c412c97a5cf37869b67579241b83e6e871",
+      "pixel_sha256": "01639597339b050efb4f3c4e915b9be00f0f9ffbe93cea07a6770f114e2bee1c",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "dfdf0ce44d1c87d2",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0175.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "a86c6cfbaa823a27341886083af50387a738ecbd0983179ae11e1c88ef6806d5",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12406,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 853,
+          "protectedFacialBrownPixels": 565,
+          "paletteSize": 13,
+          "changedPixels": 3992,
+          "changedPercent": 19.49,
+          "strongChangedPixels": 3992,
+          "originalSkinPixels": 3803,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0176": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0176.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/045.png",
+      "source_sha256": "0bbce950237e20f4277244ddc8bb13ab978b6f43b69b258db3808ebac7e83595",
+      "sha256": "1b197ea158316925212260fb6a936be0c74f84e174d32228b9714a3c540b784b",
+      "pixel_sha256": "e6f903e9b263c6e45a80ad5c985d46a7b70976c7acea1700e57b7038c6a6927f",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "121122f345fbc2bb",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0176.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "dbf3c4639677c82d601e2537bfbd85d95b0564cbeed2bcbe77ac6c604b68ca78",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 7866,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5558,
+          "protectedFacialBrownPixels": 1142,
+          "paletteSize": 13,
+          "changedPixels": 3141,
+          "changedPercent": 15.34,
+          "strongChangedPixels": 3141,
+          "originalSkinPixels": 3314,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0177": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0177.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0177.png",
+      "source_sha256": "f170b714dc7de66d24d05003c02fa27e587c372d79cdec26d0418bcc835cde70",
+      "sha256": "b7df5861f4373ea409e2bdd5749f96f71aae1317f9f009464b25510d4c5f4308",
+      "pixel_sha256": "8662d6a24c8d580ee810cd76e269b2b2e5cf59a8ac5ce655fd1eff860f718251",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "db2888d41730e0fa",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0177.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "dfe17594cb1ac1bd08879803a52d6a9157766912d3150560be1006672543adf4",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12437,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 677,
+          "protectedFacialBrownPixels": 530,
+          "paletteSize": 13,
+          "changedPixels": 4367,
+          "changedPercent": 21.32,
+          "strongChangedPixels": 4367,
+          "originalSkinPixels": 4302,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0178": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0178.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/046.png",
+      "source_sha256": "174579c0f3f8196c330a697a351dea3608a7ed22a858095bb0b4288dead3090e",
+      "sha256": "b14c9811f11789d80950a6a696180294269584b4e0acbbfae1c424c13f7716da",
+      "pixel_sha256": "a7e18a8df813a0584596ce68c2b7054f8c864ab4b8ff248c0d0e55c14972f9f4",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "bc24a524a65c1e80",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0178.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "0bb551e3b51140b618c52e62b0e782897120b14ec464f98e20e89ac1c283cad1",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 6190,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5654,
+          "protectedFacialBrownPixels": 946,
+          "paletteSize": 13,
+          "changedPixels": 3747,
+          "changedPercent": 18.3,
+          "strongChangedPixels": 3747,
+          "originalSkinPixels": 2914,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0179": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0179.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/047.png",
+      "source_sha256": "593f5886b2412896b50a93282a1d96a1211ed7c5c2abb9f9a0d983825dc79dc2",
+      "sha256": "16cbf1ca2efb1aa250a4a5d7f20f1142337e120ec9d3f84f24adbe465a0238c3",
+      "pixel_sha256": "fe3040c0a26cc83e4b6de9b1ef2ba18c2c349643918e00afd1108954098c3cd5",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "68a428fa91d1c4dd",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0179.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "22b291f63ad99b17081b30abdccec43ab60159e9e84a72afbed6858ea4615c2d",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 7604,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5140,
+          "protectedFacialBrownPixels": 888,
+          "paletteSize": 13,
+          "changedPixels": 3788,
+          "changedPercent": 18.5,
+          "strongChangedPixels": 3788,
+          "originalSkinPixels": 4448,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0180": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0180.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0180.png",
+      "source_sha256": "ffcc51396e8a4449de20986c51d8cd2d4e1d43805d0c6c197b657ee0aefe7969",
+      "sha256": "fc87775a3724855a7f3eacf6e6d4d5caa0788ef5079fc41d122699a7c85c4dd1",
+      "pixel_sha256": "0066368964af54ea65b0c0799028fbd8c1493a9a94eb1786a7e8a160468099e6",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "679a794b9847620a",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0180.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "d435de688e7d99b5c330473841b058e43488755fd60a1c300f6c6fc1a4567a37",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12558,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 536,
+          "protectedFacialBrownPixels": 608,
+          "paletteSize": 13,
+          "changedPixels": 3789,
+          "changedPercent": 18.5,
+          "strongChangedPixels": 3789,
+          "originalSkinPixels": 4169,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0181": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0181.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0181.png",
+      "source_sha256": "2bfa650a94e84f2c3bc0ce5d1294ed6c4efb5a6b5c2119d29389d5c09d11e4a6",
+      "sha256": "135e22d00566e488546ebd06e172a753e650fb299fee2848bc63bc186ba06de8",
+      "pixel_sha256": "9702f41755f4a9a294ab55e9f7ebb37bb59d2c40c8b3d58031c1878c02dd9084",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "9542fb32ebe98ecb",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0181.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "8f79d21e8ecfbb229d5393b8ebc49f1cb642b1f3f0d54bad9b0b056bb303e8d3",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 13568,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 693,
+          "protectedFacialBrownPixels": 526,
+          "paletteSize": 13,
+          "changedPixels": 3734,
+          "changedPercent": 18.23,
+          "strongChangedPixels": 3734,
+          "originalSkinPixels": 3923,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0182": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0182.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0182.png",
+      "source_sha256": "db99f01104ba26c16cc74cec746355891ecb0427b0755fcc57320d7a86c25d91",
+      "sha256": "5484cdacc8892fe6689b41a2dca0da7b71d74d93fe85bcb5c33d87d0eeab2648",
+      "pixel_sha256": "f0cf0713f78c29c134228e8e9622eb80803bc3cf38bff6bda9233b30c60ccf44",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "cfd1daf54c31a13f",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0182.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "30a717c3f0e204bede3c1992ae46e0edbd3ed6fa51239d2760fbb85f2b8e2c53",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11463,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 967,
+          "protectedFacialBrownPixels": 671,
+          "paletteSize": 13,
+          "changedPixels": 3984,
+          "changedPercent": 19.45,
+          "strongChangedPixels": 3984,
+          "originalSkinPixels": 3920,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0183": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0183.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/048.png",
+      "source_sha256": "e2530664e17fde8ada8933bba1baceb4cd490aa61b5ee4503e8fcd5748950a20",
+      "sha256": "b07302f68e74c0a27530a582d2019ee887a48d499724424195be2d0cd5fc12a3",
+      "pixel_sha256": "7e812793dfc9dd5bb18a467cb59c7d9f3a13a208c8c01ce628f77e88a90a17cf",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "62fcb8b4655a86e9",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0183.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "64a63314501a65f35b4829e39cbc3fe5ff4dc123a5b01d2ec0b6ffb419cc8373",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 6516,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5408,
+          "protectedFacialBrownPixels": 644,
+          "paletteSize": 13,
+          "changedPixels": 4279,
+          "changedPercent": 20.89,
+          "strongChangedPixels": 4279,
+          "originalSkinPixels": 4096,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0184": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0184.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/049.png",
+      "source_sha256": "be896c2da53b1d2b68853f584db9bbcb55c0b679d5843c5c5139d06a63860168",
+      "sha256": "99dc6960ad23cdf49a79c8436184be7042cc981b4945d65019a0bf306ee3fc7c",
+      "pixel_sha256": "f744732e8c70a840e0775914a6f2ca5f973f5d2f8e58b8d23c4f53b164f031f7",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "751496c3953e3385",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0184.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "380d17584ec4f02b7be236ec54b98503b57f6f2df764165bdee9e342366e6893",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 8120,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 6608,
+          "protectedFacialBrownPixels": 808,
+          "paletteSize": 13,
+          "changedPixels": 2892,
+          "changedPercent": 14.12,
+          "strongChangedPixels": 2892,
+          "originalSkinPixels": 3808,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0185": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0185.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/050.png",
+      "source_sha256": "e3596d4fe28a85c28f25712ca786f8c9b922888db0c8b22b25521fb79a78de5a",
+      "sha256": "dae07ced498748dc212deec937d0277e93425b358549f25ef89fae6ffb1da279",
+      "pixel_sha256": "dcf98d2a669678e0731f8bdd3e9cbdbed1d48716e527aa4fdf0f8c1ef2c72aae",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "fd1c46694ed0e553",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0185.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "3d6413da075daec9a8d04245eef8b8c400ed1ba86ce78f82940d41bea7eb6051",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 6570,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5288,
+          "protectedFacialBrownPixels": 730,
+          "paletteSize": 11,
+          "changedPixels": 4696,
+          "changedPercent": 22.93,
+          "strongChangedPixels": 4696,
+          "originalSkinPixels": 4736,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0496": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0496.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/122.png",
+      "source_sha256": "e3596d4fe28a85c28f25712ca786f8c9b922888db0c8b22b25521fb79a78de5a",
+      "sha256": "dae07ced498748dc212deec937d0277e93425b358549f25ef89fae6ffb1da279",
+      "pixel_sha256": "dcf98d2a669678e0731f8bdd3e9cbdbed1d48716e527aa4fdf0f8c1ef2c72aae",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "fd1c46694ed0e553",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0185.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "3d6413da075daec9a8d04245eef8b8c400ed1ba86ce78f82940d41bea7eb6051",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 6570,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5288,
+          "protectedFacialBrownPixels": 730,
+          "paletteSize": 11,
+          "changedPixels": 4696,
+          "changedPercent": 22.93,
+          "strongChangedPixels": 4696,
+          "originalSkinPixels": 4736,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0186": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0186.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/051.png",
+      "source_sha256": "008ccf355517369da0429804697067963018bc80f3e1ee6091e807683175d210",
+      "sha256": "8d57148f7e5b452cb5998f035e7c0c83ae7de4adb4655bbba4cac44ee6f9d9a9",
+      "pixel_sha256": "66cfdba86f486845e020d99fda0f1b537d4fef997a5d0a74416f8a8900334f1e",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "0aae371a68033f21",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0186.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "601d48ac44200da7229c49876ca530cfdbc76cf6c44df1378395062a922d698c",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 8472,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 4694,
+          "protectedFacialBrownPixels": 722,
+          "paletteSize": 13,
+          "changedPixels": 3928,
+          "changedPercent": 19.18,
+          "strongChangedPixels": 3928,
+          "originalSkinPixels": 5000,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0187": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0187.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0187.png",
+      "source_sha256": "1673fe7c9823ae60833bf2c112efe16341689cf4c4372c3573af661f99907832",
+      "sha256": "cb1514feef551287e792d0572c8c2821c696b36a0e0e4c84b6a2ad5bbec4a2fd",
+      "pixel_sha256": "93f28ea4a2317d76bb42fc209be79f0077152d9a11652d3b8c810d4462094a8a",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "785ee4418fc16220",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0187.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "2e22f571dbb9185c7254ecc59f8c8c323ce0c66194d4b708a4677359f5a7e89a",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12443,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1097,
+          "protectedFacialBrownPixels": 458,
+          "paletteSize": 13,
+          "changedPixels": 4200,
+          "changedPercent": 20.51,
+          "strongChangedPixels": 4200,
+          "originalSkinPixels": 4779,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0188": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0188.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0188.png",
+      "source_sha256": "aedacf224ba71c4299e580821343217d58cd46f5f326038e0a83c688c0b999ed",
+      "sha256": "b4cd9cb596050c201c224d6c60bcac357da8737acb1d233b0d26c7a84662d993",
+      "pixel_sha256": "6f663c5f410dfda0608a4dd99252a6f26769abc3f11f01c57b617a7936449973",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "879e8e55e42d2e4e",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0188.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "8c8d1110ef5d4051414e0a3a889bcdc6b129ea8c62d9ba37b7224aefec27d843",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11168,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 635,
+          "protectedFacialBrownPixels": 478,
+          "paletteSize": 13,
+          "changedPixels": 4872,
+          "changedPercent": 23.79,
+          "strongChangedPixels": 4872,
+          "originalSkinPixels": 4379,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0189": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0189.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/original/052.png",
+      "source_sha256": "3447e50970c740eb0abb1378b48ac91bd204b74f3148ec8723b2cdc409512496",
+      "sha256": "9ed93f09092f085549cd9121400a965f9421a8f3ca592acb678996e8919817ab",
+      "pixel_sha256": "511705b2e3753156ace64e234e5bcc58073c7cd584193ff629f7927854e42844",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "42c646ab2277103a",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0189.png",
+        "base_method": "Scale4x_with_native_flat_orange_top_and_thin_white_preservation",
+        "base_rgba_sha256": "10e2332133661a57e44f58baa80b16356991288e2bdadde3d54aa512920f1e34",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 7108,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 5612,
+          "protectedFacialBrownPixels": 930,
+          "paletteSize": 11,
+          "changedPixels": 3875,
+          "changedPercent": 18.92,
+          "strongChangedPixels": 3875,
+          "originalSkinPixels": 4006,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0190": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0190.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0190.png",
+      "source_sha256": "4e530d00cd0d070d92f046631badd45a4328c97659b9444efbdd406170a81eba",
+      "sha256": "60292e57d1d5253e09ae2131756c4ede9beb5207e4fc6ab15eeb32a59345baf1",
+      "pixel_sha256": "a0a3ad353dd5e3d1dffad00b9a870dfa3f93ba0951bb107a321e7d3108617d35",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "df984d73e8fd1529",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0190.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "d7a12201e65e7ac21d779ce35b0aee41e3c774e140262cf9025438efe4c9b495",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 11610,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 850,
+          "protectedFacialBrownPixels": 656,
+          "paletteSize": 13,
+          "changedPixels": 3814,
+          "changedPercent": 18.62,
+          "strongChangedPixels": 3814,
+          "originalSkinPixels": 3929,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0191": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0191.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0191.png",
+      "source_sha256": "3ac0d4813073c42f42629bae8d293b2c9212461dc273e65630c7b0d45f490930",
+      "sha256": "29025619f2ea62f85083cdc39e0666391204b0fa4e829980b12ec0b208dd0d1e",
+      "pixel_sha256": "fa5ed0fe1c9a8cdc9fff7dd850598fbe4dece6af15c952dbba889d60f418d513",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "ff0cc396651684a6",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0191.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "183f3a595446f8286a0eb2bd0c5f7e046d84e211a29e0d8ac1a6d06e85b7f017",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12173,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 749,
+          "protectedFacialBrownPixels": 396,
+          "paletteSize": 13,
+          "changedPixels": 4019,
+          "changedPercent": 19.62,
+          "strongChangedPixels": 4019,
+          "originalSkinPixels": 4345,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0192": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0192.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0192.png",
+      "source_sha256": "399e0d22d9adbf534bf2b8ec5643d4f4131d4da966f9f3e1363d5079f2c1b474",
+      "sha256": "e4ed4fb489716145eaeee84d94c77ee0d8571a657e7eb6078975991293fa8705",
+      "pixel_sha256": "2670c53e4a934803cb6cada9724eaac23841e6f003854fdb2d26e37986755b06",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "1c44d7b3b454bb5e",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0192.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "c1afc29b778c4d660c24a55d67c99b541f5207ab9776f69ddd48e215062c04fd",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12372,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 991,
+          "protectedFacialBrownPixels": 469,
+          "paletteSize": 13,
+          "changedPixels": 4023,
+          "changedPercent": 19.64,
+          "strongChangedPixels": 4023,
+          "originalSkinPixels": 5102,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0193": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0193.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0193.png",
+      "source_sha256": "dba2b18c6078c6e1b1d2e13228be549b2819cac27e6b0cf711d5cdb8d213a56d",
+      "sha256": "b5921f5275c5092b1887201b28e658840bbc42ee61977a5076ec99fe5428cc54",
+      "pixel_sha256": "df7a0a3a2621b8ba83946d11e1013deee79e33462e06173c485e4122d40036a5",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "5e991c6a78de58fd",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0193.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "6ad0394119444321407ab207238e9e8a04b10d42cd2460771e128503d81549d8",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 10836,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 1048,
+          "protectedFacialBrownPixels": 540,
+          "paletteSize": 13,
+          "changedPixels": 4507,
+          "changedPercent": 22.01,
+          "strongChangedPixels": 4507,
+          "originalSkinPixels": 4531,
+          "pngRoundtripExact": true
+        }
+      }
+    },
+    "san14-candidate-0194": {
+      "path": "/assets/portraits/enhanced/san14-candidate-0194.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/san14-candidate-0194.png",
+      "source_sha256": "7b50c05feb01efd800edb1f8dcd618e7027a2ece501b44810fbb35ab8ed65528",
+      "sha256": "c8642348f604f02388364ed0d8ba46e88b29dba976c1e7118c98e280bf0ab981",
+      "pixel_sha256": "98448cb79b5598ca342afd4d5be4a1b0119da4a4056664df955028a74136f662",
+      "method": "identity_preserving_pixel_enhancement",
+      "provenance": {
+        "group_id": "945c925d2859ce84",
+        "atlas": "atlas-03",
+        "color_study": "art/portraits/enhancement-v1/studies/atlas-03.png",
+        "color_study_sha256": "f8cb615260521840570f8cde4596941fa77a1553200eaaa1333362a9eacb0780",
+        "prepared_source": "bases/san14-candidate-0194.png",
+        "base_method": "assigned_source_atlas_visible_box_direct128_fixed_palette",
+        "base_rgba_sha256": "1801ce5bbbfd2e663de162b5097313f642608992384c2a74ef79a69e5c270a80",
+        "prompt": "art/portraits/enhancement-v1/prompts/atlas-03.txt",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "inkPixelsPreserved": 12601,
+          "alphaChanges": 0,
+          "inkChanges": 0,
+          "protectedWhitePixels": 903,
+          "protectedFacialBrownPixels": 446,
+          "paletteSize": 13,
+          "changedPixels": 3884,
+          "changedPercent": 18.96,
+          "strongChangedPixels": 3884,
+          "originalSkinPixels": 4494,
+          "pngRoundtripExact": true
+        }
+      }
+    }
+  }
+}

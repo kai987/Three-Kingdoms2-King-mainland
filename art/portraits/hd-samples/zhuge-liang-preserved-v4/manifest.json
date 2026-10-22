@@ -1,0 +1,54 @@
+{
+  "schema": "tk2-portrait-strong-color-refinement-v1",
+  "person_id": "san14-candidate-0440",
+  "runtime_id": 439,
+  "name": "諸葛亮",
+  "original": {
+    "path": "game/assets/portraits/original/109.png",
+    "sha256": "00ab7c41fc86e84deeede6f42ddf5510b928f7e9ede998ba853836936eb7306c",
+    "preserved": true
+  },
+  "baseline": {
+    "path": "../zhuge-liang-preserved-v2/edge-refined-128x160.png",
+    "sha256": "4e96dc9ebfba1344f68782c3e42c4823bea55f0ab700f61c225353bcf5f9448b",
+    "preserved": true
+  },
+  "colorStudy": {
+    "path": "generation-source.png",
+    "sha256": "001edaee007ad490598085451416ef1eecc7c0b865714813912cd9a848d9224f",
+    "method": "built-in image_gen",
+    "prompt": "prompt.txt"
+  },
+  "output": {
+    "path": "portrait-128x160.png",
+    "sha256": "0ca300923c89872b7bbb2627ea102c0cfd61b52436a748025aa5ad64e8f89372"
+  },
+  "proof": {
+    "outputSize": [
+      128,
+      160
+    ],
+    "generatedNativeSize": [
+      1122,
+      1402
+    ],
+    "changedPixels": 3718,
+    "changedPercent": 18.15,
+    "materiallyChangedPixels": 3718,
+    "materiallyChangedPercent": 18.15,
+    "materialDifferenceThreshold": 24,
+    "meanMaximumChannelDelta": 8.08,
+    "originalInkPixelsUnchanged": 7620,
+    "eyeWhitePixelsUnchanged": 56,
+    "facialBrownStrokePixelsUnchanged": 590,
+    "alphaChanges": 0,
+    "allOriginalMaterialGeometryRetained": true,
+    "paletteSize": 13,
+    "pngRoundtripExact": true,
+    "aiColorStudy": true,
+    "generatedFeatureGeometryImported": false
+  },
+  "method": "AI pixel-color study projected onto original B material masks; original transparent ink, eye whites and facial brown strokes locked",
+  "sampleOnly": true,
+  "formalGameIdentityMapUnchanged": true
+}

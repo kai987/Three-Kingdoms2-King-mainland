@@ -54,7 +54,7 @@ def portrait_static_assets(here=HERE):
     people = data.get('people') if isinstance(data, dict) else None
     if not isinstance(data, dict) or data.get('schema') != 'tk2-portraits-v1' or not isinstance(people, dict):
         return static
-    for row in people.values():
+    for person_id, row in people.items():
         path = row.get('path') if isinstance(row, dict) else None
         if not isinstance(path, str) or not re.fullmatch(r'/assets/portraits/(original|generated)/[A-Za-z0-9_-]+\.png', path):
             continue
@@ -62,6 +62,17 @@ def portrait_static_assets(here=HERE):
         if target.parent.is_symlink() or target.is_symlink():
             continue
         static[path] = (path.lstrip('/'), 'image/png')
+        enhanced = row.get('enhanced')
+        if (not isinstance(enhanced, dict) or enhanced.get('width') != 128 or enhanced.get('height') != 160 or
+                re.fullmatch(r'[A-Za-z0-9_-]+', person_id) is None):
+            continue
+        enhanced_path = enhanced.get('path')
+        if enhanced_path != f'/assets/portraits/enhanced/{person_id}.png':
+            continue
+        target = root / enhanced_path.lstrip('/')
+        if target.parent.is_symlink() or target.is_symlink():
+            continue
+        static[enhanced_path] = (enhanced_path.lstrip('/'), 'image/png')
     return static
 
 

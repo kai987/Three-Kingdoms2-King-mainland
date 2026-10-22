@@ -1,0 +1,54 @@
+{
+  "schema": "tk2-portrait-user-marked-notch-sample-v1",
+  "person_id": "san14-candidate-0440",
+  "runtime_id": 439,
+  "name": "諸葛亮",
+  "baseline": {
+    "path": "../zhuge-liang-preserved-v5/portrait-128x160.png",
+    "sha256": "9df3763bab9eca304aefc981e5510b4092e85ed4860e1d3196d0e336dc4229fb",
+    "preserved": true
+  },
+  "source": {
+    "path": "generation-source.png",
+    "sha256": "a3df217a76c71166ebc3f83c669f1ca8df492d5ca6ba09156801f0fe203e83cf",
+    "prompt": "prompt.txt",
+    "method": "built-in image_gen"
+  },
+  "userReference": "User attached screenshot with two red circles; only marked inner white notches filled",
+  "output": {
+    "path": "portrait-128x160.png",
+    "sha256": "2cc91c781fe4c9aa25ec10de89ca0eb204744a163da90ed12db8cfd1c6da7183"
+  },
+  "method": "Local notch-fill edit restricted to two 5x4 native rectangles on v5; previous outer widening is not imported",
+  "proof": {
+    "size": [
+      128,
+      160
+    ],
+    "editedRegions": [
+      {
+        "x": 31,
+        "y": 8,
+        "width": 5,
+        "height": 4
+      },
+      {
+        "x": 92,
+        "y": 8,
+        "width": 5,
+        "height": 4
+      }
+    ],
+    "whitePixelsFilled": 21,
+    "grayPixelsFilled": 1,
+    "changedPixels": 22,
+    "changedOutsideRegions": 0,
+    "outerCurvesUnchanged": true,
+    "innerWhiteOpeningsBelowY12Unchanged": true,
+    "allRemainingPixelsUnchanged": true,
+    "pngRoundtripExact": true
+  },
+  "originalPreserved": true,
+  "formalGameIdentityMapUnchanged": true,
+  "sampleOnly": true
+}

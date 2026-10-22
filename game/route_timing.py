@@ -1,0 +1,73 @@
+"""Compile geographic travel times from the same curves drawn on the map.
+
+The map has an artistic, nonuniform projection. Each road or harbour segment
+is therefore calibrated to its own geographic endpoints; there is no global
+kilometres-per-pixel scale. Existing terrain speeds and hazard rules remain.
+"""
+from math import asin, ceil, cos, hypot, isfinite, radians, sin, sqrt
+
+
+def kilometers(a, b):
+    lon1, lat1, lon2, lat2 = map(radians, (*a, *b))
+    h = sin((lat2-lat1)/2)**2 + cos(lat1)*cos(lat2)*sin((lon2-lon1)/2)**2
+    return 6371.009 * 2 * asin(min(1, sqrt(h)))
+
+
+def metric(part):
+    """Validate a compiled curve, including its independently known chord."""
+    length, chord = part['length_px'], part['chord_px']
+    if (any(type(n) not in (int, float) or not isfinite(n) or n < 0 for n in (length, chord))
+            or abs(hypot(part['end'][0]-part['start'][0], part['end'][1]-part['start'][1])-chord) > .002
+            or length + .002 < chord or chord == 0 and length > .002):
+        raise ValueError('Invalid compiled route curve')
+    ratio = max(1, length/chord) if chord else 1
+    return dict(mode=part['mode'], length_px=length, chord_px=chord,
+                shape_ratio=round(ratio, 9)), ratio
+
+
+def apply_route_timing(data, geometry, geometry_sha256):
+    """Recompute every known/exploration leg; never reuse stored distances."""
+    if geometry.get('schema') != 'tk2-route-geometry-v1':
+        raise ValueError('Unknown rendered route geometry')
+    rules, coords = data['travel_rules'], data['city_coordinates']
+    seen = {}
+    for field in ('travel_routes', 'sea_routes', 'exploration_routes'):
+        for route in data[field]:
+            row = geometry['routes'].get(route['id'])
+            if row is None or any(row[key] != route[key] for key in ('from', 'to', 'mode')):
+                raise ValueError('Missing or mismatched rendered route: ' + route['id'])
+            parts = row['parts']
+            metrics, ratios = [], []
+            for part in parts:
+                entry, ratio = metric(part)
+                metrics.append(entry)
+                ratios.append(ratio)
+            a, b = coords[route['from']], coords[route['to']]
+            if route['mode'] == 'land':
+                if len(parts) != 1 or parts[0]['mode'] != 'land':
+                    raise ValueError('Land timing requires one complete road curve')
+                land = round(kilometers(a, b) * ratios[0] * rules['detours'][route['terrain']], 1)
+                sea = 0
+                days = max(1, ceil(land/rules['speeds'][route['terrain']]))
+            elif route['mode'] == 'sea':
+                if len(parts) != 3 or [p['mode'] for p in parts] != ['land', 'sea', 'land']:
+                    raise ValueError('Sea timing requires both harbour approaches')
+                ports = route.get('geo')
+                if not ports or len(ports) < 2:
+                    raise ValueError('Missing geographic harbour calibration: ' + route['id'])
+                land = round((kilometers(a, ports[0])*ratios[0] + kilometers(ports[-1], b)*ratios[2])
+                             * rules['detours']['plain'], 1)
+                sea = round(kilometers(ports[0], ports[-1])*ratios[1], 1)
+                days = max(1, ceil(land/rules['speeds']['plain'])
+                           + ceil(sea/rules['speeds']['sea']) + rules['embark_days'])
+            else:
+                raise ValueError('Unknown travel mode')
+            route.update(distance_km=round(land+sea, 1), land_km=land, sea_km=sea, days=days,
+                         timing_geometry=dict(schema='tk2-route-timing-v1', parts=metrics))
+            values = (land, sea, days, metrics)
+            if route['id'] in seen and seen[route['id']] != values:
+                raise ValueError('One displayed route has inconsistent timing copies')
+            seen[route['id']] = values
+    rules.update(geometry_sha256=geometry_sha256,
+                 distance_policy='Geographic endpoint calibration per drawn segment, multiplied by SVG arc/chord ratio and existing land terrain detour; sea legs include both harbour approaches.',
+                 resolution='Sum current curve-based edge days, ceil(total/10) ten-day arrivals; hazard multipliers are applied at departure.')

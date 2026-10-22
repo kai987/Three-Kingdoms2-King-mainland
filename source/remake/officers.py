@@ -149,8 +149,8 @@ def convert_profile(*, san14_stats=None, legacy=None, health_max=None,
     """Explicit SAN14 strength/intellect override a verified legacy fallback.
 
     Legacy values remain available when SAN14 abilities are not yet sourced.
-    A sourced design or an explicitly authorized default can supply virtue.
-    Drafts never silently replace a legacy attribute.
+    Verified original virtue takes precedence over a later design/default.
+    A sourced design or an authorized default supplies new people's virtue.
     """
     raw = dict(san14_stats or {})
     old = dict(legacy or {})
@@ -170,7 +170,9 @@ def convert_profile(*, san14_stats=None, legacy=None, health_max=None,
     health = health_max if health_max is not None else old.get('health')
     affinity = terrain_affinity if terrain_affinity is not None else old.get('terrain_affinity_code')
     virtue = old.get('virtue')
-    if virtue_design is not None and virtue_design.get('status') == 'configured_design':
+    if virtue is not None:
+        basis['virtue'] = 'verified_legacy_record'
+    elif virtue_design is not None and virtue_design.get('status') == 'configured_design':
         if not virtue_design.get('sources'):
             raise ValueError('Configured virtue requires source references')
         virtue = virtue_score(virtue_design['dimensions'])
@@ -184,12 +186,8 @@ def convert_profile(*, san14_stats=None, legacy=None, health_max=None,
                 or virtue_design.get('dimensions') is not None
                 or virtue_design.get('sources') != []):
             raise ValueError('Default virtue requires the explicit60 policy and truthful provenance')
-        if virtue is not None:
-            raise ValueError('Default virtue may not overwrite an existing score')
         virtue = 60
         basis['virtue'] = 'explicit_user_default60; not a historical rating'
-    elif virtue is not None:
-        basis['virtue'] = 'verified_legacy_record; historical redesign pending'
     basis['health_max'] = 'explicit_game_profile' if health_max is not None else 'legacy_or_missing'
     basis['terrain_affinity'] = 'explicit_game_profile' if terrain_affinity is not None else 'legacy_or_missing'
     return OfficerProfile(health, martial, intellect, virtue, affinity, raw, basis)

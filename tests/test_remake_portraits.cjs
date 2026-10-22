@@ -25,6 +25,56 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  assert(!portraits.html('san14-person-b','<script>"',{}).includes('<script>'));assert(generated.includes('data-portrait-person="san14-person-b"'));
  for(const path of ['https://evil.example/a.png','/assets/portraits/original/../other.png','/assets/portraits/generated/a.svg','/assets/portraits/generated/a.png?x=1'])assert.throws(()=>validIndex({...manifest,people:{a:{kind:'generated',path}}}));
  assert.throws(()=>validIndex({...manifest,people:{a:{kind:'nes_original',original_id:255,path:'/assets/portraits/original/000.png'}}}));
+ // An enhanced variant is an optional presentation asset; original bindings
+ // and their provenance remain the canonical row even when it is displayed.
+ const enhancedPath=id=>`/assets/portraits/enhanced/${id}.png`;
+ const enhancedManifest={...manifest,people:{...manifest.people,
+  'san14-person-a':{...manifest.people['san14-person-a'],enhanced:{path:enhancedPath('san14-person-a'),width:128,height:160}},
+  'san14-person-b':{...manifest.people['san14-person-b'],enhanced:{path:enhancedPath('san14-person-b'),width:128,height:160}},
+ }};
+ const validEnhanced=validIndex(enhancedManifest);
+ assert.equal(validEnhanced.width,32);assert.equal(validEnhanced.height,40);
+ assert.equal(validEnhanced.people['san14-person-a'].path,manifest.people['san14-person-a'].path);
+ assert.equal(validEnhanced.people['san14-person-a'].original_id,0);
+ assert(Object.isFrozen(validEnhanced.people['san14-person-a'].enhanced));
+ for(const variant of [null,[],true,'image.png',{},
+  {path:enhancedPath('san14-person-a'),width:32,height:40},
+  {path:enhancedPath('san14-person-a'),width:128,height:159},
+  {path:enhancedPath('san14-person-a'),width:'128',height:160},
+  {path:[enhancedPath('san14-person-a')],width:128,height:160},
+  ...['https://evil.example/a.png','/assets/portraits/enhanced/../a.png','/assets/portraits/enhanced/a.svg','/assets/portraits/enhanced/a.png?x=1','/assets/portraits/generated/a.png','/assets/portraits/enhanced/.png',`/assets/portraits/enhanced/${'a'.repeat(129)}.png`].map(path=>({path,width:128,height:160})),
+ ])assert.throws(()=>validIndex({...manifest,people:{a:{...manifest.people['san14-person-a'],enhanced:variant}}}));
+ const enhancedFrames=[],enhancedEvents=new Map(),enhancedI18n={locale:'zh-Hant',t:value=>value};
+ const enhancedDoc={querySelectorAll:()=>enhancedFrames,addEventListener:(name,fn)=>enhancedEvents.set(name,fn)};
+ const enhanced=create({document:enhancedDoc,i18n:enhancedI18n,fetch:async()=>({ok:true,json:async()=>enhancedManifest})});
+ assert(await enhanced.load());
+ for(const size of ['roster','library','battle','duel','detail']){
+  const html=enhanced.html('san14-person-a','曹操',{size,source:true});
+  assert(html.includes(`portrait-${size}`));assert(html.includes(`src="${enhancedPath('san14-person-a')}"`));
+  assert(html.includes('width="128" height="160"'));assert(html.includes('原版像素肖像・明暗強化'));
+ }
+ assert(enhanced.html('san14-person-b','趙雲',{source:true}).includes('新增繪製肖像・明暗強化・非史實容貌'));
+ assert(enhanced.html('historical-extra','陸抗',{source:true}).includes('width="32" height="40"'));
+ const enhancedCatalogBefore=JSON.stringify(catalog);
+ for(const officer of library)assert.equal(enhanced.personId(catalog,officer.id),officer.person_id);
+ assert.equal(JSON.stringify(catalog),enhancedCatalogBefore);
+ const hdFrame={dataset:{portraitPerson:'san14-person-a',portraitName:'曹操',portraitSource:'1'},setAttribute(key,value){this[key]=value;},innerHTML:''};
+ enhancedFrames.push(hdFrame);enhanced.refresh();
+ enhancedI18n.locale='ja';enhancedEvents.get('game-language-change')();
+ assert(hdFrame.innerHTML.includes('原作のドット肖像・陰影強化'));assert(hdFrame.innerHTML.includes('曹操の肖像'));
+ const attemptedImage=path=>({hasAttribute:key=>key==='data-portrait-image',getAttribute:key=>key==='src'?path:null,closest:()=>hdFrame});
+ enhanced.imageError({target:attemptedImage('/assets/portraits/enhanced/unrelated.png')});
+ assert(hdFrame.innerHTML.includes(enhancedPath('san14-person-a')));
+ enhanced.imageError({target:attemptedImage(enhancedPath('san14-person-a'))});
+ assert(hdFrame.innerHTML.includes(`src="${manifest.people['san14-person-a'].path}"`));
+ assert(hdFrame.innerHTML.includes('width="32" height="40"'));assert(!hdFrame.innerHTML.includes('陰影強化'));
+ assert(hdFrame.innerHTML.includes('原作のドット肖像'));assert(enhanced.html('san14-person-b','趙雲').includes(enhancedPath('san14-person-b')));
+ // A late error from the detached HD image must not mark the native fallback
+ // as failed, and a subsequent native failure should become the placeholder.
+ enhanced.imageError({target:attemptedImage(enhancedPath('san14-person-a'))});
+ assert(hdFrame.innerHTML.includes(`src="${manifest.people['san14-person-a'].path}"`));
+ enhanced.imageError({target:attemptedImage(manifest.people['san14-person-a'].path)});
+ assert(!hdFrame.innerHTML.includes('<img'));assert(hdFrame.innerHTML.includes('肖像を読み込めませんでした'));
  // A language change updates only portrait nodes, preserving unrelated inputs.
  const frame={dataset:{portraitPerson:'san14-person-b',portraitName:'趙雲',portraitSource:'1'},setAttribute(key,value){this[key]=value;},innerHTML:''};frames.push(frame);
  const untouchedInput={value:'unsaved search and cloud label'},unchanged=JSON.stringify(untouchedInput);
@@ -36,7 +86,7 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  const healthy=create({i18n,fetch:async()=>({ok:true,json:async()=>manifest})});await healthy.load();
  const elements=new Map(),element=selector=>{if(selector.startsWith('[data-')||selector==='#tactic'||selector==='#duel')return null;if(!elements.has(selector))elements.set(selector,{innerHTML:'',onclick:null});return elements.get(selector);};
  const officers={0:{health:90,loyalty:100,experience:0,troops:300,profile:{martial_strength:80,intellect:90,virtue:70}},255:{health:80,loyalty:80,experience:0,troops:300,profile:{martial_strength:95,intellect:80,virtue:85}},999:{health:70,loyalty:80,experience:0,troops:300,profile:{martial_strength:70,intellect:95,virtue:85}}};
- const context={view:{catalog,game:{player:'shu',officers,cities:{home:{id:'home',roster:{officer_ids:[0,255,999]}}},phase:'battle',rng:{state:123,draws:0}}},GamePortraits:healthy,GameI18n:i18n,escapeHtml:String,name:id=>catalog.names[id],marching:()=>new Set(),mapNavigation:null,actor:null,target:null,document:{querySelectorAll:()=>[]},$:element,cityName:String,command(){throw new Error('Rendering must not issue commands');},sourceEvidence:()=>'',virtueDescription:()=>'',showLibrary(){},openDialog(title,body){context.lastDialog={title,body};}};
+ const context={GameOfficerChoices:require('../game/officer-choice.js'),view:{catalog,game:{player:'shu',officers,cities:{home:{id:'home',roster:{officer_ids:[0,255,999]}}},phase:'battle',rng:{state:123,draws:0}}},GamePortraits:healthy,GameI18n:i18n,escapeHtml:String,name:id=>catalog.names[id],marching:()=>new Set(),mapNavigation:null,actor:null,target:null,document:{querySelectorAll:()=>[]},$:element,cityName:String,command(){throw new Error('Rendering must not issue commands');},sourceEvidence:()=>'',virtueDescription:()=>'',showLibrary(){},openDialog(title,body){context.lastDialog={title,body};}};
  vm.createContext(context);
  vm.runInContext(source.slice(source.indexOf('const portraitHtml='),source.indexOf('\nconst faction=')),context);
  vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('function renderCity(')),context);
@@ -47,5 +97,5 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  const battle={id:1,attacker:'shu',source:'home',target:'enemy',round:1,used:[],attackers:[{id:255,troops:300}],defenders:[{id:999,troops:300}],log:[]};context.view.game.battle=battle;const beforeBattle=JSON.stringify(context.view.game);context.renderBattle();assert(elements.get('#stage').innerHTML.includes('portrait-battle'));assert(elements.get('#stage').innerHTML.includes('historical-extra'));assert.equal(JSON.stringify(context.view.game),beforeBattle);
  battle.extended={duel:{actor:255,target:999,round:1,log:[]},support:{255:{health:80,energy:10},999:{health:70,energy:10}}};const beforeDuel=JSON.stringify(context.view.game);context.renderDuel(battle);assert.equal((elements.get('#stage').innerHTML.match(/portrait-duel/g)||[]).length,2);assert(elements.get('#stage').innerHTML.includes('san14-person-b'));assert(elements.get('#stage').innerHTML.includes('historical-extra'));assert.equal(JSON.stringify(context.view.game),beforeDuel);
  delete context.view.game.battle;assert.equal(JSON.stringify(context.view.game),stateBefore);
- console.log('portraits: stable IDs, original/generated provenance, single index load, native pixels, locale-only refresh, missing assets and read-only roster/profile/battle/duel views passed');
+ console.log('portraits: stable IDs, original/generated provenance, enhanced variants and native error fallback, strict paths/dimensions, single index load, locale-only refresh, missing assets and read-only roster/profile/battle/duel views passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

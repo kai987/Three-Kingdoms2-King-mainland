@@ -254,6 +254,7 @@ flex:1
 }
 .roster-table{
 width:100%;
+min-width:440px;
 border-collapse:collapse;
 table-layout:fixed;
 font-size:16px
@@ -825,12 +826,14 @@ font-size:14px
 .city-hit .castle-fill,.city-hit .castle-border{stroke:none;shape-rendering:crispEdges}
 .faction-swatch{flex:none;border:1px solid #000;image-rendering:pixelated}
 .map-bottom-bar{position:absolute;right:14px;bottom:14px;z-index:2;display:flex;align-items:stretch;gap:8px;max-width:calc(100% - 122px)}
-.map-bottom-bar .map-toolbar{position:static;flex-wrap:nowrap;max-width:none;min-width:0;flex:1}
-.map-bottom-bar .city-jump{min-width:0;flex:1;white-space:nowrap}
-.map-bottom-bar .city-jump select{min-width:0;width:100%;max-width:220px}
+.map-bottom-bar .map-toolbar{position:static;flex-wrap:nowrap;max-width:none;min-width:0;flex:1;font-size:14px}
+.map-bottom-bar .map-toolbar button{min-width:40px;min-height:32px;padding:2px 6px;font-size:14px}
+.map-bottom-bar .city-jump{min-width:0;flex:1;gap:4px;margin:0 4px;font-size:14px;white-space:nowrap}
+.map-bottom-bar .city-jump select{min-width:0;width:156px;max-width:156px;font-size:14px}
 .map-bottom-bar #map-labels{white-space:nowrap}
-.map-labels-compact{display:none}
-#map-date{display:flex;align-items:center;gap:12px;padding:3px 8px;border:4px double #000;background:var(--paper);color:#000;font:20px/1.2 var(--display);white-space:nowrap;box-shadow:0 0 0 2px var(--paper);pointer-events:none}
+.map-bottom-bar .map-labels-full{display:none}
+.map-bottom-bar .map-labels-compact{display:inline}
+#map-date{display:flex;align-items:center;gap:6px;padding:3px 6px;border:4px double #000;background:var(--paper);color:#000;font:18px/1.2 var(--display);white-space:nowrap;box-shadow:0 0 0 2px var(--paper);pointer-events:none}
 .map-action-prompt{position:absolute;left:8px;right:8px;top:8px;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 8px;border:3px double #000;background:var(--paper);color:#000;font-size:16px}
 .map-action-prompt button{flex:none;min-height:32px;padding:2px 8px;font-size:16px}
 #world-map .city-hit.action-target .city-outline{fill:#fff3;stroke:#ffff80;stroke-width:4;stroke-dasharray:none;filter:drop-shadow(0 0 2px #000)}
@@ -840,6 +843,7 @@ font-size:14px
  .map-bottom-bar{left:8px;right:8px;bottom:56px;max-width:none;gap:4px}
  .map-bottom-bar .map-toolbar button{min-width:28px;min-height:32px;padding:2px 4px;font-size:12px}
  .map-bottom-bar .city-jump,.map-bottom-bar .city-jump select{font-size:12px}
+ .map-bottom-bar .city-jump select{width:100%}
  .map-bottom-bar .city-jump{min-width:82px}
  .map-labels-full{display:none}
  .map-labels-compact{display:inline}
@@ -866,7 +870,7 @@ stroke-dasharray:7 3
 .city-information{display:grid;gap:12px}
 .city-information p{margin:0}
 .city-information .roster-scroll{max-height:260px;flex:none}
-.coastal-lane{fill:none;stroke:#f8d878;stroke-width:2.4;stroke-dasharray:9 7;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.coastal-lane{fill:none;stroke:#f8d878;stroke-width:2.4;stroke-dasharray:9 7;stroke-linecap:round;stroke-linejoin:round;filter:none;pointer-events:none}
 .travel-estimate{border:2px solid #000;padding:10px;font-size:16px;line-height:1.55}
 .route-risks{border-left:4px solid #000;padding:0 0 0 10px;margin:12px 0;font-size:15px;line-height:1.55}
 .route-risks p{margin:6px 0}

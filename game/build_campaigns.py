@@ -10,7 +10,14 @@ from pathlib import Path
 import argparse
 import json
 import re
+import sys
 from math import asin, ceil, cos, radians, sin, sqrt
+from hashlib import sha256
+
+# Support both the CLI and callers loading this builder by absolute file path.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from route_timing import apply_route_timing
+from officer_stat_sources import validate_original_virtue
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'game/config/campaigns'
@@ -89,13 +96,24 @@ def apply_navigation_sources(data, navigation):
         data['regional_roads'].append(deepcopy(corridor))
 
 
-def load_sources():
+def load_sources(*, timing=True):
     navigation = read('game/config/navigation-geometry.json')
     if navigation.get('schema') != 'sea-mask-navigation-geometry-v1':
         raise ValueError('Unknown navigation geometry source')
+    geometry = read('game/config/route-geometry.json') if timing else None
+    geometry_sha256 = sha256((ROOT/'game/config/route-geometry.json').read_bytes()
+                            + (ROOT/'game/route_timing.py').read_bytes()).hexdigest() if timing else None
+    if timing:
+        for name, expected in geometry['sources'].items():
+            if sha256((ROOT/name).read_bytes()).hexdigest() != expected:
+                raise ValueError('Rendered timing geometry source differs: ' + name)
     index = json.loads((SOURCE / 'index.json').read_text(encoding='utf-8'))
     people = json.loads((SOURCE / 'people.json').read_text(encoding='utf-8'))
     shared = json.loads((SOURCE / 'shared.json').read_text(encoding='utf-8'))
+    original_stats = read('game/config/references/original-officer-stats.json')
+    original_identities = read('game/config/portrait-identity-map.json')
+    if sha256((ROOT/'game/config/portrait-identity-map.json').read_bytes()).hexdigest() != original_stats['identity_source_sha256']:
+        raise ValueError('Original officer identity source differs')
     if index.get('schema') != 'tk2-campaign-sources-v1' or people.get('schema') != 'tk2-campaign-people-v1' or shared.get('schema') != 'tk2-campaign-shared-v1':
         raise ValueError('Unknown canonical campaign source schema')
     order, persons = people['order'], people['people']
@@ -118,8 +136,11 @@ def load_sources():
         current_people = apply_patch(persons, source.get('people_overrides', {}))
         if set(current_people) != set(order):
             raise ValueError('A campaign may not add or remove canonical person identities')
+        validate_original_virtue(current_people, original_stats, original_identities)
         data['people'] = [current_people[pid] for pid in order]
         apply_navigation_sources(data, navigation)
+        if timing:
+            apply_route_timing(data, geometry, geometry_sha256)
         expected_id = f'mainland{data["start_year"]}-{data["start_month"]:02d}'
         if data.get('schema') != 'tk2-campaign-v1' or data.get('id') != expected_id or data['id'] != entry['id'] or data['id'] in seen_ids:
             raise ValueError('Invalid or duplicate playable campaign identity')

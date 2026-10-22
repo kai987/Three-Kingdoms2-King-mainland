@@ -11792,5 +11792,285 @@
       "stroke": "#e9bf7a",
       "width": 2.8
     }
+  ],
+  "corridor_repairs": [
+    {
+      "id": "dongping-changyi",
+      "cities": [
+        "dongping",
+        "shanyang"
+      ],
+      "reason": "One north-south trunk and shared west junction replace parallel spokes and the eastern return loop. The Donghai approach leaves Changyi from its center.",
+      "strokes": [
+        {
+          "index": 201,
+          "points": [
+            [
+              881,
+              308
+            ],
+            [
+              887,
+              299
+            ],
+            [
+              895,
+              293
+            ],
+            [
+              904.5,
+              289
+            ]
+          ],
+          "radius": 6
+        },
+        {
+          "index": 212,
+          "points": [
+            [
+              904.5,
+              289
+            ],
+            [
+              917,
+              290
+            ]
+          ],
+          "radius": 6
+        },
+        {
+          "index": 213,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 221,
+          "points": [
+            [
+              917,
+              306
+            ],
+            [
+              921,
+              316
+            ],
+            [
+              944,
+              322
+            ],
+            [
+              958.5,
+              323
+            ]
+          ],
+          "radius": 7
+        },
+        {
+          "index": 222,
+          "points": [
+            [
+              920,
+              265
+            ],
+            [
+              917,
+              280
+            ],
+            [
+              917,
+              290
+            ]
+          ],
+          "radius": 7
+        },
+        {
+          "index": 223,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 224,
+          "points": [
+            [
+              917,
+              290
+            ],
+            [
+              917,
+              306
+            ]
+          ],
+          "radius": 0
+        },
+        {
+          "index": 229,
+          "points": [],
+          "radius": 0
+        }
+      ]
+    },
+    {
+      "id": "jinan-linzi",
+      "cities": [
+        "jinan",
+        "qi"
+      ],
+      "reason": "Jinan and the southwestern approach share one final entry into Linzi. Each shared section is painted once; the old Jinan scribble and parallel northern entry are removed.",
+      "strokes": [
+        {
+          "index": 237,
+          "points": [
+            [
+              934,
+              254
+            ],
+            [
+              954,
+              244
+            ],
+            [
+              968,
+              230
+            ],
+            [
+              980.5,
+              222.5
+            ],
+            [
+              992,
+              215
+            ],
+            [
+              1014,
+              213
+            ]
+          ],
+          "radius": 7
+        },
+        {
+          "index": 238,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 247,
+          "points": [
+            [
+              970,
+              214
+            ],
+            [
+              975,
+              219
+            ],
+            [
+              980.5,
+              222.5
+            ]
+          ],
+          "radius": 5
+        }
+      ]
+    },
+    {
+      "id": "shanggu-ji",
+      "cities": [
+        "shanggu",
+        "yan"
+      ],
+      "reason": "Remove the western hairpin and parallel southbound branch, retaining one valley route and one shared southern bypass to Yuyang.",
+      "strokes": [
+        {
+          "index": 183,
+          "points": [
+            [
+              840.5,
+              73
+            ],
+            [
+              850,
+              69
+            ],
+            [
+              862,
+              68
+            ]
+          ],
+          "radius": 6
+        },
+        {
+          "index": 184,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 193,
+          "points": [
+            [
+              862,
+              68
+            ],
+            [
+              868,
+              82
+            ],
+            [
+              880,
+              90
+            ],
+            [
+              888,
+              100
+            ]
+          ],
+          "radius": 7
+        },
+        {
+          "index": 202,
+          "points": [
+            [
+              874,
+              112
+            ],
+            [
+              888,
+              100
+            ]
+          ],
+          "radius": 0
+        },
+        {
+          "index": 215,
+          "points": [
+            [
+              905,
+              108.5
+            ],
+            [
+              918,
+              110
+            ],
+            [
+              929,
+              105
+            ]
+          ],
+          "radius": 6
+        },
+        {
+          "index": 220,
+          "points": [],
+          "radius": 0
+        }
+      ]
+    }
+  ],
+  "erased_access_paths": [
+    {
+      "id": "jiaozhi-obsolete-port-approach",
+      "city": "jiaozhi",
+      "d": "M387 853L438 858Q438 858 438 858L448 858Q448 858 448 858L452 862Q452 862 452 862L452 874",
+      "reason": "Remove the historical baked direct harbour spur; the current approach shares the JiaoZhi–Yulin northern trunk before branching toward the same port."
+    }
   ]
 }

@@ -1,0 +1,63 @@
+{
+  "schema": "tk2-portrait-flat-crown-sample-v1",
+  "person_id": "san14-candidate-0440",
+  "runtime_id": 439,
+  "name": "諸葛亮",
+  "baseline": {
+    "path": "../zhuge-liang-preserved-v4/portrait-128x160.png",
+    "sha256": "0ca300923c89872b7bbb2627ea102c0cfd61b52436a748025aa5ad64e8f89372",
+    "preserved": true
+  },
+  "source": {
+    "path": "generation-source.png",
+    "sha256": "488fbcdbce82fe3456b6c66993fab232645e84ca9f6158d2bff98462a910ddb7",
+    "prompt": "prompt.txt",
+    "method": "built-in image_gen"
+  },
+  "output": {
+    "path": "portrait-128x160.png",
+    "sha256": "9df3763bab9eca304aefc981e5510b4092e85ed4860e1d3196d0e336dc4229fb"
+  },
+  "proof": {
+    "size": [
+      128,
+      160
+    ],
+    "editedRects": [
+      {
+        "x": 36,
+        "y": 8,
+        "width": 8,
+        "height": 5
+      },
+      {
+        "x": 52,
+        "y": 8,
+        "width": 8,
+        "height": 5
+      },
+      {
+        "x": 68,
+        "y": 8,
+        "width": 8,
+        "height": 5
+      },
+      {
+        "x": 84,
+        "y": 8,
+        "width": 8,
+        "height": 5
+      }
+    ],
+    "changedPixels": 69,
+    "changedOutsideTipRects": 0,
+    "allFourTipTopsFlat": true,
+    "allFourTopEdgesAtY": 8,
+    "faceAndRemainingPortraitExact": true,
+    "pngRoundtripExact": true,
+    "editSource": "built-in image_gen with restricted pixel composite"
+  },
+  "originalPreserved": true,
+  "formalGameIdentityMapUnchanged": true,
+  "sampleOnly": true
+}

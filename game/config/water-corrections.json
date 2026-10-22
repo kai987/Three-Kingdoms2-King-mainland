@@ -1,0 +1,110 @@
+{
+  "schema": "tk2-water-corrections-v1",
+  "size": [
+    1352,
+    1024
+  ],
+  "sources": {
+    "game/map-source/road-ground.png": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
+    "game/map-source/terrain-under-water.png": "e0bdfc8406f8ddf6285fdc9cdf929ec2a3ee406600bc403c6d050d22ab0a555c",
+    "game/map-source/historic-water.svg": "ba7311fe9c17ce6a4f4d8cdb1f11668ee492cd3d29f41e49df55d0ce986e3eae",
+    "game/map-source/sea-shadow.svg": "207a066255705a6f080ed9196cd75911d7bc16f37dd3a455ad061a5740130f58"
+  },
+  "provenance": {
+    "scene_sha256": "bf3684b48772332a1dd8084cb0f33c61cbe034e5d4642b13ae648682aa6233d1",
+    "policy": "Promoted local source layers, no historical files required for rebuild. Existing mountains and untouched river sections are preserved."
+  },
+  "wei": {
+    "replace_from_x": 528,
+    "points": [
+      [
+        528,
+        318
+      ],
+      [
+        548,
+        320
+      ],
+      [
+        570,
+        322
+      ],
+      [
+        600,
+        324
+      ],
+      [
+        620,
+        326
+      ],
+      [
+        639,
+        326
+      ]
+    ],
+    "junction": [
+      639,
+      326
+    ],
+    "width": 4,
+    "pixel": 2,
+    "color": "#2145ff"
+  },
+  "mouths": [
+    {
+      "river": "yellow",
+      "shore": [
+        1064,
+        179
+      ],
+      "outward": [
+        1,
+        0
+      ]
+    },
+    {
+      "river": "yangtze",
+      "shore": [
+        1147,
+        426
+      ],
+      "outward": [
+        25,
+        5
+      ]
+    },
+    {
+      "river": "huai",
+      "shore": [
+        1117,
+        358
+      ],
+      "outward": [
+        1,
+        0
+      ]
+    },
+    {
+      "river": "pearl",
+      "shore": [
+        813,
+        814
+      ],
+      "outward": [
+        45,
+        8
+      ]
+    },
+    {
+      "river": "red",
+      "shore": [
+        414,
+        901
+      ],
+      "outward": [
+        40,
+        12
+      ]
+    }
+  ]
+}

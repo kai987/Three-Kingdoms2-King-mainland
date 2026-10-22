@@ -1,0 +1,21 @@
+{
+  "schema": "tk2-portrait-enhancement-verification-v1",
+  "people": 1023,
+  "uniqueEnhancedImages": 982,
+  "approvedReferencePeople": 1,
+  "oldPortraitFilesRetained": 1040,
+  "originalSourceAtlasesRetained": 13,
+  "allSourceHashesMatch": true,
+  "allPersonBindingsMatch": true,
+  "allDimensions": [
+    128,
+    160
+  ],
+  "allNonReferenceInkAndAlphaMasksMatch": true,
+  "allNonReferencePalettesAtMost16Colors": true,
+  "protectedInkPixelsCompared": 11505111,
+  "totalEnhancedPixelsCompared": 3530903,
+  "allPublishedFileAndRgbaHashesMatch": true,
+  "unexpectedFiles": 0,
+  "scope": "Per-file automatic source, identity-mask, dimensions and hash audit; visual quality reviewed separately"
+}

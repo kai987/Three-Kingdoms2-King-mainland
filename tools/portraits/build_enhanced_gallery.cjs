@@ -1,0 +1,82 @@
+#!/usr/bin/env node
+'use strict';
+// Read-only source audit and a self-contained, locally browsable art gallery.
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const {pathToFileURL}=require('node:url');
+const {decodePng,encodePng}=require('./prepare_enhanced.cjs');
+const ROOT=path.resolve(__dirname,'../..'),WORK=path.join(ROOT,'art/portraits/enhancement-v1'),PREVIEWS=path.join(WORK,'previews');
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex'),read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
+const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function traditionalConverter(){
+ const stages=read(path.join(ROOT,'game/locales/zh-hant.json')).stages.map(stage=>{
+  const root=new Map();for(const[source,target]of Object.entries(stage.phrases||{})){let node=root;for(const ch of source){if(!node.has(ch))node.set(ch,new Map());node=node.get(ch);}node.value=target;}
+  return{root,characters:stage.characters||{}};
+ });
+ return value=>{let result=String(value);for(const stage of stages){let out='';for(let i=0;i<result.length;){let node=stage.root,last=null,end=i;for(let j=i;j<result.length;){const ch=String.fromCodePoint(result.codePointAt(j));if(!node.has(ch))break;node=node.get(ch);j+=ch.length;if(node.value!==undefined){last=node.value;end=j;}}if(last!==null){out+=last;i=end;}else{const ch=String.fromCodePoint(result.codePointAt(i));out+=stage.characters[ch]??ch;i+=ch.length;}}result=out;}return result;};
+}
+async function build(){
+ const plan=read(path.join(WORK,'plan.json'));assert.equal(plan.schema,'tk2-portrait-enhancement-plan-v1');assert.equal(Object.keys(plan.people).length,1023);
+ const tc=traditionalConverter(),groups=new Map(plan.groups.map(g=>[g.id,g])),completed=new Map(),batches=[];
+ const loaded=new Map(),sourceChecks=new Map();
+ function image(file,hash,size){
+  if(!loaded.has(file)){const bytes=fs.readFileSync(file),decoded=decodePng(bytes);loaded.set(file,{bytes,...decoded});}
+  const item=loaded.get(file);if(hash&&sha(item.bytes)!==hash)throw Error('Portrait hash mismatch:'+file);
+  if(size&&(item.width!==size[0]||item.height!==size[1]))throw Error('Portrait dimensions mismatch:'+file);return item;
+ }
+ function assetFile(asset){if(!/^\/assets\/portraits\/(?:original|generated|enhanced)\/[A-Za-z0-9_-]+\.png$/.test(asset))throw Error('Invalid gallery asset path');return path.join(ROOT,'game',asset);}
+ for(const atlas of plan.atlases){
+  const file=path.join(WORK,'processed',atlas.id+'.json');if(!fs.existsSync(file))continue;
+  let batch;try{batch=read(file);}catch{console.warn('Batch metadata still being written: '+atlas.id);continue;}
+  assert.equal(batch.schema,'tk2-portrait-enhancement-batch-v1');assert.equal(batch.atlas_id,atlas.id);
+  const expected=atlas.groups.flatMap(id=>groups.get(id).person_ids).sort();assert.deepEqual(Object.keys(batch.people).sort(),expected);
+  for(const[id,row]of Object.entries(batch.people)){
+   const person=plan.people[id];if(!person||completed.has(id)||row.path!=='/assets/portraits/enhanced/'+id+'.png'||row.source_path!==person.source_path||row.source_sha256!==person.source_sha256)throw Error('Gallery identity mismatch:'+id);
+   const file=assetFile(row.path),decoded=image(file,row.sha256,[128,160]);if(sha(decoded.rgba)!==row.pixel_sha256)throw Error('Gallery pixel hash mismatch:'+id);
+   completed.set(id,{file,row,approved:false});
+  }
+  batches.push(atlas);
+ }
+ const referenceFile=path.join(ROOT,plan.approved_reference.path),reference=image(referenceFile,plan.approved_reference.sha256,[128,160]);
+ for(const group of plan.groups.filter(g=>g.approved_reference))for(const id of group.person_ids){
+  const file=assetFile('/assets/portraits/enhanced/'+id+'.png'),exists=fs.existsSync(file);
+  if(exists)image(file,plan.approved_reference.sha256,[128,160]);
+  completed.set(id,{file:exists?file:referenceFile,row:{sha256:plan.approved_reference.sha256,pixel_sha256:sha(reference.rgba)},approved:true});
+ }
+ const relative=(folder,file)=>path.relative(folder,file).split(path.sep).join('/');
+ const people=Object.entries(plan.people).map(([id,p])=>{
+  const old=assetFile(p.source_path),original=image(old,p.source_sha256,[32,40]);sourceChecks.set(old,p.source_sha256);
+  if(sha(original.rgba)!==p.source_rgba_sha256)throw Error('Original portrait pixel hash mismatch:'+id);
+  const done=completed.get(id);
+  return{id,name:tc(p.name),originalName:p.name,runtimeId:p.runtime_id,kind:p.kind,old:relative(WORK,old),new:done?relative(WORK,done.file):null,approved:!!done?.approved,ready:!!done};
+ }).sort((a,b)=>a.runtimeId-b.runtimeId||(a.id<b.id?-1:1));
+ fs.mkdirSync(PREVIEWS,{recursive:true});
+ // Final-image batch previews preserve exact tile geometry and black backing.
+ for(const atlas of batches){
+  const rgba=Buffer.alloc(1024*1280*4);for(let at=3;at<rgba.length;at+=4)rgba[at]=255;
+  for(const groupId of atlas.groups){const group=groups.get(groupId),done=completed.get(group.representative);if(!done)throw Error('Missing completed group');const portrait=image(done.file).rgba,left=group.cell_index%8*128,top=Math.floor(group.cell_index/8)*160;
+   for(let y=0;y<160;y++)for(let x=0;x<128;x++){const from=(y*128+x)*4,to=((top+y)*1024+left+x)*4;if(portrait[from+3]){rgba[to]=portrait[from];rgba[to+1]=portrait[from+1];rgba[to+2]=portrait[from+2];}}
+  }
+  fs.writeFileSync(path.join(PREVIEWS,atlas.id+'.png'),encodePng(1024,1280,rgba));
+ }
+ const counts={total:people.length,completed:completed.size,pending:people.length-completed.size,nes_original:people.filter(p=>p.kind==='nes_original').length,generated:people.filter(p=>p.kind==='generated').length,completedBatches:batches.length,totalBatches:plan.atlases.length};
+ const stats=`<div class="stat"><strong>${counts.completed} / ${counts.total}</strong><span>肖像已完成</span></div><div class="stat"><strong>${counts.nes_original}</strong><span>原版來源武將</span></div><div class="stat"><strong>${counts.generated}</strong><span>新增來源武將</span></div><div class="stat"><strong>${counts.completedBatches} / ${counts.totalBatches}</strong><span>批次已完成</span></div>`;
+ const data=JSON.stringify({counts,people}).replace(/</g,'\\u003c');
+ const html=`<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>武將肖像・128×160強化版圖鑑</title><style>
+*{box-sizing:border-box}body{margin:0;background:#101010;color:#000;font-family:"PingFang TC","Noto Sans TC",system-ui,sans-serif;padding:24px}main{max-width:1180px;margin:auto;background:#ffd5cb;border:6px double #000;outline:3px solid #ffd5cb;padding:24px}h1{font-size:30px;line-height:1.3;margin:0 0 12px}.intro{font-size:16px;line-height:1.8;margin:0 0 18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:3px solid #000;border-bottom:3px solid #000;margin:16px 0}.stat{padding:14px 10px}.stat strong{display:block;font-size:25px}.stat span{font-size:14px}.progress{height:12px;background:#000}.progress span{display:block;height:100%;background:#f7a247}.links{display:flex;flex-wrap:wrap;gap:10px 20px;margin:18px 0;font-size:15px}a{color:#000;text-underline-offset:3px}.controls{position:sticky;top:0;z-index:3;display:grid;grid-template-columns:minmax(200px,2fr) 1fr 1fr auto;gap:10px;background:#ffd5cb;border:3px solid #000;padding:14px;margin:22px 0 12px}label{font-size:14px;display:flex;flex-direction:column;gap:6px}input,select,button{font:inherit;font-size:16px;color:#000;background:#fff7f3;border:2px solid #000;border-radius:0;min-height:44px;max-width:100%;padding:8px}button{background:#000;color:#ffd5cb;align-self:end;cursor:pointer}input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #9e4100;outline-offset:3px}#visible-count{font-size:15px;margin:14px 0}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:16px}.card{border-top:3px solid #000;padding:16px 12px 20px;content-visibility:auto;contain-intrinsic-size:auto 300px}.card h2{font-size:22px;margin:0 0 6px}.metadata{font-size:12px;line-height:1.6;overflow-wrap:anywhere}.badge{display:inline-block;border:1px solid #000;padding:2px 6px;font-size:12px;margin:8px 5px 10px 0}.badge.done{background:#000;color:#ffd5cb}.pair{display:grid;grid-template-columns:128px 128px;gap:12px;justify-content:center;margin-top:6px}figure{margin:0;text-align:center}figcaption{font-size:13px;line-height:1.4;margin-top:8px}.frame{display:block;box-sizing:content-box;width:128px;height:160px;background:#000;border:2px solid #000}.frame img{display:block;width:128px;height:160px;object-fit:contain;image-rendering:pixelated;image-rendering:crisp-edges}.pending{display:flex;align-items:center;justify-content:center;color:#ffd5cb;font-size:15px;line-height:1.8}#empty{border:2px solid #000;padding:28px;text-align:center}details{border-top:2px solid #000;margin-top:26px;padding-top:14px}summary{cursor:pointer;font-size:17px}.atlas-list{display:flex;gap:12px 20px;flex-wrap:wrap;padding:16px 0}footer{margin-top:25px;border-top:2px solid #000;padding-top:16px;font-size:14px;line-height:1.8}[hidden]{display:none!important}@media(max-width:800px){main{padding:18px}.controls{grid-template-columns:1fr 1fr}.search{grid-column:1/-1}.stats{grid-template-columns:1fr 1fr}.stat{padding:10px}.stat strong{font-size:22px}h1{font-size:26px}}@media(max-width:450px){body{padding:12px}main{padding:14px}h1{font-size:23px}.intro{font-size:14px}.controls{padding:10px;gap:8px}.card{padding:14px 0 20px}.pair{gap:10px}input,select,button{font-size:14px}.stat span{font-size:12px}}
+</style><main><h1>武將肖像・128×160強化版圖鑑</h1><p class="intro">以確認後的諸葛亮畫像為標準，保留人物輪廓、五官與冠帽結構，增加像素明暗。<br>每位武將都以相同人物ID綁定；原圖完整保留。左右均以128×160顯示，方便比較。</p><div class="stats">${stats}</div><div class="progress" role="progressbar" aria-label="肖像完成進度" aria-valuemin="0" aria-valuemax="${counts.total}" aria-valuenow="${counts.completed}"><span style="width:${counts.completed/counts.total*100}%"></span></div><div class="links"><a href="previews/comparison.png">查看主要武將比較圖</a><a href="#gallery" id="approved-link">查看諸葛亮確認版本</a></div><div class="controls"><label class="search" for="q">搜尋武將姓名／人物ID<input id="q" type="search" placeholder="例如：諸葛亮、诸葛亮、0440" autocomplete="off"></label><label for="kind">肖像來源<select id="kind"><option value="all">全部來源</option><option value="nes_original">原版來源</option><option value="generated">新增來源</option></select></label><label for="status">製作進度<select id="status"><option value="all">全部進度</option><option value="done">已完成</option><option value="pending">待製作</option></select></label><button id="reset" type="button">重設篩選</button></div><p id="visible-count" aria-live="polite"></p><div id="gallery" class="gallery"></div><p id="empty" hidden>找不到符合條件的武將。</p><details><summary>已完成批次預覽（${batches.length}／${plan.atlases.length}）</summary><div class="atlas-list">${batches.map(a=>`<a href="previews/${escape(a.id)}.png">${escape(a.id)}・${a.groups.length}幅</a>`).join('')||'批次製作中，確認版本已可查看。'}</div></details><footer>原圖32×40；強化圖128×160。新增肖像屬於遊戲美術，並不主張為史實容貌。<br>本頁反映生成圖鑑時已驗證的完成數；批次完成後重新生成即可更新。諸葛亮確認樣稿已計入完成數。</footer></main><script id="data" type="application/json">${data}</script><script>
+(()=>{'use strict';const data=JSON.parse(document.querySelector('#data').textContent),gallery=document.querySelector('#gallery'),q=document.querySelector('#q'),kind=document.querySelector('#kind'),status=document.querySelector('#status');const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const cards=[];for(const p of data.people){const card=document.createElement('article');card.className='card';card.dataset.personId=p.id;card.innerHTML='<h2>'+escape(p.name)+'</h2><div class="metadata">'+escape(p.id)+'<br>遊戲ID：'+p.runtimeId+'</div><span class="badge">'+(p.kind==='nes_original'?'原版來源':'新增來源')+'</span><span class="badge '+(p.ready?'done':'')+'">'+(p.approved?'已確認樣稿':p.ready?'已完成':'待製作')+'</span><div class="pair"><figure><span class="frame"><img src="'+escape(p.old)+'" width="32" height="40" alt="'+escape(p.name)+'原圖" loading="lazy" decoding="async"></span><figcaption>原圖・32×40</figcaption></figure><figure>'+(p.ready?'<span class="frame"><img src="'+escape(p.new)+'" width="128" height="160" alt="'+escape(p.name)+'強化肖像" loading="lazy" decoding="async"></span>':'<span class="frame pending">尚待製作</span>')+'<figcaption>強化・128×160</figcaption></figure></div>';gallery.append(card);cards.push({p,card,search:[p.name,p.originalName,p.id,String(p.runtimeId)].join(' ').toLowerCase()});}function filter(){const term=q.value.trim().toLowerCase();let visible=0;for(const item of cards){const show=(!term||item.search.includes(term))&&(kind.value==='all'||kind.value===item.p.kind)&&(status.value==='all'||(status.value==='done')===item.p.ready);item.card.hidden=!show;visible+=Number(show);}document.querySelector('#visible-count').textContent='顯示 '+visible+' 名／'+data.counts.total+' 名';document.querySelector('#empty').hidden=visible!==0;window.galleryVisible=visible;}q.addEventListener('input',filter);kind.addEventListener('change',filter);status.addEventListener('change',filter);document.querySelector('#reset').onclick=()=>{q.value='';kind.value='all';status.value='all';filter();q.focus();};document.querySelector('#approved-link').onclick=()=>{q.value='san14-candidate-0440';kind.value='all';status.value='all';filter();};filter();window.galleryData=data;window.galleryReady=true;})();
+</script></html>`;
+ fs.writeFileSync(path.join(WORK,'index.html'),html);
+ const keys=['曹操','刘备','孙权','诸葛亮','关羽','赵云','张飞','貂蝉'];
+ const featured=keys.map(name=>people.find(p=>p.originalName===name)).filter(Boolean);
+ const comparisonHtml=`<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>主要武將肖像比較</title><style>*{box-sizing:border-box}body{margin:0;padding:24px;background:#101010;color:#000;font-family:"PingFang TC",system-ui,sans-serif}main{background:#ffd5cb;border:6px double #000;outline:3px solid #ffd5cb;padding:24px}h1{font-size:28px;margin:0 0 10px}.intro{font-size:16px;line-height:1.6;margin-bottom:22px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px 16px}.card{border-top:2px solid #000;padding-top:14px;text-align:center}h2{font-size:22px;margin:0 0 10px}.pair{display:flex;justify-content:center;gap:10px}figure{margin:0}img,.pending{display:block;box-sizing:content-box;width:128px;height:160px;border:2px solid #000;background:#000;image-rendering:pixelated}.pending{display:flex;justify-content:center;align-items:center;color:#ffd5cb;font-size:16px}figcaption{font-size:13px;margin-top:7px}.note{font-size:13px;margin:8px 0 0}</style><main><h1>主要武將・原圖與強化肖像</h1><p class="intro">左：原圖32×40；右：強化128×160。兩側均以128×160顯示。<br>圖鑑已完成${counts.completed}／${counts.total}名；原圖完整保留。</p><div class="grid">${featured.map(p=>`<section class="card"><h2>${escape(p.name)}</h2><div class="pair"><figure><img src="${escape(relative(PREVIEWS,path.resolve(WORK,p.old)))}" alt="${escape(p.name)}原圖"><figcaption>原圖</figcaption></figure><figure>${p.ready?`<img src="${escape(relative(PREVIEWS,path.resolve(WORK,p.new)))}" alt="${escape(p.name)}強化版">`:'<span class="pending">尚待製作</span>'}<figcaption>強化版</figcaption></figure></div><p class="note">${p.approved?'已確認樣稿':p.ready?'已完成':'待製作'}</p></section>`).join('')}</div></main></html>`;
+ const comparisonFile=path.join(PREVIEWS,'comparison.html');fs.writeFileSync(comparisonFile,comparisonHtml);
+ const{chromium}=require('playwright'),browser=await chromium.launch({channel:'chrome',headless:true});try{
+  const page=await browser.newPage({viewport:{width:1260,height:800},deviceScaleFactor:1});await page.goto(pathToFileURL(comparisonFile).href);
+  await page.evaluate(async()=>Promise.all([...document.images].map(i=>i.decode())));await page.screenshot({path:path.join(PREVIEWS,'comparison.png'),fullPage:true});
+ }finally{await browser.close();}
+ for(const[file,hash]of sourceChecks)if(sha(fs.readFileSync(file))!==hash)throw Error('Original changed during gallery build');
+ return{gallery:path.relative(ROOT,path.join(WORK,'index.html')),comparison:path.relative(ROOT,path.join(PREVIEWS,'comparison.png')),counts,featured:featured.map(p=>({id:p.id,name:p.name,ready:p.ready}))};
+}
+module.exports={build};
+if(require.main===module)build().then(result=>console.log(JSON.stringify(result,null,2))).catch(error=>{console.error(error);process.exitCode=1;});

@@ -31,7 +31,8 @@ def road_center_corrections(root, approved):
     hashes = dict(source_sha256=hash_bytes(source_bytes), positions_sha256=hash_bytes(position_bytes),
         baseline_sha256=hash_bytes((here / 'assets/map-navigation.png').read_bytes()),
         ground_sha256=hash_bytes((here / 'map-source/road-ground.png').read_bytes()),
-        output_sha256=hash_bytes((here / 'assets/map-road-centers.png').read_bytes()))
+        output_sha256=hash_bytes((here / 'assets/map-road-centers.png').read_bytes()),
+        water_render_sha256=hash_bytes((here / 'map-source/water-render.json').read_bytes()))
     for field, expected in hashes.items():
         if manifest.get(field) != expected:
             raise ValueError('Road-center render does not match current ' + field)
@@ -39,6 +40,20 @@ def road_center_corrections(root, approved):
         raise ValueError('Road ground differs from reviewed source')
     if approved.get('map-navigation.png') != hashes['baseline_sha256'] or approved.get('map-road-centers.png') != hashes['output_sha256']:
         raise ValueError('Road-center raster differs from approved map pins')
+    water = json.loads((here / 'map-source/water-render.json').read_bytes())
+    water_config = here / 'config/water-corrections.json'
+    inputs = {'game/map-source/road-ground.png', 'game/map-source/terrain-under-water.png',
+              'game/map-source/historic-water.svg', 'game/map-source/sea-shadow.svg'}
+    if (water.get('schema') != 'tk2-water-render-v1'
+            or water.get('config_sha256') != hash_bytes(water_config.read_bytes())
+            or set(water.get('sources', {})) != inputs):
+        raise ValueError('Water render configuration differs from current source')
+    for name, expected in water['sources'].items():
+        if hash_bytes((root / name).read_bytes()) != expected:
+            raise ValueError('Water render source differs: ' + name)
+    if (water['output']['path'] != 'game/map-source/hydrology-ground.png'
+            or hash_bytes((here / 'map-source/hydrology-ground.png').read_bytes()) != water['output']['sha256']):
+        raise ValueError('Water render ground differs from current source')
     geometry = build_road_centers(source, positions)
     return dict(schema='tk2-road-center-corrections-v1',
         backgrounds={'/assets/map-navigation.png': '/assets/map-road-centers.png'},
@@ -69,6 +84,26 @@ def build():
     if result['background_sha256'] != source['approved_asset_sha256']['map-basin.png'] or result['campaign_background_sha256'] != source['approved_asset_sha256']['map-campaign.png']:
         raise ValueError('Presentation refers to different map pixels')
     result['road_center_corrections'] = road_center_corrections(ROOT, source['approved_asset_sha256'])
+    bridges_path = ROOT / 'game/assets/map-bridges.json'
+    if bridges_path.exists():
+        bridges = json.loads(bridges_path.read_bytes())
+        if bridges.get('schema') != 'tk2-map-bridges-v1':
+            raise ValueError('Unknown road bridge presentation schema')
+        if hashlib.sha256((ROOT / 'game/build_map_bridges.cjs').read_bytes()).hexdigest() != bridges['sources']['compiler_sha256']:
+            raise ValueError('Road bridges do not match current bridge compiler')
+        ground = bridges['sources']['ground']
+        if ground['path'] != 'game/map-source/hydrology-ground.png' or hashlib.sha256((ROOT / ground['path']).read_bytes()).hexdigest() != ground['sha256']:
+            raise ValueError('Road bridges do not match current river ground')
+        if hashlib.sha256((ROOT / 'game/config/road-centers.json').read_bytes()).hexdigest() != bridges['sources']['road_geometry_sha256']:
+            raise ValueError('Road bridges do not match current road geometry')
+        app_source = (ROOT / 'game/app.js').read_text()
+        path_source = app_source[app_source.index('function smoothMapPath('):app_source.index('function mapBackgroundHref(')]
+        if hashlib.sha256(path_source.encode()).hexdigest() != bridges['sources']['land_path_sha256']:
+            raise ValueError('Road bridges do not match rendered land paths')
+        for name, expected in bridges['sources']['catalogs'].items():
+            if not name.startswith('game/data/campaigns/') or Path(name).name != name.removeprefix('game/data/campaigns/') or hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != expected:
+                raise ValueError('Road bridges do not match campaign paths')
+        result['road_bridges'] = bridges
     (ROOT / 'game/assets/map-presentation.json').write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     return result
 

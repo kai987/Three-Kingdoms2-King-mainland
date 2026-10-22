@@ -12,8 +12,10 @@ python3 -I -S -B game/serve.py --port 8878
 - [操作、存檔與規則](game/README.md)
 - [目前 AI 與事件畫面](docs/ai-and-events.md)
 - [武將歸城與登場統計](docs/officer-placement-audit.md)
+- [原版德、SAN14能力與經驗欄位來源](docs/officer-attribute-sources.md)
 - [雲端帳號存檔](docs/cloud-save-options.md)
 - [原版像素肖像與來源](docs/officer-portraits.md)
+- [128×160肖像強化、原圖保留與檢查](docs/portrait-enhancement.md) · [1,023人原圖／新版對照](art/portraits/enhancement-v1/index.html)
 - [特殊道路、季風與減員](docs/hazardous-travel.md)
 - [Rust／WASM 行軍核心](docs/marching-rust-wasm.md)
 

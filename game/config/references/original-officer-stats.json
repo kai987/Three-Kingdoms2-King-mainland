@@ -1,0 +1,4105 @@
+{
+  "schema": "tk2-original-officer-stats-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "record_offset": 139280,
+  "record_size": 12,
+  "field_policy": "Only original virtue is applied; SAN14 martial/intellect and remake health/affinity/initialization remain unchanged.",
+  "identity_source": "game/config/portrait-identity-map.json",
+  "identity_source_sha256": "43331b4e5762a213ebcb514a39ff1f5a88e5d824344c4fff387563a1b0b78ada",
+  "identity_policy": "Reviewed ROM name-glyph transcription and unique exact name/orthographic identity; no likeness, statistical, ordinal or runtime-ID joins.",
+  "original_records": 237,
+  "bound_people": 220,
+  "unbound_original_records": 17,
+  "audit": {
+    "changed_people": 214,
+    "prior_default_changes": 89,
+    "prior_design_changes": 125,
+    "unchanged_original_values": 6,
+    "differences": [
+      {
+        "person_id": "san14-candidate-0003",
+        "name": "韦康",
+        "original_id": 1,
+        "previous": 60,
+        "original": 68,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0005",
+        "name": "伊籍",
+        "original_id": 2,
+        "previous": 78,
+        "original": 87,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0006",
+        "name": "尹楷",
+        "original_id": 3,
+        "previous": 60,
+        "original": 48,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0010",
+        "name": "尹赏",
+        "original_id": 4,
+        "previous": 60,
+        "original": 70,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0016",
+        "name": "于禁",
+        "original_id": 5,
+        "previous": 71,
+        "original": 86,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0023",
+        "name": "越吉",
+        "original_id": 6,
+        "previous": 60,
+        "original": 56,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0029",
+        "name": "袁熙",
+        "original_id": 7,
+        "previous": 60,
+        "original": 46,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0035",
+        "name": "袁绍",
+        "original_id": 8,
+        "previous": 47,
+        "original": 50,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0037",
+        "name": "袁谭",
+        "original_id": 9,
+        "previous": 32,
+        "original": 45,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0038",
+        "name": "阎圃",
+        "original_id": 10,
+        "previous": 60,
+        "original": 74,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0053",
+        "name": "王粲",
+        "original_id": 12,
+        "previous": 71,
+        "original": 70,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0066",
+        "name": "王双",
+        "original_id": 13,
+        "previous": 60,
+        "original": 38,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0067",
+        "name": "王忠",
+        "original_id": 14,
+        "previous": 60,
+        "original": 41,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0072",
+        "name": "王平",
+        "original_id": 15,
+        "previous": 82,
+        "original": 74,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0073",
+        "name": "王甫",
+        "original_id": 16,
+        "previous": 60,
+        "original": 53,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0078",
+        "name": "王累",
+        "original_id": 17,
+        "previous": 60,
+        "original": 84,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0084",
+        "name": "蒯越",
+        "original_id": 18,
+        "previous": 60,
+        "original": 58,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0085",
+        "name": "蒯良",
+        "original_id": 19,
+        "previous": 60,
+        "original": 79,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0086",
+        "name": "贾华",
+        "original_id": 20,
+        "previous": 60,
+        "original": 42,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0091",
+        "name": "华歆",
+        "original_id": 21,
+        "previous": 87,
+        "original": 80,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0092",
+        "name": "贾诩",
+        "original_id": 22,
+        "previous": 56,
+        "original": 65,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0095",
+        "name": "郭嘉",
+        "original_id": 24,
+        "previous": 66,
+        "original": 81,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0100",
+        "name": "郝昭",
+        "original_id": 25,
+        "previous": 72,
+        "original": 75,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0102",
+        "name": "乐进",
+        "original_id": 26,
+        "previous": 69,
+        "original": 60,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0105",
+        "name": "郭图",
+        "original_id": 27,
+        "previous": 37,
+        "original": 25,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0111",
+        "name": "郭淮",
+        "original_id": 28,
+        "previous": 78,
+        "original": 70,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0114",
+        "name": "夏侯渊",
+        "original_id": 29,
+        "previous": 76,
+        "original": 51,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0124",
+        "name": "夏侯惇",
+        "original_id": 30,
+        "previous": 83,
+        "original": 68,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0125",
+        "name": "夏侯霸",
+        "original_id": 31,
+        "previous": 71,
+        "original": 66,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0126",
+        "name": "夏侯楙",
+        "original_id": 32,
+        "previous": 60,
+        "original": 53,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0127",
+        "name": "夏侯兰",
+        "original_id": 33,
+        "previous": 60,
+        "original": 50,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0138",
+        "name": "雅丹",
+        "original_id": 34,
+        "previous": 60,
+        "original": 61,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0096",
+        "name": "鄂焕",
+        "original_id": 35,
+        "previous": 60,
+        "original": 32,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0140",
+        "name": "贾范",
+        "original_id": 36,
+        "previous": 60,
+        "original": 77,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0144",
+        "name": "华雄",
+        "original_id": 37,
+        "previous": 60,
+        "original": 43,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0147",
+        "name": "关羽",
+        "original_id": 38,
+        "previous": 70,
+        "original": 88,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0158",
+        "name": "韩玄",
+        "original_id": 41,
+        "previous": 60,
+        "original": 20,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0161",
+        "name": "关兴",
+        "original_id": 42,
+        "previous": 60,
+        "original": 66,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0166",
+        "name": "韩遂",
+        "original_id": 44,
+        "previous": 40,
+        "original": 78,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0176",
+        "name": "韩当",
+        "original_id": 45,
+        "previous": 72,
+        "original": 88,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0178",
+        "name": "韩德",
+        "original_id": 46,
+        "previous": 60,
+        "original": 51,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0179",
+        "name": "甘宁",
+        "original_id": 47,
+        "previous": 49,
+        "original": 79,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0183",
+        "name": "关平",
+        "original_id": 48,
+        "previous": 60,
+        "original": 70,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0184",
+        "name": "韩猛",
+        "original_id": 49,
+        "previous": 60,
+        "original": 36,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0185",
+        "name": "简雍",
+        "original_id": 50,
+        "previous": 82,
+        "original": 84,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0186",
+        "name": "颜良",
+        "original_id": 51,
+        "previous": 60,
+        "original": 52,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0189",
+        "name": "魏延",
+        "original_id": 52,
+        "previous": 57,
+        "original": 26,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0197",
+        "name": "牛金",
+        "original_id": 54,
+        "previous": 60,
+        "original": 40,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0203",
+        "name": "姜维",
+        "original_id": 55,
+        "previous": 68,
+        "original": 75,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0217",
+        "name": "许攸",
+        "original_id": 56,
+        "previous": 60,
+        "original": 43,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0215",
+        "name": "许褚",
+        "original_id": 57,
+        "previous": 75,
+        "original": 60,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0218",
+        "name": "妫览",
+        "original_id": 58,
+        "previous": 60,
+        "original": 10,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0219",
+        "name": "纪灵",
+        "original_id": 59,
+        "previous": 60,
+        "original": 36,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0225",
+        "name": "虞翻",
+        "original_id": 61,
+        "previous": 78,
+        "original": 71,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0231",
+        "name": "严颜",
+        "original_id": 63,
+        "previous": 60,
+        "original": 86,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0235",
+        "name": "严畯",
+        "original_id": 64,
+        "previous": 86,
+        "original": 48,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0233",
+        "name": "严纲",
+        "original_id": 65,
+        "previous": 60,
+        "original": 48,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0241",
+        "name": "吴懿",
+        "original_id": 66,
+        "previous": 78,
+        "original": 75,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0247",
+        "name": "黄盖",
+        "original_id": 67,
+        "previous": 74,
+        "original": 80,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0248",
+        "name": "高干",
+        "original_id": 68,
+        "previous": 60,
+        "original": 42,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0255",
+        "name": "高翔",
+        "original_id": 69,
+        "previous": 60,
+        "original": 59,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0250",
+        "name": "黄权",
+        "original_id": 70,
+        "previous": 86,
+        "original": 68,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0259",
+        "name": "侯选",
+        "original_id": 72,
+        "previous": 60,
+        "original": 53,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0262",
+        "name": "公孙渊",
+        "original_id": 73,
+        "previous": 22,
+        "original": 10,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0264",
+        "name": "公孙康",
+        "original_id": 74,
+        "previous": 51,
+        "original": 69,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0271",
+        "name": "黄忠",
+        "original_id": 75,
+        "previous": 74,
+        "original": 75,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0272",
+        "name": "高定",
+        "original_id": 76,
+        "previous": 60,
+        "original": 58,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0281",
+        "name": "高览",
+        "original_id": 77,
+        "previous": 60,
+        "original": 54,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0307",
+        "name": "兀突骨",
+        "original_id": 78,
+        "previous": 60,
+        "original": 50,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0314",
+        "name": "顾雍",
+        "original_id": 79,
+        "previous": 87,
+        "original": 71,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0296",
+        "name": "胡车儿",
+        "original_id": 80,
+        "previous": 60,
+        "original": 43,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0315",
+        "name": "吴兰",
+        "original_id": 81,
+        "previous": 60,
+        "original": 61,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0317",
+        "name": "崔琰",
+        "original_id": 82,
+        "previous": 87,
+        "original": 59,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0333",
+        "name": "史涣",
+        "original_id": 85,
+        "previous": 60,
+        "original": 42,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0344",
+        "name": "司马懿",
+        "original_id": 86,
+        "previous": 51,
+        "original": 90,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0346",
+        "name": "司马师",
+        "original_id": 87,
+        "previous": 47,
+        "original": 80,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0348",
+        "name": "司马昭",
+        "original_id": 88,
+        "previous": 40,
+        "original": 89,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0370",
+        "name": "周善",
+        "original_id": 89,
+        "previous": 60,
+        "original": 54,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0371",
+        "name": "周仓",
+        "original_id": 90,
+        "previous": 60,
+        "original": 59,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0373",
+        "name": "周泰",
+        "original_id": 91,
+        "previous": 74,
+        "original": 60,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0378",
+        "name": "周鲂",
+        "original_id": 92,
+        "previous": 60,
+        "original": 70,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0379",
+        "name": "周瑜",
+        "original_id": 93,
+        "previous": 85,
+        "original": 96,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0381",
+        "name": "朱桓",
+        "original_id": 94,
+        "previous": 70,
+        "original": 69,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0389",
+        "name": "朱然",
+        "original_id": 95,
+        "previous": 81,
+        "original": 60,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0390",
+        "name": "朱治",
+        "original_id": 96,
+        "previous": 85,
+        "original": 68,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0391",
+        "name": "朱褒",
+        "original_id": 97,
+        "previous": 60,
+        "original": 52,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0392",
+        "name": "朱灵",
+        "original_id": 98,
+        "previous": 60,
+        "original": 59,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0393",
+        "name": "荀彧",
+        "original_id": 99,
+        "previous": 92,
+        "original": 74,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0395",
+        "name": "淳于琼",
+        "original_id": 100,
+        "previous": 60,
+        "original": 27,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0399",
+        "name": "荀谌",
+        "original_id": 101,
+        "previous": 60,
+        "original": 49,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0407",
+        "name": "蒋干",
+        "original_id": 102,
+        "previous": 60,
+        "original": 39,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0406",
+        "name": "钟会",
+        "original_id": 103,
+        "previous": 40,
+        "original": 74,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0405",
+        "name": "蒋琬",
+        "original_id": 104,
+        "previous": 88,
+        "original": 86,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0428",
+        "name": "徐荣",
+        "original_id": 106,
+        "previous": 60,
+        "original": 47,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0432",
+        "name": "诸葛瑾",
+        "original_id": 107,
+        "previous": 86,
+        "original": 94,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0437",
+        "name": "诸葛瞻",
+        "original_id": 108,
+        "previous": 76,
+        "original": 90,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0430",
+        "name": "诸葛恪",
+        "original_id": 110,
+        "previous": 50,
+        "original": 81,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0442",
+        "name": "徐晃",
+        "original_id": 111,
+        "previous": 78,
+        "original": 47,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0446",
+        "name": "徐庶",
+        "original_id": 112,
+        "previous": 81,
+        "original": 80,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0449",
+        "name": "徐盛",
+        "original_id": 113,
+        "previous": 79,
+        "original": 70,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0460",
+        "name": "任峻",
+        "original_id": 114,
+        "previous": 60,
+        "original": 64,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0463",
+        "name": "申耽",
+        "original_id": 116,
+        "previous": 60,
+        "original": 43,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0464",
+        "name": "审配",
+        "original_id": 117,
+        "previous": 51,
+        "original": 65,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0465",
+        "name": "辛毘",
+        "original_id": 118,
+        "previous": 87,
+        "original": 83,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0466",
+        "name": "辛评",
+        "original_id": 119,
+        "previous": 60,
+        "original": 67,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0474",
+        "name": "成宜",
+        "original_id": 120,
+        "previous": 60,
+        "original": 41,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0484",
+        "name": "薛综",
+        "original_id": 121,
+        "previous": 80,
+        "original": 44,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0496",
+        "name": "全琮",
+        "original_id": 122,
+        "previous": 78,
+        "original": 49,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0501",
+        "name": "曹叡",
+        "original_id": 123,
+        "previous": 51,
+        "original": 60,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0505",
+        "name": "曹休",
+        "original_id": 124,
+        "previous": 75,
+        "original": 63,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0507",
+        "name": "宋宪",
+        "original_id": 125,
+        "previous": 60,
+        "original": 52,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0511",
+        "name": "曹洪",
+        "original_id": 126,
+        "previous": 48,
+        "original": 60,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0515",
+        "name": "曹彰",
+        "original_id": 127,
+        "previous": 71,
+        "original": 31,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0516",
+        "name": "曹植",
+        "original_id": 128,
+        "previous": 71,
+        "original": 68,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0517",
+        "name": "曹真",
+        "original_id": 129,
+        "previous": 79,
+        "original": 80,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0518",
+        "name": "曹仁",
+        "original_id": 130,
+        "previous": 73,
+        "original": 64,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0521",
+        "name": "曹操",
+        "original_id": 131,
+        "previous": 51,
+        "original": 97,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0526",
+        "name": "曹丕",
+        "original_id": 132,
+        "previous": 53,
+        "original": 88,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0531",
+        "name": "曹熊",
+        "original_id": 133,
+        "previous": 60,
+        "original": 79,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0535",
+        "name": "沮授",
+        "original_id": 134,
+        "previous": 84,
+        "original": 71,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0537",
+        "name": "苏飞",
+        "original_id": 135,
+        "previous": 60,
+        "original": 61,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0552",
+        "name": "孙乾",
+        "original_id": 136,
+        "previous": 83,
+        "original": 92,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0553",
+        "name": "孙权",
+        "original_id": 137,
+        "previous": 57,
+        "original": 95,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0557",
+        "name": "孙策",
+        "original_id": 138,
+        "previous": 65,
+        "original": 90,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0576",
+        "name": "孙翊",
+        "original_id": 139,
+        "previous": 60,
+        "original": 55,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0579",
+        "name": "孙礼",
+        "original_id": 140,
+        "previous": 88,
+        "original": 60,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0586",
+        "name": "太史慈",
+        "original_id": 141,
+        "previous": 83,
+        "original": 76,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0591",
+        "name": "谭雄",
+        "original_id": 142,
+        "previous": 60,
+        "original": 53,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0638",
+        "name": "张济",
+        "original_id": 143,
+        "previous": 60,
+        "original": 21,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0596",
+        "name": "赵云",
+        "original_id": 144,
+        "previous": 87,
+        "original": 94,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0597",
+        "name": "张卫",
+        "original_id": 145,
+        "previous": 60,
+        "original": 53,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0603",
+        "name": "张横",
+        "original_id": 146,
+        "previous": 60,
+        "original": 36,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0625",
+        "name": "张绣",
+        "original_id": 147,
+        "previous": 64,
+        "original": 69,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0618",
+        "name": "张郃",
+        "original_id": 149,
+        "previous": 71,
+        "original": 56,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0632",
+        "name": "张松",
+        "original_id": 150,
+        "previous": 60,
+        "original": 59,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0637",
+        "name": "张任",
+        "original_id": 151,
+        "previous": 76,
+        "original": 90,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0656",
+        "name": "张飞",
+        "original_id": 153,
+        "previous": 50,
+        "original": 35,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0658",
+        "name": "张苞",
+        "original_id": 154,
+        "previous": 60,
+        "original": 52,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0666",
+        "name": "张鲁",
+        "original_id": 155,
+        "previous": 76,
+        "original": 55,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0663",
+        "name": "张辽",
+        "original_id": 156,
+        "previous": 76,
+        "original": 90,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0671",
+        "name": "陈宫",
+        "original_id": 157,
+        "previous": 63,
+        "original": 67,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0680",
+        "name": "陈式",
+        "original_id": 158,
+        "previous": 60,
+        "original": 32,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0687",
+        "name": "陈兰",
+        "original_id": 159,
+        "previous": 60,
+        "original": 30,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0688",
+        "name": "陈琳",
+        "original_id": 160,
+        "previous": 68,
+        "original": 61,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0689",
+        "name": "程昱",
+        "original_id": 161,
+        "previous": 43,
+        "original": 70,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0693",
+        "name": "程银",
+        "original_id": 162,
+        "previous": 60,
+        "original": 54,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0703",
+        "name": "程普",
+        "original_id": 163,
+        "previous": 76,
+        "original": 79,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0705",
+        "name": "程秉",
+        "original_id": 164,
+        "previous": 82,
+        "original": 65,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0709",
+        "name": "典韦",
+        "original_id": 165,
+        "previous": 76,
+        "original": 39,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0712",
+        "name": "田畴",
+        "original_id": 166,
+        "previous": 91,
+        "original": 77,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0713",
+        "name": "田丰",
+        "original_id": 167,
+        "previous": 81,
+        "original": 89,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0718",
+        "name": "董允",
+        "original_id": 168,
+        "previous": 89,
+        "original": 79,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0720",
+        "name": "邓艾",
+        "original_id": 169,
+        "previous": 70,
+        "original": 68,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0729",
+        "name": "邓芝",
+        "original_id": 170,
+        "previous": 82,
+        "original": 80,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0731",
+        "name": "董袭",
+        "original_id": 171,
+        "previous": 79,
+        "original": 52,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0736",
+        "name": "董卓",
+        "original_id": 173,
+        "previous": 12,
+        "original": 11,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0758",
+        "name": "马延",
+        "original_id": 174,
+        "previous": 60,
+        "original": 23,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0759",
+        "name": "马玩",
+        "original_id": 175,
+        "previous": 60,
+        "original": 55,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0760",
+        "name": "马休",
+        "original_id": 176,
+        "previous": 60,
+        "original": 63,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0765",
+        "name": "马谡",
+        "original_id": 177,
+        "previous": 64,
+        "original": 74,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0764",
+        "name": "马遵",
+        "original_id": 178,
+        "previous": 60,
+        "original": 70,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0766",
+        "name": "马岱",
+        "original_id": 179,
+        "previous": 71,
+        "original": 52,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0769",
+        "name": "马超",
+        "original_id": 180,
+        "previous": 52,
+        "original": 76,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0770",
+        "name": "马铁",
+        "original_id": 181,
+        "previous": 60,
+        "original": 63,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0771",
+        "name": "马腾",
+        "original_id": 182,
+        "previous": 65,
+        "original": 84,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0774",
+        "name": "马良",
+        "original_id": 183,
+        "previous": 84,
+        "original": 88,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0775",
+        "name": "万彧",
+        "original_id": 184,
+        "previous": 60,
+        "original": 72,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0781",
+        "name": "潘璋",
+        "original_id": 185,
+        "previous": 36,
+        "original": 54,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0782",
+        "name": "樊稠",
+        "original_id": 186,
+        "previous": 60,
+        "original": 44,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0780",
+        "name": "潘濬",
+        "original_id": 187,
+        "previous": 81,
+        "original": 84,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0793",
+        "name": "糜竺",
+        "original_id": 188,
+        "previous": 88,
+        "original": 80,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0795",
+        "name": "糜芳",
+        "original_id": 189,
+        "previous": 44,
+        "original": 63,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0807",
+        "name": "傅巽",
+        "original_id": 190,
+        "previous": 60,
+        "original": 65,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0812",
+        "name": "文丑",
+        "original_id": 191,
+        "previous": 60,
+        "original": 50,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0814",
+        "name": "文聘",
+        "original_id": 192,
+        "previous": 82,
+        "original": 65,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0798",
+        "name": "武安国",
+        "original_id": 193,
+        "previous": 60,
+        "original": 36,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0822",
+        "name": "逢纪",
+        "original_id": 194,
+        "previous": 55,
+        "original": 48,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0827",
+        "name": "法正",
+        "original_id": 196,
+        "previous": 46,
+        "original": 82,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0828",
+        "name": "庞统",
+        "original_id": 197,
+        "previous": 81,
+        "original": 73,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0830",
+        "name": "庞德",
+        "original_id": 198,
+        "previous": 76,
+        "original": 78,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0838",
+        "name": "步骘",
+        "original_id": 199,
+        "previous": 80,
+        "original": 53,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0845",
+        "name": "孟获",
+        "original_id": 200,
+        "previous": 60,
+        "original": 71,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0850",
+        "name": "孟优",
+        "original_id": 202,
+        "previous": 60,
+        "original": 65,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0855",
+        "name": "雍闿",
+        "original_id": 203,
+        "previous": 60,
+        "original": 40,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0856",
+        "name": "杨仪",
+        "original_id": 204,
+        "previous": 43,
+        "original": 60,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0863",
+        "name": "杨洪",
+        "original_id": 205,
+        "previous": 85,
+        "original": 61,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0866",
+        "name": "杨修",
+        "original_id": 206,
+        "previous": 60,
+        "original": 82,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0879",
+        "name": "杨阜",
+        "original_id": 207,
+        "previous": 85,
+        "original": 33,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0887",
+        "name": "雷薄",
+        "original_id": 208,
+        "previous": 60,
+        "original": 30,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0891",
+        "name": "李异",
+        "original_id": 210,
+        "previous": 60,
+        "original": 38,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0893",
+        "name": "李傕",
+        "original_id": 211,
+        "previous": 11,
+        "original": 24,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0901",
+        "name": "陆绩",
+        "original_id": 212,
+        "previous": 82,
+        "original": 66,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0902",
+        "name": "陆逊",
+        "original_id": 213,
+        "previous": 84,
+        "original": 83,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0904",
+        "name": "李严",
+        "original_id": 214,
+        "previous": 49,
+        "original": 81,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0913",
+        "name": "李典",
+        "original_id": 216,
+        "previous": 84,
+        "original": 72,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0914",
+        "name": "李孚",
+        "original_id": 217,
+        "previous": 60,
+        "original": 49,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0987",
+        "name": "吕布",
+        "original_id": 218,
+        "previous": 33,
+        "original": 10,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0907",
+        "name": "李儒",
+        "original_id": 219,
+        "previous": 60,
+        "original": 40,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0938",
+        "name": "刘璋",
+        "original_id": 220,
+        "previous": 62,
+        "original": 77,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0949",
+        "name": "刘度",
+        "original_id": 221,
+        "previous": 60,
+        "original": 47,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0952",
+        "name": "刘备",
+        "original_id": 222,
+        "previous": 88,
+        "original": 99,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0957",
+        "name": "留平",
+        "original_id": 223,
+        "previous": 60,
+        "original": 63,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0959",
+        "name": "刘封",
+        "original_id": 224,
+        "previous": 55,
+        "original": 69,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0962",
+        "name": "刘晔",
+        "original_id": 225,
+        "previous": 70,
+        "original": 93,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0968",
+        "name": "廖化",
+        "original_id": 226,
+        "previous": 81,
+        "original": 41,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0969",
+        "name": "梁兴",
+        "original_id": 227,
+        "previous": 60,
+        "original": 47,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0974",
+        "name": "凌统",
+        "original_id": 228,
+        "previous": 78,
+        "original": 62,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0977",
+        "name": "吕凯",
+        "original_id": 229,
+        "previous": 86,
+        "original": 83,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0983",
+        "name": "吕旷",
+        "original_id": 230,
+        "previous": 60,
+        "original": 18,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0980",
+        "name": "吕虔",
+        "original_id": 231,
+        "previous": 81,
+        "original": 63,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0984",
+        "name": "吕翔",
+        "original_id": 232,
+        "previous": 60,
+        "original": 27,
+        "previous_status": "configured_default"
+      },
+      {
+        "person_id": "san14-candidate-0988",
+        "name": "吕蒙",
+        "original_id": 233,
+        "previous": 79,
+        "original": 65,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0986",
+        "name": "吕范",
+        "original_id": 234,
+        "previous": 84,
+        "original": 91,
+        "previous_status": "configured_design"
+      },
+      {
+        "person_id": "san14-candidate-0997",
+        "name": "鲁肃",
+        "original_id": 235,
+        "previous": 88,
+        "original": 93,
+        "previous_status": "configured_design"
+      }
+    ]
+  },
+  "records": [
+    {
+      "original_id": 0,
+      "person_id": "san14-candidate-0001",
+      "transcribed_name": "阿会喃",
+      "rom_offset": 139280,
+      "record_hex": "47 40 18 44 34 00 D0 07 00 00 51 25",
+      "record_sha256": "1485c0992df726c7e91b30d0d84f51f16981280ee3410c533b827281030684ed",
+      "virtue": 52,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 1,
+      "person_id": "san14-candidate-0003",
+      "transcribed_name": "韋康",
+      "rom_offset": 139292,
+      "record_hex": "39 28 2B 39 44 00 E8 03 00 00 00 11",
+      "record_sha256": "c8678322e608e175ebbdb7212adb89b38fb36994ffd70d97fdf8779dfdba94ba",
+      "virtue": 68,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 2,
+      "person_id": "san14-candidate-0005",
+      "transcribed_name": "伊籍",
+      "rom_offset": 139304,
+      "record_hex": "3C 21 54 47 57 00 00 00 00 00 00 01",
+      "record_sha256": "3a0fd63db30541b02b1e5c92f46bc0bdde9a900e53dac8ab4ad0bd9805e753cc",
+      "virtue": 87,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 3,
+      "person_id": "san14-candidate-0006",
+      "transcribed_name": "尹楷",
+      "rom_offset": 139316,
+      "record_hex": "46 36 27 4B 30 00 E8 03 00 00 30 11",
+      "record_sha256": "109dd9909d60926990756f1750354080b0566a3345934ffebf62bdb451140eef",
+      "virtue": 48,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 4,
+      "person_id": "san14-candidate-0010",
+      "transcribed_name": "尹賞",
+      "rom_offset": 139328,
+      "record_hex": "49 3E 26 40 46 00 00 00 00 00 01 01",
+      "record_sha256": "4c5f6f1a27f68077ab8c913c69e10d36ff3f8c1b76c16c3c0acfb168ec7247d9",
+      "virtue": 70,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 5,
+      "person_id": "san14-candidate-0016",
+      "transcribed_name": "于禁",
+      "rom_offset": 139340,
+      "record_hex": "4D 4F 38 56 56 00 E8 03 BC 02 48 1A",
+      "record_sha256": "0d13e727d03f52edf048a01de655d41f40ef0a2b73d4897b10ed4f31ade001fc",
+      "virtue": 86,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 6,
+      "person_id": "san14-candidate-0023",
+      "transcribed_name": "越吉",
+      "rom_offset": 139352,
+      "record_hex": "58 51 15 42 38 00 D0 07 00 00 4A 25",
+      "record_sha256": "35f880ab106991972138eb6a51caaabb2ccdcf8e764cd468f2120372148cff43",
+      "virtue": 56,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 7,
+      "person_id": "san14-candidate-0029",
+      "transcribed_name": "袁熙",
+      "rom_offset": 139364,
+      "record_hex": "40 32 17 53 2E 00 00 00 E8 03 21 02",
+      "record_sha256": "1f9035e37ecf3db86efb1fe577498e8a30c0139ed2cc4a3c029019fb8a8dd1b4",
+      "virtue": 46,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 8,
+      "person_id": "san14-candidate-0035",
+      "transcribed_name": "袁紹",
+      "rom_offset": 139376,
+      "record_hex": "4B 46 34 64 32 00 D0 07 E8 03 62 2A",
+      "record_sha256": "a1e8210a1fab817708bc6373b6df80c5628ca6543a87acc853a4cb4932c1a5f5",
+      "virtue": 50,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 9,
+      "person_id": "san14-candidate-0037",
+      "transcribed_name": "袁譚",
+      "rom_offset": 139388,
+      "record_hex": "46 39 1E 50 2D 00 E8 03 BC 02 28 12",
+      "record_sha256": "c943fe9a19e6dc42a70881bcf370ef3bf08217044471c1038418a194e6950a9d",
+      "virtue": 45,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 10,
+      "person_id": "san14-candidate-0038",
+      "transcribed_name": "閻圃",
+      "rom_offset": 139400,
+      "record_hex": "35 20 4E 4D 4A 00 00 00 00 00 00 01",
+      "record_sha256": "64cc2c08474245c4fec7e6097a8110da757a1dcd82eb5fa1b0506fa6b5086385",
+      "virtue": 74,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 11,
+      "person_id": null,
+      "transcribed_name": "王建",
+      "rom_offset": 139412,
+      "record_hex": "2A 18 4B 3B 29 00 D0 07 00 00 01 21",
+      "record_sha256": "2b59ac3c66a5549c2f051f4ee6014417d77bc7048d3f36261447475f2f64f49b",
+      "virtue": 41,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 12,
+      "person_id": "san14-candidate-0053",
+      "transcribed_name": "王粲",
+      "rom_offset": 139424,
+      "record_hex": "3B 22 52 3F 46 00 E8 03 00 00 00 11",
+      "record_sha256": "143d6311eeefbae1b2b9186daa3016c65dfd085e8e576c2a8eb2111faae8677a",
+      "virtue": 70,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 13,
+      "person_id": "san14-candidate-0066",
+      "transcribed_name": "王双",
+      "rom_offset": 139436,
+      "record_hex": "5A 59 0D 51 26 00 D0 07 00 00 0B 25",
+      "record_sha256": "dca6aad5877707cebd3b4ecbb942993fa8a6b10cf417d54e4f16a3e8e6ce953c",
+      "virtue": 38,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 14,
+      "person_id": "san14-candidate-0067",
+      "transcribed_name": "王忠",
+      "rom_offset": 139448,
+      "record_hex": "44 24 26 3E 29 00 00 00 00 00 28 01",
+      "record_sha256": "bc79d3314ef392052390764e56c838bc25d98221e37d6693dfe40177d1dc5d36",
+      "virtue": 41,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 15,
+      "person_id": "san14-candidate-0072",
+      "transcribed_name": "王平",
+      "rom_offset": 139460,
+      "record_hex": "54 47 30 43 4A 00 E8 03 00 00 32 19",
+      "record_sha256": "4e6fe53461b4926331616205ac458dd9239c14a6a5fa61aa9241103b56cdf5f4",
+      "virtue": 74,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 16,
+      "person_id": "san14-candidate-0073",
+      "transcribed_name": "王甫",
+      "rom_offset": 139472,
+      "record_hex": "3E 26 4F 50 35 00 00 00 00 00 00 02",
+      "record_sha256": "08cbe66f29d089ec4003744d785b88dc91e64304f670a07215b84bb26463ebb0",
+      "virtue": 53,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 17,
+      "person_id": "san14-candidate-0078",
+      "transcribed_name": "王累",
+      "rom_offset": 139484,
+      "record_hex": "40 2A 4D 59 54 00 00 00 00 00 01 01",
+      "record_sha256": "f1bf3e51c0e98ef13d6efd8574f87475a44497e5a9612986a55795fcd84e5049",
+      "virtue": 84,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 18,
+      "person_id": "san14-candidate-0084",
+      "transcribed_name": "蒯越",
+      "rom_offset": 139496,
+      "record_hex": "3B 29 54 40 3A 00 E8 03 00 00 00 11",
+      "record_sha256": "d4b911ed73936e371742fac0ee6b4e25e474af051a1a14be2ecf092aa00bdb5e",
+      "virtue": 58,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 19,
+      "person_id": "san14-candidate-0085",
+      "transcribed_name": "蒯良",
+      "rom_offset": 139508,
+      "record_hex": "40 26 59 46 4F 00 E8 03 00 00 00 11",
+      "record_sha256": "a7676a3f897e7ed4487dcf5cd7e7cd56f4f47b95d45272138791b6203b9bac55",
+      "virtue": 79,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 20,
+      "person_id": "san14-candidate-0086",
+      "transcribed_name": "賈華",
+      "rom_offset": 139520,
+      "record_hex": "4F 41 3A 4B 2A 00 00 00 00 00 21 01",
+      "record_sha256": "7931013b061673e867fb9606d0292a8ea0507c148de95e211c85b8e9523a04dc",
+      "virtue": 42,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 21,
+      "person_id": "san14-candidate-0091",
+      "transcribed_name": "華歆",
+      "rom_offset": 139532,
+      "record_hex": "3F 1B 55 40 50 00 00 00 00 00 00 01",
+      "record_sha256": "8e6455585cd075157368ae060a12e6e12f9bdbee366b0fb3f1c197fc84a4ee51",
+      "virtue": 80,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 22,
+      "person_id": "san14-candidate-0092",
+      "transcribed_name": "賈詡",
+      "rom_offset": 139544,
+      "record_hex": "34 2E 5F 46 41 00 E8 03 E8 03 00 12",
+      "record_sha256": "f802b573bfb22d1e720c8225320cb73ac4255b2ea59c5682fe6ce1aff9bba4b4",
+      "virtue": 65,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 23,
+      "person_id": "san14-candidate-0097",
+      "transcribed_name": "郭汜",
+      "rom_offset": 139556,
+      "record_hex": "42 3E 18 51 0C 00 00 00 E8 03 31 0A",
+      "record_sha256": "6ff5b7efe92515075c6109e4cde73da4724c9b640403ac6a58e0acb4c60c3f81",
+      "virtue": 12,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 24,
+      "person_id": "san14-candidate-0095",
+      "transcribed_name": "郭嘉",
+      "rom_offset": 139568,
+      "record_hex": "31 24 61 5A 51 00 D0 07 00 00 00 21",
+      "record_sha256": "613b2f1af859b7e5bfd530ba23796c870596b3114d6183d5ae3a41348b89e6c8",
+      "virtue": 81,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 25,
+      "person_id": "san14-candidate-0100",
+      "transcribed_name": "郝昭",
+      "rom_offset": 139580,
+      "record_hex": "51 4C 4A 53 4B 00 E8 03 00 00 50 15",
+      "record_sha256": "4732322395ec2dec0b2447a6a1e9241d62030efc335724bf0fa21de937b59cc0",
+      "virtue": 75,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 26,
+      "person_id": "san14-candidate-0102",
+      "transcribed_name": "楽進",
+      "rom_offset": 139592,
+      "record_hex": "50 38 32 55 3C 00 00 00 F4 01 30 02",
+      "record_sha256": "57b08610ed5cc284338c9511f01f31193a3d8ff788c19c5b1b82479ab95dfe17",
+      "virtue": 60,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 27,
+      "person_id": "san14-candidate-0105",
+      "transcribed_name": "郭図",
+      "rom_offset": 139604,
+      "record_hex": "36 1F 50 52 19 00 E8 03 F4 01 00 12",
+      "record_sha256": "34e16a475fc57022de59096d73afe5b3f94535f61b0f9c7f2ad4e888680ef1dd",
+      "virtue": 25,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 28,
+      "person_id": "san14-candidate-0111",
+      "transcribed_name": "郭淮",
+      "rom_offset": 139616,
+      "record_hex": "47 40 56 56 46 00 D0 07 00 00 48 29",
+      "record_sha256": "b725fb33098e5dadf08151eb2123fecb0d74d9de75c93d06cab3e5c2bbc2feec",
+      "virtue": 70,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 29,
+      "person_id": "san14-candidate-0114",
+      "transcribed_name": "夏侯淵",
+      "rom_offset": 139628,
+      "record_hex": "60 57 21 5B 33 00 E8 03 E8 03 29 16",
+      "record_sha256": "912bc4f35e2ff28947f24c12ae6d4be446e69e236830c3ff59918bd0694c3de7",
+      "virtue": 51,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 30,
+      "person_id": "san14-candidate-0124",
+      "transcribed_name": "夏侯惇",
+      "rom_offset": 139640,
+      "record_hex": "5E 59 3C 5C 44 00 E8 03 20 03 52 16",
+      "record_sha256": "1ba231494402c862422968ce26beacd89c4a9ca2735b94b5dbd13e2ad0504ec8",
+      "virtue": 68,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 31,
+      "person_id": "san14-candidate-0125",
+      "transcribed_name": "夏侯覇",
+      "rom_offset": 139652,
+      "record_hex": "5E 56 3C 54 42 00 AC 0D 00 00 49 35",
+      "record_sha256": "69515ddb52410618eedc2c95ef323505343f577f74afac8b12ea56117b6feba5",
+      "virtue": 66,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 32,
+      "person_id": "san14-candidate-0126",
+      "transcribed_name": "夏侯楙",
+      "rom_offset": 139664,
+      "record_hex": "43 2C 0E 47 35 00 D0 07 00 00 22 21",
+      "record_sha256": "6c404a0203471d105e0760be6e68ec91542f23d694e22d5881ae4876d39b3f88",
+      "virtue": 53,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 33,
+      "person_id": "san14-candidate-0127",
+      "transcribed_name": "夏侯蘭",
+      "rom_offset": 139676,
+      "record_hex": "53 39 24 4B 32 00 D0 07 00 00 30 21",
+      "record_sha256": "4f15634c8257b46567cccfb328b97ddf61951412246b56b373ad3672c526fda0",
+      "virtue": 50,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 34,
+      "person_id": "san14-candidate-0138",
+      "transcribed_name": "雅丹",
+      "rom_offset": 139688,
+      "record_hex": "4F 4B 44 39 3D 00 D0 07 00 00 51 29",
+      "record_sha256": "6127edc2a6e1a93d358a43ea4cfd5873413697471f3b0259440067f44d417d04",
+      "virtue": 61,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 35,
+      "person_id": "san14-candidate-0096",
+      "transcribed_name": "鄂煥",
+      "rom_offset": 139700,
+      "record_hex": "59 55 14 44 20 00 D0 07 00 00 35 25",
+      "record_sha256": "9b65f8dda5445eb33c4c2a561df3723bfb107465760db76290dc1c006350561c",
+      "virtue": 32,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 36,
+      "person_id": "san14-candidate-0140",
+      "transcribed_name": "賈範",
+      "rom_offset": 139712,
+      "record_hex": "46 21 40 47 4D 00 AC 0D 00 00 00 31",
+      "record_sha256": "8c8d452b04771906b7da8427a8b1ed005c5090fbe71840f3253ad94898f4e5d4",
+      "virtue": 77,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 37,
+      "person_id": "san14-candidate-0144",
+      "transcribed_name": "華雄",
+      "rom_offset": 139724,
+      "record_hex": "5F 5A 20 55 2B 00 D0 07 E8 03 42 26",
+      "record_sha256": "a5e133abdd675d2b9242a747c71e804fcecfbcf7fad9f76372f05aa5c6559984",
+      "virtue": 43,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 38,
+      "person_id": "san14-candidate-0147",
+      "transcribed_name": "関羽",
+      "rom_offset": 139736,
+      "record_hex": "61 61 54 63 58 00 E8 03 BC 02 2C 1A",
+      "record_sha256": "4c42602ac80325a5d9c0a151baf25678e7599131d5aa3aafadbf768ab7881282",
+      "virtue": 88,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 39,
+      "person_id": null,
+      "transcribed_name": "韓瑛",
+      "rom_offset": 139748,
+      "record_hex": "4D 46 29 3F 2A 00 E8 03 00 00 21 19",
+      "record_sha256": "54663fcc0a6bfd43f793f0b525eb71320be31b2cdbdba35f28604e122f1eb54b",
+      "virtue": 42,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 40,
+      "person_id": null,
+      "transcribed_name": "韓琪",
+      "rom_offset": 139760,
+      "record_hex": "52 40 16 43 32 00 E8 03 00 00 11 19",
+      "record_sha256": "b19d9439221cc995dde0fa3faae15e82917080f547a793eccbad6bc3cd33cea7",
+      "virtue": 50,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 41,
+      "person_id": "san14-candidate-0158",
+      "transcribed_name": "韓玄",
+      "rom_offset": 139772,
+      "record_hex": "32 29 15 3A 14 00 00 00 00 00 00 01",
+      "record_sha256": "99391f439148ae8a31e7e447dcb5ce71c1bae5118d9bf7a7e350858fd8aab0e6",
+      "virtue": 20,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 42,
+      "person_id": "san14-candidate-0161",
+      "transcribed_name": "関興",
+      "rom_offset": 139784,
+      "record_hex": "5C 58 44 57 42 00 D0 07 00 00 49 25",
+      "record_sha256": "ed1089ff7cbef7f4485c6967c0ac9b3bbce142debc4f0f55c0d74471c3dd3cde",
+      "virtue": 66,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 43,
+      "person_id": "san14-candidate-0162",
+      "transcribed_name": "関索",
+      "rom_offset": 139796,
+      "record_hex": "5E 53 3A 55 3C 00 D0 07 00 00 2A 25",
+      "record_sha256": "f3f5a05d958a5909d36a8283d0923cfa3dd75c1e42678c8f771c28deb62061a7",
+      "virtue": 60,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 44,
+      "person_id": "san14-candidate-0166",
+      "transcribed_name": "韓遂",
+      "rom_offset": 139808,
+      "record_hex": "44 2B 51 4C 4E 00 00 00 F4 01 00 02",
+      "record_sha256": "b9f5367419e3fbbc53795eaf93a2ec175a7f2bd4d64e3639d68288d731e49b8a",
+      "virtue": 78,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 45,
+      "person_id": "san14-candidate-0176",
+      "transcribed_name": "韓当",
+      "rom_offset": 139820,
+      "record_hex": "54 46 32 53 58 00 E8 03 E8 03 30 1A",
+      "record_sha256": "04d500cb96604c5e7919942162ac077ebf9b64feef9eda5c06b30400a337f39d",
+      "virtue": 88,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 46,
+      "person_id": "san14-candidate-0178",
+      "transcribed_name": "韓徳",
+      "rom_offset": 139832,
+      "record_hex": "5A 4D 2D 47 33 00 E8 03 00 00 53 15",
+      "record_sha256": "a84c74e8b8d49ca5e4ac9a8dcfe82f300e2defa41e969fcee1942a6ebb4d2beb",
+      "virtue": 51,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 47,
+      "person_id": "san14-candidate-0179",
+      "transcribed_name": "甘寧",
+      "rom_offset": 139844,
+      "record_hex": "5E 5D 3C 54 4F 00 E8 03 00 00 29 19",
+      "record_sha256": "f92e0c2c3f0df9cfcfd65704d6612badebea3c5529c439af7ba910b5cd0cdd86",
+      "virtue": 79,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 48,
+      "person_id": "san14-candidate-0183",
+      "transcribed_name": "関平",
+      "rom_offset": 139856,
+      "record_hex": "58 52 3C 55 46 00 D0 07 00 00 48 29",
+      "record_sha256": "1926e8c2434bcd87331f7cf3b03a00543bcbe2cd8d021a23f0d039a010044e89",
+      "virtue": 70,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 49,
+      "person_id": "san14-candidate-0184",
+      "transcribed_name": "韓猛",
+      "rom_offset": 139868,
+      "record_hex": "4B 3A 15 3D 24 00 E8 03 00 00 30 19",
+      "record_sha256": "2b0bc324510c0e12d3283f6112e7e8b15824bdcabf2010ec87f52e649dc3d61c",
+      "virtue": 36,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 50,
+      "person_id": "san14-candidate-0185",
+      "transcribed_name": "簡雍",
+      "rom_offset": 139880,
+      "record_hex": "46 22 4A 44 54 00 00 00 00 00 00 01",
+      "record_sha256": "cfbb010b99f189401c42d86c44f780da3e861e02eab0ba848f37e8c704918482",
+      "virtue": 84,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 51,
+      "person_id": "san14-candidate-0186",
+      "transcribed_name": "顔良",
+      "rom_offset": 139892,
+      "record_hex": "5B 59 25 57 34 00 E8 03 E8 03 4B 16",
+      "record_sha256": "fe8c4880559be390143885218e249e5958bf062d8fb9ac229ae0f0ca765d2aac",
+      "virtue": 52,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 52,
+      "person_id": "san14-candidate-0189",
+      "transcribed_name": "魏延",
+      "rom_offset": 139904,
+      "record_hex": "5F 5E 2A 37 1A 00 E8 03 00 00 49 15",
+      "record_sha256": "6643ea7e80fe448df1c832d05d4bf75625492108e13314de7f362ae4c9292192",
+      "virtue": 26,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 53,
+      "person_id": null,
+      "transcribed_name": "義渠",
+      "rom_offset": 139916,
+      "record_hex": "55 3A 25 49 2A 00 D0 07 00 00 31 29",
+      "record_sha256": "a0590ee05c6450230c0d7c40c4afa153d5258928f2695a9d6cf91da8783bf371",
+      "virtue": 42,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 54,
+      "person_id": "san14-candidate-0197",
+      "transcribed_name": "牛金",
+      "rom_offset": 139928,
+      "record_hex": "54 50 24 46 28 00 E8 03 00 00 4A 15",
+      "record_sha256": "d67eab07c467fdc6add8f07cd8d33178da166387526936cf0458052843333dd2",
+      "virtue": 40,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 55,
+      "person_id": "san14-candidate-0203",
+      "transcribed_name": "姜維",
+      "rom_offset": 139940,
+      "record_hex": "50 5C 5E 4B 4B 00 AC 0D 00 00 B4 35",
+      "record_sha256": "4df851522ad6ae867017abd19e87a7465eeae972d79643f07bdd0e1d6ebf58ab",
+      "virtue": 75,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 56,
+      "person_id": "san14-candidate-0217",
+      "transcribed_name": "許攸",
+      "rom_offset": 139952,
+      "record_hex": "2F 22 5B 44 2B 00 E8 03 00 00 00 11",
+      "record_sha256": "fbebf2d8d47014c1c38d2eb75b5b1da5f3ed0cd027706807f7e5b2d91585253a",
+      "virtue": 43,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 57,
+      "person_id": "san14-candidate-0215",
+      "transcribed_name": "許褚",
+      "rom_offset": 139964,
+      "record_hex": "5F 61 23 58 3C 00 E8 03 00 00 32 15",
+      "record_sha256": "111ceb6ab58792bb32c391cfb3b498576fb91d2c6faca1588c40854f48311843",
+      "virtue": 60,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 58,
+      "person_id": "san14-candidate-0218",
+      "transcribed_name": "媯覧",
+      "rom_offset": 139976,
+      "record_hex": "60 34 08 31 0A 00 E8 03 00 00 11 11",
+      "record_sha256": "ec510fe1cd36d69995276493988b27b507f2fb5258c8fd1e1eb48a8620dcfd25",
+      "virtue": 10,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 59,
+      "person_id": "san14-candidate-0219",
+      "transcribed_name": "紀霊",
+      "rom_offset": 139988,
+      "record_hex": "50 46 1F 39 24 00 E8 03 00 00 4A 19",
+      "record_sha256": "f02a84e43701105964fbb31b21c1b2ad4d2b5a07e5924ea37ecac522dc011bb6",
+      "virtue": 36,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 60,
+      "person_id": null,
+      "transcribed_name": "金環結",
+      "rom_offset": 140000,
+      "record_hex": "46 3E 26 3A 28 00 E8 03 00 00 32 11",
+      "record_sha256": "ae3eb3f7e8507bd30eaf6c4db5df43d41980c3d5cc01cf6b3dabb84df0484510",
+      "virtue": 40,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 61,
+      "person_id": "san14-candidate-0225",
+      "transcribed_name": "虞翻",
+      "rom_offset": 140012,
+      "record_hex": "33 28 4F 45 47 00 00 00 00 00 00 01",
+      "record_sha256": "b4f7a32894dfbaecc5fc2ac76e57807026b3dac44c6d62d46e530038eb1bc114",
+      "virtue": 71,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 62,
+      "person_id": null,
+      "transcribed_name": "刑道栄",
+      "rom_offset": 140024,
+      "record_hex": "57 50 0D 41 29 00 E8 03 00 00 33 15",
+      "record_sha256": "de17c6b707f633d5a1dbd09f01db91e8a8f8c69d45542671f92fa1cb8254850f",
+      "virtue": 41,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 63,
+      "person_id": "san14-candidate-0231",
+      "transcribed_name": "厳顔",
+      "rom_offset": 140036,
+      "record_hex": "55 56 42 56 56 00 D0 07 E8 03 48 26",
+      "record_sha256": "d4507a6f8dfddcd11ebdd6ae55ed9d322ed0800a3bd0fdf6a6b3f326fc656846",
+      "virtue": 86,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 64,
+      "person_id": "san14-candidate-0235",
+      "transcribed_name": "厳畯",
+      "rom_offset": 140048,
+      "record_hex": "32 15 4A 49 30 00 00 00 00 00 00 01",
+      "record_sha256": "a356e2803042e7fa773d94edcdcd2355baecf440cd4fb23e57d634e513555e58",
+      "virtue": 48,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 65,
+      "person_id": "san14-candidate-0233",
+      "transcribed_name": "厳綱",
+      "rom_offset": 140060,
+      "record_hex": "3C 37 33 43 30 00 E8 03 00 00 21 11",
+      "record_sha256": "c27fc9d840ca7af9ead7f459de211a274f31a026f7585297bd291f3f91ece589",
+      "virtue": 48,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 66,
+      "person_id": "san14-candidate-0241",
+      "transcribed_name": "呉懿",
+      "rom_offset": 140072,
+      "record_hex": "4E 44 49 51 4B 00 E8 03 E8 03 42 1A",
+      "record_sha256": "2d43e7358a3bd3ec611676447729b6ffec24661dcfc5fbc1f49b3db22f9ee330",
+      "virtue": 75,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 67,
+      "person_id": "san14-candidate-0247",
+      "transcribed_name": "黄蓋",
+      "rom_offset": 140084,
+      "record_hex": "48 4F 3F 54 50 00 E8 03 E8 03 28 1A",
+      "record_sha256": "d8c0a94488d6b25ddc85e72994f3626adffaa983fff032b3e5bb571479f99b82",
+      "virtue": 80,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 68,
+      "person_id": "san14-candidate-0248",
+      "transcribed_name": "高幹",
+      "rom_offset": 140096,
+      "record_hex": "45 3C 26 46 2A 00 00 00 00 00 30 09",
+      "record_sha256": "ca73b132da270f022cf2a3a11a35dbc2195e8b9ade66876405981efceae12660",
+      "virtue": 42,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 69,
+      "person_id": "san14-candidate-0255",
+      "transcribed_name": "高翔",
+      "rom_offset": 140108,
+      "record_hex": "50 3E 37 44 3B 00 E8 03 00 00 51 11",
+      "record_sha256": "8dd714d399ba8b0203a44d7bf5a3b5e60dd46720f8fac5f04e08d7e787965766",
+      "virtue": 59,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 70,
+      "person_id": "san14-candidate-0250",
+      "transcribed_name": "黄権",
+      "rom_offset": 140120,
+      "record_hex": "3B 2A 4E 57 44 00 00 00 00 00 00 02",
+      "record_sha256": "84e9a17d866151b43f5568c607467fadd979185b595f42c6e5f79650a2959e11",
+      "virtue": 68,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 71,
+      "person_id": "san14-candidate-0258",
+      "transcribed_name": "侯成",
+      "rom_offset": 140132,
+      "record_hex": "46 48 34 40 3C 00 E8 03 00 00 30 05",
+      "record_sha256": "e3f09967f55c8a47c6c104829c7b7fc7ef52bfd193a799218d666f5ea34e378d",
+      "virtue": 60,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 72,
+      "person_id": "san14-candidate-0259",
+      "transcribed_name": "侯選",
+      "rom_offset": 140144,
+      "record_hex": "51 48 2B 47 35 00 00 00 E8 03 28 06",
+      "record_sha256": "62c99b5848c96ebec635663988d0652041a2ec4f926d6e011278dca94d35e0d9",
+      "virtue": 53,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 73,
+      "person_id": "san14-candidate-0262",
+      "transcribed_name": "公孫淵",
+      "rom_offset": 140156,
+      "record_hex": "57 4C 14 30 0A 00 D0 07 00 00 4A 25",
+      "record_sha256": "c3755ba0c06fe5796d548e736393773e6ccc06a7ccb6fd110d2283335b432c9b",
+      "virtue": 10,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 74,
+      "person_id": "san14-candidate-0264",
+      "transcribed_name": "公孫康",
+      "rom_offset": 140168,
+      "record_hex": "4F 40 3E 3F 45 00 E8 03 00 00 20 19",
+      "record_sha256": "e16269f496cafec8f23390cacbb89108258f7e33bc1d81f45ea86584d6fbb220",
+      "virtue": 69,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 75,
+      "person_id": "san14-candidate-0271",
+      "transcribed_name": "黄忠",
+      "rom_offset": 140180,
+      "record_hex": "5A 60 40 4E 4B 00 AC 0D 00 00 4B 35",
+      "record_sha256": "6896e7767d5e48599777ab32875c495aee741baf79f6f021f4b05b24641cccd4",
+      "virtue": 75,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 76,
+      "person_id": "san14-candidate-0272",
+      "transcribed_name": "高定",
+      "rom_offset": 140192,
+      "record_hex": "3F 33 38 42 3A 00 E8 03 00 00 28 11",
+      "record_sha256": "414f5d8196be72d7ca19c0e81a83adadb65111005180083bed92044f10aee513",
+      "virtue": 58,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 77,
+      "person_id": "san14-candidate-0281",
+      "transcribed_name": "高覧",
+      "rom_offset": 140204,
+      "record_hex": "57 46 31 45 36 00 00 00 20 03 30 0A",
+      "record_sha256": "9115ffb710384a2376ac2073f6fd72c5fbd535e099901dcfa1b0893c6f83f918",
+      "virtue": 54,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 78,
+      "person_id": "san14-candidate-0307",
+      "transcribed_name": "兀突骨",
+      "rom_offset": 140216,
+      "record_hex": "62 50 1A 33 32 00 D0 07 00 00 71 29",
+      "record_sha256": "868c5cedad8a571fad008febc0c5a54005ce2e2b6d13f22268f1a98f037435eb",
+      "virtue": 50,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 79,
+      "person_id": "san14-candidate-0314",
+      "transcribed_name": "顧雍",
+      "rom_offset": 140228,
+      "record_hex": "34 2E 53 49 47 00 E8 03 00 00 00 11",
+      "record_sha256": "14cd9667700bd7be4de35e88c02666a1c0b942d9d928842953772717fd94942e",
+      "virtue": 71,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 80,
+      "person_id": "san14-candidate-0296",
+      "transcribed_name": "胡車児",
+      "rom_offset": 140240,
+      "record_hex": "5E 4A 32 3A 2B 00 E8 03 00 00 28 15",
+      "record_sha256": "bfac69159ee1d847d2073b997e752fc224a4239513f2b68ca52ea015003390a5",
+      "virtue": 43,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 81,
+      "person_id": "san14-candidate-0315",
+      "transcribed_name": "呉蘭",
+      "rom_offset": 140252,
+      "record_hex": "50 46 2B 4B 3D 00 00 00 F4 01 50 06",
+      "record_sha256": "0c0cdf97b0b9e23b920cf8f0dcc1d1f590960edf7434faa72d7e647ae51a39ae",
+      "virtue": 61,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 82,
+      "person_id": "san14-candidate-0317",
+      "transcribed_name": "崔琰",
+      "rom_offset": 140264,
+      "record_hex": "2C 2A 4A 3C 3B 00 D0 07 00 00 00 21",
+      "record_sha256": "35dd44707174d44b6818f4426252acbd6dd82e7bf0f368a28a3cfdbfa8d538c1",
+      "virtue": 59,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 83,
+      "person_id": null,
+      "transcribed_name": "蔡陽",
+      "rom_offset": 140276,
+      "record_hex": "46 3E 2F 31 26 00 E8 03 00 00 28 19",
+      "record_sha256": "677c718b592cbb15078943ac5b1fff4904289b157eee66c4c759d7dd178e09d2",
+      "virtue": 38,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 84,
+      "person_id": null,
+      "transcribed_name": "崔諒",
+      "rom_offset": 140288,
+      "record_hex": "45 3A 22 3D 41 00 D0 07 00 00 21 21",
+      "record_sha256": "a57d1b14261cc59b7edde14f4a136eec41d67ae265e845b1508c330b4d950c59",
+      "virtue": 65,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 85,
+      "person_id": "san14-candidate-0333",
+      "transcribed_name": "史渙",
+      "rom_offset": 140300,
+      "record_hex": "50 41 26 35 2A 00 E8 03 00 00 29 19",
+      "record_sha256": "f4fc4196d0a49187d623bb655ed7e5fb0496eac8e908a625cc79e9caa9e571a2",
+      "virtue": 42,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 86,
+      "person_id": "san14-candidate-0344",
+      "transcribed_name": "司馬懿",
+      "rom_offset": 140312,
+      "record_hex": "45 40 62 5A 5A 00 D0 07 00 00 02 21",
+      "record_sha256": "7e66a96a3076c2be5ca4b46c251d0f2ffa6397993e7e0f59f9a0b4b67164a7ed",
+      "virtue": 90,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 87,
+      "person_id": "san14-candidate-0346",
+      "transcribed_name": "司馬師",
+      "rom_offset": 140324,
+      "record_hex": "54 55 59 53 50 00 AC 0D 00 00 31 35",
+      "record_sha256": "78226e87b36d94717e8d28a8c571752d577898670f2ea971d042fc37ec42ebf3",
+      "virtue": 80,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 88,
+      "person_id": "san14-candidate-0348",
+      "transcribed_name": "司馬昭",
+      "rom_offset": 140336,
+      "record_hex": "4C 47 5A 50 59 00 AC 0D 00 00 72 39",
+      "record_sha256": "1c96f14ce01f750497846d37abf36a530a6cc2925642d71df9d0421f58b54503",
+      "virtue": 89,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 89,
+      "person_id": "san14-candidate-0370",
+      "transcribed_name": "周善",
+      "rom_offset": 140348,
+      "record_hex": "51 43 2E 55 36 00 00 00 F4 01 01 0A",
+      "record_sha256": "18813963625ec382acfed45a4519b3c0f77f2e1b99326379ec73e815f62d033b",
+      "virtue": 54,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 90,
+      "person_id": "san14-candidate-0371",
+      "transcribed_name": "周倉",
+      "rom_offset": 140360,
+      "record_hex": "5B 54 3D 43 3B 00 E8 03 00 00 4A 19",
+      "record_sha256": "94e1b2acc7fa26b2d076f6f0ae68833793b3f7df7c89e9ead709e6f522f4cd25",
+      "virtue": 59,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 91,
+      "person_id": "san14-candidate-0373",
+      "transcribed_name": "周泰",
+      "rom_offset": 140372,
+      "record_hex": "57 52 21 4E 3C 00 E8 03 00 00 30 19",
+      "record_sha256": "0f582ab7e73a308340987c4df3dcc5004d68673af3253a8797dbfab2933ffc31",
+      "virtue": 60,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 92,
+      "person_id": "san14-candidate-0378",
+      "transcribed_name": "周魴",
+      "rom_offset": 140384,
+      "record_hex": "48 36 4F 4A 46 00 E8 03 00 00 20 11",
+      "record_sha256": "78a628b345ff5e95ad8f86d61060ff3257ae66486828fca670295ccf888e34a4",
+      "virtue": 70,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 93,
+      "person_id": "san14-candidate-0379",
+      "transcribed_name": "周瑜",
+      "rom_offset": 140396,
+      "record_hex": "46 57 62 62 60 00 D0 07 00 00 62 29",
+      "record_sha256": "41e0db6305e82e9427a7b382f7475ce899cd8a19379862bf6083241a21b07caf",
+      "virtue": 96,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 94,
+      "person_id": "san14-candidate-0381",
+      "transcribed_name": "朱桓",
+      "rom_offset": 140408,
+      "record_hex": "58 54 46 49 45 00 D0 07 00 00 51 29",
+      "record_sha256": "4f40082c8f935c353da24559c046c66132f63e93cc2b0a885019b0a31cec8399",
+      "virtue": 69,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 95,
+      "person_id": "san14-candidate-0389",
+      "transcribed_name": "朱然",
+      "rom_offset": 140420,
+      "record_hex": "5A 4D 28 46 3C 00 E8 03 00 00 28 19",
+      "record_sha256": "f7f7369174a75c28f2d63770f61d4049e8604a1912b7bad873d9e2264b1043a1",
+      "virtue": 60,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 96,
+      "person_id": "san14-candidate-0390",
+      "transcribed_name": "朱治",
+      "rom_offset": 140432,
+      "record_hex": "47 3C 37 58 44 00 00 00 E8 03 00 02",
+      "record_sha256": "c1c0b4f15c7cd3bb1b6414428b6996cb2c04d8b2793f482777d6aa242ab430b8",
+      "virtue": 68,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 97,
+      "person_id": "san14-candidate-0391",
+      "transcribed_name": "朱褒",
+      "rom_offset": 140444,
+      "record_hex": "46 39 43 41 34 00 D0 07 00 00 4A 21",
+      "record_sha256": "b3af6fecb5804c2fe2d838612ec0a015d3dd12b48bb1097b826036070c74fd01",
+      "virtue": 52,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 98,
+      "person_id": "san14-candidate-0392",
+      "transcribed_name": "朱霊",
+      "rom_offset": 140456,
+      "record_hex": "52 3F 2A 3E 3B 00 E8 03 00 00 30 19",
+      "record_sha256": "f8cf958be6253c19a37dd966cbc43987f920eaef149d15e14b159c1f1b34f322",
+      "virtue": 59,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 99,
+      "person_id": "san14-candidate-0393",
+      "transcribed_name": "荀彧",
+      "rom_offset": 140468,
+      "record_hex": "3B 22 60 5C 4A 00 D0 07 00 00 00 21",
+      "record_sha256": "9bef950bea7822593d76027d605e4342908d51fdd92c05f1fe1de2145ea29940",
+      "virtue": 74,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 100,
+      "person_id": "san14-candidate-0395",
+      "transcribed_name": "淳于瓊",
+      "rom_offset": 140480,
+      "record_hex": "54 45 10 41 1B 00 E8 03 00 00 21 19",
+      "record_sha256": "caa53771c9f1c317839df994b10d2bbf164e2fa8e248b423a144a1590de8cfa7",
+      "virtue": 27,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 101,
+      "person_id": "san14-candidate-0399",
+      "transcribed_name": "荀諶",
+      "rom_offset": 140492,
+      "record_hex": "33 1E 48 4C 31 00 E8 03 00 00 00 11",
+      "record_sha256": "626d3a4a24b76463549a43736d52cfb2a6382f24087c866a68abac54f24c779a",
+      "virtue": 49,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 102,
+      "person_id": "san14-candidate-0407",
+      "transcribed_name": "蒋幹",
+      "rom_offset": 140504,
+      "record_hex": "3A 2A 4A 45 27 00 E8 03 00 00 21 11",
+      "record_sha256": "19cb949a11607e1ab114ceea19de6f5c5dc2d19c634e327c92b6315bae2dd144",
+      "virtue": 39,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 103,
+      "person_id": "san14-candidate-0406",
+      "transcribed_name": "鍾会",
+      "rom_offset": 140516,
+      "record_hex": "50 46 5C 50 4A 00 AC 0D 00 00 6B 39",
+      "record_sha256": "52ab94dd5f4c045d6e4cd126b7ee132c88700e0bec6941fef204a9b95b40353b",
+      "virtue": 74,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 104,
+      "person_id": "san14-candidate-0405",
+      "transcribed_name": "蒋琬",
+      "rom_offset": 140528,
+      "record_hex": "35 2C 5A 47 56 00 D0 07 00 00 00 21",
+      "record_sha256": "f5f96431786872cb9213d88818e7f678a9e1cd7129db399ef702d18ed183aa8f",
+      "virtue": 86,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 105,
+      "person_id": null,
+      "transcribed_name": "尚寵",
+      "rom_offset": 140540,
+      "record_hex": "45 46 37 4B 50 00 E8 03 00 00 30 11",
+      "record_sha256": "f6ee2d9b27a61444456fdad113fe9ddb4237748282df98162f96145264b1c072",
+      "virtue": 80,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 106,
+      "person_id": "san14-candidate-0428",
+      "transcribed_name": "徐栄",
+      "rom_offset": 140552,
+      "record_hex": "3C 34 1E 4F 2F 00 00 00 2C 01 22 02",
+      "record_sha256": "c95ebf7d09ed93d391fb8e96cd173d7d88401be19f3909767efaba63faec95d7",
+      "virtue": 47,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 107,
+      "person_id": "san14-candidate-0432",
+      "transcribed_name": "諸葛瑾",
+      "rom_offset": 140564,
+      "record_hex": "36 30 5E 5D 5E 00 D0 07 00 00 00 21",
+      "record_sha256": "997ae93555ec2e997682124379a64ce61c6fb6e7eac3f58569d2186b8afcbc93",
+      "virtue": 94,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 108,
+      "person_id": "san14-candidate-0437",
+      "transcribed_name": "諸葛瞻",
+      "rom_offset": 140576,
+      "record_hex": "4D 56 57 55 5A 00 AC 0D 00 00 42 35",
+      "record_sha256": "fbf31ac73296e0e1eae32e53e15d77d026cb301a86f4cce667ade4cb5672a4c2",
+      "virtue": 90,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 109,
+      "person_id": "san14-candidate-0440",
+      "transcribed_name": "諸葛亮",
+      "rom_offset": 140588,
+      "record_hex": "47 3E 63 61 5F 00 D0 07 00 00 82 29",
+      "record_sha256": "5a75b4db483931f8de72a01c8d610f5a0db709aefd0111037ef4b4360cfc72d7",
+      "virtue": 95,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 110,
+      "person_id": "san14-candidate-0430",
+      "transcribed_name": "諸葛恪",
+      "rom_offset": 140600,
+      "record_hex": "3D 47 5F 51 51 00 AC 0D 00 00 32 39",
+      "record_sha256": "2f244e4d5524e16c54c769b2790141c44a76e183cd62dd61d63f7ac448cc5468",
+      "virtue": 81,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 111,
+      "person_id": "san14-candidate-0442",
+      "transcribed_name": "徐晃",
+      "rom_offset": 140612,
+      "record_hex": "5D 5B 32 58 2F 00 D0 07 00 00 53 25",
+      "record_sha256": "70b0427abfd3ff2fd617c3fdbc82f457f8a8c1db10f5b702d72654c2d02e0918",
+      "virtue": 47,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 112,
+      "person_id": "san14-candidate-0446",
+      "transcribed_name": "徐庶",
+      "rom_offset": 140624,
+      "record_hex": "49 4A 60 43 50 00 E8 03 00 00 02 15",
+      "record_sha256": "0fa55ed9d24d4077da729a5c0e59da22729f86951aa9f37461e796eeb0ff3b85",
+      "virtue": 80,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 113,
+      "person_id": "san14-candidate-0449",
+      "transcribed_name": "徐盛",
+      "rom_offset": 140636,
+      "record_hex": "53 4A 37 4C 46 00 E8 03 00 00 52 19",
+      "record_sha256": "70e5272903b700b6fd147bea6930f9b6c838757e32644e4ac85218bd01461069",
+      "virtue": 70,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 114,
+      "person_id": "san14-candidate-0460",
+      "transcribed_name": "任峻",
+      "rom_offset": 140648,
+      "record_hex": "3C 23 27 3C 40 00 00 00 00 00 21 01",
+      "record_sha256": "d2df2f4e1358a47344d5b49143548ff4129aa687b7169828a1505bfca09c9eee",
+      "virtue": 64,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 115,
+      "person_id": null,
+      "transcribed_name": "任双",
+      "rom_offset": 140660,
+      "record_hex": "50 41 32 3D 3A 00 00 00 00 00 30 05",
+      "record_sha256": "c187c333acd655380bac5ab86ef86953e72678a76127394b70ab103ce4abb6b3",
+      "virtue": 58,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 116,
+      "person_id": "san14-candidate-0463",
+      "transcribed_name": "申耽",
+      "rom_offset": 140672,
+      "record_hex": "51 48 28 40 2B 00 E8 03 00 00 51 19",
+      "record_sha256": "e56502869ceb777189492272e7270deeec1d645a5708f6c03d6fd896975444f6",
+      "virtue": 43,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 117,
+      "person_id": "san14-candidate-0464",
+      "transcribed_name": "審配",
+      "rom_offset": 140684,
+      "record_hex": "47 42 50 5A 41 00 00 00 F4 01 01 0A",
+      "record_sha256": "0619434bc4dc695efc103736ec7c037775919d43fd19c449b1e26e8d29accd3e",
+      "virtue": 65,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 118,
+      "person_id": "san14-candidate-0465",
+      "transcribed_name": "辛毗",
+      "rom_offset": 140696,
+      "record_hex": "43 23 56 4F 53 00 E8 03 00 00 00 11",
+      "record_sha256": "1443b685ee875e3acd2611f7e493992f330a854b8c7a8decdb0d48c7a24ccc48",
+      "virtue": 83,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 119,
+      "person_id": "san14-candidate-0466",
+      "transcribed_name": "辛評",
+      "rom_offset": 140708,
+      "record_hex": "41 36 3C 53 43 00 E8 03 00 00 01 11",
+      "record_sha256": "38a89334dab59e0be66fb22df39aebdbb71aef6ce462618457ff60b1e37afe20",
+      "virtue": 67,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 120,
+      "person_id": "san14-candidate-0474",
+      "transcribed_name": "成宜",
+      "rom_offset": 140720,
+      "record_hex": "54 42 19 49 29 00 00 00 F4 01 30 02",
+      "record_sha256": "5142587fac057dd43a26f4767eb1d2ad3fdf04af7181675e417d08ea5977b445",
+      "virtue": 41,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 121,
+      "person_id": "san14-candidate-0484",
+      "transcribed_name": "薛綜",
+      "rom_offset": 140732,
+      "record_hex": "37 25 40 44 2C 00 E8 03 00 00 00 11",
+      "record_sha256": "2f1ad8d608d163a9e567f3957cc7fbdf5ec934022b610baa93b1cdf7cbe7c2ca",
+      "virtue": 44,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 122,
+      "person_id": "san14-candidate-0496",
+      "transcribed_name": "全琮",
+      "rom_offset": 140744,
+      "record_hex": "4A 3F 38 41 31 00 E8 03 00 00 28 11",
+      "record_sha256": "843a9e70307af76f0c612ad8860d0f718c2531e9af1e5f95d3d95a46eb790f6e",
+      "virtue": 49,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 123,
+      "person_id": "san14-candidate-0501",
+      "transcribed_name": "曹叡",
+      "rom_offset": 140756,
+      "record_hex": "49 4F 54 59 3C 00 AC 0D 00 00 62 35",
+      "record_sha256": "6b62ce75de93a565a79e5b89eed06043b5088018a7bc0b89ec6f60e06a85557a",
+      "virtue": 60,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 124,
+      "person_id": "san14-candidate-0505",
+      "transcribed_name": "曹休",
+      "rom_offset": 140768,
+      "record_hex": "5B 48 2A 54 3F 00 D0 07 00 00 50 29",
+      "record_sha256": "2936ecb88caf07b86bad90a74fd756fe9b9cbdbf6a7284b9036d6bce5aa105de",
+      "virtue": 63,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 125,
+      "person_id": "san14-candidate-0507",
+      "transcribed_name": "宋憲",
+      "rom_offset": 140780,
+      "record_hex": "50 3C 30 38 34 00 E8 03 00 00 30 11",
+      "record_sha256": "047e9398ad0397359ee509a4a4405a80341e2539c5bcebcab1af9916d524f8e5",
+      "virtue": 52,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 126,
+      "person_id": "san14-candidate-0511",
+      "transcribed_name": "曹洪",
+      "rom_offset": 140792,
+      "record_hex": "55 45 38 57 3C 00 00 00 20 03 28 02",
+      "record_sha256": "b901a10e2acb81f167102f5695b28063335fcae5c3a61e4a07383992b8e5f3bc",
+      "virtue": 60,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 127,
+      "person_id": "san14-candidate-0515",
+      "transcribed_name": "曹彰",
+      "rom_offset": 140804,
+      "record_hex": "5E 58 2C 55 1F 00 D0 07 00 00 72 25",
+      "record_sha256": "fbb721e4dd90b3aa04d380ec523722d13b15841a1d019c32c60d2a2d5be733ac",
+      "virtue": 31,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 128,
+      "person_id": "san14-candidate-0516",
+      "transcribed_name": "曹植",
+      "rom_offset": 140816,
+      "record_hex": "25 29 5B 53 44 00 E8 03 00 00 00 11",
+      "record_sha256": "cacd847ed36ed3085898c3fc3e233b162f7c51f745c8aaff12d57e958fd6c742",
+      "virtue": 68,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 129,
+      "person_id": "san14-candidate-0517",
+      "transcribed_name": "曹真",
+      "rom_offset": 140828,
+      "record_hex": "55 46 4A 56 50 00 E8 03 00 00 51 15",
+      "record_sha256": "d0058ab317ec91e197ee40fbe11148ff2671ce289177d7e168ebff9a3a5174ad",
+      "virtue": 80,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 130,
+      "person_id": "san14-candidate-0518",
+      "transcribed_name": "曹仁",
+      "rom_offset": 140840,
+      "record_hex": "54 4C 3B 59 40 00 00 00 E8 03 30 0A",
+      "record_sha256": "f69475527b7cbe2878efe2f72b201a040673a5937200fa9d6b6f97b62a4c6e07",
+      "virtue": 64,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 131,
+      "person_id": "san14-candidate-0521",
+      "transcribed_name": "曹操",
+      "rom_offset": 140852,
+      "record_hex": "52 54 59 64 61 00 E8 03 E8 03 A3 16",
+      "record_sha256": "c181d1671f6aae4786131d2f478b886a387e56df9f1ceed3a25f023f301f1708",
+      "virtue": 97,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 132,
+      "person_id": "san14-candidate-0526",
+      "transcribed_name": "曹丕",
+      "rom_offset": 140864,
+      "record_hex": "50 4D 4F 5C 58 00 D0 07 00 00 62 25",
+      "record_sha256": "a657b4c76e3dc7caaeecbe24a7bc52f0dcde5fd67f9dee64de7968867246d9a3",
+      "virtue": 88,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 133,
+      "person_id": "san14-candidate-0531",
+      "transcribed_name": "曹熊",
+      "rom_offset": 140876,
+      "record_hex": "1E 22 20 50 4F 00 00 00 00 00 00 01",
+      "record_sha256": "614c10d8274939610d0e593b7d6ccf50d003cf680ac8a8e28c42f27aeeb61fff",
+      "virtue": 79,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 134,
+      "person_id": "san14-candidate-0535",
+      "transcribed_name": "沮授",
+      "rom_offset": 140888,
+      "record_hex": "34 29 54 58 47 00 E8 03 2C 01 00 12",
+      "record_sha256": "39a29c10d97bee8cf9fa67ed0d4700cdc475150ff0443817673f3d305cd43bbf",
+      "virtue": 71,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 135,
+      "person_id": "san14-candidate-0537",
+      "transcribed_name": "蘇飛",
+      "rom_offset": 140900,
+      "record_hex": "4D 3C 37 43 3D 00 00 00 00 00 31 01",
+      "record_sha256": "d6805a34f5ab00401616c9d87e351353b19a587a27aaa9c3b01b6f927f573230",
+      "virtue": 61,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 136,
+      "person_id": "san14-candidate-0552",
+      "transcribed_name": "孫乾",
+      "rom_offset": 140912,
+      "record_hex": "33 2E 4A 47 5C 00 E8 03 00 00 00 11",
+      "record_sha256": "dff69c13f7333b7c745331c6c6ac622ca846b45f62d111be2d99d0d76a7a3c07",
+      "virtue": 92,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 137,
+      "person_id": "san14-candidate-0553",
+      "transcribed_name": "孫権",
+      "rom_offset": 140924,
+      "record_hex": "52 53 58 63 5F 00 D0 07 00 00 62 29",
+      "record_sha256": "c73acdcd0b06672c79f3fda31dc2facbe84ab3b48d8a246539e576ccc86e3dfb",
+      "virtue": 95,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 138,
+      "person_id": "san14-candidate-0557",
+      "transcribed_name": "孫策",
+      "rom_offset": 140936,
+      "record_hex": "5A 5F 3D 64 5A 00 00 00 E8 03 64 0A",
+      "record_sha256": "ff4c232be80aa36f1b444fbe0f190aa0c26faef411f25f5ed6057ba532743291",
+      "virtue": 90,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 139,
+      "person_id": "san14-candidate-0576",
+      "transcribed_name": "孫翊",
+      "rom_offset": 140948,
+      "record_hex": "5A 54 1A 58 37 00 E8 03 00 00 4A 15",
+      "record_sha256": "1a2b065ecb881a5d076679a7088abf0b598c79329bf5e9343d7534530e3040b4",
+      "virtue": 55,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 140,
+      "person_id": "san14-candidate-0579",
+      "transcribed_name": "孫礼",
+      "rom_offset": 140960,
+      "record_hex": "58 57 3A 49 3C 00 D0 07 00 00 29 25",
+      "record_sha256": "69109b60f0f40dd25c360b980744649518e4b8add3640379d5abdf23e14b29be",
+      "virtue": 60,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 141,
+      "person_id": "san14-candidate-0586",
+      "transcribed_name": "太史慈",
+      "rom_offset": 140972,
+      "record_hex": "5C 5E 31 55 4C 00 E8 03 E8 03 52 16",
+      "record_sha256": "2662afafabf2636e881e90e3f956530c74cf6ff91ebd36a6c05966d4958dd685",
+      "virtue": 76,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 142,
+      "person_id": "san14-candidate-0591",
+      "transcribed_name": "譚雄",
+      "rom_offset": 140984,
+      "record_hex": "4E 4C 2D 3C 35 00 00 00 00 00 28 05",
+      "record_sha256": "fd557042f41e858d6114613b02e628810e4a616f078d8cb40d931e77a081b23b",
+      "virtue": 53,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 143,
+      "person_id": "san14-candidate-0638",
+      "transcribed_name": "張済",
+      "rom_offset": 140996,
+      "record_hex": "47 37 0D 4A 15 00 E8 03 E8 03 21 12",
+      "record_sha256": "75897edc6111960b1b359159c7df70c8818d5befbd3972f7df9415bc88458e15",
+      "virtue": 21,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 144,
+      "person_id": "san14-candidate-0596",
+      "transcribed_name": "趙雲",
+      "rom_offset": 141008,
+      "record_hex": "62 61 56 4D 5E 00 D0 07 00 00 52 25",
+      "record_sha256": "3859b753bb3cf399b07441681ac2823fee0f682171a628b42bb88e374f4ba5a8",
+      "virtue": 94,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 145,
+      "person_id": "san14-candidate-0597",
+      "transcribed_name": "張衛",
+      "rom_offset": 141020,
+      "record_hex": "39 3D 31 45 35 00 E8 03 00 00 30 15",
+      "record_sha256": "56e902156f6d97b8182180a839c3bbbed971d1b6c23582009c631f2491b23762",
+      "virtue": 53,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 146,
+      "person_id": "san14-candidate-0603",
+      "transcribed_name": "張横",
+      "rom_offset": 141032,
+      "record_hex": "51 40 25 4B 24 00 00 00 20 03 30 02",
+      "record_sha256": "2f39a7a38bf8ce931dc778d02984495b3f5ace3e96b8470ced9dc52890f979a5",
+      "virtue": 36,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 147,
+      "person_id": "san14-candidate-0625",
+      "transcribed_name": "張繍",
+      "rom_offset": 141044,
+      "record_hex": "4B 4D 38 46 45 00 E8 03 00 00 51 15",
+      "record_sha256": "385505abb316532dc767001276e7c407b7110aaf7ed55546805d46d55a236130",
+      "virtue": 69,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 148,
+      "person_id": null,
+      "transcribed_name": "趙月",
+      "rom_offset": 141056,
+      "record_hex": "4D 3C 26 44 2A 00 00 00 BC 02 21 02",
+      "record_sha256": "53f0a181d458dc7173e2043899453e937b90ec7a4674be31f6fbf62a83935e7c",
+      "virtue": 42,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 149,
+      "person_id": "san14-candidate-0618",
+      "transcribed_name": "張郃",
+      "rom_offset": 141068,
+      "record_hex": "53 59 2B 43 38 00 D0 07 00 00 49 25",
+      "record_sha256": "532bc08ef7cc5640a85c4bc4b44c98ea489d42061f979e9ca91a2a12950d1fa9",
+      "virtue": 56,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 150,
+      "person_id": "san14-candidate-0632",
+      "transcribed_name": "張松",
+      "rom_offset": 141080,
+      "record_hex": "26 13 5A 49 3B 00 00 00 C8 00 00 02",
+      "record_sha256": "1abb9f643de624245ab9153661599bf792ccf6b73d2d7f0f865f4661e643d5c9",
+      "virtue": 59,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 151,
+      "person_id": "san14-candidate-0637",
+      "transcribed_name": "張任",
+      "rom_offset": 141092,
+      "record_hex": "5A 54 4A 5D 5A 00 E8 03 E8 03 51 16",
+      "record_sha256": "4855d5b31d95e681755ff3516753c1400e454c2ec3d4d2872ffc36cb14cac598",
+      "virtue": 90,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 152,
+      "person_id": null,
+      "transcribed_name": "張南",
+      "rom_offset": 141104,
+      "record_hex": "4F 3D 2E 45 1E 00 E8 03 00 00 28 19",
+      "record_sha256": "f1a05ba8f5ad8313155bb5a2094faae3faa2c3ea4a8476cb085d1a44685b6c75",
+      "virtue": 30,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 153,
+      "person_id": "san14-candidate-0656",
+      "transcribed_name": "張飛",
+      "rom_offset": 141116,
+      "record_hex": "63 62 14 62 23 00 E8 03 BC 02 70 16",
+      "record_sha256": "8f10fad8851ae6142b86b9a6c53e2ff8d582eed48cd838b66d369885edf61cfe",
+      "virtue": 35,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 154,
+      "person_id": "san14-candidate-0658",
+      "transcribed_name": "張苞",
+      "rom_offset": 141128,
+      "record_hex": "5C 5A 37 57 34 00 D0 07 00 00 52 25",
+      "record_sha256": "9a722eebfa50b4aebea474a7aef26c794a5ea4c6101f9ff5a02687cb73e9f1ca",
+      "virtue": 52,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 155,
+      "person_id": "san14-candidate-0666",
+      "transcribed_name": "張魯",
+      "rom_offset": 141140,
+      "record_hex": "51 43 41 4B 37 00 E8 03 00 00 31 11",
+      "record_sha256": "3ead5be43f676244a30ba9d0bd4c616a362f237fade5573ae130d95244e1d6e8",
+      "virtue": 55,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 156,
+      "person_id": "san14-candidate-0663",
+      "transcribed_name": "張遼",
+      "rom_offset": 141152,
+      "record_hex": "5D 5A 54 54 5A 00 D0 07 00 00 72 29",
+      "record_sha256": "6d1c34ee2fab801d7bb53133f87051e6f0797be82af90a24145388c75a7c337e",
+      "virtue": 90,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 157,
+      "person_id": "san14-candidate-0671",
+      "transcribed_name": "陳宮",
+      "rom_offset": 141164,
+      "record_hex": "36 35 4E 41 43 00 00 00 00 00 00 01",
+      "record_sha256": "bca333970068ee9fa8711c2c71e78de2e34cabcffc9776bbe420954db37f3180",
+      "virtue": 67,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 158,
+      "person_id": "san14-candidate-0680",
+      "transcribed_name": "陳式",
+      "rom_offset": 141176,
+      "record_hex": "4E 41 24 4D 20 00 00 00 F4 01 30 0A",
+      "record_sha256": "9ef64947da65f0bd4100fcd1eabc086f6c413ef78bf9bf851645795d2b324710",
+      "virtue": 32,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 159,
+      "person_id": "san14-candidate-0687",
+      "transcribed_name": "陳蘭",
+      "rom_offset": 141188,
+      "record_hex": "54 44 31 36 1E 00 00 00 00 00 48 09",
+      "record_sha256": "b697671ccd8a0a3b23ad8b90c8ac42f081f754ddb9dafe1a7e50e0396418ce4c",
+      "virtue": 30,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 160,
+      "person_id": "san14-candidate-0688",
+      "transcribed_name": "陳琳",
+      "rom_offset": 141200,
+      "record_hex": "48 2D 52 3C 3D 00 D0 07 00 00 00 21",
+      "record_sha256": "4d0a64217000f0fe60dd859f282c314c1506e0df43e06963a223de0d9e118afb",
+      "virtue": 61,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 161,
+      "person_id": "san14-candidate-0689",
+      "transcribed_name": "程昱",
+      "rom_offset": 141212,
+      "record_hex": "28 16 5C 59 46 00 E8 03 00 00 01 11",
+      "record_sha256": "ae1c84fba20fe4206ba9de76407c5ca098aeffc908c2234c87d23fda8e6a2768",
+      "virtue": 70,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 162,
+      "person_id": "san14-candidate-0693",
+      "transcribed_name": "程銀",
+      "rom_offset": 141224,
+      "record_hex": "50 49 22 4E 36 00 00 00 E8 03 30 06",
+      "record_sha256": "d35d3abca982e347e1bcafdf7c77d13c51cd1af565a334ecdcbf54a7e4eec939",
+      "virtue": 54,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 163,
+      "person_id": "san14-candidate-0703",
+      "transcribed_name": "程普",
+      "rom_offset": 141236,
+      "record_hex": "50 3C 44 59 4F 00 E8 03 F4 01 51 12",
+      "record_sha256": "502ff9e232f7964e78f4d5cbd6374e72912bd6c7f253ecedc0952fc9be0f4bd2",
+      "virtue": 79,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 164,
+      "person_id": "san14-candidate-0705",
+      "transcribed_name": "程秉",
+      "rom_offset": 141248,
+      "record_hex": "29 24 34 47 41 00 E8 03 00 00 00 11",
+      "record_sha256": "e874502703da98ed870aba3248e681a266e696041278368139b0bc141063b4ef",
+      "virtue": 65,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 165,
+      "person_id": "san14-candidate-0709",
+      "transcribed_name": "典韋",
+      "rom_offset": 141260,
+      "record_hex": "61 60 1A 5D 27 00 E8 03 00 00 51 15",
+      "record_sha256": "0829ea3438ab0c392d8ad61f8354c0f7610e905d19e48d2207427122e3b059c4",
+      "virtue": 39,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 166,
+      "person_id": "san14-candidate-0712",
+      "transcribed_name": "田疇",
+      "rom_offset": 141272,
+      "record_hex": "47 33 36 4A 4D 00 00 00 00 00 21 01",
+      "record_sha256": "7ad2291a444ef70669516fffd76a9fc662e75ab1d06ca265bc265d37daf26a51",
+      "virtue": 77,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 167,
+      "person_id": "san14-candidate-0713",
+      "transcribed_name": "田豊",
+      "rom_offset": 141284,
+      "record_hex": "28 23 5D 5A 59 00 E8 03 BC 02 00 12",
+      "record_sha256": "8bddbfef70fe8da67e6e0a9c7736753172aadc26a2462804d2b773a9ccba68dc",
+      "virtue": 89,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 168,
+      "person_id": "san14-candidate-0718",
+      "transcribed_name": "董允",
+      "rom_offset": 141296,
+      "record_hex": "25 26 56 55 4F 00 E8 03 00 00 00 11",
+      "record_sha256": "549d8487b609bc7b41a8b5504e25d07ae6dc5fca8adbe20d03ace2afb1c30caf",
+      "virtue": 79,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 169,
+      "person_id": "san14-candidate-0720",
+      "transcribed_name": "鄧艾",
+      "rom_offset": 141308,
+      "record_hex": "59 57 5A 4E 44 00 AC 0D 00 00 6B 35",
+      "record_sha256": "ee957be985edb9cd591ad4bc83bcf9f119e5fc7701474beadf63e444d30a9529",
+      "virtue": 68,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 170,
+      "person_id": "san14-candidate-0729",
+      "transcribed_name": "鄧芝",
+      "rom_offset": 141320,
+      "record_hex": "45 2D 54 46 50 00 D0 07 00 00 40 21",
+      "record_sha256": "a92c7b0c6143386b69111d6b4fcde7517dfb2a20dad2e6e41a1e870cf939f829",
+      "virtue": 80,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 171,
+      "person_id": "san14-candidate-0731",
+      "transcribed_name": "董襲",
+      "rom_offset": 141332,
+      "record_hex": "59 44 32 48 34 00 E8 03 00 00 2A 19",
+      "record_sha256": "a0fd100499fa732215d60fedb29e705a7ffc84c7d790a7370bcf00c8a2ce12a6",
+      "virtue": 52,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 172,
+      "person_id": null,
+      "transcribed_name": "董荼奴",
+      "rom_offset": 141344,
+      "record_hex": "46 3F 31 43 32 00 E8 03 00 00 31 11",
+      "record_sha256": "342aca117b27769dce667a65dfb6da2613e0439eb462f80ef0abcdec22299b3e",
+      "virtue": 50,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 173,
+      "person_id": "san14-candidate-0736",
+      "transcribed_name": "董卓",
+      "rom_offset": 141356,
+      "record_hex": "58 57 2F 64 0B 00 88 13 E8 03 64 46",
+      "record_sha256": "fc45e7413021cfc9425b47e04909d3f56f698e1b981720ac7383dc76dd6cd2ae",
+      "virtue": 11,
+      "experience_raw": 5000
+    },
+    {
+      "original_id": 174,
+      "person_id": "san14-candidate-0758",
+      "transcribed_name": "馬延",
+      "rom_offset": 141368,
+      "record_hex": "50 3A 20 44 17 00 E8 03 00 00 30 19",
+      "record_sha256": "afecf8be4960ebb8f400f3ca1e77d600eaf7063778873da615df087329132c4c",
+      "virtue": 23,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 175,
+      "person_id": "san14-candidate-0759",
+      "transcribed_name": "馬玩",
+      "rom_offset": 141380,
+      "record_hex": "49 3C 2F 41 37 00 00 00 00 00 48 01",
+      "record_sha256": "47a2ab10c83924189c2b88a5cbab6a311a1cb1d0b56023dc58c4947869a53b82",
+      "virtue": 55,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 176,
+      "person_id": "san14-candidate-0760",
+      "transcribed_name": "馬休",
+      "rom_offset": 141392,
+      "record_hex": "46 3E 28 55 3F 00 E8 03 00 00 51 11",
+      "record_sha256": "b09cf4822f407be803f00b712a7cbf5dde491ff6bd13646c35acdcc6f87774ca",
+      "virtue": 63,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 177,
+      "person_id": "san14-candidate-0765",
+      "transcribed_name": "馬謖",
+      "rom_offset": 141404,
+      "record_hex": "4C 50 59 48 4A 00 D0 07 00 00 22 25",
+      "record_sha256": "f7d42b823802078ba4922914baaff9d3c8e5f0d5f629c713fa69055902b2beaa",
+      "virtue": 74,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 178,
+      "person_id": "san14-candidate-0764",
+      "transcribed_name": "馬遵",
+      "rom_offset": 141416,
+      "record_hex": "58 33 16 4A 46 00 E8 03 00 00 49 11",
+      "record_sha256": "55210dc63d9484f6230e028504ba0b72d8d114eba209aee90df1ac394002fda4",
+      "virtue": 70,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 179,
+      "person_id": "san14-candidate-0766",
+      "transcribed_name": "馬岱",
+      "rom_offset": 141428,
+      "record_hex": "5A 58 3F 59 34 00 E8 03 00 00 69 15",
+      "record_sha256": "58a33b14609bb658a5a4b278457d0b75b655999bb608b7ae9e1bc9d12a4b9177",
+      "virtue": 52,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 180,
+      "person_id": "san14-candidate-0769",
+      "transcribed_name": "馬超",
+      "rom_offset": 141440,
+      "record_hex": "61 61 34 63 4C 00 D0 07 00 00 72 25",
+      "record_sha256": "b3796cc9d4a6c069501d13d6f0a5ffbca2248e3e1716fef9b13aeb7d4b36ce9f",
+      "virtue": 76,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 181,
+      "person_id": "san14-candidate-0770",
+      "transcribed_name": "馬鉄",
+      "rom_offset": 141452,
+      "record_hex": "51 43 27 58 3F 00 E8 03 00 00 41 11",
+      "record_sha256": "0f56804f60b2402bc8b99adb0aeeb3fca25525105a030382cff4ec35b41c243c",
+      "virtue": 63,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 182,
+      "person_id": "san14-candidate-0771",
+      "transcribed_name": "馬騰",
+      "rom_offset": 141464,
+      "record_hex": "50 52 36 64 54 00 D0 07 E8 03 62 26",
+      "record_sha256": "deceea7d6ab6b3735fe2245f45fb28cdeb8b109a4a49b02436467403a174d37a",
+      "virtue": 84,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 183,
+      "person_id": "san14-candidate-0774",
+      "transcribed_name": "馬良",
+      "rom_offset": 141476,
+      "record_hex": "2D 2D 5E 49 58 00 E8 03 00 00 00 11",
+      "record_sha256": "3109edf6b893a0b0346e891e59526b86d49ab7c49ff341de2c60932f1393e9ea",
+      "virtue": 88,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 184,
+      "person_id": "san14-candidate-0775",
+      "transcribed_name": "万彧",
+      "rom_offset": 141488,
+      "record_hex": "25 30 53 4D 48 00 00 00 00 00 01 01",
+      "record_sha256": "d727dc13d150759fa7be2b5626937ddaea3583bf105420868a385d75d9d6d80a",
+      "virtue": 72,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 185,
+      "person_id": "san14-candidate-0781",
+      "transcribed_name": "潘璋",
+      "rom_offset": 141500,
+      "record_hex": "55 4E 34 4B 36 00 E8 03 00 00 28 19",
+      "record_sha256": "737c14621d1e6d88f0a85cfa6cf21f94d2649649a8d539ab626f6a931145ce94",
+      "virtue": 54,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 186,
+      "person_id": "san14-candidate-0782",
+      "transcribed_name": "樊稠",
+      "rom_offset": 141512,
+      "record_hex": "56 46 1D 47 2C 00 E8 03 F4 01 28 16",
+      "record_sha256": "2364cd8a4512c1774a5aa004c24c83a9831ed711c41b4f3f389dc40ace053e02",
+      "virtue": 44,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 187,
+      "person_id": "san14-candidate-0780",
+      "transcribed_name": "潘濬",
+      "rom_offset": 141524,
+      "record_hex": "36 12 55 3D 54 00 E8 03 00 00 00 11",
+      "record_sha256": "6560aae8d99d88da028d6b7456bbe551345fdb83e1621f1566b05ab9b65017c1",
+      "virtue": 84,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 188,
+      "person_id": "san14-candidate-0793",
+      "transcribed_name": "糜竺",
+      "rom_offset": 141536,
+      "record_hex": "3D 28 49 4D 50 00 00 00 00 00 21 01",
+      "record_sha256": "baa1d77f96a84c23f46b63e86532e6fef241eaf55240d180acdab31858a4aa5b",
+      "virtue": 80,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 189,
+      "person_id": "san14-candidate-0795",
+      "transcribed_name": "糜芳",
+      "rom_offset": 141548,
+      "record_hex": "4C 37 2F 44 3F 00 E8 03 00 00 50 11",
+      "record_sha256": "062b46a968173d0de99babc3dc28b0253c1faf651bd53c6fbfa1d17560a3471b",
+      "virtue": 63,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 190,
+      "person_id": "san14-candidate-0807",
+      "transcribed_name": "傅巽",
+      "rom_offset": 141560,
+      "record_hex": "45 3A 33 47 41 00 E8 03 00 00 31 11",
+      "record_sha256": "9ed68cc31c64877b05b454fb40bc0e4c0f1f50ca3b446f768ca8213987e3a3a8",
+      "virtue": 65,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 191,
+      "person_id": "san14-candidate-0812",
+      "transcribed_name": "文醜",
+      "rom_offset": 141572,
+      "record_hex": "5C 5A 1F 53 32 00 E8 03 20 03 42 16",
+      "record_sha256": "955bf26e2d901db0609f10a947c52033fa24f354bcc9960dc56b4688584bfc71",
+      "virtue": 50,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 192,
+      "person_id": "san14-candidate-0814",
+      "transcribed_name": "文聘",
+      "rom_offset": 141584,
+      "record_hex": "59 51 35 43 41 00 E8 03 00 00 29 15",
+      "record_sha256": "921aa37b1a9920af7045524b064a35548723ddd22e65735dff5204494fe2f181",
+      "virtue": 65,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 193,
+      "person_id": "san14-candidate-0798",
+      "transcribed_name": "武安国",
+      "rom_offset": 141596,
+      "record_hex": "57 50 15 41 24 00 E8 03 00 00 31 15",
+      "record_sha256": "bd2fd9931940f47d379269704c3ffed8590dbdedeb91dd7b405994be26d08d7d",
+      "virtue": 36,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 194,
+      "person_id": "san14-candidate-0822",
+      "transcribed_name": "逢紀",
+      "rom_offset": 141608,
+      "record_hex": "3C 36 49 50 30 00 00 00 F4 01 00 02",
+      "record_sha256": "6a0ac0be2ec5bd8d3aeb1e47f78dde6ad8eee8151239363e1496bef69c53a5a9",
+      "virtue": 48,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 195,
+      "person_id": null,
+      "transcribed_name": "龐柔",
+      "rom_offset": 141620,
+      "record_hex": "4F 3F 2F 3F 46 00 00 00 00 00 28 09",
+      "record_sha256": "557f26c950fa380e7bf188915736ab4e50d7ce940ea45b8429084e64b9788fd1",
+      "virtue": 70,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 196,
+      "person_id": "san14-candidate-0827",
+      "transcribed_name": "法正",
+      "rom_offset": 141632,
+      "record_hex": "3D 21 5C 48 52 00 E8 03 E8 03 00 12",
+      "record_sha256": "18b07827e3e5f6ff88f5d960a0aed277987b051550e00311f52440349e85d1fb",
+      "virtue": 82,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 197,
+      "person_id": "san14-candidate-0828",
+      "transcribed_name": "龐統",
+      "rom_offset": 141644,
+      "record_hex": "44 27 62 37 49 00 D0 07 00 00 01 21",
+      "record_sha256": "99130e304860425277477f50be82e84b2e37f9424936fbaf7543c6855dcb592a",
+      "virtue": 73,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 198,
+      "person_id": "san14-candidate-0830",
+      "transcribed_name": "龐徳",
+      "rom_offset": 141656,
+      "record_hex": "5F 5E 3C 4F 4E 00 E8 03 00 00 6D 15",
+      "record_sha256": "898af1bbc725aa69e016d4f598738daca8c6410324c07d7e3a8735e64be2d98b",
+      "virtue": 78,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 199,
+      "person_id": "san14-candidate-0838",
+      "transcribed_name": "歩隲",
+      "rom_offset": 141668,
+      "record_hex": "28 27 50 52 35 00 E8 03 00 00 00 11",
+      "record_sha256": "98c2837955ccf7fb57942a347493d5a4958b91c8d0de31b8e670698a0aa03eca",
+      "virtue": 53,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 200,
+      "person_id": "san14-candidate-0845",
+      "transcribed_name": "孟獲",
+      "rom_offset": 141680,
+      "record_hex": "58 57 1D 35 47 00 D0 07 00 00 6B 25",
+      "record_sha256": "fe2a34bacc40665954bc572501751c819dec1d616c021af564ed1d4dd00aa020",
+      "virtue": 71,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 201,
+      "person_id": "san14-candidate-0849",
+      "transcribed_name": "孟達",
+      "rom_offset": 141692,
+      "record_hex": "50 48 4C 46 3C 00 00 00 E8 03 28 06",
+      "record_sha256": "a95e4054d8b211d3869f30744116a9dba562cf5f1dfd5889236a701117142ee9",
+      "virtue": 60,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 202,
+      "person_id": "san14-candidate-0850",
+      "transcribed_name": "孟優",
+      "rom_offset": 141704,
+      "record_hex": "4E 45 28 3D 41 00 D0 07 00 00 51 21",
+      "record_sha256": "a6c02a020f20990765ff74107aebfde36c7cbe779edb406afde3f4805756d5ee",
+      "virtue": 65,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 203,
+      "person_id": "san14-candidate-0855",
+      "transcribed_name": "雍闓",
+      "rom_offset": 141716,
+      "record_hex": "4F 44 25 41 28 00 E8 03 00 00 2A 15",
+      "record_sha256": "c8c5c91ec43ba4af6575b1a61318a62a85a958645ef2b43255a2f5e326259835",
+      "virtue": 40,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 204,
+      "person_id": "san14-candidate-0856",
+      "transcribed_name": "楊儀",
+      "rom_offset": 141728,
+      "record_hex": "2F 2F 4F 4D 3C 00 D0 07 00 00 00 21",
+      "record_sha256": "0a054143d79639e4353783df311184f695e7a78fc98a7fc0c1d2953ea31d072b",
+      "virtue": 60,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 205,
+      "person_id": "san14-candidate-0863",
+      "transcribed_name": "楊洪",
+      "rom_offset": 141740,
+      "record_hex": "53 25 45 3C 3D 00 E8 03 00 00 00 11",
+      "record_sha256": "29cfaf271f5e889a8c5690f2c5c43460eeb10cc7f254a93267d05ee0b3d3b922",
+      "virtue": 61,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 206,
+      "person_id": "san14-candidate-0866",
+      "transcribed_name": "楊修",
+      "rom_offset": 141752,
+      "record_hex": "3C 32 5D 49 52 00 D0 07 00 00 00 21",
+      "record_sha256": "067c60d73511ebefbdc546f8e9d9308a677f46d360e9916628bab3fb1017a4ae",
+      "virtue": 82,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 207,
+      "person_id": "san14-candidate-0879",
+      "transcribed_name": "楊阜",
+      "rom_offset": 141764,
+      "record_hex": "38 28 4B 3E 21 00 E8 03 00 00 00 11",
+      "record_sha256": "72947cef955cbaba694ecbbaafdfd05171c39d07d6123184d9288a29613e6900",
+      "virtue": 33,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 208,
+      "person_id": "san14-candidate-0887",
+      "transcribed_name": "雷薄",
+      "rom_offset": 141776,
+      "record_hex": "54 4A 31 3B 1E 00 E8 03 00 00 48 15",
+      "record_sha256": "0c74245335b034ecf2d100c15b20badb33e7098e709cf8bbbfd4ebe7915673d1",
+      "virtue": 30,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 209,
+      "person_id": null,
+      "transcribed_name": "雷同",
+      "rom_offset": 141788,
+      "record_hex": "5B 52 22 4B 33 00 00 00 20 03 30 06",
+      "record_sha256": "143bf470b562aa3971ccfa05313fbfe82baccf5aa398f346abacc81b374fc1ab",
+      "virtue": 51,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 210,
+      "person_id": "san14-candidate-0891",
+      "transcribed_name": "李異",
+      "rom_offset": 141800,
+      "record_hex": "52 46 21 4C 26 00 E8 03 00 00 53 15",
+      "record_sha256": "6a6f593e65c8cdbe0cc31cf13b2a0a6bbf3a327efec667ec1fab63ba3e0facaa",
+      "virtue": 38,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 211,
+      "person_id": "san14-candidate-0893",
+      "transcribed_name": "李傕",
+      "rom_offset": 141812,
+      "record_hex": "46 48 11 52 18 00 E8 03 E8 03 2A 16",
+      "record_sha256": "ecb7c32e139664a929ad085104db1990ae8c17d3b51c16675b5ba341185536bb",
+      "virtue": 24,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 212,
+      "person_id": "san14-candidate-0901",
+      "transcribed_name": "陸績",
+      "rom_offset": 141824,
+      "record_hex": "2C 20 40 45 42 00 E8 03 00 00 00 11",
+      "record_sha256": "82728b694ad192a4affb872f9b5ce0d3d2c370186749fc04d1cb7dfb3e2cb1a3",
+      "virtue": 66,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 213,
+      "person_id": "san14-candidate-0902",
+      "transcribed_name": "陸遜",
+      "rom_offset": 141836,
+      "record_hex": "41 4D 61 58 53 00 AC 0D 00 00 62 39",
+      "record_sha256": "e838515f7d7805a5794bc2263a2823048f99aee5c8c78b9316d21bfe0a649d8a",
+      "virtue": 83,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 214,
+      "person_id": "san14-candidate-0904",
+      "transcribed_name": "李厳",
+      "rom_offset": 141848,
+      "record_hex": "57 52 4B 44 51 00 D0 07 00 00 4B 25",
+      "record_sha256": "40a16411f6cb86f670c6883dcae76996061c824ad785e2b9cdde8f309f9543f0",
+      "virtue": 81,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 215,
+      "person_id": null,
+      "transcribed_name": "李湛",
+      "rom_offset": 141860,
+      "record_hex": "54 3F 0C 46 2F 00 E8 03 00 00 30 19",
+      "record_sha256": "67ee0dd27272803dc19ce4fd87317c1b413d3331ae27b18108ab82572a0410d6",
+      "virtue": 47,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 216,
+      "person_id": "san14-candidate-0913",
+      "transcribed_name": "李典",
+      "rom_offset": 141872,
+      "record_hex": "48 3C 40 4E 48 00 E8 03 00 00 50 11",
+      "record_sha256": "21bc1980bf09484b74297127aefe928cc7216dc3dd8d87d3ffea67b0bc30f66c",
+      "virtue": 72,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 217,
+      "person_id": "san14-candidate-0914",
+      "transcribed_name": "李孚",
+      "rom_offset": 141884,
+      "record_hex": "38 21 45 42 31 00 D0 07 00 00 00 21",
+      "record_sha256": "c70bc9f87c4fd3c784fe48cde709d3e933a5fae47c3ccd46f63533c632671ea8",
+      "virtue": 49,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 218,
+      "person_id": "san14-candidate-0987",
+      "transcribed_name": "呂布",
+      "rom_offset": 141896,
+      "record_hex": "63 63 11 1E 0A 00 AC 0D E8 03 B5 36",
+      "record_sha256": "b662fb7b4faa36d02d80337c4cb38f16f9144ef3c2e344b76f2d5bec7e1f82f7",
+      "virtue": 10,
+      "experience_raw": 3500
+    },
+    {
+      "original_id": 219,
+      "person_id": "san14-candidate-0907",
+      "transcribed_name": "李儒",
+      "rom_offset": 141908,
+      "record_hex": "35 2C 5C 59 28 00 D0 07 C8 00 00 22",
+      "record_sha256": "1c7125fd984e9648b89c6d7f7873f4eb52c5e127bbf92ba758c3f9646c99efa5",
+      "virtue": 40,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 220,
+      "person_id": "san14-candidate-0938",
+      "transcribed_name": "劉璋",
+      "rom_offset": 141920,
+      "record_hex": "3D 27 2C 64 4D 00 E8 03 E8 03 00 12",
+      "record_sha256": "b955511f365445222b289ad7dbd246a9c29f6a56f961e92289fef46cf5435b4e",
+      "virtue": 77,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 221,
+      "person_id": "san14-candidate-0949",
+      "transcribed_name": "劉度",
+      "rom_offset": 141932,
+      "record_hex": "35 33 24 3A 2F 00 00 00 00 00 30 01",
+      "record_sha256": "e66b717fad8020890e469376845fa9b883a4c5b8733501411b72eddf244737a0",
+      "virtue": 47,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 222,
+      "person_id": "san14-candidate-0952",
+      "transcribed_name": "劉備",
+      "rom_offset": 141944,
+      "record_hex": "4E 47 41 64 63 00 00 00 BC 02 42 02",
+      "record_sha256": "d0f8a561a2a66d496790de510b0f7d10f878159b5d2f0bdaa2b396afd95e8d91",
+      "virtue": 99,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 223,
+      "person_id": "san14-candidate-0957",
+      "transcribed_name": "留平",
+      "rom_offset": 141956,
+      "record_hex": "46 39 2F 3B 3F 00 E8 03 00 00 21 11",
+      "record_sha256": "f0d9d71deaf927ba41238b5ba7c48487cb7dabe9e48d0a438783f8373c1aadc7",
+      "virtue": 63,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 224,
+      "person_id": "san14-candidate-0959",
+      "transcribed_name": "劉封",
+      "rom_offset": 141968,
+      "record_hex": "54 49 37 53 45 00 D0 07 00 00 52 29",
+      "record_sha256": "51831c4c76f6da412952b75aa78e6c1cb68355afdd407a2cc4410c7ad5671e22",
+      "virtue": 69,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 225,
+      "person_id": "san14-candidate-0962",
+      "transcribed_name": "劉曄",
+      "rom_offset": 141980,
+      "record_hex": "2A 25 5B 47 5D 00 D0 07 00 00 21 21",
+      "record_sha256": "eda6cf00959324e9b7109706c55b22bbe296513cb985bf2d3f5461a949a0b570",
+      "virtue": 93,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 226,
+      "person_id": "san14-candidate-0968",
+      "transcribed_name": "廖化",
+      "rom_offset": 141992,
+      "record_hex": "51 48 36 43 29 00 E8 03 00 00 49 19",
+      "record_sha256": "4af1c3d41cf0b479abdf4daa23affa0c22c49349817f24960aa55cbe868cc3e7",
+      "virtue": 41,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 227,
+      "person_id": "san14-candidate-0969",
+      "transcribed_name": "梁興",
+      "rom_offset": 142004,
+      "record_hex": "52 41 1C 41 2F 00 E8 03 00 00 30 15",
+      "record_sha256": "d1664f578b393341ce42f98cfc8de992bdfe874cff2cc1c1fda16493e886b500",
+      "virtue": 47,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 228,
+      "person_id": "san14-candidate-0974",
+      "transcribed_name": "凌統",
+      "rom_offset": 142016,
+      "record_hex": "5A 56 35 50 3E 00 D0 07 00 00 49 29",
+      "record_sha256": "03f465c24723c474f06d72f50fa71196c99e762c18af378dd72ce1292231162a",
+      "virtue": 62,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 229,
+      "person_id": "san14-candidate-0977",
+      "transcribed_name": "呂凱",
+      "rom_offset": 142028,
+      "record_hex": "2E 25 57 44 53 00 00 00 00 00 00 01",
+      "record_sha256": "9618ba40f94ee9f791b3ad3e9ffabaad95da0bc63541bf55e86695f4518cf991",
+      "virtue": 83,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 230,
+      "person_id": "san14-candidate-0983",
+      "transcribed_name": "呂曠",
+      "rom_offset": 142040,
+      "record_hex": "49 41 28 3F 12 00 00 00 00 00 28 01",
+      "record_sha256": "0af7b06d3df95029fa26a6dfc6d3428904eba242ec4757f5de6d68571f87baa4",
+      "virtue": 18,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 231,
+      "person_id": "san14-candidate-0980",
+      "transcribed_name": "呂虔",
+      "rom_offset": 142052,
+      "record_hex": "50 3F 39 3D 3F 00 E8 03 00 00 30 15",
+      "record_sha256": "57e0b2c122552960e1b9ebf7948d9e76fef0590c7676cccc347e21e86ee97ba3",
+      "virtue": 63,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 232,
+      "person_id": "san14-candidate-0984",
+      "transcribed_name": "呂翔",
+      "rom_offset": 142064,
+      "record_hex": "51 32 24 45 1B 00 E8 03 00 00 51 11",
+      "record_sha256": "d9330413ca505d71b14d9adf15c32fe37efe766b3be76c5d48f86312795b8a1e",
+      "virtue": 27,
+      "experience_raw": 1000
+    },
+    {
+      "original_id": 233,
+      "person_id": "san14-candidate-0988",
+      "transcribed_name": "呂蒙",
+      "rom_offset": 142076,
+      "record_hex": "46 17 50 51 41 00 00 00 00 00 00 01",
+      "record_sha256": "80e305154493fd227bce3b088d35e6ee62abaa25495466dc315e172fa4eb63f6",
+      "virtue": 65,
+      "experience_raw": 0
+    },
+    {
+      "original_id": 234,
+      "person_id": "san14-candidate-0986",
+      "transcribed_name": "呂範",
+      "rom_offset": 142088,
+      "record_hex": "4B 57 5D 55 5B 00 D0 07 00 00 62 29",
+      "record_sha256": "caf83f7e2552f99500c341d7a4aacee47af95c60b33462b8cde8acf4fa68e34f",
+      "virtue": 91,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 235,
+      "person_id": "san14-candidate-0997",
+      "transcribed_name": "魯粛",
+      "rom_offset": 142100,
+      "record_hex": "28 27 5F 59 5D 00 D0 07 00 00 01 21",
+      "record_sha256": "fda88b98aa6f6a72932c86dcad940084a3775af09241197c983c8adc1f3eef11",
+      "virtue": 93,
+      "experience_raw": 2000
+    },
+    {
+      "original_id": 236,
+      "person_id": null,
+      "transcribed_name": "李珪",
+      "rom_offset": 142112,
+      "record_hex": "26 24 34 46 57 00 00 00 00 00 00 01",
+      "record_sha256": "ad8521a7e0f69feb431535621f3eeef1af420a6c5447b098dd7d21b87c46436f",
+      "virtue": 87,
+      "experience_raw": 0
+    }
+  ]
+}

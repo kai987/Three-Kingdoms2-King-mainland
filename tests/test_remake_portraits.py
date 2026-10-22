@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import struct
+import tempfile
 import unittest
 from unittest.mock import patch
 import zlib
@@ -149,9 +150,175 @@ class PortraitReleaseTests(unittest.TestCase):
                 data['by_person_id'][second][key] = data['by_person_id'][first][key]
         fail_with(duplicate_cell, 'source cell is assigned to more than one person')
 
+    def test_optional_enhancement_is_merged_without_replacing_primary_records(self):
+        config_path = ROOT / builder.ENHANCED_CONFIG
+        original_is_file, original_bytes, original_read = Path.is_file, Path.read_bytes, builder.read
+        present = False
+        person_id = 'san14-candidate-0440'
+        variant = {'path': '/assets/portraits/enhanced/' + person_id + '.png', 'width': 128, 'height': 160}
+        config, raw = {'fixture': 'optional enhanced manifest'}, b'{"fixture":"optional enhanced manifest"}'
+
+        def exists(path):
+            return present if path == config_path else original_is_file(path)
+
+        def contents(path):
+            return raw if path == config_path else original_bytes(path)
+
+        def source(path):
+            return config if path == builder.ENHANCED_CONFIG else original_read(path)
+
+        with patch.object(Path, 'is_file', new=exists), patch.object(Path, 'read_bytes', new=contents), \
+                patch.object(builder, 'read', side_effect=source), \
+                patch.object(builder, 'enhanced_records', return_value={person_id: variant}) as validate:
+            baseline = builder.build()
+            present = True
+            enhanced = builder.build()
+        self.assertNotIn('portrait-enhanced.json', baseline['sources'])
+        self.assertEqual(enhanced['sources']['portrait-enhanced.json'], builder.sha(raw))
+        self.assertEqual(enhanced['counts'], baseline['counts'])
+        self.assertEqual((enhanced['width'], enhanced['height']), (32, 40))
+        self.assertEqual(enhanced['by_runtime_id'], baseline['by_runtime_id'])
+        self.assertEqual(enhanced['people'][person_id]['enhanced'], variant)
+        for current_id, row in baseline['people'].items():
+            expected = dict(row, enhanced=variant) if current_id == person_id else row
+            self.assertEqual(enhanced['people'][current_id], expected)
+        validate.assert_called_once()
+        self.assertIs(validate.call_args.args[0], config)
+        self.assertEqual(validate.call_args.args[1][person_id]['path'], baseline['people'][person_id]['path'])
+
 
 def png_chunk(kind, data):
     return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data) & 0xffffffff)
+
+
+def solid_png(width, height, rgba):
+    pixels = bytes(rgba) * width * height
+    stride = width * 4
+    scanlines = b''.join(b'\0' + pixels[y * stride:(y + 1) * stride] for y in range(height))
+    header = struct.pack('>IIBBBBB', width, height, 8, 6, 0, 0, 0)
+    raw = b'\x89PNG\r\n\x1a\n' + png_chunk(b'IHDR', header) + png_chunk(b'IDAT', zlib.compress(scanlines)) + png_chunk(b'IEND', b'')
+    return raw, pixels
+
+
+class EnhancedPortraitTests(unittest.TestCase):
+    """Derivatives remain optional and tied to the exact original person source."""
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        root_patch = patch.object(builder, 'ROOT', self.root)
+        root_patch.start()
+        self.addCleanup(root_patch.stop)
+        self.person = 'san14-candidate-0440'
+        self.other_person = 'san14-candidate-0001'
+        native, _ = solid_png(32, 40, (247, 162, 71, 255))
+        other_native, _ = solid_png(32, 40, (158, 65, 0, 255))
+        self.primary = {
+            self.person: {'path': '/assets/portraits/original/109.png', 'png_sha256': builder.sha(native)},
+            self.other_person: {'path': '/assets/portraits/generated/' + self.other_person + '.png', 'png_sha256': builder.sha(other_native)},
+        }
+        for person, content in ((self.person, native), (self.other_person, other_native)):
+            source_path = self.root / 'game' / self.primary[person]['path'].lstrip('/')
+            source_path.parent.mkdir(parents=True, exist_ok=True)
+            source_path.write_bytes(content)
+        self.image, self.pixels = solid_png(128, 160, (255, 187, 89, 255))
+        self.output_path = self.root / 'game/assets/portraits/enhanced' / (self.person + '.png')
+        self.output_path.parent.mkdir(parents=True)
+        self.output_path.write_bytes(self.image)
+        reference = self.root / builder.ENHANCED_REFERENCE
+        reference.parent.mkdir(parents=True)
+        reference.write_bytes(self.image)
+        self.record = {
+            'path': '/assets/portraits/enhanced/' + self.person + '.png', 'width': 128, 'height': 160,
+            'source_path': self.primary[self.person]['path'],
+            'source_sha256': self.primary[self.person]['png_sha256'],
+            'sha256': builder.sha(self.image), 'pixel_sha256': builder.sha(self.pixels),
+            'method': 'identity_preserving_pixel_enhancement', 'provenance': {'tool': 'test_color_study'},
+        }
+        self.data = {
+            'schema': 'tk2-enhanced-portraits-v1', 'width': 128, 'height': 160,
+            'approved_reference': {'path': builder.ENHANCED_REFERENCE, 'sha256': builder.sha(self.image)},
+            'people': {self.person: self.record},
+        }
+
+    def bad(self, change, message):
+        data = deepcopy(self.data)
+        change(data)
+        with self.assertRaisesRegex(ValueError, message):
+            builder.enhanced_records(data, self.primary)
+
+    def test_partial_and_empty_sets_are_optional_and_do_not_replace_originals(self):
+        before = deepcopy(self.primary)
+        self.assertEqual(builder.enhanced_records(self.data, self.primary), {
+            self.person: {'path': self.record['path'], 'width': 128, 'height': 160}})
+        empty = dict(self.data, people={})
+        self.assertEqual(builder.enhanced_records(empty, self.primary), {})
+        self.assertEqual(self.primary, before)
+        self.assertEqual(self.output_path.read_bytes(), self.image)
+
+    def test_invalid_manifest_shape_or_reference_cannot_be_merged(self):
+        for invalid in (None, [], {}, dict(self.data, schema='unapproved'),
+                        dict(self.data, width=32), dict(self.data, people=[])):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                builder.enhanced_records(invalid, self.primary)
+        self.bad(lambda d: d.update(approved_reference=None), 'reference path')
+        self.bad(lambda d: d['approved_reference'].update(path='../untrusted.png'), 'reference path')
+        self.bad(lambda d: d['approved_reference'].update(sha256=123), 'reference hash')
+        self.bad(lambda d: d['approved_reference'].update(sha256='0' * 64), 'reference hash mismatch')
+        (self.root / builder.ENHANCED_REFERENCE).unlink()
+        with self.assertRaisesRegex(ValueError, 'reference hash mismatch'):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_approved_reference_is_a_real_128_by_160_image(self):
+        raw, _ = solid_png(32, 40, (255, 187, 89, 255))
+        (self.root / builder.ENHANCED_REFERENCE).write_bytes(raw)
+        self.data['approved_reference']['sha256'] = builder.sha(raw)
+        with self.assertRaisesRegex(ValueError, '128x160'):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_paths_and_source_hashes_preserve_person_identity(self):
+        for path in ('https://invalid.example/a.png', '/assets/portraits/enhanced/../a.png',
+                     '/assets/portraits/enhanced/a.png?x=1', '/assets/portraits/original/109.png'):
+            with self.subTest(path=path):
+                self.bad(lambda d: d['people'][self.person].update(path=path), 'asset path')
+        self.bad(lambda d: d['people'][self.person].update(path='/assets/portraits/enhanced/' + self.other_person + '.png'), 'different person')
+        self.bad(lambda d: d['people'][self.person].update(source_path=self.primary[self.other_person]['path']), 'source/person')
+        self.bad(lambda d: d['people'][self.person].update(source_sha256='0' * 64), 'source/person')
+        self.bad(lambda d: d['people'].update({'unknown-person': deepcopy(self.record)}), 'Unknown enhanced')
+        self.bad(lambda d: d['people'].update({self.person: None}), 'Invalid enhanced portrait record')
+
+    def test_dimensions_hashes_and_provenance_are_verified(self):
+        self.bad(lambda d: d['people'][self.person].update(width=32), 'dimensions mismatch')
+        for key in ('source_sha256', 'sha256', 'pixel_sha256'):
+            with self.subTest(hash=key):
+                self.bad(lambda d: d['people'][self.person].update({key: None}), 'Missing enhanced portrait hashes')
+        self.bad(lambda d: d['people'][self.person].update(sha256='0' * 64), 'PNG hash mismatch')
+        self.bad(lambda d: d['people'][self.person].update(pixel_sha256='0' * 64), 'pixel hash mismatch')
+        self.bad(lambda d: d['people'][self.person].update(method='unreviewed_face_replacement'), 'provenance')
+        self.bad(lambda d: d['people'][self.person].update(provenance='unknown'), 'provenance')
+
+    def test_output_png_header_and_binary_alpha_are_checked(self):
+        raw, pixels = solid_png(32, 40, (255, 187, 89, 255))
+        self.output_path.write_bytes(raw)
+        self.record.update(sha256=builder.sha(raw), pixel_sha256=builder.sha(pixels))
+        with self.assertRaisesRegex(ValueError, '128x160'):
+            builder.enhanced_records(self.data, self.primary)
+        raw, pixels = solid_png(128, 160, (255, 187, 89, 128))
+        self.output_path.write_bytes(raw)
+        self.record.update(sha256=builder.sha(raw), pixel_sha256=builder.sha(pixels))
+        with self.assertRaisesRegex(ValueError, 'partial transparency'):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_missing_assets_and_symlinks_outside_enhanced_directory_fail_closed(self):
+        self.output_path.unlink()
+        with self.assertRaisesRegex(ValueError, 'missing or outside'):
+            builder.enhanced_records(self.data, self.primary)
+        external = self.root / 'outside.png'
+        external.write_bytes(self.image)
+        self.output_path.symlink_to(external)
+        with self.assertRaisesRegex(ValueError, 'missing or outside'):
+            builder.enhanced_records(self.data, self.primary)
 
 
 def filtered_png(filter_kind):

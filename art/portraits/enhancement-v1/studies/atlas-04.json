@@ -1,0 +1,15 @@
+{
+  "atlas_id": "atlas-04",
+  "tool": "builtin_image_gen",
+  "generated_original_path": "/Users/paulasmith/.codex/generated_images/01a163ba-534f-7091-bebb-1b0e96e297a8/exec-7b19c6db-bcf4-4363-b25c-dd9ce8369760.png",
+  "prompt_path": "art/portraits/enhancement-v1/prompts/atlas-04.txt",
+  "reference_path": "art/portraits/enhancement-v1/references/atlas-04.png",
+  "style_reference_path": "art/portraits/enhancement-v1/style-reference.png",
+  "occupied_cells": 64,
+  "padding_cells": 0,
+  "path": "art/portraits/enhancement-v1/studies/atlas-04.png",
+  "png_sha256": "6680057638c469b1321b449ebeb4fed99f7704af035ff9425bdd078915b933dc",
+  "prompt_sha256": "cd5fd263db215149cb4c8eee1caf80d5c97e3595792eaf381ef792bbb8f2c1b7",
+  "reference_sha256": "ed5c880d6205fbac1e6e591b2d5091e32f3783f3d21ceaa3166bee3a5355a481",
+  "style_reference_sha256": "ec244e6c9654ac1f676d7ac725fbff81fc0daa799baf651a5fabe50b7d25ab86"
+}

@@ -31,6 +31,21 @@ def fixture():
 
 
 class RoadCenterBuilderTests(unittest.TestCase):
+    def test_obsolete_baked_harbour_approach_is_erased_without_becoming_a_road(self):
+        source = fixture()
+        source['erased_access_paths'] = [dict(id='old-port', city='a',
+            d='M9 1L44 8L52 14', reason='Replaced by the shared northern approach')]
+        before = deepcopy(source)
+        result = builder.build(source, {'a': [9, 1]})
+        self.assertTrue(result['mask_d'].endswith(source['erased_access_paths'][0]['d']))
+        self.assertNotIn(source['erased_access_paths'][0]['d'], result['paint_d'])
+        self.assertEqual(result['erased_access_paths'], source['erased_access_paths'])
+        result['erased_access_paths'][0]['d'] = 'changed'
+        self.assertEqual(source, before)
+        source['erased_access_paths'][0]['city'] = 'missing'
+        with self.assertRaisesRegex(ValueError, 'obsolete harbour'):
+            builder.build(source, {'a': [9, 1]})
+
     def test_exact_hub_moves_keep_protected_junctions_and_native_connectors(self):
         source = fixture()
         result = builder.build(source, {'a': [9, 1], 'b': [30, 10], 'c': [30, 20]})
@@ -107,6 +122,118 @@ class RoadCenterBuilderTests(unittest.TestCase):
         source['hubs'][0]['center_branch_segment_indices'] = [1]
         with self.assertRaisesRegex(ValueError, 'does not collapse'):
             builder.build(source, {'a': [9, 1]})
+
+    def test_local_corridor_branches_reach_shared_junctions_and_city_centers(self):
+        source = fixture()
+        source['corridor_repairs'] = [dict(id='shared-trunk', cities=['a', 'b'], strokes=[
+            dict(index=1, points=[[9, 1], [20, 5], [30, 10]], radius=3),
+            dict(index=3, points=[[20, 5], [40, 0]], radius=3),
+            dict(index=2, points=[], radius=0)])]
+        positions = {'a': [9, 1], 'b': [30, 10]}
+        before, original_positions = deepcopy(source), deepcopy(positions)
+        result = builder.build(source, positions)
+        rows = {row['index']: row for row in result['changes']}
+        # A branch endpoint in the middle of another stroke is an actual
+        # junction, even though it is not itself a registered city center.
+        self.assertEqual(rows[1]['new_d'], 'M9 1L20 5M20 5L30 10')
+        self.assertEqual(rows[3]['new_d'], 'M20 5L40 0')
+        self.assertNotIn('Q20 5', rows[1]['new_d'])
+        self.assertTrue(rows[2]['deleted'])
+        self.assertEqual(rows[2]['new_points'], [])
+        self.assertEqual(rows[1]['affected_cities'], ['a', 'b'])
+        self.assertEqual(source, before)
+        self.assertEqual(positions, original_positions)
+        result['corridor_repairs'][0]['strokes'][0]['points'][0][0] = 999
+        self.assertEqual(source, before, 'Output metadata cannot mutate reviewed input')
+        self.assertEqual(builder.build(source, positions)['corridor_repairs'], before['corridor_repairs'])
+
+    def test_invalid_corridor_strokes_are_rejected_before_rendering(self):
+        valid = dict(index=1, points=[[9, 1], [30, 10]], radius=3)
+        cases = [
+            ('unknown-index', dict(valid, index=999)),
+            ('boolean-index', dict(valid, index=True)),
+            ('single-point', dict(valid, points=[[9, 1]])),
+            ('nonfinite-x', dict(valid, points=[[float('inf'), 1], [30, 10]])),
+            ('nonfinite-y', dict(valid, points=[[9, 1], [30, float('nan')]])),
+            ('nonfinite-radius', dict(valid, radius=float('inf'))),
+            ('negative-radius', dict(valid, radius=-1)),
+        ]
+        for name, stroke in cases:
+            with self.subTest(name=name):
+                source = fixture()
+                source['corridor_repairs'] = [dict(id='repair', cities=['a'], strokes=[stroke])]
+                with self.assertRaisesRegex(ValueError, 'finite number pairs|corridor stroke'):
+                    builder.build(source, {'a': [9, 1]})
+        for name, repairs in (
+            ('duplicate-stroke', [dict(id='repair', cities=['a'], strokes=[valid, valid])]),
+            ('duplicate-across-corridors', [dict(id='one', cities=['a'], strokes=[valid]),
+                                          dict(id='two', cities=['a'], strokes=[valid])]),
+            ('unknown-city', [dict(id='repair', cities=['missing'], strokes=[valid])]),
+            ('duplicate-id', [dict(id='repair', cities=['a'], strokes=[]),
+                              dict(id='repair', cities=['a'], strokes=[valid])]),
+        ):
+            with self.subTest(name=name):
+                source = fixture()
+                source['corridor_repairs'] = repairs
+                with self.assertRaisesRegex(ValueError, 'corridor stroke|road corridor'):
+                    builder.build(source, {'a': [9, 1]})
+
+    def test_current_three_corridors_share_single_trunks_without_local_cycles(self):
+        source = json.loads((ROOT / 'game/config/road-centers.json').read_text())
+        catalog = json.loads((ROOT / 'game/config/campaigns/shared.json').read_text())['catalog']
+        positions = {city['id']: city['position'] for city in catalog['cities']}
+        before = deepcopy(source)
+        result = builder.build(source, positions)
+        rows = {row['index']: row for row in result['changes']}
+        repairs = {repair['id']: repair for repair in result['corridor_repairs']}
+        self.assertEqual(set(repairs), {'dongping-changyi', 'jinan-linzi', 'shanggu-ji'})
+        for identity, repair in repairs.items():
+            parents, edges = {}, set()
+
+            def root(node):
+                parents.setdefault(node, node)
+                while parents[node] != node:
+                    node = parents[node]
+                return node
+
+            for stroke in repair['strokes']:
+                row = rows[stroke['index']]
+                self.assertEqual(row['new_points'], stroke['points'])
+                self.assertEqual(row['deleted'], not bool(stroke['points']))
+                points = [tuple(point) for point in row['new_points']]
+                self.assertEqual(len(points), len(set(points)), identity)
+                for a, b in zip(points, points[1:]):
+                    edge = tuple(sorted((a, b)))
+                    self.assertNotIn(edge, edges, identity + ': shared sections are drawn once')
+                    edges.add(edge)
+                    left, right = root(a), root(b)
+                    self.assertNotEqual(left, right, identity + ': no local return loop')
+                    parents[left] = right
+        self.assertEqual([index for index in (213, 223, 229, 238, 184, 220)
+                          if rows[index]['deleted']], [213, 223, 229, 238, 184, 220])
+        # One Dongping–Changyi trunk meets the west branches precisely and
+        # both cities are reached at their icon centers.
+        self.assertEqual(rows[222]['new_points'][0], positions['dongping'])
+        self.assertEqual(rows[222]['new_points'][-1], rows[224]['new_points'][0])
+        self.assertEqual(rows[224]['new_points'][-1], positions['shanyang'])
+        self.assertEqual(rows[221]['new_points'][0], positions['shanyang'])
+        self.assertEqual(rows[201]['new_points'][0], positions['jiyin'])
+        self.assertEqual(rows[201]['new_points'][-1], rows[212]['new_points'][0])
+        # Jinan joins the southwestern trunk before Linzi; no separate
+        # parallel stroke runs from the joining point into Linzi.
+        join = [980.5, 222.5]
+        self.assertEqual(rows[247]['new_points'][0], positions['jinan'])
+        self.assertEqual(rows[247]['new_points'][-1], join)
+        self.assertEqual(rows[237]['new_points'][-1], positions['qi'])
+        self.assertIn('L980.5 222.5M980.5 222.5', rows[237]['new_d'])
+        self.assertNotIn('Q980.5 222.5', rows[237]['new_d'])
+        linzi_strokes = [row['index'] for row in repairs['jinan-linzi']['strokes']
+                        if positions['qi'] in row['points']]
+        self.assertEqual(linzi_strokes, [237])
+        self.assertEqual(rows[183]['new_points'][-1], positions['shanggu'])
+        self.assertEqual(rows[193]['new_points'][0], positions['shanggu'])
+        self.assertEqual(rows[214]['new_points'][-1], positions['yan'])
+        self.assertEqual(source, before)
 
     def test_current_reviewed_source_reaches_anding_and_preserves_catalogs(self):
         path = ROOT / 'game/config/road-centers.json'

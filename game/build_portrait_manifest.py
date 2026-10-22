@@ -15,8 +15,12 @@ import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = (32, 40)
+ENHANCED = (128, 160)
+ENHANCED_CONFIG = 'game/config/portrait-enhanced.json'
+ENHANCED_REFERENCE = 'art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png'
 HEX = re.compile(r'^[0-9a-f]{64}$')
 ASSET = re.compile(r'^/assets/portraits/(?:original/[0-9]{3}|generated/[a-z0-9-]+)\.png$')
+ENHANCED_ASSET = re.compile(r'^/assets/portraits/enhanced/[a-z0-9-]+\.png$')
 
 
 def read(path):
@@ -27,7 +31,7 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def png_pixels(raw):
+def png_pixels(raw, expected_size=NATIVE):
     """Decode strict 8-bit RGB/RGBA PNGs; return dimensions and RGBA bytes."""
     if raw[:8] != b'\x89PNG\r\n\x1a\n':
         raise ValueError('Portrait is not a PNG')
@@ -58,8 +62,9 @@ def png_pixels(raw):
     if not ended or header is None:
         raise ValueError('Incomplete PNG')
     width, height, depth, color, compression, filtering, interlace = header
-    if (width, height) != NATIVE or depth != 8 or color not in (2, 6) or any((compression, filtering, interlace)):
-        raise ValueError('Portrait must be a native32x40, noninterlaced8bit RGB/RGBA PNG')
+    if (width, height) != expected_size or depth != 8 or color not in (2, 6) or any((compression, filtering, interlace)):
+        label = 'native32x40' if expected_size == NATIVE else f'{expected_size[0]}x{expected_size[1]}'
+        raise ValueError(f'Portrait must be a {label}, noninterlaced8bit RGB/RGBA PNG')
     channels = 4 if color == 6 else 3
     stride = width * channels
     scanlines = zlib.decompress(image_data)
@@ -95,7 +100,7 @@ def png_pixels(raw):
             for x in range(0, stride, 3):
                 output.extend(row[x:x + 3])
                 output.append(255)
-    return NATIVE, bytes(output)
+    return (width, height), bytes(output)
 
 
 def image_record(row):
@@ -111,6 +116,61 @@ def image_record(row):
     if tuple(row.get(key) for key in ('width', 'height')) != size:
         raise ValueError('Portrait source dimensions mismatch: ' + path)
     return dict(path=path, width=size[0], height=size[1], png_sha256=sha(raw), rgba_sha256=sha(pixels)), pixels
+
+
+def enhanced_records(data, primary):
+    """Validate optional derivatives without replacing original identity records."""
+    if not isinstance(data, dict) or data.get('schema') != 'tk2-enhanced-portraits-v1' or (data.get('width'), data.get('height')) != ENHANCED:
+        raise ValueError('Invalid enhanced portrait manifest schema/dimensions')
+    rows = data.get('people')
+    if not isinstance(rows, dict):
+        raise ValueError('Enhanced portrait people must be an object')
+    reference = data.get('approved_reference')
+    if not isinstance(reference, dict) or reference.get('path') != ENHANCED_REFERENCE:
+        raise ValueError('Invalid enhanced portrait approved reference path')
+    reference_hash = reference.get('sha256')
+    if not isinstance(reference_hash, str) or HEX.fullmatch(reference_hash) is None:
+        raise ValueError('Invalid enhanced portrait approved reference hash')
+    reference_file = ROOT / ENHANCED_REFERENCE
+    if not reference_file.is_file() or sha(reference_file.read_bytes()) != reference_hash:
+        raise ValueError('Enhanced portrait approved reference hash mismatch')
+    png_pixels(reference_file.read_bytes(), ENHANCED)
+    enhanced = {}
+    for person_id, row in rows.items():
+        if person_id not in primary:
+            raise ValueError('Unknown enhanced portrait person')
+        if not isinstance(row, dict):
+            raise ValueError('Invalid enhanced portrait record')
+        path = row.get('path')
+        if not isinstance(path, str) or ENHANCED_ASSET.fullmatch(path) is None:
+            raise ValueError('Invalid enhanced portrait asset path')
+        if path != f'/assets/portraits/enhanced/{person_id}.png':
+            raise ValueError('Enhanced portrait path belongs to a different person')
+        if (row.get('width'), row.get('height')) != ENHANCED:
+            raise ValueError('Enhanced portrait dimensions mismatch')
+        for key in ('source_sha256', 'sha256', 'pixel_sha256'):
+            value = row.get(key)
+            if not isinstance(value, str) or HEX.fullmatch(value) is None:
+                raise ValueError('Missing enhanced portrait hashes: ' + path)
+        source = primary[person_id]
+        if row.get('source_path') != source['path'] or row['source_sha256'] != source['png_sha256']:
+            raise ValueError('Enhanced portrait source/person binding mismatch: ' + person_id)
+        if row.get('method') != 'identity_preserving_pixel_enhancement' or not isinstance(row.get('provenance'), dict):
+            raise ValueError('Enhanced portrait must state its enhancement provenance')
+        asset = ROOT / 'game' / path.lstrip('/')
+        asset_root = ROOT / 'game/assets/portraits/enhanced'
+        if not asset.resolve().is_relative_to(asset_root.resolve()) or not asset.is_file():
+            raise ValueError('Enhanced portrait asset is missing or outside its asset directory')
+        raw = asset.read_bytes()
+        if sha(raw) != row['sha256']:
+            raise ValueError('Enhanced portrait PNG hash mismatch: ' + path)
+        size, pixels = png_pixels(raw, ENHANCED)
+        if sha(pixels) != row['pixel_sha256']:
+            raise ValueError('Enhanced portrait pixel hash mismatch: ' + path)
+        if any(pixels[i] not in (0, 255) for i in range(3, len(pixels), 4)):
+            raise ValueError('Enhanced portrait contains partial transparency')
+        enhanced[person_id] = dict(path=path, width=size[0], height=size[1])
+    return enhanced
 
 
 def identities():
@@ -215,6 +275,12 @@ def build():
     generated_unique = len({r['rgba_sha256'] for r in output.values() if r['kind'] == 'generated'})
     if generated_unique != counts['generated']:
         raise ValueError('Generated portraits contain duplicate pixel images; review the source cells')
+    sources = {name: sha((ROOT / 'game/config' / name).read_bytes()) for name in
+               ('portrait-identity-map.json', 'portrait-originals.json', 'portrait-generated.json')}
+    if (ROOT / ENHANCED_CONFIG).is_file():
+        for person_id, variant in enhanced_records(read(ENHANCED_CONFIG), output).items():
+            output[person_id]['enhanced'] = variant
+        sources['portrait-enhanced.json'] = sha((ROOT / ENHANCED_CONFIG).read_bytes())
     result = dict(schema='tk2-portraits-v1', width=32, height=40, display_background='#000000',
         identity_policy='stable_person_id; no ordinal or similarity matching; saves and released catalogs unchanged',
         generated_likeness_policy='new game art, not claimed historical likeness or an original NES portrait',
@@ -222,8 +288,7 @@ def build():
                     original_archive=237, original_unique_pixels=len({r['rgba_sha256'] for r in validated_originals.values()}),
                     bound_original_unique_pixels=len({r['rgba_sha256'] for r in output.values() if r['kind'] == 'nes_original'}),
                     generated_unique_pixels=generated_unique, original_identity_pending=237 - len(bound)),
-        sources={name: sha((ROOT / 'game/config' / name).read_bytes()) for name in
-                 ('portrait-identity-map.json', 'portrait-originals.json', 'portrait-generated.json')},
+        sources=sources,
         by_runtime_id={str(p['runtime_id']): p['person_id'] for p in people.values()}, people=output)
     return result
 

@@ -1,0 +1,5 @@
+Use case: precise-object-edit.
+The supplied image is the clean hat strip to edit. The user marked the two tiny INSIDE corner gaps between the black arches and orange upright tabs.
+Make the smallest possible pixel edit: fill ONLY the TWO TINY WHITE triangular notches between the inner tips of the left/right BLACK curved hat pieces and the adjacent upright orange tabs, with the existing pure BLACK ink.
+Native full-portrait coordinates for these two notches are x31..35,y8..11 and x92..96,y8..11 in a128x160 grid. Input1 is a crop x16..111,y0..39 enlarged8x. Thus the two edit boxes in Input1 are x120..159,y64..95 and x608..647,y64..95. Fill the white or pale-gray pixels inside those small boxes with pure black. Most pixels are already black; leave them.
+STRICT: preserve the OUTER curved black silhouettes. Do not square off the entire outside arch, do not expand any outside black roof. Keep the white openings below the notches and all the orange tabs, shading, white band and everything else EXACTLY unchanged. Do not add any border, text, arrows, circles or labels. Return the clean same hat strip.

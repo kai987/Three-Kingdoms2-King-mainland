@@ -7,12 +7,14 @@
 })(typeof window==='object'?window:globalThis,function(){
  'use strict';
  const orders=Object.freeze({
-  martial_strength:Object.freeze(['martial_strength','intellect','virtue','health','troops']),
-  virtue:Object.freeze(['virtue','intellect','martial_strength','health','troops'])
+  martial_strength:Object.freeze(['martial_strength','intellect','virtue','health','experience','troops']),
+  virtue:Object.freeze(['virtue','intellect','martial_strength','health','experience','troops'])
  });
  const numeric=value=>typeof value==='number'&&Number.isFinite(value)?value:-1;
  const display=value=>typeof value==='number'&&Number.isFinite(value)?String(value):'—';
- const stat=(officer,key)=>numeric(key==='health'||key==='troops'?officer?.[key]:officer?.profile?.[key]);
+ const stat=(officer,key)=>numeric(['health','experience','troops'].includes(key)?officer?.[key]:officer?.profile?.[key]);
+ // The original information screen shows the raw experience counter / 50.
+ const experience=value=>Number.isInteger(value)&&value>=0&&value<=49999?Math.floor(value/50):'—';
  function stableId(a,b){
   const first=Number(a),second=Number(b);
   if(Number.isSafeInteger(first)&&Number.isSafeInteger(second)&&first!==second)return first-second;
@@ -34,7 +36,7 @@
  // Returns plain text. The rendering caller escapes it when inserting HTML.
  function label(name,officer,{troops=officer?.troops,health=officer?.health,loyalty=false}={}){
   const profile=officer?.profile;
-  return `${name} · ${display(troops)}兵 · 武${display(profile?.martial_strength)} · 知${display(profile?.intellect)} · 德${display(profile?.virtue)} · 体力${display(health)}${loyalty?` · 忠誠${display(officer?.loyalty)}`:''}`;
+  return `${name} · ${display(troops)}兵 · 武${display(profile?.martial_strength)} · 知${display(profile?.intellect)} · 德${display(profile?.virtue)} · 体力${display(health)} · 经验${experience(officer?.experience)}${loyalty?` · 忠誠${display(officer?.loyalty)}`:''}`;
  }
- return Object.freeze({label,sort});
+ return Object.freeze({label,sort,experience});
 });

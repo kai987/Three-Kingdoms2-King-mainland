@@ -30,10 +30,23 @@ async function main() {
   const pixels = [...presentation.castle_fill_pixels, ...presentation.castle_outline_pixels];
   const castles = Object.values(positions).flatMap(([cx, cy]) => pixels.map(([x, y]) =>
     `<rect x="${cx+x}" y="${cy+y}" width="4" height="4" fill="black"/>`)).join('');
+  const water = json('game/map-source/water-render.json');
+  if (water.schema !== 'tk2-water-render-v1' || water.config_sha256 !== sha(read('game/config/water-corrections.json')))
+    throw Error('Water render does not match current configuration');
+  for (const [file, hash] of Object.entries(water.sources))
+    if (sha(read(file)) !== hash) throw Error('Water render source changed: ' + file);
+  if (water.output.path !== 'game/map-source/hydrology-ground.png' || sha(read(water.output.path)) !== water.output.sha256)
+    throw Error('Water render ground changed');
+  const waterMask = water.mask_runs.map(([y,x,n]) => `M${x} ${y}h${n}v1h-${n}z`).join('');
+  const currentGround = water.output.path;
   const maskPath = escape(geometry.mask_d), paintPath = escape(geometry.paint_d);
   const crossings = geometry.crossings.map(c => `<path d="${escape(c.d)}" stroke="${escape(c.stroke)}" stroke-width="${c.width}"/>`).join('');
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1352" height="1024" viewBox="0 0 1352 1024">
     <defs>
+      <mask id="water-repair" maskUnits="userSpaceOnUse" x="0" y="0" width="1352" height="1024">
+        <path d="${waterMask}" fill="white" shape-rendering="crispEdges"/>
+        <g shape-rendering="crispEdges">${castles}</g>
+      </mask>
       <mask id="repair" maskUnits="userSpaceOnUse" x="0" y="0" width="1352" height="1024">
         <path d="${maskPath}" stroke="white" stroke-width="6.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         <g shape-rendering="crispEdges">${castles}</g>
@@ -43,8 +56,16 @@ async function main() {
       </mask>
     </defs>
     <image href="${data(baseline)}" width="1352" height="1024"/>
+    <g mask="url(#water-repair)">
+      <image href="${data(currentGround)}" width="1352" height="1024"/>
+      <g fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+        <path d="${paintPath}" stroke="#e4b45e" stroke-width="4.1"/>
+        <path d="${paintPath}" stroke="#704518" stroke-width="1.9"/>
+        ${crossings}
+      </g>
+    </g>
     <g mask="url(#repair)">
-      <image href="${data(ground)}" width="1352" height="1024"/>
+      <image href="${data(currentGround)}" width="1352" height="1024"/>
       <g fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
         <path d="${paintPath}" stroke="#e4b45e" stroke-width="4.1"/>
         <path d="${paintPath}" stroke="#704518" stroke-width="1.9"/>
@@ -68,7 +89,8 @@ async function main() {
   const manifest = {
     schema:'tk2-road-center-render-v1', source_sha256:sha(read('game/config/road-centers.json')),
     positions_sha256:sha(canonicalPositions), baseline_sha256:sha(read(baseline)),
-    ground_sha256:sha(read(ground)), output_sha256:sha(read('game/assets/map-road-centers.png'))
+    ground_sha256:sha(read(ground)), output_sha256:sha(read('game/assets/map-road-centers.png')),
+    water_render_sha256:sha(read('game/map-source/water-render.json'))
   };
   fs.writeFileSync(path.join(root, 'game/map-source/road-centers-render.json'), JSON.stringify(manifest, null, 2)+'\n');
   console.log(JSON.stringify({output:'game/assets/map-road-centers.png', changed_segments:geometry.changes.length, ...manifest}, null, 2));

@@ -1,79 +1,1145 @@
 {
-  "explore": {
-    "arrived": {
-      "rng": {
-        "draws": 1,
-        "state": 525710612
-      },
-      "save": "7d0b913aa11732516094d4c222c18c143ea2bd5b51bd5878851ca3a54b3c7f55",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 801,
-        "recruited": 4236
-      },
-      "state": "2186a222c7bad057c9c23c3f64f8fcae585ce534c6b3bf08691028195bee14ff",
-      "turn": 4
-    },
+  "plain": {
     "before": {
+      "save": "b3aae3dddd9e9b04b42e5622bd800a2bea99e90a83134bb2720e47f8a4784887",
+      "state": "56efdd05912e05de8dd85799a8a3e755b803b879ac6caa54ab05ae35e6a37ce1",
       "rng": {
-        "draws": 0,
-        "state": 2026
+        "state": 2026,
+        "draws": 0
       },
-      "save": "e2588c3daa81a6ff897fcee91f73ad2891773ad8682dc51968ac55a5b4492637",
       "soldiers": {
         "initial": 282180,
-        "lost": 0,
-        "recruited": 0
+        "recruited": 0,
+        "lost": 0
       },
-      "state": "c191c80529687f1f70c11965cc2ec82e10873896e3ba0e69550ccf9fd215b881",
       "turn": 1
     },
     "preview": {
+      "save": "b3aae3dddd9e9b04b42e5622bd800a2bea99e90a83134bb2720e47f8a4784887",
+      "state": "56efdd05912e05de8dd85799a8a3e755b803b879ac6caa54ab05ae35e6a37ce1",
       "rng": {
-        "draws": 0,
-        "state": 2026
+        "state": 2026,
+        "draws": 0
       },
-      "save": "e2588c3daa81a6ff897fcee91f73ad2891773ad8682dc51968ac55a5b4492637",
       "soldiers": {
         "initial": 282180,
-        "lost": 0,
-        "recruited": 0
+        "recruited": 0,
+        "lost": 0
       },
-      "state": "c191c80529687f1f70c11965cc2ec82e10873896e3ba0e69550ccf9fd215b881",
       "turn": 1
     },
     "queued": {
+      "save": "a35f92e2f913cdbb70af4efe52c98187bd26a927aff8e48b1677d0fcbb0e0262",
+      "state": "1588b82b2ca6b83232c947778cd0ad1089c30378f8c000b9563bb746e2c354a1",
       "rng": {
-        "draws": 1,
-        "state": 525710612
+        "state": 2026,
+        "draws": 0
       },
-      "save": "42ac8a854ca4f4c59b47f615bdd496c7586b5a0c3a1d8d9a42721e3be170ae08",
       "soldiers": {
         "initial": 282180,
-        "lost": 0,
-        "recruited": 0
+        "recruited": 0,
+        "lost": 0
       },
-      "state": "4fc189e09bea33df58423a43c28b214b8bd316d2a9e9e53a77752db851f8b83c",
       "turn": 1
     },
     "quote": {
+      "path": [
+        "jiameng",
+        "zitong",
+        "fuxian"
+      ],
+      "routes": [
+        {
+          "id": "jiameng:zitong:land",
+          "from": "jiameng",
+          "to": "zitong",
+          "mode": "land",
+          "terrain": "mountain",
+          "distance_km": 134.2,
+          "land_km": 134.2,
+          "sea_km": 0,
+          "days": 9,
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 49.020206,
+                "chord_px": 48.846699,
+                "shape_ratio": 1.003552072
+              }
+            ]
+          },
+          "base_days": 5,
+          "hazard": null
+        },
+        {
+          "id": "fuxian:zitong:land",
+          "from": "zitong",
+          "to": "fuxian",
+          "mode": "land",
+          "terrain": "mountain",
+          "distance_km": 63.7,
+          "land_km": 63.7,
+          "sea_km": 0,
+          "days": 5,
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 35.989582,
+                "chord_px": 35.805028,
+                "shape_ratio": 1.005154416
+              }
+            ]
+          },
+          "base_days": 3,
+          "hazard": null
+        }
+      ],
+      "days": 14,
+      "months": 1,
+      "turns": 2,
+      "distance_km": 197.9,
+      "grain_per_officer": 10,
+      "modes": [
+        "land"
+      ]
+    },
+    "arrived": {
+      "save": "cc54827f6a99a86733fd7d30eba5d12d876f54cbbf013cba7c0dc593e128f0a5",
+      "state": "280a9f2fe913266b9bc1554239b2316a427182b9f123b7a0a8873217b6698fbf",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 3
+    },
+    "troops": [
+      300,
+      300,
+      300
+    ]
+  },
+  "yinping": {
+    "before": {
+      "save": "858e4dc5bd020a58ce9efc6784a088dcd92ae5f8aef3578eab84d14cae72f62a",
+      "state": "587676ec3444ab10d0b5cf625cb5a0948996e6e2b282533f2f90fd31437e94f1",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "preview": {
+      "save": "858e4dc5bd020a58ce9efc6784a088dcd92ae5f8aef3578eab84d14cae72f62a",
+      "state": "587676ec3444ab10d0b5cf625cb5a0948996e6e2b282533f2f90fd31437e94f1",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "queued": {
+      "save": "154c55984af3c64c223493be6477fdec28ac8a98b62d4b80b3b044b6af5cb38a",
+      "state": "f69bb7656866141b4c8fa9bfb9823fdd02576ef7addd202a69f9662028c5c9d6",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "quote": {
+      "path": [
+        "yinping",
+        "shujun"
+      ],
+      "routes": [
+        {
+          "id": "yinping:shujun:land",
+          "from": "yinping",
+          "to": "shujun",
+          "mode": "land",
+          "terrain": "mountain",
+          "distance_km": 890.4,
+          "land_km": 890.4,
+          "sea_km": 0,
+          "days": 60,
+          "special": "yinping",
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 250.181127,
+                "chord_px": 106.282642,
+                "shape_ratio": 2.353922732
+              }
+            ]
+          },
+          "base_days": 30,
+          "hazard": {
+            "kind": "yinping",
+            "label": "阴平险道：全军最终余三分之一",
+            "season": null,
+            "wind": null,
+            "month": 7,
+            "survival_numerator": 1,
+            "survival_denominator": 3,
+            "loss_percent": 66.66666666666667,
+            "loss_percent_min": 66.66666666666667,
+            "loss_percent_max": 66.66666666666667
+          }
+        }
+      ],
+      "days": 60,
+      "months": 2,
+      "turns": 6,
+      "distance_km": 890.4,
+      "grain_per_officer": 5,
+      "modes": [
+        "land"
+      ]
+    },
+    "arrived": {
+      "save": "1914b9670c35f807efcbdc5a73c1b713619c8f8595e01edf87205c4dce2dfd1b",
+      "state": "72fe00652c8a9e5acc63fae2d1577e012a20f973673760ef23f1abb954157ceb",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 8428,
+        "lost": 600
+      },
+      "turn": 7
+    },
+    "troops": [
+      100,
+      100,
+      100
+    ]
+  },
+  "ziwu-rain": {
+    "before": {
+      "save": "1d3fc493e5333117d3fccc0e86d02bce6f605eb7d9d3d6c878203d6bbd6b22d2",
+      "state": "426e800a6b21b8688f98ee2c6ee0cdce0b9c97c55aa186292090c63fcd4875b7",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "preview": {
+      "save": "1d3fc493e5333117d3fccc0e86d02bce6f605eb7d9d3d6c878203d6bbd6b22d2",
+      "state": "426e800a6b21b8688f98ee2c6ee0cdce0b9c97c55aa186292090c63fcd4875b7",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "queued": {
+      "save": "22505bae6273803b9e68e853bbc860f5403bc47011c2c9d88db950686c522e00",
+      "state": "3d476b95ac78f0aac6cb66bf4a995a44a2ea6242d3175dc499973cc69da1c6ac",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "quote": {
+      "path": [
+        "hanzhong",
+        "jingzhao"
+      ],
+      "routes": [
+        {
+          "id": "hanzhong:jingzhao:ziwu",
+          "from": "hanzhong",
+          "to": "jingzhao",
+          "mode": "land",
+          "terrain": "mountain",
+          "special": "ziwu",
+          "distance_km": 329.7,
+          "land_km": 329.7,
+          "sea_km": 0,
+          "days": 44,
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 96.726875,
+                "chord_px": 95,
+                "shape_ratio": 1.018177632
+              }
+            ]
+          },
+          "base_days": 11,
+          "hazard": {
+            "kind": "ziwu_rain",
+            "label": "子午谷暴雨：减员50%",
+            "season": "rainy",
+            "wind": null,
+            "month": 7,
+            "survival_numerator": 50,
+            "survival_denominator": 100,
+            "loss_percent": 50,
+            "loss_percent_min": 50,
+            "loss_percent_max": 50
+          }
+        }
+      ],
+      "days": 44,
+      "months": 2,
+      "turns": 5,
+      "distance_km": 329.7,
+      "grain_per_officer": 5,
+      "modes": [
+        "land"
+      ]
+    },
+    "arrived": {
+      "save": "b827be15ca36183ecbdd70aec3e9721671972a7d426f88fc74c4b7a59725f00d",
+      "state": "1614c5178c044a69f639c7c3811765c32c312e7205d39e4e996fb407491b51a8",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 4214,
+        "lost": 450
+      },
+      "turn": 6
+    },
+    "troops": [
+      150,
+      150,
+      150
+    ]
+  },
+  "ziwu-dry": {
+    "before": {
+      "save": "4aa9ffb68583f687d712bf524414e5e950aed8d5c74aa6330496ab431c8d6281",
+      "state": "350eff3f52a0dee8ef7aa63e5ed68f8c6d640b92c579de6abdb124cdec2014a9",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 37926,
+        "lost": 0
+      },
+      "turn": 28
+    },
+    "preview": {
+      "save": "4aa9ffb68583f687d712bf524414e5e950aed8d5c74aa6330496ab431c8d6281",
+      "state": "350eff3f52a0dee8ef7aa63e5ed68f8c6d640b92c579de6abdb124cdec2014a9",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 37926,
+        "lost": 0
+      },
+      "turn": 28
+    },
+    "queued": {
+      "save": "4b59d79e1b43ece5bdc4738e877b613c73e52d758b33b08ded7d615c3adda0d7",
+      "state": "26fa0ad4bc8a57ddd042ad5c85f35b6cc227e55d91d533679fbbcd7843f4b906",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 37926,
+        "lost": 0
+      },
+      "turn": 28
+    },
+    "quote": {
+      "path": [
+        "hanzhong",
+        "jingzhao"
+      ],
+      "routes": [
+        {
+          "id": "hanzhong:jingzhao:ziwu",
+          "from": "hanzhong",
+          "to": "jingzhao",
+          "mode": "land",
+          "terrain": "mountain",
+          "special": "ziwu",
+          "distance_km": 329.7,
+          "land_km": 329.7,
+          "sea_km": 0,
+          "days": 22,
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 96.726875,
+                "chord_px": 95,
+                "shape_ratio": 1.018177632
+              }
+            ]
+          },
+          "base_days": 11,
+          "hazard": {
+            "kind": "ziwu_dry",
+            "label": "子午谷险道：减员20%",
+            "season": "dry",
+            "wind": null,
+            "month": 4,
+            "survival_numerator": 80,
+            "survival_denominator": 100,
+            "loss_percent": 20,
+            "loss_percent_min": 20,
+            "loss_percent_max": 20
+          }
+        }
+      ],
       "days": 22,
-      "distance_km": 1882.7,
+      "months": 1,
+      "turns": 3,
+      "distance_km": 329.7,
+      "grain_per_officer": 5,
+      "modes": [
+        "land"
+      ]
+    },
+    "arrived": {
+      "save": "adef1f8ba2e15eb816e5e8bda177807ec14c4cdd2b7d9abf59f42c8eed3efd1d",
+      "state": "f61c0f9377f564ea34eb05069540b811114ed6f0845cd86c33093a7b5fddbc68",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 42140,
+        "lost": 180
+      },
+      "turn": 31
+    },
+    "troops": [
+      240,
+      240,
+      240
+    ]
+  },
+  "sea-tail": {
+    "before": {
+      "save": "ce6fe1d60b6e327f7f5805262a411f6cdb8e5f2890c3b7973a498c44c902cdf7",
+      "state": "9b08f52f985579f769ed41eb7d2da3b4f58452963609f48e1cf91fe13546f9f4",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 25284,
+        "lost": 0
+      },
+      "turn": 19
+    },
+    "preview": {
+      "save": "ce6fe1d60b6e327f7f5805262a411f6cdb8e5f2890c3b7973a498c44c902cdf7",
+      "state": "9b08f52f985579f769ed41eb7d2da3b4f58452963609f48e1cf91fe13546f9f4",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 25284,
+        "lost": 0
+      },
+      "turn": 19
+    },
+    "queued": {
+      "save": "525792bd7ead0605ba86e3bac88ea8af055c8a1b47b7c5272a323ad54bce9543",
+      "state": "4e246bf90f630c994627ae7dffe1631ea539da932fde943d1ee2f0f078d7485c",
+      "rng": {
+        "state": 525710612,
+        "draws": 1
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 25284,
+        "lost": 0
+      },
+      "turn": 19
+    },
+    "quote": {
+      "path": [
+        "hepu",
+        "zhuya"
+      ],
+      "routes": [
+        {
+          "id": "hepu:zhuya:sea",
+          "from": "hepu",
+          "to": "zhuya",
+          "mode": "sea",
+          "terrain": "sea",
+          "distance_km": 294.4,
+          "land_km": 107.9,
+          "sea_km": 186.5,
+          "days": 8,
+          "draw": [
+            {
+              "mode": "land",
+              "points": [
+                [
+                  552,
+                  829
+                ],
+                [
+                  548,
+                  832
+                ],
+                [
+                  540,
+                  840
+                ],
+                [
+                  536,
+                  840
+                ],
+                [
+                  532,
+                  844
+                ]
+              ]
+            },
+            {
+              "mode": "sea",
+              "points": [
+                [
+                  532,
+                  844
+                ],
+                [
+                  532,
+                  848
+                ],
+                [
+                  552,
+                  868
+                ]
+              ]
+            },
+            {
+              "mode": "land",
+              "points": [
+                [
+                  552,
+                  868
+                ],
+                [
+                  552,
+                  872
+                ],
+                [
+                  565,
+                  885
+                ]
+              ]
+            }
+          ],
+          "geo": [
+            [
+              109.4,
+              21.4
+            ],
+            [
+              109.6,
+              20.3
+            ],
+            [
+              110.5,
+              20.4
+            ],
+            [
+              110.5,
+              20.1
+            ]
+          ],
+          "discovery_candidate": false,
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 25.970564,
+                "chord_px": 25,
+                "shape_ratio": 1.03882256
+              },
+              {
+                "mode": "sea",
+                "length_px": 31.613461,
+                "chord_px": 31.240999,
+                "shape_ratio": 1.011922218
+              },
+              {
+                "mode": "land",
+                "length_px": 22.384777,
+                "chord_px": 21.400935,
+                "shape_ratio": 1.045971917
+              }
+            ]
+          },
+          "base_days": 10,
+          "hazard": {
+            "kind": "monsoon_storm",
+            "label": "东北季风顺风及暴风雨：全程减员80–90%",
+            "season": "northeast_monsoon",
+            "wind": "tailwind",
+            "month": 1,
+            "loss_percent_min": 80,
+            "loss_percent_max": 90,
+            "loss_percent": null,
+            "survival_numerator": null,
+            "survival_denominator": null,
+            "speed_km_per_day": 120
+          }
+        }
+      ],
+      "days": 8,
+      "months": 1,
+      "turns": 1,
+      "distance_km": 294.4,
       "grain_per_officer": 5,
       "modes": [
         "sea"
+      ]
+    },
+    "arrived": {
+      "save": "4a729af8046a1a150f5467efc80623f76c48b900f24ac4364b1786cbd094f18d",
+      "state": "5640d427dc5612f5332991bf9c1226a203e69ece4763385eef4235e1d4989cc7",
+      "rng": {
+        "state": 525710612,
+        "draws": 1
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 25284,
+        "lost": 801
+      },
+      "turn": 20
+    },
+    "troops": [
+      33,
+      33,
+      33
+    ]
+  },
+  "sea-head": {
+    "before": {
+      "save": "97b4ed491da7cea0285279a83d605f0ff30fd6acfbd2c3c7d8f94a4bf9d5b0ec",
+      "state": "bf762accea8a8f1eca1e03a165170f10cee8ae820123e9e1b00e0cb38ae3a275",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "preview": {
+      "save": "97b4ed491da7cea0285279a83d605f0ff30fd6acfbd2c3c7d8f94a4bf9d5b0ec",
+      "state": "bf762accea8a8f1eca1e03a165170f10cee8ae820123e9e1b00e0cb38ae3a275",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "queued": {
+      "save": "746c22b0825e86275e129b629685922efb6260c02d17c8542a2da37220cfe8fa",
+      "state": "6fcf3dc12018d84db4ecafc755cccd659e3c56c713ded5081ffef2596d279373",
+      "rng": {
+        "state": 525710612,
+        "draws": 1
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "quote": {
+      "path": [
+        "hepu",
+        "zhuya"
       ],
+      "routes": [
+        {
+          "id": "hepu:zhuya:sea",
+          "from": "hepu",
+          "to": "zhuya",
+          "mode": "sea",
+          "terrain": "sea",
+          "distance_km": 294.4,
+          "land_km": 107.9,
+          "sea_km": 186.5,
+          "days": 31,
+          "draw": [
+            {
+              "mode": "land",
+              "points": [
+                [
+                  552,
+                  829
+                ],
+                [
+                  548,
+                  832
+                ],
+                [
+                  540,
+                  840
+                ],
+                [
+                  536,
+                  840
+                ],
+                [
+                  532,
+                  844
+                ]
+              ]
+            },
+            {
+              "mode": "sea",
+              "points": [
+                [
+                  532,
+                  844
+                ],
+                [
+                  532,
+                  848
+                ],
+                [
+                  552,
+                  868
+                ]
+              ]
+            },
+            {
+              "mode": "land",
+              "points": [
+                [
+                  552,
+                  868
+                ],
+                [
+                  552,
+                  872
+                ],
+                [
+                  565,
+                  885
+                ]
+              ]
+            }
+          ],
+          "geo": [
+            [
+              109.4,
+              21.4
+            ],
+            [
+              109.6,
+              20.3
+            ],
+            [
+              110.5,
+              20.4
+            ],
+            [
+              110.5,
+              20.1
+            ]
+          ],
+          "discovery_candidate": false,
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 25.970564,
+                "chord_px": 25,
+                "shape_ratio": 1.03882256
+              },
+              {
+                "mode": "sea",
+                "length_px": 31.613461,
+                "chord_px": 31.240999,
+                "shape_ratio": 1.011922218
+              },
+              {
+                "mode": "land",
+                "length_px": 22.384777,
+                "chord_px": 21.400935,
+                "shape_ratio": 1.045971917
+              }
+            ]
+          },
+          "base_days": 10,
+          "hazard": {
+            "kind": "monsoon_storm",
+            "label": "西南季风逆风及暴风雨：全程减员80–90%",
+            "season": "southwest_monsoon",
+            "wind": "headwind",
+            "month": 7,
+            "loss_percent_min": 80,
+            "loss_percent_max": 90,
+            "loss_percent": null,
+            "survival_numerator": null,
+            "survival_denominator": null,
+            "speed_km_per_day": 7.5
+          }
+        }
+      ],
+      "days": 31,
+      "months": 2,
+      "turns": 4,
+      "distance_km": 294.4,
+      "grain_per_officer": 5,
+      "modes": [
+        "sea"
+      ]
+    },
+    "arrived": {
+      "save": "33fbf49dcd1e6682ab851590555d3f348e67387b51fb2e3cf3a16112af8ba52a",
+      "state": "58d08d352f1687d3fb217ced3d93edd56ea6d4eb68c36a3f050da87641aab9cf",
+      "rng": {
+        "state": 525710612,
+        "draws": 1
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 4234,
+        "lost": 801
+      },
+      "turn": 5
+    },
+    "troops": [
+      33,
+      33,
+      33
+    ]
+  },
+  "sea-calm": {
+    "before": {
+      "save": "9b49ee84316f4381db6cea6e20e06695b41cf70165250534d765354479ef1129",
+      "state": "3a1c135fb22fef9ecb3a1827d46bc19072a6e581d9b5a2eacf6d0d3eb7db67f3",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 37926,
+        "lost": 0
+      },
+      "turn": 28
+    },
+    "preview": {
+      "save": "9b49ee84316f4381db6cea6e20e06695b41cf70165250534d765354479ef1129",
+      "state": "3a1c135fb22fef9ecb3a1827d46bc19072a6e581d9b5a2eacf6d0d3eb7db67f3",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 37926,
+        "lost": 0
+      },
+      "turn": 28
+    },
+    "queued": {
+      "save": "877d5b4b6acd8920b4b8c0b96ac2c7e453932aca2db5fe144c6cf3acbb988975",
+      "state": "71001932b22ff159e8ac61ec7a8d88a453415efb54dad051c8226fe759c39be7",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 37926,
+        "lost": 0
+      },
+      "turn": 28
+    },
+    "quote": {
+      "path": [
+        "hepu",
+        "zhuya"
+      ],
+      "routes": [
+        {
+          "id": "hepu:zhuya:sea",
+          "from": "hepu",
+          "to": "zhuya",
+          "mode": "sea",
+          "terrain": "sea",
+          "distance_km": 294.4,
+          "land_km": 107.9,
+          "sea_km": 186.5,
+          "days": 9,
+          "draw": [
+            {
+              "mode": "land",
+              "points": [
+                [
+                  552,
+                  829
+                ],
+                [
+                  548,
+                  832
+                ],
+                [
+                  540,
+                  840
+                ],
+                [
+                  536,
+                  840
+                ],
+                [
+                  532,
+                  844
+                ]
+              ]
+            },
+            {
+              "mode": "sea",
+              "points": [
+                [
+                  532,
+                  844
+                ],
+                [
+                  532,
+                  848
+                ],
+                [
+                  552,
+                  868
+                ]
+              ]
+            },
+            {
+              "mode": "land",
+              "points": [
+                [
+                  552,
+                  868
+                ],
+                [
+                  552,
+                  872
+                ],
+                [
+                  565,
+                  885
+                ]
+              ]
+            }
+          ],
+          "geo": [
+            [
+              109.4,
+              21.4
+            ],
+            [
+              109.6,
+              20.3
+            ],
+            [
+              110.5,
+              20.4
+            ],
+            [
+              110.5,
+              20.1
+            ]
+          ],
+          "discovery_candidate": false,
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 25.970564,
+                "chord_px": 25,
+                "shape_ratio": 1.03882256
+              },
+              {
+                "mode": "sea",
+                "length_px": 31.613461,
+                "chord_px": 31.240999,
+                "shape_ratio": 1.011922218
+              },
+              {
+                "mode": "land",
+                "length_px": 22.384777,
+                "chord_px": 21.400935,
+                "shape_ratio": 1.045971917
+              }
+            ]
+          },
+          "base_days": 10,
+          "hazard": null
+        }
+      ],
+      "days": 9,
       "months": 1,
+      "turns": 1,
+      "distance_km": 294.4,
+      "grain_per_officer": 5,
+      "modes": [
+        "sea"
+      ]
+    },
+    "arrived": {
+      "save": "476339e2da6325766506f75385d2f0cb1f27d5754087848f79c04f9b8b23febf",
+      "state": "bc501ff6ea9a851ba315b40e8e3a5930760e18c63a5f6e56dbdaea93a98682b9",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 37926,
+        "lost": 0
+      },
+      "turn": 29
+    },
+    "troops": [
+      300,
+      300,
+      300
+    ]
+  },
+  "explore": {
+    "before": {
+      "save": "f3467ad127d3560ef315ea69903acc44b96c2cf2348cbb54d9f6d91bdb97cda4",
+      "state": "12296d83904f12ba4eda2045328d2482f7deb15447ae7e587a645a384a912ea5",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "preview": {
+      "save": "f3467ad127d3560ef315ea69903acc44b96c2cf2348cbb54d9f6d91bdb97cda4",
+      "state": "12296d83904f12ba4eda2045328d2482f7deb15447ae7e587a645a384a912ea5",
+      "rng": {
+        "state": 2026,
+        "draws": 0
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "queued": {
+      "save": "f255674249af3514b3096e71f3f8da69afa4561dad6bd741b3a574c6e4c512f1",
+      "state": "c4b7cffdb40b59e2981e3301efc547dfcb605a025b54ee4f1b7ff7bce5731855",
+      "rng": {
+        "state": 525710612,
+        "draws": 1
+      },
+      "soldiers": {
+        "initial": 282180,
+        "recruited": 0,
+        "lost": 0
+      },
+      "turn": 1
+    },
+    "quote": {
       "path": [
         "hepu",
         "yizhou"
       ],
       "routes": [
         {
-          "base_days": 63,
-          "days": 22,
-          "discovery_candidate": true,
-          "distance_km": 1882.7,
+          "id": "explore:hepu:yizhou:sea",
+          "from": "hepu",
+          "to": "yizhou",
+          "mode": "sea",
+          "terrain": "sea",
+          "distance_km": 1457.2,
+          "land_km": 150,
+          "sea_km": 1307.2,
+          "days": 18,
           "draw": [
             {
               "mode": "land",
@@ -247,7 +1313,6 @@
               ]
             }
           ],
-          "from": "hepu",
           "geo": [
             [
               109.4,
@@ -298,991 +1363,73 @@
               24.6
             ]
           ],
+          "discovery_candidate": true,
+          "timing_geometry": {
+            "schema": "tk2-route-timing-v1",
+            "parts": [
+              {
+                "mode": "land",
+                "length_px": 25.970564,
+                "chord_px": 25,
+                "shape_ratio": 1.03882256
+              },
+              {
+                "mode": "sea",
+                "length_px": 668.231934,
+                "chord_px": 608.342009,
+                "shape_ratio": 1.098447788
+              },
+              {
+                "mode": "land",
+                "length_px": 25.970562,
+                "chord_px": 25,
+                "shape_ratio": 1.03882248
+              }
+            ]
+          },
+          "base_days": 49,
           "hazard": {
             "kind": "monsoon_storm",
             "label": "西南季风顺风及暴风雨：全程减员80–90%",
-            "loss_percent": null,
-            "loss_percent_max": 90,
-            "loss_percent_min": 80,
-            "month": 7,
             "season": "southwest_monsoon",
-            "speed_km_per_day": 120,
-            "survival_denominator": null,
+            "wind": "tailwind",
+            "month": 7,
+            "loss_percent_min": 80,
+            "loss_percent_max": 90,
+            "loss_percent": null,
             "survival_numerator": null,
-            "wind": "tailwind"
-          },
-          "id": "explore:hepu:yizhou:sea",
-          "land_km": 144.3,
-          "mode": "sea",
-          "sea_km": 1738.4,
-          "terrain": "sea",
-          "to": "yizhou"
+            "survival_denominator": null,
+            "speed_km_per_day": 120
+          }
         }
       ],
-      "turns": 3
+      "days": 18,
+      "months": 1,
+      "turns": 2,
+      "distance_km": 1457.2,
+      "grain_per_officer": 5,
+      "modes": [
+        "sea"
+      ]
     },
-    "troops": [
-      33,
-      33,
-      33
-    ]
-  },
-  "plain": {
     "arrived": {
+      "save": "ae9fd59dbf57e09461c663a0ed499afef894823756180db180de76307e364e6a",
+      "state": "bb22d4a33dfc451ee71580a20f50483f0f13d227ab9de248c32ddf087bf5258b",
       "rng": {
-        "draws": 0,
-        "state": 2026
+        "state": 525710612,
+        "draws": 1
       },
-      "save": "ec3335266623a648685dd8d4124988628321cb9b5275451065ec6cd3571e1a1a",
       "soldiers": {
         "initial": 282180,
-        "lost": 0,
-        "recruited": 0
+        "recruited": 0,
+        "lost": 801
       },
-      "state": "1488b7aebea9b6ed34d6d086b7c9e90818ef0017ca24a51bad36d0da1987bd18",
       "turn": 3
     },
-    "before": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "442d855a8d8de1c5b9c7f4d266a4d4ee7fab094b9842be43c16da51293c44f87",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "9038041bde7d59e9bbdbb3f1bd6d53f67aaf30b2ce5440133c93bc32cd6532d7",
-      "turn": 1
-    },
-    "preview": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "442d855a8d8de1c5b9c7f4d266a4d4ee7fab094b9842be43c16da51293c44f87",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "9038041bde7d59e9bbdbb3f1bd6d53f67aaf30b2ce5440133c93bc32cd6532d7",
-      "turn": 1
-    },
-    "queued": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "c2b245b65cdb2c5d11ae4d08f87ce7aaec05a84204c6f8a3b2db59cd08e5e8d9",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "6ecf9fc2c0ec3a3ae8e0d9cd2610df9f89d00150a095f0d32505b31081e7cbd4",
-      "turn": 1
-    },
-    "quote": {
-      "days": 14,
-      "distance_km": 197.1,
-      "grain_per_officer": 10,
-      "modes": [
-        "land"
-      ],
-      "months": 1,
-      "path": [
-        "jiameng",
-        "zitong",
-        "fuxian"
-      ],
-      "routes": [
-        {
-          "base_days": 5,
-          "days": 9,
-          "distance_km": 133.7,
-          "from": "jiameng",
-          "hazard": null,
-          "id": "jiameng:zitong:land",
-          "land_km": 133.7,
-          "mode": "land",
-          "sea_km": 0,
-          "terrain": "mountain",
-          "to": "zitong"
-        },
-        {
-          "base_days": 3,
-          "days": 5,
-          "distance_km": 63.4,
-          "from": "zitong",
-          "hazard": null,
-          "id": "fuxian:zitong:land",
-          "land_km": 63.4,
-          "mode": "land",
-          "sea_km": 0,
-          "terrain": "mountain",
-          "to": "fuxian"
-        }
-      ],
-      "turns": 2
-    },
-    "troops": [
-      300,
-      300,
-      300
-    ]
-  },
-  "sea-calm": {
-    "arrived": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "3986f578c70b465c388c9619005910174f7d239b6df9bf141776f60d7b5ef19c",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 37926
-      },
-      "state": "47dd4f26b00572dfac78e91ca390e9fdd21b8dd0850f2b83cddcf7ddf2d4f3ed",
-      "turn": 29
-    },
-    "before": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "906e5650c7e6e3aa34afdb6dc17e565418bd1f6db9a25dcc77a5011cdcbdd707",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 37926
-      },
-      "state": "1fdfabf13921b297164500ff366a5f72e1beee38596547f7a76b1f8a5244fac8",
-      "turn": 28
-    },
-    "preview": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "906e5650c7e6e3aa34afdb6dc17e565418bd1f6db9a25dcc77a5011cdcbdd707",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 37926
-      },
-      "state": "1fdfabf13921b297164500ff366a5f72e1beee38596547f7a76b1f8a5244fac8",
-      "turn": 28
-    },
-    "queued": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "46d19c04f17b28f8f8028a2fa3074a646557517456aef709b81c8878edcc0fae",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 37926
-      },
-      "state": "17f755f9d1b22c572ad332386068cc9489a4f695d9d18d87d3e1e77ebb5f9c06",
-      "turn": 28
-    },
-    "quote": {
-      "days": 10,
-      "distance_km": 355.6,
-      "grain_per_officer": 5,
-      "modes": [
-        "sea"
-      ],
-      "months": 1,
-      "path": [
-        "hepu",
-        "zhuya"
-      ],
-      "routes": [
-        {
-          "base_days": 12,
-          "days": 10,
-          "discovery_candidate": false,
-          "distance_km": 355.6,
-          "draw": [
-            {
-              "mode": "land",
-              "points": [
-                [
-                  552,
-                  829
-                ],
-                [
-                  548,
-                  832
-                ],
-                [
-                  540,
-                  840
-                ],
-                [
-                  536,
-                  840
-                ],
-                [
-                  532,
-                  844
-                ]
-              ]
-            },
-            {
-              "mode": "sea",
-              "points": [
-                [
-                  532,
-                  844
-                ],
-                [
-                  532,
-                  848
-                ],
-                [
-                  552,
-                  868
-                ]
-              ]
-            },
-            {
-              "mode": "land",
-              "points": [
-                [
-                  552,
-                  868
-                ],
-                [
-                  552,
-                  872
-                ],
-                [
-                  565,
-                  885
-                ]
-              ]
-            }
-          ],
-          "from": "hepu",
-          "geo": [
-            [
-              109.4,
-              21.4
-            ],
-            [
-              109.6,
-              20.3
-            ],
-            [
-              110.5,
-              20.4
-            ],
-            [
-              110.5,
-              20.1
-            ]
-          ],
-          "hazard": null,
-          "id": "hepu:zhuya:sea",
-          "land_km": 103.7,
-          "mode": "sea",
-          "sea_km": 251.9,
-          "terrain": "sea",
-          "to": "zhuya"
-        }
-      ],
-      "turns": 1
-    },
-    "troops": [
-      300,
-      300,
-      300
-    ]
-  },
-  "sea-head": {
-    "arrived": {
-      "rng": {
-        "draws": 1,
-        "state": 525710612
-      },
-      "save": "890cd396c6129c99f2454d5c4336cb34e56b1898af7afe1059da44e1b53b4e29",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 801,
-        "recruited": 4234
-      },
-      "state": "11660a5dfc8075d705ec267aac7bd8d473422484e2fe67794970d388c9ce03e2",
-      "turn": 5
-    },
-    "before": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "b62750e20d451080cb985f9e439af4ac8336f64b796302fed2ec9e1a76d53bb8",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "d561d5bb05b782ec944fed4e77009b6398b85e6bda0c41b242b9398898c8db23",
-      "turn": 1
-    },
-    "preview": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "b62750e20d451080cb985f9e439af4ac8336f64b796302fed2ec9e1a76d53bb8",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "d561d5bb05b782ec944fed4e77009b6398b85e6bda0c41b242b9398898c8db23",
-      "turn": 1
-    },
-    "queued": {
-      "rng": {
-        "draws": 1,
-        "state": 525710612
-      },
-      "save": "1bb89ce6f37e1ab07b0a4ce7c149e5e85039c029045ad58531464259f601a32b",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "0c0b92c9ed862354107c4679e07e939682ca0193418c6761e3ff673afd249f13",
-      "turn": 1
-    },
-    "quote": {
-      "days": 40,
-      "distance_km": 355.6,
-      "grain_per_officer": 5,
-      "modes": [
-        "sea"
-      ],
-      "months": 2,
-      "path": [
-        "hepu",
-        "zhuya"
-      ],
-      "routes": [
-        {
-          "base_days": 12,
-          "days": 40,
-          "discovery_candidate": false,
-          "distance_km": 355.6,
-          "draw": [
-            {
-              "mode": "land",
-              "points": [
-                [
-                  552,
-                  829
-                ],
-                [
-                  548,
-                  832
-                ],
-                [
-                  540,
-                  840
-                ],
-                [
-                  536,
-                  840
-                ],
-                [
-                  532,
-                  844
-                ]
-              ]
-            },
-            {
-              "mode": "sea",
-              "points": [
-                [
-                  532,
-                  844
-                ],
-                [
-                  532,
-                  848
-                ],
-                [
-                  552,
-                  868
-                ]
-              ]
-            },
-            {
-              "mode": "land",
-              "points": [
-                [
-                  552,
-                  868
-                ],
-                [
-                  552,
-                  872
-                ],
-                [
-                  565,
-                  885
-                ]
-              ]
-            }
-          ],
-          "from": "hepu",
-          "geo": [
-            [
-              109.4,
-              21.4
-            ],
-            [
-              109.6,
-              20.3
-            ],
-            [
-              110.5,
-              20.4
-            ],
-            [
-              110.5,
-              20.1
-            ]
-          ],
-          "hazard": {
-            "kind": "monsoon_storm",
-            "label": "西南季风逆风及暴风雨：全程减员80–90%",
-            "loss_percent": null,
-            "loss_percent_max": 90,
-            "loss_percent_min": 80,
-            "month": 7,
-            "season": "southwest_monsoon",
-            "speed_km_per_day": 7.5,
-            "survival_denominator": null,
-            "survival_numerator": null,
-            "wind": "headwind"
-          },
-          "id": "hepu:zhuya:sea",
-          "land_km": 103.7,
-          "mode": "sea",
-          "sea_km": 251.9,
-          "terrain": "sea",
-          "to": "zhuya"
-        }
-      ],
-      "turns": 4
-    },
     "troops": [
       33,
       33,
       33
-    ]
-  },
-  "sea-tail": {
-    "arrived": {
-      "rng": {
-        "draws": 1,
-        "state": 525710612
-      },
-      "save": "d0ea3eefc2728367e740d8400c68a9d9b9ec0f2cf239134808bf9c031e5bafba",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 801,
-        "recruited": 25284
-      },
-      "state": "7c6d5a204af7417f0cf27a0af3fbb02376d366658c323379987cea50999620a9",
-      "turn": 20
-    },
-    "before": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "08e6592e0013ca166e496f8194902351efbf470927763b2a395df395a4e43a0d",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 25284
-      },
-      "state": "a32c12f27306dcd0e0b23485889bb7ce8e1276f9df4f39e8157f1f8aadeac771",
-      "turn": 19
-    },
-    "preview": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "08e6592e0013ca166e496f8194902351efbf470927763b2a395df395a4e43a0d",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 25284
-      },
-      "state": "a32c12f27306dcd0e0b23485889bb7ce8e1276f9df4f39e8157f1f8aadeac771",
-      "turn": 19
-    },
-    "queued": {
-      "rng": {
-        "draws": 1,
-        "state": 525710612
-      },
-      "save": "ec7fb3ba1350539f12cfc9b9205a5c2faac6ac8765ab97d0229cab2bc00ee13f",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 25284
-      },
-      "state": "2a3a9b5944fb4c6e99b46152a87f4e1c3ca0c336fd55347a286e57bcde91012d",
-      "turn": 19
-    },
-    "quote": {
-      "days": 9,
-      "distance_km": 355.6,
-      "grain_per_officer": 5,
-      "modes": [
-        "sea"
-      ],
-      "months": 1,
-      "path": [
-        "hepu",
-        "zhuya"
-      ],
-      "routes": [
-        {
-          "base_days": 12,
-          "days": 9,
-          "discovery_candidate": false,
-          "distance_km": 355.6,
-          "draw": [
-            {
-              "mode": "land",
-              "points": [
-                [
-                  552,
-                  829
-                ],
-                [
-                  548,
-                  832
-                ],
-                [
-                  540,
-                  840
-                ],
-                [
-                  536,
-                  840
-                ],
-                [
-                  532,
-                  844
-                ]
-              ]
-            },
-            {
-              "mode": "sea",
-              "points": [
-                [
-                  532,
-                  844
-                ],
-                [
-                  532,
-                  848
-                ],
-                [
-                  552,
-                  868
-                ]
-              ]
-            },
-            {
-              "mode": "land",
-              "points": [
-                [
-                  552,
-                  868
-                ],
-                [
-                  552,
-                  872
-                ],
-                [
-                  565,
-                  885
-                ]
-              ]
-            }
-          ],
-          "from": "hepu",
-          "geo": [
-            [
-              109.4,
-              21.4
-            ],
-            [
-              109.6,
-              20.3
-            ],
-            [
-              110.5,
-              20.4
-            ],
-            [
-              110.5,
-              20.1
-            ]
-          ],
-          "hazard": {
-            "kind": "monsoon_storm",
-            "label": "东北季风顺风及暴风雨：全程减员80–90%",
-            "loss_percent": null,
-            "loss_percent_max": 90,
-            "loss_percent_min": 80,
-            "month": 1,
-            "season": "northeast_monsoon",
-            "speed_km_per_day": 120,
-            "survival_denominator": null,
-            "survival_numerator": null,
-            "wind": "tailwind"
-          },
-          "id": "hepu:zhuya:sea",
-          "land_km": 103.7,
-          "mode": "sea",
-          "sea_km": 251.9,
-          "terrain": "sea",
-          "to": "zhuya"
-        }
-      ],
-      "turns": 1
-    },
-    "troops": [
-      33,
-      33,
-      33
-    ]
-  },
-  "yinping": {
-    "arrived": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "4e6866ecb38cc4e3c3ac6a3eda47608d987b5a3455421e1dad7c14bf2903a731",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 600,
-        "recruited": 4214
-      },
-      "state": "0b9087e04d6a87babf6074f531f6d062b9af64b1fb56039d09da20d325342290",
-      "turn": 4
-    },
-    "before": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "aad44753832c302c3078d7aeee12fe1b0b4d5770ff0e039a92d57008682f46ea",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "bc3ac95a33067bcfe4d7c6ba5f1063ee8d305bf7d05e5226c9674dc9e8dbefc5",
-      "turn": 1
-    },
-    "preview": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "aad44753832c302c3078d7aeee12fe1b0b4d5770ff0e039a92d57008682f46ea",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "bc3ac95a33067bcfe4d7c6ba5f1063ee8d305bf7d05e5226c9674dc9e8dbefc5",
-      "turn": 1
-    },
-    "queued": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "17547cc1695bbbf5abbdd22dd2d11237ba1e456d6d4bd7db8201f1c400079141",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "a1a1e8ce21d04dc42cdf2c9c6904d3eebcbe473c33c3486a378e69c05d71b7f5",
-      "turn": 1
-    },
-    "quote": {
-      "days": 26,
-      "distance_km": 378.3,
-      "grain_per_officer": 5,
-      "modes": [
-        "land"
-      ],
-      "months": 1,
-      "path": [
-        "yinping",
-        "shujun"
-      ],
-      "routes": [
-        {
-          "base_days": 13,
-          "days": 26,
-          "distance_km": 378.3,
-          "from": "yinping",
-          "hazard": {
-            "kind": "yinping",
-            "label": "阴平险道：全军最终余三分之一",
-            "loss_percent": 66.66666666666667,
-            "loss_percent_max": 66.66666666666667,
-            "loss_percent_min": 66.66666666666667,
-            "month": 7,
-            "season": null,
-            "survival_denominator": 3,
-            "survival_numerator": 1,
-            "wind": null
-          },
-          "id": "yinping:shujun:land",
-          "land_km": 378.3,
-          "mode": "land",
-          "sea_km": 0,
-          "special": "yinping",
-          "terrain": "mountain",
-          "to": "shujun"
-        }
-      ],
-      "turns": 3
-    },
-    "troops": [
-      100,
-      100,
-      100
-    ]
-  },
-  "ziwu-dry": {
-    "arrived": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "492a3ba25769df5de8501d1c6b2ff5fcfa92ea9aaf373baf8105cc1f8a7f0163",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 180,
-        "recruited": 42140
-      },
-      "state": "f90d78bc819be382da4ccddacd758fd702ec33b2ff6da119f9e02cb814519c11",
-      "turn": 31
-    },
-    "before": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "fe7739705bd4599c92aaa0a5a752f404c42300a698fe746c8318c03ab82d612a",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 37926
-      },
-      "state": "024b9d3a0d118c54d42b464594abdbd0c3c3db7950abfa0fe101724efd20d346",
-      "turn": 28
-    },
-    "preview": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "fe7739705bd4599c92aaa0a5a752f404c42300a698fe746c8318c03ab82d612a",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 37926
-      },
-      "state": "024b9d3a0d118c54d42b464594abdbd0c3c3db7950abfa0fe101724efd20d346",
-      "turn": 28
-    },
-    "queued": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "98e3be0df61c4e6ed1fb66d3798ba73561d4c57ac17194ab3f11348f6ab8e699",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 37926
-      },
-      "state": "8f59de944ab3a75a924f324c4cdb93b2d8eb836aeb6c5dc49ae8136159edadac",
-      "turn": 28
-    },
-    "quote": {
-      "days": 22,
-      "distance_km": 323.8,
-      "grain_per_officer": 5,
-      "modes": [
-        "land"
-      ],
-      "months": 1,
-      "path": [
-        "hanzhong",
-        "jingzhao"
-      ],
-      "routes": [
-        {
-          "base_days": 11,
-          "days": 22,
-          "distance_km": 323.8,
-          "from": "hanzhong",
-          "hazard": {
-            "kind": "ziwu_dry",
-            "label": "子午谷险道：减员20%",
-            "loss_percent": 20,
-            "loss_percent_max": 20,
-            "loss_percent_min": 20,
-            "month": 4,
-            "season": "dry",
-            "survival_denominator": 100,
-            "survival_numerator": 80,
-            "wind": null
-          },
-          "id": "hanzhong:jingzhao:ziwu",
-          "land_km": 323.8,
-          "mode": "land",
-          "sea_km": 0,
-          "special": "ziwu",
-          "terrain": "mountain",
-          "to": "jingzhao"
-        }
-      ],
-      "turns": 3
-    },
-    "troops": [
-      240,
-      240,
-      240
-    ]
-  },
-  "ziwu-rain": {
-    "arrived": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "3a95183a80e398ef047732ec7d5d1f0a6f6daaac8ede24667b53d91c1e28f51b",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 450,
-        "recruited": 4214
-      },
-      "state": "cabdf70c020b76ea16f3e1159aaac1ddb4551f5547c20fd792800a6f7dca2be2",
-      "turn": 6
-    },
-    "before": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "7efd6de82860ecee6b98be82e33b670736a41a1e9ce82f541d7d8ae60132b40d",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "1d18c19a12fb604ad6d9204ea85924d1f041df8bc7066cf786bbb37ed5fcaf8e",
-      "turn": 1
-    },
-    "preview": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "7efd6de82860ecee6b98be82e33b670736a41a1e9ce82f541d7d8ae60132b40d",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "1d18c19a12fb604ad6d9204ea85924d1f041df8bc7066cf786bbb37ed5fcaf8e",
-      "turn": 1
-    },
-    "queued": {
-      "rng": {
-        "draws": 0,
-        "state": 2026
-      },
-      "save": "636674b62d13ac7fb1687d23ee9d3cad3958ed14597ae535661713400c842442",
-      "soldiers": {
-        "initial": 282180,
-        "lost": 0,
-        "recruited": 0
-      },
-      "state": "cb87a8fe96241a846537af225d72cfb6b50c21dab338e5e4e43b4ba40e6f9531",
-      "turn": 1
-    },
-    "quote": {
-      "days": 44,
-      "distance_km": 323.8,
-      "grain_per_officer": 5,
-      "modes": [
-        "land"
-      ],
-      "months": 2,
-      "path": [
-        "hanzhong",
-        "jingzhao"
-      ],
-      "routes": [
-        {
-          "base_days": 11,
-          "days": 44,
-          "distance_km": 323.8,
-          "from": "hanzhong",
-          "hazard": {
-            "kind": "ziwu_rain",
-            "label": "子午谷暴雨：减员50%",
-            "loss_percent": 50,
-            "loss_percent_max": 50,
-            "loss_percent_min": 50,
-            "month": 7,
-            "season": "rainy",
-            "survival_denominator": 100,
-            "survival_numerator": 50,
-            "wind": null
-          },
-          "id": "hanzhong:jingzhao:ziwu",
-          "land_km": 323.8,
-          "mode": "land",
-          "sea_km": 0,
-          "special": "ziwu",
-          "terrain": "mountain",
-          "to": "jingzhao"
-        }
-      ],
-      "turns": 5
-    },
-    "troops": [
-      150,
-      150,
-      150
     ]
   }
 }

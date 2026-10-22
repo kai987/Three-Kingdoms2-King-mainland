@@ -1,4 +1,4 @@
-"""Pure presentation builder for explicitly reviewed baked-road city hubs.
+"""Pure presentation builder for reviewed city hubs and local road corridors.
 
 The caller owns source loading, approved-asset verification and output writing.
 This module never reads historical files, campaign data, images or saves.
@@ -69,9 +69,9 @@ def _old_wuwei(path):
 def build(source, positions):
     """Return local erasure/repaint metadata without changing any input.
 
-    Only saved ``nodes_to_collapse`` are replaced, by exact coordinate equality.
-    Display positions supply the destination centers; no nearest-city/radius
-    search can pull an unrelated road into a city.
+    Saved ``nodes_to_collapse`` use exact equality, and ``corridor_repairs``
+    replace only named source strokes. Display positions supply city centers;
+    no nearest-city/radius search can pull an unrelated road into a city.
     """
     if source.get('schema') != 'tk2-road-center-source-v1':
         raise ValueError('Unknown reviewed road-center source')
@@ -119,18 +119,43 @@ def build(source, positions):
         first, last = mapping.get(points[0], points[0]), mapping.get(points[-1], points[-1])
         if first != last or first not in registered:
             raise ValueError('Deleted branch does not collapse to one city center')
+    # Local, reviewed corridor repairs also replace old forks/parallel strokes.
+    # They describe presentation geometry only; no campaign route is rewritten.
+    repairs = deepcopy(source.get('corridor_repairs', []))
+    overrides, repair_ids, junctions = {}, set(), set(registered)
+    for repair in repairs:
+        identity, cities = repair['id'], repair['cities']
+        if not identity or identity in repair_ids or not cities or any(c not in centers for c in cities):
+            raise ValueError('Invalid reviewed road corridor')
+        repair_ids.add(identity)
+        for row in repair['strokes']:
+            index, radius = row['index'], row['radius']
+            points = [_point(p) for p in row['points']]
+            if (type(index) is not int or index not in segments or index in overrides
+                    or len(points) == 1 or type(radius) not in (int, float)
+                    or not isfinite(radius) or radius < 0):
+                raise ValueError('Invalid reviewed corridor stroke')
+            overrides[index] = (points, radius, cities)
+            if points:
+                # A joining branch must reach the trunk, rather than its
+                # rounded-off control point. Shared sections are drawn once.
+                junctions.update((points[0], points[-1]))
     changes, replacements = [], {}
     for index, (points, radius) in sorted(segments.items()):
         updated = [mapping.get(point, point) for point in points]
-        if index not in deleted and updated == points:
+        affected = {node_cities[p] for p in points if p in node_cities}
+        if index in overrides:
+            updated, radius, cities = overrides[index]
+            affected.update(cities)
+        if index not in deleted and index not in overrides and updated == points:
             continue
-        new_d = '' if index in deleted else _path(updated, radius, registered)
+        new_d = '' if index in deleted else _path(updated, radius, junctions)
         remove = not new_d
         if remove:
             updated = []
         changes.append(dict(index=index, old_d=original[index], new_d=new_d,
             old_points=[list(p) for p in points], new_points=[list(p) for p in updated],
-            affected_cities=sorted({node_cities[p] for p in points if p in node_cities}),
+            affected_cities=sorted(affected),
             deleted=remove))
         replacements[index] = new_d
     # Preserve the current city connectors verbatim. The two M124 120 paths
@@ -142,9 +167,22 @@ def build(source, positions):
             obsolete.append(dict(index=index, old_d=path, reason='obsolete_wuwei_origin'))
             continue
         paint.append(replacements.get(index, path))
+    # The approved PNG also contains historical harbour approaches which are
+    # absent from original_paths. Erase the reviewed obsolete stroke without
+    # inserting it into the replacement road network or the timing graph.
+    erased = deepcopy(source.get('erased_access_paths', []))
+    erased_ids = set()
+    for row in erased:
+        if (not row.get('id') or row['id'] in erased_ids
+                or row.get('city') not in centers
+                or not isinstance(row.get('d'), str) or not _START.match(row['d'])
+                or not row.get('reason')):
+            raise ValueError('Invalid obsolete harbour approach')
+        erased_ids.add(row['id'])
     return dict(schema='tk2-road-center-presentation-v1', ground=deepcopy(source['ground']),
         provenance=deepcopy(source['provenance']), hubs=hubs,
+        corridor_repairs=repairs,
         protected_hubs=deepcopy(source['protected_hubs']), changes=changes,
-        mask_d=''.join(row['old_d'] + row['new_d'] for row in changes),
+        mask_d=''.join(row['old_d'] + row['new_d'] for row in changes) + ''.join(row['d'] for row in erased),
         paint_d=''.join(paint), crossings=deepcopy(source['crossings']),
-        removed_obsolete_paths=obsolete)
+        removed_obsolete_paths=obsolete, erased_access_paths=erased)

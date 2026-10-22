@@ -1,7 +1,8 @@
 """Geographic route estimates and ten-day queues for travel-enabled catalogs.
 
-Speeds, detours and the30-day month are authorial game rules. Screen pixels
-never determine distances. An on-road force retains its home roster slot,
+Speeds, detours and the30-day month are authorial game rules. Compiled curves
+use geographic endpoint calibration, never a global screen-pixel scale.
+An on-road force retains its home roster slot,
 but is excluded from defense, recruitment, allocation and subsequent orders.
 """
 from heapq import heappop, heappush

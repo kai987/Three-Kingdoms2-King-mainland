@@ -19,6 +19,17 @@ context.finishMapAction('enemy');assert.deepEqual(opened,[['depart','home','enem
 context.beginMapAction('recruit',home);context.finishMapAction('empty');assert.deepEqual(opened.at(-1),['recruit','home','empty']);
 context.beginMapAction('recruit',home);context.cancelMapAction();assert.equal(context.mapAction,null);
 assert.equal(JSON.stringify(view),snapshot,'Target review, invalid cities and cancellation never write state/revision/RNG');
+// A sole local candidate opens directly without a map focus/highlight step.
+const oldFree=view.catalog.recruitable.home,oldEnemy=view.catalog.persuadable.home;
+view.catalog.recruitable.home=[2];view.catalog.persuadable.home=[];
+const priorRenders=renders,priorFocus=focuses;
+context.beginMapAction('recruit',home);
+assert.equal(context.mapAction,null);assert.deepEqual(opened.at(-1),['recruit','home','home']);assert.equal(renders,priorRenders);assert.equal(focuses,priorFocus);
+// A sole remote candidate still needs a deliberate highlighted city choice.
+view.catalog.recruitable.home=[3];context.beginMapAction('recruit',home);assert.deepEqual(same(context.mapAction.targets),['empty']);context.cancelMapAction();
+view.catalog.recruitable.home=[];const openedBefore=opened.length;context.beginMapAction('recruit',home);assert.equal(opened.length,openedBefore);assert.equal(context.mapAction,null);assert(notices.at(-1).text.includes('暂无'));
+view.catalog.recruitable.home=oldFree;view.catalog.persuadable.home=oldEnemy;
+assert.equal(JSON.stringify(view),snapshot,'The direct local shortcut also leaves state and RNG untouched');
 home.action_used=true;context.beginMapAction('depart',home);assert.equal(context.mapAction,null);delete home.action_used;
 context.busy=true;context.beginMapAction('depart',home);assert.equal(context.mapAction,null);
 assert(renders>=5);

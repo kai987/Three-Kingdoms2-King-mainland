@@ -65,5 +65,24 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  for(let i=0;i<9;i++)await held.update(scenarioView('held-'+i));await held.update(scenarioView('old'));
  finishRegistration();await oldRegistration;await tick();
  assert.equal(held.status.engine,'wasm');assert(heldWorker.sent.some(r=>r.request.op==='unregister'&&r.request.context===345));assert.deepEqual(held.quotesFor(scenarioView('old')),{});
- console.log('march Worker: read-only snapshots, bounded LRU/context disposal, pending eviction, stale batches/previews, empty routes, unsupported/error/timeout fallbacks passed');
+ // A new route geometry for the same scenario/revision must fetch and
+ // register a fresh graph; neither old quotes nor a late batch can win.
+ const revisedWorker=new Worker(),revisedUrls=[];
+ const revised=createMarchCore({workerFactory:()=>revisedWorker,fetcher:async url=>{revisedUrls.push(url);return{ok:true,json:async()=>({travel_rules:{geometry_sha256:revisedUrls.length===1?'before':'after'}})};}});
+ const geometryView=geometry=>{const view=makeView(1);view.catalog.travel_rules.geometry_sha256=geometry;return view;};
+ const firstGeometry=geometryView('before'),nextGeometry=geometryView('after'),unchanged=JSON.stringify(nextGeometry);
+ const firstGraph=revised.update(firstGeometry);await tick();revisedWorker.reply(0,101);await tick();
+ assert.equal(revisedWorker.sent[1].request.context,101);
+ const nextGraph=revised.update(nextGeometry);await tick();
+ assert.equal(revised.quotesFor(firstGeometry),null);assert.equal(revised.quotesFor(nextGeometry),null);
+ assert.equal(revisedWorker.sent[2].request.op,'register');assert.equal(revisedUrls.length,2);
+ revisedWorker.reply(2,102);await tick();assert.equal(revisedWorker.sent[3].request.context,102);
+ revisedWorker.reply(3,{'a:b:fastest':{days:4}});await nextGraph;
+ revisedWorker.reply(1,{'a:b:fastest':{days:999}});await firstGraph;
+ assert.equal(revised.quotesFor(nextGeometry)['a:b:fastest'].days,4);
+ assert.equal(revised.quotesFor(firstGeometry),null);assert.equal(revised.status.contexts,2);
+ assert.equal(JSON.stringify(nextGeometry),unchanged,'Geometry invalidation preserves game state and RNG');
+ const returnToFirst=revised.update(firstGeometry);await tick();assert.equal(revisedWorker.sent[4].request.context,101);
+ revisedWorker.reply(4,{});await returnToFirst;assert.equal(revisedUrls.length,2,'An existing immutable geometry graph can still be reused');
+ console.log('march Worker: read-only snapshots, geometry-aware graph invalidation, bounded LRU/context disposal, pending eviction, stale batches/previews, empty routes, unsupported/error/timeout fallbacks passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

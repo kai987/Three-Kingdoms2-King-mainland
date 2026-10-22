@@ -1,0 +1,7 @@
+{
+  "atlas_id": "atlas-01",
+  "method": "built-in image_gen",
+  "source_file": "/Users/paulasmith/.codex/generated_images/01a1316a-d5cf-7641-8d98-1e47c65dfb1c/exec-7da94a8a-7011-4751-996b-98f0a1d51538.png",
+  "sha256": "fe1043228d336564e00116d8386bd56ca59b6a4c839f153cc3bb81921a640c35",
+  "prompt": "prompts/atlas-01.txt"
+}

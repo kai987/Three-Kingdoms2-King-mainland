@@ -1,0 +1,9 @@
+Use case: identity-preserve.
+Asset type: a single8x8 portrait SPRITE ATLAS for a retro Three Kingdoms strategy game.
+Input1 is the EDIT TARGET: exactly8columns x8rows of existing distinct character portraits. Input2 is a single approved portrait used ONLY as a shading/style reference, not a person to copy.
+Enhance the target atlas IN PLACE. Keep its exact8x8grid and tile alignment. Every occupied tile must remain the SAME EXISTING PERSON with the same sex, age, face width, eye spacing, pupils, eyebrows, nose, hairline, headgear, facial hair and costume silhouette. Never move, merge, omit, replace or reorder cells. Blank black tiles at the end remain black. No names, labels, numbers or gridline overlays.
+Apply the approved reference's crisp, limited-palette pixel CEL SHADING to each existing portrait: warm upper-left highlights, original orange skin midtones, amber/right-cheek shadows; ochre highlights on gold/orange ornaments; warm gray shading in white caps and clothing. Keep pale faces pale and each character's original skin/color design. Preserve white eye pixels, black facial strokes and white structural gaps in hats. Crown tabs which are flat in the source stay flat. Do not redesign faces or headwear.
+Use12-16colors across the atlas, clean visible hard pixel clusters, clear3-5tone material ramps, no blur, no soft smooth gradients, no painterly rendering, no photorealism, no genericface substitution. Keep original white/black backgrounds and black ink exactly where they are.
+The intended native size of EACH TILE is128x160, the whole atlas1024x1280 (or a larger exact4:5 multiple). Match the input framing and exact8x8structure. Return only this one enhanced atlas.
+
+Atlas: atlas-03. Occupied tiles: 64 of64, in unchanged row-major order. Padding tiles: 0; there are NO empty tiles in this atlas. Preserve ALL64 occupied portraits and exactly8rows x8columns.

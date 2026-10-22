@@ -290,7 +290,11 @@ class StrategicAITests(unittest.TestCase):
         results=[]
         for backend in ('python','rust'):
             with using_backend(backend):
-                game=Campaign(catalog);game.command('new',dict(faction='shu',seed=2026),0)
+                # Seed1 reaches a failed opening surrender and an actual
+                # damaging response. Seed2026 can legally resolve this fixture
+                # solely through surrender after restoring original virtue,
+                # which would not exercise the casualty/save ledger below.
+                game=Campaign(catalog);game.command('new',dict(faction='shu',seed=1),0)
                 for _ in range(18):
                     if game.state.phase=='arrivals':game.command('arrivals',{},game.revision)
                     self.assertEqual(game.state.phase,'city')

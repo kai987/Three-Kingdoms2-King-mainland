@@ -73,7 +73,7 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta['background_sha256'],hashlib.sha256((ROOT/'game'/meta['background'].lstrip('/')).read_bytes()).hexdigest())
         source=json.loads((ROOT/'game/config/map-source.json').read_text())
         self.assertEqual(source['schema'],'tk2-map-source-v1')
-        base=deepcopy(meta);base.pop('road_center_corrections')
+        base=deepcopy(meta);base.pop('road_center_corrections');base.pop('road_bridges')
         self.assertEqual(source['presentation'],base)
         self.assertEqual(set(source['approved_asset_sha256']),
                          {'map.png','map-basin.png','map-campaign.png','map-clean.png','map-navigation.png','map-road-centers.png'})
@@ -99,9 +99,9 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta['schema'],'tk2-road-center-corrections-v1')
         self.assertEqual(meta['backgrounds'],{'/assets/map-navigation.png':'/assets/map-road-centers.png'})
         self.assertEqual(len(meta['hubs']),33)
-        self.assertEqual(meta['summary'],dict(reviewed_hubs=33,visible_hubs=12,changed_segments=109,
-                                             deleted_spokes=34,protected_hubs=25))
-        for field in ('ground','provenance','protected_hubs','changes','removed_obsolete_paths','mask_d','paint_d'):
+        self.assertEqual(meta['summary'],dict(reviewed_hubs=33,visible_hubs=12,changed_segments=122,
+                                             deleted_spokes=40,protected_hubs=25))
+        for field in ('ground','provenance','protected_hubs','changes','removed_obsolete_paths','mask_d','paint_d','corridor_repairs'):
             self.assertNotIn(field,meta,'Runtime uses a native PNG, not a large SVG repaint')
         for hub in meta['hubs']:
             self.assertEqual(set(hub),{'city','center','old_hub'})
@@ -131,14 +131,17 @@ class MapPresentationTests(unittest.TestCase):
         manifest_path='game/map-source/road-centers-render.json'
         required=('game/config/road-centers.json','game/config/campaigns/shared.json',
                   'game/assets/map-navigation.png','game/map-source/road-ground.png',
-                  'game/assets/map-road-centers.png',manifest_path)
+                  'game/assets/map-road-centers.png',manifest_path,
+                  'game/config/water-corrections.json','game/map-source/water-render.json',
+                  'game/map-source/hydrology-ground.png','game/map-source/terrain-under-water.png',
+                  'game/map-source/historic-water.svg','game/map-source/sea-shadow.svg')
         originals={name:(ROOT/name).read_bytes() for name in required}
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary)
             for name,raw in originals.items():
                 p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
             manifest=json.loads(originals[manifest_path])
-            for field in ('source_sha256','positions_sha256','baseline_sha256','ground_sha256','output_sha256'):
+            for field in ('source_sha256','positions_sha256','baseline_sha256','ground_sha256','output_sha256','water_render_sha256'):
                 with self.subTest(field=field):
                     altered=dict(manifest);altered[field]='0'*64
                     (root/manifest_path).write_text(json.dumps(altered))
@@ -162,6 +165,22 @@ class MapPresentationTests(unittest.TestCase):
             pins=dict(source['approved_asset_sha256']);pins['map-road-centers.png']='0'*64
             with self.assertRaisesRegex(ValueError,'approved map pins'):
                 road_center_corrections(root,pins)
+
+    def test_water_corrections_are_bound_to_current_sources(self):
+        source=json.loads((ROOT/'game/config/map-source.json').read_text())
+        water=json.loads((ROOT/'game/map-source/water-render.json').read_text())
+        config=json.loads((ROOT/'game/config/water-corrections.json').read_text())
+        self.assertEqual(config['wei']['junction'],[639,326])
+        self.assertEqual(config['wei']['points'][-1],config['wei']['junction'])
+        self.assertEqual(set(water['stats']['clippedMouthPixels']),{'yellow','yangtze','huai','pearl','red'})
+        self.assertTrue(all(n>0 for n in water['stats']['clippedMouthPixels'].values()))
+        self.assertGreater(water['stats']['seaShadowMaskPixels'],0)
+        actual=road_center_corrections(ROOT,source['approved_asset_sha256'])
+        self.assertEqual(actual['render']['water_render_sha256'],hashlib.sha256((ROOT/'game/map-source/water-render.json').read_bytes()).hexdigest())
+        bridges=presentation()['road_bridges']
+        self.assertEqual(bridges['sources']['ground'],water['output'])
+        self.assertTrue(bridges['audit']['route_bridges']['bajun:zangke'])
+        self.assertTrue(bridges['audit']['route_bridges']['fuling:zangke'])
 
 
 if __name__=='__main__':unittest.main()

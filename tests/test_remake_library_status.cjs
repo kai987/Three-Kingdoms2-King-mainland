@@ -2,8 +2,8 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'game/app.js'),'utf8');
-const options=[],listeners=[];
-const context={GameI18n:{locale:'zh-Hant'},escapeHtml:String,document:{addEventListener:(...row)=>listeners.push(row),querySelectorAll:()=>options}};
+const options=[],choices=[],listeners=[];
+const context={GameI18n:{locale:'zh-Hant'},escapeHtml:String,document:{addEventListener:(...row)=>listeners.push(row),querySelectorAll:selector=>selector.includes('data-library-choice')?choices:options}};
 vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('// Classify actual runtime entry'),source.indexOf('function personStatus(p)')),context);
 const status=p=>context.libraryEntryStatus({missing:[],alive:null,year_state:'available',...p});
@@ -18,10 +18,22 @@ assert.equal(status({era_assignment:{status:'serving',city:'henan',faction:'wei'
 assert.equal(status({era_assignment:{status:'free',city:'henan'}}),'unentered');
 assert(context.libraryPlacementFilter({missing:['virtue'],alive:null,year_state:'available'},'entry:unentered'));
 assert.equal(listeners[0][0],'game-language-change');
+choices.push({dataset:{libraryChoice:'own',l10nNative:'zh-Hant'},textContent:''});
+const menu=context.libraryEntryOptions('wei');
+assert.deepEqual([...menu.matchAll(/value="([^"]+)"/g)].map(row=>row[1]),['own','serving','free','unentered','retired']);
+for(const removed of ['ready','rated','default60','available','missing','pending_history','pending_capacity','pending_faction'])assert(!menu.includes(`value="${removed}"`));
+assert(context.libraryEntryOptions().includes('disabled'));assert(!menu.includes('disabled'));
+const serving={missing:[],alive:true,faction:'wei',year_state:'available'},free={...serving,faction:null},enemy={...serving,faction:'wu'},future={...serving,alive:null,year_state:'not_born'};
+assert(context.libraryFilterMatches(serving,'own','wei'));assert(!context.libraryFilterMatches(enemy,'own','wei'));assert(!context.libraryFilterMatches(free,'own','wei'));assert(!context.libraryFilterMatches(future,'own','wei'));assert(!context.libraryFilterMatches(serving,'own',null));
+assert(context.libraryFilterMatches(enemy,'serving'));assert(context.libraryFilterMatches(free,'free'));assert(context.libraryFilterMatches(future,'unentered'));assert(!context.libraryFilterMatches(future,'free'));assert(!context.libraryFilterMatches(serving,'retired'));
 options.push({dataset:{libraryEntry:'pending_history',l10nNative:'zh-Hant'},textContent:''});
 context.GameI18n.locale='ja';context.refreshLibraryEntryLabels();
-assert.equal(options[0].textContent,'所属未確定');assert.equal(options[0].dataset.l10nNative,'ja');
-context.GameI18n.locale='zh-Hant';context.refreshLibraryEntryLabels();assert.equal(options[0].textContent,'歸屬待考');
+assert.equal(options[0].textContent,'所属未確定');assert.equal(choices[0].textContent,'自勢力の武将');assert.equal(options[0].dataset.l10nNative,'ja');
+context.GameI18n.locale='zh-Hant';context.refreshLibraryEntryLabels();assert.equal(options[0].textContent,'歸屬待考');assert.equal(choices[0].textContent,'我方勢力武將');
+context.sourceEvidence=(tc,ja)=>tc+ja;
+vm.runInContext(source.slice(source.indexOf('function virtueDescription('),source.indexOf('function showPerson(')),context);
+const original=context.virtueDescription({virtue:86,virtue_design:{status:'verified_original',original_id:40,design_rationale:'ROM source verified'}});
+assert(original.includes('德86 · 原版武将数值'));assert(original.includes('徳86は原作の武将データ'));assert(!original.includes('德60'));
 const python=spawnSync(process.env.PYTHON||'python3',['-B','-c',`
 import json,sys
 from pathlib import Path

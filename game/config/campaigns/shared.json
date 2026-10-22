@@ -5491,7 +5491,7 @@
       "pending_profiles": 0,
       "initial_serving": 365,
       "source_years": "third-party SAN14 settings; historical verification separate",
-      "virtue": "individual authorial ratings or explicit user default60; provenance kept separate",
+      "virtue": "verified original ROM virtue for220 exact-name identities; otherwise individual authorial ratings or explicit user default60",
       "health_configured": 1023,
       "affinity_configured": 1023,
       "new_history_profiles": 11,
@@ -5500,15 +5500,16 @@
       "planned_serving": 365,
       "planned_max_city_roster": 20,
       "pending_factions": [],
-      "history_designs_total": 295,
+      "history_designs_total": 168,
       "pending_capacity": 0,
       "pending_history": 0,
-      "default_virtue_profiles": 727,
+      "default_virtue_profiles": 635,
       "reused_profiles": 269,
       "new_historical_people": 23,
       "pending_faction": 0,
       "placement_plans": 1023,
-      "future_plans": 249
+      "future_plans": 249,
+      "original_virtue_profiles": 220
     },
     "initial_free_officers": [
       {

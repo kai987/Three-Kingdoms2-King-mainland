@@ -1,0 +1,44 @@
+{
+  "schema": "tk2-portrait-preserved-sample-v1",
+  "person_id": "san14-candidate-0440",
+  "runtime_id": 439,
+  "name": "諸葛亮",
+  "original": {
+    "path": "game/assets/portraits/original/109.png",
+    "sha256": "00ab7c41fc86e84deeede6f42ddf5510b928f7e9ede998ba853836936eb7306c",
+    "preserved": true
+  },
+  "methods": [
+    {
+      "id": "nearest4x",
+      "path": "nearest-128x160.png",
+      "sha256": "08b6ab4696da25697b8ef35e6912bb4afd2b071cd674f208b603befca7f54931",
+      "preservation": "each original pixel becomes exact4x4 identical RGBA pixels"
+    },
+    {
+      "id": "scale4x",
+      "path": "edge-refined-128x160.png",
+      "sha256": "4e96dc9ebfba1344f68782c3e42c4823bea55f0ab700f61c225353bcf5f9448b",
+      "source": "https://www.scale2x.it/algorithm",
+      "preservation": "original palette and neighborhood topology; some pixel corners altered; no synthesized facial details"
+    }
+  ],
+  "proof": {
+    "native": [
+      32,
+      40
+    ],
+    "output": [
+      128,
+      160
+    ],
+    "sourcePaletteSize": 4,
+    "nearestExact4x": true,
+    "edgeOutputUsesOnlyOriginalPalette": true,
+    "edgeChangedPixels": 1378,
+    "totalPixels": 20480,
+    "changedPercent": 6.73,
+    "aiGenerated": false
+  },
+  "formal_game_index_unchanged": true
+}

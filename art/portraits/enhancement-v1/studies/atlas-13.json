@@ -1,0 +1,17 @@
+{
+  "schema": "tk2-portrait-enhancement-study-v1",
+  "atlas_id": "atlas-13",
+  "tool": "built-in image_gen",
+  "prompt": "art/portraits/enhancement-v1/prompts/atlas-13.txt",
+  "edit_target": "art/portraits/enhancement-v1/references/atlas-13.png",
+  "style_reference": "art/portraits/enhancement-v1/style-reference.png",
+  "original_generated_file": "/Users/paulasmith/.codex/generated_images/01a163ba-c550-7340-9a2c-b301b9ec890c/exec-219d7c29-7eec-417e-9a04-8dd0fdebee40.png",
+  "study": "art/portraits/enhancement-v1/studies/atlas-13.png",
+  "sha256": "480e0dcd83fcbef1295097ee5a7d43f82db1f4de497feb3ff8ee3fe99189ef21",
+  "size": [
+    1122,
+    1402
+  ],
+  "occupied_cells": 64,
+  "padding_cells": 0
+}

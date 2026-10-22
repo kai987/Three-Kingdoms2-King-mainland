@@ -46,7 +46,7 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  const actorOptions=lastDialog.body.match(/id="recruit-actor">(.*?)<\/select>/)[1];
  assert.deepEqual(values(actorOptions),[3,1,2]);assert.deepEqual(values(element('#recruit-person').innerHTML),[6,4,5]);
  element('#recruit-actor').value='2';element('#recruit-actor').onchange();assert(element('#recruit-actor-summary').textContent.includes('武98 · 知65 · 德66'));
- assert(actorOptions.includes('30兵 · 武98 · 知65 · 德66 · 体力95 · 忠誠90'));
+ assert(actorOptions.includes('30兵 · 武98 · 知65 · 德66 · 体力95 · 经验— · 忠誠90'));
  element('#recruit-mode').value='persuade_officer';element('#recruit-mode').onchange();assert(element('#recruit-person').innerHTML.includes('武98 · 知65 · 德66'));
  context.departure(city);assert(lastDialog.body.includes('武98 · 知65 · 德66'));assert(lastDialog.body.indexOf('value="2"')<lastDialog.body.indexOf('value="1"'));
  context.transferCity(city);assert(lastDialog.body.includes('武98 · 知65 · 德66'));assert(lastDialog.body.includes('忠誠90'));
@@ -70,6 +70,6 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
  const seed={min:'1',max:'4294967295',value:'999999999999'};context.bindNumberInput(seed);seed.oninput();assert.equal(seed.value,'4294967295');seed.value='-2';seed.onchange();assert.equal(seed.value,'1');seed.value='';seed.onblur();assert.equal(seed.value,'1');seed.value='Infinity';seed.onblur();assert.equal(seed.value,'1');
  assert.equal((source.match(/type="number"/g)||[]).length,2,'All current numeric controls are explicitly covered');
  assert(source.includes('bindNumberInput($(\'#seed\'))'));assert(source.includes('bindNumberInput(input,preview)'));
- assert(source.includes('<th>德</th>'));assert(source.includes('<td>${o.virtue}</td>'));assert(source.includes('<td>${o.profile.virtue}</td>'));
+ assert(source.includes('<th>经</th>'));assert(source.includes('<th>德</th>'));assert(source.includes('<td>${o.virtue}</td>'));assert(source.includes('<td>${o.profile.virtue}</td>'));
  assert(requests===3);console.log('officer controls: comparable attributes, deterministic purpose sort, numeric bounds, exact conservation and persistent allocation passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

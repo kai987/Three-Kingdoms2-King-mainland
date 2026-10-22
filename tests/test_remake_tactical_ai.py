@@ -184,9 +184,13 @@ class TacticalAiTests(unittest.TestCase):
         self.assertEqual(game.to_dict(),restored.to_dict())
 
     def test_ai_versus_ai_uses_both_sides_shared_effects_and_conserves_soldiers(self):
+        # A successful opening surrender can legally end this one-unit fight
+        # before the defenders act. Select a real RNG seed whose first roll
+        # fails even the 80% surrender cap, so this fixture exercises both sides.
+        seed=next(i for i in range(1,10000) if SeedRng(i).next()%100>=80)
         states=[]
         for _ in range(2):
-            game=battle('mountain',three_enemies=False,player='wu');state=game.state
+            game=battle('mountain',three_enemies=False,player='wu',seed=seed);state=game.state
             with patch.object(game,'_perform_battle_action',wraps=game._perform_battle_action) as execute:
                 game._resolve_ai_battle(state)
                 self.assertLessEqual(execute.call_count,200)
