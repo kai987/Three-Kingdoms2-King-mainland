@@ -13,8 +13,12 @@
   route_discovered:['發現新航路','新航路の発見'],march_arrived:['部隊抵達','部隊の到着'],
   march_returned:['部隊折返','部隊の帰還'],new_year:['新年更始','新年の到来'],
   campaign_victory:['天下歸一','天下統一'],campaign_defeat:['戰役結束','戦役の終了'],
-  ai_campaign:['敵軍動向','敵軍の動向']
+  ai_campaign:['敵軍動向','敵軍の動向'],
+  staff_candidate:['地方文吏推薦','在地文官の推薦'],staff_hired:['文吏受聘','文官の雇用'],
+  staff_declined:['婉拒文吏','文官の採用見送り'],staff_expired:['文吏候選撤回','文官候補の取り下げ'],
+  staff_salary:['文吏月俸與成果','文官の俸給と業務成果'],staff_allegiance:['文吏留任','文官の留任']
  });
+ const STAFF=new Set(['staff_candidate','staff_hired','staff_declined','staff_expired','staff_salary','staff_allegiance']);
  const BATCH=new Set(['officer_appeared','officer_death','recruit_success','recruit_failure','march_arrived','march_returned']);
  const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','city_founded','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -23,14 +27,31 @@
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details);
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row));
+ }
+ function validStaffEvent(row){
+  const d=row.details,allowed=['staff_id','name','portrait','reason','amount','paid','bonus','counts'];
+  if(row.person_ids.length||row.city_ids.length!==1||row.factions.length<1||row.factions.length>2||Object.keys(d).some(k=>!allowed.includes(k)))return false;
+  const required=row.kind==='staff_salary'?['amount','paid','bonus','counts']:['staff_id','name','portrait','reason'];
+  if(required.some(k=>!Object.hasOwn(d,k)))return false;
+  if(Object.hasOwn(d,'staff_id')&&(typeof d.staff_id!=='string'||!/^clerk-[0-9]{6,12}$/.test(d.staff_id)||Number(d.staff_id.slice(6))<1))return false;
+  if(Object.hasOwn(d,'name')&&(typeof d.name!=='string'||!d.name.trim()||d.name.length>40||/[\u0000-\u001f\u007f]/u.test(d.name)))return false;
+  if(Object.hasOwn(d,'portrait')&&!['clerk-1','clerk-2','clerk-3'].includes(d.portrait))return false;
+  if(Object.hasOwn(d,'reason')&&(typeof d.reason!=='string'||!/^[a-z_]{1,80}$/.test(d.reason)))return false;
+  for(const k of ['amount','paid'])if(Object.hasOwn(d,k)&&(!Number.isInteger(d[k])||d[k]<0||d[k]>100000000))return false;
+  if(Object.hasOwn(d,'bonus')&&(!d.bonus||typeof d.bonus!=='object'||Array.isArray(d.bonus)||Object.keys(d.bonus).sort().join(',')!=='gold,grain,reserves'||Object.values(d.bonus).some(n=>!Number.isInteger(n)||n<0||n>100000000)))return false;
+  if(Object.hasOwn(d,'counts')&&(!d.counts||typeof d.counts!=='object'||Array.isArray(d.counts)||Object.keys(d.counts).sort().join(',')!=='cities,staff,total_unpaid'||!Number.isInteger(d.counts.staff)||d.counts.staff<1||d.counts.staff>345||!Number.isInteger(d.counts.cities)||d.counts.cities<1||d.counts.cities>115||d.counts.staff<d.counts.cities||d.counts.staff>d.counts.cities*3||!Number.isInteger(d.counts.total_unpaid)||d.counts.total_unpaid<0||d.counts.total_unpaid>d.counts.staff))return false;
+  return row.kind!=='staff_salary'||d.paid<=d.amount&&d.amount===d.counts.staff*5&&d.paid%5===0&&d.counts.total_unpaid===d.counts.staff-d.paid/5;
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){const rows=view?.game?.extension?.events?.items;return Array.isArray(rows)?rows.filter(validEvent).sort((a,b)=>a.id-b.id):[];}
- function automatic(row,player){return row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
+ function automatic(row,player){return STAFF.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
  function groupRows(rows){
-  const groups=[];
-  for(const row of rows){const last=groups.at(-1);if(last&&BATCH.has(row.kind)&&last[0].kind===row.kind&&last[0].turn===row.turn)last.push(row);else groups.push([row]);}
+  const groups=[],staffGroups=new Map();
+  for(const row of rows){
+   if(STAFF.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
+   const last=groups.at(-1);if(last&&BATCH.has(row.kind)&&last[0].kind===row.kind&&last[0].turn===row.turn)last.push(row);else groups.push([row]);
+  }
   return groups;
  }
  function create(options={}){
@@ -83,6 +104,19 @@
      return text(`前往${target}的原行軍已取消，請核對${source}與在途部隊的現有編制。`,`${target}への元の行軍を取り消しました。${source}と行軍中の部隊の現在の編制を確認してください。`);
     }
     case 'new_year':return text(`${row.year}年到來。人物年代、各城收入與體力恢復已核對。`,`${row.year}年を迎えました。武将の年代・都市収入・体力回復を確認しました。`);
+    case 'staff_candidate':return text(`地方人士${label(d.name||'文吏')}願在${c}任職。候選保留3個月，雇用費60金、月俸5金；確認後才錄用。此人為架空內政人才。`,`${label(d.name||'文官')}が${c}での勤務を希望しています。候補の有効期間は3か月、雇用費は金60、月俸は金5です。採用を確定するまで雇用されません。架空の内政人材です。`);
+    case 'staff_hired':return text(`${label(d.name||'文吏')}受聘為${c}的地方文吏，花費${d.amount??60}金，使用本旬城池行動。文吏從事內政，不參加出戰、單挑或主將繼承。`,`${label(d.name||'文官')}を${c}の在地文官として雇用しました。金${d.amount??60}を支払い、都市の今旬の行動を使用しました。文官は内政に従事し、出陣・一騎討ち・君主の継承には参加しません。`);
+    case 'staff_declined':return text(`${c}此次未錄用${label(d.name||'文吏')}，沒有支出雇用費。該城進入3個月的文吏招募冷卻期。`,`${c}では${label(d.name||'文官')}の採用を見送りました。雇用費は発生せず、この都市の次の文官募集まで3か月待機します。`);
+    case 'staff_expired':{
+     if(d.reason==='filled')return text(`${c}的編制已補足，${label(d.name||'文吏')}的候選資格已撤回。`,`${c}の人員が充足したため、${label(d.name||'文官')}の候補を取り下げました。`);
+     if(d.reason==='owner_changed')return text(`${c}的所屬已變更，原有文吏候選${label(d.name||'文吏')}已撤回。`,`${c}の所属が変わったため、文官候補${label(d.name||'文官')}を取り下げました。`);
+     return text(`${label(d.name||'文吏')}在${c}的候選期限已結束，沒有自動錄用或扣款；該城進入3個月冷卻期。`,`${c}での${label(d.name||'文官')}の応募期限が切れました。自動での採用や支払いは行わず、次の募集まで3か月待機します。`);
+    }
+    case 'staff_salary':{
+     const bonus=d.bonus||{},result=Object.entries({gold:text('錢','金'),grain:text('糧','兵糧'),reserves:text('預備兵','予備兵')}).filter(([k])=>bonus[k]>0).map(([k,l])=>`${l}+${bonus[k]}`).join(text('、','・'))||text('本月無額外收入','今月の追加収入なし');
+     return text(`${f}本月${d.counts?.cities??1}城共有文吏${d.counts?.staff??0}人，應付月俸${d.amount??0}金，實付${d.paid??0}金。內政成果：${result}。${d.paid<d.amount?'未足額領俸者本月暫停工作。':''}`,`${f}の${d.counts?.cities??1}都市、文官${d.counts?.staff??0}人分の月俸は金${d.amount??0}、支払額は金${d.paid??0}です。業務成果：${result}。${d.paid<d.amount?'俸給を全額受け取れなかった文官は今月の業務を休止します。':''}`);
+    }
+    case 'staff_allegiance':return text(`${c}的行政歸屬改變，文吏${label(d.name||'文吏')}留在本城，現隨${f}管理地方事務。`,`${c}の行政上の所属が変わり、文官${label(d.name||'文官')}は都市に留任し、現在は${f}のもとで地方行政に従事します。`);
     case 'campaign_victory':return text(`${f}完成天下統一。本次戰役已結算，可保存進度。`,`${f}が天下を統一しました。戦役の精算を終え、進行状況を保存できます。`);
     case 'campaign_defeat':return text(`${f}已無法繼續作戰。可保存結果或重新選擇劇本。`,`${f}は戦いを続けられなくなりました。結果を保存するか、シナリオを選び直せます。`);
     default:{const attacker=n.factions[0]||f;return text(`${attacker}的${d.coordinated?'多路部隊正協同':'部隊正'}朝${c}推進。`,`${attacker}の${d.coordinated?'複数部隊が連携して':'部隊が'}${c}へ進軍しています。`);}
@@ -101,8 +135,12 @@
    const fill=catalog.map_presentation?.castle_fill_pixels||[],outline=catalog.map_presentation?.castle_outline_pixels||[];
    const sprite=city?[[outline,'#000'],[fill,'#fff']].map(([pixels,color])=>pixels.map(([dx,dy])=>`<rect x="${center[0]+dx}" y="${center[1]+dy}" width="4" height="4" fill="${color}"/>`).join('')).join(''):'';
    const art=`<svg class="event-map" viewBox="${x} ${y} 288 172" role="img" aria-label="${escape(text('事件所在地圖示意','出来事の場所を示す地図'))}"><image href="${safeBackground}" x="${world.x||0}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${sprite}</svg>`;
-   const people=ids.map(id=>{const name=names({...row,person_ids:[id]}).people[0];return portraits?.entry?.(id)?`<figure class="event-person">${portraits.html(id,name,{size:'duel'})}<figcaption>${escape(name)}</figcaption></figure>`:'';}).join('');
-   return `<div class="event-art">${art}${people?`<div class="event-people">${people}</div>`:''}</div><p class="event-art-caption">${escape(text('事件示意：目前地圖與武將像素肖像','場面イメージ：現在の地図と武将のドット肖像'))}</p>`;
+   let people=ids.map(id=>{const name=names({...row,person_ids:[id]}).people[0];return portraits?.entry?.(id)?`<figure class="event-person">${portraits.html(id,name,{size:'duel'})}<figcaption>${escape(name)}</figcaption></figure>`:'';}).join('');
+   if(STAFF.has(row.kind)){
+    const staff=[...new Map(rows.filter(e=>/^clerk-[0-9]{6,12}$/.test(e.details.staff_id||'')&&['clerk-1','clerk-2','clerk-3'].includes(e.details.portrait)).map(e=>[e.details.staff_id,e.details])).values()].slice(0,4);
+    people+=staff.map(d=>`<figure class="event-person" data-event-staff="${escape(d.staff_id)}"><img class="event-staff-face" src="/assets/civil-staff/${d.portrait}.png" width="96" height="120" alt="${escape(text(`${label(d.name)}・架空文吏共用像素肖像`,`${label(d.name)}・架空文官の共通ドット肖像`))}"/><figcaption>${escape(label(d.name))}</figcaption></figure>`).join('');
+   }
+   return `<div class="event-art">${art}${people?`<div class="event-people">${people}</div>`:''}</div><p class="event-art-caption">${escape(STAFF.has(row.kind)?text('事件示意：目前地圖與架空文吏共用像素肖像；文吏另建名冊，不占歷史人物身分。','場面イメージ：現在の地図と架空文官の共通ドット肖像。文官は歴史人物とは別の名簿で管理します。'):text('事件示意：目前地圖與武將像素肖像','場面イメージ：現在の地図と武将のドット肖像'))}</p>`;
   }
   function render(){
    if(!active||!modal||disposed)return;

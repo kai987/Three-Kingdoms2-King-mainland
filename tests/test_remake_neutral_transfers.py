@@ -10,6 +10,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog
+from remake.civil_staff import synchronize
 from remake.errors import GameError
 from remake.march_core import using_backend
 from remake.travel import TravelCampaign
@@ -124,6 +125,7 @@ class NeutralTransferTests(unittest.TestCase):
             with self.subTest(backend=backend), using_backend(backend):
                 game = self.new_game()
                 game.state.cities[CHAIN[2]].owner = 'shu'
+                synchronize(game, game.state, checks=False)
                 game.validate(game.state)
                 before = game.export_save()
                 self.assertIsNone(game._travel_path(game.state, CHAIN[0], CHAIN[-1], 'wei', 'land'))
@@ -139,6 +141,7 @@ class NeutralTransferTests(unittest.TestCase):
                 with self.subTest(backend=backend, owner=owner), using_backend(backend):
                     game = self.new_game()
                     game.state.cities[CHAIN[-1]].owner = owner
+                    synchronize(game, game.state, checks=False)
                     game.validate(game.state)
                     before = game.export_save()
                     self.assertIsNone(game._travel_path(game.state, CHAIN[0], CHAIN[-1], 'wei', 'land'))
@@ -153,6 +156,7 @@ class NeutralTransferTests(unittest.TestCase):
                 game = self.new_game()
                 ident = self.queue(game)
                 game.state.cities[CHAIN[2]].owner = 'wei'
+                synchronize(game, game.state, checks=False)
                 game.validate(game.state)
                 game = self.restore(game, alternate)
                 self.arrive(game)
@@ -169,6 +173,7 @@ class NeutralTransferTests(unittest.TestCase):
                     troops, rng = game.state.officers[ident].troops, deepcopy(game.state.rng)
                     grain = game.state.cities[CHAIN[0]].grain
                     game.state.cities[key].owner = owner
+                    synchronize(game, game.state, checks=False)
                     game.validate(game.state)
                     # Ownership may change while in transit; this pending
                     # order is a valid save, then arrivals applies the block.

@@ -9,6 +9,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import SeedRng
+from remake import civil_staff
 from remake.session import CampaignSession,faction_officer_counts,faction_resources
 
 
@@ -91,7 +92,11 @@ class FactionOfficerCountTests(unittest.TestCase):
         initial={ident:o.faction_id for ident,o in game.state.officers.items() if o.alive and o.faction_id in game.catalog.factions}
         before=session.view()['catalog']['faction_officers']
         # Isolate the real calendar from AI purchases and battles.
-        for _ in range(6 * 3):game._complete_turn(game.state)
+        for _ in range(6 * 3):
+            game._complete_turn(game.state)
+            # Direct calendar stepping omits the transaction's staff cleanup.
+            # Expire candidates without generating people or paying salaries.
+            civil_staff.synchronize(game, game.state, checks=False)
         self.assertEqual((game.state.year,game.state.month),(218,1))
         retired=Counter(side for ident,side in initial.items() if not game.state.officers[ident].alive)
         self.assertGreater(sum(retired.values()),0)

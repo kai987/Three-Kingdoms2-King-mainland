@@ -9,7 +9,14 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
-from campaign_fixtures import advance_month
+from remake.civil_staff import synchronize
+from campaign_fixtures import advance_month as advance_calendar_month
+
+
+def advance_month(game):
+    # Direct service fixtures bypass command-level extension reconciliation.
+    advance_calendar_month(game)
+    synchronize(game, game.state, checks=False)
 
 
 class CityLifecycleTests(unittest.TestCase):
@@ -52,6 +59,7 @@ class CityLifecycleTests(unittest.TestCase):
                            and c.id!=parent.id and len(c.roster.officer_ids)<game.catalog.rules.city_officer_capacity)
             parent.roster.officer_ids.remove(ident);recipient.roster.officer_ids.append(ident)
         parent.owner='wu'
+        synchronize(game, game.state, checks=False)
         game.validate(game.state)
         parent_before={key:getattr(parent,key) for key in ('gold','grain','reserves')}
         troops_before=sum(o.troops for o in game.state.officers.values())

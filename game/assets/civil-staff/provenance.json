@@ -1,0 +1,33 @@
+{
+  "schema": "tk2-civil-staff-portrait-v1",
+  "policy": "Exact copies of preserved NES pixel portraits, reused as generic fictional clerk appearances. These images do not bind generated names to historical identities. Originals are retained.",
+  "portraits": [
+    {
+      "id": "clerk-1",
+      "path": "/assets/civil-staff/clerk-1.png",
+      "width": 32,
+      "height": 40,
+      "source": "/assets/portraits/original/011.png",
+      "source_original_id": 11,
+      "sha256": "a38597416450cb9032c7f54203dfafd70bc747c3dadebb49c6854752b6542b3a"
+    },
+    {
+      "id": "clerk-2",
+      "path": "/assets/civil-staff/clerk-2.png",
+      "width": 32,
+      "height": 40,
+      "source": "/assets/portraits/original/084.png",
+      "source_original_id": 84,
+      "sha256": "c50b0fe4e7a0589c0e14a21bd2cbe1002c1cb7b9a64dcfa3c7ba1d8a01f7dfc3"
+    },
+    {
+      "id": "clerk-3",
+      "path": "/assets/civil-staff/clerk-3.png",
+      "width": 32,
+      "height": 40,
+      "source": "/assets/portraits/original/195.png",
+      "source_original_id": 195,
+      "sha256": "28238152a87b79fcbdeeff9c952f52db5c65d30704f564d892feb98629bac834"
+    }
+  ]
+}

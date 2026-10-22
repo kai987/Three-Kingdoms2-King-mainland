@@ -12,6 +12,7 @@ from pathlib import Path
 from threading import RLock
 
 from .errors import GameError
+from . import civil_staff
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -137,6 +138,44 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _emit_event(self, state, kind, **values):
         return emit_event(self, state, kind, **values)
 
+    def _city_occupancy(self, state, city):
+        return len(city.roster.officer_ids) + civil_staff.city_count(state, city.id)
+
+    def _hire_staff(self, state, payload):
+        city = self._owned_city(state, payload.get('city'), action=True)
+        civil_staff.hire(self, state, city.id, payload.get('candidate'), state.player)
+
+    def _reject_staff(self, state, payload):
+        city = self._owned_city(state, payload.get('city'))
+        civil_staff.reject(self, state, city.id, payload.get('candidate'), state.player)
+
+    def _civil_staff_view(self, state):
+        result = civil_staff.view(self, state)
+        if state is None:
+            return result
+        for key, row in result['cities'].items():
+            city = state.cities[key]
+            available = [person for person in row['employees'] if person['working'] and person['health'] > 0
+                         and person['action_turn'] != state.turn]
+            candidates = self._free_candidates(state, city) if city.owner == state.player else []
+            row['searchable_staff'] = available
+            row['search_targets'] = [dict(id=i, name=self.catalog.name(i),
+                martial_strength=state.officers[i].profile.martial_strength,
+                intellect=state.officers[i].profile.intellect,
+                virtue=state.officers[i].profile.virtue,
+                experience=state.officers[i].experience, troops=state.officers[i].troops)
+                for i in candidates]
+            reason = ('not_owned' if city.owner != state.player else
+                      'wrong_phase' if state.phase != 'city' else
+                      'action_used' if city.action_used else
+                      'no_available_staff' if not available else
+                      'no_historical_candidate' if not candidates else
+                      'city_full' if self._city_occupancy(state, city) >= self.catalog.rules.city_officer_capacity else
+                      'insufficient_gold' if city.gold < self.catalog.data['rules']['recruit_officer_gold'] else None)
+            row['can_search'] = reason is None
+            row['search_blocked_reason'] = reason
+        return result
+
     def _new(self, faction, seed, difficulty='normal'):
         if faction not in self.catalog.factions:
             raise GameError('请选择一个势力。')
@@ -163,6 +202,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         self._initialize_expansion(state)
         state.extension.update(difficulty=difficulty, ai_strategy={}, events=empty_events())
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
+        state.extension['civil_staff'] = civil_staff.empty(self, state)
         self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
 
@@ -190,6 +230,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
                                 'year_available': available,
                                 **self._expanded_catalog_view(state), **self._travel_view(state),
+                                'civil_staff': self._civil_staff_view(state),
                                 'names': {str(i): self.catalog.name(i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
@@ -215,11 +256,14 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                            'tactic': self._tactic, 'duel_start': self._duel_start, 'duel_action': self._duel_action,
                            'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
                            'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
-                           'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals}
+                           'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
+                           'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
+                           'staff_recruit': self._staff_recruit}
                 if kind not in methods:
                     raise GameError('未提供这项操作。')
                 methods[kind](candidate, payload)
             record_events(self, self.state, candidate, kind, payload)
+            civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
             self.validate(candidate)
             self.state = candidate
             self.revision += 1
@@ -444,6 +488,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def validate(self, state):
         get_settings(state)
+        civil_staff.validate(self, state)
         validate_events(self, state)
         self._validate_expansion(state)
         if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}:
@@ -465,6 +510,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         seen = set()
         for key, city in state.cities.items():
             city.roster.validate()
+            if self._city_occupancy(state, city) > self.catalog.rules.city_officer_capacity:
+                raise ValueError('Combined officer and civil staff capacity exceeded')
             if city.id != key or city.roster.city_id != key or city.roster.rules != self.catalog.rules or city.owner not in {*self.catalog.factions, 'neutral'} or type(city.action_used) is not bool:
                 raise ValueError('city ownership/configuration')
             for value in (city.gold, city.grain, city.reserves):

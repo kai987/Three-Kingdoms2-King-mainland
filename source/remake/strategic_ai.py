@@ -10,6 +10,7 @@ from itertools import combinations
 from .difficulty import attack_budget, get_settings
 from .errors import GameError
 from .officers import integer, recruitment_loyalty
+from . import civil_staff
 from .route_hazards import allocate_survivors
 
 
@@ -268,7 +269,7 @@ class StrategicAI:
                 continue
             inbound = sum(len(m['officers']) for m in self.state.extension['travel']['marches']
                           if m['target']==target.id and m['owner']==city.owner)
-            room = self.game.catalog.rules.city_officer_capacity-len(target.roster.officer_ids)-inbound
+            room = self.game.catalog.rules.city_officer_capacity-self.game._city_occupancy(self.state,target)-inbound
             if room <= 0:
                 continue
             for mode in ('land','fastest'):
@@ -297,7 +298,7 @@ class StrategicAI:
         x, r = self.state.extension, self.game.catalog.data['rules']
         ids = self.available(city)
         free = self.game._free_candidates(self.state,city)
-        if ids and free and len(city.roster.officer_ids)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
+        if ids and free and self.game._city_occupancy(self.state,city)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
             actor = max((self.state.officers[i] for i in ids),key=lambda o:(o.profile.virtue,o.profile.intellect,-o.runtime_id))
             ident = min(free)
             target = self.state.officers[ident]
@@ -312,13 +313,32 @@ class StrategicAI:
                 x['officer_actions'][str(ident)] = self.state.turn
             self.game._report_ai(self.state,city,'recruit_officer',str(ident))
             return
-        if ids and city.reserves<200 and city.gold>=r['recruit_gold_per_100'] and city.grain>=r['recruit_grain_per_100']:
+        clerks = sorted((p for p in x['civil_staff']['people'].values()
+            if p['city'] == city.id and p['owner'] == city.owner and p['working'] and p['health'] > 0
+            and p['action_turn'] != self.state.turn),
+            key=lambda p:(-p['profile']['virtue'],-p['profile']['intellect'],p['id']))
+        if clerks and free and self.game._city_occupancy(self.state,city)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
+            ident = min(free)
+            self.game._staff_recruit_for_owner(self.state,city,clerks[0]['id'],ident,city.owner)
+            self.game._report_ai(self.state,city,'staff_recruit',str(ident))
+            return
+        ledger = x['civil_staff']['cities'].get(city.id)
+        if ledger and ledger['candidate'] and city.gold >= civil_staff.RULES['hire_gold']:
+            staff_id = ledger['candidate']['id']
+            try:
+                civil_staff.hire(self.game,self.state,city.id,staff_id,city.owner)
+            except GameError:
+                pass
+            else:
+                self.game._report_ai(self.state,city,'hire_staff',staff_id)
+                return
+        if (ids or clerks) and city.reserves<200 and city.gold>=r['recruit_gold_per_100'] and city.grain>=r['recruit_grain_per_100']:
             city.reserves += r['recruit_per_action'];self.state.soldiers['recruited'] += r['recruit_per_action']
             city.gold -= r['recruit_gold_per_100'];city.grain -= r['recruit_grain_per_100'];city.action_used = True
             self.game._report_ai(self.state,city,'recruit_soldiers')
             return
         candidates = self.game._persuadable(self.state,city)
-        if ids and candidates and len(city.roster.officer_ids)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['persuade_officer_gold'] and not any(report['turn']==self.state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
+        if ids and candidates and self.game._city_occupancy(self.state,city)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['persuade_officer_gold'] and not any(report['turn']==self.state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
             actor = max((self.state.officers[i] for i in ids),key=lambda o:(o.profile.virtue,-o.runtime_id))
             ident = min(candidates,key=lambda i:(self.state.officers[i].loyalty,i))
             self.game._attempt_defection(self.state,city,actor,ident)

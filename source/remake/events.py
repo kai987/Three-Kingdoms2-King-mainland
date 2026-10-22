@@ -4,8 +4,12 @@ Events describe mechanics that really happened. They never generate historical
 conquests, consume random numbers, or acknowledge/advance a game from the UI.
 """
 from copy import deepcopy
+import re
 
 LIMIT = 100
+STAFF_KINDS = {'staff_candidate', 'staff_hired', 'staff_declined', 'staff_expired',
+               'staff_salary', 'staff_allegiance'}
+STAFF_DETAILS = {'staff_id', 'name', 'portrait', 'reason', 'amount', 'paid', 'bonus', 'counts'}
 DETAILS = {
     'campaign_start': {'difficulty', 'scenario_title'}, 'officer_appeared': set(),
     'recruit_success': {'actor'}, 'recruit_failure': {'actor'},
@@ -23,7 +27,57 @@ DETAILS = {
     'march_returned': {'march_id', 'reason'}, 'new_year': {'year'},
     'campaign_victory': set(), 'campaign_defeat': set(),
     'ai_campaign': {'target', 'sources', 'arrival_turn', 'coordinated'},
+    **{kind: set(STAFF_DETAILS) for kind in STAFF_KINDS},
 }
+
+
+def _validate_staff_event(row):
+    """Staff snapshots remain independent of historical person references.
+
+    A declined or expired candidate need not remain in the current registry;
+    the committed event retains its own bounded name and shared portrait token.
+    """
+    details = row['details']
+    if row['person_ids'] or len(row['city_ids']) != 1 or not 1 <= len(row['factions']) <= 2:
+        raise ValueError('Civil staff event references')
+    required = {'amount', 'paid', 'bonus', 'counts'} if row['kind'] == 'staff_salary' else {'staff_id', 'name', 'portrait', 'reason'}
+    if not required <= set(details):
+        raise ValueError('Civil staff event payload')
+    if 'staff_id' in details:
+        ident = details['staff_id']
+        if (not isinstance(ident, str) or re.fullmatch(r'clerk-[0-9]{6,12}', ident) is None
+                or int(ident[6:]) < 1):
+            raise ValueError('Civil staff event identity')
+    if 'name' in details:
+        name = details['name']
+        if not isinstance(name, str) or not 1 <= len(name) <= 40 or not name.strip() or not name.isprintable():
+            raise ValueError('Civil staff event name')
+    if 'portrait' in details and details['portrait'] not in {'clerk-1', 'clerk-2', 'clerk-3'}:
+        raise ValueError('Civil staff event portrait')
+    if 'reason' in details and (not isinstance(details['reason'], str)
+            or re.fullmatch(r'[a-z_]{1,80}', details['reason']) is None):
+        raise ValueError('Civil staff event reason')
+    for field in ('amount', 'paid'):
+        if field in details and (type(details[field]) is not int or not 0 <= details[field] <= 100000000):
+            raise ValueError('Civil staff event amount')
+    if 'bonus' in details:
+        bonus = details['bonus']
+        if (not isinstance(bonus, dict) or set(bonus) != {'gold', 'grain', 'reserves'}
+                or any(type(value) is not int or not 0 <= value <= 100000000 for value in bonus.values())):
+            raise ValueError('Civil staff event income')
+    if 'counts' in details:
+        counts = details['counts']
+        if (not isinstance(counts, dict) or set(counts) != {'staff', 'total_unpaid', 'cities'}
+                or type(counts['staff']) is not int or not 1 <= counts['staff'] <= 345
+                or type(counts['cities']) is not int or not 1 <= counts['cities'] <= 115
+                or not counts['cities'] <= counts['staff'] <= counts['cities'] * 3
+                or type(counts['total_unpaid']) is not int or not 0 <= counts['total_unpaid'] <= counts['staff']):
+            raise ValueError('Civil staff event counts')
+    if row['kind'] == 'staff_salary' and (details['paid'] > details['amount']
+            or details['amount'] != details['counts']['staff'] * 5
+            or details['paid'] % 5 != 0
+            or details['counts']['total_unpaid'] != details['counts']['staff'] - details['paid'] // 5):
+        raise ValueError('Civil staff event salary')
 
 
 def empty():
@@ -71,7 +125,7 @@ def transition(campaign, before, after, kind, payload):
             if after.player not in (previous.faction_id, officer.faction_id):
                 continue
             homes = [city.id for city in after.cities.values() if ident in city.roster.officer_ids]
-            actor_id = payload.get('actor') if kind in {'recruit_officer', 'persuade_officer'} else None
+            actor_id = payload.get('actor') if kind in {'recruit_officer', 'persuade_officer', 'staff_recruit'} else None
             details = dict(actor=person(actor_id)) if actor_id in after.officers else {}
             if previous.faction_id is None:
                 event_kind = 'recruit_success'
@@ -80,11 +134,12 @@ def transition(campaign, before, after, kind, payload):
                 details.update(from_faction=previous.faction_id, to_faction=officer.faction_id)
             emit(campaign, after, event_kind, person_ids=[officer.person_id], city_ids=homes,
                  factions=[f for f in (previous.faction_id, officer.faction_id) if f], details=details)
-    if kind in {'recruit_officer', 'persuade_officer'}:
+    if kind in {'recruit_officer', 'persuade_officer', 'staff_recruit'}:
         ident, actor = payload.get('officer'), payload.get('actor')
         if ident in before.officers and before.officers[ident].faction_id == after.officers[ident].faction_id:
             emit(campaign, after, 'recruit_failure', person_ids=[person(ident)],
-                 city_ids=[payload['city']], factions=[after.player], details=dict(actor=person(actor)))
+                 city_ids=[payload['city']], factions=[after.player],
+                 details=dict(actor=person(actor)) if actor in after.officers else {})
     for city, value in sorted(after.cities.items()):
         if city not in before.cities:
             rule = campaign.catalog.data['city_foundings'][city]
@@ -169,5 +224,7 @@ def validate(campaign, state):
             return False
         if not value_ok(row['details']):
             raise ValueError('Campaign event JSON value')
+        if row['kind'] in STAFF_KINDS:
+            _validate_staff_event(row)
     if ids != sorted(set(ids)) or ids and ids != list(range(events['next_id']-len(ids), events['next_id'])):
         raise ValueError('Campaign event sequence')

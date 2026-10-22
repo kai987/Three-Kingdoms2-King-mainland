@@ -8,6 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
+from remake.civil_staff import synchronize
 from campaign_fixtures import advance_month
 
 FIELDS = ('gold', 'grain', 'reserves')
@@ -169,6 +170,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         # history. The future node must inherit the actual current owner.
         parent.owner = changed_owner
         parent.gold, parent.grain = 1011, 4021
+        synchronize(game, game.state, checks=False)
         game.validate(game.state)
         before = {field: getattr(parent, field) for field in FIELDS}
         recruits = game.state.soldiers['recruited']

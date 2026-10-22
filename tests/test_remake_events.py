@@ -2,13 +2,14 @@
 from copy import deepcopy
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake.difficulty import attack_budget, get_settings
-from remake.events import LIMIT
+from remake.events import LIMIT, STAFF_KINDS, empty, emit, transition, validate as validate_events
 from campaign_fixtures import controlled_catalog, reach_battle
 
 
@@ -152,6 +153,95 @@ class CampaignEventsTests(unittest.TestCase):
         for key in saved['state']:
             if key != 'extension':
                 self.assertEqual(restored[key], saved['state'][key])
+
+
+class CivilStaffEventTests(unittest.TestCase):
+    def fixture(self):
+        campaign = SimpleNamespace(catalog=SimpleNamespace(
+            definitions={'historical-person': None}, map_cities={'home': None},
+            factions={'shu': None, 'wei': None}, data={'title': 'Test campaign'}))
+        state = SimpleNamespace(year=190, month=1, day=1, turn=1, player='shu', battle=None,
+            officers={1: SimpleNamespace(person_id='historical-person', alive=True, faction_id=None)},
+            cities={'home': SimpleNamespace(id='home', roster=SimpleNamespace(officer_ids=[]))},
+            extension=dict(events=empty(), free_locations={}, leaders={}, ended_factions=[],
+                           ai_strategy={}, outcome=None))
+        return campaign, state
+
+    def personal(self):
+        return dict(staff_id='clerk-000001', name='王安', portrait='clerk-1', reason='opening')
+
+    def test_all_staff_scenes_keep_snapshot_identity_separate_from_historical_pool(self):
+        campaign, state = self.fixture()
+        for kind in sorted(STAFF_KINDS):
+            details = self.personal()
+            if kind == 'staff_salary':
+                details = dict(amount=10, paid=5, bonus=dict(gold=5, grain=0, reserves=0),
+                               counts=dict(staff=2, total_unpaid=1, cities=1))
+            emit(campaign, state, kind, city_ids=['home'], factions=['shu'], details=details, audience='world')
+        before = deepcopy(state.extension['events'])
+        validate_events(campaign, state)
+        self.assertEqual(before, state.extension['events'])
+        self.assertTrue(all(not event['person_ids'] for event in before['items']))
+        self.assertEqual(len(before['items']), 6)
+        # Expired/declined IDs are retained in the event snapshot, and are not
+        # required to be active employees or candidates in a mutable registry.
+        self.assertFalse(hasattr(state, 'civil_staff'))
+
+    def test_tampered_staff_references_portraits_money_and_salary_are_rejected(self):
+        campaign, state = self.fixture()
+        emit(campaign, state, 'staff_candidate', city_ids=['home'], factions=['shu'],
+             details=self.personal(), audience='world')
+        original = deepcopy(state.extension['events'])
+        cases = [('staff_id', 'historical-person'), ('staff_id', 'clerk-000000'),
+                 ('staff_id', 1), ('name', ''), ('name', '王\x00安'),
+                 ('portrait', '../original/001'), ('amount', -1), ('paid', True),
+                 ('reason', '<script>')]
+        for key, value in cases:
+            with self.subTest(key=key, value=value):
+                state.extension['events'] = deepcopy(original)
+                state.extension['events']['items'][0]['details'][key] = value
+                with self.assertRaisesRegex(ValueError, 'Civil staff|Campaign event JSON'):
+                    validate_events(campaign, state)
+        for key, value in [('person_ids', ['historical-person']), ('city_ids', []), ('factions', [])]:
+            state.extension['events'] = deepcopy(original)
+            state.extension['events']['items'][0][key] = value
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'Civil staff'):
+                validate_events(campaign, state)
+        state.extension['events'] = empty()
+        emit(campaign, state, 'staff_salary', city_ids=['home'], factions=['shu'], details=dict(
+            amount=10, paid=5, bonus=dict(gold=0, grain=0, reserves=0), counts=dict(staff=2, total_unpaid=1, cities=1)))
+        salary = deepcopy(state.extension['events'])
+        for key, value in [('paid', 11), ('amount', 9), ('bonus', dict(gold=0, grain=0, reserves=-1)),
+                           ('counts', dict(staff=4, total_unpaid=1, cities=1)), ('paid', 4),
+                           ('counts', dict(staff=2, total_unpaid=0, cities=1))]:
+            state.extension['events'] = deepcopy(salary)
+            state.extension['events']['items'][0]['details'][key] = value
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'Civil staff|Campaign event JSON'):
+                validate_events(campaign, state)
+
+    def test_monthly_salary_summary_can_cover_the_whole_faction_in_one_event(self):
+        campaign, state = self.fixture()
+        emit(campaign, state, 'staff_salary', city_ids=['home'], factions=['shu'], details=dict(
+            amount=1725, paid=1720, bonus=dict(gold=230, grain=200, reserves=80),
+            counts=dict(staff=345, total_unpaid=1, cities=115)))
+        validate_events(campaign, state)
+        self.assertEqual(len(state.extension['events']['items']), 1)
+
+    def test_staff_executed_historical_recruitment_emits_one_safe_success_or_failure(self):
+        for success in (False, True):
+            campaign, before = self.fixture()
+            after = deepcopy(before)
+            if success:
+                after.officers[1].faction_id = 'shu'
+                after.cities['home'].roster.officer_ids.append(1)
+            transition(campaign, before, after, 'staff_recruit',
+                       dict(actor='clerk-000001', officer=1, city='home'))
+            events = after.extension['events']['items']
+            self.assertEqual(len(events), 1)
+            self.assertEqual(events[0]['kind'], 'recruit_success' if success else 'recruit_failure')
+            self.assertEqual(events[0]['person_ids'], ['historical-person'])
+            self.assertEqual(events[0]['details'], {})
+            validate_events(campaign, after)
 
 
 if __name__ == '__main__':

@@ -254,6 +254,8 @@ class StrategicAITests(unittest.TestCase):
         for ident in list(city.roster.officer_ids):
             game.state.cities['runan'].roster.officer_ids.append(ident)
         city.roster.officer_ids.clear();city.owner='neutral'
+        from remake.civil_staff import synchronize
+        synchronize(game, game.state, checks=False)
         game.validate(game.state);game=self.resume(game)
         self.ai_turn(game)
         plan=game.state.extension['ai_strategy']['wei']

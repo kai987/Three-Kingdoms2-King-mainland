@@ -3,6 +3,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const {create,validEvent,eventRows,campaignKey,groupRows,KINDS}=require('../game/events.js');
 const row=(id,kind='recruit_success',extra={})=>({id,kind,year:190,month:1,day:1,turn:1,person_ids:['person-a'],city_ids:['home'],factions:['shu'],details:{},audience:'player',...extra});
+const staffRow=(id,kind='staff_candidate',extra={})=>row(id,kind,{person_ids:[],audience:'world',details:{staff_id:'clerk-000001',name:'王安',portrait:'clerk-1',reason:'opening'},...extra});
 const catalog={scenario_id:'mainland190-01',title:'190年',library:[{id:0,person_id:'person-a',name:'劉備'},{id:1,person_id:'person-b',name:'曹操'}],names:{0:'劉備',1:'曹操'},factions:[{id:'shu',name:'劉備勢力',city:'home'},{id:'wei',name:'曹操勢力',city:'enemy'}],cities:[{id:'home',name:'成都',position:[120,300]},{id:'enemy',name:'長安',position:[600,300]}],world:{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'},map_presentation:{road_center_corrections:{backgrounds:{'/assets/map-navigation.png':'/assets/map-road-centers.png'}},castle_fill_pixels:[[0,0]],castle_outline_pixels:[[4,4]]},tactics:[{name:'火計'}]};
 const view=(items,seed=2026)=>({revision:4,catalog,game:{seed,player:'shu',year:190,month:1,day:1,turn:1,rng:{state:2026,draws:0},officers:{0:{person_id:'person-a'}},extension:{events:{next_id:(items.at(-1)?.id||0)+1,items}}}});
 class Target{
@@ -29,12 +30,27 @@ function fixture(items=[]){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,23);
+ assert.equal(Object.keys(KINDS).length,29);
  assert(validEvent(row(1)));for(const bad of [{id:0},{kind:'<script>'},{month:13},{day:31},{audience:'other'},{person_ids:[3]},{details:[]},{turn:0}])assert(!validEvent({...row(1),...bad}));
  assert.deepEqual(eventRows({game:{extension:{events:{items:{}}}}}),[]);
  assert.notEqual(campaignKey(view([])),campaignKey(view([],2027)));
  const originalRows=[row(3),row(2),row(1)];const source=JSON.stringify(originalRows);assert.deepEqual(eventRows(view(originalRows)).map(x=>x.id),[1,2,3]);assert.equal(JSON.stringify(originalRows),source);
  assert.deepEqual(groupRows([row(1,'officer_appeared'),row(2,'officer_appeared'),row(3,'officer_death'),row(4,'officer_death',{turn:2})]).map(g=>g.length),[2,1,1]);
+ const salary=staffRow(2,'staff_salary',{details:{amount:5,paid:0,bonus:{gold:0,grain:0,reserves:0},counts:{staff:1,total_unpaid:1,cities:1}}});
+ assert(validEvent(staffRow(1)));assert(validEvent(salary));
+ for(const details of [{staff_id:'san14-candidate-0952'},{staff_id:'clerk-000000'},{staff_id:12},{portrait:'../portrait'},{name:''},{reason:'<script>'},{amount:-1},{paid:1.5}])assert(!validEvent(staffRow(1,'staff_candidate',{details:{...staffRow(1).details,...details}})));
+ assert(!validEvent(staffRow(1,'staff_candidate',{person_ids:['person-a']})));assert(!validEvent(staffRow(1,'staff_candidate',{city_ids:[]})));
+ assert(!validEvent({...salary,details:{...salary.details,paid:6}}));assert(!validEvent({...salary,details:{...salary.details,bonus:{gold:0,grain:0,reserves:-1}}}));
+ assert(!validEvent({...salary,details:{...salary.details,paid:1}}));assert(!validEvent({...salary,details:{...salary.details,counts:{staff:1,total_unpaid:0,cities:1}}}));
+ assert(validEvent({...salary,details:{amount:1725,paid:1720,bonus:{gold:230,grain:200,reserves:80},counts:{staff:345,total_unpaid:1,cities:115}}}));
+ assert.deepEqual(groupRows([staffRow(1),salary,staffRow(3),staffRow(4,'staff_candidate',{turn:2})]).map(g=>g.map(e=>e.id)),[[1,3],[2],[4]],'Interleaved staff events share one same-turn scene per kind');
+ const staff=fixture(),staffView=view([staffRow(1),salary,staffRow(3,'staff_candidate',{factions:['wei'],audience:'player'}),staffRow(4,'staff_candidate',{details:{...staffRow(4).details,staff_id:'clerk-000002',name:'周平',portrait:'clerk-2'}})]);
+ const staffBefore=JSON.stringify(staffView);staff.events.observe(staffView,{newGame:true});staff.drain();assert.deepEqual(staff.events.snapshot().active,[1,4]);assert.deepEqual(staff.events.snapshot().pending,[[2]],'Remote AI staff events never interrupt this player, even with a broad audience');
+ assert(staff.modal.innerHTML.includes('/assets/civil-staff/clerk-1.png'));assert(staff.modal.innerHTML.includes('/assets/civil-staff/clerk-2.png'));assert(staff.modal.innerHTML.includes('架空文吏'));assert(staff.modal.innerHTML.includes('王安'));assert.equal(staff.portraitRequests.length,0,'Civil staff portraits never look up a historical person ID');
+ const staffSnapshot=staff.events.snapshot();staff.i18n.locale='ja';staff.doc.emit('game-language-change');assert(staff.modal.innerHTML.includes('在地文官の推薦'));assert(staff.modal.innerHTML.includes('架空文官'));assert.deepEqual(staff.events.snapshot(),staffSnapshot);assert.equal(JSON.stringify(staffView),staffBefore);
+ staff.modal.querySelector('[data-event-next]').onclick();assert(staff.modal.innerHTML.includes('金5'));assert(staff.modal.innerHTML.includes('業務を休止'));assert(staff.modal.innerHTML.includes('今月の追加収入なし'));
+ staff.modal.querySelector('[data-event-next]').onclick();assert(!staff.modal.open);
+ const staffDesc=fixture();staffDesc.events.observe(view([]),{baseline:true});assert(staffDesc.events.description(staffRow(1,'staff_expired',{details:{...staffRow(1).details,reason:'filled'}})).includes('編制已補足'));assert(staffDesc.events.description(staffRow(1,'staff_expired',{details:{...staffRow(1).details,reason:'owner_changed'}})).includes('所屬已變更'));assert(staffDesc.events.description(staffRow(1,'staff_allegiance',{factions:['wei','shu']})).includes('劉備勢力'));
  const f=fixture([row(1)]),before=view([row(1)]);f.events.observe(before,{baseline:true});f.drain();assert.equal(f.modal.shows,0);assert.equal(f.events.snapshot().cursor,1);
  const changed=view([row(1),row(2,'tactic',{details:{tactic:0,success:false}})]),unchanged=JSON.stringify(changed);f.events.observe(changed);f.drain();assert(f.modal.open);assert.deepEqual(f.events.snapshot().active,[2]);assert(f.modal.innerHTML.includes('未能奏效'));assert(f.modal.innerHTML.includes('火計'));assert(f.modal.innerHTML.includes('/assets/map-road-centers.png'));assert(f.modal.innerHTML.includes('data-portrait-person="person-a"'));assert(!f.modal.innerHTML.includes('？'));assert.equal(JSON.stringify(changed),unchanged);assert.equal(f.modal.focuses,1);
  f.events.observe(changed);f.drain();assert.deepEqual(f.events.snapshot().pending,[]);assert.equal(f.modal.shows,1);
@@ -75,5 +91,5 @@ function fixture(items=[]){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
- console.log('events: 23 bilingual scenes, stable-ID portraits/map, grouped queues, successful-command-only observation, load baselines, modal/busy/preview guards, locale continuity, skip/history and immutable RNG/state passed');
+ console.log('events: 29 bilingual scenes, independent staff snapshots/shared portraits, same-turn staff batching and local audience, stable-ID historical portraits/map, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

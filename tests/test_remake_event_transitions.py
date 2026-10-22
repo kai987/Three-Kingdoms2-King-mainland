@@ -14,6 +14,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, GameError
+from remake import civil_staff
 from campaign_fixtures import controlled_catalog
 
 
@@ -271,6 +272,9 @@ class CampaignEventTransitionTests(unittest.TestCase):
         game.state.cities['hepu'].roster.officer_ids.extend(target.roster.officer_ids)
         target.roster.officer_ids.clear()
         target.owner = 'wei'
+        # This controlled capture bypasses the command transaction that normally
+        # updates local personnel ownership; do not run candidate/payroll checks.
+        civil_staff.synchronize(game, game.state, checks=False)
         game.validate(game.state)
         before_troops = game.state.officers[ident].troops
         before_rng = deepcopy(game.state.rng)

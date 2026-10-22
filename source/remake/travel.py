@@ -213,7 +213,7 @@ class TravelCampaign:
         if not ids or len(ids) != len(set(ids)) or any(i in self._march_ids(state) for i in ids):
             raise GameError('请选择尚未出发且不重复的武将。')
         if kind == 'attack': ids = list(select_deployment(source.roster, ids, state.officers))
-        elif len(target.roster.officer_ids)+len(ids)>self.catalog.rules.city_officer_capacity:
+        elif self._city_occupancy(state,target)+len(ids)>self.catalog.rules.city_officer_capacity:
             raise GameError('目的城武将容量不足。')
         if mode=='explore' and not sum(state.officers[i].troops for i in ids):
             raise GameError('探索航行至少需要一名带兵武将。')
@@ -281,7 +281,7 @@ class TravelCampaign:
                         details=dict(march_id=row['id'],reason='army_lost'))
                 continue
             if target.owner == row['owner']:
-                if len(target.roster.officer_ids)+len(ids)>self.catalog.rules.city_officer_capacity:
+                if self._city_occupancy(state,target)+len(ids)>self.catalog.rules.city_officer_capacity:
                     self._note(state, f'{self.catalog.map_cities[target.id]["name"]}已满员，行军{row["id"]}等待下一旬入城。')
                     continue
                 transfer_officers(source.roster, target.roster, ids)

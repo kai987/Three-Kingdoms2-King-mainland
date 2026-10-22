@@ -587,6 +587,21 @@ gap:8px;
 margin-top:16px;
 flex-wrap:wrap
 }
+.civil-staff-summary{border-top:1px solid var(--ink);padding-top:6px;margin-top:8px}
+.civil-staff-summary p{margin-bottom:6px}
+.civil-staff-card{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--ink);margin-bottom:12px}
+.civil-staff-card p{margin-bottom:4px;overflow-wrap:anywhere}
+.civil-staff-portrait{width:64px;height:80px;object-fit:contain;image-rendering:pixelated;align-self:start}
+.civil-staff-placeholder{display:grid;place-items:center;border:2px solid var(--ink);font-size:36px}
+.civil-staff-kind{display:inline-block;border:1px solid var(--ink);font-size:13px;padding:0 4px}
+.civil-staff-search{border-top:2px solid var(--ink);margin-top:14px;padding-top:8px}
+.civil-staff-search button{width:100%;margin-bottom:12px}
+.civil-staff-rules{margin-top:14px}
+.civil-staff-rules summary{cursor:pointer}
+.civil-staff-rules p{margin:8px 0}
+.staff-command-error{border:2px solid var(--ink);padding:8px}
+dialog:has([data-civil-staff-dialog]) .dialog-actions{position:sticky;bottom:-24px;background:var(--paper);padding:8px 0;border-top:2px solid var(--ink);z-index:1}
+@media(max-width:600px){dialog:has([data-civil-staff-dialog]) .dialog-actions{bottom:-16px}.civil-staff-card{grid-template-columns:48px minmax(0,1fr);gap:8px}.civil-staff-portrait{width:48px;height:60px}}
 dialog .officer-picker{
 display:grid;
 gap:4px;
