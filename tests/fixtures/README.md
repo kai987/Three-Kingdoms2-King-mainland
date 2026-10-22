@@ -21,3 +21,12 @@ all 25 scenario openings and one-month calendar states, plus three natural AI
 months and their RNG states, were checked byte-for-byte across the runtime cleanup.
 Do not refresh these fixtures to accommodate a changed physical rule, RNG draw or
 number spelling.
+
+The AI/event update adds `difficulty`, `ai_strategy` and bounded structured
+`events` in the current campaign extension. Full-state/save hashes were refreshed
+only after all32 checkpoints, with precisely these three new fields projected
+out and the envelope checksum recomputed, matched the previous full-state and
+full-save hashes exactly. All8 physical route quotes, final troops, dates,
+soldier ledgers and RNG states/draws also matched the prior fixtures unchanged.
+The current fixtures continue to pin the complete new state and save, including
+new event records; the tests do not project away those fields during acceptance.

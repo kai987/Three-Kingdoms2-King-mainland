@@ -2,13 +2,17 @@
 let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
 let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null,mapAction=null;
 let cloudSave=null,cloudSaveUI=null;
+let campaignDifficulty='normal';
+const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const gameAudio=GameAudio.create();
+const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog});
 let audioOutcome=null;
 // Browsers require a real gesture before creating/resuming the audio context.
 for(const type of ['pointerdown','keydown'])document.addEventListener(type,event=>{if(event.isTrusted)void gameAudio.unlock();},{capture:true});
 dialog.addEventListener('cancel',()=>gameAudio.play('cancel'));
-document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mapAction&&!dialog.open){event.preventDefault();gameAudio.play('cancel');cancelMapAction();}});
+$('#event-dialog')?.addEventListener('cancel',()=>gameAudio.play('cancel'));
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mapAction&&!dialog.open&&!$('#event-dialog')?.open){event.preventDefault();gameAudio.play('cancel');cancelMapAction();}});
 document.addEventListener('click',event=>{
  if(!event.isTrusted)return;
  const button=event.target.closest('button');
@@ -145,11 +149,11 @@ function mapBackgroundHref(original){
 const mapAccessKey=points=>[points[0].join(','),points.at(-1).join(',')].sort().join(':');
 const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);if(error)gameAudio.play('error');}
-function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;cloudSaveUI?.refreshButton();}
+function setBusy(value){busy=value;document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;cloudSaveUI?.refreshButton();if($('#event-history'))$('#event-history').disabled=value||!!setupPreview||!view?.game?.extension?.events?.items?.length;if(!value)gameEvents?.pump();}
 async function request(path,body,{raw=false,text=false}={}){
  const response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:raw?body:JSON.stringify(body)});
  const value=text&&response.ok?await response.text():await response.json();
- if(!response.ok){if(response.status===409){view=await request('/api/state');render();}throw new Error(value.error||'操作未完成。');}
+ if(!response.ok){if(response.status===409){view=await request('/api/state');gameEvents?.observe(view,{baseline:true});render();}throw new Error(value.error||'操作未完成。');}
  return value;
 }
 async function command(kind,payload={}){
@@ -157,7 +161,7 @@ async function command(kind,payload={}){
  setBusy(true);notice();
  try{
   const previousTurn=view.game?.turn,previousOutcome=audioOutcome,previousBattleLog=view.game?.battle?.log||[];
-  view=await request('/api/command',{kind,payload,revision:view.revision});render();
+  view=await request('/api/command',{kind,payload,revision:view.revision});if(typeof gameEvents!=='undefined')gameEvents?.observe(view,{newGame:kind==='new'});render();
   if(!audioOutcome||audioOutcome===previousOutcome){
    let sound={depart:'march',transfer:'march',attack:'attack',retreat:'cancel'}[kind]||'confirm';
    if(kind==='duel_start')sound=view.game.battle?.extended?.duel?'duel_start':'duel_refused';
@@ -191,6 +195,7 @@ function openDialog(title,body,actions){
 }
 function selectFaction(){
  mapAction=null;
+ if($('#event-history'))$('#event-history').disabled=true;
  gameAudio.setScene('menu');
  const current=view.catalog.scenario_id;
  const scenarios=view.catalog.scenarios;
@@ -209,7 +214,7 @@ function selectFaction(){
   const chronology=(meta.chronology_overrides||[]).map(row=>{const changes=Object.entries({birth_year:'出生年',service_year:'出仕年',death_year:'卒年'}).filter(([key])=>row.before[key]!==row.after[key]).map(([key,label])=>`${label} ${row.before[key]??'未详'} → ${row.after[key]??'未详'}`).join('、');return `<li>${escapeHtml(row.name)}：${changes}（${row.is_historical_correction?'史料修订':'本作游戏设定'}）。</li>`;}).join('');
   const scenarioKind=`<p class="small scenario-kind" data-scenario-kind>剧本类型：${escapeHtml(category)}${meta.fictional?' · 假想剧本（IF）':''}</p>`;
   const scenarioExtra=`${meta.story_note_i18n?.['zh-Hant']?`<p>${escapeHtml(meta.story_note_i18n['zh-Hant'])}</p>`:''}${meta.official_same_date_title?`<p>同年月官方剧本：${escapeHtml(meta.official_same_date_title['zh-Hant'])}。</p>`:''}${meta.scope_note?`<p>${escapeHtml(meta.scope_note)}</p>`:''}${chronology?`<details class="chronology-exceptions"><summary>人物年代例外</summary><p>以下个别年代修订仅适用于本剧本。游戏设定不等同史实。</p><ul>${chronology}</ul></details>`:''}`;
-  const content=`<label class="field" for="scenario">选择剧本<select id="scenario">${options}</select></label><p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>${scenarioKind}${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary><p>${escapeHtml(option.main_scenario.summary)}</p>${scenarioExtra}<p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p>${scenarioSource}</details>`:''}
+  const content=`<label class="field" for="scenario">选择剧本<select id="scenario">${options}</select></label><label class="field" for="difficulty">游戏难度<select id="difficulty">${['easy','normal','hard'].map(id=>`<option value="${id}" ${campaignDifficulty===id?'selected':''}>${difficultyName(id)}</option>`).join('')}</select></label><p class="small" id="difficulty-help">简单：较少进攻，使用普通攻击；普通：长期目标、双路协同；困难：更积极进攻、三路协同与完整计略评估。各档沿用相同的资源与战斗规则。</p><p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>${scenarioKind}${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary><p>${escapeHtml(option.main_scenario.summary)}</p>${scenarioExtra}<p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p>${scenarioSource}</details>`:''}
   ${option.main_scenario?.city_chronology_note?`<p class="small">${escapeHtml(option.main_scenario.city_chronology_note)}</p>`:''}<div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg><span class="faction-choice-body"><span class="faction-choice-heading"><span>${escapeHtml(f.name)}</span><span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></span><span class="faction-choice-resources" data-faction-resources="${f.id}">${resourceSummary(f.id,option)}</span></span></label>`).join('')}</div>
   <p id="setup-summary" class="small" aria-live="polite"></p><label class="seed-label" for="seed">随机种子<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026" aria-describedby="seed-help"></label><p id="seed-help" class="small">控制招募、战斗等随机判定；相同种子与操作可重现战局。</p>`;
   $('#inspector').classList.add('setup-menu');
@@ -222,12 +227,13 @@ function selectFaction(){
   if($('#cancel-setup'))$('#cancel-setup').onclick=()=>{setupPreview=null;render();$('#main-menu').focus();};
   refreshPreview();
   $('#scenario').onchange=()=>draw($('#scenario').value);
+  $('#difficulty').onchange=()=>{campaignDifficulty=$('#difficulty').value;};
   bindNumberInput($('#seed'));
   $('#begin').onclick=async()=>{
    const f=document.querySelector('input[name=faction]:checked')?.value,seed=clampNumberInput($('#seed'),true);
    if(!Number.isInteger(seed)||seed<1||seed>4294967295)return notice('随机种子请填写1到4294967295之间的整数。',true);
    const pending=setupPreview;setupPreview=null;
-   if(await command('new',{faction:f,seed,scenario})){
+   if(await command('new',{faction:f,seed,scenario,difficulty:campaignDifficulty})){
     selectedCity=view.catalog.factions.find(x=>x.id===f).city;actor=target=null;mapMode='all';dialog.close();render();
    }else{setupPreview=pending;renderMap();}
   };
@@ -678,6 +684,8 @@ function renderBattle(){
 }
 function render(){
  if(!view)return;
+ if(typeof gameEvents!=='undefined')gameEvents?.pump();
+ if($('#event-history'))$('#event-history').disabled=busy||!!setupPreview||!view.game?.extension?.events?.items?.length;
  if(mapAction&&(view.revision!==mapAction.revision||view.game?.phase!=='city'||setupPreview))mapAction=null;
  MarchCore.update(view);
  GameI18n.registerScenarios(view.catalog.scenarios);
@@ -696,7 +704,7 @@ function render(){
  $('#main-menu').disabled=busy||!game||!!setupPreview;
  $('#main-menu').setAttribute('aria-expanded',String(!!setupPreview));
  cloudSaveUI?.refreshButton();
- $('#date').textContent=game?`${GameCalendar.text(game)}　第${game.turn}回合 · 1旬10日`:'选择势力';
+ $('#date').textContent=game?`${GameCalendar.text(game)}　第${game.turn}回合 · 1旬10日 · ${difficultyName(game.extension?.difficulty)}`:'选择势力';
  if(!game){renderMap();selectFaction();return;}
  if(!selectedCity||!game.cities[selectedCity])selectedCity=Object.values(game.cities).find(c=>c.owner===game.player)?.id||view.catalog.active_cities[0];
  if(game.phase==='battle'||game.phase==='result')renderBattle();
@@ -707,6 +715,7 @@ function render(){
 }
 $('#rules').onclick=()=>openDialog('规则说明',`<div class="rules-body"><p>每回合为1旬，固定10日；每月上旬、中旬、下旬，各势力每旬行动。月结只在进入下月上旬时执行。</p><p>每城${capacity()}人；每方出战最多10人，包含主将。</p><ul>${view.catalog.notes.map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><p>总人物库${view.catalog.library_count}人。仅已登场且配置齐全的人物进入本局。随机种子决定招募、战斗等判定的随机序列；相同种子与操作可重现战局，保存会保留随机序列进度。</p></div>`,'<button data-cancel>返回战役</button>');
 $('#library').onclick=showLibrary;
+$('#event-history').onclick=()=>gameEvents?.history();
 $('#audio-settings').onclick=()=>{
  const settings=gameAudio.getSettings();
  const row=(id,label,value)=>`<label class="audio-volume" for="${id}"><span>${label}</span><output id="${id}-value" for="${id}">${Math.round(value*100)}%</output><input id="${id}" type="range" min="0" max="100" step="1" value="${Math.round(value*100)}"></label>`;
@@ -724,10 +733,10 @@ $('#save').onclick=async()=>{
  if(busy)return;
  try{const save=await request('/api/save',undefined,{text:true});localStorage.setItem('three-kingdoms-save',save);const blob=new Blob([save],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。');}catch(e){notice(e.message,true);}
 };
-async function loadSave(save,guard=()=>true){if(busy||!guard())return false;setBusy(true);try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');return true;}catch(e){notice(e.message,true);return false;}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
+async function loadSave(save,guard=()=>true){if(busy||!guard())return false;setBusy(true);try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});gameEvents?.observe(view,{baseline:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');return true;}catch(e){notice(e.message,true);return false;}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
 $('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-save');openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>`,'<button data-cancel>取消</button>');$('#load-local').onclick=()=>{try{loadSave(saved);}catch(e){notice('存档无效，当前进度未改变。',true);}};$('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(await file.text());}catch(e){notice('存档无效，当前进度未改变。',true);}};};
 GameI18n.ready.then(()=>Promise.all([request('/api/state'),request('/assets/city-positions.json'),request('/api/cloud-config').catch(()=>({enabled:false,slots:5}))])).then(([value,positions,cloudConfig])=>{
- view=value;mapPositions=positions;render();if(view.game)selectFaction();
+ view=value;gameEvents?.observe(view,{baseline:true});mapPositions=positions;render();if(view.game)selectFaction();
  cloudSave=CloudSave.create(cloudConfig);
  cloudSaveUI=CloudSaveUI.create({cloud:cloudSave,getView:()=>view,getRawSave:()=>request('/api/save',undefined,{text:true}),loadRawSave:loadSave,openDialog,notice,isBusy:()=>busy});
  cloudSave.init().catch(()=>cloudSaveUI.refreshButton());

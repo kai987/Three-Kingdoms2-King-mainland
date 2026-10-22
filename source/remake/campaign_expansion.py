@@ -175,6 +175,10 @@ class ExpandedCampaign:
         state.phase='battle'
         state.extension['officer_actions'].update({str(i):state.turn for i in selected})
         self._note(state,state.battle['log'][0])
+        if state.player in (source.owner,target.owner):
+            self._emit_event(state,'battle_started',person_ids=[state.officers[i].person_id for i in [*selected[:1],*defenders[:1]]],
+                city_ids=[source.id,target.id],factions=[source.owner,target.owner],
+                details=dict(battle_id=state.battle['id'],attacker=source.owner,defender=target.owner))
         if not defenders: state.battle['outcome']='victory';state.phase='result'
 
     def _player_sides(self,state):
@@ -206,30 +210,36 @@ class ExpandedCampaign:
         b['log'][:]=b['log'][-80:]
 
     def _counter(self,state,foe,actor):
-        b=state.battle;x=b['extended'];support=x['support']
-        enemies=[u for u in b[foe] if u['troops']>0]
-        if not enemies or actor['troops']<=0:return
-        enemy=max(enemies,key=lambda u:(u['troops'],-u['id']))
-        if x['ambush']:
-            trap=x['ambush'];ambusher=next(u for u in b['attackers']+b['defenders'] if u['id']==trap['actor'])
-            if ambusher['troops']>0:
-                loss=min(enemy['troops'],max(1,state.officers[trap['actor']].profile.intellect*2))
-                enemy['troops']-=loss;b['log'].append(f'十面埋伏触发，{self.catalog.name(enemy["id"])}损兵{loss}。')
-            x['ambush']=None
-            if enemy['troops']<=0:return
-        es=support[str(enemy['id'])];a=support[str(actor['id'])]
-        if es['stunned']:
-            es['stunned']-=1;b['log'].append(f'{self.catalog.name(enemy["id"])}受扰乱，本次不能反击。');return
-        # Both sides use the same damage and resource rules. Defensive AI may
-        # spend its saved energy to confuse or burn instead of normal retaliation.
-        iq=state.officers[enemy['id']].profile.intellect
-        if iq>=80 and es['energy']>=6 and state.rng.next()%4==0:
-            es['energy']-=6
-            loss=min(actor['troops'],max(1,iq*2));b['log'].append(f'{self.catalog.name(enemy["id"])}以要撃反制。')
-        else: loss=self._damage(state,enemy,actor)
-        if a['guard']:
-            loss=max(1,loss//2);a['guard']-=1
-        actor['troops']-=loss;b['log'].append(f'{self.catalog.name(enemy["id"])}反击，{self.catalog.name(actor["id"])}损兵{loss}。')
+        from .difficulty import get_settings
+        from .tactical_ai import choose_action
+        b=state.battle
+        if actor['troops']<=0:return
+        own='defenders' if foe=='attackers' else 'attackers'
+        choice=choose_action(state,b,foe,own,self.catalog.map_cities[b['target']]['terrain'],TACTICS,
+            settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'],responding=True)
+        if choice:self._perform_battle_action(state,choice,foe,own,finish=False,counter=True)
+
+    def _trigger_ambush(self,state,actor,own):
+        """A trap belongs to its actor's side; only an opposing action trips it."""
+        b=state.battle;x=b['extended'];trap=x['ambush']
+        if not trap:return
+        side=next((key for key in ('attackers','defenders') if any(u['id']==trap['actor'] for u in b[key])),None)
+        ambusher=next((u for key in ('attackers','defenders') for u in b[key] if u['id']==trap['actor']),None)
+        if ambusher is None or ambusher['troops']<=0:x['ambush']=None;return
+        if side==own:return
+        loss=min(actor['troops'],max(1,state.officers[trap['actor']].profile.intellect*2))
+        actor['troops']-=loss;x['ambush']=None
+        b['log'].append(f'十面埋伏触发，{self.catalog.name(actor["id"])}损兵{loss}。')
+
+    def _perform_battle_action(self,state,choice,own,foe,*,finish=False,counter=False):
+        b=state.battle
+        actor=next((u for u in b[own] if u['id']==choice['actor'] and u['troops']>0),None)
+        target=next((u for u in b[foe] if u['id']==choice['target'] and u['troops']>0),None)
+        if actor is None or target is None:return False
+        if choice['kind']=='tactic':
+            self._execute_tactic(state,actor,target,own,foe,choice['tactic'],finish=finish)
+        else:self._execute_attack(state,actor,target,own,foe,finish=finish,counter=counter)
+        return True
 
     def _finish_action(self,state,actor,own,foe,*,respond=True):
         b=state.battle
@@ -244,6 +254,15 @@ class ExpandedCampaign:
 
     def _expanded_attack(self,state,payload):
         b,actor,target,own,foe=self._battle_selection(state,payload)
+        self._execute_attack(state,actor,target,own,foe)
+
+    def _execute_attack(self,state,actor,target,own,foe,*,finish=True,counter=False):
+        b=state.battle
+        self._trigger_ambush(state,actor,own)
+        if actor['troops']<=0:
+            if finish:self._finish_action(state,actor,own,foe)
+            else:self._battle_result(state)
+            return
         s=b['extended']['support'][str(actor['id'])]
         if s['stunned']:
             s['stunned']-=1;b['log'].append(f'{self.catalog.name(actor["id"])}受扰乱，行动跳过。')
@@ -251,20 +270,27 @@ class ExpandedCampaign:
             loss=self._damage(state,actor,target)
             defense=b['extended']['support'][str(target['id'])]
             if defense['guard']:loss=max(1,loss//2);defense['guard']-=1
-            target['troops']-=loss;b['log'].append(f'{self.catalog.name(actor["id"])}攻击{self.catalog.name(target["id"])}，损兵{loss}。')
-        self._finish_action(state,actor,own,foe)
+            target['troops']-=loss;b['log'].append(f'{self.catalog.name(actor["id"])}{"反击" if counter else "攻击"}{self.catalog.name(target["id"])}，损兵{loss}。')
+        if finish:self._finish_action(state,actor,own,foe)
+        else:self._battle_result(state)
 
     def _tactic(self,state,payload):
         b,actor,target,own,foe=self._battle_selection(state,payload)
         tid=integer(payload.get('tactic'),0,15,'tactic')
+        self._execute_tactic(state,actor,target,own,foe,tid)
+
+    def _execute_tactic(self,state,actor,target,own,foe,tid,*,finish=True):
+        from .tactical_ai import tactic_reason
+        b=state.battle
         title,cost,effect,_=TACTICS[tid];x=b['extended'];support=x['support'];a=support[str(actor['id'])]
         terrain=self.catalog.map_cities[b['target']]['terrain']
-        if a['stunned']:raise GameError('该部队受扰乱，不能施计；可执行普通行动恢复。')
-        if a['energy']<cost:raise GameError('计略气力不足。')
-        if effect in {'water','chain','flood'} and terrain!='water':raise GameError('此计略需要水地形。')
-        if effect=='rock' and terrain!='mountain':raise GameError('落石需要山地形。')
-        if effect in {'fire','inferno','trap'} and terrain=='water':raise GameError('该地形不能使用此计略。')
-        if effect=='ambush' and (actor['troops']<100 or x['ambush']):raise GameError('设伏需要至少100兵，且当前没有伏兵。')
+        reason=tactic_reason(state,b,actor,target,own,foe,terrain,TACTICS[tid])
+        if reason:raise GameError(reason)
+        self._trigger_ambush(state,actor,own)
+        if actor['troops']<=0:
+            if finish:self._finish_action(state,actor,own,foe)
+            else:self._battle_result(state)
+            return
         enemies=[u for u in b[foe] if u['troops']>0];p=state.officers[actor['id']].profile;t=state.officers[target['id']]
         a['energy']-=cost
         chance=max(10,min(95,60+(p.intellect-t.profile.intellect)//2))
@@ -295,7 +321,12 @@ class ExpandedCampaign:
                     if hp['health']==1:u['troops']=0
                 if effect=='feint':support[str(u['id'])]['stunned']=1
                 b['log'].append(f'{title}命中{self.catalog.name(u["id"])}，损兵{loss}。')
-        self._finish_action(state,actor,own,foe,respond=effect!='ambush')
+        if hasattr(self,'_emit_event') and state.player in (b['attacker'],b['defender']):
+            self._emit_event(state,'tactic',person_ids=[state.officers[actor['id']].person_id,state.officers[target['id']].person_id],city_ids=[b['target']],
+                factions=[b['attacker'],b['defender']],
+                details={'tactic':tid,'success':success})
+        if finish:self._finish_action(state,actor,own,foe,respond=effect!='ambush')
+        else:self._battle_result(state)
 
     def _duel_start(self,state,payload):
         b,actor,target,own,foe=self._battle_selection(state,payload)
@@ -375,9 +406,17 @@ class ExpandedCampaign:
             source.roster.officer_ids[:]=[i for i in source.roster.officer_ids if i not in selected]
             target.owner=b['attacker'];target.action_used=True
             self._note(state,f'{self.catalog.factions[b["attacker"]]["name"]}攻占{self.catalog.map_cities[target.id]["name"]}。')
+            self._emit_event(state,'city_captured',person_ids=[state.officers[i].person_id for i in selected[:1]],
+                city_ids=[target.id],factions=[b['attacker'],b['defender']],
+                details=dict(previous_owner=b['defender']),audience='world')
         state.settled_battles.append(b['id'])
         incoming=b['attacker']!=state.player
         self._note(state,f'战果已结算，合计损兵{lost}，劝降兵员{sum(x["surrenders"].values())}入城。')
+        if state.player in (b['attacker'],b['defender']):
+            self._emit_event(state,'battle_result',city_ids=[b['source'],b['target']],
+                person_ids=[state.officers[u['id']].person_id for u in (b['attackers'][:1]+b['defenders'][:1])],
+                factions=[b['attacker'],b['defender']],
+                details=dict(battle_id=b['id'],outcome=b['outcome'],lost=lost,surrendered=sum(x['surrenders'].values())))
         state.battle=None;state.phase='ai' if incoming else 'city'
         travel=state.extension['travel']
         if travel['battle_arrival']:
@@ -408,63 +447,8 @@ class ExpandedCampaign:
         state.extension['ai_reports'][:]=state.extension['ai_reports'][-200:]
 
     def _expanded_ai(self,state,payload):
-        if state.phase!='ai' or payload.get('turn')!=state.turn:raise GameError('当前不是待处理的电脑回合。')
-        x=state.extension;r=self.catalog.data['rules']
-        if not x['ai_queue']:
-            # Resolve each non-player faction together, with a stable city order.
-            x['ai_queue']=[c.id for c in sorted(state.cities.values(),key=lambda c:(c.owner,c.id))
-                           if c.owner not in {state.player,'neutral'}]
-            x['ai_cursor']=0;x['ai_attacks']=0
-        while x['ai_cursor']<len(x['ai_queue']):
-            key=x['ai_queue'][x['ai_cursor']];x['ai_cursor']+=1;city=state.cities[key]
-            if city.owner in {state.player,'neutral'} or city.action_used:continue
-            ids=[i for i in city.roster.officer_ids if i not in self._march_ids(state)]
-            free=self._free_candidates(state,city)
-            if ids and free and len(city.roster.officer_ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
-                # Same success formula/loyalty as the player; failure costs gold.
-                recruiter=max(ids,key=lambda i:state.officers[i].profile.virtue);actor=state.officers[recruiter];ident=free[0];o=state.officers[ident]
-                chance=max(15,min(95,35+actor.profile.virtue//2+actor.profile.intellect//5-o.profile.virtue//5))
-                city.gold-=r['recruit_officer_gold']
-                if state.rng.next()%100<chance:
-                    o.faction_id=city.owner;o.loyalty=recruitment_loyalty(actor.profile.virtue,o.loyalty);city.roster.officer_ids.append(ident);x['free_locations'].pop(str(ident),None)
-                x['officer_actions'][str(recruiter)]=state.turn
-                x['officer_actions'][str(ident)]=state.turn
-                self._report_ai(state,city,'recruit_officer',str(ident));city.action_used=True;continue
-            if ids and city.reserves<200 and city.gold>=20 and city.grain>=30:
-                city.reserves+=100;state.soldiers['recruited']+=100;city.gold-=20;city.grain-=30
-                self._report_ai(state,city,'recruit_soldiers')
-            for ident in sorted(ids,key=lambda i:(state.officers[i].troops,i)):
-                o=state.officers[ident];amount=min(80,city.reserves,600-o.troops)
-                if amount>0 and city.gold>=4 and city.grain>=8:
-                    o.troops+=amount;city.reserves-=amount;city.gold-=4;city.grain-=8
-            army=sorted((i for i in ids if state.officers[i].troops>0 and state.officers[i].health>0 and x['officer_actions'].get(str(i))!=state.turn),key=lambda i:(-state.officers[i].troops,i))[:10]
-            targets=[state.cities[k] for k in self._neighbors(key,state) if k in state.cities and state.cities[k].owner!=city.owner]
-            targets.sort(key=lambda c:(sum(state.officers[i].troops for i in c.roster.officer_ids),c.id))
-            strength=sum(state.officers[i].troops for i in army)
-            target=next((c for c in targets if strength>=max(150,sum(state.officers[i].troops for i in c.roster.officer_ids)*13//10)),None)
-            if army and target and x['ai_attacks']<r['ai_max_attacks_per_turn'] and city.grain>=max(1,strength//25):
-                x['ai_attacks']+=1;self._report_ai(state,city,'attack',target.id)
-                self._queue_march(state,city,target,army,'attack')
-                continue
-            elif any(x['officer_actions'].get(str(i))!=state.turn for i in ids) and len(city.roster.officer_ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['persuade_officer_gold'] and self._persuadable(state,city) and not any(report['turn']==state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
-                actor=max((state.officers[i] for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda o:o.profile.virtue)
-                target=min(self._persuadable(state,city),key=lambda i:state.officers[i].loyalty)
-                self._attempt_defection(state,city,actor,target)
-                self._report_ai(state,city,'persuade_officer',str(target))
-                self._reconcile_factions(state)
-                if state.phase=='finished':return
-            elif len([i for i in ids if x['officer_actions'].get(str(i))!=state.turn])>1:
-                friends=[state.cities[k] for k in self._neighbors(key,state) if k in state.cities and state.cities[k].owner==city.owner and len(state.cities[k].roster.officer_ids)<self.catalog.rules.city_officer_capacity]
-                friends.sort(key=lambda c:(len(c.roster.officer_ids),c.id))
-                if friends and len(friends[0].roster.officer_ids)<len(ids)-1 and city.grain>=5:
-                    ident=min((i for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda i:state.officers[i].troops)
-                    self._queue_march(state,city,friends[0],[ident],'transfer')
-                    x['officer_actions'][str(ident)]=state.turn
-                    self._report_ai(state,city,'transfer',friends[0].id)
-            city.action_used=True
-        x['ai_queue']=[];x['ai_cursor']=0;x['ai_attacks']=0
-        self._complete_turn(state)
-        self._reconcile_factions(state)
+        from .strategic_ai import run
+        return run(self,state,payload)
 
     def _expanded_catalog_view(self,state):
         library=[]
@@ -492,7 +476,7 @@ class ExpandedCampaign:
 
     def _validate_expansion(self,state):
         x=state.extension
-        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel'}
+        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events'}
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')
@@ -518,7 +502,10 @@ class ExpandedCampaign:
         if x['outcome']=='defeat' and state.player not in x['ended_factions']:raise ValueError('false mainland defeat')
         queue=x['ai_queue']
         if not isinstance(queue,list) or len(queue)!=len(set(queue)) or not set(queue)<=set(state.cities):raise ValueError('AI queue')
-        integer(x['ai_cursor'],0,len(queue),'AI cursor');integer(x['ai_attacks'],0,self.catalog.data['rules']['ai_max_attacks_per_turn'],'AI attacks')
+        from .difficulty import attack_budget
+        from .strategic_ai import validate_strategies
+        validate_strategies(self,state)
+        integer(x['ai_cursor'],0,len(queue),'AI cursor');integer(x['ai_attacks'],0,attack_budget(self.catalog,state),'AI attacks')
         if queue and state.phase=='city':raise ValueError('AI continuation in city phase')
         if not isinstance(x['ai_reports'],list) or len(x['ai_reports'])>200:raise ValueError('AI report bounds')
         for r in x['ai_reports']:

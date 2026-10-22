@@ -1,0 +1,173 @@
+"""Structured, bounded campaign events, committed with the game transaction.
+
+Events describe mechanics that really happened. They never generate historical
+conquests, consume random numbers, or acknowledge/advance a game from the UI.
+"""
+from copy import deepcopy
+
+LIMIT = 100
+DETAILS = {
+    'campaign_start': {'difficulty', 'scenario_title'}, 'officer_appeared': set(),
+    'recruit_success': {'actor'}, 'recruit_failure': {'actor'},
+    'defection': {'from_faction', 'to_faction', 'actor'},
+    'officer_death': {'released_troops'}, 'succession': {'previous'},
+    'faction_ended': set(), 'city_founded': {'parent'},
+    'city_captured': {'previous_owner'},
+    'battle_started': {'battle_id', 'attacker', 'defender'},
+    'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
+    'duel_started': set(), 'duel_result': {'result'},
+    'tactic': {'tactic', 'success'},
+    'march_weather': {'march_id', 'lost', 'risks'},
+    'route_discovered': {'from', 'to'},
+    'march_arrived': {'march_id', 'officers'},
+    'march_returned': {'march_id', 'reason'}, 'new_year': {'year'},
+    'campaign_victory': set(), 'campaign_defeat': set(),
+    'ai_campaign': {'target', 'sources', 'arrival_turn', 'coordinated'},
+}
+
+
+def empty():
+    return dict(next_id=1, items=[])
+
+
+def emit(campaign, state, kind, *, person_ids=(), city_ids=(), factions=(), details=None, audience='player'):
+    if kind not in DETAILS:
+        raise ValueError('Unknown campaign event')
+    events = state.extension['events']
+    row = dict(id=events['next_id'], kind=kind, year=state.year, month=state.month,
+        day=state.day, turn=state.turn, person_ids=list(dict.fromkeys(person_ids)),
+        city_ids=list(dict.fromkeys(city_ids)), factions=list(dict.fromkeys(factions)),
+        details=deepcopy(details or {}), audience=audience)
+    events['items'].append(row)
+    events['items'][:] = events['items'][-LIMIT:]
+    events['next_id'] += 1
+    return row
+
+
+def transition(campaign, before, after, kind, payload):
+    """Diff committed domain facts; do not infer events by parsing log text."""
+    person = lambda ident: after.officers[ident].person_id
+    if before is None or kind == 'new':
+        leader = after.extension['leaders'].get(after.player)
+        emit(campaign, after, 'campaign_start',
+             person_ids=[person(leader)] if leader is not None else [],
+             city_ids=[c.id for c in after.cities.values() if c.owner == after.player][:1],
+             factions=[after.player], details=dict(difficulty=after.extension['difficulty'],
+             scenario_title=campaign.catalog.data['title']))
+        return
+    for ident, officer in sorted(after.officers.items()):
+        previous = before.officers.get(ident)
+        if previous is None:
+            city = after.extension['free_locations'].get(str(ident))
+            emit(campaign, after, 'officer_appeared', person_ids=[officer.person_id],
+                 city_ids=[city] if city else [], audience='world')
+        elif previous.alive and not officer.alive:
+            homes = [city.id for city in before.cities.values() if ident in city.roster.officer_ids]
+            emit(campaign, after, 'officer_death', person_ids=[officer.person_id],
+                 city_ids=homes, factions=[previous.faction_id] if previous.faction_id else [],
+                 details=dict(released_troops=previous.troops), audience='world')
+        elif previous.faction_id != officer.faction_id and officer.faction_id in campaign.catalog.factions:
+            # Only personnel changes involving this player interrupt play.
+            if after.player not in (previous.faction_id, officer.faction_id):
+                continue
+            homes = [city.id for city in after.cities.values() if ident in city.roster.officer_ids]
+            actor_id = payload.get('actor') if kind in {'recruit_officer', 'persuade_officer'} else None
+            details = dict(actor=person(actor_id)) if actor_id in after.officers else {}
+            if previous.faction_id is None:
+                event_kind = 'recruit_success'
+            else:
+                event_kind = 'defection'
+                details.update(from_faction=previous.faction_id, to_faction=officer.faction_id)
+            emit(campaign, after, event_kind, person_ids=[officer.person_id], city_ids=homes,
+                 factions=[f for f in (previous.faction_id, officer.faction_id) if f], details=details)
+    if kind in {'recruit_officer', 'persuade_officer'}:
+        ident, actor = payload.get('officer'), payload.get('actor')
+        if ident in before.officers and before.officers[ident].faction_id == after.officers[ident].faction_id:
+            emit(campaign, after, 'recruit_failure', person_ids=[person(ident)],
+                 city_ids=[payload['city']], factions=[after.player], details=dict(actor=person(actor)))
+    for city, value in sorted(after.cities.items()):
+        if city not in before.cities:
+            rule = campaign.catalog.data['city_foundings'][city]
+            emit(campaign, after, 'city_founded', city_ids=[city, rule['parent']],
+                 factions=[value.owner], details=dict(parent=rule['parent']), audience='world')
+    for faction, leader in sorted(after.extension['leaders'].items()):
+        previous = before.extension['leaders'].get(faction)
+        if leader is not None and leader != previous:
+            emit(campaign, after, 'succession', person_ids=[person(leader)], factions=[faction],
+                 details=dict(previous=person(previous) if previous in after.officers else None), audience='world')
+    for faction in after.extension['ended_factions']:
+        if faction not in before.extension['ended_factions']:
+            emit(campaign, after, 'faction_ended', factions=[faction], audience='world')
+    if after.year > before.year:
+        emit(campaign, after, 'new_year', details=dict(year=after.year), audience='world')
+    old_duel = before.battle and before.battle['extended']['duel']
+    duel = after.battle and after.battle['extended']['duel']
+    if duel and not old_duel:
+        emit(campaign, after, 'duel_started', person_ids=[person(duel['actor']), person(duel['target'])],
+             city_ids=[after.battle['target']], factions=[after.battle['attacker'], after.battle['defender']])
+    old_history = before.battle['extended']['duel_history'] if before.battle else []
+    history = after.battle['extended']['duel_history'] if after.battle else []
+    if history and history != old_history:
+        result = history[-1]
+        emit(campaign, after, 'duel_result', person_ids=[person(result['actor']), person(result['target'])],
+             city_ids=[after.battle['target']], details=dict(result=result['result']))
+    for faction, plan in sorted(after.extension['ai_strategy'].items()):
+        old = before.extension.get('ai_strategy', {}).get(faction)
+        target = plan['target']
+        if plan['orders'] and target in after.cities and after.cities[target].owner == after.player and (
+                old is None or (plan['target'], plan['created_turn']) != (old['target'], old['created_turn'])):
+            emit(campaign, after, 'ai_campaign', city_ids=[target], factions=[faction],
+                 details=dict(target=target, sources=list(dict.fromkeys(o['source'] for o in plan['orders'])),
+                 arrival_turn=plan['arrival_turn'], coordinated=len(plan['orders']) > 1))
+    if after.extension['outcome'] and after.extension['outcome'] != before.extension['outcome']:
+        emit(campaign, after, 'campaign_' + after.extension['outcome'], factions=[after.player], audience='world')
+
+
+def validate(campaign, state):
+    events = state.extension['events']
+    if not isinstance(events, dict) or set(events) != {'next_id', 'items'}:
+        raise ValueError('Campaign event fields')
+    if type(events['next_id']) is not int or events['next_id'] < 1:
+        raise ValueError('Campaign event counter')
+    rows = events['items']
+    if not isinstance(rows, list) or len(rows) > LIMIT:
+        raise ValueError('Campaign event bound')
+    ids = []
+    fields = {'id', 'kind', 'year', 'month', 'day', 'turn', 'person_ids', 'city_ids', 'factions', 'details', 'audience'}
+    for row in rows:
+        if not isinstance(row, dict) or set(row) != fields or row['kind'] not in DETAILS:
+            raise ValueError('Campaign event identity')
+        ident = row['id']
+        if type(ident) is not int or not 1 <= ident < events['next_id']:
+            raise ValueError('Campaign event ID')
+        ids.append(ident)
+        for key, low, high in [('year', 1, state.year), ('month', 1, 12), ('turn', 1, state.turn)]:
+            if type(row[key]) is not int or not low <= row[key] <= high:
+                raise ValueError('Campaign event date')
+        if type(row['day']) is not int or row['day'] not in (1, 11, 21) or (row['year'], row['month'], row['day']) > (state.year, state.month, state.day):
+            raise ValueError('Campaign event calendar')
+        for key, allowed in [('person_ids', campaign.catalog.definitions), ('city_ids', campaign.catalog.map_cities),
+                             ('factions', {*campaign.catalog.factions, 'neutral'})]:
+            values = row[key]
+            if not isinstance(values, list) or len(values) > 99 or any(not isinstance(v, str) or v not in allowed for v in values) or len(set(values)) != len(values):
+                raise ValueError('Campaign event references')
+        if row['audience'] not in {'player', 'world'} or not isinstance(row['details'], dict) or not set(row['details']) <= DETAILS[row['kind']]:
+            raise ValueError('Campaign event payload')
+        def value_ok(value, depth=0):
+            if depth > 3:
+                return False
+            if value is None or type(value) is bool:
+                return True
+            if type(value) is int:
+                return 0 <= value <= 2**53-1
+            if isinstance(value, str):
+                return len(value) <= 500
+            if isinstance(value, list):
+                return len(value) <= 99 and all(value_ok(v, depth+1) for v in value)
+            if isinstance(value, dict):
+                return len(value) <= 10 and all(isinstance(k, str) and len(k) <= 80 and value_ok(v, depth+1) for k, v in value.items())
+            return False
+        if not value_ok(row['details']):
+            raise ValueError('Campaign event JSON value')
+    if ids != sorted(set(ids)) or ids and ids != list(range(events['next_id']-len(ids), events['next_id'])):
+        raise ValueError('Campaign event sequence')

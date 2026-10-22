@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/cloud-save.css">
   <link rel="stylesheet" href="/portraits.css">
+  <link rel="stylesheet" href="/events.css">
   <script src="/i18n.js" defer></script>
   <script src="/calendar.js" defer></script>
   <script src="/audio.js" defer></script>
@@ -17,6 +18,7 @@
   <script src="/cloud-save.js" defer></script>
   <script src="/cloud-save-ui.js" defer></script>
   <script src="/portraits.js" defer></script>
+  <script src="/events.js" defer></script>
   <script src="/officer-choice.js" defer></script>
   <script src="/officer-selection.js" defer></script>
   <script src="/route-options.js" defer></script>
@@ -35,6 +37,7 @@
       <button id="rules">規則說明</button>
       <button id="library">人物庫</button>
       <button id="audio-settings" aria-controls="dialog">音樂設定</button>
+      <button id="event-history" aria-controls="event-dialog" disabled>事件回顧</button>
     </nav>
   </header>
   <p id="notice" role="status" aria-live="polite"></p>
@@ -47,6 +50,7 @@
     </section>
   </main>
   <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+  <dialog id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"></dialog>
   <noscript>請啟用瀏覽器JavaScript後開始戰役。</noscript>
 </body>
 </html>

@@ -187,6 +187,11 @@ class TravelCampaign:
             state.soldiers['lost'] += risk['lost']
             label = row['quote']['routes'][risk['legs'][0]]['hazard']['label']
             self._note(state,f'行军{row["id"]}遭遇{label}，全程兵员由{sum(before)}减至{sum(after)}，伤亡{risk["lost"]}；减员只结算一次。')
+            if row['owner']==state.player:
+                self._emit_event(state,'march_weather',person_ids=[state.officers[i].person_id for i in ids[:1]],
+                    city_ids=[row['source'],row['target']],factions=[row['owner']],
+                    details=dict(march_id=row['id'],lost=risk['lost'],risks=[dict(kind=risk['kind'],
+                    loss_percent=100*(risk['survival_denominator']-risk['survival_numerator'])//risk['survival_denominator'])]))
         return sum(state.officers[i].troops for i in ids)>0
 
     def _discover_march_route(self, state, row):
@@ -198,6 +203,8 @@ class TravelCampaign:
             discovered.append(route_id)
             source,target = (self.catalog.map_cities[row[k]]['name'] for k in ('source','target'))
             self._note(state,f'探索航行成功抵达{target}，发现{source}—{target}海路，现已显示在地图上。')
+            self._emit_event(state,'route_discovered',city_ids=[row['source'],row['target']],
+                factions=[row['owner']],details={'from':row['source'],'to':row['target']},audience='world')
 
     def _queue_march(self, state, source, target, ids, kind, mode='fastest'):
         quote = self._travel_path(state, source.id, target.id, source.owner, mode, adjacent=kind == 'attack')
@@ -236,6 +243,9 @@ class TravelCampaign:
             if not row['officers'] or source.owner != row['owner']:
                 travel['marches'].remove(row)
                 self._note(state, f'行军{row["id"]}因出发城失陷或人员退场取消。')
+                if row['owner']==state.player:
+                    self._emit_event(state,'march_returned',city_ids=[row['source'],row['target']],
+                        factions=[row['owner']],details=dict(march_id=row['id'],reason='origin_changed'))
 
     def _arrivals(self, state, payload):
         if state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
@@ -251,14 +261,23 @@ class TravelCampaign:
                                               for k in row['quote']['path'][1:-1]):
                 travel['marches'].remove(row)
                 self._note(state, f'调动{row["id"]}沿途城池易主，路线中断，部队返回出发城编制。')
+                if row['owner']==state.player:
+                    self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
+                        details=dict(march_id=row['id'],reason='route_blocked'))
                 continue
             if row['kind']=='transfer' and target.owner!=row['owner']:
                 travel['marches'].remove(row)
                 self._note(state,f'目的城已易主，调动{row["id"]}取消，部队返回出发城编制。')
+                if row['owner']==state.player:
+                    self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
+                        details=dict(march_id=row['id'],reason='target_changed'))
                 continue
             if row['risks'] and not self._apply_march_risks(state,row):
                 travel['marches'].remove(row)
                 self._note(state,f'行军{row["id"]}遭遇灾害后带兵全损，航行或进军失败；武将返回出发城编制，未发现新航路。')
+                if row['owner']==state.player:
+                    self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
+                        details=dict(march_id=row['id'],reason='army_lost'))
                 continue
             if target.owner == row['owner']:
                 if len(target.roster.officer_ids)+len(ids)>self.catalog.rules.city_officer_capacity:
@@ -269,6 +288,9 @@ class TravelCampaign:
                 travel['marches'].remove(row)
                 state.extension['officer_actions'].update({str(i): state.turn for i in ids})
                 self._note(state, f'行军{row["id"]}到达{self.catalog.map_cities[target.id]["name"]}，{len(ids)}将入城。')
+                if row['owner']==state.player:
+                    self._emit_event(state,'march_arrived',person_ids=[state.officers[i].person_id for i in ids[:1]],
+                        city_ids=[source.id,target.id],factions=[row['owner']],details=dict(march_id=row['id'],officers=len(ids)))
             else:
                 travel['marches'].remove(row)
                 ids = [i for i in ids if state.officers[i].troops>0 and state.officers[i].health>0]
@@ -283,14 +305,30 @@ class TravelCampaign:
         state.phase = 'city'
 
     def _resolve_ai_battle(self, state):
-        """Same AI damage/settlement rules; no second supply charge."""
+        """Both sides use real actions/effects, with a bounded number of turns."""
+        from .campaign_expansion import TACTICS
+        from .difficulty import get_settings
+        from .tactical_ai import choose_action
         battle = state.battle
+        used={'attackers':set(),'defenders':set()};side='attackers'
+        terrain=self.catalog.map_cities[battle['target']]['terrain']
+        settings=get_settings(state)
         for _ in range(200):
             if state.phase == 'result': break
-            a = max((u for u in battle['attackers'] if u['troops']>0), key=lambda u:u['troops'])
-            t = max((u for u in battle['defenders'] if u['troops']>0), key=lambda u:u['troops'])
-            t['troops'] -= self._damage(state,a,t)
-            if t['troops']>0: a['troops'] -= self._damage(state,t,a)
+            self._battle_result(state)
+            if state.phase=='result':break
+            live={key:{u['id'] for u in battle[key] if u['troops']>0} for key in used}
+            if all(not live[key]-used[key] for key in used):
+                used={key:set() for key in used};battle['round']+=1
+                for support in battle['extended']['support'].values():support['energy']=min(18,support['energy']+4)
+            foe='defenders' if side=='attackers' else 'attackers'
+            if not live[side]-used[side]:side,foe=foe,side
+            choice=choose_action(state,battle,side,foe,terrain,TACTICS,settings=settings,
+                damage_percent=self.catalog.data['rules']['battle_damage_percent'],used=used[side])
+            if choice is None:break
+            self._perform_battle_action(state,choice,side,foe,finish=False)
+            used[side].add(choice['actor'])
+            side=foe
             self._battle_result(state)
         if state.phase=='battle': battle['outcome']='retreat';state.phase='result'
         self._expanded_settle(state,{'battle_id':battle['id']})

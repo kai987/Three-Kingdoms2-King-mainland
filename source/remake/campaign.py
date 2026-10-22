@@ -14,6 +14,8 @@ from threading import RLock
 from .errors import GameError
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
+from .difficulty import DIFFICULTIES, catalog_choices, get_settings
+from .events import empty as empty_events, emit as emit_event, transition as record_events, validate as validate_events
 from .officers import (CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
                        initialize_officer, integer, year_state)
@@ -132,10 +134,15 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.log.append(f'{state.year}年{state.month}月{period}　{text}')
         state.log[:] = state.log[-200:]
 
-    def _new(self, faction, seed):
+    def _emit_event(self, state, kind, **values):
+        return emit_event(self, state, kind, **values)
+
+    def _new(self, faction, seed, difficulty='normal'):
         if faction not in self.catalog.factions:
             raise GameError('请选择一个势力。')
         integer(seed, 1, 0xffffffff, 'seed')
+        if not isinstance(difficulty, str) or difficulty not in DIFFICULTIES:
+            raise GameError('请选择简单、普通或困难难度。')
         d = self.catalog.data
         state = CampaignState(faction, seed, SeedRng(seed), d['start_year'], d['start_month'], d['start_year'])
         for key in d['active_cities']:
@@ -154,6 +161,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             city.roster.officer_ids.append(ident)
         state.soldiers['initial'] = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
         self._initialize_expansion(state)
+        state.extension.update(difficulty=difficulty, ai_strategy={}, events=empty_events())
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
         self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
@@ -178,6 +186,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                     state.month if state else self.catalog.data['start_month']),
                                 'links': self.catalog.data['links'], 'rules': self.catalog.data['rules'],
                                 'calendar_rules': self.catalog.data['calendar_rules'],
+                                'difficulties': catalog_choices(),
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
                                 'year_available': available,
                                 **self._expanded_catalog_view(state), **self._travel_view(state),
@@ -197,7 +206,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 raise GameError('进度已更新，请重新选择操作。', 409)
             before = self.to_dict()
             if kind == 'new':
-                candidate = self._new(payload.get('faction'), payload.get('seed'))
+                candidate = self._new(payload.get('faction'), payload.get('seed'), payload.get('difficulty', 'normal'))
             else:
                 if self.state is None:
                     raise GameError('请先选择势力。')
@@ -210,6 +219,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 if kind not in methods:
                     raise GameError('未提供这项操作。')
                 methods[kind](candidate, payload)
+            record_events(self, self.state, candidate, kind, payload)
             self.validate(candidate)
             self.state = candidate
             self.revision += 1
@@ -399,6 +409,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 if content['format'] != 'three-kingdoms-remake-save' or content['version'] != 1 or content['catalog_sha256'] != self.catalog.sha256 or content['scenario'] != self.catalog.data['id'] or digest(content) != payload['checksum']:
                     raise ValueError('save identity/checksum')
                 raw = deepcopy(content['state'])
+                # The current catalog's existing campaigns acquire the three
+                # new presentation/AI preferences without replaying past events.
+                # Historical catalog IDs/checksums remain unsupported.
+                extension = raw['extension']
+                extension.setdefault('difficulty', 'normal')
+                extension.setdefault('ai_strategy', {})
+                extension.setdefault('events', empty_events())
                 raw['rng'] = SeedRng(**raw['rng'])
                 officers = {}
                 for key, row in raw['officers'].items():
@@ -426,6 +443,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             return self.view()
 
     def validate(self, state):
+        get_settings(state)
+        validate_events(self, state)
         self._validate_expansion(state)
         if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}:
             raise ValueError('campaign phase/player')
