@@ -13,7 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff, domestic, logistics
+from . import civil_staff, domestic, logistics, presentation
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
@@ -278,36 +278,37 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 return self.view()
             if type(revision) is not int or revision != self.revision:
                 raise GameError('进度已更新，请重新选择操作。', 409)
-            before = self.to_dict()
-            if kind == 'new':
-                candidate = self._new(payload.get('faction'), payload.get('seed'), payload.get('difficulty', 'normal'))
-            else:
-                if self.state is None:
-                    raise GameError('请先选择势力。')
-                candidate = deepcopy(self.state)
-                methods = {'persuade_officer': self._persuade_officer, 'recruit_officer': self._recruit_officer, 'transfer': self._transfer,
-                           'tactic': self._tactic, 'duel_start': self._duel_start, 'duel_action': self._duel_action,
-                           'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
-                           'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
-                           'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
-                           'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
-                           'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
-                           'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
-                           'dispatch_transport':self._dispatch_transport}
-                if kind not in methods:
-                    raise GameError('未提供这项操作。')
-                methods[kind](candidate, payload)
-            record_events(self, self.state, candidate, kind, payload)
-            civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
-            logistics.synchronize(self,candidate)
-            domestic.synchronize(self,candidate)
-            self.validate(candidate)
-            self.state = candidate
-            self.revision += 1
-            self.journal.append({'kind': kind, 'revision': self.revision,
-                                 'before_sha256': digest(before), 'after_sha256': digest(self.to_dict()),
-                                 'rng_draws': candidate.rng.draws})
-            return self.view()
+            with presentation.capture(self) as scenes:
+                before = self.to_dict()
+                if kind == 'new':
+                    candidate = self._new(payload.get('faction'), payload.get('seed'), payload.get('difficulty', 'normal'))
+                else:
+                    if self.state is None:
+                        raise GameError('请先选择势力。')
+                    candidate = deepcopy(self.state)
+                    methods = {'persuade_officer': self._persuade_officer, 'recruit_officer': self._recruit_officer, 'transfer': self._transfer,
+                               'tactic': self._tactic, 'duel_start': self._duel_start, 'duel_action': self._duel_action,
+                               'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
+                               'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
+                               'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
+                               'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
+                               'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
+                               'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
+                               'dispatch_transport':self._dispatch_transport}
+                    if kind not in methods:
+                        raise GameError('未提供这项操作。')
+                    methods[kind](candidate, payload)
+                record_events(self, self.state, candidate, kind, payload)
+                civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
+                logistics.synchronize(self,candidate)
+                domestic.synchronize(self,candidate)
+                self.validate(candidate)
+                self.state = candidate
+                self.revision += 1
+                self.journal.append({'kind': kind, 'revision': self.revision,
+                                     'before_sha256': digest(before), 'after_sha256': digest(self.to_dict()),
+                                     'rng_draws': candidate.rng.draws})
+                return presentation.response(self.view(), self.revision, scenes)
 
     def _owned_city(self, state, key, *, action=False):
         if state.extension.get('pending_succession', {}).get(state.player):

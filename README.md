@@ -11,6 +11,7 @@ python3 -I -S -B game/serve.py --port 8878
 
 - [操作、存檔與規則](game/README.md)
 - [目前 AI 與事件畫面](docs/ai-and-events.md)
+- [原版風格戰場、兵陣與單挑演出](docs/battle-scenes.md)
 - [地方文吏的候選、雇用、薪俸與獨立身分](docs/civil-staff.md)
 - [兩名內政官、共用自動人事與前線運輸](docs/domestic-delegation.md)
 - [武將歸城與登場統計](docs/officer-placement-audit.md)

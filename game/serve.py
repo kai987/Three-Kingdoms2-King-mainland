@@ -26,6 +26,36 @@ def audio_effect_static_assets():
             for cue in ORIGINAL_EFFECT_CUES}
 
 
+def battle_static_assets(here=None):
+    """Ship only manifest-listed PNGs, never the original ROM or emulator states."""
+    here = Path(here) if here is not None else HERE
+    base = here / 'assets/battle-original'
+    result = {'/assets/battle-original/index.json':
+              ('assets/battle-original/index.json', 'application/json; charset=utf-8')}
+    if (here / 'assets').is_symlink() or base.is_symlink() or (base / 'index.json').is_symlink():
+        return {}
+    try:
+        data = json.loads((base / 'index.json').read_text(encoding='utf-8'))
+        if not isinstance(data, dict) or data.get('schema') != 'tk2-battle-original-v1':
+            return result
+        def visit(value):
+            if isinstance(value, dict):
+                path = value.get('path')
+                if isinstance(path, str) and re.fullmatch(r'/assets/battle-original/[A-Za-z0-9_-]+\.png', path):
+                    target = here / path.lstrip('/')
+                    if not target.is_symlink() and target.is_file():
+                        result[path] = (path.lstrip('/'), 'image/png')
+                for row in value.values():
+                    visit(row)
+            elif isinstance(value, list):
+                for row in value:
+                    visit(row)
+        visit(data)
+    except (OSError, ValueError):
+        pass
+    return result
+
+
 class GameHTTPServer(ThreadingHTTPServer):
     # Browsers open the deferred scripts/fonts/images concurrently. Python's
     # default backlog5 can reset those sockets while a catalog response is busy.
@@ -84,10 +114,11 @@ def static_file_bytes(here, name):
         target.resolve().relative_to(root)
     except ValueError:
         raise FileNotFoundError(name) from None
-    if name.startswith('assets/portraits/') and (target.is_symlink() or target.parent.is_symlink() or
-                                                 (root / 'assets/portraits').is_symlink() or
-                                                 (root / 'assets').is_symlink()):
-        raise FileNotFoundError(name)
+    for directory in ('assets/portraits', 'assets/battle-original'):
+        if name.startswith(directory + '/') and (target.is_symlink() or target.parent.is_symlink() or
+                                                  (root / directory).is_symlink() or
+                                                  (root / 'assets').is_symlink()):
+            raise FileNotFoundError(name)
     return target.read_bytes()
 
 
@@ -140,6 +171,8 @@ def main():
               '/officer-selection.js': ('officer-selection.js', 'text/javascript; charset=utf-8'),
               '/civil-staff.js': ('civil-staff.js', 'text/javascript; charset=utf-8'),
               '/domestic.js': ('domestic.js', 'text/javascript; charset=utf-8'),
+              '/battle-scene.js': ('battle-scene.js', 'text/javascript; charset=utf-8'),
+              '/battle-scene.css': ('battle-scene.css', 'text/css; charset=utf-8'),
               '/assets/civil-staff/clerk-1.png': ('assets/civil-staff/clerk-1.png', 'image/png'),
               '/assets/civil-staff/clerk-2.png': ('assets/civil-staff/clerk-2.png', 'image/png'),
               '/assets/civil-staff/clerk-3.png': ('assets/civil-staff/clerk-3.png', 'image/png'),
@@ -171,6 +204,7 @@ def main():
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
     static.update(portrait_static_assets())
     static.update(audio_effect_static_assets())
+    static.update(battle_static_assets())
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *unused):

@@ -7,6 +7,12 @@ let campaignDifficulty='normal';
 const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const gameAudio=GameAudio.create();
+const battleScene=typeof GameBattleScene==='undefined'?null:GameBattleScene.create({i18n:GameI18n,portraits:GamePortraits,name:id=>name(id),onSelect:(side,id)=>{if(busy)return;if(side==='actor')actor=id;else target=id;gameAudio.play('click');renderBattle();},onSound:scene=>{
+ gameAudio.setScene(scene.kind.startsWith('duel')?'duel':'battle');
+ const families=['88','95','8d','8d','88','88','88','8d','91','95','8d','8d','88','88','88','95'];
+ const cue=scene.skipped||!scene.success?'error':scene.kind==='tactic'?'tactic_'+(families[scene.tactic]||'88'):scene.kind==='ambush'?'tactic_8d':scene.kind==='duel_start'?'duel_start':scene.kind==='duel_action'?'duel_'+scene.move:scene.kind==='retreat'?'cancel':'attack';
+ gameAudio.play(scene.kind==='duel_start'&&!scene.success?'duel_refused':cue);
+},onSettled:()=>gameAudio.setScene(view?.game?.battle?.extended?.duel?'duel':['battle','result'].includes(view?.game?.phase)?'battle':'strategy'),onOutcome:cue=>gameAudio.play(cue)});
 const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog});
 let audioOutcome=null;
 // Browsers require a real gesture before creating/resuming the audio context.
@@ -163,15 +169,19 @@ function setBusy(value){busy=value;document.body.classList.toggle('busy',value);
 async function request(path,body,{raw=false,text=false}={}){
  const response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:raw?body:JSON.stringify(body)});
  const value=text&&response.ok?await response.text():await response.json();
- if(!response.ok){if(response.status===409){view=await request('/api/state');gameEvents?.observe(view,{baseline:true});render();}throw new Error(value.error||'操作未完成。');}
+ if(!response.ok){if(response.status===409){if(typeof battleScene!=='undefined')battleScene?.reset();view=await request('/api/state');gameEvents?.observe(view,{baseline:true});render();}throw new Error(value.error||'操作未完成。');}
  return value;
 }
 async function command(kind,payload={}){
  if(busy)return false;
  setBusy(true);notice();
  try{
-  const previousTurn=view.game?.turn,previousOutcome=audioOutcome,previousBattleLog=view.game?.battle?.log||[];
-  view=await request('/api/command',{kind,payload,revision:view.revision});if(typeof gameEvents!=='undefined')gameEvents?.observe(view,{newGame:kind==='new'});render();
+  const previousView=view,previousTurn=view.game?.turn,previousOutcome=audioOutcome,previousBattleLog=view.game?.battle?.log||[];
+  view=await request('/api/command',{kind,payload,revision:view.revision});
+  const scene=typeof battleScene==='undefined'?null:battleScene;
+  scene?.observe(kind,payload,previousView,view);
+  if(['tactic','duel_start','retreat'].includes(kind)&&typeof dialog!=='undefined'&&dialog.open)dialog.close();
+  if(typeof gameEvents!=='undefined')gameEvents?.observe(view,{newGame:kind==='new'});render();
   if(!audioOutcome||audioOutcome===previousOutcome){
    let sound={depart:'march',transfer:'march',attack:'attack',retreat:'cancel'}[kind]||'confirm';
    if(kind==='duel_start')sound=view.game.battle?.extended?.duel?'duel_start':'duel_refused';
@@ -188,8 +198,9 @@ async function command(kind,payload={}){
     sound=failed?'error':'tactic_'+(originalFamilies[payload.tactic]||'88');
    }
    if(previousTurn!==undefined&&view.game?.turn>previousTurn)sound='turn';
-   gameAudio.play(sound);
+   if(!scene?.state().queued)gameAudio.play(sound);
   }
+  await scene?.play();
   return true;
  }
  catch(e){notice(e.message,true);return false;}
@@ -709,7 +720,9 @@ function tactics(b){
 }
 function renderDuel(b){
  const d=b.extended.duel,a=b.extended.support[d.actor],t=b.extended.support[d.target];
- $('#stage').innerHTML=`<div class="arena"><div class="arena-heading"><h2>阵前单挑</h2><span>第${d.round}合</span></div><div class="duel-fighters"><div><div class="duel-fighter-head">${portraitHtml(d.actor,'duel')}<h3>${escapeHtml(name(d.actor))}</h3></div><p>${escapeHtml(officerAttributes(d.actor))} · 体${a.health}</p><progress aria-label="本方体力" max="99" value="${a.health}"></progress></div><div><div class="duel-fighter-head">${portraitHtml(d.target,'duel')}<h3>${escapeHtml(name(d.target))}</h3></div><p>${escapeHtml(officerAttributes(d.target))} · 体${t.health}</p><progress aria-label="对方体力" max="99" value="${t.health}"></progress></div></div><ul class="battle-log">${d.log.map(l=>`<li>${escapeHtml(l)}</li>`).join('')}</ul></div>`;
+ const picture=typeof battleScene==='undefined'?'':battleScene?.html()||'';
+ $('#stage').innerHTML=`<div class="arena"><div class="arena-heading"><h2>阵前单挑</h2><span>第${d.round}合</span></div>${picture||`<div class="duel-fighters"><div><div class="duel-fighter-head">${portraitHtml(d.actor,'duel')}<h3>${escapeHtml(name(d.actor))}</h3></div><p>${escapeHtml(officerAttributes(d.actor))} · 体${a.health}</p><progress aria-label="本方体力" max="99" value="${a.health}"></progress></div><div><div class="duel-fighter-head">${portraitHtml(d.target,'duel')}<h3>${escapeHtml(name(d.target))}</h3></div><p>${escapeHtml(officerAttributes(d.target))} · 体${t.health}</p><progress aria-label="对方体力" max="99" value="${t.health}"></progress></div></div>`}<details class="battle-army-menu"><summary>交锋记录</summary><ul class="battle-log">${d.log.map(l=>`<li>${escapeHtml(l)}</li>`).join('')}</ul></details></div>`;
+ if(typeof battleScene!=='undefined')battleScene?.mount($('#stage [data-battle-scene]'),view,{actor:d.actor,target:d.target});
  $('#inspector').innerHTML='<div class="inspector-heading"><h2>选择招式</h2></div><p>突击直攻；防守减伤；佯攻克制防守，但易受突击。负伤者败退，二十合仍未分胜负则返回战场。</p><div class="actions"><button id="duel-strike" class="primary">突击</button><button id="duel-guard">防守</button><button id="duel-feint">佯攻</button><button id="duel-withdraw">退出单挑</button></div>';
  for(const move of ['strike','guard','feint','withdraw'])$('#duel-'+move).onclick=()=>command('duel_action',{battle_id:b.id,move});
 }
@@ -722,7 +735,10 @@ function renderBattle(){
  if(!usable.some(u=>u.id===actor))actor=usable[0]?.id??null;
  if(!enemies.some(u=>u.id===target))target=enemies[0]?.id??null;
  const unitList=(units,side)=>units.map(u=>`<button class="unit ${u.troops===0?'routed':''}" data-${side}="${u.id}" aria-pressed="${(side==='actor'?actor:target)===u.id}" ${game.phase!=='battle'||u.troops===0||(side==='actor'&&b.used.includes(u.id))?'disabled':''}><span class="officer-identity">${portraitHtml(u.id,'battle')}<span>${escapeHtml(name(u.id))}<small>${escapeHtml(officerAttributes(u.id))}</small></span></span><span class="troops">${u.troops}兵${b.extended?`<small>体${b.extended.support[u.id].health} 气${b.extended.support[u.id].energy}</small>`:''}</span></button>`).join('');
- $('#stage').innerHTML=`<div class="arena"><div class="arena-heading"><h2>${escapeHtml(cityName(b.target))}之战</h2><span>第${b.round}轮</span></div><div class="armies"><section class="army"><h3>本方${own==='defenders'?'（守方）':'（攻方）'}</h3><div class="unit-list">${unitList(friendly,'actor')}</div></section><section class="army"><h3>对方${own==='defenders'?'（攻方）':'（守方）'}</h3><div class="unit-list">${unitList(hostile,'target')||'<p>无守军</p>'}</div></section></div><p class="combat-hint">选择本方部队和守方目标。每支本方部队每轮行动一次，对方随后反击。</p></div>`;
+ const picture=typeof battleScene==='undefined'?'':battleScene?.html()||'';
+ const listOpen=$('#stage .battle-army-menu')?.open||!picture;
+ $('#stage').innerHTML=`<div class="arena"><div class="arena-heading"><h2>${escapeHtml(cityName(b.target))}之战</h2><span>第${b.round}轮</span></div>${picture}<details class="battle-army-menu" ${listOpen?'open':''}><summary>部队名单 · 本方${friendly.length}/10人 · 对方${hostile.length}/10人</summary><div class="armies"><section class="army"><h3>本方${own==='defenders'?'（守方）':'（攻方）'}</h3><div class="unit-list">${unitList(friendly,'actor')}</div></section><section class="army"><h3>对方${own==='defenders'?'（攻方）':'（守方）'}</h3><div class="unit-list">${unitList(hostile,'target')||'<p>无守军</p>'}</div></section></div></details></div>`;
+ if(typeof battleScene!=='undefined')battleScene?.mount($('#stage [data-battle-scene]'),view,{actor,target});
  $('[data-actor]')&&document.querySelectorAll('[data-actor]').forEach(el=>el.onclick=()=>{actor=GameOfficerChoices.ref(el.dataset.actor);renderBattle();});document.querySelectorAll('[data-target]').forEach(el=>el.onclick=()=>{target=GameOfficerChoices.ref(el.dataset.target);renderBattle();});
  const labels={victory:own==='attackers'?'本方胜利':'本方城池失守',defeat:own==='attackers'?'本方败退':'本方守城成功',retreat:'攻方退却'};
  $('#inspector').innerHTML=`<h2 class="battle-title">${game.phase==='result'?'战果':'本方行动'}</h2>${game.phase==='result'?`<p class="outcome">${labels[b.outcome]}</p><p>接收战果后，兵员、名册与城池资源一起结算。</p>`:`<p class="phase-description">本方${friendly.length}/10人，对方${hostile.length}/10人。</p><p>选择：${actor===null?'—':escapeHtml(name(actor))} 对 ${target===null?'—':escapeHtml(name(target))}</p>`}<ul class="battle-log">${b.log.slice(-8).map(t=>`<li>${escapeHtml(displayLog(t))}</li>`).join('')}</ul><div class="actions">${game.phase==='result'?'<button id="settle" class="primary">接收战果</button>':`<button id="attack" class="primary" ${actor===null||target===null?'disabled':''}>攻击</button>${b.extended?`<div class="action-pair"><button id="tactic" ${actor===null||target===null?'disabled':''}>计略</button><button id="duel" ${actor===null||target===null?'disabled':''}>单挑</button></div>`:''}<button id="retreat">退却</button>`}</div>`;
@@ -745,11 +761,13 @@ function render(){
  GameI18n.registerScenarios(view.catalog.scenarios);
  $('#inspector').classList.remove('setup-menu');
  const game=view.game;
+ $('#stage').classList.toggle('battle-stage',!!game&&['battle','result'].includes(game.phase)&&!setupPreview);
+ if(!game||!['battle','result'].includes(game.phase)||setupPreview)battleScene?.leave();
  gameAudio.setScene(setupPreview||!game?'menu':game.battle?.extended?.duel?'duel':['battle','result'].includes(game.phase)?'battle':'strategy');
  const outcomeKey=game?.phase==='result'?`battle:${game.battle.id}:${game.battle.outcome}`:game?.phase==='finished'?`campaign:${game.extension?.outcome}`:null;
  if(outcomeKey&&outcomeKey!==audioOutcome){
   const won=game.phase==='finished'?game.extension?.outcome==='victory':game.battle.attacker===game.player?game.battle.outcome==='victory':game.battle.outcome!=='victory';
-  gameAudio.play(won?'victory':'defeat');
+  if(busy&&battleScene?.state().queued)battleScene.deferOutcome(won?'victory':'defeat');else gameAudio.play(won?'victory':'defeat');
  }
  audioOutcome=outcomeKey;
  $('#library').disabled=!view.catalog.library;
@@ -789,7 +807,7 @@ $('#save').onclick=async()=>{
  if(busy)return;
  try{const save=await request('/api/save',undefined,{text:true});localStorage.setItem('three-kingdoms-save',save);const blob=new Blob([save],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。');}catch(e){notice(e.message,true);}
 };
-async function loadSave(save,guard=()=>true){if(busy||!guard())return false;setBusy(true);try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});gameEvents?.observe(view,{baseline:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');return true;}catch(e){notice(e.message,true);return false;}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
+async function loadSave(save,guard=()=>true){if(busy||!guard())return false;setBusy(true);try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});battleScene?.reset();gameEvents?.observe(view,{baseline:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');return true;}catch(e){notice(e.message,true);return false;}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
 $('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-save');openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>`,'<button data-cancel>取消</button>');$('#load-local').onclick=()=>{try{loadSave(saved);}catch(e){notice('存档无效，当前进度未改变。',true);}};$('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(await file.text());}catch(e){notice('存档无效，当前进度未改变。',true);}};};
 GameI18n.ready.then(()=>Promise.all([request('/api/state'),request('/assets/city-positions.json'),request('/api/cloud-config').catch(()=>({enabled:false,slots:5}))])).then(([value,positions,cloudConfig])=>{
  view=value;gameEvents?.observe(view,{baseline:true});mapPositions=positions;render();if(view.game)selectFaction();
@@ -797,4 +815,5 @@ GameI18n.ready.then(()=>Promise.all([request('/api/state'),request('/assets/city
  cloudSaveUI=CloudSaveUI.create({cloud:cloudSave,getView:()=>view,getRawSave:()=>request('/api/save',undefined,{text:true}),loadRawSave:loadSave,openDialog,notice,isBusy:()=>busy});
  cloudSave.init().catch(()=>cloudSaveUI.refreshButton());
  void GamePortraits.load();
+ void battleScene?.load();
 }).catch(e=>notice('游戏未能载入，请确认本地服务正在运行。',true));

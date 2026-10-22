@@ -4,6 +4,7 @@ Names/capacities reference the research; effects and balance below are explicit
 remake designs. No original engine, ROM tables or control IR are loaded.
 """
 from .errors import GameError
+from . import presentation
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref)
@@ -251,7 +252,7 @@ class ExpandedCampaign:
             settings=get_settings(state),damage_percent=self.catalog.data['rules']['battle_damage_percent'],responding=True)
         if choice:self._perform_battle_action(state,choice,foe,own,finish=False,counter=True)
 
-    def _trigger_ambush(self,state,actor,own):
+    def _trigger_ambush(self,state,actor,own,*,counter=False):
         """A trap belongs to its actor's side; only an opposing action trips it."""
         b=state.battle;x=b['extended'];trap=x['ambush']
         if not trap:return
@@ -259,9 +260,12 @@ class ExpandedCampaign:
         ambusher=next((u for key in ('attackers','defenders') for u in b[key] if u['id']==trap['actor']),None)
         if ambusher is None or ambusher['troops']<=0:x['ambush']=None;return
         if side==own:return
+        before=presentation.snapshot(self,state)
         loss=min(actor['troops'],max(1,state.officers[trap['actor']].profile.intellect*2))
         actor['troops']-=loss;x['ambush']=None
         b['log'].append(f'十面埋伏触发，{self.person_name(state, actor["id"])}损兵{loss}。')
+        presentation.record(self,state,before,kind='ambush',actor=ambusher['id'],
+            target=actor['id'],own=side,counter=counter,tactic=11,effect='ambush')
 
     def _perform_battle_action(self,state,choice,own,foe,*,finish=False,counter=False):
         b=state.battle
@@ -269,7 +273,7 @@ class ExpandedCampaign:
         target=next((u for u in b[foe] if u['id']==choice['target'] and u['troops']>0),None)
         if actor is None or target is None:return False
         if choice['kind']=='tactic':
-            self._execute_tactic(state,actor,target,own,foe,choice['tactic'],finish=finish)
+            self._execute_tactic(state,actor,target,own,foe,choice['tactic'],finish=finish,counter=counter)
         else:self._execute_attack(state,actor,target,own,foe,finish=finish,counter=counter)
         return True
 
@@ -290,19 +294,25 @@ class ExpandedCampaign:
 
     def _execute_attack(self,state,actor,target,own,foe,*,finish=True,counter=False):
         b=state.battle
-        self._trigger_ambush(state,actor,own)
+        self._trigger_ambush(state,actor,own,counter=counter)
+        before=presentation.snapshot(self,state)
         if actor['troops']<=0:
+            presentation.record(self,state,before,kind='attack',actor=actor['id'],
+                target=target['id'],own=own,counter=counter,success=False,skipped=True)
             if finish:self._finish_action(state,actor,own,foe)
             else:self._battle_result(state)
             return
         s=b['extended']['support'][str(actor['id'])]
-        if s['stunned']:
+        skipped=bool(s['stunned'])
+        if skipped:
             s['stunned']-=1;b['log'].append(f'{self.person_name(state, actor["id"])}受扰乱，行动跳过。')
         else:
             loss=self._damage(state,actor,target)
             defense=b['extended']['support'][str(target['id'])]
             if defense['guard']:loss=max(1,loss//2);defense['guard']-=1
             target['troops']-=loss;b['log'].append(f'{self.person_name(state, actor["id"])}{"反击" if counter else "攻击"}{self.person_name(state, target["id"])}，损兵{loss}。')
+        presentation.record(self,state,before,kind='attack',actor=actor['id'],
+            target=target['id'],own=own,counter=counter,success=not skipped,skipped=skipped)
         if finish:self._finish_action(state,actor,own,foe)
         else:self._battle_result(state)
 
@@ -311,15 +321,19 @@ class ExpandedCampaign:
         tid=integer(payload.get('tactic'),0,15,'tactic')
         self._execute_tactic(state,actor,target,own,foe,tid)
 
-    def _execute_tactic(self,state,actor,target,own,foe,tid,*,finish=True):
+    def _execute_tactic(self,state,actor,target,own,foe,tid,*,finish=True,counter=False):
         from .tactical_ai import tactic_reason
         b=state.battle
         title,cost,effect,_=TACTICS[tid];x=b['extended'];support=x['support'];a=support[str(actor['id'])]
         terrain=self.catalog.map_cities[b['target']]['terrain']
         reason=tactic_reason(state,b,actor,target,own,foe,terrain,TACTICS[tid])
         if reason:raise GameError(reason)
-        self._trigger_ambush(state,actor,own)
+        self._trigger_ambush(state,actor,own,counter=counter)
+        before=presentation.snapshot(self,state)
         if actor['troops']<=0:
+            presentation.record(self,state,before,kind='tactic',actor=actor['id'],
+                target=target['id'],own=own,counter=counter,tactic=tid,effect=effect,
+                success=False,skipped=True)
             if finish:self._finish_action(state,actor,own,foe)
             else:self._battle_result(state)
             return
@@ -357,6 +371,8 @@ class ExpandedCampaign:
             self._emit_event(state,'tactic',person_ids=[state.officers[actor['id']].person_id,state.officers[target['id']].person_id],city_ids=[b['target']],
                 factions=[b['attacker'],b['defender']],
                 details={'tactic':tid,'success':success})
+        presentation.record(self,state,before,kind='tactic',actor=actor['id'],
+            target=target['id'],own=own,counter=counter,tactic=tid,effect=effect,success=success)
         if finish:self._finish_action(state,actor,own,foe,respond=effect!='ambush')
         else:self._battle_result(state)
 
@@ -364,11 +380,15 @@ class ExpandedCampaign:
         b,actor,target,own,foe=self._battle_selection(state,payload)
         a=state.officers[actor['id']].profile.martial_strength;t=state.officers[target['id']].profile.martial_strength
         if b['extended']['support'][str(actor['id'])]['stunned']:raise GameError('受扰乱部队不能挑战单挑。')
+        before=presentation.snapshot(self,state)
         # An opponent is free to refuse; refusal consumes the challenger's action.
         if state.rng.next()%100>=max(15,min(90,70+(t-a))):
-            b['log'].append(f'{self.person_name(state, target["id"])}拒绝单挑。');self._finish_action(state,actor,own,foe);return
+            b['log'].append(f'{self.person_name(state, target["id"])}拒绝单挑。')
+            presentation.record(self,state,before,kind='duel_start',actor=actor['id'],target=target['id'],own=own,success=False)
+            self._finish_action(state,actor,own,foe);return
         b['extended']['duel']={'actor':actor['id'],'target':target['id'],'round':1,'log':['双方接受单挑。']}
         b['log'].append(f'{self.person_name(state, actor["id"])}与{self.person_name(state, target["id"])}开始单挑。')
+        presentation.record(self,state,before,kind='duel_start',actor=actor['id'],target=target['id'],own=own)
 
     def _duel_action(self,state,payload):
         b=state.battle
@@ -378,6 +398,7 @@ class ExpandedCampaign:
         x=b['extended'];d=x['duel'];own,foe=self._player_sides(state)
         actor=next(u for u in b[own] if u['id']==d['actor']);target=next(u for u in b[foe] if u['id']==d['target'])
         a=x['support'][str(actor['id'])];t=x['support'][str(target['id'])]
+        before=presentation.snapshot(self,state);reply=None
         if move=='withdraw':result='退出单挑'
         else:
             reply=('strike','guard','feint')[state.rng.next()%3]
@@ -399,14 +420,19 @@ class ExpandedCampaign:
             result='双方负伤退场' if a['health']==1 and t['health']==1 else '本方单挑胜出' if t['health']==1 else '本方负伤败退' if a['health']==1 else '二十合未分胜负' if d['round']>20 else None
         if result:
             x['duel_history'].append({'actor':actor['id'],'target':target['id'],'result':result});x['duel_history'][:]=x['duel_history'][-20:]
-            b['log'].append(result);x['duel']=None;self._finish_action(state,actor,own,foe,respond=False)
+            b['log'].append(result);x['duel']=None
+        presentation.record(self,state,before,kind='duel_action',actor=actor['id'],
+            target=target['id'],own=own,move=move,reply=reply)
+        if result:self._finish_action(state,actor,own,foe,respond=False)
 
     def _expanded_retreat(self,state,payload):
         b=state.battle
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id']:raise GameError('当前不能退却。')
         own,_=self._player_sides(state)
+        before=presentation.snapshot(self,state)
         b['extended']['duel']=None;b['extended']['withdrawn']=own
         b['outcome']='retreat' if own=='attackers' else 'victory';state.phase='result'
+        presentation.record(self,state,before,kind='retreat',own=own)
 
     def _expanded_settle(self,state,payload):
         b=state.battle

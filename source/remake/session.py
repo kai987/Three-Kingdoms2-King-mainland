@@ -133,10 +133,12 @@ class CampaignSession:
                 if not isinstance(scenario,str) or scenario not in self.catalogs:raise GameError('请选择有效的战役。')
                 if type(revision) is not int or revision!=self.revision:raise GameError('进度已更新。',409)
                 candidate=Campaign(self.catalogs[scenario]);candidate.revision=self.revision
-                candidate.command(kind,payload,revision)
+                result=candidate.command(kind,payload,revision)
                 self.game=candidate
-            else:self.game.command(kind,payload,revision)
-            return self.view()
+            else:result=self.game.command(kind,payload,revision)
+            view=self.view()
+            if 'presentation' in result:view['presentation']=result['presentation']
+            return view
 
     def export_save(self):
         with self.lock:return self.game.export_save()

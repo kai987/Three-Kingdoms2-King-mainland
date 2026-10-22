@@ -1,0 +1,31 @@
+/* The original256×240 screen is kept intact, using nearest-neighbor scaling. */
+#stage.battle-stage{background:#000}
+.battle-stage .arena{padding:8px;gap:6px;overflow:hidden}
+.battle-stage .arena-heading{padding:0 2px 4px;flex:none;border-color:var(--paper);color:var(--paper)}
+.battle-stage .arena-heading h2{font-size:22px}
+.nes-battle{display:flex;flex:1;flex-direction:column;min-height:0;min-width:0;background:#000;color:var(--paper);overflow:hidden}
+.nes-battle-toolbar{display:flex;align-items:center;justify-content:space-between;min-height:28px;gap:8px;padding:0 4px;font-size:14px;flex:none}
+.nes-battle-toolbar button{min-height:26px;font-size:14px;padding:0 6px;border-color:var(--paper);background:#000;color:var(--paper)}
+.busy [data-battle-skip]{pointer-events:auto}
+.nes-battle-viewport{display:grid;place-items:center;flex:1;min-height:0;min-width:0;background:#000;overflow:hidden}
+.nes-battle canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;max-width:100%;touch-action:manipulation;cursor:crosshair}
+.nes-battle-status{flex:none;min-height:20px;font-size:13px;line-height:1.35;padding:2px 4px;overflow-wrap:anywhere}
+.battle-army-menu{flex:none;background:var(--paper);color:var(--ink);font-size:14px;padding:4px 8px;max-height:210px;overflow:auto}
+.battle-army-menu summary{cursor:pointer;min-height:28px;line-height:28px}
+.battle-army-menu .armies{gap:8px;padding-top:4px;overflow:visible}
+.battle-army-menu .unit{min-height:48px;padding:4px;font-size:14px}
+.battle-army-menu .unit small,.battle-army-menu .unit .troops{font-size:13px}
+.battle-army-menu .unit .portrait-frame{width:26px;height:34px}
+.battle-army-menu .unit .officer-portrait{width:26px;flex-basis:26px}
+.battle-army-menu .unit .officer-identity{gap:5px}
+@media(max-width:760px){
+ #stage.battle-stage{height:auto;min-height:420px;flex:none}
+ .battle-stage .arena{height:auto;min-height:412px;padding:4px;gap:4px}
+ .nes-battle{flex:none;overflow:visible}
+ .nes-battle-viewport{flex:none;height:auto;min-height:0;aspect-ratio:256/240;width:100%}
+ .nes-battle-status{font-size:14px;padding:4px}
+ .battle-army-menu{max-height:260px}
+ .battle-army-menu .unit{flex-wrap:wrap}
+ .battle-stage .arena-heading h2{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){.nes-battle canvas{scroll-behavior:auto}}
