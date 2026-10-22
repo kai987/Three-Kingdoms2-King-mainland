@@ -113,7 +113,7 @@ class CampaignTests(unittest.TestCase):
         self.assertEqual(self.game.state.cities['nanyang'].grain, paid_grain)
         self.assertEqual(self.game.state.cities['xiangyang'].owner, 'shu')
 
-    def test_monthly_ai_receipt_is_idempotent(self):
+    def test_ten_day_ai_receipt_is_idempotent(self):
         for _ in range(3):
             turn = self.game.state.turn
             self.cmd('end_turn')
@@ -123,7 +123,7 @@ class CampaignTests(unittest.TestCase):
             self.game.command('ai', dict(turn=turn), revision)
             self.assertEqual(self.game.to_dict(), after)
             self.assertEqual(self.game.revision, committed)
-        self.assertEqual((self.game.state.year, self.game.state.month), (218, 2))
+        self.assertEqual((self.game.state.year, self.game.state.month, self.game.state.day), (217, 12, 1))
         self.assertEqual(self.game.state.completed_ai_turns, [1, 2, 3])
 
     def test_midbattle_save_restores_exact_next_action_and_rng(self):
@@ -171,8 +171,8 @@ class CampaignTests(unittest.TestCase):
         officer.alive = False; officer.faction_id = None
         city.roster.officer_ids.remove(123)
         self.game._reconcile_factions(self.game.state)
-        for _ in range(38):
-            self.game._complete_month(self.game.state)
+        for _ in range(38 * 3):
+            self.game._complete_turn(self.game.state)
             self.game._spawn_eligible(self.game.state)
             self.game._reconcile_factions(self.game.state)
             self.game.validate(self.game.state)

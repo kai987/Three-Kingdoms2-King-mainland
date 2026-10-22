@@ -49713,7 +49713,7 @@
       },
       "embark_days": 2,
       "basis": "Authorial gameplay estimates, not historical marching-rate measurements.",
-      "resolution": "sum edge days, ceil(total/30) monthly arrivals; no daily tactical simulation"
+      "resolution": "sum edge days, ceil(total/10) ten-day arrivals; every month has30days, no daily tactical simulation"
     },
     "city_coordinates": {
       "liaodong": [
@@ -98646,6 +98646,16 @@
         "newly_checked_guide_people": 15
       },
       "source_boundary": "Configuration complete; exact historical postings are not all established. Authorial continuity/regions are labelled per person."
+    },
+    "calendar_rules": {
+      "turn_days": 10,
+      "month_days": 30,
+      "turn_start_days": [
+        1,
+        11,
+        21
+      ],
+      "monthly_settlement": "month_rollover"
     }
   }
 }

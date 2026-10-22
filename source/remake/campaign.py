@@ -61,6 +61,7 @@ class CampaignState:
     year: int
     month: int
     calendar_cursor: int
+    day: int = 1
     turn: int = 1
     phase: str = 'city'
     cities: dict[str, City] = field(default_factory=dict)
@@ -84,6 +85,8 @@ class Catalog:
             raise ValueError('Unsupported campaign catalog schema')
         if not self.data.get('travel_rules') or not self.data.get('travel_hazards'):
             raise ValueError('Current geographic and hazard travel rules are required')
+        if self.data.get('calendar_rules') != {'turn_days': 10, 'month_days': 30, 'turn_start_days': [1, 11, 21], 'monthly_settlement': 'month_rollover'}:
+            raise ValueError('Current campaigns require fixed ten-day turns')
         r = self.data['rules']
         self.rules = GameRules(r['city_officer_capacity'], r['battle_officers_per_side'], r['runtime_capacity'])
         self.by_id, self.definitions, self.profiles = {}, {}, {}
@@ -125,7 +128,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         self.journal = []
 
     def _note(self, state, text):
-        state.log.append(f'{state.year}年{state.month}月　{text}')
+        period = {1: '上旬', 11: '中旬', 21: '下旬'}[state.day]
+        state.log.append(f'{state.year}年{state.month}月{period}　{text}')
         state.log[:] = state.log[-200:]
 
     def _new(self, faction, seed):
@@ -173,6 +177,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                     state.year if state else self.catalog.data['start_year'],
                                     state.month if state else self.catalog.data['start_month']),
                                 'links': self.catalog.data['links'], 'rules': self.catalog.data['rules'],
+                                'calendar_rules': self.catalog.data['calendar_rules'],
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
                                 'year_available': available,
                                 **self._expanded_catalog_view(state), **self._travel_view(state),
@@ -307,13 +312,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 parent_name = self.catalog.map_cities[rule['parent']]['name']
                 self._note(state,f'{self.catalog.map_cities[key]["name"]}建置，承接{parent_name}当时归属与部分资源；未新增兵员或强制转属。')
 
-    def _complete_month(self, state):
+    def _monthly_calendar(self, state):
+        """Monthly income, healing and dated events run only at month rollover."""
         r = self.catalog.data['rules']
-        state.completed_ai_turns.append(state.turn)
-        state.month += 1
-        if state.month == 13:
-            state.month = 1
-            state.year += 1
         self._open_dated_cities(state)
         if state.year > state.calendar_cursor:
             events = advance_year(self.catalog.definitions.values(), state.officers,
@@ -339,7 +340,6 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             state.calendar_cursor = state.year
             self._note(state, f'新年更新人物库，记录{count}项年代事件；未自动招募或复活人物。')
         for city in state.cities.values():
-            city.action_used = False
             if city.owner != 'neutral':
                 income=self.catalog.data.get('city_income',{}).get(city.id,
                     {'gold':r['monthly_gold_income'],'grain':r['monthly_grain_income'],'reserves':0})
@@ -347,7 +347,26 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 city.grain += income['grain']
                 city.reserves += income['reserves']
                 state.soldiers['recruited'] += income['reserves']
+        self._spawn_eligible(state)
+        for officer in state.officers.values():
+            if officer.alive:
+                officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
+
+    def _complete_turn(self, state):
+        """Commit one fixed ten-day turn and begin the next strategic phase."""
+        state.completed_ai_turns.append(state.turn)
+        state.day += 10
+        month_changed = state.day > 30
+        if month_changed:
+            state.day = 1
+            state.month += 1
+            if state.month > 12:
+                state.month = 1
+                state.year += 1
+            self._monthly_calendar(state)
         state.turn += 1
+        for city in state.cities.values():
+            city.action_used = False
         state.phase = 'city'
         self._prune_marches(state)
         if any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
@@ -356,10 +375,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             state.phase = 'finished'
             self._note(state, '本方已无可用驻军，本次演练结束。')
         else:
-            if self.catalog.data.get('city_income'):
-                self._note(state,'电脑行动完成，轮到本方。各城按规模获得金钱、粮食与预备兵收入。')
-            else:
-                self._note(state, f'电脑行动完成，轮到本方。各城收获金钱{r["monthly_gold_income"]}、粮食{r["monthly_grain_income"]}。')
+            if month_changed:
+                self._note(state,'新月结算：各城按规模获得金钱、粮食与预备兵收入，武将恢复体力。')
+            self._note(state,'各势力本旬行动完成，进入下一旬战略阶段；每旬固定10天。')
 
     def export_save(self):
         with self.lock:
@@ -413,12 +431,15 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             raise ValueError('campaign phase/player')
         integer(state.year, 1, 400, 'year')
         integer(state.month, 1, 12, 'month')
+        integer(state.day, 1, 21, 'day')
+        if state.day not in (1, 11, 21):
+            raise ValueError('calendar ten-day period')
         integer(state.turn, 1, 1000000, 'turn')
         integer(state.seed, 1, 0xffffffff, 'seed')
         integer(state.rng.state, 1, 0xffffffff, 'rng state')
         integer(state.rng.draws, 0, 100000000, 'rng draws')
         elapsed = (state.year - self.catalog.data['start_year']) * 12 + state.month - self.catalog.data['start_month']
-        if state.calendar_cursor != state.year or elapsed != state.turn - 1 or set(state.cities) != set(self.catalog.active_city_ids(state.year,state.month)):
+        if state.calendar_cursor != state.year or elapsed * 3 + (state.day - 1) // 10 != state.turn - 1 or set(state.cities) != set(self.catalog.active_city_ids(state.year,state.month)):
             raise ValueError('calendar/city domain')
         if any(type(v) is not int or not 0 <= v <= 100000000 for v in state.soldiers.values()) or set(state.soldiers) != {'initial', 'recruited', 'lost'}:
             raise ValueError('soldier ledger')

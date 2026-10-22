@@ -9,6 +9,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
+from campaign_fixtures import advance_month
 
 
 class CityLifecycleTests(unittest.TestCase):
@@ -35,11 +36,11 @@ class CityLifecycleTests(unittest.TestCase):
         self.assertIn('xinxing',catalog.active_city_ids(207,11))
         game=self.start(catalog)
         self.assertNotIn('xinxing',game.view()['catalog']['active_cities'])
-        game._complete_month(game.state);game.validate(game.state)
+        advance_month(game);game.validate(game.state)
         self.assertEqual((game.state.year,game.state.month),(207,10))
         self.assertNotIn('xinxing',game.state.cities)
         self.assertNotIn('xinxing',game.view()['catalog']['active_cities'])
-        game._complete_month(game.state);game.validate(game.state)
+        advance_month(game);game.validate(game.state)
         self.assertIn('xinxing',game.state.cities)
         self.assertIn('xinxing',game.view()['catalog']['active_cities'])
 
@@ -55,7 +56,7 @@ class CityLifecycleTests(unittest.TestCase):
         parent_before={key:getattr(parent,key) for key in ('gold','grain','reserves')}
         troops_before=sum(o.troops for o in game.state.officers.values())
         rng_before=deepcopy(game.state.rng)
-        game._complete_month(game.state);game.validate(game.state)
+        advance_month(game);game.validate(game.state)
         child=game.state.cities['xinxing']
         self.assertEqual(child.owner,'wu')
         self.assertEqual(child.roster.officer_ids,[])
@@ -82,7 +83,7 @@ class CityLifecycleTests(unittest.TestCase):
         bad['checksum']=digest({k:v for k,v in bad.items() if k!='checksum'})
         with self.assertRaises(ValueError):loaded.load_save(bad,loaded.revision)
         self.assertEqual(loaded.to_dict(),game.to_dict())
-        game._complete_month(game.state);game.validate(game.state)
+        advance_month(game);game.validate(game.state)
         after=game.export_save();loaded.load_save(after,loaded.revision)
         self.assertEqual(loaded.to_dict(),game.to_dict())
         bad=deepcopy(after);del bad['state']['cities']['xinxing']
@@ -108,7 +109,7 @@ class CityLifecycleTests(unittest.TestCase):
             before=(game.state.year,game.state.month)
             for city,date in boundaries.items():
                 self.assertEqual(city in game.state.cities,before>=date)
-            game._complete_month(game.state)
+            advance_month(game)
             game._spawn_eligible(game.state);game._reconcile_factions(game.state)
             now=(game.state.year,game.state.month)
             if now in boundaries.values():

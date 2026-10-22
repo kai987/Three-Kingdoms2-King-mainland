@@ -75,7 +75,7 @@ class HazardMarchTests(unittest.TestCase):
 
     def arrive(self,game):
         while game.state.turn<min(row['arrival_turn'] for row in game.state.extension['travel']['marches']):
-            game._complete_month(game.state);game._spawn_eligible(game.state);game._reconcile_factions(game.state)
+            game._complete_turn(game.state);game._spawn_eligible(game.state);game._reconcile_factions(game.state)
             game.validate(game.state)
         game.command('arrivals',{},game.revision)
 
@@ -107,14 +107,19 @@ class HazardMarchTests(unittest.TestCase):
         self.assertTrue(all(r['applied'] for r in row['risks']))
         saved=game.export_save();copy=Campaign(game.catalog);copy.load_save(saved,0)
         self.assertEqual(copy.to_dict(),game.to_dict())
-        game._complete_month(game.state);game.validate(game.state)
+        previous_turn,previous_month,previous_day=game.state.turn,game.state.month,game.state.day
+        game._complete_turn(game.state);game.validate(game.state)
+        self.assertEqual(game.state.turn,previous_turn+1)
+        self.assertEqual(game.state.day,1 if previous_day==21 else previous_day+10)
+        if previous_day!=21:self.assertEqual(game.state.month,previous_month)
         game.command('arrivals',{},game.revision)
+        self.assertTrue(any('等待下一旬入城' in note for note in game.state.log))
         self.assertEqual(game.state.soldiers['lost']-old_lost,1800)
         target=game.state.cities['shujun']
         for ident,city in moved[:3]:
             target.roster.officer_ids.remove(ident)
             game.state.cities[city].roster.officer_ids.append(ident)
-        game._complete_month(game.state);game.validate(game.state)
+        game._complete_turn(game.state);game.validate(game.state)
         game.command('arrivals',{},game.revision)
         self.assertFalse(game.state.extension['travel']['marches'])
         self.assertTrue(set(ids)<=set(game.state.cities['shujun'].roster.officer_ids))
@@ -151,7 +156,7 @@ class HazardMarchTests(unittest.TestCase):
         self.arrive(game)
         self.assertTrue(game.state.extension['travel']['marches'][0]['risks'][0]['applied'])
         while (game.state.year,game.state.month)<(220,1):
-            game._complete_month(game.state);game._spawn_eligible(game.state);game._reconcile_factions(game.state)
+            game._complete_turn(game.state);game._spawn_eligible(game.state);game._reconcile_factions(game.state)
             game.validate(game.state)
         self.assertFalse(game.state.officers[ids[0]].alive)
         row=game.state.extension['travel']['marches'][0]

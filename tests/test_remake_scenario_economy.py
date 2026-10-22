@@ -8,6 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
+from campaign_fixtures import advance_month
 
 FIELDS = ('gold', 'grain', 'reserves')
 
@@ -130,7 +131,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         before = {key: tuple(getattr(c, field) for field in FIELDS) for key, c in game.state.cities.items()}
         rng = deepcopy(game.state.rng)
         recruited = game.state.soldiers['recruited']
-        game._complete_month(game.state)
+        advance_month(game)
         expected_recruits = 0
         for key, city in game.state.cities.items():
             expected = game.catalog.data['city_income'][key] if city.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
@@ -150,7 +151,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         # Direct calendar-service boundary fixture: historical event only opens
         # the node, while actual holdings and current resources are conserved.
         while (game.state.year, game.state.month) < (257, 1):
-            game._complete_month(game.state)
+            advance_month(game)
             game._spawn_eligible(game.state)
             game._reconcile_factions(game.state)
         game.validate(game.state)
@@ -172,7 +173,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         before = {field: getattr(parent, field) for field in FIELDS}
         recruits = game.state.soldiers['recruited']
         rng = deepcopy(game.state.rng)
-        game._complete_month(game.state)
+        advance_month(game)
         child = game.state.cities[key]
         income = game.catalog.data['city_income'][key] if child.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
         for field in FIELDS:

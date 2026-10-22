@@ -207,6 +207,7 @@ fn quote(path: &[String], legs: &[Value]) -> Result<Value> {
     Ok(
         json!({"path":path,"routes":legs,"days":numeric(days, whole_days)?,
         "months":numeric((days / 30.0).ceil().max(1.0), true)?,
+        "turns":numeric((days / 10.0).ceil().max(1.0), true)?,
         "distance_km":numeric(rounded, true)?,
         "grain_per_officer":5 * legs.len(),"modes":modes}),
     )

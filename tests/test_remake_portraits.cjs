@@ -39,7 +39,7 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  const context={view:{catalog,game:{player:'shu',officers,cities:{home:{id:'home',roster:{officer_ids:[0,255,999]}}},phase:'battle',rng:{state:123,draws:0}}},GamePortraits:healthy,GameI18n:i18n,escapeHtml:String,name:id=>catalog.names[id],marching:()=>new Set(),mapNavigation:null,actor:null,target:null,document:{querySelectorAll:()=>[]},$:element,cityName:String,command(){throw new Error('Rendering must not issue commands');},sourceEvidence:()=>'',virtueDescription:()=>'',showLibrary(){},openDialog(title,body){context.lastDialog={title,body};}};
  vm.createContext(context);
  vm.runInContext(source.slice(source.indexOf('const portraitHtml='),source.indexOf('\nconst faction=')),context);
- vm.runInContext(source.slice(source.indexOf('function rosterRows('),source.indexOf('function renderCity(')),context);
+ vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('function renderCity(')),context);
  vm.runInContext(source.slice(source.indexOf('function showPerson('),source.indexOf('function tactics(')),context);
  vm.runInContext(source.slice(source.indexOf('function renderDuel('),source.indexOf('function render(){')),context);
  const stateBefore=JSON.stringify(context.view.game),rows=context.rosterRows(context.view.game.cities.home);assert(rows.includes('san14-person-b'));assert(rows.includes('historical-extra'));assert(rows.includes('portrait-roster'));

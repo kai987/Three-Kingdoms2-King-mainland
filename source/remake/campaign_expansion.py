@@ -411,7 +411,9 @@ class ExpandedCampaign:
         if state.phase!='ai' or payload.get('turn')!=state.turn:raise GameError('当前不是待处理的电脑回合。')
         x=state.extension;r=self.catalog.data['rules']
         if not x['ai_queue']:
-            x['ai_queue']=sorted(c.id for c in state.cities.values() if c.owner not in {state.player,'neutral'})
+            # Resolve each non-player faction together, with a stable city order.
+            x['ai_queue']=[c.id for c in sorted(state.cities.values(),key=lambda c:(c.owner,c.id))
+                           if c.owner not in {state.player,'neutral'}]
             x['ai_cursor']=0;x['ai_attacks']=0
         while x['ai_cursor']<len(x['ai_queue']):
             key=x['ai_queue'][x['ai_cursor']];x['ai_cursor']+=1;city=state.cities[key]
@@ -461,10 +463,7 @@ class ExpandedCampaign:
                     self._report_ai(state,city,'transfer',friends[0].id)
             city.action_used=True
         x['ai_queue']=[];x['ai_cursor']=0;x['ai_attacks']=0
-        self._complete_month(state)
-        self._spawn_eligible(state)
-        for o in state.officers.values():
-            if o.alive:o.health=min(o.profile.health_max,o.health+r['monthly_heal'])
+        self._complete_turn(state)
         self._reconcile_factions(state)
 
     def _expanded_catalog_view(self,state):

@@ -88,6 +88,8 @@ def load_sources():
         expected_id = f'mainland{data["start_year"]}-{data["start_month"]:02d}'
         if data.get('schema') != 'tk2-campaign-v1' or data.get('id') != expected_id or data['id'] != entry['id'] or data['id'] in seen_ids:
             raise ValueError('Invalid or duplicate playable campaign identity')
+        if data.get('calendar_rules') != dict(turn_days=10, month_days=30, turn_start_days=[1, 11, 21], monthly_settlement='month_rollover'):
+            raise ValueError('Current campaigns require fixed ten-day turns')
         if 'content_generation' in data or data['rules']['city_officer_capacity'] != 99 or data['rules']['battle_officers_per_side'] != 10:
             raise ValueError('Campaign rules do not match the current 99/10 contract')
         if len({p['runtime_id'] for p in data['people']}) != len(order):

@@ -1,4 +1,4 @@
-"""Geographic route estimates and monthly queues for travel-enabled catalogs.
+"""Geographic route estimates and ten-day queues for travel-enabled catalogs.
 
 Speeds, detours and the30-day month are authorial game rules. Screen pixels
 never determine distances. An on-road force retains its home roster slot,
@@ -76,7 +76,7 @@ class TravelCampaign:
         # Current save checksums must survive browser download/upload roundtrips.
         if type(distance) is float and distance.is_integer():
             distance = int(distance)
-        return dict(path=path,routes=legs,days=days,months=max(1,ceil(days/30)),
+        return dict(path=path,routes=legs,days=days,months=max(1,ceil(days/30)),turns=max(1,ceil(days/10)),
                     distance_km=distance,
                     grain_per_officer=5*len(legs),modes=sorted({row['mode'] for row in legs}))
 
@@ -218,14 +218,14 @@ class TravelCampaign:
         travel['counter'] += 1
         row = dict(id=travel['counter'], source=source.id, target=target.id, owner=source.owner,
                    officers=ids, kind=kind, mode=mode, departure_turn=state.turn,
-                   arrival_turn=state.turn+quote['months'], checked_turn=0, quote=quote)
-        row.update(departure_year=state.year,departure_month=state.month,
+                   arrival_turn=state.turn+quote['turns'], checked_turn=0, quote=quote)
+        row.update(departure_year=state.year,departure_month=state.month,departure_day=state.day,
                    departure_troops={str(i):state.officers[i].troops for i in ids},
                    risks=self._march_risks(quote,state.rng))
         travel['marches'].append(row)
         self._note(state, f'{len(ids)}将从{self.catalog.map_cities[source.id]["name"]}出发，'
                    f'至{self.catalog.map_cities[target.id]["name"]}约{quote["distance_km"]}公里、{quote["days"]}日，'
-                   f'{quote["months"]}个月回合后到达，耗粮{grain}。')
+                   f'{quote["turns"]}旬后到达（每旬10天），耗粮{grain}。')
 
     def _prune_marches(self, state):
         travel = state.extension['travel']
@@ -261,7 +261,7 @@ class TravelCampaign:
                 continue
             if target.owner == row['owner']:
                 if len(target.roster.officer_ids)+len(ids)>self.catalog.rules.city_officer_capacity:
-                    self._note(state, f'{self.catalog.map_cities[target.id]["name"]}已满员，行军{row["id"]}等待下月入城。')
+                    self._note(state, f'{self.catalog.map_cities[target.id]["name"]}已满员，行军{row["id"]}等待下一旬入城。')
                     continue
                 transfer_officers(source.roster, target.roster, ids)
                 self._discover_march_route(state,row)
@@ -398,7 +398,7 @@ class TravelCampaign:
             raise ValueError('march queue')
         seen,serials=set(),set()
         fields={'id','source','target','owner','officers','kind','mode','departure_turn','arrival_turn','checked_turn','quote',
-                'departure_year','departure_month','departure_troops','risks'}
+                'departure_year','departure_month','departure_day','departure_troops','risks'}
         for row in x['marches']:
             if not isinstance(row,dict) or set(row)!=fields:
                 raise ValueError('hazard march fields')
@@ -426,16 +426,20 @@ class TravelCampaign:
             integer(row['checked_turn'],0,state.turn,'march arrival cursor')
             integer(row['departure_year'],self.catalog.data['start_year'],state.year,'march departure year')
             integer(row['departure_month'],1,12,'march departure month')
-            departure=((row['departure_year']-self.catalog.data['start_year'])*12
-                       +row['departure_month']-self.catalog.data['start_month']+1)
+            integer(row['departure_day'],1,21,'march departure day')
+            if row['departure_day'] not in (1,11,21):
+                raise ValueError('march departure ten-day period')
+            departure=(((row['departure_year']-self.catalog.data['start_year'])*12
+                       +row['departure_month']-self.catalog.data['start_month'])*3
+                       +(row['departure_day']-1)//10+1)
             if departure!=row['departure_turn']:
                 raise ValueError('march departure calendar')
             if row['mode'] not in self._travel_modes():
                 raise ValueError('march mode')
             quote=row['quote']
-            if not isinstance(quote,dict) or set(quote)!={'path','routes','days','months','distance_km','grain_per_officer','modes'}:
+            if not isinstance(quote,dict) or set(quote)!={'path','routes','days','months','turns','distance_km','grain_per_officer','modes'}:
                 raise ValueError('march quote')
-            for key in ('days','months','grain_per_officer'):
+            for key in ('days','months','turns','grain_per_officer'):
                 integer(quote[key],1,1000000,'march '+key)
             path,legs=quote['path'],quote['routes']
             if not isinstance(path,list) or len(path)<2 or len(path)!=len(set(path)) or any(k not in state.cities for k in path) or path[0]!=row['source'] or path[-1]!=row['target'] or not isinstance(legs,list) or len(legs)!=len(path)-1:
@@ -463,7 +467,7 @@ class TravelCampaign:
                 raise ValueError('special mode is not a valley')
             if row['mode']=='explore' and legs[0]['id'] not in exploration:
                 raise ValueError('exploration needs coastal candidate')
-            if quote!=self._quote(path,legs) or row['arrival_turn']!=row['departure_turn']+quote['months']:
+            if quote!=self._quote(path,legs) or row['arrival_turn']!=row['departure_turn']+quote['turns']:
                 raise ValueError('march ETA')
             manifest=row['departure_troops']
             if not isinstance(manifest,dict) or not manifest or not {str(i) for i in ids}<=manifest.keys():

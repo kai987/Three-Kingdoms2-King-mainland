@@ -55,10 +55,17 @@ def reach_battle(game):
     marches = game.state.extension['travel']['marches']
     arrival = max(row['arrival_turn'] for row in marches)
     while game.state.turn < arrival:
-        game._complete_month(game.state)
+        game._complete_turn(game.state)
         game._spawn_eligible(game.state)
         game._reconcile_factions(game.state)
     game.state.phase = 'arrivals'
     game.command('arrivals', {}, game.revision)
     assert game.state.phase == 'battle'
     return game.state.battle['id']
+
+
+def advance_month(game):
+    """Exercise all three real ten-day services for one calendar month."""
+    month = game.state.year, game.state.month
+    while (game.state.year, game.state.month) == month:
+        game._complete_turn(game.state)

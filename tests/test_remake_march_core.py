@@ -38,7 +38,7 @@ def campaign_fixture(case):
     game = Campaign(catalog)
     game.command('new', dict(faction=side, seed=2026), 0)
     while game.state.month != month:
-        game._complete_month(game.state)
+        game._complete_turn(game.state)
         game._spawn_eligible(game.state)
         game._reconcile_factions(game.state)
     destination = game.state.cities[target]
@@ -86,7 +86,7 @@ def campaign_result(case, alternate_backend=None):
     assert canonical(loaded.to_dict()) == canonical(game.to_dict())
     assert canonical(loaded.export_save()) == canonical(saved)
     while game.state.turn < game.state.extension['travel']['marches'][0]['arrival_turn']:
-        game._complete_month(game.state)
+        game._complete_turn(game.state)
         game._spawn_eligible(game.state)
         game._reconcile_factions(game.state)
         game.validate(game.state)
@@ -337,7 +337,7 @@ class MarchNativeParityTests(unittest.TestCase):
             data['travel_hazards']['yinping'] = {'from': 's', 'to': 'a'}
             self.assertFalse(invoke('allowed', data=data, route=land, source='a', target='s'))
 
-    def test_three_natural_ai_months_preserve_each_command_state_save_and_rng(self):
+    def test_three_natural_ai_ten_day_turns_preserve_each_command_state_save_and_rng(self):
         catalog = Catalog(ROOT / 'game/data/campaigns/217-07.json')
         reference_game, native_game = Campaign(catalog), Campaign(catalog)
         transcript, phases, saw_march = [], set(), False
@@ -383,7 +383,7 @@ class MarchNativeParityTests(unittest.TestCase):
             dispatch(kind, payload)
         else:
             self.fail(f'Natural AI replay exceeded100commands: {transcript}')
-        self.assertEqual((reference_game.state.year, reference_game.state.month), (217, 10))
+        self.assertEqual((reference_game.state.year, reference_game.state.month, reference_game.state.day), (217, 8, 1))
         self.assertTrue({'ai', 'arrivals'} <= phases)
         self.assertTrue(saw_march, 'Natural AI must queue a real march')
         self.assertGreater(reference_game.state.rng.draws, 0)

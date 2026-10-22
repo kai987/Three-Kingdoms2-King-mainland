@@ -29,7 +29,7 @@ class HazardJsonTests(unittest.TestCase):
         game = Campaign(self.catalog)
         game.command('new', dict(faction=faction, seed=2026), 0)
         while game.state.month != month:
-            game._complete_month(game.state)
+            game._complete_turn(game.state)
             game._spawn_eligible(game.state)
             game._reconcile_factions(game.state)
         game.validate(game.state)

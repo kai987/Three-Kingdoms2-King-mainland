@@ -14,7 +14,7 @@ officers[100]={...officers[0],faction_id:null};
 const context={view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10,expanded_campaign:true},city_profiles:{},city_income:{},map_presentation:{city_names:{}},links:[['home','enemy']],recruitable:{home:[100]},persuadable:{home:[]}},game:{player:'wei',turn:1,cities:{home,away,enemy},officers,extension:{officer_actions:{}}}},selectedCity:'home',actor:null,target:null,$:element,escapeHtml:String,name:id=>'武将'+id,portraitHtml:()=>'<i></i>',faction:String,cityName:String,periodCityName:String,cityEconomyNote:()=>'',resourceSummary:()=>'',marching:()=>new Set(),watchRouteDialog(){},notice(text,error){lastNotice={text,error};},command(kind,payload){lastCommand={kind,payload};return Promise.resolve(true);},render(){},dialog:{querySelectorAll:()=>picked,close(){}},openDialog(title,body){lastDialog={title,body};element('#departure-target').value='enemy';element('#transfer-city').value='away';element('#recruit-mode').value='recruit_officer';}};
 vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('const capacity='),source.indexOf('\nconst marching=')),context);
-vm.runInContext(source.slice(source.indexOf('function rosterRows('),source.indexOf('// Classify actual runtime entry')),context);
+vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),context);
 (async()=>{
  const before=JSON.stringify(context.view.game);
  context.renderCity();
@@ -44,7 +44,7 @@ vm.runInContext(source.slice(source.indexOf('function rosterRows('),source.index
   assert.equal(japanese(`每城${limit}人；每方出战最多10人，包含主将。`),`1都市${limit}人まで。主将を含め各軍10人まで出陣できます。`);
  }
  // The current server's complete scenario list is displayed directly.
- Object.assign(context,{setupPreview:null,busy:false,mapMode:'all',mapColor:()=> '#fff',renderMap(){},document:{querySelectorAll:()=>[]},GameI18n:{locale:'zh-Hant'}});
+ Object.assign(context,{gameAudio:{setScene(){}},setupPreview:null,busy:false,mapMode:'all',mapColor:()=> '#fff',renderMap(){},document:{querySelectorAll:()=>[]},GameI18n:{locale:'zh-Hant'}});
  context.view.catalog.scenarios=Array.from({length:25},(_,i)=>({id:`mainland${184+i}-01`,title:`本篇${i+1}`,year:184+i,month:1,cities:115,capacity:99,serving:1,free:0,configured:1023,initial_owners:{home:'wei'},factions:[{id:'wei',city:'home',name:'曹操勢力',captain:'曹操'}],main_scenario:{group:'base',summary:'目前本篇配置'}}));
  context.view.catalog.scenario_id=context.view.catalog.scenarios[3].id;
  vm.runInContext(source.slice(source.indexOf('function selectFaction('),source.indexOf('function renderMap(')),context);

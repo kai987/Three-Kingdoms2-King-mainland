@@ -2,18 +2,18 @@
   "abi": 1,
   "build_host": "aarch64-apple-darwin",
   "builder_sha256": "e2c581a185539df582541cbd0b9a8060d79e68b570ef96dc27abaa43a170989a",
-  "bytes": 337798,
+  "bytes": 338221,
   "crate": "march-core",
   "file": "march_core.wasm",
   "rust": "1.93.0",
-  "sha256": "62f176bc932b31dbb564021278d0baca9f7cf8d2749b2ac5239b41b4fbe3a079",
+  "sha256": "43166d6687a80d6d4d764e34679808c027e3a5e4a3290f487e3188e34133189f",
   "sources_sha256": {
     "Cargo.lock": "9b51622445815199b04aea76b6983d42616f85f19d8963fabc3932d8b25223a2",
     "Cargo.toml": "79fa9377cbafc659413f7e05d212b2a0379fc5f2058e470f567cb9f4c6e2192d",
     "src/hazards.rs": "31e134dbdcc6147871bea92b4937b2614cc3fd36866722027ccac838a70451c9",
     "src/lib.rs": "fcffab7aece196a73a37696fef79211e5769198e97cc900b1a1e83b808a30644",
     "src/main.rs": "eef1ba77e410ff8726503e1727c2a414b28d3291d62c722ce709882fe632a04a",
-    "src/paths.rs": "6f071e664fa2f7bdde58ac9a32cec94c854f14cad6f211389b198a2d5967407c",
+    "src/paths.rs": "3c882182a065b58d96ae151d57f5c95b91e5412caa263e4c8b63bc64dbd03970",
     "tests/protocol.rs": "3e89cc19f6ffb89a3a6d50034250ce48d486264e449a55c244f9992c3ca1212a"
   },
   "target": "wasm32-unknown-unknown"

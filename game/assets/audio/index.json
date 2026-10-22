@@ -1,0 +1,237 @@
+{
+  "schema": "tk2-original-audio-v1",
+  "rom_sha256": "26c8d921ff5c208191f136480bcd8d7e89c2e4ed40a0ac7b51482bcb52fe2b82",
+  "core": {
+    "name": "Nestopia",
+    "version": "2.0.0 135dfa6",
+    "sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+  },
+  "AV": {
+    "fps": 60.098813897440515,
+    "sample_rate": 48000.0
+  },
+  "tracks": {
+    "menu": {
+      "path": "/assets/audio/original/title.mp3",
+      "kind": "original_rom_capture",
+      "label": "原版標題場景",
+      "sha256": "8c5d32cc9a3594372c56cfd13aea31751697cb1164bd29c89d2b3518e9c0c5fb",
+      "bytes": 694869,
+      "duration": 50.982708333333335,
+      "loop_start": 0,
+      "loop_end": 50.982708333333335,
+      "sample_rate": 48000,
+      "channels": 2,
+      "request": {
+        "id": 176,
+        "entry": 58995,
+        "descriptor_count": 7
+      },
+      "provenance": {
+        "state_source": "analysis/runtime/title.state",
+        "state_sha256": "aebf5ce50d70604969dae65105e281f673d298271e6c75e070d0ff2d2c2323ee",
+        "captured_frames": 8305,
+        "source_loop_frames": [
+          2177,
+          5241
+        ],
+        "period_frames": 3064,
+        "loop_kind": "original_title_controller_restart",
+        "key_fields": [
+          "0700..07F1",
+          "07F6",
+          "07F9 & 0F"
+        ],
+        "whole_period_state_comparison": true,
+        "repeat_original_pcm_sha256": [
+          "56970e3f5ac03c6104c39b680cedfeefca588ee167c08b267bc15b2deff4a9d1",
+          "56970e3f5ac03c6104c39b680cedfeefca588ee167c08b267bc15b2deff4a9d1"
+        ],
+        "source_loop_pcm_sha256": "35d1c0e8f02af43339f59820b4299e5890f2df46ac19ad0e1ac7d60346c12670",
+        "exported_pcm_sha256": "4ad797a96ba1bca7b9057504eae97dec6eefc604ede2db2c0507753e48e872d0",
+        "stereo_sample_frames": 2447170,
+        "seam_fade_ms": 4,
+        "observed_global_nmi_states": [
+          [
+            0,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            10,
+            6
+          ]
+        ],
+        "controller_inputs": [],
+        "rom_modified": false,
+        "core_memory_modified": false,
+        "pcm_source": "unchanged Nestopia libretro audio callbacks"
+      }
+    },
+    "strategy": {
+      "path": "/assets/audio/original/strategy.mp3",
+      "kind": "original_rom_capture",
+      "label": "原版戰略地圖",
+      "sha256": "015fdceea6f615397786bec67387764af5e50b505b61c240cc86a2ac7e5bc901",
+      "bytes": 409581,
+      "duration": 25.557916666666667,
+      "loop_start": 0,
+      "loop_end": 25.557916666666667,
+      "sample_rate": 48000,
+      "channels": 2,
+      "request": {
+        "id": 129,
+        "entry": 58995,
+        "descriptor_count": 7
+      },
+      "provenance": {
+        "state_source": "analysis/runtime/map-ready.state",
+        "state_sha256": "7579ff3f4b26afadb759a4bf258a30a90b2cf97e067b376e9a3186d5e7354837",
+        "captured_frames": 3073,
+        "source_loop_frames": [
+          1,
+          1537
+        ],
+        "period_frames": 1536,
+        "loop_kind": "original_music_driver_loop",
+        "key_fields": [
+          "0700..07F1",
+          "07F6",
+          "07F9 & 0F"
+        ],
+        "whole_period_state_comparison": true,
+        "repeat_original_pcm_sha256": [
+          "f3dd3ba16cf5c5861bb375ead2c9d77f3e8b1e9865341b232ae9772c732292da",
+          "f3dd3ba16cf5c5861bb375ead2c9d77f3e8b1e9865341b232ae9772c732292da"
+        ],
+        "source_loop_pcm_sha256": "a8626d48779d6c1ce46acb28d947e60dd8dea5d079153659b428e1684baa53dd",
+        "exported_pcm_sha256": "2ea3feae02027b937e22980622d988d1aaa276c0da62f8be81ca94018fafe3df",
+        "stereo_sample_frames": 1226780,
+        "seam_fade_ms": 4,
+        "observed_global_nmi_states": [
+          [
+            2,
+            2
+          ]
+        ],
+        "controller_inputs": [],
+        "rom_modified": false,
+        "core_memory_modified": false,
+        "pcm_source": "unchanged Nestopia libretro audio callbacks"
+      }
+    },
+    "battle": {
+      "path": "/assets/audio/original/battle.mp3",
+      "kind": "original_rom_capture",
+      "label": "原版戰場",
+      "sha256": "12fc8d15f05521e295404886b6355dee2a5038b2405a84632eef1c02d5368389",
+      "bytes": 647445,
+      "duration": 38.33685416666667,
+      "loop_start": 0,
+      "loop_end": 38.33685416666667,
+      "sample_rate": 48000,
+      "channels": 2,
+      "request": {
+        "id": 29,
+        "entry": 58995,
+        "descriptor_count": 7
+      },
+      "provenance": {
+        "state_source": "analysis/runtime/phase3/battle-tactics-true.state",
+        "state_sha256": "af7f2175a19e81527b15d87416458bf364fdc9484ea6db3abac424ad92e0ad70",
+        "captured_frames": 4609,
+        "source_loop_frames": [
+          1,
+          2305
+        ],
+        "period_frames": 2304,
+        "loop_kind": "original_music_driver_loop",
+        "key_fields": [
+          "0700..07F1",
+          "07F6",
+          "07F9 & 0F"
+        ],
+        "whole_period_state_comparison": true,
+        "repeat_original_pcm_sha256": [
+          "d837aa8d126c6fe17359194d04b9b15d8636d9e38013a8b78a6dfe4f36b369ad",
+          "d837aa8d126c6fe17359194d04b9b15d8636d9e38013a8b78a6dfe4f36b369ad"
+        ],
+        "source_loop_pcm_sha256": "3c337df6bb4789e13259e64a2283170e632ceecc1b455bd90c1cea76778c68ad",
+        "exported_pcm_sha256": "7261a13ad02116762d53f5b32ccc7309eff362b4ee414638315315f4d97df981",
+        "stereo_sample_frames": 1840169,
+        "seam_fade_ms": 4,
+        "observed_global_nmi_states": [
+          [
+            4,
+            3
+          ]
+        ],
+        "controller_inputs": [],
+        "rom_modified": false,
+        "core_memory_modified": false,
+        "pcm_source": "unchanged Nestopia libretro audio callbacks"
+      }
+    },
+    "duel": {
+      "path": "/assets/audio/original/duel.mp3",
+      "kind": "original_rom_capture",
+      "label": "原版單挑",
+      "sha256": "2b0e8956de4ec50fd3eecb20e89e6afe9dadb9616387baf0cb6d2c62ed636bbe",
+      "bytes": 1174221,
+      "duration": 74.27766666666666,
+      "loop_start": 0,
+      "loop_end": 74.27766666666666,
+      "sample_rate": 48000,
+      "channels": 2,
+      "request": {
+        "id": 18,
+        "entry": 59003,
+        "descriptor_count": 6
+      },
+      "provenance": {
+        "state_source": "analysis/phase11/runtime/duel-return/first-duel-main-03.state",
+        "state_sha256": "192f6efc45b19495a4b5fa9bdb34fb2024fec3e7e53f7a3d64c470c70edfbc45",
+        "captured_frames": 10336,
+        "source_loop_frames": [
+          1408,
+          5872
+        ],
+        "period_frames": 4464,
+        "loop_kind": "original_music_driver_loop",
+        "key_fields": [
+          "0700..07F1",
+          "07F6",
+          "07F9 & 0F"
+        ],
+        "whole_period_state_comparison": true,
+        "repeat_original_pcm_sha256": [
+          "ec868454ce9d64dd135604cb9aeaf4017446409eba367d653afce49cf7158657",
+          "ec868454ce9d64dd135604cb9aeaf4017446409eba367d653afce49cf7158657"
+        ],
+        "source_loop_pcm_sha256": "66dce68f738aeab2b7b7f19a6503e01963193aa8d840c9db2c0cd1235aa86a5a",
+        "exported_pcm_sha256": "f55684c1539521027011ecaf268928ea13289feed35aef48b696dcce235d0c68",
+        "stereo_sample_frames": 3565328,
+        "seam_fade_ms": 4,
+        "observed_global_nmi_states": [
+          [
+            8,
+            5
+          ]
+        ],
+        "controller_inputs": [],
+        "rom_modified": false,
+        "core_memory_modified": false,
+        "pcm_source": "unchanged Nestopia libretro audio callbacks"
+      }
+    }
+  },
+  "rights": "Original game recordings retain their original rights; captured from the user-provided ROM. Synthesized additions are separately identified.",
+  "tool_sha256": "bef2aef51b90994b3be54a2c60ad303e3d816d590e1e63c27213fb8e1dc12580"
+}

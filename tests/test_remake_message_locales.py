@@ -93,8 +93,8 @@ class MessageLocaleTests(unittest.TestCase):
 
     def test_battle_personnel_and_travel_messages_translate_captured_values(self):
         cases = {
-            '217年7月　张辽寻访赵云，招募未获应允，花费60金。':
-                '217年7月　張遼が趙雲を訪問。登用結果：拒否。金60を消費しました。',
+            '217年7月中旬　张辽寻访赵云，招募未获应允，花费60金。':
+                '217年7月中旬　張遼が趙雲を訪問。登用結果：拒否。金60を消費しました。',
             '周瑜劝说张飞，转属成功，花费100金。':
                 '周瑜が張飛を勧誘。結果：仕官先の変更に成功。金100を消費しました。',
             '关羽攻击张辽，损兵17。': '関羽が張遼を攻撃。17の兵力損耗。',
@@ -119,8 +119,8 @@ class MessageLocaleTests(unittest.TestCase):
         self.assertEqual(result, '221年8月　行軍1：南西季節風・追い風と暴風雨：全行程の兵力損耗80–90%。全行程の兵力999→109、損耗890。損耗の精算は一度のみ。')
         self.assertEqual(translate('子午谷暴雨：减员50%', self.data), '子午谷の豪雨：兵力損耗50%')
         self.assertEqual(translate('阴平险道：全军最终余三分之一', self.data), '陰平の険路：到着時の兵力は出発時の3分の1')
-        result = translate('3将从汉中出发，至长安约323.8公里、44日，2个月回合后到达，耗粮15。', self.data)
-        self.assertEqual(result, '武将3人が漢中から出発。長安まで約323.8km・44日、2か月ターン後に到着予定です。兵糧15を消費しました。')
+        result = translate('3将从汉中出发，至长安约323.8公里、44日，5旬后到达（每旬10天），耗粮15。', self.data)
+        self.assertEqual(result, '武将3人が漢中から出発。長安まで約323.8km・44日、5旬後に到着予定です（1旬10日）。兵糧15を消費しました。')
 
     def test_message_resource_rebuild_is_deterministic_and_does_not_edit_catalog(self):
         path = ROOT / 'game/locales/messages-ja.json'

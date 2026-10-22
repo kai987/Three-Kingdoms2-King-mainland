@@ -1,0 +1,122 @@
+/* Web Audio lifecycle, original scores, bounded voices and optional storage. */
+'use strict';
+const assert=require('node:assert/strict');
+const{create,STORAGE_KEY}=require('../game/audio.js');
+class Param{
+ constructor(){this.events=[];}
+ setValueAtTime(value,time){assert(Number.isFinite(value));assert(Number.isFinite(time));this.events.push(['set',value,time]);}
+ linearRampToValueAtTime(value,time){assert(Number.isFinite(value));assert(Number.isFinite(time));this.events.push(['ramp',value,time]);}
+}
+class Node{
+ constructor(){this.connections=[];this.disconnected=false;this.gain=new Param();}
+ connect(target){this.connections.push(target);}
+ disconnect(){this.disconnected=true;}
+}
+class Osc extends Node{
+ constructor(ctx){super();this.ctx=ctx;this.frequency=new Param();this.stops=[];}
+ start(time){this.started=time;}
+ stop(time){this.stops.push(time);if(time<=this.ctx.currentTime)this.onended?.();}
+}
+class Context{
+ static instances=[];
+ constructor(){this.currentTime=0;this.state='suspended';this.destination={};this.nodes=[];this.oscillators=[];Context.instances.push(this);}
+ createGain(){const node=new Node();this.nodes.push(node);return node;}
+ createDynamicsCompressor(){const node=new Node();for(const key of ['threshold','knee','ratio','attack','release'])node[key]=new Param();this.nodes.push(node);return node;}
+ createOscillator(){const node=new Osc(this);this.oscillators.push(node);return node;}
+ async resume(){this.state='running';}
+ async suspend(){this.state='suspended';}
+ async close(){this.state='closed';}
+}
+function fixture(saved,options={}){
+ const events=new Map(),doc={hidden:false,addEventListener:(key,fn)=>events.set(key,fn),removeEventListener:(key,fn)=>{if(events.get(key)===fn)events.delete(key);}};
+ const store=new Map(saved?[[STORAGE_KEY,JSON.stringify(saved)]]:[]),storage={getItem:key=>store.get(key),setItem:(key,value)=>store.set(key,value)};
+ let next=0;const timers=new Map();
+ const audio=create({AudioContext:Context,document:doc,storage,setInterval:fn=>{timers.set(++next,fn);return next;},clearInterval:key=>timers.delete(key),...options});
+ return{audio,events,doc,store,timers};
+}
+const settle=()=>new Promise(resolve=>setImmediate(resolve));
+(async()=>{
+ const f=fixture(),{audio,timers}=f;
+ assert.equal(Context.instances.length,0,'Loading the page must not create or start AudioContext');
+ assert.equal(audio.play('click'),false);
+ audio.setScene('strategy');assert.equal(Context.instances.length,0);assert.equal(timers.size,0);
+ assert(await audio.unlock());const ctx=Context.instances.at(-1);
+ assert.equal(ctx.state,'running');assert.equal(timers.size,1);assert(audio.getStatus().activeVoices>0);
+ assert.equal(audio.getStatus().scene,'strategy');
+ assert.equal(ctx.oscillators[0].frequency.events[0][1],440*Math.pow(2,(64-69)/12));
+ assert.equal(ctx.oscillators[0].type,'square');assert(ctx.oscillators.some(node=>node.type==='triangle'));
+ for(const node of ctx.oscillators){assert(node.started>=0);assert(node.stops[0]>node.started);}
+ const firstMusic=[...ctx.oscillators];
+ assert(await audio.unlock());assert.equal(Context.instances.length,1);assert.equal(timers.size,1);
+ assert(audio.play('confirm'));const effectVoices=audio.getStatus().activeVoices-firstMusic.length;
+ assert.equal(effectVoices,2);
+ audio.setScene('battle');assert.equal(timers.size,1);
+ assert(firstMusic.every(node=>node.disconnected),'Switching scenes must stop/disconnect all scheduled music');
+ assert(ctx.oscillators.slice(firstMusic.length,firstMusic.length+2).every(node=>!node.disconnected),'Brief feedback may finish across scene changes');
+ for(const value of ['menu','duel','strategy','battle']){
+  audio.setScene(value);assert.equal(timers.size,1);assert.equal(audio.getStatus().scene,value);
+ }
+ audio.setScene('__proto__');assert.equal(audio.getStatus().scene,'battle');assert.equal(audio.play('__proto__'),false);
+ // Clock jumps enqueue a small current window rather than old, missed notes.
+ const beforeJump=ctx.oscillators.length;ctx.currentTime=600;[...timers.values()][0]();
+ assert(ctx.oscillators.length-beforeJump<10);assert(ctx.oscillators.at(-1).started>=600);
+ for(const effect of ['click','confirm','cancel','error','march','attack','tactic','victory','defeat','turn'])assert(audio.play(effect));
+ for(let i=0;i<200;i++)audio.play('click');
+ assert(audio.getStatus().activeVoices<45,'Repeated interaction sounds must remain bounded');
+ const config=audio.configure({bgmVolume:5,sfxVolume:-1});assert.equal(config.bgmVolume,1);assert.equal(config.sfxVolume,0);
+ assert.equal(audio.play('click'),false);config.bgmVolume=.42;assert.equal(audio.getSettings().bgmVolume,1,'Settings must return a copy');
+ assert.deepEqual(JSON.parse(f.store.get(STORAGE_KEY)),{muted:false,bgmVolume:1,sfxVolume:0});
+ audio.configure({bgmVolume:NaN,sfxVolume:Infinity});assert.equal(audio.getSettings().bgmVolume,1);assert.equal(audio.getSettings().sfxVolume,0);
+ audio.configure({muted:true});assert.equal(timers.size,0);assert.equal(audio.getStatus().activeVoices,0);assert.equal(audio.play('click'),false);
+ assert(ctx.oscillators.every(node=>node.disconnected));
+ audio.configure({muted:false,sfxVolume:.5});assert.equal(timers.size,1);
+ audio.configure({bgmVolume:0});assert.equal(timers.size,0);assert(audio.play('click'),'Effects remain available with music volume zero');
+ audio.configure({bgmVolume:.3});assert.equal(timers.size,1);
+ f.doc.hidden=true;f.events.get('visibilitychange')();await settle();
+ assert.equal(timers.size,0);assert.equal(audio.getStatus().activeVoices,0);assert.equal(ctx.state,'suspended');assert.equal(audio.play('click'),false);
+ f.doc.hidden=false;f.events.get('visibilitychange')();await settle();assert.equal(ctx.state,'running');assert.equal(timers.size,1);
+ // Ended sources release their gain/oscillator references, without a scene change.
+ const live=ctx.oscillators.filter(node=>!node.disconnected);for(const node of live)node.onended?.();
+ assert.equal(audio.getStatus().activeVoices,0);assert(live.every(node=>node.disconnected));
+ audio.play('victory');audio.dispose();await settle();assert.equal(timers.size,0);assert.equal(f.events.size,0);
+ assert.equal(ctx.state,'closed');assert.equal(audio.getStatus().activeVoices,0);assert.equal(await audio.unlock(),false);
+ assert.equal(audio.play('click'),false);audio.setScene('duel');audio.dispose();
+ const persisted=fixture({muted:true,bgmVolume:.2,sfxVolume:.8});assert.deepEqual(persisted.audio.getSettings(),{muted:true,bgmVolume:.2,sfxVolume:.8});
+ assert(await persisted.audio.unlock());assert.equal(persisted.timers.size,0);persisted.audio.dispose();
+ const absent=create({AudioContext:null,document:null,storage:{getItem(){throw Error('private');},setItem(){throw Error('private');}}});
+ assert.equal(absent.getStatus().supported,false);assert.equal(await absent.unlock(),false);assert.equal(absent.play('click'),false);
+ assert.doesNotThrow(()=>absent.configure({muted:true}));absent.dispose();
+ const broken=create({AudioContext:class{constructor(){throw Error('disabled');}},document:null,storage:null});
+ assert.equal(await broken.unlock(),false);assert.equal(broken.play('click'),false);broken.dispose();
+ // Original recordings replace the authored fallback only after real decoding.
+ class BufferContext extends Context{
+  async decodeAudioData(data){assert(data instanceof ArrayBuffer);return{duration:10};}
+  createBufferSource(){const source=new Osc(this);source.start=(time,offset)=>{source.started=time;source.offset=offset;};this.oscillators.push(source);return source;}
+ }
+ const requests=[],track=slug=>({path:'/assets/audio/original/'+slug+'.mp3',kind:'original_rom_capture',loop_start:0,loop_end:2});
+ const manifest={schema:'tk2-original-audio-v1',tracks:{menu:track('title'),strategy:track('strategy'),battle:{...track('battle'),path:'https://other.invalid/music.mp3'}}};
+ const original=fixture(null,{AudioContext:BufferContext,fetch:async path=>{requests.push(path);return path.endsWith('.json')?{ok:true,json:async()=>manifest}:{ok:true,arrayBuffer:async()=>new ArrayBuffer(8)};}});
+ assert.equal(requests.length,0,'Original assets also wait for the first audio unlock');
+ assert(await original.audio.unlock());await settle();
+ assert.deepEqual(requests,['/assets/audio/index.json','/assets/audio/original/title.mp3']);
+ assert.equal(original.audio.getStatus().musicSource,'original');assert.equal(original.timers.size,0);
+ const bc=Context.instances.at(-1),titleSource=bc.oscillators.at(-1);
+ assert.equal(titleSource.loop,true);assert.equal(titleSource.loopStart,0);assert.equal(titleSource.loopEnd,2);assert.equal(titleSource.offset,0);
+ original.audio.setScene('strategy');await settle();assert(titleSource.disconnected);
+ assert.equal(original.audio.getStatus().musicSource,'original');assert.equal(original.audio.getStatus().originalTracks,2);
+ bc.currentTime=1.5;
+ original.audio.configure({muted:true});assert.equal(original.audio.getStatus().activeVoices,0);assert.equal(original.audio.getStatus().playing,false);
+ original.audio.configure({muted:false});assert.equal(original.audio.getStatus().musicSource,'original');
+ assert(Math.abs(bc.oscillators.at(-1).offset-1.49)<1e-8,'Unmuting an original track resumes its playhead');
+ original.audio.setScene('battle');await settle();assert.equal(original.audio.getStatus().musicSource,'synthesized');
+ assert(!requests.some(path=>path.startsWith('https:')),'Original media paths must remain within the pinned asset directory');
+ original.audio.setScene('menu');assert.equal(original.audio.getStatus().musicSource,'original');assert.equal(requests.filter(path=>path.endsWith('title.mp3')).length,1);
+ original.audio.dispose();assert.equal(original.audio.getStatus().activeVoices,0);assert.equal(original.timers.size,0);
+ const unavailable=fixture(null,{AudioContext:BufferContext,fetch:async()=>({ok:false})});await unavailable.audio.unlock();await settle();
+ assert.equal(unavailable.audio.getStatus().musicSource,'synthesized');unavailable.audio.dispose();
+ let release;
+ const late=fixture(null,{AudioContext:BufferContext,fetch:async path=>path.endsWith('.json')?{ok:true,json:async()=>manifest}:{ok:true,arrayBuffer:()=>new Promise(resolve=>{release=resolve;})}});
+ await late.audio.unlock();await settle();late.audio.dispose();release(new ArrayBuffer(8));await settle();
+ assert.equal(late.audio.getStatus().activeVoices,0);assert.equal(late.timers.size,0,'Late decoding must not restart disposed music');
+ console.log('audio: original ROM buffers/loop/playhead, authored fallback and ten effects, gesture unlock, volume persistence, scene/visibility cleanup, bounded voices and optional storage passed');
+})().catch(error=>{console.error(error);process.exitCode=1;});

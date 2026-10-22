@@ -109,6 +109,7 @@ white-space:nowrap
 }
 .topbar nav{
 display:flex;
+flex-wrap:wrap;
 gap:8px
 }
 .topbar button{
@@ -280,6 +281,18 @@ width:24%
 .small{
 font-size:16px;
 color:var(--muted)
+}
+.audio-volume{
+display:grid;
+grid-template-columns:minmax(0,1fr) auto;
+align-items:center;
+gap:8px 16px;
+margin:16px 0
+}
+.audio-volume input{
+grid-column:1 / -1;
+width:100%;
+accent-color:#000
 }
 .actions{
 margin-top:auto;
@@ -554,9 +567,15 @@ dialog p{
 margin-bottom:12px
 }
 dialog label.field{
+min-width:0;
 display:grid;
 gap:8px;
 margin-bottom:16px
+}
+dialog label.field select{
+width:100%;
+min-width:0;
+max-width:100%
 }
 dialog .dialog-actions{
 display:flex;

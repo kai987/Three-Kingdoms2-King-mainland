@@ -15,6 +15,7 @@ from remake.campaign import Campaign, Catalog, GameError, canonical
 from remake.officers import (CapacityError, CityRoster, YearState, select_deployment,
                             transfer_officers, year_state)
 from remake.session import CampaignSession
+from campaign_fixtures import advance_month
 
 
 EXEMPT_OPENING = {'scenario_excluded', 'closed_career'}
@@ -72,7 +73,7 @@ class PlacementCompletionTests(unittest.TestCase):
     def calendar_month(self, game):
         # Isolate real calendar/appearance services from AI conquest. Each month
         # still commits its actual resources, year receipts and city openings.
-        game._complete_month(game.state)
+        advance_month(game)
         game._spawn_eligible(game.state)
         game._reconcile_factions(game.state)
         game.validate(game.state)
