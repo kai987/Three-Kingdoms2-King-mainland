@@ -1,0 +1,37 @@
+{
+  "schema": "tk2-route-corridors-v1",
+  "access_policy": "Reuse the approved, already painted city-to-harbour approach and append only the short link to the unchanged navigation port. Prevent a second parallel land corridor without moving cities or repainting terrain.",
+  "access_overrides": {
+    "liaodong": [[1194, 78], [1180, 126], [1186, 134]],
+    "lelang": [[1290, 182], [1280, 210], [1270, 210], [1264, 204]],
+    "kuaiji": [[1142, 512], [1180, 516], [1186, 522], [1186, 534]]
+  },
+  "land_connections": [
+    {
+      "from": "zangke",
+      "to": "bajun",
+      "mode": "land",
+      "terrain": "mountain",
+      "junction": [448, 612],
+      "history": {
+        "classification": "authorial_regional_mountain_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《華陽國志·巴志》記江州為巴郡治、巴郡南接涪陵；涪陵西接牂柯、北接巴郡。據區域毗鄰及山谷交通，在本作補充牂牁至江州的山道連邊；並非考古復原的直達官道。",
+        "source": "https://zh.wikisource.org/zh-hant/華陽國志/卷一"
+      }
+    },
+    {
+      "from": "zangke",
+      "to": "fuling",
+      "mode": "land",
+      "terrain": "mountain",
+      "junction": [448, 612],
+      "history": {
+        "classification": "authorial_regional_mountain_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "《華陽國志·巴志》明記涪陵西接牂柯，且土地山險、水灘。將相鄰區域交通抽象為山地城際通道，不把河谷稱作已證實可全程通航的航道，亦不聲稱確證兩郡治間直達古道。",
+        "source": "https://zh.wikisource.org/zh-hant/華陽國志/卷一"
+      }
+    }
+  ]
+}

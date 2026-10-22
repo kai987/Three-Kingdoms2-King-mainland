@@ -18,7 +18,7 @@ const officers={
 };
 const city={id:'home',owner:'wei',reserves:20,roster:{officer_ids:[1,2,3]}},away={id:'away',owner:'wei',roster:{officer_ids:[]}},enemy={id:'enemy',owner:'wu',roster:{officer_ids:[]}};
 let closed=0,lastDialog,lastCommand,picked=[],requests=0;
-const context={view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10},links:[['home','enemy']],recruitable:{home:[5,6,4]},persuadable:{home:[2]}},game:{player:'wei',turn:1,cities:{home:city,away,enemy},officers,extension:{officer_actions:{}}}},$:element,name:id=>'武将'+id,escapeHtml:String,marching:()=>new Set(),capacity:()=>99,notice(){},faction:String,cityName:String,actor:null,target:null,watchRouteDialog(){},dialog:{querySelectorAll:()=>picked,close(){closed++;}},openDialog(title,body){
+const context={GameOfficerChoices:require('../game/officer-choice.js'),view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10},links:[['home','enemy']],recruitable:{home:[5,6,4]},persuadable:{home:[2]}},game:{player:'wei',turn:1,cities:{home:city,away,enemy},officers,extension:{officer_actions:{}}}},$:element,name:id=>'武将'+id,escapeHtml:String,marching:()=>new Set(),capacity:()=>99,notice(){},faction:String,cityName:String,actor:null,target:null,watchRouteDialog(){},dialog:{querySelectorAll:()=>picked,close(){closed++;}},openDialog(title,body){
  lastDialog={title,body};
  for(const match of body.matchAll(/<select id="([^"]+)"[^>]*>(.*?)<\/select>/g)){
   const options=[...match[2].matchAll(/<option value="([^"]+)"([^>]*)>/g)];
@@ -41,15 +41,15 @@ const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[
 (async()=>{
  const before=JSON.stringify(context.view.game);
  assert.deepEqual(Array.from(context.sortedOfficers([1,2,3])),[2,3,1]);
- assert.deepEqual(Array.from(context.sortedOfficers([6,5,4],'virtue')),[4,6,5],'Ties use stable person IDs, never input mutation');
+ assert.deepEqual(Array.from(context.sortedOfficers([6,5,4],'virtue')),[6,4,5],'Ties compare intellect before stable IDs, never input mutation');
  context.recruitOfficer(city);
  const actorOptions=lastDialog.body.match(/id="recruit-actor">(.*?)<\/select>/)[1];
- assert.deepEqual(values(actorOptions),[3,1,2]);assert.deepEqual(values(element('#recruit-person').innerHTML),[4,6,5]);
+ assert.deepEqual(values(actorOptions),[3,1,2]);assert.deepEqual(values(element('#recruit-person').innerHTML),[6,4,5]);
  element('#recruit-actor').value='2';element('#recruit-actor').onchange();assert(element('#recruit-actor-summary').textContent.includes('武98 · 知65 · 德66'));
- assert(actorOptions.includes('武98 · 知65 · 德66 · 30兵 · 体95 · 忠90'));
+ assert(actorOptions.includes('30兵 · 武98 · 知65 · 德66 · 体力95 · 忠誠90'));
  element('#recruit-mode').value='persuade_officer';element('#recruit-mode').onchange();assert(element('#recruit-person').innerHTML.includes('武98 · 知65 · 德66'));
  context.departure(city);assert(lastDialog.body.includes('武98 · 知65 · 德66'));assert(lastDialog.body.indexOf('value="2"')<lastDialog.body.indexOf('value="1"'));
- context.transferCity(city);assert(lastDialog.body.includes('武98 · 知65 · 德66'));assert(lastDialog.body.includes('忠90'));
+ context.transferCity(city);assert(lastDialog.body.includes('武98 · 知65 · 德66'));assert(lastDialog.body.includes('忠誠90'));
  assert.equal(JSON.stringify(context.view.game),before,'Reviewing and sorting choices has no game or RNG mutation');
  // A low-reserve city can use exactly its own troops plus reserves, never a negative preview.
  context.allocate(city,1);

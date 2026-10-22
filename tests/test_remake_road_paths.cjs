@@ -1,0 +1,12 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const source=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
+const context={view:{catalog:{cities:[{position:[0,0]},{position:[20,20]},{position:[40,0]},{position:[50,50]}]}},mapPosition:c=>c.position};
+vm.createContext(context);vm.runInContext(source.slice(source.indexOf('function smoothMapPath('),source.indexOf('const mapAccessKey=')),context);
+const points=[[2,1],[10,5],[19,22],[30,5],[42,1]],before=JSON.stringify(points);
+const d=context.landMapPath(points);
+assert(d.startsWith('M0 0'));assert(d.includes('L20 20M20 20'),'An explicit city vertex is reached by the curve, not merely its control point');assert(d.endsWith('L40 0'));
+assert.equal(context.landMapPath(points,{smooth:false}),'M0 0L10 5L20 20L30 5L40 0','Access roads follow their existing painted polylines');
+assert.equal(context.landMapPath([[0,0],[40,40],[60,60]]),'M0 0Q40 40 50 50L60 60','Passing near a city does not insert a new junction');
+assert.equal(JSON.stringify(points),before);assert.equal(context.landMapPath([]),'');
+console.log('road paths: native-grid endpoint correction, true city-center curve junctions, preserved port polylines and no invented nearby links passed');

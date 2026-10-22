@@ -1,6 +1,6 @@
 'use strict';
 let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
-let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null;
+let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null,mapAction=null;
 let cloudSave=null,cloudSaveUI=null;
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const gameAudio=GameAudio.create();
@@ -8,6 +8,7 @@ let audioOutcome=null;
 // Browsers require a real gesture before creating/resuming the audio context.
 for(const type of ['pointerdown','keydown'])document.addEventListener(type,event=>{if(event.isTrusted)void gameAudio.unlock();},{capture:true});
 dialog.addEventListener('cancel',()=>gameAudio.play('cancel'));
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mapAction&&!dialog.open){event.preventDefault();gameAudio.play('cancel');cancelMapAction();}});
 document.addEventListener('click',event=>{
  if(!event.isTrusted)return;
  const button=event.target.closest('button');
@@ -105,6 +106,19 @@ function smoothMapPath(points){
  for(let i=1;i<points.length-1;i++)d+=`Q${points[i].join(' ')} ${(points[i][0]+points[i+1][0])/2} ${(points[i][1]+points[i+1][1])/2}`;
  return d+`L${points.at(-1).join(' ')}`;
 }
+function landMapPath(points,{smooth=true}={}){
+ if(!Array.isArray(points)||points.length<2)return '';
+ const centers=view.catalog.cities.map(mapPosition);
+ // Only explicit road vertices can be junctions; nearby cities do not create new links.
+ const snapped=points.map(p=>centers.find(c=>Math.hypot(c[0]-p[0],c[1]-p[1])<=3)||p);
+ if(!smooth)return snapped.map((p,i)=>(i?'L':'M')+p.join(' ')).join('');
+ let start=0,path='';
+ for(let i=1;i<snapped.length;i++)if(i===snapped.length-1||centers.includes(snapped[i])){
+  // End a curve at a city, rather than using its center as an off-curve control point.
+  path+=smoothMapPath(snapped.slice(start,i+1));start=i;
+ }
+ return path;
+}
 const mapAccessKey=points=>[points[0].join(','),points.at(-1).join(',')].sort().join(':');
 const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
 function notice(text='',error=false){$('#notice').textContent=text;$('#notice').classList.toggle('error',error);if(error)gameAudio.play('error');}
@@ -153,6 +167,7 @@ function openDialog(title,body,actions){
  return generation;
 }
 function selectFaction(){
+ mapAction=null;
  gameAudio.setScene('menu');
  const current=view.catalog.scenario_id;
  const scenarios=view.catalog.scenarios;
@@ -214,52 +229,55 @@ function renderMap(){
  if(preview)$('#date').textContent=`${GameCalendar.text(date)} · 选择势力`;
  const spritePixels=pixels=>pixels.map(([x,y])=>`<rect x="${x}" y="${y}" width="4" height="4"/>`).join('');
  const spriteDefs=`<g id="castle-fill-pixels">${spritePixels(view.catalog.map_presentation.castle_fill_pixels)}</g><g id="castle-outline-pixels">${spritePixels(view.catalog.map_presentation.castle_outline_pixels)}</g>`;
+ const recolor=view.catalog.map_presentation.mountain_recolors;
+ const mountainMask=recolor?.patches.map(p=>p.runs.map(([y,x,n])=>`M${x} ${y}h${n}v1h-${n}z`).join('')).join('')||'';
+ const mountainDefs=mountainMask?`<clipPath id="western-mountain-faces"><path d="${mountainMask}"/></clipPath><filter id="western-mountain-color" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="${recolor.color_matrix.join(' ')}"/></filter>`:'';
+ const mountainColors=mountainMask?`<g clip-path="url(#western-mountain-faces)" data-terrain-recolor="chengdu-west"><image href="${world.background}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}" filter="url(#western-mountain-color)"/></g>`:'';
  const castles=active.map(c=>{
   const [x,y]=mapPosition(c),owner=owners[c.id]||'neutral';
   // Cover the baked outline too: every pixel of an unowned castle is white.
   const outline=owner==='neutral'||added.includes(c.id)||view.catalog.map_presentation.new_city_ids?.includes(c.id)?`<use class="castle-border" href="#castle-outline-pixels" x="${x}" y="${y}" fill="${owner==='neutral'?'#fff':'#000'}"/>`:'';
   const colored=`<use class="castle-fill" href="#castle-fill-pixels" x="${x}" y="${y}" fill="${mapColor(owner)}"/>`;
-  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''}" data-city="${c.id}" data-owner="${owner}" aria-label="${escapeHtml(cityCaption(c.id))}，${escapeHtml(ownerName(owner,c.id))}"><title>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owner,c.id))}</title>${outline}${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/></g>`;
+  const actionable=mapAction?.targets.includes(c.id);
+  return `<g role="button" tabindex="0" class="city-hit ${owner==='neutral'?'unowned':''} ${focused===c.id?'selected':''} ${preview&&owner===preview.faction?'preview-owned':''} ${mapAction?(actionable?'action-target':'action-unavailable'):''}" data-city="${c.id}" data-owner="${owner}"${mapAction?` data-action-eligible="${!!actionable}"`:''} aria-label="${escapeHtml(cityCaption(c.id))}，${escapeHtml(ownerName(owner,c.id))}${actionable?'，可选择目标':''}"><title>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owner,c.id))}</title>${outline}${colored}<rect class="city-outline" x="${x-21}" y="${y-21}" width="42" height="42"/></g>`;
  }).join('');
  const extras=preview?.road_additions||view.catalog.road_additions;
  const hazardous=!!(preview?preview.travel_hazards:view.catalog.travel_hazards);
  const roads=view.catalog.map_presentation.added_land_roads.filter(r=>extras.some(e=>e.includes(r.from)&&e.includes(r.to))).map(r=>{
-  const ps=r.new_branch;let d=`M${ps[0].join(' ')}`;
-  for(let i=1;i<ps.length-1;i++)d+=`Q${ps[i].join(' ')} ${(ps[i][0]+ps[i+1][0])/2} ${(ps[i][1]+ps[i+1][1])/2}`;
-  d+=`L${ps.at(-1).join(' ')}`;
+  const d=landMapPath(r.new_branch);
   const oneway=hazardous&&r.from==='yinping'&&r.to==='shujun';
   return `<g data-road="${r.from}-${r.to}"${oneway?' data-oneway="yinping-shujun"':''}><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"${oneway?' marker-end="url(#oneway-road-arrow)"':''}/></g>`;
  }).join('');
  const drawnAccess=new Set();
  const firstAccess=part=>{if(part.mode==='sea')return true;const key=mapAccessKey(part.points);if(drawnAccess.has(key))return false;drawnAccess.add(key);return true;};
- const expansionRoads=preview?.world||!preview&&view.catalog.world?view.catalog.map_presentation.expansion_connections.filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.filter(part=>!hazardous||part.mode!=='sea'&&firstAccess(part)).map((part,index)=>{const d=part.points.map((p,i)=>(i?'L':'M')+p.join(' ')).join(' ');return part.mode==='sea'?`<path class="coastal-lane" d="${d}" data-coastal-route="${r.from}-${r.to}"/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;})).join(''):'';
+ const expansionRoads=preview?.world||!preview&&view.catalog.world?view.catalog.map_presentation.expansion_connections.filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.filter(part=>!hazardous||part.mode!=='sea'&&firstAccess(part)).map((part,index)=>{const d=part.mode==='sea'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false});return part.mode==='sea'?`<path class="coastal-lane" d="${d}" data-coastal-route="${r.from}-${r.to}"/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;})).join(''):'';
  const seaRoutes=hazardous?[...(preview?.sea_routes||view.catalog.sea_routes||[]),...(!preview?view.catalog.discovered_routes||[]:[])]:[];
  const discoveredIds=new Set(!preview?(view.catalog.discovered_routes||[]).map(r=>r.id||[r.from,r.to].sort().join(':')):[]);
  const seaPairs=new Set();
  const navigableSeas=seaRoutes.filter(r=>{
   const key=[r.from,r.to].sort().join(':');if(seaPairs.has(key)||!activeIds.has(r.from)||!activeIds.has(r.to))return false;seaPairs.add(key);return true;
  }).flatMap(r=>(r.draw||[]).filter(firstAccess).map((part,index)=>{
-  const d=smoothMapPath(part.points);if(!d)return '';
+  const d=part.mode==='sea'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false});if(!d)return '';
   const discovered=discoveredIds.has(r.id||[r.from,r.to].sort().join(':'));
   return part.mode==='sea'?`<path class="coastal-lane${discovered?' discovered-lane':''}" d="${d}" data-coastal-route="${r.from}-${r.to}" data-sea-route="${escapeHtml(r.id||r.from+'-'+r.to)}"${discovered?' data-discovered-route="'+escapeHtml(r.id||r.from+'-'+r.to)+'"':''}/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
- const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.map(part=>{
-  const ps=part.points;let d=`M${ps[0].join(' ')}`;
-  for(let i=1;i<ps.length-1;i++)d+=`Q${ps[i].join(' ')} ${(ps[i][0]+ps[i+1][0])/2} ${(ps[i][1]+ps[i+1][1])/2}`;
-  d+=`L${ps.at(-1).join(' ')}`;
+ const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.filter(firstAccess).map(part=>{
+  const d=landMapPath(part.points);
   return `<g data-regional-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
  const offsets=preview?.city_label_offsets||view.catalog.city_label_offsets||{};
  const labels=cityLabels==='none'?'':active.filter(c=>cityLabels==='all'||added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused).map(c=>{
   const [x,y]=mapPosition(c),[dx,dy,anchor]=offsets[c.id]||[0,-24,'middle'];return `<text class="map-city-name" x="${x+dx}" y="${y+dy}" text-anchor="${anchor}" data-city-label="${c.id}" aria-hidden="true">${escapeHtml(cityName(c.id))}</text>`;
  }).join('');
- $('#stage').innerHTML=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</button></div>
- <svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${world.background}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
+ const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示"><span class="map-labels-full">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</span><span class="map-labels-compact">${{major:'名：主',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
+ $('#stage').innerHTML=`<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${world.background}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${mountainColors}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
  <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
- <time id="map-date" datetime="${GameCalendar.iso(date)}" aria-label="${GameCalendar.text(date)}">${date.year}年<span>${date.month}月${GameCalendar.period(date.day)}</span></time>`;
+ <div class="map-bottom-bar">${toolbar}<time id="map-date" datetime="${GameCalendar.iso(date)}" aria-label="${GameCalendar.text(date)}">${date.year}年<span>${date.month}月${GameCalendar.period(date.day)}</span></time></div>
+ ${mapAction?`<div class="map-action-prompt" role="status"><span>${escapeHtml(cityName(mapAction.source))} · ${mapAction.kind==='depart'?'请选择高亮城池出征':'请选择高亮城池招募或劝降'}</span><button id="cancel-map-action">取消选城</button></div>`:''}`;
  const choose=(id,inspect=false)=>{
   if(busy)return;
+  if(mapAction&&!preview&&game.phase==='city')return finishMapAction(id);
   if(preview)preview.focus=id;
   else{selectedCity=id;if(game.phase==='city'){$('#inspector').scrollTop=0;renderCity();}}
   if(!inspect){const city=board.find(c=>c.id===id);if(city)mapNavigation.focus(...mapPosition(city),mapCamera?.zoom||1);}
@@ -280,7 +298,8 @@ function renderMap(){
  $('#map-zoom-out').onclick=()=>mapNavigation.zoomBy(1/1.25);$('#map-zoom-in').onclick=()=>mapNavigation.zoomBy(1.25);
  $('#city-jump').onchange=()=>choose($('#city-jump').value);
  $('#map-labels').onclick=()=>{cityLabels={major:'all',all:'none',none:'major'}[cityLabels];renderMap();};
- document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=e=>{if(!mapNavigation.shouldSuppressClick(e)){gameAudio.play('click');choose(id,true);}};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();gameAudio.play('click');choose(id,true);}};});
+ if($('#cancel-map-action'))$('#cancel-map-action').onclick=cancelMapAction;
+ document.querySelectorAll('[data-city],[data-city-label]').forEach(el=>{const id=el.dataset.city||el.dataset.cityLabel;el.onclick=e=>{if(!mapNavigation.shouldSuppressClick(e)){if(!mapAction||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!mapAction||mapAction.targets.includes(id))gameAudio.play('click');choose(id,true);}};});
 }
 
 async function showCityInformation(id){
@@ -330,10 +349,10 @@ function officerAttributes(id){
 }
 function officerChoiceText(id,{loyalty=false}={}){
  const o=view.game.officers[id],b=view.game.battle,unit=[...(b?.attackers||[]),...(b?.defenders||[])].find(u=>u.id===Number(id));
- return `${name(id)} · ${officerAttributes(id)} · ${unit?.troops??o.troops}兵 · 体${b?.extended?.support?.[id]?.health??o.health}${loyalty?` · 忠${o.loyalty}`:''}`;
+ return GameOfficerChoices.label(name(id),o,{troops:unit?.troops??o.troops,health:b?.extended?.support?.[id]?.health??o.health,loyalty});
 }
 function sortedOfficers(ids,attribute='martial_strength'){
- return [...ids].sort((a,b)=>(view.game.officers[b].profile[attribute]??-1)-(view.game.officers[a].profile[attribute]??-1)||Number(a)-Number(b));
+ return GameOfficerChoices.sort(ids,id=>view.game.officers[id],attribute);
 }
 // Number inputs expose limits as attributes and normalize pasted / typed values.
 // An empty field remains editable until blur or confirmation, then uses its minimum.
@@ -362,9 +381,9 @@ function renderCity(){
  <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>武</th><th>知</th><th>德</th><th>兵</th></tr></thead><tbody>${rosterRows(city)||'<tr><td colspan="5">暂无驻军</td></tr>'}</tbody></table></div>
  <p class="small">驻城 ${city.roster.officer_ids.length}/${capacity()}；每方出战上限10人。${city.action_used?'本城本回合已行动。':''}</p>
  <div class="actions">${owned?`<div class="action-pair"><button id="allocate" class="primary" ${!city.roster.officer_ids.length?'disabled':''}>编兵</button><button id="depart" class="primary" ${city.action_used?'disabled':''}>出征</button></div><div class="action-pair secondary-row"><button id="recruit-officer" ${city.action_used||!city.roster.officer_ids.length?'disabled':''}>招募 / 劝降</button><button id="transfer" ${city.action_used||!city.roster.officer_ids.length?'disabled':''}>调动武将</button></div><div class="secondary-row"><button id="recruit" ${city.action_used?'disabled':''}>征募预备兵</button></div>`:'<button id="home">返回本城</button>'}<button id="end-turn">结束本旬</button></div>`;
- if(owned){$('#allocate').onclick=()=>allocate(city);$('#depart').onclick=()=>departure(city);$('#recruit').onclick=()=>{openDialog('征募预备兵','<p>花费20金钱、30粮食，征募100名预备兵。确认后消耗本城本回合行动。</p>','<button data-cancel>取消</button><button id="confirm-recruit" class="primary">确认征募</button>');$('#confirm-recruit').onclick=async()=>{if(await command('recruit',{city:city.id}))dialog.close();};};}
+ if(owned){$('#allocate').onclick=()=>allocate(city);$('#depart').onclick=()=>beginMapAction('depart',city);$('#recruit').onclick=()=>{openDialog('征募预备兵','<p>花费20金钱、30粮食，征募100名预备兵。确认后消耗本城本回合行动。</p>','<button data-cancel>取消</button><button id="confirm-recruit" class="primary">确认征募</button>');$('#confirm-recruit').onclick=async()=>{if(await command('recruit',{city:city.id}))dialog.close();};};}
  else $('#home').onclick=()=>{selectedCity=Object.values(game.cities).find(c=>c.owner===game.player)?.id||selectedCity;render();};
- if($('#recruit-officer'))$('#recruit-officer').onclick=()=>recruitOfficer(city);
+ if($('#recruit-officer'))$('#recruit-officer').onclick=()=>beginMapAction('recruit',city);
  if($('#transfer'))$('#transfer').onclick=()=>transferCity(city);
  $('#end-turn').onclick=()=>command('end_turn');
 }
@@ -386,8 +405,31 @@ function allocate(city,preferred=null){
  };
 }
 
-function departure(city){
- const targets=Object.values(view.game.cities).filter(c=>c.owner!==view.game.player&&(view.catalog.travel_hazards?availableRouteModes(city.id,c.id).length:view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id))));
+function actionTargetCities(kind,city){
+ if(kind==='depart')return Object.values(view.game.cities).filter(c=>c.owner!==view.game.player&&(view.catalog.travel_hazards?availableRouteModes(city.id,c.id).length:view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id)))).map(c=>c.id);
+ const free=new Set((view.catalog.recruitable?.[city.id]||[]).map(i=>view.game.extension.free_locations[i]));
+ const enemy=new Set(view.catalog.persuadable?.[city.id]||[]);
+ return Object.values(view.game.cities).filter(c=>free.has(c.id)||c.roster.officer_ids.some(i=>enemy.has(i))).map(c=>c.id);
+}
+function beginMapAction(kind,city){
+ if(busy||view.game?.phase!=='city'||city.owner!==view.game.player||city.action_used)return;
+ const targets=actionTargetCities(kind,city);
+ if(!targets.length)return notice(kind==='depart'?'没有可出征的陆路或沿海城池。':'附近暂无可招募的在野武将或可劝降的敌将。可在“人物库”查看年代与配置。');
+ mapAction={kind,source:city.id,targets,revision:view.revision};notice();renderMap();GameI18n.apply();
+ const stage=$('#stage'),rect=stage.getBoundingClientRect();
+ if(rect.top<0||rect.bottom>window.innerHeight)stage.scrollIntoView({block:'center'});
+ document.querySelector('.city-hit.action-target')?.focus({preventScroll:true});
+}
+function cancelMapAction(){mapAction=null;notice();renderMap();GameI18n.apply();}
+function finishMapAction(id){
+ const choice=mapAction,city=view.game.cities[choice.source];
+ if(!actionTargetCities(choice.kind,city).includes(id))return notice('请选择高亮的可操作城池。',true);
+ mapAction=null;notice();renderMap();
+ if(choice.kind==='depart')departure(city,id);else recruitOfficer(city,id);
+ GameI18n.apply();
+}
+function departure(city,targetCity=null){
+ const targets=Object.values(view.game.cities).filter(c=>(!targetCity||c.id===targetCity)&&c.owner!==view.game.player&&(view.catalog.travel_hazards?availableRouteModes(city.id,c.id).length:view.catalog.links.some(e=>e.includes(city.id)&&e.includes(c.id))));
  if(!targets.length)return notice(view.catalog.travel_hazards?'没有可出征的陆路或沿海城池。':'没有相邻的敌方城池。');
  const draft={source:city.id,target:targets[0].id,officers:[],route_mode:'fastest'};
  const pick=()=>{
@@ -398,10 +440,10 @@ function departure(city){
  pick();
 }
 
-function recruitOfficer(city){
- const free=view.catalog.recruitable?.[city.id]||[],enemy=view.catalog.persuadable?.[city.id]||[];
+function recruitOfficer(city,targetCity=null){
+ const free=(view.catalog.recruitable?.[city.id]||[]).filter(i=>!targetCity||view.game.extension.free_locations[i]===targetCity),enemy=(view.catalog.persuadable?.[city.id]||[]).filter(i=>!targetCity||view.game.cities[targetCity].roster.officer_ids.includes(i));
  if(!free.length&&!enemy.length)return notice('附近暂无可招募的在野武将或可劝降的敌将。可在“人物库”查看年代与配置。');
- openDialog('招募与劝降',`<label class="field">人事方式<select id="recruit-mode"><option value="recruit_officer" ${!free.length?'disabled':''}>在野招募 · 60金</option><option value="persuade_officer" ${!enemy.length?'disabled':''} ${!free.length?'selected':''}>邻城劝降 · 100金</option></select></label><p>一次寻访消耗本城行动，对方可能拒绝。取消不扣资源；君主不能直接劝降。</p><label class="field">执行武将<select id="recruit-actor">${sortedOfficers(city.roster.officer_ids,'virtue').map(i=>`<option value="${i}" ${(marching().has(i)||view.game.extension?.officer_actions?.[i]===view.game.turn)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="recruit-actor-summary"></p><label class="field">目标武将<select id="recruit-person"></select></label><p class="small officer-choice-summary" id="recruit-person-summary"></p><p class="small">最多${capacity()}人。转属成功后保留体力、带兵、装备和经验；忠诚按本作招募规则重新结算。</p>`,'<button data-cancel>取消</button><button id="confirm-officer" class="primary">确认寻访</button>');
+ openDialog('招募与劝降',`${targetCity?`<p data-recruit-city="${targetCity}">寻访城池：${escapeHtml(cityName(targetCity))}</p>`:''}<label class="field">人事方式<select id="recruit-mode"><option value="recruit_officer" ${!free.length?'disabled':''}>在野招募 · 60金</option><option value="persuade_officer" ${!enemy.length?'disabled':''} ${!free.length?'selected':''}>邻城劝降 · 100金</option></select></label><p>一次寻访消耗本城行动，对方可能拒绝。取消不扣资源；君主不能直接劝降。</p><label class="field">执行武将<select id="recruit-actor">${sortedOfficers(city.roster.officer_ids,'virtue').map(i=>`<option value="${i}" ${(marching().has(i)||view.game.extension?.officer_actions?.[i]===view.game.turn)?'disabled':''}>${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="recruit-actor-summary"></p><label class="field">目标武将<select id="recruit-person"></select></label><p class="small officer-choice-summary" id="recruit-person-summary"></p><p class="small">最多${capacity()}人。转属成功后保留体力、带兵、装备和经验；忠诚按本作招募规则重新结算。</p>`,'<button data-cancel>取消</button><button id="confirm-officer" class="primary">确认寻访</button>');
  const summary=()=>{for(const kind of ['actor','person']){const id=$('#recruit-'+kind).value;$('#recruit-'+kind+'-summary').textContent=view.game.officers[id]?officerChoiceText(id,{loyalty:true}):'';}};
  const draw=()=>{$('#recruit-person').innerHTML=sortedOfficers($('#recruit-mode').value==='recruit_officer'?free:enemy,'virtue').map(i=>`<option value="${i}">${escapeHtml(officerChoiceText(i,{loyalty:true}))}</option>`).join('');summary();};
  $('#recruit-mode').onchange=draw;$('#recruit-actor').onchange=summary;$('#recruit-person').onchange=summary;draw();
@@ -536,6 +578,7 @@ function renderBattle(){
 }
 function render(){
  if(!view)return;
+ if(mapAction&&(view.revision!==mapAction.revision||view.game?.phase!=='city'||setupPreview))mapAction=null;
  MarchCore.update(view);
  GameI18n.registerScenarios(view.catalog.scenarios);
  $('#inspector').classList.remove('setup-menu');

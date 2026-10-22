@@ -819,8 +819,28 @@ font-size:14px
 /* Keep the native32px silhouette; unowned castles cover the baked black border in white. */
 .city-hit .castle-fill,.city-hit .castle-border{stroke:none;shape-rendering:crispEdges}
 .faction-swatch{flex:none;border:1px solid #000;image-rendering:pixelated}
-#map-date{position:absolute;right:14px;bottom:14px;z-index:2;display:flex;gap:20px;padding:3px 8px;border:4px double #000;background:var(--paper);color:#000;font:20px/1.2 var(--display);white-space:nowrap;box-shadow:0 0 0 2px var(--paper);pointer-events:none}
-@media(max-width:600px){#map-date{right:8px;bottom:8px;gap:14px;font-size:16px}}
+.map-bottom-bar{position:absolute;right:14px;bottom:14px;z-index:2;display:flex;align-items:stretch;gap:8px;max-width:calc(100% - 122px)}
+.map-bottom-bar .map-toolbar{position:static;flex-wrap:nowrap;max-width:none;min-width:0;flex:1}
+.map-bottom-bar .city-jump{min-width:0;flex:1;white-space:nowrap}
+.map-bottom-bar .city-jump select{min-width:0;width:100%;max-width:220px}
+.map-bottom-bar #map-labels{white-space:nowrap}
+.map-labels-compact{display:none}
+#map-date{display:flex;align-items:center;gap:12px;padding:3px 8px;border:4px double #000;background:var(--paper);color:#000;font:20px/1.2 var(--display);white-space:nowrap;box-shadow:0 0 0 2px var(--paper);pointer-events:none}
+.map-action-prompt{position:absolute;left:8px;right:8px;top:8px;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 8px;border:3px double #000;background:var(--paper);color:#000;font-size:16px}
+.map-action-prompt button{flex:none;min-height:32px;padding:2px 8px;font-size:16px}
+#world-map .city-hit.action-target .city-outline{fill:#fff3;stroke:#ffff80;stroke-width:4;stroke-dasharray:none;filter:drop-shadow(0 0 2px #000)}
+.city-hit.action-unavailable{cursor:not-allowed}
+.city-hit.action-unavailable .city-outline{stroke:none}
+@media(max-width:600px){
+ .map-bottom-bar{left:8px;right:8px;bottom:56px;max-width:none;gap:4px}
+ .map-bottom-bar .map-toolbar button{min-width:28px;min-height:32px;padding:2px 4px;font-size:12px}
+ .map-bottom-bar .city-jump,.map-bottom-bar .city-jump select{font-size:12px}
+ .map-bottom-bar .city-jump{min-width:82px}
+ .map-labels-full{display:none}
+ .map-labels-compact{display:inline}
+ #map-date{gap:4px;padding:2px 4px;border-width:3px;font-size:14px}
+ .map-action-prompt{font-size:14px}
+}
 
 .city-hit .city-outline{
 stroke:none;

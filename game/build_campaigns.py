@@ -10,6 +10,7 @@ from pathlib import Path
 import argparse
 import json
 import re
+from math import asin, ceil, cos, radians, sin, sqrt
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'game/config/campaigns'
@@ -58,7 +59,40 @@ def apply_patch(base, patch):
     return result
 
 
+def apply_navigation_sources(data, navigation):
+    """One vector road source feeds movement, previews and discovered sea lanes."""
+    by_pair = {frozenset((r['from'], r['to'])): r for r in navigation['routes']}
+    for field in ('travel_routes', 'sea_routes', 'exploration_routes'):
+        for row in data[field]:
+            if row['mode'] != 'sea':
+                continue
+            route = by_pair[frozenset((row['from'], row['to']))]
+            draw = deepcopy(route['draw'])
+            if route['from'] != row['from']:
+                draw = [dict(part, points=list(reversed(part['points']))) for part in reversed(draw)]
+            row['draw'] = draw
+    for corridor in navigation['land_roads']:
+        a, b = corridor['from'], corridor['to']
+        if frozenset((a, b)) in {frozenset(e) for e in data['links']}:
+            raise ValueError('Duplicate added land corridor')
+        first, second = data['city_coordinates'][a], data['city_coordinates'][b]
+        lon1, lat1, lon2, lat2 = map(radians, (*first, *second))
+        haversine = sin((lat2-lat1)/2)**2 + cos(lat1)*cos(lat2)*sin((lon2-lon1)/2)**2
+        distance = round(6371.009 * 2 * asin(min(1, sqrt(haversine))) *
+                         data['travel_rules']['detours'][corridor['terrain']], 1)
+        data['links'].append([a, b])
+        data['travel_routes'].append(dict(id=f'{a}:{b}:land', **{'from': a, 'to': b},
+            mode='land', terrain=corridor['terrain'], distance_km=distance,
+            land_km=distance, sea_km=0,
+            days=max(1, ceil(distance / data['travel_rules']['speeds'][corridor['terrain']])),
+            draw=deepcopy(corridor['draw']), history=deepcopy(corridor['history'])))
+        data['regional_roads'].append(deepcopy(corridor))
+
+
 def load_sources():
+    navigation = read('game/config/navigation-geometry.json')
+    if navigation.get('schema') != 'sea-mask-navigation-geometry-v1':
+        raise ValueError('Unknown navigation geometry source')
     index = json.loads((SOURCE / 'index.json').read_text(encoding='utf-8'))
     people = json.loads((SOURCE / 'people.json').read_text(encoding='utf-8'))
     shared = json.loads((SOURCE / 'shared.json').read_text(encoding='utf-8'))
@@ -85,6 +119,7 @@ def load_sources():
         if set(current_people) != set(order):
             raise ValueError('A campaign may not add or remove canonical person identities')
         data['people'] = [current_people[pid] for pid in order]
+        apply_navigation_sources(data, navigation)
         expected_id = f'mainland{data["start_year"]}-{data["start_month"]:02d}'
         if data.get('schema') != 'tk2-campaign-v1' or data.get('id') != expected_id or data['id'] != entry['id'] or data['id'] in seen_ids:
             raise ValueError('Invalid or duplicate playable campaign identity')
