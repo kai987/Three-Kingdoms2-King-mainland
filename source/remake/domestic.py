@@ -23,7 +23,7 @@ _CITY_FIELDS = {'owner', 'morale', 'income_month', 'income_points', 'last_work_t
                 'last_auto_turn', 'last_income_month'}
 _FACTION_FIELDS = {'civil', 'military', 'policy'}
 _REPORT_FIELDS = {'turn', 'city', 'owner', 'kind', 'details'}
-_REPORT_KINDS = {'income', 'recruit', 'training', 'personnel', 'policy', 'hire_staff'}
+_REPORT_KINDS = {'income', 'recruit', 'training', 'personnel', 'policy', 'hire_staff', 'allocation'}
 LIMIT = 100000000
 
 
@@ -333,6 +333,52 @@ def training_preview(game, state, city_id):
     return dict(gain=gain, gold=units, grain=units * 2)
 
 
+def allocation_preview(game, state, city_id):
+    """Plan local reserve assignments without drawing RNG or changing the state.
+
+    A faction official manages every owned city, but troops stay in their own
+    city. Existing troops are retained; only the unassigned reserve is filled
+    into each eligible officer in ability order, up to the manual 999 cap.
+    """
+    city = state.cities[city_id]
+    result = dict(soldiers=0, officers=0, remaining_reserves=city.reserves, assignments=[])
+    if not city.reserves:
+        return result
+    official = appointments(state, city.owner).get('military')
+    if official is None or not _present(game, state, city, official):
+        return result
+    available = [state.officers[i] for i in city.roster.officer_ids
+                 if state.officers[i].troops < 999 and _present(game, state, city, i)]
+    available.sort(key=lambda officer: (-officer.profile.martial_strength,
+        -officer.profile.intellect, -officer.profile.virtue, -officer.health,
+        -officer.experience, _ref_key(officer.runtime_id)))
+    for officer in available:
+        amount = min(result['remaining_reserves'], max(0, 999 - officer.troops))
+        if not amount:
+            continue
+        result['assignments'].append(dict(id=officer.runtime_id, **{'from': officer.troops},
+                                          to=officer.troops + amount, added=amount))
+        result['soldiers'] += amount
+        result['officers'] += 1
+        result['remaining_reserves'] -= amount
+        if not result['remaining_reserves']:
+            break
+    return result
+
+
+def allocate_garrison(game, state, city_id, *, record=True):
+    """Apply the shared player/AI allocation plan; no fees or action are spent."""
+    quote = allocation_preview(game, state, city_id)
+    if quote['soldiers']:
+        city = state.cities[city_id]
+        for assignment in quote['assignments']:
+            state.officers[assignment['id']].troops = assignment['to']
+        city.reserves = quote['remaining_reserves']
+        if record:
+            _report(state, city, 'allocation', soldiers=quote['soldiers'], officers=quote['officers'])
+    return quote
+
+
 def _chance(actor, target, method):
     if method == 'recruit_officer':
         return max(15, min(95, 35 + actor.profile.virtue // 2 + actor.profile.intellect // 5 - target.profile.virtue // 5))
@@ -585,6 +631,9 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
         if ident is not None and _present(game, state, city, ident):
             duty = 1 if state.extension['officer_actions'].get(str(ident)) == state.turn else 2
             row['income_points'] = min(594, row['income_points'] + state.officers[ident].profile.intellect * duty)
+        # Active jobs, including explicitly configured reserve transports, have
+        # first claim. Assign only the local remainder before training it.
+        allocate_garrison(game, state, key)
         if policy['training_enabled']:
             quote = training_preview(game, state, key)
             if quote['gain']:
@@ -620,6 +669,7 @@ def view(game, state):
                                      if city is not None and _present(game, state, city, i)), key=_ref_key),
             city_ids=city_ids, monthly_bonus_preview=dict(gold=0, grain=0),
             recruit_preview=dict(soldiers=0, gold=0, grain=0), training_preview=dict(gain=0, gold=0, grain=0),
+            allocation_preview=dict(soldiers=0, officers=0),
             personnel_targets=faction_personnel_targets(game, state, owner) if owner == state.player else [])
         result['factions'][owner] = row
     for key, city in state.cities.items():
@@ -628,6 +678,7 @@ def view(game, state):
         row.update(civil=post.get('civil'), military=post.get('military'),
             civil_active=post.get('civil_active', False), military_active=post.get('military_active', False),
             recruit_preview=recruitment_preview(game, state, key), training_preview=training_preview(game, state, key),
+            allocation_preview=allocation_preview(game, state, key),
             personnel_targets=personnel_targets(game, state, key) if city.owner == state.player else [])
         base = _income(game, key)
         intellect = state.officers[row['civil']].profile.intellect if row['civil_active'] else 0
@@ -637,6 +688,8 @@ def view(game, state):
             for field in ('monthly_bonus_preview', 'recruit_preview', 'training_preview'):
                 for resource, amount in row[field].items():
                     post[field][resource] += amount
+            for field in ('soldiers', 'officers'):
+                post['allocation_preview'][field] += row['allocation_preview'][field]
     return result
 
 
@@ -700,7 +753,7 @@ def validate(game, state):
         fields = dict(income={'gold', 'grain'}, recruit={'soldiers', 'gold', 'grain'},
             training={'gain', 'gold', 'grain', 'morale'}, policy={'civil', 'military'},
             personnel={'id', 'method', 'actor', 'chance', 'success', 'gold'},
-            hire_staff={'staff_id', 'gold'})[row['kind']]
+            hire_staff={'staff_id', 'gold'}, allocation={'soldiers', 'officers'})[row['kind']]
         if set(details) != fields:
             raise ValueError('Domestic report details')
         for field in fields & {'gold', 'grain', 'soldiers'}:
@@ -715,3 +768,7 @@ def validate(game, state):
         if row['kind'] == 'training' and (not _integer(details['gain'], 1, 5)
                 or not _integer(details['morale'], details['gain'], 100)):
             raise ValueError('Domestic report morale')
+        if row['kind'] == 'allocation' and (not _integer(details['soldiers'], 1, 999 * game.catalog.rules.city_officer_capacity)
+                or not _integer(details['officers'], 1, game.catalog.rules.city_officer_capacity)
+                or details['officers'] > details['soldiers']):
+            raise ValueError('Domestic allocation report')

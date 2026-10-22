@@ -15,7 +15,8 @@ function fake(db=new Map(),id=A){
   onAuthStateChange(cb){callback=cb;return {data:{subscription:{unsubscribe(){callback=null;}}}};},
   async getSession(){if(api.sessionHold)await api.sessionHold.promise;return {data:{session},error:null};},
   async signInWithPassword(input){api.calls.push({kind:'login',email:input.email});if(input.password==='bad')return {error:{code:'invalid_credentials',status:400,message:'private password bad'}};event({user:{id:input.email.startsWith('b')?B:A,email:input.email}});return {data:{session},error:null};},
-  async signUp(input){api.calls.push({kind:'signup',email:input.email});if(api.signupConfirmation)return {data:{user:{id:A,email:input.email},session:null},error:null};event({user:{id:A,email:input.email}});return {data:{session},error:null};},
+  async signUp(input){api.calls.push({kind:'signup',email:input.email,...(input.options?{options:input.options}:{})});if(api.signupError)return {error:api.signupError};if(api.signupConfirmation)return {data:{user:{id:A,email:input.email},session:null},error:null};event({user:{id:A,email:input.email}});return {data:{session},error:null};},
+  async resend(input){api.calls.push({kind:'resend',...input});if(api.resendHold)await api.resendHold.promise;return {data:{},error:api.resendError||null};},
   async signOut(input){api.calls.push({kind:'logout',scope:input.scope});event(null);return {error:null};}
  };
  let serial=0;
@@ -66,7 +67,8 @@ async function ready(api=fake()){const core=create(config,{createClient:api.crea
 (async()=>{
  // Invalid/missing config disables cloud without affecting any local state.
  for(const value of [{}, {...config,enabled:false},{...config,url:'http://test-cloud.supabase.co'},
-  {...config,url:'https://attacker.example'},{...config,publishableKey:'sb_secret_admin'}]){
+  {...config,url:'https://attacker.example'},{...config,publishableKey:'sb_secret_admin'},
+  ...['http://example.com/','https://user:password@example.com/','https://example.com/#token','javascript:alert(1)','not a URL'].map(confirmationRedirectUrl=>({...config,confirmationRedirectUrl}))]){
   const disabled=create(value,{createClient(){throw Error('must not initialize');}});await disabled.init();assert.equal(disabled.state.configured,false);assert.equal(disabled.state.ready,true);await code('unavailable',()=>disabled.list());
  }
  const {core,api}=await ready();
@@ -136,6 +138,32 @@ async function ready(api=fake()){const core=create(config,{createClient:api.crea
  api.signupConfirmation=false;const confirmed=await core.signUp('a@example.test','correct');assert.equal(confirmed.needsConfirmation,false);assert.equal(core.state.user.id,A);
  await code('invalid',()=>core.signUp('a@example.test','correct'));
  unsubscribe();const count=states.length;await core.signOut();assert.equal(states.length,count);
+ // Confirmation resend is explicit, password-free, throttled, and never saves.
+ let clock=1000;const mailApi=fake(new Map(),null),mail=create(config,{createClient:mailApi.createClient,now:()=>clock});await mail.init();
+ assert.equal(mailApi.calls.length,0);
+ for(const [provider,expected] of [['email_address_not_authorized','email_delivery_unavailable'],['email_provider_disabled','registration_disabled'],['signup_disabled','registration_disabled']]){
+  mailApi.signupError={code:provider,status:400,message:'private recipient and provider details'};
+  await code(expected,()=>mail.signUp('person@example.test','password123'));assert.equal(mail.state.authBusy,false);assert.equal(mail.state.user,null);
+ }
+ mailApi.signupError=null;await mail.signUp('person@example.test','password123');assert.equal(mail.state.confirmationRetryAt,61000);
+ const countBeforeResend=mailApi.calls.length;await code('rate_limited',()=>mail.resendConfirmation('person@example.test'));assert.equal(mailApi.calls.length,countBeforeResend);
+ clock=61000;await code('invalid',()=>mail.resendConfirmation('invalid'));
+ const resent=await mail.resendConfirmation(' person@example.test ');assert.equal(resent.needsConfirmation,true);assert.equal(mail.state.user,null);
+ assert.deepEqual(mailApi.calls.at(-1),{kind:'resend',type:'signup',email:'person@example.test'});
+ assert.equal(mail.state.confirmationRetryAt,121000);await code('rate_limited',()=>mail.resendConfirmation('person@example.test'));
+ clock=121000;mailApi.resendError={code:'over_email_send_rate_limit',status:429,message:'private provider limit'};
+ await code('rate_limited',()=>mail.resendConfirmation('person@example.test'));assert.equal(mail.state.confirmationRetryAt,181000);
+ clock=181000;mailApi.resendError={code:'email_address_not_authorized',status:400};await code('email_delivery_unavailable',()=>mail.resendConfirmation('person@example.test'));
+ mailApi.resendError=null;mailApi.resendHold=deferred();const staleResend=mail.resendConfirmation('person@example.test');
+ mailApi.changeUser(B);mailApi.resendHold.resolve();await code('session_changed',()=>staleResend);assert.equal(mail.state.user.id,B);
+ await code('invalid',()=>mail.resendConfirmation('person@example.test'));
+ assert(mailApi.calls.every(call=>['signup','resend'].includes(call.kind)),'email actions never access cloud save rows');
+ // A deployer may explicitly configure an allowlisted callback; no origin is guessed.
+ for(const url of ['https://game.example/confirm','http://127.0.0.1:8878/','http://localhost:8878/','http://[::1]:8878/']){
+  const redirectApi=fake(new Map(),null),redirectCore=create({...config,confirmationRedirectUrl:url},{createClient:redirectApi.createClient,now:()=>clock});
+  await redirectCore.init();await redirectCore.signUp('person@example.test','password123');assert.equal(redirectApi.calls.at(-1).options.emailRedirectTo,url);
+  clock+=60000;await redirectCore.resendConfirmation('person@example.test');assert.equal(redirectApi.calls.at(-1).options.emailRedirectTo,url);
+ }
  // Two independent device clients share cloud data, while each owns its Auth state.
  const db=new Map(),device1=await ready(fake(db)),device2=await ready(fake(db));
  const saved=await device1.core.write(3,'跨裝置',raw,0);assert.equal((await device2.core.read(3)).save_text,raw);

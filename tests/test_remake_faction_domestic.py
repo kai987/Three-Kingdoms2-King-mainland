@@ -365,10 +365,12 @@ class FactionDomesticTests(unittest.TestCase):
         row = state.extension['domestic']['factions']['shu']
         self.assertEqual((row['civil'], row['military']), (expected_civil, expected_military))
         self.assertNotEqual(row['civil'], row['military'])
-        before = {key: c.reserves for key, c in state.cities.items()}
+        before = {key: c.reserves + sum(state.officers[i].troops for i in c.roster.officer_ids)
+                  for key, c in state.cities.items()}
         domestic.finish_faction_turn(game, state, 'shu')
         for key in ('xiangyang', 'nanjun'):
-            self.assertGreater(state.cities[key].reserves, before[key])
+            city = state.cities[key]
+            self.assertGreater(city.reserves + sum(state.officers[i].troops for i in city.roster.officer_ids), before[key])
             self.assertGreater(state.extension['domestic']['cities'][key]['morale'], 60)
         self.assertEqual(row['civil'], expected_civil)
         self.assertEqual(state.rng.draws, 0)

@@ -292,6 +292,11 @@ class StrategicAI:
         return True
 
     def prepare(self, city):
+        if 'domestic' in self.state.extension:
+            # Both sides allocate through the appointed military official at
+            # faction-turn end, after reserved frontline cargo has departed.
+            # Do not run the older AI-only, fee-charging partial top-up first.
+            return
         # Allocation never creates soldiers. Retain a local reserve on an
         # exposed front instead of draining its whole pool into the expedition.
         guard = min(city.reserves,self.settings['min_guard_troops']) if self.threat(city) else 0

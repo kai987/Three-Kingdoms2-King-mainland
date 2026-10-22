@@ -13,9 +13,10 @@ portrait.registerGenerated({people:[{id:'clerk-000001',portrait:'../invalid'}]})
 const profile={martial_strength:80,intellect:90,virtue:85,health_max:90};
 const policy={auto_recruit:true,auto_persuade:false,priority:'best',envoy:null,min_chance:20,budget:100,recruit_enabled:true,reserve_target:2000,recruit_budget:50,training_enabled:true,gold_floor:100,grain_floor:200,excluded_targets:[],task_order:['personnel','recruit','transport']};
 const shipping={enabled:true,target_city:'front',reserve_gold:200,reserve_grain:500,reserve_reserves:500,reserve_officers:2,target_gold:600,target_grain:1800,target_reserves:2000,target_officers:10,allow_sea:false,allow_special:false,max_gold:500,max_grain:1500,max_reserves:1000,max_officers:3};
-const factionOffice={civil:1,military:'clerk-000001',civil_active:true,military_active:true,eligible_officers:[1,'clerk-000001',2],city_ids:['home','front'],policy,monthly_bonus_preview:{gold:50,grain:150},recruit_preview:{soldiers:360,gold:44,grain:108},training_preview:{gain:10,gold:4,grain:8},personnel_targets:[{id:'clerk-000001',method:'recruit_officer',actor:1,chance:80,city:'front'}]};
-const cityLedger=(morale,gold)=>({owner:'shu',morale,monthly_bonus_preview:{gold,grain:gold*3},recruit_preview:{soldiers:180,gold:22,grain:54},training_preview:{gain:5,gold:2,grain:4}});
+const factionOffice={civil:1,military:'clerk-000001',civil_active:true,military_active:true,eligible_officers:[1,'clerk-000001',2],city_ids:['home','front'],policy,monthly_bonus_preview:{gold:50,grain:150},recruit_preview:{soldiers:360,gold:44,grain:108},allocation_preview:{soldiers:2097,officers:3},training_preview:{gain:10,gold:4,grain:8},personnel_targets:[{id:'clerk-000001',method:'recruit_officer',actor:1,chance:80,city:'front'}]};
+const cityLedger=(morale,gold)=>({owner:'shu',morale,monthly_bonus_preview:{gold,grain:gold*3},recruit_preview:{soldiers:180,gold:22,grain:54},allocation_preview:gold===30?{soldiers:699,officers:1,remaining_reserves:0,assignments:[{id:1,from:300,to:999,added:699}]}:{soldiers:1398,officers:2,remaining_reserves:87,assignments:[{id:2,from:500,to:999,added:499},{id:'clerk-000001',from:100,to:999,added:899}]},training_preview:{gain:5,gold:2,grain:4}});
 const view={game:{player:'shu',phase:'city',rng:{state:2026,draws:0},cities:{home:{id:'home',owner:'shu',roster:{officer_ids:[1]}},front:{id:'front',owner:'shu',roster:{officer_ids:['clerk-000001',2]}}},officers:{1:{profile,health:90,troops:300,loyalty:80,experience:50},2:{profile:{...profile,intellect:97,martial_strength:85,virtue:90},health:90,troops:500,loyalty:85,experience:100},'clerk-000001':{profile:{...profile,intellect:60,virtue:97},health:75,troops:100,loyalty:80,experience:0}}},catalog:{factions:[{id:'shu',name:'劉備'},{id:'wei',name:'曹操'}],names:{1:'孔明',2:'遠城官','clerk-000001':'王安'},domestic:{factions:{shu:factionOffice},cities:{home:cityLedger(70,30),front:cityLedger(50,20)},reports:[{turn:1,city:'front',owner:'shu',kind:'training',details:{gain:5,gold:2,grain:4,morale:50}}]},logistics:{cities:{home:{owner:'shu',policy:shipping,inbound:{gold:5,grain:10,reserves:20,officers:1},can_dispatch:true,blocked_reason:null,preview:{target:'front',officers:['clerk-000001'],cargo:{gold:200,grain:300,reserves:100},cost_grain:5,route_mode:'land',quote:{days:10}}}},convoys:[],reports:[]}}};
+view.catalog.domestic.reports.push({turn:1,city:'front',owner:'shu',kind:'allocation',details:{soldiers:1398,officers:2}});
 const original=JSON.stringify(view),elements=new Map(),listeners=new Map(),doc={addEventListener:(name,handler)=>listeners.set(name,handler),removeEventListener:(name,handler)=>listeners.get(name)===handler&&listeners.delete(name)};
 let shown=null,submitted=[],busy=false,preview=false,resolveCommand=null,nextResult=true;
 const dialog={open:false,scrollTop:55,querySelector(selector){if(selector==='[data-domestic-dialog]')return shown?.body.includes('data-domestic-dialog')?{}:null;return elements.get(selector)||null;},querySelectorAll(){return [...elements.values()].filter(x=>x.tag==='button');}};
@@ -26,12 +27,41 @@ const ui=domestic.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=
  for(const [,id,options]of body.matchAll(/<select[^>]*id="([^"]+)"[^>]*>(.*?)<\/select>/gs)){const rows=[...options.matchAll(/<option value="([^"]*)"([^>]*)>/g)];const node=elements.get('#'+id);node.value=(rows.find(row=>row[2].includes('selected'))||rows[0])?.[1]||'';node.selectedOptions=rows.filter(row=>row[2].includes('selected')).map(row=>({value:row[1]}));}
  return 1;
 },async command(kind,payload){submitted.push({kind,payload});if(resolveCommand)await new Promise(resolve=>{resolveCommand=resolve;});if(nextResult&&kind==='set_domestic'){const current=view.catalog.domestic.factions[payload.faction];for(const key of ['civil','military'])if(key in payload)current[key]=payload[key];if(payload.policy)Object.assign(current.policy,payload.policy);}return nextResult;}});
+function assertAllocation(locale){
+ const ja=locale==='ja';
+ assert(shown.body.includes('軍備官：募兵・配兵・訓練'));
+ assert(shown.body.includes(ja?'勢力全体の自動配兵合計：武将3人へ2097兵を補充。':'全勢力自動配兵合計：3名武將補兵2097。'));
+ assert(shown.body.includes(ja?'自動配兵：武将1人へ699兵を補充、残り予備兵0。':'自動配兵：1名武將補兵699，剩餘預備兵0。'));
+ assert(shown.body.includes(ja?'自動配兵：武将2人へ1398兵を補充、残り予備兵87。':'自動配兵：2名武將補兵1398，剩餘預備兵87。'));
+ assert(shown.body.includes(ja?'配兵内訳（補充順）':'配兵明細（依分配順序）'));
+ const higher='<li>遠城官 · 兵 500 → 999（+499）</li>',generated='<li>王安 · 兵 100 → 999（+899）</li>';
+ assert(shown.body.includes('<li>孔明 · 兵 300 → 999（+699）</li>'));
+ assert(shown.body.indexOf(higher)>=0&&shown.body.indexOf(higher)<shown.body.indexOf(generated),'Historical and generated IDs use the server’s allocation order and values');
+ assert(shown.body.includes(ja?'漢中 · 自動配兵 · 武将2人へ1398兵を補充':'漢中 · 自動配兵 · 2名武將補兵1398'));
+ assert(shown.body.includes(ja?'武→知→徳→現在の体力→経験→人物ID':'武→知→德→目前體力→經驗→人物ID'));
+ assert(shown.body.includes(ja?'精算時の兵数と残り予備兵':'結算時的本城兵力與剩餘預備兵'));
+ assert(shown.body.includes(ja?'追加の資金・兵糧や都市行動は消費しません':'不另收金糧，也不消耗城市行動'));
+ assert(!/id="policy-[^"]*allocat/.test(shown.body),'Automatic allocation adds no policy control or persisted field');
+}
 (async()=>{
  assert(ui.open('home'));assert.equal(shown.title,'勢力內政委任 · 劉備');assert(shown.body.includes('本勢力2座城池'));assert(shown.body.includes('整個勢力共兩名'));assert(shown.body.includes('各城執行預覽（2城）'));assert(shown.body.includes('全勢力月收入加成：金50、糧150'));assert(shown.body.includes('王安')&&shown.body.includes('漢中'));assert(shown.body.includes('漢中 · 訓練'));const civilOptions=shown.body.match(/id="office-civil"[^>]*>(.*?)<\/select>/s)[1];assert(civilOptions.indexOf('value="2"')<civilOptions.indexOf('value="1"'),'The best intellect from another city ranks before local officers');const envoyOptions=shown.body.match(/id="policy-envoy"[^>]*>(.*?)<\/select>/s)[1];assert(envoyOptions.indexOf('value="clerk-000001"')<envoyOptions.indexOf('value="2"'),'Envoys prioritize virtue across all cities');assert(shown.body.includes('執行城 漢中'));assert(domestic.summary(view,'home').includes('勢力民政官'));assert(domestic.summary(view,'front').includes('孔明'));dialog.scrollTop=55;assert(shown.body.includes('知90'));assert(shown.body.includes('忠誠80'));assert(shown.body.includes('訓練度 70/100'));assert.equal(JSON.stringify(view),original);
+ assertAllocation('zh-Hant');assert.equal(JSON.stringify(view),original,'Rendering authoritative reserve allocation previews never changes troops, reserves or RNG');
+ const allocationState={active:factionOffice.military_active,total:factionOffice.allocation_preview,cities:Object.fromEntries(Object.entries(view.catalog.domestic.cities).map(([id,c])=>[id,c.allocation_preview]))};
+ factionOffice.military_active=false;factionOffice.allocation_preview={soldiers:0,officers:0};
+ for(const city of Object.values(view.catalog.domestic.cities))city.allocation_preview={soldiers:0,officers:0,remaining_reserves:900,assignments:[]};
+ for(const locale of ['zh-Hant','ja']){
+  i18n.locale=locale;const untouched=JSON.stringify(view);listeners.get('game-language-change')();
+  assert(shown.body.includes(locale==='ja'?'勢力全体の自動配兵合計：武将0人へ0兵を補充。':'全勢力自動配兵合計：0名武將補兵0。'));
+  assert(shown.body.includes(locale==='ja'?'残り予備兵900':'剩餘預備兵900'));assert(!shown.body.includes(locale==='ja'?'配兵内訳（補充順）':'配兵明細（依分配順序）'));
+  assert.equal(JSON.stringify(view),untouched,'Inactive and zero-allocation previews remain authoritative read-only data');
+ }
+ factionOffice.military_active=allocationState.active;factionOffice.allocation_preview=allocationState.total;
+ for(const [id,allocation]of Object.entries(allocationState.cities))view.catalog.domestic.cities[id].allocation_preview=allocation;
+ i18n.locale='zh-Hant';listeners.get('game-language-change')();assert.equal(JSON.stringify(view),original);
  view.game.officers[1].loyalty=view.game.officers['clerk-000001'].loyalty=100;
  view.game.extension={leaders:{shu:1,ended:null}};
  for(const locale of ['zh-Hant','ja']){
-  i18n.locale=locale;assert(ui.open('home'));
+  i18n.locale=locale;assert(ui.open('home'));assertAllocation(locale);
   assert(shown.body.includes(locale==='ja'?'練度70/100':'訓練度 70/100'));assert(!shown.body.includes('士氣'));assert(!shown.body.includes('士気'));
   assert(shown.body.includes(locale==='ja'?'0で80%、100で110%':'0為80%、100為110%'));
   assert(shown.body.includes(choices.label('孔明',view.game.officers[1],{loyalty:true,isRuler:true})));
@@ -48,9 +78,10 @@ const ui=domestic.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=
  elements.get('#policy-min-chance').value='-1';elements.get('#policy-min-chance').onblur();assert.equal(elements.get('#policy-min-chance').value,'0');
  elements.get('#policy-envoy').value='clerk-000001';elements.get('#policy-envoy').onchange();elements.get('#policy-excluded').selectedOptions=[{value:'clerk-000001'}];elements.get('#policy-excluded').onchange();
  elements.get('#policy-task-order').value='transport,personnel,recruit';elements.get('#policy-task-order').onchange();
- i18n.locale='ja';listeners.get('game-language-change')();assert.equal(elements.get('#policy-budget').value,'1000000');assert.equal(elements.get('#policy-envoy').value,'clerk-000001');assert.equal(elements.get('#policy-task-order').value,'transport,personnel,recruit');assert.equal(dialog.scrollTop,55);assert(shown.body.includes('都市の今旬1回'));
+ i18n.locale='ja';listeners.get('game-language-change')();assert.equal(elements.get('#policy-budget').value,'1000000');assert.equal(elements.get('#policy-envoy').value,'clerk-000001');assert.equal(elements.get('#policy-task-order').value,'transport,personnel,recruit');assert.equal(dialog.scrollTop,55);assert(shown.body.includes('都市の今旬1回'));assertAllocation('ja');
  assert.equal(submitted.length,0);assert.equal(JSON.stringify(view),original,'Draft input and locale changes never mutate game state or RNG');
  await elements.get('#save-domestic').onclick();assert.equal(submitted[0].kind,'set_domestic');assert.equal(submitted[0].payload.faction,'shu');assert(!('city' in submitted[0].payload));assert.equal('civil' in submitted[0].payload,false);assert.equal('military' in submitted[0].payload,false);assert.equal('auto_recruit' in submitted[0].payload.policy,false);assert.equal(submitted[0].payload.policy.envoy,'clerk-000001');assert.deepEqual(submitted[0].payload.policy.excluded_targets,['clerk-000001']);assert.deepEqual(submitted[0].payload.policy.task_order,['transport','personnel','recruit']);assert(shown.body.includes('方針を保存しました'));
+ assert(!JSON.stringify(submitted[0].payload).includes('allocation'),'Allocation previews never become a policy or command payload field');
  // Any city opens the same two faction offices, even when the officers live elsewhere.
  assert(ui.open('front'));assert(shown.title.includes('劉備'));assert.equal(elements.get('#office-civil').value,'1');assert.equal(elements.get('#office-military').value,'clerk-000001');assert.equal(elements.get('#policy-budget').value,'1000000');
  elements.get('#office-civil').value='2';elements.get('#office-civil').onchange();await elements.get('#save-domestic').onclick();assert.deepEqual(submitted.at(-1),{kind:'set_domestic',payload:{faction:'shu',civil:2}});
@@ -76,5 +107,5 @@ const ui=domestic.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=
  const ctx={view:battleState,GameOfficerChoices:choices,GameI18n:{apply(){}},GamePortraits:portrait,actor:null,target:null,mapNavigation:null,name:id=>battleState.catalog.names[id],escapeHtml:String,cityName:String,portraitHtml:id=>`<img data-person="${id}">`,command:(kind,payload)=>{attackPayload={kind,payload};},$:selector=>selector==='[data-actor]'?actorNode:button(selector),document:{querySelectorAll:selector=>selector==='[data-actor]'?[actorNode]:selector==='[data-target]'?[targetNode]:[]}};
  vm.createContext(ctx);vm.runInContext(app.slice(app.indexOf('function officerAttributes('),app.indexOf('function renderCity(')),ctx);vm.runInContext(app.slice(app.indexOf('function renderDuel('),app.indexOf('function render(){')),ctx);
  const untouched=JSON.stringify(battleState);ctx.renderBattle();actorNode.onclick();targetNode.onclick();button('#attack').onclick();assert.equal(attackPayload.payload.actor,'clerk-000001');assert.equal(attackPayload.payload.target,1);assert(!button('#stage').innerHTML.includes('NaN'));assert.equal(JSON.stringify(battleState),untouched);
- console.log('delegation UI: mixed refs, fictional portraits, loyalty, two distinct faction-wide offices from any city, shared policies and remote-city forecasts, bounded budgets, task ordering, bilingual drafts, support payloads, phase/action guards and read-only review passed');
+ console.log('delegation UI: mixed refs, fictional portraits, loyalty, faction-wide offices, authoritative reserve allocation totals/ordered details/reports, zero and inactive previews, bilingual drafts, bounded budgets, task ordering, support payloads, phase/action guards and read-only review passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

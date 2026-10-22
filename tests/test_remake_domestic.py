@@ -108,10 +108,12 @@ class DomesticTests(unittest.TestCase):
         self.assertEqual(quote['soldiers'], 100)
         self.assertEqual(quote['gold'], 20 - strength // 10)
         before = city.gold, city.grain, city.reserves, game.state.soldiers['recruited']
+        troops_before = sum(game.state.officers[i].troops for i in city.roster.officer_ids)
         expected_recruited = sum(domestic.recruitment_preview(game, game.state, key)['soldiers']
             for key, c in game.state.cities.items() if c.owner == 'shu')
         domestic.finish_faction_turn(game, game.state, 'shu')
-        self.assertEqual(city.reserves, before[2] + 100)
+        self.assertEqual(city.reserves + sum(game.state.officers[i].troops for i in city.roster.officer_ids),
+                         before[2] + troops_before + 100)
         self.assertEqual(game.state.soldiers['recruited'], before[3] + expected_recruited)
         self.assertLess(city.gold, before[0]); self.assertLess(city.grain, before[1])
         self.assertTrue(0 <= row['morale'] <= 100)
@@ -156,8 +158,11 @@ class DomesticTests(unittest.TestCase):
         game.command('recruit', dict(city=city.id), game.revision)
         city = game.state.cities['xiangyang']
         before = city.gold, city.grain, city.reserves, game.state.rng.draws
+        troops_before = sum(game.state.officers[i].troops for i in city.roster.officer_ids)
         domestic.finish_faction_turn(game, game.state, 'shu')
-        self.assertEqual((city.gold, city.grain, city.reserves), before[:3])
+        self.assertEqual((city.gold, city.grain), before[:2])
+        self.assertEqual(city.reserves + sum(game.state.officers[i].troops for i in city.roster.officer_ids),
+                         before[2] + troops_before, 'Free passive allocation cannot duplicate a used city action')
         self.assertFalse(any(r['city'] == city.id and r['kind'] in {'recruit', 'personnel'}
             for r in game.state.extension['domestic']['reports']))
         self.assertEqual(game.state.rng.draws, before[3] + 1,

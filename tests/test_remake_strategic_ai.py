@@ -89,6 +89,18 @@ class StrategicAITests(unittest.TestCase):
         self.assertEqual(game.export_save(),before)
         self.assertEqual(game.state.rng.draws,0)
 
+    def test_preparation_does_not_charge_or_preempt_shared_domestic_allocation(self):
+        game=self.new(flank=True)
+        city=game.state.cities['nanyang']
+        self.assertGreater(city.reserves,0)
+        # The old AI-only branch could spend money/grain and give troops to a
+        # weaker general before the military official's shared turn-end work.
+        for military in (None, city.roster.officer_ids[0]):
+            game.state.extension['domestic']['factions']['wei']['military']=military
+            before=game.export_save()
+            StrategicAI(game,game.state).prepare(city)
+            self.assertEqual(game.export_save(),before)
+
     def test_two_cities_depart_on_different_turns_for_one_real_arrival_and_resume_battle(self):
         game=self.new()
         original=deepcopy(game.state.soldiers)
@@ -214,12 +226,16 @@ class StrategicAITests(unittest.TestCase):
         self.assertTrue(all(len(c.roster.officer_ids)<=99 for c in game.state.cities.values()))
         game.validate(game.state)
 
-    def test_an_exposed_flank_retains_real_guards_and_reserve_troops(self):
+    def test_an_exposed_flank_retains_real_guards_after_shared_allocation(self):
         game=self.new(flank=True)
         self.ai_turn(game)
         city=game.state.cities['nanyang'];marching=game._march_ids(game.state)
         self.assertGreaterEqual(sum(game.state.officers[i].troops for i in city.roster.officer_ids if i not in marching),200)
-        self.assertGreaterEqual(city.reserves,200)
+        receipts=[r for r in game.state.extension['domestic']['reports']
+                  if r['city']==city.id and r['kind']=='allocation']
+        self.assertTrue(receipts)
+        self.assertEqual(receipts[-1]['details']['soldiers'],250)
+        self.assertEqual(city.reserves,0,'The military official puts all leftover reserves into actual local troops')
         game.validate(game.state)
 
     def test_impossible_attacks_and_zero_budget_do_not_create_an_army(self):

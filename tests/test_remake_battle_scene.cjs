@@ -106,10 +106,11 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   assert.equal(JSON.stringify(row),original,'Receipt validation and differences are read-only');
  }
  const first=actual.rows.find(r=>r.key==='attack'),bid=first.after.game.battle.id,revision=first.after.revision;
- // Same-family markers are computed across BOTH armies before locale translation.
+ // Same-family markers use canonical names, within each army independently.
  {
   const names=['刘备','劉表','张飞','張郃','诸葛亮','諸葛瑾','公孙瓒','公孫度','司马懿','司馬昭','夏侯惇','夏侯渊','夏侯恩','夏承','司宏','张','𠮷野','趙雲'];
-  const units=names.map((_,id)=>({id,side:id%2?'defenders':'attackers'})),expected=['备','表','飞','郃','亮','瑾','瓒','度','懿','昭','惇','渊','恩','夏','司','张','𠮷','趙'];
+  const attackerIds=new Set([0,1,2,3,10,11,12,13,15,17]);
+  const units=names.map((_,id)=>({id,side:attackerIds.has(id)?'attackers':'defenders'})),expected=['备','表','飞','郃','亮','瑾','瓒','度','懿','昭','惇','渊','恩','夏','司','张','𠮷','趙'];
   const original=JSON.stringify(units),markers=standalone.markerLabels(units,id=>names[id]);
   assert.deepEqual(Array.from(markers.values()),expected,'Shared surname uses final full Unicode character; compound surnames are not confused with single-character families');
   const localized=['劉備','劉表','張飛','張郃','諸葛亮','諸葛瑾','公孫瓚','公孫度','司馬懿','司馬昭','夏侯惇','夏侯淵','夏侯恩','夏承','司宏','張','𠮷野','趙雲'];
@@ -118,7 +119,25 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   assert.equal(japanese.get(13),'夏','A lone夏 is not grouped with夏侯');assert.equal(japanese.get(14),'司','A lone司 is not grouped with司馬');
   assert.equal(JSON.stringify(units),original,'Marker labels are read-only');
   assert.equal(standalone.familyName(' 皇甫嵩 '),'皇甫');assert.equal(standalone.familyName('毌丘俭'),'毌丘');
-  const zhongNames=['钟离牧','鍾離斐','钟会'];assert.deepEqual(Array.from(standalone.markerLabels(zhongNames.map((_,id)=>({id})),id=>zhongNames[id]).values()),['牧','斐','钟'],'鍾離 and単姓鍾 remain distinct families');
+  const zhongNames=['钟离牧','鍾離斐','钟会'];assert.deepEqual(Array.from(standalone.markerLabels(zhongNames.map((_,id)=>({id,side:'attackers'})),id=>zhongNames[id]).values()),['牧','斐','钟'],'鍾離 and単姓鍾 remain distinct families');
+ }
+ {
+  const names=['张飞','張遼','張郃','张绣'],a='attackers',d='defenders';
+  for(const [sides,expected]of [
+   [[a,d],['张','張']],
+   [[a,d,a],['飞','張','郃']],
+   [[a,d,d],['张','遼','郃']],
+   [[a,d,a,d],['飞','遼','郃','绣']]
+  ]){
+   const units=sides.map((side,id)=>({id,side,troops:300})),original=JSON.stringify(units);
+   assert.deepEqual(Array.from(standalone.markerLabels(units,id=>names[id]).values()),expected,'Only same-side surname duplicates change that army’s markers');
+   assert.equal(JSON.stringify(units),original,'Same-side grouping preserves the unit state');
+  }
+  const routed=[{id:0,side:a,troops:300},{id:1,side:d,troops:300},{id:2,side:a,troops:0}];
+  assert.deepEqual(Array.from(standalone.markerLabels(routed,id=>names[id]).values()),['飞','張','郃'],'Routed teammates still have flags and remain part of their own surname group');
+  const compound=['诸葛亮','諸葛瑾','諸葛誕'],mixed=[{id:0,side:a},{id:1,side:d},{id:2,side:a}];
+  assert.deepEqual(Array.from(standalone.markerLabels(mixed,id=>compound[id],id=>['諸葛亮','諸葛瑾','諸葛誕'][id]).values()),['亮','諸','誕'],'Canonical compound surnames are grouped per side before localized display');
+  assert.deepEqual(Array.from(standalone.markerLabels([{id:0,side:a},{id:1,side:a}],id=>['劉𠮷','刘表'][id]).values()),['𠮷','表'],'Final markers retain full Unicode characters');
  }
  // A visible normal strike has distinct approach, contact, recoil and result
  // stages, using no random sampling and resolving damage from the receipt only.
@@ -145,6 +164,24 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   const flag=flags.find(t=>t.text==='𠮷');env.surface.onclick({clientX:(flag.x+4)*2,clientY:(flag.y+4)*2});
   assert.deepEqual(selected,[{side:'actor',id}],'Pointer hit testing stays inCSS/logical coordinates after4× rendering');
   scene.dispose();
+ }
+
+ // A real tactical view draws same-side duplicates without changing the view,
+ // including campaign RNG; changing the player never changes family grouping.
+ {
+  const row=clone(actual.rows.find(r=>r.key==='tactic:fire').before),b=row.game.battle;
+  assert(b.attackers.length===1&&b.defenders.length>=3,'Fixture must contain one attacker and several defenders');
+  row.catalog.names[String(b.attackers[0].id)]='张飞';
+  for(const [i,name]of ['張遼','张郃','趙雲'].entries())row.catalog.names[String(b.defenders[i].id)]=name;
+  b.defenders[1].troops=0;
+  for(const player of [b.attacker,b.defender]){
+   const view=clone(row);view.game.player=player;freeze(view);const original=JSON.stringify(view);
+   const env=environment(),scene=env.api.create();scene.mount(env.host,view);
+   const flags=env.texts.filter(t=>t.y<160),left=flags.filter(t=>t.x<128).map(t=>t.text),right=flags.filter(t=>t.x>=128).map(t=>t.text);
+   assert.deepEqual(left,['张'],'A lone attacking surname keeps its first character despite enemy duplicates');
+   assert(right.includes('遼')&&right.includes('郃')&&!right.includes('張'),'Defending teammates use final characters, including the routed flag');
+   assert.equal(JSON.stringify(view),original,'Drawing flags preserves the entire campaign view and RNG');scene.dispose();
+  }
  }
 
  for(const key of ['attack','mixed']){

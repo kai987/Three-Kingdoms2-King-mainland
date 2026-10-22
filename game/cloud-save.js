@@ -1,7 +1,7 @@
 /* Account-private raw-text saves. Game state and RNG stay in the existing engine. */
 'use strict';
 (function(root){
- const TABLE='tk2_cloud_saves',MAX_BYTES=2*1024*1024-128;
+ const TABLE='tk2_cloud_saves',MAX_BYTES=2*1024*1024-128,CONFIRMATION_COOLDOWN_MS=60000;
  const META='save_id,slot,label,revision,scenario,game_year,game_month,game_turn,save_sha256,created_at,updated_at';
  const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
  const HEX=/^[0-9a-f]{64}$/;
@@ -14,8 +14,16 @@
   if(/^sb_publishable_[a-zA-Z0-9_-]+$/.test(key))return true;
   try{return JSON.parse(root.atob(key.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).role==='anon';}catch{return false;}
  }
+ function confirmationRedirect(config){
+  if(config?.confirmationRedirectUrl===undefined||config.confirmationRedirectUrl===null||config.confirmationRedirectUrl==='')return null;
+  if(typeof config.confirmationRedirectUrl!=='string'||config.confirmationRedirectUrl.length>2048||/[\u0000-\u0020\u007f]/.test(config.confirmationRedirectUrl))throw Error('Invalid confirmation redirect');
+  const url=new URL(config.confirmationRedirectUrl);
+  if(url.username||url.password||url.hash||!url.hostname||
+    (url.protocol!=='https:'&&!(url.protocol==='http:'&&['localhost','127.0.0.1','[::1]'].includes(url.hostname))))throw Error('Invalid confirmation redirect');
+  return url.href;
+ }
  function validConfig(config){
-  try{const url=new URL(config?.url);return config.enabled===true&&config.slots===5&&
+  try{const url=new URL(config?.url);confirmationRedirect(config);return config.enabled===true&&config.slots===5&&
    url.protocol==='https:'&&/^[a-z0-9-]+\.supabase\.co$/.test(url.hostname)&&
    !url.username&&!url.password&&!url.port&&!url.search&&!url.hash&&url.pathname==='/'&&publicKey(config.publishableKey);
   }catch{return false;}
@@ -25,6 +33,8 @@
   const code=String(error?.code||''),status=Number(error?.status||0);
   if(code==='23505'||code==='PT409'||status===409)return new CloudError('conflict');
   if(code==='email_not_confirmed')return new CloudError('email_unconfirmed');
+  if(code==='email_address_not_authorized')return new CloudError('email_delivery_unavailable');
+  if(code==='email_provider_disabled'||code==='signup_disabled')return new CloudError('registration_disabled');
   if(status===429||code==='over_request_rate_limit'||code==='over_email_send_rate_limit')return new CloudError('rate_limited');
   if(code==='weak_password')return new CloudError('invalid');
   if(error?.name==='AbortError')return new CloudError('session_changed');
@@ -56,16 +66,22 @@
     typeof row.created_at!=='string'||typeof row.updated_at!=='string')fail('invalid');
   return Object.fromEntries(META.split(',').map(key=>[key,row[key]]));
  }
- function credentials(email,password){
+ function emailAddress(email){
   if(typeof email!=='string'||email.length>320||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())||
-    typeof password!=='string'||password.length<1||password.length>1024)fail('invalid');
-  return {email:email.trim(),password};
+    !email.trim())fail('invalid');
+  return email.trim();
+ }
+ function credentials(email,password){
+  if(typeof password!=='string'||password.length<1||password.length>1024)fail('invalid');
+  return {email:emailAddress(email),password};
  }
  function create(config,options={}){
   const configured=validConfig(config),listeners=new Set(),pending=new Set();
+  const redirect=configured?confirmationRedirect(config):null;
   const timeoutMs=Number.isInteger(options.timeoutMs)&&options.timeoutMs>0&&options.timeoutMs<=60000?options.timeoutMs:20000;
-  let client=null,ready=false,user=null,authBusy=false,authMode=null,epoch=0,intent=0,initializing=null;
-  const state=()=>Object.freeze({configured,ready,user:user?Object.freeze({...user}):null,authBusy,slots:5});
+  let client=null,ready=false,user=null,authBusy=false,authMode=null,epoch=0,intent=0,initializing=null,confirmationRetryAt=0;
+  const now=()=>typeof options.now==='function'?options.now():Date.now();
+  const state=()=>Object.freeze({configured,ready,user:user?Object.freeze({...user}):null,authBusy,slots:5,confirmationRetryAt});
   const notify=()=>{for(const callback of listeners){try{callback(state());}catch{}}};
   const invalidate=()=>{epoch++;for(const controller of pending)controller.abort();};
   const applySession=session=>{
@@ -125,22 +141,35 @@
   }
   async function authCall(kind,email,password){
    const c=ensureClient();if(authBusy)fail('busy');
-   if(kind==='signUp'&&user)fail('invalid');
-   const input=kind==='signOut'?undefined:credentials(email,password);
+   if((kind==='signUp'||kind==='resend')&&user)fail('invalid');
+   const input=kind==='signOut'?undefined:kind==='resend'?{email:emailAddress(email)}:credentials(email,password);
+   if(kind==='resend'&&now()<confirmationRetryAt)fail('rate_limited');
    authBusy=true;authMode=kind;const token=++intent;invalidate();
+   const startEpoch=epoch;
    if(kind==='signOut')user=null;
    notify();
    try{
     const result=await(kind==='signOut'?c.auth.signOut({scope:'local'}):
-     kind==='signIn'?c.auth.signInWithPassword(input):c.auth.signUp(input));
+     kind==='signIn'?c.auth.signInWithPassword(input):kind==='resend'?c.auth.resend({type:'signup',email:input.email,
+      ...(redirect?{options:{emailRedirectTo:redirect}}:{})}):c.auth.signUp({...input,...(redirect?{options:{emailRedirectTo:redirect}}:{})}));
     if(token!==intent)fail('session_changed');
+    if(kind==='resend'&&startEpoch!==epoch)fail('session_changed');
     if(result.error)throw mapped(result.error,true);
     if(kind==='signOut'){applySession(null);return;}
+    if(kind==='resend'){
+     confirmationRetryAt=now()+CONFIRMATION_COOLDOWN_MS;
+     return {needsConfirmation:true,user:null};
+    }
     const session=result.data?.session||null;
     if(kind==='signIn'&&!session)fail('auth_failed');
     applySession(session);
+    if(kind==='signUp'&&!session)confirmationRetryAt=now()+CONFIRMATION_COOLDOWN_MS;
     return {needsConfirmation:kind==='signUp'&&!session,user:state().user};
-   }catch(error){throw mapped(error,true);}
+   }catch(error){
+    const failure=mapped(error,true);
+    if((kind==='signUp'||kind==='resend')&&failure.code==='rate_limited')confirmationRetryAt=now()+CONFIRMATION_COOLDOWN_MS;
+    throw failure;
+   }
    finally{if(token===intent){authBusy=false;authMode=null;notify();}}
   }
   function operation(){
@@ -211,7 +240,7 @@
    });
   }
   return Object.freeze({get state(){return state();},init,signIn:(email,password)=>authCall('signIn',email,password),
-   signUp:(email,password)=>authCall('signUp',email,password),signOut:()=>authCall('signOut'),list,read,write,remove,
+   signUp:(email,password)=>authCall('signUp',email,password),resendConfirmation:email=>authCall('resend',email),signOut:()=>authCall('signOut'),list,read,write,remove,
    subscribe(callback){if(typeof callback!=='function')fail('invalid');listeners.add(callback);callback(state());return()=>listeners.delete(callback);}});
  }
  const api=Object.freeze({create,CloudError,MAX_BYTES});

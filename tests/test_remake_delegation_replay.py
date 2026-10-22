@@ -14,7 +14,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
-from remake import logistics
+from remake import domestic, logistics
 from remake.march_core import using_backend
 from remake.officers import ref_sort_key
 
@@ -147,6 +147,21 @@ class DelegationReplayTests(unittest.TestCase):
     def reinforce_184_guards(self):
         """Use available reserves before defending the exposed one-city start."""
         game, state = self.games[0], self.games[0].state
+        post = domestic.appointments(state, state.player)
+        if post['military'] is None:
+            # Rival automatic persuasion can legitimately recruit the military
+            # official. A human commander must refill that vacancy rather than
+            # leave all newly recruited city reserves unassigned indefinitely.
+            # Use the real appointment eligibility and public command; do not
+            # restore the defecting officer, edit loyalty, or suppress AI work.
+            eligible = domestic.view(game, state)['factions'][state.player]['eligible_officers']
+            choices = [i for i in eligible if i != post['civil']]
+            if choices:
+                ident = min(choices, key=lambda i: (-state.officers[i].profile.martial_strength,
+                                                  ref_sort_key(i)))
+                self.command('set_domestic', faction=state.player, military=ident)
+                self.reappointed_military.append((state.turn, ident))
+                game, state = self.games[0], self.games[0].state
         for city in sorted(state.cities.values(), key=lambda c: c.id):
             if city.owner != state.player:
                 continue
@@ -217,6 +232,7 @@ class DelegationReplayTests(unittest.TestCase):
         self.phases, self.commands = Counter(), Counter()
         self.player_reports, self.ai_reports, self.ai_work, self.convoy_reports = set(), set(), set(), set()
         self.generated, self.staff_attack_sent, self.staff_battles = None, False, set()
+        self.reappointed_military = []
         catalog = Catalog(ROOT / 'game/data/campaigns' / filename)
         original_catalog = digest(catalog.data)
         for backend in backends:
@@ -271,6 +287,12 @@ class DelegationReplayTests(unittest.TestCase):
             self.assertGreater(final.officers[self.generated].experience, 0)
             self.assertNotIn(self.generated, catalog.by_id)
             self.assertEqual(len(catalog.definitions), 1023)
+        if filename == '184-02.json':
+            self.assertTrue(self.reappointed_military,
+                'Real persuasion must be followed by a legal replacement military appointment')
+            self.assertTrue(any(kind == 'allocation' and turn >= self.reappointed_military[0][0]
+                                for turn, _, kind in self.player_reports),
+                            'The replacement official must resume actual local reserve allocation')
         self.assertEqual(digest(catalog.data), original_catalog, 'Replay mutated the real catalog')
 
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):

@@ -9,8 +9,11 @@
   email:['電子郵件','メールアドレス'],password:['密碼','パスワード'],
   login:['登入','ログイン'],register:['註冊新帳號','新規登録'],
   loginHelp:['使用電子郵件與密碼登入。','メールアドレスとパスワードでログインします。'],
-  registerHelp:['密碼至少8個字元。若需要確認信，請完成電子郵件確認後，回到本遊戲登入。','パスワードは8文字以上です。確認メールが届いた場合は、認証を済ませてからこのゲームに戻ってログインしてください。'],
-  confirmEmail:['請查看註冊信箱。完成電子郵件確認後，請回到本遊戲登入。','登録したメールを確認し、認証を済ませてからこのゲームに戻ってログインしてください。'],
+  registerHelp:['密碼至少8個字元。若需要確認信，請完成電子郵件確認後，回到本遊戲登入。若此信箱已註冊，請使用原密碼登入；重複註冊不會變更密碼。','パスワードは8文字以上です。確認メールで認証後、このゲームに戻ってログインしてください。登録済みのアドレスは元のパスワードでログインしてください。再登録ではパスワードは変更されません。'],
+  confirmEmail:['註冊請求已處理。請查看註冊信箱與垃圾郵件；完成確認後，回到本遊戲登入。若未收到確認信，可稍後重寄。已確認的帳號可直接登入；重複註冊不會變更原密碼。','登録したメールを確認し、迷惑メールも確認してください。認証後にこのゲームに戻ってログインしてください。届かない場合は、しばらく待って再送できます。認証済みのアカウントはそのままログインできます。再登録では元のパスワードは変更されません。'],
+  resend:['重寄確認信','確認メールを再送'],seconds:['秒','秒'],
+  resendHelp:['沒有收到確認信？輸入註冊信箱後，可重寄確認信。每次請求至少間隔60秒，郵件服務仍可能有額外限制。','確認メールが届かない場合は、登録したアドレスを入力して再送できます。再送は60秒間隔で、配信側の制限が加わる場合もあります。'],
+  resendRequested:['重寄請求已處理。若此信箱有待確認帳號，郵件服務會處理確認信；請查看收件匣與垃圾郵件。','再送を依頼しました。未認証の登録がある場合は、配信サービスが確認メールを処理します。受信箱と迷惑メールを確認してください。'],
   account:['目前帳號','アカウント'],logout:['登出此裝置','この端末からログアウト'],refresh:['刷新列表','一覧を更新'],
   slotsHelp:['每個帳號有5個存檔槽。本機進度與雲端分開保存；請主動選擇保存或讀取。','アカウントごとに5つの保存枠があります。本機とクラウドは別々です。保存・読込はボタンから行ってください。'],
   noCampaign:['目前尚未開始戰役，可以先讀取雲端存檔。','戦役はまだ始まっていません。クラウドのセーブは読み込めます。'],
@@ -27,33 +30,39 @@
   authError:['請先登入帳號，再使用雲端存檔。','ログインしてからクラウドセーブを使ってください。'],
   authFailed:['電子郵件或密碼不正確，請重新確認。','メールアドレスまたはパスワードを確認してください。'],
   unconfirmed:['電子郵件尚未確認，請先完成信箱確認再登入。','メールアドレスが未認証です。認証後にログインしてください。'],
+  deliveryUnavailable:['確認信服務未能寄送到此信箱，遊戲管理者需檢查郵件服務設定。重複註冊無法解除此限制。','このアドレスには確認メールを送信できません。ゲーム管理者によるメール配信設定の確認が必要です。登録を繰り返しても制限は解除されません。'],
+  registrationDisabled:['目前未開放電子郵件註冊，請由遊戲管理者檢查帳號服務設定。','現在メールアドレスによる登録は無効です。ゲーム管理者による認証設定の確認が必要です。'],
   conflict:['此槽的雲端版本已變更。請先刷新列表，再選擇讀取或覆蓋；本次沒有覆蓋新版本。','この枠は別の端末などで更新されました。一覧を更新してから読込または上書きを選んでください。今回は上書きしていません。'],
   network:['連線未完成，請確認網路後再試。尚未確認雲端保存成功，本機進度不受影響。','通信が完了しませんでした。接続を確認して再試行してください。クラウドへの保存は未確認です。本機の進行には影響しません。'],
   invalid:['存檔無效或超過大小限制，目前進度未改變。','セーブが無効、またはサイズ制限を超えています。現在の進行は変更していません。'],
   invalidCredentials:['請輸入有效電子郵件與密碼；註冊密碼至少8個字元。','有効なメールアドレスとパスワードを入力してください。登録時は8文字以上必要です。'],
+  invalidEmail:['請輸入有效的註冊信箱。重寄確認信不需要密碼。','有効な登録メールアドレスを入力してください。再送時にパスワードは不要です。'],
   rateLimited:['嘗試次數較多，請稍後再試。','試行回数が多いため、少し待ってからやり直してください。'],
   sessionChanged:['登入帳號已變更，請重新選擇操作。','ログイン中のアカウントが変わりました。操作を選び直してください。'],
   notFound:['此雲端存檔已不存在，請刷新列表。','このクラウドセーブは存在しません。一覧を更新してください。'],
   busy:['已有操作正在進行，請稍候再試。','別の操作を処理中です。完了後にやり直してください。'],
   loadFailed:['雲端存檔未能讀入，請查看遊戲提示。目前進度未改變。','クラウドセーブを読み込めませんでした。ゲームの通知を確認してください。現在の進行は変更していません。'],
  };
- const errorKeys={unavailable:'unavailableError',auth_required:'authError',auth_failed:'authFailed',email_unconfirmed:'unconfirmed',conflict:'conflict',network:'network',invalid:'invalid',rate_limited:'rateLimited',session_changed:'sessionChanged',not_found:'notFound',busy:'busy'};
+ const errorKeys={unavailable:'unavailableError',auth_required:'authError',auth_failed:'authFailed',email_unconfirmed:'unconfirmed',email_delivery_unavailable:'deliveryUnavailable',registration_disabled:'registrationDisabled',conflict:'conflict',network:'network',invalid:'invalid',rate_limited:'rateLimited',session_changed:'sessionChanged',not_found:'notFound',busy:'busy'};
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function create(options){
   const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,cloud=options.cloud;
   const dialog=options.dialog||doc.querySelector('#dialog'),button=options.button||doc.querySelector('#cloud-save');
   if(!dialog||!cloud)throw new Error('Cloud save UI requires a dialog and controller');
   let panel=null,generation=0,pending=false,rows=[],listed=false,currentUser=cloud.state.user?.id||null;
-  let authMode='login',email='',message=null,confirmation=null,destroyed=false;
+  let authMode='login',email='',message=null,confirmation=null,destroyed=false,resendTimer=null;
   const labels=new Map(),dirtyLabels=new Set(),conflicts=new Set();
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant';
   const t=key=>copy[key]?.[locale()==='ja'?1:0]||key;
+  const now=()=>typeof options.now==='function'?options.now():Date.now();
+  const resendWait=()=>Math.max(0,Math.ceil(((Number(cloud.state.confirmationRetryAt)||0)-now())/1000));
   const query=selector=>panel?.querySelector(selector);
   const isBusy=()=>pending||!!options.isBusy?.()||!!cloud.state.authBusy;
   const isOpen=()=>!!panel&&dialog.open&&dialog.querySelector('[data-cloud-panel]')===panel;
   const stamp=()=>({generation,user:cloud.state.user?.id||null,panel});
   const valid=point=>!destroyed&&isOpen()&&point.generation===generation&&point.panel===panel&&point.user===(cloud.state.user?.id||null);
   function clear(){
+   clearTimeout(resendTimer);resendTimer=null;
    const password=query('#cloud-password');if(password)password.value='';
    panel=null;generation++;pending=false;rows=[];listed=false;confirmation=null;message=null;email='';labels.clear();dirtyLabels.clear();conflicts.clear();
    dialog.classList.remove('cloud-save-dialog');refreshButton();
@@ -96,6 +105,7 @@
   }
   function draw({keepPassword=true,keepDrafts=true}={}){
    if(!isOpen())return;
+   clearTimeout(resendTimer);resendTimer=null;
    const before=keepDrafts?preserve():{password:'',focus:null,start:null,end:null,scroll:0},lang=locale(),state=cloud.state,user=state.user;
    panel.setAttribute('data-l10n-native',lang);
    const title=dialog.querySelector('#dialog-title');if(title){title.setAttribute('data-l10n-native',lang);title.textContent=t('title');}
@@ -104,7 +114,9 @@
    if(!state.configured)body=`<p>${t('unavailable')}</p>`;
    else if(!state.ready)body=`<p>${t('preparing')}</p>`;
    else if(!user){
-    body=`<p>${t('intro')}</p><div class="cloud-auth-modes" role="tablist" aria-label="${t('title')}"><button id="cloud-login-mode" role="tab" aria-selected="${authMode==='login'}" ${authMode==='login'?'class="primary"':''}>${t('login')}</button><button id="cloud-register-mode" role="tab" aria-selected="${authMode==='register'}" ${authMode==='register'?'class="primary"':''}>${t('register')}</button></div><form id="cloud-auth-form" class="cloud-auth-form"><p class="small">${t(authMode==='login'?'loginHelp':'registerHelp')}</p><label class="field" for="cloud-email">${t('email')}<input id="cloud-email" name="email" type="email" required autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="254" value="${escape(email)}"></label><label class="field" for="cloud-password">${t('password')}<input id="cloud-password" name="password" type="password" required minlength="${authMode==='register'?8:1}" maxlength="256" autocomplete="${authMode==='register'?'new-password':'current-password'}"></label><button id="cloud-auth-submit" type="submit" class="primary">${t(authMode==='login'?'login':'register')}</button></form>`;
+    const wait=resendWait();
+    body=`<p>${t('intro')}</p><div class="cloud-auth-modes" role="tablist" aria-label="${t('title')}"><button id="cloud-login-mode" role="tab" aria-selected="${authMode==='login'}" ${authMode==='login'?'class="primary"':''}>${t('login')}</button><button id="cloud-register-mode" role="tab" aria-selected="${authMode==='register'}" ${authMode==='register'?'class="primary"':''}>${t('register')}</button></div><form id="cloud-auth-form" class="cloud-auth-form"><p class="small">${t(authMode==='login'?'loginHelp':'registerHelp')}</p><label class="field" for="cloud-email">${t('email')}<input id="cloud-email" name="email" type="email" required autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="254" value="${escape(email)}"></label><label class="field" for="cloud-password">${t('password')}<input id="cloud-password" name="password" type="password" required minlength="${authMode==='register'?8:1}" maxlength="256" autocomplete="${authMode==='register'?'new-password':'current-password'}"></label><button id="cloud-auth-submit" type="submit" class="primary">${t(authMode==='login'?'login':'register')}</button></form><div class="cloud-confirmation-help"><p class="small">${t('resendHelp')}</p><button id="cloud-resend" type="button" ${wait?'disabled':''}>${t('resend')}${wait?` (${wait}${t('seconds')})`:''}</button></div>`;
+    if(wait){resendTimer=setTimeout(()=>{resendTimer=null;draw();},1000);resendTimer.unref?.();}
    }else{
     body=`<div class="cloud-account"><p>${t('account')}：<strong>${escape(user.email||user.id)}</strong></p><div class="cloud-slot-actions"><button id="cloud-refresh">${t('refresh')}</button><button id="cloud-logout">${t('logout')}</button></div></div><p class="small">${t('slotsHelp')}</p>${!options.getView?.()?.game?`<p>${t('noCampaign')}</p>`:''}${confirmationHtml()}<div class="cloud-slots">${Array.from({length:5},(_,i)=>slotHtml(i+1)).join('')}</div>`;
    }
@@ -151,6 +163,19 @@
     else fail(error,point);
    }
   }
+  async function resend(){
+   if(resendWait())return;
+   const input=query('#cloud-email');email=input.value.trim();
+   if(!input.checkValidity()){message={key:'invalidEmail',error:true};draw();return;}
+   const point=begin();if(!point)return;
+   try{
+    await cloud.resendConfirmation(email);if(!valid(point))return;
+    pending=false;message={key:'resendRequested'};draw({keepPassword:false});
+   }catch(error){
+    if(valid(point)&&error?.code==='invalid'){pending=false;message={key:'invalidEmail',error:true};draw();}
+    else fail(error,point);
+   }
+  }
   async function signOut(){
    const point=begin();if(!point)return;
    try{await cloud.signOut();if(valid(point)){pending=false;draw({keepPassword:false});}}
@@ -193,6 +218,7 @@
    const bindClick=(id,handler)=>{const el=query(id);if(el)el.onclick=handler;};
    bindClick('#cloud-login-mode',()=>{if(isBusy())return;authMode='login';message=null;draw();});
    bindClick('#cloud-register-mode',()=>{if(isBusy())return;authMode='register';message=null;draw();});
+   bindClick('#cloud-resend',()=>void resend());
    if(query('#cloud-auth-form'))query('#cloud-auth-form').onsubmit=authenticate;
    if(query('#cloud-email'))query('#cloud-email').oninput=event=>{email=event.target.value;};
    bindClick('#cloud-refresh',()=>void refresh());bindClick('#cloud-logout',()=>void signOut());

@@ -54,10 +54,11 @@ const a='10000000-0000-4000-8000-000000000001',b='10000000-0000-4000-8000-000000
 const raw=' {"state":{"distance":315.0},"checksum":"unchanged"} ';
 const row=(slot=1,overrides={})=>({save_id:`00000000-0000-4000-8000-${String(slot).padStart(12,'0')}`,slot,label:'洛陽戰役',revision:3,scenario:'mainland190-01',game_year:190,game_month:1,game_turn:1,save_sha256:'a'.repeat(64),created_at:'2026-10-22T00:00:00Z',updated_at:'2026-10-22T00:00:00Z',...overrides});
 function mockCloud(user=null){
- const listeners=new Set(),calls=[],state={configured:true,ready:true,user,authBusy:false};let rows=[row()];
+ const listeners=new Set(),calls=[],state={configured:true,ready:true,user,authBusy:false,confirmationRetryAt:0};let rows=[row()];
  const cloud={state,calls,setRows:value=>{rows=value;},setUser(user){state.user=user;for(const fn of listeners)fn(state);},subscribe(fn){listeners.add(fn);fn(state);return()=>listeners.delete(fn);},
   async signIn(email,password){calls.push(['signIn',email,password]);cloud.setUser({id:a,email});return{user:state.user};},
   async signUp(email,password){calls.push(['signUp',email,password]);return {needsConfirmation:true,user:null};},
+  async resendConfirmation(email){calls.push(['resendConfirmation',email]);state.confirmationRetryAt=Date.now()+60000;return {needsConfirmation:true,user:null};},
   async signOut(){calls.push(['signOut']);cloud.setUser(null);},
   async list(){calls.push(['list',state.user?.id]);return rows.map(r=>({...r}));},
   async read(slot){calls.push(['read',slot]);return {...rows.find(r=>r.slot===slot),save_text:raw};},
@@ -67,10 +68,10 @@ function mockCloud(user=null){
 }
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
 const deferred=()=>{let resolve;const promise=new Promise(done=>{resolve=done;});return {promise,resolve};};
-function setup(cloud=mockCloud()){
+function setup(cloud=mockCloud(),extraOptions={}){
  const surface=dom(),i18n={locale:'zh-Hant',apply(){}},notices=[],loaded=[];let game={year:190},busy=false;
  const options={cloud,document:surface.doc,dialog:surface.dialog,button:surface.button,i18n,openDialog:surface.openDialog,
-  getView:()=>({game}),getRawSave:async()=>raw,loadRawSave:async(value,guard)=>{if(!guard())return false;loaded.push(value);return false;},notice:value=>notices.push(value),isBusy:()=>busy};
+  getView:()=>({game}),getRawSave:async()=>raw,loadRawSave:async(value,guard)=>{if(!guard())return false;loaded.push(value);return false;},notice:value=>notices.push(value),isBusy:()=>busy,...extraOptions};
  const ui=create(options),el=id=>surface.doc.getElementById(id),language=value=>{i18n.locale=value;surface.doc.dispatchEvent({type:'game-language-change'});};
  return {...surface,cloud,options,ui,el,language,notices,loaded,setGame:value=>{game=value;},setBusy:value=>{busy=value;ui.refreshButton();}};
 }
@@ -78,9 +79,11 @@ function setup(cloud=mockCloud()){
  // Registration/login, immediate language updates, and no implicit upload.
  const x=setup();assert(x.ui.open());x.el('cloud-email').value='person@example.test';x.el('cloud-password').value='password123';
  x.el('cloud-register-mode').click();assert.equal(x.el('cloud-password').getAttribute('autocomplete'),'new-password');
+ assert(x.dialog.textContent.includes('重複註冊不會變更密碼'));
  x.language('ja');assert.equal(x.el('cloud-email').value,'person@example.test');assert.equal(x.el('cloud-password').value,'password123');assert.equal(x.el('dialog-title').textContent,'クラウドセーブ');
+ assert(x.dialog.textContent.includes('再登録ではパスワードは変更されません'));
  await x.el('cloud-auth-form').dispatchEvent({type:'submit',preventDefault(){}});await tick();
- assert(x.dialog.textContent.includes('登録したメールを確認'));assert.equal(x.el('cloud-password').value,'');assert.equal(x.cloud.calls[0][0],'signUp');
+ assert(x.dialog.textContent.includes('登録したメールを確認'));assert(x.dialog.textContent.includes('認証済みのアカウントはそのままログイン'));assert.equal(x.el('cloud-password').value,'');assert.equal(x.cloud.calls[0][0],'signUp');
  x.el('cloud-password').value='password123';await x.el('cloud-auth-form').dispatchEvent({type:'submit',preventDefault(){}});await tick();
  assert(x.el('cloud-write-1'));assert.equal(x.cloud.calls.filter(c=>c[0]==='list').length,1);assert.equal(x.cloud.calls.filter(c=>['write','read','remove'].includes(c[0])).length,0);
  // Label drafts and caret survive language switches. Empty slot sends raw text.
@@ -118,6 +121,19 @@ function setup(cloud=mockCloud()){
  // Account validation errors must not be presented as invalid save files.
  const bad=setup();bad.ui.open();bad.el('cloud-email').value='person@example.test';bad.el('cloud-password').value='password123';bad.cloud.signIn=async()=>{throw {code:'invalid'};};
  await bad.el('cloud-auth-form').dispatchEvent({type:'submit',preventDefault(){}});assert(bad.dialog.textContent.includes('請輸入有效電子郵件與密碼'));assert(!bad.dialog.textContent.includes('存檔無效'));bad.ui.destroy();
+ // Resend never needs a password, only runs after a click, and survives reopening.
+ let clock=1000;const mailCloud=mockCloud(),mail=setup(mailCloud,{now:()=>clock});mail.ui.open();assert.equal(mailCloud.calls.length,0);
+ mail.el('cloud-resend').click();await tick();assert(mail.dialog.textContent.includes('重寄確認信不需要密碼'));assert.equal(mailCloud.calls.length,0);
+ mail.el('cloud-email').value='person@example.test';mailCloud.resendConfirmation=async email=>{mailCloud.calls.push(['resendConfirmation',email]);mailCloud.state.confirmationRetryAt=clock+60000;};
+ mail.el('cloud-resend').click();await tick();assert.deepEqual(mailCloud.calls,[['resendConfirmation','person@example.test']]);assert.equal(mail.el('cloud-resend').disabled,true);
+ assert(mail.dialog.textContent.includes('若此信箱有待確認帳號'));assert(mail.el('cloud-resend').textContent.includes('60秒'));
+ mail.el('cloud-resend').click();await tick();assert.equal(mailCloud.calls.length,1);mail.dialog.close();mail.ui.open();assert.equal(mail.el('cloud-resend').disabled,true);
+ clock+=60000;mail.language('ja');assert.equal(mail.el('cloud-resend').disabled,false);assert(mail.dialog.textContent.includes('確認メールを再送'));
+ mail.el('cloud-email').value='person@example.test';mailCloud.resendConfirmation=async()=>{throw {code:'email_delivery_unavailable'};};mail.el('cloud-resend').click();await tick();assert(mail.dialog.textContent.includes('メール配信設定'));assert(!mail.dialog.textContent.includes('パスワードを確認'));
+ mail.language('zh-Hant');assert(mail.dialog.textContent.includes('郵件服務設定'));mail.ui.destroy();
+ // A resend response arriving after the dialog closes cannot reopen its status.
+ const lateMail=setup(),lateResend=deferred();lateMail.cloud.resendConfirmation=()=>lateResend.promise;lateMail.ui.open();lateMail.el('cloud-email').value='person@example.test';
+ lateMail.el('cloud-resend').click();lateMail.dialog.close();lateResend.resolve();await tick();assert.equal(lateMail.dialog.open,false);lateMail.ui.destroy();
  // Show a localized scenario title; refresh untouched names but keep user drafts.
  const readable=setup(mockCloud({id:a,email:'a@example.test'}));readable.options.getView=()=>({game:{},catalog:{scenarios:[{id:row().scenario,title:'反董卓聯盟'}]}});
  readable.options.i18n.t=(title,locale)=>locale==='ja'?'反董卓連合':title;readable.ui.open();await tick();

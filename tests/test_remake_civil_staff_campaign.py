@@ -256,6 +256,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         # A satisfied reserve target isolates the actual AI hiring/personnel
         # commands from that independent city-action competitor.
         domestic.appointments(game.state, 'shu')['policy']['reserve_target'] = 0
+        local_soldiers = game.state.cities['nanjun'].reserves
         self.step(game)
         people = self.pool(game)['people']
         clerk = next(p for p in people.values() if p['city'] == 'nanjun')
@@ -264,6 +265,9 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual(game.state.cities['nanjun'].gold, 1200 - 60 - training)
         self.assertTrue(any(r['action'] == 'hire_staff' and r['city'] == 'nanjun'
                             for r in game.state.extension['ai_reports']))
+        self.assertEqual(game.state.officers[clerk['id']].troops, 999,
+                         'The shared military official fills a hired defender to the normal troop cap')
+        self.assertEqual(game.state.cities['nanjun'].reserves, local_soldiers - 999)
         self.assertEqual(game.state.rng.draws, 0)
         # Explicitly give the generated officer the one faction civil post.
         # Leaving the best historical appointee in that post would correctly
@@ -278,10 +282,17 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.step(game)
         training = sum(r['details']['gold'] for r in game.state.extension['domestic']['reports']
             if r['city'] == 'nanjun' and r['turn'] == game.state.turn - 1 and r['kind'] == 'training')
-        self.assertEqual(game.state.cities['nanjun'].gold, gold - 4 - 60 - training)
-        self.assertEqual(game.state.officers[clerk['id']].troops, 80, 'AI prepares generated defenders by the normal paid allocation rule')
+        self.assertEqual(game.state.cities['nanjun'].gold, gold - 60 - training,
+                         'Shared reserve assignment does not charge the former AI-only top-up fee')
+        self.assertEqual(game.state.officers[clerk['id']].troops, 999)
         self.assertEqual(game.state.rng.draws, 1)
         self.assertEqual(game.state.officers[target].faction_id, 'shu')
+        self.assertEqual(game.state.officers[target].troops, local_soldiers - 999,
+                         'The newly recruited historical officer receives the remaining local reserves')
+        self.assertEqual(game.state.cities['nanjun'].reserves, 0)
+        self.assertEqual(sum(game.state.officers[i].troops
+                            for i in game.state.cities['nanjun'].roster.officer_ids), local_soldiers,
+                         'Hiring, personnel work and reserve assignment preserve local soldiers')
         self.assertEqual(self.pool(game)['people'][clerk['id']]['action_turn'], game.state.turn - 1)
         self.assertTrue(any(r['action'] in {'staff_recruit','recruit_officer'} and r['city'] == 'nanjun'
                             for r in game.state.extension['ai_reports']))
