@@ -2,6 +2,8 @@
 analysis/** -text -whitespace
 expansion/officers/source/** -text -whitespace
 game/locales/opencc/** -text -whitespace
+# Rebuilt third-party SDK literals and license line endings are byte-checked.
+game/vendor/** -text -whitespace
 *.csv -text whitespace=cr-at-eol
 
 # Preserve historical source hashes, including generated final blank lines.

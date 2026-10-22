@@ -55,8 +55,16 @@ jobs:
           node tests/test_remake_library_status.cjs
           node --check game/save-transfer.js
           node tests/test_remake_save_transfer.cjs
+          node --check game/cloud-save.js
+          node --check game/cloud-save-ui.js
+          node tests/test_remake_cloud_save.cjs
+          node tests/test_remake_cloud_ui.cjs
           node tests/test_remake_i18n_runtime.cjs
           node tests/test_remake_map_navigation.cjs
+      - name: Rebuild pinned self-hosted cloud SDK
+        run: |
+          npm ci --prefix tools/cloud-sdk --ignore-scripts
+          npm run check --prefix tools/cloud-sdk
       - name: Rebuild current officer batch and historical campaigns offline
         env:
           PYTHONDONTWRITEBYTECODE: '1'

@@ -44,6 +44,9 @@ def main():
     from remake.campaign import GameError
     from remake.session import CampaignSession
     from remake.march_core import backend_status, config_for
+    from remake.cloud_config import public_config, content_security_policy
+    cloud_config = public_config(HERE / 'config/cloud-save-public.json')
+    cloud_csp = content_security_policy(cloud_config)
     era_index = json.loads((HERE / 'data/eras/index.json').read_text())
     current_index = json.loads((HERE / 'data/eras-v3/index.json').read_text())
     main_index = json.loads((HERE / 'data/main-scenarios/index.json').read_text())
@@ -61,6 +64,11 @@ def main():
                            [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs'] + main_index['catalogs'] + complete_index['catalogs'] + city_index['catalogs'] + travel_index['catalogs'] + northern_index['catalogs'] + unified_index['catalogs'] + southern_index['catalogs'] + hazard_index['catalogs'] + dlc_index['catalogs'] + officer_index['catalogs'] + economy_index['catalogs']])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/save-transfer.js': ('save-transfer.js', 'text/javascript; charset=utf-8'),
+              '/cloud-save.js': ('cloud-save.js', 'text/javascript; charset=utf-8'),
+              '/cloud-save-ui.js': ('cloud-save-ui.js', 'text/javascript; charset=utf-8'),
+              '/cloud-save.css': ('cloud-save.css', 'text/css; charset=utf-8'),
+              '/vendor/supabase.min.js': ('vendor/supabase.min.js', 'text/javascript; charset=utf-8'),
+              '/vendor/supabase-LICENSES.txt': ('vendor/supabase-LICENSES.txt', 'text/plain; charset=utf-8'),
               '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
               '/i18n.js': ('i18n.js', 'text/javascript; charset=utf-8'),
               '/march-core.js': ('march-core.js', 'text/javascript; charset=utf-8'),
@@ -94,7 +102,7 @@ def main():
             self.send_header('Content-Length', str(len(data)))
             self.send_header('Cache-Control', 'no-store')
             self.send_header('X-Content-Type-Options', 'nosniff')
-            self.send_header('Content-Security-Policy', "default-src 'self'; img-src 'self' data:; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'")
+            self.send_header('Content-Security-Policy', cloud_csp)
             self.end_headers()
             self.wfile.write(data)
             audit['requests'].append({'method': self.command, 'path': self.path, 'status': status, 'bytes': len(data)})
@@ -103,6 +111,8 @@ def main():
             try:
                 if self.path == '/api/state':
                     return self.send(200, game.view())
+                if self.path == '/api/cloud-config':
+                    return self.send(200, cloud_config)
                 if self.path == '/api/march-status':
                     return self.send(200, backend_status())
                 if urlsplit(self.path).path == '/api/march-config':

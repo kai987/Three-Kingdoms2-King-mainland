@@ -12,6 +12,8 @@ python3 -I -S -B game/serve.py --port 8878
 
 載入頁面先預覽最新劇本地圖，確認開始後才建立新戰役；可繼續原存檔。地圖支援滑鼠／觸控拖曳及1～4倍縮放，勢力配色、城名與介面可即時切換語言。
 
+頂欄「雲端存檔」可使用電子郵件與密碼登入，每個帳號有5個私人存檔槽，可在另一部執行本遊戲的裝置讀取。首次註冊依既有雲端專案設定確認電子郵件後，回到本遊戲登入；保存與讀取由玩家主動操作，並保留本機存檔。
+
 - [啟動、操作、存取與規則](game/README.md)
 - [城市年代資源與存檔相容](docs/scenario-economy-v14.md)
 - [武將逐劇本安置審計](docs/officer-placement-audit.md)
@@ -28,6 +30,7 @@ python3 -I -S -B game/serve.py --port 8878
 | `source/remake/` | Python戰役、人物、戰鬥、計略、單挑、AI、存檔及Rust行軍適配器 |
 | `crates/march-core/`、`game/wasm/` | 共用Rust行軍核心、WASM及可重現建置清單 |
 | `game/app.js`、`i18n.js`、`map-navigation.js` | HTML／SVG介面、繁中／日文、地圖手勢 |
+| `game/cloud-save*.js`、`game/vendor/` | 帳號式雲端存檔、版本衝突處理、自託管固定版SDK |
 | `game/serve.py` | 本機HTTP服務，僅公開明列的遊戲資產與API |
 | `game/data/` | 186份戰役目錄；25份最新版，其餘供舊存檔驗證 |
 | `game/config/`、`game/build_*.py` | 人物、年代、城池、道路與劇本的離線建置 |

@@ -1,0 +1,31 @@
+/* Reuse the game's NES paper, ink, border and font palette. */
+.cloud-panel{min-width:0}
+.cloud-panel p{overflow-wrap:anywhere}
+.cloud-status{min-height:1.5em;margin-bottom:12px;overflow-wrap:anywhere}
+.cloud-status:empty{display:none}
+.cloud-status.error{color:#a00000}
+.cloud-auth-modes,.cloud-slot-actions{display:flex;flex-wrap:wrap;gap:8px}
+.cloud-auth-modes{margin-bottom:16px}
+.cloud-auth-form{max-width:420px}
+.cloud-auth-form input,.cloud-slot-label input{width:100%;min-width:0;min-height:40px;border:2px solid #000;border-radius:0;background:#fff0e8;padding:6px 8px}
+.cloud-account{border-bottom:2px solid #000;padding-bottom:12px;margin-bottom:12px}
+.cloud-account strong{overflow-wrap:anywhere}
+.cloud-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cloud-slot{min-width:0;border:2px solid #000;padding:12px}
+.cloud-slot h3{font-size:20px;margin-bottom:8px}
+.cloud-slot>strong{display:block;overflow-wrap:anywhere}
+.cloud-slot p{margin-bottom:8px}
+.cloud-slot .cloud-slot-label{gap:4px;margin-bottom:8px}
+.cloud-slot-actions button{flex:1;min-width:70px;padding:6px 8px}
+.cloud-confirm{border:4px double #000;padding:12px;margin:12px 0 16px}
+.cloud-confirm h3{font-size:20px;margin-bottom:12px}
+.cloud-confirm>strong{display:block;overflow-wrap:anywhere}
+.cloud-save-dialog .dialog-actions{position:sticky;bottom:-1px;background:var(--paper);border-top:2px solid #000;padding-top:12px;z-index:1}
+@media(max-width:600px){
+ .cloud-slots{grid-template-columns:minmax(0,1fr)}
+ .cloud-auth-modes button{flex:1}
+ .cloud-slot-actions button{min-height:44px}
+ .cloud-save-dialog{width:calc(100% - 24px);max-height:92dvh;padding:12px}
+ .cloud-save-dialog .dialog-heading{gap:8px}
+ .cloud-save-dialog .dialog-heading h2{font-size:28px}
+}

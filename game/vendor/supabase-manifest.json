@@ -1,0 +1,19 @@
+{
+  "schema": "tk2-self-hosted-cloud-sdk-v1",
+  "supabase_js": "2.118.0",
+  "esbuild": "0.28.2",
+  "lock_sha256": "4f6f01bd7be54c5cca56a96634e0638e80102993bbe030ca8537d399a4e8e81c",
+  "bundle_sha256": "ccdca16e0eec481d5f9e5f8e21eb0ee15be4a7ae1a246d004bb925a17b9df212",
+  "bundle_bytes": 223178,
+  "packages": {
+    "@supabase/auth-js": "2.118.0",
+    "@supabase/functions-js": "2.118.0",
+    "@supabase/phoenix": "0.4.5",
+    "@supabase/postgrest-js": "2.118.0",
+    "@supabase/realtime-js": "2.118.0",
+    "@supabase/storage-js": "2.118.0",
+    "@supabase/supabase-js": "2.118.0",
+    "iceberg-js": "0.8.1",
+    "tslib": "2.8.1"
+  }
+}
