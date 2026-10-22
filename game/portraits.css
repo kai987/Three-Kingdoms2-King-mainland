@@ -1,0 +1,29 @@
+/* Native 32×40 pixels use integer scales and the existing NES ink/paper frame. */
+.officer-portrait{display:inline-flex;flex-direction:column;align-items:center;gap:6px;flex:none;vertical-align:middle;max-width:100%}
+.portrait-frame{display:block;box-sizing:content-box;width:32px;height:40px;border:2px solid #000;background:#000;overflow:hidden;flex:none}
+.portrait-frame img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;image-rendering:crisp-edges}
+.portrait-placeholder{display:flex;width:100%;height:100%;align-items:center;justify-content:center;font:24px/1 var(--ui);background:var(--paper);color:#000}
+.portrait-source{display:block;max-width:200px;font-size:13px;line-height:1.45;text-align:center;overflow-wrap:anywhere}
+.portrait-detail .portrait-frame{width:128px;height:160px}
+.portrait-duel .portrait-frame{width:96px;height:120px}
+.officer-identity{display:flex;align-items:center;gap:8px;min-width:0}
+.officer-identity>span:last-child{min-width:0;overflow-wrap:anywhere}
+.roster-table .officer-identity,.library-table .officer-identity{gap:6px}
+.roster-table .officer-identity>span:last-child{min-width:3em}
+.person-profile-head{display:flex;gap:20px;align-items:flex-start;margin-bottom:16px;min-width:0}
+.person-profile-summary{min-width:0;flex:1}
+.person-profile-summary p:last-child{margin-bottom:0}
+.unit .officer-identity{flex:1}
+.unit .officer-identity>span:last-child{min-width:2em}
+.duel-fighter-head{display:flex;align-items:center;gap:16px;margin-bottom:12px;min-width:0}
+.duel-fighter-head h3{margin:0;overflow-wrap:anywhere}
+@media(max-width:600px){
+ .portrait-detail .portrait-frame{width:96px;height:120px}
+ .person-profile-head{gap:12px;flex-wrap:wrap}
+ .person-profile-summary{flex-basis:150px}
+ .duel-fighter-head{display:block}
+ .duel-fighter-head .officer-portrait{margin-bottom:8px}
+ .portrait-duel .portrait-frame{width:64px;height:80px}
+ .unit .officer-identity{flex-basis:100%}
+ .unit .troops{margin-left:auto}
+}

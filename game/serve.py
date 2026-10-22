@@ -7,6 +7,7 @@ The optional audit records actual file opens, imports and HTTP requests.
 from pathlib import Path
 import argparse
 import json
+import re
 import signal
 import sys
 import traceback
@@ -15,6 +16,54 @@ from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'game'
+
+
+def portrait_static_assets(here=HERE):
+    """Register exact presentation URLs, never a browsable asset directory.
+
+    The deployed index fixes the PNG allowlist for this server process. A missing
+    or malformed index leaves the frontend's explicit missing-portrait fallback.
+    Neither build evidence nor original ROM inputs are exposed.
+    """
+    static = {'/portraits.js': ('portraits.js', 'text/javascript; charset=utf-8'),
+              '/portraits.css': ('portraits.css', 'text/css; charset=utf-8'),
+              '/assets/portraits/index.json': ('assets/portraits/index.json', 'application/json; charset=utf-8')}
+    root = Path(here).resolve()
+    base = root / 'assets/portraits'
+    index = base / 'index.json'
+    if (root / 'assets').is_symlink() or base.is_symlink() or index.is_symlink():
+        return static
+    try:
+        data = json.loads(index.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return static
+    people = data.get('people') if isinstance(data, dict) else None
+    if not isinstance(data, dict) or data.get('schema') != 'tk2-portraits-v1' or not isinstance(people, dict):
+        return static
+    for row in people.values():
+        path = row.get('path') if isinstance(row, dict) else None
+        if not isinstance(path, str) or not re.fullmatch(r'/assets/portraits/(original|generated)/[A-Za-z0-9_-]+\.png', path):
+            continue
+        target = root / path.lstrip('/')
+        if target.parent.is_symlink() or target.is_symlink():
+            continue
+        static[path] = (path.lstrip('/'), 'image/png')
+    return static
+
+
+def static_file_bytes(here, name):
+    """Keep even a replaced symlink inside the explicitly served game tree."""
+    root = Path(here).resolve()
+    target = root / name
+    try:
+        target.resolve().relative_to(root)
+    except ValueError:
+        raise FileNotFoundError(name) from None
+    if name.startswith('assets/portraits/') and (target.is_symlink() or target.parent.is_symlink() or
+                                                 (root / 'assets/portraits').is_symlink() or
+                                                 (root / 'assets').is_symlink()):
+        raise FileNotFoundError(name)
+    return target.read_bytes()
 
 
 def main():
@@ -89,6 +138,7 @@ def main():
               '/assets/map-navigation.png': ('assets/map-navigation.png', 'image/png'),
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
+    static.update(portrait_static_assets())
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *unused):
@@ -140,7 +190,10 @@ def main():
                     return self.send(204, b'', 'image/x-icon')
                 if self.path in static:
                     name, mime = static[self.path]
-                    return self.send(200, (HERE / name).read_bytes(), mime)
+                    try:
+                        return self.send(200, static_file_bytes(HERE, name), mime)
+                    except OSError:
+                        return self.send(404, {'error': '未找到这个资源。'})
                 self.send(404, {'error': '未找到这个页面。'})
             except GameError as exc:
                 self.send(exc.status, {'error': str(exc)})

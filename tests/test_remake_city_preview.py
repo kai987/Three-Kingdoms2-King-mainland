@@ -29,8 +29,8 @@ class CityPreviewTests(unittest.TestCase):
                 self.assertEqual(row['terrain'],c.map_cities[ident].get('terrain'))
                 self.assertEqual((row['owner'],row['gold'],row['grain'],row['reserves']),
                                  (city.owner,city.gold,city.grain,city.reserves))
-                expected=[(i,c.name(i),g.state.officers[i].troops) for i in city.roster.officer_ids]
-                self.assertEqual([(o['id'],o['name'],o['troops']) for o in row['officers']],expected)
+                expected=[(i,c.by_id[i]['person_id'],c.name(i),g.state.officers[i].troops) for i in city.roster.officer_ids]
+                self.assertEqual([(o['id'],o['person_id'],o['name'],o['troops']) for o in row['officers']],expected)
                 count+=1
         self.assertGreater(count,4000)
         self.assertEqual(s.to_dict(),before);self.assertEqual(s.revision,revision)
@@ -56,6 +56,20 @@ class CityPreviewTests(unittest.TestCase):
         for scenario,city in ((None,'shujun'),([],None),('unknown','shujun'),(demo,None),(demo,{}),(demo,'unknown'),(demo,inactive)):
             with self.assertRaises(GameError):s.preview_city(scenario,city)
         self.assertEqual(s.to_dict(),before);self.assertEqual(s.revision,revision)
+
+    def test_portrait_identity_comes_from_preview_catalog_when_old_save_lacks_person(self):
+        s=CampaignSession([ROOT/'game/data/main-scenarios-v5/184-02.json',
+                           ROOT/'game/data/main-scenarios-v14/190-01.json'])
+        s.command('new',{'scenario':'mainland184-02-v5','faction':'yellow_turban','seed':2026},s.revision)
+        saved=s.export_save();revision=s.revision
+        selected=s.catalogs['mainland190-01-v14']
+        newcomer=next(row for row in selected.data['initial_officers'] if selected.ids[row['person_id']]>=1000)
+        self.assertNotIn(newcomer['person_id'],s.game.catalog.ids)
+        preview=s.preview_city(selected.data['id'],newcomer['city'])
+        row=next(row for row in preview['city']['officers'] if row['id']==selected.ids[newcomer['person_id']])
+        self.assertEqual(row['person_id'],newcomer['person_id'])
+        self.assertEqual(row['name'],selected.name(row['id']))
+        self.assertEqual(s.export_save(),saved);self.assertEqual(s.revision,revision)
 
 
 if __name__=='__main__':unittest.main()

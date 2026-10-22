@@ -59,12 +59,19 @@ jobs:
           node --check game/cloud-save-ui.js
           node tests/test_remake_cloud_save.cjs
           node tests/test_remake_cloud_ui.cjs
+          node --check game/portraits.js
+          node tests/test_remake_portraits.cjs
           node tests/test_remake_i18n_runtime.cjs
           node tests/test_remake_map_navigation.cjs
       - name: Rebuild pinned self-hosted cloud SDK
         run: |
           npm ci --prefix tools/cloud-sdk --ignore-scripts
           npm run check --prefix tools/cloud-sdk
+      - name: Rebuild stable-ID portrait index offline
+        run: |
+          python -m pip install -r tools/portraits/requirements.txt
+          python tools/portraits/build_generated.py --check
+          python game/build_portrait_manifest.py --check
       - name: Rebuild current officer batch and historical campaigns offline
         env:
           PYTHONDONTWRITEBYTECODE: '1'

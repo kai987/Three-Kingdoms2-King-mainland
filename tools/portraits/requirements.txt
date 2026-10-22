@@ -1,0 +1,2 @@
+# Offline source-atlas decoding/fitting only; runtime and manifest checks use stdlib.
+Pillow==11.1.0
