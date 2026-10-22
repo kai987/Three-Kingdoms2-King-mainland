@@ -208,12 +208,11 @@ function selectFaction(){
   <p id="setup-summary" class="small" aria-live="polite"></p><label class="seed-label" for="seed">随机种子<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026" aria-describedby="seed-help"></label><p id="seed-help" class="small">控制招募、战斗等随机判定；相同种子与操作可重现战局。</p>`;
   $('#inspector').classList.add('setup-menu');
   $('#inspector').innerHTML=`<div class="inspector-heading"><h2>主菜单</h2></div>${content}<div class="actions">${view.game?`<button class="primary" id="cancel-setup">${view.game.phase==='finished'?'返回战役结果':'继续当前战役'}</button>`:''}<button class="${view.game?'':'primary'}" id="begin">${view.game?'开始新战役':'开始战役'}</button></div>`;
-  const refreshPreview=()=>{
-   const chosen=option.factions.find(f=>f.id===setupPreview.faction),count=Object.values(option.initial_owners).filter(owner=>owner===chosen.id).length;
-   $('#setup-summary').textContent=`${chosen.name} · ${count}座城池 · 根据地${cityName(chosen.city)}。${resourceSummary(chosen.id,option)}。地图已预览本剧本归属，开始后才建立新战役。`;
+  const refreshPreview=(id=setupPreview.faction,focus=setupPreview.focus)=>{
+   setPreviewFaction(id,focus);
    $('#library').disabled=true;renderMap();
   };
-  document.querySelectorAll('input[name=faction]').forEach(input=>input.onchange=()=>{setupPreview.faction=input.value;setupPreview.focus=option.factions.find(f=>f.id===input.value).city;refreshPreview();});
+  document.querySelectorAll('input[name=faction]').forEach(input=>input.onchange=()=>refreshPreview(input.value,null));
   if($('#cancel-setup'))$('#cancel-setup').onclick=()=>{setupPreview=null;render();$('#main-menu').focus();};
   refreshPreview();
   $('#scenario').onchange=()=>draw($('#scenario').value);
@@ -229,6 +228,20 @@ function selectFaction(){
  };
  draw(initial.id);
  $('#scenario').focus();
+}
+function setPreviewFaction(id,focus=null,reveal=false){
+ const preview=setupPreview,chosen=preview?.factions.find(f=>f.id===id);
+ if(!chosen)return false;
+ preview.faction=chosen.id;preview.focus=focus??chosen.city;
+ let selected;
+ document.querySelectorAll('input[name=faction]').forEach(input=>{input.checked=input.value===chosen.id;if(input.checked)selected=input;});
+ const count=Object.values(preview.initial_owners).filter(owner=>owner===chosen.id).length;
+ $('#setup-summary').textContent=`${chosen.name} · ${count}座城池 · 根据地${cityName(chosen.city)}。${resourceSummary(chosen.id,preview)}。地图已预览本剧本归属，开始后才建立新战役。`;
+ if(reveal&&selected){
+  const row=selected.closest('.faction-choice'),list=row?.closest('.choice-list');
+  if(list){const item=row.getBoundingClientRect(),box=list.getBoundingClientRect();if(item.top<box.top)list.scrollTop+=item.top-box.top;else if(item.bottom>box.bottom)list.scrollTop+=item.bottom-box.bottom;}
+ }
+ return true;
 }
 function renderMap(){
  const game=view.game,preview=setupPreview,owners=preview?.initial_owners||Object.fromEntries(Object.values(game?.cities||{}).map(c=>[c.id,c.owner]));
@@ -295,7 +308,7 @@ function renderMap(){
  const choose=(id,inspect=false)=>{
   if(busy)return;
   if(mapAction&&!preview&&game.phase==='city')return finishMapAction(id);
-  if(preview)preview.focus=id;
+  if(preview){preview.focus=id;setPreviewFaction(owners[id],id,true);}
   else{selectedCity=id;if(game.phase==='city'){$('#inspector').scrollTop=0;renderCity();}}
   if(!inspect){const city=board.find(c=>c.id===id);if(city)mapNavigation.focus(...mapPosition(city),mapCamera?.zoom||1);}
   renderMap();
