@@ -169,14 +169,26 @@ def synthetic_config():
                 links=[['s', 't'], ['s', 'a'], ['s', 'b'], ['a', 't'], ['b', 't']])
 
 
+def neutral_transit_config():
+    """A long neutral corridor with a shorter enemy-owned shortcut."""
+    keys = ['s', *(f'n{i:02}' for i in range(1, 33)), 't']
+    pairs = list(zip(keys, keys[1:])) + [('s', 'enemy'), ('enemy', 't')]
+    return dict(travel_rules=dict(speeds={'plain': 30, 'sea': 70}, embark_days=2),
+                travel_hazards={'schema': 'parity', 'coastal_cities': []},
+                city_coordinates={key: [110 + index / 100, 30] for index, key in enumerate(keys + ['enemy'])},
+                travel_routes=[dict(id=f'{a}:{b}:land', **{'from': a, 'to': b}, mode='land',
+                    terrain='plain', distance_km=30, land_km=30, sea_km=0, days=1)
+                    for a, b in pairs], exploration_routes=[], links=[list(p) for p in pairs])
+
+
 def vector_document():
     """Reference matrices cover every current leg in both directions/months."""
     current = config_for(Catalog(ROOT / 'game/data/campaigns/217-07.json').data)
-    return [current, synthetic_config()]
+    return [current, synthetic_config(), neutral_transit_config()]
 
 
 def vectors(configs):
-    current, synthetic = configs
+    current, synthetic, neutral = configs
     for index, data in enumerate(configs):
         routes = data['travel_routes'] + data.get('exploration_routes', [])
         months = range(1, 13)
@@ -198,7 +210,8 @@ def vectors(configs):
                                source=row['from'], target=row['to'], owner='friendly', mode=mode, adjacent=True)
                 yield f'path:{row["id"]}:{month}:{mode}', request
     keys = list(synthetic['city_coordinates'])
-    for ownership in (['friendly'] * 4, ['friendly', 'enemy', 'friendly', 'enemy']):
+    for ownership in (['friendly'] * 4, ['friendly', 'enemy', 'friendly', 'enemy'],
+                      ['friendly', 'neutral', 'neutral', 'friendly']):
         cities = [dict(id=key, owner=owner) for key, owner in zip(keys, ownership)]
         for discovered in ([], ['explore:a:b']):
             for month in (4, 7, 11):
@@ -217,6 +230,22 @@ def vectors(configs):
         yield f'batch:actual:{side}', dict(op='batch', config=0,
             cities=[dict(id=c.id, owner=c.owner) for c in game.state.cities.values()],
             month=game.state.month, discovered=[], player=side)
+    neutral_owners = {key: 'friendly' if key in ('s', 't') else
+                      'enemy' if key == 'enemy' else 'neutral' for key in neutral['city_coordinates']}
+    for changed, owner in ((None, None), ('n01', 'friendly'), ('n16', 'enemy'),
+                           ('n32', 'enemy'), ('t', 'neutral'), ('t', 'enemy')):
+        owners = dict(neutral_owners)
+        if changed is not None:
+            owners[changed] = owner
+        base = dict(config=2, cities=[dict(id=key, owner=value) for key, value in owners.items()],
+                    month=4, discovered=[])
+        yield f'batch:neutral:{changed}:{owner}', dict(base, op='batch', player='friendly')
+        for source, target in (('s', 't'), ('t', 's'), ('s', 'n01'), ('s', 'n32'), ('s', 'enemy')):
+            for mode in ('fastest', 'land'):
+                for adjacent in (False, True):
+                    yield f'path:neutral:{changed}:{owner}:{source}:{target}:{mode}:{adjacent}', dict(
+                        base, op='path', source=source, target=target, owner='friendly',
+                        mode=mode, adjacent=adjacent)
     seeded = random.Random(20261022)
     counts = [[], [0], [1, 1, 1], [1, 2], [0, 1, 2, 999, 1000], [999] * 30, [1000] * 30, [1000] * 99]
     counts += [[seeded.randrange(100001) for _ in range(seeded.randrange(31))] for _ in range(40)]

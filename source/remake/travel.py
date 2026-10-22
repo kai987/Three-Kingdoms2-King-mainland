@@ -138,7 +138,7 @@ class TravelCampaign:
                     continue
                 if adjacent and (here!=source or nxt!=target):
                     continue
-                if not adjacent and state.cities[nxt].owner!=owner:
+                if not adjacent and state.cities[nxt].owner not in (owner, 'neutral'):
                     continue
                 if not route_allowed(self.catalog.data,raw,here,nxt):
                     continue
@@ -247,7 +247,8 @@ class TravelCampaign:
             row['checked_turn'] = state.turn
             source, target = (state.cities[row[k]] for k in ('source', 'target'))
             ids = row['officers']
-            if row['kind']=='transfer' and any(state.cities[k].owner!=row['owner'] for k in row['quote']['path'][1:-1]):
+            if row['kind']=='transfer' and any(state.cities[k].owner not in (row['owner'], 'neutral')
+                                              for k in row['quote']['path'][1:-1]):
                 travel['marches'].remove(row)
                 self._note(state, f'调动{row["id"]}沿途城池易主，路线中断，部队返回出发城编制。')
                 continue
@@ -343,11 +344,14 @@ class TravelCampaign:
                     if here in seen:
                         continue
                     seen.add(here)
-                    if legs:
+                    # Neutral cities can connect the tree, but only our own
+                    # cities are transfer destinations. Direct attacks below
+                    # are quoted independently of this transit search.
+                    if legs and state.cities[here].owner==state.player:
                         quotes[f'{source}:{here}:{mode}']=self._quote(path,legs)
                     for leg in adjacency[here]:
                         target=leg['to']
-                        if target in seen or state.cities[target].owner!=state.player or mode=='land' and leg['mode']=='sea':
+                        if target in seen or state.cities[target].owner not in (state.player, 'neutral') or mode=='land' and leg['mode']=='sea':
                             continue
                         heappush(queue,(days+leg['days'],distance+leg['distance_km'],target,next(serial),path+[target],legs+[leg]))
                 # Attacks remain direct city-to-city legs; friendly paths above

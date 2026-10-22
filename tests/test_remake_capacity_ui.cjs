@@ -11,13 +11,14 @@ let picked=[],lastDialog=null,lastNotice=null,lastCommand=null;
 const officers=Object.fromEntries(Array.from({length:99},(_,id)=>[id,{health:90,loyalty:80,experience:0,troops:300,profile:{martial_strength:80,intellect:70,virtue:60}}]));
 const home={id:'home',owner:'wei',gold:100,grain:1000,reserves:999,action_used:false,roster:{officer_ids:Object.keys(officers).map(Number)}},away={id:'away',owner:'wei',roster:{officer_ids:[]}},enemy={id:'enemy',owner:'wu',roster:{officer_ids:[]}};
 officers[100]={...officers[0],faction_id:null};
-const context={GameOfficerChoices:require('../game/officer-choice.js'),view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10,expanded_campaign:true},city_profiles:{},city_income:{},map_presentation:{city_names:{}},links:[['home','enemy']],recruitable:{home:[100]},persuadable:{home:[]}},game:{player:'wei',turn:1,cities:{home,away,enemy},officers,extension:{officer_actions:{}}}},selectedCity:'home',actor:null,target:null,$:element,escapeHtml:String,name:id=>'武将'+id,portraitHtml:()=>'<i></i>',faction:String,cityName:String,periodCityName:String,cityEconomyNote:()=>'',resourceSummary:()=>'',marching:()=>new Set(),watchRouteDialog(){},notice(text,error){lastNotice={text,error};},command(kind,payload){lastCommand={kind,payload};return Promise.resolve(true);},render(){},dialog:{querySelectorAll:()=>picked,close(){}},openDialog(title,body){lastDialog={title,body};element('#departure-target').value='enemy';element('#transfer-city').value='away';element('#recruit-mode').value='recruit_officer';}};
+const context={GameOfficerChoices:require('../game/officer-choice.js'),GameOfficerSelection:require('../game/officer-selection.js'),GameI18n:{apply(){}},view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10,expanded_campaign:true},city_profiles:{},city_income:{},map_presentation:{city_names:{}},links:[['home','enemy']],recruitable:{home:[100]},persuadable:{home:[]}},game:{player:'wei',turn:1,cities:{home,away,enemy},officers,extension:{officer_actions:{}}}},selectedCity:'home',actor:null,target:null,$:element,escapeHtml:String,name:id=>'武将'+id,portraitHtml:()=>'<i></i>',faction:String,cityName:String,periodCityName:String,cityEconomyNote:()=>'',resourceSummary:()=>'',marching:()=>new Set(),watchRouteDialog(){},notice(text,error){lastNotice={text,error};},command(kind,payload){lastCommand={kind,payload};return Promise.resolve(true);},render(){},dialog:{querySelectorAll:()=>picked.map(input=>Object.assign(input,{addEventListener(){}})),close(){}},openDialog(title,body){lastDialog={title,body};element('#departure-target').value='enemy';element('#transfer-city').value='away';element('#recruit-mode').value='recruit_officer';}};
 vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('const capacity='),source.indexOf('\nconst marching=')),context);
 vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),context);
 (async()=>{
  const before=JSON.stringify(context.view.game);
  context.renderCity();
+ assert(element('#inspector').innerHTML.includes('id="recruit-officer" disabled'),'A full city cannot start another recruitment');
  assert(element('#inspector').innerHTML.includes('驻城 99/99；每方出战上限10人。'));
  assert.equal((element('#inspector').innerHTML.match(/<tr title=/g)||[]).length,99,'Every city member remains visible in the scrollable roster');
  context.recruitOfficer(home);assert(lastDialog.body.includes('最多99人。'));
@@ -36,6 +37,13 @@ vm.runInContext(source.slice(source.indexOf('function officerAttributes('),sourc
  context.view.catalog.rules.city_officer_capacity=30;home.roster.officer_ids=home.roster.officer_ids.slice(0,30);
  context.renderCity();assert(element('#inspector').innerHTML.includes('驻城 30/30；每方出战上限10人。'));
  context.transferCity(home);assert(lastDialog.body.includes('目的城仍最多30人。'));
+ const remembered=Object.fromEntries(Object.entries(officers).map(([id,o])=>[id,o.health]));
+ for(const o of Object.values(officers))o.health=0;
+ context.renderCity();
+ for(const id of ['depart','recruit-officer','transfer'])assert(new RegExp(`id="${id}"[^>]*disabled`).test(element('#inspector').innerHTML),'No healthy actor: '+id);
+ for(const[id,health]of Object.entries(remembered))officers[id].health=health;
+ const gold=home.gold,grain=home.grain;home.gold=0;home.grain=0;context.renderCity();
+ assert(/id="recruit" disabled/.test(element('#inspector').innerHTML),'Resource shortage disables reserve recruitment before spending');home.gold=gold;home.grain=grain;
  // Shipped Japanese patterns interpolate both capacities instead of freezing 30.
  const patterns=JSON.parse(fs.readFileSync(path.join(root,'game/locales/ui-ja.json'),'utf8')).patterns;
  const japanese=value=>{const row=patterns.find(row=>new RegExp(row.pattern,row.flags||'u').test(value));assert(row,'Missing translated capacity pattern: '+value);return value.replace(new RegExp(row.pattern,row.flags||'u'),row.replacement);};

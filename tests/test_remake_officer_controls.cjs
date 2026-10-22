@@ -18,7 +18,7 @@ const officers={
 };
 const city={id:'home',owner:'wei',reserves:20,roster:{officer_ids:[1,2,3]}},away={id:'away',owner:'wei',roster:{officer_ids:[]}},enemy={id:'enemy',owner:'wu',roster:{officer_ids:[]}};
 let closed=0,lastDialog,lastCommand,picked=[],requests=0;
-const context={GameOfficerChoices:require('../game/officer-choice.js'),view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10},links:[['home','enemy']],recruitable:{home:[5,6,4]},persuadable:{home:[2]}},game:{player:'wei',turn:1,cities:{home:city,away,enemy},officers,extension:{officer_actions:{}}}},$:element,name:id=>'武将'+id,escapeHtml:String,marching:()=>new Set(),capacity:()=>99,notice(){},faction:String,cityName:String,actor:null,target:null,watchRouteDialog(){},dialog:{querySelectorAll:()=>picked,close(){closed++;}},openDialog(title,body){
+const context={GameOfficerChoices:require('../game/officer-choice.js'),GameOfficerSelection:require('../game/officer-selection.js'),GameI18n:{apply(){}},view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10},links:[['home','enemy']],recruitable:{home:[5,6,4]},persuadable:{home:[2]}},game:{player:'wei',turn:1,cities:{home:city,away,enemy},officers,extension:{officer_actions:{}}}},$:element,name:id=>'武将'+id,escapeHtml:String,marching:()=>new Set(),capacity:()=>99,notice(){},faction:String,cityName:String,actor:null,target:null,watchRouteDialog(){},dialog:{querySelectorAll:()=>picked.map(input=>Object.assign(input,{addEventListener(){}})),close(){closed++;}},openDialog(title,body){
  lastDialog={title,body};
  for(const match of body.matchAll(/<select id="([^"]+)"[^>]*>(.*?)<\/select>/g)){
   const options=[...match[2].matchAll(/<option value="([^"]+)"([^>]*)>/g)];

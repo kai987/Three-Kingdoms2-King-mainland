@@ -124,6 +124,7 @@ def main():
               '/calendar.js': ('calendar.js', 'text/javascript; charset=utf-8'),
               '/audio.js': ('audio.js', 'text/javascript; charset=utf-8'),
               '/officer-choice.js': ('officer-choice.js', 'text/javascript; charset=utf-8'),
+              '/officer-selection.js': ('officer-selection.js', 'text/javascript; charset=utf-8'),
               '/assets/audio/index.json': ('assets/audio/index.json', 'application/json; charset=utf-8'),
               '/assets/audio/effects.json': ('assets/audio/effects.json', 'application/json; charset=utf-8'),
               '/assets/audio/original/title.mp3': ('assets/audio/original/title.mp3', 'audio/mpeg'),

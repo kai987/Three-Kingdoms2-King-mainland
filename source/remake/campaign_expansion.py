@@ -486,7 +486,7 @@ class ExpandedCampaign:
                             'virtue_design':row.get('virtue_design'),
                             'era_assignment':self.catalog.data.get('era_assignments',{}).get(person.person_id)})
         return {'coverage':self.catalog.data['coverage'],'library':library,
-                'tactics':[{'id':i,'name':t[0],'cost':t[1],'description':t[3]} for i,t in enumerate(TACTICS)],
+                'tactics':[{'id':i,'name':t[0],'cost':t[1],'effect':t[2],'description':t[3]} for i,t in enumerate(TACTICS)],
                 'persuadable':{c.id:self._persuadable(state,c) for c in state.cities.values() if c.owner==state.player} if state else {},
                 'recruitable':{c.id:self._free_candidates(state,c) for c in state.cities.values() if c.owner==state.player} if state else {}}
 

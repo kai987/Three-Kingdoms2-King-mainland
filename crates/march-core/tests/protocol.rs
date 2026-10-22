@@ -161,6 +161,44 @@ fn scalar_direct_ties_use_id_while_batch_ties_preserve_route_order() {
 }
 
 #[test]
+fn neutral_corridors_connect_friendly_destinations_but_never_extend_attack_reach() {
+    let mut d = data();
+    d["travel_routes"] = json!([
+        land("a", "n1", 30.0),
+        land("n1", "n2", 30.0),
+        land("n2", "b", 30.0),
+        land("a", "enemy", 1.0),
+        land("enemy", "b", 1.0)
+    ]);
+    let mut cities = json!([{"id":"a","owner":"p"},{"id":"n1","owner":"neutral"},
+        {"id":"n2","owner":"neutral"},{"id":"b","owner":"p"},
+        {"id":"enemy","owner":"enemy"}]);
+    let request = json!({"op":"path","data":d,"cities":cities,"month":4,
+        "source":"a","target":"b","owner":"p","mode":"land"});
+    let quote = value(request.clone());
+    assert_eq!(quote["path"], json!(["a", "n1", "n2", "b"]));
+    assert_eq!(quote["grain_per_officer"], 15);
+    let bulk = value(json!({"op":"batch","data":d,"cities":cities,"month":4,"player":"p"}));
+    assert_eq!(bulk["a:b:land"], quote);
+    assert_eq!(bulk["a:n1:land"]["path"], json!(["a", "n1"]));
+    assert!(bulk.get("a:n2:land").is_none());
+    assert!(value(json!({"op":"path","data":d,"cities":cities,"month":4,
+        "source":"a","target":"b","owner":"p","mode":"land","adjacent":true}))
+    .is_null());
+    cities[2]["owner"] = json!("enemy");
+    let mut blocked = request.clone();
+    blocked["cities"] = cities.clone();
+    assert!(value(blocked).is_null());
+    let bulk = value(json!({"op":"batch","data":d,"cities":cities,"month":4,"player":"p"}));
+    assert!(bulk.get("a:b:land").is_none());
+    cities[2]["owner"] = json!("neutral");
+    cities[3]["owner"] = json!("neutral");
+    let mut neutral_destination = request;
+    neutral_destination["cities"] = cities;
+    assert!(value(neutral_destination).is_null());
+}
+
+#[test]
 fn survival_preview_merges_sea_storm_once_in_first_occurrence_order() {
     let storm =
         json!({"hazard":{"kind":"monsoon_storm","loss_percent_min":80,"loss_percent_max":90}});

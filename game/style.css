@@ -594,6 +594,9 @@ dialog .officer-picker label{
 padding:6px;
 border-bottom:1px solid #000
 }
+.selection-status{padding:6px 8px;margin:8px 0;border:2px solid #000;background:var(--paper)}
+.selection-status p{margin:2px 0}
+dialog .officer-picker label:has(input:disabled:not(:checked)){opacity:.5}
 dialog input[type=checkbox]{
 width:16px;
 height:16px;

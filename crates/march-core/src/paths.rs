@@ -158,6 +158,10 @@ fn initial(source: &str) -> BinaryHeap<Entry> {
     }])
 }
 
+fn can_transit(owner: Option<&Value>, player: &Value) -> bool {
+    owner.is_some_and(|owner| owner == player || owner.as_str() == Some("neutral"))
+}
+
 fn enqueue(
     queue: &mut BinaryHeap<Entry>,
     current: &Entry,
@@ -341,7 +345,7 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
             if adjacent && (current.city != source || next != target) {
                 continue;
             }
-            if !adjacent && cities.owners.get(next) != Some(owner) {
+            if !adjacent && !can_transit(cities.owners.get(next), owner) {
                 continue;
             }
             if !hazards::allowed(data, raw, &current.city, next)? {
@@ -436,7 +440,9 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
                 if !seen.insert(current.city.clone()) {
                     continue;
                 }
-                if !current.legs.is_empty() {
+                // Neutral cities connect friendly destinations; they are not
+                // themselves transfer destinations or remote attack targets.
+                if !current.legs.is_empty() && cities.owners.get(&current.city) == Some(player) {
                     quotes.insert(
                         format!("{source}:{}:{mode}", current.city),
                         quote(&current.path, &current.legs)?,
@@ -446,7 +452,7 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
                     for leg in legs {
                         let target = string(leg, "to")?;
                         if seen.contains(target)
-                            || cities.owners.get(target) != Some(player)
+                            || !can_transit(cities.owners.get(target), player)
                             || mode == "land" && string(leg, "mode")? == "sea"
                         {
                             continue;

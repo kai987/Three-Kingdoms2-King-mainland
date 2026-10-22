@@ -37,6 +37,14 @@ Route trees use `(days,distance,city,serial)` ordering. Legacy raw route metadat
 orientation, and float spellings remain intact; hazard quotes normalize integral
 numbers for the existing browser/save checksum contract.
 
+Friendly transfers require an owned destination, and may transit any number of
+connected owned or `neutral` cities. Enemy cities block that route tree. Batch
+searches expand neutral transit nodes without exposing them as remote attack
+destinations: attack quotes remain direct legs from the source. Direct sea,
+special, and exploration modes retain their existing one-leg restrictions.
+The host rechecks transit ownership on arrival; the pure core has no occupation,
+resource, random-number, or save side effects.
+
 ## ABI
 
 Exports are `memory` (WASM), `march_version() -> 1`, `march_alloc(len) -> ptr`,
