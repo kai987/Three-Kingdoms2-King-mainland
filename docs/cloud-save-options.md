@@ -8,7 +8,7 @@
 
 只有使用者明確按下保存／讀取／刪除時才操作對應槽。帳號切換或關閉對話框後的過期回應不會誤操作新帳號；遊戲狀態已變更時不會套用過期的讀檔請求。覆蓋、載入及刪除都有確認。
 
-公開設定在 `game/config/cloud-save-public.json`，僅包含公開 URL 和 publishable／anon key；自託管 SDK 在 `game/vendor/`。資料表與 RLS 定義在 `supabase/`，SDK 重建工具在 `tools/cloud-sdk/`。資料庫密鑰不放進前端。
+公開設定在 `game/config/cloud-save-public.json`，僅包含公開 URL 和 publishable key；本機服務會拒絕其他密鑰格式。自託管 SDK 在 `game/vendor/`。資料表與 RLS 定義在 `supabase/`，SDK 重建工具在 `tools/cloud-sdk/`。資料庫密鑰不放進前端。
 
 測試使用實際 SDK 與受控 Auth／PostgREST 回應，覆蓋跨裝置、版本衝突、帳號隔離、離線、損壞存檔與原文傳輸；這不等於已代替玩家完成真實信箱註冊及確認。
 

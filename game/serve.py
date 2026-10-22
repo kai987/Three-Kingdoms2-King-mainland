@@ -6,17 +6,106 @@ The optional audit records actual file opens, imports and HTTP requests.
 """
 from pathlib import Path
 import argparse
+import gzip
+import hashlib
 import json
+import math
 import re
 import signal
+import socket
 import sys
+import time
 import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from threading import BoundedSemaphore, Lock
 from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'game'
 ORIGINAL_EFFECT_CUES = ('5a', '5d', '5e', '60', '61', '62', '65', '68', '69', '88', '8d', '91', '95')
+MAX_BODY_BYTES = 2 * 1024 * 1024
+MAX_JSON_DEPTH = 64
+AUDIT_LIMITS = {'file_opens': 5000, 'imports': 1024, 'requests': 4096, 'denied_access': 1024}
+
+
+class AuditLog:
+    """Optional diagnostics have fixed storage bounds and retain dropped counts."""
+    def __init__(self, limits=None):
+        self.limits = dict(AUDIT_LIMITS if limits is None else limits)
+        self.rows = {key: [] for key in self.limits}
+        self.counts = dict.fromkeys(self.limits, 0)
+        self.lock = Lock()
+
+    def record(self, kind, value):
+        with self.lock:
+            self.counts[kind] += 1
+            if len(self.rows[kind]) < self.limits[kind]:
+                self.rows[kind].append(value)
+
+    def snapshot(self):
+        with self.lock:
+            return {**{key: list(rows) for key, rows in self.rows.items()},
+                    'counts': dict(self.counts), 'limits': dict(self.limits),
+                    'truncated': {key: self.counts[key] - len(rows) for key, rows in self.rows.items()}}
+
+
+def strict_json(raw):
+    """Reject ambiguous or excessive JSON before any campaign operation runs."""
+    depth = 0
+    quoted = escaped = False
+    for char in raw:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif char == 92:
+                escaped = True
+            elif char == 34:
+                quoted = False
+        elif char == 34:
+            quoted = True
+        elif char in (91, 123):
+            depth += 1
+            if depth > MAX_JSON_DEPTH:
+                raise ValueError('JSON nesting limit')
+        elif char in (93, 125):
+            depth -= 1
+
+    def unique_object(pairs):
+        value = {}
+        for key, item in pairs:
+            if key in value:
+                raise ValueError('Duplicate JSON key')
+            value[key] = item
+        return value
+
+    def finite_number(text):
+        value = float(text)
+        if not math.isfinite(value):
+            raise ValueError('Non-finite JSON number')
+        return value
+
+    def reject_constant(unused):
+        raise ValueError('Non-finite JSON constant')
+
+    return json.loads(raw.decode('utf-8'), object_pairs_hook=unique_object,
+                      parse_float=finite_number, parse_constant=reject_constant)
+
+
+def accepts_gzip(headers):
+    """Require an explicit gzip token; malformed/zero preferences fail closed."""
+    qualities = []
+    for value in headers.get_all('Accept-Encoding', []):
+        for item in value.split(','):
+            parts = [part.strip().lower() for part in item.split(';')]
+            if parts[0] != 'gzip':
+                continue
+            if len(parts) == 1:
+                qualities.append(1.0)
+            elif len(parts) == 2 and re.fullmatch(r'q=(?:0(?:\.[0-9]{0,3})?|1(?:\.0{0,3})?)', parts[1]):
+                qualities.append(float(parts[1][2:]))
+            else:
+                qualities.append(0.0)
+    return bool(qualities) and min(qualities) > 0
 
 
 def audio_effect_static_assets():
@@ -91,6 +180,59 @@ class GameHTTPServer(ThreadingHTTPServer):
     # Browsers open the deferred scripts/fonts/images concurrently. Python's
     # default backlog5 can reset those sockets while a catalog response is busy.
     request_queue_size = 128
+    daemon_threads = False
+
+    def __init__(self, address, handler, *, max_workers=32, request_timeout=5):
+        self.workers = BoundedSemaphore(max_workers)
+        self.request_timeout = request_timeout
+        self.connections = set()
+        self.connections_lock = Lock()
+        super().__init__(address, handler)
+
+    def get_request(self):
+        connection, address = super().get_request()
+        connection.settimeout(self.request_timeout)
+        return connection, address
+
+    def process_request(self, request, client_address):
+        if not self.workers.acquire(blocking=False):
+            # Admission never waits for a worker or a slow peer to read a reply.
+            try:
+                request.setblocking(False)
+                request.sendall(b'HTTP/1.0 503 Service Unavailable\r\nConnection: close\r\n'
+                                b'Content-Length: 0\r\nCache-Control: no-store\r\nRetry-After: 1\r\n\r\n')
+            except OSError:
+                pass
+            self.shutdown_request(request)
+            return
+        with self.connections_lock:
+            self.connections.add(request)
+        try:
+            super().process_request(request, client_address)
+        except BaseException:
+            with self.connections_lock:
+                self.connections.discard(request)
+            self.workers.release()
+            raise
+
+    def process_request_thread(self, request, client_address):
+        try:
+            super().process_request_thread(request, client_address)
+        finally:
+            with self.connections_lock:
+                self.connections.discard(request)
+            self.workers.release()
+
+    def server_close(self):
+        # Wake idle header/body readers before ThreadingMixIn joins its workers.
+        with self.connections_lock:
+            connections = list(self.connections)
+        for connection in connections:
+            try:
+                connection.shutdown(socket.SHUT_RDWR)
+            except OSError:
+                pass
+        super().server_close()
 
 
 def portrait_static_assets(here=HERE):
@@ -183,33 +325,203 @@ def static_file_bytes(here, name):
     return target.read_bytes()
 
 
+def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
+    from remake.errors import GameError
+
+    class Handler(BaseHTTPRequestHandler):
+        # Every response closes its connection, including rejections with unread bodies.
+        protocol_version = 'HTTP/1.0'
+
+        def log_message(self, *unused):
+            pass
+
+        def handle(self):
+            try:
+                super().handle()
+            except (ConnectionError, TimeoutError):
+                self.close_connection = True
+
+        def parse_request(self):
+            if not super().parse_request():
+                return False
+            port = self.server.server_address[1]
+            authorities = {f'127.0.0.1:{port}', f'localhost:{port}'}
+            if port == 80:
+                authorities.update(('127.0.0.1', 'localhost'))
+            hosts = self.headers.get_all('Host', [])
+            origins = self.headers.get_all('Origin', [])
+            sites = self.headers.get_all('Sec-Fetch-Site', [])
+            target = self.requestline.split()[1]
+            if (len(hosts) != 1 or hosts[0] not in authorities
+                    or origins and (len(origins) != 1 or origins[0] not in {'http://' + host for host in authorities})
+                    or sites and (len(sites) != 1 or sites[0] not in ('same-origin', 'none'))
+                    or not target.startswith('/') or target.startswith('//')):
+                self.send(403, {'error': '请在本地游戏页面操作。'})
+                return False
+            return True
+
+        def send(self, status, data, mime='application/json; charset=utf-8', *, etag=None):
+            if not isinstance(data, bytes):
+                data = json.dumps(data, ensure_ascii=False, allow_nan=False).encode()
+            vary = status == 200 and self.path.startswith('/api/') and self.path != '/api/save' and mime.startswith('application/json')
+            compressed = False
+            if vary and len(data) >= 4096 and accepts_gzip(self.headers):
+                packed = gzip.compress(data, compresslevel=1, mtime=0)
+                if len(packed) < len(data):
+                    data, compressed = packed, True
+            self.close_connection = True
+            self.connection.settimeout(self.server.request_timeout)
+            self.send_response(status)
+            self.send_header('Content-Type', mime)
+            if status not in (204, 304):
+                self.send_header('Content-Length', str(len(data)))
+            self.send_header('Connection', 'close')
+            self.send_header('Cache-Control', 'private, no-cache' if etag else 'no-store')
+            self.send_header('X-Content-Type-Options', 'nosniff')
+            self.send_header('Content-Security-Policy', cloud_csp)
+            if etag:
+                self.send_header('ETag', etag)
+            if vary:
+                self.send_header('Vary', 'Accept-Encoding')
+            if compressed:
+                self.send_header('Content-Encoding', 'gzip')
+            complete = False
+            try:
+                self.end_headers()
+                self.wfile.write(data)
+                self.wfile.flush()
+                complete = True
+            finally:
+                if audit is not None:
+                    audit.record('requests', {'method': self.command[:32], 'path': self.path[:2048],
+                                             'status': status, 'bytes': len(data) if complete else 0,
+                                             'complete': complete})
+
+        def do_GET(self):
+            try:
+                if self.path == '/api/state':
+                    return self.send(200, game.view())
+                if self.path == '/api/cloud-config':
+                    return self.send(200, cloud_config)
+                if self.path == '/api/march-status':
+                    from remake.march_core import backend_status
+                    return self.send(200, backend_status())
+                if urlsplit(self.path).path == '/api/march-config':
+                    try:
+                        query = parse_qs(urlsplit(self.path).query, keep_blank_values=True, max_num_fields=1)
+                    except ValueError:
+                        raise GameError('行军查询参数无效。')
+                    if set(query) != {'scenario'} or len(query['scenario']) != 1:
+                        raise GameError('行军查询参数无效。')
+                    catalog = game.catalogs.get(query['scenario'][0])
+                    if catalog is None:
+                        raise GameError('未找到这个剧本。')
+                    from remake.march_core import config_for
+                    return self.send(200, config_for(catalog.data))
+                if self.path == '/api/save':
+                    return self.send(200, game.export_save())
+                if urlsplit(self.path).path == '/api/city-preview':
+                    try:
+                        query = parse_qs(urlsplit(self.path).query, keep_blank_values=True, max_num_fields=2)
+                    except ValueError:
+                        raise GameError('城池查询参数无效。')
+                    if set(query) != {'scenario', 'city'} or any(len(v) != 1 for v in query.values()):
+                        raise GameError('城池查询参数无效。')
+                    return self.send(200, game.preview_city(query['scenario'][0], query['city'][0]))
+                if self.path == '/favicon.ico':
+                    return self.send(204, b'', 'image/x-icon')
+                if self.path in static:
+                    name, mime = static[self.path]
+                    try:
+                        data = static_file_bytes(here, name)
+                    except OSError:
+                        return self.send(404, {'error': '未找到这个资源。'})
+                    etag = '"' + hashlib.sha256(data).hexdigest() + '"'
+                    tags = ','.join(self.headers.get_all('If-None-Match', [])).split(',')
+                    if any(tag.strip() == '*' or tag.strip().removeprefix('W/') == etag for tag in tags):
+                        return self.send(304, b'', mime, etag=etag)
+                    return self.send(200, data, mime, etag=etag)
+                self.send(404, {'error': '未找到这个页面。'})
+            except GameError as exc:
+                self.send(exc.status, {'error': str(exc)})
+            except (ConnectionError, TimeoutError):
+                pass
+
+        def do_POST(self):
+            try:
+                if self.path not in ('/api/command', '/api/load'):
+                    return self.send(404, {'error': '未找到这个操作。'})
+                lengths = self.headers.get_all('Content-Length', [])
+                if (self.headers.get_all('Transfer-Encoding') or len(lengths) != 1
+                        or re.fullmatch(r'[0-9]+', lengths[0]) is None):
+                    return self.send(400, {'error': '操作数据长度无效。'})
+                digits = lengths[0].lstrip('0') or '0'
+                if len(digits) > 7 or int(digits) > MAX_BODY_BYTES:
+                    return self.send(413, {'error': '存档或操作数据大小无效。'})
+                length = int(digits)
+                if not length or len(self.headers.get_all('Content-Type', [])) != 1 or self.headers.get_content_type() != 'application/json' or self.headers.get_all('Content-Encoding'):
+                    return self.send(400, {'error': '操作数据格式无效。'})
+                try:
+                    deadline = time.monotonic() + self.server.request_timeout
+                    raw = bytearray()
+                    while len(raw) < length:
+                        remaining = deadline - time.monotonic()
+                        if remaining <= 0:
+                            raise TimeoutError('Body deadline')
+                        self.connection.settimeout(remaining)
+                        chunk = self.rfile.read1(min(65536, length - len(raw)))
+                        if not chunk:
+                            break
+                        raw.extend(chunk)
+                except TimeoutError:
+                    return self.send(408, {'error': '操作数据接收超时，进度未改变。'})
+                if len(raw) != length:
+                    return self.send(400, {'error': '操作数据不完整，进度未改变。'})
+                payload = strict_json(raw)
+                if not isinstance(payload, dict):
+                    raise ValueError('payload')
+                if self.path == '/api/command':
+                    view = game.command(payload.get('kind'), payload.get('payload', {}), payload.get('revision'))
+                else:
+                    view = game.load_save(payload.get('save'), payload.get('revision'))
+                self.send(200, view)
+            except GameError as exc:
+                self.send(exc.status, {'error': str(exc)})
+            except (ValueError, TypeError, KeyError, RecursionError):
+                self.send(400, {'error': '输入或存档不符合当前规则，进度未改变。'})
+            except (ConnectionError, TimeoutError):
+                pass
+            except Exception:
+                traceback.print_exc()
+                self.send(500, {'error': '操作未完成，请核对当前进度后重试。'})
+
+    return Handler
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port', type=int, default=8878)
     parser.add_argument('--audit-log', type=Path)
     args = parser.parse_args()
-    audit = {'file_opens': [], 'imports': [], 'requests': [], 'denied_access': []}
+    audit = AuditLog() if args.audit_log else None
 
     def audit_hook(event, values):
         if event == 'open':
             path = str(values[0])
             if any(part in Path(path).parts for part in ('.toolchain', '.venv-trace', 'analysis')) or Path(path).suffix.lower() in {'.nes', '.state'}:
-                audit['denied_access'].append(path)
+                audit.record('denied_access', path[:2048])
                 raise PermissionError('Forbidden original runtime input: ' + path)
-            if len(audit['file_opens']) < 50000:
-                audit['file_opens'].append({'path': path, 'mode': str(values[1])})
+            audit.record('file_opens', {'path': path[:2048], 'mode': str(values[1])[:32]})
         elif event == 'import':
             name = str(values[0])
             if name == 'py65' or name.startswith(('py65.', 'recovered.')):
-                audit['denied_access'].append(name)
+                audit.record('denied_access', name[:256])
                 raise ImportError('Forbidden runtime module: ' + name)
-            audit['imports'].append(name)
+            audit.record('imports', name[:256])
     if args.audit_log:
         sys.addaudithook(audit_hook)
     sys.path.insert(0, str(ROOT / 'source'))
-    from remake.campaign import GameError
     from remake.session import CampaignSession
-    from remake.march_core import backend_status, config_for
     from remake.cloud_config import public_config, content_security_policy
     cloud_config = public_config(HERE / 'config/cloud-save-public.json')
     cloud_csp = content_security_policy(cloud_config)
@@ -271,92 +583,7 @@ def main():
     static.update(battle_static_assets())
     static.update(enhanced_battle_static_assets())
 
-    class Handler(BaseHTTPRequestHandler):
-        def log_message(self, *unused):
-            pass
-
-        def send(self, status, data, mime='application/json; charset=utf-8'):
-            if not isinstance(data, bytes):
-                data = json.dumps(data, ensure_ascii=False, allow_nan=False).encode()
-            self.send_response(status)
-            self.send_header('Content-Type', mime)
-            self.send_header('Content-Length', str(len(data)))
-            self.send_header('Cache-Control', 'no-store')
-            self.send_header('X-Content-Type-Options', 'nosniff')
-            self.send_header('Content-Security-Policy', cloud_csp)
-            self.end_headers()
-            self.wfile.write(data)
-            audit['requests'].append({'method': self.command, 'path': self.path, 'status': status, 'bytes': len(data)})
-
-        def do_GET(self):
-            try:
-                if self.path == '/api/state':
-                    return self.send(200, game.view())
-                if self.path == '/api/cloud-config':
-                    return self.send(200, cloud_config)
-                if self.path == '/api/march-status':
-                    return self.send(200, backend_status())
-                if urlsplit(self.path).path == '/api/march-config':
-                    try:
-                        query = parse_qs(urlsplit(self.path).query, keep_blank_values=True, max_num_fields=1)
-                    except ValueError:
-                        raise GameError('行军查询参数无效。')
-                    if set(query) != {'scenario'} or len(query['scenario']) != 1:
-                        raise GameError('行军查询参数无效。')
-                    catalog = game.catalogs.get(query['scenario'][0])
-                    if catalog is None:
-                        raise GameError('未找到这个剧本。')
-                    return self.send(200, config_for(catalog.data))
-                if self.path == '/api/save':
-                    return self.send(200, game.export_save())
-                if urlsplit(self.path).path == '/api/city-preview':
-                    try:
-                        query=parse_qs(urlsplit(self.path).query,keep_blank_values=True,max_num_fields=2)
-                    except ValueError:
-                        raise GameError('城池查询参数无效。')
-                    if set(query)!={'scenario','city'} or any(len(v)!=1 for v in query.values()):
-                        raise GameError('城池查询参数无效。')
-                    return self.send(200,game.preview_city(query['scenario'][0],query['city'][0]))
-                if self.path == '/favicon.ico':
-                    return self.send(204, b'', 'image/x-icon')
-                if self.path in static:
-                    name, mime = static[self.path]
-                    try:
-                        return self.send(200, static_file_bytes(HERE, name), mime)
-                    except OSError:
-                        return self.send(404, {'error': '未找到这个资源。'})
-                self.send(404, {'error': '未找到这个页面。'})
-            except GameError as exc:
-                self.send(exc.status, {'error': str(exc)})
-
-        def do_POST(self):
-            try:
-                origin = self.headers.get('Origin')
-                port = self.server.server_address[1]
-                if origin and origin not in {f'http://127.0.0.1:{port}', f'http://localhost:{port}'}:
-                    return self.send(403, {'error': '请在本地游戏页面操作。'})
-                if self.headers.get_content_type() != 'application/json':
-                    return self.send(400, {'error': '操作数据格式无效。'})
-                length = int(self.headers.get('Content-Length', '0'))
-                if not 0 < length <= 2 * 1024 * 1024:
-                    return self.send(400, {'error': '存档或操作数据大小无效。'})
-                payload = json.loads(self.rfile.read(length))
-                if not isinstance(payload, dict):
-                    raise ValueError('payload')
-                if self.path == '/api/command':
-                    view = game.command(payload.get('kind'), payload.get('payload', {}), payload.get('revision'))
-                elif self.path == '/api/load':
-                    view = game.load_save(payload.get('save'), payload.get('revision'))
-                else:
-                    return self.send(404, {'error': '未找到这个操作。'})
-                self.send(200, view)
-            except GameError as exc:
-                self.send(exc.status, {'error': str(exc)})
-            except (ValueError, TypeError, KeyError) as exc:
-                self.send(400, {'error': '输入或存档不符合当前规则，进度未改变。'})
-            except Exception:
-                traceback.print_exc()
-                self.send(500, {'error': '操作未完成，当前进度未改变。'})
+    Handler = make_handler(game, cloud_config, cloud_csp, static, audit)
 
     server = GameHTTPServer(('127.0.0.1', args.port), Handler)
     def stop(signum, frame):
@@ -370,13 +597,14 @@ def main():
     finally:
         server.server_close()
         if args.audit_log:
-            audit['loaded_modules'] = {name: getattr(module, '__file__', None)
+            report = audit.snapshot()
+            report['loaded_modules'] = {name: getattr(module, '__file__', None)
                                        for name, module in sorted(sys.modules.items())}
-            audit['game_journal'] = game.journal
-            audit['final_revision'] = game.revision
-            audit['final_state'] = game.to_dict()
+            report['game_journal'] = game.journal
+            report['final_revision'] = game.revision
+            report['final_state'] = game.to_dict()
             args.audit_log.parent.mkdir(parents=True, exist_ok=True)
-            args.audit_log.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + '\n')
+            args.audit_log.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
 
 
 if __name__ == '__main__':

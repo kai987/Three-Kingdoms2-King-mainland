@@ -1,4 +1,4 @@
-"""Current opening caches preserve saves, RNG and independent response containers."""
+"""Session response reuse and opening caches preserve saves, RNG and receipts."""
 from copy import deepcopy
 from pathlib import Path
 import sys
@@ -7,9 +7,10 @@ from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
-from remake.campaign import digest
+from remake.campaign import Campaign, GameError, digest
 from remake.session import CampaignSession
 import remake.session as session_module
+from campaign_fixtures import controlled_catalog
 
 
 class SessionPreviewCacheTests(unittest.TestCase):
@@ -69,6 +70,106 @@ class SessionPreviewCacheTests(unittest.TestCase):
                 session.load_save(saved,session.revision)
                 self.assertEqual(session.view()['catalog']['scenarios'],openings)
                 self.assertEqual(session.export_save(),saved)
+
+
+class SessionResponseReuseTests(unittest.TestCase):
+    def setUp(self):
+        catalog=controlled_catalog()
+        with patch.object(session_module,'Catalog',return_value=catalog):
+            self.session=CampaignSession([ROOT/'controlled.json'])
+
+    def single_view(self, operation):
+        with patch.object(Campaign,'view',autospec=True,side_effect=Campaign.view) as base_view:
+            result=operation()
+        self.assertEqual(base_view.call_count,1,'one response recomputed the campaign view')
+        self.assertIs(base_view.call_args.args[0],self.session.game)
+        saved=self.session.export_save()
+        self.assertEqual({k:v for k,v in result.items() if k!='presentation'},self.session.view())
+        self.assertEqual(self.session.export_save(),saved,'reading the response changed saved state/RNG')
+        return result
+
+    def start(self):
+        return self.single_view(lambda:self.session.command('new',dict(faction='shu',seed=2026),self.session.revision))
+
+    def test_new_regular_load_and_idempotent_ai_generate_one_complete_view(self):
+        session=self.session
+        self.start()
+        self.single_view(lambda:session.command('allocate',dict(city='xiangyang',officer=146,troops=250),session.revision))
+        self.assertEqual(session.game.state.officers[146].troops,250)
+        saved=session.export_save();rng=deepcopy(session.game.state.rng)
+        self.single_view(lambda:session.load_save(saved,session.revision))
+        self.assertEqual(session.export_save(),saved)
+        self.assertEqual(session.game.state.rng,rng)
+        turn=session.game.state.turn
+        self.single_view(lambda:session.command('end_turn',{},session.revision))
+        revision=session.revision
+        self.single_view(lambda:session.command('ai',dict(turn=turn),revision))
+        saved=session.export_save();committed=session.revision;journal=deepcopy(session.journal)
+        result=self.single_view(lambda:session.command('ai',dict(turn=turn),revision))
+        self.assertNotIn('presentation',result)
+        self.assertEqual(session.export_save(),saved)
+        self.assertEqual(session.revision,committed)
+        self.assertEqual(session.journal,journal)
+
+    def test_real_battle_receipt_survives_reuse_without_replaying_after_settlement_or_load(self):
+        session=self.session
+        self.start()
+        game=session.game;state=game.state
+        game._start_expanded_battle(state,state.cities['xiangyang'],state.cities['nanyang'],[146])
+        battle=state.battle;payload=dict(battle_id=battle['id'],actor=146,target=battle['defenders'][0]['id'])
+        reference=Campaign(game.catalog)
+        reference.load_save(session.export_save(),0)
+        expected=reference.command('attack',payload,reference.revision)
+        result=self.single_view(lambda:session.command('attack',payload,session.revision))
+        self.assertEqual(result['presentation'],expected['presentation'])
+        self.assertEqual(session.export_save(),reference.export_save())
+        self.assertEqual(session.game.state.rng,reference.state.rng)
+        self.assertNotIn('presentation',session.view())
+        result=self.single_view(lambda:session.command('retreat',dict(battle_id=battle['id']),session.revision))
+        self.assertEqual(result['presentation']['scenes'][0]['kind'],'retreat')
+        revision=session.revision
+        result=self.single_view(lambda:session.command('settle',dict(battle_id=battle['id']),revision))
+        self.assertNotIn('presentation',result)
+        saved=session.export_save();committed=session.revision;journal=deepcopy(session.journal)
+        result=self.single_view(lambda:session.command('settle',dict(battle_id=battle['id']),revision))
+        self.assertNotIn('presentation',result)
+        self.assertEqual(session.export_save(),saved)
+        self.assertEqual(session.revision,committed)
+        self.assertEqual(session.journal,journal)
+        result=self.single_view(lambda:session.load_save(saved,session.revision))
+        self.assertNotIn('presentation',result)
+        self.assertEqual(session.export_save(),saved)
+
+    def test_failed_commands_and_loads_keep_state_rng_revision_and_game_identity(self):
+        session=self.session
+        self.start()
+        game=session.game;saved=session.export_save();revision=session.revision;journal=deepcopy(session.journal)
+        invalid=deepcopy(saved);invalid['checksum']='invalid'
+        operations=[
+            lambda:session.command('new',dict(scenario='missing',faction='shu',seed=2026),revision),
+            lambda:session.command('new',dict(faction='missing',seed=2026),revision),
+            lambda:session.command('allocate',dict(city='xiangyang',officer=146,troops=250),revision-1),
+            lambda:session.command('allocate',dict(city='nanyang',officer=146,troops=250),revision),
+            lambda:session.load_save(invalid,revision)]
+        for index,operation in enumerate(operations):
+            with self.subTest(operation=index):
+                with patch.object(Campaign,'view',autospec=True,side_effect=Campaign.view) as base_view:
+                    with self.assertRaises((GameError,ValueError)):
+                        operation()
+                self.assertEqual(base_view.call_count,0)
+                self.assertIs(session.game,game)
+                self.assertEqual(session.export_save(),saved)
+                self.assertEqual(session.revision,revision)
+                self.assertEqual(session.journal,journal)
+        with patch.object(game,'validate',side_effect=ValueError('controlled post-action failure')), \
+             patch.object(Campaign,'view',autospec=True,side_effect=Campaign.view) as base_view:
+            with self.assertRaises(ValueError):
+                session.command('allocate',dict(city='xiangyang',officer=146,troops=250),revision)
+        self.assertEqual(base_view.call_count,0)
+        self.assertIs(session.game,game)
+        self.assertEqual(session.export_save(),saved)
+        self.assertEqual(session.revision,revision)
+        self.assertEqual(session.journal,journal)
 
 
 if __name__=='__main__':unittest.main()

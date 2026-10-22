@@ -17,6 +17,7 @@ python3 -I -S -B game/serve.py --port 8878
 - [武將歸城與登場統計](docs/officer-placement-audit.md)
 - [原版德、SAN14能力與經驗欄位來源](docs/officer-attribute-sources.md)
 - [雲端帳號存檔](docs/cloud-save-options.md)
+- [本機服務安全邊界與效能](docs/runtime-safety.md)
 - [原版像素肖像與來源](docs/officer-portraits.md)
 - [128×160肖像強化、原圖保留與檢查](docs/portrait-enhancement.md) · [1,023人原圖／新版對照](art/portraits/enhancement-v1/index.html)
 - [特殊道路、季風與減員](docs/hazardous-travel.md)

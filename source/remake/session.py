@@ -62,25 +62,28 @@ class CampaignSession:
 
     def view(self):
         with self.lock:
-            result=self.game.view()
-            names=city_names(self.game.catalog,self.game.state.year if self.game.state else self.game.catalog.data['start_year'])
-            result['catalog']['cities']=[dict(c,name=names[c['id']],administrative_name=c['name'])
-                                         for c in result['catalog']['cities']]
-            result['catalog']['map_presentation']=presentation()
-            result['catalog']['city_profiles']=self.game.catalog.data.get('city_profiles',{})
-            result['catalog']['city_income']=self.game.catalog.data.get('city_income',{})
-            result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
-            result['catalog']['world']=self.game.catalog.data.get('world')
-            result['catalog']['scenario_id']=self.game.catalog.data['id']
-            result['catalog']['faction_resources']=faction_resources(self.game.catalog,self.game.state)
-            result['catalog']['faction_officers']=faction_officer_counts(self.game.catalog,self.game.state)
-            result['catalog']['faction_colors']=faction_colors(self.game.catalog)
-            result['catalog']['sea_routes']=self.game.catalog.data.get('sea_routes',[])
-            result['catalog']['travel_hazards']=self.game.catalog.data.get('travel_hazards')
-            for field in ('added_city_ids','regional_roads','city_label_offsets','city_history'):
-                result['catalog'][field]=self.game.catalog.data.get(field,[] if field in ('added_city_ids','regional_roads') else {})
-            result['catalog']['scenarios']=self._scenario_previews()
-            return result
+            return self._decorate_view(self.game.view())
+
+    def _decorate_view(self, result):
+        """Add session metadata to one fresh campaign response under our lock."""
+        names=city_names(self.game.catalog,self.game.state.year if self.game.state else self.game.catalog.data['start_year'])
+        result['catalog']['cities']=[dict(c,name=names[c['id']],administrative_name=c['name'])
+                                     for c in result['catalog']['cities']]
+        result['catalog']['map_presentation']=presentation()
+        result['catalog']['city_profiles']=self.game.catalog.data.get('city_profiles',{})
+        result['catalog']['city_income']=self.game.catalog.data.get('city_income',{})
+        result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
+        result['catalog']['world']=self.game.catalog.data.get('world')
+        result['catalog']['scenario_id']=self.game.catalog.data['id']
+        result['catalog']['faction_resources']=faction_resources(self.game.catalog,self.game.state)
+        result['catalog']['faction_officers']=faction_officer_counts(self.game.catalog,self.game.state)
+        result['catalog']['faction_colors']=faction_colors(self.game.catalog)
+        result['catalog']['sea_routes']=self.game.catalog.data.get('sea_routes',[])
+        result['catalog']['travel_hazards']=self.game.catalog.data.get('travel_hazards')
+        for field in ('added_city_ids','regional_roads','city_label_offsets','city_history'):
+            result['catalog'][field]=self.game.catalog.data.get(field,[] if field in ('added_city_ids','regional_roads') else {})
+        result['catalog']['scenarios']=self._scenario_previews()
+        return result
 
     def _scenario_previews(self):
         """Build immutable opening summaries once, retaining fresh view containers.
@@ -136,9 +139,7 @@ class CampaignSession:
                 result=candidate.command(kind,payload,revision)
                 self.game=candidate
             else:result=self.game.command(kind,payload,revision)
-            view=self.view()
-            if 'presentation' in result:view['presentation']=result['presentation']
-            return view
+            return self._decorate_view(result)
 
     def export_save(self):
         with self.lock:return self.game.export_save()
@@ -174,6 +175,6 @@ class CampaignSession:
             scenario=save.get('scenario') if isinstance(save,dict) else None
             if not isinstance(scenario,str) or scenario not in self.catalogs:raise GameError('存档所属战役不可用，进度未改变。')
             candidate=Campaign(self.catalogs[scenario]);candidate.revision=self.revision
-            candidate.load_save(save,revision)
+            result=candidate.load_save(save,revision)
             self.game=candidate
-            return self.view()
+            return self._decorate_view(result)
