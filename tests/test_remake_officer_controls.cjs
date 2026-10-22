@@ -36,6 +36,7 @@ const context={GameOfficerChoices:require('../game/officer-choice.js'),GameOffic
  return true;
 }};
 vm.createContext(context);
+context.isRuler=id=>context.GameOfficerChoices.isRuler(id,context.view.game.extension?.leaders);
 vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),context);
 const values=html=>[...html.matchAll(/<option value="(\d+)"/g)].map(m=>Number(m[1]));
 (async()=>{

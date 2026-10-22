@@ -26,6 +26,18 @@ const ui=domestic.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=
 },async command(kind,payload){submitted.push({kind,payload});if(resolveCommand)await new Promise(resolve=>{resolveCommand=resolve;});return nextResult;}});
 (async()=>{
  assert(ui.open('home'));dialog.scrollTop=55;assert(shown.body.includes('知90'));assert(shown.body.includes('忠誠80'));assert(shown.body.includes('士氣 70/100'));assert.equal(JSON.stringify(view),original);
+ view.game.officers[1].loyalty=view.game.officers['clerk-000001'].loyalty=100;
+ view.game.extension={leaders:{shu:1,ended:null}};
+ for(const locale of ['zh-Hant','ja']){
+  i18n.locale=locale;assert(ui.open('home'));
+  assert(shown.body.includes(choices.label('孔明',view.game.officers[1],{loyalty:true,isRuler:true})));
+  assert(shown.body.includes(choices.label('王安',view.game.officers['clerk-000001'],{loyalty:true})));
+  view.game.extension.leaders.shu='clerk-000001';const unchanged=JSON.stringify(view);listeners.get('game-language-change')();
+  assert(shown.body.includes(choices.label('王安',view.game.officers['clerk-000001'],{loyalty:true,isRuler:true})));
+  assert(shown.body.includes(choices.label('孔明',view.game.officers[1],{loyalty:true})));
+  assert.equal(JSON.stringify(view),unchanged,'Changing ruler display leaves internal loyalty, role map and RNG untouched');view.game.extension.leaders.shu=1;
+ }
+ delete view.game.extension;view.game.officers[1].loyalty=view.game.officers['clerk-000001'].loyalty=80;i18n.locale='zh-Hant';ui.open('home');dialog.scrollTop=55;
  elements.get('#office-civil').value='clerk-000001';elements.get('#office-civil').onchange();assert(elements.get('#save-domestic').disabled);await elements.get('#save-domestic').onclick();assert.equal(submitted.length,0);
  elements.get('#office-civil').value='1';elements.get('#office-civil').onchange();assert(!elements.get('#save-domestic').disabled);
  elements.get('#policy-budget').value='999999999999';elements.get('#policy-budget').oninput();assert.equal(elements.get('#policy-budget').value,'1000000');

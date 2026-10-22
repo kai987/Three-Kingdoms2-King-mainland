@@ -18,9 +18,10 @@
   return /^clerk-[123]$/.test(record?.portrait||'')?`<img class="civil-staff-portrait" src="/assets/civil-staff/${record.portrait}.png" width="32" height="40" alt="${title}" loading="lazy" decoding="async">`:`<span class="civil-staff-portrait civil-staff-placeholder" role="img" aria-label="${title}">吏</span>`;
  }
  function stat(value){return Number.isInteger(value)&&value>=0?value:'—';}
- function attributes(record,locale='zh-Hant'){
+ function attributes(record,locale='zh-Hant',isRuler=record?.is_ruler===true){
   const p=record?.profile||{},experience=Number.isInteger(record?.experience)&&record.experience>=0&&record.experience<=49999?Math.floor(record.experience/50):'—';
-  return choose(locale,`兵${stat(record?.troops??0)} · 武${stat(p.martial_strength)} · 知${stat(p.intellect)} · 德${stat(p.virtue)} · 忠${stat(record?.loyalty)} · 體${stat(record?.health??p.health_max)} · 經${experience}`,`兵${stat(record?.troops??0)}・武${stat(p.martial_strength)}・知${stat(p.intellect)}・徳${stat(p.virtue)}・忠${stat(record?.loyalty)}・体力${stat(record?.health??p.health_max)}・経${experience}`);
+  const loyalty=isRuler?'--':stat(record?.loyalty);
+  return choose(locale,`兵${stat(record?.troops??0)} · 武${stat(p.martial_strength)} · 知${stat(p.intellect)} · 德${stat(p.virtue)} · 忠${loyalty} · 體${stat(record?.health??p.health_max)} · 經${experience}`,`兵${stat(record?.troops??0)}・武${stat(p.martial_strength)}・知${stat(p.intellect)}・徳${stat(p.virtue)}・忠${loyalty}・体力${stat(record?.health??p.health_max)}・経${experience}`);
  }
  function summary(view,id,{locale='zh-Hant',cityName=value=>value,bilingual=false}={}){
   if(bilingual)return ['zh-Hant','ja'].map(language=>`<div data-locale-only="${language}" data-l10n-native="${language}">${summary(view,id,{locale:language,cityName})}</div>`).join('');
@@ -35,11 +36,12 @@
   let active=null,pending=false,disposed=false;
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant',text=(tc,ja)=>choose(locale(),tc,ja),label=value=>i18n?.t?i18n.t(value,locale()):String(value??'');
   const query=selector=>dialog?.querySelector?.(selector);
+  const currentRuler=person=>root.GameOfficerChoices?.isRuler?.(person?.id,getView()?.game?.extension?.leaders)===true;
   function showing(){return !!active&&dialog?.open!==false&&!!query('[data-civil-staff-dialog]');}
   function card(person,{candidate=false}={}){
    const kind=specialtyLabels[person.specialty]||['內政','内政'];
    const working=person.working?text('履職中','勤務中'):text('待月結／欠薪暫停','月次精算待ち・未払い時は休務');
-   return `<article class="civil-staff-card" data-staff-id="${escape(person.id)}">${portrait(person,locale())}<div><p><strong>${escape(label(person.name))}</strong> <span class="civil-staff-kind">${text('架空文吏','架空の文吏')}</span></p><p class="small">${text('專長','得意分野')}：${kind[locale()==='ja'?1:0]}</p><p class="small">${attributes(person,locale())}</p><p class="small">${candidate?text(`候選可雇用至${month(person.expires_month,locale())}開始前。`,`${month(person.expires_month,locale())}の月初まで雇用できます。`):working}${!candidate&&person.unpaid_months?text(` · 連續欠薪${person.unpaid_months}月`,`・俸給未払い${person.unpaid_months}か月`):''}</p></div></article>`;
+   return `<article class="civil-staff-card" data-staff-id="${escape(person.id)}">${portrait(person,locale())}<div><p><strong>${escape(label(person.name))}</strong> <span class="civil-staff-kind">${text('架空文吏','架空の文吏')}</span></p><p class="small">${text('專長','得意分野')}：${kind[locale()==='ja'?1:0]}</p><p class="small">${attributes(person,locale(),!candidate&&currentRuler(person))}</p><p class="small">${candidate?text(`候選可雇用至${month(person.expires_month,locale())}開始前。`,`${month(person.expires_month,locale())}の月初まで雇用できます。`):working}${!candidate&&person.unpaid_months?text(` · 連續欠薪${person.unpaid_months}月`,`・俸給未払い${person.unpaid_months}か月`):''}</p></div></article>`;
   }
   function searchBody(row){
    const actors=[...(row.searchable_staff||[])].sort((a,b)=>b.profile.virtue-a.profile.virtue||b.profile.intellect-a.profile.intellect||a.id.localeCompare(b.id)),targets=[...(row.search_targets||[])].sort((a,b)=>b.virtue-a.virtue||b.intellect-a.intellect||String(a.id).localeCompare(String(b.id),undefined,{numeric:true}));
@@ -47,7 +49,7 @@
    if(!targets.some(p=>String(p.id)===String(active.target)))active.target=targets[0]?.id??'';
    const reason=reasons[row.search_blocked_reason];
    const historical=p=>{const runtime=getView()?.game?.officers?.[p.id];return {...p,profile:runtime?.profile||p,health:runtime?.health};};
-   return `<section class="civil-staff-search"><h3>${text('文吏尋訪歷史武將','文吏による歴史武将の登用')}</h3><p class="small">${text('文吏可代辦在野登用，費用60金，使用原登用成功判定並消耗本城本旬行動。','文吏が在野武将の登用を代行します。費用60で、既存の成功判定を使い、都市の今旬の行動を消費します。')}</p><label class="field">${text('執行文吏','実行する文吏')}<select id="staff-search-actor">${actors.map(p=>`<option value="${escape(p.id)}" ${p.id===active.actor?'selected':''}>${escape(label(p.name))} · ${attributes(p,locale())}</option>`).join('')||`<option value="">${text('沒有可行動的文吏','行動できる文吏がいません')}</option>`}</select></label><label class="field">${text('歷史武將候選','歴史武将の候補')}<select id="staff-search-target">${targets.map(p=>`<option value="${p.id}" ${String(p.id)===String(active.target)?'selected':''}>${escape(label(p.name))} · ${attributes(historical(p),locale())}</option>`).join('')||`<option value="">${text('附近沒有可登用的歷史武將','近隣に登用できる歴史武将がいません')}</option>`}</select></label><p class="small" role="status">${reason?reason[locale()==='ja'?1:0]:''}</p><button id="staff-search-confirm" ${pending||isPreview()||!row.can_search?'disabled':''}>${text('確認文吏尋訪','文吏の訪問を確定')}</button></section>`;
+   return `<section class="civil-staff-search"><h3>${text('文吏尋訪歷史武將','文吏による歴史武将の登用')}</h3><p class="small">${text('文吏可代辦在野登用，費用60金，使用原登用成功判定並消耗本城本旬行動。','文吏が在野武将の登用を代行します。費用60で、既存の成功判定を使い、都市の今旬の行動を消費します。')}</p><label class="field">${text('執行文吏','実行する文吏')}<select id="staff-search-actor">${actors.map(p=>`<option value="${escape(p.id)}" ${p.id===active.actor?'selected':''}>${escape(label(p.name))} · ${attributes(p,locale(),currentRuler(p))}</option>`).join('')||`<option value="">${text('沒有可行動的文吏','行動できる文吏がいません')}</option>`}</select></label><label class="field">${text('歷史武將候選','歴史武将の候補')}<select id="staff-search-target">${targets.map(p=>`<option value="${p.id}" ${String(p.id)===String(active.target)?'selected':''}>${escape(label(p.name))} · ${attributes(historical(p),locale(),currentRuler(p))}</option>`).join('')||`<option value="">${text('附近沒有可登用的歷史武將','近隣に登用できる歴史武将がいません')}</option>`}</select></label><p class="small" role="status">${reason?reason[locale()==='ja'?1:0]:''}</p><button id="staff-search-confirm" ${pending||isPreview()||!row.can_search?'disabled':''}>${text('確認文吏尋訪','文吏の訪問を確定')}</button></section>`;
   }
   function rulesBody(rules={}){
    const fee=rules.hire_gold??60,salary=rules.monthly_salary??5;

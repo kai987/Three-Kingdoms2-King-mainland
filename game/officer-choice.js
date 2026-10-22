@@ -18,6 +18,13 @@
  }
  const numeric=value=>typeof value==='number'&&Number.isFinite(value)?value:-1;
  const display=value=>typeof value==='number'&&Number.isFinite(value)?String(value):'—';
+ function isRuler(id,leaders){
+  const ident=ref(id);
+  return ident!==null&&!!leaders&&typeof leaders==='object'&&!Array.isArray(leaders)&&Object.values(leaders).some(leader=>leader!==null&&ref(leader)===ident);
+ }
+ // A current ruler has no superior to whom loyalty is owed. Keep the saved
+ // numeric sentinel intact; an ordinary officer with loyalty100 still shows100.
+ const loyaltyValue=(officer,{isRuler=false}={})=>isRuler?'--':display(officer?.loyalty);
  const stat=(officer,key)=>numeric(['health','experience','troops'].includes(key)?officer?.[key]:officer?.profile?.[key]);
  // The original information screen shows the raw experience counter / 50.
  const experience=value=>Number.isInteger(value)&&value>=0&&value<=49999?Math.floor(value/50):'—';
@@ -40,9 +47,9 @@
   }).map(row=>row.id);
  }
  // Returns plain text. The rendering caller escapes it when inserting HTML.
- function label(name,officer,{troops=officer?.troops,health=officer?.health,loyalty=false}={}){
+ function label(name,officer,{troops=officer?.troops,health=officer?.health,loyalty=false,isRuler=false}={}){
   const profile=officer?.profile;
-  return `${name} · ${display(troops)}兵 · 武${display(profile?.martial_strength)} · 知${display(profile?.intellect)} · 德${display(profile?.virtue)} · 体力${display(health)} · 经验${experience(officer?.experience)}${loyalty?` · 忠誠${display(officer?.loyalty)}`:''}`;
+  return `${name} · ${display(troops)}兵 · 武${display(profile?.martial_strength)} · 知${display(profile?.intellect)} · 德${display(profile?.virtue)} · 体力${display(health)} · 经验${experience(officer?.experience)}${loyalty?` · 忠誠${loyaltyValue(officer,{isRuler})}`:''}`;
  }
- return Object.freeze({label,sort,experience,ref});
+ return Object.freeze({label,sort,experience,ref,isRuler,loyalty:loyaltyValue});
 });

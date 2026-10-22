@@ -2,6 +2,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const staff=require('../game/civil-staff.js');
+globalThis.GameOfficerChoices=require('../game/officer-choice.js');
 const person={id:'clerk-000001',name:'陳文',portrait:'clerk-1',specialty:'commerce',profile:{martial_strength:20,intellect:56,virtue:60,health_max:70},health:70,troops:0,experience:0,offered_month:2280,expires_month:2283};
 const row={target:2,minimum:2,limit:2,count:0,staff_count:0,officer_count:0,occupancy:0,effective_count:0,need:2,candidate:person,employees:[],can_hire:true,can_reject:true,blocked_reason:'',monthly_salary:0,cooldown_until_month:2280};
 const view={game:{player:'shu',phase:'city',rng:{state:2026,draws:0},officers:{},cities:{home:{id:'home',owner:'shu',roster:{officer_ids:[]}},away:{id:'away',owner:'shu',roster:{officer_ids:[1,2]}}}},catalog:{rules:{city_officer_capacity:99},civil_staff:{current_month:2280,rules:{hire_gold:60,monthly_salary:5},cities:{home:row},people:[],faction_counts:{shu:0}}}};
@@ -9,6 +10,11 @@ const original=JSON.stringify(view);
 assert.equal(staff.month(2280),'190年1月');assert.equal(staff.month(2291,'ja'),'190年12月');assert.equal(staff.month(2292),'191年1月');assert.equal(staff.month(-1),'—');
 assert.equal(staff.count(view,'home'),0);assert.equal(staff.occupancy(view,'home'),0);assert.equal(staff.occupancy(view,view.game.cities.away),2);
 assert(staff.attributes({...person,experience:49999}).includes('經999'));assert(staff.attributes({...person,experience:50},'ja').includes('経1'));
+for(const locale of ['zh-Hant','ja']){
+ assert(staff.attributes({...person,loyalty:100,is_ruler:true},locale).includes('忠--'));
+ assert(staff.attributes({...person,loyalty:100},locale).includes('忠100'));
+ assert(staff.attributes({...person,loyalty:100,is_ruler:true},locale,false).includes('忠100'),'Current role overrides a stale record flag');
+}
 assert(staff.portrait(person).includes('/assets/civil-staff/clerk-1.png'));assert(staff.portrait(person,'ja').includes('架空の文吏'));
 for(const portrait of ['clerk-4','../clerk-1','clerk-1?x=1','https://evil.example/p.png','" onerror="alert(1)'])assert(!staff.portrait({...person,portrait}).includes('<img'));
 assert(staff.summary(view,'home',{bilingual:true}).includes('data-locale-only="ja"'));assert(staff.summary(view,'home').includes('合計 0/99人'));
@@ -55,6 +61,17 @@ const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id
  row.can_search=true;row.search_blocked_reason='';listeners.get('game-language-change')();
  nextResult=true;await elements.get('#staff-search-confirm').onclick();assert.deepEqual(submitted,{kind:'staff_recruit',payload:{city:'home',actor:'clerk-000001',officer:7}},'The civil actor stays a string; only the historical target uses its original number');
  ui.openRegistry();assert(currentDialog.body.includes('歴史人物1023人とは別'));const input=elements.get('#staff-search');input.value='陳';input.selectionStart=1;input.oninput();i18n.locale='zh-Hant';listeners.get('game-language-change')();assert.equal(elements.get('#staff-search').value,'陳');assert(currentDialog.body.includes('陳文'));assert(currentDialog.body.includes('與1,023名歷史人物分開登記'));
+ // A generated successor is masked by the live ruler map, in cards, registry
+ // and searchable officer labels; being100 loyal alone is not enough.
+ const employee=row.employees[0];employee.loyalty=100;employee.is_ruler=true;
+ view.game.extension={leaders:{shu:employee.id,ended:null}};
+ for(const locale of ['zh-Hant','ja']){
+  i18n.locale=locale;ui.open('home');assert(currentDialog.body.includes(staff.attributes(employee,locale,true)));
+  ui.openRegistry();assert(currentDialog.body.includes(staff.attributes(employee,locale,true)));
+  const stored=JSON.stringify(view);listeners.get('game-language-change')();assert.equal(JSON.stringify(view),stored,'Ruler display never mutates generated officer membership, loyalty or RNG');
+ }
+ view.game.extension.leaders.shu='clerk-000002';ui.openRegistry();assert(!currentDialog.body.includes('忠--'));assert(currentDialog.body.includes('忠100'),'Former generated rulers display their actual loyalty despite a stale is_ruler field');
+ delete view.game.extension;delete employee.loyalty;delete employee.is_ruler;
  dialog.open=false;const closedCount=callCount;i18n.locale='ja';listeners.get('game-language-change')();assert.equal(callCount,closedCount,'Locale changes never reopen a closed panel');
  ui.dispose();assert(!listeners.has('game-language-change'));assert.equal(ui.open('home'),false);
 

@@ -35,6 +35,7 @@ document.addEventListener('click',event=>{
 document.addEventListener('change',event=>{if(event.isTrusted&&event.target.matches('select,input[type=checkbox],input[type=radio]'))gameAudio.play('click');});
 const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=id=>view.catalog.names[String(id)]||'武将';
+const isRuler=id=>GameOfficerChoices.isRuler(id,view?.game?.extension?.leaders);
 const portraitHtml=(id,size='roster',source=false,personId=null,displayName=null)=>GamePortraits.html(personId||GamePortraits.personId(view.catalog,id),displayName??name(id),{size,source});
 const faction=id=>id==='neutral'?'无主':view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
 const capacity=()=>view.catalog.rules.city_officer_capacity;
@@ -381,11 +382,11 @@ async function showCityInformation(id){
    const c=view.game.cities[id],def=view.catalog.cities.find(c=>c.id===id);
    data={title:view.catalog.title,year:view.game.year,month:view.game.month,day:view.game.day,capacity:capacity(),city:{...c,
     owner_name:faction(c.owner),terrain:def.terrain,profile:view.catalog.city_profiles[id],income:view.catalog.city_income[id],history:view.catalog.city_history?.[id],
-    officers:c.roster.officer_ids.map(i=>{const o=view.game.officers[i];return {id:i,name:name(i),martial_strength:o.profile.martial_strength,intellect:o.profile.intellect,virtue:o.profile.virtue,loyalty:o.loyalty,health:o.health,troops:o.troops,experience:o.experience};})}};
+    officers:c.roster.officer_ids.map(i=>{const o=view.game.officers[i];return {id:i,name:name(i),martial_strength:o.profile.martial_strength,intellect:o.profile.intellect,virtue:o.profile.virtue,loyalty:o.loyalty,is_ruler:isRuler(i),health:o.health,troops:o.troops,experience:o.experience};})}};
   }
   if(!dialog.open||generation!==dialogGeneration||preview!==setupPreview)return;
   const c=data.city,naming=view.catalog.map_presentation.city_names[id],history=c.history,troops=c.officers.reduce((n,o)=>n+o.troops,0);
-  const rows=c.officers.map(o=>`<tr><td><span class="officer-identity">${portraitHtml(o.id,'roster',false,o.person_id,o.name)}<span>${escapeHtml(o.name)}</span></span></td><td>${o.troops}</td><td>${o.martial_strength}</td><td>${o.intellect}</td><td>${o.virtue}</td><td>${o.loyalty??'—'}</td><td>${GameOfficerChoices.experience(o.experience)}</td><td>${o.health??'—'}</td></tr>`).join('');
+  const rows=c.officers.map(o=>`<tr><td><span class="officer-identity">${portraitHtml(o.id,'roster',false,o.person_id,o.name)}<span>${escapeHtml(o.name)}</span></span></td><td>${o.troops}</td><td>${o.martial_strength}</td><td>${o.intellect}</td><td>${o.virtue}</td><td>${GameOfficerChoices.loyalty(o,{isRuler:o.is_ruler===true})}</td><td>${GameOfficerChoices.experience(o.experience)}</td><td>${o.health??'—'}</td></tr>`).join('');
   const garrisonLabels={attested_yanmen_post_227:'史料任职',reviewed_SAN14_source_city_to_board:'攻略驻城参考',retained_faction_ruler_seat:'君主营地'};
   const historySources=(history?.sources||[]).map((source,i)=>{const url=typeof source==='string'?source:source?.url,label=typeof source==='object'&&source?.note?source.note:`参考资料${i+1}`;return typeof url==='string'&&url?`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`:`<span>${escapeHtml(label)}</span>`;}).join(' · ');
   openDialog(title,`<div class="city-information" data-inspected-city="${id}" data-information-mode="${preview?'preview':'live'}">
@@ -431,7 +432,7 @@ function officerAttributes(id){
 function cityOccupancy(city){return view.catalog.civil_staff?.cities?.[city?.id]?.occupancy??(city?.roster?.officer_ids?.length??capacity());}
 function officerChoiceText(id,{loyalty=true}={}){
  const o=view.game.officers[id],b=view.game.battle,unit=[...(b?.attackers||[]),...(b?.defenders||[])].find(u=>u.id===GameOfficerChoices.ref(id));
- return GameOfficerChoices.label(name(id),o,{troops:unit?.troops??o.troops,health:b?.extended?.support?.[id]?.health??o.health,loyalty});
+ return GameOfficerChoices.label(name(id),o,{troops:unit?.troops??o.troops,health:b?.extended?.support?.[id]?.health??o.health,loyalty,isRuler:isRuler(id)});
 }
 function sortedOfficers(ids,attribute='martial_strength'){
  return GameOfficerChoices.sort(ids,id=>view.game.officers[id],attribute);
@@ -458,7 +459,7 @@ function bindNumberInput(input,refresh=()=>{}){
  const update=commit=>{clampNumberInput(input,commit);refresh();};
  input.oninput=()=>update(false);input.onchange=()=>update(true);input.onblur=()=>update(true);
 }
-function rosterRows(city){return city.roster.officer_ids.map(id=>{const o=view.game.officers[id];return `<tr title="体${o.health}，德${o.profile.virtue}，忠${o.loyalty}，经验${GameOfficerChoices.experience(o.experience)}"><td><span class="officer-identity">${portraitHtml(id)}<span>${escapeHtml(name(id))}${marching().has(id)?'（在途）':''}</span></span></td><td>${o.troops}</td><td>${o.profile.martial_strength}</td><td>${o.profile.intellect}</td><td>${o.profile.virtue}</td><td>${o.loyalty}</td><td>${GameOfficerChoices.experience(o.experience)}</td><td>${o.health}</td></tr>`;}).join('');}
+function rosterRows(city){return city.roster.officer_ids.map(id=>{const o=view.game.officers[id],loyalty=GameOfficerChoices.loyalty(o,{isRuler:isRuler(id)});return `<tr title="体${o.health}，德${o.profile.virtue}，忠${loyalty}，经验${GameOfficerChoices.experience(o.experience)}"><td><span class="officer-identity">${portraitHtml(id)}<span>${escapeHtml(name(id))}${marching().has(id)?'（在途）':''}</span></span></td><td>${o.troops}</td><td>${o.profile.martial_strength}</td><td>${o.profile.intellect}</td><td>${o.profile.virtue}</td><td>${loyalty}</td><td>${GameOfficerChoices.experience(o.experience)}</td><td>${o.health}</td></tr>`;}).join('');}
 function renderCity(){
  const game=view.game,city=game.cities[selectedCity],owned=city.owner===game.player;
  const available=city.roster.officer_ids.filter(i=>!officerUnavailable(i)),fighters=available.filter(i=>game.officers[i].troops>0);

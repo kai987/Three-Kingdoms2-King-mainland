@@ -591,7 +591,7 @@ flex-wrap:wrap
 .civil-staff-summary p{margin-bottom:6px}
 .civil-staff-card{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--ink);margin-bottom:12px}
 .civil-staff-card p{margin-bottom:4px;overflow-wrap:anywhere}
-.civil-staff-portrait{width:64px;height:80px;object-fit:contain;image-rendering:pixelated;align-self:start}
+.civil-staff-portrait{width:64px;height:80px;object-fit:contain;image-rendering:pixelated;align-self:start;background:#000}
 .civil-staff-placeholder{display:grid;place-items:center;border:2px solid var(--ink);font-size:36px}
 .civil-staff-kind{display:inline-block;border:1px solid var(--ink);font-size:13px;padding:0 4px}
 .civil-staff-search{border-top:2px solid var(--ink);margin-top:14px;padding-top:8px}

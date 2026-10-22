@@ -43,7 +43,7 @@
  function duration(scene){return scene.kind==='duel_action'?1000:scene.kind==='tactic'?1000:scene.kind==='duel_start'?700:scene.kind==='ambush'?850:700;}
  function validAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-original\/[a-zA-Z0-9_/-]+\.png$/.test(path);}
  function create(options={}){
-  const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits;
+  const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits,officerChoices=options.officerChoices||root.GameOfficerChoices;
   const fetcher=options.fetch||root.fetch?.bind(root),ImageType=options.Image||root.Image;
   const raf=options.requestAnimationFrame||root.requestAnimationFrame?.bind(root),caf=options.cancelAnimationFrame||root.cancelAnimationFrame?.bind(root);
   const images=new Map(),terrainSlots=new Map();let manifest=null,assetStatus='idle',assetsPromise=null;
@@ -161,7 +161,8 @@
   function hud(state,scene){
    rectangle(0,160,256,80,PAPER);const id=selectedId(state,scene),unit=state.units.find(u=>u.id===id),o=view.game.officers[String(id)];if(!unit||!o)return;
    portrait(id,8,168);const p=o.profile;label(person(id),48,166,INK,10);
-   for(const [column,x]of [[[[text('兵','兵'),unit.troops],[text('體','体'),unit.health],[text('經','経'),Math.floor(o.experience/50)]],48],[[[text('武','武'),p.martial_strength],[text('德','徳'),p.virtue],[text('氣','気'),unit.energy]],116],[[[text('知','知'),p.intellect],[text('忠','忠'),o.loyalty],[text('士','士'),view.game.battle.extended.support[String(id)]?.morale??70]],184]])column.forEach(([title,value],i)=>label(title+' '+value,x,180+i*11));
+   const loyalty=officerChoices?.loyalty?officerChoices.loyalty(o,{isRuler:officerChoices.isRuler?.(id,view.game.extension?.leaders)===true}):o.loyalty;
+   for(const [column,x]of [[[[text('兵','兵'),unit.troops],[text('體','体'),unit.health],[text('經','経'),Math.floor(o.experience/50)]],48],[[[text('武','武'),p.martial_strength],[text('德','徳'),p.virtue],[text('氣','気'),unit.energy]],116],[[[text('知','知'),p.intellect],[text('忠','忠'),loyalty],[text('士','士'),view.game.battle.extended.support[String(id)]?.morale??70]],184]])column.forEach(([title,value],i)=>label(title+' '+value,x,180+i*11));
    const target=scene?.target??selection.target,foe=state.units.find(u=>u.id===target);
    if(foe)label('→ '+person(target)+'  '+text('兵','兵')+' '+foe.troops,8,216);
    const caption=scene?sceneCaption(scene):text('選擇本方部隊與對手','味方部隊と相手を選択');label(caption.slice(0,31),8,229);

@@ -48,6 +48,17 @@ assert.equal(choices.label('关羽',guan,{loyalty:true}),'关羽 · 300兵 · �
 const unchanged=JSON.stringify(guan);
 assert.equal(choices.label('关羽',guan,{troops:0,health:1,loyalty:true}),'关羽 · 0兵 · 武97 · 知75 · 德70 · 体力1 · 经验0 · 忠誠80');
 assert.equal(JSON.stringify(guan),unchanged,'Battle display overrides do not change stored troops/health');
+const rulers=Object.freeze({zero:0,shu:'clerk-000001',ended:null}),fullyLoyal=Object.freeze(person({loyalty:100}));
+assert.equal(choices.isRuler(0,rulers),true);assert.equal(choices.isRuler('0',rulers),true);
+assert.equal(choices.isRuler('clerk-000001',rulers),true);
+for(const id of [null,undefined,false,'',-1,'00','clerk-000000','clerk-0000001',1])assert.equal(choices.isRuler(id,rulers),false,'Invalid, missing and ordinary IDs do not acquire ruler status');
+assert.equal(choices.isRuler(0,{ended:null}),false,'An ended faction is not the officer with ID0');
+for(const leaders of [null,undefined,[],100,'0'])assert.equal(choices.isRuler(0,leaders),false);
+assert.equal(choices.loyalty(fullyLoyal),'100');assert.equal(choices.loyalty(fullyLoyal,{isRuler:true}),'--');
+assert.equal(choices.loyalty({}),'—');assert.equal(choices.loyalty({},{isRuler:true}),'--');
+assert(choices.label('君主',fullyLoyal,{loyalty:true,isRuler:true}).endsWith('忠誠--'));
+assert(choices.label('一般武将',fullyLoyal,{loyalty:true}).endsWith('忠誠100'));
+assert.equal(fullyLoyal.loyalty,100,'Ruler masking never replaces the saved numeric sentinel');
 assert.equal(choices.label('待考',{}),'待考 · —兵 · 武— · 知— · 德— · 体力— · 经验—');
 assert.deepEqual([0,49,50,99,49999].map(choices.experience),[0,0,1,1,999]);
 for(const invalid of [undefined,null,-1,50000,1.5,Infinity,'50'])assert.equal(choices.experience(invalid),'—');
@@ -56,6 +67,7 @@ assert(choices.label('<名>',guan).startsWith('<名> · 300兵'),'Label remains 
 // Browser and Node receive the same pure interface without document/storage/RNG dependencies.
 const browser={window:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../game/officer-choice.js'),'utf8'),browser);
 assert.equal(browser.window.GameOfficerChoices.label('关羽',guan),choices.label('关羽',guan));
+assert.equal(browser.window.GameOfficerChoices.isRuler('0',rulers),true);assert.equal(browser.window.GameOfficerChoices.loyalty(fullyLoyal,{isRuler:true}),'--');
 assert.deepEqual(Array.from(browser.window.GameOfficerChoices.sort(originalIds,id=>officers[id])),[1,2,3,4,7,5,6]);
 assert(Object.isFrozen(choices));
 console.log('officer choices: name/troops-first labels, full core-stat tie order before troops, virtue recruitment, stable IDs, battle overrides and pure browser/Node interface passed');

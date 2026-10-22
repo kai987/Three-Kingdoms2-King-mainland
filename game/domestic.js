@@ -25,7 +25,7 @@
   const canWrite=()=>!isPreview()&&!isBusy()&&!pending&&getView()?.game?.phase==='city'&&getView()?.game?.cities?.[active?.city]?.owner===getView()?.game?.player;
   const showing=()=>!!active&&dialog?.open!==false&&!!query('[data-domestic-dialog]');
   function name(id){return getView()?.catalog?.names?.[String(id)]||String(id);}
-  function officerLabel(id){const officer=getView()?.game?.officers?.[id];return root.GameOfficerChoices?.label?root.GameOfficerChoices.label(label(name(id)),officer,{loyalty:true}):label(name(id));}
+  function officerLabel(id){const view=getView(),officer=view?.game?.officers?.[id];return root.GameOfficerChoices?.label?root.GameOfficerChoices.label(label(name(id)),officer,{loyalty:true,isRuler:root.GameOfficerChoices.isRuler?.(id,view?.game?.extension?.leaders)===true}):label(name(id));}
   function sorted(ids,kind='civil'){
    const fields=kind==='military'?['martial_strength','intellect','virtue']:['intellect','virtue','martial_strength'];
    return [...new Set(ids)].sort((a,b)=>{for(const field of fields){const d=(getView()?.game?.officers?.[b]?.profile?.[field]??-1)-(getView()?.game?.officers?.[a]?.profile?.[field]??-1);if(d)return d;}return String(a).localeCompare(String(b),undefined,{numeric:true});});

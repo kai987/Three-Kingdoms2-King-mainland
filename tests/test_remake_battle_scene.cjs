@@ -2,6 +2,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const {execFileSync}=require('node:child_process');
+const officerChoices=require('../game/officer-choice.js');
 const ROOT=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(ROOT,'game/battle-scene.js'),'utf8');
 const actual=JSON.parse(execFileSync(process.env.PYTHON||'python3',['-B','-c',String.raw`
 import json,sys
@@ -56,7 +57,7 @@ function environment({manifest=null,reduced=false,missingRAF=false,missingContex
  for(const name of ['[data-battle-skip]','[data-battle-scene-title]','[data-battle-caption]','[data-battle-description]'])nodes[name]={hidden:true,textContent:'',addEventListener(type,fn){this[type]=fn;}};
  const host={isConnected:true,dataset:{},querySelector:selector=>nodes[selector]||null};
  const i18n={locale:'zh-Hant',t:(value,lang)=>lang==='ja'?'日:'+value:value};
- const sandbox={module:{exports:{}},document:doc,console,AbortController,Uint8ClampedArray,Math:Object.assign(Object.create(Math),{random(){throw Error('Scene sampled randomness');}}),GameI18n:i18n,
+ const sandbox={module:{exports:{}},document:doc,console,AbortController,Uint8ClampedArray,Math:Object.assign(Object.create(Math),{random(){throw Error('Scene sampled randomness');}}),GameI18n:i18n,GameOfficerChoices:officerChoices,
   matchMedia:()=>({matches:reduced}),setTimeout(fn){const id=++next;timers.set(id,fn);return id;},clearTimeout(id){timers.delete(id);},
   requestAnimationFrame:missingRAF?undefined:fn=>{const id=++next;rafs.set(id,fn);return id;},cancelAnimationFrame:id=>{cancels.push(id);rafs.delete(id);},
   fetch:async url=>{requests.push(url);assert.equal(url,'/assets/battle-original/index.json','Playback may fetch artwork, never gameplay');return manifest?{ok:true,json:async()=>manifest}:{ok:false};},
@@ -90,6 +91,18 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   assert.equal(JSON.stringify(row),original,'Receipt validation and differences are read-only');
  }
  const first=actual.rows.find(r=>r.key==='attack'),bid=first.after.game.battle.id,revision=first.after.revision;
+ for(const key of ['attack','mixed']){
+  const row=actual.rows.find(r=>r.key===key),view=clone(row.after),id=row.payload.actor,foe=row.payload.target;
+  view.game.extension={leaders:{current:id,ended:null}};view.game.officers[String(id)].loyalty=100;
+  const env=environment(),scene=env.api.create(),selected={actor:id,target:foe};
+  for(const locale of ['zh-Hant','ja']){
+   env.i18n.locale=locale;const before=JSON.stringify(view);env.texts.length=0;scene.mount(env.host,view,selected);
+   assert(env.texts.some(t=>t.x===184&&t.y===191&&t.text==='忠 --'),key+' current ruler HUD must display the literal --');
+   assert.equal(JSON.stringify(view),before,'Battle HUD preserves current-ruler loyalty sentinel and RNG');
+  }
+  view.game.extension.leaders.current=foe;env.texts.length=0;scene.mount(env.host,view,selected);
+  assert(env.texts.some(t=>t.x===184&&t.y===191&&t.text==='忠 100'),key+' ordinary officer with100 loyalty is not masked');scene.dispose();
+ }
  for(const mutate of [r=>r.schema='unknown',r=>r.revision++,r=>r.scenes.push(...Array(25).fill(r.scenes[0])),r=>r.scenes[0].battle_id='another-battle',r=>r.scenes[0].kind='execute-command',r=>r.scenes[0].actor=true,r=>r.scenes[0].counter=1,r=>r.scenes[0].effect='invented',r=>r.scenes[0].before.units[0]=null,r=>r.scenes[0].before.units[0].troops=-1,r=>r.scenes[0].after.units[0].health=100,r=>r.scenes[0].after.units[0].energy=19,r=>r.scenes[0].after.units[1].id=r.scenes[0].after.units[0].id]){
   const malformed=clone(first.after.presentation);mutate(malformed);assert.equal(standalone.receiptScenes(malformed,bid,revision).length,0,'Malformed receipt must be ignored');
  }

@@ -40,6 +40,9 @@ class CityPreviewTests(unittest.TestCase):
                 self.assertEqual([(o['experience'],o['tier']) for o in row['officers']],
                                  [(g.state.officers[i].experience,g.state.officers[i].tier)
                                   for i in city.roster.officer_ids])
+                self.assertEqual([o['is_ruler'] for o in row['officers']],
+                                 [g.state.extension['leaders'].get(city.owner)==i
+                                  for i in city.roster.officer_ids])
                 count+=1
         self.assertEqual(count,sum(len(c.data['active_cities']) for c in s.catalogs.values()))
         self.assertGreaterEqual(count,2700)
