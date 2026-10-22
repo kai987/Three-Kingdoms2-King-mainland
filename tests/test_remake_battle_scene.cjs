@@ -23,8 +23,10 @@ for tid,(_,cost,effect,_) in enumerate(TACTICS):
  terrain='water' if effect in {'water','chain','flood'} else 'mountain' if effect=='rock' else 'plain'
  game=battle(terrain);b,a,t,*_=actors(game);successful_rng(game.state)
  action(game,'tactic',dict(battle_id=b['id'],actor=a['id'],target=t['id'],tactic=tid),'tactic:'+effect)
-for key in ('attack','ambush','stunned','failure','retreat','duel'):
+for key in ('attack','attack_guard','attack_defeat','ambush','stunned','failure','retreat','duel'):
  game=battle(three_enemies=False);b,a,t,*_=actors(game)
+ if key=='attack_guard':b['extended']['support'][str(t['id'])]['guard']=2
+ if key=='attack_defeat':t['troops']=1
  if key=='ambush':b['extended']['ambush']=dict(actor=t['id'])
  if key=='stunned':b['extended']['support'][str(a['id'])]['stunned']=1
  if key=='failure':
@@ -60,10 +62,10 @@ print(json.dumps(dict(rows=rows,tactics=[dict(id=i,effect=t[2]) for i,t in enume
 `],{cwd:ROOT,encoding:'utf8',maxBuffer:8*1024*1024,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}}));
 const clone=value=>JSON.parse(JSON.stringify(value));
 function freeze(value){if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
-function environment({manifest=null,enhancedManifest=null,duelAppearance=null,failedPaths=[],reduced=false,missingRAF=false,missingContext=false}={}){
- const rafs=new Map(),timers=new Map(),listeners=new Map(),requests=[],imageRequests=[],cancels=[],observers=[],texts=[],draws=[],rectangles=[],transforms=[];let next=0;
+function environment({manifest=null,enhancedManifest=null,duelAppearance=null,failedPaths=[],badDimensions=[],reduced=false,missingRAF=false,missingContext=false}={}){
+ const rafs=new Map(),timers=new Map(),listeners=new Map(),requests=[],imageRequests=[],cancels=[],observers=[],texts=[],draws=[],rectangles=[],transforms=[],scales=[],matrixStack=[];let next=0,matrix=[1,0,0,1,0,0];
  const doc={hidden:false,addEventListener(type,fn){if(!listeners.has(type))listeners.set(type,new Set());listeners.get(type).add(fn);},removeEventListener(type,fn){listeners.get(type)?.delete(fn);},emit(type,event={}){for(const fn of [...listeners.get(type)||[]])fn(event);},createElement(){return canvas();}};
- const context={setTransform(...args){transforms.push(args);},fillRect(x,y,w,h){rectangles.push({x,y,w,h,color:this.fillStyle});},fillText(text,x,y){texts.push({text:String(text),x,y});},save(){},restore(){},drawImage(image,...args){draws.push({src:image?.src,args});},translate(){},scale(){},getImageData(){return{data:new Uint8ClampedArray(256*160*4)};}};
+ const context={setTransform(...args){transforms.push(args);matrix=[...args];},fillRect(x,y,w,h){rectangles.push({x,y,w,h,color:this.fillStyle});},fillText(text,x,y){texts.push({text:String(text),x,y});},save(){matrixStack.push([...matrix]);},restore(){matrix=matrixStack.pop()||matrix;},drawImage(image,...args){draws.push({src:image?.src,args,matrix:[...matrix]});},translate(x,y){matrix[4]+=matrix[0]*x+matrix[2]*y;matrix[5]+=matrix[1]*x+matrix[3]*y;},scale(...args){scales.push(args);matrix[0]*=args[0];matrix[1]*=args[0];matrix[2]*=args[1];matrix[3]*=args[1];},getImageData(){return{data:new Uint8ClampedArray(256*160*4)};}};
  function canvas(){return{style:{},width:256,height:240,getContext:()=>missingContext?null:context,getBoundingClientRect(){return{left:0,top:0,width:parseFloat(this.style.width)||256,height:parseFloat(this.style.height)||240};}};}
  const surface=canvas(),nodes={'.nes-battle-viewport':{clientWidth:512,clientHeight:480},'[data-battle-canvas]':surface};
  for(const name of ['[data-battle-skip]','[data-battle-scene-title]','[data-battle-caption]','[data-battle-description]'])nodes[name]={hidden:true,textContent:'',addEventListener(type,fn){this[type]=fn;}};
@@ -75,9 +77,9 @@ function environment({manifest=null,enhancedManifest=null,duelAppearance=null,fa
   requestAnimationFrame:missingRAF?undefined:fn=>{const id=++next;rafs.set(id,fn);return id;},cancelAnimationFrame:id=>{cancels.push(id);rafs.delete(id);},
   fetch:async url=>{requests.push(url);assert(['/assets/battle-original/index.json','/assets/battle-enhanced/index.json'].includes(url),'Playback may fetch artwork, never gameplay');const data=url.includes('battle-enhanced')?enhancedManifest:manifest;return data?{ok:true,json:async()=>data}:{ok:false};},
   ResizeObserver:class{constructor(fn){this.fn=fn;this.disconnects=0;observers.push(this);}observe(){}disconnect(){this.disconnects++;}},
-  Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;imageRequests.push(value);queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
+  Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;const atlas=Object.values(enhancedManifest?.soldiers?.types||{}).flatMap(type=>[type.friendly,type.enemy]).find(row=>row?.path===value);if(atlas){this.width=atlas.width;this.height=atlas.height;if(badDimensions.includes(value))this.width--;}imageRequests.push(value);queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
  sandbox.window=sandbox;vm.runInNewContext(source,sandbox,{filename:'game/battle-scene.js'});
- return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,imageRequests,cancels,observers,texts,draws,rectangles,transforms,rafs,timers,setReduced(value){reduced=value;},
+ return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,imageRequests,cancels,observers,texts,draws,rectangles,transforms,scales,rafs,timers,setReduced(value){reduced=value;},
   step(time){const entries=[...rafs];rafs.clear();for(const [,fn]of entries)fn(time);},
   drain(){for(let i=0;rafs.size&&i<100;i++)this.step(i*1200);assert.equal(rafs.size,0,'RAF queue must terminate');},
   listenerCount(){return[...listeners.values()].reduce((n,set)=>n+set.size,0);}};
@@ -85,6 +87,14 @@ function environment({manifest=null,enhancedManifest=null,duelAppearance=null,fa
 const standalone=environment().api;
 const normalize=value=>JSON.parse(JSON.stringify(value));
 function scenesFor(row){return standalone.receiptScenes(row.after.presentation,row.after.game.battle.id,row.after.revision);}
+function soldierLibrary(){
+ const actions=['idle','march','ready','attack','guard','hit','retreat','defeat'];
+ return{schema:'tk2-soldier-actions-v1',scale:4,actions,types:Object.fromEntries(Object.entries({infantry:16,archer:16,cavalry:24}).map(([type,size])=>[type,Object.fromEntries(['friendly','enemy'].map(side=>[side,{path:`/assets/battle-enhanced/soldiers-${type}-${side}.png`,facing:'right',width:size*4*8,height:size*4,logical_width:size,logical_height:size,frames:actions.map((action,i)=>({action,source_rect:[i*size*4,0,size*4,size*4]}))}]))]))};
+}
+function enhancedSoldiers(native,soldiers=soldierLibrary()){
+ const sprites=Object.fromEntries(['attack_formation','attack_formation_enemy'].map(kind=>[kind,{frames:native.sprites[kind].frames.map((f,i)=>({path:`/assets/battle-enhanced/${kind}-${i}.png`,width:512,height:640,logical_width:128,logical_height:160}))}]));
+ return{schema:'tk2-battle-enhanced-v1',scale:4,backgrounds:{},sprites,duelists:{},soldiers};
+}
 const watchdog=setTimeout(()=>{console.error('Battle scene playback did not resolve within 20 seconds');process.exitCode=1;},20000);
 (async()=>{
  const accepted=new Map(actual.rows.map(row=>[row.key,scenesFor(row)]));
@@ -252,6 +262,68 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  }
  // Native artwork must remain on screen for actor-less retreat, and strike must actually render an impact.
  const nativeManifest=JSON.parse(fs.readFileSync(path.join(ROOT,'game/assets/battle-original/index.json'),'utf8'));
+ // New soldier poses read only committed snapshots; they do not infer a new
+ // saved troop class or create another damage/randomness calculation.
+ {
+  const strike=accepted.get('attack')[0],actor=strike.actor,target=strike.target;
+  for(const [p,pose]of [[.1,'march'],[.33,'ready'],[.45,'attack'],[.8,'retreat'],[.99,'idle']])assert.equal(standalone.soldierActionPose(strike,actor,p),pose);
+  assert.equal(standalone.soldierActionPose(strike,target,.45),'ready');assert.equal(standalone.soldierActionPose(strike,target,.6),'hit');
+  const guarded=accepted.get('attack_guard')[0];assert.equal(standalone.soldierActionPose(guarded,guarded.target,.45),'guard');
+  const defeated=accepted.get('attack_defeat')[0];assert.equal(standalone.soldierActionPose(defeated,defeated.target,.6),'defeat');
+  const stunned=accepted.get('stunned')[0];assert.equal(standalone.soldierActionPose(stunned,stunned.actor,.45),'idle');
+  const crossbow=accepted.get('tactic:crossbow')[0];assert.equal(standalone.soldierActionPose(crossbow,crossbow.actor,.4),'attack');
+  const guard=accepted.get('tactic:guard')[0];assert.equal(standalone.soldierActionPose(guard,guard.actor,.4),'guard');
+  const retreat=accepted.get('retreat')[0],own=retreat.before.units.find(u=>u.side===retreat.own),foe=retreat.before.units.find(u=>u.side!==retreat.own);
+  assert.equal(standalone.soldierActionPose(retreat,own.id,.5),'retreat');assert.equal(standalone.soldierActionPose(retreat,foe.id,.5),'idle');
+  assert.equal(standalone.soldierActionPose(null,actor,.4),'idle');
+  for(const row of actual.rows){const before=JSON.stringify(row);for(const s of scenesFor(row))for(const u of s.before.units)for(const p of [0,.33,.45,.6,.8,1])assert(standalone.SOLDIER_ACTIONS.includes(standalone.soldierActionPose(freeze(s),u.id,p)));assert.equal(JSON.stringify(row),before);}
+ }
+ {
+  const good=soldierLibrary();assert(standalone.validSoldierLibrary(good));
+  for(const alter of [s=>s.scale=2,s=>s.actions.reverse(),s=>delete s.types.archer,s=>s.types.infantry.friendly.width--,s=>s.types.cavalry.enemy.facing='left',s=>s.types.archer.enemy.path='/assets/battle-enhanced/../escape.png',s=>s.types.infantry.friendly.frames[3].source_rect[0]++,s=>s.types.infantry.friendly.frames[3].action='unknown']){
+   const bad=clone(good);alter(bad);assert.equal(standalone.validSoldierLibrary(bad),false,'Malformed soldier component must fail closed');
+   const env=environment({manifest:nativeManifest,enhancedManifest:enhancedSoldiers(nativeManifest,bad)}),scene=env.api.create(),row=actual.rows.find(r=>r.key==='attack');
+   scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);assert(await scene.load(),'Optional invalid soldier component must retain old enhanced artwork');const play=scene.play();for(let i=0;i<15;i++)await Promise.resolve();env.step(0);
+   assert(!env.imageRequests.some(p=>p.includes('/soldiers-')));assert(env.draws.some(d=>d.src.startsWith('/assets/battle-enhanced/attack_formation')));scene.skip();await play;scene.dispose();
+  }
+ }
+ for(const key of ['attack','attack_guard','attack_defeat','tactic:crossbow','tactic:guard','retreat']){
+  const row=actual.rows.find(r=>r.key===key),before=JSON.stringify(row),hd=enhancedSoldiers(nativeManifest),env=environment({manifest:nativeManifest,enhancedManifest:hd}),scene=env.api.create();
+  scene.observe(row.kind,row.payload,freeze(row.before),freeze(row.after));scene.mount(env.host,row.after);await scene.load();assert(!env.imageRequests.some(p=>p.includes('/soldiers-')),'Tactical view must not preload soldier atlases');
+  const play=scene.play();for(let i=0;i<15;i++)await Promise.resolve();assert(scene.playing);env.step(0);assert.equal(new Set(env.imageRequests.filter(p=>p.includes('/soldiers-'))).size,6);assert(!env.imageRequests.some(p=>p.includes('/duel-actions-')));
+  const first=scenesFor(row)[0],duration=env.api.duration(first);
+  for(const p of [.33,.45,.6,.8,.95]){
+   env.draws.length=0;env.scales.length=0;env.step(duration*p);
+   const sprites=env.draws.filter(d=>d.src.includes('/soldiers-'));assert.equal(sprites.length,20,'Each army retains the mixed native-style ten-position composition');
+   for(const type of ['infantry','archer','cavalry'])for(const palette of ['friendly','enemy']){
+    const atlas=hd.soldiers.types[type][palette],unit=first.before.units.find(u=>u.id===(palette==='friendly'?(first.own==='attackers'?first.actor:first.target):(first.own==='attackers'?first.target:first.actor)))||first.before.units.find(u=>u.side===(palette==='friendly'?'attackers':'defenders'));
+    let pose=standalone.soldierActionPose(first,unit.id,p);if(first.effect==='crossbow'&&unit.id===first.actor&&pose==='attack'&&type!=='archer')pose='ready';
+    const draws=sprites.filter(d=>d.src===atlas.path);assert.equal(draws.length,type==='archer'?2:4);
+    for(const d of draws){assert.deepEqual(d.args.slice(0,4),atlas.frames.find(f=>f.action===pose).source_rect);assert.equal(d.args.length,8,'Crop original4× source pixels directly without an intermediate tiny canvas');assert.deepEqual(d.args.slice(-2),[atlas.logical_width,atlas.logical_height]);}
+   }
+   assert.equal(env.scales.filter(s=>s[0]===-1&&s[1]===1).length,10,'Only the right-facing army is mirrored');
+   const boxes=sprites.filter(d=>d.src.includes('/soldiers-archer-')).map(d=>{const[x,y,w,h]=d.args.slice(4),[a,b,c,e,tx,ty]=d.matrix,xx=[(a*x+c*y+tx)/4,(a*(x+w)+c*(y+h)+tx)/4],yy=[(b*x+e*y+ty)/4,(b*(x+w)+e*(y+h)+ty)/4];return{src:d.src,left:Math.min(...xx),right:Math.max(...xx),top:Math.min(...yy),bottom:Math.max(...yy)};});
+   const friendly=boxes.filter(b=>b.src.endsWith('-friendly.png')),enemy=boxes.filter(b=>b.src.endsWith('-enemy.png'));assert.equal(friendly.length,2);assert.equal(enemy.length,2);
+   for(const a of friendly)for(const b of enemy)assert(a.right+8<=b.left,'Both opposing archer image boxes remain visible with at least8logical pixels of separation');
+   for(const box of boxes)assert(box.left>=0&&box.right<=256&&box.top>=0&&box.bottom<=160,'Archer sprites remain within the original battle arena');
+   if(key==='attack'&&p===.45){assert.equal(Math.max(...friendly.map(b=>b.right)),124,'Only the positive archer approach is capped at28');const cavalry=sprites.filter(d=>d.src.endsWith('cavalry-friendly.png'));assert.equal(Math.max(...cavalry.map(d=>d.args[4]+d.args[6])),84+standalone.attackStage(p).shift,'Cavalry retain the original full contact shift');}
+   if(key==='retreat')assert.equal(Math.max(...friendly.map(b=>b.right)),96-Math.round(p*38),'Negative withdrawal retains the full outward distance');
+  }
+  scene.skip();await play;scene.dispose();assert.equal(JSON.stringify(row),before,'Soldier playback cannot mutate authoritative views or RNG');assert.equal(env.rafs.size,0);assert.equal(env.timers.size,0);
+ }
+ for(const fallback of ['atlas','physical-size','native-formation','single-soldier']){
+  const hd=enhancedSoldiers(nativeManifest),paths=Object.values(hd.soldiers.types).flatMap(t=>[t.friendly.path,t.enemy.path]),failed=fallback==='physical-size'?[]:[...paths];
+  if(['native-formation','single-soldier'].includes(fallback))failed.push(...Object.values(hd.sprites).flatMap(r=>r.frames.map(f=>f.path)));
+  if(fallback==='single-soldier')failed.push(...['attack_formation','attack_formation_enemy'].flatMap(k=>nativeManifest.sprites[k].frames.map(f=>f.path)));
+  const env=environment({manifest:nativeManifest,enhancedManifest:hd,failedPaths:failed,badDimensions:fallback==='physical-size'?paths:[]}),scene=env.api.create(),row=actual.rows.find(r=>r.key==='attack');
+  scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);await scene.load();const play=scene.play();for(let i=0;i<15;i++)await Promise.resolve();env.step(0);
+  assert(!env.draws.some(d=>d.src.includes('/soldiers-')),'Failed or physically malformed soldier atlases are not rendered');
+  assert(env.draws.some(d=>fallback==='single-soldier'?/\/(infantry|cavalry)-/.test(d.src):d.src.startsWith(`/assets/battle-${fallback==='native-formation'?'original':'enhanced'}/attack_formation`)),fallback+' retains the next original artwork layer');
+  scene.skip();await play;scene.dispose();assert.equal(env.rafs.size,0);
+ }
+ {
+  const row=actual.rows.find(r=>r.key==='attack'),env=environment({manifest:nativeManifest,enhancedManifest:enhancedSoldiers(nativeManifest),reduced:true}),scene=env.api.create();scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);await scene.load();await scene.play();assert(!env.imageRequests.some(p=>p.includes('/soldiers-')),'Reduced motion settles without waiting for additional artwork');assert.equal(env.rafs.size,0);assert.equal(scene.state().queued,0);scene.dispose();
+ }
  // A real ordinary-attack receipt visibly renders both original soldier lines,
  // advances to contact, resolves authoritative losses, and returns without re-execution.
  for(const useEnhanced of [false,true]){

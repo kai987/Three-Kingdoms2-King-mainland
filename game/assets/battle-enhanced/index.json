@@ -12,7 +12,7 @@
   },
   "build": {
     "tool": "tools/battle-enhancement/build.cjs",
-    "tool_sha256": "01b20f6ab64c3154353f5bac98566533341f3adbac153446c64371f156b16fef",
+    "tool_sha256": "cce388d4099c7a023e87d425be71e4d352c05c7c4187ee0703c17b99ee625a01",
     "native_index": "game/assets/battle-original/index.json",
     "native_index_sha256": "5d2d52319b8281bc4ed60e0498dc94437d02e45317cc969fd21a08bfd5dabded",
     "imagegen_mode": "built_in",
@@ -18366,5 +18366,1313 @@
         255
       ]
     ]
+  },
+  "soldiers": {
+    "schema": "tk2-soldier-actions-v1",
+    "scale": 4,
+    "actions": [
+      "idle",
+      "march",
+      "ready",
+      "attack",
+      "guard",
+      "hit",
+      "retreat",
+      "defeat"
+    ],
+    "types": {
+      "infantry": {
+        "friendly": {
+          "path": "/assets/battle-enhanced/soldiers-infantry-friendly.png",
+          "width": 512,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "facing": "right",
+          "frames": [
+            {
+              "action": "idle",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "march",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "ready",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "attack",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "guard",
+              "source_rect": [
+                256,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "hit",
+              "source_rect": [
+                320,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "retreat",
+              "source_rect": [
+                384,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "defeat",
+              "source_rect": [
+                448,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "a2e1815f2f431ce55f7e0bfc9a972eb857280c7c87041b6e309caa644eb187a7",
+          "pixel_sha256": "3e4f02df9e53f66e958fdf8a203b73eda4e0cf683b0a07b6e0cf61ccd51e84f2",
+          "uniform_pixels": [
+            101,
+            115,
+            135,
+            128,
+            112,
+            119,
+            148,
+            85
+          ],
+          "method": "imagegen_soldier_action_atlas_uniform_mask",
+          "study_key": "infantry"
+        },
+        "enemy": {
+          "path": "/assets/battle-enhanced/soldiers-infantry-enemy.png",
+          "width": 512,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "facing": "right",
+          "frames": [
+            {
+              "action": "idle",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "march",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "ready",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "attack",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "guard",
+              "source_rect": [
+                256,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "hit",
+              "source_rect": [
+                320,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "retreat",
+              "source_rect": [
+                384,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "defeat",
+              "source_rect": [
+                448,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "c503b837937596d9e5e2b87c11e4f5b9545282602ddc0986d62885a3e71a56c1",
+          "pixel_sha256": "1ede431eb66c9805678ad7b16a18fec65746710f12f1350a23997697bf2e91e3",
+          "uniform_pixels": [
+            101,
+            115,
+            135,
+            128,
+            112,
+            119,
+            148,
+            85
+          ],
+          "method": "imagegen_soldier_action_atlas_uniform_mask",
+          "study_key": "infantry"
+        }
+      },
+      "archer": {
+        "friendly": {
+          "path": "/assets/battle-enhanced/soldiers-archer-friendly.png",
+          "width": 512,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "facing": "right",
+          "frames": [
+            {
+              "action": "idle",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "march",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "ready",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "attack",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "guard",
+              "source_rect": [
+                256,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "hit",
+              "source_rect": [
+                320,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "retreat",
+              "source_rect": [
+                384,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "defeat",
+              "source_rect": [
+                448,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "d74fe794d024fdb16dc9e59111a24534b03062e62e70c8fa668409927a46089f",
+          "pixel_sha256": "a64dda19b969cea5fb742d3fa7716700b93734907117b92287228c991dc01f6f",
+          "uniform_pixels": [
+            185,
+            169,
+            190,
+            196,
+            189,
+            235,
+            149,
+            173
+          ],
+          "method": "imagegen_soldier_action_atlas_uniform_mask",
+          "study_key": "archer"
+        },
+        "enemy": {
+          "path": "/assets/battle-enhanced/soldiers-archer-enemy.png",
+          "width": 512,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "facing": "right",
+          "frames": [
+            {
+              "action": "idle",
+              "source_rect": [
+                0,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "march",
+              "source_rect": [
+                64,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "ready",
+              "source_rect": [
+                128,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "attack",
+              "source_rect": [
+                192,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "guard",
+              "source_rect": [
+                256,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "hit",
+              "source_rect": [
+                320,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "retreat",
+              "source_rect": [
+                384,
+                0,
+                64,
+                64
+              ]
+            },
+            {
+              "action": "defeat",
+              "source_rect": [
+                448,
+                0,
+                64,
+                64
+              ]
+            }
+          ],
+          "sha256": "94b4f9e191b387375f07c59047b9a0f29de5794c42064bf66cb8434c31fe29ef",
+          "pixel_sha256": "4c423156b0a60141da1a3afac8ff77434d648ff19ac262a01394336b11a5711b",
+          "uniform_pixels": [
+            185,
+            169,
+            190,
+            196,
+            189,
+            235,
+            149,
+            173
+          ],
+          "method": "imagegen_soldier_action_atlas_uniform_mask",
+          "study_key": "archer"
+        }
+      },
+      "cavalry": {
+        "friendly": {
+          "path": "/assets/battle-enhanced/soldiers-cavalry-friendly.png",
+          "width": 768,
+          "height": 96,
+          "logical_width": 24,
+          "logical_height": 24,
+          "anchor": {
+            "x": 12,
+            "y": 24
+          },
+          "facing": "right",
+          "frames": [
+            {
+              "action": "idle",
+              "source_rect": [
+                0,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "march",
+              "source_rect": [
+                96,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "ready",
+              "source_rect": [
+                192,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "attack",
+              "source_rect": [
+                288,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "guard",
+              "source_rect": [
+                384,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "hit",
+              "source_rect": [
+                480,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "retreat",
+              "source_rect": [
+                576,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "defeat",
+              "source_rect": [
+                672,
+                0,
+                96,
+                96
+              ]
+            }
+          ],
+          "sha256": "264b5c81b565f93b3f816d70b1168e18ec7220c2f869143495a9e96bbb772d73",
+          "pixel_sha256": "29760c938a60b468e420523578b3e2f4fdc7d3c505abcdef6b3e090dbaacb69b",
+          "uniform_pixels": [
+            253,
+            250,
+            272,
+            253,
+            251,
+            273,
+            223,
+            189
+          ],
+          "method": "imagegen_soldier_action_atlas_uniform_mask",
+          "study_key": "cavalry"
+        },
+        "enemy": {
+          "path": "/assets/battle-enhanced/soldiers-cavalry-enemy.png",
+          "width": 768,
+          "height": 96,
+          "logical_width": 24,
+          "logical_height": 24,
+          "anchor": {
+            "x": 12,
+            "y": 24
+          },
+          "facing": "right",
+          "frames": [
+            {
+              "action": "idle",
+              "source_rect": [
+                0,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "march",
+              "source_rect": [
+                96,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "ready",
+              "source_rect": [
+                192,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "attack",
+              "source_rect": [
+                288,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "guard",
+              "source_rect": [
+                384,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "hit",
+              "source_rect": [
+                480,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "retreat",
+              "source_rect": [
+                576,
+                0,
+                96,
+                96
+              ]
+            },
+            {
+              "action": "defeat",
+              "source_rect": [
+                672,
+                0,
+                96,
+                96
+              ]
+            }
+          ],
+          "sha256": "272a1a3331680a071faf2fdf1fdc0227114350c2e2fb9a5fb1277276358116cb",
+          "pixel_sha256": "e0d17164225682081dadffdf99e9be9e8c4684e6fd15e08599364a9a8c80c243",
+          "uniform_pixels": [
+            253,
+            250,
+            272,
+            253,
+            251,
+            273,
+            223,
+            189
+          ],
+          "method": "imagegen_soldier_action_atlas_uniform_mask",
+          "study_key": "cavalry"
+        }
+      }
+    },
+    "studies": {
+      "infantry": {
+        "study": "art/soldier-enhancement-v1/studies/infantry.png",
+        "study_sha256": "11ceeb812c682b82f61da01082a840a55c744bc84fb7fb9816c3f70034951a11",
+        "prompt": "art/soldier-enhancement-v1/prompts/infantry.txt",
+        "prompt_sha256": "10a731e0664d41df6795e82a09c095caa6cf20169467af3c4ac673d22e177055",
+        "gray_reference": "art/soldier-enhancement-v1/references/infantry-gray-study.png",
+        "gray_reference_sha256": "c41a829b89b9c6647f81da560e9e2fd2675b0df66f172b2c6040cc19f03bcb55",
+        "material_prompt": "art/soldier-enhancement-v1/prompts/material-mask.txt",
+        "material_prompt_sha256": "538038fee71427ea640498c0696ddd9475015f367d05288e5636ad21b02550da",
+        "native_reference": "game/assets/battle-original/witness-attack.png",
+        "native_reference_sha256": "dc95e82ed8c23dfd77c8d3dcbc0aaab666820de88912ace862ea7f3714a51b56",
+        "imagegen_mode": "built_in",
+        "scope": "New supplemental action artwork from original visual references, not recovered native-ROM action frames",
+        "source_size": [
+          1774,
+          887
+        ],
+        "source_grid": [
+          4,
+          2
+        ],
+        "source_cells": [
+          [
+            159,
+            98,
+            113,
+            316
+          ],
+          [
+            574,
+            111,
+            133,
+            303
+          ],
+          [
+            939,
+            147,
+            228,
+            267
+          ],
+          [
+            1378,
+            225,
+            343,
+            189
+          ],
+          [
+            158,
+            535,
+            193,
+            269
+          ],
+          [
+            515,
+            563,
+            228,
+            241
+          ],
+          [
+            1005,
+            505,
+            132,
+            299
+          ],
+          [
+            1347,
+            722,
+            358,
+            92
+          ]
+        ],
+        "source_boxes": [
+          [
+            1,
+            1,
+            112,
+            315
+          ],
+          [
+            1,
+            1,
+            132,
+            302
+          ],
+          [
+            1,
+            1,
+            227,
+            266
+          ],
+          [
+            1,
+            1,
+            342,
+            188
+          ],
+          [
+            1,
+            1,
+            192,
+            268
+          ],
+          [
+            1,
+            1,
+            227,
+            240
+          ],
+          [
+            1,
+            1,
+            131,
+            298
+          ],
+          [
+            1,
+            1,
+            357,
+            91
+          ]
+        ],
+        "fitted_boxes": [
+          [
+            23,
+            11,
+            40,
+            60
+          ],
+          [
+            21,
+            13,
+            42,
+            60
+          ],
+          [
+            14,
+            18,
+            50,
+            60
+          ],
+          [
+            5,
+            31,
+            59,
+            60
+          ],
+          [
+            17,
+            18,
+            47,
+            60
+          ],
+          [
+            14,
+            22,
+            50,
+            60
+          ],
+          [
+            22,
+            13,
+            42,
+            60
+          ],
+          [
+            4,
+            46,
+            60,
+            60
+          ]
+        ],
+        "scale": 0.15730337078651685,
+        "actions": [
+          "idle",
+          "march",
+          "ready",
+          "attack",
+          "guard",
+          "hit",
+          "retreat",
+          "defeat"
+        ],
+        "uniform_method": "Explicit cyan/turquoise source uniform annotation; grayscale friendly/red enemy, skin/metal/horse preserved"
+      },
+      "archer": {
+        "study": "art/soldier-enhancement-v1/studies/archer.png",
+        "study_sha256": "effde78681fea3a89e4957663b3eacd89c8c472af70bb4ceb2980414412f72e4",
+        "prompt": "art/soldier-enhancement-v1/prompts/archer.txt",
+        "prompt_sha256": "a69a8cf14d249fafa1f8eb87c14df3bc7cd224f7c88a536b01d169b1a2a05706",
+        "gray_reference": "art/soldier-enhancement-v1/references/archer-gray-study.png",
+        "gray_reference_sha256": "33f70b38c935cd550dffea3771f99ff09de53cfd27defac038b8f6adcdc2cea1",
+        "material_prompt": "art/soldier-enhancement-v1/prompts/material-mask.txt",
+        "material_prompt_sha256": "538038fee71427ea640498c0696ddd9475015f367d05288e5636ad21b02550da",
+        "native_reference": "game/assets/battle-original/witness-attack.png",
+        "native_reference_sha256": "dc95e82ed8c23dfd77c8d3dcbc0aaab666820de88912ace862ea7f3714a51b56",
+        "imagegen_mode": "built_in",
+        "scope": "New supplemental action artwork from original visual references, not recovered native-ROM action frames",
+        "source_size": [
+          1774,
+          887
+        ],
+        "source_grid": [
+          4,
+          2
+        ],
+        "source_cells": [
+          [
+            173,
+            167,
+            149,
+            244
+          ],
+          [
+            594,
+            167,
+            153,
+            244
+          ],
+          [
+            971,
+            167,
+            221,
+            245
+          ],
+          [
+            1371,
+            177,
+            344,
+            234
+          ],
+          [
+            140,
+            596,
+            194,
+            197
+          ],
+          [
+            544,
+            565,
+            217,
+            228
+          ],
+          [
+            1000,
+            550,
+            170,
+            243
+          ],
+          [
+            1374,
+            679,
+            334,
+            124
+          ]
+        ],
+        "source_boxes": [
+          [
+            1,
+            1,
+            148,
+            243
+          ],
+          [
+            1,
+            1,
+            152,
+            243
+          ],
+          [
+            1,
+            1,
+            220,
+            244
+          ],
+          [
+            1,
+            1,
+            343,
+            233
+          ],
+          [
+            1,
+            1,
+            193,
+            196
+          ],
+          [
+            1,
+            1,
+            216,
+            227
+          ],
+          [
+            1,
+            1,
+            169,
+            242
+          ],
+          [
+            1,
+            1,
+            333,
+            123
+          ]
+        ],
+        "fitted_boxes": [
+          [
+            20,
+            20,
+            44,
+            60
+          ],
+          [
+            19,
+            20,
+            44,
+            60
+          ],
+          [
+            14,
+            20,
+            50,
+            60
+          ],
+          [
+            4,
+            22,
+            60,
+            60
+          ],
+          [
+            16,
+            28,
+            47,
+            60
+          ],
+          [
+            14,
+            23,
+            49,
+            60
+          ],
+          [
+            18,
+            21,
+            46,
+            60
+          ],
+          [
+            5,
+            40,
+            59,
+            60
+          ]
+        ],
+        "scale": 0.16374269005847952,
+        "actions": [
+          "idle",
+          "march",
+          "ready",
+          "attack",
+          "guard",
+          "hit",
+          "retreat",
+          "defeat"
+        ],
+        "uniform_method": "Explicit cyan/turquoise source uniform annotation; grayscale friendly/red enemy, skin/metal/horse preserved"
+      },
+      "cavalry": {
+        "study": "art/soldier-enhancement-v1/studies/cavalry.png",
+        "study_sha256": "9ef003e7d05c577a5a01b0c679fd41ac1ba8e5bf843af247246594d19bb8091f",
+        "prompt": "art/soldier-enhancement-v1/prompts/cavalry.txt",
+        "prompt_sha256": "45c05cbc2614e94bf196462fd115a752ab8d67ea46617c74dfacbef0ceec0454",
+        "gray_reference": "art/soldier-enhancement-v1/references/cavalry-gray-study.png",
+        "gray_reference_sha256": "ec858beb6fbb0eef4eecb3487e6d35160d3b2762c057030b56b6ac674ee65587",
+        "material_prompt": "art/soldier-enhancement-v1/prompts/material-mask.txt",
+        "material_prompt_sha256": "538038fee71427ea640498c0696ddd9475015f367d05288e5636ad21b02550da",
+        "native_reference": "game/assets/battle-original/witness-attack.png",
+        "native_reference_sha256": "dc95e82ed8c23dfd77c8d3dcbc0aaab666820de88912ace862ea7f3714a51b56",
+        "imagegen_mode": "built_in",
+        "scope": "New supplemental action artwork from original visual references, not recovered native-ROM action frames",
+        "source_size": [
+          1774,
+          887
+        ],
+        "source_grid": [
+          4,
+          2
+        ],
+        "source_cells": [
+          [
+            85,
+            66,
+            269,
+            325
+          ],
+          [
+            511,
+            56,
+            266,
+            335
+          ],
+          [
+            930,
+            100,
+            302,
+            291
+          ],
+          [
+            1353,
+            124,
+            377,
+            261
+          ],
+          [
+            77,
+            509,
+            289,
+            299
+          ],
+          [
+            503,
+            478,
+            284,
+            330
+          ],
+          [
+            945,
+            489,
+            265,
+            319
+          ],
+          [
+            1318,
+            641,
+            422,
+            172
+          ]
+        ],
+        "source_boxes": [
+          [
+            1,
+            1,
+            268,
+            324
+          ],
+          [
+            1,
+            1,
+            265,
+            334
+          ],
+          [
+            1,
+            1,
+            301,
+            290
+          ],
+          [
+            1,
+            1,
+            376,
+            260
+          ],
+          [
+            1,
+            1,
+            288,
+            298
+          ],
+          [
+            1,
+            1,
+            283,
+            329
+          ],
+          [
+            1,
+            1,
+            264,
+            318
+          ],
+          [
+            1,
+            1,
+            421,
+            171
+          ]
+        ],
+        "fitted_boxes": [
+          [
+            20,
+            24,
+            76,
+            92
+          ],
+          [
+            20,
+            22,
+            75,
+            92
+          ],
+          [
+            16,
+            31,
+            79,
+            92
+          ],
+          [
+            8,
+            38,
+            87,
+            92
+          ],
+          [
+            18,
+            30,
+            78,
+            92
+          ],
+          [
+            18,
+            23,
+            77,
+            92
+          ],
+          [
+            20,
+            26,
+            75,
+            92
+          ],
+          [
+            4,
+            56,
+            92,
+            92
+          ]
+        ],
+        "scale": 0.20952380952380953,
+        "actions": [
+          "idle",
+          "march",
+          "ready",
+          "attack",
+          "guard",
+          "hit",
+          "retreat",
+          "defeat"
+        ],
+        "uniform_method": "Explicit cyan/turquoise source uniform annotation; grayscale friendly/red enemy, skin/metal/horse preserved"
+      }
+    },
+    "palettes": {
+      "shared": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          25,
+          22,
+          20
+        ],
+        [
+          77,
+          86,
+          87
+        ],
+        [
+          154,
+          166,
+          166
+        ],
+        [
+          232,
+          240,
+          230
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          144,
+          61,
+          21
+        ],
+        [
+          222,
+          127,
+          53
+        ],
+        [
+          255,
+          199,
+          116
+        ],
+        [
+          65,
+          29,
+          12
+        ],
+        [
+          103,
+          43,
+          18
+        ],
+        [
+          158,
+          65,
+          0
+        ],
+        [
+          211,
+          115,
+          35
+        ]
+      ],
+      "uniforms": {
+        "friendly": [
+          [
+            48,
+            52,
+            55
+          ],
+          [
+            83,
+            89,
+            94
+          ],
+          [
+            128,
+            137,
+            140
+          ],
+          [
+            185,
+            197,
+            197
+          ],
+          [
+            225,
+            234,
+            230
+          ]
+        ],
+        "enemy": [
+          [
+            57,
+            6,
+            10
+          ],
+          [
+            110,
+            14,
+            19
+          ],
+          [
+            172,
+            35,
+            31
+          ],
+          [
+            224,
+            70,
+            42
+          ],
+          [
+            255,
+            132,
+            71
+          ]
+        ]
+      }
+    },
+    "build": {
+      "tool": "tools/soldier-enhancement/build.cjs",
+      "tool_sha256": "eb3b870541babcf21ad1b275acb1e813d3e019009a1636cb2441b601f8a08413",
+      "source_art": "built-in imagegen, original mixed formation references retained",
+      "scope": "Presentation-only infantry/archer/cavalry actions; no new troop counts, combat rules, RNG or save fields",
+      "originals_retained": true
+    }
   }
 }

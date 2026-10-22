@@ -5,6 +5,7 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
 const {decodePng,encodePng,scale2x}=require('../portraits/prepare_enhanced.cjs');
 const {WEAPONS,HORSES}=require('../../game/duel-appearance.js');
+const soldierEnhancement=require('../soldier-enhancement/build.cjs');
 const ROOT=path.resolve(__dirname,'../..'),OUT='game/assets/battle-enhanced',ART='art/battle-enhancement-v1',ACTION_ART='art/battle-enhancement-v2',TOOL='tools/battle-enhancement/build.cjs';
 // The approved v1 two-pose files are immutable; expansion must not regenerate
 // a larger legacy Cartesian product just because the public registry grows.
@@ -207,7 +208,7 @@ function actionAtlasEntry(weapon,horse,source){
 }
 function build(){
  // Validate the complete new source set before writing any runtime asset.
- const actionSources=Object.fromEntries(WEAPONS.map(weapon=>[weapon,actionSource(weapon)])),actionAtlases={},actionStudies={};
+ const soldierSources=soldierEnhancement.prepare(),actionSources=Object.fromEntries(WEAPONS.map(weapon=>[weapon,actionSource(weapon)])),actionAtlases={},actionStudies={};
  const originalPath='game/assets/battle-original/index.json',original=json(originalPath),backgrounds={},sprites={},duelists={},studies={};
  for(const[key,row]of Object.entries(original.backgrounds))backgrounds[key]=nativeEntry(row);
  for(const[key,row]of Object.entries(original.sprites))sprites[key]={facing:row.facing,frames:row.frames.map(frame=>nativeEntry(frame,{nearest:key.startsWith('attack_formation')}))};
@@ -228,7 +229,8 @@ function build(){
   actionStudies[weapon]=actionSources[weapon].metadata;actionAtlases[weapon]={};
   for(const horse of HORSES)actionAtlases[weapon][horse]=actionAtlasEntry(weapon,horse,actionSources[weapon]);
  }
- const manifest={schema:'tk2-battle-enhanced-v1',scale:4,originals_retained:true,logical_resolution:{width:256,height:240},resolution:{width:1024,height:960},build:{tool:TOOL,tool_sha256:sha(read(TOOL)),native_index:originalPath,native_index_sha256:sha(read(originalPath)),imagegen_mode:'built_in',native_method:'Scale2x twice for existing native cutouts; exact nearest4x for complete attack formations, retaining original palette and originals',duel_method:'Approved v1 two-pose files retained; eight separately imagegen-painted actions per weapon, explicit cyan horse-coat mask, offline named palettes; lazy runtime action-atlas loading, no new battle stats or RNG'},studies,backgrounds,sprites,duelists,actions:[...ACTIONS],action_studies:actionStudies,action_atlases:actionAtlases,horse_palettes:ACTION_COATS};
+ const soldiers=soldierEnhancement.build(soldierSources);
+ const manifest={schema:'tk2-battle-enhanced-v1',scale:4,originals_retained:true,logical_resolution:{width:256,height:240},resolution:{width:1024,height:960},build:{tool:TOOL,tool_sha256:sha(read(TOOL)),native_index:originalPath,native_index_sha256:sha(read(originalPath)),imagegen_mode:'built_in',native_method:'Scale2x twice for existing native cutouts; exact nearest4x for complete attack formations, retaining original palette and originals',duel_method:'Approved v1 two-pose files retained; eight separately imagegen-painted actions per weapon, explicit cyan horse-coat mask, offline named palettes; lazy runtime action-atlas loading, no new battle stats or RNG'},studies,backgrounds,sprites,duelists,actions:[...ACTIONS],action_studies:actionStudies,action_atlases:actionAtlases,horse_palettes:ACTION_COATS,soldiers};
  write('index.json',Buffer.from(JSON.stringify(manifest,null,2)+'\n'));return check();
 }
 function entries(manifest){return [...Object.values(manifest.backgrounds),...Object.values(manifest.sprites).flatMap(row=>row.frames),...Object.values(manifest.duelists).flatMap(rows=>Object.values(rows).flatMap(row=>row.frames))];}
@@ -268,8 +270,10 @@ function check(){
   }
  }
  assert.equal(atlases,WEAPONS.length*HORSES.length);
+ const soldierReport=soldierEnhancement.check(m.soldiers);
+ for(const rows of Object.values(m.soldiers.types))for(const row of Object.values(rows))paths.add(path.basename(row.path));
  assert.deepEqual(fs.readdirSync(path.join(ROOT,OUT)).filter(p=>p.endsWith('.png')).sort(),[...paths].sort(),'No stale final sprites');
- return{check:true,scale:4,native_files:paths.size-generated-atlases,legacy_generated_frames:generated,action_atlases:atlases,action_frames:atlases*ACTIONS.length,action_types:ACTIONS.length,weapon_types:WEAPONS.length,horse_types:HORSES.length,originals_retained:true};
+ return{check:true,scale:4,native_files:paths.size-generated-atlases-soldierReport.soldier_atlases,legacy_generated_frames:generated,action_atlases:atlases,action_frames:atlases*ACTIONS.length,action_types:ACTIONS.length,weapon_types:WEAPONS.length,horse_types:HORSES.length,...soldierReport};
 }
 module.exports={build,check,native4x,nearest4x,bounds,poseImages,imageBounds,fitted,horseMask,recolor,entries,atlasEntries,frameHasMargin,ACTIONS,ACTION_FRAME_WIDTH,ACTION_FRAME_HEIGHT,LEGACY_WEAPONS,LEGACY_HORSES,ACTION_COATS,actionGrid,actionPoseImages,cyanCoat,fittedAction,recolorAction,actionSource,actionAtlasEntry};
 if(require.main===module){try{console.log(JSON.stringify(process.argv.includes('--check')?check():build()));}catch(error){console.error(error);process.exitCode=1;}}
