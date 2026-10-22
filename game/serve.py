@@ -18,6 +18,12 @@ ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'game'
 
 
+class GameHTTPServer(ThreadingHTTPServer):
+    # Browsers open the deferred scripts/fonts/images concurrently. Python's
+    # default backlog5 can reset those sockets while a catalog response is busy.
+    request_queue_size = 128
+
+
 def portrait_static_assets(here=HERE):
     """Register exact presentation URLs, never a browsable asset directory.
 
@@ -109,8 +115,14 @@ def main():
     dlc_index = json.loads((HERE / 'data/main-scenarios-v12/index.json').read_text())
     officer_index = json.loads((HERE / 'data/main-scenarios-v13/index.json').read_text())
     economy_index = json.loads((HERE / 'data/main-scenarios-v14/index.json').read_text())
-    game = CampaignSession([HERE / 'data/demo.json', HERE / 'data/mainland.json'] +
-                           [HERE / 'data' / name for name in era_index['catalogs'] + current_index['catalogs'] + main_index['catalogs'] + complete_index['catalogs'] + city_index['catalogs'] + travel_index['catalogs'] + northern_index['catalogs'] + unified_index['catalogs'] + southern_index['catalogs'] + hazard_index['catalogs'] + dlc_index['catalogs'] + officer_index['catalogs'] + economy_index['catalogs']])
+    placement_index = json.loads((HERE / 'data/main-scenarios-v15/index.json').read_text())
+    archived_indices = (era_index, current_index, main_index, complete_index, city_index,
+                        travel_index, northern_index, unified_index, southern_index,
+                        hazard_index, dlc_index, officer_index, economy_index)
+    archived_paths = [HERE / 'data/demo.json', HERE / 'data/mainland.json'] + [
+        HERE / 'data' / name for index in archived_indices for name in index['catalogs']]
+    game = CampaignSession([HERE / 'data' / name for name in placement_index['catalogs']],
+                           archived_paths=archived_paths)
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/save-transfer.js': ('save-transfer.js', 'text/javascript; charset=utf-8'),
               '/cloud-save.js': ('cloud-save.js', 'text/javascript; charset=utf-8'),
@@ -227,7 +239,7 @@ def main():
                 traceback.print_exc()
                 self.send(500, {'error': '操作未完成，当前进度未改变。'})
 
-    server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
+    server = GameHTTPServer(('127.0.0.1', args.port), Handler)
     def stop(signum, frame):
         raise KeyboardInterrupt
     signal.signal(signal.SIGTERM, stop)

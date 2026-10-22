@@ -125,6 +125,11 @@ def apply_postings(data, *, capacity=None, source_aliases=None, proxy_names=None
                 city = posting['city']
                 if city in owned:
                     place(row, city, 'attested_yanmen_post_227', prior_posting=deepcopy(posting))
+            primary = assignments.get(pid, {}).get('historical_posting_reference') or {}
+            if pid not in planned and primary.get('basis') == 'primary_referenced_career_posting':
+                city = primary.get('city')
+                if city in owned and counts[city] < capacity:
+                    place(row, city, 'primary_referenced_career_posting', prior_posting=deepcopy(primary))
 
     pending = defaultdict(list)
     for side in sorted(members):

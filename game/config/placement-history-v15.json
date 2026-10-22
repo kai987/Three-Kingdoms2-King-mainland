@@ -1,0 +1,505 @@
+{
+  "schema": "tk2-placement-history-v15",
+  "reviewed_on": "2026-10-22",
+  "source_hash_scope": "SHA256 of UTF8 article text extracted from the largest mw-parser-output block; stripped text nodes joined with newline. Original source URLs remain the citation authority.",
+  "application_policy": "Historical scenarios only; explicit IF story overrides and date-matched source rows take precedence. Career windows express roster eligibility, not exact monthly garrisons, and never bypass birth, service or death eligibility. Neutral-region placement is authored gameplay completion, not proof of historical resignation.",
+  "sources": [
+    {
+      "url": "https://zh.wikisource.org/wiki/華陽國志/卷四",
+      "sha256": "b2ac79986e8986bc2027f4a74b4bdacf1cd5ca2ec04f8a6ec9a5ae49d7aa3058",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷01",
+      "sha256": "3a3c743bba01492a04431dca541478224bc1246dbd61859e79cee4991be42bd2",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷02",
+      "sha256": "d5e66e0ef368e5c27d30982e83de6a1479b687efc49df314643917e62f97a828",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷03",
+      "sha256": "4d66309a851913f9853e4b4646660a5cf3d7c6763e4a199a71ea3e32b9be1294",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷06",
+      "sha256": "d51f8ff2a764f29b39df771ba7a9819b28eda4b2b2dacea132b4a0f1dfb4dfb7",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷08",
+      "sha256": "19261269808eaae3a928282fa579512be141e870e803e6d0fafc7121c37635d1",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷09",
+      "sha256": "c612979848c4a1ec1bc1034512daa7e73f75d0eed0296e4199504b2c093f06a5",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷17",
+      "sha256": "d7f9171a082d634f7480e7dac62caf9960c465d15e9ed43af37ad9126f9c5233",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷18",
+      "sha256": "42c458783580090a60e161be0f08cedc6a9f5e99a977525157584261f80236f7",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷21",
+      "sha256": "fac01c06776c7a67b973a864b9d6de8a2b6b2b0f5b98c87bfbabaac3efc8cdd5",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32",
+      "sha256": "c4079e430f3847a6104ece37df0ada49d2540f71324b9dc1447d63ec273d7e10",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷33",
+      "sha256": "e0063c12014a08a055efed10e00f1ffecd161cc6026d121778de3545c27e6727",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷35",
+      "sha256": "d9d32d26f2a26154394cfa9d25b9c9d9d2d94439bbd767f274c5dd238a3248cd",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷36",
+      "sha256": "93996384971640bbf62e09f54b870dfab9b3cd62cf81bc6d69d0361aa0cfdc17",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷40",
+      "sha256": "bf3ddaae72173419f613b04ab8165d8eeb6034fad76e7bc94d6f86585d3c6d99",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷43",
+      "sha256": "68f75e6d755b5b6ccde425583b4d2f2c46a344b55eebdcd76ca6e3efdc81cb68",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷44",
+      "sha256": "8f0b4e582e16f0183f3287e03ff5cba77fc000b82ce8a5be763d7a52e1b61c34",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷54",
+      "sha256": "b54b8a2a97e1dd92f259f273427c8ddda19bf6fb25bd1ca00f43daba4c746e32",
+      "retrieved": "2026-10-22"
+    },
+    {
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷61",
+      "sha256": "b0fc0cb2d9306b60e858b9a70bd477ba9041bb87ac775bfad498f997d2c1dc1f",
+      "retrieved": "2026-10-22"
+    }
+  ],
+  "free_region_overrides": [
+    {
+      "person_id": "historical-expansion-0001",
+      "name": "鮮于銀",
+      "from": [
+        194,
+        1
+      ],
+      "to": [
+        220,
+        12
+      ],
+      "city": "yuyang",
+      "basis": "authorial_region_placement",
+      "note": "劉虞舊部於其遇害後聯合閻柔等反公孫瓚；此後轉屬與生卒未詳。用幽州相關區域安置為遊戲中立在野，不宣稱史實辭官、定居或隨鮮于輔投曹。194年1月起點及220年12月終點為本作月界／退場設計，非史載日期。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷08"
+      ]
+    },
+    {
+      "person_id": "historical-expansion-0002",
+      "name": "齊周",
+      "from": [
+        194,
+        1
+      ],
+      "to": [
+        220,
+        12
+      ],
+      "city": "yan",
+      "basis": "authorial_region_placement",
+      "note": "劉虞舊部於其遇害後聯合閻柔等反公孫瓚；此後轉屬與生卒未詳。用幽州相關區域安置為遊戲中立在野，不宣稱史實辭官、定居或隨鮮于輔投曹。194年1月起點及220年12月終點為本作月界／退場設計，非史載日期。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷08"
+      ]
+    }
+  ],
+  "career_overrides": [
+    {
+      "person_id": "san14-candidate-0203",
+      "name": "姜維",
+      "from": [
+        228,
+        4
+      ],
+      "to": [
+        264,
+        1
+      ],
+      "faction": "shu",
+      "basis": "bounded_career_inference",
+      "note": "建興六年第一次北伐時，由魏天水郡吏歸諸葛亮。原典記年與事件，不載轉屬確月；228年4月為春季戰事後的遊戲月界。264年1月為鍾會之亂死亡事件月，仍須服從本作死亡／劇本規則。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷44",
+        "https://zh.wikisource.org/zh-hant/三國志/卷33"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0250",
+      "name": "黃權",
+      "from": [
+        222,
+        8
+      ],
+      "to": [
+        240,
+        12
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "卷02明記黃初三年八月率眾降魏；卷43記後徙居河南、正始元年卒。222年8月為原典月份；240年12月僅按死亡年收束的遊戲終界，不宣稱卒月或全程駐河南。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷02",
+        "https://zh.wikisource.org/zh-hant/三國志/卷43"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0849",
+      "name": "孟達",
+      "from": [
+        220,
+        7
+      ],
+      "to": [
+        227,
+        11
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "卷03裴注明記延康元年歸魏，後領新城；本紀記227年12月反、228年正月被斬。降魏確月原文未載，220年7月為本作同年事件月界推定；227年11月止是反叛前月，不把此前整年算作蜀臣。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷03",
+        "https://zh.wikisource.org/zh-hant/三國志/卷40"
+      ],
+      "city": "xincheng"
+    },
+    {
+      "person_id": "san14-candidate-0125",
+      "name": "夏侯霸",
+      "from": [
+        249,
+        2
+      ],
+      "to": [
+        262,
+        12
+      ],
+      "faction": "shu",
+      "basis": "bounded_career_inference",
+      "note": "正始十年高平陵之變後，聞曹爽被誅、夏侯玄被召與郭淮代任，遂奔蜀。原典未直載奔蜀月份；249年2月為保留1月劇本事變前狀態的遊戲界線。262年12月沿用本作退場設計，非史實卒月。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷09",
+        "https://zh.wikisource.org/zh-hant/三國志/卷36"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0446",
+      "name": "徐庶",
+      "from": [
+        208,
+        9
+      ],
+      "to": [
+        232,
+        12
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "劉表死、長阪敗後因母被獲而辭劉備詣曹；裴注記後任魏右中郎將、御史中丞。208年9月按長阪事件映射，非本傳直接繫月；232年12月沿用本作年界，史料只記後數年病卒。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷35",
+        "https://zh.wikisource.org/zh-hant/三國志/卷32"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0769",
+      "name": "馬超",
+      "from": [
+        214,
+        6
+      ],
+      "to": [
+        222,
+        12
+      ],
+      "faction": "shu",
+      "basis": "bounded_career_inference",
+      "note": "建安十九年劉備圍成都時歸附，章武二年卒。原典不載歸附確月，214年6月是成都降前後的遊戲月界；222年12月按史載卒年收束而非卒月。此歷史窗口不替代本作獨立生卒設定；不得因此套用IF馬超劇本。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷36",
+        "https://zh.wikisource.org/zh-hant/三國志/卷32"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0766",
+      "name": "馬岱",
+      "from": [
+        214,
+        6
+      ],
+      "to": [
+        246,
+        12
+      ],
+      "faction": "shu",
+      "basis": "bounded_career_inference",
+      "note": "卷36可證222年馬超託付從弟岱及其蜀漢爵職，卷40記234年追斬魏延。214年隨馬超歸蜀屬同族生涯的作者推定，所讀原典無直接年月，不能稱已證轉屬；214年6月與246年12月均為本作窗口。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷36",
+        "https://zh.wikisource.org/zh-hant/三國志/卷40"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0618",
+      "name": "張郃",
+      "from": [
+        200,
+        10
+      ],
+      "to": [
+        231,
+        12
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "卷01在建安五年冬十月官渡決戰段記張郃、高覽降曹；卷17記同事但敘事先後有異。200年10月有本紀依據；231年12月為死亡年終界，不宣稱卒月；IF官渡結果改寫須另處理。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷01",
+        "https://zh.wikisource.org/zh-hant/三國志/卷17"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0281",
+      "name": "高覽",
+      "from": [
+        200,
+        10
+      ],
+      "to": [
+        201,
+        12
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "與張郃同在官渡決戰降曹，200年10月有卷01本紀依據；201年12月僅沿用本作退場年界，正史未在此記其卒年，不能把演義趙雲刺死敘事當作正史日期。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷01",
+        "https://zh.wikisource.org/zh-hant/三國志/卷17"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0780",
+      "name": "潘濬",
+      "from": [
+        219,
+        12
+      ],
+      "to": [
+        239,
+        12
+      ],
+      "faction": "wu",
+      "basis": "bounded_career_inference",
+      "note": "劉備入蜀時留典荊州；孫權取荊州、關羽死後仕吳。219年12月按荊州陷落事件映射，非本傳所載任官確月；239年12月按赤烏二年卒收束。219年7月開局仍不歸吳。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷61"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0072",
+      "name": "王平",
+      "from": [
+        219,
+        7
+      ],
+      "to": [
+        248,
+        12
+      ],
+      "faction": "shu",
+      "basis": "bounded_career_inference",
+      "note": "本從曹公征漢中後歸劉備，後任蜀將並鎮漢中。原傳未繫歸附確月，219年7月為漢中戰役後的遊戲界線；248年12月按延熙十一年卒收束，不宣稱卒月。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷43"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0845",
+      "name": "孟獲",
+      "from": [
+        225,
+        10
+      ],
+      "to": [
+        250,
+        12
+      ],
+      "faction": "shu",
+      "basis": "bounded_career_inference",
+      "note": "華陽國志記225年秋平南中，孟獲後為蜀官屬、官至御史中丞。225年10月採秋後遊戲界線，並非實錄任官月；250年12月沿用本作退場年界，史實卒年不詳。不提前覆蓋225年7月叛亂劇本，也不連帶改祝融、孟優等人的來源身分。",
+      "source_urls": [
+        "https://zh.wikisource.org/wiki/華陽國志/卷四"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0053",
+      "name": "王粲",
+      "from": [
+        208,
+        9
+      ],
+      "to": [
+        217,
+        3
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "劉表卒後勸劉琮歸曹，曹操辟為丞相掾，後軍謀祭酒、魏侍中。卷21記217年春病卒；208年9月按荊州歸降事件映射，217年3月為春末遊戲終界，均非本傳直載確月。不可因217年7月已死而把208至212年歸為在野。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷21",
+        "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0167",
+      "name": "韓嵩",
+      "from": [
+        208,
+        9
+      ],
+      "to": [
+        210,
+        12
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "劉表生前曾奉使許都而返，返後遭劉表囚禁；表卒後與蒯越等勸琮歸曹。曹操平荊州後拜韓嵩大鴻臚。本次以208年9月為歸曹遊戲月界，不把較早奉使擅算永久轉屬；210年12月沿用本作退場年界，非原典卒月。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷06",
+        "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0084",
+      "name": "蒯越",
+      "from": [
+        208,
+        9
+      ],
+      "to": [
+        214,
+        12
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "與韓嵩、傅巽等勸劉琮歸曹，曹操平荊州後授蒯越光祿勳；卷06記建安十九年卒。208年9月為荊州歸降的遊戲月界，214年12月為死亡年終界，不宣稱卒月或逐月固定治所。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷06",
+        "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0814",
+      "name": "文聘",
+      "from": [
+        208,
+        9
+      ],
+      "to": [
+        237,
+        12
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "原劉表大將，劉琮降時未即同行；曹操渡漢後才歸曹，隨曹純追劉備於長阪，後江夏太守。208年9月按同段戰事映射，原傳無歸附確日；237年12月沿用本作退場設定，傳文只記在江夏數十年而未繫卒年。此條只校勢力，不把南荊州四郡將領一併判歸魏。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷18",
+        "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0946",
+      "name": "劉琮",
+      "from": [
+        208,
+        9
+      ],
+      "to": [
+        208,
+        12
+      ],
+      "faction": "wei",
+      "basis": "bounded_career_inference",
+      "note": "卷01記208年九月歸降；卷06記曹操以其為青州刺史、封列侯，後遷諫議大夫，非演義所說降後被殺。此短窗只補本作208年開局歸屬，終點受目前人物庫208退場年界限制；不將208退場冒稱史實死亡，不自行修改全局生卒資料。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷06",
+        "https://zh.wikisource.org/zh-hant/三國志/卷01"
+      ]
+    },
+    {
+      "person_id": "san14-candidate-0988",
+      "name": "呂蒙",
+      "from": [
+        208,
+        9
+      ],
+      "to": [
+        219,
+        12
+      ],
+      "faction": "wu",
+      "basis": "bounded_career_inference",
+      "note": "原從孫策、繼仕孫權，參與赤壁，219年仍為吳將，奪荊州後病亡。208年9月為本次補充開局月界，並非其初仕孫氏年月；219年12月沿用本作死亡年界，原傳敘關羽敗後患病而未直載卒月。必須保留219年7月在籍，不能把全年當已死。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷54"
+      ]
+    }
+  ],
+  "city_owner_corrections": [
+    {
+      "from": [
+        238,
+        9
+      ],
+      "to": [
+        9999,
+        12
+      ],
+      "cities": [
+        "liaodong",
+        "lelang",
+        "daifang"
+      ],
+      "faction": "wei",
+      "only_when_owner": "neutral",
+      "note": "卷08記238年八月襄平陷、公孫淵父子死，遼東、帶方、樂浪等平。九月起為避開事件當月的遊戲月界；只補歷史劇本中仍屬中立的三城，不取代玩家戰果或其他已明示勢力歸屬。",
+      "source_urls": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷08"
+      ]
+    }
+  ]
+}

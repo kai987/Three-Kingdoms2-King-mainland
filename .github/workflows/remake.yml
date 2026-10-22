@@ -61,6 +61,8 @@ jobs:
           node tests/test_remake_cloud_ui.cjs
           node --check game/portraits.js
           node tests/test_remake_portraits.cjs
+          node tests/test_remake_capacity_ui.cjs
+          node tests/test_remake_placement_ui.cjs
           node tests/test_remake_i18n_runtime.cjs
           node tests/test_remake_map_navigation.cjs
       - name: Rebuild pinned self-hosted cloud SDK
@@ -161,3 +163,7 @@ jobs:
         run: |
           python game/build_officer_expansion.py
           git diff --exit-code -- game/data/main-scenarios-v13
+      - name: Rebuild all dated placements and 99-person cities offline
+        run: |
+          python -m unittest discover -s tools/officer-placement -p 'test_*.py' -v
+          python game/build_placement_campaigns.py --check

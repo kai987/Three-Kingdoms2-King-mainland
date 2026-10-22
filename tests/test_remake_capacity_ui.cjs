@@ -1,0 +1,71 @@
+/* City capacity follows the selected catalog; deployment remains a separate limit. */
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{spawnSync}=require('node:child_process');
+const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'game/app.js'),'utf8');
+const elements=new Map(),element=selector=>{
+ if(selector==='#transfer-estimate'||selector==='#route-mode')return null;
+ if(!elements.has(selector))elements.set(selector,{innerHTML:'',value:'',disabled:false});
+ return elements.get(selector);
+};
+let picked=[],lastDialog=null,lastNotice=null,lastCommand=null;
+const officers=Object.fromEntries(Array.from({length:99},(_,id)=>[id,{health:90,loyalty:80,experience:0,troops:300,profile:{martial_strength:80,intellect:70,virtue:60}}]));
+const home={id:'home',owner:'wei',gold:100,grain:1000,reserves:999,action_used:false,roster:{officer_ids:Object.keys(officers).map(Number)}},away={id:'away',owner:'wei',roster:{officer_ids:[]}},enemy={id:'enemy',owner:'wu',roster:{officer_ids:[]}};
+officers[100]={...officers[0],faction_id:null};
+const context={view:{catalog:{rules:{city_officer_capacity:99,battle_officers_per_side:10,expanded_campaign:true},city_profiles:{},city_income:{},map_presentation:{city_names:{}},links:[['home','enemy']],recruitable:{home:[100]},persuadable:{home:[]}},game:{player:'wei',turn:1,cities:{home,away,enemy},officers,extension:{officer_actions:{}}}},selectedCity:'home',actor:null,target:null,$:element,escapeHtml:String,name:id=>'武将'+id,portraitHtml:()=>'<i></i>',faction:String,cityName:String,periodCityName:String,cityEconomyNote:()=>'',resourceSummary:()=>'',marching:()=>new Set(),watchRouteDialog(){},notice(text,error){lastNotice={text,error};},command(kind,payload){lastCommand={kind,payload};return Promise.resolve(true);},render(){},dialog:{querySelectorAll:()=>picked,close(){}},openDialog(title,body){lastDialog={title,body};element('#departure-target').value='enemy';element('#transfer-city').value='away';element('#recruit-mode').value='recruit_officer';}};
+vm.createContext(context);
+vm.runInContext(source.slice(source.indexOf('const capacity='),source.indexOf('\nconst marching=')),context);
+vm.runInContext(source.slice(source.indexOf('function rosterRows('),source.indexOf('// Classify actual runtime entry')),context);
+(async()=>{
+ const before=JSON.stringify(context.view.game);
+ context.renderCity();
+ assert(element('#inspector').innerHTML.includes('驻城 99/99；每方出战上限10人。'));
+ assert.equal((element('#inspector').innerHTML.match(/<tr title=/g)||[]).length,99,'Every city member remains visible in the scrollable roster');
+ context.recruitOfficer(home);assert(lastDialog.body.includes('最多99人。'));
+ context.transferCity(home);assert(lastDialog.body.includes('目的城仍最多99人。'));assert(lastDialog.body.includes('0/99人'));
+ // Transferring an entire roster is independent of the battle deployment limit.
+ picked=Array.from({length:99},(_,value)=>({value:String(value)}));await element('#confirm-transfer').onclick();
+ assert.equal(lastCommand.kind,'transfer');assert.equal(lastCommand.payload.officers.length,99);
+ element('#allocation-officer').value='0';element('#allocation-troops').value='300';context.allocate(home);assert(lastDialog.body.includes('max="999"'),'Troop input uses troop limits, not city membership capacity');
+ assert.equal((lastDialog.body.match(/<option value=/g)||[]).length,99);
+ context.departure(home);assert(lastDialog.body.includes('选择1—10名武将'));assert.equal((lastDialog.body.match(/name="depart-officer"/g)||[]).length,99);
+ picked=Array.from({length:11},(_,value)=>({value:String(value)}));element('#review-departure').onclick();
+ assert.equal(lastNotice.error,true);assert.equal(lastDialog.title,'选择出征名单','11 members may not enter a battle from a 99-member city');
+ picked=picked.slice(0,10);element('#review-departure').onclick();assert.equal(lastDialog.title,'出征确认');await element('#confirm-departure').onclick();assert.equal(lastCommand.kind,'depart');assert.equal(lastCommand.payload.officers.length,10);
+ assert.equal(JSON.stringify(context.view.game),before,'Rendering and uncommitted confirmation never mutate runtime state');
+ // Opening a legacy save keeps that catalog's 30-person display and transfer cap.
+ context.view.catalog.rules.city_officer_capacity=30;home.roster.officer_ids=home.roster.officer_ids.slice(0,30);
+ context.renderCity();assert(element('#inspector').innerHTML.includes('驻城 30/30；每方出战上限10人。'));
+ context.transferCity(home);assert(lastDialog.body.includes('目的城仍最多30人。'));
+ // Shipped Japanese patterns interpolate both capacities instead of freezing 30.
+ const patterns=JSON.parse(fs.readFileSync(path.join(root,'game/locales/ui-ja.json'),'utf8')).patterns;
+ const japanese=value=>{const row=patterns.find(row=>new RegExp(row.pattern,row.flags||'u').test(value));assert(row,'Missing translated capacity pattern: '+value);return value.replace(new RegExp(row.pattern,row.flags||'u'),row.replacement);};
+ for(const limit of [30,99]){
+  assert.equal(japanese(`驻城 ${limit}/${limit}；每方出战上限10人。`),`在籍 ${limit}/${limit}人。出陣は各軍10人まで。`);
+  assert.equal(japanese(`每城${limit}人；每方出战最多10人，包含主将。`),`1都市${limit}人まで。主将を含め各軍10人まで出陣できます。`);
+ }
+ // Exercise the real rules with a 99-person roster and a legacy 30-person roster.
+ const python=spawnSync(process.env.PYTHON||'python3',['-B','-c',`
+import sys
+from types import SimpleNamespace
+sys.path.insert(0,'source')
+from remake.officers import GameRules,CityRoster,select_deployment,transfer_officers,CapacityError
+modern=GameRules(99,10,1200);legacy=GameRules(30,10,1200)
+roster=CityRoster('home',list(range(99)),modern);roster.validate()
+officers={i:SimpleNamespace(runtime_id=i,alive=True,health=90,troops=300,faction_id='wei') for i in range(99)}
+assert select_deployment(roster,range(10),officers)==tuple(range(10))
+try:select_deployment(roster,range(11),officers)
+except ValueError:pass
+else:raise AssertionError('99-person city allowed 11-person deployment')
+destination=CityRoster('away',[],modern);transfer_officers(roster,destination,list(range(99)));assert len(destination.officer_ids)==99
+extra=CityRoster('extra',[100],modern)
+try:transfer_officers(extra,destination,[100])
+except CapacityError:pass
+else:raise AssertionError('100th member accepted')
+assert extra.officer_ids==[100] and len(destination.officer_ids)==99
+try:CityRoster('legacy',list(range(31)),legacy).validate()
+except CapacityError:pass
+else:raise AssertionError('legacy capacity changed')
+`],{cwd:root,encoding:'utf8',env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});
+ assert.equal(python.status,0,python.stderr||python.stdout);
+ console.log('capacity UI: 99-member roster/recruit/transfer/troop input, 10-member deployment, legacy 30 and atomic overflow passed');
+})().catch(error=>{console.error(error);process.exitCode=1;});
