@@ -118,7 +118,7 @@ class PortraitReleaseTests(unittest.TestCase):
     def test_rebuilding_is_deterministic_and_does_not_mutate_campaign_catalogs(self):
         index_path = ROOT / 'game/assets/portraits/index.json'
         self.assertEqual(index_path.read_bytes(), (json.dumps(self.index, ensure_ascii=False, separators=(',', ':')) + '\n').encode())
-        catalogs = read('game/data/main-scenarios-v14/index.json')['catalogs']
+        catalogs = read('game/data/campaigns/index.json')['catalogs']
         before = {p: builder.sha((ROOT / 'game/data' / p).read_bytes()) for p in catalogs}
         self.assertEqual(builder.build(), self.index)
         after = {p: builder.sha((ROOT / 'game/data' / p).read_bytes()) for p in catalogs}

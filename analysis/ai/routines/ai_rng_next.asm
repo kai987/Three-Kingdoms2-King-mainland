@@ -1,7 +1,0 @@
-; Recovered evidence for ai_rng_next; file range $0115E5-$0115F4
-0115E5  b08:$B5D5  8E 93 6F  STX  $6F93
-0115E8  b08:$B5D8  AE 92 6F  LDX  $6F92
-0115EB  b08:$B5DB  BD E5 B5  LDA  $B5E5,X
-0115EE  b08:$B5DE  EE 92 6F  INC  $6F92
-0115F1  b08:$B5E1  AE 93 6F  LDX  $6F93
-0115F4  b08:$B5E4  60        RTS

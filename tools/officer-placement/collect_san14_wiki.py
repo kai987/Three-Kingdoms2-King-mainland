@@ -257,10 +257,29 @@ def build_output(people, failures, dates, index_meta, offline=False):
             chronology_disagreement_people=sum(bool(p['chronology_disagreements']) for p in ordered.values())))
 
 
+def canonical_candidates():
+    """Keep original1000 stable identities; use the current canonical pool."""
+    source = read('game/config/campaigns/people.json')
+    candidates = []
+    for pid in source['order']:
+        if not pid.startswith('san14-candidate-'):
+            continue
+        person = source['people'][pid]
+        japanese = person['ability_source']['source_name']
+        candidates.append(dict(person_id=pid, name_japanese=japanese,
+            name_traditional=person['name'], name_simplified=person['name'],
+            search_aliases=list(dict.fromkeys(person.get('aliases', []))),
+            chronology=dict(game_birth_year=person['birth_year'],
+                game_appearance_year=person['service_year'], game_death_year=person['death_year'])))
+    if len(candidates) != 1000 or len({p['person_id'] for p in candidates}) != 1000:
+        raise ValueError('Expected1000 canonical SAN14 identities')
+    return candidates
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--cache-dir',type=Path,default=Path('/tmp/tk-placement-audit/wiki-cache-v15'))
-    parser.add_argument('--output',type=Path,default=ROOT/'game/config/san14-scenario-postings-v15.json')
+    parser.add_argument('--cache-dir',type=Path,default=Path('/tmp/tk-placement-audit/wiki-cache'))
+    parser.add_argument('--output',type=Path,default=ROOT/'game/config/references/san14-postings.json')
     parser.add_argument('--workers',type=int,default=2)
     parser.add_argument('--min-interval',type=float,default=3,help='Global seconds between requests, shared by all workers')
     parser.add_argument('--limit',type=int)
@@ -270,12 +289,11 @@ def main():
     if args.min_interval<1:parser.error('Respectful request spacing must be at least1second')
     GATE.interval=args.min_interval
     args.cache_dir.mkdir(parents=True,exist_ok=True)
-    source=read('expansion/officers/data/roster-candidates.json')
-    catalogs=read('game/data/main-scenarios-v14/index.json')['catalogs']
-    dates={(d['start_year'],d['start_month']) for d in (read('game/data/'+f) for f in catalogs)}
+    source=canonical_candidates()
+    dates={(entry['year'],entry['month']) for entry in read('game/config/campaigns/index.json')['scenarios']}
     raw,index_meta=fetch(INDEX_URL,args.cache_dir,args.offline)
     links=index_links(raw.decode('utf-8-sig'))
-    candidates=source['officers'][:args.limit] if args.limit else source['officers']
+    candidates=source[:args.limit] if args.limit else source
     people={};failures=[]
     def task(person):
         url,join=candidate_url(person,links)

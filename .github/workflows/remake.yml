@@ -1,4 +1,4 @@
-name: Independent remake checks
+name: Web campaign checks
 on:
   push:
     branches: [main]
@@ -11,6 +11,7 @@ jobs:
     env:
       RUSTUP_TOOLCHAIN: '1.93.0'
       MARCH_CORE_BACKEND: rust
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -20,6 +21,14 @@ jobs:
           python-version: '3.13'
       - name: Install pinned marching-core toolchain
         run: rustup toolchain install 1.93.0 --profile minimal --component clippy,rustfmt --target wasm32-unknown-unknown
+      - name: Current campaign and source builds
+        run: |
+          python game/build_campaigns.py --check
+          python game/build_map_anchors.py
+          python game/build_map_presentation.py
+          python game/build_message_locales.py
+          python game/build_locales.py
+          git diff --exit-code -- game/data game/assets game/locales
       - name: Rust rules and reproducible native/WASM build
         run: |
           cargo fmt --manifest-path crates/march-core/Cargo.toml --check
@@ -27,143 +36,22 @@ jobs:
           cargo test --manifest-path crates/march-core/Cargo.toml --locked
           python game/build_march_core.py --check
           node tests/march_wasm_parity.cjs
-          MARCH_WASM_PATH=build/march-core-target/wasm32-unknown-unknown/release/march_core.wasm node tests/march_wasm_parity.cjs
-      - name: Officer and campaign behavior
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
+      - name: Current campaign behavior
         run: python -m unittest discover -s tests -p 'test_remake_*.py' -v
-      - name: Rebuild standalone mainland data offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
+      - name: Browser scripts and interactions
         run: |
-          python game/build_mainland.py
-          git diff --exit-code -- game/data/mainland.json
-      - name: Rebuild era profiles and placements offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_eras.py
-          git diff --exit-code -- game/data/eras expansion/officers/data/era-configuration-audit.json
-      - name: Browser script syntax
-        run: |
-          node --check game/app.js
-          node --check game/i18n.js
-          node --check game/map-navigation.js
-          node --check game/march-core.js
-          node --check game/march-worker.js
-          node tests/test_remake_march_worker.cjs
-          node tests/test_remake_library_status.cjs
-          node --check game/save-transfer.js
-          node tests/test_remake_save_transfer.cjs
-          node --check game/cloud-save.js
-          node --check game/cloud-save-ui.js
-          node tests/test_remake_cloud_save.cjs
-          node tests/test_remake_cloud_ui.cjs
-          node --check game/portraits.js
-          node tests/test_remake_portraits.cjs
-          node tests/test_remake_capacity_ui.cjs
-          node tests/test_remake_placement_ui.cjs
-          node tests/test_remake_i18n_runtime.cjs
-          node tests/test_remake_map_navigation.cjs
-      - name: Rebuild pinned self-hosted cloud SDK
+          for file in game/*.js; do node --check "$file"; done
+          for file in tests/test_remake_*.cjs; do node "$file"; done
+      - name: Pinned self-hosted cloud SDK
         run: |
           npm ci --prefix tools/cloud-sdk --ignore-scripts
           npm run check --prefix tools/cloud-sdk
-      - name: Rebuild stable-ID portrait index offline
+      - name: Stable-ID portrait assets
         run: |
           python -m pip install -r tools/portraits/requirements.txt
           python tools/portraits/build_generated.py --check
           python game/build_portrait_manifest.py --check
-      - name: Rebuild current officer batch and historical campaigns offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_campaigns.py
-          git diff --exit-code -- game/data/eras-v3 expansion/officers/data/era-configuration-v3-audit.json
-      - name: Changed-file whitespace
-        run: git diff --check
-      - name: Rebuild eleven historical main chapters offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_map_anchors.py
-          git diff --exit-code -- game/assets/city-positions.json
-          python game/build_main_scenarios.py
-          git diff --exit-code -- game/data/main-scenarios
-      - name: Rebuild completed virtue profiles and eleven v5 campaigns offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_virtue_completion.py
-          git diff --exit-code -- game/data/main-scenarios-v5 expansion/officers/data/virtue-completion-audit.json
-      - name: Rebuild presentation-only city names and native castle colors
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_map_presentation.py
-          git diff --exit-code -- game/assets/map-presentation.json
-      - name: Rebuild size-based city economy and Yinping-Chengdu campaigns
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_city_campaigns.py
-          git diff --exit-code -- game/data/main-scenarios-v6
-      - name: Rebuild100-city campaigns and geographic monthly marches
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_travel_campaigns.py
-          git diff --exit-code -- game/data/main-scenarios-v7
-      - name: Rebuild dated106-city northern campaigns
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_northern_campaigns.py
-          git diff --exit-code -- game/data/main-scenarios-v8
-      - name: Rebuild unified chapters and reviewed garrisons
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_unified_campaigns.py
-          git diff --exit-code -- game/data/main-scenarios-v9
-      - name: Rebuild dated Shu and Wu city expansion
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_southern_campaigns.py
-          git diff --exit-code -- game/data/main-scenarios-v10
-      - name: Rebuild dangerous routes and discoverable navigation offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_hazard_campaigns.py
-          git diff --exit-code -- game/data/main-scenarios-v11
-      - name: Rebuild DLC and supplemental campaigns offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_dlc_campaigns.py
-          git diff --exit-code -- game/data/main-scenarios-v12
-      - name: Rebuild date-specific city economy campaigns offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_economy_campaigns.py
-          git diff --exit-code -- game/data/main-scenarios-v14
-      - name: Rebuild Traditional Chinese and Japanese display dictionaries offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_message_locales.py
-          python game/build_locales.py
-          git diff --exit-code -- game/locales
-      - name: Rebuild additional officers and reviewed career windows offline
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: |
-          python game/build_officer_expansion.py
-          git diff --exit-code -- game/data/main-scenarios-v13
-      - name: Rebuild all dated placements and 99-person cities offline
+      - name: Offline source collector tests and whitespace
         run: |
           python -m unittest discover -s tools/officer-placement -p 'test_*.py' -v
-          python game/build_placement_campaigns.py --check
+          git diff --check

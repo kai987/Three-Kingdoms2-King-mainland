@@ -29,6 +29,7 @@ fn proportional_survivors_conserve_whole_army_and_input_order() {
         vec![1, 1, 1],
         vec![0, 1, 2, 999, 1000],
         vec![999; 30],
+        vec![1000; 99],
     ] {
         for (n, d) in [(0, 1), (1, 1), (1, 3), (1, 2), (1, 10), (4, 5)] {
             let result =
@@ -138,25 +139,6 @@ fn sea_wind_reverses_with_direction_and_month_but_april_is_unchanged() {
         )["hazard"]["wind"],
         "headwind"
     );
-}
-
-#[test]
-fn legacy_keeps_reverse_raw_metadata_and_float_number_spelling() {
-    let mut legacy = data();
-    legacy["travel_hazards"] = json!({});
-    let route = land("a", "b", 300.0);
-    let q = value(
-        json!({"op":"evaluate_leg","data":legacy,"route":route,"source":"b","target":"a","month":4}),
-    );
-    assert_eq!(q, route);
-    assert!(q["distance_km"].as_number().unwrap().is_f64());
-    assert_eq!(q["from"], "a");
-    legacy["travel_routes"] = json!([route]);
-    let q = value(
-        json!({"op":"path","data":legacy,"cities":[{"id":"a","owner":"p"},{"id":"b","owner":"p"}],"month":4,"source":"b","target":"a","owner":"p"}),
-    );
-    assert!(q["distance_km"].as_number().unwrap().is_f64());
-    assert_eq!(q["routes"][0]["from"], "a");
 }
 
 #[test]

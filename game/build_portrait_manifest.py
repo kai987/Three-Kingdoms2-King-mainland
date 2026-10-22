@@ -114,7 +114,7 @@ def image_record(row):
 
 
 def identities():
-    index = read('game/data/main-scenarios-v14/index.json')
+    index = read('game/data/campaigns/index.json')
     people, stable = None, None
     for path in index['catalogs']:
         rows = read('game/data/' + path)['people']

@@ -1,4 +1,4 @@
-"""Exact Python/native/WASM parity, including pre-migration save/RNG fixtures.
+"""Exact Python/native/WASM parity, including current save/RNG fixtures.
 
 Use --wasm-vectors to emit read-only Python reference vectors for Node's real
 WebAssembly ABI test. No live server or existing player campaign is changed.
@@ -29,14 +29,12 @@ CASES = [
     ('sea-head', 'wu', 'hepu', 'zhuya', 'sea', 7),
     ('sea-calm', 'wu', 'hepu', 'zhuya', 'sea', 4),
     ('explore', 'wu', 'hepu', 'yizhou', 'explore', 7),
-    ('legacy', 'shu', 'jiameng', 'fuxian', 'fastest', 7),
 ]
 
 
 def campaign_fixture(case):
     name, side, source, target, mode, month = case
-    version = 'v10' if name == 'legacy' else 'v13'
-    catalog = Catalog(ROOT / f'game/data/main-scenarios-{version}/217-07.json')
+    catalog = Catalog(ROOT / 'game/data/campaigns/217-07.json')
     game = Campaign(catalog)
     game.command('new', dict(faction=side, seed=2026), 0)
     while game.state.month != month:
@@ -48,7 +46,7 @@ def campaign_fixture(case):
         # Controlled friendly destination; preserve all identities and troops.
         for ident in destination.roster.officer_ids:
             other = next(c for c in game.state.cities.values()
-                         if c.id != target and c.owner == destination.owner and len(c.roster.officer_ids) < 30)
+                         if c.id != target and c.owner == destination.owner and len(c.roster.officer_ids) < game.catalog.rules.city_officer_capacity)
             other.roster.officer_ids.append(ident)
         destination.roster.officer_ids.clear()
         destination.owner = side
@@ -172,17 +170,16 @@ def synthetic_config():
 
 
 def vector_document():
-    """Reference matrices cover every released v13 leg in both directions/months."""
-    current = config_for(Catalog(ROOT / 'game/data/main-scenarios-v13/217-07.json').data)
-    legacy = config_for(Catalog(ROOT / 'game/data/main-scenarios-v10/217-07.json').data)
-    return [current, legacy, synthetic_config()]
+    """Reference matrices cover every current leg in both directions/months."""
+    current = config_for(Catalog(ROOT / 'game/data/campaigns/217-07.json').data)
+    return [current, synthetic_config()]
 
 
 def vectors(configs):
-    current, legacy, synthetic = configs
+    current, synthetic = configs
     for index, data in enumerate(configs):
         routes = data['travel_routes'] + data.get('exploration_routes', [])
-        months = range(1, 13) if index != 1 else (4, 7)
+        months = range(1, 13)
         for row in routes:
             for source, target in ((row['from'], row['to']), (row['to'], row['from'])):
                 allowed = dict(op='allowed', config=index, route=row, source=source, target=target)
@@ -192,7 +189,7 @@ def vectors(configs):
                         allowed, op='evaluate_leg', month=month)
     data = current
     cities = [{'id': city['id'], 'owner': 'friendly' if i % 3 else 'enemy'}
-              for i, city in enumerate(Catalog(ROOT / 'game/data/main-scenarios-v13/217-07.json').data['cities'])]
+              for i, city in enumerate(Catalog(ROOT / 'game/data/campaigns/217-07.json').data['cities'])]
     for month in (4, 7, 11):
         # Every physical connection, not only routes held by the player's faction.
         for row in data['travel_routes']:
@@ -201,32 +198,27 @@ def vectors(configs):
                                source=row['from'], target=row['to'], owner='friendly', mode=mode, adjacent=True)
                 yield f'path:{row["id"]}:{month}:{mode}', request
     keys = list(synthetic['city_coordinates'])
-    for hazard in (True, False):
-        # Legacy representation is separate: .0 must survive Python JSON saves.
-        index = 2
-        if not hazard:
-            continue  # Full actual legacy batch below covers the unchanged schema.
-        for ownership in (['friendly'] * 4, ['friendly', 'enemy', 'friendly', 'enemy']):
-            cities = [dict(id=key, owner=owner) for key, owner in zip(keys, ownership)]
-            for discovered in ([], ['explore:a:b']):
-                for month in (4, 7, 11):
-                    base = dict(config=index, cities=cities, month=month, discovered=discovered)
-                    yield f'batch:tie:{ownership}:{discovered}:{month}', dict(base, op='batch', player='friendly')
-                    for source in keys:
-                        for target in keys + ['missing']:
-                            for mode in ('fastest', 'land', 'sea', 'special', 'explore'):
-                                yield f'tie:{source}:{target}:{mode}:{month}', dict(
-                                    base, op='path', source=source, target=target,
-                                    owner='friendly', mode=mode, adjacent=ownership[keys.index(target)] != 'friendly' if target in keys else True)
-    for index, version, side in ((0, 'v13', 'shu'), (0, 'v13', 'wu'), (0, 'v13', 'wei'), (1, 'v10', 'shu')):
-        game = Campaign(Catalog(ROOT / f'game/data/main-scenarios-{version}/217-07.json'))
+    for ownership in (['friendly'] * 4, ['friendly', 'enemy', 'friendly', 'enemy']):
+        cities = [dict(id=key, owner=owner) for key, owner in zip(keys, ownership)]
+        for discovered in ([], ['explore:a:b']):
+            for month in (4, 7, 11):
+                base = dict(config=1, cities=cities, month=month, discovered=discovered)
+                yield f'batch:tie:{ownership}:{discovered}:{month}', dict(base, op='batch', player='friendly')
+                for source in keys:
+                    for target in keys + ['missing']:
+                        for mode in ('fastest', 'land', 'sea', 'special', 'explore'):
+                            yield f'tie:{source}:{target}:{mode}:{month}', dict(
+                                base, op='path', source=source, target=target,
+                                owner='friendly', mode=mode, adjacent=ownership[keys.index(target)] != 'friendly' if target in keys else True)
+    for side in ('shu', 'wu', 'wei'):
+        game = Campaign(Catalog(ROOT / 'game/data/campaigns/217-07.json'))
         with using_backend('python'):
             game.command('new', dict(faction=side, seed=2026), 0)
-        yield f'batch:actual:{version}:{side}', dict(op='batch', config=index,
+        yield f'batch:actual:{side}', dict(op='batch', config=0,
             cities=[dict(id=c.id, owner=c.owner) for c in game.state.cities.values()],
             month=game.state.month, discovered=[], player=side)
     seeded = random.Random(20261022)
-    counts = [[], [0], [1, 1, 1], [1, 2], [0, 1, 2, 999, 1000], [999] * 30, [1000] * 30]
+    counts = [[], [0], [1, 1, 1], [1, 2], [0, 1, 2, 999, 1000], [999] * 30, [1000] * 30, [1000] * 99]
     counts += [[seeded.randrange(100001) for _ in range(seeded.randrange(31))] for _ in range(40)]
     for troops in counts:
         for numerator, denominator in ((0, 1), (1, 1), (1, 3), (1, 2), (4, 5), (1, 10), (19, 100)):
@@ -248,7 +240,7 @@ def vectors(configs):
 
 
 class MarchReferenceBaselineTests(unittest.TestCase):
-    def test_original_python_campaign_save_and_rng_hashes(self):
+    def test_current_python_campaign_save_and_rng_hashes(self):
         expected = json.loads((ROOT / 'tests/fixtures/march-python-baseline.json').read_text())
         with using_backend('python'):
             for case in CASES:
@@ -346,7 +338,7 @@ class MarchNativeParityTests(unittest.TestCase):
             self.assertFalse(invoke('allowed', data=data, route=land, source='a', target='s'))
 
     def test_three_natural_ai_months_preserve_each_command_state_save_and_rng(self):
-        catalog = Catalog(ROOT / 'game/data/main-scenarios-v13/217-07.json')
+        catalog = Catalog(ROOT / 'game/data/campaigns/217-07.json')
         reference_game, native_game = Campaign(catalog), Campaign(catalog)
         transcript, phases, saw_march = [], set(), False
 
@@ -396,7 +388,7 @@ class MarchNativeParityTests(unittest.TestCase):
         self.assertTrue(saw_march, 'Natural AI must queue a real march')
         self.assertGreater(reference_game.state.rng.draws, 0)
 
-    def test_full_campaigns_and_cross_backend_pending_save_loads_match_original(self):
+    def test_full_campaigns_and_cross_backend_pending_save_loads_match_reference(self):
         expected = json.loads((ROOT / 'tests/fixtures/march-python-baseline.json').read_text())
         for backend, alternate in (('rust', 'python'), ('python', 'rust')):
             with using_backend(backend):

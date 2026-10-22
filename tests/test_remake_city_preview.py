@@ -13,16 +13,22 @@ from remake.session import CampaignSession
 class CityPreviewTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        paths=[ROOT/'game/data/demo.json',ROOT/'game/data/mainland.json']
-        for folder in ('eras','eras-v3','main-scenarios','main-scenarios-v5','main-scenarios-v6'):
-            index=json.loads((ROOT/f'game/data/{folder}/index.json').read_text())
-            paths.extend(ROOT/'game/data'/p for p in index['catalogs'])
+        index=json.loads((ROOT/'game/data/campaigns/index.json').read_text())
+        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=25:
+            raise AssertionError('Expected all25 current scenarios')
+        paths=[ROOT/'game/data'/p for p in index['catalogs']]
         cls.session=CampaignSession(paths)
+
+    @classmethod
+    def tearDownClass(cls):
+        del cls.session
 
     def test_all_catalog_previews_match_actual_opening_resources_and_rosters(self):
         s=self.session;before=s.to_dict();revision=s.revision;count=0
         for key,c in s.catalogs.items():
-            g=Campaign(c);g.command('new',{'faction':next(iter(c.factions)),'seed':2026},0)
+            self.assertEqual(c.data['schema'],'tk2-campaign-v1')
+            self.assertRegex(key,r'^mainland\d{3}-\d{2}$')
+            g=Campaign(c);g.state=g._new(next(iter(c.factions)),2026);g.validate(g.state)
             for ident,city in g.state.cities.items():
                 preview=s.preview_city(key,ident);row=preview['city']
                 self.assertEqual(preview['capacity'],c.rules.city_officer_capacity)
@@ -32,39 +38,40 @@ class CityPreviewTests(unittest.TestCase):
                 expected=[(i,c.by_id[i]['person_id'],c.name(i),g.state.officers[i].troops) for i in city.roster.officer_ids]
                 self.assertEqual([(o['id'],o['person_id'],o['name'],o['troops']) for o in row['officers']],expected)
                 count+=1
-        self.assertGreater(count,4000)
+        self.assertEqual(count,sum(len(c.data['active_cities']) for c in s.catalogs.values()))
+        self.assertGreaterEqual(count,2700)
         self.assertEqual(s.to_dict(),before);self.assertEqual(s.revision,revision)
 
     def test_preview_during_ai_uses_the_selected_opening_without_mutating_live_save(self):
         s=self.session
-        s.command('new',{'scenario':'mainland217-07-v6','faction':'shu','seed':2026},s.revision)
+        s.command('new',{'scenario':'mainland217-07','faction':'shu','seed':2026},s.revision)
         city=s.game.state.cities['shujun'];ident=city.roster.officer_ids[0]
         s.command('allocate',{'city':'shujun','officer':ident,'troops':500},s.revision)
         s.command('end_turn',{},s.revision);saved=s.export_save();revision=s.revision
-        preview=s.preview_city('mainland217-07-v6','shujun')
+        preview=s.preview_city('mainland217-07','shujun')
         self.assertEqual(preview['city']['officers'][0]['troops'],300)
-        self.assertEqual(preview['city']['reserves'],2400)
-        old=s.preview_city('mainland217-07-v5','shujun')
-        self.assertEqual(old['city']['reserves'],1200)
-        self.assertIsNone(old['city']['profile'])
+        expected=s.game.catalog.data['initial_city_resources']['shujun']
+        self.assertEqual(preview['city']['reserves'],expected['reserves'])
+        another=s.preview_city('mainland225-07','jianning')
+        self.assertEqual(another['city']['owner'],'nanman')
+        self.assertIsNotNone(another['city']['profile'])
         self.assertEqual(s.export_save(),saved);self.assertEqual(s.revision,revision)
 
     def test_bad_scenario_city_and_inactive_city_are_rejected_without_changing_play(self):
         s=self.session;before=s.to_dict();revision=s.revision
-        demo=next(key for key,c in s.catalogs.items() if len(c.data['active_cities'])==4)
-        inactive=next(k for k in s.catalogs[demo].map_cities if k not in s.catalogs[demo].data['active_cities'])
-        for scenario,city in ((None,'shujun'),([],None),('unknown','shujun'),(demo,None),(demo,{}),(demo,'unknown'),(demo,inactive)):
+        current='mainland184-02'
+        inactive=next(k for k in s.catalogs[current].map_cities if k not in s.catalogs[current].data['active_cities'])
+        for scenario,city in ((None,'shujun'),([],None),('unknown','shujun'),(current,None),(current,{}),(current,'unknown'),(current,inactive)):
             with self.assertRaises(GameError):s.preview_city(scenario,city)
         self.assertEqual(s.to_dict(),before);self.assertEqual(s.revision,revision)
 
-    def test_portrait_identity_comes_from_preview_catalog_when_old_save_lacks_person(self):
-        s=CampaignSession([ROOT/'game/data/main-scenarios-v5/184-02.json',
-                           ROOT/'game/data/main-scenarios-v14/190-01.json'])
-        s.command('new',{'scenario':'mainland184-02-v5','faction':'yellow_turban','seed':2026},s.revision)
+    def test_portrait_identity_comes_from_selected_preview_not_live_roster(self):
+        s=self.session
+        s.command('new',{'scenario':'mainland184-02','faction':'yellow_turban','seed':2026},s.revision)
         saved=s.export_save();revision=s.revision
-        selected=s.catalogs['mainland190-01-v14']
-        newcomer=next(row for row in selected.data['initial_officers'] if selected.ids[row['person_id']]>=1000)
-        self.assertNotIn(newcomer['person_id'],s.game.catalog.ids)
+        selected=s.catalogs['mainland190-01']
+        newcomer=next(row for row in selected.data['initial_officers'] if selected.ids[row['person_id']] not in s.game.state.officers)
+        self.assertNotIn(selected.ids[newcomer['person_id']],s.game.state.officers)
         preview=s.preview_city(selected.data['id'],newcomer['city'])
         row=next(row for row in preview['city']['officers'] if row['id']==selected.ids[newcomer['person_id']])
         self.assertEqual(row['person_id'],newcomer['person_id'])

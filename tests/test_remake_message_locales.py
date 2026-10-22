@@ -28,7 +28,8 @@ class MessageLocaleTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.data = json.loads((ROOT / 'game/locales/messages-ja.json').read_text())
-        cls.catalog = json.loads((ROOT / 'game/data/main-scenarios-v11/217-07.json').read_text())
+        cls.catalog = json.loads((ROOT / 'game/data/campaigns/217-07.json').read_text())
+        if cls.catalog['schema']!='tk2-campaign-v1':raise AssertionError('Expected current campaign schema')
 
     def test_all_runtime_game_errors_have_a_japanese_translation(self):
         checked = set()
@@ -43,17 +44,21 @@ class MessageLocaleTests(unittest.TestCase):
                 checked.add(text)
                 self.assertIn(text, self.data['exact'], (str(path), node.lineno, text))
                 self.assertNotEqual(text, translate(text, self.data))
-        self.assertGreater(len(checked), 60)
+        # Removed demo/old-engine branches no longer contribute error strings.
+        # Every discovered current error above must still have a translation.
+        self.assertGreaterEqual(len(checked), 50)
+        self.assertTrue({'存档无效，当前进度未改变。','请选择有效的战役。',
+                         '请选择本城健康的武将。','当前不是待处理的电脑回合。'}<=checked)
 
-    def test_all_thousand_officer_identities_keep_the_existing_name_crosswalk(self):
-        self.assertEqual(len(self.catalog['people']), 1000)
+    def test_all1023_officer_identities_keep_the_name_crosswalk(self):
+        self.assertEqual(len(self.catalog['people']), 1023)
         ids = set()
         for person in self.catalog['people']:
             ids.add(person['person_id'])
             japanese = person['ability_source']['source_name']
             self.assertEqual(translate(person['name'], self.data), japanese)
             self.assertEqual(translate(japanese, self.data), japanese)
-        self.assertEqual(len(ids), 1000)
+        self.assertEqual(len(ids), 1023)
         self.assertEqual(translate('乐𬘭', self.data), '楽綝')
         self.assertEqual(translate('马云𫘧', self.data), '馬雲騄')
         self.assertEqual(translate('吴郡', self.data), '呉郡')
@@ -78,12 +83,12 @@ class MessageLocaleTests(unittest.TestCase):
                 self.assertRegex(translated, '[ぁ-ゖァ-ヶ]')
 
     def test_dlc_scope_notes_have_japanese_prose_without_changing_sources(self):
-        data = json.loads((ROOT / 'game/data/main-scenarios-v12/225-07.json').read_text())
+        data = json.loads((ROOT / 'game/data/campaigns/225-07.json').read_text())
         for text in data['design_notes']:
             self.assertIn(text, self.data['exact'])
             self.assertRegex(translate(text, self.data), '[ぁ-ゖァ-ヶ]')
-        custom = json.loads((ROOT / 'game/config/dlc-scenarios.json').read_text())
-        note = next(row['scope_note'] for row in custom['entries'] if row['year'] == 211)
+        custom = json.loads((ROOT / 'game/data/campaigns/211-07.json').read_text())
+        note = custom['main_scenario']['scope_note']
         self.assertIn(note, self.data['exact'])
 
     def test_battle_personnel_and_travel_messages_translate_captured_values(self):
@@ -101,7 +106,7 @@ class MessageLocaleTests(unittest.TestCase):
                 '221年8月　探索部隊が夷洲に到着。朱崖―夷洲航路を発見し、地図に表示しました。',
             '行军3因出发城失陷或人员退场取消。': '行軍3は出発都市の陥落、または参加武将の退場により中止されました。',
             '行军2到达成都，3将入城。': '行軍2が成都に到着。武将3人が入城しました。',
-            '本城已满30人，招募未执行。': 'この都市は定員30人に達しているため、登用は行いませんでした。',
+            '本城已满99人，招募未执行。': 'この都市は定員99人に達しているため、登用は行いませんでした。',
         }
         for source, expected in cases.items():
             with self.subTest(source=source):
@@ -120,12 +125,13 @@ class MessageLocaleTests(unittest.TestCase):
     def test_message_resource_rebuild_is_deterministic_and_does_not_edit_catalog(self):
         path = ROOT / 'game/locales/messages-ja.json'
         before = path.read_bytes()
-        catalog_path = ROOT / 'game/data/main-scenarios-v11/217-07.json'
-        original = catalog_path.read_bytes()
+        catalogs = sorted((ROOT / 'game/data/campaigns').glob('*.json'))
+        self.assertEqual(len(catalogs),26)
+        original = {path:path.read_bytes() for path in catalogs}
         subprocess.run([sys.executable, '-B', 'game/build_message_locales.py'], cwd=ROOT,
                        check=True, capture_output=True)
         self.assertEqual(path.read_bytes(), before)
-        self.assertEqual(catalog_path.read_bytes(), original)
+        self.assertEqual({path:path.read_bytes() for path in catalogs}, original)
 
 
 if __name__ == '__main__':

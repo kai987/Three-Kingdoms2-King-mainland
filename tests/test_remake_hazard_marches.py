@@ -1,4 +1,4 @@
-"""Hazard departures, exactly-once arrival losses, exploration and old saves."""
+"""Hazard departures, exactly-once arrival losses, exploration and current saves."""
 from copy import deepcopy
 import json
 from pathlib import Path
@@ -16,7 +16,7 @@ from remake.route_hazards import evaluate_leg
 
 class HazardMarchTests(unittest.TestCase):
     def catalog(self):
-        data=json.loads((ROOT/'game/data/main-scenarios-v10/217-07.json').read_text())
+        data=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
         data['id']='hazard-march-fixture'
         data['travel_hazards']=dict(
             yinping=dict(from_='yinping'),
@@ -26,9 +26,10 @@ class HazardMarchTests(unittest.TestCase):
             coastal_cities=['hepu','zhuya','yizhou','nanhai','kuaiji','wujun','jiaozhi'])
         data['travel_hazards']['yinping']={'from':'yinping','to':'shujun','time_multiplier':2,
             'survival_numerator':1,'survival_denominator':3}
+        data['travel_routes']=[r for r in data['travel_routes'] if r.get('special')!='ziwu']
         data['travel_routes'].append(dict(id='ziwu-fixture',**{'from':'hanzhong','to':'jingzhao'},
             mode='land',terrain='mountain',distance_km=300,land_km=300,sea_km=0,days=20,special='ziwu'))
-        data['links'].append(['hanzhong','jingzhao'])
+        if ['hanzhong','jingzhao'] not in data['links']:data['links'].append(['hanzhong','jingzhao'])
         data['exploration_routes']=[dict(id='explore:hepu:yizhou',**{'from':'hepu','to':'yizhou'},
             mode='sea',terrain='sea',distance_km=990,land_km=0,sea_km=990,days=17,exploration=True),
             dict(id='explore:zhuya:yizhou',**{'from':'zhuya','to':'yizhou'},mode='sea',terrain='sea',
@@ -45,11 +46,24 @@ class HazardMarchTests(unittest.TestCase):
         city=game.state.cities[key]
         for ident in list(city.roster.officer_ids):
             destination=next(c for c in game.state.cities.values() if c.id!=key and c.owner==city.owner
-                             and len(c.roster.officer_ids)<30)
+                             and len(c.roster.officer_ids)<game.catalog.rules.city_officer_capacity)
             destination.roster.officer_ids.append(ident)
         city.roster.officer_ids.clear();city.owner=owner
         game.validate(game.state)
         return city
+
+    def fill(self,game,target):
+        """Move actual same-faction people to exercise the real 99-person limit."""
+        moved=[];marching=game._march_ids(game.state)
+        for city in game.state.cities.values():
+            if city.id==target.id or city.owner!=target.owner:continue
+            for ident in list(city.roster.officer_ids):
+                if ident in marching:continue
+                if len(target.roster.officer_ids)==game.catalog.rules.city_officer_capacity:
+                    return moved
+                city.roster.officer_ids.remove(ident);target.roster.officer_ids.append(ident)
+                moved.append((ident,city.id))
+        self.fail('Current faction must have enough people for a full-city fixture')
 
     def set_troops(self,game,ids,amount):
         delta=0
@@ -83,11 +97,8 @@ class HazardMarchTests(unittest.TestCase):
         ids=source.roster.officer_ids[:3];self.set_troops(game,ids,900)
         game.command('transfer',dict(source='yinping',target='shujun',officers=ids,route_mode='special'),game.revision)
         target=game.state.cities['shujun']
-        free=[int(i) for i in game.state.extension['free_locations']][:30]
-        self.assertEqual(len(free),30)
-        for ident in free:
-            game.state.officers[ident].faction_id='wei';target.roster.officer_ids.append(ident)
-            game.state.extension['free_locations'].pop(str(ident))
+        moved=self.fill(game,target)
+        self.assertEqual(len(target.roster.officer_ids),99)
         game.validate(game.state);old_lost=game.state.soldiers['lost']
         self.arrive(game)
         self.assertEqual(sum(game.state.officers[i].troops for i in ids),900)
@@ -100,9 +111,9 @@ class HazardMarchTests(unittest.TestCase):
         game.command('arrivals',{},game.revision)
         self.assertEqual(game.state.soldiers['lost']-old_lost,1800)
         target=game.state.cities['shujun']
-        for ident in free[:3]:
-            target.roster.officer_ids.remove(ident);game.state.officers[ident].faction_id=None
-            game.state.extension['free_locations'][str(ident)]=target.id
+        for ident,city in moved[:3]:
+            target.roster.officer_ids.remove(ident)
+            game.state.cities[city].roster.officer_ids.append(ident)
         game._complete_month(game.state);game.validate(game.state)
         game.command('arrivals',{},game.revision)
         self.assertFalse(game.state.extension['travel']['marches'])
@@ -128,13 +139,15 @@ class HazardMarchTests(unittest.TestCase):
         # Controlled calendar fixture isolates deaths while a full port/city
         # waits; it does not claim a natural multi-year military outcome.
         game=self.game('wei');target=self.empty(game,'shujun','wei')
-        source=game.state.cities['yinping'];ids=source.roster.officer_ids[:3]
+        source=game.state.cities['yinping']
+        # Use the actual current chronology, independent of roster ordering.
+        dying=next(i for i in source.roster.officer_ids
+            if 217 < (game.catalog.definitions[game.state.officers[i].person_id].death_year or 999) < 220)
+        ids=[dying]+[i for i in source.roster.officer_ids if i!=dying][:2]
         self.set_troops(game,ids,900)
         game.command('transfer',dict(source='yinping',target='shujun',officers=ids,route_mode='special'),game.revision)
         target=game.state.cities['shujun']
-        for text in list(game.state.extension['free_locations'])[:30]:
-            ident=int(text);game.state.officers[ident].faction_id='wei'
-            target.roster.officer_ids.append(ident);game.state.extension['free_locations'].pop(text)
+        self.fill(game,target)
         self.arrive(game)
         self.assertTrue(game.state.extension['travel']['marches'][0]['risks'][0]['applied'])
         while (game.state.year,game.state.month)<(220,1):
@@ -213,17 +226,6 @@ class HazardMarchTests(unittest.TestCase):
             with self.assertRaises(GameError):game.load_save(bad,game.revision)
             self.assertEqual(game.to_dict(),before)
 
-    def test_released_catalogs_keep_legacy_travel_schema_and_quotes(self):
-        game=Campaign(Catalog(ROOT/'game/data/main-scenarios-v10/217-07.json'))
-        game.command('new',dict(faction='shu',seed=2026),0)
-        self.assertEqual(set(game.state.extension['travel']),{'counter','marches','battle_arrival'})
-        source=game.state.cities['jiameng'];ident=source.roster.officer_ids[0]
-        game.command('transfer',dict(source=source.id,target='fuxian',officers=[ident]),game.revision)
-        row=game.state.extension['travel']['marches'][0]
-        self.assertNotIn('risks',row)
-        self.assertTrue(all('hazard' not in leg for leg in row['quote']['routes']))
-        saved=game.export_save();loaded=Campaign(game.catalog);loaded.load_save(saved,0)
-        self.assertEqual(loaded.to_dict(),game.to_dict())
 
 
 if __name__=='__main__':unittest.main()

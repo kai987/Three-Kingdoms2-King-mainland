@@ -1,4 +1,4 @@
-"""Complete dated placement plans are playable without rewriting old saves."""
+"""Current dated plans, calendar behavior and canonical rebuild invariants."""
 from copy import deepcopy
 import hashlib
 import json
@@ -6,12 +6,12 @@ from collections import Counter
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake.campaign import Campaign, Catalog, canonical
-from remake.garrison_postings import apply_postings
+from remake.campaign import Campaign, Catalog, GameError, canonical
 from remake.officers import (CapacityError, CityRoster, YearState, select_deployment,
                             transfer_officers, year_state)
 from remake.session import CampaignSession
@@ -54,14 +54,12 @@ def first_future_entry(catalog, person_id):
 class PlacementCompletionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.index = read('game/data/main-scenarios-v15/index.json')
+        cls.index = read('game/data/campaigns/index.json')
         cls.catalogs = {}
-        cls.parents = {}
         for filename in cls.index['catalogs']:
             catalog = Catalog(ROOT / 'game/data' / filename)
             date = catalog.data['start_year'], catalog.data['start_month']
             cls.catalogs[date] = catalog
-            cls.parents[date] = Catalog(ROOT / f'game/data/main-scenarios-v14/{date[0]}-{date[1]:02d}.json')
         cls.portrait_index = read('game/assets/portraits/index.json')
 
     def game(self, date, faction=None):
@@ -79,36 +77,33 @@ class PlacementCompletionTests(unittest.TestCase):
         game._reconcile_factions(game.state)
         game.validate(game.state)
 
-    def test_all25_new_catalogs_keep_people_profiles_map_and_portrait_identities(self):
+    def test_all25_current_catalogs_have_complete_stable_person_and_board_identities(self):
         self.assertEqual(len(self.catalogs), 25)
-        self.assertEqual(set(self.catalogs), set(self.parents))
-        self.assertEqual(self.index['default'], 'mainland217-07-v15')
-        protected = ('people', 'cities', 'active_cities', 'city_foundings',
-                     'links', 'travel_routes', 'travel_hazards', 'sea_routes', 'exploration_routes',
-                     'world', 'initial_city_resources', 'city_income', 'faction_rulers')
+        self.assertEqual(self.index['schema'], 'tk2-campaign-index-v1')
+        self.assertEqual(self.index['default'], 'mainland217-07')
         portrait_people = self.portrait_index['people']
+        stable = self.catalogs[217, 7]
+        shared_board = ('cities', 'links', 'city_foundings', 'travel_routes',
+                        'travel_hazards', 'sea_routes', 'exploration_routes', 'world')
         for date, catalog in self.catalogs.items():
-            data, prior = catalog.data, self.parents[date].data
+            data = catalog.data
             with self.subTest(date=date):
-                self.assertEqual(data['id'], prior['id'].replace('-v14', '-v15'))
-                self.assertEqual(data['content_generation'], 15)
+                self.assertEqual(data['id'], f'mainland{date[0]}-{date[1]:02d}')
+                self.assertEqual(data['schema'], 'tk2-campaign-v1')
+                self.assertNotIn('content_generation', data)
                 self.assertEqual(catalog.rules.city_officer_capacity, 99)
                 self.assertEqual(catalog.rules.battle_officers_per_side, 10)
                 self.assertEqual(len(data['people']), 1023)
-                for key in protected:
-                    self.assertEqual(data[key], prior[key], key)
-                expected_owners = dict(prior['initial_owners'])
-                if date in ((249, 1), (263, 5)):
-                    # Reviewed post238 Wei administration, explicitly scoped
-                    # to these six corrections; all other holdings are frozen.
-                    for city in ('liaodong', 'lelang', 'daifang'):
-                        self.assertEqual(prior['initial_owners'][city], 'neutral')
-                        expected_owners[city] = 'wei'
-                self.assertEqual(data['initial_owners'], expected_owners)
+                for key in shared_board:
+                    self.assertEqual(data[key], stable.data[key], key)
                 self.assertEqual(set(catalog.ids), set(portrait_people))
                 for person in data['people']:
-                    self.assertEqual(person['runtime_id'], self.parents[date].ids[person['person_id']])
+                    self.assertEqual(person['runtime_id'], stable.ids[person['person_id']])
+                    self.assertIsNotNone(person['profile']['virtue'])
                     self.assertIn(portrait_people[person['person_id']]['kind'], ('nes_original', 'generated'))
+                if date in ((249, 1), (263, 5)):
+                    for city in ('liaodong', 'lelang', 'daifang'):
+                        self.assertEqual(data['initial_owners'][city], 'wei')
                 self.assertTrue(data['placement_completion']['complete'])
                 self.assertEqual(data['placement_completion']['pending'], 0)
                 self.assertEqual(set(data['era_assignments']), set(catalog.ids))
@@ -149,6 +144,12 @@ class PlacementCompletionTests(unittest.TestCase):
     def test_every_future_person_has_usable_dated_windows_and_an_open_city(self):
         future_count = 0
         for date, catalog in self.catalogs.items():
+            for city, founding in catalog.data['city_foundings'].items():
+                opening = founding['year'], founding.get('month', 1)
+                before = (opening[0], opening[1] - 1) if opening[1] > 1 else (opening[0] - 1, 12)
+                with self.subTest(date=date, city=city, opening=opening):
+                    self.assertNotIn(city, catalog.active_city_ids(*before))
+                    self.assertIn(city, catalog.active_city_ids(*opening))
             for pid, definition in catalog.definitions.items():
                 assignment = catalog.data['era_assignments'][pid]
                 ys = year_state(definition, date[0])
@@ -192,7 +193,7 @@ class PlacementCompletionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             select_deployment(destination, destination.officer_ids[:11], game.state.officers)
 
-    def test_meng_da_reviewed_city_is_used_without_changing_faction_when_unavailable(self):
+    def test_meng_da_is_actually_stationed_at_xincheng_for_wei(self):
         pid = 'san14-candidate-0849'
         for date in ((221, 7), (225, 7), (227, 2)):
             with self.subTest(date=date):
@@ -206,34 +207,7 @@ class PlacementCompletionTests(unittest.TestCase):
                 self.assertIn(ident, game.state.cities['xincheng'].roster.officer_ids)
                 self.assertEqual(game.state.officers[ident].faction_id, 'wei')
 
-        data = deepcopy(self.catalogs[225, 7].data)
-        target = 'xincheng'
-        faction_by_person = {row['person_id']: data['era_assignments'][row['person_id']]['faction']
-                             for row in data['initial_officers']}
-        wei_seat = next(f['city'] for f in data['factions'] if f['id'] == 'wei')
-        self.assertNotEqual(wei_seat, target)
-        # Begin with legal Wei origins while the formerly preferred city is
-        # controlled by Shu. The posting service is not a defection mechanism.
-        for row in data['initial_officers']:
-            if row['city'] == target:
-                self.assertEqual(faction_by_person[row['person_id']], 'wei')
-                row['city'] = wei_seat
-                data['era_assignments'][row['person_id']]['city'] = wei_seat
-                data['appearance_locations'][row['person_id']] = wei_seat
-        data['initial_owners'][target] = 'shu'
-        audit = apply_postings(data)
-        assignment = data['era_assignments'][pid]
-        self.assertEqual(assignment['faction'], 'wei')
-        self.assertNotEqual(assignment['city'], target)
-        self.assertEqual(data['initial_owners'][assignment['city']], 'wei')
-        record = next(row for row in audit['postings'] if row['person_id'] == pid)
-        self.assertNotEqual(record['basis'], 'primary_referenced_career_posting')
-        self.assertEqual(record['faction'], 'wei')
-        for row in data['initial_officers']:
-            self.assertEqual(data['initial_owners'][row['city']], faction_by_person[row['person_id']])
-        self.assertTrue(all(count <= 99 for f in audit['factions'].values() for count in f['city_rosters'].values()))
-
-    def test_qian_zhao_attested_yanmen_post_survives_only_for_its_original_faction(self):
+    def test_qian_zhao_is_actually_stationed_at_yanmen_for_wei(self):
         pid = 'san14-candidate-0236'
         game = self.game((227, 2))
         assignment = game.catalog.data['era_assignments'][pid]
@@ -242,27 +216,6 @@ class PlacementCompletionTests(unittest.TestCase):
         self.assertEqual(assignment['posting_reference']['basis'], 'attested_yanmen_post_227')
         self.assertEqual(assignment['appearance_plan']['city'], 'yanmen')
         self.assertIn(game.catalog.ids[pid], game.state.cities['yanmen'].roster.officer_ids)
-
-        # A changed final affiliation cannot inherit a pin recorded for Wei.
-        # This is an explicit alternate-assignment fixture, not a history claim.
-        sys.path.insert(0, str(ROOT / 'game'))
-        try:
-            from build_placement_campaigns import Planner
-        finally:
-            sys.path.pop(0)
-        previous = deepcopy(self.parents[227, 2].data)
-        old = previous['era_assignments'][pid]
-        shu_seat = next(f['city'] for f in previous['factions'] if f['id'] == 'shu')
-        self.assertEqual(old['posting_reference']['faction'], 'wei')
-        old.update(faction='shu', city=shu_seat)
-        next(r for r in previous['initial_officers'] if r['person_id'] == pid)['city'] = shu_seat
-        previous['appearance_locations'][pid] = shu_seat
-        result = Planner().build_catalog(previous)
-        changed = result['era_assignments'][pid]
-        self.assertEqual(changed['faction'], 'shu')
-        self.assertEqual(result['initial_owners'][changed['city']], 'shu')
-        self.assertNotEqual(changed['city'], 'yanmen')
-        self.assertNotEqual(changed['posting_reference']['basis'], 'attested_yanmen_post_227')
 
     def test_real_calendar_boundaries_spawn_once_as_free_and_never_revive(self):
         # Exercise both unborn and not-yet-serving pools and multiple scenario
@@ -320,7 +273,7 @@ class PlacementCompletionTests(unittest.TestCase):
                 self.assertFalse(officer.alive)
                 game.validate(game.state)
 
-    def test_new_save_roundtrips_and_legacy_catalog_still_uses_its_own_capacity(self):
+    def test_all_current_saves_roundtrip_and_retired_scenario_ids_are_atomic_rejections(self):
         for date in self.catalogs:
             with self.subTest(date=date):
                 game = self.game(date)
@@ -328,18 +281,20 @@ class PlacementCompletionTests(unittest.TestCase):
                 restored = Campaign(game.catalog)
                 restored.load_save(saved, 0)
                 self.assertEqual(canonical(restored.export_save()), canonical(saved))
-        old, new = self.parents[217, 7], self.catalogs[217, 7]
-        session = CampaignSession([ROOT / 'game/data/main-scenarios-v14/217-07.json',
-                                   ROOT / 'game/data/main-scenarios-v15/217-07.json'])
-        session.command('new', {'scenario': old.data['id'], 'faction': 'wu', 'seed': 2026}, session.revision)
-        saved = session.export_save()
-        old_state = session.to_dict()
-        session.command('new', {'scenario': new.data['id'], 'faction': 'wu', 'seed': 2026}, session.revision)
-        self.assertEqual(session.game.catalog.rules.city_officer_capacity, 99)
-        session.load_save(saved, session.revision)
-        self.assertEqual(session.to_dict(), old_state)
-        self.assertEqual(session.game.catalog.rules.city_officer_capacity, 30)
-        self.assertEqual(session.game.catalog.sha256, old.sha256)
+        session = CampaignSession([ROOT / 'game/data' / name for name in self.index['catalogs']])
+        session.command('new', dict(scenario='mainland217-07', faction='wu', seed=2026), session.revision)
+        saved, revision = session.export_save(), session.revision
+        for retired in ('mainland217-07-v14', 'mainland217-07-v15', 'mainland217-v3'):
+            with self.subTest(retired=retired):
+                with self.assertRaises(GameError):
+                    session.command('new', dict(scenario=retired, faction='wu', seed=2026), session.revision)
+                invalid = deepcopy(saved)
+                invalid['scenario'] = retired
+                with self.assertRaises(GameError):
+                    session.load_save(invalid, session.revision)
+                self.assertEqual(session.export_save(), saved)
+                self.assertEqual(session.revision, revision)
+                self.assertEqual(session.game.catalog.rules.city_officer_capacity, 99)
 
     def test_short_natural_campaign_progress_keeps_capacity_and_save_contracts(self):
         for date in ((184, 2), (217, 7), (249, 1)):
@@ -370,26 +325,41 @@ class PlacementCompletionTests(unittest.TestCase):
             restored.load_save(saved, 0)
             self.assertEqual(restored.to_dict(), game.to_dict())
 
-    def test_check_builder_preserves_all_published_catalog_and_portrait_bytes(self):
-        parents = sorted((ROOT / 'game/data/main-scenarios-v14').glob('*.json'))
-        self.assertEqual(len(parents), 26)
-        for path in parents:
-            relative = path.relative_to(ROOT).as_posix()
-            released = subprocess.run(['git', 'show', 'HEAD:' + relative], cwd=ROOT,
-                                      check=True, capture_output=True).stdout
-            self.assertEqual(path.read_bytes(), released, relative)
-        frozen = [p for p in (ROOT / 'game/data').rglob('*.json')
-                  if 'main-scenarios-v15' not in p.parts]
-        portrait_paths = [ROOT / 'game/assets/portraits/index.json',
-                          ROOT / 'game/config/portrait-identity-map.json',
-                          ROOT / 'game/config/portrait-originals.json',
-                          ROOT / 'game/config/portrait-generated.json']
-        all_paths = frozen + portrait_paths + list((ROOT / 'game/data/main-scenarios-v15').glob('*.json'))
-        before = {p: file_hash(p) for p in all_paths}
-        result = subprocess.run([sys.executable, '-B', 'game/build_placement_campaigns.py', '--check'],
+    def test_canonical_rebuild_preserves_sources_catalogs_and_portrait_bytes(self):
+        paths = list((ROOT / 'game/config/campaigns').rglob('*.json'))
+        paths += list((ROOT / 'game/data/campaigns').glob('*.json'))
+        paths += [ROOT / 'game/assets/portraits/index.json',
+                  ROOT / 'game/config/portrait-identity-map.json',
+                  ROOT / 'game/config/portrait-originals.json',
+                  ROOT / 'game/config/portrait-generated.json']
+        before = {p: file_hash(p) for p in paths}
+        result = subprocess.run([sys.executable, '-B', 'game/build_campaigns.py', '--check'],
                                 cwd=ROOT, check=True, capture_output=True, text=True)
-        self.assertTrue(result.stdout.strip())
-        self.assertEqual(before, {p: file_hash(p) for p in all_paths})
+        self.assertEqual(json.loads(result.stdout)['catalogs'], 25)
+        # Fail any attempt to read a generated catalog while independently
+        # rebuilding. Canonical inputs alone must reproduce every current byte.
+        with tempfile.TemporaryDirectory() as directory:
+            script = r'''import importlib.util, pathlib, sys
+root = pathlib.Path.cwd()
+def audit(event, args):
+    if event == 'open' and isinstance(args[0], (str, bytes)):
+        path = pathlib.Path(args[0]).resolve()
+        if path.is_relative_to(root / 'game/data'):
+            raise AssertionError('Generated catalog was used as a build input')
+sys.addaudithook(audit)
+spec = importlib.util.spec_from_file_location('canonical_builder', root / 'game/build_campaigns.py')
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+module.build(output=pathlib.Path(sys.argv[1]))
+'''
+            subprocess.run([sys.executable, '-B', '-c', script, directory], cwd=ROOT,
+                           check=True, capture_output=True, text=True)
+            generated = Path(directory)
+            self.assertEqual({p.name for p in generated.glob('*.json')},
+                             {p.name for p in (ROOT / 'game/data/campaigns').glob('*.json')})
+            for rebuilt in generated.glob('*.json'):
+                self.assertEqual(rebuilt.read_bytes(), (ROOT / 'game/data/campaigns' / rebuilt.name).read_bytes())
+        self.assertEqual(before, {p: file_hash(p) for p in paths})
 
 
 if __name__ == '__main__':

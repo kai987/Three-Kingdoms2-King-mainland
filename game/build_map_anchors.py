@@ -1,26 +1,27 @@
 #!/usr/bin/env python3
-"""Register Web hit areas against the actual approved v42 rendered castles.
-
-The earlier iconLayout array predates several manual northwest/northern moves.
-The v42 renderer uses cities.displayArtX/Y and crops136px from the left.
-"""
+"""Rebuild the approved map hit areas from the canonical map source."""
 from pathlib import Path
 import hashlib
 import json
 
-ROOT=Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def build():
-    plan=json.loads((ROOT/'expansion/map/city-map-city-sea-plan-v42.json').read_text())
-    positions={c['key']:[c['displayArtX']-136,c['displayArtY']] for c in plan['cities']}
-    if len(positions)!=96 or any(not (0<=x<1352 and 0<=y<1024) for x,y in positions.values()):
-        raise ValueError('Invalid rendered city registration')
-    result={'schema':'rendered-v42-city-positions-v1',
-        'map_sha256':hashlib.sha256((ROOT/'game/assets/map.png').read_bytes()).hexdigest(),
-        'source':'expansion/map/city-map-city-sea-plan-v42.json displayArtX/displayArtY; crop x136',
-        'positions':positions}
-    (ROOT/'game/assets/city-positions.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    source = json.loads((ROOT / 'game/config/map-source.json').read_text(encoding='utf-8'))
+    if source.get('schema') != 'tk2-map-source-v1':
+        raise ValueError('Unknown approved map source')
+    expected = source['approved_asset_sha256']['map.png']
+    if hashlib.sha256((ROOT / 'game/assets/map.png').read_bytes()).hexdigest() != expected:
+        raise ValueError('Approved map pixels changed')
+    result = source['anchors']
+    if result['map_sha256'] != expected:
+        raise ValueError('Hit areas refer to different map pixels')
+    if len(result['positions']) != 96 or any(not (0 <= x < 1352 and 0 <= y < 1024) for x, y in result['positions'].values()):
+        raise ValueError('Invalid approved base-map registration')
+    (ROOT / 'game/assets/city-positions.json').write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+    return result
 
 
-if __name__=='__main__':build()
+if __name__ == '__main__':
+    build()

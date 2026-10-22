@@ -102,27 +102,8 @@ def main():
     from remake.cloud_config import public_config, content_security_policy
     cloud_config = public_config(HERE / 'config/cloud-save-public.json')
     cloud_csp = content_security_policy(cloud_config)
-    era_index = json.loads((HERE / 'data/eras/index.json').read_text())
-    current_index = json.loads((HERE / 'data/eras-v3/index.json').read_text())
-    main_index = json.loads((HERE / 'data/main-scenarios/index.json').read_text())
-    complete_index = json.loads((HERE / 'data/main-scenarios-v5/index.json').read_text())
-    city_index = json.loads((HERE / 'data/main-scenarios-v6/index.json').read_text())
-    travel_index = json.loads((HERE / 'data/main-scenarios-v7/index.json').read_text())
-    northern_index = json.loads((HERE / 'data/main-scenarios-v8/index.json').read_text())
-    unified_index = json.loads((HERE / 'data/main-scenarios-v9/index.json').read_text())
-    southern_index = json.loads((HERE / 'data/main-scenarios-v10/index.json').read_text())
-    hazard_index = json.loads((HERE / 'data/main-scenarios-v11/index.json').read_text())
-    dlc_index = json.loads((HERE / 'data/main-scenarios-v12/index.json').read_text())
-    officer_index = json.loads((HERE / 'data/main-scenarios-v13/index.json').read_text())
-    economy_index = json.loads((HERE / 'data/main-scenarios-v14/index.json').read_text())
-    placement_index = json.loads((HERE / 'data/main-scenarios-v15/index.json').read_text())
-    archived_indices = (era_index, current_index, main_index, complete_index, city_index,
-                        travel_index, northern_index, unified_index, southern_index,
-                        hazard_index, dlc_index, officer_index, economy_index)
-    archived_paths = [HERE / 'data/demo.json', HERE / 'data/mainland.json'] + [
-        HERE / 'data' / name for index in archived_indices for name in index['catalogs']]
-    game = CampaignSession([HERE / 'data' / name for name in placement_index['catalogs']],
-                           archived_paths=archived_paths)
+    current_index = json.loads((HERE / 'data/campaigns/index.json').read_text())
+    game = CampaignSession([HERE / 'data' / name for name in current_index['catalogs']])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/save-transfer.js': ('save-transfer.js', 'text/javascript; charset=utf-8'),
               '/cloud-save.js': ('cloud-save.js', 'text/javascript; charset=utf-8'),

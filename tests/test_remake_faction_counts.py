@@ -15,12 +15,14 @@ from remake.session import CampaignSession,faction_officer_counts,faction_resour
 class FactionOfficerCountTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        index=json.loads((ROOT/'game/data/main-scenarios-v12/index.json').read_text())
+        index=json.loads((ROOT/'game/data/campaigns/index.json').read_text())
+        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=25:
+            raise AssertionError('Expected25 current campaign catalogs')
         cls.paths=[ROOT/'game/data'/name for name in index['catalogs']]
 
     def session(self):
-        session=CampaignSession(self.paths)
-        session.command('new',dict(scenario='mainland217-07-v12',faction='shu',seed=2026),0)
+        session=CampaignSession([ROOT/'game/data/campaigns/225-07.json',ROOT/'game/data/campaigns/217-07.json'])
+        session.command('new',dict(scenario='mainland217-07',faction='shu',seed=2026),0)
         return session
 
     def test_each_preview_counts_actual_starting_members_without_mutation(self):
@@ -42,7 +44,7 @@ class FactionOfficerCountTests(unittest.TestCase):
         self.assertGreater(len(session.game.state.officers),sum(expected.values())) # Free officers are not faction members.
         for values in faction_resources(session.game.catalog,session.game.state).values():
             self.assertEqual(set(values),{'gold','grain','reserves','cities'})
-        session.preview_city('mainland225-07-v12','jianning')
+        session.preview_city('mainland225-07','jianning')
         self.assertEqual(session.export_save(),saved);self.assertEqual(session.game.state.rng,rng)
         session.load_save(saved,session.revision)
         self.assertEqual(session.view()['catalog']['faction_officers'],expected)
@@ -60,7 +62,7 @@ class FactionOfficerCountTests(unittest.TestCase):
 
     def test_actual_recruitment_increases_only_the_recruiting_faction(self):
         session=self.session();game=session.game;state=game.state
-        city=next(c for c in state.cities.values() if c.owner=='shu' and c.roster.officer_ids and len(c.roster.officer_ids)<30 and game._free_candidates(state,c))
+        city=next(c for c in state.cities.values() if c.owner=='shu' and c.roster.officer_ids and len(c.roster.officer_ids)<game.catalog.rules.city_officer_capacity and game._free_candidates(state,c))
         actor=city.roster.officer_ids[0];candidate=game._free_candidates(state,city)[0]
         before=session.view()['catalog']['faction_officers']
         # Controlled RNG isolates successful recruitment, using actual people and locations.
@@ -73,7 +75,7 @@ class FactionOfficerCountTests(unittest.TestCase):
 
     def test_actual_defection_moves_one_member_between_factions(self):
         session=self.session();game=session.game;state=game.state
-        city=next(c for c in state.cities.values() if c.owner=='shu' and c.roster.officer_ids and len(c.roster.officer_ids)<30 and game._persuadable(state,c))
+        city=next(c for c in state.cities.values() if c.owner=='shu' and c.roster.officer_ids and len(c.roster.officer_ids)<game.catalog.rules.city_officer_capacity and game._persuadable(state,c))
         actor=city.roster.officer_ids[0];candidate=game._persuadable(state,city)[0]
         prior_side=state.officers[candidate].faction_id
         before=session.view()['catalog']['faction_officers']

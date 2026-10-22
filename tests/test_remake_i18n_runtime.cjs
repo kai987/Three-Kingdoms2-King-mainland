@@ -19,13 +19,14 @@ const input=body.append(new Element('input',{'aria-label':'随机种子'}));inpu
 const all=node=>[node,...(node.children||[]).flatMap(all)];
 const events=[],document={documentElement:html,querySelector:s=>all(html).find(n=>n.nodeType===1&&n.matches(s))||null,querySelectorAll:s=>all(html).filter(n=>n.nodeType===1&&n.matches(s)),createTreeWalker(node){const nodes=all(node).slice(1);let index=0;return{currentNode:node,nextNode(){if(index===nodes.length)return false;this.currentNode=nodes[index++];return true;}};},addEventListener(){},dispatchEvent(e){events.push(e);return true;}};
 Object.defineProperty(document,'title',{get:()=>title.data});
-const storage=new Map([['three-kingdoms-demo-save','unchanged-game-save']]),requests=[];
+const storage=new Map([['three-kingdoms-save','unchanged-game-save']]),requests=[];
 const context={window:{},document,Node:{TEXT_NODE:3,ELEMENT_NODE:1},NodeFilter:{SHOW_ELEMENT:1,SHOW_TEXT:4},MutationObserver:class{observe(){}disconnect(){}},CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail;}},localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,String(v))},fetch:async url=>{requests.push(url);return{ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,'game',url),'utf8'))};},console};
 vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i18n.js'),'utf8'),context,{filename:'game/i18n.js'});
 (async()=>{
  const i18n=context.window.GameI18n;await i18n.ready;
  assert.equal(i18n.locale,'zh-Hant');assert.equal(document.title,'三國·大陸戰役');assert.equal(heading.data,'保存進度');
- const index=JSON.parse(fs.readFileSync(path.join(root,'game/data/main-scenarios-v12/index.json')));
+ const index=JSON.parse(fs.readFileSync(path.join(root,'game/data/campaigns/index.json')));
+ assert.equal(index.schema,'tk2-campaign-index-v1');assert.equal(index.catalogs.length,25);
  const rows=index.catalogs.map(file=>{const data=JSON.parse(fs.readFileSync(path.join(root,'game/data',file)));return{title:data.title,year:data.start_year,month:data.start_month,main_scenario:data.main_scenario};});
  const before=JSON.stringify(rows);i18n.registerScenarios(rows);
  const cases=[
@@ -40,7 +41,7 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
   ['1023人武将库','武将名鑑・1023人'],['全部1023人','全1023人'],
   ['荀勖','荀勗'],['施績','朱績'],
   ['容量不足，尚未登场','都市の定員不足・未登場'],
-  ['武 40 / 知 70 / 德 60。武知为参考生涯的本作设计值，并非《三国志14》原始能力。年代含游戏估计，详见来源。','武 40 / 知 70 / 徳 60。武力・知力は事績を参考にした本作独自の設定値で、『三國志14』の原能力値ではありません。年代にはゲーム用の推定を含みます。根拠は出典を参照してください。'],
+  ['武 40 / 知 70 / 德 60。武知为参考生涯的本作设计值，并非《三国志14》原始能力。年代含游戏估计，详见来源。','武 40 / 知 70 / 徳 60。武力・知力は事績を参考にした本作独自の設定値で、『三国志14』の原能力値ではありません。年代にはゲーム用の推定を含みます。根拠は出典を参照してください。'],
  ];
  for(const[source,expected]of cases){const translated=i18n.t(source,'ja');assert.equal(translated,expected,source);assert.equal(i18n.t(translated,'ja'),expected,'Japanese translation must be idempotent: '+source);}
  for(const row of rows){const once=i18n.t(row.title,'ja');assert.equal(i18n.t(once,'ja'),once,row.title);assert(!once.includes('の戦いの戦い'),row.title);}
@@ -48,6 +49,6 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
  for(let n=0;n<2;n++){assert(i18n.setLocale('ja'));assert.equal(heading.data,'セーブ');assert.equal(document.title,'三国志・大陸戦役');assert(i18n.setLocale('zh-Hant'));assert.equal(heading.data,'保存進度');assert.equal(document.title,'三國·大陸戰役');}
  const storageBefore=[...storage];assert.equal(i18n.setLocale('zh-CN'),false);assert.equal(i18n.locale,'zh-Hant');assert.deepEqual([...storage],storageBefore);
  assert.equal(input.value,'13579');assert.equal(input.checked,true);assert.equal(language.children[0].children[0].data,'繁體中文');assert.equal(language.children[1].children[0].data,'日本語');
- assert.equal(storage.get('three-kingdoms-demo-save'),'unchanged-game-save');assert.equal(JSON.stringify(rows),before);assert.equal(requests.length,3);assert(requests.every(url=>url.startsWith('/locales/')));
+ assert.equal(storage.get('three-kingdoms-save'),'unchanged-game-save');assert.equal(JSON.stringify(rows),before);assert.equal(requests.length,3);assert(requests.every(url=>url.startsWith('/locales/')));
  console.log(`i18n runtime: ${cases.length} exact/idempotence cases, ${rows.length} scenario titles, both-language DOM restoration, immutable form/save and invalid-locale checks passed`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

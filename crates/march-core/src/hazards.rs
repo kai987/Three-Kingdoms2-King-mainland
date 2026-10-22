@@ -82,9 +82,6 @@ pub(crate) fn allowed(data: &Value, route: &Value, source: &str, target: &str) -
     if !pair(route, source, target)? {
         return Ok(false);
     }
-    if !truthy(data.get("travel_hazards")) {
-        return Ok(true);
-    }
     let yinping = &data["travel_hazards"]["yinping"];
     let start = text(yinping, "from", "yinping")?;
     let end = text(yinping, "to", "shujun")?;
@@ -154,9 +151,6 @@ pub(crate) fn evaluate(
     }
     if !allowed(data, route, source, target)? {
         return Err("Route does not permit this direction".into());
-    }
-    if !truthy(data.get("travel_hazards")) {
-        return Ok(route.clone());
     }
     let mut leg = normalized(route)?;
     if !leg.is_object() {

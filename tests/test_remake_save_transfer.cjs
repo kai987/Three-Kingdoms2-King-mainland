@@ -8,4 +8,4 @@ assert.equal(JSON.parse(body).revision,7);
 for(const raw of ['',null,[], 'null','1','[]','{} {}','{invalid','{"x":NaN}'])assert.throws(()=>loadBody(raw,1),/存档无效/);
 for(const rev of [-1,1.5,NaN,Infinity,'1',Number.MAX_SAFE_INTEGER+1])assert.throws(()=>loadBody('{}',rev));
 assert.throws(()=>loadBody(JSON.stringify({text:'字'.repeat(800000)}),1));
-console.log('save transfer: legacy number spelling, exact JSON payload, UTF-8 bounds and invalid-document rejection passed');
+console.log('save transfer: current number spelling, exact JSON payload, UTF-8 bounds and invalid-document rejection passed');

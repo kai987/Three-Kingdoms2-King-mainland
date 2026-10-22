@@ -38,7 +38,7 @@ def apply_postings(data, *, capacity=None, source_aliases=None, proxy_names=None
     Free/future/dead people, identities, profiles, armies and affiliations are
     not created or changed.  ``capacity`` defaults to the catalog's own rule.
     """
-    capacity = data.get('rules', {}).get('city_officer_capacity', 30) if capacity is None else capacity
+    capacity = data.get('rules', {}).get('city_officer_capacity', 99) if capacity is None else capacity
     if not isinstance(capacity, int) or isinstance(capacity, bool) or capacity < 1:
         raise ValueError('City officer capacity must be a positive integer')
     cities = {row['id']: row for row in data['cities']}

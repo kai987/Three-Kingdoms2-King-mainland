@@ -1,1 +1,0 @@
-These exploratory captures used the inherited camera64,64. Their initial world-coordinate/vertical-shift assumptions were rejected. They are not part of visual-evidence.json and must not be used as class1 named/coordinate evidence. Valid paired evidence is in core-views with camera0,0 and independent pixel verification.

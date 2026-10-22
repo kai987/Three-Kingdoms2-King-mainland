@@ -1,7 +1,6 @@
-"""Small independent campaign: typed state, transactions, battle and saved RNG.
+"""Current campaign: typed state, atomic transactions, battles and saved RNG.
 
-Only the modern officer model and Python standard library are imported. All
-rules newly designed for this playable slice are supplied in the demo catalog.
+Only current campaign catalogs are accepted; gameplay parameters remain data-driven.
 """
 from __future__ import annotations
 
@@ -17,7 +16,7 @@ from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .officers import (CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
-                       initialize_officer, integer, select_deployment, year_state)
+                       initialize_officer, integer, year_state)
 
 
 def canonical(value):
@@ -81,7 +80,10 @@ class Catalog:
         raw = Path(path).read_bytes()
         self.sha256 = hashlib.sha256(raw).hexdigest()
         self.data = json.loads(raw)
-        assert self.data['schema'] in {'standalone-demo-data-v1', 'standalone-mainland-data-v1'}
+        if self.data.get('schema') != 'tk2-campaign-v1':
+            raise ValueError('Unsupported campaign catalog schema')
+        if not self.data.get('travel_rules') or not self.data.get('travel_hazards'):
+            raise ValueError('Current geographic and hazard travel rules are required')
         r = self.data['rules']
         self.rules = GameRules(r['city_officer_capacity'], r['battle_officers_per_side'], r['runtime_capacity'])
         self.by_id, self.definitions, self.profiles = {}, {}, {}
@@ -97,9 +99,9 @@ class Catalog:
         self.factions = {f['id']: f for f in self.data['factions']}
         self.map_cities = {c['id']: c for c in self.data['cities']}
         self.links = {frozenset(e) for e in self.data['links']}
-        expected = self.data.get('city_count', 100 if self.data.get('travel_rules') else 96)
+        expected = self.data['city_count']
         assert type(expected) is int and expected > 0
-        expected_people = self.data.get('officer_count', 1000)
+        expected_people = self.data['officer_count']
         integer(expected_people, 1, self.rules.runtime_capacity, 'catalog officer count')
         assert len(self.definitions) == expected_people and len(self.map_cities) == expected
 
@@ -147,12 +149,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             state.officers[ident] = officer
             city.roster.officer_ids.append(ident)
         state.soldiers['initial'] = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
-        if self.expanded:
-            self._initialize_expansion(state)
-        if self.travelling:
-            state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False)
-            if self.catalog.data.get('travel_hazards'):
-                state.extension['travel']['discovered'] = []
+        self._initialize_expansion(state)
+        state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
         self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
 
@@ -256,14 +254,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _depart(self, state, payload):
         source = self._owned_city(state, payload.get('source'), action=True)
         target_key = payload.get('target')
-        hazard_rules = self.catalog.data.get('travel_hazards')
-        if hazard_rules:
-            adjacent = target_key in self._neighbors(source.id,state)
-            exploring = (payload.get('route_mode') == 'explore' and
-                         self._exploration_route(source.id,target_key) is not None)
-        else:
-            adjacent = frozenset((source.id,target_key)) in self.catalog.links
-            exploring = False
+        adjacent = target_key in self._neighbors(source.id,state)
+        exploring = (payload.get('route_mode') == 'explore' and
+                     self._exploration_route(source.id,target_key) is not None)
         if target_key not in state.cities or not (adjacent or exploring):
             raise GameError('请选择相邻且已开放的城池。')
         target = state.cities[target_key]
@@ -272,34 +265,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         ids = payload.get('officers')
         if not isinstance(ids, list) or any(type(i) is not int for i in ids):
             raise GameError('出征名单无效。')
-        if self.expanded:
-            for ident in ids: self._personnel_actor(state, source, ident)
-            if self.travelling:
-                self._queue_march(state, source, target, ids, 'attack', payload.get('route_mode','fastest'))
-                return
-            self._start_expanded_battle(state, source, target, ids)
-            return
-        selected = select_deployment(source.roster, ids, state.officers)
-        cost = max(1, sum(state.officers[i].troops for i in selected) // 25)
-        if source.grain < cost:
-            raise GameError('出征粮食不足。')
-        defenders = sorted(target.roster.officer_ids, key=lambda i: (-state.officers[i].troops, i))
-        defenders = [i for i in defenders if state.officers[i].alive and state.officers[i].troops > 0][:self.catalog.rules.battle_officers_per_side]
-        def units(group):
-            return [{'id': i, 'troops': state.officers[i].troops, 'start': state.officers[i].troops,
-                     'martial': state.officers[i].profile.martial_strength} for i in group]
-        state.battle_counter += 1
-        state.battle = {'id': f'battle-{state.battle_counter}', 'source': source.id, 'target': target.id,
-                        'attacker': state.player, 'defender': target.owner, 'attackers': units(selected),
-                        'defenders': units(defenders), 'used': [], 'round': 1, 'outcome': None,
-                        'supply_cost': cost, 'log': ['出征已确认。选择本方部队和目标，再执行攻击。']}
-        source.grain -= cost
-        source.action_used = True
-        state.phase = 'battle'
-        self._note(state, f'向{self.catalog.map_cities[target.id]["name"]}出征，耗粮{cost}。')
-        if not defenders:
-            state.battle['outcome'] = 'victory'
-            state.phase = 'result'
+        for ident in ids:self._personnel_actor(state,source,ident)
+        self._queue_march(state,source,target,ids,'attack',payload.get('route_mode','fastest'))
 
     def _damage(self, state, attacker, defender):
         spread = 90 + state.rng.next() % 21
@@ -307,85 +274,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         return min(defender['troops'], max(1, base // ((defender['martial'] + 80) * 10000)))
 
     def _attack(self, state, payload):
-        if self.expanded:
-            return self._expanded_attack(state, payload)
-        battle = state.battle
-        if state.phase != 'battle' or not battle or payload.get('battle_id') != battle['id']:
-            raise GameError('当前没有可操作的战斗。')
-        actor = next((u for u in battle['attackers'] if u['id'] == payload.get('actor')), None)
-        target = next((u for u in battle['defenders'] if u['id'] == payload.get('target')), None)
-        if not actor or not target or actor['troops'] <= 0 or target['troops'] <= 0 or actor['id'] in battle['used']:
-            raise GameError('请选择尚未行动的部队和有效目标。')
-        loss = self._damage(state, actor, target)
-        target['troops'] -= loss
-        battle['used'].append(actor['id'])
-        battle['log'].append(f'{self.catalog.name(actor["id"])}攻击{self.catalog.name(target["id"])}，对方损兵{loss}。')
-        enemies = [u for u in battle['defenders'] if u['troops'] > 0]
-        if not enemies:
-            battle['outcome'] = 'victory'
-        else:
-            enemy = max(enemies, key=lambda u: (u['troops'], -u['id']))
-            loss = self._damage(state, enemy, actor)
-            actor['troops'] -= loss
-            battle['log'].append(f'{self.catalog.name(enemy["id"])}反击，本方损兵{loss}。')
-            if not any(u['troops'] > 0 for u in battle['attackers']):
-                battle['outcome'] = 'defeat'
-        if battle['outcome']:
-            state.phase = 'result'
-        elif all(u['id'] in battle['used'] for u in battle['attackers'] if u['troops'] > 0):
-            battle['used'] = []
-            battle['round'] += 1
-        battle['log'][:] = battle['log'][-80:]
+        return self._expanded_attack(state, payload)
 
     def _retreat(self, state, payload):
-        if self.expanded:
-            return self._expanded_retreat(state, payload)
-        if state.phase != 'battle' or not state.battle or payload.get('battle_id') != state.battle['id']:
-            raise GameError('当前不能退却。')
-        state.battle['outcome'] = 'retreat'
-        state.phase = 'result'
+        return self._expanded_retreat(state, payload)
 
     def _settle(self, state, payload):
-        if self.expanded:
-            return self._expanded_settle(state, payload)
-        battle = state.battle
-        if state.phase != 'result' or not battle or payload.get('battle_id') != battle['id']:
-            raise GameError('没有待接收的战果。')
-        source, target = state.cities[battle['source']], state.cities[battle['target']]
-        lost = 0
-        for unit in battle['attackers'] + battle['defenders']:
-            officer = state.officers[unit['id']]
-            lost += unit['start'] - unit['troops']
-            officer.troops = unit['troops']
-            # Slice design: experience from actual enemy losses, not age.
-            side = battle['defenders'] if unit in battle['attackers'] else battle['attackers']
-            gain = sum(u['start'] - u['troops'] for u in side) // max(1, len(side) * 2)
-            officer.experience = min(49999, officer.experience + gain)
-            officer.tier = experience_tier(officer.experience)
-        state.soldiers['lost'] += lost
-        if battle['outcome'] == 'victory':
-            selected = [u['id'] for u in battle['attackers']]
-            if len(selected) > target.roster.rules.city_officer_capacity:
-                raise GameError('目标城容量不足，战果未提交。')
-            # Nondeployed garrison surrenders its remaining soldiers to the
-            # city's reserve. Every removed troop has an explicit destination.
-            for ident in target.roster.officer_ids:
-                officer = state.officers[ident]
-                target.reserves += officer.troops
-                officer.troops = 0
-                officer.faction_id = None
-                officer.loyalty = 0
-            target.roster.officer_ids[:] = selected
-            source.roster.officer_ids[:] = [i for i in source.roster.officer_ids if i not in selected]
-            target.owner = state.player
-            target.action_used = True
-            label = f'攻占{self.catalog.map_cities[target.id]["name"]}，出征武将移驻，城内资源随城接收。'
-        else:
-            label = '本方败退，武将返回原城。' if battle['outcome'] == 'defeat' else '本方退却，武将返回原城。'
-        self._note(state, f'{label}本战合计损兵{lost}。')
-        state.settled_battles.append(battle['id'])
-        state.battle = None
-        state.phase = 'city'
+        return self._expanded_settle(state, payload)
 
     def _end_turn(self, state, payload):
         if state.phase != 'city':
@@ -393,27 +288,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.phase = 'ai'
 
     def _ai(self, state, payload):
-        if self.expanded:
-            return self._expanded_ai(state, payload)
-        if state.phase != 'ai' or payload.get('turn') != state.turn:
-            raise GameError('当前不是待处理的电脑回合。')
-        r = self.catalog.data['rules']
-        for city in state.cities.values():
-            if city.owner in (state.player, 'neutral'):
-                continue
-            ids = [i for i in city.roster.officer_ids if state.officers[i].alive]
-            if ids and city.reserves and city.gold >= 4 and city.grain >= 8:
-                ident = ids[state.rng.next() % len(ids)]
-                officer = state.officers[ident]
-                amount = min(r['ai_reinforce_max'], city.reserves, 999 - officer.troops)
-                officer.troops += amount
-                city.reserves -= amount
-                city.gold -= 4
-                city.grain -= 8
-                self._note(state, f'{self.catalog.factions[city.owner]["name"]}在{self.catalog.map_cities[city.id]["name"]}整备，{self.catalog.name(ident)}补兵{amount}。')
-            else:
-                self._note(state, f'{self.catalog.map_cities[city.id]["name"]}守军休整。')
-        self._complete_month(state)
+        return self._expanded_ai(state, payload)
 
     def _open_dated_cities(self, state):
         """Split an existing actual territory; do not replay historical conquest."""
@@ -474,10 +349,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 state.soldiers['recruited'] += income['reserves']
         state.turn += 1
         state.phase = 'city'
-        if self.travelling:
-            self._prune_marches(state)
-            if any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
-                state.phase = 'arrivals'
+        self._prune_marches(state)
+        if any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
+            state.phase = 'arrivals'
         if not any(c.owner == state.player for c in state.cities.values()) or not any(o.alive and o.faction_id == state.player for o in state.officers.values()):
             state.phase = 'finished'
             self._note(state, '本方已无可用驻军，本次演练结束。')
@@ -535,7 +409,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def validate(self, state):
         self._validate_expansion(state)
-        if state.player not in self.catalog.factions or state.phase not in ({'city', 'battle', 'result', 'ai', 'finished'} | ({'arrivals'} if self.travelling else set())):
+        if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}:
             raise ValueError('campaign phase/player')
         integer(state.year, 1, 400, 'year')
         integer(state.month, 1, 12, 'month')
@@ -612,7 +486,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             raise ValueError('settlement receipt sequence')
         if battle:
             base_fields = {'id', 'source', 'target', 'attacker', 'defender', 'attackers', 'defenders', 'used', 'round', 'outcome', 'supply_cost', 'log'}
-            if set(battle) != base_fields | ({'extended'} if self.expanded else set()):
+            if set(battle) != base_fields | {'extended'}:
                 raise ValueError('battle fields')
             if battle['id'] != f'battle-{state.battle_counter}' or battle['outcome'] not in {None, 'victory', 'defeat', 'retreat'}:
                 raise ValueError('battle identity/outcome')
@@ -620,12 +494,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             integer(battle['supply_cost'], 1, 10000, 'supply cost')
             if not isinstance(battle['log'], list) or len(battle['log']) > 80 or any(not isinstance(t, str) or len(t) > 500 for t in battle['log']):
                 raise ValueError('battle log')
-            connected = (battle['target'] in self._neighbors(battle['source'], state)
-                         if self.hazardous_travel else
-                         frozenset((battle['source'], battle['target'])) in self.catalog.links)
+            connected = battle['target'] in self._neighbors(battle['source'], state)
             if battle['source'] == battle['target'] or not connected or battle['id'] in state.settled_battles:
                 raise ValueError('battle location/receipt')
-            if (not self.expanded and battle['attacker'] != state.player) or battle['attacker'] not in self.catalog.factions or state.cities[battle['source']].owner != battle['attacker'] or state.cities[battle['target']].owner != battle['defender']:
+            if battle['attacker'] not in self.catalog.factions or state.cities[battle['source']].owner != battle['attacker'] or state.cities[battle['target']].owner != battle['defender']:
                 raise ValueError('battle faction')
             if (state.phase == 'result') != (battle['outcome'] in {'victory', 'defeat', 'retreat'}):
                 raise ValueError('battle outcome')
@@ -644,13 +516,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                         raise ValueError('deployed/reserved membership')
                     integer(unit['troops'], 0, unit['start'], 'battle troops')
                     all_ids.append(unit['id'])
-            if len(all_ids) != len(set(all_ids)) or len(battle['used']) != len(set(battle['used'])) or not set(battle['used']) <= {u['id'] for u in battle[self._player_sides(state)[0] if self.expanded else 'attackers']}:
+            if len(all_ids) != len(set(all_ids)) or len(battle['used']) != len(set(battle['used'])) or not set(battle['used']) <= {u['id'] for u in battle[self._player_sides(state)[0]]}:
                 raise ValueError('battle duplicate/turn ownership')
             attacking = any(u['troops'] > 0 for u in battle['attackers'])
             defending = any(u['troops'] > 0 for u in battle['defenders'])
             if state.phase == 'battle' and not (attacking and defending):
                 raise ValueError('battle without active sides')
-            withdrew = self.expanded and battle['extended']['withdrawn'] == 'defenders'
+            withdrew = battle['extended']['withdrawn'] == 'defenders'
             if battle['outcome'] == 'victory' and ((defending and not withdrew) or not attacking):
                 raise ValueError('victory before defenders rout')
             if battle['outcome'] == 'defeat' and (attacking or not defending):

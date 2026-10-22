@@ -10,7 +10,7 @@
 - `game/config/portrait-identity-map.json`記錄原始13-byte姓名資料雜湊、字形證據及人工轉錄。證據圖在`game/assets/portraits/evidence/original-name-glyphs.png`。
 - 特別核對原ID108為諸葛瞻、137為孫權；諸葛均及孫桓不與之誤綁。原版序號、三國志14來源序號和遊戲執行期數字ID不能互換。
 
-原圖由指定ROM的靜態第0幀解碼，完整頭肩尺寸32×40。模式0色板來自ROM偏移`0x3DBFB`，NES索引`0F,20,27,17`；RGBA為透明、白`#FFFFFF`、橙`#F7A247`、棕`#9E4100`。RGB採本項目錄製的Nestopia royaltea色板，並非聲稱所有NES顯示器RGB都一致。原ID131與原模擬器截圖`analysis/phase13/runtime/world-officer-browse-cycle/officer-info-first.png`的`[16,175,48,215]`區域逐像素一致，包含原圖的不透明白色。
+原圖由指定ROM的靜態第0幀解碼，完整頭肩尺寸32×40。模式0色板來自ROM偏移`0x3DBFB`，NES索引`0F,20,27,17`；RGBA為透明、白`#FFFFFF`、橙`#F7A247`、棕`#9E4100`。RGB採本項目錄製的Nestopia royaltea色板，並非聲稱所有NES顯示器RGB都一致。原ID131與原模擬器截圖`art/portraits/reference/officer-info-native-witness.png`的`[16,175,48,215]`區域逐像素一致，包含原圖的不透明白色。
 
 離線重提取需要本地ROM，Web遊戲不讀取ROM：
 
@@ -46,7 +46,7 @@ node tests/test_remake_portraits.cjs
 
 ## 存檔與邊界
 
-`game/assets/portraits/index.json`是唯一正式顯示索引。Web端以`person_id`查圖；舊目錄的數字ID先在該目錄中精確查出穩定ID。開局預覽使用所選劇本目錄，不能借用當前舊存檔的ID表。
+`game/assets/portraits/index.json`是唯一正式顯示索引。Web端以`person_id`查圖；畫面上的數字ID先由目前劇本精確查出穩定ID；開局預覽使用所選劇本的人物表。
 
 本次不修改人物庫、存檔結構、隨機數、年代或戰鬥規則。圖片或索引載入失敗會顯示明確的缺圖框，不能借用其他武將頭像。原圖共用會如實保留，新繪803張逐一驗證像素互異。
 

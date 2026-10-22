@@ -1,4 +1,4 @@
-use crate::{field, hazards, number, numeric, string, truthy, Result};
+use crate::{field, hazards, number, numeric, string, Result};
 use serde_json::{json, Map, Value};
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BTreeSet, BinaryHeap};
@@ -52,12 +52,10 @@ fn discovered(request: &Value) -> Result<BTreeSet<&str>> {
 
 fn known_routes<'a>(data: &'a Value, request: &Value) -> Result<Vec<&'a Value>> {
     let mut result: Vec<_> = rows(data, "travel_routes")?.iter().collect();
-    if truthy(data.get("travel_hazards")) {
-        let found = discovered(request)?;
-        for row in rows(data, "exploration_routes")? {
-            if found.contains(string(row, "id")?) {
-                result.push(row);
-            }
+    let found = discovered(request)?;
+    for row in rows(data, "exploration_routes")? {
+        if found.contains(string(row, "id")?) {
+            result.push(row);
         }
     }
     Ok(result)
@@ -189,9 +187,9 @@ fn enqueue(
     Ok(())
 }
 
-fn quote(path: &[String], legs: &[Value], hazard: bool) -> Result<Value> {
+fn quote(path: &[String], legs: &[Value]) -> Result<Value> {
     let (mut days, mut distance) = (0.0, 0.0);
-    let (mut whole_days, mut whole_distance) = (true, true);
+    let mut whole_days = true;
     let mut modes = BTreeSet::new();
     for leg in legs {
         let d = field(leg, "days")?;
@@ -199,7 +197,6 @@ fn quote(path: &[String], legs: &[Value], hazard: bool) -> Result<Value> {
         days += number(d, "Invalid route days")?;
         distance += number(km, "Invalid route distance")?;
         whole_days &= d.as_number().is_some_and(|v| !v.is_f64());
-        whole_distance &= km.as_number().is_some_and(|v| !v.is_f64());
         modes.insert(string(leg, "mode")?);
     }
     // Rust's decimal formatter rounds the original binary float to nearest,
@@ -210,7 +207,7 @@ fn quote(path: &[String], legs: &[Value], hazard: bool) -> Result<Value> {
     Ok(
         json!({"path":path,"routes":legs,"days":numeric(days, whole_days)?,
         "months":numeric((days / 30.0).ceil().max(1.0), true)?,
-        "distance_km":numeric(rounded, hazard || whole_distance)?,
+        "distance_km":numeric(rounded, true)?,
         "grain_per_officer":5 * legs.len(),"modes":modes}),
     )
 }
@@ -245,14 +242,11 @@ fn best(legs: Vec<Value>, with_id: bool) -> Result<Option<Value>> {
 }
 
 pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
-    let hazard = truthy(data.get("travel_hazards"));
     let mode = match request.get("mode") {
         None => "fastest",
         Some(value) => value.as_str().ok_or("请选择有效的行军路线。")?,
     };
-    if !(["fastest", "land"].contains(&mode)
-        || hazard && ["sea", "special", "explore"].contains(&mode))
-    {
+    if !["fastest", "land", "sea", "special", "explore"].contains(&mode) {
         return Err("请选择有效的行军路线。".into());
     }
     let (source, target) = (string(request, "source")?, string(request, "target")?);
@@ -262,17 +256,16 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
         .get("adjacent")
         .and_then(Value::as_bool)
         .unwrap_or(false);
-    if hazard
-        && (source == target
-            || !cities.owners.contains_key(source)
-            || !cities.owners.contains_key(target)
-            || !adjacent && cities.owners.get(target) != Some(owner))
+    if source == target
+        || !cities.owners.contains_key(source)
+        || !cities.owners.contains_key(target)
+        || !adjacent && cities.owners.get(target) != Some(owner)
     {
         return Ok(Value::Null);
     }
     let routes = known_routes(data, request)?;
     let month = request.get("month").unwrap_or(&Value::Null);
-    if hazard && ["sea", "special", "explore"].contains(&mode) {
+    if ["sea", "special", "explore"].contains(&mode) {
         let mut candidates = vec![];
         if mode == "explore" {
             let Some(raw) = exploration(data, source, target)? else {
@@ -320,7 +313,7 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
             }
         }
         return match best(legs, true)? {
-            Some(leg) => quote(&[source.into(), target.into()], &[leg], true),
+            Some(leg) => quote(&[source.into(), target.into()], &[leg]),
             None => Ok(Value::Null),
         };
     }
@@ -332,7 +325,7 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
             continue;
         }
         if current.city == target && !current.legs.is_empty() {
-            return quote(&current.path, &current.legs, hazard);
+            return quote(&current.path, &current.legs);
         }
         for raw in &routes {
             let Some(next) = other(raw, &current.city)? else {
@@ -350,14 +343,10 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
             if !adjacent && cities.owners.get(next) != Some(owner) {
                 continue;
             }
-            if hazard && !hazards::allowed(data, raw, &current.city, next)? {
+            if !hazards::allowed(data, raw, &current.city, next)? {
                 continue;
             }
-            let leg = if hazard {
-                hazards::evaluate(data, raw, &current.city, next, month)?
-            } else {
-                (*raw).clone()
-            };
+            let leg = hazards::evaluate(data, raw, &current.city, next, month)?;
             enqueue(&mut queue, &current, next, leg, &mut serial)?;
         }
     }
@@ -381,7 +370,7 @@ fn insert_direct(
     if let Some(leg) = best(options, false)? {
         quotes.insert(
             format!("{source}:{target}:{mode}"),
-            quote(&[source.into(), target.into()], &[leg], true)?,
+            quote(&[source.into(), target.into()], &[leg])?,
         );
     }
     Ok(())
@@ -392,55 +381,6 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
     let player = field(request, "player")?;
     let mut quotes = Map::new();
     if cities.order.is_empty() {
-        return Ok(Value::Object(quotes));
-    }
-    if !truthy(data.get("travel_hazards")) {
-        let links = data.get("links").and_then(Value::as_array);
-        for source in &cities.order {
-            if cities.owners.get(source) != Some(player) {
-                continue;
-            }
-            for target in &cities.order {
-                if source == target {
-                    continue;
-                }
-                let adjacent = cities.owners.get(target) != Some(player);
-                if adjacent {
-                    let mut linked = false;
-                    if let Some(links) = links {
-                        for link in links {
-                            let pair = link
-                                .as_array()
-                                .filter(|v| v.len() == 2)
-                                .ok_or("Invalid city link")?;
-                            linked |= (pair[0].as_str() == Some(source)
-                                && pair[1].as_str() == Some(target))
-                                || (pair[1].as_str() == Some(source)
-                                    && pair[0].as_str() == Some(target));
-                        }
-                    } else {
-                        for route in rows(data, "travel_routes")? {
-                            linked |= is_pair(route, source, target)?;
-                        }
-                    }
-                    if !linked {
-                        continue;
-                    }
-                }
-                for mode in ["fastest", "land"] {
-                    let mut path_request = request.clone();
-                    path_request["source"] = json!(source);
-                    path_request["target"] = json!(target);
-                    path_request["owner"] = player.clone();
-                    path_request["mode"] = json!(mode);
-                    path_request["adjacent"] = json!(adjacent);
-                    let result = path(data, &path_request)?;
-                    if !result.is_null() {
-                        quotes.insert(format!("{source}:{target}:{mode}"), result);
-                    }
-                }
-            }
-        }
         return Ok(Value::Object(quotes));
     }
     let routes = known_routes(data, request)?;
@@ -498,7 +438,7 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
                 if !current.legs.is_empty() {
                     quotes.insert(
                         format!("{source}:{}:{mode}", current.city),
-                        quote(&current.path, &current.legs, true)?,
+                        quote(&current.path, &current.legs)?,
                     );
                 }
                 if let Some(legs) = adjacency.get(&current.city) {
@@ -561,11 +501,7 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
             let target = string(leg, "to")?;
             quotes.insert(
                 format!("{source}:{target}:explore"),
-                quote(
-                    &[source.clone(), target.into()],
-                    std::slice::from_ref(leg),
-                    true,
-                )?,
+                quote(&[source.clone(), target.into()], std::slice::from_ref(leg))?,
             );
         }
     }

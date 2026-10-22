@@ -52,7 +52,7 @@ function dom(){
 }
 const a='10000000-0000-4000-8000-000000000001',b='10000000-0000-4000-8000-000000000002';
 const raw=' {"state":{"distance":315.0},"checksum":"unchanged"} ';
-const row=(slot=1,overrides={})=>({save_id:`00000000-0000-4000-8000-${String(slot).padStart(12,'0')}`,slot,label:'洛陽舊檔',revision:3,scenario:'mainland190-01-v14',game_year:190,game_month:1,game_turn:1,save_sha256:'a'.repeat(64),created_at:'2026-10-22T00:00:00Z',updated_at:'2026-10-22T00:00:00Z',...overrides});
+const row=(slot=1,overrides={})=>({save_id:`00000000-0000-4000-8000-${String(slot).padStart(12,'0')}`,slot,label:'洛陽戰役',revision:3,scenario:'mainland190-01',game_year:190,game_month:1,game_turn:1,save_sha256:'a'.repeat(64),created_at:'2026-10-22T00:00:00Z',updated_at:'2026-10-22T00:00:00Z',...overrides});
 function mockCloud(user=null){
  const listeners=new Set(),calls=[],state={configured:true,ready:true,user,authBusy:false};let rows=[row()];
  const cloud={state,calls,setRows:value=>{rows=value;},setUser(user){state.user=user;for(const fn of listeners)fn(state);},subscribe(fn){listeners.add(fn);fn(state);return()=>listeners.delete(fn);},

@@ -28,31 +28,31 @@ def active(ident, **options):
 
 
 class ModernRosterTests(unittest.TestCase):
-    def test_20_city_members_do_not_expand_battle_capacity(self):
-        city = CityRoster('luoyang', list(range(20)))
-        registry = {i: active(i) for i in range(20)}
+    def test_99_city_members_do_not_expand_battle_capacity(self):
+        city = CityRoster('luoyang', list(range(99)))
+        registry = {i: active(i) for i in range(99)}
         before = deepcopy((city, registry))
-        self.assertEqual(select_deployment(city, range(10, 20), registry), tuple(range(10, 20)))
+        self.assertEqual(select_deployment(city, range(89, 99), registry), tuple(range(89, 99)))
         with self.assertRaises(ValueError):
             select_deployment(city, range(11), registry)
         self.assertEqual((city, registry), before)  # Selection/cancel never spends or removes.
 
     def test_full_destination_rejects_whole_transaction(self):
         source = CityRoster('changan', [255, 999])
-        destination = CityRoster('luoyang', list(range(20)))
+        destination = CityRoster('luoyang', list(range(99)))
         before = deepcopy((source, destination))
         with self.assertRaises(CapacityError):
             transfer_officers(source, destination, [255, 999])
         self.assertEqual((source, destination), before)
 
-    def test_transfer_19_to20_and_valid_id255(self):
+    def test_transfer_98_to99_and_valid_id255(self):
         source = CityRoster('changan', [255, 999])
-        target = CityRoster('luoyang', list(range(19)))
+        target = CityRoster('luoyang', list(range(98)))
         self.assertEqual(transfer_officers(source, target, [255]), (255,))
         self.assertEqual(source.officer_ids, [999])
-        self.assertEqual(len(target.officer_ids), 20)
+        self.assertEqual(len(target.officer_ids), 99)
         self.assertEqual(target.officer_ids[-1], 255)
-        self.assertEqual(len(set(source.officer_ids + target.officer_ids)), 21)
+        self.assertEqual(len(set(source.officer_ids + target.officer_ids)), 100)
         with self.assertRaises(CapacityError):
             transfer_officers(source, target, [999])
 
@@ -70,7 +70,7 @@ class ModernRosterTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 CityRoster('a', values)
         with self.assertRaises(CapacityError):
-            CityRoster('a', list(range(21)))
+            CityRoster('a', list(range(100)))
 
     def test_all_1000_library_ids_remain_distinct(self):
         rules = GameRules()
@@ -160,7 +160,7 @@ class ChronologyTests(unittest.TestCase):
         self.assertEqual(a.officer_ids, [0])
 
     def test_real_1000_population_reconciles(self):
-        data = json.loads((ROOT / 'expansion/officers/data/roster-candidates.json').read_text())['officers']
+        data = json.loads((ROOT / 'game/config/references/san14-roster.json').read_text())['officers']
         people = [PersonDefinition(p['person_id'], p['name_simplified'], p['chronology']['game_birth_year'],
                   p['chronology']['game_appearance_year'], p['chronology']['game_death_year']) for p in data]
         states = [year_state(p, 230) for p in people]
@@ -206,34 +206,30 @@ class InitializationTests(unittest.TestCase):
             OfficerProfile(75, 80, 90, 70, 3)
 
     def test_virtue_is_sourced_design_independent_of_charisma(self):
-        designs = json.loads((ROOT / 'expansion/officers/virtue-designs.json').read_text())['profiles']
-        for d in designs:
-            self.assertFalse(d['is_historical_fact'])
+        people = json.loads((ROOT / 'game/config/campaigns/people.json').read_text())['people']
+        designs = [(p, p['virtue_design']) for p in people.values() if isinstance((p.get('virtue_design') or {}).get('dimensions'), dict)]
+        for person, d in designs:
+            self.assertIs(person['configuration']['is_historical_measurement'], False)
+            self.assertFalse(d.get('is_historical_fact', False))
             self.assertEqual(virtue_score(d['dimensions']), d['virtue'])
             p = convert_profile(san14_stats={'charisma': 1}, virtue_design=d)
             self.assertEqual(p.virtue, d['virtue'])
         with self.assertRaises(ValueError):
             virtue_score({'care': 90})
 
-    def test_recruitment_and_capture_match_original_pure_rules(self):
-        from recovered.officer_transfer import OfficerTransfer
-        memory = bytearray(65536)
-        original = OfficerTransfer(memory, None)
-        for virtue in range(1, 100):
-            memory[0x63C4] = virtue
-            for old in range(101):
-                memory[0x63C0 + 12 + 3] = old
-                self.assertEqual(recruitment_loyalty(virtue, old), original.loyalty_for_recruitment(0, 1)['value'])
-        for old in range(101):
-            memory[0x63C0 + 12 + 3] = old
-            self.assertEqual(captured_loyalty(old), original.loyalty_after_capture(1)['value'])
+    def test_loyalty_rules_keep_wrap_clamp_and_capture_boundaries(self):
+        for virtue, previous, expected in [(60, 0, 76), (60, 70, 10), (60, 76, 10),
+                (60, 77, 90), (99, 80, 90), (99, 69, 10), (1, 70, 10), (1, 71, 90)]:
+            self.assertEqual(recruitment_loyalty(virtue, previous), expected)
+        for previous, expected in [(0, 10), (25, 26), (50, 51), (75, 26), (100, 10)]:
+            self.assertEqual(captured_loyalty(previous), expected)
 
     def test_modern_runtime_imports_in_directory_without_rom_or_ir(self):
         with tempfile.TemporaryDirectory() as directory:
             shutil.copytree(ROOT / 'source/remake', Path(directory) / 'remake',
                             ignore=shutil.ignore_patterns('__pycache__'))
             code = ('from remake.officers import *; '
-                    'assert GameRules().city_officer_capacity==20; '
+                    'assert GameRules().city_officer_capacity==99; '
                     'assert GameRules().officer_id(999)==999; '
                     'assert year_state(PersonDefinition("a","a",190,217,225),217)==YearState.AVAILABLE')
             subprocess.run([sys.executable, '-c', code], cwd=directory, check=True,

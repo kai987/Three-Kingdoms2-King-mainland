@@ -1,84 +1,7 @@
 """Atomic scenario switching. Failed new/load requests retain the current game."""
-from collections.abc import Mapping
-import json
-from pathlib import Path
 from threading import RLock
 from .campaign import Campaign, Catalog, GameError
 from .map_presentation import city_names,presentation,faction_colors
-
-
-def _catalog_header_id(path):
-    """Read a root ID without materializing the large people/placement payload.
-
-    Catalog paths come only from the server's fixed registry. Never treat an ID
-    in a save or request as a filename. A late ID falls back to one temporary
-    JSON parse; it still does not build definitions/profiles or a Catalog.
-    """
-    decoder=json.JSONDecoder()
-    with Path(path).open('r',encoding='utf-8') as stream:
-        prefix=stream.read(8192)
-        text=prefix.lstrip()
-        if not text.startswith('{'):
-            raise ValueError('Archived catalog must be a JSON object')
-        cursor=1
-        try:
-            while True:
-                while cursor<len(text) and text[cursor].isspace():cursor+=1
-                if cursor<len(text) and text[cursor]=='}':
-                    raise ValueError('Archived catalog has no root id')
-                key,cursor=decoder.raw_decode(text,cursor)
-                if not isinstance(key,str):raise ValueError('Invalid archived catalog header')
-                while cursor<len(text) and text[cursor].isspace():cursor+=1
-                if cursor>=len(text):raise json.JSONDecodeError('Incomplete root field',text,cursor)
-                if text[cursor]!=':':raise ValueError('Invalid archived catalog header')
-                cursor+=1
-                while cursor<len(text) and text[cursor].isspace():cursor+=1
-                value,cursor=decoder.raw_decode(text,cursor)
-                if key=='id':
-                    ident=value
-                    break
-                while cursor<len(text) and text[cursor].isspace():cursor+=1
-                if cursor>=len(text):raise json.JSONDecodeError('Incomplete root object',text,cursor)
-                if text[cursor]=='}':raise ValueError('Archived catalog has no root id')
-                if text[cursor]!=',':raise ValueError('Invalid archived catalog header')
-                cursor+=1
-        except json.JSONDecodeError:
-            stream.seek(0)
-            data=json.load(stream)
-            if not isinstance(data,dict):raise ValueError('Archived catalog must be a JSON object')
-            ident=data.get('id')
-    if (not isinstance(ident,str) or not ident or len(ident)>200
-            or any(ord(c)<32 or c in '/\\' for c in ident)):
-        raise ValueError('Invalid archived catalog id')
-    return ident
-
-
-class _CatalogRegistry(Mapping):
-    """Known IDs are cheap to inspect; only indexed archives are loaded."""
-    def __init__(self, current, archived_paths):
-        self._loaded={catalog.data['id']:catalog for catalog in current}
-        self._paths={ident:None for ident in self._loaded}
-        self._lock=RLock()
-        for filename in archived_paths:
-            path=Path(filename).resolve(strict=True)
-            ident=_catalog_header_id(path)
-            if ident in self._paths:
-                if ident in self._loaded or self._paths[ident]==path:continue
-                raise ValueError('Duplicate archived catalog id: '+ident)
-            self._paths[ident]=path
-
-    def __len__(self):return len(self._paths)
-    def __iter__(self):return iter(self._paths)
-    def __contains__(self,ident):return isinstance(ident,str) and ident in self._paths
-    def __getitem__(self,ident):
-        if ident not in self:raise KeyError(ident)
-        with self._lock:
-            if ident not in self._loaded:
-                catalog=Catalog(self._paths[ident])
-                if catalog.data['id']!=ident:
-                    raise ValueError('Archived catalog id changed: '+ident)
-                self._loaded[ident]=catalog
-            return self._loaded[ident]
 
 
 def faction_resources(catalog, state=None):
@@ -120,10 +43,13 @@ def faction_officer_counts(catalog, state=None):
 
 
 class CampaignSession:
-    def __init__(self, paths, *, archived_paths=()):
+    def __init__(self, paths):
         catalogs=[Catalog(path) for path in paths]
-        self.catalogs=_CatalogRegistry(catalogs,archived_paths)
-        self._preview_catalogs=tuple({c.data['id']:c for c in catalogs}.values())
+        if not catalogs:
+            raise ValueError('Current campaign catalogs are required')
+        self.catalogs={c.data['id']:c for c in catalogs}
+        if len(self.catalogs)!=len(catalogs):
+            raise ValueError('Duplicate current campaign id')
         self.game=Campaign(catalogs[-1])
         self.lock=RLock()
         self._opening_previews=None
@@ -165,7 +91,6 @@ class CampaignSession:
         cannot poison a later preview by editing one of those containers.
         """
         if self._opening_previews is None:
-            latest=max(c.data.get('content_generation',0) for c in self._preview_catalogs)
             self._opening_previews=[{'id':c.data['id'],'title':c.data['title'],
                                            'cities':len(c.data['active_cities']),
                                            'year':c.data['start_year'],'month':c.data['start_month'],
@@ -174,7 +99,6 @@ class CampaignSession:
                                            'serving':len(c.data['initial_officers']),
                                            'free':len(c.data.get('initial_free_officers',[])),
                                            'main_scenario':c.data.get('main_scenario'),
-                                           'archived':c.data.get('content_generation',0)<latest,
                                            'initial_owners':dict(c.data['initial_owners']),
                                            'active_cities':list(c.data['active_cities']),
                                            'city_names':city_names(c,c.data['start_year']),
@@ -190,7 +114,7 @@ class CampaignSession:
                                            'faction_colors':faction_colors(c),
                                            'travel_hazards':c.data.get('travel_hazards'),
                                            'sea_routes':c.data.get('sea_routes',[]),
-                                           'factions':list(c.factions.values())} for c in self._preview_catalogs]
+                                           'factions':list(c.factions.values())} for c in self.catalogs.values()]
         return [dict(row,
             initial_owners=dict(row['initial_owners']),
             active_cities=list(row['active_cities']),

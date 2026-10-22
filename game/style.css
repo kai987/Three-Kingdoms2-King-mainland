@@ -1,4 +1,4 @@
-/* Original NES visual reference: analysis/runtime/replayed/city-commands.png
+/* Original NES visual reference: pink panels and native pixel portraits
    Pink panels, black grid/cursor, 16px glyphs. Expanded map and web controls
    deliberately retain their existing layout and accessible native semantics. */
 @font-face{

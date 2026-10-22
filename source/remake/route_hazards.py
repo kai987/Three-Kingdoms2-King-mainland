@@ -4,7 +4,6 @@ These are the user's game rules, not historical casualty measurements or a
 weather forecast.  Quotes never draw random numbers or mutate raw route data.
 The campaign runtime owns random storm severity and exactly-once settlement.
 """
-from copy import deepcopy
 from math import ceil, cos, radians
 
 
@@ -12,8 +11,8 @@ def _json_numbers(value):
     """Clone JSON data using the same integral-number spelling as browsers.
 
     Python emits ``50.0`` while JSON.stringify emits ``50``. Keep newly
-    quoted hazard data stable across a browser save download without changing
-    the checksum format or any released catalog's raw route representation.
+    quoted route data stable across a browser save download without changing
+    the checksum format.
     """
     if isinstance(value, dict):
         return {key: _json_numbers(item) for key, item in value.items()}
@@ -32,9 +31,7 @@ def route_allowed(data, route, source, target):
     """Whether this immutable leg can be traversed in the requested direction."""
     if not _pair(route, source, target):
         return False
-    policy = data.get('travel_hazards')
-    if not policy:
-        return True
+    policy = data['travel_hazards']
     yinping = policy.get('yinping', {})
     start, end = yinping.get('from', 'yinping'), yinping.get('to', 'shujun')
     if route.get('mode') == 'land' and {source, target} == {start, end}:
@@ -63,10 +60,9 @@ def _monsoon(policy, month):
 def evaluate_leg(data, route, source, target, departure_month):
     """Return a directional, deterministic time quote from an immutable leg.
 
-    Hazard catalogs get ``base_days`` (this route's plain-road time) and a
-    ``hazard`` description. Legacy catalogs return an unchanged deep copy,
-    retaining released quote/save equality. A forbidden directed leg is an
-    error rather than a quote that may accidentally be enqueued.
+    Quotes contain ``base_days`` (this route's plain-road time) and a nullable
+    ``hazard`` description. A forbidden directed leg is an error rather than a
+    quote that may accidentally be enqueued.
 
     Land special times multiply the integer plain-road baseline, so a10-day
     plain leg is20 days in the dry Ziwu season and40 in its rainy season.
@@ -77,11 +73,8 @@ def evaluate_leg(data, route, source, target, departure_month):
         raise ValueError('Departure month must be an integer from1 to12')
     if not route_allowed(data, route, source, target):
         raise ValueError('Route does not permit this direction')
-    leg = deepcopy(route)
-    policy = data.get('travel_hazards')
-    if not policy:
-        return leg
-    leg = _json_numbers(leg)
+    policy = data['travel_hazards']
+    leg = _json_numbers(route)
     leg.update({'from': source, 'to': target})
     plain_speed = data['travel_rules']['speeds']['plain']
     leg['base_days'] = max(1, ceil(route['distance_km'] / plain_speed))
@@ -163,7 +156,7 @@ def allocate_survivors(troops, numerator, denominator):
     return result
 
 
-# Keep the released reference available for fallback and differential replay.
+# Keep the Python reference available for fallback and differential replay.
 _python_route_allowed = route_allowed
 _python_evaluate_leg = evaluate_leg
 _python_allocate_survivors = allocate_survivors

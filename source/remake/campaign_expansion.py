@@ -3,10 +3,9 @@
 Names/capacities reference the research; effects and balance below are explicit
 remake designs. No original engine, ROM tables or control IR are loaded.
 """
-from collections import deque
 from .errors import GameError
 from .officers import (YearState, experience_tier, initialize_officer, integer,
-                       recruitment_loyalty, select_deployment, transfer_officers, year_state)
+                       recruitment_loyalty, select_deployment, year_state)
 
 TACTICS = (
     ('火計',6,'fire','单体兵损，水地形不可用'), ('陥穽',5,'trap','单体体力损伤，平地或山地'),
@@ -21,14 +20,6 @@ TACTICS = (
 
 
 class ExpandedCampaign:
-    @property
-    def expanded(self):
-        return bool(self.catalog.data['rules'].get('expanded_campaign'))
-
-    def _require_expanded(self):
-        if not self.expanded:
-            raise GameError('请在九十六城扩展战役中使用这项操作。')
-
     def _initialize_expansion(self, state):
         state.extension = {'free_locations': {}, 'officer_actions': {},
                            'leaders': dict(self.catalog.data['faction_rulers']),
@@ -73,26 +64,14 @@ class ExpandedCampaign:
             self._note(state, f'{person.name}已到登场年代，在{self.catalog.map_cities[city]["name"]}待访。')
 
     def _neighbors(self, city, state=None):
-        if self.catalog.data.get('travel_hazards'):
-            from .route_hazards import route_allowed
-            neighbors=set()
-            routes=self._known_routes(state) if state else self.catalog.data['travel_routes']
-            for route in routes:
-                if city not in (route['from'],route['to']):continue
-                target=route['to'] if city==route['from'] else route['from']
-                if route_allowed(self.catalog.data,route,city,target):neighbors.add(target)
-            return sorted(neighbors)
-        return sorted(next(iter(edge - {city})) for edge in self.catalog.links if city in edge)
-
-    def _friendly_path(self, state, source, target, owner):
-        queue = deque([[source]]); seen = {source}
-        while queue:
-            path = queue.popleft()
-            if path[-1] == target: return path
-            for nxt in self._neighbors(path[-1],state):
-                if nxt not in seen and nxt in state.cities and state.cities[nxt].owner == owner:
-                    seen.add(nxt); queue.append(path + [nxt])
-        return None
+        from .route_hazards import route_allowed
+        neighbors=set()
+        routes=self._known_routes(state)
+        for route in routes:
+            if city not in (route['from'],route['to']):continue
+            target=route['to'] if city==route['from'] else route['from']
+            if route_allowed(self.catalog.data,route,city,target):neighbors.add(target)
+        return sorted(neighbors)
 
     def _personnel_actor(self, state, city, ident):
         integer(ident, 0, self.catalog.rules.runtime_capacity - 1, 'officer')
@@ -110,7 +89,6 @@ class ExpandedCampaign:
                 and state.extension['free_locations'].get(str(i)) in near]
 
     def _recruit_officer(self, state, payload):
-        self._require_expanded()
         city = self._owned_city(state, payload.get('city'), action=True)
         actor = self._personnel_actor(state, city, payload.get('actor'))
         ident = integer(payload.get('officer'),0,self.catalog.rules.runtime_capacity-1,'target officer')
@@ -144,7 +122,6 @@ class ExpandedCampaign:
                 and ident not in state.extension['leaders'].values()]
 
     def _persuade_officer(self,state,payload):
-        self._require_expanded()
         city=self._owned_city(state,payload.get('city'),action=True)
         actor=self._personnel_actor(state,city,payload.get('actor'))
         ident=integer(payload.get('officer'),0,self.catalog.rules.runtime_capacity-1,'target officer')
@@ -173,24 +150,13 @@ class ExpandedCampaign:
         self._note(state,f'{self.catalog.name(actor.runtime_id)}劝说{self.catalog.name(ident)}，{"转属成功" if success else "遭到拒绝"}，花费{fee}金。')
 
     def _transfer(self,state,payload):
-        self._require_expanded()
         source=self._owned_city(state,payload.get('source'),action=True)
         destination=self._owned_city(state,payload.get('target'))
         ids=payload.get('officers')
         if source.id==destination.id or not isinstance(ids,list) or not ids or len(ids)!=len(set(ids)):
             raise GameError('请选择不同的目的城和不重复的调动名单。')
         for ident in ids: self._personnel_actor(state,source,ident)
-        if self.travelling:
-            self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
-            return
-        path=self._friendly_path(state,source.id,destination.id,state.player)
-        if not path: raise GameError('两城之间没有连续的本方道路。')
-        fee=(len(path)-1)*len(ids)*5
-        if source.grain < fee: raise GameError('调动粮食不足。')
-        transfer_officers(source.roster,destination.roster,ids)
-        source.grain-=fee;source.action_used=True
-        state.extension['officer_actions'].update({str(i):state.turn for i in ids})
-        self._note(state,f'{len(ids)}名武将调往{self.catalog.map_cities[destination.id]["name"]}，经{len(path)-1}段道路，耗粮{fee}。')
+        self._queue_march(state,source,destination,ids,'transfer',payload.get('route_mode','fastest'))
 
     def _start_expanded_battle(self,state,source,target,ids,*,paid=False):
         selected=select_deployment(source.roster,ids,state.officers)
@@ -215,7 +181,7 @@ class ExpandedCampaign:
         return ('attackers','defenders') if state.battle['attacker']==state.player else ('defenders','attackers')
 
     def _battle_selection(self,state,payload,*,allow_duel=False):
-        self._require_expanded();b=state.battle
+        b=state.battle
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id']:
             raise GameError('当前没有待操作的战斗。')
         if b['extended']['duel'] and not allow_duel: raise GameError('请先完成或退出当前单挑。')
@@ -342,7 +308,7 @@ class ExpandedCampaign:
         b['log'].append(f'{self.catalog.name(actor["id"])}与{self.catalog.name(target["id"])}开始单挑。')
 
     def _duel_action(self,state,payload):
-        self._require_expanded();b=state.battle
+        b=state.battle
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or not b['extended']['duel']:raise GameError('当前没有单挑。')
         move=payload.get('move')
         if move not in {'strike','guard','feint','withdraw'}:raise GameError('单挑动作无效。')
@@ -413,11 +379,10 @@ class ExpandedCampaign:
         incoming=b['attacker']!=state.player
         self._note(state,f'战果已结算，合计损兵{lost}，劝降兵员{sum(x["surrenders"].values())}入城。')
         state.battle=None;state.phase='ai' if incoming else 'city'
-        if self.travelling:
-            travel=state.extension['travel']
-            if travel['battle_arrival']:
-                travel['battle_arrival']=False;state.phase='arrivals'
-            self._prune_marches(state)
+        travel=state.extension['travel']
+        if travel['battle_arrival']:
+            travel['battle_arrival']=False;state.phase='arrivals'
+        self._prune_marches(state)
         self._reconcile_factions(state)
 
     def _reconcile_factions(self,state):
@@ -451,7 +416,7 @@ class ExpandedCampaign:
         while x['ai_cursor']<len(x['ai_queue']):
             key=x['ai_queue'][x['ai_cursor']];x['ai_cursor']+=1;city=state.cities[key]
             if city.owner in {state.player,'neutral'} or city.action_used:continue
-            ids=[i for i in city.roster.officer_ids if i not in self._march_ids(state)] if self.travelling else city.roster.officer_ids
+            ids=[i for i in city.roster.officer_ids if i not in self._march_ids(state)]
             free=self._free_candidates(state,city)
             if ids and free and len(city.roster.officer_ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
                 # Same success formula/loyalty as the player; failure costs gold.
@@ -477,25 +442,8 @@ class ExpandedCampaign:
             target=next((c for c in targets if strength>=max(150,sum(state.officers[i].troops for i in c.roster.officer_ids)*13//10)),None)
             if army and target and x['ai_attacks']<r['ai_max_attacks_per_turn'] and city.grain>=max(1,strength//25):
                 x['ai_attacks']+=1;self._report_ai(state,city,'attack',target.id)
-                if self.travelling:
-                    self._queue_march(state,city,target,army,'attack')
-                    continue
-                self._start_expanded_battle(state,city,target,army)
-                if target.owner==state.player:return  # Player controls the defending side.
-                # AI-v-AI / empty-city combat uses the same troop formula and
-                # settlement ledger, bounded to200 exchanges then an attacker retreat.
-                b=state.battle
-                for _ in range(200):
-                    if state.phase=='result':break
-                    a=max((u for u in b['attackers'] if u['troops']>0),key=lambda u:u['troops'])
-                    t=max((u for u in b['defenders'] if u['troops']>0),key=lambda u:u['troops'])
-                    t['troops']-=self._damage(state,a,t)
-                    if t['troops']>0:a['troops']-=self._damage(state,t,a)
-                    self._battle_result(state)
-                if state.phase=='battle':b['outcome']='retreat';state.phase='result'
-                self._expanded_settle(state,{'battle_id':b['id']})
-                if state.phase=='finished':return
-                state.phase='ai'
+                self._queue_march(state,city,target,army,'attack')
+                continue
             elif any(x['officer_actions'].get(str(i))!=state.turn for i in ids) and len(city.roster.officer_ids)<self.catalog.rules.city_officer_capacity and city.gold>=r['persuade_officer_gold'] and self._persuadable(state,city) and not any(report['turn']==state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
                 actor=max((state.officers[i] for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda o:o.profile.virtue)
                 target=min(self._persuadable(state,city),key=lambda i:state.officers[i].loyalty)
@@ -508,8 +456,7 @@ class ExpandedCampaign:
                 friends.sort(key=lambda c:(len(c.roster.officer_ids),c.id))
                 if friends and len(friends[0].roster.officer_ids)<len(ids)-1 and city.grain>=5:
                     ident=min((i for i in ids if x['officer_actions'].get(str(i))!=state.turn),key=lambda i:state.officers[i].troops)
-                    if self.travelling:self._queue_march(state,city,friends[0],[ident],'transfer')
-                    else:transfer_officers(city.roster,friends[0].roster,[ident]);city.grain-=5
+                    self._queue_march(state,city,friends[0],[ident],'transfer')
                     x['officer_actions'][str(ident)]=state.turn
                     self._report_ai(state,city,'transfer',friends[0].id)
             city.action_used=True
@@ -521,7 +468,6 @@ class ExpandedCampaign:
         self._reconcile_factions(state)
 
     def _expanded_catalog_view(self,state):
-        if not self.expanded:return {}
         library=[]
         for ident,row in self.catalog.by_id.items():
             person=self.catalog.definitions[row['person_id']];profile=self.catalog.profiles[ident]
@@ -547,10 +493,7 @@ class ExpandedCampaign:
 
     def _validate_expansion(self,state):
         x=state.extension
-        if not self.expanded:
-            if x!={}:raise ValueError('unexpected expanded data in legacy slice')
-            return
-        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome'} | ({'travel'} if self.travelling else set())
+        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel'}
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')

@@ -1,6 +1,6 @@
 /* Optional placement evidence remains distinct from historical posting and runtime entry. */
 'use strict';
-const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{execFileSync}=require('node:child_process');
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'game/app.js'),'utf8');
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const elements=new Map(),element=key=>{if(!elements.has(key))elements.set(key,{onclick:null,value:'preserve search'});return elements.get(key);};
@@ -12,7 +12,7 @@ vm.runInContext(source.slice(source.indexOf('function showPerson('),source.index
 for(const invalid of ['javascript:alert(1)','http://example.com','//example.com','data:text/html,<script>','https://user:password@example.com/x',' https://example.com','https://'])assert.equal(context.sourceReference(invalid),null,invalid);
 assert.equal(context.sourceReference('https://example.com/source#section'),'https://example.com/source#section');
 assert.equal(context.personPlacementEvidence(undefined),'');assert.equal(context.personPlacementEvidence({status:'serving',city:'henan'}),'');
-const review={basis:'reviewed_biography_window',historical_certainty:'bounded_career_inference',source_urls:['https://example.com/source#section','javascript:alert(1)','https://example.com/source#section'],note:'同勢力防務配置 <script>bad()</script>',reference_date:[211,7],reference_scenario:'mainland211-07-v15',title:'入蜀爭奪戰'};
+const review={basis:'reviewed_biography_window',historical_certainty:'bounded_career_inference',source_urls:['https://example.com/source#section','javascript:alert(1)','https://example.com/source#section'],note:'同勢力防務配置 <script>bad()</script>',reference_date:[211,7],reference_scenario:'mainland211-07',title:'入蜀爭奪戰'};
 const plan={start:[260,10],end:[263,12],city:'jianan',status:'future_free',basis:'reviewed_first_service_region'};
 const a={...person.era_assignment,placement_review:review,appearance_plan:plan};
 const before=JSON.stringify(a),html=context.personPlacementEvidence(a);
@@ -30,13 +30,13 @@ for(const [certainty,tc,ja] of [['game_reference','公開遊戲配置參考','�
  const result=context.personPlacementEvidence({placement_review:{...review,historical_certainty:certainty},appearance_plan:{...plan,status:'serving'}});assert(result.includes(tc));assert(result.includes(ja));assert(result.includes('開局在籍'));assert(result.includes('開始時に仕官中'));
 }
 const excluded=context.personPlacementEvidence({appearance_plan:{status:'excluded'}});assert(excluded.includes('本劇本不登場'));assert(excluded.includes('本シナリオでは登場しない'));assert(!excluded.includes('undefined'));
-// Existing catalogs lacking these optional fields produce exactly the same person dialog.
-const previous=execFileSync('git',['show','HEAD:game/app.js'],{cwd:root,encoding:'utf8'});
-const oldContext={...context};vm.createContext(oldContext);vm.runInContext(previous.slice(previous.indexOf('function showPerson('),previous.indexOf('function tactics(')),oldContext);
-context.showPerson(person.id);const legacyBody=context.dialogContent.body;
-oldContext.showPerson(person.id);assert.equal(context.dialogContent.body,legacyBody,'No new fields means unchanged legacy output');
-person.era_assignment=a;const gameBefore=JSON.stringify(context.view);context.showPerson(person.id);
+// Optional missing evidence does not invent an attribution or show obsolete membership text.
+context.showPerson(person.id);assert(!context.dialogContent.body.includes('person-placement-evidence'));
+person.era_assignment={...a,membership_resolution:{basis:'reviewed_career_window_v13'},membership_revision:{reason:'superseded-generation-proof'}};
+const gameBefore=JSON.stringify(context.view);context.showPerson(person.id);
 assert(context.dialogContent.body.includes('person-placement-evidence'));assert(context.dialogContent.body.includes('data-appearance-status="future_free"'));
+assert(!context.dialogContent.body.includes('开局来源'));assert(!context.dialogContent.body.includes('superseded-generation-proof'));
+assert(context.dialogContent.body.includes('武知来自第三方SAN14数值转写'));assert(context.dialogContent.body.includes('德60'));
 assert.equal(JSON.stringify(context.view),gameBefore,'Person details must not change current game/library state');
 context.GameI18n.locale='ja';context.showPerson(person.id);assert.equal(element('#library-search').value,'preserve search');assert.equal(JSON.stringify(context.view),gameBefore);
-console.log('placement UI: optional TC/JP evidence, first-appearance dates/city, safe links, historical caveats, unchanged legacy output and immutable game/input passed');
+console.log('placement UI: current TC/JP evidence, first-appearance dates/city, safe links, historical caveats, no obsolete provenance and immutable game/input passed');

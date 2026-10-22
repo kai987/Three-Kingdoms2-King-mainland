@@ -24,13 +24,6 @@ class RouteHazardTests(unittest.TestCase):
         value=fixture();value['travel_hazards']={'schema':'hazard-test'}
         return value
 
-    def test_legacy_catalog_quotes_are_unchanged_even_in_reverse(self):
-        data=fixture();raw=land('yinping','shujun');before=deepcopy(raw)
-        self.assertTrue(route_allowed(data,raw,'shujun','yinping'))
-        self.assertEqual(evaluate_leg(data,raw,'shujun','yinping',8),raw)
-        self.assertIsNot(evaluate_leg(data,raw,'shujun','yinping',8),raw)
-        self.assertEqual(raw,before)
-
     def test_yinping_is_directed_and_uses_plain_baseline_not_mountain_days(self):
         data=self.data();raw=land('yinping','shujun');before=deepcopy(raw)
         self.assertTrue(route_allowed(data,raw,'yinping','shujun'))
@@ -92,7 +85,7 @@ class RouteHazardTests(unittest.TestCase):
         self.assertEqual((data,raw),before)
 
     def test_proportional_integer_survivors_conserve_total_and_never_create_men(self):
-        for counts in ([],[0],[1],[1,1,1],[0,1,2,999,1000],[999]*30,[1000]*30):
+        for counts in ([],[0],[1],[1,1,1],[0,1,2,999,1000],[999]*30,[1000]*30,[1000]*99):
             for numerator,denominator in ((1,3),(1,2),(4,5),(1,5),(1,10),(0,1),(1,1)):
                 survivors=allocate_survivors(counts,numerator,denominator)
                 self.assertEqual(sum(survivors),sum(counts)*numerator//denominator)

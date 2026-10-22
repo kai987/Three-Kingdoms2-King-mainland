@@ -29,7 +29,7 @@ sys.path.insert(0,'source')
 from remake.campaign import Campaign,Catalog
 rows=[]
 for date,side in [('217-07','wu'),('191-10','wei'),('201-05','wei')]:
-    game=Campaign(Catalog(Path('game/data/main-scenarios-v13')/(date+'.json')))
+    game=Campaign(Catalog(Path('game/data/campaigns')/(date+'.json')))
     game.state=game._new(side,2026)
     game.validate(game.state)
     rows.append(dict(date=date,library=game._expanded_catalog_view(game.state)['library']))
@@ -45,11 +45,12 @@ for(const row of rows){
  assert.equal(counts.serving,serving);assert.equal(counts.free,free);
  const [year,month]=row.date.split('-').map(Number),summary=context.libraryEntrySummary(row.library,{year,month});
  assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1023`));
- if(row.date==='217-07')assert.deepEqual(counts,{serving:361,free:50,not_born:117,not_appeared:132,retired:352,death_review:5,pending_history:2,pending_capacity:0,pending_faction:4,scenario_excluded:0,missing:0,unknown:0,unentered:0});
- if(row.date==='191-10')assert.equal(counts.pending_history,206);
+ assert.equal(counts.pending_history,0);assert.equal(counts.pending_capacity,0);assert.equal(counts.pending_faction,0);
+ if(row.date==='217-07'){assert.equal(counts.serving,365);assert.equal(counts.free,52);}
+ if(row.date==='191-10'){assert.equal(counts.serving,300);assert.equal(counts.free,96);}
  if(row.date==='201-05'){
-  assert.equal(counts.pending_capacity,14);
-  assert.equal(row.library.filter(p=>context.libraryPlacementFilter(p,'entry:pending_capacity')).length,14);
+  assert.equal(counts.serving,289);assert.equal(counts.free,127);
+  assert.equal(row.library.filter(p=>context.libraryPlacementFilter(p,'entry:pending_capacity')).length,0);
  }
 }
 assert(context.libraryEntrySummary([],null).includes('尚未開始戰役'));

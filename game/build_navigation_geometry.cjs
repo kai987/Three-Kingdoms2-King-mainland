@@ -3,8 +3,8 @@
 const fs=require('fs'),path=require('path'),assert=require('assert/strict');
 const {chromium}=require('playwright'),root=path.resolve(__dirname,'..');
 (async()=>{const b=await chromium.launch({channel:'chrome',headless:true});try{
- const page=await b.newPage(),file=path.join(__dirname,'config/navigation-geometry.json'),spec=JSON.parse(fs.readFileSync(path.join(__dirname,'config/travel-map.json'))),catalog=JSON.parse(fs.readFileSync(path.join(__dirname,'data/main-scenarios-v10/249-01.json'))),positions=Object.fromEntries(catalog.cities.map(c=>[c.id,c.position]));
- const result=await page.evaluate(async({png,spec,positions})=>{
+ const page=await b.newPage(),file=path.join(__dirname,'config/navigation-geometry.json'),catalog=JSON.parse(fs.readFileSync(path.join(__dirname,'data/campaigns/249-01.json'))),positions=Object.fromEntries(catalog.cities.map(c=>[c.id,c.position]));
+ const result=await page.evaluate(async({png,positions})=>{
   const image=new Image();image.src=png;await image.decode();const c=document.createElement('canvas');c.width=image.width;c.height=image.height;const ctx=c.getContext('2d');ctx.drawImage(image,0,0);const pixels=ctx.getImageData(0,0,c.width,c.height).data;
   const step=4,W=Math.floor(c.width/step),H=Math.floor(c.height/step),N=W*H;
   const blue=(x,y)=>{if(x<0||y<0||x>=c.width||y>=c.height)return false;const i=(y*c.width+x)*4;return pixels[i+2]>140&&pixels[i+2]>pixels[i]*1.4&&pixels[i+2]>pixels[i+1]*1.3};
@@ -45,6 +45,6 @@ const {chromium}=require('playwright'),root=path.resolve(__dirname,'..');
   }
   return {schema:'sea-mask-navigation-geometry-v1',coastal_cities:coastalIds,ports:Object.fromEntries(Object.entries(ports).map(([id,i])=>[id,point(i)])),routes,
    method:'4px ocean-connected sea mask and A-star; smooth display follows sea cells. Approximate game ports, not identified historical harbours. Distances use separate geographic marine waypoints, never art pixels.'};
- },{png:'data:image/png;base64,'+fs.readFileSync(path.join(__dirname,'assets/map-navigation.png')).toString('base64'),spec,positions});
+ },{png:'data:image/png;base64,'+fs.readFileSync(path.join(__dirname,'assets/map-navigation.png')).toString('base64'),positions});
  fs.writeFileSync(file,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({routes:result.routes.length,coastal_cities:result.coastal_cities.length}));
 }finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1});

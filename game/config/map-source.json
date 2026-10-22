@@ -1,0 +1,2093 @@
+{
+  "schema": "tk2-map-source-v1",
+  "reviewed_on": "2026-10-22",
+  "description": "Approved map pixels and presentation metadata promoted as canonical inputs. Historical plan/page hashes are provenance only; builders never read those former development files.",
+  "approved_asset_sha256": {
+    "map-basin.png": "c90171f28cc5d839038c59348b9c734906d661954f5a01f77ec76698e094fa18",
+    "map-campaign.png": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "map-clean.png": "bbe033c944ba1547ca12c7d0cbd50d930c8a49befce5fbcc767cf5afbfc77c7e",
+    "map-navigation.png": "3cf81b31f08fe73ff5f9acd7627e009de9e4250664088c2d7cfc54f31bd2f683",
+    "map.png": "30946ef6877db09f7fb44c7d0cfe729614983613619095428ff3a270c0881edd"
+  },
+  "native_castle_sprite": {
+    "sourceRect": [
+      112,
+      64,
+      8,
+      8
+    ],
+    "width": 8,
+    "height": 8,
+    "rows": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        6,
+        6,
+        2,
+        1,
+        0
+      ],
+      [
+        2,
+        2,
+        2,
+        6,
+        6,
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        2
+      ],
+      [
+        2,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    ]
+  },
+  "anchors": {
+    "schema": "rendered-v42-city-positions-v1",
+    "map_sha256": "30946ef6877db09f7fb44c7d0cfe729614983613619095428ff3a270c0881edd",
+    "source": "expansion/map/city-map-city-sea-plan-v42.json displayArtX/displayArtY; crop x136",
+    "positions": {
+      "liaodong": [
+        1194,
+        78
+      ],
+      "fanyang": [
+        874,
+        112
+      ],
+      "taiyuan": [
+        731,
+        181
+      ],
+      "qi": [
+        1014,
+        213
+      ],
+      "wei": [
+        796,
+        254
+      ],
+      "xihe": [
+        670,
+        234
+      ],
+      "wuwei": [
+        124,
+        120
+      ],
+      "anding": [
+        434,
+        270
+      ],
+      "jingzhao": [
+        497,
+        354
+      ],
+      "jincheng": [
+        278,
+        256
+      ],
+      "donghai": [
+        1036,
+        326
+      ],
+      "shanyang": [
+        917,
+        306
+      ],
+      "henan": [
+        695,
+        346
+      ],
+      "yiyang": [
+        736,
+        449
+      ],
+      "yingchuan": [
+        776,
+        351
+      ],
+      "danyang": [
+        1050,
+        427
+      ],
+      "jiujiang": [
+        945,
+        406
+      ],
+      "yuzhang": [
+        904,
+        579
+      ],
+      "jiaozhi": [
+        387,
+        853
+      ],
+      "yulin": [
+        550,
+        771
+      ],
+      "jiangxia": [
+        817,
+        496
+      ],
+      "nanjun": [
+        691,
+        503
+      ],
+      "cangwu": [
+        635,
+        776
+      ],
+      "changsha": [
+        727,
+        577
+      ],
+      "lingling": [
+        656,
+        655
+      ],
+      "hanzhong": [
+        421,
+        411
+      ],
+      "shujun": [
+        214,
+        502
+      ],
+      "bajun": [
+        398,
+        553
+      ],
+      "yunnan": [
+        82,
+        681
+      ],
+      "yongchang": [
+        27,
+        684
+      ],
+      "xincheng": [
+        610,
+        427
+      ],
+      "nanyang": [
+        709,
+        400
+      ],
+      "bohai": [
+        924,
+        157
+      ],
+      "tianshui": [
+        370,
+        362
+      ],
+      "lujiang": [
+        925,
+        454
+      ],
+      "guiyang": [
+        730,
+        671
+      ],
+      "beihai": [
+        1054,
+        219
+      ],
+      "dongjun": [
+        833,
+        284
+      ],
+      "chenliu": [
+        827,
+        340
+      ],
+      "runan": [
+        835,
+        410
+      ],
+      "qiao": [
+        892,
+        356
+      ],
+      "xiapi": [
+        996,
+        351
+      ],
+      "wudu": [
+        304,
+        364
+      ],
+      "badong": [
+        555,
+        476
+      ],
+      "wujun": [
+        1142,
+        456
+      ],
+      "wuling": [
+        660,
+        545
+      ],
+      "kuaiji": [
+        1142,
+        512
+      ],
+      "yizhou": [
+        1140,
+        703
+      ],
+      "lelang": [
+        1290,
+        182
+      ],
+      "daifang": [
+        1292,
+        226
+      ],
+      "zitong": [
+        315,
+        433
+      ],
+      "guanghan": [
+        255,
+        470
+      ],
+      "wenshan": [
+        173,
+        454
+      ],
+      "baxi": [
+        382,
+        450
+      ],
+      "qianwei": [
+        213,
+        554
+      ],
+      "jiangyang": [
+        281,
+        563
+      ],
+      "hanjia": [
+        140,
+        515
+      ],
+      "zhuti": [
+        230,
+        651
+      ],
+      "yuexi": [
+        130,
+        619
+      ],
+      "zangke": [
+        432,
+        655
+      ],
+      "jianning": [
+        231,
+        711
+      ],
+      "xinggu": [
+        298,
+        751
+      ],
+      "yinping": [
+        250,
+        402
+      ],
+      "fuling": [
+        474,
+        549
+      ],
+      "xindu": [
+        1058,
+        522
+      ],
+      "poyang": [
+        969,
+        568
+      ],
+      "luling": [
+        828,
+        630
+      ],
+      "yidu": [
+        647,
+        472
+      ],
+      "qichun": [
+        874,
+        512
+      ],
+      "linhe": [
+        658,
+        728
+      ],
+      "nanhai": [
+        741,
+        775
+      ],
+      "gaoliang": [
+        696,
+        812
+      ],
+      "hepu": [
+        552,
+        829
+      ],
+      "jiuzhen": [
+        370,
+        902
+      ],
+      "rinan": [
+        422,
+        1009
+      ],
+      "yan": [
+        918,
+        98
+      ],
+      "yuyang": [
+        965,
+        66
+      ],
+      "shanggu": [
+        862,
+        68
+      ],
+      "dai": [
+        808,
+        100
+      ],
+      "liaoxi": [
+        1061,
+        121
+      ],
+      "changshan": [
+        798,
+        184
+      ],
+      "zhongshan": [
+        826,
+        149
+      ],
+      "anping": [
+        860,
+        181
+      ],
+      "pingyuan": [
+        918,
+        202
+      ],
+      "jinan": [
+        970,
+        214
+      ],
+      "jiyin": [
+        881,
+        308
+      ],
+      "dongping": [
+        920,
+        265
+      ],
+      "henei": [
+        666,
+        301
+      ],
+      "hedong": [
+        657,
+        385
+      ],
+      "hongnong": [
+        620,
+        346
+      ],
+      "fengyi": [
+        567,
+        327
+      ],
+      "fufeng": [
+        420,
+        341
+      ],
+      "longxi": [
+        306,
+        330
+      ],
+      "shangdang": [
+        733,
+        266
+      ],
+      "xiangyang": [
+        764,
+        403
+      ],
+      "zhuya": [
+        565,
+        885
+      ]
+    }
+  },
+  "presentation": {
+    "schema": "map-presentation-v1",
+    "city_names": {
+      "shujun": {
+        "displayName": "成都",
+        "state": "益州",
+        "polity": "蜀汉",
+        "role": "益州治所、蜀汉国都"
+      },
+      "jingzhao": {
+        "displayName": "长安",
+        "state": "雍州",
+        "polity": "曹魏",
+        "role": "雍州治所"
+      },
+      "henan": {
+        "displayName": "洛阳",
+        "state": "司隶",
+        "polity": "曹魏",
+        "role": "司隶治所、曹魏国都；沿用通行写法洛阳，古籍亦作雒阳"
+      },
+      "danyang": {
+        "displayName": "建业",
+        "state": "扬州",
+        "polity": "孙吴",
+        "role": "孙吴扬州治所、229年以后国都",
+        "source": "https://zh.wikisource.org/zh-hant/三國志/卷47",
+        "before212": "秣陵",
+        "name_source": "https://dfz.nanjing.gov.cn/gzdt/202403/t20240315_4186987.html"
+      },
+      "taiyuan": {
+        "displayName": "晋阳",
+        "state": "并州",
+        "polity": "曹魏",
+        "role": "并州治所"
+      },
+      "qi": {
+        "displayName": "临淄",
+        "state": "青州",
+        "polity": "曹魏",
+        "role": "青州治所"
+      },
+      "wuwei": {
+        "displayName": "姑臧",
+        "state": "凉州",
+        "polity": "曹魏",
+        "role": "凉州治所"
+      },
+      "jiujiang": {
+        "displayName": "寿春",
+        "state": "扬州",
+        "polity": "曹魏",
+        "role": "曹魏扬州治所；233年迁合肥新城的记载保留为后续剧本年代分支",
+        "source": "https://www.huainan.gov.cn/zjhn/hngk/"
+      },
+      "nanjun": {
+        "displayName": "江陵",
+        "state": "荆州",
+        "polity": "孙吴",
+        "role": "孙吴荆州治所"
+      },
+      "nanhai": {
+        "displayName": "番禺",
+        "state": "交州",
+        "polity": "孙吴",
+        "role": "交州治所；约230年交广合治，保留南海郡行政名称",
+        "source": "https://www.yuexiu.gov.cn/zjyx/yxgk/jzyg/"
+      },
+      "yan": {
+        "displayName": "蓟",
+        "state": "幽州",
+        "polity": "曹魏",
+        "role": "幽州治所；行政名称为燕郡",
+        "source": "https://zh.wikipedia.org/wiki/曹魏行政區劃"
+      },
+      "anping": {
+        "displayName": "信都",
+        "state": "冀州",
+        "polity": "曹魏",
+        "role": "冀州治所；行政名称为安平郡",
+        "source": "https://zh.wikipedia.org/wiki/曹魏行政區劃"
+      },
+      "wei": {
+        "displayName": "邺",
+        "state": "冀州",
+        "role": "汉末冀州治所、曹操魏王都；保留魏郡节点",
+        "source": "https://whly.hebei.gov.cn/c/2023-07-26/573174.html"
+      },
+      "shanyang": {
+        "displayName": "昌邑",
+        "state": "兖州",
+        "role": "汉末兖州治所；只更改显示城名，不模拟此后的州治迁移",
+        "source": "https://jnmz.jining.gov.cn/art/2019/9/10/art_9455_2033181.html"
+      },
+      "yingchuan": {
+        "displayName": "许昌",
+        "before221": "许县",
+        "aliases": [
+          "许昌",
+          "许县",
+          "许都",
+          "颍川"
+        ],
+        "role": "沿用既有许昌坐标节点，保留颍川内部ID；汉末城名为许县，221年改许昌",
+        "source": "https://xuchang.gov.cn/zjxc/walkIntoXC.html"
+      },
+      "liaodong": {
+        "displayName": "襄平",
+        "settlementName": "襄平县",
+        "administrativeName": "辽东郡",
+        "aliases": [
+          "襄平",
+          "襄平县",
+          "辽东",
+          "辽东郡"
+        ],
+        "detail": "襄平县 · 原郡名：辽东郡",
+        "source": "https://zh.wikisource.org/zh-hant/後漢書/卷113#幽州",
+        "evidence": "《后汉书·郡国五》辽东郡条列襄平；当前节点沿用辽阳一带的位置。"
+      },
+      "bohai": {
+        "displayName": "南皮",
+        "settlementName": "南皮县",
+        "administrativeName": "渤海郡",
+        "aliases": [
+          "南皮",
+          "南皮县",
+          "渤海",
+          "渤海郡",
+          "勃海郡"
+        ],
+        "detail": "南皮县 · 原郡名：渤海郡",
+        "source": "https://zh.wikisource.org/zh-hant/後漢書/卷110#勃海郡",
+        "evidence": "《后汉书·郡国二》勃海郡条列南皮；按现有南皮节点选取城名，不外推到西汉等其他时期。"
+      },
+      "dongjun": {
+        "displayName": "濮阳",
+        "settlementName": "濮阳县",
+        "administrativeName": "东郡",
+        "aliases": [
+          "濮阳",
+          "濮阳县",
+          "东郡"
+        ],
+        "detail": "濮阳县 · 原郡名：东郡",
+        "source": "https://zh.wikisource.org/zh-hant/後漢書/卷111#東郡",
+        "evidence": "《后汉书·郡国三》东郡条列濮阳；当前节点沿用濮阳一带的位置。"
+      },
+      "nanyang": {
+        "displayName": "宛城",
+        "settlementName": "宛县",
+        "administrativeName": "南阳郡",
+        "aliases": [
+          "宛城",
+          "宛",
+          "宛县",
+          "南阳",
+          "南阳郡"
+        ],
+        "detail": "宛县 · 原郡名：南阳郡",
+        "source": "https://zh.wikisource.org/zh-hant/後漢書/卷112#南陽郡",
+        "evidence": "《后汉书·郡国四》南阳郡条列宛；宛城为该县城的游戏显示名称。"
+      },
+      "yuzhang": {
+        "displayName": "南昌",
+        "settlementName": "南昌县",
+        "administrativeName": "豫章郡",
+        "aliases": [
+          "南昌",
+          "南昌县",
+          "豫章",
+          "豫章郡"
+        ],
+        "detail": "南昌县 · 原郡名：豫章郡",
+        "source": "https://zh.wikisource.org/zh-hant/後漢書/卷112#豫章郡",
+        "evidence": "《后汉书·郡国四》豫章郡条列南昌；替代历史地图资料中误指福建南安的来源链接。"
+      },
+      "wujun": {
+        "displayName": "吴",
+        "settlementName": "吴县",
+        "administrativeName": "吴郡",
+        "aliases": [
+          "吴",
+          "吴县",
+          "吴郡"
+        ],
+        "detail": "吴县 · 吴郡治",
+        "source": "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_32054",
+        "evidence": "CHGIS吴郡条明确记载治吴县，并列《后汉书》《吴郡图经续记》出处；地图简称吴，详情保留县名。"
+      },
+      "kuaiji": {
+        "displayName": "山阴",
+        "settlementName": "山阴县",
+        "administrativeName": "会稽郡",
+        "aliases": [
+          "山阴",
+          "山阴县",
+          "会稽",
+          "会稽郡"
+        ],
+        "detail": "山阴县 · 原郡名：会稽郡",
+        "source": "https://zh.wikisource.org/zh-hant/後漢書/卷112#會稽郡",
+        "evidence": "《后汉书·郡国四》会稽条记本治吴，分置吴郡后移山阴。"
+      },
+      "bajun": {
+        "displayName": "江州",
+        "settlementName": "江州县",
+        "administrativeName": "巴郡",
+        "aliases": [
+          "江州",
+          "江州县",
+          "巴郡"
+        ],
+        "detail": "江州县 · 原郡名：巴郡",
+        "source": "https://zh.wikisource.org/zh-hant/華陽國志/卷一#巴郡",
+        "evidence": "《华阳国志·巴志》巴郡条明载江州县，郡治；对应现有重庆主城一带节点。"
+      },
+      "baxi": {
+        "displayName": "阆中",
+        "settlementName": "阆中县",
+        "administrativeName": "巴西郡",
+        "aliases": [
+          "阆中",
+          "阆中县",
+          "巴西",
+          "巴西郡"
+        ],
+        "detail": "阆中县 · 原郡名：巴西郡",
+        "source": "https://zh.wikisource.org/zh-hant/華陽國志/卷一#巴西郡",
+        "evidence": "《华阳国志·巴志》巴西郡条明载阆中县，郡治；早期剧本仍使用既定96城节点，不据此声称巴西郡已设立。"
+      },
+      "guanghan": {
+        "displayName": "雒城",
+        "settlementName": "雒县",
+        "administrativeName": "广汉郡",
+        "aliases": [
+          "雒城",
+          "雒",
+          "雒县",
+          "广汉",
+          "广汉郡"
+        ],
+        "detail": "雒县 · 原郡名：广汉郡",
+        "source": "https://zh.wikisource.org/zh-hant/後漢書/卷113#益州",
+        "evidence": "《后汉书·郡国五》广汉条列雒，刺史治；雒城是县城的显示称呼，不声称所有剧本年代均为益州治所。"
+      },
+      "xiping": {
+        "displayName": "西平",
+        "detail": "西都（今青海西宁附近）；新增西北节点。"
+      },
+      "zhangye": {
+        "displayName": "张掖",
+        "detail": "觻得（今甘肃张掖附近）；新增西北节点。"
+      },
+      "jiuquan": {
+        "displayName": "酒泉",
+        "detail": "禄福（今甘肃酒泉附近）；新增西北节点。"
+      },
+      "dunhuang": {
+        "displayName": "敦煌",
+        "detail": "敦煌县（今甘肃敦煌附近）；新增西北节点。"
+      }
+    },
+    "colors": {
+      "wei": "#fcfcfc",
+      "shu": "#f8b800",
+      "wu": "#f85898",
+      "han": "#fcfcfc",
+      "yellow_turban": "#f8b800",
+      "yuan_shao": "#a4e4fc",
+      "han_fu": "#3cbcfc",
+      "liu_biao": "#b8b8f8",
+      "liu_dai": "#f878f8",
+      "liu_zhang": "#00e8d8",
+      "liu_yan": "#00e8d8",
+      "ma_teng": "#fca044",
+      "yuan_shu": "#f8d878",
+      "gongsun": "#b8f818",
+      "gongsun_zan": "#b8f818",
+      "liu_yu": "#58d854",
+      "dong_zhuo": "#f83800",
+      "li_jue": "#f83800",
+      "sun_jian": "#f85898",
+      "lubu": "#f87858",
+      "zhang_chao": "#fc7460",
+      "shi_xie": "#94b0fc",
+      "zhang_yang": "#d8b8f8",
+      "kong_rong": "#58f898",
+      "tao_qian": "#fcbcb0",
+      "liu_you": "#f8d8f8",
+      "wang_lang": "#f8b8f8",
+      "zhang_lu": "#c8c8c8",
+      "neutral": "#ffffff"
+    },
+    "castle_fill_pixels": [
+      [
+        -4,
+        -4
+      ],
+      [
+        0,
+        -4
+      ],
+      [
+        -4,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -12,
+        4
+      ],
+      [
+        -8,
+        4
+      ],
+      [
+        -4,
+        4
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        -12,
+        8
+      ],
+      [
+        -8,
+        8
+      ],
+      [
+        -4,
+        8
+      ],
+      [
+        0,
+        8
+      ],
+      [
+        4,
+        8
+      ],
+      [
+        8,
+        8
+      ]
+    ],
+    "name_policy": "Use approved state-seat and settlement labels for the existing board nodes; retain commandery IDs and original catalog names. These labels do not simulate every administrative foundation or relocation.",
+    "date_policy": "Match the original single-line year/month frame; preview chapter dates before starting.",
+    "labelled_city_ids": [
+      "shujun",
+      "jingzhao",
+      "henan",
+      "danyang",
+      "taiyuan",
+      "qi",
+      "wuwei",
+      "jiujiang",
+      "nanjun",
+      "nanhai",
+      "yan",
+      "anping",
+      "wei",
+      "shanyang",
+      "yingchuan",
+      "liaodong",
+      "bohai",
+      "dongjun",
+      "nanyang",
+      "yuzhang",
+      "wujun",
+      "kuaiji",
+      "bajun",
+      "baxi",
+      "guanghan",
+      "xiping",
+      "zhangye",
+      "jiuquan",
+      "dunhuang",
+      "yinping"
+    ],
+    "added_land_roads": [
+      {
+        "from": "yinping",
+        "to": "shujun",
+        "names": [
+          "阴平",
+          "成都"
+        ],
+        "shared_prefix": [
+          [
+            250,
+            402
+          ],
+          [
+            260,
+            408
+          ],
+          [
+            258,
+            418
+          ],
+          [
+            264,
+            412
+          ],
+          [
+            272,
+            420
+          ],
+          [
+            244,
+            448
+          ]
+        ],
+        "new_branch": [
+          [
+            244,
+            448
+          ],
+          [
+            238,
+            456
+          ],
+          [
+            226,
+            474
+          ],
+          [
+            216,
+            490
+          ],
+          [
+            214,
+            502
+          ]
+        ],
+        "drawing_policy": "Reuse the existing Yinping-Wenshan northern approach; paint only the branch after its junction, no parallel duplicate."
+      }
+    ],
+    "expansion_connections": [
+      {
+        "from": "wuwei",
+        "to": "zhangye",
+        "mode": "land",
+        "terrain": "plain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                200,
+                182
+              ],
+              [
+                198,
+                156
+              ],
+              [
+                206,
+                130
+              ],
+              [
+                208,
+                104
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "from": "zhangye",
+        "to": "jiuquan",
+        "mode": "land",
+        "terrain": "desert",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                208,
+                104
+              ],
+              [
+                178,
+                100
+              ],
+              [
+                146,
+                88
+              ],
+              [
+                116,
+                88
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "from": "jiuquan",
+        "to": "dunhuang",
+        "mode": "land",
+        "terrain": "desert",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                116,
+                88
+              ],
+              [
+                90,
+                86
+              ],
+              [
+                62,
+                84
+              ],
+              [
+                32,
+                82
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "from": "xiping",
+        "to": "jincheng",
+        "mode": "land",
+        "terrain": "mountain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                154,
+                232
+              ],
+              [
+                182,
+                218
+              ],
+              [
+                224,
+                234
+              ],
+              [
+                278,
+                256
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "from": "xiping",
+        "to": "wuwei",
+        "mode": "land",
+        "terrain": "mountain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                154,
+                232
+              ],
+              [
+                182,
+                218
+              ],
+              [
+                194,
+                204
+              ],
+              [
+                200,
+                182
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "from": "kuaiji",
+        "to": "nanhai",
+        "mode": "sea",
+        "sea_only": true,
+        "via": "东冶沿海中转（航路点，非新增城池）",
+        "geo": [
+          [
+            121.3,
+            29.8
+          ],
+          [
+            121,
+            28
+          ],
+          [
+            119.9,
+            26.3
+          ],
+          [
+            118.4,
+            24.2
+          ],
+          [
+            116.9,
+            23.1
+          ],
+          [
+            115,
+            22.5
+          ],
+          [
+            113.6,
+            22.7
+          ]
+        ],
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                1142,
+                512
+              ],
+              [
+                1148,
+                516
+              ],
+              [
+                1152,
+                520
+              ],
+              [
+                1156,
+                520
+              ],
+              [
+                1160,
+                524
+              ],
+              [
+                1164,
+                524
+              ],
+              [
+                1176,
+                536
+              ],
+              [
+                1188,
+                536
+              ]
+            ]
+          },
+          {
+            "mode": "sea",
+            "points": [
+              [
+                1188,
+                536
+              ],
+              [
+                1188,
+                548
+              ],
+              [
+                1192,
+                552
+              ],
+              [
+                1192,
+                560
+              ],
+              [
+                1196,
+                564
+              ],
+              [
+                1196,
+                572
+              ],
+              [
+                1192,
+                576
+              ],
+              [
+                1192,
+                580
+              ],
+              [
+                1188,
+                584
+              ],
+              [
+                1188,
+                588
+              ],
+              [
+                1184,
+                592
+              ],
+              [
+                1184,
+                596
+              ],
+              [
+                1160,
+                620
+              ],
+              [
+                1160,
+                624
+              ],
+              [
+                1156,
+                628
+              ],
+              [
+                1156,
+                632
+              ],
+              [
+                1124,
+                664
+              ],
+              [
+                1124,
+                668
+              ],
+              [
+                1120,
+                672
+              ],
+              [
+                1120,
+                676
+              ],
+              [
+                1084,
+                712
+              ],
+              [
+                1080,
+                712
+              ],
+              [
+                1076,
+                716
+              ],
+              [
+                1072,
+                716
+              ],
+              [
+                1056,
+                732
+              ],
+              [
+                1048,
+                732
+              ],
+              [
+                1044,
+                736
+              ],
+              [
+                1040,
+                736
+              ],
+              [
+                1024,
+                752
+              ],
+              [
+                1008,
+                752
+              ],
+              [
+                1000,
+                760
+              ],
+              [
+                996,
+                760
+              ],
+              [
+                976,
+                780
+              ],
+              [
+                972,
+                780
+              ],
+              [
+                968,
+                784
+              ],
+              [
+                944,
+                784
+              ],
+              [
+                944,
+                792
+              ],
+              [
+                940,
+                796
+              ],
+              [
+                940,
+                800
+              ],
+              [
+                936,
+                800
+              ],
+              [
+                936,
+                804
+              ],
+              [
+                932,
+                808
+              ],
+              [
+                880,
+                808
+              ],
+              [
+                876,
+                812
+              ],
+              [
+                872,
+                812
+              ],
+              [
+                868,
+                816
+              ],
+              [
+                860,
+                816
+              ],
+              [
+                860,
+                820
+              ],
+              [
+                860,
+                820
+              ],
+              [
+                860,
+                828
+              ],
+              [
+                856,
+                832
+              ],
+              [
+                856,
+                836
+              ],
+              [
+                852,
+                840
+              ],
+              [
+                852,
+                852
+              ],
+              [
+                844,
+                860
+              ],
+              [
+                828,
+                860
+              ],
+              [
+                816,
+                848
+              ],
+              [
+                816,
+                844
+              ],
+              [
+                812,
+                840
+              ],
+              [
+                812,
+                836
+              ],
+              [
+                808,
+                832
+              ],
+              [
+                808,
+                824
+              ],
+              [
+                804,
+                820
+              ],
+              [
+                804,
+                824
+              ],
+              [
+                796,
+                824
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                796,
+                824
+              ],
+              [
+                796,
+                820
+              ],
+              [
+                784,
+                808
+              ],
+              [
+                788,
+                804
+              ],
+              [
+                784,
+                800
+              ],
+              [
+                772,
+                800
+              ],
+              [
+                768,
+                796
+              ],
+              [
+                760,
+                796
+              ],
+              [
+                744,
+                780
+              ],
+              [
+                741,
+                775
+              ]
+            ]
+          }
+        ],
+        "coastal_controls": [
+          [
+            1186,
+            534
+          ],
+          [
+            1196,
+            564
+          ],
+          [
+            1184,
+            594
+          ],
+          [
+            1154,
+            632
+          ],
+          [
+            1120,
+            674
+          ],
+          [
+            1072,
+            714
+          ],
+          [
+            1008,
+            748
+          ],
+          [
+            938,
+            780
+          ],
+          [
+            844,
+            818
+          ],
+          [
+            800,
+            818
+          ],
+          [
+            774,
+            802
+          ]
+        ]
+      },
+      {
+        "from": "nanhai",
+        "to": "gaoliang",
+        "mode": "sea",
+        "geo": [
+          [
+            113.6,
+            22.7
+          ],
+          [
+            112.9,
+            21.8
+          ],
+          [
+            111.6,
+            21.5
+          ]
+        ],
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                741,
+                775
+              ],
+              [
+                744,
+                780
+              ],
+              [
+                760,
+                796
+              ],
+              [
+                768,
+                796
+              ],
+              [
+                772,
+                800
+              ],
+              [
+                784,
+                800
+              ],
+              [
+                788,
+                804
+              ],
+              [
+                784,
+                808
+              ],
+              [
+                796,
+                820
+              ],
+              [
+                796,
+                824
+              ]
+            ]
+          },
+          {
+            "mode": "sea",
+            "points": [
+              [
+                796,
+                824
+              ],
+              [
+                796,
+                828
+              ],
+              [
+                792,
+                832
+              ],
+              [
+                792,
+                836
+              ],
+              [
+                788,
+                840
+              ],
+              [
+                788,
+                844
+              ],
+              [
+                784,
+                848
+              ],
+              [
+                772,
+                848
+              ],
+              [
+                768,
+                844
+              ],
+              [
+                764,
+                844
+              ],
+              [
+                764,
+                844
+              ],
+              [
+                756,
+                844
+              ],
+              [
+                752,
+                848
+              ],
+              [
+                740,
+                848
+              ],
+              [
+                736,
+                852
+              ],
+              [
+                728,
+                852
+              ],
+              [
+                728,
+                856
+              ],
+              [
+                716,
+                856
+              ],
+              [
+                716,
+                852
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                716,
+                852
+              ],
+              [
+                716,
+                848
+              ],
+              [
+                720,
+                844
+              ],
+              [
+                720,
+                836
+              ],
+              [
+                696,
+                812
+              ]
+            ]
+          }
+        ],
+        "coastal_controls": [
+          [
+            774,
+            802
+          ],
+          [
+            754,
+            830
+          ],
+          [
+            724,
+            840
+          ],
+          [
+            700,
+            838
+          ]
+        ]
+      },
+      {
+        "from": "gaoliang",
+        "to": "hepu",
+        "mode": "sea",
+        "geo": [
+          [
+            111.6,
+            21.5
+          ],
+          [
+            110.5,
+            20.3
+          ],
+          [
+            109.8,
+            20.1
+          ],
+          [
+            109,
+            21
+          ]
+        ],
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                696,
+                812
+              ],
+              [
+                720,
+                836
+              ],
+              [
+                720,
+                844
+              ],
+              [
+                716,
+                848
+              ],
+              [
+                716,
+                852
+              ]
+            ]
+          },
+          {
+            "mode": "sea",
+            "points": [
+              [
+                716,
+                852
+              ],
+              [
+                716,
+                856
+              ],
+              [
+                728,
+                856
+              ],
+              [
+                732,
+                860
+              ],
+              [
+                732,
+                872
+              ],
+              [
+                728,
+                876
+              ],
+              [
+                728,
+                880
+              ],
+              [
+                716,
+                892
+              ],
+              [
+                676,
+                892
+              ],
+              [
+                672,
+                888
+              ],
+              [
+                672,
+                864
+              ],
+              [
+                668,
+                868
+              ],
+              [
+                640,
+                868
+              ],
+              [
+                640,
+                856
+              ],
+              [
+                636,
+                860
+              ],
+              [
+                628,
+                860
+              ],
+              [
+                624,
+                864
+              ],
+              [
+                620,
+                864
+              ],
+              [
+                620,
+                868
+              ],
+              [
+                612,
+                868
+              ],
+              [
+                604,
+                876
+              ],
+              [
+                596,
+                876
+              ],
+              [
+                584,
+                864
+              ],
+              [
+                584,
+                868
+              ],
+              [
+                564,
+                868
+              ],
+              [
+                556,
+                860
+              ],
+              [
+                544,
+                860
+              ],
+              [
+                532,
+                848
+              ],
+              [
+                532,
+                844
+              ]
+            ]
+          },
+          {
+            "mode": "land",
+            "points": [
+              [
+                532,
+                844
+              ],
+              [
+                536,
+                840
+              ],
+              [
+                540,
+                840
+              ],
+              [
+                548,
+                832
+              ],
+              [
+                552,
+                829
+              ]
+            ]
+          }
+        ],
+        "coastal_controls": [
+          [
+            700,
+            838
+          ],
+          [
+            674,
+            846
+          ],
+          [
+            638,
+            850
+          ],
+          [
+            610,
+            852
+          ],
+          [
+            576,
+            854
+          ],
+          [
+            542,
+            836
+          ]
+        ]
+      },
+      {
+        "from": "wuwei",
+        "to": "jincheng",
+        "mode": "land",
+        "terrain": "mountain",
+        "draw": [
+          {
+            "mode": "land",
+            "points": [
+              [
+                200,
+                182
+              ],
+              [
+                194,
+                204
+              ],
+              [
+                182,
+                218
+              ],
+              [
+                224,
+                234
+              ],
+              [
+                278,
+                256
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "new_city_ids": [
+      "xiping",
+      "zhangye",
+      "jiuquan",
+      "dunhuang",
+      "wuwei"
+    ],
+    "castle_outline_pixels": [
+      [
+        -8,
+        -8
+      ],
+      [
+        -4,
+        -8
+      ],
+      [
+        0,
+        -8
+      ],
+      [
+        4,
+        -8
+      ],
+      [
+        -8,
+        -4
+      ],
+      [
+        4,
+        -4
+      ],
+      [
+        -16,
+        0
+      ],
+      [
+        -12,
+        0
+      ],
+      [
+        -8,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        -16,
+        4
+      ],
+      [
+        12,
+        4
+      ],
+      [
+        -16,
+        8
+      ],
+      [
+        12,
+        8
+      ],
+      [
+        -16,
+        12
+      ],
+      [
+        -12,
+        12
+      ],
+      [
+        -8,
+        12
+      ],
+      [
+        -4,
+        12
+      ],
+      [
+        0,
+        12
+      ],
+      [
+        4,
+        12
+      ],
+      [
+        8,
+        12
+      ],
+      [
+        12,
+        12
+      ]
+    ],
+    "background": "/assets/map-basin.png",
+    "background_sha256": "c90171f28cc5d839038c59348b9c734906d661954f5a01f77ec76698e094fa18",
+    "campaign_background_sha256": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
+    "source_html_sha256": "bf3684b48772332a1dd8084cb0f33c61cbe034e5d4642b13ae648682aa6233d1"
+  },
+  "provenance": {
+    "plan": {
+      "path": "expansion/map/city-map-city-sea-plan-v42.json",
+      "sha256": "ae41aa5671d269db81e91cbf529262aa9d5999b50da469eaa123cc7f43e22777"
+    },
+    "rendered_page": {
+      "path": "expansion/map/city-map-city-sea-preview-v42.html",
+      "sha256": "bf3684b48772332a1dd8084cb0f33c61cbe034e5d4642b13ae648682aa6233d1"
+    },
+    "original_castle_policy": "Preserve the approved native8x8 castle rows and current32px fill/outline masks; no new painting or geometry."
+  }
+}

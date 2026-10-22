@@ -5,6 +5,7 @@ Names reuse the existing identity crosswalk; translating a label never changes
 its stable ID, scenario membership, save hash or game-state text.
 """
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -390,7 +391,18 @@ def build():
         '新增人物僅在本篇已啟用勢力的生涯窗口內登場；未來以在野待訪，不強制歷史轉屬。': '追加人物は本シナリオに存在する勢力の活動期間内だけ登場します。将来の登場は在野となり、歴史通りの所属変更は強制しません。',
         '新增資料只用於新開v13戰役；每城30人、出戰10人、地圖及既有存檔保持原規則。': '追加データはv13の新規戦役に適用します。都市定員30人、出陣10人、地図と既存セーブの規則は維持します。',
     })
-    data = json.loads((ROOT / 'game/data/main-scenarios-v11/217-07.json').read_text())
+    EXACT.update({
+        '补充年代采用本作的城池、人物与年代配置。': '補完年代は、本作の都市・人物・年代設定を用います。',
+        '以下个别年代修订仅适用于本剧本。游戏设定不等同史实。': '以下の個別の年代修正は、このシナリオにのみ適用します。ゲーム設定は史実と同一ではありません。',
+        '武知来自第三方SAN14数值转写，年代为来源游戏设定。': '武力・知力は第三者が転記したSAN14の値を参考にし、登場年代は参照元のゲーム設定です。',
+        '武知为参考生涯的本作设计值，并非《三国志14》原始能力。年代含游戏估计，详见来源。': '武力・知力は経歴を参考にした本作独自の設定で、『三國志14』の原能力値ではありません。登場年代にはゲーム用の推定が含まれます。出典を確認してください。',
+    })
+    for old in list(EXACT):
+        if re.search(r'v[0-9]+|旧存档|舊存檔|旧版战役|旧版城市', old):
+            del EXACT[old]
+    data = json.loads((ROOT / 'game/data/campaigns/217-07.json').read_text())
+    for source, target in list(EXACT.items()):
+        EXACT[source] = target.replace('三國志14', '三国志14')
     names = {}
     for person in data['people']:
         # A display spelling only: same-name identities remain separate IDs.
@@ -400,19 +412,13 @@ def build():
             if previous and previous != japanese:
                 raise ValueError('Ambiguous localized spelling: ' + label)
             names[label] = japanese
-    expansion = ROOT / 'game/config/officer-expansion-v13.json'
-    if expansion.exists():
-        extra = json.loads(expansion.read_text())
-        for person in extra['people']:
-            japanese = person['name_japanese']
-            for label in [person['name'], japanese, *person.get('aliases', [])]:
-                previous = names.get(label)
-                if previous and previous != japanese:
-                    raise ValueError('Ambiguous expansion spelling: ' + label)
-                names[label] = japanese
-        originals = {p['person_id']: p for p in data['people']}
-        for duplicate in extra.get('excluded_duplicates', []):
-            names[duplicate['name']] = originals[duplicate['existing_person_id']]['ability_source']['source_name']
+    people = {person['person_id']: person for person in data['people']}
+    for person_id, aliases in data.get('additional_person_aliases', {}).items():
+        japanese = people[person_id]['ability_source']['source_name']
+        for label in aliases:
+            if label in names and names[label] != japanese:
+                raise ValueError('Ambiguous current alias spelling: ' + label)
+            names[label] = japanese
     city_labels = {city['name'] for city in data['cities']}
     presentation = json.loads((ROOT / 'game/assets/map-presentation.json').read_text())
     for row in presentation['city_names'].values():

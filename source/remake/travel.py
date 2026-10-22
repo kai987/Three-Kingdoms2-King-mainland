@@ -7,7 +7,6 @@ but is excluded from defense, recruitment, allocation and subsequent orders.
 from heapq import heappop, heappush
 from itertools import count
 from math import asin, ceil, cos, radians, sin, sqrt
-from copy import deepcopy
 from .errors import GameError
 from .officers import integer, select_deployment, transfer_officers
 
@@ -48,30 +47,22 @@ def build_routes(data, spec):
 
 
 class TravelCampaign:
-    @property
-    def travelling(self):
-        return bool(self.catalog.data.get('travel_rules'))
-
     def _march_ids(self, state):
         return {i for r in state.extension.get('travel', {}).get('marches', []) for i in r['officers']}
 
-    @property
-    def hazardous_travel(self):
-        return bool(self.catalog.data.get('travel_hazards'))
-
     def _travel_modes(self):
-        return ('fastest','land','sea','special','explore') if self.hazardous_travel else ('fastest','land')
+        return ('fastest','land','sea','special','explore')
 
     def _known_routes(self, state):
         routes = self.catalog.data['travel_routes']
-        if not self.hazardous_travel or state is None:
+        if state is None:
             return routes
         discovered = set(state.extension['travel']['discovered'])
         return routes + [row for row in self.catalog.data.get('exploration_routes', [])
                          if row['id'] in discovered]
 
     def _exploration_route(self, source, target):
-        coastal = set(self.catalog.data.get('travel_hazards', {}).get('coastal_cities', []))
+        coastal = set(self.catalog.data['travel_hazards']['coastal_cities'])
         if source == target or source not in coastal or target not in coastal:
             return None
         return next((row for row in self.catalog.data.get('exploration_routes', [])
@@ -82,7 +73,7 @@ class TravelCampaign:
         days = sum(row['days'] for row in legs)
         distance = round(sum(row['distance_km'] for row in legs),1)
         # Browser JSON.stringify writes integral numbers without a .0 suffix;
-        # v11 save checksums must survive downloading this newly quoted data.
+        # Current save checksums must survive browser download/upload roundtrips.
         if type(distance) is float and distance.is_integer():
             distance = int(distance)
         return dict(path=path,routes=legs,days=days,months=max(1,ceil(days/30)),
@@ -100,8 +91,6 @@ class TravelCampaign:
         return self._python_travel_path(state, source, target, owner, mode, adjacent=adjacent)
 
     def _python_travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False):
-        if not self.hazardous_travel:
-            return self._legacy_travel_path(state,source,target,owner,mode,adjacent=adjacent)
         from .route_hazards import evaluate_leg, route_allowed
         if mode not in self._travel_modes():
             raise GameError('请选择有效的行军路线。')
@@ -120,7 +109,7 @@ class TravelCampaign:
             else:
                 candidates = [row for row in routes if {row['from'],row['to']}=={source,target}
                               and (row['mode']=='sea' if mode=='sea' else row.get('special') in ('yinping','ziwu'))]
-                # The original Yinping row has no special tag in some catalogs.
+                # The current Yinping route is identified by its endpoint pair.
                 if mode == 'special':
                     candidates += [row for row in routes if row not in candidates
                                    and {row['from'],row['to']}=={source,target}
@@ -210,30 +199,6 @@ class TravelCampaign:
             source,target = (self.catalog.map_cities[row[k]]['name'] for k in ('source','target'))
             self._note(state,f'探索航行成功抵达{target}，发现{source}—{target}海路，现已显示在地图上。')
 
-    def _legacy_travel_path(self, state, source, target, owner, mode='fastest', *, adjacent=False):
-        if mode not in {'fastest', 'land'}: raise GameError('请选择有效的行军路线。')
-        routes = self.catalog.data['travel_routes']
-        serial = count()
-        queue = [(0, 0, source, next(serial), [source], [])]
-        seen = set()
-        while queue:
-            days, distance, here, _, path, legs = heappop(queue)
-            if here in seen: continue
-            seen.add(here)
-            if here == target and legs:
-                months = max(1, ceil(days/30))
-                return dict(path=path, routes=legs, days=days, months=months,
-                            distance_km=round(distance, 1), grain_per_officer=5*len(legs),
-                            modes=sorted({r['mode'] for r in legs}))
-            for route in routes:
-                if here not in (route['from'], route['to']) or mode == 'land' and route['mode'] == 'sea': continue
-                nxt = route['to'] if here == route['from'] else route['from']
-                if nxt not in state.cities or nxt in seen: continue
-                if adjacent and (here != source or nxt != target): continue
-                if not adjacent and state.cities[nxt].owner != owner: continue
-                heappush(queue, (days+route['days'], distance+route['distance_km'], nxt, next(serial), path+[nxt], legs+[route]))
-        return None
-
     def _queue_march(self, state, source, target, ids, kind, mode='fastest'):
         quote = self._travel_path(state, source.id, target.id, source.owner, mode, adjacent=kind == 'attack')
         if not quote: raise GameError('没有满足海陆选择及本方连通条件的路线。')
@@ -242,7 +207,7 @@ class TravelCampaign:
         if kind == 'attack': ids = list(select_deployment(source.roster, ids, state.officers))
         elif len(target.roster.officer_ids)+len(ids)>self.catalog.rules.city_officer_capacity:
             raise GameError('目的城武将容量不足。')
-        if self.hazardous_travel and mode=='explore' and not sum(state.officers[i].troops for i in ids):
+        if mode=='explore' and not sum(state.officers[i].troops for i in ids):
             raise GameError('探索航行至少需要一名带兵武将。')
         grain = max(1, sum(state.officers[i].troops for i in ids)//25) if kind == 'attack' else len(ids)*quote['grain_per_officer']
         if source.grain < grain: raise GameError('行军粮食不足。')
@@ -254,17 +219,15 @@ class TravelCampaign:
         row = dict(id=travel['counter'], source=source.id, target=target.id, owner=source.owner,
                    officers=ids, kind=kind, mode=mode, departure_turn=state.turn,
                    arrival_turn=state.turn+quote['months'], checked_turn=0, quote=quote)
-        if self.hazardous_travel:
-            row.update(departure_year=state.year,departure_month=state.month,
-                       departure_troops={str(i):state.officers[i].troops for i in ids},
-                       risks=self._march_risks(quote,state.rng))
+        row.update(departure_year=state.year,departure_month=state.month,
+                   departure_troops={str(i):state.officers[i].troops for i in ids},
+                   risks=self._march_risks(quote,state.rng))
         travel['marches'].append(row)
         self._note(state, f'{len(ids)}将从{self.catalog.map_cities[source.id]["name"]}出发，'
                    f'至{self.catalog.map_cities[target.id]["name"]}约{quote["distance_km"]}公里、{quote["days"]}日，'
                    f'{quote["months"]}个月回合后到达，耗粮{grain}。')
 
     def _prune_marches(self, state):
-        if not self.travelling: return
         travel = state.extension['travel']
         for row in list(travel['marches']):
             source = state.cities[row['source']]
@@ -275,7 +238,7 @@ class TravelCampaign:
                 self._note(state, f'行军{row["id"]}因出发城失陷或人员退场取消。')
 
     def _arrivals(self, state, payload):
-        if not self.travelling or state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
+        if state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
         travel = state.extension['travel']
         self._prune_marches(state)
         for row in sorted(list(travel['marches']), key=lambda r: (r['arrival_turn'], r['id'])):
@@ -288,34 +251,28 @@ class TravelCampaign:
                 travel['marches'].remove(row)
                 self._note(state, f'调动{row["id"]}沿途城池易主，路线中断，部队返回出发城编制。')
                 continue
-            if self.hazardous_travel:
-                if row['kind']=='transfer' and target.owner!=row['owner']:
-                    travel['marches'].remove(row)
-                    self._note(state,f'目的城已易主，调动{row["id"]}取消，部队返回出发城编制。')
-                    continue
-                if row['risks'] and not self._apply_march_risks(state,row):
-                    travel['marches'].remove(row)
-                    self._note(state,f'行军{row["id"]}遭遇灾害后带兵全损，航行或进军失败；武将返回出发城编制，未发现新航路。')
-                    continue
+            if row['kind']=='transfer' and target.owner!=row['owner']:
+                travel['marches'].remove(row)
+                self._note(state,f'目的城已易主，调动{row["id"]}取消，部队返回出发城编制。')
+                continue
+            if row['risks'] and not self._apply_march_risks(state,row):
+                travel['marches'].remove(row)
+                self._note(state,f'行军{row["id"]}遭遇灾害后带兵全损，航行或进军失败；武将返回出发城编制，未发现新航路。')
+                continue
             if target.owner == row['owner']:
                 if len(target.roster.officer_ids)+len(ids)>self.catalog.rules.city_officer_capacity:
                     self._note(state, f'{self.catalog.map_cities[target.id]["name"]}已满员，行军{row["id"]}等待下月入城。')
                     continue
                 transfer_officers(source.roster, target.roster, ids)
-                if self.hazardous_travel:
-                    self._discover_march_route(state,row)
+                self._discover_march_route(state,row)
                 travel['marches'].remove(row)
                 state.extension['officer_actions'].update({str(i): state.turn for i in ids})
                 self._note(state, f'行军{row["id"]}到达{self.catalog.map_cities[target.id]["name"]}，{len(ids)}将入城。')
-            elif row['kind'] == 'transfer':
-                travel['marches'].remove(row)
-                self._note(state, f'目的城已易主，调动{row["id"]}取消，部队返回出发城编制。')
             else:
                 travel['marches'].remove(row)
                 ids = [i for i in ids if state.officers[i].troops>0 and state.officers[i].health>0]
                 if not ids: continue
-                if self.hazardous_travel:
-                    self._discover_march_route(state,row)
+                self._discover_march_route(state,row)
                 self._start_expanded_battle(state, source, target, ids, paid=True)
                 travel['battle_arrival'] = True
                 if state.player in (source.owner, target.owner): return
@@ -325,7 +282,7 @@ class TravelCampaign:
         state.phase = 'city'
 
     def _resolve_ai_battle(self, state):
-        """Same damage/settlement as the legacy AI; no second supply charge."""
+        """Same AI damage/settlement rules; no second supply charge."""
         battle = state.battle
         for _ in range(200):
             if state.phase == 'result': break
@@ -339,40 +296,19 @@ class TravelCampaign:
 
     def _travel_view(self, state):
         from .march_core import enabled, invoke, state_input
-        if not self.travelling or not enabled():
+        if not enabled():
             return self._python_travel_view(state)
-        if self.hazardous_travel:
-            # Reuse metadata construction without doing a second route search.
-            result = self._hazard_travel_view(None)
-        else:
-            result = dict(travel_rules=self.catalog.data['travel_rules'], travel_quotes={})
+        # Reuse metadata construction without a second route search.
+        result = self._python_travel_view(None)
         if state is not None:
-            if self.hazardous_travel:
-                discovered = set(state.extension['travel']['discovered'])
-                result['discovered_routes'] = [row for row in self.catalog.data.get('exploration_routes', [])
-                                               if row['id'] in discovered]
+            discovered = set(state.extension['travel']['discovered'])
+            result['discovered_routes'] = [row for row in self.catalog.data.get('exploration_routes', [])
+                                           if row['id'] in discovered]
             result['travel_quotes'] = invoke('batch', data=self.catalog.data,
                                             **state_input(state), player=state.player)
         return result
 
     def _python_travel_view(self, state):
-        if not self.travelling: return {}
-        if self.hazardous_travel:
-            return self._hazard_travel_view(state)
-        quotes = {}
-        if state:
-            for source in state.cities.values():
-                if source.owner != state.player: continue
-                for target in state.cities.values():
-                    if source.id == target.id: continue
-                    adjacent = target.owner != state.player
-                    if adjacent and not self.hazardous_travel and frozenset((source.id, target.id)) not in self.catalog.links: continue
-                    for mode in self._travel_modes():
-                        quote = self._travel_path(state, source.id, target.id, state.player, mode, adjacent=adjacent)
-                        if quote: quotes[f'{source.id}:{target.id}:{mode}'] = quote
-        return dict(travel_rules=self.catalog.data['travel_rules'], travel_quotes=quotes)
-
-    def _hazard_travel_view(self, state):
         """Quote each friendly route tree once, without advancing saved RNG."""
         from .route_hazards import evaluate_leg, route_allowed
         quotes={}
@@ -437,11 +373,6 @@ class TravelCampaign:
         return result
 
     def _validate_travel(self, state):
-        if not self.hazardous_travel:
-            return self._validate_legacy_travel(state)
-        self._validate_hazard_travel(state)
-
-    def _validate_hazard_travel(self, state):
         from .route_hazards import allocate_survivors, evaluate_leg, route_allowed
         x=state.extension['travel']
         if not isinstance(x,dict) or set(x)!={'counter','marches','battle_arrival','discovered'}:
@@ -599,44 +530,3 @@ class TravelCampaign:
                     raise ValueError('inconsistent marching troop strength')
         if state.battle and seen.intersection(u['id'] for key in ('attackers','defenders') for u in state.battle[key]):
             raise ValueError('marching unit deployed twice')
-
-    def _validate_legacy_travel(self, state):
-        if not self.travelling: return
-        x = state.extension['travel']
-        if not isinstance(x, dict) or set(x) != {'counter', 'marches', 'battle_arrival'}: raise ValueError('travel fields')
-        integer(x['counter'], 0, 1000000, 'march counter')
-        if type(x['battle_arrival']) is not bool or x['battle_arrival'] and state.phase not in {'battle', 'result'}:
-            raise ValueError('arrival continuation')
-        if not isinstance(x['marches'], list) or len(x['marches'])>1000: raise ValueError('march queue')
-        seen, serials = set(), set()
-        for row in x['marches']:
-            if set(row) != {'id','source','target','owner','officers','kind','mode','departure_turn','arrival_turn','checked_turn','quote'}: raise ValueError('march fields')
-            integer(row['id'], 1, x['counter'], 'march id')
-            if row['id'] in serials: raise ValueError('duplicate march id')
-            serials.add(row['id'])
-            if row['source'] == row['target'] or row['source'] not in state.cities or row['target'] not in state.cities: raise ValueError('march city')
-            source = state.cities[row['source']]
-            if source.owner != row['owner'] or row['owner'] not in self.catalog.factions or row['kind'] not in {'attack','transfer'}: raise ValueError('march ownership')
-            ids = row['officers']
-            if not isinstance(ids,list) or not ids or len(ids)!=len(set(ids)) or seen.intersection(ids) or not set(ids)<=set(source.roster.officer_ids): raise ValueError('march officers')
-            for ident in ids: self.catalog.rules.officer_id(ident)
-            if row['kind']=='attack' and len(ids)>self.catalog.rules.battle_officers_per_side: raise ValueError('march deployment')
-            seen.update(ids)
-            integer(row['departure_turn'], 1, state.turn, 'march departure')
-            integer(row['arrival_turn'], row['departure_turn']+1, 1000000, 'march arrival')
-            integer(row['checked_turn'], 0, state.turn, 'march arrival cursor')
-            # Validate route geometry against immutable catalog data, allowing
-            # intermediate cities to have changed owner since departure.
-            quote = row['quote']
-            if not isinstance(quote,dict) or set(quote)!={'path','routes','days','months','distance_km','grain_per_officer','modes'}: raise ValueError('march quote')
-            for key in ('days','months','grain_per_officer'): integer(quote[key],1,1000000,'march '+key)
-            path, legs = quote['path'], quote['routes']
-            if not isinstance(path,list) or not path or len(path)!=len(set(path)) or any(key not in state.cities for key in path) or path[0]!=row['source'] or path[-1]!=row['target'] or len(legs)!=len(path)-1: raise ValueError('march path')
-            if row['mode'] not in {'fastest','land'}: raise ValueError('march mode')
-            for a,b,leg in zip(path,path[1:],legs):
-                if leg not in self.catalog.data['travel_routes'] or {leg['from'],leg['to']}!={a,b} or row['mode']=='land' and leg['mode']=='sea': raise ValueError('march leg')
-            days = sum(r['days'] for r in legs)
-            expected = dict(path=path,routes=legs,days=days,months=max(1,ceil(days/30)),distance_km=round(sum(r['distance_km'] for r in legs),1),grain_per_officer=5*len(legs),modes=sorted({r['mode'] for r in legs}))
-            if quote!=expected or row['arrival_turn']!=row['departure_turn']+quote['months']: raise ValueError('march ETA')
-            if row['kind']=='attack' and len(legs)!=1: raise ValueError('attack path')
-        if state.battle and seen.intersection(u['id'] for k in ('attackers','defenders') for u in state.battle[k]): raise ValueError('marching unit deployed twice')

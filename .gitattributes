@@ -1,12 +1,5 @@
-# Frozen analysis and third-party source snapshots must retain their exact bytes.
-analysis/** -text -whitespace
-expansion/officers/source/** -text -whitespace
+# Pinned reference snapshots, conversion tables and SDK bytes are verified.
+game/config/references/** -text -whitespace
 game/locales/opencc/** -text -whitespace
-# Rebuilt third-party SDK literals and license line endings are byte-checked.
 game/vendor/** -text -whitespace
 *.csv -text whitespace=cr-at-eol
-
-# Preserve historical source hashes, including generated final blank lines.
-source/recovered/** whitespace=-blank-at-eof
-scripts/analyze_officer_details_ui_services.py -whitespace
-scripts/build_phase16_browser.py -whitespace

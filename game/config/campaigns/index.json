@@ -1,0 +1,156 @@
+{
+  "schema": "tk2-campaign-sources-v1",
+  "default": "mainland217-07",
+  "scenarios": [
+    {
+      "id": "mainland184-02",
+      "year": 184,
+      "month": 2,
+      "file": "scenarios/184-02.json"
+    },
+    {
+      "id": "mainland188-06",
+      "year": 188,
+      "month": 6,
+      "file": "scenarios/188-06.json"
+    },
+    {
+      "id": "mainland190-01",
+      "year": 190,
+      "month": 1,
+      "file": "scenarios/190-01.json"
+    },
+    {
+      "id": "mainland191-10",
+      "year": 191,
+      "month": 10,
+      "file": "scenarios/191-10.json"
+    },
+    {
+      "id": "mainland194-06",
+      "year": 194,
+      "month": 6,
+      "file": "scenarios/194-06.json"
+    },
+    {
+      "id": "mainland196-06",
+      "year": 196,
+      "month": 6,
+      "file": "scenarios/196-06.json"
+    },
+    {
+      "id": "mainland197-07",
+      "year": 197,
+      "month": 7,
+      "file": "scenarios/197-07.json"
+    },
+    {
+      "id": "mainland200-01",
+      "year": 200,
+      "month": 1,
+      "file": "scenarios/200-01.json"
+    },
+    {
+      "id": "mainland201-05",
+      "year": 201,
+      "month": 5,
+      "file": "scenarios/201-05.json"
+    },
+    {
+      "id": "mainland207-09",
+      "year": 207,
+      "month": 9,
+      "file": "scenarios/207-09.json"
+    },
+    {
+      "id": "mainland208-10",
+      "year": 208,
+      "month": 10,
+      "file": "scenarios/208-10.json"
+    },
+    {
+      "id": "mainland209-06",
+      "year": 209,
+      "month": 6,
+      "file": "scenarios/209-06.json"
+    },
+    {
+      "id": "mainland210-11",
+      "year": 210,
+      "month": 11,
+      "file": "scenarios/210-11.json"
+    },
+    {
+      "id": "mainland211-07",
+      "year": 211,
+      "month": 7,
+      "file": "scenarios/211-07.json"
+    },
+    {
+      "id": "mainland212-06",
+      "year": 212,
+      "month": 6,
+      "file": "scenarios/212-06.json"
+    },
+    {
+      "id": "mainland219-07",
+      "year": 219,
+      "month": 7,
+      "file": "scenarios/219-07.json"
+    },
+    {
+      "id": "mainland221-07",
+      "year": 221,
+      "month": 7,
+      "file": "scenarios/221-07.json"
+    },
+    {
+      "id": "mainland225-07",
+      "year": 225,
+      "month": 7,
+      "file": "scenarios/225-07.json"
+    },
+    {
+      "id": "mainland227-02",
+      "year": 227,
+      "month": 2,
+      "file": "scenarios/227-02.json"
+    },
+    {
+      "id": "mainland234-02",
+      "year": 234,
+      "month": 2,
+      "file": "scenarios/234-02.json"
+    },
+    {
+      "id": "mainland235-01",
+      "year": 235,
+      "month": 1,
+      "file": "scenarios/235-01.json"
+    },
+    {
+      "id": "mainland238-01",
+      "year": 238,
+      "month": 1,
+      "file": "scenarios/238-01.json"
+    },
+    {
+      "id": "mainland249-01",
+      "year": 249,
+      "month": 1,
+      "file": "scenarios/249-01.json"
+    },
+    {
+      "id": "mainland263-05",
+      "year": 263,
+      "month": 5,
+      "file": "scenarios/263-05.json"
+    },
+    {
+      "id": "mainland217-07",
+      "year": 217,
+      "month": 7,
+      "file": "scenarios/217-07.json"
+    }
+  ]
+}

@@ -18,7 +18,7 @@ def integer(value, low, high, label):
 
 @dataclass(frozen=True)
 class GameRules:
-    city_officer_capacity: int = 20
+    city_officer_capacity: int = 99
     battle_officers_per_side: int = 10
     runtime_capacity: int = 1200
 

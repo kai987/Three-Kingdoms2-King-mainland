@@ -5,7 +5,7 @@ const {create,MAX_BYTES}=require('../game/cloud-save.js');
 const A='11111111-1111-4111-8111-111111111111',B='22222222-2222-4222-8222-222222222222';
 const config={enabled:true,url:'https://test-cloud.supabase.co',publishableKey:'sb_publishable_test',slots:5};
 const hash=text=>createHash('sha256').update(text).digest('hex');
-const raw='{"format":"three-kingdoms-remake-save","version":1,"scenario":"mainland217-07-v14","catalog_sha256":"'+'a'.repeat(64)+'","checksum":"'+'b'.repeat(64)+'","state":{"year":217,"month":7,"turn":1,"march_distance":315.0,"negative_zero":-0.0,"extra_large":9007199254740993,"note":"臺灣😀"}}';
+const raw='{"format":"three-kingdoms-remake-save","version":1,"scenario":"mainland217-07","catalog_sha256":"'+'a'.repeat(64)+'","checksum":"'+'b'.repeat(64)+'","state":{"year":217,"month":7,"turn":1,"march_distance":315.0,"negative_zero":-0.0,"extra_large":9007199254740993,"note":"臺灣😀"}}';
 const deferred=()=>{let resolve;const promise=new Promise(r=>resolve=r);return {promise,resolve};};
 function fake(db=new Map(),id=A){
  let session=id?{user:{id,email:(id===A?'a':'b')+'@example.test'},access_token:'private-token'}:null,callback;

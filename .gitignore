@@ -1,31 +1,19 @@
-.toolchain/
-.venv*/
+# Generated compiler outputs, dependencies and Python caches.
+/build/
+/crates/march-core/target/
+node_modules/
 __pycache__/
-tools/rea/
-build/
+*.py[cod]
+.venv*/
+.DS_Store
 *.zip
 
-# Local inputs, original game byte source, dependency caches and secrets.
-node_modules
-.DS_Store
-*.py[cod]
+# Local game inputs, native binaries and credentials.
 *.nes
 *.state
 *.dylib
 *.so
+*.dll
 .env
 .env.*
 !.env.example
-/source/byte-source/
-
-# Raw evidence is retained locally. Selected source dependencies and reports
-# are explicitly staged through docs/repository-files.txt.
-/analysis/**
-
-# Workbook inspection scratch files; final XLSX and validation stay versioned.
-/outputs/**/*-preview.png
-/outputs/**/*.ndjson
-/outputs/**/sources-preview.png
-
-# Regenerable marching-core compiler outputs (web WASM is committed).
-/crates/march-core/target/

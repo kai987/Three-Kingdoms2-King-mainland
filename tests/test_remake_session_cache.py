@@ -1,4 +1,4 @@
-"""Opening metadata caching must preserve API, save and independent view data."""
+"""Current opening caches preserve saves, RNG and independent response containers."""
 from copy import deepcopy
 from pathlib import Path
 import sys
@@ -13,43 +13,44 @@ import remake.session as session_module
 
 
 class SessionPreviewCacheTests(unittest.TestCase):
-    paths=[ROOT/'game/data/demo.json',ROOT/'game/data/main-scenarios-v5/184-02.json',
-           ROOT/'game/data/main-scenarios-v13/217-07.json',ROOT/'game/data/main-scenarios-v13/263-05.json']
+    paths=[ROOT/'game/data/campaigns'/f'{date}.json' for date in ('184-02','190-01','263-05','217-07')]
 
-    def test_exact_preoptimization_view_and_save_contracts(self):
-        # Canonical hashes captured from the uncached 9bf4aea implementation,
-        # same four catalogs, seed2026 and command order. Include full current
-        # library, seasonal route quotes and all opening previews in the view.
-        cases=[(None,None,'c73335ef8d909ec50e11d7bbf7cd5f84ed940f5b74206139c9ae0784be5ca072',None),
-            ('mainland184-02-v5','yellow_turban','2ea238f8c1de3c7ef65ca3ec93c5632997935d26cb6edd2d9b657aa864912f55','f4120e7a7d4e778139ed82c91650e1e36dc06bb7410c4264f84e5583e927e7e8'),
-            ('mainland217-07-v13','shu','2d341c2a7f3c819685eece6a39956dd6b5988fa5a1d28fc51fc604125284af22','7ad7c1a6d02ad67be193340b9303cf1d0238a1290210ccbaa62b238c7859cd0a'),
-            ('mainland263-05-v13','wei','89f7cd5f6a049f0ddf1729e4cecb99d1424831cf98c76e82c599148d4b5091eb','f9bf708b4927be8a308b62be212cb59e19a81662349d0e26f0e2d84af39f2e03')]
+    def test_repeated_current_views_and_save_roundtrip_keep_exact_state(self):
         session=CampaignSession(self.paths)
-        for scenario,side,view_hash,save_hash in cases:
+        baseline=digest(session.view())
+        self.assertEqual(digest(session.view()),baseline)
+        self.assertIsNone(session.to_dict())
+        for scenario,side in [('mainland184-02','yellow_turban'),('mainland217-07','shu'),('mainland263-05','wei')]:
             with self.subTest(scenario=scenario):
-                if scenario:
-                    session.command('new',dict(scenario=scenario,faction=side,seed=2026),session.revision)
-                revision=session.revision
-                for _ in range(2):self.assertEqual(digest(session.view()),view_hash)
-                self.assertEqual(session.revision,revision)
-                if scenario:self.assertEqual(digest(session.export_save()),save_hash)
+                session.command('new',dict(scenario=scenario,faction=side,seed=2026),session.revision)
+                saved=session.export_save();state=deepcopy(session.to_dict());revision=session.revision
+                rng=deepcopy(session.game.state.rng);baseline=digest(session.view())
+                self.assertEqual(digest(session.view()),baseline)
+                self.assertEqual(session.revision,revision);self.assertEqual(session.to_dict(),state)
+                self.assertEqual(session.game.state.rng,rng)
+                session.load_save(saved,revision)
+                self.assertEqual(session.export_save(),saved);self.assertEqual(session.to_dict(),state)
+                self.assertEqual(session.game.state.rng,rng)
+                self.assertEqual(session.game.catalog.data['schema'],'tk2-campaign-v1')
+                self.assertNotIn('content_generation',session.game.catalog.data)
+                self.assertTrue(all('archived' not in row for row in session.view()['catalog']['scenarios']))
 
     def test_fresh_preview_containers_cannot_corrupt_cached_openings(self):
         session=CampaignSession(self.paths)
         expected=deepcopy(session.view()['catalog']['scenarios'])
         catalog_hashes={key:digest(c.data) for key,c in session.catalogs.items()}
-        previews=session.view()['catalog']['scenarios'];row=previews[0]
+        previews=session.view()['catalog']['scenarios'];row=previews[0];side=next(iter(row['faction_resources']))
         row['id']='corrupt';row['initial_owners']['nanyang']='corrupt'
         row['active_cities'].clear();row['city_names'].clear()
         row['map_cities'].clear();row['factions'].clear()
-        row['faction_resources']['wei']['gold']=-1
-        row['faction_officers']['wei']=-1;row['faction_colors']['wei']='#000000'
+        row['faction_resources'][side]['gold']=-1
+        row['faction_officers'][side]=-1;row['faction_colors'][side]='#000000'
         previews.pop()
         self.assertEqual(session.view()['catalog']['scenarios'],expected)
         self.assertEqual({key:digest(c.data) for key,c in session.catalogs.items()},catalog_hashes)
         self.assertEqual(session.revision,0);self.assertIsNone(session.to_dict())
 
-    def test_cached_openings_do_not_rescan_archived_catalogs(self):
+    def test_cached_openings_do_not_rescan_other_scenarios(self):
         session=CampaignSession(self.paths)
         openings=deepcopy(session.view()['catalog']['scenarios'])
         def current_only(function):
@@ -61,7 +62,7 @@ class SessionPreviewCacheTests(unittest.TestCase):
              patch.object(session_module,'faction_resources',side_effect=current_only(session_module.faction_resources)), \
              patch.object(session_module,'faction_officer_counts',side_effect=current_only(session_module.faction_officer_counts)), \
              patch.object(session_module,'faction_colors',side_effect=current_only(session_module.faction_colors)):
-            for scenario,side in [('mainland184-02-v5','yellow_turban'),('mainland217-07-v13','shu')]:
+            for scenario,side in [('mainland184-02','yellow_turban'),('mainland217-07','shu')]:
                 session.command('new',dict(scenario=scenario,faction=side,seed=2026),session.revision)
                 saved=session.export_save()
                 self.assertEqual(session.view()['catalog']['scenarios'],openings)

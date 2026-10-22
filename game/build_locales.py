@@ -39,7 +39,7 @@ def corpus():
     paths = [HERE / 'index.html', HERE / 'app.js']
     paths += sorted((ROOT / 'source/remake').glob('*.py'))
     paths += sorted((HERE / 'config').glob('*.json'))
-    latest = next(path for path in (HERE / f'data/main-scenarios-v{n}' for n in (14, 13, 12, 11)) if path.exists())
+    latest = HERE / 'data/campaigns'
     paths += sorted(latest.glob('*.json'))
     # Locale keys can contain UI text added outside app.js.
     paths += sorted((HERE / 'locales').glob('*-ja.json'))
@@ -96,7 +96,7 @@ def build():
     second = dict(phrases={}, characters=dictionary('TWVariants.txt'))
     # Historical proper names must retain surname 于/范/干/余/游. These are
     # semantic exceptions to modern prose conversion, not new officer data.
-    people = json.loads((HERE / 'data/main-scenarios-v11/217-07.json').read_text())['people']
+    people = json.loads((HERE / 'data/campaigns/217-07.json').read_text())['people']
     for person in people:
         name = person['name']
         if name.startswith(('于', '范', '干', '余', '游')):

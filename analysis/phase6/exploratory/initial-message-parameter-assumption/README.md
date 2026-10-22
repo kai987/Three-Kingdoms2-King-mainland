@@ -1,1 +1,0 @@
-Rejected initial message fixture: D8/D9 were incorrectly given officer IDs in fields assumed to be date parameters. No complete loss dialogue conclusion uses these images. Replaced by explicitly source-derived parameter layouts; parent menu text also remains visible outside newly drawn lines.

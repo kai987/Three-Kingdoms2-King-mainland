@@ -16,15 +16,18 @@ class FactionPaletteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.catalogs={}
-        for path in sorted((ROOT/'game/data').rglob('*.json')):
+        index=json.loads((ROOT/'game/data/campaigns/index.json').read_text())
+        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=25:
+            raise AssertionError('Expected25 current campaign catalogs')
+        for name in index['catalogs']:
+            path=ROOT/'game/data'/name
             data=json.loads(path.read_text())
-            if isinstance(data,dict) and isinstance(data.get('factions'),list):
-                cls.catalogs[data['id']]=SimpleNamespace(
-                    data={'id':data['id'],'content_generation':data.get('content_generation')},
-                    factions={row['id']:row for row in data['factions']})
+            if data['schema']!='tk2-campaign-v1':raise AssertionError('Unexpected campaign schema')
+            cls.catalogs[data['id']]=SimpleNamespace(data={'id':data['id']},
+                factions={row['id']:row for row in data['factions']})
 
-    def test_every_released_scenario_has_separated_visible_fills(self):
-        self.assertGreaterEqual(len(self.catalogs),161)
+    def test_all25_current_scenarios_have_separated_visible_fills(self):
+        self.assertEqual(len(self.catalogs),25)
         for identity,catalog in self.catalogs.items():
             palette=faction_colors(catalog)
             self.assertEqual(set(palette),{'neutral',*catalog.factions},identity)
@@ -42,18 +45,18 @@ class FactionPaletteTests(unittest.TestCase):
                     self.assertGreaterEqual(color_distance(color,other),29,identity)
 
     def test_nanman_is_cyan_and_shu_gold_in_every_current_preview(self):
-        current=[c for c in self.catalogs.values() if c.data.get('content_generation')==13]
+        current=list(self.catalogs.values())
         self.assertEqual(len(current),25)
         for catalog in current:
             palette=faction_colors(catalog)
             for key,expected in [('wei','#0078f8'),('shu','#f8b800'),('wu','#f85898')]:
                 if key in catalog.factions:self.assertEqual(palette[key],expected,catalog.data['id'])
-        palette=faction_colors(self.catalogs['mainland225-07-v13'])
+        palette=faction_colors(self.catalogs['mainland225-07'])
         self.assertEqual(palette['nanman'],'#00e8d8')
         self.assertGreater(color_distance(palette['nanman'],palette['shu']),100)
 
     def test_reordering_unknown_factions_and_mutated_result_do_not_change_palette(self):
-        catalog=self.catalogs['mainland190-01-v13']
+        catalog=self.catalogs['mainland190-01']
         original=faction_colors(catalog)
         reordered=SimpleNamespace(factions=dict(reversed(list(catalog.factions.items()))))
         self.assertEqual(faction_colors(reordered),original)
@@ -65,17 +68,15 @@ class FactionPaletteTests(unittest.TestCase):
         self.assertEqual(len(set(first.values())),4)
         self.assertEqual(unknown.factions,{'new_b':{},'wei':{},'new_a':{}})
 
-    def test_old_save_and_previews_keep_the_same_palette_without_mutation(self):
-        paths=[ROOT/'game/data/main-scenarios-v5/184-02.json',
-               ROOT/'game/data/main-scenarios-v13/190-01.json',
-               ROOT/'game/data/main-scenarios-v13/225-07.json']
+    def test_current_save_and_previews_keep_the_same_palette_without_mutation(self):
+        paths=[ROOT/'game/data/campaigns'/f'{date}.json' for date in ('184-02','190-01','225-07')]
         session=CampaignSession(paths)
         catalogs={key:deepcopy(c.data) for key,c in session.catalogs.items()}
         preview=session.view()
         for row in preview['catalog']['scenarios']:
             self.assertEqual(row['faction_colors'],faction_colors(session.catalogs[row['id']]))
         self.assertEqual(session.revision,0);self.assertIsNone(session.game.state)
-        session.command('new',{'scenario':'mainland184-02-v5','faction':'han','seed':2026},session.revision)
+        session.command('new',{'scenario':'mainland184-02','faction':'han','seed':2026},session.revision)
         saved=session.export_save();revision=session.revision
         palette=session.view()['catalog']['faction_colors']
         session.view();session.view()

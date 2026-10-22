@@ -1,17 +1,13 @@
-"""Date-aware city stocks preserve the released catalogs and live-game rules."""
+"""Current dated stocks, income and live territorial-resource conservation."""
 from copy import deepcopy
-import hashlib
 import json
 from pathlib import Path
-import subprocess
 import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-sys.path.insert(0, str(ROOT / 'game'))
 from remake.campaign import Campaign, Catalog, canonical
-from build_economy_campaigns import city_values, phase_at, scale, validate_spec
 
 FIELDS = ('gold', 'grain', 'reserves')
 
@@ -23,8 +19,7 @@ def read(path):
 class DatedScenarioEconomyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.index = read('game/data/main-scenarios-v14/index.json')
-        cls.spec = read('game/config/scenario-economy.json')
+        cls.index = read('game/data/campaigns/index.json')
         cls.catalogs = {}
         for path in cls.index['catalogs']:
             catalog = Catalog(ROOT / 'game/data' / path)
@@ -36,25 +31,13 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         game.validate(game.state)
         return game
 
-    def test_all25_openings_change_only_economy_and_keep_rosters_and_map(self):
+    def test_all25_current_openings_have_dated_nonuniform_stocks_and_income(self):
         self.assertEqual(len(self.catalogs), 25)
-        self.assertEqual(self.index['default'], 'mainland217-07-v14')
-        unchanged = ('people', 'rules', 'initial_owners', 'initial_officers',
-                     'initial_free_officers', 'era_assignments', 'appearance_locations',
-                     'appearance_windows', 'factions', 'faction_rulers', 'cities',
-                     'active_cities', 'city_foundings', 'links', 'travel_rules',
-                     'travel_routes', 'travel_hazards', 'exploration_routes', 'world')
+        self.assertEqual(self.index['default'], 'mainland217-07')
         for date, catalog in self.catalogs.items():
             data = catalog.data
-            prior = read(f'game/data/main-scenarios-v13/{date[0]}-{date[1]:02d}.json')
             with self.subTest(date=date):
-                self.assertEqual(data['content_generation'], 14)
-                self.assertEqual(data['id'], prior['id'].replace('-v13', '-v14'))
-                for key in unchanged:
-                    self.assertEqual(data[key], prior[key], key)
-                self.assertEqual(data['city_economy']['source_catalog'], prior['id'])
-                self.assertEqual(data['city_economy']['reference_date'], list(date))
-                self.assertEqual(data['main_scenario']['city_economy'], self.spec['schema'])
+                self.assertEqual(data['schema'], 'tk2-campaign-v1')
                 self.assertTrue(all(r['troops'] == 300 for r in data['initial_officers']))
                 patterns = {tuple(data['initial_city_resources'][key][field] for field in FIELDS)
                             for key in data['active_cities']}
@@ -65,9 +48,10 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                         self.assertEqual(set(values), set(FIELDS))
                         self.assertTrue(all(type(value) is int and 0 < value < 100000 for value in values.values()))
                     profile = data['city_profiles'][key]
-                    self.assertEqual(profile['tier'], prior['city_profiles'][key]['tier'])
+                    self.assertIn(profile['tier'], ('normal', 'large', 'giant'))
                     self.assertIs(profile['is_SAN14_starting_resources'], False)
                     self.assertEqual(profile['economy_reference_date'], list(date))
+                    self.assertEqual(profile['economy_numeric_basis'], 'authorial_remake_balance_not_historical_measurement')
                     self.assertTrue(profile['economy_period_label_tc'])
                     self.assertTrue(profile['economy_period_label_ja'])
 
@@ -85,40 +69,30 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         self.assertLess(stock((263, 5), 'shujun'), stock((221, 7), 'shujun'))
         for field in FIELDS:
             self.assertGreater(stock((249, 1), 'wei', field), stock((200, 1), 'wei', field))
-        # Every city's opening stock actually differs across released dates.
+        # Every city's opening stock actually differs across playable dates.
         for city in self.catalogs[217, 7].map_cities:
             values = {tuple(c.data['initial_city_resources'][city][field] for field in FIELDS)
                       for c in self.catalogs.values()}
             self.assertGreater(len(values), 1, city)
 
-    def test_month_boundaries_and_city_size_are_explicit_not_random(self):
-        prior = read('game/data/main-scenarios-v13/196-06.json')
-        before, _, _ = city_values(prior, self.spec, 'yingchuan', (196, 7))
-        after, _, _ = city_values(prior, self.spec, 'yingchuan', (196, 8))
-        for field in FIELDS:
-            self.assertGreater(after[field], before[field])
-        before, _, _ = city_values(prior, self.spec, 'henan', (190, 1))
-        after, _, _ = city_values(prior, self.spec, 'henan', (190, 2))
-        for field in FIELDS:
-            self.assertLess(after[field], before[field])
-        before, _, _ = city_values(prior, self.spec, 'danyang', (229, 8))
-        after, _, profile = city_values(prior, self.spec, 'danyang', (229, 9))
-        self.assertEqual(profile['economy_date_precision'], 'attested_annal_month')
-        for field in FIELDS:
-            self.assertGreater(after[field], before[field])
-        city = 'shujun'
-        actual, income, _ = city_values(prior, self.spec, city, (217, 7))
-        ordinary = deepcopy(prior)
-        for section, values in (('initial_city_resources', dict(gold=1200, grain=3800, reserves=1200)),
-                                ('city_income', dict(gold=35, grain=90, reserves=30))):
-            ordinary[section][city] = values
-        normal, normal_income, _ = city_values(ordinary, self.spec, city, (217, 7))
-        for field in FIELDS:
-            self.assertGreater(actual[field], normal[field])
-            self.assertGreater(income[field], normal_income[field])
-        self.assertEqual(scale(1, [50], 1), 1)
-        self.assertEqual(scale(125, [100], 10), 130)
-        self.assertEqual(phase_at([dict(from_date=[196, 8])], (196, 7)), None)
+    def test_city_size_and_dated_precision_are_visible_in_playable_values(self):
+        data = self.catalogs[217, 7].data
+        self.assertEqual(data['city_profiles']['shujun']['tier'], 'large')
+        self.assertEqual(data['city_profiles']['guanghan']['tier'], 'normal')
+        self.assertEqual(data['city_profiles']['shujun']['economy_region'],
+                         data['city_profiles']['guanghan']['economy_region'])
+        for section in ('initial_city_resources', 'city_income'):
+            for field in FIELDS:
+                self.assertGreater(data[section]['shujun'][field], data[section]['guanghan'][field])
+        self.assertEqual(data['city_profiles']['yingchuan']['economy_date_precision'], 'attested_annal_month')
+        self.assertEqual(self.catalogs[234, 2].data['city_profiles']['danyang']['economy_date_precision'],
+                         'attested_annal_month')
+        for date, catalog in self.catalogs.items():
+            game = self.game(date, next(iter(catalog.factions)))
+            self.assertEqual(game.state.rng.draws, 0)
+            for key, city in game.state.cities.items():
+                self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
+                                 tuple(catalog.data['initial_city_resources'][key][field] for field in FIELDS))
 
     def test_every_faction_can_start_and_soldier_initial_ledger_matches_new_reserves(self):
         starts = 0
@@ -135,7 +109,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     for city in game.state.cities.values():
                         self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
                                          tuple(catalog.data['initial_city_resources'][city.id][field] for field in FIELDS))
-                        self.assertLessEqual(len(city.roster.officer_ids), 30)
+                        self.assertLessEqual(len(city.roster.officer_ids), 99)
                     starts += 1
         self.assertGreaterEqual(starts, 200)
 
@@ -182,15 +156,36 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         game.validate(game.state)
         key, rule = 'linhai', game.catalog.data['city_foundings']['linhai']
         parent = game.state.cities[rule['parent']]
+        original_owner = parent.owner
+        changed_owner = next(side for side in game.catalog.factions if side != original_owner)
+        for ident in list(parent.roster.officer_ids):
+            recipient = next(city for city in game.state.cities.values()
+                             if city.id != parent.id and city.owner == original_owner
+                             and len(city.roster.officer_ids) < 99)
+            parent.roster.officer_ids.remove(ident)
+            recipient.roster.officer_ids.append(ident)
+        # This valid ownership fixture deliberately differs from the opening
+        # history. The future node must inherit the actual current owner.
+        parent.owner = changed_owner
         parent.gold, parent.grain = 1011, 4021
+        game.validate(game.state)
         before = {field: getattr(parent, field) for field in FIELDS}
         recruits = game.state.soldiers['recruited']
+        rng = deepcopy(game.state.rng)
         game._complete_month(game.state)
         child = game.state.cities[key]
         income = game.catalog.data['city_income'][key] if child.owner != 'neutral' else dict.fromkeys(FIELDS, 0)
         for field in FIELDS:
             self.assertEqual(getattr(child, field), before[field] // rule['resource_divisor'] + income[field])
-        self.assertEqual(child.owner, parent.owner)
+        self.assertEqual(child.owner, changed_owner)
+        self.assertNotEqual(child.owner, original_owner)
+        self.assertEqual(game.state.rng, rng)
+        for field in FIELDS:
+            self.assertEqual(getattr(parent, field) + getattr(child, field),
+                before[field] + game.catalog.data['city_income'][parent.id][field] + income[field])
+        current = game.to_dict()
+        game._open_dated_cities(game.state)
+        self.assertEqual(game.to_dict(), current)
         self.assertLess(child.gold, game.catalog.data['initial_city_resources'][key]['gold'])
         # Calendar death review may move existing troops but never invents them.
         self.assertGreaterEqual(game.state.soldiers['recruited'], recruits)
@@ -198,27 +193,24 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         game._reconcile_factions(game.state)
         game.validate(game.state)
 
-    def test_source_marks_balance_design_and_rebuild_keeps_all_released_bytes(self):
-        self.assertTrue(self.spec['sources'])
-        self.assertIn('no numerical value', self.spec['scope'].lower())
-        with self.assertRaises(ValueError):
-            malformed = deepcopy(self.spec)
-            malformed['regions']['hebei']['cities'].append('henan')
-            validate_spec(malformed, self.catalogs[217, 7].map_cities)
-        paths = list((ROOT / 'game/data').rglob('*.json'))
-        before = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
-        subprocess.run([sys.executable, '-B', 'game/build_economy_campaigns.py'], cwd=ROOT,
-                       check=True, capture_output=True)
-        self.assertEqual(before, {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths})
-        old = Campaign(Catalog(ROOT / 'game/data/main-scenarios-v13/217-07.json'))
-        old.state = old._new('wu', 2026)
-        old.validate(old.state)
-        saved = old.export_save()
-        restored = Campaign(old.catalog)
-        restored.load_save(saved, 0)
-        self.assertEqual(canonical(restored.export_save()), canonical(saved))
-        self.assertEqual(old.state.cities['hepu'].gold, 1200)
-        self.assertNotEqual(self.catalogs[217, 7].data['initial_city_resources']['hepu']['gold'], 1200)
+    def test_canonical_provenance_preserves_sources_without_claiming_original_numeric_setups(self):
+        provenance = read('game/config/campaigns/provenance.json')
+        self.assertEqual(provenance['schema'], 'tk2-campaign-promotion-provenance-v1')
+        self.assertEqual(len(provenance['promoted_catalogs']), 25)
+        self.assertTrue(provenance['source_urls'])
+        for row in provenance['source_files']:
+            self.assertRegex(row['sha256'], r'^[a-f0-9]{64}$')
+        for date, catalog in self.catalogs.items():
+            with self.subTest(date=date):
+                for profile in catalog.data['city_profiles'].values():
+                    self.assertIs(profile['is_SAN14_starting_resources'], False)
+                    self.assertEqual(profile['economy_numeric_basis'],
+                                     'authorial_remake_balance_not_historical_measurement')
+                game = self.game(date, next(iter(catalog.factions)))
+                saved = game.export_save()
+                restored = Campaign(game.catalog)
+                restored.load_save(saved, 0)
+                self.assertEqual(canonical(restored.export_save()), canonical(saved))
 
 
 if __name__ == '__main__':

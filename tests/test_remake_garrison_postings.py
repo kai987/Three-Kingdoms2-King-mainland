@@ -15,7 +15,7 @@ def fixture(count=8):
     names = dict(shujun='蜀郡', hanzhong='汉中', bajun='巴郡', badong='巴东',
                  zitong='梓潼', enemy='敌城', vacant='空城', yanmen='雁门')
     data = dict(cities=[dict(id=key, name=value) for key, value in names.items()],
-                active_cities=list(names), rules=dict(city_officer_capacity=30),
+                active_cities=list(names), rules=dict(city_officer_capacity=99),
                 factions=[dict(id='a', city='shujun'), dict(id='b', city='enemy')],
                 initial_owners={key: 'b' if key == 'enemy' else 'neutral' if key == 'vacant' else 'a'
                                 for key in names},
@@ -116,19 +116,24 @@ class GarrisonPostingTests(unittest.TestCase):
                     apply_postings(data, **options)
                 self.assertEqual(data, before)
 
-    def test_all_released_chapters_keep_existing_people_and_capacity(self):
-        index = json.loads((ROOT / 'game/data/main-scenarios-v8/index.json').read_text())
+    def test_all_current_chapters_keep_existing_people_membership_profiles_and_capacity(self):
+        index = json.loads((ROOT / 'game/data/campaigns/index.json').read_text())
+        self.assertEqual(len(index['catalogs']),25)
         for filename in index['catalogs']:
             data = json.loads((ROOT / 'game/data' / filename).read_text())
             before = deepcopy(data)
+            self.assertEqual(data['rules']['city_officer_capacity'],99)
             audit = apply_postings(data)
             self.assertEqual(len(audit['postings']), len(before['initial_officers']))
             self.assertEqual(data['people'], before['people'])
             self.assertEqual(data['initial_free_officers'], before['initial_free_officers'])
-            self.assertLessEqual(max(Counter(row['city'] for row in data['initial_officers']).values()), 30)
+            self.assertEqual(data['faction_rulers'],before['faction_rulers'])
+            self.assertEqual(data['initial_owners'],before['initial_owners'])
+            self.assertEqual(data['appearance_windows'],before['appearance_windows'])
+            self.assertLessEqual(max(Counter(row['city'] for row in data['initial_officers']).values()), 99)
             for old, new in zip(before['initial_officers'], data['initial_officers']):
-                self.assertEqual(old['person_id'], new['person_id'])
-                self.assertEqual(old['troops'], new['troops'])
+                self.assertEqual({k:v for k,v in old.items() if k!='city'},
+                                 {k:v for k,v in new.items() if k!='city'})
                 self.assertEqual(before['initial_owners'][old['city']], data['initial_owners'][new['city']])
             if data['start_year'] == 227:
                 person = next(row for row in data['people'] if row['name'] == '牵招')['person_id']

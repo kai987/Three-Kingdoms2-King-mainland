@@ -1,5 +1,0 @@
-# 阶段30真实软件调用输入
-
-三个原存档短窗分自然stage0human、自然stage1mode0及受控祖先stage0human/后续mode1。每个导出保留实际2K/8K/AXYP-SP-PC/四PRG/原栈；同一entry/stage/mode/side只选首现场，导出范围只含NEW5。其它helper与inline目标的原capture保留在Native目录，不把它们伪造为新增JSRcaller；完整父case已经执行其真实正文。immediate_transfer_PC未知即null，不用ret−3造JSR。祖先0或19已知写及更早unknown完整保留，不称本轮冷启或新准备。
-
-N163未瞬时捕获，input-n163.bin与端口值是共同显式软件夹具。原CPU/Source比较不是fixedcore逐指令trace；被动核只在此路径与固定核逐帧五buffer相同。Source内部不注入NMI/IRQ、PC、ready或ack。

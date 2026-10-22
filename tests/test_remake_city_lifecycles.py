@@ -15,7 +15,7 @@ class CityLifecycleTests(unittest.TestCase):
     def fixture(self,month=10):
         # A controlled fixture moves the existing future node to an imminent
         # month. It tests scheduling, not a new historical claim about新兴.
-        data=json.loads((ROOT/'game/data/main-scenarios-v9/207-09.json').read_text())
+        data=json.loads((ROOT/'game/data/campaigns/207-09.json').read_text())
         data['id']='month-opening-fixture'
         data['city_foundings']['xinxing'].update(year=207,month=month)
         directory=tempfile.TemporaryDirectory();self.addCleanup(directory.cleanup)
@@ -48,7 +48,7 @@ class CityLifecycleTests(unittest.TestCase):
         parent=game.state.cities['taiyuan']
         for ident in list(parent.roster.officer_ids):
             recipient=next(c for c in game.state.cities.values() if c.owner==parent.owner
-                           and c.id!=parent.id and len(c.roster.officer_ids)<30)
+                           and c.id!=parent.id and len(c.roster.officer_ids)<game.catalog.rules.city_officer_capacity)
             parent.roster.officer_ids.remove(ident);recipient.roster.officer_ids.append(ident)
         parent.owner='wu'
         game.validate(game.state)
@@ -90,18 +90,35 @@ class CityLifecycleTests(unittest.TestCase):
         with self.assertRaises(ValueError):loaded.load_save(bad,loaded.revision)
         self.assertEqual(loaded.to_dict(),game.to_dict())
 
-    def test_legacy_year_only_dates_still_open_in_january(self):
-        catalog=Catalog(ROOT/'game/data/main-scenarios-v8/200-01.json')
-        self.assertNotIn('xinxing',catalog.active_city_ids(214,12))
-        self.assertIn('xinxing',catalog.active_city_ids(215))
-        self.assertIn('xinxing',catalog.active_city_ids(215,1))
+    def test_current_dated_city_boundaries_match_calendar_and_roundtrip(self):
+        catalog=Catalog(ROOT/'game/data/campaigns/207-09.json')
+        # Exact game boundaries are explicit even where the source gives only
+        # a year. October/December there are authored dates, not historical claims.
+        boundaries={'wuchang':(221,4),'linhai':(257,2),'linchuan':(257,2),
+                    'jianan':(260,10),'wuxing':(266,12)}
+        for city,(year,month) in boundaries.items():
+            with self.subTest(city=city):
+                rule=catalog.data['city_foundings'][city]
+                self.assertEqual((rule['year'],rule['month']),(year,month))
+                previous=(year,month-1) if month>1 else (year-1,12)
+                self.assertNotIn(city,catalog.active_city_ids(*previous))
+                self.assertIn(city,catalog.active_city_ids(year,month))
         game=self.start(catalog)
-        # Calendar-only progression intentionally excludes conquest AI.
-        while (game.state.year,game.state.month)<(215,1):game._complete_month(game.state)
-        game._spawn_eligible(game.state);game._reconcile_factions(game.state)
-        game.validate(game.state)
-        self.assertIn('xinxing',game.state.cities)
-        self.assertTrue(any('承接晋阳当时归属' in text for text in game.state.log))
+        while (game.state.year,game.state.month)<(266,12):
+            before=(game.state.year,game.state.month)
+            for city,date in boundaries.items():
+                self.assertEqual(city in game.state.cities,before>=date)
+            game._complete_month(game.state)
+            game._spawn_eligible(game.state);game._reconcile_factions(game.state)
+            now=(game.state.year,game.state.month)
+            if now in boundaries.values():
+                game.validate(game.state)
+                for city,date in boundaries.items():
+                    self.assertEqual(city in game.state.cities,now>=date)
+                saved=game.export_save();loaded=Campaign(catalog)
+                loaded.load_save(saved,0)
+                self.assertEqual(loaded.to_dict(),game.to_dict())
+        self.assertTrue(set(boundaries)<=set(game.state.cities))
 
 
 if __name__=='__main__':unittest.main()

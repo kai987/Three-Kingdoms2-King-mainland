@@ -1,64 +1,43 @@
 # 三國・大陸戰役
 
-原版像素風格的Web戰略遊戲：**最多115城、每城99人、25個劇本、1023名人物，繁體中文／日本語切換**。現有開局依年代開放109～114城，後續新城按年月開放；每方出戰最多10人。
+原版像素風格的 Web 戰略遊戲：25 個劇本、最多 115 城、每城 99 人、每方出戰 10 人、1,023 名人物，繁體中文／日本語切換。城池與人物按年月登場，開局資源依劇本配置。
 
 ```sh
-# 已安裝Rust1.93.0與wasm32-unknown-unknown目標時，先建置原生核心
-python3 game/build_march_core.py
+python3 -B game/build_march_core.py
 python3 -I -S -B game/serve.py --port 8878
 ```
 
-開啟 [本機遊戲](http://127.0.0.1:8878/)。需要Python3.10以上，無需原ROM或原模擬器；目前只監聽本機。已建置的原生行軍核心會自動啟用；沒有Rust工具鏈時可直接執行第二行，以Python相容後端啟動。瀏覽器的行軍預覽使用隨附WASM，失敗時採用伺服器報價。
+開啟 http://127.0.0.1:8878/ 。需要 Python 3.10+；建置行軍核心需要 Rust 1.93.0 與 wasm32-unknown-unknown。遊戲執行不讀取 ROM 或模擬器。
 
-載入頁面先預覽最新劇本地圖，確認開始後才建立新戰役；可繼續原存檔。地圖支援滑鼠／觸控拖曳及1～4倍縮放，勢力配色、城名與介面可即時切換語言。
+- [操作、存檔與規則](game/README.md)
+- [目前 AI 與事件畫面](docs/ai-and-events.md)
+- [武將歸城與登場統計](docs/officer-placement-audit.md)
+- [雲端帳號存檔](docs/cloud-save-options.md)
+- [原版像素肖像與來源](docs/officer-portraits.md)
+- [特殊道路、季風與減員](docs/hazardous-travel.md)
+- [Rust／WASM 行軍核心](docs/marching-rust-wasm.md)
 
-頂欄「雲端存檔」可使用電子郵件與密碼登入，每個帳號有5個私人存檔槽，可在另一部執行本遊戲的裝置讀取。首次註冊依既有雲端專案設定確認電子郵件後，回到本遊戲登入；保存與讀取由玩家主動操作，並保留本機存檔。
-
-1023名人物均有按人物ID綁定的32×40像素肖像：220名使用確認身分的原版圖，803名使用新增同色板像素圖。武將庫、城內名冊、人物資料、戰鬥及單挑會顯示肖像；新增圖屬於本作美術設計，資料頁標明來源。舊存檔無需轉換。
-
-- [啟動、操作、存取與規則](game/README.md)
-- [城市年代資源與存檔相容](docs/scenario-economy-v14.md)
-- [武將逐劇本安置審計](docs/officer-placement-audit.md)
-- [全部人物歸城、99人容量與未來登場配置](docs/placement-completion-v15.md)
-- [本機與雲端存檔方式](docs/cloud-save-options.md)
-- [人物擴充、任職名冊與待考範圍](docs/officer-expansion-v13.md)
-- [像素肖像、人物綁定與美術來源](docs/officer-portraits.md)
-- [劇本日期與配置來源](docs/dlc-scenarios.md)
-- [行軍Rust／WASM建置、相容契約與驗證](docs/marching-rust-wasm.md)
-- [程式優化、清理結果與Rust遷移順序](docs/code-optimization-and-rust.md)
-
-## 程式與資料
+目前只維護一套戰役資料，不載入舊版劇本或遷移歷史存檔。人物能力、歸城依據、原典與遊戲推定保留；舊版逐級生成器與相容目錄已移除。存檔仍驗證目前劇本、資料 SHA、狀態校驗和及回合版本，失敗不覆寫正在遊玩的戰役。
 
 | 路徑 | 用途 |
 | --- | --- |
-| `source/remake/` | Python戰役、人物、戰鬥、計略、單挑、AI、存檔及Rust行軍適配器 |
-| `crates/march-core/`、`game/wasm/` | 共用Rust行軍核心、WASM及可重現建置清單 |
-| `game/app.js`、`i18n.js`、`map-navigation.js` | HTML／SVG介面、繁中／日文、地圖手勢 |
-| `game/cloud-save*.js`、`game/vendor/` | 帳號式雲端存檔、版本衝突處理、自託管固定版SDK |
-| `game/portraits.*`、`game/assets/portraits/` | 32×40像素肖像與按穩定人物ID查詢的顯示層 |
-| `art/portraits/`、`tools/portraits/` | 新繪來源圖集、提示詞、分配計畫與離線像素資產工具 |
-| `game/serve.py` | 本機HTTP服務，僅公開明列的遊戲資產與API |
-| `game/data/` | 211份戰役目錄；25份最新版，其餘供舊存檔驗證 |
-| `game/config/`、`game/build_*.py` | 人物、年代、城池、道路與劇本的離線建置 |
-| `game/assets/`、`game/locales/` | 地圖、原版城標定義、字型、翻譯及來源／授權 |
-| `expansion/` | 地圖源場景、人物來源快照與早期匯入工具；部分仍為建置輸入 |
-
-人物身分、當年登場、開局在籍、在野及未來計畫分開處理。25份v15劇本均完成1023人的年代配置；駐城按同年月遊戲資料、原典生涯及明列的本作區域推定安排。人物能力沿用v13，年代資源沿用v14；新開v15戰役採99人容量及補齊的名冊，舊存檔保留原目錄與規則。
-
-## 驗證
+| `source/remake/` | Python 戰役、人物、戰鬥、AI、交易與存檔 |
+| `crates/march-core/` | Rust 路徑、地形、季風與減員計算 |
+| `game/` | 畫面、地圖、肖像、語言與本地／雲端存檔介面 |
+| `game/config/campaigns/` | 唯一的劇本來源：共享人物、地圖資料與逐劇本差異 |
+| `game/data/campaigns/` | 25 份目前可玩的生成資料 |
+| `game/config/references/` | 原典任職、年代、能力及遊戲參考資料 |
+| `game/config/map-source.json` | 已批准地圖、城標與座標來源 |
+| `art/portraits/`、`tools/portraits/` | 肖像素材、來源證據及離線處理工具 |
+| `supabase/`、`tools/cloud-sdk/` | 私人雲存檔資料表、帳號整合與固定版本 SDK |
+| `tests/` | 目前玩法、存讀、語言、介面及 Python/Rust/WASM 差分測試 |
 
 ```sh
-PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_remake_*.py' -v
-node tests/test_remake_i18n_runtime.cjs
-node tests/test_remake_map_navigation.cjs
+python3 -B game/build_campaigns.py --check
+python3 -B -m unittest discover -s tests -p 'test_remake_*.py' -v
+node tests/march_wasm_parity.cjs
 ```
 
-GitHub Actions另會重建劇本、地圖顯示定義與雙語資料，確認已發佈資料沒有意外改寫。效能數字是指定本機場景的量測，不代表所有裝置的遊戲速度。
+修改人物時使用穩定 `person_id`。`people.json` 保存共同人物，`scenarios/*.json` 只記錄各劇本差異；`build_campaigns.py` 完全離線，無須先生成任何舊版。共享資料及差異格式見 [建置說明](game/README.md)。
 
-## 歷史逆向資料
-
-`source/recovered/`、`source/readable_c/`、`scripts/`與`analysis/`保留原NES逆向程式、規則證據與有邊界的驗證資料；Web遊戲使用獨立的`source/remake/`，不執行控制IR或原CPU。完整原機硬體與所有流程仍未全部恢復。
-
-歷史閱讀入口見 [恢復源碼說明](source/README.md) 與 [倉庫範圍](docs/repository-scope.md)。大型原機證據、ROM、工具鏈和封存ZIP為本機研究資料，未隨Git提交。過時概念圖與可再生快取的清理記錄見 [清理清單](docs/development-cleanup-20261022.json)。
-
-MIT適用於本工程原創程式；遊戲參考素材、來源資料、字型與OpenCC依各自的權利及授權保留來源。
+程式採 MIT 授權；第三方程式、字型、轉換表及原遊戲圖像的來源與授權各自列明，見 [授權說明](docs/licenses/README.md)。

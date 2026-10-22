@@ -23,7 +23,7 @@ WIDTH, HEIGHT, COUNT = 32, 40, 237
 PALETTE_OFFSET = 0x3DBFB
 PALETTE_MODE0 = bytes.fromhex('0f 12 1a 2a 0f 27 16 2a 0f 36 30 16 0f 36 30 16 0f 0f 20 16 0f 0f 2b 28 0f 36 30 16 0f 20 27 17')
 RGBA = ((0, 0, 0, 0), (255, 255, 255, 255), (247, 162, 71, 255), (158, 65, 0, 255))
-WITNESS = ROOT / 'analysis/phase13/runtime/world-officer-browse-cycle/officer-info-first.png'
+WITNESS = ROOT / 'art/portraits/reference/officer-info-native-witness.png'
 
 
 def sha(data):
@@ -101,7 +101,7 @@ def build(rom_path, check=False):
     out = ROOT / 'game/assets/portraits/original'
     if not check:
         out.mkdir(parents=True, exist_ok=True)
-    witnesses = dict(path='analysis/phase13/runtime/world-officer-browse-cycle/officer-info-first.png',
+    witnesses = dict(path='art/portraits/reference/officer-info-native-witness.png',
                      sha256='d31153e8770601acd65bc5367b67f679300e86c570cde6564d23bf1e4ec7571e',
                      original_id=131, crop=[16, 175, 48, 215], opaque_pixels_compared=734,
                      opaque_pixel_mismatches=0, transparent_pixels_compare_on_black=546,

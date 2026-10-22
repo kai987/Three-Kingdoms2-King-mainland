@@ -1,4 +1,4 @@
-"""Browser number serialization must preserve genuine v11 save checksums."""
+"""Browser number serialization must preserve current pending-march save checksums."""
 import json
 from pathlib import Path
 import sys
@@ -23,7 +23,7 @@ def browser_numbers(value):
 class HazardJsonTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalog = Catalog(ROOT / 'game/data/main-scenarios-v11/217-07.json')
+        cls.catalog = Catalog(ROOT / 'game/data/campaigns/217-07.json')
 
     def game(self, faction, month=7):
         game = Campaign(self.catalog)
