@@ -1,0 +1,2300 @@
+{
+  "schema": "tk2-battle-enhanced-v1",
+  "scale": 4,
+  "originals_retained": true,
+  "logical_resolution": {
+    "width": 256,
+    "height": 240
+  },
+  "resolution": {
+    "width": 1024,
+    "height": 960
+  },
+  "build": {
+    "tool": "tools/battle-enhancement/build.cjs",
+    "tool_sha256": "b75a4d41a9d6c556f26a3a38bd459de5630113999aa33cb4b374a08f9e601f5f",
+    "native_index": "game/assets/battle-original/index.json",
+    "native_index_sha256": "4d4909cb5c113d9b74d9a4af33cda0af01eef348da57092891059d03208fa5c3",
+    "imagegen_mode": "built_in",
+    "native_method": "Scale2x twice, retaining original palette and originals",
+    "duel_method": "Two distinct imagegen-painted poses per weapon, binary alpha, finite NES-compatible palette, source-aware lower warm coat masks; no new battle stats or RNG"
+  },
+  "studies": {
+    "spear": {
+      "study": "art/battle-enhancement-v1/studies/spear.png",
+      "study_sha256": "49055bfb9589c85ecd2930bd77c54af157a1e6f22fa999305e65f8ef9904ad0e",
+      "prompt": "art/battle-enhancement-v1/prompts/spear.txt",
+      "prompt_sha256": "d8a09e5efc5ecf6cdc203a32c6fb8656ac6bffa5d069bcbfb96b9844b7534454",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          94,
+          156,
+          735,
+          775
+        ],
+        [
+          842,
+          206,
+          1756,
+          773
+        ]
+      ]
+    },
+    "serpent-spear": {
+      "study": "art/battle-enhancement-v1/studies/serpent-spear.png",
+      "study_sha256": "b1110a92b284e3315b7f27135f255920f13953e681a40fff0ca0fa347254bca8",
+      "prompt": "art/battle-enhancement-v1/prompts/serpent-spear.txt",
+      "prompt_sha256": "c83f8d6b9bcca9557ac28e95a17a319f2ef85aa42d837c420530e4149973b618",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          91,
+          166,
+          786,
+          775
+        ],
+        [
+          785,
+          240,
+          1767,
+          760
+        ]
+      ]
+    },
+    "guandao": {
+      "study": "art/battle-enhancement-v1/studies/guandao.png",
+      "study_sha256": "bbcb5dda43f2299b41a231946d5e96fe2670a59649a6daa195ab11abfebb041d",
+      "prompt": "art/battle-enhancement-v1/prompts/guandao.txt",
+      "prompt_sha256": "d02ad57bf5243743820fab7550379e558b501974eff1ab43451d81314db0334b",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          96,
+          110,
+          733,
+          814
+        ],
+        [
+          790,
+          258,
+          1748,
+          810
+        ]
+      ]
+    },
+    "halberd": {
+      "study": "art/battle-enhancement-v1/studies/halberd.png",
+      "study_sha256": "174f41bbb8914eb3b50ed98f0e0739de1b49f61d631df68a0108b52caa13ba7a",
+      "prompt": "art/battle-enhancement-v1/prompts/halberd.txt",
+      "prompt_sha256": "7545882ca209badd2a78b2c421825056e983288b4c0f707b0fca8edee58b8dbe",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          87,
+          87,
+          789,
+          817
+        ],
+        [
+          762,
+          256,
+          1756,
+          813
+        ]
+      ]
+    },
+    "sword": {
+      "study": "art/battle-enhancement-v1/studies/sword.png",
+      "study_sha256": "26fb01519d07c501b2b2f1ae906ec7e6660ce7511e6fc96e32a5ade622d5e692",
+      "prompt": "art/battle-enhancement-v1/prompts/sword.txt",
+      "prompt_sha256": "ef1666d60b093fae24f0c682ab3a31b2b31ab8c76b9360f9bee17d5adffa6738",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          73,
+          133,
+          806,
+          809
+        ],
+        [
+          853,
+          179,
+          1747,
+          809
+        ]
+      ]
+    },
+    "dual-swords": {
+      "study": "art/battle-enhancement-v1/studies/dual-swords.png",
+      "study_sha256": "54ea877e1964e08894a3657eaf74d6f6f54b76bd4dd2fc5d47f9b1afcf0c4d30",
+      "prompt": "art/battle-enhancement-v1/prompts/dual-swords.txt",
+      "prompt_sha256": "2f0fd86c3283ebb1d82f0a9d87c622e0ceaf82e1b81d6311f9ac3a725571249e",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          81,
+          166,
+          806,
+          824
+        ],
+        [
+          861,
+          238,
+          1746,
+          824
+        ]
+      ]
+    },
+    "axe": {
+      "study": "art/battle-enhancement-v1/studies/axe.png",
+      "study_sha256": "fac3db93dd315ad61a3877999bd15eb548c23bb2a46a17122376d76b3d5c4151",
+      "prompt": "art/battle-enhancement-v1/prompts/axe.txt",
+      "prompt_sha256": "6e2690a0a398e922ba9d33dde4460da545e8c4a967449ec98b485180bd56b28b",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          112,
+          142,
+          725,
+          773
+        ],
+        [
+          810,
+          267,
+          1732,
+          765
+        ]
+      ]
+    },
+    "dual-axes": {
+      "study": "art/battle-enhancement-v1/studies/dual-axes.png",
+      "study_sha256": "fda26514ecc58f04bfd9fc44b61be7c2495444acf93b7601c1866184daaddb8f",
+      "prompt": "art/battle-enhancement-v1/prompts/dual-axes.txt",
+      "prompt_sha256": "f2fb12024c4dbadede443b48e4b22bb3fc78c1f9d04c64101eae1afa482792ac",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          130,
+          168,
+          782,
+          786
+        ],
+        [
+          902,
+          110,
+          1682,
+          786
+        ]
+      ]
+    },
+    "dual-ji": {
+      "study": "art/battle-enhancement-v1/studies/dual-ji.png",
+      "study_sha256": "9deafaacd5bc09c4a436f9ebcfe781e452a082719a584bde28dd889bcfc1da7a",
+      "prompt": "art/battle-enhancement-v1/prompts/dual-ji.txt",
+      "prompt_sha256": "f63b84c3a362a3223a274f4d3c886c0e7579812b07f58c5f8294b1ee2ee70373",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_boxes": [
+        [
+          98,
+          193,
+          763,
+          783
+        ],
+        [
+          886,
+          191,
+          1697,
+          779
+        ]
+      ]
+    }
+  },
+  "backgrounds": {
+    "tactical": {
+      "path": "/assets/battle-enhanced/native-tactical.png",
+      "width": 1024,
+      "height": 640,
+      "logical_width": 256,
+      "logical_height": 160,
+      "anchor": {
+        "x": 128,
+        "y": 160
+      },
+      "sha256": "f82ec9140c209379a7fe2008f557e781383de414afc2eb16f1bc11efbf71ba5c",
+      "pixel_sha256": "bc3b02ca48193793fc735f9407bca8b15ca176d2cf12a065df66882a92e08319",
+      "source_path": "/assets/battle-original/tactical.png",
+      "source_sha256": "9a9480d18f9e8140086aaf21524368c7034fe1f830c477e474f1372b8f5f3a03",
+      "method": "native_scale4x"
+    },
+    "plain": {
+      "path": "/assets/battle-enhanced/native-plain.png",
+      "width": 1024,
+      "height": 640,
+      "logical_width": 256,
+      "logical_height": 160,
+      "anchor": {
+        "x": 128,
+        "y": 160
+      },
+      "sha256": "cee29d6847d317f30a163bba0a377f59ad6d39ed8be51938072328ffd619c433",
+      "pixel_sha256": "89cc76c3a8bcf7bebcbfa95b1a9d04c25d43c3bf54bf3e6fefef5c1c1df6c104",
+      "source_path": "/assets/battle-original/plain.png",
+      "source_sha256": "7e8c872b0f6fdfaea1529689fa2dafb85a36dc7247c43fefabb409f4a87e6e17",
+      "method": "native_scale4x"
+    },
+    "mountain": {
+      "path": "/assets/battle-enhanced/native-tactical.png",
+      "width": 1024,
+      "height": 640,
+      "logical_width": 256,
+      "logical_height": 160,
+      "anchor": {
+        "x": 128,
+        "y": 160
+      },
+      "sha256": "f82ec9140c209379a7fe2008f557e781383de414afc2eb16f1bc11efbf71ba5c",
+      "pixel_sha256": "bc3b02ca48193793fc735f9407bca8b15ca176d2cf12a065df66882a92e08319",
+      "source_path": "/assets/battle-original/tactical.png",
+      "source_sha256": "9a9480d18f9e8140086aaf21524368c7034fe1f830c477e474f1372b8f5f3a03",
+      "method": "native_scale4x"
+    },
+    "water": {
+      "path": "/assets/battle-enhanced/native-tactical.png",
+      "width": 1024,
+      "height": 640,
+      "logical_width": 256,
+      "logical_height": 160,
+      "anchor": {
+        "x": 128,
+        "y": 160
+      },
+      "sha256": "f82ec9140c209379a7fe2008f557e781383de414afc2eb16f1bc11efbf71ba5c",
+      "pixel_sha256": "bc3b02ca48193793fc735f9407bca8b15ca176d2cf12a065df66882a92e08319",
+      "source_path": "/assets/battle-original/tactical.png",
+      "source_sha256": "9a9480d18f9e8140086aaf21524368c7034fe1f830c477e474f1372b8f5f3a03",
+      "method": "native_scale4x"
+    }
+  },
+  "sprites": {
+    "infantry": {
+      "facing": "right",
+      "frames": [
+        {
+          "path": "/assets/battle-enhanced/native-infantry-00.png",
+          "width": 64,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "sha256": "95c048c7ef3a07f245dcfe5f7ad8373f5c8be74aed51555272745bec26196741",
+          "pixel_sha256": "efcce4dc0de9ee9a35e8b3707125e4368ba3f6e9eb99bdefb57b355ab7eadfaf",
+          "source_path": "/assets/battle-original/infantry-00.png",
+          "source_sha256": "45d766e3ab165727a0d176ded6ab6e79dad0d70158033815c47821af66703227",
+          "method": "native_scale4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-infantry-01.png",
+          "width": 64,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "sha256": "853e2df2c9289a3f983fa7a472b93e25922ff062b6ed80f10b1df47c1bb53cb1",
+          "pixel_sha256": "17bf0449497900450c0c4b3248b3633b3e765a7de20caf1921c87298dafd33be",
+          "source_path": "/assets/battle-original/infantry-01.png",
+          "source_sha256": "88e0c859f11eebe87f7061c9521de535ad698f31dd5199168fb9d0ac25e922d9",
+          "method": "native_scale4x"
+        }
+      ]
+    },
+    "cavalry": {
+      "facing": "left",
+      "frames": [
+        {
+          "path": "/assets/battle-enhanced/native-cavalry-00.png",
+          "width": 64,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "sha256": "ea1c214836289caf01bccbe37f3eaa0e679a570cf0ccabf7b6d72f99dbe65968",
+          "pixel_sha256": "57738d5f699fc62f6503945390a19ca46cf49ebd9545187160d1415e5360d224",
+          "source_path": "/assets/battle-original/cavalry-00.png",
+          "source_sha256": "c100a36419eb97a105f0cf2aedff519531daabedb56337aa97ca55f44361ca1f",
+          "method": "native_scale4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-cavalry-01.png",
+          "width": 64,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "sha256": "921159c492f40d38380aa5b6644c3d3059554c1017b2cc389566d57872a96bec",
+          "pixel_sha256": "a3d5ac543fccd2272b85437b7dbf945f8ce0f805b8585bf9bef68ade7ee9ee1a",
+          "source_path": "/assets/battle-original/cavalry-01.png",
+          "source_sha256": "7a9cb52aa25b8985edf9162250ea3c1078e76067e05a2b6bac70fb55f975c1bc",
+          "method": "native_scale4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-cavalry-02.png",
+          "width": 64,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "sha256": "dca68b4a244924bd851d2182efa7690e620393809134541d7b30130451a4498b",
+          "pixel_sha256": "f4c7f4c92d67d54494e93cc984a330b10b7a1f0e442f1fa7e68818cd3da94b2f",
+          "source_path": "/assets/battle-original/cavalry-02.png",
+          "source_sha256": "344e841b4f0e0416f46ece97a874bbeeb1c510d40c4f0e136fc3e696a42eb57e",
+          "method": "native_scale4x"
+        }
+      ]
+    },
+    "duelist": {
+      "facing": "right",
+      "frames": [
+        {
+          "path": "/assets/battle-enhanced/native-duelist-00.png",
+          "width": 384,
+          "height": 384,
+          "logical_width": 96,
+          "logical_height": 96,
+          "anchor": {
+            "x": 48,
+            "y": 96
+          },
+          "sha256": "e81a0a7e5b394eebed09247c9c11b368a1ca836a3af0c185874dc69db0429bea",
+          "pixel_sha256": "928818605480151abe2868b90009fd166c019596c2566ccfb7791cf97da2f414",
+          "source_path": "/assets/battle-original/duelist-00.png",
+          "source_sha256": "a6d913c846c2dd52fc664ec49e7e723f61b8489b96740ce73ce576f8cb9a4a31",
+          "method": "native_scale4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-duelist-01.png",
+          "width": 384,
+          "height": 384,
+          "logical_width": 96,
+          "logical_height": 96,
+          "anchor": {
+            "x": 48,
+            "y": 96
+          },
+          "sha256": "a272cd6f666261f9ee0f871e61ba4a0366232ddd79e2137df506531ef6b9e52d",
+          "pixel_sha256": "5a28ec59f4ddbcf0e5ecc3fdb7d0ba7c5fb2d9ea040ac267a5d3fa1153c5e6b6",
+          "source_path": "/assets/battle-original/duelist-01.png",
+          "source_sha256": "e2b3cb358321b1bba869bc388aa9d2dd48e3e45ed745b3f7345594e64ec740ab",
+          "method": "native_scale4x"
+        }
+      ]
+    },
+    "duelist_enemy": {
+      "facing": "left",
+      "frames": [
+        {
+          "path": "/assets/battle-enhanced/native-duelist_enemy-00.png",
+          "width": 384,
+          "height": 384,
+          "logical_width": 96,
+          "logical_height": 96,
+          "anchor": {
+            "x": 48,
+            "y": 96
+          },
+          "sha256": "f74ce6ff14fd37eddc1ba60f11f1cc7810586d3fd004278da38235a59d0464f7",
+          "pixel_sha256": "64b2876a3ab505903636e60477bd4f357876607d9da05a7d0ab3cad253cfb283",
+          "source_path": "/assets/battle-original/duelist_enemy-00.png",
+          "source_sha256": "71722a64c24db2fbf4000dd2b8c59ede1e42982c99a2d8fc9f80dc5df1505151",
+          "method": "native_scale4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-duelist_enemy-01.png",
+          "width": 384,
+          "height": 384,
+          "logical_width": 96,
+          "logical_height": 96,
+          "anchor": {
+            "x": 48,
+            "y": 96
+          },
+          "sha256": "36a691ec5effc792f7b53ef22506eceb58cc647f399660909f55d0dcf38e2a0b",
+          "pixel_sha256": "cffb82b269c9e6b857eab908a44ee65e6fe444dd8846ffddb1ced33324bc933d",
+          "source_path": "/assets/battle-original/duelist_enemy-01.png",
+          "source_sha256": "4c5eddb6c3b8c612ac34102ff5a4d02d5eab867d0eb92b35aac0b6ce64a32b64",
+          "method": "native_scale4x"
+        }
+      ]
+    },
+    "infantry_enemy": {
+      "facing": "left",
+      "frames": [
+        {
+          "path": "/assets/battle-enhanced/native-cavalry-00.png",
+          "width": 64,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "sha256": "ea1c214836289caf01bccbe37f3eaa0e679a570cf0ccabf7b6d72f99dbe65968",
+          "pixel_sha256": "57738d5f699fc62f6503945390a19ca46cf49ebd9545187160d1415e5360d224",
+          "source_path": "/assets/battle-original/cavalry-00.png",
+          "source_sha256": "c100a36419eb97a105f0cf2aedff519531daabedb56337aa97ca55f44361ca1f",
+          "method": "native_scale4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-cavalry-01.png",
+          "width": 64,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "sha256": "921159c492f40d38380aa5b6644c3d3059554c1017b2cc389566d57872a96bec",
+          "pixel_sha256": "a3d5ac543fccd2272b85437b7dbf945f8ce0f805b8585bf9bef68ade7ee9ee1a",
+          "source_path": "/assets/battle-original/cavalry-01.png",
+          "source_sha256": "7a9cb52aa25b8985edf9162250ea3c1078e76067e05a2b6bac70fb55f975c1bc",
+          "method": "native_scale4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-cavalry-02.png",
+          "width": 64,
+          "height": 64,
+          "logical_width": 16,
+          "logical_height": 16,
+          "anchor": {
+            "x": 8,
+            "y": 16
+          },
+          "sha256": "dca68b4a244924bd851d2182efa7690e620393809134541d7b30130451a4498b",
+          "pixel_sha256": "f4c7f4c92d67d54494e93cc984a330b10b7a1f0e442f1fa7e68818cd3da94b2f",
+          "source_path": "/assets/battle-original/cavalry-02.png",
+          "source_sha256": "344e841b4f0e0416f46ece97a874bbeeb1c510d40c4f0e136fc3e696a42eb57e",
+          "method": "native_scale4x"
+        }
+      ]
+    }
+  },
+  "duelists": {
+    "spear": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-spear-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "be7e3968e71b14a165e019b21e204f299b67a8e54debe4b06ceb88a128ced79c",
+            "pixel_sha256": "2f4a2d7d147950328c6f24d700f0bbd24c9412f110e162c02d1484c0b888834d",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 0,
+            "horse_mask_pixels": 7652
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-spear-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "7becc129275bd84074039b348e53e41095379f1aa3138ccea70af9fb1733dba6",
+            "pixel_sha256": "a69c8d94514e1296f233a5868441283aecb56c7c7a3c4f570db119637a45d42e",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 1,
+            "horse_mask_pixels": 8032
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-spear-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "076d8edba4398521e158396c6dc0373db33e2e25ed501b9499cd10a04739a5eb",
+            "pixel_sha256": "5ab5046374ab5a3eb9edc3b2cb82e56da5dbd5ad1c89a7801fb5ccc76f364fd0",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 0,
+            "horse_mask_pixels": 7652
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-spear-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "414d4019e05e3c054cf324344b22e3be7ec54be346935aa9c7b13135830cdf7c",
+            "pixel_sha256": "83a1d25ddd373c0c6869928fb8df9280cbb845725e6addc5889de10a7cef1190",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 1,
+            "horse_mask_pixels": 8032
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-spear-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "0f4952a310c30434cfeda3fef33982469d748277b9b6c0e7f0f0050cff649260",
+            "pixel_sha256": "4ff3f9b63e90e8e64207697b3bf640ec6a81c7bfd84e41aea930807132e43870",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 0,
+            "horse_mask_pixels": 7652
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-spear-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "49f824d6109b9df80ca478c7a666ad6c405a894403aae0c6e3e4664ceb0e71b7",
+            "pixel_sha256": "7bb6b24a43ab6a239567dfac0c6ce4caae6af749533c2cd8fad03895cd11c354",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 1,
+            "horse_mask_pixels": 8032
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-spear-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "f27dff8a18dcfd333d0d88b1f58ad045e8fa81e5227807a3394a3fcb16eac8a1",
+            "pixel_sha256": "02e35a8dede207501d891f02c54738d8944fed19e920d074526f06919bcc6b40",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 0,
+            "horse_mask_pixels": 7652
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-spear-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "475ac206e74d75bfcda2ee8b599da58b1e1704ebf91d7da4df7697284f4d70ad",
+            "pixel_sha256": "f674d3ad9897f2d18e595708f71d3fd6c5f60f70c42a534659a3f7c4f849302f",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 1,
+            "horse_mask_pixels": 8032
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-spear-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "076d8edba4398521e158396c6dc0373db33e2e25ed501b9499cd10a04739a5eb",
+            "pixel_sha256": "5ab5046374ab5a3eb9edc3b2cb82e56da5dbd5ad1c89a7801fb5ccc76f364fd0",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 0,
+            "horse_mask_pixels": 7652
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-spear-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "414d4019e05e3c054cf324344b22e3be7ec54be346935aa9c7b13135830cdf7c",
+            "pixel_sha256": "83a1d25ddd373c0c6869928fb8df9280cbb845725e6addc5889de10a7cef1190",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "spear",
+            "pose": 1,
+            "horse_mask_pixels": 8032
+          }
+        ]
+      }
+    },
+    "serpent-spear": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "e11cbb963b1404bcac3ffae60e030bc4485603b0a7533fbbf4218ae074cfa6f3",
+            "pixel_sha256": "b7855c0193bf9ffe35f5cf40fe562b3a90a5605a89e5cc0381af3761932671df",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 0,
+            "horse_mask_pixels": 5584
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "ce06dcfe31d39b9031fc86a7c3b927ce9318e6d7033d3d97cb5e0e004793d29c",
+            "pixel_sha256": "d51c7fabf6adbe6e589b555215062b3b66a44af0766fad8f0d852a3b5b8fcc9d",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 1,
+            "horse_mask_pixels": 5420
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "0be89a62d5def40f4330aa4fd067928419c87f799954a126c15c0c4956c3e4d3",
+            "pixel_sha256": "202688a4deef0f6616d47ba1105932cfdfac705f291be4f846ad7e9dd2b448fa",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 0,
+            "horse_mask_pixels": 5584
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "ed2a6d5fd65850d8d247967470f9e336c02a5f297c6841ef2bc92ec961651625",
+            "pixel_sha256": "bf7aa3f912b565e6b240986338cb832289916742d89f92926012cf2de584d76b",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 1,
+            "horse_mask_pixels": 5420
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "cb3ecb2553259b7c2ce2a71fc01b2d3457a06784723a4c1d247f2e935b671ae9",
+            "pixel_sha256": "eaf90c87a04eca343c1ebd02e0da715325cd7aebab068352f830fde7fb458621",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 0,
+            "horse_mask_pixels": 5584
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "81b227d60eefb7a29a4945a2fe5a811271329a51efd478c4e1f1f42e4e28a166",
+            "pixel_sha256": "a3f286de0efd475afc279968d681dd0a6e5aa0fd36a79e636abef24c833e931a",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 1,
+            "horse_mask_pixels": 5420
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "feb1a1870603cf18a629853fdbeb00895e955eaad542a471e14e7418cb031a95",
+            "pixel_sha256": "63a694d9b5b4d26d204f699035181ef5afe9f313f31fe976ad8f8fa9065870b2",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 0,
+            "horse_mask_pixels": 5584
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "18fdd7de8d6afd82c0685a518b72e4eb23e375cef4ba38e31db06c4f63fad50b",
+            "pixel_sha256": "69ce460adc1ab8e0eb0c2be7c2f04991c108b70fc8e7da307aef50a49b849d4e",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 1,
+            "horse_mask_pixels": 5420
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "0be89a62d5def40f4330aa4fd067928419c87f799954a126c15c0c4956c3e4d3",
+            "pixel_sha256": "202688a4deef0f6616d47ba1105932cfdfac705f291be4f846ad7e9dd2b448fa",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 0,
+            "horse_mask_pixels": 5584
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-serpent-spear-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "ed2a6d5fd65850d8d247967470f9e336c02a5f297c6841ef2bc92ec961651625",
+            "pixel_sha256": "bf7aa3f912b565e6b240986338cb832289916742d89f92926012cf2de584d76b",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "serpent-spear",
+            "pose": 1,
+            "horse_mask_pixels": 5420
+          }
+        ]
+      }
+    },
+    "guandao": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "106d24a411554660e40e21417dec2a06a5fcb553ba8c51d538a3da3d0d298958",
+            "pixel_sha256": "e1278c2c252bde48cc3e6cf2f64b7e968b34d90d76e2b3696bcaf139a36139c9",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 0,
+            "horse_mask_pixels": 7776
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "d8926435212346df59c45f69af7e0da598ae281d26879bbc404791e08ee7ad4a",
+            "pixel_sha256": "9dc9e880405920bd28d3ae3f7b6fcfaf8606564450ee30257cb3f258f8197df1",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 1,
+            "horse_mask_pixels": 7752
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "366e1b0961540199b8b3e6fb192c7cca314cd32ba2bb361bacb39b3c95f7b1ce",
+            "pixel_sha256": "0863cb8883c454578ea7591c4a7efcb65db180775435c556ba9bbbced794a8ea",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 0,
+            "horse_mask_pixels": 7776
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "c10b2c8014143d13edae8f8e1576caca06337106da2d8bbc1837f033fe6be230",
+            "pixel_sha256": "e5035798af24ea8d5eb94dece47fd19c13065a7d536d4922d0b31da2d0dd80ba",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 1,
+            "horse_mask_pixels": 7752
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "f38d0e183ab487017c5e7647ab636a49171b8d88ad845582d6ac260fd164bbf0",
+            "pixel_sha256": "dd0bc8c91f82db52b2f0dccb0fa122f336fc02cafd70317ffa2e13133ae66ad8",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 0,
+            "horse_mask_pixels": 7776
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "b6e4c6834db84899ca2e4b7b19f3c468333810c94c8ce54b259312f2401c8a5b",
+            "pixel_sha256": "419d7d1e8ddee6c8fd9260757a2c0ac0cf8efccb5f71d75eac83ff6e8867ea22",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 1,
+            "horse_mask_pixels": 7752
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "3d1b2ac97c8e3d6970a41a893605fb39d911bdb0f57caf3d2657048115922159",
+            "pixel_sha256": "91134fff4126a820c44519a3791daebf733384bf6471175f583e27bb1df62e01",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 0,
+            "horse_mask_pixels": 7776
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "29310b29764b4c8f146f5efc9f170eebae07443e62f372110e881dde929a6b43",
+            "pixel_sha256": "69fe3d26ee547f94c3c1845a6b3d088487e830a56efbb89045c4f3967e4b99f4",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 1,
+            "horse_mask_pixels": 7752
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "366e1b0961540199b8b3e6fb192c7cca314cd32ba2bb361bacb39b3c95f7b1ce",
+            "pixel_sha256": "0863cb8883c454578ea7591c4a7efcb65db180775435c556ba9bbbced794a8ea",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 0,
+            "horse_mask_pixels": 7776
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-guandao-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "c10b2c8014143d13edae8f8e1576caca06337106da2d8bbc1837f033fe6be230",
+            "pixel_sha256": "e5035798af24ea8d5eb94dece47fd19c13065a7d536d4922d0b31da2d0dd80ba",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "guandao",
+            "pose": 1,
+            "horse_mask_pixels": 7752
+          }
+        ]
+      }
+    },
+    "halberd": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "6b4d23e3a6ef0554281053cec4c001a26066723f56ccf093d8768f1aedafdb1d",
+            "pixel_sha256": "626b08e29f0ca1ea0f73666d831609f66272f0c38e428b2cc42bbd156b7a3f68",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 0,
+            "horse_mask_pixels": 6288
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "b2388761adede35c1c2de1e1072548b20e60c3efd6029c743fcbc75f9c1bc02b",
+            "pixel_sha256": "be1100ad7692cd978eb4e21330907dd9ac72458e5fa08af7f56c261370139bcd",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 1,
+            "horse_mask_pixels": 5964
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "480e9be0c38dfb587ff39bc904f3af0c7d84931078f402565a8ff19369e989c9",
+            "pixel_sha256": "6296d3259bbe74e4234b594d023f3d1eb38d7dd1bd16bde67dc291cdab23fb2d",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 0,
+            "horse_mask_pixels": 6288
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "7e029e7f42990147d0d0883040d8c8ff4a9ff97fed3bb58dccaea06f0b7d9577",
+            "pixel_sha256": "f5986f024ac84e2fb6ce54dae43268fe2e00398c58d81fffb9eee5f6d95f7338",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 1,
+            "horse_mask_pixels": 5964
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "4191bc9d00c98061925b05a2f8b6e9e5f8fc95dd1ae8b612e04c14725873769c",
+            "pixel_sha256": "e6272a105d3aba61662be7b3a4a347952b43eb5371013fa878cdaf4cf8805bbf",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 0,
+            "horse_mask_pixels": 6288
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "bbcbd0f55f16674b42e5971633200912266c69b52e531fcaf93726c4eeeb9971",
+            "pixel_sha256": "13271abba5a55891827b8ade6cf83d9c186fac926f19ab9f76202f64cbaee568",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 1,
+            "horse_mask_pixels": 5964
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "039532837b55717602350645eceb3b7658fb5ace30a4a7ca7d06e48907830e24",
+            "pixel_sha256": "356bb693f3c20b9bbd4626301bf4d687d99e56bb0462d7aaf9b56afaa98c8f08",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 0,
+            "horse_mask_pixels": 6288
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "6e6709a6ccaa9c14dbfe187967a15ebfb09f69396ff655b36fedd5308d64bf41",
+            "pixel_sha256": "ea6bca397ce9af02cf7682a7676b59c07c1474fdb3113c1c60775c46e060f90a",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 1,
+            "horse_mask_pixels": 5964
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "480e9be0c38dfb587ff39bc904f3af0c7d84931078f402565a8ff19369e989c9",
+            "pixel_sha256": "6296d3259bbe74e4234b594d023f3d1eb38d7dd1bd16bde67dc291cdab23fb2d",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 0,
+            "horse_mask_pixels": 6288
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-halberd-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "7e029e7f42990147d0d0883040d8c8ff4a9ff97fed3bb58dccaea06f0b7d9577",
+            "pixel_sha256": "f5986f024ac84e2fb6ce54dae43268fe2e00398c58d81fffb9eee5f6d95f7338",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "halberd",
+            "pose": 1,
+            "horse_mask_pixels": 5964
+          }
+        ]
+      }
+    },
+    "sword": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-sword-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "7a9382815ac2f75587cd6271e2e885e1eaae341334c241837e93023c5e4a64b4",
+            "pixel_sha256": "4edbc7027e7a01085cf4c36f6975e04547f7dcecb89bf7e1e716c42276b71945",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 0,
+            "horse_mask_pixels": 9956
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-sword-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "8c67472fb1a9b43bc97939ee5fecee8eb8cdab205812ee11db8b62f74a707e22",
+            "pixel_sha256": "e8a61f0ceb6a165504bcb4d1d56129f01cebbd0f28dceb5617e7f60eb70e72c5",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 1,
+            "horse_mask_pixels": 9988
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-sword-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "ffc0dd58ff071e5c203be7cb34ce5983b173712f5ef91b8d28b6e5c2be061342",
+            "pixel_sha256": "2b99c6def722c90bf46d1eb13249c218cb5c74f70ebbb2a4e3a33601057358e6",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 0,
+            "horse_mask_pixels": 9956
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-sword-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "85f63f2d370c9e005a21558643f7ac753baf71f2c3b5caabc029af7f75a53222",
+            "pixel_sha256": "105ea852ab4b2ef8e6c66e1c20bcc61a9970447acb03e8d767d68fbdf8ce8b88",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 1,
+            "horse_mask_pixels": 9988
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-sword-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "b2791e66d2b3766f393f7fb47594761bc87a7a66468a6c35cf6e908cdc53c3f6",
+            "pixel_sha256": "b8cf535cda53c817f7fbfd9bd8dc9f90a2a0ee813b2f98ddbb35275d82175177",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 0,
+            "horse_mask_pixels": 9956
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-sword-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "12d79a0d950527e2ff8631ae6c951fdc21a0a1e902e11fd1f0e731753dbb0625",
+            "pixel_sha256": "2aad640c63cd89e47d2593d361c4e2a90aa11670197a62359a8839959fa3f8a1",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 1,
+            "horse_mask_pixels": 9988
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-sword-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "5248aeb42310fe313fe1af36ed73a6ee7820768860c9ceca48fc6ce8038f62fe",
+            "pixel_sha256": "57098733db4e79a7c87c237109ad1d9d70ae7b14c79e3d684cd6fbb3baa77268",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 0,
+            "horse_mask_pixels": 9956
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-sword-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "911608edf5bfa2c94c8b84446bb70fae6e45f5220f5f6d74764b6d2cde102212",
+            "pixel_sha256": "bb62e986262c1f4f04acf535f08873cbea82c713d9c1ca37669f29260efe3e7d",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 1,
+            "horse_mask_pixels": 9988
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-sword-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "ffc0dd58ff071e5c203be7cb34ce5983b173712f5ef91b8d28b6e5c2be061342",
+            "pixel_sha256": "2b99c6def722c90bf46d1eb13249c218cb5c74f70ebbb2a4e3a33601057358e6",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 0,
+            "horse_mask_pixels": 9956
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-sword-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "85f63f2d370c9e005a21558643f7ac753baf71f2c3b5caabc029af7f75a53222",
+            "pixel_sha256": "105ea852ab4b2ef8e6c66e1c20bcc61a9970447acb03e8d767d68fbdf8ce8b88",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "sword",
+            "pose": 1,
+            "horse_mask_pixels": 9988
+          }
+        ]
+      }
+    },
+    "dual-swords": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "9dd368e19e35a2d6b4f0a58641d5f3e95e5020bbf85d35d69e183688cfb2602e",
+            "pixel_sha256": "5a4e16ac88eb8f52347f568244350e8bc3834c1abeec0aa03d4f51e6207e85a1",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 0,
+            "horse_mask_pixels": 9492
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "7f52ada3b346e0847b4bc77b82cbee2d3e76941227e3125df511b0b2989929a6",
+            "pixel_sha256": "d3ae2f951191f7751a791409fa1367f8c9d55dcce1720d8372c61dd22f1543ba",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 1,
+            "horse_mask_pixels": 9052
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "f355043eae31f55f1a44e2fa5f010ae79899a98fa9414a7d4e7b3a51198c7703",
+            "pixel_sha256": "bd35741ddc39070ece3ab49044b679cbd56d7775cbe7a003be288a42d331825f",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 0,
+            "horse_mask_pixels": 9492
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "a6e84cd2638f719c9cdd2edd5fcbc2adccf6f03fe2d5b76955f26f30c5a08f4f",
+            "pixel_sha256": "725c996e69f02e6eeacf4e599b84f29315a78b62b711eaf263881eed6a04f21f",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 1,
+            "horse_mask_pixels": 9052
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "3e68b9a2eb9e0d16128c7ca9d9e416c769dd10b08bc4deb35891f26a734bef32",
+            "pixel_sha256": "092a98494f8cb214d0f016be69e6b0d17e63b9fde61eb55a2f7a536b2ce7daf4",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 0,
+            "horse_mask_pixels": 9492
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "18bcaa156811a9e2c69989324c933db5257233fa4efe59517a34eb33db370243",
+            "pixel_sha256": "36d31e79eee04cb74d6853b5e540da8f803832c5ed3393ef2bb6bfdc18ae8dcb",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 1,
+            "horse_mask_pixels": 9052
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "b0074249750812e7292865bf89f4f80b10ec532afa970d7ecfaced700c9b680b",
+            "pixel_sha256": "a4518908d6887aced3a56bc537f4862df34e4e9848fc9870c81f48335967ccd8",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 0,
+            "horse_mask_pixels": 9492
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "1dbb470de90ca20b240e1936eba2bb5915adb766112e1762a0255bc68aaaf3fb",
+            "pixel_sha256": "1bf27f83adfa7414f92a031211f68102900b255eb114a335bf952de630d9b666",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 1,
+            "horse_mask_pixels": 9052
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "f355043eae31f55f1a44e2fa5f010ae79899a98fa9414a7d4e7b3a51198c7703",
+            "pixel_sha256": "bd35741ddc39070ece3ab49044b679cbd56d7775cbe7a003be288a42d331825f",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 0,
+            "horse_mask_pixels": 9492
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-swords-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "a6e84cd2638f719c9cdd2edd5fcbc2adccf6f03fe2d5b76955f26f30c5a08f4f",
+            "pixel_sha256": "725c996e69f02e6eeacf4e599b84f29315a78b62b711eaf263881eed6a04f21f",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-swords",
+            "pose": 1,
+            "horse_mask_pixels": 9052
+          }
+        ]
+      }
+    },
+    "axe": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-axe-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "9605a3a3e5fdc2e6cbc7e2a1a6eb2208e1579328b8a17071c0e2c2e4887e9300",
+            "pixel_sha256": "5d4fc204ffa4ed33eeb32455f82320b2d483a13ac48ec74624ace68032ec779c",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 0,
+            "horse_mask_pixels": 6628
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-axe-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "d8e187d1e5dc491bcbab0835a0a459f313cb84f71f9661c80c61ac7aceeb4054",
+            "pixel_sha256": "90165c5b45112a18723238306860549fef64befd7da00cb23173e8fb193dfa6b",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 1,
+            "horse_mask_pixels": 6656
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-axe-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "9a13418c9666fc3905892e34753ccea3ce7a7ddcf03db8051d533b38b5872e30",
+            "pixel_sha256": "83f9af568f43a51640a2415c4d340deadeaecc705f82748da6cb2c13ff8806af",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 0,
+            "horse_mask_pixels": 6628
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-axe-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "e173958c8b4820bac4a292b9ff95f0b62fab9dea636fb058923b3435b5194f18",
+            "pixel_sha256": "1cabe1d6ad14b36674a564bc4aab2c904ff1174fa3d18b8af31953c5092ef779",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 1,
+            "horse_mask_pixels": 6656
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-axe-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "8471e754f0fef5702656c613b13d39a9d892b602a8493007b425b34c9d085074",
+            "pixel_sha256": "4ded5597ca2808ac02c6a6c2ea92577cd40593046ed654efe8d3a061a6a8140b",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 0,
+            "horse_mask_pixels": 6628
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-axe-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "e66f9788f3a13ba21c0128d3ceddc11430467d63e5d51fb8b1405517854a97d3",
+            "pixel_sha256": "c6b3c0d0199f2b0e38df6e807dcf519b5438546c14a160387d7277ce7d4ef1e6",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 1,
+            "horse_mask_pixels": 6656
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-axe-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "84ad008aea19b3fff15f3a4797f2992669bc250922ed53318f929fe19ab7259b",
+            "pixel_sha256": "e71a7313825c33273fbe3a269833d96f79a03432d313caea1b15c82d24775183",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 0,
+            "horse_mask_pixels": 6628
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-axe-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "c516ef5f30a1141fd83cd1b8218a09c3ca36ffed35f490d093b42d374cf754a7",
+            "pixel_sha256": "c91f489446f60694fde370aa874bc2827d50073d9db79affba09f268f94cdffc",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 1,
+            "horse_mask_pixels": 6656
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-axe-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "9a13418c9666fc3905892e34753ccea3ce7a7ddcf03db8051d533b38b5872e30",
+            "pixel_sha256": "83f9af568f43a51640a2415c4d340deadeaecc705f82748da6cb2c13ff8806af",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 0,
+            "horse_mask_pixels": 6628
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-axe-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "e173958c8b4820bac4a292b9ff95f0b62fab9dea636fb058923b3435b5194f18",
+            "pixel_sha256": "1cabe1d6ad14b36674a564bc4aab2c904ff1174fa3d18b8af31953c5092ef779",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "axe",
+            "pose": 1,
+            "horse_mask_pixels": 6656
+          }
+        ]
+      }
+    },
+    "dual-axes": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "aa9365421b368fa1629afb736d07d04426e8669c3927182808dd61c69450fa80",
+            "pixel_sha256": "69affb2457f19c2a5fc6c16a24c8d5933b00e7b22f73eabe0e27333cf2487bd5",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 0,
+            "horse_mask_pixels": 11784
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "c0f34f353f5e9b98dc484a5b928a77bfee60b147d24f8e03a51000fc32b23a8c",
+            "pixel_sha256": "c18aa9b8b2666afa5168bf504a8dd41c368cd7c8974f124a3486102eb5bdced6",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 1,
+            "horse_mask_pixels": 12800
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "59fa91a7fbe64d4411b19d1968523348a2c0528e4725cfe86dbb669fde5c26cc",
+            "pixel_sha256": "799412909d1b78b1faf903900183533affd381244dde874d8cd6b394e501c543",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 0,
+            "horse_mask_pixels": 11784
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "9dc359d57ac5baa1eb448b95cdd6bfc2a2312fb06b17acb71b4f8116aaebc928",
+            "pixel_sha256": "f384a2735be82231b5a6cf6b7baecffc6ddcff76adca61edf5ebf8651d6a12dd",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 1,
+            "horse_mask_pixels": 12800
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "ef6602ae991e6a94402b5a5853a15659c34cec377290da0210aa6cca3a50b02e",
+            "pixel_sha256": "dfbd8b6a433c683bace2e6655a027511c4b9e37efe95344859220e3fb9819018",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 0,
+            "horse_mask_pixels": 11784
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "e12e79e20e7b5d48803ad724a7ab45c7f925a7ae53b8eb836108a9c6146e2a82",
+            "pixel_sha256": "eef771e089e4267eb4031ac329724b78ca553992a95bfa321b6d0a4606763e3c",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 1,
+            "horse_mask_pixels": 12800
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "5d0c3252bad3941faec9591491abebf93e5d4976b4cfd4b0b61c2e591c67f501",
+            "pixel_sha256": "ba33c8e89797c86584007468c163dadd9029863c9be871848303f02d676f34af",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 0,
+            "horse_mask_pixels": 11784
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "22f281f20d1e76e8834d75037a838d6f774cde4f4e99611fc0673ba3fd522778",
+            "pixel_sha256": "85a55ba2ef5b81b5df6d878b894815de3c64cd397f4b37e268a73d4555fa4aec",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 1,
+            "horse_mask_pixels": 12800
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "59fa91a7fbe64d4411b19d1968523348a2c0528e4725cfe86dbb669fde5c26cc",
+            "pixel_sha256": "799412909d1b78b1faf903900183533affd381244dde874d8cd6b394e501c543",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 0,
+            "horse_mask_pixels": 11784
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-axes-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "9dc359d57ac5baa1eb448b95cdd6bfc2a2312fb06b17acb71b4f8116aaebc928",
+            "pixel_sha256": "f384a2735be82231b5a6cf6b7baecffc6ddcff76adca61edf5ebf8651d6a12dd",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-axes",
+            "pose": 1,
+            "horse_mask_pixels": 12800
+          }
+        ]
+      }
+    },
+    "dual-ji": {
+      "chestnut": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-chestnut-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "be50de8b3ed180ab740d7afcb4445194ed0ac3dce0b7b1155679456c2ebdc89a",
+            "pixel_sha256": "76c88fb2cbdbbe80bdf7b3ec4eac3fc2884534718b46c8505207ac4209a094f8",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 0,
+            "horse_mask_pixels": 9488
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-chestnut-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "a24a0af3391806c6ff998411c493490ae181881235aace38d12b1845cf892ed2",
+            "pixel_sha256": "b1dd6cf69d7ec733ac410a795377d3d3482950e49e12936eb18a3d4e51b4cfca",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 1,
+            "horse_mask_pixels": 9732
+          }
+        ]
+      },
+      "white": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-white-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "147748870914ac83ffe7c75067b52df64343502615a56ca125faf542d5635e77",
+            "pixel_sha256": "77d6298ba9b8b52a36d10b5fcf2e3cbb4453c2f37ed567a060997e9d4e10ad08",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 0,
+            "horse_mask_pixels": 9488
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-white-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "983ec983ec792adb1112314d9ff63b8c40d6ce394d4a7db2483044febb8d6692",
+            "pixel_sha256": "7bd884017cee617e3090c0bef2421f63bc023b9d92717e0edc690189f3954f1d",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 1,
+            "horse_mask_pixels": 9732
+          }
+        ]
+      },
+      "black": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-black-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "f633363db178ca6b49548ce072f2f91018154ce640a4d523ea823da130b9e798",
+            "pixel_sha256": "f00e5c45a56e37d53e98ea1628e737203a61fb626ec63fceb439ad4a9dee5889",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 0,
+            "horse_mask_pixels": 9488
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-black-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "83c614a096cdc2d51344fb55f87c92557ee32d17233c307f2a9af15c85c27029",
+            "pixel_sha256": "a5b7c058a81d8c3699e6879fe88c0ed0e9d9c1ef1956372a6fdcb37e4dcce0bc",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 1,
+            "horse_mask_pixels": 9732
+          }
+        ]
+      },
+      "red-hare": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-red-hare-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "91b2057234fae1afbcaf0a59db0d7a562fa107bf19eaf4aec0387ee86130d64b",
+            "pixel_sha256": "6078a3febec0c9e9f026deb1cd0ab73ba0612cf8b0eda9f6f8b2436241f2e4e4",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 0,
+            "horse_mask_pixels": 9488
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-red-hare-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "aa101227c7fa92336d1bd93a06c4282dc1ed7ec1bf7f3ba849048d41d0806ace",
+            "pixel_sha256": "36af926c0392469a11b907f71c310149b04eedae1629bd923c039acd438228d5",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 1,
+            "horse_mask_pixels": 9732
+          }
+        ]
+      },
+      "dilu": {
+        "facing": "right",
+        "frames": [
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-dilu-00.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "147748870914ac83ffe7c75067b52df64343502615a56ca125faf542d5635e77",
+            "pixel_sha256": "77d6298ba9b8b52a36d10b5fcf2e3cbb4453c2f37ed567a060997e9d4e10ad08",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 0,
+            "horse_mask_pixels": 9488
+          },
+          {
+            "path": "/assets/battle-enhanced/duel-dual-ji-dilu-01.png",
+            "width": 384,
+            "height": 384,
+            "logical_width": 96,
+            "logical_height": 96,
+            "anchor": {
+              "x": 48,
+              "y": 96
+            },
+            "sha256": "983ec983ec792adb1112314d9ff63b8c40d6ce394d4a7db2483044febb8d6692",
+            "pixel_sha256": "7bd884017cee617e3090c0bef2421f63bc023b9d92717e0edc690189f3954f1d",
+            "method": "imagegen_painted_sprite_pixel_fit_coat_mask",
+            "study_key": "dual-ji",
+            "pose": 1,
+            "horse_mask_pixels": 9732
+          }
+        ]
+      }
+    }
+  }
+}

@@ -48,23 +48,23 @@ print(json.dumps(dict(rows=rows,tactics=[dict(id=i,effect=t[2]) for i,t in enume
 `],{cwd:ROOT,encoding:'utf8',maxBuffer:8*1024*1024,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}}));
 const clone=value=>JSON.parse(JSON.stringify(value));
 function freeze(value){if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
-function environment({manifest=null,reduced=false,missingRAF=false,missingContext=false}={}){
- const rafs=new Map(),timers=new Map(),listeners=new Map(),requests=[],cancels=[],observers=[],texts=[],draws=[],rectangles=[];let next=0;
+function environment({manifest=null,enhancedManifest=null,duelAppearance=null,failedPaths=[],reduced=false,missingRAF=false,missingContext=false}={}){
+ const rafs=new Map(),timers=new Map(),listeners=new Map(),requests=[],cancels=[],observers=[],texts=[],draws=[],rectangles=[],transforms=[];let next=0;
  const doc={hidden:false,addEventListener(type,fn){if(!listeners.has(type))listeners.set(type,new Set());listeners.get(type).add(fn);},removeEventListener(type,fn){listeners.get(type)?.delete(fn);},emit(type,event={}){for(const fn of [...listeners.get(type)||[]])fn(event);},createElement(){return canvas();}};
- const context={fillRect(x,y,w,h){rectangles.push({x,y,w,h,color:this.fillStyle});},fillText(text,x,y){texts.push({text:String(text),x,y});},save(){},restore(){},drawImage(image,...args){draws.push({src:image?.src,args});},translate(){},scale(){},getImageData(){return{data:new Uint8ClampedArray(256*160*4)};}};
+ const context={setTransform(...args){transforms.push(args);},fillRect(x,y,w,h){rectangles.push({x,y,w,h,color:this.fillStyle});},fillText(text,x,y){texts.push({text:String(text),x,y});},save(){},restore(){},drawImage(image,...args){draws.push({src:image?.src,args});},translate(){},scale(){},getImageData(){return{data:new Uint8ClampedArray(256*160*4)};}};
  function canvas(){return{style:{},width:256,height:240,getContext:()=>missingContext?null:context,getBoundingClientRect(){return{left:0,top:0,width:parseFloat(this.style.width)||256,height:parseFloat(this.style.height)||240};}};}
  const surface=canvas(),nodes={'.nes-battle-viewport':{clientWidth:512,clientHeight:480},'[data-battle-canvas]':surface};
  for(const name of ['[data-battle-skip]','[data-battle-scene-title]','[data-battle-caption]','[data-battle-description]'])nodes[name]={hidden:true,textContent:'',addEventListener(type,fn){this[type]=fn;}};
  const host={isConnected:true,dataset:{},querySelector:selector=>nodes[selector]||null};
  const i18n={locale:'zh-Hant',t:(value,lang)=>lang==='ja'?'日:'+value:value};
- const sandbox={module:{exports:{}},document:doc,console,AbortController,Uint8ClampedArray,Math:Object.assign(Object.create(Math),{random(){throw Error('Scene sampled randomness');}}),GameI18n:i18n,GameOfficerChoices:officerChoices,
+ const sandbox={module:{exports:{}},document:doc,console,AbortController,Uint8ClampedArray,Math:Object.assign(Object.create(Math),{random(){throw Error('Scene sampled randomness');}}),GameI18n:i18n,GameOfficerChoices:officerChoices,GameDuelAppearance:duelAppearance,
   matchMedia:()=>({matches:reduced}),setTimeout(fn){const id=++next;timers.set(id,fn);return id;},clearTimeout(id){timers.delete(id);},
   requestAnimationFrame:missingRAF?undefined:fn=>{const id=++next;rafs.set(id,fn);return id;},cancelAnimationFrame:id=>{cancels.push(id);rafs.delete(id);},
-  fetch:async url=>{requests.push(url);assert.equal(url,'/assets/battle-original/index.json','Playback may fetch artwork, never gameplay');return manifest?{ok:true,json:async()=>manifest}:{ok:false};},
+  fetch:async url=>{requests.push(url);assert(['/assets/battle-original/index.json','/assets/battle-enhanced/index.json'].includes(url),'Playback may fetch artwork, never gameplay');const data=url.includes('battle-enhanced')?enhancedManifest:manifest;return data?{ok:true,json:async()=>data}:{ok:false};},
   ResizeObserver:class{constructor(fn){this.fn=fn;this.disconnects=0;observers.push(this);}observe(){}disconnect(){this.disconnects++;}},
-  Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;queueMicrotask(()=>this.onload?.());}get src(){return this._src;}}};
+  Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
  sandbox.window=sandbox;vm.runInNewContext(source,sandbox,{filename:'game/battle-scene.js'});
- return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,cancels,observers,texts,draws,rectangles,rafs,timers,
+ return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,cancels,observers,texts,draws,rectangles,transforms,rafs,timers,
   step(time){const entries=[...rafs];rafs.clear();for(const [,fn]of entries)fn(time);},
   drain(){for(let i=0;rafs.size&&i<100;i++)this.step(i*1200);assert.equal(rafs.size,0,'RAF queue must terminate');},
   listenerCount(){return[...listeners.values()].reduce((n,set)=>n+set.size,0);}};
@@ -91,6 +91,22 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   assert.equal(JSON.stringify(row),original,'Receipt validation and differences are read-only');
  }
  const first=actual.rows.find(r=>r.key==='attack'),bid=first.after.game.battle.id,revision=first.after.revision;
+ //4× means4× each backing dimension, with the logical/CSS footprint unchanged.
+ {const env=environment(),selected=[],scene=env.api.create({onSelect:(side,id)=>selected.push({side,id})}),row=clone(first.before),id=first.payload.actor;
+  row.catalog.names[String(id)]='𠮷野';
+  scene.mount(env.host,row,{actor:id});
+  assert.equal(env.surface.width,1024);assert.equal(env.surface.height,960);
+  assert.equal(env.surface.style.width,'512px');assert.equal(env.surface.style.height,'480px');
+  assert(env.transforms.some(t=>t.join(',')==='4,0,0,4,0,0'));
+  const flags=env.texts.filter(t=>t.y<160);
+  assert(flags.some(t=>t.text==='𠮷'),'Flag retains the first full Unicode character');
+  assert(flags.every(t=>Array.from(t.text).length===1),'Every tactical flag contains one character only');
+  assert(scene.html().includes('width="1024" height="960"'));
+  const flag=flags.find(t=>t.text==='𠮷');env.surface.onclick({clientX:(flag.x+4)*2,clientY:(flag.y+4)*2});
+  assert.deepEqual(selected,[{side:'actor',id}],'Pointer hit testing stays inCSS/logical coordinates after4× rendering');
+  scene.dispose();
+ }
+
  for(const key of ['attack','mixed']){
   const row=actual.rows.find(r=>r.key===key),view=clone(row.after),id=row.payload.actor,foe=row.payload.target;
   view.game.extension={leaders:{current:id,ended:null}};view.game.officers[String(id)].loyalty=100;
@@ -122,7 +138,7 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   env.doc.emit('game-language-change');env.i18n.locale='ja';env.doc.emit('game-language-change');assert(scene.playing,'Language change must not cancel/restart an action');
   env.drain();await playback;assert(!scene.playing);assert.equal(scene.state().queued,0);assert(env.nodes['[data-battle-skip]'].hidden);assert.equal(env.rafs.size,0);
   assert.deepEqual(normalize(sounds),normalize(accepted.get(row.key)),row.key+' must play each authoritative scene once and in order');assert.equal(settled.length,1);
-  assert.equal(JSON.stringify(row),original,'Drawing and language changes cannot alter campaign, RNG or receipt');assert.deepEqual(env.requests,['/assets/battle-original/index.json'],'Only the one cached artwork manifest request is permitted');
+  assert.equal(JSON.stringify(row),original,'Drawing and language changes cannot alter campaign, RNG or receipt');assert.deepEqual(env.requests,['/assets/battle-original/index.json','/assets/battle-enhanced/index.json'],'Only the two cached artwork manifest requests are permitted');
   scene.observe(row.kind,row.payload,row.before,row.after);assert.equal(scene.state().queued,0,'Same revision must not replay');
   scene.dispose();assert.equal(env.listenerCount(),0);assert.equal(env.rafs.size,0);assert(env.observers.every(o=>o.disconnects>0));assert.equal(env.timers.size,0);
  }
@@ -159,6 +175,41 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  }
  // Native artwork must remain on screen for actor-less retreat, and strike must actually render an impact.
  const nativeManifest=JSON.parse(fs.readFileSync(path.join(ROOT,'game/assets/battle-original/index.json'),'utf8'));
+ // Enhanced sprites use their logical dimensions, prefer actual4× source pixels,
+ // bind both participants separately, and fall back to the original same scene.
+ {
+  const row=actual.rows.find(r=>r.key==='duel_start');assert(row.after.game.battle.extended.duel);
+  const ids=row.after.game.battle.extended.duel;
+  const frame=(path,w,h)=>({path,width:w*4,height:h*4,logical_width:w,logical_height:h,anchor:{x:w/2,y:h}});
+  const aPath='/assets/battle-enhanced/dual_swords-white.png',tPath='/assets/battle-enhanced/spear-black.png';
+  const enhanced={schema:'tk2-battle-enhanced-v1',scale:4,backgrounds:{plain:frame('/assets/battle-enhanced/plain.png',256,160)},sprites:{},duelists:{dual_swords:{white:{frames:[frame(aPath,96,96)]}},spear:{black:{frames:[frame(tPath,96,96)]}}}};
+  const profiles={
+   [ids.actor]:{weapon:'dual_swords',horse:'white',weapon_label:{'zh-Hant':'雙股劍',ja:'双股剣'},horse_label:{'zh-Hant':'的盧',ja:'的盧'}},
+   [ids.target]:{weapon:'spear',horse:'black',weapon_label:{'zh-Hant':'長槍',ja:'長槍'},horse_label:{'zh-Hant':'黑馬',ja:'黒馬'}}
+  };
+  for(const failed of [false,true]){
+   let loaded=0;const env=environment({manifest:nativeManifest,enhancedManifest:enhanced,duelAppearance:{load:async()=>loaded++,profile:(catalog,id)=>profiles[id]},failedPaths:failed?[aPath,tPath]:[]}),scene=env.api.create(),before=JSON.stringify(row.after);
+   scene.mount(env.host,row.after);assert(await scene.load());assert.equal(loaded,1);env.draws.length=0;env.texts.length=0;
+   env.doc.emit('game-language-change');
+   if(!failed){
+    assert(env.texts.some(t=>t.y===50&&t.text==='雙股劍'));assert(env.texts.some(t=>t.y===57&&t.text==='的盧'));
+    assert(env.texts.some(t=>t.y===50&&t.text==='長槍'));assert(env.texts.some(t=>t.y===57&&t.text==='黑馬'));
+    assert(env.nodes['[data-battle-description]'].textContent.includes('雙股劍 的盧'),'Equipment remains available to screen readers');
+   }else{
+    assert.equal(env.texts.filter(t=>t.y===50&&t.text==='原版備用圖').length,2);assert(!env.texts.some(t=>t.y===50&&['雙股劍','長槍'].includes(t.text)));
+    assert(!env.nodes['[data-battle-description]'].textContent.includes('雙股劍'),'Fallback cannot describe mismatched native equipment as the iconic set');
+    assert(env.nodes['[data-battle-description]'].textContent.includes('原版備用圖 通用騎將'));
+   }
+   if(!failed){assert(env.draws.some(d=>d.src===aPath));assert(env.draws.some(d=>d.src===tPath));assert(env.draws.filter(d=>[aPath,tPath].includes(d.src)).every(d=>d.args.slice(-2).join(',')==='96,96'));}
+   else{assert(!env.draws.some(d=>[aPath,tPath].includes(d.src)));assert(env.draws.some(d=>/battle-original\/duelist/.test(d.src)),'Missing enhanced riders retain original mounted artwork');}
+   env.i18n.locale='ja';env.texts.length=0;env.doc.emit('game-language-change');if(!failed){assert(env.texts.some(t=>t.y===50&&t.text==='双股剣'));assert(env.texts.some(t=>t.y===57&&t.text==='黒馬'));}else assert.equal(env.texts.filter(t=>t.y===50&&t.text==='原作予備画像').length,2);
+   assert.equal(JSON.stringify(row.after),before,'Equipment and high resolution rendering cannot change state, stats or RNG');
+   scene.dispose();assert.equal(env.timers.size,0);assert.equal(env.rafs.size,0);
+  }
+ }
+ for(const p of ['/assets/battle-enhanced/dual_swords-white.png','/assets/battle-enhanced/tactical.png'])assert(standalone.validEnhancedAssetPath(p));
+ for(const p of ['/assets/battle-enhanced/../escape.png','/assets/battle-enhanced/sub/file.png','https://example.com/a.png','/assets/battle-original/duelist.png','/assets/battle-enhanced/a.png?x=1'])assert(!standalone.validEnhancedAssetPath(p));
+
  for(const key of ['attack','tactic:strike','retreat']){
   const row=actual.rows.find(r=>r.key===key),env=environment({manifest:nativeManifest}),scene=env.api.create();
   scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);assert(await scene.load());

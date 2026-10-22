@@ -1,4 +1,4 @@
-/* The original256×240 screen is kept intact, using nearest-neighbor scaling. */
+/* Logical256×240 layout, direct1024×960 rendering, unchanged display footprint. */
 #stage.battle-stage{background:#000}
 .battle-stage .arena{padding:8px;gap:6px;overflow:hidden}
 .battle-stage .arena-heading{padding:0 2px 4px;flex:none;border-color:var(--paper);color:var(--paper)}

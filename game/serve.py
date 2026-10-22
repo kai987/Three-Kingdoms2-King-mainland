@@ -56,6 +56,37 @@ def battle_static_assets(here=None):
     return result
 
 
+def enhanced_battle_static_assets(here=None):
+    """Only the shipped4x battle manifest and its fixed PNG filenames are public."""
+    here = Path(here) if here is not None else HERE
+    base = here / 'assets/battle-enhanced'
+    index = base / 'index.json'
+    if (here / 'assets').is_symlink() or base.is_symlink() or index.is_symlink():
+        return {}
+    result = {'/assets/battle-enhanced/index.json':
+              ('assets/battle-enhanced/index.json', 'application/json; charset=utf-8')}
+    try:
+        data = json.loads(index.read_text(encoding='utf-8'))
+        if not isinstance(data, dict) or data.get('schema') != 'tk2-battle-enhanced-v1' or data.get('scale') != 4:
+            return result
+        def visit(value):
+            if isinstance(value, dict):
+                path = value.get('path')
+                if isinstance(path, str) and re.fullmatch(r'/assets/battle-enhanced/[A-Za-z0-9_-]+\.png', path):
+                    target = here / path.lstrip('/')
+                    if not target.is_symlink() and target.is_file():
+                        result[path] = (path.lstrip('/'), 'image/png')
+                for row in value.values():
+                    visit(row)
+            elif isinstance(value, list):
+                for row in value:
+                    visit(row)
+        visit(data)
+    except (OSError, ValueError):
+        pass
+    return result
+
+
 class GameHTTPServer(ThreadingHTTPServer):
     # Browsers open the deferred scripts/fonts/images concurrently. Python's
     # default backlog5 can reset those sockets while a catalog response is busy.
@@ -144,7 +175,7 @@ def static_file_bytes(here, name):
         target.resolve().relative_to(root)
     except ValueError:
         raise FileNotFoundError(name) from None
-    for directory in ('assets/portraits', 'assets/battle-original', 'assets/civil-staff'):
+    for directory in ('assets/portraits', 'assets/battle-original', 'assets/battle-enhanced', 'assets/civil-staff'):
         if name.startswith(directory + '/') and (target.is_symlink() or target.parent.is_symlink() or
                                                   (root / directory).is_symlink() or
                                                   (root / 'assets').is_symlink()):
@@ -203,6 +234,8 @@ def main():
               '/domestic.js': ('domestic.js', 'text/javascript; charset=utf-8'),
               '/battle-scene.js': ('battle-scene.js', 'text/javascript; charset=utf-8'),
               '/battle-scene.css': ('battle-scene.css', 'text/css; charset=utf-8'),
+              '/duel-appearance.js': ('duel-appearance.js', 'text/javascript; charset=utf-8'),
+              '/config/duel-appearances.json': ('config/duel-appearances.json', 'application/json; charset=utf-8'),
               '/assets/civil-staff/clerk-1.png': ('assets/civil-staff/clerk-1.png', 'image/png'),
               '/assets/civil-staff/clerk-2.png': ('assets/civil-staff/clerk-2.png', 'image/png'),
               '/assets/civil-staff/clerk-3.png': ('assets/civil-staff/clerk-3.png', 'image/png'),
@@ -236,6 +269,7 @@ def main():
     static.update(civil_portrait_static_assets())
     static.update(audio_effect_static_assets())
     static.update(battle_static_assets())
+    static.update(enhanced_battle_static_assets())
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *unused):

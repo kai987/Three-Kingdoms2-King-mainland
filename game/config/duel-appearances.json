@@ -1,0 +1,928 @@
+{
+  "schema": "tk2-duel-appearances-v1",
+  "version": 1,
+  "purpose": "presentation_only_no_combat_stats_rng_or_save_changes",
+  "identity": "canonical_person_id_only",
+  "chronology_policy": "iconic_novel_appearance_all_scenarios_not_physical_equipment_ownership",
+  "defaults": {
+    "weapon": "spear",
+    "horse": "chestnut",
+    "weapon_evidence": {
+      "kind": "authorial_generic",
+      "source_ids": []
+    },
+    "horse_evidence": {
+      "kind": "authorial_palette",
+      "source_ids": []
+    }
+  },
+  "generic_weapons": [
+    "spear",
+    "serpent-spear",
+    "guandao",
+    "halberd",
+    "sword",
+    "dual-swords",
+    "axe",
+    "dual-axes",
+    "dual-ji"
+  ],
+  "generic_horses": [
+    "chestnut",
+    "white",
+    "black"
+  ],
+  "sources": {
+    "novel-001": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 1,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第001回",
+      "summary": "桃園結義後分別製作劉備雙股劍、關羽青龍偃月刀及張飛丈八點鋼矛。"
+    },
+    "novel-003": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 3,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第003回",
+      "summary": "呂布持方天畫戟；李肅送赤兔，正文形容其全身赤色。"
+    },
+    "novel-005": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 5,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第005回",
+      "summary": "孫堅麾下程普使用鐵脊蛇矛，韓當使用大刀。 潘鳳出戰華雄時手提大斧上馬。"
+    },
+    "novel-007": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 7,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第007回",
+      "summary": "趙雲救公孫瓚時以槍與文醜交戰；文醜同樣使用槍。"
+    },
+    "novel-014": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 14,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第014回",
+      "summary": "許褚與徐晃交鋒使用刀、斧；曹操曾持寶劍督戰。"
+    },
+    "novel-015": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 15,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第015回",
+      "summary": "神亭之戰，孫策與太史慈均持槍交鋒。"
+    },
+    "novel-016": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 16,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第016回",
+      "summary": "胡車兒設法偷走典韋雙鐵戟，這是其代表兵器。"
+    },
+    "novel-025": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 25,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第025回",
+      "summary": "曹操把呂布舊騎赤兔交給關羽；顏良在陣前持刀。"
+    },
+    "novel-034": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 34,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第034回",
+      "summary": "劉備騎的盧赴襄陽宴會，遇害逃出並躍過檀溪。"
+    },
+    "novel-042": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 42,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第042回",
+      "summary": "長坂橋的張飛持蛇矛，與第一回丈八點鋼矛合用為其代表兵器。"
+    },
+    "novel-053": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 53,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第053回",
+      "summary": "黃忠使用刀、弓；張遼持刀迎戰太史慈；孫權也曾準備持槍迎敵。"
+    },
+    "novel-059": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 59,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第059回",
+      "summary": "馬超持槍與許褚交戰，許褚使用鋼刀。"
+    },
+    "novel-063": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 63,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第063回",
+      "summary": "劉備入蜀時將自己的馴熟白馬換給龐統，後者在落鳳坡遇伏。與第三十四回合讀，以白色的盧作劉備代表視覺。"
+    },
+    "novel-067": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 67,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第067回",
+      "summary": "夏侯淵迎戰昌奇、楊任，以刀作戰。"
+    },
+    "novel-070": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 70,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第070回",
+      "summary": "張郃持槍迎戰張飛，夜襲時刺中草人；黃忠持大刀。"
+    },
+    "novel-074": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 74,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第074回",
+      "summary": "龐德在關平、關羽面前以鋼刀、白馬出陣。"
+    },
+    "novel-093": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 93,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第093回",
+      "summary": "姜維以槍迎戰趙雲，正文特別描寫其槍法。"
+    },
+    "novel-094": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 94,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第094回",
+      "summary": "魏延截擊曹遵，以刀斬將。"
+    }
+  },
+  "profiles": {
+    "san14-candidate-0952": {
+      "name": "劉備",
+      "name_ja": "劉備",
+      "aliases": [
+        "刘备",
+        "劉備"
+      ],
+      "runtime_id": 951,
+      "weapon": "dual-swords",
+      "horse": "dilu",
+      "weapon_label": {
+        "zh-Hant": "雙股劍",
+        "ja": "双股剣"
+      },
+      "horse_label": {
+        "zh-Hant": "的盧",
+        "ja": "的盧"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-001"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "novel_explicit_name_inferred_coat",
+        "source_ids": [
+          "novel-034",
+          "novel-063"
+        ],
+        "note": "第三十四回具名的盧；第六十三回明寫劉備白馬，未在該段重複馬名，因此白色的盧為合讀後的視覺選擇。全劇本固定代表外觀。"
+      }
+    },
+    "san14-candidate-0147": {
+      "name": "關羽",
+      "name_ja": "関羽",
+      "aliases": [
+        "关羽",
+        "關羽",
+        "関羽"
+      ],
+      "runtime_id": 146,
+      "weapon": "guandao",
+      "horse": "red-hare",
+      "weapon_label": {
+        "zh-Hant": "青龍偃月刀",
+        "ja": "青龍偃月刀"
+      },
+      "horse_label": {
+        "zh-Hant": "赤兔",
+        "ja": "赤兎"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-001"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-003",
+          "novel-025"
+        ],
+        "note": "小說代表形象；全劇本固定外觀，不表示當年實物所有權。"
+      }
+    },
+    "san14-candidate-0656": {
+      "name": "張飛",
+      "name_ja": "張飛",
+      "aliases": [
+        "张飞",
+        "張飛"
+      ],
+      "runtime_id": 655,
+      "weapon": "serpent-spear",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "丈八點鋼矛／蛇矛",
+        "ja": "丈八の蛇矛"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-001",
+          "novel-042"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0596": {
+      "name": "趙雲",
+      "name_ja": "趙雲",
+      "aliases": [
+        "赵云",
+        "趙雲"
+      ],
+      "runtime_id": 595,
+      "weapon": "spear",
+      "horse": "white",
+      "weapon_label": {
+        "zh-Hant": "長槍",
+        "ja": "長槍"
+      },
+      "horse_label": {
+        "zh-Hant": "白馬",
+        "ja": "白馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-007"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0987": {
+      "name": "呂布",
+      "name_ja": "呂布",
+      "aliases": [
+        "吕布",
+        "呂布"
+      ],
+      "runtime_id": 986,
+      "weapon": "halberd",
+      "horse": "red-hare",
+      "weapon_label": {
+        "zh-Hant": "方天畫戟",
+        "ja": "方天画戟"
+      },
+      "horse_label": {
+        "zh-Hant": "赤兔",
+        "ja": "赤兎"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-003"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-003"
+        ],
+        "note": "小說代表形象；全劇本固定外觀，不表示當年實物所有權。"
+      }
+    },
+    "san14-candidate-0442": {
+      "name": "徐晃",
+      "name_ja": "徐晃",
+      "aliases": [
+        "徐晃"
+      ],
+      "runtime_id": 441,
+      "weapon": "axe",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "大斧",
+        "ja": "大斧"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-014"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0709": {
+      "name": "典韋",
+      "name_ja": "典韋",
+      "aliases": [
+        "典韦",
+        "典韋"
+      ],
+      "runtime_id": 708,
+      "weapon": "dual-ji",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "雙鐵戟",
+        "ja": "双鉄戟"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-016"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0271": {
+      "name": "黃忠",
+      "name_ja": "黄忠",
+      "aliases": [
+        "黄忠",
+        "黃忠"
+      ],
+      "runtime_id": 270,
+      "weapon": "guandao",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "大刀",
+        "ja": "大刀"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-053",
+          "novel-070"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0830": {
+      "name": "龐德",
+      "name_ja": "龐徳",
+      "aliases": [
+        "庞德",
+        "龐德",
+        "龐徳"
+      ],
+      "runtime_id": 829,
+      "weapon": "guandao",
+      "horse": "white",
+      "weapon_label": {
+        "zh-Hant": "鋼刀",
+        "ja": "鋼刀"
+      },
+      "horse_label": {
+        "zh-Hant": "白馬",
+        "ja": "白馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-074"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-074"
+        ],
+        "note": "小說代表形象；全劇本固定外觀，不表示當年實物所有權。"
+      }
+    },
+    "san14-candidate-0769": {
+      "name": "馬超",
+      "name_ja": "馬超",
+      "aliases": [
+        "马超",
+        "馬超"
+      ],
+      "runtime_id": 768,
+      "weapon": "spear",
+      "horse": "white",
+      "weapon_label": {
+        "zh-Hant": "長槍",
+        "ja": "長槍"
+      },
+      "horse_label": {
+        "zh-Hant": "白馬",
+        "ja": "白馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-059"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0557": {
+      "name": "孫策",
+      "name_ja": "孫策",
+      "aliases": [
+        "孙策",
+        "孫策"
+      ],
+      "runtime_id": 556,
+      "weapon": "spear",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "長槍",
+        "ja": "長槍"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-015"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0586": {
+      "name": "太史慈",
+      "name_ja": "太史慈",
+      "aliases": [
+        "太史慈"
+      ],
+      "runtime_id": 585,
+      "weapon": "spear",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "長槍",
+        "ja": "長槍"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-015"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0703": {
+      "name": "程普",
+      "name_ja": "程普",
+      "aliases": [
+        "程普"
+      ],
+      "runtime_id": 702,
+      "weapon": "serpent-spear",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "鐵脊蛇矛",
+        "ja": "鉄脊蛇矛"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-005"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0176": {
+      "name": "韓當",
+      "name_ja": "韓当",
+      "aliases": [
+        "韩当",
+        "韓當",
+        "韓当"
+      ],
+      "runtime_id": 175,
+      "weapon": "guandao",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "大刀",
+        "ja": "大刀"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-005"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0215": {
+      "name": "許褚",
+      "name_ja": "許褚",
+      "aliases": [
+        "许褚",
+        "許褚"
+      ],
+      "runtime_id": 214,
+      "weapon": "guandao",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "鋼刀",
+        "ja": "鋼刀"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-014",
+          "novel-059"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0203": {
+      "name": "姜維",
+      "name_ja": "姜維",
+      "aliases": [
+        "姜维",
+        "姜維"
+      ],
+      "runtime_id": 202,
+      "weapon": "spear",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "長槍",
+        "ja": "長槍"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-093"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0618": {
+      "name": "張郃",
+      "name_ja": "張郃",
+      "aliases": [
+        "张郃",
+        "張郃"
+      ],
+      "runtime_id": 617,
+      "weapon": "spear",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "長槍",
+        "ja": "長槍"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-070"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0189": {
+      "name": "魏延",
+      "name_ja": "魏延",
+      "aliases": [
+        "魏延"
+      ],
+      "runtime_id": 188,
+      "weapon": "guandao",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "大刀",
+        "ja": "大刀"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-094"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0114": {
+      "name": "夏侯淵",
+      "name_ja": "夏侯淵",
+      "aliases": [
+        "夏侯渊",
+        "夏侯淵"
+      ],
+      "runtime_id": 113,
+      "weapon": "guandao",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "大刀",
+        "ja": "大刀"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-067"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0521": {
+      "name": "曹操",
+      "name_ja": "曹操",
+      "aliases": [
+        "曹操"
+      ],
+      "runtime_id": 520,
+      "weapon": "sword",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "寶劍",
+        "ja": "宝剣"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-014"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0812": {
+      "name": "文醜",
+      "name_ja": "文醜",
+      "aliases": [
+        "文丑",
+        "文醜"
+      ],
+      "runtime_id": 811,
+      "weapon": "spear",
+      "horse": "black",
+      "weapon_label": {
+        "zh-Hant": "長槍",
+        "ja": "長槍"
+      },
+      "horse_label": {
+        "zh-Hant": "黑馬",
+        "ja": "黒馬"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-007"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0663": {
+      "name": "張遼",
+      "name_ja": "張遼",
+      "aliases": [
+        "张辽",
+        "張遼"
+      ],
+      "runtime_id": 662,
+      "weapon": "guandao",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "大刀",
+        "ja": "大刀"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-053"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0186": {
+      "name": "顏良",
+      "name_ja": "顔良",
+      "aliases": [
+        "颜良",
+        "顏良",
+        "顔良"
+      ],
+      "runtime_id": 185,
+      "weapon": "guandao",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "大刀",
+        "ja": "大刀"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-025"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0553": {
+      "name": "孫權",
+      "name_ja": "孫権",
+      "aliases": [
+        "孙权",
+        "孫權",
+        "孫権"
+      ],
+      "runtime_id": 552,
+      "weapon": "spear",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "長槍",
+        "ja": "長槍"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-053"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0785": {
+      "name": "潘鳳",
+      "name_ja": "潘鳳",
+      "aliases": [
+        "潘凤",
+        "潘鳳"
+      ],
+      "runtime_id": 784,
+      "weapon": "axe",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "大斧",
+        "ja": "大斧"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-005"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "第五回明寫手提大斧上馬，但沒有馬色記載；棗紅配色僅供遊戲辨識。"
+      }
+    }
+  }
+}

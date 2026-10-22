@@ -1,10 +1,10 @@
-/* Native NES artwork, current campaign actors, presentation-only playback.
+/* NES-style4× rendering with native assets and separately documented new duel art.
  * The server receipts describe already committed actions. Rendering, skipping,
  * resizing and changing language never submit commands or sample game RNG. */
 'use strict';
 (function(root){
- const WIDTH=256,HEIGHT=240,SCHEMA='tk2-battle-presentation-v1';
- const PAPER='#ffd4c8',INK='#000000',ASSET_ROOT='/assets/battle-original/';
+ const WIDTH=256,HEIGHT=240,RESOLUTION_SCALE=4,SCHEMA='tk2-battle-presentation-v1';
+ const PAPER='#ffd4c8',INK='#000000',ASSET_ROOT='/assets/battle-original/',ENHANCED_ROOT='/assets/battle-enhanced/';
  const EFFECTS=new Set(['fire','trap','strike','water','confuse','supply','feint','rock','area','chain','crossbow','surrender','ambush','flood','inferno','guard']);
  const KINDS=new Set(['attack','tactic','ambush','duel_start','duel_action','retreat']);
  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -42,11 +42,12 @@
  function campaignKey(view){return [view?.catalog?.scenario_id,view?.game?.player,view?.game?.seed].join(':');}
  function duration(scene){return scene.kind==='duel_action'?1000:scene.kind==='tactic'?1000:scene.kind==='duel_start'?700:scene.kind==='ambush'?850:700;}
  function validAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-original\/[a-zA-Z0-9_/-]+\.png$/.test(path);}
+ function validEnhancedAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-enhanced\/[a-z0-9_-]+\.png$/.test(path);}
  function create(options={}){
-  const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits,officerChoices=options.officerChoices||root.GameOfficerChoices;
+  const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits,officerChoices=options.officerChoices||root.GameOfficerChoices,duelAppearance=options.duelAppearance||root.GameDuelAppearance;
   const fetcher=options.fetch||root.fetch?.bind(root),ImageType=options.Image||root.Image;
   const raf=options.requestAnimationFrame||root.requestAnimationFrame?.bind(root),caf=options.cancelAnimationFrame||root.cancelAnimationFrame?.bind(root);
-  const images=new Map(),terrainSlots=new Map();let manifest=null,assetStatus='idle',assetsPromise=null;
+  const images=new Map(),terrainSlots=new Map(),duelRendering=new Map();let manifest=null,enhanced=null,assetStatus='idle',assetsPromise=null;
   let host=null,canvas=null,ctx=null,view=null,selection={},queue=[],key='',observed=null,playing=false,frame=null,handle=null,resolvePlay=null,resizeObserver=null,disposed=false,outcomeCue=null;
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant';
   const text=(tc,ja)=>locale()==='ja'?ja:tc;
@@ -64,25 +65,41 @@
    });return row;
   }
   function imageFor(path){if(!path)return null;const row=loadImage(path);return row.status==='ready'?row.image:null;}
+  async function readManifest(url,validate){
+   let timer;const controller=typeof AbortController==='function'?new AbortController():null;
+   try{
+    const read=(async()=>{const response=await fetcher(url,controller?{signal:controller.signal}:{});if(!response.ok)throw Error('assets');return response.json();})();
+    const data=await Promise.race([read,new Promise((_,reject)=>{timer=setTimeout(()=>{controller?.abort();reject(Error('timeout'));},6000);})]);
+    const paths=validate(data);if(!paths)return null;
+    await Promise.all(paths.map(path=>loadImage(path).promise));return {data,paths};
+   }catch{return null;}finally{clearTimeout(timer);}
+  }
   async function load(){
    if(assetsPromise)return assetsPromise;
    assetStatus='loading';assetsPromise=(async()=>{
-    let timer;const controller=typeof AbortController==='function'?new AbortController():null;
-    try{
-     const read=(async()=>{const response=await fetcher(ASSET_ROOT+'index.json',controller?{signal:controller.signal}:{});if(!response.ok)throw Error('assets');return response.json();})();
-     const data=await Promise.race([read,new Promise((_,reject)=>{timer=setTimeout(()=>{controller?.abort();reject(Error('timeout'));},6000);})]);
-     if(data?.schema!=='tk2-battle-original-v1'||!data.backgrounds||!data.sprites)throw Error('manifest');
-     const paths=[...Object.values(data.backgrounds).map(r=>r?.path),...Object.values(data.sprites).flatMap(r=>(r?.frames||[]).map(f=>f.path))].filter(Boolean);
-     if(!paths.length||paths.length>256||paths.some(p=>!validAssetPath(p)))throw Error('path');
-     manifest=data;await Promise.all(paths.map(path=>loadImage(path).promise));
-     assetStatus=paths.some(path=>images.get(path).status==='ready')?'ready':'unavailable';
-    }catch{assetStatus='unavailable';}finally{clearTimeout(timer);updateText();draw();}
-    return assetStatus==='ready';
+    const [native,hd]=await Promise.all([
+     readManifest(ASSET_ROOT+'index.json',data=>{
+      if(data?.schema!=='tk2-battle-original-v1'||!data.backgrounds||!data.sprites)return null;
+      const paths=[...Object.values(data.backgrounds).map(r=>r?.path),...Object.values(data.sprites).flatMap(r=>(r?.frames||[]).map(f=>f.path))].filter(Boolean);
+      return paths.length&&paths.length<=256&&paths.every(validAssetPath)?paths:null;
+     }),
+     readManifest(ENHANCED_ROOT+'index.json',data=>{
+      if(data?.schema!=='tk2-battle-enhanced-v1'||data.scale!==RESOLUTION_SCALE||!data.backgrounds||!data.sprites||!data.duelists)return null;
+      const frames=[...Object.values(data.backgrounds),...Object.values(data.sprites).flatMap(r=>r?.frames||[]),...Object.values(data.duelists).flatMap(horses=>Object.values(horses||{}).flatMap(r=>r?.frames||[]))];
+      if(!frames.length||frames.length>512||!frames.every(f=>f&&validEnhancedAssetPath(f.path)&&Number.isInteger(f.logical_width)&&Number.isInteger(f.logical_height)&&f.logical_width>0&&f.logical_width<=1024&&f.logical_height>0&&f.logical_height<=1024&&f.width===f.logical_width*RESOLUTION_SCALE&&f.height===f.logical_height*RESOLUTION_SCALE))return null;
+      return frames.map(f=>f.path);
+     }),
+     Promise.resolve().then(()=>duelAppearance?.load?.()).catch(()=>null)
+    ]);
+    manifest=native?.data||null;enhanced=hd?.data||null;
+    const paths=[...(native?.paths||[]),...(hd?.paths||[])];
+    assetStatus=paths.some(path=>images.get(path)?.status==='ready')?'ready':'unavailable';
+    updateText();draw();return assetStatus==='ready';
    })();return assetsPromise;
   }
   function html(){
    const lang=locale();
-   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div class="nes-battle-viewport"><canvas width="256" height="240" data-battle-canvas role="img" aria-label="${text('原版像素戰場，請使用部隊按鈕選將','原作ドットの戦場。部隊ボタンで武将を選択できます')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
+   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas role="img" aria-label="${text('原版像素戰場，請使用部隊按鈕選將','原作ドットの戦場。部隊ボタンで武将を選択できます')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
   }
   function fit(){
    const box=host?.querySelector?.('.nes-battle-viewport');if(!box||!canvas)return;
@@ -93,7 +110,7 @@
   function mount(element,current,selected={}){
    resizeObserver?.disconnect();host=element;view=current;selection=selected;
    canvas=host?.querySelector?.('[data-battle-canvas]');ctx=null;
-   if(canvas){try{ctx=canvas.getContext('2d',{alpha:false});}catch{}canvas.onclick=clickMap;}
+   if(canvas){canvas.width=WIDTH*RESOLUTION_SCALE;canvas.height=HEIGHT*RESOLUTION_SCALE;try{ctx=canvas.getContext('2d',{alpha:false});}catch{}canvas.onclick=clickMap;}
    if(root.ResizeObserver&&host){resizeObserver=new root.ResizeObserver(fit);resizeObserver.observe(host.querySelector('.nes-battle-viewport')||host);}
    host?.querySelector?.('[data-battle-skip]')?.addEventListener('click',skip);
    if(host)host.dataset.sceneAssets=assetStatus;
@@ -113,20 +130,29 @@
   function label(value,x,y,color=INK,size=8){ctx.font=`${size}px Unifont, monospace`;ctx.textBaseline='top';ctx.fillStyle=color;ctx.fillText(String(value),Math.round(x),Math.round(y));}
   function outline(x,y,w,h,color=INK){rectangle(x,y,w,1,color);rectangle(x,y+h-1,w,1,color);rectangle(x,y,1,h,color);rectangle(x+w-1,y,1,h,color);}
   function blit(image,x,y,w=image?.width,h=image?.height,mirror=false){if(!image)return false;ctx.save();ctx.imageSmoothingEnabled=false;if(mirror){ctx.translate(Math.round(x+w),Math.round(y));ctx.scale(-1,1);ctx.drawImage(image,0,0,w,h);}else ctx.drawImage(image,Math.round(x),Math.round(y),Math.round(w),Math.round(h));ctx.restore();return true;}
+  function readyFrame(kind,tick){
+   for(const source of [enhanced,manifest]){
+    const frames=source?.sprites?.[kind]?.frames||[],f=frames[Math.floor(tick)%Math.max(1,frames.length)],image=imageFor(f?.path);
+    if(image)return {image,width:f.logical_width||image.width,height:f.logical_height||image.height};
+   }return null;
+  }
   function sprite(kind,x,y,tick,{mirror=false,maxWidth=32,maxHeight=32}={}){
-   const frames=manifest?.sprites?.[kind]?.frames||[],f=frames[Math.floor(tick)%Math.max(1,frames.length)],image=imageFor(f?.path);if(!image)return false;
-   const scale=Math.min(1,maxWidth/image.width,maxHeight/image.height),w=Math.round(image.width*scale),h=Math.round(image.height*scale);
-   return blit(image,x-w/2,y-h,w,h,mirror);
+   const row=readyFrame(kind,tick);if(!row)return false;
+   const scale=Math.min(1,maxWidth/row.width,maxHeight/row.height),w=Math.round(row.width*scale),h=Math.round(row.height*scale);
+   return blit(row.image,x-w/2,y-h,w,h,mirror);
+  }
+  function backgroundImage(kind){
+   for(const source of [enhanced,manifest]){const row=source?.backgrounds?.[kind]||source?.backgrounds?.plain,image=imageFor(row?.path);if(image)return image;}return null;
   }
   function background(kind){
-   const path=manifest?.backgrounds?.[kind]?.path||manifest?.backgrounds?.plain?.path,image=imageFor(path);
+   const image=backgroundImage(kind);
    if(image){blit(image,0,0,256,160);return image;}
    rectangle(0,0,256,160,kind==='water'?'#1850db':'#fff0b0');return null;
   }
   function plainSlots(image,side){
    const cache=(image?.src||'fallback')+':'+side;if(terrainSlots.has(cache))return terrainSlots.get(cache);
    let pixels=null;
-   if(image&&doc?.createElement){try{const sample=doc.createElement('canvas');sample.width=256;sample.height=160;const c=sample.getContext('2d');c.drawImage(image,0,0,256,160);pixels=c.getImageData(0,0,256,160).data;}catch{}}
+   if(image&&doc?.createElement){try{const sample=doc.createElement('canvas');sample.width=256;sample.height=160;const c=sample.getContext('2d');c.imageSmoothingEnabled=false;c.drawImage(image,0,0,256,160);pixels=c.getImageData(0,0,256,160).data;}catch{}}
    const candidates=[];
    for(let gy=0;gy<10;gy++)for(let gx=0;gx<16;gx++){
     if(side==='attackers'?gx>6:gx<9)continue;
@@ -142,7 +168,7 @@
   }
   function flag(u,p,selected,enemy,used){
    const color=u.troops===0?'#888888':enemy?'#b61c16':'#ffffff';rectangle(p.x-6,p.y-6,12,12,INK);rectangle(p.x-5,p.y-5,10,10,color);
-   label(person(u.id).slice(0,2),p.x-4,p.y-4,enemy?'#ffffff':INK,8);
+   label(Array.from(person(u.id))[0]||'',p.x-4,p.y-4,enemy?'#ffffff':INK,8);
    if(u.troops===0){line(p.x-6,p.y-6,p.x+5,p.y+5,'#ffffff');line(p.x+5,p.y-6,p.x-6,p.y+5,'#ffffff');}
    if(used&&u.troops>0)rectangle(p.x+3,p.y+3,3,3,'#505050');
    if(selected){outline(p.x-8,p.y-8,16,16,'#ffffff');outline(p.x-7,p.y-7,14,14,INK);}
@@ -218,13 +244,30 @@
    const max=view.game.officers[String(id)]?.profile.health_max||99;rectangle(x,y,80,7,'#ffffff');rectangle(x,y,Math.round(80*health/max),7,'#9c3c00');outline(x,y,80,7);
    for(let j=4;j<80;j+=4)rectangle(x+j,y,1,7,INK);
   }
+  function duelProfile(id){return duelAppearance?.profile?.(view?.catalog,id)||null;}
+  function equipmentLabel(value){return typeof value==='object'?value?.[locale()]||value?.['zh-Hant']||'':translate(value);}
+  function duelEquipment(profile,x,matched){
+   label(matched?equipmentLabel(profile.weapon_label):text('原版備用圖','原作予備画像'),x,50,INK,6);
+   label(matched?equipmentLabel(profile.horse_label):text('通用騎將','汎用騎将'),x,57,INK,6);
+  }
+  function duelist(profile,x,y,tick,mirror){
+   const frames=enhanced?.duelists?.[profile?.weapon]?.[profile?.horse]?.frames||[],f=frames[Math.floor(tick)%Math.max(1,frames.length)],image=imageFor(f?.path);
+   if(!image)return false;
+   const w=f.logical_width,h=f.logical_height,scale=Math.min(1,96/w,96/h);
+   const anchor=f.anchor&&Number.isFinite(f.anchor.x)&&Number.isFinite(f.anchor.y)&&f.anchor.x>=0&&f.anchor.x<=w&&f.anchor.y>=0&&f.anchor.y<=h?f.anchor:{x:w/2,y:h};
+   return blit(image,x-(mirror?w-anchor.x:anchor.x)*scale,y-anchor.y*scale,w*scale,h*scale,mirror);
+  }
   function paintDuel(state,scene=null,progress=0){
    rectangle(0,0,256,64,PAPER);rectangle(0,64,256,96,INK);rectangle(0,160,256,80,PAPER);
    const d=state.duel||scene?.before.duel||scene?.after.duel||{actor:scene?.actor,target:scene?.target},a=state.units.find(u=>u.id===d.actor),t=state.units.find(u=>u.id===d.target);if(!a||!t)return;
    label(person(a.id),32,17,INK,12);label(person(t.id),144,17,INK,12);bar(a.id,a.health,32,40);bar(t.id,t.health,144,40);
+   const ap=duelProfile(a.id),tp=duelProfile(t.id);
    const action=scene?.kind==='duel_action'&&scene.move!=='withdraw',approach=action?Math.round(Math.sin(progress*Math.PI)*26):0,tick=Math.floor(progress*10);
-   if(!sprite('duelist',54+approach,160,tick,{maxWidth:96,maxHeight:96}))sprite('cavalry',54+approach,155,tick,{maxWidth:72,maxHeight:88});
-   if(!sprite('duelist_enemy',202-approach,160,tick+1,{maxWidth:96,maxHeight:96}))sprite('duelist',202-approach,160,tick+1,{mirror:true,maxWidth:96,maxHeight:96});
+   const aMatched=duelist(ap,54+approach,160,tick,false),tMatched=duelist(tp,202-approach,160,tick+1,true);
+   duelRendering.set(a.id,aMatched);duelRendering.set(t.id,tMatched);
+   if(!aMatched&&!sprite('duelist',54+approach,160,tick,{maxWidth:96,maxHeight:96}))sprite('cavalry',54+approach,155,tick,{maxWidth:72,maxHeight:88});
+   if(!tMatched&&!sprite('duelist_enemy',202-approach,160,tick+1,{maxWidth:96,maxHeight:96}))sprite('duelist',202-approach,160,tick+1,{mirror:true,maxWidth:96,maxHeight:96});
+   duelEquipment(ap,32,aMatched);duelEquipment(tp,144,tMatched);
    if(action&&progress>.38&&progress<.7){line(115,95,140,131,'#fff',2);line(139,95,115,131,'#ffb800',2);}
    label(text(`第${d.round||1}合`,`第${d.round||1}合`),108,166);
    const caption=scene?sceneCaption(scene):text('選擇招式，與對手交鋒','技を選び、相手と打ち合う');label(caption.slice(0,30),8,185,INK,9);
@@ -242,7 +285,9 @@
   }
   function description(){
    const b=view?.game?.battle;if(!b)return '';
-   return ['attackers','defenders'].map(side=>b[side].map(u=>`${person(u.id)} ${text('兵','兵')} ${u.troops} ${text('體','体')} ${b.extended.support[String(u.id)].health} ${text('訓練度','練度')} ${b.extended.support[String(u.id)].morale??70}`).join('、')).join(' / ');
+   const armies=['attackers','defenders'].map(side=>b[side].map(u=>`${person(u.id)} ${text('兵','兵')} ${u.troops} ${text('體','体')} ${b.extended.support[String(u.id)].health} ${text('訓練度','練度')} ${b.extended.support[String(u.id)].morale??70}`).join('、')).join(' / ');
+   const duel=b.extended.duel,equipment=duel?[duel.actor,duel.target].map(id=>{const p=duelProfile(id);return p&&duelRendering.get(id)?[person(id),equipmentLabel(p.weapon_label),equipmentLabel(p.horse_label)].join(' '):[person(id),text('原版備用圖','原作予備画像'),text('通用騎將','汎用騎将')].join(' ');}).filter(Boolean).join(' / '):'';
+   return armies+(equipment?' / '+equipment:'');
   }
   function updateText(){
    if(!host)return;host.dataset.l10nNative=locale();host.dataset.sceneAssets=assetStatus;
@@ -253,7 +298,9 @@
   }
   function draw(){
    if(!ctx||!view?.game?.battle||host?.isConnected===false)return;
-   ctx.imageSmoothingEnabled=false;rectangle(0,0,256,240,INK);
+   // Render directly into the4× backing store, retaining the original logical layout.
+   // This also lets128×160 portraits and32px CJK text retain their actual detail.
+   duelRendering.clear();ctx.setTransform(RESOLUTION_SCALE,0,0,RESOLUTION_SCALE,0,0);ctx.imageSmoothingEnabled=false;rectangle(0,0,WIDTH,HEIGHT,INK);
    if(frame){const {scene,progress}=frame,state=progress<.55?scene.before:scene.after;if(scene.kind.startsWith('duel'))paintDuel(state,scene,progress);else paintEngagement(scene,progress);}
    else{const state=snapshot(view);if(state.duel)paintDuel(state);else{paintMap(state);hud(state);}}
    updateText();
@@ -261,7 +308,7 @@
   function clickMap(event){
    if(playing||!canvas||!view?.game?.battle||view.game.phase!=='battle'||view.game.battle.extended.duel)return;
    const rect=canvas.getBoundingClientRect(),x=(event.clientX-rect.left)*256/rect.width,y=(event.clientY-rect.top)*240/rect.height;if(y>=160)return;
-   const state=snapshot(view),image=imageFor(manifest?.backgrounds?.tactical?.path),points=positions(state,image),own=view.game.battle.attacker===view.game.player?'attackers':'defenders';
+   const state=snapshot(view),image=backgroundImage('tactical'),points=positions(state,image),own=view.game.battle.attacker===view.game.player?'attackers':'defenders';
    const found=state.units.map(u=>({u,p:points.get(u.id)})).filter(r=>r.p&&Math.abs(r.p.x-x)<=9&&Math.abs(r.p.y-y)<=9).sort((a,b)=>Math.hypot(a.p.x-x,a.p.y-y)-Math.hypot(b.p.x-x,b.p.y-y))[0];
    if(!found||found.u.troops<=0||found.u.side===own&&view.game.battle.used.includes(found.u.id))return;
    options.onSelect?.(found.u.side===own?'actor':'target',found.u.id);
@@ -282,7 +329,7 @@
     handle=raf(tick);
    };frame={scene:scenes[0],progress:0};draw();handle=raf(tick);});
   }
-  function reset(){finish(false);observed=null;key='';view=null;selection={};resizeObserver?.disconnect();host=canvas=ctx=null;}
+  function reset(){finish(false);duelRendering.clear();observed=null;key='';view=null;selection={};resizeObserver?.disconnect();host=canvas=ctx=null;}
   function leave(){if(host||playing||queue.length)reset();}
   function changeLanguage(){updateText();draw();}
   function visibility(){if(doc?.hidden&&playing)skip();}
@@ -291,6 +338,6 @@
   function dispose(){disposed=true;reset();doc?.removeEventListener?.('game-language-change',changeLanguage);doc?.removeEventListener?.('visibilitychange',visibility);doc?.removeEventListener?.('keydown',keydown);}
   return {html,mount,observe,play,skip,reset,leave,load,dispose,deferOutcome:cue=>{outcomeCue=cue;},get playing(){return playing;},state:()=>({playing,queued:queue.length,assetStatus,battleId:view?.game?.battle?.id??null,scene:frame?.scene?.kind??null})};
  }
- const api={create,receiptScenes,validSnapshot,snapshot,changes,duration,validAssetPath};
+ const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,receiptScenes,validSnapshot,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameBattleScene=api;
 })(typeof window==='object'?window:globalThis);

@@ -1,0 +1,139 @@
+#!/usr/bin/env node
+'use strict';
+/* Offline, deterministic packing of imagegen-painted weapon/horse sprites.
+ * Native pixels remain separate; originals are read and hash-checked only. */
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const {decodePng,encodePng,scale2x}=require('../portraits/prepare_enhanced.cjs');
+const {WEAPONS,HORSES}=require('../../game/duel-appearance.js');
+const ROOT=path.resolve(__dirname,'../..'),OUT='game/assets/battle-enhanced',ART='art/battle-enhancement-v1',TOOL='tools/battle-enhancement/build.cjs';
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex'),read=p=>fs.readFileSync(path.join(ROOT,p)),json=p=>JSON.parse(read(p));
+const PALETTE=[[0,0,0],[66,30,15],[103,43,18],[145,62,21],[186,86,29],[222,127,53],[247,162,71],[255,199,116],[255,226,168],[255,244,211],[255,255,255],[57,60,60],[100,105,104],[151,155,151],[203,207,197],[128,19,21],[208,49,32],[52,92,40],[90,143,56],[40,62,103]];
+function write(name,bytes){const target=path.join(ROOT,OUT,name);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes);return bytes;}
+function native4x(image){
+ assert.equal(new Uint8Array(new Uint32Array([0x01020304]).buffer)[0],4,'Pixel packing requires a little-endian Node runtime');
+ const values=Uint32Array.from({length:image.width*image.height},(_,i)=>image.rgba.readUInt32LE(i*4));
+ return Buffer.from(scale2x(scale2x(values,image.width,image.height),image.width*2,image.height*2).buffer);
+}
+function nativeEntry(row){
+ const sourcePath='game'+row.path,source=read(sourcePath),image=decodePng(source),rgba=native4x(image),width=image.width*4,height=image.height*4;
+ const name='native-'+path.basename(row.path),bytes=write(name,encodePng(width,height,rgba));
+ return {path:'/assets/battle-enhanced/'+name,width,height,logical_width:image.width,logical_height:image.height,anchor:row.anchor||{x:image.width/2,y:image.height},sha256:sha(bytes),pixel_sha256:sha(rgba),source_path:row.path,source_sha256:sha(source),method:'native_scale4x'};
+}
+function poseImages(image){
+ // The riders are separate transparent islands. Their bounding rectangles can
+ // overlap inx (long weapon over the other horse's tail), so a50/50 sheet crop
+ // would cut actual art. Trace connected painted islands instead.
+ const {width:w,height:h,rgba}=image,seen=new Uint8Array(w*h),components=[];
+ for(let start=0;start<w*h;start++){
+  if(seen[start]||rgba[start*4+3]<128)continue;const queue=[start];seen[start]=1;let x1=w,y1=h,x2=0,y2=0;
+  for(let k=0;k<queue.length;k++){const i=queue[k],x=i%w,y=Math.floor(i/w);x1=Math.min(x1,x);x2=Math.max(x2,x);y1=Math.min(y1,y);y2=Math.max(y2,y);
+   for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx<0||xx>=w||yy<0||yy>=h)continue;const j=yy*w+xx;if(!seen[j]&&rgba[j*4+3]>=128){seen[j]=1;queue.push(j);}}
+  }
+  if(queue.length>=12)components.push({pixels:queue,box:[x1,y1,x2+1,y2+1]});
+ }
+ components.sort((a,b)=>b.pixels.length-a.pixels.length);assert(components.length>=2&&components[1].pixels.length>10000,'Source sheet must contain two separate complete mounted riders');
+ const main=components.slice(0,2).sort((a,b)=>a.box[0]-b.box[0]),out=main.map((_,pose)=>({width:w,height:h,rgba:Buffer.alloc(rgba.length),pose}));
+ const distance=(a,b)=>{const ax=(a[0]+a[2])/2,ay=(a[1]+a[3])/2,dx=ax< b[0]?b[0]-ax:ax>b[2]?ax-b[2]:0,dy=ay<b[1]?b[1]-ay:ay>b[3]?ay-b[3]:0;return dx*dx+dy*dy+Math.abs(ax-(b[0]+b[2])/2)*.01;};
+ for(const component of components){let slot=main.indexOf(component);if(slot<0)slot=distance(component.box,main[0].box)<=distance(component.box,main[1].box)?0:1;
+  for(const i of component.pixels)rgba.copy(out[slot].rgba,i*4,i*4,i*4+4);
+ }
+ return out;
+}
+function imageBounds(image){
+ let x1=image.width,y1=image.height,x2=-1,y2=-1,count=0;
+ for(let y=0;y<image.height;y++)for(let x=0;x<image.width;x++)if(image.rgba[(y*image.width+x)*4+3]>=128){x1=Math.min(x1,x);x2=Math.max(x2,x);y1=Math.min(y1,y);y2=Math.max(y2,y);count++;}
+ assert(count>500&&x2>x1&&y2>y1,'Each transparent sheet half must contain a complete mounted rider');
+ return [x1,y1,x2+1,y2+1];
+}
+function bounds(image,which){return imageBounds(poseImages(image)[which]);}
+function nearest(rgb){let best=0,distance=Infinity;for(let k=0;k<PALETTE.length;k++){const d=PALETTE[k].reduce((sum,v,c)=>sum+(v-rgb[c])**2,0);if(d<distance){best=k;distance=d;}}return best;}
+function fitted(image,box,scale){
+ const rgba=Buffer.alloc(384*384*4),[left,top,right,bottom]=box,w=Math.round((right-left)*scale),h=Math.round((bottom-top)*scale),dx=Math.floor((384-w)/2),dy=384-h;
+ assert(dx>=0&&dy>=0&&w>100&&h>100);
+ // Two real output pixels per art pixel keep the NES pixel edge, while the
+ // source study supplies more shape detail than a repeated native96px frame.
+ for(let y=0;y<h;y+=2)for(let x=0;x<w;x+=2){
+  const sx=Math.min(right-1,left+Math.floor((x+.5)/scale)),sy=Math.min(bottom-1,top+Math.floor((y+.5)/scale)),src=(sy*image.width+sx)*4;
+  if(image.rgba[src+3]<128)continue;const color=PALETTE[nearest(image.rgba.subarray(src,src+3))];
+  for(let yy=0;yy<2&&y+yy<h;yy++)for(let xx=0;xx<2&&x+xx<w;xx++){const at=((dy+y+yy)*384+dx+x+xx)*4;for(let c=0;c<3;c++)rgba[at+c]=color[c];rgba[at+3]=255;}
+ }
+ // These annotations protect only the upper rider/gauntlets in the approved
+ // two-pose art layout. The horse's upper rump starts below this source area.
+ const annotated=[[240,120,590,450],[1000,140,1390,440]][image.pose];
+ const riderSourceRect=annotated?annotated.map((n,i)=>n*(i%2===0?image.width/1774:image.height/887)):null;
+ return {rgba,box:[dx,dy,dx+w,dy+h],source_box:box,scale,rider_source_rect:riderSourceRect};
+}
+function horseMask(image){
+ const {rgba,box}=image,w=384,h=384,minY=box[1]+Math.floor((box[3]-box[1])*.25),mask=new Uint8Array(w*h),seen=new Uint8Array(w*h),components=[];
+ const warm=i=>{const at=i*4,r=rgba[at],g=rgba[at+1],b=rgba[at+2];return rgba[at+3]&&r>65&&r<=222&&g/r>=.32&&r-g>22&&g-b>4;};
+ for(let y=minY;y<h;y++)for(let x=0;x<w;x++){
+  const start=y*w+x;if(seen[start]||!warm(start))continue;const queue=[start];seen[start]=1;let x1=x,x2=x,y1=y,y2=y;
+  for(let k=0;k<queue.length;k++){const i=queue[k],xx=i%w,yy=Math.floor(i/w);x1=Math.min(x1,xx);x2=Math.max(x2,xx);y1=Math.min(y1,yy);y2=Math.max(y2,yy);
+   for(const j of[xx>0?i-1:-1,xx<w-1?i+1:-1,yy>minY?i-w:-1,yy<h-1?i+w:-1])if(j>=0&&!seen[j]&&warm(j)){seen[j]=1;queue.push(j);}
+  }
+  components.push({pixels:queue,box:[x1,y1,x2,y2]});
+ }
+ // Exclude thin wooden weapon shafts; the large warm horse patches remain.
+ for(const component of components){
+  const[x1,y1,x2,y2]=component.box;
+  let protectedRider=false;
+  if(image.rider_source_rect){
+   const[l,t,r,b]=image.rider_source_rect,sx=image.source_box[0]+(x1-box[0]+.5)/image.scale,sy=image.source_box[1]+(y1-box[1]+.5)/image.scale,sr=image.source_box[0]+(x2-box[0]+.5)/image.scale,sb=image.source_box[1]+(y2-box[1]+.5)/image.scale;
+   // Protect a complete leather patch within the rider annotation, rather
+   // than cutting a rectangle out of a larger horse-neck/body component.
+   protectedRider=sx>=l&&sy>=t&&sr<r&&sb<b;
+  }
+  if(component.pixels.length<128||(x2-x1<9&&y2-y1>40)||protectedRider)continue;
+  for(const i of component.pixels)mask[i]=1;
+ }
+ assert(mask.reduce((a,b)=>a+b,0)>500,'Horse coat mask must cover a substantive painted horse region');return mask;
+}
+const COATS={
+ chestnut:[[66,30,15],[103,43,18],[145,62,21],[186,86,29],[222,127,53],[247,162,71]],
+ white:[[169,177,175],[220,225,216],[245,245,226],[255,251,235],[255,255,255],[255,255,255]],
+ black:[[20,24,29],[47,53,61],[65,72,81],[85,92,101],[105,112,119],[132,139,145]],
+ 'red-hare':[[67,13,12],[105,20,15],[145,33,18],[190,51,24],[225,78,31],[247,126,49]],
+ dilu:[[169,177,175],[220,225,216],[245,245,226],[255,251,235],[255,255,255],[255,255,255]]
+};
+function recolor(image,mask,horse){
+ const rgba=Buffer.from(image.rgba),ramp=COATS[horse];let changed=0;
+ for(let i=0;i<mask.length;i++)if(mask[i]){const at=i*4,luma=rgba[at]*.299+rgba[at+1]*.587+rgba[at+2]*.114,index=Math.min(5,Math.max(0,Math.floor((luma-30)/32))),color=ramp[index];for(let c=0;c<3;c++){changed+=Number(rgba[at+c]!==color[c]);rgba[at+c]=color[c];}}
+ return {rgba,changed};
+}
+function build(){
+ const originalPath='game/assets/battle-original/index.json',original=json(originalPath),backgrounds={},sprites={},duelists={},studies={};
+ for(const[key,row]of Object.entries(original.backgrounds))backgrounds[key]=nativeEntry(row);
+ for(const[key,row]of Object.entries(original.sprites))sprites[key]={facing:row.facing,frames:row.frames.map(nativeEntry)};
+ for(const weapon of WEAPONS){
+  const study=ART+'/studies/'+weapon+'.png',prompt=ART+'/prompts/'+weapon+'.txt',input=read(study),image=decodePng(input),poses=poseImages(image),boxes=poses.map(imageBounds),scale=Math.min(...boxes.map(([l,t,r,b])=>Math.min(320/(r-l),352/(b-t))));
+  assert(new Set(image.rgba.filter((_,i)=>i%4===3)).size>1,'Generated source must actually retain a transparent background');
+  studies[weapon]={study,study_sha256:sha(input),prompt,prompt_sha256:sha(read(prompt)),source_size:[image.width,image.height],source_boxes:boxes};duelists[weapon]={};
+  const fittedFrames=boxes.map((box,index)=>fitted(poses[index],box,scale)),masks=fittedFrames.map(horseMask);
+  for(const horse of HORSES){const frames=[];
+   for(let pose=0;pose<2;pose++){
+    const rendered=recolor(fittedFrames[pose],masks[pose],horse),name=`duel-${weapon}-${horse}-${String(pose).padStart(2,'0')}.png`,bytes=write(name,encodePng(384,384,rendered.rgba));
+    frames.push({path:'/assets/battle-enhanced/'+name,width:384,height:384,logical_width:96,logical_height:96,anchor:{x:48,y:96},sha256:sha(bytes),pixel_sha256:sha(rendered.rgba),method:'imagegen_painted_sprite_pixel_fit_coat_mask',study_key:weapon,pose,horse_mask_pixels:masks[pose].reduce((a,b)=>a+b,0)});
+   }
+   duelists[weapon][horse]={facing:'right',frames};
+  }
+ }
+ const manifest={schema:'tk2-battle-enhanced-v1',scale:4,originals_retained:true,logical_resolution:{width:256,height:240},resolution:{width:1024,height:960},build:{tool:TOOL,tool_sha256:sha(read(TOOL)),native_index:originalPath,native_index_sha256:sha(read(originalPath)),imagegen_mode:'built_in',native_method:'Scale2x twice, retaining original palette and originals',duel_method:'Two distinct imagegen-painted poses per weapon, binary alpha, finite NES-compatible palette, source-aware lower warm coat masks; no new battle stats or RNG'},studies,backgrounds,sprites,duelists};
+ write('index.json',Buffer.from(JSON.stringify(manifest,null,2)+'\n'));return check();
+}
+function entries(manifest){return [...Object.values(manifest.backgrounds),...Object.values(manifest.sprites).flatMap(row=>row.frames),...Object.values(manifest.duelists).flatMap(rows=>Object.values(rows).flatMap(row=>row.frames))];}
+function check(){
+ const m=json(OUT+'/index.json');assert.equal(m.schema,'tk2-battle-enhanced-v1');assert.equal(m.scale,4);assert.equal(m.originals_retained,true);assert.equal(m.build.tool_sha256,sha(read(TOOL)));assert.equal(m.build.native_index_sha256,sha(read(m.build.native_index)));assert.deepEqual(Object.keys(m.duelists).sort(),[...WEAPONS].sort());
+ let generated=0;const paths=new Set();
+ for(const row of entries(m)){
+  assert.match(row.path,/^\/assets\/battle-enhanced\/[a-zA-Z0-9_-]+\.png$/);paths.add(path.basename(row.path));const input=read('game'+row.path),image=decodePng(input);
+  assert.deepEqual([image.width,image.height],[row.width,row.height]);assert.equal(row.width,row.logical_width*4);assert.equal(row.height,row.logical_height*4);assert.equal(row.sha256,sha(input));assert.equal(row.pixel_sha256,sha(image.rgba));
+  if(row.source_path){const src=read('game'+row.source_path);assert.equal(row.source_sha256,sha(src));assert(native4x(decodePng(src)).equals(image.rgba),'Native Scale4x must reproduce exactly');}
+  else{generated++;assert.deepEqual([row.width,row.height],[384,384]);const alpha=new Set();let count=0;const palette=new Set();for(let i=0;i<image.rgba.length;i+=4){alpha.add(image.rgba[i+3]);if(image.rgba[i+3]){count++;palette.add(image.rgba.subarray(i,i+3).toString('hex'));}}assert.deepEqual([...alpha].sort((a,b)=>a-b),[0,255]);assert(count>1000);assert(palette.size<=26);assert(row.horse_mask_pixels>500);}
+ }
+ for(const weapon of WEAPONS){assert.deepEqual(Object.keys(m.duelists[weapon]).sort(),[...HORSES].sort());const study=m.studies[weapon];assert.equal(study.study_sha256,sha(read(study.study)));assert.equal(study.prompt_sha256,sha(read(study.prompt)));for(const horse of HORSES)assert.equal(m.duelists[weapon][horse].frames.length,2);}
+ assert.equal(generated,WEAPONS.length*HORSES.length*2);
+ assert.deepEqual(fs.readdirSync(path.join(ROOT,OUT)).filter(p=>p.endsWith('.png')).sort(),[...paths].sort(),'No stale final sprites');
+ return{check:true,scale:4,native_files:paths.size-generated,generated_frames:generated,weapon_types:WEAPONS.length,horse_types:HORSES.length,originals_retained:true};
+}
+module.exports={build,check,native4x,bounds,poseImages,imageBounds,fitted,horseMask,recolor,entries};
+if(require.main===module){try{console.log(JSON.stringify(process.argv.includes('--check')?check():build()));}catch(error){console.error(error);process.exitCode=1;}}
