@@ -307,13 +307,15 @@
    // Keep a whole side visually coherent if any one of its three atlases fails.
    if(Object.keys(SOLDIER_TYPES).some(type=>!soldierImage(soldiers.types[type][palette])))return false;
    const pose=soldierActionPose(scene,unit.id,progress),left=side==='left';
-   const groups=[['infantry',[[40,32],[40,48],[40,64],[56,80]]],['cavalry',[[24,96],[56,96],[56,112],[72,128]]],['archer',[[56,160],[88,160]]]];
+   const groups=[['infantry',[[40,32],[40,48],[40,64],[56,80]]],['archer',[[24,96],[56,96],[56,112],[72,128]]],['cavalry',[[56,160],[88,160]]]];
    for(const [type,points]of groups){
     // Crossbow is a known tactic effect, not a new saved archer-unit class.
     const action=scene?.effect==='crossbow'&&unit.id===scene.actor&&pose==='attack'&&type!=='archer'?'ready':pose;
-    // Rear archers stop before their opposing bows/bodies overlap at contact.
-    // Outward withdrawal and every other formation's advance stay unchanged.
-    const advance=type==='archer'?Math.min(28,shift):shift;
+    // Retain the original4 infantry /4 archers /2 rear cavalry layout.
+    // Stop each approaching group before its mirrored image boxes overlap;
+    // outward withdrawal keeps the complete negative displacement.
+    const maximum=128-Math.max(...points.map(([x])=>x))-SOLDIER_TYPES[type]/2-4;
+    const advance=Math.min(shift,maximum,type==='archer'?28:Infinity);
     for(const [x,y]of points)soldierSprite(type,side,action,(left?x:256-x)+(left?advance:-advance),y);
    }
    return true;

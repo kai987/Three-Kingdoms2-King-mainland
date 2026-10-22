@@ -298,16 +298,18 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
    for(const type of ['infantry','archer','cavalry'])for(const palette of ['friendly','enemy']){
     const atlas=hd.soldiers.types[type][palette],unit=first.before.units.find(u=>u.id===(palette==='friendly'?(first.own==='attackers'?first.actor:first.target):(first.own==='attackers'?first.target:first.actor)))||first.before.units.find(u=>u.side===(palette==='friendly'?'attackers':'defenders'));
     let pose=standalone.soldierActionPose(first,unit.id,p);if(first.effect==='crossbow'&&unit.id===first.actor&&pose==='attack'&&type!=='archer')pose='ready';
-    const draws=sprites.filter(d=>d.src===atlas.path);assert.equal(draws.length,type==='archer'?2:4);
+    const draws=sprites.filter(d=>d.src===atlas.path);assert.equal(draws.length,type==='cavalry'?2:4,'Original composition is4 infantry,4 archers and2 cavalry per army');
     for(const d of draws){assert.deepEqual(d.args.slice(0,4),atlas.frames.find(f=>f.action===pose).source_rect);assert.equal(d.args.length,8,'Crop original4× source pixels directly without an intermediate tiny canvas');assert.deepEqual(d.args.slice(-2),[atlas.logical_width,atlas.logical_height]);}
    }
    assert.equal(env.scales.filter(s=>s[0]===-1&&s[1]===1).length,10,'Only the right-facing army is mirrored');
-   const boxes=sprites.filter(d=>d.src.includes('/soldiers-archer-')).map(d=>{const[x,y,w,h]=d.args.slice(4),[a,b,c,e,tx,ty]=d.matrix,xx=[(a*x+c*y+tx)/4,(a*(x+w)+c*(y+h)+tx)/4],yy=[(b*x+e*y+ty)/4,(b*(x+w)+e*(y+h)+ty)/4];return{src:d.src,left:Math.min(...xx),right:Math.max(...xx),top:Math.min(...yy),bottom:Math.max(...yy)};});
-   const friendly=boxes.filter(b=>b.src.endsWith('-friendly.png')),enemy=boxes.filter(b=>b.src.endsWith('-enemy.png'));assert.equal(friendly.length,2);assert.equal(enemy.length,2);
-   for(const a of friendly)for(const b of enemy)assert(a.right+8<=b.left,'Both opposing archer image boxes remain visible with at least8logical pixels of separation');
-   for(const box of boxes)assert(box.left>=0&&box.right<=256&&box.top>=0&&box.bottom<=160,'Archer sprites remain within the original battle arena');
-   if(key==='attack'&&p===.45){assert.equal(Math.max(...friendly.map(b=>b.right)),124,'Only the positive archer approach is capped at28');const cavalry=sprites.filter(d=>d.src.endsWith('cavalry-friendly.png'));assert.equal(Math.max(...cavalry.map(d=>d.args[4]+d.args[6])),84+standalone.attackStage(p).shift,'Cavalry retain the original full contact shift');}
-   if(key==='retreat')assert.equal(Math.max(...friendly.map(b=>b.right)),96-Math.round(p*38),'Negative withdrawal retains the full outward distance');
+   const boxes=sprites.map(d=>{const[x,y,w,h]=d.args.slice(4),[a,b,c,e,tx,ty]=d.matrix,xx=[(a*x+c*y+tx)/4,(a*(x+w)+c*(y+h)+tx)/4],yy=[(b*x+e*y+ty)/4,(b*(x+w)+e*(y+h)+ty)/4];return{src:d.src,left:Math.min(...xx),right:Math.max(...xx),top:Math.min(...yy),bottom:Math.max(...yy)};});
+   const friendly=boxes.filter(b=>b.src.endsWith('-friendly.png')),enemy=boxes.filter(b=>b.src.endsWith('-enemy.png'));assert.equal(friendly.length,10);assert.equal(enemy.length,10);
+   const friendlyType=type=>friendly.filter(b=>b.src.includes('/soldiers-'+type+'-'));
+   assert.deepEqual(friendlyType('infantry').map(b=>b.bottom),[32,48,64,80]);assert.deepEqual(friendlyType('archer').map(b=>b.bottom),[96,96,112,128]);assert.deepEqual(friendlyType('cavalry').map(b=>b.bottom),[160,160],'The original rear pair are cavalry, not archers');
+   for(const a of friendly)for(const b of enemy)assert(a.right+8<=b.left,'Every opposing soldier image box remains separated by at least8logical pixels');
+   if(key!=='retreat')for(const box of boxes)assert(box.left>=0&&box.right<=256&&box.top>=0&&box.bottom<=160,'Approaching soldiers remain within the original battle arena');
+   if(key==='attack'&&p===.45){assert.equal(Math.max(...friendlyType('archer').map(b=>b.right)),108,'Archer approach remains capped at28');assert.equal(Math.max(...friendlyType('cavalry').map(b=>b.right)),124,'Wider rear cavalry stop at24 to retain the center gap');assert.equal(Math.max(...friendlyType('infantry').map(b=>b.right)),64+standalone.attackStage(p).shift,'Infantry retain the original full contact shift');}
+   if(key==='retreat'){assert.equal(Math.max(...friendlyType('archer').map(b=>b.right)),80-Math.round(p*38));assert.equal(Math.max(...friendlyType('cavalry').map(b=>b.right)),100-Math.round(p*38),'Negative withdrawal retains the full outward distance');}
   }
   scene.skip();await play;scene.dispose();assert.equal(JSON.stringify(row),before,'Soldier playback cannot mutate authoritative views or RNG');assert.equal(env.rafs.size,0);assert.equal(env.timers.size,0);
  }
