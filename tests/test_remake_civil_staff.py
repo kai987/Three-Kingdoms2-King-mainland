@@ -142,7 +142,9 @@ class CivilStaffTests(unittest.TestCase):
         self.assertEqual(staff.city_occupancy(state, city), 1)
         self.assertEqual(person['troops'], 0)
         self.assertEqual(person['experience'], 0)
-        self.assertEqual(state.officers, historical)
+        self.assertEqual({i:o for i,o in state.officers.items() if type(i) is int}, historical)
+        self.assertIn(person['id'], state.officers)
+        self.assertEqual(state.officers[person['id']].loyalty, 80)
         self.assertEqual(person['action_turn'], 0)
         with self.assertRaises(GameError):
             staff.hire(game, state, 'empty', candidate['id'], 'one')
@@ -264,18 +266,21 @@ class CivilStaffTests(unittest.TestCase):
         self.assertEqual(person['unpaid_months'], 0)
         staff.validate(game, state)
 
-    def test_employees_follow_city_allegiance_without_becoming_historical_officers(self):
+    def test_generated_person_follows_actual_retreat_not_the_captured_city_owner(self):
         game, state = fixture()
         person = open_and_hire(game, state)
-        history = deepcopy(state.officers)
+        historical = {i:deepcopy(o) for i,o in state.officers.items() if type(i) is int}
+        # A real battle's normal settlement retreats the clerk to a friendly
+        # roster before the captured city's new owner is synchronized.
+        state.cities['empty'].roster.officer_ids.remove(person['id'])
+        state.cities['one'].roster.officer_ids.append(person['id'])
         state.cities['empty'].owner = 'two'
         staff.synchronize(game, state)
-        self.assertEqual(person['owner'], 'two')
-        self.assertFalse(person['working'])
-        self.assertEqual(staff.view(game, state)['faction_counts'], {'one': 0, 'two': 1})
-        event = next(row for row in reversed(state.events) if row['kind'] == 'staff_allegiance')
-        self.assertEqual(event['factions'], ['one', 'two'])
-        self.assertEqual(state.officers, history)
+        self.assertEqual(person['owner'], 'one')
+        self.assertEqual(person['city'], 'one')
+        self.assertEqual(staff.view(game, state)['faction_counts'], {'one': 1, 'two': 0})
+        self.assertFalse(any(e['kind']=='staff_allegiance' for e in state.events))
+        self.assertEqual({i:o for i,o in state.officers.items() if type(i) is int}, historical)
         staff.validate(game, state)
 
     def test_players_and_ai_use_same_hire_and_payroll_with_no_remote_event_flood(self):
@@ -357,6 +362,8 @@ class CivilStaffTests(unittest.TestCase):
         person = open_and_hire(game, state)
         advance_month(state, 2)
         state.cities['empty'].owner = 'two'
+        # Explicit ordinary-person defection accompanies this controlled owner change.
+        state.officers[person['id']].faction_id = 'two'
         before_money = {key: city.gold for key, city in state.cities.items()}
         before_random = deepcopy(state.extension['civil_staff']['rng'])
         before_payroll = state.extension['civil_staff']['last_payroll_month']

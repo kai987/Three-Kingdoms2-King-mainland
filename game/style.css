@@ -849,8 +849,9 @@ font-size:14px
 .map-bottom-bar .map-labels-full{display:none}
 .map-bottom-bar .map-labels-compact{display:inline}
 #map-date{display:flex;align-items:center;gap:6px;padding:3px 6px;border:4px double #000;background:var(--paper);color:#000;font:18px/1.2 var(--display);white-space:nowrap;box-shadow:0 0 0 2px var(--paper);pointer-events:none}
-.map-action-prompt{position:absolute;left:8px;right:8px;top:8px;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 8px;border:3px double #000;background:var(--paper);color:#000;font-size:16px}
-.map-action-prompt button{flex:none;min-height:32px;padding:2px 8px;font-size:16px}
+.map-action-prompt{position:absolute;left:0;right:0;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 6px;border:3px double #000;background:var(--paper);color:#000;font-size:14px;line-height:1.2}
+.map-action-prompt span{min-width:0}
+.map-action-prompt button{flex:none;min-height:24px;padding:0 6px;font-size:14px;line-height:1.2;white-space:nowrap}
 #world-map .city-hit.action-target .city-outline{fill:#fff3;stroke:#ffff80;stroke-width:4;stroke-dasharray:none;filter:drop-shadow(0 0 2px #000)}
 .city-hit.action-unavailable{cursor:not-allowed}
 .city-hit.action-unavailable .city-outline{stroke:none}
@@ -863,7 +864,7 @@ font-size:14px
  .map-labels-full{display:none}
  .map-labels-compact{display:inline}
  #map-date{gap:4px;padding:2px 4px;border-width:3px;font-size:14px}
- .map-action-prompt{font-size:14px}
+ .map-action-prompt button{min-height:28px}
 }
 
 .city-hit .city-outline{
@@ -910,3 +911,34 @@ stroke-dasharray:7 3
 
 .dialog-heading{display:flex;align-items:start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 .dialog-heading h2{margin:0}
+
+/* Compact two-officer administration keeps all controls in the original panels. */
+.roster-table{min-width:620px}
+.roster-table th:first-child,.roster-table td:first-child{width:30%}
+.roster-table th:last-child,.roster-table td:last-child{width:8%}
+/* Keep all eight live roster values visible in the desktop inspector. */
+#inspector .roster-table{min-width:400px;font-size:14px}
+#inspector .roster-table th,#inspector .roster-table td{padding:4px}
+#inspector .roster-table th:first-child,#inspector .roster-table td:first-child{width:24%}
+#inspector .roster-table th:not(:first-child),#inspector .roster-table td:not(:first-child){width:10.857%}
+#inspector .roster-table .officer-identity{gap:4px}
+#inspector .roster-table .portrait-frame{width:28px;height:35px}
+.domestic-role-grid,.domestic-input-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.domestic-role-grid .field,.domestic-input-grid .field{min-width:0;margin:0}
+.domestic-role-grid select,.domestic-input-grid input{max-width:100%;width:100%;min-width:0}
+[data-domestic-dialog]{display:grid;gap:16px;min-width:0}
+[data-domestic-dialog] fieldset{display:grid;gap:12px;border:2px solid #000;margin:0;padding:12px;min-width:0}
+[data-domestic-dialog] legend{padding:0 6px;font-size:20px}
+.domestic-toggle{display:flex;align-items:start;gap:8px;min-width:0}
+.domestic-toggle input{flex:none;width:20px;height:20px;margin:3px 0}
+.domestic-preview{border-block:3px double #000;padding:10px 0;display:grid;gap:6px;overflow-wrap:anywhere}
+.domestic-role-warning:empty{display:none}
+.domestic-saved{color:#204c20}
+[data-domestic-dialog] select[multiple]{min-height:96px;max-width:100%;width:100%}
+.logistics-convoys{border-top:3px double #000;margin-top:14px;padding-top:10px;overflow-wrap:anywhere}
+.logistics-convoys h3{font-size:20px}.logistics-convoys p{margin:8px 0}
+.domestic-reports p{margin:8px 0}
+@media(max-width:600px){.domestic-role-grid,.domestic-input-grid{grid-template-columns:minmax(0,1fr)}[data-domestic-dialog] fieldset{padding:8px}}
+
+dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;background:var(--paper);padding:8px 0;border-top:2px solid var(--ink);z-index:1}
+@media(max-width:600px){dialog:has([data-domestic-dialog]) .dialog-actions{bottom:-16px}}

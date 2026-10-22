@@ -10,16 +10,18 @@ import hashlib
 import json
 from pathlib import Path
 from threading import RLock
+from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff
+from . import civil_staff, domestic, logistics
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
 from .events import empty as empty_events, emit as emit_event, transition as record_events, validate as validate_events
 from .officers import (CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
-                       initialize_officer, integer, year_state)
+                       initialize_officer, integer, year_state, is_generated_ref,
+                       parse_officer_ref, deserialize_officer_ref, ref_sort_key)
 
 
 def canonical(value):
@@ -94,7 +96,7 @@ class Catalog:
         self.rules = GameRules(r['city_officer_capacity'], r['battle_officers_per_side'], r['runtime_capacity'])
         self.by_id, self.definitions, self.profiles = {}, {}, {}
         for row in self.data['people']:
-            ident = self.rules.officer_id(row['runtime_id'])
+            ident = integer(row['runtime_id'], 0, self.rules.runtime_capacity-1, 'historical officer ID')
             person = PersonDefinition(row['person_id'], row['name'], row['birth_year'],
                                       row['service_year'], row['death_year'], row['chronology_basis'])
             assert ident not in self.by_id and person.person_id not in self.definitions
@@ -138,8 +140,20 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _emit_event(self, state, kind, **values):
         return emit_event(self, state, kind, **values)
 
+    def person_name(self, state, ident):
+        return state.extension['civil_staff']['people'][ident]['name'] if is_generated_ref(ident) else self.catalog.name(ident)
+
+    def person_definition(self, state, ident):
+        return civil_staff.definition(state.extension['civil_staff']['people'][ident]) if is_generated_ref(ident) else self.catalog.definitions[self.catalog.by_id[ident]['person_id']]
+
+    def person_profile(self, state, ident):
+        return civil_staff.officer_profile(state.extension['civil_staff']['people'][ident]) if is_generated_ref(ident) else self.catalog.profiles[ident]
+
+    def all_person_definitions(self, state):
+        return [*self.catalog.definitions.values(), *(civil_staff.definition(p) for p in state.extension.get('civil_staff', {}).get('people', {}).values())]
+
     def _city_occupancy(self, state, city):
-        return len(city.roster.officer_ids) + civil_staff.city_count(state, city.id)
+        return len(city.roster.officer_ids)
 
     def _hire_staff(self, state, payload):
         city = self._owned_city(state, payload.get('city'), action=True)
@@ -148,6 +162,21 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _reject_staff(self, state, payload):
         city = self._owned_city(state, payload.get('city'))
         civil_staff.reject(self, state, city.id, payload.get('candidate'), state.player)
+
+    def _set_domestic(self, state, payload):
+        from .domestic import set_policy
+        self._owned_city(state,payload.get('city'))
+        set_policy(self,state,payload,state.player)
+
+    def _set_logistics(self, state, payload):
+        from .logistics import set_policy
+        self._owned_city(state,payload.get('city'))
+        set_policy(self,state,payload,state.player)
+
+    def _dispatch_transport(self, state, payload):
+        from .logistics import dispatch
+        self._owned_city(state,payload.get('source'),action=True)
+        dispatch(self,state,payload,state.player)
 
     def _civil_staff_view(self, state):
         result = civil_staff.view(self, state)
@@ -159,7 +188,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                          and person['action_turn'] != state.turn]
             candidates = self._free_candidates(state, city) if city.owner == state.player else []
             row['searchable_staff'] = available
-            row['search_targets'] = [dict(id=i, name=self.catalog.name(i),
+            row['search_targets'] = [dict(id=i, name=self.person_name(state, i),
                 martial_strength=state.officers[i].profile.martial_strength,
                 intellect=state.officers[i].profile.intellect,
                 virtue=state.officers[i].profile.virtue,
@@ -203,6 +232,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.extension.update(difficulty=difficulty, ai_strategy={}, events=empty_events())
         state.extension['travel'] = dict(counter=0, marches=[], battle_arrival=False, discovered=[])
         state.extension['civil_staff'] = civil_staff.empty(self, state)
+        state.extension['domestic'] = domestic.empty(self,state)
+        state.extension['logistics'] = logistics.empty(self,state)
         self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
 
@@ -231,7 +262,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'year_available': available,
                                 **self._expanded_catalog_view(state), **self._travel_view(state),
                                 'civil_staff': self._civil_staff_view(state),
-                                'names': {str(i): self.catalog.name(i) for i in state.officers} if state else {}}}
+                                'domestic':domestic.view(self,state),
+                                'logistics':logistics.view(self,state),
+                                'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
         with self.lock:
@@ -258,12 +291,16 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                            'attack': self._attack, 'retreat': self._retreat, 'settle': self._settle,
                            'end_turn': self._end_turn, 'ai': self._ai, 'arrivals': self._arrivals,
                            'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
-                           'staff_recruit': self._staff_recruit}
+                           'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
+                           'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
+                           'dispatch_transport':self._dispatch_transport}
                 if kind not in methods:
                     raise GameError('未提供这项操作。')
                 methods[kind](candidate, payload)
             record_events(self, self.state, candidate, kind, payload)
             civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
+            logistics.synchronize(self,candidate)
+            domestic.synchronize(self,candidate)
             self.validate(candidate)
             self.state = candidate
             self.revision += 1
@@ -273,7 +310,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             return self.view()
 
     def _owned_city(self, state, key, *, action=False):
-        if state.phase != 'city' or key not in state.cities:
+        if state.extension.get('pending_succession', {}).get(state.player):
+            raise GameError('请先选择继承君主。')
+        if state.phase != 'city' or not isinstance(key,str) or key not in state.cities:
             raise GameError('当前不能操作这座城。')
         city = state.cities[key]
         if city.owner != state.player:
@@ -284,7 +323,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def _allocate(self, state, payload):
         city = self._owned_city(state, payload.get('city'))
-        ident = integer(payload.get('officer'), 0, self.catalog.rules.runtime_capacity - 1, 'officer')
+        ident = parse_officer_ref(payload.get('officer'), self.catalog.rules)
         troops = integer(payload.get('troops'), 0, 999, 'troops')
         if ident not in city.roster.officer_ids:
             raise GameError('武将不在本城。')
@@ -296,7 +335,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             raise GameError('本城预备兵不足。')
         officer.troops = troops
         city.reserves -= change
-        self._note(state, f'{self.catalog.name(ident)}编兵为{troops}，本城预备兵{city.reserves}。')
+        self._note(state, f'{self.person_name(state, ident)}编兵为{troops}，本城预备兵{city.reserves}。')
 
     def _recruit(self, state, payload):
         city = self._owned_city(state, payload.get('city'), action=True)
@@ -305,8 +344,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             raise GameError('金钱或粮食不足。')
         city.gold -= r['recruit_gold_per_100']
         city.grain -= r['recruit_grain_per_100']
-        city.reserves += r['recruit_per_action']
-        state.soldiers['recruited'] += r['recruit_per_action']
+        domestic.add_reserves(self,state,city,r['recruit_per_action'],recruited=True)
         city.action_used = True
         self._note(state, f'{self.catalog.map_cities[city.id]["name"]}征募{r["recruit_per_action"]}名预备兵。')
 
@@ -322,7 +360,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if target.owner == state.player:
             raise GameError('不能向本方城池出征。')
         ids = payload.get('officers')
-        if not isinstance(ids, list) or any(type(i) is not int for i in ids):
+        if not isinstance(ids, list) or any(not (type(i) is int or is_generated_ref(i)) for i in ids):
             raise GameError('出征名单无效。')
         for ident in ids:self._personnel_actor(state,source,ident)
         self._queue_march(state,source,target,ids,'attack',payload.get('route_mode','fastest'))
@@ -330,7 +368,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _damage(self, state, attacker, defender):
         spread = 90 + state.rng.next() % 21
         base = attacker['troops'] * (attacker['martial'] + 40) * self.catalog.data['rules']['battle_damage_percent'] * spread
-        return min(defender['troops'], max(1, base // ((defender['martial'] + 80) * 10000)))
+        amount=max(1,base//((defender['martial']+80)*10000))
+        support=(state.battle or {}).get('extended',{}).get('support',{}).get(str(attacker['id']),{})
+        factor=max(80,min(110,100+(support.get('morale',70)-70)//3))
+        return min(defender['troops'],max(1,amount*factor//100))
 
     def _attack(self, state, payload):
         return self._expanded_attack(state, payload)
@@ -342,8 +383,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         return self._expanded_settle(state, payload)
 
     def _end_turn(self, state, payload):
+        if state.extension.get('pending_succession', {}).get(state.player):
+            raise GameError('请先选择继承君主。')
         if state.phase != 'city':
             raise GameError('请先完成当前操作或战果结算。')
+        if 'domestic' in state.extension:
+            from .domestic import finish_faction_turn
+            finish_faction_turn(self,state,state.player)
         state.phase = 'ai'
 
     def _ai(self, state, payload):
@@ -370,8 +416,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         """Monthly income, healing and dated events run only at month rollover."""
         r = self.catalog.data['rules']
         self._open_dated_cities(state)
+        domestic.synchronize(self,state)
         if state.year > state.calendar_cursor:
-            events = advance_year(self.catalog.definitions.values(), state.officers,
+            events = advance_year(self.all_person_definitions(state), state.officers,
                                   [c.roster for c in state.cities.values()], state.calendar_cursor, state.year)
             count = 0
             for event in events:
@@ -385,8 +432,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     if released:
                         if event['origin_city'] not in state.cities:
                             raise GameError('死亡兵员缺少接收城市，回合未提交。')
-                        state.cities[event['origin_city']].reserves += released
-                    name = self.catalog.definitions[event['person_id']].name
+                        home=state.cities[event['origin_city']]
+                        domestic.add_reserves(self,state,home,released,morale_value=domestic.morale(state,home.id))
+                    name = next(p.name for p in self.all_person_definitions(state) if p.person_id == event['person_id'])
                     if event.get('already_dead'):
                         self._note(state, f'{name}此前已死亡，本年仅完成年代核对。')
                     else:
@@ -399,12 +447,12 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     {'gold':r['monthly_gold_income'],'grain':r['monthly_grain_income'],'reserves':0})
                 city.gold += income['gold']
                 city.grain += income['grain']
-                city.reserves += income['reserves']
-                state.soldiers['recruited'] += income['reserves']
+                domestic.add_reserves(self,state,city,income['reserves'],recruited=True)
         self._spawn_eligible(state)
         for officer in state.officers.values():
             if officer.alive:
                 officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
+        domestic.month_rollover(self,state)
 
     def _complete_turn(self, state):
         """Commit one fixed ten-day turn and begin the next strategic phase."""
@@ -423,7 +471,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             city.action_used = False
         state.phase = 'city'
         self._prune_marches(state)
-        if any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
+        logistics.synchronize(self,state)
+        domestic.synchronize(self,state)
+        if logistics.due(state) or any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
             state.phase = 'arrivals'
         if not any(c.owner == state.player for c in state.cities.values()) or not any(o.alive and o.faction_id == state.player for o in state.officers.values()):
             state.phase = 'finished'
@@ -463,10 +513,12 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 raw['rng'] = SeedRng(**raw['rng'])
                 officers = {}
                 for key, row in raw['officers'].items():
-                    ident = int(key)
-                    if str(ident) != key or row['runtime_id'] != ident or row['person_id'] != self.catalog.by_id[ident]['person_id'] or row['profile'] != asdict(self.catalog.profiles[ident]):
+                    ident = deserialize_officer_ref(key, self.catalog.rules)
+                    expected = self.person_profile(SimpleNamespace(extension=extension), ident)
+                    person_id = ident if is_generated_ref(ident) else self.catalog.by_id[ident]['person_id']
+                    if row['runtime_id'] != ident or row['person_id'] != person_id or row['profile'] != asdict(expected):
                         raise ValueError('officer identity/profile')
-                    row['profile'] = self.catalog.profiles[ident]
+                    row['profile'] = expected
                     officers[ident] = RuntimeOfficer(**row)
                 raw['officers'] = officers
                 cities = {}
@@ -489,6 +541,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def validate(self, state):
         get_settings(state)
         civil_staff.validate(self, state)
+        domestic.validate(self,state)
+        logistics.validate(self,state)
         validate_events(self, state)
         self._validate_expansion(state)
         if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}:
@@ -526,7 +580,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         people = set()
         for ident, officer in state.officers.items():
             self.catalog.rules.officer_id(ident)
-            if ident != officer.runtime_id or officer.person_id != self.catalog.by_id[ident]['person_id'] or officer.person_id in people or officer.profile != self.catalog.profiles[ident] or officer.profile.missing:
+            if ident != officer.runtime_id or officer.person_id != self.person_definition(state, ident).person_id or officer.person_id in people or officer.profile != self.person_profile(state, ident) or officer.profile.missing:
                 raise ValueError('officer identity/profile')
             people.add(officer.person_id)
             for value, low, high in ((officer.health, 0, officer.profile.health_max), (officer.loyalty, 0, 100),
@@ -537,11 +591,12 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 raise ValueError('experience/alive')
             if officer.faction_id is not None and officer.faction_id not in {*self.catalog.factions, 'neutral'}:
                 raise ValueError('unknown faction')
-            if officer.faction_id is not None and year_state(self.catalog.definitions[officer.person_id], state.year) not in {YearState.AVAILABLE, YearState.DEATH_YEAR_REVIEW}:
+            if officer.faction_id is not None and year_state(self.person_definition(state, ident), state.year) not in {YearState.AVAILABLE, YearState.DEATH_YEAR_REVIEW}:
                 raise ValueError('officer annual membership')
             if ident not in seen and (officer.faction_id is not None or officer.troops != 0):
                 raise ValueError('unassigned officer ownership/troops')
-        current_soldiers = sum(c.reserves for c in state.cities.values()) + sum(o.troops for o in state.officers.values())
+        current_soldiers = (sum(c.reserves for c in state.cities.values())
+            +sum(o.troops for o in state.officers.values())+logistics.in_transit_reserves(state))
         if current_soldiers + state.soldiers['lost'] != state.soldiers['initial'] + state.soldiers['recruited']:
             raise ValueError('soldier conservation')
         for values in (state.settled_battles, state.completed_ai_turns, state.year_events):
@@ -555,8 +610,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             for kind, year in (('birth', p.birth_year), ('service_eligible', p.service_year)):
                 if year is not None and self.catalog.data['start_year'] < year <= state.calendar_cursor:
                     expected_events.add(f'{kind}:{p.person_id}:{year}')
-        for officer in state.officers.values():
-            p = self.catalog.definitions[officer.person_id]
+        for ident, officer in state.officers.items():
+            p = self.person_definition(state, ident)
             if p.death_year is not None and self.catalog.data['start_year'] < p.death_year + 1 <= state.calendar_cursor:
                 expected_events.add(f'remove_after_death_year:{p.person_id}:{p.death_year + 1}')
                 if officer.alive:

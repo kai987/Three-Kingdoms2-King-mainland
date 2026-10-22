@@ -139,6 +139,7 @@ def main():
               '/officer-choice.js': ('officer-choice.js', 'text/javascript; charset=utf-8'),
               '/officer-selection.js': ('officer-selection.js', 'text/javascript; charset=utf-8'),
               '/civil-staff.js': ('civil-staff.js', 'text/javascript; charset=utf-8'),
+              '/domestic.js': ('domestic.js', 'text/javascript; charset=utf-8'),
               '/assets/civil-staff/clerk-1.png': ('assets/civil-staff/clerk-1.png', 'image/png'),
               '/assets/civil-staff/clerk-2.png': ('assets/civil-staff/clerk-2.png', 'image/png'),
               '/assets/civil-staff/clerk-3.png': ('assets/civil-staff/clerk-3.png', 'image/png'),

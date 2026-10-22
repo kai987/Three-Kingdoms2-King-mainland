@@ -20,7 +20,7 @@
  function stat(value){return Number.isInteger(value)&&value>=0?value:'—';}
  function attributes(record,locale='zh-Hant'){
   const p=record?.profile||{},experience=Number.isInteger(record?.experience)&&record.experience>=0&&record.experience<=49999?Math.floor(record.experience/50):'—';
-  return choose(locale,`兵0 · 武${stat(p.martial_strength)} · 知${stat(p.intellect)} · 德${stat(p.virtue)} · 體${stat(record?.health??p.health_max)} · 經${experience}`,`兵0・武${stat(p.martial_strength)}・知${stat(p.intellect)}・徳${stat(p.virtue)}・体力${stat(record?.health??p.health_max)}・経${experience}`);
+  return choose(locale,`兵${stat(record?.troops??0)} · 武${stat(p.martial_strength)} · 知${stat(p.intellect)} · 德${stat(p.virtue)} · 忠${stat(record?.loyalty)} · 體${stat(record?.health??p.health_max)} · 經${experience}`,`兵${stat(record?.troops??0)}・武${stat(p.martial_strength)}・知${stat(p.intellect)}・徳${stat(p.virtue)}・忠${stat(record?.loyalty)}・体力${stat(record?.health??p.health_max)}・経${experience}`);
  }
  function summary(view,id,{locale='zh-Hant',cityName=value=>value,bilingual=false}={}){
   if(bilingual)return ['zh-Hant','ja'].map(language=>`<div data-locale-only="${language}" data-l10n-native="${language}">${summary(view,id,{locale:language,cityName})}</div>`).join('');
@@ -42,7 +42,7 @@
    return `<article class="civil-staff-card" data-staff-id="${escape(person.id)}">${portrait(person,locale())}<div><p><strong>${escape(label(person.name))}</strong> <span class="civil-staff-kind">${text('架空文吏','架空の文吏')}</span></p><p class="small">${text('專長','得意分野')}：${kind[locale()==='ja'?1:0]}</p><p class="small">${attributes(person,locale())}</p><p class="small">${candidate?text(`候選可雇用至${month(person.expires_month,locale())}開始前。`,`${month(person.expires_month,locale())}の月初まで雇用できます。`):working}${!candidate&&person.unpaid_months?text(` · 連續欠薪${person.unpaid_months}月`,`・俸給未払い${person.unpaid_months}か月`):''}</p></div></article>`;
   }
   function searchBody(row){
-   const actors=[...(row.searchable_staff||[])].sort((a,b)=>b.profile.virtue-a.profile.virtue||b.profile.intellect-a.profile.intellect||a.id.localeCompare(b.id)),targets=[...(row.search_targets||[])].sort((a,b)=>b.virtue-a.virtue||b.intellect-a.intellect||a.id-b.id);
+   const actors=[...(row.searchable_staff||[])].sort((a,b)=>b.profile.virtue-a.profile.virtue||b.profile.intellect-a.profile.intellect||a.id.localeCompare(b.id)),targets=[...(row.search_targets||[])].sort((a,b)=>b.virtue-a.virtue||b.intellect-a.intellect||String(a.id).localeCompare(String(b.id),undefined,{numeric:true}));
    if(!actors.some(p=>p.id===active.actor))active.actor=actors[0]?.id||'';
    if(!targets.some(p=>String(p.id)===String(active.target)))active.target=targets[0]?.id??'';
    const reason=reasons[row.search_blocked_reason];
@@ -51,7 +51,7 @@
   }
   function rulesBody(rules={}){
    const fee=rules.hire_gold??60,salary=rules.monthly_salary??5;
-   return `<details class="civil-staff-rules"><summary>${text('文吏招募與任職規則','文吏の募集と勤務規則')}</summary><p>${text(`雇用${fee}金，消耗本城本旬行動；每人月俸${salary}金。不需要先指定武將，無駐將城也能辦理。`,`雇用費${fee}、一人の月額俸給${salary}。雇用は都市の今旬の行動を使います。実行武将の指定は不要で、武将がいない都市でも雇用できます。`)}</p><p>${text('普通城目標2人、大城與巨城3人；名冊中的行軍武將與30日內確定到達的增援也計入缺編判定。文吏與歷史武將合計最多99人。','通常都市の目標は2人、大都市・巨大都市は3人です。名簿に残る行軍中の武将と30日以内に到着予定の援軍も人員判定に含め、武将と文吏の合計定員は99人です。')}</p><p>${text('每月上旬檢查；持續缺編2個月後，一人城60%、大城二人時30%，連續3次未出現候選後下次保底。開局無人城直接推薦；戰後無人城須穩定30日。','月の上旬に判定します。2か月続けて人員不足なら、1人の都市は60%、大都市で2人の場合は30%。候補が3回続けて現れなければ次回は必ず推薦されます。開始時の無人都市には直ちに推薦し、戦後の無人都市では30日の安定を待ちます。')}</p><p>${text('每城同時一名候選，保留3個月；雇用、拒絕或過期後冷卻3個月。人物、肖像與能力生成後固定，讀檔不重抽。玩家與AI使用相同規則。','各都市の候補は一度に1人で、3か月間保持されます。雇用・辞退・期限切れ後は3か月休止します。候補の名前・肖像・能力は生成時に固定され、ロードでは変わりません。プレイヤーとAIは同じ規則です。')}</p><p>${text('已付薪文吏按專長提高對應月收入：基本收入×（2＋知÷20向下取整）%，全城合計最多15%。原有基礎收入保留；欠薪時當月暫停加成。文吏不出戰、不單挑、不繼承君主，也不佔用歷史人物ID。','俸給支払済みの文吏は得意分野に応じ、基本月収×（2＋知力÷20の切り捨て）%を加算します。都市全体で最大15%。既存の基本収入は保持し、俸給未払いの月は加算を休止します。文吏は出陣・一騎討ち・君主継承を行わず、歴史人物のIDも使用しません。')}</p></details>`;
+   return `<details class="civil-staff-rules"><summary>${text('文吏招募與任職規則','文吏の募集と勤務規則')}</summary><p>${text(`雇用${fee}金，消耗本城本旬行動；每人月俸${salary}金。不需要先指定武將，無駐將城也能辦理。`,`雇用費${fee}、一人の月額俸給${salary}。雇用は都市の今旬の行動を使います。実行武将の指定は不要で、武将がいない都市でも雇用できます。`)}</p><p>${text('普通城目標2人、大城與巨城3人；名冊中的行軍武將與30日內確定到達的增援也計入缺編判定。文吏與歷史武將合計最多99人。','通常都市の目標は2人、大都市・巨大都市は3人です。名簿に残る行軍中の武将と30日以内に到着予定の援軍も人員判定に含め、武将と文吏の合計定員は99人です。')}</p><p>${text('每月上旬檢查；持續缺編2個月後，一人城60%、大城二人時30%，連續3次未出現候選後下次保底。開局無人城直接推薦；戰後無人城須穩定30日。','月の上旬に判定します。2か月続けて人員不足なら、1人の都市は60%、大都市で2人の場合は30%。候補が3回続けて現れなければ次回は必ず推薦されます。開始時の無人都市には直ちに推薦し、戦後の無人都市では30日の安定を待ちます。')}</p><p>${text('每城同時一名候選，保留3個月；雇用、拒絕或過期後冷卻3個月。人物、肖像與能力生成後固定，讀檔不重抽。玩家與AI使用相同規則。','各都市の候補は一度に1人で、3か月間保持されます。雇用・辞退・期限切れ後は3か月休止します。候補の名前・肖像・能力は生成時に固定され、ロードでは変わりません。プレイヤーとAIは同じ規則です。')}</p><p>${text('地方文吏可像普通武將一樣編兵、出戰、單挑、轉屬與繼承君主，仍使用獨立身分。商農與募兵訓練改由兩名委任官管理，不重複疊加舊有個人收入加成；欠薪時暫停委任工作。','地方文吏も通常の武将と同じく編成・出陣・一騎討ち・移籍・君主継承が可能で、独立した人物IDを使います。商農と募兵・訓練は二人の担当官が管理し、従来の個人収入加算は重複しません。俸給未払い時は担当業務を休止します。')}</p></details>`;
   }
   function renderCity(){
    const view=getView(),row=city(view,active.city),record=view?.game?.cities?.[active.city];
@@ -78,7 +78,7 @@
    if(search)search.onclick=async()=>{
     if(pending||isBusy()||isPreview()||!row.can_search||!active.actor||active.target==='')return;
     const token=active;pending=true;search.disabled=true;
-    try{token.error=await command('staff_recruit',{city:token.city,actor:token.actor,officer:Number(token.target)})===false;}catch{token.error=true;}
+    try{token.error=await command('staff_recruit',{city:token.city,actor:token.actor,officer:root.GameOfficerChoices?.ref?root.GameOfficerChoices.ref(token.target):(/^clerk-[0-9]{6,12}$/.test(String(token.target))?token.target:Number(token.target))})===false;}catch{token.error=true;}
     finally{pending=false;if(active===token&&showing())renderCity();}
    };
    i18n?.apply?.();

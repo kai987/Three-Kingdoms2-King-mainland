@@ -9,7 +9,7 @@ from itertools import combinations
 
 from .difficulty import attack_budget, get_settings
 from .errors import GameError
-from .officers import integer, recruitment_loyalty
+from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
 from .route_hazards import allocate_survivors
 
@@ -27,7 +27,7 @@ class StrategicAI:
         return sorted((i for i in city.roster.officer_ids if i not in marching
                        and self.state.officers[i].alive and self.state.officers[i].health > 0
                        and self.state.officers[i].troops > 0),
-                      key=lambda i: (-self.state.officers[i].troops, i))[:10]
+                      key=lambda i: (-self.state.officers[i].troops, ref_sort_key(i)))[:10]
 
     def strength(self, city):
         return sum(self.state.officers[i].troops for i in self.defenders(city))
@@ -49,7 +49,7 @@ class StrategicAI:
         return sorted((i for i in city.roster.officer_ids if i not in marching
                        and self.state.officers[i].alive and self.state.officers[i].health > 0
                        and self.state.extension['officer_actions'].get(str(i)) != self.state.turn),
-                      key=lambda i: (-self.state.officers[i].troops, i))
+                      key=lambda i: (-self.state.officers[i].troops, ref_sort_key(i)))
 
     def army(self, city, target=None, *, transfer=False):
         available = self.available(city)
@@ -64,7 +64,13 @@ class StrategicAI:
         present = sorted((i for i in city.roster.officer_ids if i not in marching
                           and self.state.officers[i].alive and self.state.officers[i].health > 0
                           and self.state.officers[i].troops > 0),
-                         key=lambda i: (self.state.officers[i].troops, i))
+                         key=lambda i: (self.state.officers[i].troops, ref_sort_key(i)))
+        if transfer and 'domestic' in self.state.extension:
+            posts=self.state.extension['domestic']['cities'].get(city.id,{})
+            guards.update(i for i in (posts.get('civil'),posts.get('military'))
+                if i in city.roster.officer_ids and i not in marching
+                and self.state.officers[i].alive and self.state.officers[i].health > 0)
+            kept=sum(sorted((self.state.officers[i].troops for i in guards),reverse=True)[:10])
         for ident in present:
             if kept >= need and (not transfer or guards):
                 break
@@ -90,7 +96,7 @@ class StrategicAI:
         return self.quotes[key]
 
     def survivors(self, quote, ids):
-        troops = [self.state.officers[i].troops for i in sorted(ids)]
+        troops = [self.state.officers[i].troops for i in sorted(ids,key=ref_sort_key)]
         storm = False
         for leg in quote['routes']:
             hazard = leg.get('hazard')
@@ -288,7 +294,7 @@ class StrategicAI:
         # Allocation never creates soldiers. Retain a local reserve on an
         # exposed front instead of draining its whole pool into the expedition.
         guard = min(city.reserves,self.settings['min_guard_troops']) if self.threat(city) else 0
-        for ident in sorted(self.available(city),key=lambda i:(self.state.officers[i].troops,i)):
+        for ident in sorted(self.available(city),key=lambda i:(self.state.officers[i].troops,ref_sort_key(i))):
             officer = self.state.officers[ident]
             amount = min(80,max(0,city.reserves-guard),max(0,600-officer.troops))
             if amount and city.gold >= 4 and city.grain >= 8:
@@ -299,8 +305,8 @@ class StrategicAI:
         ids = self.available(city)
         free = self.game._free_candidates(self.state,city)
         if ids and free and self.game._city_occupancy(self.state,city)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
-            actor = max((self.state.officers[i] for i in ids),key=lambda o:(o.profile.virtue,o.profile.intellect,-o.runtime_id))
-            ident = min(free)
+            actor = min((self.state.officers[i] for i in ids),key=lambda o:(-o.profile.virtue,-o.profile.intellect,ref_sort_key(o.runtime_id)))
+            ident = min(free,key=ref_sort_key)
             target = self.state.officers[ident]
             chance = max(15,min(95,35+actor.profile.virtue//2+actor.profile.intellect//5-target.profile.virtue//5))
             city.gold -= r['recruit_officer_gold'];city.action_used = True
@@ -318,7 +324,7 @@ class StrategicAI:
             and p['action_turn'] != self.state.turn),
             key=lambda p:(-p['profile']['virtue'],-p['profile']['intellect'],p['id']))
         if clerks and free and self.game._city_occupancy(self.state,city)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['recruit_officer_gold']:
-            ident = min(free)
+            ident = min(free,key=ref_sort_key)
             self.game._staff_recruit_for_owner(self.state,city,clerks[0]['id'],ident,city.owner)
             self.game._report_ai(self.state,city,'staff_recruit',str(ident))
             return
@@ -339,8 +345,8 @@ class StrategicAI:
             return
         candidates = self.game._persuadable(self.state,city)
         if ids and candidates and self.game._city_occupancy(self.state,city)<self.game.catalog.rules.city_officer_capacity and city.gold>=r['persuade_officer_gold'] and not any(report['turn']==self.state.turn and report['action']=='persuade_officer' for report in x['ai_reports']):
-            actor = max((self.state.officers[i] for i in ids),key=lambda o:(o.profile.virtue,-o.runtime_id))
-            ident = min(candidates,key=lambda i:(self.state.officers[i].loyalty,i))
+            actor = min((self.state.officers[i] for i in ids),key=lambda o:(-o.profile.virtue,ref_sort_key(o.runtime_id)))
+            ident = min(candidates,key=lambda i:(self.state.officers[i].loyalty,ref_sort_key(i)))
             self.game._attempt_defection(self.state,city,actor,ident)
             self.game._report_ai(self.state,city,'persuade_officer',str(ident))
             self.game._reconcile_factions(self.state)
@@ -352,6 +358,11 @@ def run(campaign, state, payload):
         raise GameError('当前不是待处理的电脑回合。')
     x = state.extension
     ai = StrategicAI(campaign,state)
+    if 'domestic' in x:
+        from .domestic import prepare_ai
+        for owner in sorted(campaign.catalog.factions):
+            if owner != state.player:
+                prepare_ai(campaign,state,owner)
     if not x['ai_queue']:
         x['ai_queue'] = [c.id for c in sorted(state.cities.values(),key=lambda c:(c.owner,c.id))
                          if c.owner not in (state.player,'neutral')]
@@ -364,11 +375,18 @@ def run(campaign, state, payload):
         plan = ai.plan(city.owner)
         ai.prepare(city)
         if not ai.depart(city,plan) and not ai.reinforce(city,plan):
-            ai.personnel_or_recruit(city)
-        city.action_used = True
+            if 'domestic' not in x:
+                ai.personnel_or_recruit(city)
+        if 'domestic' not in x:
+            city.action_used = True
         if state.phase != 'ai':
             return
     x['ai_queue'] = [];x['ai_cursor'] = 0;x['ai_attacks'] = 0
+    if 'domestic' in x:
+        from .domestic import finish_faction_turn
+        for owner in sorted(campaign.catalog.factions):
+            if owner != state.player:
+                finish_faction_turn(campaign,state,owner)
     campaign._complete_turn(state)
     campaign._reconcile_factions(state)
 

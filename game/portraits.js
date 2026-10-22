@@ -26,24 +26,31 @@
  function create(options={}){
   const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,fetcher=options.fetch||root.fetch?.bind(root);
   const timeout=Number.isFinite(options.timeoutMs)&&options.timeoutMs>0?options.timeoutMs:10000;
-  const catalogMaps=new WeakMap(),failedPaths=new Set();let index=null,loading=null,status='idle',attached=false;
+  const catalogMaps=new WeakMap(),failedPaths=new Set(),generated=new Map();let index=null,loading=null,status='idle',attached=false;
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant';
   const text=(tc,ja)=>locale()==='ja'?ja:tc;
   const labelName=value=>i18n?.t?i18n.t(String(value??''),locale()):String(value??'');
   function personId(catalog,runtimeId){
+   if(typeof runtimeId==='string'&&/^clerk-[0-9]{6,12}$/.test(runtimeId))return runtimeId;
    if(!catalog||typeof catalog!=='object'||!Array.isArray(catalog.library))return null;
    let map=catalogMaps.get(catalog);
    if(!map){map=new Map(catalog.library.filter(p=>p&&typeof p.person_id==='string').map(p=>[String(p.id),p.person_id]));catalogMaps.set(catalog,map);}
    return map.get(String(runtimeId))||null;
   }
-  function entry(id){return typeof id==='string'&&index?index.people[id]||null:null;}
+  function registerGenerated(pool){
+   generated.clear();const people=Array.isArray(pool?.people)?pool.people:Object.values(pool?.people||{});
+   for(const person of people){if(!/^clerk-[0-9]{6,12}$/.test(person?.id||'')||!/^clerk-[123]$/.test(person?.portrait||''))continue;
+    generated.set(person.id,Object.freeze({path:`/assets/civil-staff/${person.portrait}.png`,kind:'generated',fictional:true,width:32,height:40,original_id:null}));}
+  }
+  function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||null):null;}
   function selectedAsset(row){
    if(!row)return null;
    if(row.enhanced&&!failedPaths.has(row.enhanced.path))return{...row.enhanced,enhanced:true};
-   return failedPaths.has(row.path)?null:{path:row.path,width:index.width,height:index.height,enhanced:false};
+   return failedPaths.has(row.path)?null:{path:row.path,width:row.width||index?.width||32,height:row.height||index?.height||40,enhanced:false};
   }
   function description(row,enhanced=false){
    if(!row)return text(status==='idle'||status==='loading'?'肖像準備中':'肖像待補',status==='idle'||status==='loading'?'肖像を準備中':'肖像は未設定です');
+   if(row.fictional)return text('架空武將・共用原版像素肖像','架空の武将・共通の原作ドット肖像');
    if(enhanced)return row.kind==='nes_original'?text('原版像素肖像・明暗強化','原作のドット肖像・陰影強化'):text('新增繪製肖像・明暗強化・非史實容貌','新規制作の肖像・陰影強化・史実の容貌ではありません');
    return row.kind==='nes_original'?text('原版像素肖像','原作のドット肖像'):text('新增繪製肖像・非史實容貌','新規制作の肖像・史実の容貌ではありません');
   }
@@ -95,7 +102,7 @@
    })();
    return loading;
   }
-  return Object.freeze({load,html,personId,entry,refresh,imageError,get status(){return status;}});
+  return Object.freeze({load,html,personId,entry,registerGenerated,refresh,imageError,get status(){return status;}});
  }
  if(typeof module==='object'&&module.exports)module.exports={create,validIndex};else root.GamePortraits=create();
 })(typeof window==='object'?window:globalThis);

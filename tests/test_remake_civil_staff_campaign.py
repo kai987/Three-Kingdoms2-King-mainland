@@ -99,7 +99,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         """Populate with eligible real IDs and zero troops, preserving the ledger."""
         target = game.state.cities[city]
         for ident, row in game.catalog.by_id.items():
-            if len(target.roster.officer_ids) >= historical_count:
+            if sum(type(i) is int for i in target.roster.officer_ids) >= historical_count:
                 break
             person = game.catalog.definitions[row['person_id']]
             if ident in game.state.officers or year_state(person, game.state.year) not in {
@@ -110,7 +110,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
                 faction_id=target.owner, loyalty=80, troops=0,
                 resolve_death_year=True, rules=game.catalog.rules)
             target.roster.officer_ids.append(ident)
-        self.assertEqual(len(target.roster.officer_ids), historical_count)
+        self.assertEqual(sum(type(i) is int for i in target.roster.officer_ids), historical_count)
         game.validate(game.state)
 
     def test_all_25_actual_openings_keep_historical_ids_and_offer_only_owned_empty_cities(self):
@@ -146,7 +146,8 @@ class CivilStaffCampaignTests(unittest.TestCase):
         ident = self.hire(game)
         self.assertEqual(game.state.cities['nanjun'].gold, 1140)
         self.assertTrue(game.state.cities['nanjun'].action_used)
-        self.assertEqual(game.state.officers, historical)
+        self.assertEqual({i:o for i,o in game.state.officers.items() if type(i) is int}, historical)
+        self.assertIn(ident, game.state.officers)
         self.assertEqual(game.state.rng, combat_rng)
         self.assertEqual(game.state.soldiers, ledger)
         self.assertEqual(self.pool(game)['people'][ident]['troops'], 0)
@@ -175,7 +176,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual(self.pool(game)['people'][ident]['action_turn'], game.state.turn)
         event = game.state.extension['events']['items'][-1]
         self.assertEqual(event['kind'], 'recruit_success' if expected_success else 'recruit_failure')
-        self.assertNotIn('actor', event['details'], 'A clerk string is never sent to historical portrait/ID lookup')
+        self.assertEqual(event['details']['actor'], ident, 'Generated actors retain their independent person reference')
         self.fails_atomically(game, 'staff_recruit', payload)
 
     def test_save_restore_keeps_next_staff_rng_candidate_and_real_turn_results(self):
@@ -263,11 +264,12 @@ class CivilStaffCampaignTests(unittest.TestCase):
         game.state.extension['free_locations'][str(target)] = 'nanjun'
         game.validate(game.state)
         self.step(game)
-        self.assertEqual(game.state.cities['nanjun'].gold, 1080)
+        self.assertEqual(game.state.cities['nanjun'].gold, 1076)
+        self.assertEqual(game.state.officers[clerk['id']].troops, 80, 'AI prepares generated defenders by the normal paid allocation rule')
         self.assertEqual(game.state.rng.draws, 1)
         self.assertEqual(game.state.officers[target].faction_id, 'shu')
         self.assertEqual(self.pool(game)['people'][clerk['id']]['action_turn'], game.state.turn - 1)
-        self.assertTrue(any(r['action'] == 'staff_recruit' and r['city'] == 'nanjun'
+        self.assertTrue(any(r['action'] in {'staff_recruit','recruit_officer'} and r['city'] == 'nanjun'
                             for r in game.state.extension['ai_reports']))
         self.assertFalse(any(e['kind'].startswith('staff_') for e in game.state.extension['events']['items']),
                          'Remote AI paperwork must not flood the player event window')
@@ -332,12 +334,13 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual(game._city_occupancy(game.state, game.state.cities['yingchuan']), 99)
         game.validate(game.state)
 
-    def test_staff_is_local_noncombatant_and_cannot_succeed_an_extinct_historical_faction(self):
+    def test_generated_person_can_preserve_faction_and_inherit_without_consuming_history_id(self):
         game = self.new(free=False)
         clerk = self.hire(game)
         for city in game.state.cities.values():
             if city.owner != 'shu': continue
             for ident in list(city.roster.officer_ids):
+                if ident == clerk: continue
                 officer = game.state.officers[ident]
                 city.reserves += officer.troops
                 officer.troops = 0
@@ -346,12 +349,16 @@ class CivilStaffCampaignTests(unittest.TestCase):
                 officer.loyalty = 0
                 city.roster.officer_ids.remove(ident)
         game._reconcile_factions(game.state)
-        self.assertEqual(game.state.phase, 'finished')
-        self.assertIsNone(game.state.extension['leaders']['shu'])
-        self.assertIn('shu', game.state.extension['ended_factions'])
+        self.assertEqual(game.state.phase, 'city')
+        self.assertNotIn('shu', game.state.extension['ended_factions'])
+        self.assertEqual(game.state.extension['pending_succession']['shu']['candidates'], [clerk])
+        self.cmd(game, 'choose_successor', officer=clerk)
+        self.assertEqual(game.state.extension['leaders']['shu'], clerk)
+        self.assertEqual(game.state.officers[clerk].loyalty, 100)
         self.assertEqual(self.pool(game)['people'][clerk]['city'], 'nanjun')
-        self.assertEqual(self.pool(game)['people'][clerk]['owner'], 'neutral')
-        self.assertNotIn(clerk, game.state.officers)
+        self.assertEqual(self.pool(game)['people'][clerk]['owner'], 'shu')
+        self.assertIn(clerk, game.state.officers)
+        self.assertNotIn(clerk, game.catalog.by_id)
         game.validate(game.state)
 
 

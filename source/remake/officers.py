@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+import re
 from typing import Iterable, Mapping
 
 
@@ -14,6 +15,36 @@ def integer(value, low, high, label):
     if type(value) is not int or not low <= value <= high:
         raise ValueError(f'{label} must be an integer in {low}..{high}')
     return value
+
+
+def is_generated_ref(value):
+    """Generated people have their own bounded namespace, never historic IDs."""
+    if not isinstance(value, str) or re.fullmatch(r'clerk-[0-9]{6,7}', value) is None:
+        return False
+    number = int(value[6:])
+    return 1 <= number <= 1000000 and value == f'clerk-{number:06d}'
+
+
+def ref_sort_key(value):
+    return (1, int(value[6:])) if is_generated_ref(value) else (0, value)
+
+
+def parse_officer_ref(value, rules=None):
+    if is_generated_ref(value):
+        return value
+    return integer(value, 0, (rules.runtime_capacity if rules else 1200)-1, 'runtime officer ID')
+
+
+def deserialize_officer_ref(value, rules=None):
+    """Only saved object keys use canonical decimal strings for historical IDs."""
+    if is_generated_ref(value):
+        return value
+    if not isinstance(value, str) or not value.isascii() or not value.isdecimal():
+        raise ValueError('Invalid saved officer reference')
+    ident = parse_officer_ref(int(value), rules)
+    if str(ident) != value:
+        raise ValueError('Noncanonical saved officer reference')
+    return ident
 
 
 @dataclass(frozen=True)
@@ -28,7 +59,7 @@ class GameRules:
         integer(self.runtime_capacity, 1, 65535, 'runtime capacity')
 
     def officer_id(self, value):
-        return integer(value, 0, self.runtime_capacity - 1, 'runtime officer ID')
+        return parse_officer_ref(value, self)
 
 
 class YearState(str, Enum):
@@ -195,7 +226,7 @@ def convert_profile(*, san14_stats=None, legacy=None, health_max=None,
 
 @dataclass
 class RuntimeOfficer:
-    runtime_id: int
+    runtime_id: int | str
     person_id: str
     profile: OfficerProfile
     health: int
@@ -246,7 +277,7 @@ class CapacityError(ValueError):
 @dataclass
 class CityRoster:
     city_id: str
-    officer_ids: list[int] = field(default_factory=list)
+    officer_ids: list[int | str] = field(default_factory=list)
     rules: GameRules = field(default_factory=GameRules)
 
     def __post_init__(self):

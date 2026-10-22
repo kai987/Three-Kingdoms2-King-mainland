@@ -3,6 +3,7 @@
 Scores describe expected effects, never sampled future results. No candidate
 reads or advances the campaign RNG, and neither side receives hidden bonuses.
 """
+from .officers import ref_sort_key
 
 
 def _support(battle, unit):
@@ -50,8 +51,11 @@ def expected_attack(battle, actor, target, damage_percent=32):
     denominator = (target['martial'] + 80) * 10000
     base = actor['troops'] * (actor['martial'] + 40) * damage_percent
     guarded = _support(battle, target)['guard'] > 0
-    values = [min(target['troops'], max(1, base * spread // denominator))
+    values = [max(1, base * spread // denominator)
               for spread in range(90, 111)]
+    morale = _support(battle, actor).get('morale',70)
+    factor = max(80,min(110,100+(morale-70)//3))
+    values = [min(target['troops'],max(1,value*factor//100)) for value in values]
     if guarded:
         values = [max(1, value // 2) for value in values]
     return sum(values) / len(values)
@@ -158,7 +162,7 @@ def candidates(state, battle, own, foe, terrain, tactics, *, damage_percent=32,
                         value += 20
                 rows.append(dict(kind='tactic', actor=actor['id'], target=target['id'],
                                  tactic=tid, score=value))
-    return sorted(rows, key=lambda row: (-row['score'], row['actor'], row['target'],
+    return sorted(rows, key=lambda row: (-row['score'], ref_sort_key(row['actor']), ref_sort_key(row['target']),
                                         -1 if row['tactic'] is None else row['tactic']))
 
 

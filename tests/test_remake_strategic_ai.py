@@ -144,7 +144,14 @@ class StrategicAITests(unittest.TestCase):
         self.assertEqual(current['review_turn'],plan['review_turn'])
 
     def test_rear_reinforcement_uses_normal_queue_fees_and_keeps_a_home_officer(self):
-        game=self.new(second=100,troops=999)
+        # Two appointees stay home; a third real officer can reinforce.
+        data=deepcopy(strategic_catalog(second=100,troops=999).data)
+        used={r['person_id'] for r in data['initial_officers']}
+        actual=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
+        extra=next(r for r in actual['initial_officers'] if r['person_id'] not in used)
+        data['initial_officers'].append(dict(extra,city='runan',troops=600,ruler=False))
+        game=Campaign(catalog_from_data(data))
+        game.command('new',dict(faction='shu',seed=2026,difficulty='normal'),0)
         source=game.state.cities['runan'];ids=set(source.roster.officer_ids);grain=source.grain
         before=deepcopy(game.state.soldiers)
         self.ai_turn(game)
@@ -153,6 +160,8 @@ class StrategicAITests(unittest.TestCase):
         self.assertEqual(moving[0]['kind'],'transfer')
         self.assertEqual(len(moving[0]['officers']),1)
         self.assertTrue(ids-set(moving[0]['officers']))
+        posts=game.state.extension['domestic']['cities']['runan']
+        self.assertTrue({posts['civil'],posts['military']}.isdisjoint(moving[0]['officers']))
         self.assertEqual(source.grain,grain,'The command commits a copy; the old source object is untouched')
         live=game.state.cities['runan']
         self.assertEqual(live.grain,grain-moving[0]['quote']['grain_per_officer'])
@@ -256,6 +265,9 @@ class StrategicAITests(unittest.TestCase):
         city.roster.officer_ids.clear();city.owner='neutral'
         from remake.civil_staff import synchronize
         synchronize(game, game.state, checks=False)
+        from remake import logistics, domestic
+        logistics.synchronize(game,game.state)
+        domestic.synchronize(game,game.state)
         game.validate(game.state);game=self.resume(game)
         self.ai_turn(game)
         plan=game.state.extension['ai_strategy']['wei']

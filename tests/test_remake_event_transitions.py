@@ -14,7 +14,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, GameError
-from remake import civil_staff
+from remake import civil_staff, domestic, logistics
 from campaign_fixtures import controlled_catalog
 
 
@@ -129,6 +129,10 @@ class CampaignEventTransitionTests(unittest.TestCase):
         for _ in range(3):
             tick(game)
         death = events(game, 'officer_death')
+        self.assertEqual(events(game, 'succession'), [], 'A provisional player ruler is not yet a committed choice')
+        pending=game.state.extension['pending_succession']['shu']
+        self.assertIn(successor,pending['candidates'])
+        game.command('choose_successor',dict(officer=successor),game.revision)
         succession = events(game, 'succession')
         self.assertEqual(len(death), 1)
         self.assertEqual(death[0]['person_ids'], [ruler])
@@ -274,6 +278,8 @@ class CampaignEventTransitionTests(unittest.TestCase):
         target.owner = 'wei'
         # This controlled capture bypasses the command transaction that normally
         # updates local personnel ownership; do not run candidate/payroll checks.
+        logistics.synchronize(game, game.state)
+        domestic.synchronize(game, game.state)
         civil_staff.synchronize(game, game.state, checks=False)
         game.validate(game.state)
         before_troops = game.state.officers[ident].troops

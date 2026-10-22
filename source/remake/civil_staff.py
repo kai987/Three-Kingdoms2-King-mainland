@@ -8,6 +8,8 @@ from hashlib import sha256
 import re
 
 from .errors import GameError
+from .officers import (OfficerProfile, PersonDefinition, initialize_officer,
+                       is_generated_ref, year_state, YearState)
 
 
 SCHEMA = 'tk2-civil-staff-v1'
@@ -66,18 +68,20 @@ def target(campaign, city_id):
 
 
 def _historical_count(state, city):
-    return sum(ident in state.officers and state.officers[ident].alive
+    return sum(not is_generated_ref(ident) and ident in state.officers and state.officers[ident].alive
                for ident in city.roster.officer_ids)
 
 
 def city_count(state, city_id):
     pool = state.extension.get('civil_staff', {})
-    return sum(person['city'] == city_id for person in pool.get('people', {}).values())
+    city = state.cities.get(city_id)
+    return sum(is_generated_ref(ident) and ident in state.officers and state.officers[ident].alive
+               for ident in city.roster.officer_ids) if city else 0
 
 
 def city_occupancy(state, city):
     """Capacity counts the actual roster, not projected arrivals."""
-    return len(city.roster.officer_ids) + city_count(state, city.id)
+    return len(city.roster.officer_ids)
 
 
 def _effective_count(state, city):
@@ -93,7 +97,14 @@ def _effective_count(state, city):
                     or any(key not in state.cities or state.cities[key].owner not in {city.owner, 'neutral'} for key in path)):
                 continue
             ids.update(i for i in march['officers'] if i in state.officers and state.officers[i].alive)
-    return len(ids) + city_count(state, city.id)
+    for convoy in state.extension.get('logistics', {}).get('convoys', []):
+        journey = convoy['journeys'][-1]
+        if (convoy['target'] == city.id and convoy['owner'] == city.owner
+                and state.turn <= journey['arrival_turn'] <= state.turn + 3
+                and all(key in state.cities and state.cities[key].owner in {city.owner, 'neutral'}
+                        for key in journey['quote']['path'])):
+            ids.update(i for i in convoy['officers'] if i in state.officers and state.officers[i].alive)
+    return len(ids)
 
 
 def _ledger(state, city):
@@ -146,6 +157,60 @@ def _immutable_record(campaign, state, number):
                 specialty=SPECIALTIES[draw() % len(SPECIALTIES)],
                 profile=dict(health_max=health, martial_strength=10 + draw() % 26,
                              intellect=40 + draw() % 26, virtue=60))
+
+
+def definition(person):
+    """Fixed fictional adulthood and life window, anchored to the offer date."""
+    value = _seed(f'{SCHEMA}:life:{person["id"]}:{person["name"]}')
+    service = person['offered_month'] // 12
+    birth = max(1, service - 20 - value % 16)
+    death = min(400, birth + 60 + (value >> 8) % 16)
+    return PersonDefinition(person['id'], person['name'], birth, service, death,
+                            'fictional_generated_life; not_historical')
+
+
+def officer_profile(person):
+    profile = person['profile']
+    affinity = _seed(f'{SCHEMA}:affinity:{person["id"]}:{person["name"]}') % 3
+    return OfficerProfile(**profile, terrain_affinity=affinity,
+        source_stats={}, basis={key: 'fixed_generated_profile; not_historical'
+        for key in ('health_max', 'martial_strength', 'intellect', 'virtue', 'terrain_affinity')})
+
+
+def runtime_view(state, person):
+    result = deepcopy(person)
+    officer = state.officers.get(person['id'])
+    if officer is not None:
+        result.update(profile=dict(health_max=officer.profile.health_max,
+            martial_strength=officer.profile.martial_strength,
+            intellect=officer.profile.intellect, virtue=officer.profile.virtue,
+            terrain_affinity=officer.profile.terrain_affinity), health=officer.health,
+            troops=officer.troops, experience=officer.experience, loyalty=officer.loyalty,
+            alive=officer.alive, faction_id=officer.faction_id,
+            weapon_id=officer.weapon_id, armor_id=officer.armor_id,
+            chronology=dict(birth_year=definition(person).birth_year,
+                service_year=definition(person).service_year, death_year=definition(person).death_year))
+    else:
+        result.update(loyalty=None, alive=True, faction_id=None)
+    return result
+
+
+def sync_people(state):
+    """Location/owner are views of normal officer membership, never city capture."""
+    pool = state.extension['civil_staff']
+    locations = {ident: city.id for city in state.cities.values() for ident in city.roster.officer_ids}
+    for ident, person in pool['people'].items():
+        officer = state.officers.get(ident)
+        if officer is None:
+            continue
+        owner = officer.faction_id or 'neutral'
+        if person['owner'] != owner:
+            person['working'] = False
+        person['owner'] = owner
+        person['city'] = locations.get(ident, state.extension.get('free_locations', {}).get(ident, person['city']))
+        person['action_turn'] = state.extension.get('officer_actions', {}).get(ident, 0)
+        if not officer.alive or officer.faction_id in (None, 'neutral'):
+            person['working'] = False
 
 
 def _person_details(person, **extra):
@@ -211,8 +276,11 @@ def _payroll(campaign, state):
     summary = dict(amount=0, paid=0, bonus=dict(gold=0, grain=0, reserves=0),
                    counts=dict(staff=0, total_unpaid=0, cities=0))
     first_city = None
+    sync_people(state)
     for key, city in sorted(state.cities.items()):
-        employees = sorted((p for p in pool['people'].values() if p['city'] == key), key=lambda p: p['id'])
+        employees = sorted((p for p in pool['people'].values() if p['city'] == key
+            and p['id'] in city.roster.officer_ids and state.officers[p['id']].alive
+            and state.officers[p['id']].faction_id == city.owner), key=lambda p: p['id'])
         if not employees:
             continue
         if not _active(campaign, state, city):
@@ -231,7 +299,9 @@ def _payroll(campaign, state):
             paid += RULES['monthly_salary']
             person.update(paid_month=m, unpaid_months=0, working=True)
             field = dict(commerce='gold', farming='grain', recruitment='reserves')[person['specialty']]
-            contributions[field] += int(base.get(field, 0)) * (2 + person['profile']['intellect'] // 20) // 100
+            # The delegation system replaces this legacy per-person bonus.
+            if 'domestic' not in state.extension:
+                contributions[field] += int(base.get(field, 0)) * (2 + person['profile']['intellect'] // 20) // 100
         bonus = {field: min(amount, int(base.get(field, 0)) * RULES['income_bonus_cap_percent'] // 100)
                  for field, amount in contributions.items()}
         for field, amount in bonus.items():
@@ -258,6 +328,7 @@ def synchronize(campaign, state, *, opening=False, monthly=False, checks=True):
     """
     pool = state.extension['civil_staff']
     m, tick = month_index(state), _tick(state)
+    sync_people(state)
     for key, city in sorted(state.cities.items()):
         row = pool['cities'].setdefault(key, _ledger(state, city))
         if row['owner'] != city.owner:
@@ -265,11 +336,6 @@ def synchronize(campaign, state, *, opening=False, monthly=False, checks=True):
             row.update(owner=city.owner, owner_since_tick=tick,
                        shortage_since_month=m, zero_since_tick=None, misses=0)
             _expire(campaign, state, city, row, 'owner_changed', cooldown=False)
-            for person in sorted(pool['people'].values(), key=lambda p: p['id']):
-                if person['city'] == key:
-                    person.update(owner=city.owner, working=False)
-                    _emit(campaign, state, 'staff_allegiance', city, person=person,
-                          factions=list(dict.fromkeys((previous, city.owner))), reason='city_owner_changed')
         count = _effective_count(state, city)
         limit = target(campaign, key)
         if count >= limit:
@@ -373,6 +439,10 @@ def hire(campaign, state, city_id, candidate_id, owner):
     person.update(city=city_id, owner=owner, hired_month=month_index(state),
                   paid_month=month_index(state), unpaid_months=0, working=True, action_turn=0)
     pool['people'][person['id']] = person
+    state.officers[person['id']] = initialize_officer(definition(person), person['id'],
+        officer_profile(person), year=state.year, faction_id=owner, loyalty=80, rules=campaign.catalog.rules,
+        resolve_death_year=True)
+    city.roster.officer_ids.append(person['id'])
     row['candidate'] = None
     row['cooldown_until_month'] = month_index(state) + RULES['cooldown_months']
     row['misses'] = 0
@@ -409,7 +479,8 @@ def view(campaign, state):
     pool = state.extension['civil_staff']
     for key, city in state.cities.items():
         row = pool['cities'][key]
-        employees = sorted((deepcopy(p) for p in pool['people'].values() if p['city'] == key), key=lambda p: p['id'])
+        employees = sorted((runtime_view(state, p) for p in pool['people'].values()
+            if p['id'] in city.roster.officer_ids and state.officers[p['id']].alive), key=lambda p: p['id'])
         count, effective, limit = len(employees), _effective_count(state, city), target(campaign, key)
         reason = _blocked_reason(campaign, state, city, state.player)
         rejectable = (row['candidate'] is not None and row['candidate']['expires_month'] > month_index(state)
@@ -431,6 +502,7 @@ def view(campaign, state):
         if city.owner in result['faction_counts']:
             result['faction_counts'][city.owner] += count
         result['people'].extend(employees)
+    result['people'] = [runtime_view(state, p) for p in pool['people'].values()]
     return result
 
 
@@ -446,7 +518,7 @@ def validate(campaign, state):
             or not _int(pool['next_id'], 1, 1000001)
             or not _int(pool['last_payroll_month'], 0, m)
             or not isinstance(pool['cities'], dict) or set(pool['cities']) != set(state.cities)
-            or not isinstance(pool['people'], dict) or len(pool['people']) > len(state.cities)*3):
+            or not isinstance(pool['people'], dict) or len(pool['people']) > 100000):
         raise ValueError('Civil staff state bounds')
     seen = set()
 
@@ -471,7 +543,7 @@ def validate(campaign, state):
                 or person['expires_month'] != person['offered_month'] + RULES['candidate_months']):
             raise ValueError('Civil staff noncombat state')
         if employee:
-            if (person['city'] not in state.cities or person['owner'] != state.cities[person['city']].owner
+            if (person['city'] not in state.cities or person['owner'] not in {*campaign.catalog.factions, 'neutral'}
                     or not _int(person['hired_month'], person['offered_month'], min(m, person['expires_month']-1))
                     or not _int(person['paid_month'], person['hired_month'], m)
                     or not _int(person['unpaid_months'], 0, m-person['hired_month'])
@@ -493,9 +565,20 @@ def validate(campaign, state):
             raise ValueError('Civil staff city ledger')
         if row['candidate'] is not None:
             record(row['candidate'])
-        if city_count(state, key) > target(campaign, key) or city_occupancy(state, city) > campaign.catalog.rules.city_officer_capacity:
+        if city_occupancy(state, city) > campaign.catalog.rules.city_officer_capacity:
             raise ValueError('Civil staff combined city capacity')
     for key, person in pool['people'].items():
         if key != person.get('id'):
             raise ValueError('Civil staff registry identity')
         record(person, employee=True)
+        officer = state.officers.get(key)
+        if officer is None or officer.person_id != key or officer.profile != officer_profile(person):
+            raise ValueError('Civil staff runtime identity/profile')
+        actual_city = next((c.id for c in state.cities.values() if key in c.roster.officer_ids),
+            state.extension.get('free_locations', {}).get(key, person['city']))
+        if person['city'] != actual_city or person['owner'] != (officer.faction_id or 'neutral'):
+            raise ValueError('Civil staff runtime location/owner')
+        if not officer.alive and person['working']:
+            raise ValueError('Dead generated officer is working')
+    if {i for i in state.officers if is_generated_ref(i)} != set(pool['people']):
+        raise ValueError('Generated runtime/registry set')

@@ -11,7 +11,7 @@
   const rows=[...inputs],permanent=new Set(rows.filter(input=>input.disabled));
   let maximum=limitOf(limit),order=[],lastSignature=null,notifying=false,pendingNotification=false;
   const eligible=input=>!permanent.has(input)&&!!isEligible(input);
-  const id=input=>Number(input.value);
+  const id=input=>/^clerk-[0-9]{6,12}$/.test(input.value)?input.value:Number(input.value);
   const selectedIds=()=>rows.filter(input=>input.checked&&eligible(input)).map(id);
   const state=trimmed=>{const ids=selectedIds();return{ids,count:ids.length,limit:maximum,trimmedIds:[...trimmed]};};
   function notify(snapshot,signature){

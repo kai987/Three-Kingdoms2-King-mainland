@@ -10,7 +10,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
-from remake import civil_staff
+from remake import civil_staff, domestic, logistics
 from remake.errors import GameError
 from remake.route_hazards import evaluate_leg
 
@@ -52,6 +52,8 @@ class HazardMarchTests(unittest.TestCase):
         city.roster.officer_ids.clear();city.owner=owner
         # Fixture-only ownership edits must update the independent staff ledger
         # just as a committed capture would, without monthly checks or payroll.
+        logistics.synchronize(game, game.state)
+        domestic.synchronize(game, game.state)
         civil_staff.synchronize(game,game.state,checks=False)
         game.validate(game.state)
         return city

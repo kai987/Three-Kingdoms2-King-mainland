@@ -5,11 +5,14 @@ conquests, consume random numbers, or acknowledge/advance a game from the UI.
 """
 from copy import deepcopy
 import re
+from .officers import ref_sort_key, is_generated_ref
 
 LIMIT = 100
 STAFF_KINDS = {'staff_candidate', 'staff_hired', 'staff_declined', 'staff_expired',
                'staff_salary', 'staff_allegiance'}
 STAFF_DETAILS = {'staff_id', 'name', 'portrait', 'reason', 'amount', 'paid', 'bonus', 'counts'}
+TRANSPORT_KINDS = {'transport_departed','transport_arrived','transport_returned','transport_weather'}
+TRANSPORT_DETAILS = {'convoy_id','gold','grain','reserves','lost','reason'}
 DETAILS = {
     'campaign_start': {'difficulty', 'scenario_title'}, 'officer_appeared': set(),
     'recruit_success': {'actor'}, 'recruit_failure': {'actor'},
@@ -28,6 +31,8 @@ DETAILS = {
     'campaign_victory': set(), 'campaign_defeat': set(),
     'ai_campaign': {'target', 'sources', 'arrival_turn', 'coordinated'},
     **{kind: set(STAFF_DETAILS) for kind in STAFF_KINDS},
+    **{kind: set(TRANSPORT_DETAILS) for kind in TRANSPORT_KINDS},
+    'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
 }
 
 
@@ -68,9 +73,9 @@ def _validate_staff_event(row):
     if 'counts' in details:
         counts = details['counts']
         if (not isinstance(counts, dict) or set(counts) != {'staff', 'total_unpaid', 'cities'}
-                or type(counts['staff']) is not int or not 1 <= counts['staff'] <= 345
+                or type(counts['staff']) is not int or not 1 <= counts['staff'] <= 11385
                 or type(counts['cities']) is not int or not 1 <= counts['cities'] <= 115
-                or not counts['cities'] <= counts['staff'] <= counts['cities'] * 3
+                or not counts['cities'] <= counts['staff'] <= counts['cities'] * 99
                 or type(counts['total_unpaid']) is not int or not 0 <= counts['total_unpaid'] <= counts['staff']):
             raise ValueError('Civil staff event counts')
     if row['kind'] == 'staff_salary' and (details['paid'] > details['amount']
@@ -109,9 +114,11 @@ def transition(campaign, before, after, kind, payload):
              factions=[after.player], details=dict(difficulty=after.extension['difficulty'],
              scenario_title=campaign.catalog.data['title']))
         return
-    for ident, officer in sorted(after.officers.items()):
+    for ident, officer in sorted(after.officers.items(), key=lambda item: ref_sort_key(item[0])):
         previous = before.officers.get(ident)
         if previous is None:
+            if is_generated_ref(ident):
+                continue  # Hiring already emitted the independent staff snapshot.
             city = after.extension['free_locations'].get(str(ident))
             emit(campaign, after, 'officer_appeared', person_ids=[officer.person_id],
                  city_ids=[city] if city else [], audience='world')
@@ -147,7 +154,7 @@ def transition(campaign, before, after, kind, payload):
                  factions=[value.owner], details=dict(parent=rule['parent']), audience='world')
     for faction, leader in sorted(after.extension['leaders'].items()):
         previous = before.extension['leaders'].get(faction)
-        if leader is not None and leader != previous:
+        if leader is not None and leader != previous and faction not in after.extension.get('pending_succession', {}) and kind != 'choose_successor':
             emit(campaign, after, 'succession', person_ids=[person(leader)], factions=[faction],
                  details=dict(previous=person(previous) if previous in after.officers else None), audience='world')
     for faction in after.extension['ended_factions']:
@@ -201,7 +208,7 @@ def validate(campaign, state):
                 raise ValueError('Campaign event date')
         if type(row['day']) is not int or row['day'] not in (1, 11, 21) or (row['year'], row['month'], row['day']) > (state.year, state.month, state.day):
             raise ValueError('Campaign event calendar')
-        for key, allowed in [('person_ids', campaign.catalog.definitions), ('city_ids', campaign.catalog.map_cities),
+        for key, allowed in [('person_ids', {*campaign.catalog.definitions, *state.extension.get('civil_staff', {}).get('people', {})}), ('city_ids', campaign.catalog.map_cities),
                              ('factions', {*campaign.catalog.factions, 'neutral'})]:
             values = row[key]
             if not isinstance(values, list) or len(values) > 99 or any(not isinstance(v, str) or v not in allowed for v in values) or len(set(values)) != len(values):
@@ -226,5 +233,17 @@ def validate(campaign, state):
             raise ValueError('Campaign event JSON value')
         if row['kind'] in STAFF_KINDS:
             _validate_staff_event(row)
+        if row['kind'] in TRANSPORT_KINDS or row['kind']=='domestic_report':
+            details=row['details']
+            if set(details)!=DETAILS[row['kind']]:
+                raise ValueError('Domestic/transport event fields')
+            for key,value in details.items():
+                if key=='reason':
+                    if not isinstance(value,str) or re.fullmatch(r'[a-z_]{1,80}',value) is None:
+                        raise ValueError('Domestic/transport event reason')
+                elif type(value) is not int or not 0<=value<=100000000:
+                    raise ValueError('Domestic/transport event value')
+            if not row['city_ids'] or len(row['factions'])!=1:
+                raise ValueError('Domestic/transport event references')
     if ids != sorted(set(ids)) or ids and ids != list(range(events['next_id']-len(ids), events['next_id'])):
         raise ValueError('Campaign event sequence')

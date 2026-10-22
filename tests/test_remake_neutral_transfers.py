@@ -10,7 +10,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog
-from remake.civil_staff import synchronize
+from remake import civil_staff, domestic, logistics
 from remake.errors import GameError
 from remake.march_core import using_backend
 from remake.travel import TravelCampaign
@@ -19,6 +19,13 @@ from test_remake_march_core import neutral_transit_config, route_state
 
 
 CHAIN = ['nanyang', 'nanjun', 'yiyang', 'runan', 'yingchuan']
+
+
+def synchronize(game, state, **options):
+    """Manual fixtures mirror transaction reconciliation without running work."""
+    logistics.synchronize(game, state)
+    domestic.synchronize(game, state)
+    civil_staff.synchronize(game, state, **options)
 
 
 def transit_catalog():

@@ -9,7 +9,8 @@ from heapq import heappop, heappush
 from itertools import count
 from math import asin, ceil, cos, radians, sin, sqrt
 from .errors import GameError
-from .officers import integer, select_deployment, transfer_officers
+from .officers import (integer, select_deployment, transfer_officers,
+                       ref_sort_key, deserialize_officer_ref)
 
 
 def kilometers(a, b):
@@ -49,7 +50,11 @@ def build_routes(data, spec):
 
 class TravelCampaign:
     def _march_ids(self, state):
-        return {i for r in state.extension.get('travel', {}).get('marches', []) for i in r['officers']}
+        ids = {i for r in state.extension.get('travel', {}).get('marches', []) for i in r['officers']}
+        if 'logistics' in state.extension:
+            from .logistics import marching_ids
+            ids.update(marching_ids(state))
+        return ids
 
     def _travel_modes(self):
         return ('fastest','land','sea','special','explore')
@@ -175,7 +180,7 @@ class TravelCampaign:
 
     def _apply_march_risks(self, state, row):
         from .route_hazards import allocate_survivors
-        ids = sorted(row['officers'])
+        ids = sorted(row['officers'], key=ref_sort_key)
         for risk in row['risks']:
             if risk['applied']:
                 continue
@@ -231,6 +236,9 @@ class TravelCampaign:
                    departure_troops={str(i):state.officers[i].troops for i in ids},
                    risks=self._march_risks(quote,state.rng))
         travel['marches'].append(row)
+        if 'domestic' in state.extension:
+            from .domestic import on_departure
+            on_departure(self,state,ids,source.id)
         self._note(state, f'{len(ids)}将从{self.catalog.map_cities[source.id]["name"]}出发，'
                    f'至{self.catalog.map_cities[target.id]["name"]}约{quote["distance_km"]}公里、{quote["days"]}日，'
                    f'{quote["turns"]}旬后到达（每旬10天），耗粮{grain}。')
@@ -250,6 +258,9 @@ class TravelCampaign:
 
     def _arrivals(self, state, payload):
         if state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
+        if 'logistics' in state.extension:
+            from .logistics import process_arrivals
+            process_arrivals(self,state)
         travel = state.extension['travel']
         self._prune_marches(state)
         for row in sorted(list(travel['marches']), key=lambda r: (r['arrival_turn'], r['id'])):
@@ -284,6 +295,9 @@ class TravelCampaign:
                 if self._city_occupancy(state,target)+len(ids)>self.catalog.rules.city_officer_capacity:
                     self._note(state, f'{self.catalog.map_cities[target.id]["name"]}已满员，行军{row["id"]}等待下一旬入城。')
                     continue
+                if 'domestic' in state.extension:
+                    from .domestic import on_arrival
+                    on_arrival(self,state,ids,target.id)
                 transfer_officers(source.roster, target.roster, ids)
                 self._discover_march_route(state,row)
                 travel['marches'].remove(row)
@@ -516,9 +530,7 @@ class TravelCampaign:
             if not isinstance(manifest,dict) or not manifest or not {str(i) for i in ids}<=manifest.keys():
                 raise ValueError('march departure manifest')
             for text,amount in manifest.items():
-                if not isinstance(text,str) or not text.isdigit() or str(int(text))!=text:
-                    raise ValueError('march manifest identity')
-                ident=self.catalog.rules.officer_id(int(text))
+                ident=deserialize_officer_ref(text,self.catalog.rules)
                 if ident not in state.officers:
                     raise ValueError('unknown manifest officer')
                 integer(amount,0,999,'departure troops')
@@ -560,7 +572,7 @@ class TravelCampaign:
                     integer(amount,0,999,'before attrition')
                     if amount!=prior[text]:
                         raise ValueError('march before troop receipt')
-                ordered=sorted(before,key=int)
+                ordered=sorted(before,key=lambda key:ref_sort_key(deserialize_officer_ref(key,self.catalog.rules)))
                 expected_after=allocate_survivors([before[k] for k in ordered],numerator,actual['survival_denominator'])
                 if after!={key:n for key,n in zip(ordered,expected_after)}:
                     raise ValueError('march casualty receipt')

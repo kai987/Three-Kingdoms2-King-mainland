@@ -43,6 +43,22 @@ def successful_rng(state):
 
 
 class TacticalAiTests(unittest.TestCase):
+    def test_morale_prediction_matches_actual_all_damage_spreads(self):
+        game=battle(three_enemies=False)
+        state=game.state;b,a,t,_,_=actors(game)
+        for troops in (1,25,999):
+            t['troops']=troops
+            for morale in (0,50,70,100):
+                b['extended']['support'][str(a['id'])]['morale']=morale
+                for guard in (0,2):
+                    b['extended']['support'][str(t['id'])]['guard']=guard
+                    actual=[]
+                    for spread in range(21):
+                        with patch.object(SeedRng,'next',return_value=spread):
+                            amount=game._damage(state,a,t)
+                        actual.append(max(1,amount//2) if guard else amount)
+                    self.assertEqual(expected_attack(b,a,t,game.catalog.data['rules']['battle_damage_percent']),sum(actual)/21)
+
     def test_every_tactic_is_a_legal_scored_candidate_on_its_terrain(self):
         found=set()
         for terrain in ('plain','mountain','water'):

@@ -10,6 +10,12 @@
   martial_strength:Object.freeze(['martial_strength','intellect','virtue','health','experience','troops']),
   virtue:Object.freeze(['virtue','intellect','martial_strength','health','experience','troops'])
  });
+ function ref(value){
+  if(typeof value==='number')return Number.isSafeInteger(value)&&value>=0&&value<=65534?value:null;
+  if(typeof value!=='string')return null;
+  if(/^clerk-[0-9]{6,12}$/.test(value)){const n=Number(value.slice(6));if(n>=1&&n<=1000000&&value===`clerk-${String(n).padStart(6,'0')}`)return value;return null;}
+  return /^(?:0|[1-9][0-9]*)$/.test(value)&&Number.isSafeInteger(Number(value))&&Number(value)<=65534?Number(value):null;
+ }
  const numeric=value=>typeof value==='number'&&Number.isFinite(value)?value:-1;
  const display=value=>typeof value==='number'&&Number.isFinite(value)?String(value):'—';
  const stat=(officer,key)=>numeric(['health','experience','troops'].includes(key)?officer?.[key]:officer?.profile?.[key]);
@@ -38,5 +44,5 @@
   const profile=officer?.profile;
   return `${name} · ${display(troops)}兵 · 武${display(profile?.martial_strength)} · 知${display(profile?.intellect)} · 德${display(profile?.virtue)} · 体力${display(health)} · 经验${experience(officer?.experience)}${loyalty?` · 忠誠${display(officer?.loyalty)}`:''}`;
  }
- return Object.freeze({label,sort,experience});
+ return Object.freeze({label,sort,experience,ref});
 });

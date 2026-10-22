@@ -7,6 +7,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
+from remake import domestic
 from campaign_fixtures import controlled_catalog
 
 
@@ -106,12 +107,22 @@ class TenDayCalendarTests(unittest.TestCase):
             if city.owner not in (game.state.player, 'neutral'):
                 game.state.soldiers['lost'] += city.reserves
                 city.reserves = 0
+                # Each controlled AI city has one officer. Assign that officer
+                # to recruitment so the new two-office rules perform a real
+                # paid action, rather than assuming legacy free recruitment.
+                domestic.set_policy(game, game.state,
+                    dict(city=city.id, military=city.roster.officer_ids[0]), city.owner)
         game.command('end_turn', {}, game.revision)
         game.command('ai', dict(turn=1), game.revision)
-        reports = [r for r in game.state.extension['ai_reports'] if r['turn'] == 1]
-        factions = [r['faction'] for r in reports]
+        reports = [r for r in game.state.extension['domestic']['reports']
+                   if r['turn'] == 1 and r['kind'] == 'recruit']
+        factions = [r['owner'] for r in reports]
         self.assertEqual(set(factions), {'wei', 'wu'})
         self.assertEqual(factions, sorted(factions))
+        for report in reports:
+            self.assertGreater(report['details']['soldiers'], 0)
+            row = game.state.extension['domestic']['cities'][report['city']]
+            self.assertEqual((row['last_auto_turn'], row['last_work_turn']), (1, 1))
         game.validate(game.state)
 
     def test_player_defense_arrival_save_and_settlement_do_not_tick_twice(self):
