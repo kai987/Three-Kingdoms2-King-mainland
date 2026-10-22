@@ -577,6 +577,8 @@ width:100%;
 min-width:0;
 max-width:100%
 }
+.route-choice [hidden]{display:none!important}
+.route-choice{margin-bottom:16px}
 dialog .dialog-actions{
 display:flex;
 justify-content:flex-end;
