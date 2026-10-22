@@ -123,11 +123,14 @@ function smoothMapPath(points){
  for(let i=1;i<points.length-1;i++)d+=`Q${points[i].join(' ')} ${(points[i][0]+points[i+1][0])/2} ${(points[i][1]+points[i+1][1])/2}`;
  return d+`L${points.at(-1).join(' ')}`;
 }
-function landMapPath(points,{smooth=true}={}){
+function landMapPath(points,{smooth=true,from=null,to=null}={}){
  if(!Array.isArray(points)||points.length<2)return '';
- const centers=view.catalog.cities.map(mapPosition);
+ const cities=typeof setupPreview!=='undefined'&&setupPreview?.map_cities||view.catalog.cities;
+ const anchors=cities.map(city=>({id:city.id,center:mapPosition(city)})),centers=anchors.map(row=>row.center);
+ const endpoint=id=>id===null?null:anchors.find(row=>row.id===id)?.center;
+ const origin=endpoint(from),destination=endpoint(to);
  // Only explicit road vertices can be junctions; nearby cities do not create new links.
- const snapped=points.map(p=>centers.find(c=>Math.hypot(c[0]-p[0],c[1]-p[1])<=3)||p);
+ const snapped=points.map((p,index)=>index===0&&origin?origin:index===points.length-1&&destination?destination:centers.find(c=>Math.hypot(c[0]-p[0],c[1]-p[1])<=3)||p);
  if(!smooth)return snapped.map((p,i)=>(i?'L':'M')+p.join(' ')).join('');
  let start=0,path='';
  for(let i=1;i<snapped.length;i++)if(i===snapped.length-1||centers.includes(snapped[i])){
@@ -135,6 +138,9 @@ function landMapPath(points,{smooth=true}={}){
   path+=smoothMapPath(snapped.slice(start,i+1));start=i;
  }
  return path;
+}
+function mapBackgroundHref(original){
+ return view.catalog.map_presentation?.road_center_corrections?.backgrounds?.[original]||original;
 }
 const mapAccessKey=points=>[points[0].join(','),points.at(-1).join(',')].sort().join(':');
 const displayLog=text=>view.catalog.cities.filter(c=>c.administrative_name!==cityName(c.id)).reduce((s,c)=>s.replaceAll(c.administrative_name,cityName(c.id)),text);
@@ -251,6 +257,7 @@ function renderMap(){
  const added=preview?.added_city_ids||view.catalog.added_city_ids||[],activeIds=new Set(active.map(c=>c.id));
  const focused=preview?.focus||selectedCity,selected=board.find(c=>c.id===focused),center=selected?mapPosition(selected):[760,440];
  const world=(preview?preview.world:view.catalog.world)||{x:0,y:0,width:1352,height:1024,background:view.catalog.map_presentation.background};
+ const backgroundHref=mapBackgroundHref(world.background);
  const cameraKey=[world.x,world.y||0,world.width,world.height,world.background].join(':');
  if(mapNavigation){mapNavigation.destroy();mapNavigation=null;}
  if(cameraKey!==mapCameraKey){mapCamera=null;mapCameraKey=cameraKey;}
@@ -262,7 +269,7 @@ function renderMap(){
  const recolor=view.catalog.map_presentation.mountain_recolors;
  const mountainMask=recolor?.patches.map(p=>p.runs.map(([y,x,n])=>`M${x} ${y}h${n}v1h-${n}z`).join('')).join('')||'';
  const mountainDefs=mountainMask?`<clipPath id="western-mountain-faces"><path d="${mountainMask}"/></clipPath><filter id="western-mountain-color" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="${recolor.color_matrix.join(' ')}"/></filter>`:'';
- const mountainColors=mountainMask?`<g clip-path="url(#western-mountain-faces)" data-terrain-recolor="chengdu-west"><image href="${world.background}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}" filter="url(#western-mountain-color)"/></g>`:'';
+ const mountainColors=mountainMask?`<g clip-path="url(#western-mountain-faces)" data-terrain-recolor="chengdu-west"><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}" filter="url(#western-mountain-color)"/></g>`:'';
  const castles=active.map(c=>{
   const [x,y]=mapPosition(c),owner=owners[c.id]||'neutral';
   // Cover the baked outline too: every pixel of an unowned castle is white.
@@ -274,25 +281,27 @@ function renderMap(){
  const extras=preview?.road_additions||view.catalog.road_additions;
  const hazardous=!!(preview?preview.travel_hazards:view.catalog.travel_hazards);
  const roads=view.catalog.map_presentation.added_land_roads.filter(r=>extras.some(e=>e.includes(r.from)&&e.includes(r.to))).map(r=>{
-  const d=landMapPath(r.new_branch);
+  const d=landMapPath(r.new_branch,{to:r.to});
   const oneway=hazardous&&r.from==='yinping'&&r.to==='shujun';
   return `<g data-road="${r.from}-${r.to}"${oneway?' data-oneway="yinping-shujun"':''}><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"${oneway?' marker-end="url(#oneway-road-arrow)"':''}/></g>`;
  }).join('');
  const drawnAccess=new Set();
  const firstAccess=part=>{if(part.mode==='sea')return true;const key=mapAccessKey(part.points);if(drawnAccess.has(key))return false;drawnAccess.add(key);return true;};
- const expansionRoads=preview?.world||!preview&&view.catalog.world?view.catalog.map_presentation.expansion_connections.filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.filter(part=>!hazardous||part.mode!=='sea'&&firstAccess(part)).map((part,index)=>{const d=part.mode==='sea'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false});return part.mode==='sea'?`<path class="coastal-lane" d="${d}" data-coastal-route="${r.from}-${r.to}"/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;})).join(''):'';
+ const expansionRoads=preview?.world||!preview&&view.catalog.world?view.catalog.map_presentation.expansion_connections.filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.map((part,index)=>{if(hazardous&&(part.mode==='sea'||!firstAccess(part)))return '';const d=part.mode==='sea'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false,from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});return part.mode==='sea'?`<path class="coastal-lane" d="${d}" data-coastal-route="${r.from}-${r.to}"/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;})).join(''):'';
  const seaRoutes=hazardous?[...(preview?.sea_routes||view.catalog.sea_routes||[]),...(!preview?view.catalog.discovered_routes||[]:[])]:[];
  const discoveredIds=new Set(!preview?(view.catalog.discovered_routes||[]).map(r=>r.id||[r.from,r.to].sort().join(':')):[]);
  const seaPairs=new Set();
  const navigableSeas=seaRoutes.filter(r=>{
   const key=[r.from,r.to].sort().join(':');if(seaPairs.has(key)||!activeIds.has(r.from)||!activeIds.has(r.to))return false;seaPairs.add(key);return true;
- }).flatMap(r=>(r.draw||[]).filter(firstAccess).map((part,index)=>{
-  const d=part.mode==='sea'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false});if(!d)return '';
+ }).flatMap(r=>(r.draw||[]).map((part,index)=>{
+  if(!firstAccess(part))return '';
+  const d=part.mode==='sea'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false,from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});if(!d)return '';
   const discovered=discoveredIds.has(r.id||[r.from,r.to].sort().join(':'));
   return part.mode==='sea'?`<path class="coastal-lane${discovered?' discovered-lane':''}" d="${d}" data-coastal-route="${r.from}-${r.to}" data-sea-route="${escapeHtml(r.id||r.from+'-'+r.to)}"${discovered?' data-discovered-route="'+escapeHtml(r.id||r.from+'-'+r.to)+'"':''}/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
- const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.filter(firstAccess).map(part=>{
-  const d=landMapPath(part.points);
+ const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.map((part,index)=>{
+  if(!firstAccess(part))return '';
+  const d=landMapPath(part.points,{from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});
   return `<g data-regional-road="${r.from}-${r.to}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
  const offsets=preview?.city_label_offsets||view.catalog.city_label_offsets||{};
@@ -300,7 +309,7 @@ function renderMap(){
   const [x,y]=mapPosition(c),[dx,dy,anchor]=offsets[c.id]||[0,-24,'middle'];return `<text class="map-city-name" x="${x+dx}" y="${y+dy}" text-anchor="${anchor}" data-city-label="${c.id}" aria-hidden="true">${escapeHtml(cityName(c.id))}</text>`;
  }).join('');
  const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" aria-label="切换城名显示"><span class="map-labels-full">城名：${{major:'主城',all:'全部',none:'关闭'}[cityLabels]}</span><span class="map-labels-compact">${{major:'名：主',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
- $('#stage').innerHTML=`<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${world.background}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${mountainColors}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
+ $('#stage').innerHTML=`<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${mountainColors}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${castles}${labels}</svg>
  <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
  <div class="map-bottom-bar">${toolbar}<time id="map-date" datetime="${GameCalendar.iso(date)}" aria-label="${GameCalendar.text(date)}">${date.year}年<span>${date.month}月${GameCalendar.period(date.day)}</span></time></div>

@@ -5,12 +5,16 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
+sys.path.insert(0,str(ROOT/'game'))
 from remake.map_presentation import city_names,presentation
 from remake.session import CampaignSession
+from build_map_presentation import road_center_corrections
+from road_centers import build as build_road_centers
 
 
 class MapPresentationTests(unittest.TestCase):
@@ -69,9 +73,10 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta['background_sha256'],hashlib.sha256((ROOT/'game'/meta['background'].lstrip('/')).read_bytes()).hexdigest())
         source=json.loads((ROOT/'game/config/map-source.json').read_text())
         self.assertEqual(source['schema'],'tk2-map-source-v1')
-        self.assertEqual(source['presentation'],meta)
+        base=deepcopy(meta);base.pop('road_center_corrections')
+        self.assertEqual(source['presentation'],base)
         self.assertEqual(set(source['approved_asset_sha256']),
-                         {'map.png','map-basin.png','map-campaign.png','map-clean.png','map-navigation.png'})
+                         {'map.png','map-basin.png','map-campaign.png','map-clean.png','map-navigation.png','map-road-centers.png'})
         for name,expected in source['approved_asset_sha256'].items():
             self.assertEqual(hashlib.sha256((ROOT/'game/assets'/name).read_bytes()).hexdigest(),expected,name)
         sprite=source['native_castle_sprite'];self.assertEqual((sprite['width'],sprite['height']),(8,8))
@@ -85,6 +90,78 @@ class MapPresentationTests(unittest.TestCase):
         subprocess.run([sys.executable,'-B','game/build_map_presentation.py'],cwd=ROOT,check=True)
         subprocess.run([sys.executable,'-B','game/build_map_anchors.py'],cwd=ROOT,check=True)
         self.assertEqual(before,{p:hashlib.sha256(p.read_bytes()).hexdigest() for p in files})
+
+    def test_native_road_corrections_bind_current_sources_and_keep_runtime_audit_compact(self):
+        source=json.loads((ROOT/'game/config/map-source.json').read_text())
+        meta=presentation()['road_center_corrections']
+        actual=road_center_corrections(ROOT,source['approved_asset_sha256'])
+        self.assertEqual(meta,actual)
+        self.assertEqual(meta['schema'],'tk2-road-center-corrections-v1')
+        self.assertEqual(meta['backgrounds'],{'/assets/map-navigation.png':'/assets/map-road-centers.png'})
+        self.assertEqual(len(meta['hubs']),33)
+        self.assertEqual(meta['summary'],dict(reviewed_hubs=33,visible_hubs=12,changed_segments=109,
+                                             deleted_spokes=34,protected_hubs=25))
+        for field in ('ground','provenance','protected_hubs','changes','removed_obsolete_paths','mask_d','paint_d'):
+            self.assertNotIn(field,meta,'Runtime uses a native PNG, not a large SVG repaint')
+        for hub in meta['hubs']:
+            self.assertEqual(set(hub),{'city','center','old_hub'})
+        shared=json.loads((ROOT/'game/config/campaigns/shared.json').read_text())
+        positions={city['id']:city['position'] for city in shared['catalog']['cities']}
+        full=build_road_centers(json.loads((ROOT/'game/config/road-centers.json').read_text()),positions)
+        self.assertEqual(len(full['hubs']),meta['summary']['reviewed_hubs'])
+        self.assertEqual(len(full['protected_hubs']),meta['summary']['protected_hubs'])
+        self.assertEqual(len(full['changes']),meta['summary']['changed_segments'])
+        self.assertEqual(sum(row['deleted'] for row in full['changes']),meta['summary']['deleted_spokes'])
+        self.assertEqual([row['index'] for row in full['removed_obsolete_paths']],[4,339])
+        rows={row['index']:row for row in full['changes']}
+        self.assertEqual(rows[55]['new_points'][-1],[434,270])
+        self.assertTrue(rows[61]['deleted'])
+        self.assertEqual(rows[62]['new_points'][0],[434,270])
+        for name in ('map-navigation.png','map-road-centers.png'):
+            raw=(ROOT/'game/assets'/name).read_bytes()
+            self.assertEqual(raw[:8],b'\x89PNG\r\n\x1a\n')
+            self.assertEqual((int.from_bytes(raw[16:20],'big'),int.from_bytes(raw[20:24],'big')),(1352,1024))
+        catalog_files=self.paths+[ROOT/'game/data/campaigns/index.json']
+        before={p:hashlib.sha256(p.read_bytes()).hexdigest() for p in catalog_files}
+        road_center_corrections(ROOT,source['approved_asset_sha256'])
+        self.assertEqual(before,{p:hashlib.sha256(p.read_bytes()).hexdigest() for p in catalog_files})
+
+    def test_stale_road_render_sources_positions_assets_and_pins_are_rejected(self):
+        source=json.loads((ROOT/'game/config/map-source.json').read_text())
+        manifest_path='game/map-source/road-centers-render.json'
+        required=('game/config/road-centers.json','game/config/campaigns/shared.json',
+                  'game/assets/map-navigation.png','game/map-source/road-ground.png',
+                  'game/assets/map-road-centers.png',manifest_path)
+        originals={name:(ROOT/name).read_bytes() for name in required}
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary)
+            for name,raw in originals.items():
+                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
+            manifest=json.loads(originals[manifest_path])
+            for field in ('source_sha256','positions_sha256','baseline_sha256','ground_sha256','output_sha256'):
+                with self.subTest(field=field):
+                    altered=dict(manifest);altered[field]='0'*64
+                    (root/manifest_path).write_text(json.dumps(altered))
+                    with self.assertRaisesRegex(ValueError,field):
+                        road_center_corrections(root,source['approved_asset_sha256'])
+            (root/manifest_path).write_bytes(originals[manifest_path])
+            for name,field in (('game/assets/map-navigation.png','baseline_sha256'),
+                               ('game/map-source/road-ground.png','ground_sha256'),
+                               ('game/assets/map-road-centers.png','output_sha256')):
+                with self.subTest(asset=name):
+                    (root/name).write_bytes(originals[name]+b'changed')
+                    with self.assertRaisesRegex(ValueError,field):
+                        road_center_corrections(root,source['approved_asset_sha256'])
+                    (root/name).write_bytes(originals[name])
+            shared=json.loads(originals['game/config/campaigns/shared.json'])
+            shared['catalog']['cities'][0]['position'][0]+=1
+            (root/'game/config/campaigns/shared.json').write_text(json.dumps(shared))
+            with self.assertRaisesRegex(ValueError,'positions_sha256'):
+                road_center_corrections(root,source['approved_asset_sha256'])
+            (root/'game/config/campaigns/shared.json').write_bytes(originals['game/config/campaigns/shared.json'])
+            pins=dict(source['approved_asset_sha256']);pins['map-road-centers.png']='0'*64
+            with self.assertRaisesRegex(ValueError,'approved map pins'):
+                road_center_corrections(root,pins)
 
 
 if __name__=='__main__':unittest.main()

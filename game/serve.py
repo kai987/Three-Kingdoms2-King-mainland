@@ -148,6 +148,7 @@ def main():
               '/assets/map-basin.png': ('assets/map-basin.png', 'image/png'),
               '/assets/map-campaign.png': ('assets/map-campaign.png', 'image/png'),
               '/assets/map-navigation.png': ('assets/map-navigation.png', 'image/png'),
+              '/assets/map-road-centers.png': ('assets/map-road-centers.png', 'image/png'),
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
     static.update(portrait_static_assets())

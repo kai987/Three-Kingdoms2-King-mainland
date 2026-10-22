@@ -7,7 +7,8 @@
     "map-campaign.png": "0fc790e8c8e87b79bac5bde213a6f047faaf8ec6810ecd8c0c53bc7af7dac2c7",
     "map-clean.png": "bbe033c944ba1547ca12c7d0cbd50d930c8a49befce5fbcc767cf5afbfc77c7e",
     "map-navigation.png": "3cf81b31f08fe73ff5f9acd7627e009de9e4250664088c2d7cfc54f31bd2f683",
-    "map.png": "30946ef6877db09f7fb44c7d0cfe729614983613619095428ff3a270c0881edd"
+    "map.png": "30946ef6877db09f7fb44c7d0cfe729614983613619095428ff3a270c0881edd",
+    "map-road-centers.png": "ce96249cf2c7945875be795c2a31c835f061be76cad26bc6c374c8725c00ce2a"
   },
   "native_castle_sprite": {
     "sourceRect": [

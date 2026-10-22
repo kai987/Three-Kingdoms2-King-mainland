@@ -3516,5 +3516,391 @@
       }
     ],
     "green_contour_expansion_pixels": 6
+  },
+  "road_center_corrections": {
+    "schema": "tk2-road-center-corrections-v1",
+    "backgrounds": {
+      "/assets/map-navigation.png": "/assets/map-road-centers.png"
+    },
+    "render": {
+      "schema": "tk2-road-center-render-v1",
+      "source_sha256": "ff255df7436057b1d4b183515c9cbff3100bc98a8628ee974ec9cc92572cd474",
+      "positions_sha256": "91a45ddd1005028f4f20779946104df3bab590aab30a0c63c1d17f24a810d38d",
+      "baseline_sha256": "3cf81b31f08fe73ff5f9acd7627e009de9e4250664088c2d7cfc54f31bd2f683",
+      "ground_sha256": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
+      "output_sha256": "ce96249cf2c7945875be795c2a31c835f061be76cad26bc6c374c8725c00ce2a"
+    },
+    "summary": {
+      "reviewed_hubs": 33,
+      "visible_hubs": 12,
+      "changed_segments": 109,
+      "deleted_spokes": 34,
+      "protected_hubs": 25
+    },
+    "hubs": [
+      {
+        "city": "lingling",
+        "center": [
+          656,
+          655
+        ],
+        "old_hub": [
+          674,
+          646
+        ]
+      },
+      {
+        "city": "anding",
+        "center": [
+          434,
+          270
+        ],
+        "old_hub": [
+          422,
+          286
+        ]
+      },
+      {
+        "city": "changsha",
+        "center": [
+          727,
+          577
+        ],
+        "old_hub": [
+          742,
+          590
+        ]
+      },
+      {
+        "city": "hepu",
+        "center": [
+          552,
+          829
+        ],
+        "old_hub": [
+          566,
+          822
+        ]
+      },
+      {
+        "city": "linhe",
+        "center": [
+          658,
+          728
+        ],
+        "old_hub": [
+          654,
+          738
+        ]
+      },
+      {
+        "city": "zhongshan",
+        "center": [
+          826,
+          149
+        ],
+        "old_hub": [
+          818.0,
+          156.0
+        ]
+      },
+      {
+        "city": "fanyang",
+        "center": [
+          874,
+          112
+        ],
+        "old_hub": [
+          884.0,
+          111.0
+        ]
+      },
+      {
+        "city": "pingyuan",
+        "center": [
+          918,
+          202
+        ],
+        "old_hub": [
+          923.0,
+          195.0
+        ]
+      },
+      {
+        "city": "runan",
+        "center": [
+          835,
+          410
+        ],
+        "old_hub": [
+          842,
+          414
+        ]
+      },
+      {
+        "city": "yunnan",
+        "center": [
+          82,
+          681
+        ],
+        "old_hub": [
+          74,
+          682
+        ]
+      },
+      {
+        "city": "baxi",
+        "center": [
+          382,
+          450
+        ],
+        "old_hub": [
+          382,
+          442
+        ]
+      },
+      {
+        "city": "fufeng",
+        "center": [
+          420,
+          341
+        ],
+        "old_hub": [
+          414,
+          346
+        ]
+      },
+      {
+        "city": "badong",
+        "center": [
+          555,
+          476
+        ],
+        "old_hub": [
+          562,
+          478
+        ]
+      },
+      {
+        "city": "danyang",
+        "center": [
+          1050,
+          427
+        ],
+        "old_hub": [
+          1050,
+          434
+        ]
+      },
+      {
+        "city": "wuling",
+        "center": [
+          660,
+          545
+        ],
+        "old_hub": [
+          666,
+          542
+        ]
+      },
+      {
+        "city": "jingzhao",
+        "center": [
+          497,
+          354
+        ],
+        "old_hub": [
+          502,
+          350
+        ]
+      },
+      {
+        "city": "gaoliang",
+        "center": [
+          696,
+          812
+        ],
+        "old_hub": [
+          698,
+          806
+        ]
+      },
+      {
+        "city": "donghai",
+        "center": [
+          1036,
+          326
+        ],
+        "old_hub": [
+          1030.0,
+          326.0
+        ]
+      },
+      {
+        "city": "yan",
+        "center": [
+          918,
+          98
+        ],
+        "old_hub": [
+          913.0,
+          101.0
+        ]
+      },
+      {
+        "city": "jiangyang",
+        "center": [
+          281,
+          563
+        ],
+        "old_hub": [
+          278,
+          558
+        ]
+      },
+      {
+        "city": "wuling",
+        "center": [
+          660,
+          545
+        ],
+        "old_hub": [
+          658,
+          550
+        ]
+      },
+      {
+        "city": "nanjun",
+        "center": [
+          691,
+          503
+        ],
+        "old_hub": [
+          686,
+          502
+        ]
+      },
+      {
+        "city": "xinggu",
+        "center": [
+          298,
+          751
+        ],
+        "old_hub": [
+          298,
+          746
+        ]
+      },
+      {
+        "city": "qichun",
+        "center": [
+          874,
+          512
+        ],
+        "old_hub": [
+          878,
+          514
+        ]
+      },
+      {
+        "city": "bajun",
+        "center": [
+          398,
+          553
+        ],
+        "old_hub": [
+          402,
+          554
+        ]
+      },
+      {
+        "city": "guanghan",
+        "center": [
+          255,
+          470
+        ],
+        "old_hub": [
+          254,
+          474
+        ]
+      },
+      {
+        "city": "jiujiang",
+        "center": [
+          945,
+          406
+        ],
+        "old_hub": [
+          946.0,
+          410.0
+        ]
+      },
+      {
+        "city": "dai",
+        "center": [
+          808,
+          100
+        ],
+        "old_hub": [
+          810.0,
+          103.0
+        ]
+      },
+      {
+        "city": "yidu",
+        "center": [
+          647,
+          472
+        ],
+        "old_hub": [
+          650,
+          474
+        ]
+      },
+      {
+        "city": "pingyuan",
+        "center": [
+          918,
+          202
+        ],
+        "old_hub": [
+          919.0,
+          199.0
+        ]
+      },
+      {
+        "city": "qi",
+        "center": [
+          1014,
+          213
+        ],
+        "old_hub": [
+          1015.0,
+          210.0
+        ]
+      },
+      {
+        "city": "taiyuan",
+        "center": [
+          731,
+          181
+        ],
+        "old_hub": [
+          734.0,
+          182.0
+        ]
+      },
+      {
+        "city": "hedong",
+        "center": [
+          657,
+          385
+        ],
+        "old_hub": [
+          658,
+          382
+        ]
+      }
+    ]
   }
 }
