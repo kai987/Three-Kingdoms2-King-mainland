@@ -10,7 +10,7 @@ const gameAudio=GameAudio.create();
 const battleScene=typeof GameBattleScene==='undefined'?null:GameBattleScene.create({i18n:GameI18n,portraits:GamePortraits,name:id=>name(id),onSelect:(side,id)=>{if(busy)return;if(side==='actor')actor=id;else target=id;gameAudio.play('click');renderBattle();},onSound:scene=>{
  gameAudio.setScene(scene.kind.startsWith('duel')?'duel':'battle');
  const families=['88','95','8d','8d','88','88','88','8d','91','95','8d','8d','88','88','88','95'];
- const cue=scene.skipped||!scene.success?'error':scene.kind==='tactic'?'tactic_'+(families[scene.tactic]||'88'):scene.kind==='ambush'?'tactic_8d':scene.kind==='duel_start'?'duel_start':scene.kind==='duel_action'?'duel_'+scene.move:scene.kind==='retreat'?'cancel':'attack';
+ const cue=scene.skipped||!scene.success?'error':scene.kind==='tactic'?'tactic_'+(families[scene.tactic]||'88'):scene.kind==='ambush'?'tactic_8d':scene.kind==='duel_start'?'duel_start':scene.kind==='duel_action'?'duel_'+(scene.move==='desperate'?'strike':scene.move):scene.kind==='retreat'?'cancel':'attack';
  gameAudio.play(scene.kind==='duel_start'&&!scene.success?'duel_refused':cue);
 },onSettled:()=>gameAudio.setScene(view?.game?.battle?.extended?.duel?'duel':['battle','result'].includes(view?.game?.phase)?'battle':'strategy'),onOutcome:cue=>gameAudio.play(cue)});
 const gameEvents=typeof GameEvents==='undefined'?null:GameEvents.create({getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview,parentDialog:dialog});
@@ -189,7 +189,7 @@ async function command(kind,payload={}){
   if(!audioOutcome||audioOutcome===previousOutcome){
    let sound={depart:'march',transfer:'march',attack:'attack',retreat:'cancel'}[kind]||'confirm';
    if(kind==='duel_start')sound=view.game.battle?.extended?.duel?'duel_start':'duel_refused';
-   if(kind==='duel_action')sound='duel_'+payload.move;
+   if(kind==='duel_action')sound='duel_'+(payload.move==='desperate'?'strike':payload.move);
    if(kind==='tactic'){
     const originalFamilies=['88','95','8d','8d','88','88','88','8d','91','95','8d','8d','88','88','88','95'];
     const log=view.game.battle?.log||[];
@@ -727,8 +727,8 @@ function renderDuel(b){
  const picture=typeof battleScene==='undefined'?'':battleScene?.html()||'';
  $('#stage').innerHTML=`<div class="arena"><div class="arena-heading"><h2>阵前单挑</h2><span>第${d.round}合</span></div>${picture||`<div class="duel-fighters"><div><div class="duel-fighter-head">${portraitHtml(d.actor,'duel')}<h3>${escapeHtml(name(d.actor))}</h3></div><p>${escapeHtml(officerAttributes(d.actor))} · 体${a.health}</p><progress aria-label="本方体力" max="99" value="${a.health}"></progress></div><div><div class="duel-fighter-head">${portraitHtml(d.target,'duel')}<h3>${escapeHtml(name(d.target))}</h3></div><p>${escapeHtml(officerAttributes(d.target))} · 体${t.health}</p><progress aria-label="对方体力" max="99" value="${t.health}"></progress></div></div>`}<details class="battle-army-menu"><summary>交锋记录</summary><ul class="battle-log">${d.log.map(l=>`<li>${escapeHtml(l)}</li>`).join('')}</ul></details></div>`;
  if(typeof battleScene!=='undefined')battleScene?.mount($('#stage [data-battle-scene]'),view,{actor:d.actor,target:d.target});
- $('#inspector').innerHTML='<div class="inspector-heading"><h2>选择招式</h2></div><p>突击直攻；防守减伤；佯攻克制防守，但易受突击。负伤者败退，二十合仍未分胜负则返回战场。</p><div class="actions"><button id="duel-strike" class="primary">突击</button><button id="duel-guard">防守</button><button id="duel-feint">佯攻</button><button id="duel-withdraw">退出单挑</button></div>';
- for(const move of ['strike','guard','feint','withdraw'])$('#duel-'+move).onclick=()=>command('duel_action',{battle_id:b.id,move});
+ $('#inspector').innerHTML='<div class="inspector-heading"><h2>选择招式</h2></div><p>突击直攻；防守减伤；佯攻克制防守，但易受突击。舍命一击有30%机会造成双倍基础伤害，失败自损10～30体力。负伤者败退，二十合仍未分胜负则返回战场。</p><div class="actions"><button id="duel-strike" class="primary">突击</button><button id="duel-guard">防守</button><button id="duel-feint">佯攻</button><button id="duel-desperate">舍命一击</button><button id="duel-withdraw">退出单挑</button></div>';
+ for(const move of ['strike','guard','feint','desperate','withdraw'])$('#duel-'+move).onclick=()=>command('duel_action',{battle_id:b.id,move});
 }
 function renderBattle(){
  if(mapNavigation){mapNavigation.destroy();mapNavigation=null;}

@@ -37,3 +37,9 @@ refreshes the pinned route-source fingerprint and catalog identity. All32 curren
 checkpoints were regenerated under the Python backend only after proving that
 every field except full-state/save hashes matched the preceding fixtures: route
 quotes, dates, final troops, soldier ledgers, and RNG state/draws are unchanged.
+
+## 捨命一擊接入前的單挑向量
+
+`duel-pre-desperate-baseline.json`由凍結的`eea539c`程式擷取，記錄8個種子×4種既有招式的完整狀態雜湊、亂數與回執。兩方體力80，避免觸發新增的低體力AI捨命選擇；新招式沒有被任何一方選中時，這些既有操作應保持逐項一致。
+
+單挑動作擴充提交另因 `app.js` 指紋更新重綁32個行軍存檔包雜湊；重建前逐項確認八條行軍案例的完整狀態、RNG、路線報價、存活兵數及回合完全不變。此項不更新任何行軍公式或狀態雜湊。

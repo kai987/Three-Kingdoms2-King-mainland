@@ -1,0 +1,15 @@
+Use case: stylized-concept. Production transparent PIXEL ART sprite sheet for NES-style Three Kingdoms horse duels.
+PORTRAIT1024x1536 canvas. Strict TWO COLUMNS by FOUR ROWS = EXACTLY EIGHT mounted rider sprites. Each cell512x384. No text, grid lines, borders, scenery, shadows or glow. Fully TRANSPARENT background.
+STYLE REFERENCE: match provided image's flat ivory armor, bold chunky black outlines, limited palette, legible side view. Same warrior, same horse and SAME weapon category in all cells. Every horse faces RIGHT. NO color blue/cyan anywhere except HORSE COAT.
+TECHNICAL HORSE MASK: coat cyan/turquoise only (#00FFFF,#00BBBB,#007F7F). Black mane/tail/hooves and gold/ivory/brown saddle and reins. All cyan coat will later be recolored. Warrior ivory armor, black/red sash, tan face, no cyan. Keep every complete horse, tail, rider, weapon and bow arrow strictly INSIDE its own512x384 cell with32px transparent margins on every side. Make each group at most440px wide and310px high. Long weapons angled up or close to body so NEVER cross into another cell. Keep all silhouettes separated, no cut-off.
+WEAPON: one long straight spear with silver leaf point and red tassel; never an axe.
+Eight DIFFERENT poses, reading order:
+row1 LEFT idle: upright rider, horse standing, weapon held ready.
+row1 RIGHT strike: horse charges, rider reaches weapon forward for a strike (bow: releases arrow).
+row2 LEFT guard: braced horse, rider leans BACK, weapon raised DIAGONALLY ACROSS CHEST blocking. Clearly a defensive pose.
+row2 RIGHT feint: rider twists shoulder, weapon partly retracted as deceptive probing attack (bow: partial draw).
+row3 LEFT withdraw: horse steps BACK while facing RIGHT, rider pulls reins and leans back, weapon low.
+row3 RIGHT desperate: extended forceful all-in lunge, rider leans far FORWARD, weapon raised then slashing/thrusting (bow: extreme full draw release).
+row4 LEFT hit: horse rears slightly, rider RECOILS far backward with lowered weapon, head thrown back.
+row4 RIGHT defeat: horse still upright but tired, rider SLUMPED low forward over neck with weapon dangling. No dismemberment.
+Each sprite needs a visibly different silhouette but identical design and scale. No blurred/airbrushed edges or photorealism. Do not add companion people, effects, labels or extra weapons.

@@ -3,7 +3,7 @@
   "version": 1,
   "purpose": "presentation_only_no_combat_stats_rng_or_save_changes",
   "identity": "canonical_person_id_only",
-  "chronology_policy": "iconic_novel_appearance_all_scenarios_not_physical_equipment_ownership",
+  "chronology_policy": "iconic_requested_appearance_all_scenarios_not_physical_equipment_ownership",
   "defaults": {
     "weapon": "spear",
     "horse": "chestnut",
@@ -52,7 +52,7 @@
       "edition": "一百二十回本（維基文庫轉錄）",
       "chapter": 5,
       "url": "https://zh.wikisource.org/wiki/三國演義/第005回",
-      "summary": "孫堅麾下程普使用鐵脊蛇矛，韓當使用大刀。 潘鳳出戰華雄時手提大斧上馬。"
+      "summary": "孫堅持古錠刀、騎花鬃馬；程普使用鐵脊蛇矛，韓當使用大刀，潘鳳手提大斧。"
     },
     "novel-007": {
       "work": "三國演義",
@@ -108,7 +108,7 @@
       "edition": "一百二十回本（維基文庫轉錄）",
       "chapter": 53,
       "url": "https://zh.wikisource.org/wiki/三國演義/第053回",
-      "summary": "黃忠使用刀、弓；張遼持刀迎戰太史慈；孫權也曾準備持槍迎敵。"
+      "summary": "黃忠能開二石力之弓，交鋒用刀；該章未稱其弓為鐵胎，換乘的是韓玄青馬。張遼持刀迎戰太史慈，孫權亦曾準備持槍。"
     },
     "novel-059": {
       "work": "三國演義",
@@ -158,6 +158,41 @@
       "chapter": 94,
       "url": "https://zh.wikisource.org/wiki/三國演義/第094回",
       "summary": "魏延截擊曹遵，以刀斬將。"
+    },
+    "novel-020": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 20,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第020回",
+      "summary": "曹操在許田圍獵時乘爪黃飛電；該段未指定完整毛色。"
+    },
+    "novel-097": {
+      "work": "三國演義",
+      "edition": "一百二十回本（維基文庫轉錄）",
+      "chapter": 97,
+      "url": "https://zh.wikisource.org/wiki/三國演義/第097回",
+      "summary": "曹真推薦的王雙使用兩石鐵胎弓；此段不是黃忠使用鐵胎弓的證據。"
+    },
+    "sanguozhi-001": {
+      "work": "三國志",
+      "edition": "陳壽撰、裴松之注（維基文庫轉錄）",
+      "chapter": 1,
+      "url": "https://zh.wikisource.org/wiki/三國志/卷01",
+      "summary": "武帝紀建安二年宛城段注引魏書，明記曹操所乘馬名絕影；沒有指定毛色。"
+    },
+    "sanguozhi-047": {
+      "work": "三國志",
+      "edition": "陳壽撰、裴松之注（維基文庫轉錄）",
+      "chapter": 47,
+      "url": "https://zh.wikisource.org/wiki/三國志/卷47",
+      "summary": "吳主傳記孫權乘駿馬越津橋，江表傳注記谷利助鞭；該段未命名快航。"
+    },
+    "taiping-yulan-0897": {
+      "work": "太平御覽",
+      "edition": "卷897引崔豹古今注（維基文庫轉錄）",
+      "chapter": 897,
+      "url": "https://zh.wikisource.org/wiki/太平御覽/0897",
+      "summary": "古今注引文將驚帆記為曹真的駃馬，非孫權之馬；形容其疾馳如烈風舉帆。"
     }
   },
   "profiles": {
@@ -268,14 +303,14 @@
       ],
       "runtime_id": 595,
       "weapon": "spear",
-      "horse": "white",
+      "horse": "zhaoye-yushizi",
       "weapon_label": {
         "zh-Hant": "長槍",
         "ja": "長槍"
       },
       "horse_label": {
-        "zh-Hant": "白馬",
-        "ja": "白馬"
+        "zh-Hant": "照夜玉獅子",
+        "ja": "照夜玉獅子"
       },
       "weapon_evidence": {
         "kind": "novel_explicit",
@@ -284,9 +319,9 @@
         ]
       },
       "horse_evidence": {
-        "kind": "authorial_palette",
+        "kind": "user_requested_later_tradition",
         "source_ids": [],
-        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+        "note": "照夜玉獅子依使用者指定採通俗形象；本次未定位可靠三國原典名稱與本人的綁定，毛色為本作美術。"
       }
     },
     "san14-candidate-0987": {
@@ -388,28 +423,44 @@
         "黃忠"
       ],
       "runtime_id": 270,
-      "weapon": "guandao",
-      "horse": "chestnut",
+      "weapon": "bow",
+      "horse": "liaoyuanhuo",
       "weapon_label": {
-        "zh-Hant": "大刀",
-        "ja": "大刀"
+        "zh-Hant": "二石鐵胎弓",
+        "ja": "二石鐵胎弓"
       },
       "horse_label": {
-        "zh-Hant": "棗紅馬",
-        "ja": "栗毛"
+        "zh-Hant": "燎原火",
+        "ja": "燎原火"
       },
       "weapon_evidence": {
-        "kind": "novel_explicit",
+        "kind": "novel_bow_strength_user_requested_material",
         "source_ids": [
-          "novel-053",
-          "novel-070"
-        ]
+          "novel-053"
+        ],
+        "note": "第五十三回明寫二石力之弓；鐵胎名稱與材質為使用者指定美術。第九十七回兩石鐵胎弓屬王雙，未移作黃忠的原典證據。"
       },
       "horse_evidence": {
-        "kind": "authorial_palette",
+        "kind": "user_requested_later_tradition",
         "source_ids": [],
-        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
-      }
+        "note": "燎原火依使用者指定採通俗形象；本次未定位可靠三國原典名稱與黃忠的綁定，毛色為本作美術。"
+      },
+      "weapon_variants": [
+        {
+          "key": "bow",
+          "label": {
+            "zh-Hant": "二石鐵胎弓",
+            "ja": "二石鐵胎弓"
+          }
+        },
+        {
+          "key": "guandao",
+          "label": {
+            "zh-Hant": "大刀",
+            "ja": "大刀"
+          }
+        }
+      ]
     },
     "san14-candidate-0830": {
       "name": "龐德",
@@ -453,14 +504,14 @@
       ],
       "runtime_id": 768,
       "weapon": "spear",
-      "horse": "white",
+      "horse": "lifeisha",
       "weapon_label": {
         "zh-Hant": "長槍",
         "ja": "長槍"
       },
       "horse_label": {
-        "zh-Hant": "白馬",
-        "ja": "白馬"
+        "zh-Hant": "里飛沙",
+        "ja": "里飛沙"
       },
       "weapon_evidence": {
         "kind": "novel_explicit",
@@ -469,9 +520,9 @@
         ]
       },
       "horse_evidence": {
-        "kind": "authorial_palette",
+        "kind": "user_requested_later_tradition",
         "source_ids": [],
-        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+        "note": "里飛沙依使用者指定採通俗形象；本次未定位可靠三國原典名稱與本人的綁定，毛色為本作美術。"
       }
     },
     "san14-candidate-0557": {
@@ -482,27 +533,42 @@
         "孫策"
       ],
       "runtime_id": 556,
-      "weapon": "spear",
+      "weapon": "guding-dao",
       "horse": "chestnut",
       "weapon_label": {
-        "zh-Hant": "長槍",
-        "ja": "長槍"
+        "zh-Hant": "古錠刀",
+        "ja": "古錠刀"
       },
       "horse_label": {
         "zh-Hant": "棗紅馬",
         "ja": "栗毛"
       },
       "weapon_evidence": {
-        "kind": "novel_explicit",
-        "source_ids": [
-          "novel-015"
-        ]
+        "kind": "user_requested_later_tradition",
+        "source_ids": [],
+        "note": "依使用者指定，採孫氏古錠刀傳承外觀；本次未在原典確認此刀傳至孫策。第十五回神亭交鋒明寫孫策持槍，保留長槍外觀供切換。"
       },
       "horse_evidence": {
         "kind": "authorial_palette",
         "source_ids": [],
         "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
-      }
+      },
+      "weapon_variants": [
+        {
+          "key": "guding-dao",
+          "label": {
+            "zh-Hant": "古錠刀",
+            "ja": "古錠刀"
+          }
+        },
+        {
+          "key": "spear",
+          "label": {
+            "zh-Hant": "長槍",
+            "ja": "槍"
+          }
+        }
+      ]
     },
     "san14-candidate-0586": {
       "name": "太史慈",
@@ -601,28 +667,42 @@
         "許褚"
       ],
       "runtime_id": 214,
-      "weapon": "guandao",
+      "weapon": "ring-dao",
       "horse": "black",
       "weapon_label": {
-        "zh-Hant": "鋼刀",
-        "ja": "鋼刀"
+        "zh-Hant": "九環刀",
+        "ja": "九環刀"
       },
       "horse_label": {
         "zh-Hant": "黑馬",
         "ja": "黒馬"
       },
       "weapon_evidence": {
-        "kind": "novel_explicit",
-        "source_ids": [
-          "novel-014",
-          "novel-059"
-        ]
+        "kind": "user_requested_later_tradition",
+        "source_ids": [],
+        "note": "原典第十四、五十九回可核實鋼刀；本次未定位九環刀名稱，按使用者指定製作九環刀外觀，保留鋼刀供切換。"
       },
       "horse_evidence": {
         "kind": "authorial_palette",
         "source_ids": [],
         "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
-      }
+      },
+      "weapon_variants": [
+        {
+          "key": "ring-dao",
+          "label": {
+            "zh-Hant": "九環刀",
+            "ja": "九環刀"
+          }
+        },
+        {
+          "key": "guandao",
+          "label": {
+            "zh-Hant": "鋼刀",
+            "ja": "鋼刀"
+          }
+        }
+      ]
     },
     "san14-candidate-0203": {
       "name": "姜維",
@@ -751,14 +831,14 @@
       ],
       "runtime_id": 520,
       "weapon": "sword",
-      "horse": "black",
+      "horse": "jueying",
       "weapon_label": {
         "zh-Hant": "寶劍",
         "ja": "宝剣"
       },
       "horse_label": {
-        "zh-Hant": "黑馬",
-        "ja": "黒馬"
+        "zh-Hant": "絕影",
+        "ja": "絶影"
       },
       "weapon_evidence": {
         "kind": "novel_explicit",
@@ -767,10 +847,29 @@
         ]
       },
       "horse_evidence": {
-        "kind": "authorial_palette",
-        "source_ids": [],
-        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
-      }
+        "kind": "historical_commentary_and_novel_names",
+        "source_ids": [
+          "sanguozhi-001",
+          "novel-020"
+        ],
+        "note": "絕影見武帝紀注引魏書；爪黃飛電見演義第二十回。兩匹名馬配色為本作美術，外觀選擇不表示當年實際所有權。"
+      },
+      "horse_variants": [
+        {
+          "key": "jueying",
+          "label": {
+            "zh-Hant": "絕影",
+            "ja": "絶影"
+          }
+        },
+        {
+          "key": "zhuahuang-feidian",
+          "label": {
+            "zh-Hant": "爪黃飛電",
+            "ja": "爪黄飛電"
+          }
+        }
+      ]
     },
     "san14-candidate-0812": {
       "name": "文醜",
@@ -811,14 +910,14 @@
       ],
       "runtime_id": 662,
       "weapon": "guandao",
-      "horse": "chestnut",
+      "horse": "huiying",
       "weapon_label": {
         "zh-Hant": "大刀",
         "ja": "大刀"
       },
       "horse_label": {
-        "zh-Hant": "棗紅馬",
-        "ja": "栗毛"
+        "zh-Hant": "灰影",
+        "ja": "灰影"
       },
       "weapon_evidence": {
         "kind": "novel_explicit",
@@ -827,9 +926,9 @@
         ]
       },
       "horse_evidence": {
-        "kind": "authorial_palette",
+        "kind": "user_requested_later_tradition",
         "source_ids": [],
-        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
+        "note": "灰影依使用者指定採通俗形象；本次未定位可靠三國原典名稱與本人的綁定，毛色為本作美術。"
       }
     },
     "san14-candidate-0186": {
@@ -873,14 +972,14 @@
       ],
       "runtime_id": 552,
       "weapon": "spear",
-      "horse": "chestnut",
+      "horse": "kuaihang",
       "weapon_label": {
         "zh-Hant": "長槍",
         "ja": "長槍"
       },
       "horse_label": {
-        "zh-Hant": "棗紅馬",
-        "ja": "栗毛"
+        "zh-Hant": "快航",
+        "ja": "快航"
       },
       "weapon_evidence": {
         "kind": "novel_explicit",
@@ -889,10 +988,26 @@
         ]
       },
       "horse_evidence": {
-        "kind": "authorial_palette",
+        "kind": "user_requested_later_tradition",
         "source_ids": [],
-        "note": "無已核實的個人馬色／馬名記載，配色僅供遊戲辨識。"
-      }
+        "note": "快航依使用者指定採通俗名稱；三國志吳主傳及江表傳注只記越津橋駿馬，未在該段命名快航。驚帆的古籍主人明為曹真，孫權可選版本僅為本作演繹，並非古籍歸屬。"
+      },
+      "horse_variants": [
+        {
+          "key": "kuaihang",
+          "label": {
+            "zh-Hant": "快航",
+            "ja": "快航"
+          }
+        },
+        {
+          "key": "jingfan",
+          "label": {
+            "zh-Hant": "驚帆・本作演繹",
+            "ja": "驚帆・本作演出"
+          }
+        }
+      ]
     },
     "san14-candidate-0785": {
       "name": "潘鳳",
@@ -922,6 +1037,66 @@
         "kind": "authorial_palette",
         "source_ids": [],
         "note": "第五回明寫手提大斧上馬，但沒有馬色記載；棗紅配色僅供遊戲辨識。"
+      }
+    },
+    "san14-candidate-0551": {
+      "name": "孫堅",
+      "name_ja": "孫堅",
+      "aliases": [
+        "孙坚",
+        "孫堅"
+      ],
+      "runtime_id": 550,
+      "weapon": "guding-dao",
+      "horse": "chestnut",
+      "weapon_label": {
+        "zh-Hant": "古錠刀",
+        "ja": "古錠刀"
+      },
+      "horse_label": {
+        "zh-Hant": "棗紅馬",
+        "ja": "栗毛"
+      },
+      "weapon_evidence": {
+        "kind": "novel_explicit",
+        "source_ids": [
+          "novel-005"
+        ]
+      },
+      "horse_evidence": {
+        "kind": "authorial_palette",
+        "source_ids": [],
+        "note": "原典寫花鬃馬；目前使用棗紅通用素材，並非已還原專屬花鬃毛色。"
+      }
+    },
+    "san14-candidate-0517": {
+      "name": "曹真",
+      "name_ja": "曹真",
+      "aliases": [
+        "曹真"
+      ],
+      "runtime_id": 516,
+      "weapon": "spear",
+      "horse": "jingfan",
+      "weapon_label": {
+        "zh-Hant": "長槍（通用）",
+        "ja": "槍（汎用）"
+      },
+      "horse_label": {
+        "zh-Hant": "驚帆",
+        "ja": "驚帆"
+      },
+      "weapon_evidence": {
+        "kind": "authorial_generic",
+        "source_ids": [],
+        "note": "通用兵器外觀，不以此宣稱曹真的專屬兵器。"
+      },
+      "horse_evidence": {
+        "kind": "ancient_text_explicit",
+        "source_ids": [
+          "taiping-yulan-0897"
+        ],
+        "note": "太平御覽引古今注明記曹真之馬驚帆；毛色為本作美術，未據該段推定史實毛色。"
       }
     }
   }

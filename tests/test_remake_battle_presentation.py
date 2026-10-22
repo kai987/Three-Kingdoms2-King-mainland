@@ -153,6 +153,8 @@ class BattlePresentationTests(unittest.TestCase):
                 if move == 'last_hit':
                     game.state.battle['extended']['support'][str(target['id'])]['health'] = 2
                 rng = deepcopy(game.state.rng); expected_reply = None if move == 'withdraw' else ('strike', 'guard', 'feint')[rng.next() % 3]
+                if expected_reply == 'strike' and game.state.battle['extended']['support'][str(target['id'])]['health'] <= 30:
+                    expected_reply = 'desperate'
                 scene = self.perform(game, 'duel_action', battle_id=b['id'],
                                      move='strike' if move == 'last_hit' else move)[0]
                 self.assertEqual(scene['reply'], expected_reply)

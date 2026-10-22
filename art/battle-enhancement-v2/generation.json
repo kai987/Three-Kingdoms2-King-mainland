@@ -1,0 +1,126 @@
+{
+  "tool": "imagegen",
+  "mode": "built_in",
+  "transparent_background": true,
+  "scope": "Eight authored duel poses per weapon; coat cyan is an offline recolor mask, not an in-game horse color. Original v1 sources and sprites retained.",
+  "actions": [
+    "idle",
+    "strike",
+    "guard",
+    "feint",
+    "withdraw",
+    "desperate",
+    "hit",
+    "defeat"
+  ],
+  "entries": [
+    {
+      "weapon": "spear",
+      "study": "studies/spear.png",
+      "prompt": "prompts/spear.txt",
+      "reference": "art/battle-enhancement-v1/studies/spear.png",
+      "built_in_output_basename": "exec-bc8336f0-14de-418e-9b55-d56d868163a4.png",
+      "study_sha256": "38f7dd679d17bf63b3d00b19c29a1ea023ba8ea3164f5bb4b1f0998c75bb405e",
+      "prompt_sha256": "d5c98e869e245d1c5a6e9bcbbb313caa148b196c437210c23ca26b35a078cb5e"
+    },
+    {
+      "weapon": "serpent-spear",
+      "study": "studies/serpent-spear.png",
+      "prompt": "prompts/serpent-spear.txt",
+      "reference": "art/battle-enhancement-v1/studies/serpent-spear.png",
+      "built_in_output_basename": "exec-730ca31f-e6d9-4d22-927e-09f3d3588b1e.png",
+      "study_sha256": "ea55a75759d5aa40ba2ff7f98dc91a4f0c7544c138b1362e24726965a5db5886",
+      "prompt_sha256": "0bff5dab5b3976a7206d9bb351e6f6616e57c66ae4634ce973feb81ef43cce04"
+    },
+    {
+      "weapon": "guandao",
+      "study": "studies/guandao.png",
+      "prompt": "prompts/guandao.txt",
+      "reference": "art/battle-enhancement-v1/studies/guandao.png",
+      "built_in_output_basename": "exec-d32bf1c2-d80e-49fb-b3c2-19c0c15e70e8.png",
+      "study_sha256": "a2e4ed6829a0789870a3aad8245a249ac8611cec16e1c89707bd4d572edf8878",
+      "prompt_sha256": "d71807ed057ba0abf3c425be2c71fc7a54c1a77959e481dac170eb4e7beec0fa"
+    },
+    {
+      "weapon": "halberd",
+      "study": "studies/halberd.png",
+      "prompt": "prompts/halberd.txt",
+      "reference": "art/battle-enhancement-v1/studies/halberd.png",
+      "built_in_output_basename": "exec-11b9b17a-47ad-4f3d-8bcb-c2d840e3b3b3.png",
+      "study_sha256": "949c2245e3dcf31a28dff3e4ef0d628847985acb118765bad7411f47de20fd7e",
+      "prompt_sha256": "f81a92dac0eead3b79a4d464964fdaf69040fba61e9506c8d1f74f5ecbdaf179"
+    },
+    {
+      "weapon": "sword",
+      "study": "studies/sword.png",
+      "prompt": "prompts/sword.txt",
+      "reference": "art/battle-enhancement-v1/studies/sword.png",
+      "built_in_output_basename": "exec-75c4e2a8-6263-4729-9933-8b78c95cf636.png",
+      "study_sha256": "45bd8b839624e957733afd957807c095e78f5cbbe85f23fd8cde004e82821a97",
+      "prompt_sha256": "cdff102e876e42d39c06cacac9a2a377df93752be0b9b261b0d6078bf7b576d2"
+    },
+    {
+      "weapon": "dual-swords",
+      "study": "studies/dual-swords.png",
+      "prompt": "prompts/dual-swords.txt",
+      "reference": "art/battle-enhancement-v1/studies/dual-swords.png",
+      "built_in_output_basename": "exec-2ace72bb-4002-421e-88bd-b916021d10c2.png",
+      "study_sha256": "c3c1592a12f32f872c4060d8e3d061cc1378321ca48f18fa3fe0b014e9601aee",
+      "prompt_sha256": "8eaed0548edbeb510ac1e0e642c339317580f4ebf5b1da2bcc084fd2f0fe1d63"
+    },
+    {
+      "weapon": "axe",
+      "study": "studies/axe.png",
+      "prompt": "prompts/axe.txt",
+      "reference": "art/battle-enhancement-v1/studies/axe.png",
+      "built_in_output_basename": "exec-c5920e95-05b4-480d-98a0-8b2ee9cebde4.png",
+      "study_sha256": "4ea17ec3a8e294e422b3c2c2b3a5e6968fa65f0f188fc5c1eb27213675bfb3ff",
+      "prompt_sha256": "52ad46dcf3d05c9e7f3018201317d42cc7298d3d35ba42917b41a74e70896f4d"
+    },
+    {
+      "weapon": "dual-axes",
+      "study": "studies/dual-axes.png",
+      "prompt": "prompts/dual-axes.txt",
+      "reference": "art/battle-enhancement-v1/studies/dual-axes.png",
+      "built_in_output_basename": "exec-f5c49c29-1b83-462b-b025-a5afa25739be.png",
+      "study_sha256": "afbba6cd116fec6f4e1f2cccd1dfdf58c46bfd51582855fe2eaa30d303830019",
+      "prompt_sha256": "f6ec8717ab3dc95e5180e9f430aa74fa84f27bed81576ca85678b578a0872d6c"
+    },
+    {
+      "weapon": "dual-ji",
+      "study": "studies/dual-ji.png",
+      "prompt": "prompts/dual-ji.txt",
+      "reference": "art/battle-enhancement-v1/studies/dual-ji.png",
+      "built_in_output_basename": "exec-34d970c3-2be4-48f0-9e27-1759a127dbdf.png",
+      "study_sha256": "38e0fbe924ef34e1ab278cbe3c0b46d6f3392b55bf58dba4480795086f3aaf19",
+      "prompt_sha256": "56d913dcc1c78b43aaaa154b42349670c7acd54f7170c1a573d1bc27edfe7a2c"
+    },
+    {
+      "weapon": "guding-dao",
+      "study": "studies/guding-dao.png",
+      "prompt": "prompts/guding-dao.txt",
+      "reference": "art/battle-enhancement-v1/studies/sword.png",
+      "built_in_output_basename": "exec-e4206d99-570c-4027-baaf-10c8c17bf897.png",
+      "study_sha256": "2d2c5eff9fe8e7bd8820c225fd5395c6ede580a936091e80a59de875092e2105",
+      "prompt_sha256": "615526768a20acc56ef8c2e0b1bf623aa430177cc28202e91a46f1be47383007"
+    },
+    {
+      "weapon": "ring-dao",
+      "study": "studies/ring-dao.png",
+      "prompt": "prompts/ring-dao.txt",
+      "reference": "art/battle-enhancement-v1/studies/sword.png",
+      "built_in_output_basename": "exec-598c89e6-2488-485c-9d84-3e13f5fcb651.png",
+      "study_sha256": "5e48d7ffcb9bc8277089a28e86a31282ce218d6f918381dfb6927960b1971f9b",
+      "prompt_sha256": "3d55a1b1ec5bfcab8583ad1f92fab87e3bc34f20921429baa77fdf38f89d29cf"
+    },
+    {
+      "weapon": "bow",
+      "study": "studies/bow.png",
+      "prompt": "prompts/bow.txt",
+      "reference": "art/battle-enhancement-v1/studies/guandao.png",
+      "built_in_output_basename": "exec-0a87cb0e-9a6a-4370-b5a2-73e756fbf97c.png",
+      "study_sha256": "7a0d0ba2c4194f5f1d28a5f1813a557579c205aa38262d8840d7f4d9ed4a31f8",
+      "prompt_sha256": "e0730c9077f33352c68cfd5aca840045bd3323bec8aae27860984a23e28ba8b0"
+    }
+  ]
+}

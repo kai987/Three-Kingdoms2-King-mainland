@@ -7,6 +7,7 @@
  const PAPER='#ffd4c8',INK='#000000',ASSET_ROOT='/assets/battle-original/',ENHANCED_ROOT='/assets/battle-enhanced/';
  const EFFECTS=new Set(['fire','trap','strike','water','confuse','supply','feint','rock','area','chain','crossbow','surrender','ambush','flood','inferno','guard']);
  const KINDS=new Set(['attack','tactic','ambush','duel_start','duel_action','retreat']);
+ const DUEL_ACTIONS=Object.freeze(['idle','strike','guard','feint','withdraw','desperate','hit','defeat']);
  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const reference=id=>Number.isInteger(id)&&id>=0&&id<1200||typeof id==='string'&&/^clerk-[0-9]{6,12}$/.test(id)&&Number(id.slice(6))>=1&&Number(id.slice(6))<=1000000&&id==='clerk-'+String(Number(id.slice(6))).padStart(6,'0');
  const bounded=(n,max)=>Number.isInteger(n)&&n>=0&&n<=max;
@@ -48,7 +49,7 @@
    if(s.kind==='retreat'){if(s.actor!==null||s.target!==null)return false;}
    else{const a=s.before.units.find(u=>u.id===s.actor),t=s.before.units.find(u=>u.id===s.target);if(!reference(s.actor)||!reference(s.target)||!a||!t||a.side!==s.own||t.side===s.own)return false;}
    if(['tactic','ambush'].includes(s.kind)){if(!bounded(s.tactic,15)||!EFFECTS.has(s.effect))return false;}else if(s.tactic!==null||s.effect!==null)return false;
-   if(s.kind==='duel_action'){if(!['strike','guard','feint','withdraw'].includes(s.move)||(s.move==='withdraw'?s.reply!==null:!['strike','guard','feint'].includes(s.reply)))return false;}
+   if(s.kind==='duel_action'){if(!['strike','guard','feint','withdraw','desperate'].includes(s.move)||(s.move==='withdraw'?s.reply!==null:!['strike','guard','feint','desperate'].includes(s.reply)))return false;}
    else if(s.move!==null||s.reply!==null)return false;
    return true;
   }))return [];
@@ -64,11 +65,30 @@
  function duration(scene){return scene.kind==='attack'&&!scene.skipped?2200:scene.kind==='duel_action'?1000:scene.kind==='tactic'?1000:scene.kind==='duel_start'?700:scene.kind==='ambush'?850:700;}
  function validAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-original\/[a-zA-Z0-9_/-]+\.png$/.test(path);}
  function validEnhancedAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-enhanced\/[a-z0-9_-]+\.png$/.test(path);}
+ function validActionAtlas(row){
+  return !!row&&validEnhancedAssetPath(row.path)&&row.width===4096&&row.height===384&&row.logical_width===128&&row.logical_height===96&&row.anchor?.x===64&&row.anchor?.y===96&&Array.isArray(row.frames)&&row.frames.length===DUEL_ACTIONS.length&&row.frames.every((f,i)=>f?.action===DUEL_ACTIONS[i]&&Array.isArray(f.source_rect)&&f.source_rect.length===4&&f.source_rect.every((v,j)=>v===[i*512,0,512,384][j]));
+ }
+ function duelActionPose(scene,id,progress){
+  if(scene?.kind!=='duel_action')return 'idle';
+  const move=id===scene.actor?scene.move:scene.reply,p=Math.max(0,Math.min(1,progress)),before=scene.before.units.find(u=>u.id===id),after=scene.after.units.find(u=>u.id===id);
+  if(p>=.68&&after&&(after.health===0||after.troops===0&&after.health<=1))return 'defeat';
+  if(p>=.54&&p<.79&&before&&after&&after.health<before.health)return 'hit';
+  if(move==='withdraw')return p>=.15?'withdraw':'idle';
+  if(['strike','guard','feint','desperate'].includes(move)&&p>=.18&&p<.88)return move;
+  return 'idle';
+ }
+ function duelMotion(move,progress,bow=false){
+  const p=Math.max(0,Math.min(1,progress));
+  if(move==='withdraw')return -Math.round(p*38);
+  if(move==='guard'||!move)return 0;
+  if(move==='feint')return Math.round(Math.sin(p*Math.PI*2)*14);
+  return Math.round(Math.sin(p*Math.PI)*(bow?3:move==='desperate'?34:26));
+ }
  function create(options={}){
   const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,portraits=options.portraits||root.GamePortraits,officerChoices=options.officerChoices||root.GameOfficerChoices,duelAppearance=options.duelAppearance||root.GameDuelAppearance;
   const fetcher=options.fetch||root.fetch?.bind(root),ImageType=options.Image||root.Image;
   const raf=options.requestAnimationFrame||root.requestAnimationFrame?.bind(root),caf=options.cancelAnimationFrame||root.cancelAnimationFrame?.bind(root);
-  const images=new Map(),terrainSlots=new Map(),duelRendering=new Map();let manifest=null,enhanced=null,assetStatus='idle',assetsPromise=null;
+  const images=new Map(),terrainSlots=new Map(),duelRendering=new Map(),duelLoadouts=new Map();let manifest=null,enhanced=null,assetStatus='idle',assetsPromise=null,loadoutSignature='';
   let host=null,canvas=null,ctx=null,view=null,selection={},queue=[],key='',observed=null,playing=false,frame=null,handle=null,resolvePlay=null,resizeObserver=null,disposed=false,outcomeCue=null;
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant';
   const text=(tc,ja)=>locale()==='ja'?ja:tc;
@@ -107,9 +127,12 @@
      }),
      readManifest(ENHANCED_ROOT+'index.json',data=>{
       if(data?.schema!=='tk2-battle-enhanced-v1'||data.scale!==RESOLUTION_SCALE||!data.backgrounds||!data.sprites||!data.duelists)return null;
-      const frames=[...Object.values(data.backgrounds),...Object.values(data.sprites).flatMap(r=>r?.frames||[]),...Object.values(data.duelists).flatMap(horses=>Object.values(horses||{}).flatMap(r=>r?.frames||[]))];
+      const eager=[...Object.values(data.backgrounds),...Object.values(data.sprites).flatMap(r=>r?.frames||[])],legacy=Object.values(data.duelists).flatMap(horses=>Object.values(horses||{}).flatMap(r=>r?.frames||[])),frames=[...eager,...legacy];
       if(!frames.length||frames.length>512||!frames.every(f=>f&&validEnhancedAssetPath(f.path)&&Number.isInteger(f.logical_width)&&Number.isInteger(f.logical_height)&&f.logical_width>0&&f.logical_width<=1024&&f.logical_height>0&&f.logical_height<=1024&&f.width===f.logical_width*RESOLUTION_SCALE&&f.height===f.logical_height*RESOLUTION_SCALE))return null;
-      return frames.map(f=>f.path);
+      if(data.action_atlases!==undefined){if(!data.action_atlases||typeof data.action_atlases!=='object'||Array.isArray(data.action_atlases))return null;const atlases=Object.values(data.action_atlases).flatMap(horses=>Object.values(horses||{}));if(atlases.length>256||!atlases.every(validActionAtlas))return null;}
+      // The cartesian atlas library is indexed here, but only the two selected
+      // fighters' artwork is fetched by draw()/preloadDuelArtwork().
+      return eager.map(f=>f.path);
      }),
      Promise.resolve().then(()=>duelAppearance?.load?.()).catch(()=>null)
     ]);
@@ -121,7 +144,7 @@
   }
   function html(){
    const lang=locale();
-   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas role="img" aria-label="${text('原版像素戰場，請使用部隊按鈕選將','原作ドットの戦場。部隊ボタンで武将を選択できます')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
+   return `<div class="nes-battle" data-battle-scene data-l10n-native="${lang}"><div class="nes-battle-toolbar"><span data-battle-scene-title>${text('戰場','戦場')}</span><button type="button" data-battle-skip hidden>${text('略過演出','演出をスキップ')}</button></div><div data-duel-loadouts hidden></div><div class="nes-battle-viewport"><canvas width="1024" height="960" data-battle-canvas role="img" aria-label="${text('原版像素戰場，請使用部隊按鈕選將','原作ドットの戦場。部隊ボタンで武将を選択できます')}"></canvas></div><p class="nes-battle-status" data-battle-caption aria-live="polite"></p><p class="visually-hidden" data-battle-description></p></div>`;
   }
   function fit(){
    const box=host?.querySelector?.('.nes-battle-viewport');if(!box||!canvas)return;
@@ -130,7 +153,7 @@
    canvas.style.width=Math.max(1,Math.floor(WIDTH*scale))+'px';canvas.style.height=Math.max(1,Math.floor(HEIGHT*scale))+'px';
   }
   function mount(element,current,selected={}){
-   resizeObserver?.disconnect();host=element;view=current;selection=selected;
+   resizeObserver?.disconnect();host=element;view=current;selection=selected;loadoutSignature='';
    canvas=host?.querySelector?.('[data-battle-canvas]');ctx=null;
    if(canvas){canvas.width=WIDTH*RESOLUTION_SCALE;canvas.height=HEIGHT*RESOLUTION_SCALE;try{ctx=canvas.getContext('2d',{alpha:false});}catch{}canvas.onclick=clickMap;}
    if(root.ResizeObserver&&host){resizeObserver=new root.ResizeObserver(fit);resizeObserver.observe(host.querySelector('.nes-battle-viewport')||host);}
@@ -282,13 +305,70 @@
    const max=view.game.officers[String(id)]?.profile.health_max||99;rectangle(x,y,80,7,'#ffffff');rectangle(x,y,Math.round(80*health/max),7,'#9c3c00');outline(x,y,80,7);
    for(let j=4;j<80;j+=4)rectangle(x+j,y,1,7,INK);
   }
-  function duelProfile(id){return duelAppearance?.profile?.(view?.catalog,id)||null;}
+  function duelProfile(id){
+   const base=duelAppearance?.profile?.(view?.catalog,id)||null;if(!base)return null;
+   const key=base.person_id||String(id),choice=duelLoadouts.get(key);if(!choice)return base;
+   try{return duelAppearance.profile(view?.catalog,id,choice);}catch{duelLoadouts.delete(key);return base;}
+  }
+  function duelParticipants(){
+   const queued=queue.find(s=>s.kind.startsWith('duel')),d=view?.game?.battle?.extended?.duel||frame?.scene?.before?.duel||frame?.scene?.after?.duel||queued?.before?.duel||queued?.after?.duel;
+   return d?[d.actor,d.target]:[];
+  }
+  function chooseDuelAppearance(id,choice){
+   if(playing||queue.length||!duelParticipants().includes(id)||!choice||typeof choice!=='object'||Array.isArray(choice)||Object.keys(choice).some(k=>!['weapon','horse'].includes(k)))return false;
+   const base=duelAppearance?.profile?.(view?.catalog,id);if(!base)return false;
+   const current=duelProfile(id),next={weapon:choice.weapon??current.weapon,horse:choice.horse??current.horse};
+   for(const field of ['weapon','horse'])if(!(base[field+'_variants']||[{key:base[field]}]).some(row=>row.key===next[field]))return false;
+   duelLoadouts.set(base.person_id||String(id),next);loadoutSignature='';updateText();draw();void preloadDuelArtwork();return true;
+  }
+  function updateLoadoutControls(){
+   const box=host?.querySelector?.('[data-duel-loadouts]');if(!box)return;
+   const ids=duelParticipants(),disabled=playing||queue.length>0;box.hidden=!ids.length;
+   if(!ids.length){box.innerHTML='';loadoutSignature='';return;}
+   const signature=JSON.stringify([ids,locale(),disabled,ids.map(id=>{const p=duelProfile(id);return p?[p.weapon,p.horse]:null;})]);if(signature===loadoutSignature)return;
+   loadoutSignature=signature;const open=box.querySelector?.('details')?.open===true;
+   box.innerHTML=`<details ${open?'open':''}><summary>${text('單挑外觀（不影響能力）','一騎討ちの外見（能力への影響なし）')}</summary><div class="duel-loadout-grid">${ids.map(id=>{
+    const p=duelProfile(id);if(!p)return '';
+    return `<fieldset><legend>${esc(person(id))}</legend>${['weapon','horse'].map(field=>{
+     const rows=p[field+'_variants']||[{key:p[field],label:p[field+'_label']}];
+     return `<label>${field==='weapon'?text('兵器','武器'):text('坐騎','騎馬')}<select data-duel-person="${esc(id)}" data-duel-field="${field}" ${disabled||rows.length<2?'disabled':''}>${rows.map(row=>`<option value="${esc(row.key)}" ${row.key===p[field]?'selected':''}>${esc(equipmentLabel(row.label))}</option>`).join('')}</select></label>`;
+    }).join('')}</fieldset>`;
+   }).join('')}</div></details>`;
+   box.onchange=event=>{const node=event.target,id=ids.find(id=>String(id)===node?.dataset?.duelPerson),field=node?.dataset?.duelField;if(id!==undefined&&['weapon','horse'].includes(field))chooseDuelAppearance(id,{[field]:node.value});};
+  }
+  async function preloadDuelArtwork(){
+   const rows=duelParticipants().map(duelProfile).filter(Boolean);
+   await Promise.all(rows.map(async profile=>{
+    const atlas=enhanced?.action_atlases?.[profile.weapon]?.[profile.horse];
+    if(validActionAtlas(atlas)&&await loadImage(atlas.path).promise)return;
+    await Promise.all((enhanced?.duelists?.[profile.weapon]?.[profile.horse]?.frames||[]).map(f=>loadImage(f.path).promise));
+   }));
+  }
+  function duelArtworkNeedsLoad(){
+   return duelParticipants().map(duelProfile).filter(Boolean).some(profile=>{
+    const atlas=enhanced?.action_atlases?.[profile.weapon]?.[profile.horse];
+    if(validActionAtlas(atlas)){const status=images.get(atlas.path)?.status;if(status==='ready')return false;if(status!=='unavailable')return true;}
+    return (enhanced?.duelists?.[profile.weapon]?.[profile.horse]?.frames||[]).some(f=>!['ready','unavailable'].includes(images.get(f.path)?.status));
+   });
+  }
   function equipmentLabel(value){return typeof value==='object'?value?.[locale()]||value?.['zh-Hant']||'':translate(value);}
   function duelEquipment(profile,x,matched){
    label(matched?equipmentLabel(profile.weapon_label):text('原版備用圖','原作予備画像'),x,50,INK,6);
    label(matched?equipmentLabel(profile.horse_label):text('通用騎將','汎用騎将'),x,57,INK,6);
   }
-  function duelist(profile,x,y,tick,mirror){
+  function duelCenter(profile,legacy,mirror){
+   const atlas=enhanced?.action_atlases?.[profile?.weapon]?.[profile?.horse];
+   return validActionAtlas(atlas)&&images.get(atlas.path)?.status==='ready'?legacy+(mirror?-10:10):legacy;
+  }
+  function duelist(profile,x,y,pose,mirror,tick=0){
+   const atlas=enhanced?.action_atlases?.[profile?.weapon]?.[profile?.horse],action=validActionAtlas(atlas)?atlas.frames.find(f=>f.action===pose):null,atlasImage=action?imageFor(atlas.path):null;
+   if(atlasImage){
+    const [sx,sy,sw,sh]=action.source_rect,w=atlas.logical_width,h=atlas.logical_height,dx=x-(mirror?w-atlas.anchor.x:atlas.anchor.x),dy=y-atlas.anchor.y;
+    ctx.save();ctx.imageSmoothingEnabled=false;
+    if(mirror){ctx.translate(Math.round(dx+w),Math.round(dy));ctx.scale(-1,1);ctx.drawImage(atlasImage,sx,sy,sw,sh,0,0,w,h);}
+    else ctx.drawImage(atlasImage,sx,sy,sw,sh,Math.round(dx),Math.round(dy),w,h);
+    ctx.restore();return true;
+   }
    const frames=enhanced?.duelists?.[profile?.weapon]?.[profile?.horse]?.frames||[],f=frames[Math.floor(tick)%Math.max(1,frames.length)],image=imageFor(f?.path);
    if(!image)return false;
    const w=f.logical_width,h=f.logical_height,scale=Math.min(1,96/w,96/h);
@@ -300,13 +380,16 @@
    const d=state.duel||scene?.before.duel||scene?.after.duel||{actor:scene?.actor,target:scene?.target},a=state.units.find(u=>u.id===d.actor),t=state.units.find(u=>u.id===d.target);if(!a||!t)return;
    label(person(a.id),32,17,INK,12);label(person(t.id),144,17,INK,12);bar(a.id,a.health,32,40);bar(t.id,t.health,144,40);
    const ap=duelProfile(a.id),tp=duelProfile(t.id);
-   const action=scene?.kind==='duel_action'&&scene.move!=='withdraw',approach=action?Math.round(Math.sin(progress*Math.PI)*26):0,tick=Math.floor(progress*10);
-   const aMatched=duelist(ap,54+approach,160,tick,false),tMatched=duelist(tp,202-approach,160,tick+1,true);
+   const action=scene?.kind==='duel_action',am=action?scene.move:null,tm=action?scene.reply:null,tick=Math.floor(progress*10),ax=duelCenter(ap,54,false)+duelMotion(am,progress,ap?.weapon==='bow'),tx=duelCenter(tp,202,true)-duelMotion(tm,progress,tp?.weapon==='bow');
+   const aMatched=duelist(ap,ax,160,duelActionPose(scene,a.id,progress),false,tick),tMatched=duelist(tp,tx,160,duelActionPose(scene,t.id,progress),true,tick+1);
    duelRendering.set(a.id,aMatched);duelRendering.set(t.id,tMatched);
-   if(!aMatched&&!sprite('duelist',54+approach,160,tick,{maxWidth:96,maxHeight:96}))sprite('cavalry',54+approach,155,tick,{maxWidth:72,maxHeight:88});
-   if(!tMatched&&!sprite('duelist_enemy',202-approach,160,tick+1,{maxWidth:96,maxHeight:96}))sprite('duelist',202-approach,160,tick+1,{mirror:true,maxWidth:96,maxHeight:96});
+   if(!aMatched&&!sprite('duelist',ax,160,tick,{maxWidth:96,maxHeight:96}))sprite('cavalry',ax,155,tick,{maxWidth:72,maxHeight:88});
+   if(!tMatched&&!sprite('duelist_enemy',tx,160,tick+1,{maxWidth:96,maxHeight:96}))sprite('duelist',tx,160,tick+1,{mirror:true,maxWidth:96,maxHeight:96});
    duelEquipment(ap,32,aMatched);duelEquipment(tp,144,tMatched);
-   if(action&&progress>.38&&progress<.7){line(115,95,140,131,'#fff',2);line(139,95,115,131,'#ffb800',2);}
+   if(action&&scene.success&&progress>.38&&progress<.7&&changes(scene).some(c=>c.health<0)&&[am,tm].some(m=>['strike','feint','desperate'].includes(m))){line(115,95,140,131,'#fff',2);line(139,95,115,131,'#ffb800',2);}
+   if(action&&progress>=.25&&progress<=.55)for(const [p,matched,move,from,to]of [[ap,aMatched,am,ax,tx],[tp,tMatched,tm,tx,ax]])if(matched&&p?.weapon==='bow'&&['strike','desperate'].includes(move)){
+    const travel=(progress-.25)/.3,x=from+(to-from)*travel,direction=to>from?1:-1;line(x-direction*8,108,x+direction*6,108,'#fff0b0');line(x+direction*6,108,x+direction*2,105,'#ffffff');line(x+direction*6,108,x+direction*2,111,'#ffffff');
+   }
    label(text(`第${d.round||1}合`,`第${d.round||1}合`),108,166);
    const caption=scene?sceneCaption(scene):text('選擇招式，與對手交鋒','技を選び、相手と打ち合う');label(caption.slice(0,30),8,185,INK,9);
    label(person(a.id)+' '+text('體','体')+' '+a.health,16,206);label(person(t.id)+' '+text('體','体')+' '+t.health,144,206);
@@ -315,10 +398,10 @@
   function sceneCaption(scene){
    if(scene.kind==='retreat')return text('部隊退卻','部隊撤退');
    const action=scene.kind==='tactic'?translate(view?.catalog?.tactics?.[scene.tactic]?.name||text('計略','計略')):
-    scene.kind==='ambush'?text('十面埋伏觸發','十面埋伏が発動'):scene.kind==='duel_start'?text('單挑挑戰','一騎討ちの挑戦'):scene.kind==='duel_action'?({strike:text('突擊','突撃'),guard:text('防守','防御'),feint:text('佯攻','牽制'),withdraw:text('退出單挑','一騎討ちから退く')}[scene.move]||text('交鋒','打ち合い')):
+    scene.kind==='ambush'?text('十面埋伏觸發','十面埋伏が発動'):scene.kind==='duel_start'?text('單挑挑戰','一騎討ちの挑戦'):scene.kind==='duel_action'?({strike:text('突擊','突撃'),guard:text('防守','防御'),feint:text('佯攻','牽制'),desperate:text('捨命一擊','捨て身の攻撃'),withdraw:text('退出單挑','一騎討ちから退く')}[scene.move]||text('交鋒','打ち合い')):
     scene.kind==='retreat'?text('退卻','撤退'):scene.counter?text('反擊','反撃'):text('攻擊','攻撃');
    const status=scene.skipped?text('行動跳過','行動できない'):scene.success?'':scene.kind==='duel_start'?text('拒絕挑戰','挑戦を拒否'):text('未能奏效','効果なし');
-   const reply=scene.kind==='duel_action'&&scene.reply?text('對手：','相手：')+({strike:text('突擊','突撃'),guard:text('防守','防御'),feint:text('佯攻','牽制')}[scene.reply]):'';
+   const reply=scene.kind==='duel_action'&&scene.reply?text('對手：','相手：')+({strike:text('突擊','突撃'),guard:text('防守','防御'),feint:text('佯攻','牽制'),desperate:text('捨命一擊','捨て身の攻撃')}[scene.reply]):'';
    return `${person(scene.actor)} · ${action}${reply?' / '+reply:''}${status?' · '+status:''}`;
   }
   function description(){
@@ -329,6 +412,7 @@
   }
   function updateText(){
    if(!host)return;host.dataset.l10nNative=locale();host.dataset.sceneAssets=assetStatus;
+   updateLoadoutControls();
    const skipButton=host.querySelector('[data-battle-skip]');if(skipButton){skipButton.hidden=!playing;skipButton.textContent=text('略過演出','演出をスキップ');}
    const title=host.querySelector('[data-battle-scene-title]');if(title)title.textContent=frame?.scene?.kind==='attack'?text('部隊對陣','部隊同士の戦闘'):view?.game?.battle?.extended?.duel?text('陣前單挑','一騎討ち'):text('戰場','戦場');
    const caption=host.querySelector('[data-battle-caption]');if(caption)caption.textContent=frame?sceneCaption(frame.scene):assetStatus==='unavailable'?text('原版素材載入失敗，仍可使用部隊名單操作。','原作素材を読み込めません。部隊一覧から操作できます。'):text('點選戰場旗標或部隊名單選將；兵數以實際結算為準。','戦場の旗か部隊一覧から選択できます。兵数は実際の精算結果です。');
@@ -359,6 +443,7 @@
    if(reduced()||doc?.hidden||!raf){if(!doc?.hidden){options.onSound?.(queue[0]);options.onSettled?.();}finish();return;}
    // A fast first attack must not finish before its original artwork arrives.
    if(assetStatus==='idle'||assetStatus==='loading'){await load();if(disposed||!queue.length||!ctx||host?.isConnected===false){finish(false);return;}}
+   if(queue.some(scene=>scene.kind.startsWith('duel'))&&duelArtworkNeedsLoad()){await preloadDuelArtwork();if(disposed||!queue.length||!ctx||host?.isConnected===false){finish(false);return;}}
    // Loading may span a visibility or accessibility change. Do not start a
    // background RAF that can leave the already committed command waiting.
    if(reduced()||doc?.hidden||!raf){if(!doc?.hidden){options.onSound?.(queue[0]);options.onSettled?.();}finish();return;}
@@ -372,15 +457,15 @@
     handle=raf(tick);
    };frame={scene:scenes[0],progress:0};draw();handle=raf(tick);});
   }
-  function reset(){finish(false);duelRendering.clear();observed=null;key='';view=null;selection={};resizeObserver?.disconnect();host=canvas=ctx=null;}
+  function reset(){finish(false);duelRendering.clear();duelLoadouts.clear();loadoutSignature='';observed=null;key='';view=null;selection={};resizeObserver?.disconnect();host=canvas=ctx=null;}
   function leave(){if(host||playing||queue.length)reset();}
   function changeLanguage(){updateText();draw();}
   function visibility(){if(doc?.hidden&&playing)skip();}
   function keydown(event){if(playing&&event.key==='Escape'){event.preventDefault();skip();}}
   doc?.addEventListener?.('game-language-change',changeLanguage);doc?.addEventListener?.('visibilitychange',visibility);doc?.addEventListener?.('keydown',keydown);
   function dispose(){disposed=true;reset();doc?.removeEventListener?.('game-language-change',changeLanguage);doc?.removeEventListener?.('visibilitychange',visibility);doc?.removeEventListener?.('keydown',keydown);}
-  return {html,mount,observe,play,skip,reset,leave,load,dispose,deferOutcome:cue=>{outcomeCue=cue;},get playing(){return playing;},state:()=>({playing,queued:queue.length,assetStatus,battleId:view?.game?.battle?.id??null,scene:frame?.scene?.kind??null})};
+  return {html,mount,observe,play,skip,reset,leave,load,dispose,chooseDuelAppearance,deferOutcome:cue=>{outcomeCue=cue;},get playing(){return playing;},state:()=>({playing,queued:queue.length,assetStatus,battleId:view?.game?.battle?.id??null,scene:frame?.scene?.kind??null})};
  }
- const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,receiptScenes,validSnapshot,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath,familyName,markerLabels,attackStage};
+ const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,receiptScenes,validSnapshot,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath,validActionAtlas,DUEL_ACTIONS,duelActionPose,duelMotion,familyName,markerLabels,attackStage};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameBattleScene=api;
 })(typeof window==='object'?window:globalThis);

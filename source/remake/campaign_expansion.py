@@ -394,26 +394,43 @@ class ExpandedCampaign:
         b=state.battle
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or not b['extended']['duel']:raise GameError('当前没有单挑。')
         move=payload.get('move')
-        if move not in {'strike','guard','feint','withdraw'}:raise GameError('单挑动作无效。')
+        if move not in {'strike','guard','feint','withdraw','desperate'}:raise GameError('单挑动作无效。')
         x=b['extended'];d=x['duel'];own,foe=self._player_sides(state)
         actor=next(u for u in b[own] if u['id']==d['actor']);target=next(u for u in b[foe] if u['id']==d['target'])
         a=x['support'][str(actor['id'])];t=x['support'][str(target['id'])]
-        before=presentation.snapshot(self,state);reply=None
+        before=presentation.snapshot(self,state);reply=None;success=True
         if move=='withdraw':result='退出单挑'
         else:
+            # A wounded AI may replace its ordinary strike with the same risk
+            # move. Reuse the existing choice draw: policy never samples RNG.
             reply=('strike','guard','feint')[state.rng.next()%3]
+            if t['health']<=30 and reply=='strike':reply='desperate'
             def hit(first,second,attack,defense):
+                # ROM bank23 category6: quality<30 doubles the strike; otherwise
+                # the actor loses10..30 HP from low-five-bit rejection sampling.
+                # The Web game keeps its established damage/equipment model and
+                # health1=rout boundary rather than importing NES byte wrapping.
+                quality=state.rng.next()%100 if attack=='desperate' else None
                 martial=state.officers[first['id']].profile.martial_strength
                 other=state.officers[second['id']].profile.martial_strength
                 base=max(2,10+(martial-other)//6+state.rng.next()%7)
+                if attack=='desperate':
+                    if quality<30:base*=2
+                    else:
+                        while True:
+                            loss=state.rng.next()&31
+                            if loss<21:return 0,loss+10,False
                 if attack=='guard':base=max(1,base//3)
                 if defense=='guard':base=max(1,base//3) if attack!='feint' else base+4
                 if attack=='feint' and defense=='strike':base=max(1,base//2)
-                return base
-            damage=hit(actor,target,move,reply);received=hit(target,actor,reply,move)
-            t['health']=max(1,t['health']-damage);a['health']=max(1,a['health']-received)
-            labels={'strike':'突击','guard':'防守','feint':'佯攻'}
-            d['log'].append(f'本方{labels[move]}，对方{labels[reply]}；体力损伤{received}/{damage}。');d['log'][:]=d['log'][-10:]
+                return base,0,True
+            damage,self_loss,success=hit(actor,target,move,reply)
+            received,enemy_self_loss,enemy_success=hit(target,actor,reply,move)
+            t['health']=max(1,t['health']-damage-enemy_self_loss);a['health']=max(1,a['health']-received-self_loss)
+            labels={'strike':'突击','guard':'防守','feint':'佯攻','desperate':'舍命一击'}
+            if move=='desperate' and not success:d['log'].append(f'本方舍命一击失手，自损体力{self_loss}。')
+            if reply=='desperate' and not enemy_success:d['log'].append(f'对方舍命一击失手，自损体力{enemy_self_loss}。')
+            d['log'].append(f'本方{labels[move]}，对方{labels[reply]}；体力损伤{received+self_loss}/{damage+enemy_self_loss}。');d['log'][:]=d['log'][-10:]
             d['round']+=1
             if a['health']==1:actor['troops']=0
             if t['health']==1:target['troops']=0
@@ -422,7 +439,7 @@ class ExpandedCampaign:
             x['duel_history'].append({'actor':actor['id'],'target':target['id'],'result':result});x['duel_history'][:]=x['duel_history'][-20:]
             b['log'].append(result);x['duel']=None
         presentation.record(self,state,before,kind='duel_action',actor=actor['id'],
-            target=target['id'],own=own,move=move,reply=reply)
+            target=target['id'],own=own,move=move,reply=reply,success=success)
         if result:self._finish_action(state,actor,own,foe,respond=False)
 
     def _expanded_retreat(self,state,payload):

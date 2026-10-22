@@ -39,6 +39,18 @@ for key in ('attack','ambush','stunned','failure','retreat','duel'):
   action(game,'duel_action',dict(battle_id=b['id'],move='feint'),'duel_feint')
   action(game,'duel_action',dict(battle_id=b['id'],move='withdraw'),'duel_withdraw');continue
  action(game,'attack',dict(battle_id=b['id'],actor=a['id'],target=t['id']),key)
+# Real committed desperate attacks, separately covering success, self-injury,
+# and a low-health opponent choosing the same move from its ordinary AI pool.
+for key,wanted,reply_only in [('duel_desperate_success',True,False),('duel_desperate_failure',False,False),('duel_desperate_reply',None,True)]:
+ game=battle(three_enemies=False);b,a,t,*_=actors(game);successful_rng(game.state)
+ game.command('duel_start',dict(battle_id=b['id'],actor=a['id'],target=t['id']),game.revision)
+ b=game.state.battle
+ for seed in range(1,1000):
+  r=SeedRng(seed);reply=r.next()%3;quality=r.next()%100
+  if reply_only and reply==0 or not reply_only and (quality<30)==wanted:break
+ game.state.rng=SeedRng(seed)
+ if reply_only:b['extended']['support'][str(t['id'])]['health']=30
+ action(game,'duel_action',dict(battle_id=b['id'],move='guard' if reply_only else 'desperate'),key)
 game,ident=GeneratedOfficerTests().new()
 game.command('allocate',dict(city='nanjun',officer=ident,troops=999),game.revision)
 game._complete_turn(game.state);game._reconcile_factions(game.state)
@@ -49,12 +61,13 @@ print(json.dumps(dict(rows=rows,tactics=[dict(id=i,effect=t[2]) for i,t in enume
 const clone=value=>JSON.parse(JSON.stringify(value));
 function freeze(value){if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
 function environment({manifest=null,enhancedManifest=null,duelAppearance=null,failedPaths=[],reduced=false,missingRAF=false,missingContext=false}={}){
- const rafs=new Map(),timers=new Map(),listeners=new Map(),requests=[],cancels=[],observers=[],texts=[],draws=[],rectangles=[],transforms=[];let next=0;
+ const rafs=new Map(),timers=new Map(),listeners=new Map(),requests=[],imageRequests=[],cancels=[],observers=[],texts=[],draws=[],rectangles=[],transforms=[];let next=0;
  const doc={hidden:false,addEventListener(type,fn){if(!listeners.has(type))listeners.set(type,new Set());listeners.get(type).add(fn);},removeEventListener(type,fn){listeners.get(type)?.delete(fn);},emit(type,event={}){for(const fn of [...listeners.get(type)||[]])fn(event);},createElement(){return canvas();}};
  const context={setTransform(...args){transforms.push(args);},fillRect(x,y,w,h){rectangles.push({x,y,w,h,color:this.fillStyle});},fillText(text,x,y){texts.push({text:String(text),x,y});},save(){},restore(){},drawImage(image,...args){draws.push({src:image?.src,args});},translate(){},scale(){},getImageData(){return{data:new Uint8ClampedArray(256*160*4)};}};
  function canvas(){return{style:{},width:256,height:240,getContext:()=>missingContext?null:context,getBoundingClientRect(){return{left:0,top:0,width:parseFloat(this.style.width)||256,height:parseFloat(this.style.height)||240};}};}
  const surface=canvas(),nodes={'.nes-battle-viewport':{clientWidth:512,clientHeight:480},'[data-battle-canvas]':surface};
  for(const name of ['[data-battle-skip]','[data-battle-scene-title]','[data-battle-caption]','[data-battle-description]'])nodes[name]={hidden:true,textContent:'',addEventListener(type,fn){this[type]=fn;}};
+ nodes['[data-duel-loadouts]']={hidden:true,innerHTML:'',querySelector:()=>null};
  const host={isConnected:true,dataset:{},querySelector:selector=>nodes[selector]||null};
  const i18n={locale:'zh-Hant',t:(value,lang)=>lang==='ja'?'日:'+value:value};
  const sandbox={module:{exports:{}},document:doc,console,AbortController,Uint8ClampedArray,Math:Object.assign(Object.create(Math),{random(){throw Error('Scene sampled randomness');}}),GameI18n:i18n,GameOfficerChoices:officerChoices,GameDuelAppearance:duelAppearance,
@@ -62,9 +75,9 @@ function environment({manifest=null,enhancedManifest=null,duelAppearance=null,fa
   requestAnimationFrame:missingRAF?undefined:fn=>{const id=++next;rafs.set(id,fn);return id;},cancelAnimationFrame:id=>{cancels.push(id);rafs.delete(id);},
   fetch:async url=>{requests.push(url);assert(['/assets/battle-original/index.json','/assets/battle-enhanced/index.json'].includes(url),'Playback may fetch artwork, never gameplay');const data=url.includes('battle-enhanced')?enhancedManifest:manifest;return data?{ok:true,json:async()=>data}:{ok:false};},
   ResizeObserver:class{constructor(fn){this.fn=fn;this.disconnects=0;observers.push(this);}observe(){}disconnect(){this.disconnects++;}},
-  Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
+  Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;imageRequests.push(value);queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
  sandbox.window=sandbox;vm.runInNewContext(source,sandbox,{filename:'game/battle-scene.js'});
- return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,cancels,observers,texts,draws,rectangles,transforms,rafs,timers,setReduced(value){reduced=value;},
+ return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,imageRequests,cancels,observers,texts,draws,rectangles,transforms,rafs,timers,setReduced(value){reduced=value;},
   step(time){const entries=[...rafs];rafs.clear();for(const [,fn]of entries)fn(time);},
   drain(){for(let i=0;rafs.size&&i<100;i++)this.step(i*1200);assert.equal(rafs.size,0,'RAF queue must terminate');},
   listenerCount(){return[...listeners.values()].reduce((n,set)=>n+set.size,0);}};
@@ -82,6 +95,8 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  assert(accepted.get('retreat').length,'Actual retreat permits null actor/target');
  assert.equal(accepted.get('stunned')[0].skipped,true);assert.equal(accepted.get('failure')[0].success,false);
  assert.equal(typeof accepted.get('mixed')[0].actor,'string');
+ assert.equal(accepted.get('duel_desperate_success')[0].move,'desperate');assert.equal(accepted.get('duel_desperate_success')[0].success,true);
+ assert.equal(accepted.get('duel_desperate_failure')[0].success,false);assert.equal(accepted.get('duel_desperate_reply')[0].reply,'desperate');
  for(const row of actual.rows){
   const original=JSON.stringify(row),scenes=accepted.get(row.key);assert(scenes.length,row.key);
   for(const scene of scenes){
@@ -280,6 +295,68 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
    assert.equal(JSON.stringify(row.after),before,'Equipment and high resolution rendering cannot change state, stats or RNG');
    scene.dispose();assert.equal(env.timers.size,0);assert.equal(env.rafs.size,0);
   }
+ }
+ // Each fighter follows its own authoritative move/reply. Hurt and defeat
+ // poses come only from actual health/roster deltas, never an animation roll.
+ {
+  const base=clone(accepted.get('duel_action')[0]),moves=['strike','guard','feint','desperate'];
+  for(const move of moves)for(const reply of moves){
+   const s=clone(base);s.move=move;s.reply=reply;s.after=clone(s.before);
+   assert.equal(standalone.duelActionPose(s,s.actor,.35),move);
+   assert.equal(standalone.duelActionPose(s,s.target,.35),reply);
+   assert.equal(standalone.duelActionPose(s,s.actor,.05),'idle');
+   s.after.units.find(u=>u.id===s.target).health-=3;
+   assert.equal(standalone.duelActionPose(s,s.target,.65),'hit');
+   assert.equal(standalone.duelActionPose(s,s.actor,.65),move,'A hit against the target cannot change the actor pose');
+   s.after.units.find(u=>u.id===s.target).health=0;
+   assert.equal(standalone.duelActionPose(s,s.target,.75),'defeat');
+  }
+  const s=clone(base);s.move='withdraw';s.reply=null;s.after=clone(s.before);
+  assert.equal(standalone.duelActionPose(s,s.actor,.4),'withdraw');assert.equal(standalone.duelActionPose(s,s.target,.4),'idle');
+  assert.equal(standalone.duelMotion('guard',.5),0);assert(standalone.duelMotion('withdraw',.5)<0);
+  assert(standalone.duelMotion('strike',.5)>standalone.duelMotion('strike',.5,true),'A bow fires from its position instead of charging into melee');
+  assert(standalone.duelMotion('desperate',.5)>standalone.duelMotion('strike',.5));
+ }
+ // Complete eight-action atlases are lazy: the cartesian library stays on the
+ // server, while the two selected riders alone fetch their4096×384 source.
+ {
+  const row=actual.rows.find(r=>r.key==='duel_guard'),ids=row.before.game.battle.extended.duel,appearance=require('../game/duel-appearance.js');
+  const labels=value=>({'zh-Hant':value,ja:'日'+value}),atlas=name=>({path:'/assets/battle-enhanced/atlas-'+name+'.png',width:4096,height:384,logical_width:128,logical_height:96,anchor:{x:64,y:96},frames:standalone.DUEL_ACTIONS.map((action,i)=>({action,source_rect:[i*512,0,512,384]}))});
+  const a=atlas('spear-white'),t=atlas('dual-ji-black'),bow=atlas('bow-white'),blackBow=atlas('bow-black'),unused=atlas('guding-chestnut');
+  const enhanced={schema:'tk2-battle-enhanced-v1',scale:4,backgrounds:{plain:{path:'/assets/battle-enhanced/plain.png',width:1024,height:640,logical_width:256,logical_height:160}},sprites:{},duelists:{},action_atlases:{spear:{white:a},'dual-ji':{black:t},bow:{white:bow,black:blackBow},'guding-dao':{chestnut:unused}}};
+  assert(standalone.validActionAtlas(a));
+  for(const mutate of [r=>r.path='../file.png',r=>r.width=384,r=>r.anchor.x=-1,r=>r.frames.pop(),r=>r.frames[2].action='strike',r=>r.frames[0].source_rect=[3072,0,384,384]]){const bad=clone(a);mutate(bad);assert(!standalone.validActionAtlas(bad));}
+  const profiles=appearance.validate({schema:'tk2-duel-appearances-v1',profiles:{'actor-art':{name:'甲',weapon:'spear',horse:'white',weapon_variants:[{key:'bow',label:labels('弓')}],horse_variants:[{key:'black',label:labels('黑馬')}]},'target-art':{name:'乙',weapon:'dual-ji',horse:'black'}}});
+  const appearances={load:async()=>true,profile:(catalog,id,choice)=>appearance.select(profiles[id===ids.actor?'actor-art':'target-art'],choice)},env=environment({manifest:nativeManifest,enhancedManifest:enhanced,duelAppearance:appearances}),scene=env.api.create(),original=JSON.stringify(row);
+  scene.mount(env.host,row.before);await scene.load();await Promise.resolve();
+  assert.deepEqual([...new Set(env.imageRequests.filter(p=>p.includes('/atlas-')))].sort(),[a.path,t.path].sort(),'Only both current default rider atlases load');
+  assert(!env.nodes['[data-duel-loadouts]'].hidden);assert(env.nodes['[data-duel-loadouts]'].innerHTML.includes('data-duel-field="weapon"'));
+  assert(!scene.chooseDuelAppearance(ids.target,{weapon:'bow'}),'Another rider cannot borrow a globally valid weapon');
+  assert(!scene.chooseDuelAppearance(999999,{horse:'black'}));
+  assert(scene.chooseDuelAppearance(ids.actor,{weapon:'bow'}));await Promise.resolve();await Promise.resolve();
+  assert(env.imageRequests.includes(bow.path));assert(!env.imageRequests.includes(blackBow.path));assert(!env.imageRequests.includes(unused.path));
+  env.nodes['[data-duel-loadouts]'].onchange({target:{dataset:{duelPerson:String(ids.actor),duelField:'horse'},value:'black'}});await Promise.resolve();await Promise.resolve();
+  assert(env.imageRequests.includes(blackBow.path),'The cosmetic selector changes just the chosen rider');
+  env.i18n.locale='ja';env.doc.emit('game-language-change');assert(env.nodes['[data-duel-loadouts]'].innerHTML.includes('value="black" selected'),'Language changes retain the selected loadout');
+  scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);const playback=scene.play();await Promise.resolve();await Promise.resolve();
+  assert(scene.playing);assert(!scene.chooseDuelAppearance(ids.actor,{horse:'white'}),'Do not swap art while a committed exchange is playing');
+  env.step(0);env.draws.length=0;env.step(350);
+  const action=accepted.get('duel_guard')[0],leftPose=standalone.duelActionPose(action,ids.actor,.35),rightPose=standalone.duelActionPose(action,ids.target,.35);
+  const ad=env.draws.find(d=>d.src===blackBow.path),td=env.draws.find(d=>d.src===t.path);assert(ad&&td,'Both selected action atlases draw');
+  assert.equal(ad.args[0],standalone.DUEL_ACTIONS.indexOf(leftPose)*512);assert.equal(td.args[0],standalone.DUEL_ACTIONS.indexOf(rightPose)*512);
+  assert.deepEqual(ad.args.slice(1,4),[0,512,384]);assert.deepEqual(ad.args.slice(-2),[128,96]);
+  scene.skip();await playback;assert.equal(JSON.stringify(row),original,'Selectors, language, atlas playback and skip never change the save or RNG');
+  const shot=actual.rows.find(r=>r.key==='duel_action'),shotState=JSON.stringify(shot);scene.observe(shot.kind,shot.payload,shot.before,shot.after);scene.mount(env.host,shot.after);
+  const firing=scene.play();await Promise.resolve();env.step(0);env.rectangles.length=0;env.draws.length=0;env.step(400);
+  assert(env.rectangles.some(r=>r.color==='#fff0b0'),'An actual bow strike releases a visible arrow');
+  assert(env.draws.some(d=>d.src===blackBow.path&&d.args[0]===512),'Bow release selects its strike picture, not a sword or idle frame');
+  scene.skip();await firing;assert.equal(JSON.stringify(shot),shotState,'Bow release cannot add a damage roll or an engine command');
+  scene.reset();scene.mount(env.host,row.before);await Promise.resolve();assert(env.nodes['[data-duel-loadouts]'].innerHTML.includes('value="spear" selected'),'New/load reset clears cosmetic choices');scene.dispose();
+  assert.equal(env.timers.size,0);assert.equal(env.rafs.size,0);
+  // A failed new atlas keeps the older exact weapon/mount two-pose artwork.
+  const legacyPath='/assets/battle-enhanced/legacy-spear-white.png',fallback=clone(enhanced);fallback.duelists.spear={white:{frames:[{path:legacyPath,width:384,height:384,logical_width:96,logical_height:96,anchor:{x:48,y:96}}]}};
+  const failed=environment({manifest:nativeManifest,enhancedManifest:fallback,duelAppearance:appearances,failedPaths:[a.path]}),kept=failed.api.create();kept.mount(failed.host,row.before);await kept.load();for(let i=0;i<8;i++)await Promise.resolve();
+  assert(failed.draws.some(d=>d.src===legacyPath),'Missing action atlas retains the matching previous rider instead of blocking the duel');kept.dispose();assert.equal(failed.timers.size,0);
  }
  for(const p of ['/assets/battle-enhanced/dual_swords-white.png','/assets/battle-enhanced/tactical.png'])assert(standalone.validEnhancedAssetPath(p));
  for(const p of ['/assets/battle-enhanced/../escape.png','/assets/battle-enhanced/sub/file.png','https://example.com/a.png','/assets/battle-original/duelist.png','/assets/battle-enhanced/a.png?x=1'])assert(!standalone.validEnhancedAssetPath(p));

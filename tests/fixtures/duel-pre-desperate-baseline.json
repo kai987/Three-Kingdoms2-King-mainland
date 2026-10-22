@@ -1,0 +1,2568 @@
+{
+  "schema": "tk2-duel-pre-desperate-baseline-v1",
+  "source_commit": "eea539c579af3f72c130c160a00fe9ccaa28e6e0",
+  "source_file_sha256": "4b2d2438bc214bec6b47b5c752dccf6205d86276dd2dc5ac9437cb6b4051fe73",
+  "scope": "Controlled real duel, health80 on each side. Existing four moves; no desperate option selected by either side.",
+  "vectors": [
+    {
+      "seed": 1,
+      "move": "strike",
+      "state_sha256": "175207050f491c645e643dd8817caee167af6d5a8d8d14c003042b5d975b218a",
+      "rng": {
+        "state": 2647435461,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "strike",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 66,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 66,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "move": "guard",
+      "state_sha256": "eefe55a3a025f0b2ee5e1a45c7c31a9fd8208c90fc74d139797f4539c8385a74",
+      "rng": {
+        "state": 2647435461,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "guard",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "move": "feint",
+      "state_sha256": "e666959c9218978907c528ab4881cac406a6ce0014f188b612cf4549dc48b681",
+      "rng": {
+        "state": 2647435461,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "feint",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 66,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 73,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "move": "withdraw",
+      "state_sha256": "576e0fda7b0abf9ee27ed07c22b7427c97c806b72a55060d2cd7327893178fd6",
+      "rng": {
+        "state": 1,
+        "draws": 0
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "withdraw",
+        "reply": null,
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": null,
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 4,
+      "move": "strike",
+      "state_sha256": "9983a96afd16e7dc70802965d599dfedcceb0dc7d093b1208a2997f6a62ad270",
+      "rng": {
+        "state": 1395765508,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "strike",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 68,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 63,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 4,
+      "move": "guard",
+      "state_sha256": "7fcf3889a257a69b1392e4aa5a4d9ded413a879151b7207f7ae755c791b825a6",
+      "rng": {
+        "state": 1395765508,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "guard",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 75,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 4,
+      "move": "feint",
+      "state_sha256": "b8c107be496da6a1932ae184c5b4d794784c97b4a8700c619e8a6aa3c10994d2",
+      "rng": {
+        "state": 1395765508,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "feint",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 68,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 72,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 4,
+      "move": "withdraw",
+      "state_sha256": "23d12adcd4fa376f0b00360c5f3bc7aede0b42b95423e16522577d35cab91993",
+      "rng": {
+        "state": 4,
+        "draws": 0
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "withdraw",
+        "reply": null,
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": null,
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 5,
+      "move": "strike",
+      "state_sha256": "80e8354a1e55faae4dcf42d49cc8b9977b15080009cb86598234380b75d10ee3",
+      "rng": {
+        "state": 3472693697,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "strike",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 68,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 67,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 5,
+      "move": "guard",
+      "state_sha256": "572364efd5ddd52b31caec025cb5cc6d140a12577dc8c18798046d484b5a20b8",
+      "rng": {
+        "state": 3472693697,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "guard",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 5,
+      "move": "feint",
+      "state_sha256": "7ed4510fc9b2e79a1761cce6c46ecc9579372118fc1d22c1f36f71aa099c2cc6",
+      "rng": {
+        "state": 3472693697,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "feint",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 68,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 74,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 5,
+      "move": "withdraw",
+      "state_sha256": "6dad15a768db4f3d59db077aa6eb98a328bc3b46749d074e57fd7c224155cf38",
+      "rng": {
+        "state": 5,
+        "draws": 0
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "withdraw",
+        "reply": null,
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": null,
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 10,
+      "move": "strike",
+      "state_sha256": "beb20cad00e368f5dfb4da59d1d192a779b7e8c8d3024c807b12ddeffe303a0f",
+      "rng": {
+        "state": 2415639211,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "strike",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 66,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 68,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 10,
+      "move": "guard",
+      "state_sha256": "5922f31d8fb202cc1ce12037af546b07dbab25ea13e85a44585de45295d9fa3a",
+      "rng": {
+        "state": 2415639211,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "guard",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 10,
+      "move": "feint",
+      "state_sha256": "5ce779ea823438fe95585203341f9a087cf5a89dd48dfd839256b9cafa6853e2",
+      "rng": {
+        "state": 2415639211,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "feint",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 66,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 74,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 10,
+      "move": "withdraw",
+      "state_sha256": "f37aa4c576c2460147b6ee9081008a4430d561d04d1dca7986fea1f9a751d692",
+      "rng": {
+        "state": 10,
+        "draws": 0
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "withdraw",
+        "reply": null,
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": null,
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 63,
+      "move": "strike",
+      "state_sha256": "1897ec4f001bc07d986688d71c74270c4e060c0c8040ec32246e15b02f366935",
+      "rng": {
+        "state": 459078678,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "strike",
+        "reply": "guard",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 77,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 63,
+      "move": "guard",
+      "state_sha256": "4650406b3765c1d4d8cae85394c6e57ed2377fb04e29c423bde7ac087f5f7d01",
+      "rng": {
+        "state": 459078678,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "guard",
+        "reply": "guard",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 79,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 79,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 63,
+      "move": "feint",
+      "state_sha256": "a9299c6bbc8c19655c1c7bc91e63f4bbd2fe2c0684953fcf2af240c59ded3baa",
+      "rng": {
+        "state": 459078678,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "feint",
+        "reply": "guard",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 77,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 63,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 63,
+      "move": "withdraw",
+      "state_sha256": "310ffb4a96d62f12e25cb3f7fac26d12a7fbef5fdd948ccef8ddfea8e3798547",
+      "rng": {
+        "state": 63,
+        "draws": 0
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "withdraw",
+        "reply": null,
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": null,
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 226,
+      "move": "strike",
+      "state_sha256": "4d161c1f82f96bf5c23e80016faba122d59385b8c5d2167f41a9fe35f3a64850",
+      "rng": {
+        "state": 3850349506,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "strike",
+        "reply": "guard",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 77,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 75,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 226,
+      "move": "guard",
+      "state_sha256": "1c5c71f37ba6553ed3b0209dcb7e45ce76468a74324a7bc2ca1912ca86b7fc71",
+      "rng": {
+        "state": 3850349506,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "guard",
+        "reply": "guard",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 79,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 79,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 226,
+      "move": "feint",
+      "state_sha256": "3bc991d5dd4fe547cc27855825641a9b51d716d3a21420c8183ea57c28c6139d",
+      "rng": {
+        "state": 3850349506,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "feint",
+        "reply": "guard",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 77,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 59,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 226,
+      "move": "withdraw",
+      "state_sha256": "1bd22c27e3fe7134c05d8b54708d012a64bb08f27e12790219f8f5e4b21b4993",
+      "rng": {
+        "state": 226,
+        "draws": 0
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "withdraw",
+        "reply": null,
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": null,
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 3908,
+      "move": "strike",
+      "state_sha256": "c6723714a49384a4ea3772bf0e0141ada5f2cee0fe9a9759d0f0a6ae430da69e",
+      "rng": {
+        "state": 3951081868,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "strike",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 66,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 66,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 3908,
+      "move": "guard",
+      "state_sha256": "25d6b817639128088244c53432f8770d33bcb409d7a553819290ce0f1dd304d3",
+      "rng": {
+        "state": 3951081868,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "guard",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 3908,
+      "move": "feint",
+      "state_sha256": "db869fa5df31931125e13ca487ecc0388ad1b5f1b60fe1959122172b000e1913",
+      "rng": {
+        "state": 3951081868,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "feint",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 66,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 73,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 3908,
+      "move": "withdraw",
+      "state_sha256": "636b8bb1d8a5f15bdcf7d0d384eeaedde3714e5dc2767ef08b3c57bca470f45d",
+      "rng": {
+        "state": 3908,
+        "draws": 0
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "withdraw",
+        "reply": null,
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": null,
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 30193,
+      "move": "strike",
+      "state_sha256": "221284c19b98620ca8a66dfa52d92036dc9ccb4d9fbd41ad0227832f40e39fe2",
+      "rng": {
+        "state": 3528247950,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "strike",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 69,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 68,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 30193,
+      "move": "guard",
+      "state_sha256": "defd5f1f16169a0cbc2aff543d4d044202f5f84f72234abc77e4347dd8d268fa",
+      "rng": {
+        "state": 3528247950,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "guard",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 77,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 76,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 30193,
+      "move": "feint",
+      "state_sha256": "79b988c0f674347d863214c857cf2ec776ba79c5660ffbe4e96cd985be2e3560",
+      "rng": {
+        "state": 3528247950,
+        "draws": 3
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "feint",
+        "reply": "strike",
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 2
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 69,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 74,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 30193,
+      "move": "withdraw",
+      "state_sha256": "ab755cfb0e7fb8076f28846cd1dbccbf0591fef959d2a34d13feff8a497e34db",
+      "rng": {
+        "state": 30193,
+        "draws": 0
+      },
+      "presentation": {
+        "kind": "duel_action",
+        "battle_id": "battle-1",
+        "actor": 146,
+        "target": 123,
+        "own": "attackers",
+        "counter": false,
+        "tactic": null,
+        "effect": null,
+        "success": true,
+        "skipped": false,
+        "move": "withdraw",
+        "reply": null,
+        "before": {
+          "round": 1,
+          "outcome": null,
+          "duel": {
+            "actor": 146,
+            "target": 123,
+            "round": 1
+          },
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        },
+        "after": {
+          "round": 1,
+          "outcome": null,
+          "duel": null,
+          "units": [
+            {
+              "id": 146,
+              "side": "attackers",
+              "troops": 180,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            },
+            {
+              "id": 123,
+              "side": "defenders",
+              "troops": 480,
+              "health": 80,
+              "energy": 18,
+              "guard": 0,
+              "stunned": 0
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
