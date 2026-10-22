@@ -8627,6 +8627,2142 @@
       ],
       "usage": "Opposing original ordinary-attack soldier art; red palette, not a verified cavalry classification. The cavalry key is a compatibility alias for this art and adds no troop type.",
       "facing": "left"
+    },
+    "attack_formation": {
+      "frames": [
+        {
+          "path": "/assets/battle-original/attack_formation-00.png",
+          "width": 128,
+          "height": 160,
+          "sha256": "a2958c2f40b26d80a446f74303eb18fcc3dfdcc071625f78dca0985043b862f9",
+          "source": {
+            "screenshot": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-01.png",
+            "screenshot_sha256": "2e4eaebc9fc513e67e8f845ab3c9ab67e71a02084ba1b7e4af5f71549cd6bbaa",
+            "resolution": [
+              256,
+              240
+            ],
+            "pixel_origin": "Original Nestopia video callback, royaltea palette, no resampling",
+            "capture": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-01.json",
+            "capture_sha256": "2c4fe4c2c21f52aa8a0b5b2801454724dbc691e6ccb5c31eb6fc23d4e532e60c",
+            "captured_frame": 1155,
+            "engine": {
+              "name": "Nestopia",
+              "version": "2.0.0 135dfa6",
+              "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+            },
+            "pixel_format": 1,
+            "state": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-01.state",
+            "ppu": {
+              "state_sha256": "eea706e71dcdf1c66d8c62201c3b6d7ec06b871e2a08459e859b55c1c62d56c7",
+              "ppu_register_bytes": [
+                144,
+                30,
+                128,
+                2,
+                40,
+                0,
+                0,
+                0,
+                0,
+                232,
+                0
+              ],
+              "palette_indices": [
+                15,
+                55,
+                41,
+                25,
+                15,
+                55,
+                54,
+                22,
+                15,
+                54,
+                32,
+                22,
+                15,
+                55,
+                54,
+                16,
+                15,
+                15,
+                54,
+                22,
+                15,
+                15,
+                54,
+                16,
+                15,
+                15,
+                32,
+                22,
+                15,
+                32,
+                39,
+                23
+              ],
+              "chr_banks": [
+                {
+                  "window": 0,
+                  "source": 0,
+                  "page_1k": 4,
+                  "rom_offset": 266256
+                },
+                {
+                  "window": 1,
+                  "source": 0,
+                  "page_1k": 1,
+                  "rom_offset": 263184
+                },
+                {
+                  "window": 2,
+                  "source": 0,
+                  "page_1k": 24,
+                  "rom_offset": 286736
+                },
+                {
+                  "window": 3,
+                  "source": 0,
+                  "page_1k": 24,
+                  "rom_offset": 286736
+                },
+                {
+                  "window": 4,
+                  "source": 0,
+                  "page_1k": 8,
+                  "rom_offset": 270352
+                },
+                {
+                  "window": 5,
+                  "source": 0,
+                  "page_1k": 9,
+                  "rom_offset": 271376
+                },
+                {
+                  "window": 6,
+                  "source": 0,
+                  "page_1k": 5,
+                  "rom_offset": 267280
+                },
+                {
+                  "window": 7,
+                  "source": 0,
+                  "page_1k": 6,
+                  "rom_offset": 268304
+                }
+              ],
+              "oam_sha256": "ab62e4df60c36ab8f468801579adfc84c722b5b7950022d6afabf1bb731a8dfd",
+              "oam_records": [
+                [
+                  165,
+                  168,
+                  35,
+                  16
+                ],
+                [
+                  165,
+                  169,
+                  35,
+                  24
+                ],
+                [
+                  165,
+                  169,
+                  99,
+                  32
+                ],
+                [
+                  165,
+                  168,
+                  99,
+                  40
+                ],
+                [
+                  173,
+                  170,
+                  35,
+                  16
+                ],
+                [
+                  173,
+                  170,
+                  99,
+                  40
+                ],
+                [
+                  181,
+                  172,
+                  35,
+                  16
+                ],
+                [
+                  181,
+                  172,
+                  99,
+                  40
+                ],
+                [
+                  189,
+                  174,
+                  35,
+                  16
+                ],
+                [
+                  189,
+                  174,
+                  99,
+                  40
+                ],
+                [
+                  197,
+                  176,
+                  35,
+                  16
+                ],
+                [
+                  197,
+                  177,
+                  35,
+                  24
+                ],
+                [
+                  197,
+                  177,
+                  99,
+                  32
+                ],
+                [
+                  197,
+                  176,
+                  99,
+                  40
+                ],
+                [
+                  173,
+                  171,
+                  35,
+                  24
+                ],
+                [
+                  173,
+                  171,
+                  99,
+                  32
+                ],
+                [
+                  181,
+                  173,
+                  35,
+                  24
+                ],
+                [
+                  181,
+                  173,
+                  99,
+                  32
+                ],
+                [
+                  189,
+                  180,
+                  35,
+                  24
+                ],
+                [
+                  189,
+                  180,
+                  99,
+                  32
+                ],
+                [
+                  165,
+                  212,
+                  35,
+                  208
+                ],
+                [
+                  165,
+                  213,
+                  35,
+                  216
+                ],
+                [
+                  165,
+                  213,
+                  99,
+                  224
+                ],
+                [
+                  165,
+                  212,
+                  99,
+                  232
+                ],
+                [
+                  173,
+                  214,
+                  35,
+                  208
+                ],
+                [
+                  173,
+                  214,
+                  99,
+                  232
+                ],
+                [
+                  181,
+                  216,
+                  35,
+                  208
+                ],
+                [
+                  181,
+                  216,
+                  99,
+                  232
+                ],
+                [
+                  189,
+                  218,
+                  35,
+                  208
+                ],
+                [
+                  189,
+                  218,
+                  99,
+                  232
+                ],
+                [
+                  197,
+                  220,
+                  35,
+                  208
+                ],
+                [
+                  197,
+                  221,
+                  35,
+                  216
+                ],
+                [
+                  197,
+                  221,
+                  99,
+                  224
+                ],
+                [
+                  197,
+                  220,
+                  99,
+                  232
+                ],
+                [
+                  173,
+                  215,
+                  35,
+                  216
+                ],
+                [
+                  173,
+                  215,
+                  99,
+                  224
+                ],
+                [
+                  181,
+                  217,
+                  35,
+                  216
+                ],
+                [
+                  181,
+                  217,
+                  99,
+                  224
+                ],
+                [
+                  189,
+                  224,
+                  35,
+                  216
+                ],
+                [
+                  189,
+                  224,
+                  99,
+                  224
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ]
+              ],
+              "nametable_sha256": "c1f256f7d65f921e4bfbca4fbbe50e2a2e135ac01036343bddbd1ffbc5856586",
+              "raster_scope": "Captured PPU state is provenance only. Original game changes CHR/palette during scanlines; these banks alone do not reproduce the complete visible frame."
+            },
+            "source_rect": [
+              0,
+              0,
+              128,
+              160
+            ],
+            "operations": [
+              {
+                "kind": "pixel_exact_native_background_difference",
+                "background": "analysis/phase11/runtime/ordinary-attack-return/attack-prelude-1.png",
+                "background_sha256": "763034f0ba5402310ae1be0e6353c2d10eca43fe59e3b34ce72b8bec7c6cffcf"
+              }
+            ]
+          },
+          "anchor": {
+            "x": 64,
+            "y": 160
+          }
+        },
+        {
+          "path": "/assets/battle-original/attack_formation-01.png",
+          "width": 128,
+          "height": 160,
+          "sha256": "dcf249e0189e53ccbba809cb66d8099005e2e5dad6ed0418012014044fc061db",
+          "source": {
+            "screenshot": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.png",
+            "screenshot_sha256": "2f17ed3ff193ff4941af927d88de2fcae8a6bb8257c0745b85d5e71017169b8c",
+            "resolution": [
+              256,
+              240
+            ],
+            "pixel_origin": "Original Nestopia video callback, royaltea palette, no resampling",
+            "capture": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.json",
+            "capture_sha256": "a16b64f0ea3451f29715643722673cbb81779eecb10e08ffc730f21543629383",
+            "captured_frame": 2123,
+            "engine": {
+              "name": "Nestopia",
+              "version": "2.0.0 135dfa6",
+              "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+            },
+            "pixel_format": 1,
+            "state": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.state",
+            "ppu": {
+              "state_sha256": "a4b8edcdda8a98a430096bcf8433d0d77699ecc7ecad5023fdd77fa741b9d0fa",
+              "ppu_register_bytes": [
+                144,
+                30,
+                128,
+                2,
+                40,
+                0,
+                0,
+                0,
+                0,
+                232,
+                0
+              ],
+              "palette_indices": [
+                15,
+                55,
+                41,
+                25,
+                15,
+                55,
+                54,
+                22,
+                15,
+                54,
+                32,
+                22,
+                15,
+                55,
+                54,
+                16,
+                15,
+                15,
+                54,
+                22,
+                15,
+                15,
+                54,
+                16,
+                15,
+                15,
+                32,
+                22,
+                15,
+                32,
+                39,
+                23
+              ],
+              "chr_banks": [
+                {
+                  "window": 0,
+                  "source": 0,
+                  "page_1k": 4,
+                  "rom_offset": 266256
+                },
+                {
+                  "window": 1,
+                  "source": 0,
+                  "page_1k": 1,
+                  "rom_offset": 263184
+                },
+                {
+                  "window": 2,
+                  "source": 0,
+                  "page_1k": 24,
+                  "rom_offset": 286736
+                },
+                {
+                  "window": 3,
+                  "source": 0,
+                  "page_1k": 24,
+                  "rom_offset": 286736
+                },
+                {
+                  "window": 4,
+                  "source": 0,
+                  "page_1k": 8,
+                  "rom_offset": 270352
+                },
+                {
+                  "window": 5,
+                  "source": 0,
+                  "page_1k": 9,
+                  "rom_offset": 271376
+                },
+                {
+                  "window": 6,
+                  "source": 0,
+                  "page_1k": 5,
+                  "rom_offset": 267280
+                },
+                {
+                  "window": 7,
+                  "source": 0,
+                  "page_1k": 6,
+                  "rom_offset": 268304
+                }
+              ],
+              "oam_sha256": "61ffcd1c382a29d22626e2cde091c22f88c72b09dd28ceee8411ad353c7548e4",
+              "oam_records": [
+                [
+                  165,
+                  168,
+                  35,
+                  16
+                ],
+                [
+                  165,
+                  169,
+                  35,
+                  24
+                ],
+                [
+                  165,
+                  169,
+                  99,
+                  32
+                ],
+                [
+                  165,
+                  168,
+                  99,
+                  40
+                ],
+                [
+                  173,
+                  170,
+                  35,
+                  16
+                ],
+                [
+                  173,
+                  170,
+                  99,
+                  40
+                ],
+                [
+                  181,
+                  172,
+                  35,
+                  16
+                ],
+                [
+                  181,
+                  172,
+                  99,
+                  40
+                ],
+                [
+                  189,
+                  174,
+                  35,
+                  16
+                ],
+                [
+                  189,
+                  174,
+                  99,
+                  40
+                ],
+                [
+                  197,
+                  176,
+                  35,
+                  16
+                ],
+                [
+                  197,
+                  177,
+                  35,
+                  24
+                ],
+                [
+                  197,
+                  177,
+                  99,
+                  32
+                ],
+                [
+                  197,
+                  176,
+                  99,
+                  40
+                ],
+                [
+                  173,
+                  171,
+                  35,
+                  24
+                ],
+                [
+                  173,
+                  171,
+                  99,
+                  32
+                ],
+                [
+                  181,
+                  173,
+                  35,
+                  24
+                ],
+                [
+                  181,
+                  173,
+                  99,
+                  32
+                ],
+                [
+                  189,
+                  180,
+                  35,
+                  24
+                ],
+                [
+                  189,
+                  180,
+                  99,
+                  32
+                ],
+                [
+                  165,
+                  212,
+                  35,
+                  208
+                ],
+                [
+                  165,
+                  213,
+                  35,
+                  216
+                ],
+                [
+                  165,
+                  213,
+                  99,
+                  224
+                ],
+                [
+                  165,
+                  212,
+                  99,
+                  232
+                ],
+                [
+                  173,
+                  214,
+                  35,
+                  208
+                ],
+                [
+                  173,
+                  214,
+                  99,
+                  232
+                ],
+                [
+                  181,
+                  216,
+                  35,
+                  208
+                ],
+                [
+                  181,
+                  216,
+                  99,
+                  232
+                ],
+                [
+                  189,
+                  218,
+                  35,
+                  208
+                ],
+                [
+                  189,
+                  218,
+                  99,
+                  232
+                ],
+                [
+                  197,
+                  220,
+                  35,
+                  208
+                ],
+                [
+                  197,
+                  221,
+                  35,
+                  216
+                ],
+                [
+                  197,
+                  221,
+                  99,
+                  224
+                ],
+                [
+                  197,
+                  220,
+                  99,
+                  232
+                ],
+                [
+                  173,
+                  215,
+                  35,
+                  216
+                ],
+                [
+                  173,
+                  215,
+                  99,
+                  224
+                ],
+                [
+                  181,
+                  217,
+                  35,
+                  216
+                ],
+                [
+                  181,
+                  217,
+                  99,
+                  224
+                ],
+                [
+                  189,
+                  224,
+                  35,
+                  216
+                ],
+                [
+                  189,
+                  224,
+                  99,
+                  224
+                ],
+                [
+                  240,
+                  38,
+                  1,
+                  2
+                ],
+                [
+                  240,
+                  39,
+                  1,
+                  9
+                ],
+                [
+                  240,
+                  52,
+                  1,
+                  2
+                ],
+                [
+                  240,
+                  53,
+                  1,
+                  9
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ]
+              ],
+              "nametable_sha256": "29e4b17564826cca573ec1cb7d163a99f263d9db7cf26887f4708b493993ee19",
+              "raster_scope": "Captured PPU state is provenance only. Original game changes CHR/palette during scanlines; these banks alone do not reproduce the complete visible frame."
+            },
+            "source_rect": [
+              0,
+              0,
+              128,
+              160
+            ],
+            "operations": [
+              {
+                "kind": "pixel_exact_native_background_difference",
+                "background": "analysis/phase11/runtime/ordinary-attack-return/attack-prelude-1.png",
+                "background_sha256": "763034f0ba5402310ae1be0e6353c2d10eca43fe59e3b34ce72b8bec7c6cffcf"
+              }
+            ]
+          },
+          "anchor": {
+            "x": 64,
+            "y": 160
+          }
+        }
+      ],
+      "facing": "right",
+      "usage": "Complete native ordinary-attack half-screen formation, not a tactical flag or a single repeated soldier. Native capture poses only; Web timing is presentation."
+    },
+    "attack_formation_enemy": {
+      "frames": [
+        {
+          "path": "/assets/battle-original/attack_formation_enemy-00.png",
+          "width": 128,
+          "height": 160,
+          "sha256": "2c4018b9ea8fb214237d93c5bf9846ce830bd5ad9d1e995647fab01bce2f0902",
+          "source": {
+            "screenshot": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-01.png",
+            "screenshot_sha256": "2e4eaebc9fc513e67e8f845ab3c9ab67e71a02084ba1b7e4af5f71549cd6bbaa",
+            "resolution": [
+              256,
+              240
+            ],
+            "pixel_origin": "Original Nestopia video callback, royaltea palette, no resampling",
+            "capture": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-01.json",
+            "capture_sha256": "2c4fe4c2c21f52aa8a0b5b2801454724dbc691e6ccb5c31eb6fc23d4e532e60c",
+            "captured_frame": 1155,
+            "engine": {
+              "name": "Nestopia",
+              "version": "2.0.0 135dfa6",
+              "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+            },
+            "pixel_format": 1,
+            "state": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-01.state",
+            "ppu": {
+              "state_sha256": "eea706e71dcdf1c66d8c62201c3b6d7ec06b871e2a08459e859b55c1c62d56c7",
+              "ppu_register_bytes": [
+                144,
+                30,
+                128,
+                2,
+                40,
+                0,
+                0,
+                0,
+                0,
+                232,
+                0
+              ],
+              "palette_indices": [
+                15,
+                55,
+                41,
+                25,
+                15,
+                55,
+                54,
+                22,
+                15,
+                54,
+                32,
+                22,
+                15,
+                55,
+                54,
+                16,
+                15,
+                15,
+                54,
+                22,
+                15,
+                15,
+                54,
+                16,
+                15,
+                15,
+                32,
+                22,
+                15,
+                32,
+                39,
+                23
+              ],
+              "chr_banks": [
+                {
+                  "window": 0,
+                  "source": 0,
+                  "page_1k": 4,
+                  "rom_offset": 266256
+                },
+                {
+                  "window": 1,
+                  "source": 0,
+                  "page_1k": 1,
+                  "rom_offset": 263184
+                },
+                {
+                  "window": 2,
+                  "source": 0,
+                  "page_1k": 24,
+                  "rom_offset": 286736
+                },
+                {
+                  "window": 3,
+                  "source": 0,
+                  "page_1k": 24,
+                  "rom_offset": 286736
+                },
+                {
+                  "window": 4,
+                  "source": 0,
+                  "page_1k": 8,
+                  "rom_offset": 270352
+                },
+                {
+                  "window": 5,
+                  "source": 0,
+                  "page_1k": 9,
+                  "rom_offset": 271376
+                },
+                {
+                  "window": 6,
+                  "source": 0,
+                  "page_1k": 5,
+                  "rom_offset": 267280
+                },
+                {
+                  "window": 7,
+                  "source": 0,
+                  "page_1k": 6,
+                  "rom_offset": 268304
+                }
+              ],
+              "oam_sha256": "ab62e4df60c36ab8f468801579adfc84c722b5b7950022d6afabf1bb731a8dfd",
+              "oam_records": [
+                [
+                  165,
+                  168,
+                  35,
+                  16
+                ],
+                [
+                  165,
+                  169,
+                  35,
+                  24
+                ],
+                [
+                  165,
+                  169,
+                  99,
+                  32
+                ],
+                [
+                  165,
+                  168,
+                  99,
+                  40
+                ],
+                [
+                  173,
+                  170,
+                  35,
+                  16
+                ],
+                [
+                  173,
+                  170,
+                  99,
+                  40
+                ],
+                [
+                  181,
+                  172,
+                  35,
+                  16
+                ],
+                [
+                  181,
+                  172,
+                  99,
+                  40
+                ],
+                [
+                  189,
+                  174,
+                  35,
+                  16
+                ],
+                [
+                  189,
+                  174,
+                  99,
+                  40
+                ],
+                [
+                  197,
+                  176,
+                  35,
+                  16
+                ],
+                [
+                  197,
+                  177,
+                  35,
+                  24
+                ],
+                [
+                  197,
+                  177,
+                  99,
+                  32
+                ],
+                [
+                  197,
+                  176,
+                  99,
+                  40
+                ],
+                [
+                  173,
+                  171,
+                  35,
+                  24
+                ],
+                [
+                  173,
+                  171,
+                  99,
+                  32
+                ],
+                [
+                  181,
+                  173,
+                  35,
+                  24
+                ],
+                [
+                  181,
+                  173,
+                  99,
+                  32
+                ],
+                [
+                  189,
+                  180,
+                  35,
+                  24
+                ],
+                [
+                  189,
+                  180,
+                  99,
+                  32
+                ],
+                [
+                  165,
+                  212,
+                  35,
+                  208
+                ],
+                [
+                  165,
+                  213,
+                  35,
+                  216
+                ],
+                [
+                  165,
+                  213,
+                  99,
+                  224
+                ],
+                [
+                  165,
+                  212,
+                  99,
+                  232
+                ],
+                [
+                  173,
+                  214,
+                  35,
+                  208
+                ],
+                [
+                  173,
+                  214,
+                  99,
+                  232
+                ],
+                [
+                  181,
+                  216,
+                  35,
+                  208
+                ],
+                [
+                  181,
+                  216,
+                  99,
+                  232
+                ],
+                [
+                  189,
+                  218,
+                  35,
+                  208
+                ],
+                [
+                  189,
+                  218,
+                  99,
+                  232
+                ],
+                [
+                  197,
+                  220,
+                  35,
+                  208
+                ],
+                [
+                  197,
+                  221,
+                  35,
+                  216
+                ],
+                [
+                  197,
+                  221,
+                  99,
+                  224
+                ],
+                [
+                  197,
+                  220,
+                  99,
+                  232
+                ],
+                [
+                  173,
+                  215,
+                  35,
+                  216
+                ],
+                [
+                  173,
+                  215,
+                  99,
+                  224
+                ],
+                [
+                  181,
+                  217,
+                  35,
+                  216
+                ],
+                [
+                  181,
+                  217,
+                  99,
+                  224
+                ],
+                [
+                  189,
+                  224,
+                  35,
+                  216
+                ],
+                [
+                  189,
+                  224,
+                  99,
+                  224
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ]
+              ],
+              "nametable_sha256": "c1f256f7d65f921e4bfbca4fbbe50e2a2e135ac01036343bddbd1ffbc5856586",
+              "raster_scope": "Captured PPU state is provenance only. Original game changes CHR/palette during scanlines; these banks alone do not reproduce the complete visible frame."
+            },
+            "source_rect": [
+              128,
+              0,
+              256,
+              160
+            ],
+            "operations": [
+              {
+                "kind": "pixel_exact_native_background_difference",
+                "background": "analysis/phase11/runtime/ordinary-attack-return/attack-prelude-1.png",
+                "background_sha256": "763034f0ba5402310ae1be0e6353c2d10eca43fe59e3b34ce72b8bec7c6cffcf"
+              }
+            ]
+          },
+          "anchor": {
+            "x": 64,
+            "y": 160
+          }
+        },
+        {
+          "path": "/assets/battle-original/attack_formation_enemy-01.png",
+          "width": 128,
+          "height": 160,
+          "sha256": "4713081b8cee4163649f1fa943ebe74dedf3aaedf1e598ccac292ada1e07a945",
+          "source": {
+            "screenshot": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.png",
+            "screenshot_sha256": "2f17ed3ff193ff4941af927d88de2fcae8a6bb8257c0745b85d5e71017169b8c",
+            "resolution": [
+              256,
+              240
+            ],
+            "pixel_origin": "Original Nestopia video callback, royaltea palette, no resampling",
+            "capture": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.json",
+            "capture_sha256": "a16b64f0ea3451f29715643722673cbb81779eecb10e08ffc730f21543629383",
+            "captured_frame": 2123,
+            "engine": {
+              "name": "Nestopia",
+              "version": "2.0.0 135dfa6",
+              "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+            },
+            "pixel_format": 1,
+            "state": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.state",
+            "ppu": {
+              "state_sha256": "a4b8edcdda8a98a430096bcf8433d0d77699ecc7ecad5023fdd77fa741b9d0fa",
+              "ppu_register_bytes": [
+                144,
+                30,
+                128,
+                2,
+                40,
+                0,
+                0,
+                0,
+                0,
+                232,
+                0
+              ],
+              "palette_indices": [
+                15,
+                55,
+                41,
+                25,
+                15,
+                55,
+                54,
+                22,
+                15,
+                54,
+                32,
+                22,
+                15,
+                55,
+                54,
+                16,
+                15,
+                15,
+                54,
+                22,
+                15,
+                15,
+                54,
+                16,
+                15,
+                15,
+                32,
+                22,
+                15,
+                32,
+                39,
+                23
+              ],
+              "chr_banks": [
+                {
+                  "window": 0,
+                  "source": 0,
+                  "page_1k": 4,
+                  "rom_offset": 266256
+                },
+                {
+                  "window": 1,
+                  "source": 0,
+                  "page_1k": 1,
+                  "rom_offset": 263184
+                },
+                {
+                  "window": 2,
+                  "source": 0,
+                  "page_1k": 24,
+                  "rom_offset": 286736
+                },
+                {
+                  "window": 3,
+                  "source": 0,
+                  "page_1k": 24,
+                  "rom_offset": 286736
+                },
+                {
+                  "window": 4,
+                  "source": 0,
+                  "page_1k": 8,
+                  "rom_offset": 270352
+                },
+                {
+                  "window": 5,
+                  "source": 0,
+                  "page_1k": 9,
+                  "rom_offset": 271376
+                },
+                {
+                  "window": 6,
+                  "source": 0,
+                  "page_1k": 5,
+                  "rom_offset": 267280
+                },
+                {
+                  "window": 7,
+                  "source": 0,
+                  "page_1k": 6,
+                  "rom_offset": 268304
+                }
+              ],
+              "oam_sha256": "61ffcd1c382a29d22626e2cde091c22f88c72b09dd28ceee8411ad353c7548e4",
+              "oam_records": [
+                [
+                  165,
+                  168,
+                  35,
+                  16
+                ],
+                [
+                  165,
+                  169,
+                  35,
+                  24
+                ],
+                [
+                  165,
+                  169,
+                  99,
+                  32
+                ],
+                [
+                  165,
+                  168,
+                  99,
+                  40
+                ],
+                [
+                  173,
+                  170,
+                  35,
+                  16
+                ],
+                [
+                  173,
+                  170,
+                  99,
+                  40
+                ],
+                [
+                  181,
+                  172,
+                  35,
+                  16
+                ],
+                [
+                  181,
+                  172,
+                  99,
+                  40
+                ],
+                [
+                  189,
+                  174,
+                  35,
+                  16
+                ],
+                [
+                  189,
+                  174,
+                  99,
+                  40
+                ],
+                [
+                  197,
+                  176,
+                  35,
+                  16
+                ],
+                [
+                  197,
+                  177,
+                  35,
+                  24
+                ],
+                [
+                  197,
+                  177,
+                  99,
+                  32
+                ],
+                [
+                  197,
+                  176,
+                  99,
+                  40
+                ],
+                [
+                  173,
+                  171,
+                  35,
+                  24
+                ],
+                [
+                  173,
+                  171,
+                  99,
+                  32
+                ],
+                [
+                  181,
+                  173,
+                  35,
+                  24
+                ],
+                [
+                  181,
+                  173,
+                  99,
+                  32
+                ],
+                [
+                  189,
+                  180,
+                  35,
+                  24
+                ],
+                [
+                  189,
+                  180,
+                  99,
+                  32
+                ],
+                [
+                  165,
+                  212,
+                  35,
+                  208
+                ],
+                [
+                  165,
+                  213,
+                  35,
+                  216
+                ],
+                [
+                  165,
+                  213,
+                  99,
+                  224
+                ],
+                [
+                  165,
+                  212,
+                  99,
+                  232
+                ],
+                [
+                  173,
+                  214,
+                  35,
+                  208
+                ],
+                [
+                  173,
+                  214,
+                  99,
+                  232
+                ],
+                [
+                  181,
+                  216,
+                  35,
+                  208
+                ],
+                [
+                  181,
+                  216,
+                  99,
+                  232
+                ],
+                [
+                  189,
+                  218,
+                  35,
+                  208
+                ],
+                [
+                  189,
+                  218,
+                  99,
+                  232
+                ],
+                [
+                  197,
+                  220,
+                  35,
+                  208
+                ],
+                [
+                  197,
+                  221,
+                  35,
+                  216
+                ],
+                [
+                  197,
+                  221,
+                  99,
+                  224
+                ],
+                [
+                  197,
+                  220,
+                  99,
+                  232
+                ],
+                [
+                  173,
+                  215,
+                  35,
+                  216
+                ],
+                [
+                  173,
+                  215,
+                  99,
+                  224
+                ],
+                [
+                  181,
+                  217,
+                  35,
+                  216
+                ],
+                [
+                  181,
+                  217,
+                  99,
+                  224
+                ],
+                [
+                  189,
+                  224,
+                  35,
+                  216
+                ],
+                [
+                  189,
+                  224,
+                  99,
+                  224
+                ],
+                [
+                  240,
+                  38,
+                  1,
+                  2
+                ],
+                [
+                  240,
+                  39,
+                  1,
+                  9
+                ],
+                [
+                  240,
+                  52,
+                  1,
+                  2
+                ],
+                [
+                  240,
+                  53,
+                  1,
+                  9
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ],
+                [
+                  240,
+                  240,
+                  224,
+                  240
+                ]
+              ],
+              "nametable_sha256": "29e4b17564826cca573ec1cb7d163a99f263d9db7cf26887f4708b493993ee19",
+              "raster_scope": "Captured PPU state is provenance only. Original game changes CHR/palette during scanlines; these banks alone do not reproduce the complete visible frame."
+            },
+            "source_rect": [
+              128,
+              0,
+              256,
+              160
+            ],
+            "operations": [
+              {
+                "kind": "pixel_exact_native_background_difference",
+                "background": "analysis/phase11/runtime/ordinary-attack-return/attack-prelude-1.png",
+                "background_sha256": "763034f0ba5402310ae1be0e6353c2d10eca43fe59e3b34ce72b8bec7c6cffcf"
+              }
+            ]
+          },
+          "anchor": {
+            "x": 64,
+            "y": 160
+          }
+        }
+      ],
+      "facing": "left",
+      "usage": "Complete native ordinary-attack half-screen formation, not a tactical flag or a single repeated soldier. Native capture poses only; Web timing is presentation."
     }
   },
   "terrain": {
@@ -11740,6 +13876,520 @@
         }
       }
     },
+    "attack_advance": {
+      "path": "/assets/battle-original/witness-attack_advance.png",
+      "width": 256,
+      "height": 240,
+      "sha256": "f5650d1f5a65b49389538f1cf99345433d0fe35ba4b53372c8b3317d6f890b0f",
+      "source": {
+        "screenshot": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.png",
+        "screenshot_sha256": "2f17ed3ff193ff4941af927d88de2fcae8a6bb8257c0745b85d5e71017169b8c",
+        "resolution": [
+          256,
+          240
+        ],
+        "pixel_origin": "Original Nestopia video callback, royaltea palette, no resampling",
+        "capture": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.json",
+        "capture_sha256": "a16b64f0ea3451f29715643722673cbb81779eecb10e08ffc730f21543629383",
+        "captured_frame": 2123,
+        "engine": {
+          "name": "Nestopia",
+          "version": "2.0.0 135dfa6",
+          "core_sha256": "924191ebb41b863993a96cf461321058b391c507a6fed2f1203df44eaa5a539a"
+        },
+        "pixel_format": 1,
+        "state": "analysis/phase11/runtime/ordinary-attack-return/first-attack-main-04.state",
+        "ppu": {
+          "state_sha256": "a4b8edcdda8a98a430096bcf8433d0d77699ecc7ecad5023fdd77fa741b9d0fa",
+          "ppu_register_bytes": [
+            144,
+            30,
+            128,
+            2,
+            40,
+            0,
+            0,
+            0,
+            0,
+            232,
+            0
+          ],
+          "palette_indices": [
+            15,
+            55,
+            41,
+            25,
+            15,
+            55,
+            54,
+            22,
+            15,
+            54,
+            32,
+            22,
+            15,
+            55,
+            54,
+            16,
+            15,
+            15,
+            54,
+            22,
+            15,
+            15,
+            54,
+            16,
+            15,
+            15,
+            32,
+            22,
+            15,
+            32,
+            39,
+            23
+          ],
+          "chr_banks": [
+            {
+              "window": 0,
+              "source": 0,
+              "page_1k": 4,
+              "rom_offset": 266256
+            },
+            {
+              "window": 1,
+              "source": 0,
+              "page_1k": 1,
+              "rom_offset": 263184
+            },
+            {
+              "window": 2,
+              "source": 0,
+              "page_1k": 24,
+              "rom_offset": 286736
+            },
+            {
+              "window": 3,
+              "source": 0,
+              "page_1k": 24,
+              "rom_offset": 286736
+            },
+            {
+              "window": 4,
+              "source": 0,
+              "page_1k": 8,
+              "rom_offset": 270352
+            },
+            {
+              "window": 5,
+              "source": 0,
+              "page_1k": 9,
+              "rom_offset": 271376
+            },
+            {
+              "window": 6,
+              "source": 0,
+              "page_1k": 5,
+              "rom_offset": 267280
+            },
+            {
+              "window": 7,
+              "source": 0,
+              "page_1k": 6,
+              "rom_offset": 268304
+            }
+          ],
+          "oam_sha256": "61ffcd1c382a29d22626e2cde091c22f88c72b09dd28ceee8411ad353c7548e4",
+          "oam_records": [
+            [
+              165,
+              168,
+              35,
+              16
+            ],
+            [
+              165,
+              169,
+              35,
+              24
+            ],
+            [
+              165,
+              169,
+              99,
+              32
+            ],
+            [
+              165,
+              168,
+              99,
+              40
+            ],
+            [
+              173,
+              170,
+              35,
+              16
+            ],
+            [
+              173,
+              170,
+              99,
+              40
+            ],
+            [
+              181,
+              172,
+              35,
+              16
+            ],
+            [
+              181,
+              172,
+              99,
+              40
+            ],
+            [
+              189,
+              174,
+              35,
+              16
+            ],
+            [
+              189,
+              174,
+              99,
+              40
+            ],
+            [
+              197,
+              176,
+              35,
+              16
+            ],
+            [
+              197,
+              177,
+              35,
+              24
+            ],
+            [
+              197,
+              177,
+              99,
+              32
+            ],
+            [
+              197,
+              176,
+              99,
+              40
+            ],
+            [
+              173,
+              171,
+              35,
+              24
+            ],
+            [
+              173,
+              171,
+              99,
+              32
+            ],
+            [
+              181,
+              173,
+              35,
+              24
+            ],
+            [
+              181,
+              173,
+              99,
+              32
+            ],
+            [
+              189,
+              180,
+              35,
+              24
+            ],
+            [
+              189,
+              180,
+              99,
+              32
+            ],
+            [
+              165,
+              212,
+              35,
+              208
+            ],
+            [
+              165,
+              213,
+              35,
+              216
+            ],
+            [
+              165,
+              213,
+              99,
+              224
+            ],
+            [
+              165,
+              212,
+              99,
+              232
+            ],
+            [
+              173,
+              214,
+              35,
+              208
+            ],
+            [
+              173,
+              214,
+              99,
+              232
+            ],
+            [
+              181,
+              216,
+              35,
+              208
+            ],
+            [
+              181,
+              216,
+              99,
+              232
+            ],
+            [
+              189,
+              218,
+              35,
+              208
+            ],
+            [
+              189,
+              218,
+              99,
+              232
+            ],
+            [
+              197,
+              220,
+              35,
+              208
+            ],
+            [
+              197,
+              221,
+              35,
+              216
+            ],
+            [
+              197,
+              221,
+              99,
+              224
+            ],
+            [
+              197,
+              220,
+              99,
+              232
+            ],
+            [
+              173,
+              215,
+              35,
+              216
+            ],
+            [
+              173,
+              215,
+              99,
+              224
+            ],
+            [
+              181,
+              217,
+              35,
+              216
+            ],
+            [
+              181,
+              217,
+              99,
+              224
+            ],
+            [
+              189,
+              224,
+              35,
+              216
+            ],
+            [
+              189,
+              224,
+              99,
+              224
+            ],
+            [
+              240,
+              38,
+              1,
+              2
+            ],
+            [
+              240,
+              39,
+              1,
+              9
+            ],
+            [
+              240,
+              52,
+              1,
+              2
+            ],
+            [
+              240,
+              53,
+              1,
+              9
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ],
+            [
+              240,
+              240,
+              224,
+              240
+            ]
+          ],
+          "nametable_sha256": "29e4b17564826cca573ec1cb7d163a99f263d9db7cf26887f4708b493993ee19",
+          "raster_scope": "Captured PPU state is provenance only. Original game changes CHR/palette during scanlines; these banks alone do not reproduce the complete visible frame."
+        }
+      }
+    },
     "duel": {
       "path": "/assets/battle-original/witness-duel.png",
       "width": 256,
@@ -12265,7 +14915,7 @@
   "rights": "Original game graphics retain their original rights and are not MIT relicensed. Extracted from captures made with the user-provided ROM. Tool code is covered by the repository code license.",
   "build": {
     "tool": "tools/battle-original/build.py",
-    "tool_sha256": "17c427ad26fd35953d3e1ce186ea775fd6025dbca1bc9112fb88975b45a0e416",
+    "tool_sha256": "ba19d41c7584873148a2c8e19944d41dde68c0b34f1501f76925b5d563b14ef5",
     "runtime_requires_rom": false,
     "runtime_requires_emulator": false
   }

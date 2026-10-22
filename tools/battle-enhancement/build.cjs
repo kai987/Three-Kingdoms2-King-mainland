@@ -14,10 +14,18 @@ function native4x(image){
  const values=Uint32Array.from({length:image.width*image.height},(_,i)=>image.rgba.readUInt32LE(i*4));
  return Buffer.from(scale2x(scale2x(values,image.width,image.height),image.width*2,image.height*2).buffer);
 }
-function nativeEntry(row){
- const sourcePath='game'+row.path,source=read(sourcePath),image=decodePng(source),rgba=native4x(image),width=image.width*4,height=image.height*4;
+function nearest4x(image){
+ const width=image.width*4,height=image.height*4,rgba=Buffer.alloc(width*height*4);
+ for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+  const src=(Math.floor(y/4)*image.width+Math.floor(x/4))*4,at=(y*width+x)*4;
+  image.rgba.copy(rgba,at,src,src+4);
+ }
+ return rgba;
+}
+function nativeEntry(row,{nearest=false}={}){
+ const sourcePath='game'+row.path,source=read(sourcePath),image=decodePng(source),rgba=(nearest?nearest4x:native4x)(image),width=image.width*4,height=image.height*4;
  const name='native-'+path.basename(row.path),bytes=write(name,encodePng(width,height,rgba));
- return {path:'/assets/battle-enhanced/'+name,width,height,logical_width:image.width,logical_height:image.height,anchor:row.anchor||{x:image.width/2,y:image.height},sha256:sha(bytes),pixel_sha256:sha(rgba),source_path:row.path,source_sha256:sha(source),method:'native_scale4x'};
+ return {path:'/assets/battle-enhanced/'+name,width,height,logical_width:image.width,logical_height:image.height,anchor:row.anchor||{x:image.width/2,y:image.height},sha256:sha(bytes),pixel_sha256:sha(rgba),source_path:row.path,source_sha256:sha(source),method:nearest?'native_nearest4x':'native_scale4x'};
 }
 function poseImages(image){
  // The riders are separate transparent islands. Their bounding rectangles can
@@ -103,7 +111,7 @@ function recolor(image,mask,horse){
 function build(){
  const originalPath='game/assets/battle-original/index.json',original=json(originalPath),backgrounds={},sprites={},duelists={},studies={};
  for(const[key,row]of Object.entries(original.backgrounds))backgrounds[key]=nativeEntry(row);
- for(const[key,row]of Object.entries(original.sprites))sprites[key]={facing:row.facing,frames:row.frames.map(nativeEntry)};
+ for(const[key,row]of Object.entries(original.sprites))sprites[key]={facing:row.facing,frames:row.frames.map(frame=>nativeEntry(frame,{nearest:key.startsWith('attack_formation')}))};
  for(const weapon of WEAPONS){
   const study=ART+'/studies/'+weapon+'.png',prompt=ART+'/prompts/'+weapon+'.txt',input=read(study),image=decodePng(input),poses=poseImages(image),boxes=poses.map(imageBounds),scale=Math.min(...boxes.map(([l,t,r,b])=>Math.min(320/(r-l),352/(b-t))));
   assert(new Set(image.rgba.filter((_,i)=>i%4===3)).size>1,'Generated source must actually retain a transparent background');
@@ -117,7 +125,7 @@ function build(){
    duelists[weapon][horse]={facing:'right',frames};
   }
  }
- const manifest={schema:'tk2-battle-enhanced-v1',scale:4,originals_retained:true,logical_resolution:{width:256,height:240},resolution:{width:1024,height:960},build:{tool:TOOL,tool_sha256:sha(read(TOOL)),native_index:originalPath,native_index_sha256:sha(read(originalPath)),imagegen_mode:'built_in',native_method:'Scale2x twice, retaining original palette and originals',duel_method:'Two distinct imagegen-painted poses per weapon, binary alpha, finite NES-compatible palette, source-aware lower warm coat masks; no new battle stats or RNG'},studies,backgrounds,sprites,duelists};
+ const manifest={schema:'tk2-battle-enhanced-v1',scale:4,originals_retained:true,logical_resolution:{width:256,height:240},resolution:{width:1024,height:960},build:{tool:TOOL,tool_sha256:sha(read(TOOL)),native_index:originalPath,native_index_sha256:sha(read(originalPath)),imagegen_mode:'built_in',native_method:'Scale2x twice for existing native cutouts; exact nearest4x for complete attack formations, retaining original palette and originals',duel_method:'Two distinct imagegen-painted poses per weapon, binary alpha, finite NES-compatible palette, source-aware lower warm coat masks; no new battle stats or RNG'},studies,backgrounds,sprites,duelists};
  write('index.json',Buffer.from(JSON.stringify(manifest,null,2)+'\n'));return check();
 }
 function entries(manifest){return [...Object.values(manifest.backgrounds),...Object.values(manifest.sprites).flatMap(row=>row.frames),...Object.values(manifest.duelists).flatMap(rows=>Object.values(rows).flatMap(row=>row.frames))];}
@@ -127,7 +135,7 @@ function check(){
  for(const row of entries(m)){
   assert.match(row.path,/^\/assets\/battle-enhanced\/[a-zA-Z0-9_-]+\.png$/);paths.add(path.basename(row.path));const input=read('game'+row.path),image=decodePng(input);
   assert.deepEqual([image.width,image.height],[row.width,row.height]);assert.equal(row.width,row.logical_width*4);assert.equal(row.height,row.logical_height*4);assert.equal(row.sha256,sha(input));assert.equal(row.pixel_sha256,sha(image.rgba));
-  if(row.source_path){const src=read('game'+row.source_path);assert.equal(row.source_sha256,sha(src));assert(native4x(decodePng(src)).equals(image.rgba),'Native Scale4x must reproduce exactly');}
+  if(row.source_path){const src=read('game'+row.source_path);assert.equal(row.source_sha256,sha(src));assert(['native_scale4x','native_nearest4x'].includes(row.method));assert((row.method==='native_nearest4x'?nearest4x:native4x)(decodePng(src)).equals(image.rgba),'Native4x must reproduce exactly');}
   else{generated++;assert.deepEqual([row.width,row.height],[384,384]);const alpha=new Set();let count=0;const palette=new Set();for(let i=0;i<image.rgba.length;i+=4){alpha.add(image.rgba[i+3]);if(image.rgba[i+3]){count++;palette.add(image.rgba.subarray(i,i+3).toString('hex'));}}assert.deepEqual([...alpha].sort((a,b)=>a-b),[0,255]);assert(count>1000);assert(palette.size<=26);assert(row.horse_mask_pixels>500);}
  }
  for(const weapon of WEAPONS){assert.deepEqual(Object.keys(m.duelists[weapon]).sort(),[...HORSES].sort());const study=m.studies[weapon];assert.equal(study.study_sha256,sha(read(study.study)));assert.equal(study.prompt_sha256,sha(read(study.prompt)));for(const horse of HORSES)assert.equal(m.duelists[weapon][horse].frames.length,2);}
@@ -135,5 +143,5 @@ function check(){
  assert.deepEqual(fs.readdirSync(path.join(ROOT,OUT)).filter(p=>p.endsWith('.png')).sort(),[...paths].sort(),'No stale final sprites');
  return{check:true,scale:4,native_files:paths.size-generated,generated_frames:generated,weapon_types:WEAPONS.length,horse_types:HORSES.length,originals_retained:true};
 }
-module.exports={build,check,native4x,bounds,poseImages,imageBounds,fitted,horseMask,recolor,entries};
+module.exports={build,check,native4x,nearest4x,bounds,poseImages,imageBounds,fitted,horseMask,recolor,entries};
 if(require.main===module){try{console.log(JSON.stringify(process.argv.includes('--check')?check():build()));}catch(error){console.error(error);process.exitCode=1;}}

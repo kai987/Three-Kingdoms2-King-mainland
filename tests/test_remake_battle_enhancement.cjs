@@ -2,6 +2,18 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const ROOT=path.resolve(__dirname,'..'),builder=require('../tools/battle-enhancement/build.cjs'),{decodePng}=require('../tools/portraits/prepare_enhanced.cjs'),{WEAPONS,HORSES}=require('../game/duel-appearance.js');
 const manifest=JSON.parse(fs.readFileSync(path.join(ROOT,'game/assets/battle-enhanced/index.json')));
+let nativeFormationPixels=0;
+for(const key of ['attack_formation','attack_formation_enemy']){
+ const formation=manifest.sprites[key];assert.equal(formation.frames.length,2);
+ for(const row of formation.frames){
+  assert.equal(row.method,'native_nearest4x');assert.deepEqual([row.width,row.height,row.logical_width,row.logical_height],[512,640,128,160]);
+  const src=decodePng(fs.readFileSync(path.join(ROOT,'game'+row.source_path))),image=decodePng(fs.readFileSync(path.join(ROOT,'game'+row.path)));
+  for(let y=0;y<image.height;y++)for(let x=0;x<image.width;x++){
+   const dst=(y*image.width+x)*4,at=(Math.floor(y/4)*src.width+Math.floor(x/4))*4;
+   assert(image.rgba.subarray(dst,dst+4).equals(src.rgba.subarray(at,at+4)),'Each original attack pixel must remain an exact4×4 block including its transparent edge');nativeFormationPixels++;
+  }
+ }
+}
 let islands=0,coats=0,redTasselPixels=0,protectedShoulderPixels=0,whiteCoatPixels=0;
 for(const weapon of WEAPONS){
  const source=decodePng(fs.readFileSync(path.join(ROOT,manifest.studies[weapon].study))),poses=builder.poseImages(source),boxes=poses.map(builder.imageBounds),scale=Math.min(...boxes.map(([l,t,r,b])=>Math.min(320/(r-l),352/(b-t))));
@@ -41,4 +53,4 @@ for(const weapon of WEAPONS){
  }
 }
 assert(redTasselPixels>100);assert(protectedShoulderPixels>20);assert(whiteCoatPixels>200);
-console.log(`battle enhanced art: ${islands} complete source-isolated painted poses, ${coats} alpha-identical coats, no adjacent-pose bleed, ${redTasselPixels} red tassel and ${protectedShoulderPixels} LiuBei shoulder pixels preserved, ${whiteCoatPixels} white rump/neck pixels checked`);
+console.log(`battle enhanced art: ${nativeFormationPixels} exact original formation pixels, ${islands} complete source-isolated painted poses, ${coats} alpha-identical coats, no adjacent-pose bleed, ${redTasselPixels} red tassel and ${protectedShoulderPixels} LiuBei shoulder pixels preserved, ${whiteCoatPixels} white rump/neck pixels checked`);

@@ -64,7 +64,7 @@ function environment({manifest=null,enhancedManifest=null,duelAppearance=null,fa
   ResizeObserver:class{constructor(fn){this.fn=fn;this.disconnects=0;observers.push(this);}observe(){}disconnect(){this.disconnects++;}},
   Image:class{constructor(){this.width=16;this.height=16;}set src(value){this._src=value;queueMicrotask(()=>failedPaths.includes(value)?this.onerror?.():this.onload?.());}get src(){return this._src;}}};
  sandbox.window=sandbox;vm.runInNewContext(source,sandbox,{filename:'game/battle-scene.js'});
- return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,cancels,observers,texts,draws,rectangles,transforms,rafs,timers,
+ return{api:sandbox.module.exports,doc,host,surface,nodes,i18n,requests,cancels,observers,texts,draws,rectangles,transforms,rafs,timers,setReduced(value){reduced=value;},
   step(time){const entries=[...rafs];rafs.clear();for(const [,fn]of entries)fn(time);},
   drain(){for(let i=0;rafs.size&&i<100;i++)this.step(i*1200);assert.equal(rafs.size,0,'RAF queue must terminate');},
   listenerCount(){return[...listeners.values()].reduce((n,set)=>n+set.size,0);}};
@@ -91,6 +91,31 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   assert.equal(JSON.stringify(row),original,'Receipt validation and differences are read-only');
  }
  const first=actual.rows.find(r=>r.key==='attack'),bid=first.after.game.battle.id,revision=first.after.revision;
+ // Same-family markers are computed across BOTH armies before locale translation.
+ {
+  const names=['刘备','劉表','张飞','張郃','诸葛亮','諸葛瑾','公孙瓒','公孫度','司马懿','司馬昭','夏侯惇','夏侯渊','夏侯恩','夏承','司宏','张','𠮷野','趙雲'];
+  const units=names.map((_,id)=>({id,side:id%2?'defenders':'attackers'})),expected=['备','表','飞','郃','亮','瑾','瓒','度','懿','昭','惇','渊','恩','夏','司','张','𠮷','趙'];
+  const original=JSON.stringify(units),markers=standalone.markerLabels(units,id=>names[id]);
+  assert.deepEqual(Array.from(markers.values()),expected,'Shared surname uses final full Unicode character; compound surnames are not confused with single-character families');
+  const localized=['劉備','劉表','張飛','張郃','諸葛亮','諸葛瑾','公孫瓚','公孫度','司馬懿','司馬昭','夏侯惇','夏侯淵','夏侯恩','夏承','司宏','張','𠮷野','趙雲'];
+  const japanese=standalone.markerLabels(units,id=>names[id],id=>localized[id]);
+  assert.equal(japanese.get(0),'備');assert.equal(japanese.get(2),'飛');assert.equal(japanese.get(11),'淵');
+  assert.equal(japanese.get(13),'夏','A lone夏 is not grouped with夏侯');assert.equal(japanese.get(14),'司','A lone司 is not grouped with司馬');
+  assert.equal(JSON.stringify(units),original,'Marker labels are read-only');
+  assert.equal(standalone.familyName(' 皇甫嵩 '),'皇甫');assert.equal(standalone.familyName('毌丘俭'),'毌丘');
+  const zhongNames=['钟离牧','鍾離斐','钟会'];assert.deepEqual(Array.from(standalone.markerLabels(zhongNames.map((_,id)=>({id})),id=>zhongNames[id]).values()),['牧','斐','钟'],'鍾離 and単姓鍾 remain distinct families');
+ }
+ // A visible normal strike has distinct approach, contact, recoil and result
+ // stages, using no random sampling and resolving damage from the receipt only.
+ {
+  assert.equal(standalone.duration(accepted.get('attack')[0]),2200);
+  assert.equal(standalone.attackStage(0).phase,'approach');assert.equal(standalone.attackStage(.15).shift,20);
+  assert.equal(standalone.attackStage(.4).phase,'clash');assert.equal(standalone.attackStage(.4).resolved,false);
+  assert.equal(standalone.attackStage(.6).resolved,true);assert.equal(standalone.attackStage(.75).phase,'recoil');
+  assert.equal(standalone.attackStage(1).phase,'result');assert.equal(standalone.attackStage(1).shift,0);
+  assert.equal(standalone.attackStage(.4,true).phase,'result');assert.equal(standalone.attackStage(.4,true).shift,0);
+ }
+
  //4× means4× each backing dimension, with the logical/CSS footprint unchanged.
  {const env=environment(),selected=[],scene=env.api.create({onSelect:(side,id)=>selected.push({side,id})}),row=clone(first.before),id=first.payload.actor;
   row.catalog.names[String(id)]='𠮷野';
@@ -175,6 +200,55 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
  }
  // Native artwork must remain on screen for actor-less retreat, and strike must actually render an impact.
  const nativeManifest=JSON.parse(fs.readFileSync(path.join(ROOT,'game/assets/battle-original/index.json'),'utf8'));
+ // A real ordinary-attack receipt visibly renders both original soldier lines,
+ // advances to contact, resolves authoritative losses, and returns without re-execution.
+ for(const useEnhanced of [false,true]){
+  const row=actual.rows.find(r=>r.key==='attack'),original=JSON.stringify(row),native=clone(nativeManifest);
+  const makeFrame=(path)=>({path,logical_width:128,logical_height:160,width:512,height:640});
+  const hd={schema:'tk2-battle-enhanced-v1',scale:4,backgrounds:{},duelists:{},sprites:{
+   attack_formation:{frames:[makeFrame('/assets/battle-enhanced/formation-left-00.png'),makeFrame('/assets/battle-enhanced/formation-left-01.png')]},
+   attack_formation_enemy:{frames:[makeFrame('/assets/battle-enhanced/formation-right-00.png'),makeFrame('/assets/battle-enhanced/formation-right-01.png')]}}};
+  const env=environment({manifest:native,enhancedManifest:useEnhanced?hd:null}),scene=env.api.create();
+  scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);await scene.load();const playback=scene.play();env.step(0);
+  const wanted=side=>new Set(((useEnhanced?hd:native).sprites[side]?.frames||[]).map(f=>f.path));
+  const left=wanted('attack_formation'),right=wanted('attack_formation_enemy');assert(left.size&&right.size,'Original attack formations must be available');
+  env.draws.length=0;env.step(330);
+  let l=env.draws.find(d=>left.has(d.src)),r=env.draws.find(d=>right.has(d.src));assert(l&&r,'Both opposing soldier formations are visible in the same frame');
+  assert.deepEqual(l.args,[20,0,128,160]);assert.deepEqual(r.args,[108,0,128,160]);
+  env.draws.length=0;env.step(880);l=env.draws.find(d=>left.has(d.src));r=env.draws.find(d=>right.has(d.src));
+  assert(l&&r);assert(l.args[0]>=39&&l.args[0]<=41);assert(r.args[0]>=87&&r.args[0]<=89,'Opposed troops meet during the clash');
+  env.draws.length=0;env.step(2090);l=env.draws.find(d=>left.has(d.src));r=env.draws.find(d=>right.has(d.src));assert.equal(l.args[0],0);assert.equal(r.args[0],128,'Surviving formations withdraw to native positions');
+  scene.skip();await playback;assert.equal(scene.state().queued,0);assert.equal(env.rafs.size,0);assert.equal(JSON.stringify(row),original,'Attack animation is presentation only');
+  scene.observe(row.kind,row.payload,row.before,row.after);assert.equal(scene.state().queued,0,'Skip cannot replay the same committed attack');scene.dispose();
+ }
+ // Starting the first attack during asynchronous artwork loading waits for
+ // the original formations instead of spending the whole action on placeholders.
+ {
+  const env=environment({manifest:nativeManifest}),scene=env.api.create(),row=actual.rows.find(r=>r.key==='attack');
+  scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);const playback=scene.play();
+  assert.equal(scene.state().assetStatus,'loading');assert.equal(env.rafs.size,0);assert.equal(scene.playing,false);
+  await scene.load();await Promise.resolve();assert(scene.playing);env.step(0);
+  assert.equal(env.nodes['[data-battle-scene-title]'].textContent,'部隊對陣');
+  assert(env.draws.some(d=>/attack_formation/.test(d.src)),'Artwork is present before the first timed frame');
+  scene.skip();await playback;scene.dispose();assert.equal(env.timers.size,0);assert.equal(env.rafs.size,0);
+ }
+ // Visibility/reduced-motion can change while the first artwork fetch is
+ // pending. Settle instead of scheduling a background RAF after that await.
+ for(const mode of ['hidden','reduced']){
+  const env=environment({manifest:nativeManifest}),sounds=[],settled=[],outcomes=[],scene=env.api.create({onSound:s=>sounds.push(s),onSettled:()=>settled.push(true),onOutcome:cue=>outcomes.push(cue)}),row=actual.rows.find(r=>r.key==='attack');
+  scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);scene.deferOutcome('committed');const playback=scene.play();assert.equal(scene.state().assetStatus,'loading');
+  if(mode==='hidden'){env.doc.hidden=true;env.doc.emit('visibilitychange');}else env.setReduced(true);
+  await scene.load();await playback;assert.equal(env.rafs.size,0);assert.equal(scene.playing,false);assert.equal(scene.state().queued,0);assert.deepEqual(outcomes,['committed']);
+  assert.equal(sounds.length,mode==='hidden'?0:1);assert.equal(settled.length,mode==='hidden'?0:1);scene.dispose();assert.equal(env.timers.size,0);
+ }
+ // Failure of the new formation images still leaves native unit sprites and
+ // the already-committed result available, without a second command or roll.
+ {
+  const rows=['attack_formation','attack_formation_enemy'].flatMap(k=>nativeManifest.sprites[k].frames),env=environment({manifest:nativeManifest,failedPaths:rows.map(f=>f.path)}),scene=env.api.create(),row=actual.rows.find(r=>r.key==='attack');
+  scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);await scene.load();env.draws.length=0;
+  const playback=scene.play();env.step(0);assert(env.draws.some(d=>/\/(infantry|cavalry)-/.test(d.src)),'Missing formation falls back to retained original soldier cutouts');
+  scene.skip();await playback;scene.dispose();assert.equal(env.rafs.size,0);assert.equal(env.timers.size,0);
+ }
  // Enhanced sprites use their logical dimensions, prefer actual4× source pixels,
  // bind both participants separately, and fall back to the original same scene.
  {
@@ -214,7 +288,7 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   const row=actual.rows.find(r=>r.key===key),env=environment({manifest:nativeManifest}),scene=env.api.create();
   scene.observe(row.kind,row.payload,row.before,row.after);scene.mount(env.host,row.after);assert(await scene.load());
   const playback=scene.play();env.step(0);env.draws.length=0;env.texts.length=0;env.rectangles.length=0;env.step(env.api.duration(accepted.get(key)[0])*.6);
-  const armyPaths=new Set(['infantry','infantry_enemy','cavalry'].flatMap(kind=>(nativeManifest.sprites[kind]?.frames||[]).map(f=>f.path)));
+  const armyPaths=new Set(['infantry','infantry_enemy','cavalry','attack_formation','attack_formation_enemy'].flatMap(kind=>(nativeManifest.sprites[kind]?.frames||[]).map(f=>f.path)));
   assert(env.draws.some(d=>armyPaths.has(d.src)),key+' must draw real unit artwork');assert(env.texts.length>0,key+' must retain its unit HUD');
   if(key!=='retreat'){
    const impactPaths=new Set((nativeManifest.sprites.impact?.frames||[]).map(f=>f.path));

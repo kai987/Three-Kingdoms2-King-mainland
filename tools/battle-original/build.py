@@ -165,12 +165,29 @@ def build(root, rom):
     sprites['cavalry']['usage']=sprites['infantry_enemy']['usage']
     sprites['infantry']['facing']='right'
     sprites['cavalry']['facing']='left'
+    # Preserve the actual opposing formations, including the original mixture
+    # of spear lines and individual soldiers. Repeating one16x16 cutout loses
+    # the native ordinary-attack composition. These full-half transparent
+    # layers retain each captured position, pose, palette and relative size;
+    # only the Web presentation supplies approach/recoil timing.
+    for kind,rect,facing in [('attack_formation',(0,0,128,160),'right'),
+                             ('attack_formation_enemy',(128,0,256,160),'left')]:
+        frames=[]
+        for stem in ('first-attack-main-01','first-attack-main-04'):
+            screen,meta=source(root,ARMY+stem)
+            frame=difference(screen.crop(rect),ground.crop(rect))
+            if not frame.getbbox(): raise ValueError('Missing native attack formation')
+            frames.append(export(frame,f'{kind}-{len(frames):02d}',meta,rect,
+                operations=[dict(kind='pixel_exact_native_background_difference',background=ground_source['screenshot'],background_sha256=ground_source['screenshot_sha256'])],
+                anchor=dict(x=64,y=160)))
+        sprites[kind]=dict(frames=frames,facing=facing,
+            usage='Complete native ordinary-attack half-screen formation, not a tactical flag or a single repeated soldier. Native capture poses only; Web timing is presentation.')
     # Clean native tactical tiles can be rearranged by the presentation layer.
     terrain={}
     for key,rect in dict(ground=(0,0,16,16),forest=(32,48,64,80),mountain=(96,16,160,80),river=(64,32,96,64)).items():
         terrain[key]=export(tactical.crop(rect),'terrain-'+key,tactical_source,rect)
     witnesses={}
-    for key,stem in [('tactical',MAP),('attack',ARMY+'first-attack-main-01'),('duel',DUEL+'first-duel-main-03')]:
+    for key,stem in [('tactical',MAP),('attack',ARMY+'first-attack-main-01'),('attack_advance',ARMY+'first-attack-main-04'),('duel',DUEL+'first-duel-main-03')]:
         image,meta=source(root,stem);witnesses[key]=export(image,'witness-'+key,meta)
     result=dict(schema='tk2-battle-original-v1',rom_sha256=ROM_SHA,core=dict(name='Nestopia libretro',original_capture_core_sha256=CORE_SHA),
         native_resolution=dict(width=256,height=240,main_height=160,panel_height=80,duel_name_height=64,duel_arena_height=96),
@@ -202,7 +219,13 @@ def check():
             for child in value:visit(child)
     visit(manifest)
     assert manifest['build']['tool_sha256']==sha(Path(__file__).read_bytes())
-    assert all(manifest['sprites'][key]['frames'] for key in ('infantry','cavalry','duelist','duelist_enemy'))
+    assert all(manifest['sprites'][key]['frames'] for key in ('infantry','cavalry','duelist','duelist_enemy','attack_formation','attack_formation_enemy'))
+    for kind in ('attack_formation','attack_formation_enemy'):
+        assert len(manifest['sprites'][kind]['frames'])==2
+        for frame in manifest['sprites'][kind]['frames']:
+            assert (frame['width'],frame['height'])==(128,160)
+            image=Image.open(ROOT/'game'/frame['path'].lstrip('/'))
+            assert image.mode=='RGBA' and image.getchannel('A').getextrema()==(0,255)
     return dict(images=len(seen),sprites={key:len(row['frames'])for key,row in manifest['sprites'].items()},rom_sha256=manifest['rom_sha256'])
 
 

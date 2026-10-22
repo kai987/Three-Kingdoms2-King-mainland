@@ -110,6 +110,36 @@ class BattleAssetTests(unittest.TestCase):
                     self.assertGreaterEqual(max(y for x,y in occupied)-min(y for x,y in occupied)+1,28)
         self.assertEqual(self.manifest['intentionally_unavailable_effects'],['fire','arrow','impact','rock'])
 
+    def test_complete_attack_formations_are_exact_opposing_native_capture_layers(self):
+        """Do not replace the original mixed armies with repeated map tokens."""
+        _,ground=png.png_pixels((ROOT/'game/assets/battle-original/plain.png').read_bytes(),(256,160))
+        for pose,witness in enumerate(('attack','attack_advance')):
+            row=self.manifest['witnesses'][witness]
+            _,pixels=png.png_pixels((ROOT/'game'/row['path'].lstrip('/')).read_bytes(),(256,240))
+            for kind,left,facing in [('attack_formation',0,'right'),('attack_formation_enemy',128,'left')]:
+                formation=self.manifest['sprites'][kind]
+                self.assertEqual(formation['facing'],facing)
+                self.assertEqual(len(formation['frames']),2)
+                frame=formation['frames'][pose]
+                self.assertEqual((frame['width'],frame['height']),(128,160))
+                self.assertEqual(frame['anchor'],dict(x=64,y=160))
+                self.assertEqual(frame['source']['screenshot_sha256'],row['source']['screenshot_sha256'])
+                self.assertEqual(frame['source']['source_rect'],[left,0,left+128,160])
+                _,actual=png.png_pixels((ROOT/'game'/frame['path'].lstrip('/')).read_bytes(),(128,160))
+                expected=bytearray()
+                for y in range(160):
+                    for x in range(left,left+128):
+                        at=(y*256+x)*4
+                        rgb=pixels[at:at+3]
+                        expected.extend(rgb)
+                        expected.append(0 if rgb==ground[at:at+3] else 255)
+                self.assertEqual(actual,bytes(expected),'Every army pixel must come from its original frame; only grass becomes transparent')
+                self.assertEqual(set(actual[3::4]),{0,255})
+                occupied=[i for i,a in enumerate(actual[3::4])if a]
+                self.assertGreater(len(occupied),500)
+                self.assertGreater(max(i//128 for i in occupied)-min(i//128 for i in occupied),100)
+                self.assertGreater(len({actual[i*4:i*4+3]for i in occupied}),2)
+
     def test_server_lists_exactly_manifest_pngs_and_no_source_or_unlisted_files(self):
         static=server.battle_static_assets(ROOT/'game')
         expected={entry['path'] for entry in self.entries}|{'/assets/battle-original/index.json'}

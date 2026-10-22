@@ -12,11 +12,11 @@
   },
   "build": {
     "tool": "tools/battle-enhancement/build.cjs",
-    "tool_sha256": "b75a4d41a9d6c556f26a3a38bd459de5630113999aa33cb4b374a08f9e601f5f",
+    "tool_sha256": "46246d3db6bdedc5518398fa34a0c83181b3be634f62948d33a55e282dfc5125",
     "native_index": "game/assets/battle-original/index.json",
-    "native_index_sha256": "4d4909cb5c113d9b74d9a4af33cda0af01eef348da57092891059d03208fa5c3",
+    "native_index_sha256": "5d2d52319b8281bc4ed60e0498dc94437d02e45317cc969fd21a08bfd5dabded",
     "imagegen_mode": "built_in",
-    "native_method": "Scale2x twice, retaining original palette and originals",
+    "native_method": "Scale2x twice for existing native cutouts; exact nearest4x for complete attack formations, retaining original palette and originals",
     "duel_method": "Two distinct imagegen-painted poses per weapon, binary alpha, finite NES-compatible palette, source-aware lower warm coat masks; no new battle stats or RNG"
   },
   "studies": {
@@ -518,6 +518,80 @@
           "source_path": "/assets/battle-original/cavalry-02.png",
           "source_sha256": "344e841b4f0e0416f46ece97a874bbeeb1c510d40c4f0e136fc3e696a42eb57e",
           "method": "native_scale4x"
+        }
+      ]
+    },
+    "attack_formation": {
+      "facing": "right",
+      "frames": [
+        {
+          "path": "/assets/battle-enhanced/native-attack_formation-00.png",
+          "width": 512,
+          "height": 640,
+          "logical_width": 128,
+          "logical_height": 160,
+          "anchor": {
+            "x": 64,
+            "y": 160
+          },
+          "sha256": "0be4440d44397bd42c3fc742932f82b5ecdace421d1b7d46bee85681c3460219",
+          "pixel_sha256": "22db63a2aac3b25e76d80b719c98b8279a2a0c9bb739bb2b6f838031c1626211",
+          "source_path": "/assets/battle-original/attack_formation-00.png",
+          "source_sha256": "a2958c2f40b26d80a446f74303eb18fcc3dfdcc071625f78dca0985043b862f9",
+          "method": "native_nearest4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-attack_formation-01.png",
+          "width": 512,
+          "height": 640,
+          "logical_width": 128,
+          "logical_height": 160,
+          "anchor": {
+            "x": 64,
+            "y": 160
+          },
+          "sha256": "17a0a61c3fe16786de7f71b411eba3cf87364b7cab65c9d4638ad76f03006489",
+          "pixel_sha256": "d407f6c2eb35d4b0219d6438e1caace921472ffc67bd09950eee17e5ee95e2eb",
+          "source_path": "/assets/battle-original/attack_formation-01.png",
+          "source_sha256": "dcf249e0189e53ccbba809cb66d8099005e2e5dad6ed0418012014044fc061db",
+          "method": "native_nearest4x"
+        }
+      ]
+    },
+    "attack_formation_enemy": {
+      "facing": "left",
+      "frames": [
+        {
+          "path": "/assets/battle-enhanced/native-attack_formation_enemy-00.png",
+          "width": 512,
+          "height": 640,
+          "logical_width": 128,
+          "logical_height": 160,
+          "anchor": {
+            "x": 64,
+            "y": 160
+          },
+          "sha256": "d29bbb044ed7e67e61f4ccf8c4f06a5d22eb10758b85c3cab654dc785434bddf",
+          "pixel_sha256": "e54e299ca1a6e72b7ae05fc1bd38530642674de198a130a3cb0d50db4974793d",
+          "source_path": "/assets/battle-original/attack_formation_enemy-00.png",
+          "source_sha256": "2c4018b9ea8fb214237d93c5bf9846ce830bd5ad9d1e995647fab01bce2f0902",
+          "method": "native_nearest4x"
+        },
+        {
+          "path": "/assets/battle-enhanced/native-attack_formation_enemy-01.png",
+          "width": 512,
+          "height": 640,
+          "logical_width": 128,
+          "logical_height": 160,
+          "anchor": {
+            "x": 64,
+            "y": 160
+          },
+          "sha256": "fc8a2a74f60a2c36482a37d982af88000bb90dd15dd7a7add53c411742a4d2af",
+          "pixel_sha256": "613f15473246c6d75088f82e0e47944a55dc6d0404e9f904136b45ab1b8acb0c",
+          "source_path": "/assets/battle-original/attack_formation_enemy-01.png",
+          "source_sha256": "4713081b8cee4163649f1fa943ebe74dedf3aaedf1e598ccac292ada1e07a945",
+          "method": "native_nearest4x"
         }
       ]
     }

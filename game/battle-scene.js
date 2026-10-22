@@ -11,6 +11,27 @@
  const reference=id=>Number.isInteger(id)&&id>=0&&id<1200||typeof id==='string'&&/^clerk-[0-9]{6,12}$/.test(id)&&Number(id.slice(6))>=1&&Number(id.slice(6))<=1000000&&id==='clerk-'+String(Number(id.slice(6))).padStart(6,'0');
  const bounded=(n,max)=>Number.isInteger(n)&&n>=0&&n<=max;
  const clone=value=>JSON.parse(JSON.stringify(value));
+ // Group on canonical names, before locale translation; simplified/traditional
+ // spellings of a surname identify the same family on either side of battle.
+ const COMPOUND_SURNAMES=new Set(['公孫','司馬','諸葛','夏侯','皇甫','太史','上官','歐陽','令狐','尉遲','呼延','宇文','慕容','毌丘','鮮于','閭丘','東方','南宮','軒轅','鍾離','澹臺','申屠','仲長','第五','段干','長孫','拓跋','濮陽','羊舌','百里','淳于']);
+ const SURNAME_EQUIVALENTS={'孙':'孫','马':'馬','诸':'諸','欧':'歐','迟':'遲','鲜':'鮮','闾':'閭','东':'東','宫':'宮','轩':'軒','辕':'轅','钟':'鍾','离':'離','台':'臺','长':'長','阳':'陽','刘':'劉','张':'張','陈':'陳','许':'許','郑':'鄭','卫':'衛','黄':'黃','赵':'趙','邓':'鄧','庞':'龐','陆':'陸','吕':'呂','吴':'吳','严':'嚴','华':'華','韩':'韓','贾':'賈','顾':'顧','阎':'閻','韦':'韋','费':'費','乐':'樂','满':'滿','鲁':'魯','骆':'駱','钱':'錢','乔':'喬','蒋':'蔣','冯':'馮','谯':'譙','步':'歩','郤':'郄'};
+ function familyName(name){
+  const chars=Array.from(String(name??'').trim().normalize('NFKC')).map(c=>SURNAME_EQUIVALENTS[c]||c),compound=chars.slice(0,2).join('');
+  return COMPOUND_SURNAMES.has(compound)?compound:chars[0]||'';
+ }
+ function markerLabels(units,nameFor,displayName=nameFor){
+  const families=new Map(),names=new Map();
+  for(const unit of units){const family=familyName(nameFor(unit.id));names.set(unit.id,family);if(family)families.set(family,(families.get(family)||0)+1);}
+  return new Map(units.map(unit=>{const chars=Array.from(String(displayName(unit.id)??'').trim());return [unit.id,(families.get(names.get(unit.id))>1?chars.at(-1):chars[0])||''];}));
+ }
+ function attackStage(progress,skipped=false){
+  const p=Math.max(0,Math.min(1,progress)),tick=Math.floor(p*20);
+  if(skipped)return {phase:'result',shift:0,tick:0,resolved:true};
+  if(p<.3)return {phase:'approach',shift:Math.round(p/.3*40),tick,resolved:false};
+  if(p<.66)return {phase:'clash',shift:40+(tick%2?1:-1),tick,resolved:p>=.55};
+  if(p<.88)return {phase:'recoil',shift:Math.round((.88-p)/.22*40),tick,resolved:true};
+  return {phase:'result',shift:0,tick,resolved:true};
+ }
  function validSnapshot(s){
   if(!s||Object.keys(s).sort().join(',')!=='duel,outcome,round,units'||!bounded(s.round,1000000)||s.round<1||![null,'victory','defeat','retreat'].includes(s.outcome)||!Array.isArray(s.units)||s.units.length>20)return false;
   const seen=new Set();
@@ -40,7 +61,7 @@
  }
  function changes(scene){return scene.after.units.map(u=>{const old=scene.before.units.find(a=>a.id===u.id);return old?{id:u.id,side:u.side,troops:u.troops-old.troops,health:u.health-old.health,energy:u.energy-old.energy,guard:u.guard-old.guard,stunned:u.stunned-old.stunned}:null;}).filter(x=>x&&Object.entries(x).some(([key,value])=>!['id','side'].includes(key)&&value!==0));}
  function campaignKey(view){return [view?.catalog?.scenario_id,view?.game?.player,view?.game?.seed].join(':');}
- function duration(scene){return scene.kind==='duel_action'?1000:scene.kind==='tactic'?1000:scene.kind==='duel_start'?700:scene.kind==='ambush'?850:700;}
+ function duration(scene){return scene.kind==='attack'&&!scene.skipped?2200:scene.kind==='duel_action'?1000:scene.kind==='tactic'?1000:scene.kind==='duel_start'?700:scene.kind==='ambush'?850:700;}
  function validAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-original\/[a-zA-Z0-9_/-]+\.png$/.test(path);}
  function validEnhancedAssetPath(path){return typeof path==='string'&&/^\/assets\/battle-enhanced\/[a-z0-9_-]+\.png$/.test(path);}
  function create(options={}){
@@ -52,7 +73,8 @@
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant';
   const text=(tc,ja)=>locale()==='ja'?ja:tc;
   const translate=value=>i18n?.t?i18n.t(value,locale()):String(value??'');
-  const person=id=>translate(options.name?.(id)||view?.catalog?.names?.[String(id)]||text('武將','武将'));
+  const canonicalName=id=>view?.catalog?.names?.[String(id)]||options.name?.(id)||text('武將','武将');
+  const person=id=>translate(options.name?.(id)||canonicalName(id));
   const reduced=()=>!!root.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   function loadImage(path){
    if(images.has(path))return images.get(path);
@@ -166,17 +188,17 @@
   function positions(state,image){
    const out=new Map();for(const side of ['attackers','defenders']){const points=plainSlots(image,side);state.units.filter(u=>u.side===side).forEach((u,i)=>out.set(u.id,points[i]));}return out;
   }
-  function flag(u,p,selected,enemy,used){
+  function flag(u,p,selected,enemy,used,marker){
    const color=u.troops===0?'#888888':enemy?'#b61c16':'#ffffff';rectangle(p.x-6,p.y-6,12,12,INK);rectangle(p.x-5,p.y-5,10,10,color);
-   label(Array.from(person(u.id))[0]||'',p.x-4,p.y-4,enemy?'#ffffff':INK,8);
+   label(marker,p.x-4,p.y-4,enemy?'#ffffff':INK,8);
    if(u.troops===0){line(p.x-6,p.y-6,p.x+5,p.y+5,'#ffffff');line(p.x+5,p.y-6,p.x-6,p.y+5,'#ffffff');}
    if(used&&u.troops>0)rectangle(p.x+3,p.y+3,3,3,'#505050');
    if(selected){outline(p.x-8,p.y-8,16,16,'#ffffff');outline(p.x-7,p.y-7,14,14,INK);}
   }
   function paintMap(state){
    const b=view.game.battle,own=b.attacker===view.game.player?'attackers':'defenders';
-   const image=background('tactical'),points=positions(state,image);
-   for(const u of state.units){const p=points.get(u.id);if(p)flag(u,p,u.id===selection.actor||u.id===selection.target,u.side!==own,b.used.includes(u.id));}
+   const image=background('tactical'),points=positions(state,image),markers=markerLabels(state.units,canonicalName,person);
+   for(const u of state.units){const p=points.get(u.id);if(p)flag(u,p,u.id===selection.actor||u.id===selection.target,u.side!==own,b.used.includes(u.id),markers.get(u.id));}
    if(state.outcome){rectangle(70,60,116,30,PAPER);outline(70,60,116,30);label(outcome(state.outcome),80,70,INK,12);}
   }
   function outcome(value){const own=view?.game?.battle?.attacker===view?.game?.player;return value==='victory'?(own?text('本方勝利','勝利'):text('城池失守','都市陥落')):value==='defeat'?(own?text('本方敗退','敗北'):text('守城成功','防衛成功')):text('攻方退卻','攻撃側撤退');}
@@ -205,6 +227,17 @@
     }
    }
   }
+  function attackArmy(unit,side,stage){
+   if(!unit||unit.troops<=0)return;
+   const left=side==='left',kind=left?'attack_formation':'attack_formation_enemy',row=readyFrame(kind,stage.tick);
+   if(row){
+    // Native128×160 half-screen formations contain the original mixed spear
+    // poses. Their4× source pixels are drawn into the unchanged logical scene.
+    blit(row.image,(left?0:128)+(left?stage.shift:-stage.shift),0,128,160);
+    return;
+   }
+   army(unit,side,stage.tick,.5,stage.phase!=='result');
+  }
   function effects(scene,progress,tick,targetX){
    const effect=scene.kind==='ambush'?'ambush':scene.effect;if(!scene.success||scene.skipped)return;
    const y=72,flash=progress>.35&&progress<.82;
@@ -226,11 +259,16 @@
    else if(['chain','confuse'].includes(effect))for(let i=0;i<8;i++){const x=targetX-24+(i*11+tick*3)%54,cy=25+i%4*17;outline(x,cy,5,5,i%2?'#fff':'#0068b8');}
   }
   function paintEngagement(scene,progress){
-   const state=progress<.55?scene.before:scene.after;background('plain');
+   const stage=attackStage(progress,scene.skipped),state=(scene.kind==='attack'?stage.resolved:progress>=.55)?scene.after:scene.before;background('plain');
    const actor=state.units.find(u=>u.id===scene.actor)||state.units.find(u=>u.side===scene.own),target=state.units.find(u=>u.id===scene.target)||state.units.find(u=>u.side!==scene.own),actorLeft=scene.own==='attackers',tick=Math.floor(progress*12);
-   army(actor,actorLeft?'left':'right',tick,progress,!scene.skipped);army(target,actorLeft?'right':'left',tick+1,0,false);
-   effects(scene,progress,tick,actorLeft?198:58);
-   if(progress>.52){
+   if(scene.kind==='attack'){
+    attackArmy(actor,actorLeft?'left':'right',stage);attackArmy(target,actorLeft?'right':'left',stage);
+    if(stage.phase==='clash')effects(scene,progress,stage.tick,actorLeft?140:116);
+   }else{
+    army(actor,actorLeft?'left':'right',tick,progress,!scene.skipped);army(target,actorLeft?'right':'left',tick+1,0,false);
+    effects(scene,progress,tick,actorLeft?198:58);
+   }
+   if(scene.kind==='attack'?stage.resolved:progress>.52){
     const losses=changes(scene).filter(c=>c.troops<0||c.health<0);
     if(losses.length>2){
      // Area tactics report every actual victim, instead of overlaying their losses.
@@ -292,7 +330,7 @@
   function updateText(){
    if(!host)return;host.dataset.l10nNative=locale();host.dataset.sceneAssets=assetStatus;
    const skipButton=host.querySelector('[data-battle-skip]');if(skipButton){skipButton.hidden=!playing;skipButton.textContent=text('略過演出','演出をスキップ');}
-   const title=host.querySelector('[data-battle-scene-title]');if(title)title.textContent=view?.game?.battle?.extended?.duel?text('陣前單挑','一騎討ち'):text('戰場','戦場');
+   const title=host.querySelector('[data-battle-scene-title]');if(title)title.textContent=frame?.scene?.kind==='attack'?text('部隊對陣','部隊同士の戦闘'):view?.game?.battle?.extended?.duel?text('陣前單挑','一騎討ち'):text('戰場','戦場');
    const caption=host.querySelector('[data-battle-caption]');if(caption)caption.textContent=frame?sceneCaption(frame.scene):assetStatus==='unavailable'?text('原版素材載入失敗，仍可使用部隊名單操作。','原作素材を読み込めません。部隊一覧から操作できます。'):text('點選戰場旗標或部隊名單選將；兵數以實際結算為準。','戦場の旗か部隊一覧から選択できます。兵数は実際の精算結果です。');
    const hidden=host.querySelector('[data-battle-description]');if(hidden)hidden.textContent=description();
   }
@@ -319,6 +357,11 @@
    if(disposed){finish(false);return;}
    if(!queue.length||!ctx){finish();return;}
    if(reduced()||doc?.hidden||!raf){if(!doc?.hidden){options.onSound?.(queue[0]);options.onSettled?.();}finish();return;}
+   // A fast first attack must not finish before its original artwork arrives.
+   if(assetStatus==='idle'||assetStatus==='loading'){await load();if(disposed||!queue.length||!ctx||host?.isConnected===false){finish(false);return;}}
+   // Loading may span a visibility or accessibility change. Do not start a
+   // background RAF that can leave the already committed command waiting.
+   if(reduced()||doc?.hidden||!raf){if(!doc?.hidden){options.onSound?.(queue[0]);options.onSettled?.();}finish();return;}
    host?.querySelector?.('[data-battle-canvas]')?.scrollIntoView?.({block:'nearest',behavior:'instant'});
    const scenes=queue.splice(0);playing=true;updateText();
    await new Promise(resolve=>{resolvePlay=resolve;let index=0,start=null;const tick=now=>{
@@ -338,6 +381,6 @@
   function dispose(){disposed=true;reset();doc?.removeEventListener?.('game-language-change',changeLanguage);doc?.removeEventListener?.('visibilitychange',visibility);doc?.removeEventListener?.('keydown',keydown);}
   return {html,mount,observe,play,skip,reset,leave,load,dispose,deferOutcome:cue=>{outcomeCue=cue;},get playing(){return playing;},state:()=>({playing,queued:queue.length,assetStatus,battleId:view?.game?.battle?.id??null,scene:frame?.scene?.kind??null})};
  }
- const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,receiptScenes,validSnapshot,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath};
+ const api={WIDTH,HEIGHT,RESOLUTION_SCALE,create,receiptScenes,validSnapshot,snapshot,changes,duration,validAssetPath,validEnhancedAssetPath,familyName,markerLabels,attackStage};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameBattleScene=api;
 })(typeof window==='object'?window:globalThis);
