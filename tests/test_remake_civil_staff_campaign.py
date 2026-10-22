@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
+from remake import domestic
 from remake.officers import YearState, initialize_officer, year_state
 from campaign_fixtures import controlled_catalog
 
@@ -251,20 +252,33 @@ class CivilStaffCampaignTests(unittest.TestCase):
 
     def test_actual_ai_hires_and_clerk_recruits_with_the_same_cost_and_rng(self):
         game = self.new(player='wu', free=False)
+        # The faction military official can now recruit even in an empty city.
+        # A satisfied reserve target isolates the actual AI hiring/personnel
+        # commands from that independent city-action competitor.
+        domestic.appointments(game.state, 'shu')['policy']['reserve_target'] = 0
         self.step(game)
         people = self.pool(game)['people']
         clerk = next(p for p in people.values() if p['city'] == 'nanjun')
-        self.assertEqual(game.state.cities['nanjun'].gold, 1140)
+        training = sum(r['details']['gold'] for r in game.state.extension['domestic']['reports']
+            if r['city'] == 'nanjun' and r['turn'] == game.state.turn - 1 and r['kind'] == 'training')
+        self.assertEqual(game.state.cities['nanjun'].gold, 1200 - 60 - training)
         self.assertTrue(any(r['action'] == 'hire_staff' and r['city'] == 'nanjun'
                             for r in game.state.extension['ai_reports']))
         self.assertEqual(game.state.rng.draws, 0)
+        # Explicitly give the generated officer the one faction civil post.
+        # Leaving the best historical appointee in that post would correctly
+        # have that person perform the remote recruitment instead of the clerk.
+        domestic.set_policy(game, game.state, dict(faction='shu', civil=clerk['id']), 'shu')
         target = game.catalog.ids[FREE_PERSON]
         game.state.officers[target] = initialize_officer(game.catalog.definitions[FREE_PERSON], target,
             game.catalog.profiles[target], year=game.state.year, rules=game.catalog.rules)
         game.state.extension['free_locations'][str(target)] = 'nanjun'
         game.validate(game.state)
+        gold = game.state.cities['nanjun'].gold
         self.step(game)
-        self.assertEqual(game.state.cities['nanjun'].gold, 1076)
+        training = sum(r['details']['gold'] for r in game.state.extension['domestic']['reports']
+            if r['city'] == 'nanjun' and r['turn'] == game.state.turn - 1 and r['kind'] == 'training')
+        self.assertEqual(game.state.cities['nanjun'].gold, gold - 4 - 60 - training)
         self.assertEqual(game.state.officers[clerk['id']].troops, 80, 'AI prepares generated defenders by the normal paid allocation rule')
         self.assertEqual(game.state.rng.draws, 1)
         self.assertEqual(game.state.officers[target].faction_id, 'shu')
@@ -312,6 +326,10 @@ class CivilStaffCampaignTests(unittest.TestCase):
 
     def test_defeated_historical_officer_cannot_escape_into_98_officers_plus_one_clerk(self):
         game = self.new(enemy=True, free=False)
+        # Keep the capacity fixture focused on a real hired clerk. Otherwise
+        # global military recruitment legally consumes this empty city's action
+        # before the central civil official can hire the candidate.
+        domestic.appointments(game.state, 'wei')['policy']['reserve_target'] = 0
         self.step(game)
         self.assertEqual(sum(p['city'] == 'yingchuan' for p in self.pool(game)['people'].values()), 1)
         self.cmd(game, 'allocate', city='xiangyang', officer=146, troops=999)

@@ -144,7 +144,8 @@ class StrategicAITests(unittest.TestCase):
         self.assertEqual(current['review_turn'],plan['review_turn'])
 
     def test_rear_reinforcement_uses_normal_queue_fees_and_keeps_a_home_officer(self):
-        # Two appointees stay home; a third real officer can reinforce.
+        # Faction appointees present at this source stay home; spare real
+        # officers may reinforce under the ordinary guard and fee rules.
         data=deepcopy(strategic_catalog(second=100,troops=999).data)
         used={r['person_id'] for r in data['initial_officers']}
         actual=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
@@ -158,13 +159,14 @@ class StrategicAITests(unittest.TestCase):
         moving=[m for m in game.state.extension['travel']['marches'] if m['source']=='runan']
         self.assertEqual(len(moving),1)
         self.assertEqual(moving[0]['kind'],'transfer')
-        self.assertEqual(len(moving[0]['officers']),1)
+        self.assertGreaterEqual(len(moving[0]['officers']),1)
+        self.assertLess(len(moving[0]['officers']),len(ids))
         self.assertTrue(ids-set(moving[0]['officers']))
-        posts=game.state.extension['domestic']['cities']['runan']
+        posts=game.state.extension['domestic']['factions']['wei']
         self.assertTrue({posts['civil'],posts['military']}.isdisjoint(moving[0]['officers']))
         self.assertEqual(source.grain,grain,'The command commits a copy; the old source object is untouched')
         live=game.state.cities['runan']
-        self.assertEqual(live.grain,grain-moving[0]['quote']['grain_per_officer'])
+        self.assertEqual(live.grain,grain-len(moving[0]['officers'])*moving[0]['quote']['grain_per_officer'])
         self.assertEqual(game.state.soldiers,before)
         game.validate(game.state)
 
@@ -304,11 +306,10 @@ class StrategicAITests(unittest.TestCase):
         results=[]
         for backend in ('python','rust'):
             with using_backend(backend):
-                # Seed1 reaches a failed opening surrender and an actual
-                # damaging response. Seed2026 can legally resolve this fixture
-                # solely through surrender after restoring original virtue,
-                # which would not exercise the casualty/save ledger below.
-                game=Campaign(catalog);game.command('new',dict(faction='shu',seed=1),0)
+                # With the faction-wide officials, seed3 produces actual
+                # casualties. A surrender-only outcome would not exercise the
+                # casualty/save ledger that this long replay must cover.
+                game=Campaign(catalog);game.command('new',dict(faction='shu',seed=3),0)
                 for _ in range(18):
                     if game.state.phase=='arrivals':game.command('arrivals',{},game.revision)
                     self.assertEqual(game.state.phase,'city')

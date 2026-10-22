@@ -1,4 +1,4 @@
-"""Two city offices, bounded automatic tasks and conserved training degree.
+"""Two faction offices, bounded automatic tasks and conserved city training degree.
 
 The serialized morale/unit_morale keys remain stable for current campaign saves;
 these values represent training degree, not the original temporary morale tactic.
@@ -7,12 +7,11 @@ This is an authorial adaptation of the agreed rules, not SAN14's formulas.
 Only committed faction-turn and calendar hooks perform work. Views are pure.
 """
 from copy import deepcopy
-from math import ceil
 
 from .errors import GameError
 from .officers import parse_officer_ref
 
-SCHEMA = 'tk2-domestic-v1'
+SCHEMA = 'tk2-domestic-v2'
 RULES = dict(max_income_bonus_percent=40, personnel_gold=60, persuasion_gold=100,
              training_initial_morale=70, recruit_morale=50, training_per_1000_gold=1,
              training_per_1000_grain=2, automatic_retry_turns=3)
@@ -20,8 +19,9 @@ DEFAULT_POLICY = dict(auto_recruit=False, auto_persuade=False, priority='best', 
     min_chance=20, budget=100, excluded_targets=[], recruit_enabled=False,
     reserve_target=2000, recruit_budget=50, training_enabled=False,
     gold_floor=100, grain_floor=200, task_order=['personnel', 'recruit', 'transport'])
-_CITY_FIELDS = {'owner', 'civil', 'military', 'morale', 'policy', 'income_month',
-                'income_points', 'last_work_turn', 'last_auto_turn', 'last_income_month'}
+_CITY_FIELDS = {'owner', 'morale', 'income_month', 'income_points', 'last_work_turn',
+                'last_auto_turn', 'last_income_month'}
+_FACTION_FIELDS = {'civil', 'military', 'policy'}
 _REPORT_FIELDS = {'turn', 'city', 'owner', 'kind', 'details'}
 _REPORT_KINDS = {'income', 'recruit', 'training', 'personnel', 'policy', 'hire_staff'}
 LIMIT = 100000000
@@ -40,13 +40,18 @@ def _month(state):
 
 
 def _new_city(state, city):
-    return dict(owner=city.owner, civil=None, military=None, morale=70,
-                policy=deepcopy(DEFAULT_POLICY), income_month=_month(state), income_points=0,
+    return dict(owner=city.owner, morale=70, income_month=_month(state), income_points=0,
                 last_work_turn=0, last_auto_turn=0, last_income_month=_month(state))
 
 
+def _new_faction():
+    return dict(civil=None, military=None, policy=deepcopy(DEFAULT_POLICY))
+
+
 def empty(game, state):
-    return dict(schema=SCHEMA, cities={key: _new_city(state, city) for key, city in state.cities.items()},
+    return dict(schema=SCHEMA,
+                factions={owner: _new_faction() for owner in game.catalog.factions if owner != 'neutral'},
+                cities={key: _new_city(state, city) for key, city in state.cities.items()},
                 unit_morale={}, attempts={}, reports=[])
 
 
@@ -64,35 +69,61 @@ def _marching(game, state):
     return game._march_ids(state)
 
 
+def appointments(state, owner):
+    """The one canonical pair for a faction; no per-city appointment mirrors."""
+    return state.extension.get('domestic', {}).get('factions', {}).get(owner, {})
+
+
+def _owned_ids(state, owner):
+    return {ident for city in state.cities.values() if city.owner == owner
+            for ident in city.roster.officer_ids}
+
+
+def _retained(game, state, owner, ident):
+    person = state.officers.get(ident)
+    if (person is None or not person.alive or person.faction_id != owner
+            or owner in state.extension.get('ended_factions', [])
+            or not any(c.owner == owner for c in state.cities.values())):
+        return False
+    # A travelling officer keeps the office even if the old home falls before
+    # arrival. Work remains paused until an owned city can host the officer.
+    battling = ({u['id'] for side in ('attackers', 'defenders') for u in state.battle[side]}
+                if state.battle else set())
+    return ident in _owned_ids(state, owner) or ident in _marching(game, state) or ident in battling
+
+
 def _present(game, state, city, ident, *, unused=False):
+    """A central official may work for any city of the same faction remotely."""
     person = state.officers.get(ident)
     paid = state.extension.get('civil_staff', {}).get('people', {}).get(ident, {}).get('working', True)
-    return bool(person is not None and ident in city.roster.officer_ids and person.alive
-                and person.faction_id == city.owner and person.health > 0
-                and paid
-                and ident not in _marching(game, state)
+    battling = ({u['id'] for side in ('attackers', 'defenders') for u in state.battle[side]}
+                if state.battle else set())
+    return bool(person is not None and ident in _owned_ids(state, city.owner) and person.alive
+                and person.faction_id == city.owner and person.health > 0 and paid
+                and ident not in _marching(game, state) and ident not in battling
                 and (not unused or state.extension['officer_actions'].get(str(ident)) != state.turn))
 
 
 def synchronize(game, state):
-    """Reconcile appointments and new cities, without doing work or drawing RNG."""
+    """Reconcile faction appointments and city ledgers without work or RNG."""
     pool = _pool(state)
+    for owner in game.catalog.factions:
+        if owner == 'neutral':
+            continue
+        post = pool['factions'].setdefault(owner, _new_faction())
+        for field in ('civil', 'military'):
+            if post[field] is not None and not _retained(game, state, owner, post[field]):
+                post[field] = None
+        envoy = post['policy']['envoy']
+        if envoy is not None and not _retained(game, state, owner, envoy):
+            post['policy']['envoy'] = None
     for key, city in state.cities.items():
         row = pool['cities'].setdefault(key, _new_city(state, city))
         if row['owner'] != city.owner:
-            row.update(owner=city.owner, civil=None, military=None,
-                       policy=deepcopy(DEFAULT_POLICY), income_month=_month(state), income_points=0,
+            # The training degree stays with the garrison. Previous-owner
+            # earned income cannot be paid to a conquering faction.
+            row.update(owner=city.owner, income_month=_month(state), income_points=0,
                        last_income_month=_month(state), last_work_turn=0, last_auto_turn=0)
-        for field in ('civil', 'military'):
-            ident = row[field]
-            person = state.officers.get(ident)
-            if ident is not None and (person is None or not person.alive
-                    or person.faction_id != city.owner or ident not in city.roster.officer_ids):
-                row[field] = None
-        ident = row['policy']['envoy']
-        if ident is not None and (ident not in state.officers or not state.officers[ident].alive
-                or state.officers[ident].faction_id != city.owner or ident not in city.roster.officer_ids):
-            row['policy']['envoy'] = None
     travelling = {str(i) for i in _marching(game, state)}
     battle = state.battle
     if battle:
@@ -144,20 +175,22 @@ def _validate_policy(game, state, policy):
 
 
 def set_policy(game, state, payload, owner):
-    if (not isinstance(payload, dict) or set(payload) - {'city', 'civil', 'military', 'policy'}
-            or not isinstance(payload.get('city'), str) or payload['city'] not in state.cities):
+    if (not isinstance(payload, dict) or set(payload) - {'faction', 'civil', 'military', 'policy'}
+            or payload.get('faction') != owner or not isinstance(payload.get('faction'), str)
+            or owner not in _pool(state)['factions']):
         raise GameError('内政委任参数无效。')
-    city = state.cities[payload['city']]
-    if city.owner != owner or owner == 'neutral' or state.phase not in {'city', 'ai'}:
-        raise GameError('请选择战略阶段的本方城池。')
-    row = _pool(state)['cities'][city.id]
+    cities = sorted((c for c in state.cities.values() if c.owner == owner), key=lambda c: c.id)
+    if not cities or owner == 'neutral' or state.phase not in {'city', 'ai'}:
+        raise GameError('请在战略阶段设置本势力内政官。')
+    city = cities[0]
+    row = _pool(state)['factions'][owner]
     revised = deepcopy(row)
     for field in ('civil', 'military'):
         if field in payload:
             ident = payload[field]
             if ident is not None and (type(ident) not in (int, str)
                     or ident != row[field] and not _present(game, state, city, ident)):
-                raise GameError('请选择本城健康且未出征的委任官。')
+                raise GameError('请选择本势力健康且未出征的委任官。')
             revised[field] = ident
     if revised['civil'] is not None and revised['civil'] == revised['military']:
         raise GameError('同一武将不能兼任两个内政岗位。')
@@ -173,8 +206,8 @@ def set_policy(game, state, payload, owner):
         envoy = revised['policy']['envoy']
         if (envoy is not None and 'envoy' in patch and envoy != row['policy']['envoy']
                 and not _present(game, state, city, envoy)):
-            raise GameError('请选择本城健康且未出征的使者。')
-    _pool(state)['cities'][city.id] = revised
+            raise GameError('请选择本势力健康且未出征的使者。')
+    _pool(state)['factions'][owner] = revised
     _report(state, city, 'policy', civil=revised['civil'], military=revised['military'])
 
 
@@ -269,7 +302,8 @@ def month_rollover(game, state):
 
 def recruitment_preview(game, state, city_id):
     city, row = state.cities[city_id], _pool(state)['cities'][city_id]
-    ident, policy = row['military'], row['policy']
+    post = appointments(state, city.owner)
+    ident, policy = post.get('military'), post.get('policy', DEFAULT_POLICY)
     if ident is None or not _present(game, state, city, ident):
         return dict(soldiers=0, gold=0, grain=0)
     strength = state.officers[ident].profile.martial_strength
@@ -285,14 +319,15 @@ def recruitment_preview(game, state, city_id):
 
 def training_preview(game, state, city_id):
     city, row = state.cities[city_id], _pool(state)['cities'][city_id]
-    ident = row['military']
+    post = appointments(state, city.owner)
+    ident = post.get('military')
     if ident is None or not _present(game, state, city, ident) or row['morale'] >= 100:
         return dict(gain=0, gold=0, grain=0)
     soldiers = _garrison_troops(game, state, city)
     if not soldiers:
         return dict(gain=0, gold=0, grain=0)
     units = (soldiers + 999) // 1000
-    if city.gold - row['policy']['gold_floor'] < units or city.grain - row['policy']['grain_floor'] < units * 2:
+    if city.gold - post['policy']['gold_floor'] < units or city.grain - post['policy']['grain_floor'] < units * 2:
         return dict(gain=0, gold=0, grain=0)
     gain = min(100 - row['morale'], 2 + state.officers[ident].profile.martial_strength // 25)
     return dict(gain=gain, gold=units, grain=units * 2)
@@ -305,10 +340,24 @@ def _chance(actor, target, method):
                       + (actor.profile.intellect - target.profile.intellect) // 4))
 
 
+def _target_key(state, policy, choice, city_id):
+    target = state.officers[choice['id']].profile
+    stats = [target.martial_strength, target.intellect, target.virtue]
+    primary = {'martial': stats[0], 'intellect': stats[1], 'virtue': stats[2]}.get(policy['priority'])
+    ranking = sorted(stats, reverse=True) if primary is None else [primary, *sorted(stats, reverse=True)]
+    location = state.extension['free_locations'].get(str(choice['id']))
+    distance = 0 if location == city_id else 1
+    return (*(-value for value in ranking), -choice['chance'], distance,
+            _ref_key(choice['id']), choice['method'], city_id)
+
+
 def personnel_targets(game, state, city_id):
-    city, row = state.cities[city_id], _pool(state)['cities'][city_id]
+    city = state.cities[city_id]
+    row = appointments(state, city.owner)
+    if not row or city.action_used or game._city_occupancy(state, city) >= game.catalog.rules.city_officer_capacity:
+        return []
     policy = row['policy']
-    if row['civil'] is None or not _present(game, state, city, row['civil'], unused=True):
+    if row['civil'] is None or not _present(game, state, city, row['civil']):
         return []
     choices = []
     attempts = _pool(state)['attempts'].get(city.owner, {})
@@ -330,25 +379,35 @@ def personnel_targets(game, state, city_id):
             chance = _chance(actor, state.officers[ident], method)
             if chance >= policy['min_chance']:
                 choices.append(dict(id=ident, method=method, actor=actor_id, chance=chance))
-
-    def sort_key(choice):
-        target = state.officers[choice['id']].profile
-        stats = [target.martial_strength, target.intellect, target.virtue]
-        primary = {'martial': stats[0], 'intellect': stats[1], 'virtue': stats[2]}.get(policy['priority'])
-        ranking = sorted(stats, reverse=True) if primary is None else [primary, *sorted(stats, reverse=True)]
-        location = state.extension['free_locations'].get(str(choice['id']))
-        distance = 0 if location == city_id else 1
-        return (*(-value for value in ranking), -choice['chance'], distance, _ref_key(choice['id']), choice['method'])
-    return sorted(choices, key=sort_key)
+    return sorted(choices, key=lambda choice: _target_key(state, policy, choice, city_id))
 
 
-def _personnel(game, state, city):
+def faction_personnel_targets(game, state, owner, city_ids=None):
+    policy = appointments(state, owner).get('policy', DEFAULT_POLICY)
+    allowed = set(city_ids) if city_ids is not None else None
+    choices = [dict(choice, city=key) for key, city in state.cities.items()
+               if city.owner == owner and (allowed is None or key in allowed)
+               for choice in personnel_targets(game, state, key)]
+    choices.sort(key=lambda choice: _target_key(state, policy, choice, choice['city']))
+    # A target may be approachable from several friendly cities. Only publish
+    # its best affordable approach for each actor/method, never duplicate rolls.
+    seen = set()
+    result = []
+    for choice in choices:
+        token = choice['actor'], choice['id'], choice['method']
+        if token not in seen:
+            seen.add(token)
+            result.append(choice)
+    return result
+
+
+def _personnel(game, state, city, choice=None):
     if game._city_occupancy(state, city) >= game.catalog.rules.city_officer_capacity:
         return False
-    choices = personnel_targets(game, state, city.id)
+    choices = personnel_targets(game, state, city.id) if choice is None else [choice]
     if not choices:
         return False
-    choice = choices[0]
+    choice = {k: v for k, v in choices[0].items() if k != 'city'}
     actor = state.officers[choice['actor']]
     if choice['method'] == 'recruit_officer':
         game._attempt_recruitment(state, city, actor, choice['id'])
@@ -381,43 +440,77 @@ def record_attempt(state, owner, ident, success):
 
 
 def auto_assign(game, state, owner):
-    """AI chooses appointments; the work below is exactly the player service."""
+    """AI chooses one faction pair; all work uses the ordinary shared service."""
+    row = appointments(state, owner)
+    cities = sorted((c for c in state.cities.values() if c.owner == owner), key=lambda c: c.id)
+    if not row or not cities or owner in state.extension.get('ended_factions', []):
+        return
+    available = [i for i in _owned_ids(state, owner) if _present(game, state, cities[0], i)]
+    civil = [i for i in available if i != row['military']]
+    if row['civil'] is None and civil:
+        row['civil'] = min(civil, key=lambda i: (-state.officers[i].profile.intellect,
+            -state.officers[i].profile.virtue, _ref_key(i)))
+    remaining = [i for i in available if i != row['civil']]
+    if row['military'] is None and remaining:
+        row['military'] = min(remaining, key=lambda i: (-state.officers[i].profile.martial_strength,
+            -state.officers[i].profile.intellect, _ref_key(i)))
+    row['policy'].update(auto_recruit=True, auto_persuade=True, recruit_enabled=True, training_enabled=True)
     if 'logistics' in state.extension:
         from . import logistics
         fronts = {c.id for c in logistics._fronts(game, state, owner)}
-    else:
-        fronts = set()
-    for key, city in state.cities.items():
-        if city.owner != owner:
-            continue
-        row = _pool(state)['cities'][key]
-        available = [i for i in city.roster.officer_ids if _present(game, state, city, i)]
-        civil = [i for i in available if i != row['military']]
-        if row['civil'] is None and civil:
-            row['civil'] = min(civil, key=lambda i: (-state.officers[i].profile.intellect,
-                -state.officers[i].profile.virtue, _ref_key(i)))
-        remaining = [i for i in available if i != row['civil']]
-        if row['military'] is None and remaining:
-            row['military'] = min(remaining, key=lambda i: (-state.officers[i].profile.martial_strength,
-                -state.officers[i].profile.intellect, _ref_key(i)))
-        row['policy'].update(auto_recruit=True, auto_persuade=True, recruit_enabled=True,
-                             training_enabled=True)
-        row['policy']['task_order'] = ['recruit', 'personnel', 'transport'] if key in fronts else ['transport', 'personnel', 'recruit']
-    if 'logistics' in state.extension:
-        from . import logistics
+        row['policy']['task_order'] = (['recruit', 'personnel', 'transport'] if fronts
+                                       else ['transport', 'personnel', 'recruit'])
         logistics.prepare_ai(game, state, owner)
 
 
 prepare_ai = auto_assign
 
 
+def _hire_staff(game, state, owner, city_ids):
+    """The central civil officer can hire at most one local candidate per turn."""
+    from . import civil_staff
+    post = appointments(state, owner)
+    ident, policy = post.get('civil'), post.get('policy', DEFAULT_POLICY)
+    candidates = []
+    for key in city_ids:
+        city = state.cities[key]
+        if (city.action_used or ident is None or not _present(game, state, city, ident, unused=True)
+                or game._city_occupancy(state, city) >= game.catalog.rules.city_officer_capacity):
+            continue
+        candidate = state.extension['civil_staff']['cities'][key]['candidate']
+        fee = civil_staff.RULES['hire_gold']
+        if candidate and city.gold - fee >= policy['gold_floor'] and policy['budget'] >= fee:
+            stats = candidate['profile']
+            values = [stats['martial_strength'], stats['intellect'], stats['virtue']]
+            primary = {'martial': values[0], 'intellect': values[1], 'virtue': values[2]}.get(policy['priority'])
+            rank = sorted(values, reverse=True) if primary is None else [primary, *sorted(values, reverse=True)]
+            candidates.append((tuple(-v for v in rank), key, candidate['id']))
+    for _, key, candidate_id in sorted(candidates):
+        city = state.cities[key]
+        try:
+            civil_staff.hire(game, state, key, candidate_id, owner)
+        except GameError:
+            continue
+        state.extension['officer_actions'][str(ident)] = state.turn
+        _report(state, city, 'hire_staff', staff_id=candidate_id, gold=civil_staff.RULES['hire_gold'])
+        if owner != state.player:
+            game._report_ai(state, city, 'hire_staff', candidate_id)
+        return True
+    return False
+
+
 def run_automatic(game, state, owner):
-    """Use at most the city's remaining active action; no extra AI action."""
+    """Spend each city's remaining action once using the one shared policy."""
     synchronize(game, state)
+    if owner not in game.catalog.factions or owner == 'neutral' or owner in state.extension.get('ended_factions', []):
+        return
     if owner != state.player:
         auto_assign(game, state, owner)
-    if owner not in game.catalog.factions or owner in state.extension.get('ended_factions', []):
+    post = appointments(state, owner)
+    if not post:
         return
+    policy = post['policy']
+    eligible = []
     for key, city in sorted(state.cities.items()):
         if city.owner != owner:
             continue
@@ -425,26 +518,25 @@ def run_automatic(game, state, owner):
         if row['last_auto_turn'] == state.turn:
             continue
         row['last_auto_turn'] = state.turn
-        if city.action_used:
-            continue
-        for task in row['policy']['task_order']:
-            if task == 'personnel':
-                if _personnel(game, state, city):
+        if not city.action_used:
+            eligible.append(key)
+    for task in policy['task_order']:
+        if task == 'personnel':
+            # Rank across the entire faction before committing. Lexical city
+            # order must not consume the only civil action on a weaker target.
+            while True:
+                choices = faction_personnel_targets(game, state, owner, eligible)
+                if not choices:
                     break
-                if row['policy']['auto_recruit'] and 'civil_staff' in state.extension:
-                    from . import civil_staff
-                    candidate = state.extension['civil_staff']['cities'][key]['candidate']
-                    if candidate and city.gold - 60 >= row['policy']['gold_floor'] and row['policy']['budget'] >= 60:
-                        try:
-                            civil_staff.hire(game, state, key, candidate['id'], city.owner)
-                        except GameError:
-                            pass
-                        else:
-                            _report(state, city, 'hire_staff', staff_id=candidate['id'], gold=60)
-                            if city.owner != state.player:
-                                game._report_ai(state, city, 'hire_staff', candidate['id'])
-                            break
-            elif task == 'recruit' and row['policy']['recruit_enabled']:
+                choice = choices[0]
+                _personnel(game, state, state.cities[choice['city']], choice)
+            if policy['auto_recruit'] and 'civil_staff' in state.extension:
+                _hire_staff(game, state, owner, eligible)
+        elif task == 'recruit' and policy['recruit_enabled']:
+            for key in eligible:
+                city = state.cities[key]
+                if city.action_used:
+                    continue
                 quote = recruitment_preview(game, state, key)
                 if quote['soldiers']:
                     city.gold -= quote['gold']
@@ -452,11 +544,11 @@ def run_automatic(game, state, owner):
                     add_reserves(game, state, city, quote['soldiers'], recruited=True)
                     city.action_used = True
                     _report(state, city, 'recruit', **quote)
-                    break
-            elif task == 'transport' and 'logistics' in state.extension:
-                from . import logistics
-                if logistics.auto_dispatch_city(game, state, key):
-                    break
+        elif task == 'transport' and 'logistics' in state.extension:
+            from . import logistics
+            for key in eligible:
+                if not state.cities[key].action_used:
+                    logistics.auto_dispatch_city(game, state, key)
 
 
 def finish_faction_turn(game, state, owner, *, automatic=True):
@@ -466,6 +558,10 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
     synchronize(game, state)
     summary = dict(gold=0, grain=0, reserves=0, morale=0, cities=0, reason='turn')
     first_city = None
+    post = appointments(state, owner)
+    if not post:
+        return
+    policy = post['policy']
     for key, city in sorted(state.cities.items()):
         if city.owner != owner:
             continue
@@ -474,7 +570,7 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
             continue
         row['last_work_turn'] = state.turn
         affected = False
-        if city.owner == state.player and row['policy']['recruit_enabled']:
+        if city.owner == state.player and policy['recruit_enabled']:
             receipt = next((r for r in reversed(_pool(state)['reports']) if r['turn'] == state.turn
                 and r['city'] == key and r['kind'] == 'recruit'), None)
             if receipt is not None:
@@ -485,11 +581,11 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
                 summary['grain'] += receipt['details']['grain']
         if row['income_month'] != _month(state):
             row.update(income_month=_month(state), income_points=0)
-        ident = row['civil']
+        ident = post['civil']
         if ident is not None and _present(game, state, city, ident):
             duty = 1 if state.extension['officer_actions'].get(str(ident)) == state.turn else 2
             row['income_points'] = min(594, row['income_points'] + state.officers[ident].profile.intellect * duty)
-        if row['policy']['training_enabled']:
+        if policy['training_enabled']:
             quote = training_preview(game, state, key)
             if quote['gain']:
                 city.gold -= quote['gold']
@@ -509,30 +605,61 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
 
 
 def view(game, state):
-    result = dict(rules=deepcopy(RULES), cities={}, reports=[])
+    result = dict(rules=deepcopy(RULES), scope='faction', factions={}, cities={}, reports=[])
     if state is None or 'domestic' not in state.extension:
         return result
     pool = _pool(state)
     result['reports'] = deepcopy([row for row in pool['reports'] if row['owner'] == state.player])
+    for owner, post in pool['factions'].items():
+        city_ids = sorted(key for key, city in state.cities.items() if city.owner == owner)
+        city = state.cities[city_ids[0]] if city_ids else None
+        row = deepcopy(post)
+        row.update(civil_active=city is not None and post['civil'] is not None and _present(game, state, city, post['civil']),
+            military_active=city is not None and post['military'] is not None and _present(game, state, city, post['military']),
+            eligible_officers=sorted((i for i in _owned_ids(state, owner)
+                                     if city is not None and _present(game, state, city, i)), key=_ref_key),
+            city_ids=city_ids, monthly_bonus_preview=dict(gold=0, grain=0),
+            recruit_preview=dict(soldiers=0, gold=0, grain=0), training_preview=dict(gain=0, gold=0, grain=0),
+            personnel_targets=faction_personnel_targets(game, state, owner) if owner == state.player else [])
+        result['factions'][owner] = row
     for key, city in state.cities.items():
+        post = result['factions'].get(city.owner, {})
         row = deepcopy(pool['cities'][key])
-        row.update(civil_active=row['civil'] is not None and _present(game, state, city, row['civil']),
-            military_active=row['military'] is not None and _present(game, state, city, row['military']),
-            eligible_officers=sorted((i for i in city.roster.officer_ids if _present(game, state, city, i, unused=True)), key=_ref_key),
-            recruit_preview=recruitment_preview(game, state, key),
-            training_preview=training_preview(game, state, key),
+        row.update(civil=post.get('civil'), military=post.get('military'),
+            civil_active=post.get('civil_active', False), military_active=post.get('military_active', False),
+            recruit_preview=recruitment_preview(game, state, key), training_preview=training_preview(game, state, key),
             personnel_targets=personnel_targets(game, state, key) if city.owner == state.player else [])
         base = _income(game, key)
         intellect = state.officers[row['civil']].profile.intellect if row['civil_active'] else 0
         row['monthly_bonus_preview'] = {field: int(base[field]) * 40 * intellect // (100 * 99) for field in ('gold', 'grain')}
         result['cities'][key] = row
+        if post:
+            for field in ('monthly_bonus_preview', 'recruit_preview', 'training_preview'):
+                for resource, amount in row[field].items():
+                    post[field][resource] += amount
     return result
 
 
 def validate(game, state):
     pool = _pool(state)
-    if not isinstance(pool, dict) or set(pool) != {'schema', 'cities', 'unit_morale', 'attempts', 'reports'} or pool['schema'] != SCHEMA:
+    if not isinstance(pool, dict) or set(pool) != {'schema', 'factions', 'cities', 'unit_morale', 'attempts', 'reports'} or pool['schema'] != SCHEMA:
         raise ValueError('Domestic schema')
+    owners = set(game.catalog.factions) - {'neutral'}
+    if not isinstance(pool['factions'], dict) or set(pool['factions']) != owners:
+        raise ValueError('Domestic factions')
+    for owner, post in pool['factions'].items():
+        if not isinstance(post, dict) or set(post) != _FACTION_FIELDS:
+            raise ValueError('Domestic faction offices')
+        for field in ('civil', 'military'):
+            ident = post[field]
+            if ident is not None and (type(ident) not in (int, str) or not _retained(game, state, owner, ident)):
+                raise ValueError('Domestic appointment identity')
+        if post['civil'] is not None and post['civil'] == post['military']:
+            raise ValueError('Domestic dual appointment')
+        _validate_policy(game, state, post['policy'])
+        envoy = post['policy']['envoy']
+        if envoy is not None and not _retained(game, state, owner, envoy):
+            raise ValueError('Domestic envoy ownership')
     if not isinstance(pool['cities'], dict) or set(pool['cities']) != set(state.cities):
         raise ValueError('Domestic cities')
     for key, city in state.cities.items():
@@ -547,19 +674,6 @@ def validate(game, state):
         for field in ('last_work_turn', 'last_auto_turn'):
             if not _integer(row[field], 0, state.turn):
                 raise ValueError('Domestic turn receipt')
-        for field in ('civil', 'military'):
-            ident = row[field]
-            if ident is not None and (type(ident) not in (int, str) or ident not in state.officers
-                    or ident not in city.roster.officer_ids or not state.officers[ident].alive
-                    or state.officers[ident].faction_id != city.owner):
-                raise ValueError('Domestic appointment identity')
-        if row['civil'] is not None and row['civil'] == row['military']:
-            raise ValueError('Domestic dual appointment')
-        _validate_policy(game, state, row['policy'])
-        envoy = row['policy']['envoy']
-        if envoy is not None and (envoy not in city.roster.officer_ids
-                or not state.officers[envoy].alive or state.officers[envoy].faction_id != city.owner):
-            raise ValueError('Domestic envoy ownership')
     if not isinstance(pool['unit_morale'], dict) or len(pool['unit_morale']) > len(state.officers):
         raise ValueError('Domestic unit morale')
     keys = {str(i) for i in state.officers}

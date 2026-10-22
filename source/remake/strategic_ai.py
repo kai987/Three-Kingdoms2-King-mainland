@@ -66,7 +66,8 @@ class StrategicAI:
                           and self.state.officers[i].troops > 0),
                          key=lambda i: (self.state.officers[i].troops, ref_sort_key(i)))
         if transfer and 'domestic' in self.state.extension:
-            posts=self.state.extension['domestic']['cities'].get(city.id,{})
+            from .domestic import appointments
+            posts=appointments(self.state,city.owner)
             guards.update(i for i in (posts.get('civil'),posts.get('military'))
                 if i in city.roster.officer_ids and i not in marching
                 and self.state.officers[i].alive and self.state.officers[i].health > 0)

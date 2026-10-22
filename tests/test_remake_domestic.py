@@ -1,4 +1,4 @@
-"""Actual city offices, cost boundaries, saved receipts and automatic targets."""
+"""Faction offices, local cost boundaries, saved receipts and automatic targets."""
 from copy import deepcopy
 from pathlib import Path
 import json
@@ -48,7 +48,7 @@ class DomesticTests(unittest.TestCase):
         ids = game.state.cities['xiangyang'].roster.officer_ids
         civil = max(ids, key=lambda i: game.state.officers[i].profile.intellect)
         military = max((i for i in ids if i != civil), key=lambda i: game.state.officers[i].profile.martial_strength)
-        game.command('set_domestic', dict(city='xiangyang', civil=civil, military=military,
+        game.command('set_domestic', dict(faction='shu', civil=civil, military=military,
             policy=policy or {}), game.revision)
         return civil, military
 
@@ -63,12 +63,12 @@ class DomesticTests(unittest.TestCase):
         game = self.game()
         a, b = self.appoint(game)
         for payload in (
-                dict(city='xiangyang', military=a), dict(city='xiangyang', civil=True),
-                dict(city=[], civil=a), dict(city='xiangyang', policy={'budget': -1}),
-                dict(city='xiangyang', policy={'task_order': ['personnel'] * 3}),
-                dict(city='xiangyang', policy={'excluded_targets': [a, a]}),
-                dict(city='xiangyang', policy={'envoy': True}),
-                dict(city='xiangyang', policy={'unknown': True})):
+                dict(faction='shu', military=a), dict(faction='shu', civil=True),
+                dict(faction=[], civil=a), dict(faction='shu', policy={'budget': -1}),
+                dict(faction='shu', policy={'task_order': ['personnel'] * 3}),
+                dict(faction='shu', policy={'excluded_targets': [a, a]}),
+                dict(faction='shu', policy={'envoy': True}),
+                dict(faction='shu', policy={'unknown': True})):
             self.fails(game, payload)
         before = game.export_save()
         for _ in range(3):
@@ -108,9 +108,11 @@ class DomesticTests(unittest.TestCase):
         self.assertEqual(quote['soldiers'], 100)
         self.assertEqual(quote['gold'], 20 - strength // 10)
         before = city.gold, city.grain, city.reserves, game.state.soldiers['recruited']
+        expected_recruited = sum(domestic.recruitment_preview(game, game.state, key)['soldiers']
+            for key, c in game.state.cities.items() if c.owner == 'shu')
         domestic.finish_faction_turn(game, game.state, 'shu')
         self.assertEqual(city.reserves, before[2] + 100)
-        self.assertEqual(game.state.soldiers['recruited'], before[3] + 100)
+        self.assertEqual(game.state.soldiers['recruited'], before[3] + expected_recruited)
         self.assertLess(city.gold, before[0]); self.assertLess(city.grain, before[1])
         self.assertTrue(0 <= row['morale'] <= 100)
         self.assertTrue(city.action_used)
@@ -120,14 +122,14 @@ class DomesticTests(unittest.TestCase):
         row['morale'] = 100
         self.assertEqual(domestic.training_preview(game, game.state, city.id), dict(gain=0, gold=0, grain=0))
         city.gold, city.grain = 0, 0
-        row['policy']['reserve_target'] = 2000
+        game.state.extension['domestic']['factions']['shu']['policy']['reserve_target'] = 2000
         self.assertEqual(domestic.recruitment_preview(game, game.state, city.id)['soldiers'], 0)
         self.assertGreaterEqual(city.gold, 0); self.assertGreaterEqual(city.grain, 0)
 
     def test_personnel_ranks_real_abilities_and_reuses_actual_fee_and_rng(self):
         game = self.game()
         civil, _ = self.appoint(game, dict(auto_recruit=True, auto_persuade=True, gold_floor=0, min_chance=0))
-        row = game.state.extension['domestic']['cities']['xiangyang']
+        row = game.state.extension['domestic']['factions']['shu']
         candidates = domestic.personnel_targets(game, game.state, 'xiangyang')
         self.assertTrue(candidates)
         self.assertTrue(all(r['method'] == 'recruit_officer' for r in candidates), 'Unaffordable custom persuasion fee must not pass a hardcoded100 budget')
@@ -136,11 +138,12 @@ class DomesticTests(unittest.TestCase):
             choices = domestic.personnel_targets(game, game.state, 'xiangyang')
             self.assertEqual(getattr(game.state.officers[choices[0]['id']].profile, field),
                 max(getattr(game.state.officers[c['id']].profile, field) for c in choices))
-        chosen = domestic.personnel_targets(game, game.state, 'xiangyang')[0]
-        gold, draws = game.state.cities['xiangyang'].gold, game.state.rng.draws
+        chosen = domestic.faction_personnel_targets(game, game.state, 'shu')[0]
+        gold = sum(c.gold for c in game.state.cities.values() if c.owner == 'shu')
+        draws = game.state.rng.draws
         domestic.finish_faction_turn(game, game.state, 'shu')
         self.assertEqual(game.state.rng.draws, draws + 1)
-        self.assertEqual(game.state.cities['xiangyang'].gold, gold - 60)
+        self.assertEqual(sum(c.gold for c in game.state.cities.values() if c.owner == 'shu'), gold - 60)
         self.assertEqual(game.state.extension['officer_actions'][str(civil)], game.state.turn)
         self.assertFalse(domestic.can_attempt(game.state, 'shu', chosen['id']))
         self.assertNotIn(chosen['id'], [r['id'] for r in domestic.personnel_targets(game, game.state, 'xiangyang')])
@@ -154,7 +157,11 @@ class DomesticTests(unittest.TestCase):
         city = game.state.cities['xiangyang']
         before = city.gold, city.grain, city.reserves, game.state.rng.draws
         domestic.finish_faction_turn(game, game.state, 'shu')
-        self.assertEqual((city.gold, city.grain, city.reserves, game.state.rng.draws), before)
+        self.assertEqual((city.gold, city.grain, city.reserves), before[:3])
+        self.assertFalse(any(r['city'] == city.id and r['kind'] in {'recruit', 'personnel'}
+            for r in game.state.extension['domestic']['reports']))
+        self.assertEqual(game.state.rng.draws, before[3] + 1,
+            'A used city does not block legal delegated work in another owned city')
 
     def test_appointments_pause_on_march_and_income_is_half_when_actor_busy(self):
         game = self.game()
@@ -174,11 +181,11 @@ class DomesticTests(unittest.TestCase):
     def test_paused_offices_and_envoy_do_not_block_unrelated_policy_updates(self):
         game = self.game()
         civil, military = self.appoint(game)
-        game.command('set_domestic', dict(city='xiangyang', policy=dict(envoy=civil)), game.revision)
+        game.command('set_domestic', dict(faction='shu', policy=dict(envoy=civil)), game.revision)
         game.command('transfer', dict(source='xiangyang', target='nanjun', officers=[civil], route_mode='land'), game.revision)
-        game.command('set_domestic', dict(city='xiangyang', civil=civil, military=military,
+        game.command('set_domestic', dict(faction='shu', civil=civil, military=military,
             policy=dict(budget=250, envoy=civil)), game.revision)
-        row = game.state.extension['domestic']['cities']['xiangyang']
+        row = game.state.extension['domestic']['factions']['shu']
         self.assertEqual(row['policy']['budget'], 250)
         self.assertEqual(row['civil'], civil)
         self.assertFalse(domestic.view(game, game.state)['cities']['xiangyang']['civil_active'])
@@ -202,7 +209,7 @@ class DomesticTests(unittest.TestCase):
         game.state.officers[0] = envoy
         city = game.state.cities['xiangyang']; city.roster.officer_ids.append(0)
         game.catalog.data['rules']['persuade_officer_gold'] = 100
-        row = game.state.extension['domestic']['cities'][city.id]
+        row = game.state.extension['domestic']['factions']['shu']
         row['policy'].update(auto_persuade=True, envoy=0, min_chance=0)
         with patch.object(game, '_persuadable', return_value=[123]):
             targets = domestic.personnel_targets(game, game.state, city.id)
@@ -222,9 +229,11 @@ class DomesticTests(unittest.TestCase):
             row = altered['state']['extension']['domestic']['cities']['xiangyang']
             if change == 'morale': row['morale'] = 101
             elif change == 'income': row['income_points'] = 595
-            elif change == 'dual': row['military'] = row['civil']
+            elif change == 'dual':
+                offices = altered['state']['extension']['domestic']['factions']['shu']
+                offices['military'] = offices['civil']
             elif change == 'receipt': row['last_work_turn'] += 1
-            else: row['policy']['budget'] = -1
+            else: altered['state']['extension']['domestic']['factions']['shu']['policy']['budget'] = -1
             altered['checksum'] = digest({k: v for k, v in altered.items() if k != 'checksum'})
             before = loaded.export_save()
             with self.assertRaises(GameError): loaded.load_save(altered, loaded.revision)

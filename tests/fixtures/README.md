@@ -30,3 +30,10 @@ full-save hashes exactly. All8 physical route quotes, final troops, dates,
 soldier ledgers and RNG states/draws also matched the prior fixtures unchanged.
 The current fixtures continue to pin the complete new state and save, including
 new event records; the tests do not project away those fields during acceptance.
+
+Faction-wide administration uses `tk2-domestic-v2`: a single pair of offices and
+policy per faction, with separate city training/income receipts. The UI entry also
+refreshes the pinned route-source fingerprint and catalog identity. All32 current
+checkpoints were regenerated under the Python backend only after proving that
+every field except full-state/save hashes matched the preceding fixtures: route
+quotes, dates, final troops, soldier ledgers, and RNG state/draws are unchanged.

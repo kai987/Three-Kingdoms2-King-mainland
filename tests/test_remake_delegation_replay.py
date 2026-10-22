@@ -72,21 +72,22 @@ class DelegationReplayTests(unittest.TestCase):
     def configure(self):
         game, state = self.games[0], self.games[0].state
         cities = sorted((c for c in state.cities.values()
-                         if c.owner == state.player and len(c.roster.officer_ids) >= 2),
+                         if c.owner == state.player and c.roster.officer_ids),
                         key=lambda c: (-len(c.roster.officer_ids), c.id))[:2]
-        self.assertTrue(cities, 'Real opening must offer a city with two distinct appointees')
-        self.appointed = []
-        for city in cities:
-            ids = city.roster.officer_ids
-            civil = min(ids, key=lambda i: (-state.officers[i].profile.intellect, ref_sort_key(i)))
-            military = min((i for i in ids if i != civil),
-                key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
-            self.command('set_domestic', city=city.id, civil=civil, military=military,
-                policy=dict(auto_recruit=True, auto_persuade=True, min_chance=0,
-                    recruit_enabled=True, training_enabled=True,
-                    reserve_target=city.reserves + 1000, recruit_budget=100,
-                    task_order=['recruit', 'personnel', 'transport']))
-            self.appointed.append(city.id)
+        ids = [i for c in state.cities.values() if c.owner == state.player
+               for i in c.roster.officer_ids]
+        self.assertGreaterEqual(len(ids), 2, 'Real faction must offer two distinct appointees')
+        civil = min(ids, key=lambda i: (-state.officers[i].profile.intellect, ref_sort_key(i)))
+        military = min((i for i in ids if i != civil),
+            key=lambda i: (-state.officers[i].profile.martial_strength, ref_sort_key(i)))
+        self.command('set_domestic', faction=state.player, civil=civil, military=military,
+            policy=dict(auto_recruit=True, auto_persuade=True, min_chance=0,
+                recruit_enabled=True, training_enabled=True,
+                reserve_target=max(c.reserves for c in cities) + 1000, recruit_budget=100,
+                task_order=['recruit', 'personnel', 'transport']))
+        # Appointment is faction-wide; these two sources only bound the real
+        # geographic transport search, not the number of governed cities.
+        self.appointed = [city.id for city in cities]
         # A single-city faction has no legal friendly destination. Larger
         # factions choose a real reachable front and use ordinary policy knobs;
         # no cargo or soldiers are injected into the campaign.
@@ -109,7 +110,7 @@ class DelegationReplayTests(unittest.TestCase):
                 target_officers=len(city.roster.officer_ids) + 1,
                 reserve_officers=2, max_gold=100, max_grain=300,
                 max_reserves=200, max_officers=1))
-            self.command('set_domestic', city=source,
+            self.command('set_domestic', faction=state.player,
                          policy=dict(task_order=['transport', 'recruit', 'personnel']))
             self.transport_source = source
 

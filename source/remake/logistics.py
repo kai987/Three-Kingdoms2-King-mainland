@@ -195,8 +195,9 @@ def _safe_quote(game, state, source, target, policy):
 
 def _eligible(game, state, source):
     busy = game._march_ids(state)
-    domestic = state.extension.get('domestic', {}).get('cities', {}).get(source.id, {})
-    assigned = {domestic.get('civil'), domestic.get('military')}
+    from .domestic import appointments
+    offices = appointments(state, source.owner)
+    assigned = {offices.get('civil'), offices.get('military')}
     return [i for i in source.roster.officer_ids if i not in busy and i not in assigned
             and state.officers[i].alive and state.officers[i].faction_id == source.owner
             and state.officers[i].health > 0
@@ -240,9 +241,10 @@ def preview(game, state, city_id):
         return None, 'target_full'
     eligible = sorted(_eligible(game, state, source), key=lambda i: (
         -state.officers[i].profile.martial_strength, -state.officers[i].profile.intellect, _key(i)))
-    retained = max(policy['reserve_officers'], sum(x is not None for x in (
-        state.extension.get('domestic', {}).get('cities', {}).get(city_id, {}).get('civil'),
-        state.extension.get('domestic', {}).get('cities', {}).get(city_id, {}).get('military'))))
+    from .domestic import appointments
+    offices = appointments(state, source.owner)
+    retained = max(policy['reserve_officers'], sum(ident is not None and ident in source.roster.officer_ids
+        and ident not in game._march_ids(state) for ident in (offices.get('civil'), offices.get('military'))))
     slots = min(room, policy['max_officers'], max(0, _present_count(game, state, source) - retained))
     wanted = max(1, policy['target_officers'] - game._city_occupancy(state, target) - inbound['officers'])
     ids = eligible[:min(slots, wanted)]

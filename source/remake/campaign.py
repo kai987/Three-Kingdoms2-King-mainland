@@ -165,7 +165,6 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def _set_domestic(self, state, payload):
         from .domestic import set_policy
-        self._owned_city(state,payload.get('city'))
         set_policy(self,state,payload,state.player)
 
     def _set_logistics(self, state, payload):

@@ -942,3 +942,8 @@ stroke-dasharray:7 3
 
 dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;background:var(--paper);padding:8px 0;border-top:2px solid var(--ink);z-index:1}
 @media(max-width:600px){dialog:has([data-domestic-dialog]) .dialog-actions{bottom:-16px}}
+
+/* Shared faction appointments, with separate per-city settlement forecasts. */
+.domestic-city-previews ul{list-style:none;display:grid;gap:10px;padding:0;margin:10px 0 0;max-height:280px;overflow:auto}
+.domestic-city-previews li{display:grid;gap:4px;border-top:1px solid #000;padding-top:8px;font-size:16px;overflow-wrap:anywhere}
+.domestic-city-previews summary{cursor:pointer;min-height:32px}

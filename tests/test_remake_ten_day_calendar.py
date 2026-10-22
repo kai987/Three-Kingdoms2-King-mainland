@@ -111,7 +111,7 @@ class TenDayCalendarTests(unittest.TestCase):
                 # to recruitment so the new two-office rules perform a real
                 # paid action, rather than assuming legacy free recruitment.
                 domestic.set_policy(game, game.state,
-                    dict(city=city.id, military=city.roster.officer_ids[0]), city.owner)
+                    dict(faction=city.owner, military=city.roster.officer_ids[0]), city.owner)
         game.command('end_turn', {}, game.revision)
         game.command('ai', dict(turn=1), game.revision)
         reports = [r for r in game.state.extension['domestic']['reports']
