@@ -106,6 +106,36 @@ def portrait_static_assets(here=HERE):
     return static
 
 
+def civil_portrait_static_assets(here=HERE):
+    """Only the three fixed, identity-bound civil portrait variants are public."""
+    root = Path(here).resolve()
+    base = root / 'assets/civil-staff'
+    enhanced = base / 'enhanced'
+    index = enhanced / 'index.json'
+    if ((root / 'assets').is_symlink() or base.is_symlink() or
+            enhanced.is_symlink() or index.is_symlink()):
+        return {}
+    static = {'/assets/civil-staff/enhanced/index.json':
+              ('assets/civil-staff/enhanced/index.json', 'application/json; charset=utf-8')}
+    try:
+        data = json.loads(index.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return static
+    if (not isinstance(data, dict) or data.get('schema') != 'tk2-civil-portraits-v1' or
+            data.get('width') != 128 or data.get('height') != 160 or not isinstance(data.get('portraits'), dict)):
+        return static
+    for key in ('clerk-1', 'clerk-2', 'clerk-3'):
+        row = data['portraits'].get(key)
+        path = f'/assets/civil-staff/enhanced/{key}.png'
+        if (not isinstance(row, dict) or row.get('path') != path or
+                row.get('width') != 128 or row.get('height') != 160):
+            continue
+        target = root / path.lstrip('/')
+        if not target.is_symlink() and target.is_file():
+            static[path] = (path.lstrip('/'), 'image/png')
+    return static
+
+
 def static_file_bytes(here, name):
     """Keep even a replaced symlink inside the explicitly served game tree."""
     root = Path(here).resolve()
@@ -114,7 +144,7 @@ def static_file_bytes(here, name):
         target.resolve().relative_to(root)
     except ValueError:
         raise FileNotFoundError(name) from None
-    for directory in ('assets/portraits', 'assets/battle-original'):
+    for directory in ('assets/portraits', 'assets/battle-original', 'assets/civil-staff'):
         if name.startswith(directory + '/') and (target.is_symlink() or target.parent.is_symlink() or
                                                   (root / directory).is_symlink() or
                                                   (root / 'assets').is_symlink()):
@@ -203,6 +233,7 @@ def main():
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
     static.update(portrait_static_assets())
+    static.update(civil_portrait_static_assets())
     static.update(audio_effect_static_assets())
     static.update(battle_static_assets())
 

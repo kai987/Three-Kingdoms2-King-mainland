@@ -15,7 +15,7 @@ for(const locale of ['zh-Hant','ja']){
  assert(staff.attributes({...person,loyalty:100},locale).includes('忠100'));
  assert(staff.attributes({...person,loyalty:100,is_ruler:true},locale,false).includes('忠100'),'Current role overrides a stale record flag');
 }
-assert(staff.portrait(person).includes('/assets/civil-staff/clerk-1.png'));assert(staff.portrait(person,'ja').includes('架空の文吏'));
+assert(staff.portrait(person).includes('/assets/civil-staff/enhanced/clerk-1.png'));assert(staff.portrait(person,'ja').includes('架空の文吏'));
 for(const portrait of ['clerk-4','../clerk-1','clerk-1?x=1','https://evil.example/p.png','" onerror="alert(1)'])assert(!staff.portrait({...person,portrait}).includes('<img'));
 assert(staff.summary(view,'home',{bilingual:true}).includes('data-locale-only="ja"'));assert(staff.summary(view,'home').includes('合計 0/99人'));
 assert.equal(JSON.stringify(view),original,'Every pure presentation helper is read-only');

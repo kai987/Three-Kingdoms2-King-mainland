@@ -13,9 +13,11 @@
   if(!Number.isInteger(value)||value<0)return '—';
   return choose(locale,`${Math.floor(value/12)}年${value%12+1}月`,`${Math.floor(value/12)}年${value%12+1}月`);
  }
- function portrait(record,locale='zh-Hant'){
+ function portrait(record,locale='zh-Hant',{className='civil-staff-portrait'}={}){
+  if(!['civil-staff-portrait','event-staff-face'].includes(className))className='civil-staff-portrait';
   const title=choose(locale,'架空文吏・共用像素肖像','架空の文吏・共用ドット肖像');
-  return /^clerk-[123]$/.test(record?.portrait||'')?`<img class="civil-staff-portrait" src="/assets/civil-staff/${record.portrait}.png" width="32" height="40" alt="${title}" loading="lazy" decoding="async">`:`<span class="civil-staff-portrait civil-staff-placeholder" role="img" aria-label="${title}">吏</span>`;
+  if(root.GamePortraits?.civilHtml)return root.GamePortraits.civilHtml(record?.portrait,record?.name||'',{className,locale});
+  return /^clerk-[123]$/.test(record?.portrait||'')?`<img data-civil-portrait="${record.portrait}" class="${className}" src="/assets/civil-staff/enhanced/${record.portrait}.png" width="128" height="160" alt="${title}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${title}">吏</span>`;
  }
  function stat(value){return Number.isInteger(value)&&value>=0?value:'—';}
  function attributes(record,locale='zh-Hant',isRuler=record?.is_ruler===true){

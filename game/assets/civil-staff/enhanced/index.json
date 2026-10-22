@@ -1,0 +1,105 @@
+{
+  "schema": "tk2-civil-portraits-v1",
+  "width": 128,
+  "height": 160,
+  "originals_retained": true,
+  "shared_templates": 3,
+  "historical_likeness_claim": false,
+  "display_background": "#000000",
+  "approved_reference": {
+    "path": "art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png",
+    "sha256": "d6690b5f41fa7b6dae4a9e6445df572832f7b0f5aded4061e4fd80b1e509e514"
+  },
+  "build": {
+    "tool": "tools/civil-portraits/build.cjs",
+    "tool_sha256": "b6597df098ff4aea43f1a6733cdd02f19e4015cdb8974a3460c15bde0839316d",
+    "geometry": "Same approved native Scale4x and source-driven top/white preservation",
+    "appearance": "Imagegen studies transfer only finite palette tones; source alpha, ink, facial lines and white eye regions retained"
+  },
+  "portraits": {
+    "clerk-1": {
+      "path": "/assets/civil-staff/enhanced/clerk-1.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/civil-staff/clerk-1.png",
+      "source_width": 32,
+      "source_height": 40,
+      "source_sha256": "a38597416450cb9032c7f54203dfafd70bc747c3dadebb49c6854752b6542b3a",
+      "sha256": "e1f6307ce50727ba12f1a5a4fa15166fed9a09f600bc430ad5268ea28ea0549c",
+      "pixel_sha256": "13dd16bb766600bb2b9fced6eb8551681f90d59f0bfd2892f9d1d681ad7a7c57",
+      "base_rgba_sha256": "cca4fcb3121c54dc6a75902fff8e9d393daefe359f41ac72f16804bb1d96129b",
+      "study": "art/civil-portraits/enhancement-v1/studies/clerk-1.png",
+      "study_sha256": "a7a4fa5f2700060c8920f786adcdd875d09aae96760600c6f9917ec9621da49e",
+      "prompt": "art/civil-portraits/enhancement-v1/prompts/clerk-1.txt",
+      "prompt_sha256": "6876726b6e216866585bc8c9f992ecdedf49b01647dff487103aee1e05ee5bd1",
+      "method": "imagegen_tone_study_native_scale4x_material_masks",
+      "qa": {
+        "size": [
+          128,
+          160
+        ],
+        "palette_size": 11,
+        "changed_pixels": 3022,
+        "ink_pixels_preserved": 6582,
+        "alpha_changes": 0,
+        "ink_changes": 0
+      }
+    },
+    "clerk-2": {
+      "path": "/assets/civil-staff/enhanced/clerk-2.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/civil-staff/clerk-2.png",
+      "source_width": 32,
+      "source_height": 40,
+      "source_sha256": "c50b0fe4e7a0589c0e14a21bd2cbe1002c1cb7b9a64dcfa3c7ba1d8a01f7dfc3",
+      "sha256": "bbb31950eff7940e5c5ede872ef8f6a19e7ef6dae8dc1d23e685aa180b40d29f",
+      "pixel_sha256": "a388dbb0f388258de2c1f8cd307bcc3f76f639a75566519b0ec0f1a5a3409e9b",
+      "base_rgba_sha256": "56ecd452f63e4719d90477ed570c36a8f61fd7f510cd16df3ccbfad91bb33871",
+      "study": "art/civil-portraits/enhancement-v1/studies/clerk-2.png",
+      "study_sha256": "37250786fd6c84a82547b69594a8b819b1cccf943062673bf40298b272f9496d",
+      "prompt": "art/civil-portraits/enhancement-v1/prompts/clerk-2.txt",
+      "prompt_sha256": "67ca49ab7f1a4eaf1898a9dcbcf64abfaa0563407a2ca0393980105595b9bdcc",
+      "method": "imagegen_tone_study_native_scale4x_material_masks",
+      "qa": {
+        "size": [
+          128,
+          160
+        ],
+        "palette_size": 13,
+        "changed_pixels": 1820,
+        "ink_pixels_preserved": 6584,
+        "alpha_changes": 0,
+        "ink_changes": 0
+      }
+    },
+    "clerk-3": {
+      "path": "/assets/civil-staff/enhanced/clerk-3.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/civil-staff/clerk-3.png",
+      "source_width": 32,
+      "source_height": 40,
+      "source_sha256": "28238152a87b79fcbdeeff9c952f52db5c65d30704f564d892feb98629bac834",
+      "sha256": "ccdf7c9a53d61ff9eeba5a0ba215da12fac20a82dc5f5a100f652afd67862ac5",
+      "pixel_sha256": "5c4324e0260ad2239a51dc3266d45c54e9770b07962c801104dcc3ce491ced4b",
+      "base_rgba_sha256": "5d4e14f91d7fffc46c14ba1c2aec4d028565f2343014e40ef2b319ec5725855c",
+      "study": "art/civil-portraits/enhancement-v1/studies/clerk-3.png",
+      "study_sha256": "8b7fc39dab60fa30a1f4f627918a52eec845adb6a6ba0f839f3673339cf59ff3",
+      "prompt": "art/civil-portraits/enhancement-v1/prompts/clerk-3.txt",
+      "prompt_sha256": "804628708b3cc087af4cd162a5f3b9353e838c41c2cde64311ed3e7ee97a69db",
+      "method": "imagegen_tone_study_native_scale4x_material_masks",
+      "qa": {
+        "size": [
+          128,
+          160
+        ],
+        "palette_size": 13,
+        "changed_pixels": 1207,
+        "ink_pixels_preserved": 6948,
+        "alpha_changes": 0,
+        "ink_changes": 0
+      }
+    }
+  }
+}

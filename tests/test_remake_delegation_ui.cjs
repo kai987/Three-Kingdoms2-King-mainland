@@ -8,7 +8,7 @@ for(const value of ['',null,undefined,NaN,-1,1.5,'0001',' 1','clerk-000000','cle
 const boxes=[1,'clerk-000001'].map(value=>({value:String(value),checked:true,disabled:false,addEventListener(){}}));
 assert.deepEqual(selection.bind(boxes,{limit:10}).selectedIds(),[1,'clerk-000001']);
 const portrait=portraits({fetch:async()=>({ok:false})});portrait.registerGenerated({people:[{id:'clerk-000001',portrait:'clerk-2'}]});
-assert.equal(portrait.personId({},'clerk-000001'),'clerk-000001');assert(portrait.html('clerk-000001','王安').includes('/assets/civil-staff/clerk-2.png'));assert(portrait.html('clerk-000001','王安',{source:true}).includes('架空武將'));assert.equal(portrait.entry('clerk-000001').fictional,true);
+assert.equal(portrait.personId({},'clerk-000001'),'clerk-000001');assert(portrait.html('clerk-000001','王安').includes('/assets/civil-staff/enhanced/clerk-2.png'));assert.equal(portrait.entry('clerk-000001').path,'/assets/civil-staff/clerk-2.png');assert(portrait.html('clerk-000001','王安',{source:true}).includes('架空武將'));assert.equal(portrait.entry('clerk-000001').fictional,true);
 portrait.registerGenerated({people:[{id:'clerk-000001',portrait:'../invalid'}]});assert.equal(portrait.entry('clerk-000001'),null);
 const profile={martial_strength:80,intellect:90,virtue:85,health_max:90};
 const policy={auto_recruit:true,auto_persuade:false,priority:'best',envoy:null,min_chance:20,budget:100,recruit_enabled:true,reserve_target:2000,recruit_budget:50,training_enabled:true,gold_floor:100,grain_floor:200,excluded_targets:[],task_order:['personnel','recruit','transport']};
@@ -25,11 +25,13 @@ const ui=domestic.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=
  return 1;
 },async command(kind,payload){submitted.push({kind,payload});if(resolveCommand)await new Promise(resolve=>{resolveCommand=resolve;});return nextResult;}});
 (async()=>{
- assert(ui.open('home'));dialog.scrollTop=55;assert(shown.body.includes('知90'));assert(shown.body.includes('忠誠80'));assert(shown.body.includes('士氣 70/100'));assert.equal(JSON.stringify(view),original);
+ assert(ui.open('home'));dialog.scrollTop=55;assert(shown.body.includes('知90'));assert(shown.body.includes('忠誠80'));assert(shown.body.includes('訓練度 70/100'));assert.equal(JSON.stringify(view),original);
  view.game.officers[1].loyalty=view.game.officers['clerk-000001'].loyalty=100;
  view.game.extension={leaders:{shu:1,ended:null}};
  for(const locale of ['zh-Hant','ja']){
   i18n.locale=locale;assert(ui.open('home'));
+  assert(shown.body.includes(locale==='ja'?'練度70/100':'訓練度 70/100'));assert(!shown.body.includes('士氣'));assert(!shown.body.includes('士気'));
+  assert(shown.body.includes(locale==='ja'?'0で80%、100で110%':'0為80%、100為110%'));
   assert(shown.body.includes(choices.label('孔明',view.game.officers[1],{loyalty:true,isRuler:true})));
   assert(shown.body.includes(choices.label('王安',view.game.officers['clerk-000001'],{loyalty:true})));
   view.game.extension.leaders.shu='clerk-000001';const unchanged=JSON.stringify(view);listeners.get('game-language-change')();

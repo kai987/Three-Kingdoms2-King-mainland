@@ -1,4 +1,7 @@
-"""Two city offices, bounded automatic tasks and conserved military morale.
+"""Two city offices, bounded automatic tasks and conserved training degree.
+
+The serialized morale/unit_morale keys remain stable for current campaign saves;
+these values represent training degree, not the original temporary morale tactic.
 
 This is an authorial adaptation of the agreed rules, not SAN14's formulas.
 Only committed faction-turn and calendar hooks perform work. Views are pure.

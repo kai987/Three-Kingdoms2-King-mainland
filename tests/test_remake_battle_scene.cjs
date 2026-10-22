@@ -98,6 +98,8 @@ const watchdog=setTimeout(()=>{console.error('Battle scene playback did not reso
   for(const locale of ['zh-Hant','ja']){
    env.i18n.locale=locale;const before=JSON.stringify(view);env.texts.length=0;scene.mount(env.host,view,selected);
    assert(env.texts.some(t=>t.x===184&&t.y===191&&t.text==='忠 --'),key+' current ruler HUD must display the literal --');
+   const trainingLabel=(locale==='ja'?'練度':'訓練度')+' '+(view.game.battle.extended.support[String(id)].morale??70);
+   assert(env.texts.some(t=>t.x===184&&t.y===202&&t.text===trainingLabel),key+' HUD labels the actual training value');
    assert.equal(JSON.stringify(view),before,'Battle HUD preserves current-ruler loyalty sentinel and RNG');
   }
   view.game.extension.leaders.current=foe;env.texts.length=0;scene.mount(env.host,view,selected);

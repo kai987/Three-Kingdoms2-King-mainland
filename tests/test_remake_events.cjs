@@ -39,6 +39,7 @@ function fixture(items=[]){
  const salary=staffRow(2,'staff_salary',{details:{amount:5,paid:0,bonus:{gold:0,grain:0,reserves:0},counts:{staff:1,total_unpaid:1,cities:1}}});
  const transport=row(8,'transport_departed',{person_ids:['clerk-000001'],city_ids:['home','enemy'],details:{convoy_id:1,gold:100,grain:300,reserves:50,lost:0,reason:'outbound'}}),work=row(9,'domestic_report',{person_ids:[],details:{gold:20,grain:30,reserves:180,morale:150,cities:30,reason:'turn'}});
  assert(validEvent(transport));assert(validEvent(work));for(const bad of [{convoy_id:0},{gold:-1},{lost:1.5},{reason:'<script>'},{unknown:1}])assert(!validEvent({...transport,details:{...transport.details,...bad}}));
+ const training=fixture([work]),trainingBefore=JSON.stringify(work);for(const locale of ['zh-Hant','ja']){training.i18n.locale=locale;const message=training.events.description(work);assert(message.includes(locale==='ja'?'練度の成果は150':'訓練度成果150'));assert(!message.includes('士氣'));assert(!message.includes('士気'));}assert.equal(JSON.stringify(work),trainingBefore,'Renaming historical training reports preserves their saved numerical details');
  assert(!validEvent({...work,details:{...work.details,cities:116}}));assert(!validEvent({...work,details:{...work.details,reason:'unknown'}}));
  assert.deepEqual(groupRows([transport,{...transport,id:9},work]).map(g=>g.length),[2,1]);
  assert(validEvent(staffRow(1)));assert(validEvent(salary));

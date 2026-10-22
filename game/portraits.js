@@ -40,7 +40,7 @@
   function registerGenerated(pool){
    generated.clear();const people=Array.isArray(pool?.people)?pool.people:Object.values(pool?.people||{});
    for(const person of people){if(!/^clerk-[0-9]{6,12}$/.test(person?.id||'')||!/^clerk-[123]$/.test(person?.portrait||''))continue;
-    generated.set(person.id,Object.freeze({path:`/assets/civil-staff/${person.portrait}.png`,kind:'generated',fictional:true,width:32,height:40,original_id:null}));}
+    generated.set(person.id,Object.freeze({path:`/assets/civil-staff/${person.portrait}.png`,kind:'generated',fictional:true,width:32,height:40,original_id:null,enhanced:Object.freeze({path:`/assets/civil-staff/enhanced/${person.portrait}.png`,width:128,height:160})}));}
   }
   function entry(id){return typeof id==='string'?(generated.get(id)||index?.people[id]||null):null;}
   function selectedAsset(row){
@@ -48,9 +48,21 @@
    if(row.enhanced&&!failedPaths.has(row.enhanced.path))return{...row.enhanced,enhanced:true};
    return failedPaths.has(row.path)?null:{path:row.path,width:row.width||index?.width||32,height:row.height||index?.height||40,enhanced:false};
   }
+  function asset(id){return selectedAsset(entry(id));}
+  function failAsset(id,path){const row=entry(id);if(!row||(path!==row.path&&path!==row.enhanced?.path))return false;failedPaths.add(path);refresh();return true;}
+  function civilAsset(key){
+   if(!/^clerk-[123]$/.test(key||''))return null;
+   const enhanced=`/assets/civil-staff/enhanced/${key}.png`,native=`/assets/civil-staff/${key}.png`;
+   return !failedPaths.has(enhanced)?{path:enhanced,width:128,height:160,enhanced:true}:!failedPaths.has(native)?{path:native,width:32,height:40,enhanced:false}:null;
+  }
+  function civilHtml(key,rawName,{className='civil-staff-portrait',locale:language=locale()}={}){
+   if(!['civil-staff-portrait','event-staff-face'].includes(className))className='civil-staff-portrait';
+   const value=civilAsset(key),title=language==='ja'?'架空の文吏・共用ドット肖像':'架空文吏・共用像素肖像',name=i18n?.t?i18n.t(String(rawName||''),language):String(rawName||'');
+   return value?`<img data-civil-portrait="${escape(key)}" data-civil-name="${escape(rawName||'')}" class="${className}" src="${value.path}" width="${value.width}" height="${value.height}" alt="${escape(name?name+'・'+title:title)}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${escape(title)}">吏</span>`;
+  }
   function description(row,enhanced=false){
    if(!row)return text(status==='idle'||status==='loading'?'肖像準備中':'肖像待補',status==='idle'||status==='loading'?'肖像を準備中':'肖像は未設定です');
-   if(row.fictional)return text('架空武將・共用原版像素肖像','架空の武将・共通の原作ドット肖像');
+   if(row.fictional)return enhanced?text('架空武將・共用像素肖像・明暗強化','架空の武将・共通ドット肖像・陰影強化'):text('架空武將・共用原版像素肖像','架空の武将・共通の原作ドット肖像');
    if(enhanced)return row.kind==='nes_original'?text('原版像素肖像・明暗強化','原作のドット肖像・陰影強化'):text('新增繪製肖像・明暗強化・非史實容貌','新規制作の肖像・陰影強化・史実の容貌ではありません');
    return row.kind==='nes_original'?text('原版像素肖像','原作のドット肖像'):text('新增繪製肖像・非史實容貌','新規制作の肖像・史実の容貌ではありません');
   }
@@ -75,12 +87,21 @@
    }
   }
   function imageError(event){
-   const image=event.target;if(!image?.hasAttribute?.('data-portrait-image'))return;
+   const image=event.target;
+   if(image?.hasAttribute?.('data-civil-portrait')){
+    const key=image.getAttribute?.('data-civil-portrait')||image.dataset?.civilPortrait,attempted=image.getAttribute?.('src');
+    if(!/^clerk-[123]$/.test(key||'')||![`/assets/civil-staff/enhanced/${key}.png`,`/assets/civil-staff/${key}.png`].includes(attempted))return;
+    failedPaths.add(attempted);const next=civilAsset(key);
+    if(next){image.setAttribute('src',next.path);image.setAttribute('width',String(next.width));image.setAttribute('height',String(next.height));}
+    else{const holder=doc?.createElement?.('span');if(holder){holder.className=image.className+' civil-staff-placeholder';holder.setAttribute('role','img');holder.setAttribute('aria-label',image.getAttribute?.('alt')||'');holder.textContent='吏';image.replaceWith?.(holder);}}
+    return;
+   }
+   if(!image?.hasAttribute?.('data-portrait-image'))return;
    const frame=image.closest?.('[data-portrait-person]'),row=entry(frame?.dataset?.portraitPerson);
    if(!row)return;
    const attempted=image.getAttribute?.('src')||selectedAsset(row)?.path;
    if(attempted!==row.path&&attempted!==row.enhanced?.path)return;
-   failedPaths.add(attempted);refresh();
+   failAsset(frame.dataset.portraitPerson,attempted);
   }
   function attach(){
    if(attached||!doc?.addEventListener)return;attached=true;
@@ -102,7 +123,7 @@
    })();
    return loading;
   }
-  return Object.freeze({load,html,personId,entry,registerGenerated,refresh,imageError,get status(){return status;}});
+  return Object.freeze({load,html,personId,entry,asset,failAsset,civilAsset,civilHtml,registerGenerated,refresh,imageError,get status(){return status;}});
  }
  if(typeof module==='object'&&module.exports)module.exports={create,validIndex};else root.GamePortraits=create();
 })(typeof window==='object'?window:globalThis);

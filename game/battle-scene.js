@@ -156,13 +156,15 @@
   function outcome(value){const own=view?.game?.battle?.attacker===view?.game?.player;return value==='victory'?(own?text('本方勝利','勝利'):text('城池失守','都市陥落')):value==='defeat'?(own?text('本方敗退','敗北'):text('守城成功','防衛成功')):text('攻方退卻','攻撃側撤退');}
   function selectedId(state,scene){return scene?.actor??(state.duel?.actor??selection.actor??state.units[0]?.id);}
   function portrait(id,x,y){
-   const personId=portraits?.personId?.(view.catalog,id),entry=portraits?.entry?.(personId),image=imageFor(entry?.path);rectangle(x,y,32,40,INK);if(image)blit(image,x,y,32,40);else label(person(id).slice(0,2),x+5,y+12,PAPER,12);outline(x-1,y-1,34,42);
+   const personId=portraits?.personId?.(view.catalog,id),entry=portraits?.entry?.(personId);let asset=portraits?.asset?portraits.asset(personId):entry,image=imageFor(asset?.path);
+   if(asset&&images.get(asset.path)?.status==='unavailable'&&portraits?.failAsset?.(personId,asset.path)){asset=portraits.asset?.(personId);image=imageFor(asset?.path);}
+   rectangle(x,y,32,40,INK);if(image)blit(image,x,y,32,40);else label(person(id).slice(0,2),x+5,y+12,PAPER,12);outline(x-1,y-1,34,42);
   }
   function hud(state,scene){
    rectangle(0,160,256,80,PAPER);const id=selectedId(state,scene),unit=state.units.find(u=>u.id===id),o=view.game.officers[String(id)];if(!unit||!o)return;
    portrait(id,8,168);const p=o.profile;label(person(id),48,166,INK,10);
    const loyalty=officerChoices?.loyalty?officerChoices.loyalty(o,{isRuler:officerChoices.isRuler?.(id,view.game.extension?.leaders)===true}):o.loyalty;
-   for(const [column,x]of [[[[text('兵','兵'),unit.troops],[text('體','体'),unit.health],[text('經','経'),Math.floor(o.experience/50)]],48],[[[text('武','武'),p.martial_strength],[text('德','徳'),p.virtue],[text('氣','気'),unit.energy]],116],[[[text('知','知'),p.intellect],[text('忠','忠'),loyalty],[text('士','士'),view.game.battle.extended.support[String(id)]?.morale??70]],184]])column.forEach(([title,value],i)=>label(title+' '+value,x,180+i*11));
+   for(const [column,x]of [[[[text('兵','兵'),unit.troops],[text('體','体'),unit.health],[text('經','経'),Math.floor(o.experience/50)]],48],[[[text('武','武'),p.martial_strength],[text('德','徳'),p.virtue],[text('氣','気'),unit.energy]],116],[[[text('知','知'),p.intellect],[text('忠','忠'),loyalty],[text('訓練度','練度'),view.game.battle.extended.support[String(id)]?.morale??70]],184]])column.forEach(([title,value],i)=>label(title+' '+value,x,180+i*11));
    const target=scene?.target??selection.target,foe=state.units.find(u=>u.id===target);
    if(foe)label('→ '+person(target)+'  '+text('兵','兵')+' '+foe.troops,8,216);
    const caption=scene?sceneCaption(scene):text('選擇本方部隊與對手','味方部隊と相手を選択');label(caption.slice(0,31),8,229);
@@ -240,7 +242,7 @@
   }
   function description(){
    const b=view?.game?.battle;if(!b)return '';
-   return ['attackers','defenders'].map(side=>b[side].map(u=>`${person(u.id)} ${text('兵','兵')} ${u.troops} ${text('體','体')} ${b.extended.support[String(u.id)].health}`).join('、')).join(' / ');
+   return ['attackers','defenders'].map(side=>b[side].map(u=>`${person(u.id)} ${text('兵','兵')} ${u.troops} ${text('體','体')} ${b.extended.support[String(u.id)].health} ${text('訓練度','練度')} ${b.extended.support[String(u.id)].morale??70}`).join('、')).join(' / ');
   }
   function updateText(){
    if(!host)return;host.dataset.l10nNative=locale();host.dataset.sceneAssets=assetStatus;

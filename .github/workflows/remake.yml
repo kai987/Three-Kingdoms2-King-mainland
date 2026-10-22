@@ -52,6 +52,7 @@ jobs:
           python tools/portraits/build_generated.py --check
           python game/build_portrait_manifest.py --check
           python tools/battle-original/build.py --check
+          node tools/civil-portraits/build.cjs --check
       - name: Offline source collector tests and whitespace
         run: |
           python -m unittest discover -s tools/officer-placement -p 'test_*.py' -v
