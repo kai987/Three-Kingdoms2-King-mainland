@@ -404,6 +404,7 @@ font:16px/1.5 var(--ui)
 }
 .choice-list{
 display:grid;
+grid-auto-rows:max-content;
 overflow:auto;
 gap:4px;
 padding:8px 0;
