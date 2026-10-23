@@ -622,9 +622,11 @@ class TravelCampaign:
             if row['id'] in serials:
                 raise ValueError('duplicate march id')
             serials.add(row['id'])
-            if row['source']==row['target'] or any(row[k] not in state.cities for k in ('source','target')):
-                if row['status']!='returning' or row['source']!=row['target']:
-                    raise ValueError('march city')
+            returning_trip=(row['kind']=='transfer' and isinstance(row['history'],list) and bool(row['history'])
+                            and row['status'] in {'returning','waiting'})
+            if (any(row[k] not in state.cities for k in ('source','target'))
+                    or row['source']==row['target'] and not returning_trip):
+                raise ValueError('march city')
             if (row['journey_source'] not in state.cities or row['status'] not in {'outbound','waiting','returning'}
                     or row['reason'] not in {'outbound','shortage','route_blocked','target_changed','no_return_route','resource_full'}
                     or not isinstance(row['mission'],dict)
@@ -685,7 +687,7 @@ class TravelCampaign:
                     raise ValueError('altered departure weather or route')
                 sailed={r['id'] for h in row['history'] for r in h['quote']['routes']}
                 if (leg['id'] in exploration and row['mode']!='explore' and leg['id'] not in discovered
-                        and not (row['status']=='returning' and leg['id'] in sailed)):
+                        and not (returning_trip and leg['id'] in sailed)):
                     raise ValueError('undiscovered route used as known')
             if row['mode'] in ('sea','special','explore') or row['kind']=='attack':
                 if len(legs)!=1:

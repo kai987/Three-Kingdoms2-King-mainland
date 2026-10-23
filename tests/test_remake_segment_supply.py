@@ -163,4 +163,54 @@ class SegmentSupplyTests(unittest.TestCase):
         self.assertLessEqual(game.state.cities[target.id].grain,march_supply.LIMIT)
 
 
+    def test_return_to_origin_waits_at_a_cut_route_across_turns_and_save_loads(self):
+        from remake import civil_staff,domestic,logistics
+        for backend in ('python','rust'):
+            with self.subTest(backend=backend),using_backend(backend):
+                game=self.game(days=(5,5));ident,outbound=self.queue(game)
+                mission=deepcopy(outbound['mission']);self.step(game)
+                def capture(city_id):
+                    city=game.state.cities[city_id]
+                    game.state.cities['xiangyang'].roster.officer_ids.extend(city.roster.officer_ids)
+                    city.roster.officer_ids.clear();city.owner='wei'
+                    logistics.synchronize(game,game.state);domestic.synchronize(game,game.state)
+                    civil_staff.synchronize(game,game.state,checks=False)
+                    game.validate(game.state)
+                # The outbound journey really arrives before ownership changes.
+                # Its friendly intermediate return node is then captured too.
+                capture('jiangxia');game.command('arrivals',{},game.revision)
+                returning=game.state.extension['travel']['marches'][0]
+                self.assertEqual(returning['quote']['path'],['jiangxia','nanjun','xiangyang'])
+                self.assertEqual(returning['source'],returning['target'])
+                self.assertEqual(returning['status'],'returning')
+                self.assertEqual(len(returning['history']),1)
+                capture('nanjun');rng=deepcopy(game.state.rng)
+                for elapsed in (10,20,30):
+                    turn=game.state.turn
+                    game.command('end_turn',{},game.revision)
+                    game.command('ai',dict(turn=turn),game.revision)
+                    row=game.state.extension['travel']['marches'][0]
+                    self.assertEqual((row['status'],row['reason']),('waiting','no_return_route'))
+                    self.assertEqual(row['mission'],mission)
+                    self.assertEqual(march_supply.current_city(row),'jiangxia')
+                    self.assertEqual(row['supply']['route_days'],0,'A cut return must not teleport through enemy cities')
+                    self.assertEqual(row['supply']['elapsed_days'],elapsed,'Waiting forces still need daily food')
+                    self.assertEqual(row['supply']['shortage_days'],elapsed)
+                    self.assertIn(ident,game._march_ids(game.state))
+                    game=self.restore(game)
+                self.assertEqual(game.state.rng,rng)
+
+    def test_matching_source_target_without_a_real_return_history_is_rejected(self):
+        game=self.game();self.queue(game);original=game.export_save()
+        for status in ('outbound','returning','waiting'):
+            with self.subTest(status=status):
+                bad=deepcopy(original);row=bad['state']['extension']['travel']['marches'][0]
+                row['target']=row['source'];row['status']=status
+                bad['checksum']=digest({k:v for k,v in bad.items() if k!='checksum'})
+                with self.assertRaises(GameError) as rejected:game.load_save(bad,game.revision)
+                self.assertIsInstance(rejected.exception.__cause__,ValueError)
+                self.assertEqual(str(rejected.exception.__cause__),'march city')
+                self.assertEqual(game.export_save(),original)
+
+
 if __name__=='__main__':unittest.main()
