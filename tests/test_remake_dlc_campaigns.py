@@ -1,5 +1,6 @@
 """Four dated DLC openings and distinct playable campaigns in the same month."""
 from copy import deepcopy
+from html.parser import HTMLParser
 import json
 from pathlib import Path
 import shutil
@@ -32,6 +33,15 @@ class DlcCampaignTests(unittest.TestCase):
 
     def test_four_official_dlc_dates_and_two_kinds_cover_every_current_opening(self):
         self.assertEqual(len(self.catalogs), 29)
+        class CampaignCount(HTMLParser):
+            count = None
+            def handle_starttag(self, tag, attrs):
+                attributes = dict(attrs)
+                if tag == 'meta' and attributes.get('name') == 'game-campaign-count':
+                    self.count = int(attributes['content'])
+        page = CampaignCount()
+        page.feed((ROOT / 'game/index.html').read_text())
+        self.assertEqual(page.count, len(self.catalogs), 'Stale-service warnings must use the published scenario count')
         self.assertEqual(self.index['default'], 'mainland217-07')
         fictional = {key for key, c in self.catalogs.items()
                      if c.data['main_scenario'].get('fictional', False)}

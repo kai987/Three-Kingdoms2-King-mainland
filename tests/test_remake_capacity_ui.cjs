@@ -112,7 +112,7 @@ async function weightedTransferChecks(){
   assert.equal(japanese(`每城${limit}人；每方出战最多10人，包含主将。`),`1都市${limit}人まで。主将を含め各軍10人まで出陣できます。`);
  }
  // The current server's complete scenario list is displayed directly.
- Object.assign(context,{gameAudio:{setScene(){}},setupPreview:null,busy:false,mapMode:'all',mapColor:()=> '#fff',renderMap(){},document:{querySelectorAll:()=>[],addEventListener(){}},GameI18n:{locale:'zh-Hant'}});
+ Object.assign(context,{gameAudio:{setScene(){}},setupPreview:null,busy:false,mapMode:'all',mapColor:()=> '#fff',renderMap(){},document:{querySelector:selector=>selector==='meta[name="game-campaign-count"]'?{content:'29'}:null,querySelectorAll:()=>[],addEventListener(){}},GameI18n:{locale:'zh-Hant'}});
  context.view.catalog.scenarios=Array.from({length:29},(_,i)=>({id:`mainland${184+i}-01`,title:`本篇${i+1}`,year:184+i,month:1,cities:115,capacity:99,serving:1,free:0,configured:1023,initial_owners:{home:'wei'},factions:[{id:'wei',city:'home',name:'曹操勢力',captain:'曹操'}],main_scenario:{group:i<23?'custom':'if',fictional:i>=23,summary:'目前本篇配置'}}));
  context.view.catalog.scenario_id=context.view.catalog.scenarios[3].id;
  vm.runInContext(source.slice(source.indexOf("let campaignDifficulty="),source.indexOf("const $=")),context);
@@ -125,6 +125,13 @@ async function weightedTransferChecks(){
  assert(menu.includes('mainland187-01" selected'));assert(menu.includes('每城99人'));
  assert(!menu.includes('旧存档'));assert(!menu.includes('旧版战役配置'));
  assert(menu.includes('继续当前战役'),'Current running campaign still has a return control');
+ assert(menu.includes('data-scenario-count="29"'));assert(!menu.includes('id="scenario-version-warning"'));
+ const previous=JSON.stringify(context.view.game);
+ context.view.catalog.scenarios=context.view.catalog.scenarios.slice(0,25);context.selectFaction();
+ const stale=element('#inspector').innerHTML;
+ assert(stale.includes('data-scenario-count="25"')&&stale.includes('id="scenario-version-warning"'));
+ assert(stale.includes('本頁版本應有29篇')&&stale.includes('https://kai987.github.io/Three-Kingdoms2-King-mainland/'));
+ assert.equal(JSON.stringify(context.view.game),previous,'Detecting an outdated local catalogue cannot reset the running campaign');
  await weightedTransferChecks();
  // Exercise city capacity and deployment as independent configured rules.
  const python=spawnSync(process.env.PYTHON||'python3',['-B','-c',`

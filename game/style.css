@@ -1088,3 +1088,9 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 [data-autosave-recover]{white-space:normal;text-align:left;overflow-wrap:anywhere}
 
 .river-lane{fill:none;stroke:#d4e9ff;stroke-width:1.2;stroke-dasharray:3 3;stroke-linecap:butt;pointer-events:none}
+
+#scenario-count{margin:8px 0;line-height:1.5}
+#scenario-version-warning{padding:10px 12px;margin:8px 0 12px;border:2px solid currentColor;line-height:1.5;background:#ffe8b8}
+#scenario-version-warning p{font-size:13px;margin:0 0 8px}
+#scenario-version-warning a{display:inline-block;min-height:32px;padding:4px 8px;border:1px solid currentColor}
+.city-island-status{font-size:14px;line-height:1.6}

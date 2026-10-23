@@ -45,7 +45,7 @@ if(fs.existsSync(file)){
  const app=fs.readFileSync(path.join(root,appSource)),pin=compiled.sources[appSource];
  assert.doesNotThrow(()=>validateSource(appSource,Buffer.concat([Buffer.from('// Display-only metadata.\n'),app]),pin,compiled.sources,attestation),'unrelated UI changes do not rewrite campaign hashes');
  assert.throws(()=>validateSource(appSource,Buffer.from(app.toString().replace('return d+`L','return d +`L')),pin,compiled.sources,attestation),'even whitespace changes inside path functions require rebuilding geometry');
- assert.throws(()=>validateSource(appSource,app,pin,compiled.sources,{...attestation,original_source_sha256:'0'.repeat(64)}),'an attestation cannot substitute a different baseline');
+ assert.throws(()=>validateSource(appSource,Buffer.concat([Buffer.from('// Display-only metadata.\n'),app]),pin,compiled.sources,{...attestation,original_source_sha256:'0'.repeat(64)}),'an attestation cannot substitute a different baseline');
  assert.throws(()=>validateSource(compilerSource,Buffer.from('// compiler changed'),compiled.sources[compilerSource],compiled.sources,attestation),'compiler changes retain full-file validation');
  assert.equal(compiled.schema,'tk2-route-geometry-v1');assert.equal(compiled.audit.input_routes,364);assert.equal(compiled.audit.compiled_routes,364);assert.deepEqual(compiled.audit.unmatched,[]);
  for(const [id,r]of Object.entries(compiled.routes)){

@@ -651,3 +651,120 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
   join(directory,`${testInfo.project.name}-river-land-route-map.png`):testInfo.outputPath('river-land-route-map.png')});
  expect(errors.get(page)).toEqual([]);
 });
+
+test('scenario totals and DLC labels stay bilingual while island history remains neutral',async({page},testInfo)=>{
+ await opening(page);
+ const select=page.locator('#scenario'),counter=page.locator('#scenario-count');
+ await expect(select.locator('option')).toHaveCount(29);
+ await expect(select.locator('optgroup')).toHaveCount(2);
+ await expect(counter).toHaveAttribute('data-scenario-count','29');
+ await expect(counter).toContainText(/史實\s*23/,{useInnerText:true});
+ await expect(counter).toContainText(/假想\s*6/,{useInnerText:true});
+ await expect(select.locator('option[data-scenario-dlc]')).toHaveCount(7);
+ const dlcIds=['mainland198-03','mainland202-06','mainland211-07-tongguan','mainland215-08'];
+ for(const id of dlcIds){
+  await expect(select.locator(`option[value="${id}"][data-scenario-dlc]`)).toContainText('DLC');
+  await expect(select.locator(`optgroup[label="史實"] option[value="${id}"]`)).toHaveCount(1);
+ }
+ await expect(page.locator('#scenario-version-warning')).toHaveCount(0);
+ await select.selectOption('mainland202-06');
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#language').selectOption('ja');
+ await expect(select).toHaveValue('mainland202-06');
+ await expect(counter).toContainText(/史実\s*23/,{useInnerText:true});
+ await expect(counter).toContainText(/仮想\s*6/,{useInnerText:true});
+ await expect(select.locator('optgroup')).toHaveCount(2);
+ await expect(select.locator('option[data-scenario-dlc]')).toHaveCount(7);
+ for(const id of dlcIds)await expect(select.locator(`option[value="${id}"][data-scenario-dlc]`)).toContainText('DLC');
+ await page.locator('#language').selectOption('zh-Hant');
+ await page.locator('#utility-menu summary').click();
+ await select.selectOption('mainland217-07');
+ for(const id of ['zhuya','yizhou']){
+  const marker=page.locator(`#world-map .city-hit[data-city="${id}"]`);
+  await expect(marker).toHaveAttribute('data-owner','neutral');
+  await expect(marker).toHaveAttribute('aria-label',/島嶼.*中立/);
+  await page.locator('#city-jump').selectOption(id);
+  const info=page.locator(`.city-information[data-inspected-city="${id}"]`);
+  await expect(info).toBeVisible();
+  await expect(info.locator('.city-information-owner')).toContainText(/島嶼.*中立/,{useInnerText:true});
+  await expect(info.locator('.city-information-owner')).not.toContainText('漢郡',{useInnerText:true});
+  const island=info.locator(`[data-island-status="${id}"]`);
+  await expect(island).toContainText('中立',{useInnerText:true});
+  await expect(island).toContainText(/遠征|渡海/,{useInnerText:true});
+  for(const date of id==='zhuya'?['239年','242年7月']:['230年1月','231年2月'])
+   await expect(island).toContainText(date,{useInnerText:true});
+  const history=info.locator('.city-history');
+  await history.locator(':scope > summary').click();
+  await expect(history.locator('a[href^="https://"]')).not.toHaveCount(0);
+  await expect(history).toContainText(id==='zhuya'?/孫權|孫吳|聶友|陸凱/:/孫權|孫吳|衛溫/,{useInnerText:true});
+  await expect(history).toContainText(/中立|持續|常設|統治|管轄/,{useInnerText:true});
+  await historyScreenshot(page,testInfo,`${id}-historical-neutral-tc`);
+  await page.locator('#dialog-language').selectOption('ja');
+  await expect(info.locator('.city-information-owner')).toContainText('中立',{useInnerText:true});
+  await expect(info.locator('.city-information-owner')).not.toContainText('漢郡',{useInnerText:true});
+  await expect(island).toContainText('中立',{useInnerText:true});
+  await expect(island).toContainText(/遠征|渡海/,{useInnerText:true});
+  for(const date of id==='zhuya'?['239年','242年7月']:['230年1月','231年2月'])
+   await expect(island).toContainText(date,{useInnerText:true});
+  await historyScreenshot(page,testInfo,`${id}-historical-neutral-ja`);
+  await page.locator('#dialog-language').selectOption('zh-Hant');
+  await closeDialog(page);
+ }
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('a stale local API menu warns without restarting or changing its campaign',async({page,context},testInfo)=>{
+ const api=[];
+ await page.exposeFunction('__recordScenarioApi',row=>api.push(row));
+ await context.route('**/app.js',async route=>{
+  const response=await route.fetch();
+  const prefix=`'use strict';\n(() => {
+   const original=window.fetch.bind(window);
+   const excluded=new Set(['mainland198-03','mainland202-06','mainland211-07-tongguan','mainland215-08']);
+   window.fetch=async function(input,settings={}){
+    const result=await original(input,settings);
+    const path=typeof input==='string'?input:new URL(input.url,location.href).pathname;
+    if(path.startsWith('/api/'))await window.__recordScenarioApi({path,method:settings.method||'GET'});
+    if(path!=='/api/state')return result;
+    const value=await result.clone().json(),catalog=value.static_catalog||value.catalog;
+    if(Array.isArray(catalog?.scenarios))catalog.scenarios=catalog.scenarios.filter(row=>!excluded.has(row.id));
+    return new Response(JSON.stringify(value),{status:result.status,headers:result.headers});
+   };
+  })();\n`;
+  await route.fulfill({response,body:prefix+await response.text()});
+ });
+ await opening(page);
+ const readState=()=>page.evaluate(async()=>{
+  const response=await fetch('/api/state');
+  const value=await response.json();
+  const state=value.view||value;
+  return {game:state.game,revision:state.revision};
+ });
+ const before=await readState();
+ const select=page.locator('#scenario'),warning=page.locator('#scenario-version-warning');
+ await expect(select.locator('option')).toHaveCount(25);
+ await expect(select.locator('optgroup')).toHaveCount(2);
+ await expect(page.locator('#scenario-count')).toHaveAttribute('data-scenario-count','25');
+ await expect(warning).toBeVisible();
+ await expect(warning).toContainText('目前服務仍載入舊版25篇劇本',{useInnerText:true});
+ await expect(warning).toContainText('本頁版本應有29篇',{useInnerText:true});
+ await expect(warning).toContainText('請先儲存進度',{useInnerText:true});
+ const link=warning.locator('a[data-update-game]');
+ await expect(link).toHaveAttribute('href','https://kai987.github.io/Three-Kingdoms2-King-mainland/');
+ await historyScreenshot(page,testInfo,'stale-25-api-warning-tc');
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#language').selectOption('ja');
+ await expect(warning).toBeVisible();
+ await expect(warning).toContainText(/ローカル|旧版|古い/,{useInnerText:true});
+ await expect(select.locator('option')).toHaveCount(25);
+ await expect(select.locator('optgroup')).toHaveCount(2);
+ await expect(link).toHaveAttribute('href','https://kai987.github.io/Three-Kingdoms2-King-mainland/');
+ await page.locator('#utility-menu summary').click();
+ await historyScreenshot(page,testInfo,'stale-25-api-warning-ja');
+ expect(await readState()).toEqual(before);
+ expect(before.game).toBeNull();
+ expect(api.filter(row=>row.method!=='GET')).toEqual([]);
+ expect(api.some(row=>['/api/command','/api/load'].includes(row.path))).toBe(false);
+ await expect(page.locator('#begin')).toBeEnabled();
+ expect(errors.get(page)).toEqual([]);
+});

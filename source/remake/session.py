@@ -170,10 +170,11 @@ class CampaignSession:
                                      experience=0,tier=0,loyalty=100 if row.get('ruler') else 80,
                                      is_ruler=bool(row.get('ruler')),health=profile.health_max))
             owner=d['initial_owners'][city]
+            history=d.get('city_history',{}).get(city,{})
+            neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,
-                city=dict(id=city,owner=owner,owner_name=c.factions[owner]['name'] if owner!='neutral' else
-                    '地方汉郡（中立）' if d.get('city_history',{}).get(city,{}).get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主',
+                city=dict(id=city,owner=owner,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
                     profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),history=d.get('city_history',{}).get(city),
                     **d.get('initial_city_resources',{}).get(city,d['initial_resources'])))

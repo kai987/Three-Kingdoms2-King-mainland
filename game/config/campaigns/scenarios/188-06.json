@@ -41656,9 +41656,13 @@
             }
           },
           "yizhou": {
-            "detail": "",
+            "detail": "本作夷洲為臺灣方向的作者地圖映射；不據古代同名記載宣稱精確疆界或已完成行政統治。《三國志·吳主傳》記黃龍二年（230年）正月，孫權派衛溫、諸葛直率萬人浮海求夷洲、亶洲，後帶回夷洲數千人；黃龍三年（231年）二月記二將違詔無功被誅。這些是出航與事後處置記錄，不是占領、設郡或留置守將的年月，亦不足以證明對本作臺灣節點的持續控制。既有29篇劇本保留中立，230年正月及231年二月不觸發自動歸吳，不虛構初始駐將。中立不表示島上無人或沒有在地社會；戰役中實際攻占、駐防與海路探索仍依玩家和AI共用規則處理。",
             "names": [],
             "sources": [
+              {
+                "url": "https://zh.wikisource.org/zh-hant/三國志/卷47",
+                "note": "黃龍二年正月遣衛溫、諸葛直浮海求夷洲、亶洲；三年二月以違詔無功處置，不是設郡占領月。"
+              },
               {
                 "url": "https://wikiwiki.jp/sangokushi14/184年2月　黄巾の乱",
                 "note": "势力表9势力：何进4城、张角6城，其余7势力各1城；合计17座SAN14主城。"
@@ -41732,6 +41736,39 @@
                 "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                 "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
               ]
+            },
+            "kind": "island_region",
+            "neutral_label": "岛屿地区（中立）",
+            "neutral_label_ja": "島嶼地域（中立）",
+            "automatic_owner_change": false,
+            "occupation_date": null,
+            "neutrality_basis": "preserve_reviewed_opening_no_attested_dated_permanent_Wu_island_administration",
+            "neutral_meaning": "本作未配置可證的初始勢力駐軍；不表示島上無人、沒有聚落或沒有地方社會。",
+            "neutral_meaning_ja": "史料で確認できる開始時の勢力守備隊を設定していません。無人島や集落・在地社会の不在を意味するものではありません。",
+            "detail_ja": "本作の夷洲は台湾方面を表す作者の地図上の対応付けです。古代の同名記録から厳密な領域や行政支配の完成を断定しません。『三國志』呉主伝は黄龍二年（230年）正月、孫権が衛温・諸葛直に一万人を率いさせ、夷洲・亶洲を求めて渡海したと記し、夷洲の数千人を連れ帰ったとします。翌黄龍三年（231年）二月には両将が命令違反と無功により処刑されたとあります。これらは出航と事後処分の記録で、占領・設郡・守将配置の年月ではなく、本作の台湾拠点の持続的支配を証明するものでもありません。既存29本の開始時所属は中立のままとし、230年1月や231年2月に自動で呉領へ変更せず、開始時の守将も創作しません。中立は無人島や在地社会の不在を意味しません。戦役中の実際の占領・駐屯・航路探索はプレイヤーとAIに共通する規則で処理します。",
+            "chronology": [
+              {
+                "year": 230,
+                "month": 1,
+                "kind": "maritime_expedition",
+                "precision": "attested_annal_month",
+                "is_island_occupation": false,
+                "note": "衛溫、諸葛直奉命渡海求夷洲、亶洲，不記設郡或常駐守將。",
+                "source": "https://zh.wikisource.org/zh-hant/三國志/卷47"
+              },
+              {
+                "year": 231,
+                "month": 2,
+                "kind": "expedition_accountability",
+                "precision": "attested_annal_month",
+                "is_island_occupation": false,
+                "note": "以違詔無功處置二將，不能解讀為吳取得持續島嶼統治。",
+                "source": "https://zh.wikisource.org/zh-hant/三國志/卷47"
+              }
+            ],
+            "summary_i18n": {
+              "zh-Hant": "230年1月渡海、231年2月以無功處置二將，不等於設郡或持續占領。史實開局採中立，進行中的實際占領不因此修改。",
+              "ja": "230年1月の渡海と231年2月の両将処分は、設郡や持続的占領を意味しません。史実シナリオの開始時は中立とし、プレイ中の実際の占領は変更しません。"
             }
           },
           "lelang": {
@@ -45369,9 +45406,25 @@
             }
           },
           "zhuya": {
-            "detail": "",
+            "detail": "本作朱崖為海南島方向的地圖代理節點，不等於雷州半島徐聞的郡治。《元和郡縣圖志》後出逸文記吳赤烏二年（239年）於徐聞立朱崖郡，同段有未從化、未持有其地的記載且傳本語句重複，須保留輯佚與傳抄界線；僅能記年，不能補造設郡或海南全島占領月份。《三國志·吳主傳》記赤烏五年（242年）七月遣聶友、陸凱率軍討珠崖、儋耳；《陸凱傳》記征討有功，但未給出本作海南節點的完整占領、設郡及常駐守將年月。《宋書·州郡志》所記郡縣沿革亦不能與本作島嶼節點直接等同。故既有29篇劇本均保留中立，不將239年設郡或242年七月出征自動視為吳占領月，也不虛構駐將。中立不等於無人島；進行中若玩家或AI實際占領，按戰局處理，不被歷史註記改回中立。",
             "names": [],
             "sources": [
+              {
+                "url": "https://www.shidianguji.com/zh/book/CADAL02035716/chapter/1l7kl9gv9e0qe",
+                "note": "《元和郡縣圖志》逸文：赤烏二年於徐聞設郡，後出輯本只記年，同段有未從化、未有其地及語句重複；不是海南節點占領年月。"
+              },
+              {
+                "url": "https://zh.wikisource.org/zh-hant/三國志/卷47",
+                "note": "赤烏五年秋七月遣聶友、陸凱討珠崖、儋耳，記出征而非占領月。"
+              },
+              {
+                "url": "https://zh.wikisource.org/zh-hant/三國志/卷61",
+                "note": "陸凱傳：赤烏年間任儋耳太守、討朱崖有功；傳文不載精確年月，也沒有本作島嶼節點常駐守將年月。"
+              },
+              {
+                "url": "https://zh.wikisource.org/zh-hant/宋書/卷38",
+                "note": "州郡志郡縣沿革，須區分郡名、郡治及島嶼代理節點。"
+              },
               {
                 "url": "https://wikiwiki.jp/sangokushi14/184年2月　黄巾の乱",
                 "note": "势力表9势力：何进4城、张角6城，其余7势力各1城；合计17座SAN14主城。"
@@ -45445,6 +45498,39 @@
                 "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                 "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
               ]
+            },
+            "kind": "island_region",
+            "neutral_label": "岛屿地区（中立）",
+            "neutral_label_ja": "島嶼地域（中立）",
+            "automatic_owner_change": false,
+            "occupation_date": null,
+            "neutrality_basis": "preserve_reviewed_opening_no_attested_dated_permanent_Wu_island_administration",
+            "neutral_meaning": "本作未配置可證的初始勢力駐軍；不表示島上無人、沒有聚落或沒有地方社會。",
+            "neutral_meaning_ja": "史料で確認できる開始時の勢力守備隊を設定していません。無人島や集落・在地社会の不在を意味するものではありません。",
+            "detail_ja": "本作の朱崖は海南島方面を表す地図上の代理拠点であり、雷州半島の徐聞に置かれた郡治と同一ではありません。『元和郡県図志』の後世に伝わる逸文には、呉の赤烏二年（239年）に徐聞で朱崖郡を設けたとありますが、同じ段には服属せず土地を保持しなかった趣旨の記述もあり、文の重複を含む伝本として慎重に扱います。月は示されず、海南島全域の占領月は決められません。『三國志』呉主伝は赤烏五年（242年）七月に聶友・陸凱を珠崖・儋耳へ派遣したと記し、陸凱伝には征討の功績があります。しかし、本作の海南拠点を恒久的に支配・設郡し守将を置いた年月は確認できません。『宋書』州郡志の行政沿革も島嶼拠点へそのまま置き換えられません。そのため既存29本の開始時所属は中立のままとし、239年の設郡や242年7月の出征を自動占領日とせず、守将も創作しません。中立は無人島という意味ではありません。プレイヤーやAIが実際に占領した後は戦況に従い、史料注記で中立へ戻しません。",
+            "chronology": [
+              {
+                "year": 239,
+                "month": null,
+                "kind": "commandery_establishment_in_xuwen",
+                "precision": "later_transmitted_fragment_year_only",
+                "is_island_occupation": false,
+                "note": "徐聞設朱崖郡的年記，不推定海南島全島占領月份。",
+                "source": "https://www.shidianguji.com/zh/book/CADAL02035716/chapter/1l7kl9gv9e0qe"
+              },
+              {
+                "year": 242,
+                "month": 7,
+                "kind": "military_expedition",
+                "precision": "attested_annal_month",
+                "is_island_occupation": false,
+                "note": "聶友、陸凱出征珠崖、儋耳；出征不等於占領完成或設常駐守將。",
+                "source": "https://zh.wikisource.org/zh-hant/三國志/卷47"
+              }
+            ],
+            "summary_i18n": {
+              "zh-Hant": "239年徐聞設郡與242年7月遠征，不能確定本作海南節點的歸吳月份或持續統治。史實開局採中立，進行中的實際占領不因此修改。",
+              "ja": "239年の徐聞設郡と242年7月の遠征から、本作の海南拠点の呉への帰属月や持続的支配は確定できません。史実シナリオの開始時は中立とし、プレイ中の実際の占領は変更しません。"
             }
           },
           "xiping": {
