@@ -72,6 +72,10 @@ Pyodide 使用精確版本的官方 npm 產物：
 
 ## GitHub Actions 與線上驗收
 
-`.github/workflows/pages.yml` 在 `main` 更新或手動觸發後，先安裝鎖定核心，執行 Python／瀏覽器檢查並建置發布包，再透過 Pages 專用 artifact 部署。各 Action 以完整 commit SHA 固定；部署工作才獲得 `pages: write` 與 `id-token: write`。不需要把 Supabase 管理權限或私人憑據加入 Actions。
+`.github/workflows/remake.yml` 在`main`更新或PR時呼叫共用`web-checks.yml`，集中原生／WASM、雙後端規則、多劇本跨年、來源資料、素材及真實瀏覽器檢查。靜態發布包只建置一次，完成WASM／CPU與桌面／觸控Chromium驗收後保留為該commit的產物。
+
+`.github/workflows/pages.yml`在主驗證成功後接續執行；只接受本倉庫`main`推送的成功結果，下載該次執行的精確commit產物，不重跑另一份發布建置。手動發布也先呼叫相同共用門檻。部署前確認該commit仍為目前`main`，並檢查`runtime/build.json`中的commit、完整檔案清單、大小、逐檔SHA256與整體內容SHA；只驗證下載資料，不執行產物內的程式。各Action以完整commit SHA固定；部署工作才獲得`pages: write`與`id-token: write`，下載檢查工作使用唯讀Actions權限，不需要把Supabase管理權限或私人憑據加入Actions。
+
+檢查命令及報告定義統一見[遊戲驗證與回放](testing.md)：受控介面夾具、實際WASM／CPU對照、真實瀏覽器頁面操作、多劇本多種子的跨年回放分別驗證不同邊界。長期回放會檢查每月及繼承後的存檔往返、雙後端狀態與亂數一致、兵員守恆及容量，不以短程冒煙測試或單一戰局證明長期平衡。
 
 發布後仍須檢查正式網址實際載入、劇本選擇、勢力開戰、一次可見操作、存檔讀回及 console／網路錯誤。Actions 成功只表示建置與部署成功；正式環境的操作及資料校驗應另外驗收。可將線上 `runtime/build.json` 的 commit、內容清單與本機同一 commit 的發布包比較，避免只檢查到舊快取的首頁。

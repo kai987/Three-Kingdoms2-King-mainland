@@ -13,3 +13,16 @@
 行軍使用距離、地形、海陸路線、季節及季風；風暴在完整航程結算一次，預覽不抽亂數。新海路只在探索成功到達後顯示。詳見[行軍規則](hazardous-travel.md)。
 
 目前 AI 與事件畫面的精確範圍見 [AI 與事件](ai-and-events.md)。歷史歸城參考、有限生涯推定與本作區域配置分開記錄；配置齊全不代表逐人逐月的歷史駐軍已全部確證。
+
+## 目前規格的核對來源
+
+下表說明目前Web版的容量與素材，不把原版ROM、保留的舊素材或歷史調查快照改寫成目前規格。更新規則或素材時，應一併核對日文主[README](../README.md)、[繁中README](../README.zh-TW.md)與[操作說明](../game/README.md)。
+
+| 項目 | 目前設定 | 核對來源 |
+| --- | --- | --- |
+| 劇本與人物庫 | 25個劇本，預設217年7月；1,023名歷史人物 | [劇本索引](../game/config/campaigns/index.json)、[人物來源](../game/config/campaigns/people.json) |
+| 城池與兵員 | 最多115城，每城歷史在籍武將及已雇文吏合計99人，每方出戰10人，每將最多999兵 | [共用規則](../game/config/campaigns/shared.json)、[人物與名冊](../source/remake/officers.py)、[戰役校驗](../source/remake/campaign.py) |
+| 曆法 | 1旬10日，每月30日，上／中／下旬從1／11／21日開始 | [共用曆法設定](../game/config/campaigns/shared.json)、[旬月推進](../source/remake/campaign.py) |
+| 戰鬥畫面 | 1024×960，原版256×240的寬高各4倍 | [戰鬥素材索引](../game/assets/battle-enhanced/index.json)、[戰鬥說明](battle-scenes.md) |
+| 單挑外觀 | 12類兵器、13類坐騎；27位具名人物配置 | [動作圖集索引](../game/assets/battle-enhanced/index.json)、[穩定人物ID對照](../game/config/duel-appearances.json) |
+| 圖文事件 | 34類，最多保留最近100項 | [事件定義與上限](../source/remake/events.py)、[展示範圍](ai-and-events.md) |

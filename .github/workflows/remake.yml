@@ -1,60 +1,17 @@
 name: Web campaign checks
+
 on:
   push:
     branches: [main]
   pull_request:
+
 permissions:
   contents: read
+
+concurrency:
+  group: web-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  rules-and-data:
-    runs-on: ubuntu-latest
-    env:
-      RUSTUP_TOOLCHAIN: '1.93.0'
-      MARCH_CORE_BACKEND: rust
-      PYTHONDONTWRITEBYTECODE: '1'
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
-        with:
-          python-version: '3.13'
-      - name: Install pinned marching-core toolchain
-        run: rustup toolchain install 1.93.0 --profile minimal --component clippy,rustfmt --target wasm32-unknown-unknown
-      - name: Current campaign and source builds
-        run: |
-          python game/build_campaigns.py --check
-          python game/build_map_anchors.py
-          python game/build_map_presentation.py
-          python game/build_message_locales.py
-          python game/build_locales.py
-          git diff --exit-code -- game/data game/assets game/locales
-      - name: Rust rules and reproducible native/WASM build
-        run: |
-          cargo fmt --manifest-path crates/march-core/Cargo.toml --check
-          cargo clippy --manifest-path crates/march-core/Cargo.toml --locked --all-targets -- -D warnings
-          cargo test --manifest-path crates/march-core/Cargo.toml --locked
-          python game/build_march_core.py --check
-          node tests/march_wasm_parity.cjs
-      - name: Current campaign behavior
-        run: python -m unittest discover -s tests -p 'test_remake_*.py' -v
-      - name: Browser scripts and interactions
-        run: |
-          for file in game/*.js; do node --check "$file"; done
-          for file in tests/test_remake_*.cjs; do node "$file"; done
-      - name: Pinned self-hosted cloud SDK
-        run: |
-          npm ci --prefix tools/cloud-sdk --ignore-scripts
-          npm run check --prefix tools/cloud-sdk
-      - name: Original battle pixels and stable-ID portrait assets
-        run: |
-          python -m pip install -r tools/portraits/requirements.txt
-          python tools/portraits/build_generated.py --check
-          python game/build_portrait_manifest.py --check
-          python tools/battle-original/build.py --check
-          node tools/civil-portraits/build.cjs --check
-          node tools/battle-enhancement/build.cjs --check
-      - name: Offline source collector tests and whitespace
-        run: |
-          python -m unittest discover -s tools/officer-placement -p 'test_*.py' -v
-          git diff --check
+  verify:
+    uses: ./.github/workflows/web-checks.yml

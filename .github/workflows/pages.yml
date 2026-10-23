@@ -1,7 +1,9 @@
 name: Deploy playable Web campaign
 
 on:
-  push:
+  workflow_run:
+    workflows: [Web campaign checks]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -13,55 +15,102 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      PYTHONDONTWRITEBYTECODE: '1'
-      MARCH_CORE_BACKEND: python
-      RUSTUP_TOOLCHAIN: '1.93.0'
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
-        with:
-          python-version: '3.13'
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
-        with:
-          node-version: '24'
-          cache: npm
-          cache-dependency-path: tools/web-runtime/package-lock.json
-      - name: Install integrity-pinned browser Python runtime
-        run: npm ci --prefix tools/web-runtime --ignore-scripts
-      - name: Prepare native reference for campaign parity tests
-        run: |
-          rustup toolchain install 1.93.0 --profile minimal --target wasm32-unknown-unknown
-          python -B game/build_march_core.py --check
-      - name: Campaign rules and static release boundaries
-        run: python -m unittest discover -s tests -p 'test_remake_*.py' -v
-      - name: Browser scripts and interaction checks
-        run: |
-          for file in game/*.js; do node --check "$file"; done
-          for file in tests/test_remake_*.cjs; do node "$file"; done
-          git diff --check
-      - name: Build current immutable catalogs and approved public assets
-        run: python -B game/build_web.py --output build/web
-      - name: Real WebAssembly campaign and CPU replay parity
-        run: node tests/browser_engine_smoke.mjs build/web
-      - name: Upload Pages release
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
-        with:
-          path: build/web
-  deploy:
-    needs: build
+  # Manual publication uses the same gates. Pushes reuse the checked artifact.
+  verify-manual:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/web-checks.yml
+
+  prepare:
+    needs: verify-manual
+    if: >-
+      always() &&
+      ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && needs.verify-manual.result == 'success') ||
+       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.head_repository.full_name == github.repository))
     runs-on: ubuntu-latest
     permissions:
+      contents: read
+      actions: read
+    outputs:
+      current: ${{ steps.identity.outputs.current }}
+      commit: ${{ steps.identity.outputs.commit }}
+    steps:
+      - name: Require the successful main commit to still be current
+        id: identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          SOURCE_RUN: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.id || github.run_id }}
+        run: |
+          set -euo pipefail
+          current=$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)
+          printf 'commit=%s\nrun=%s\n' "$SOURCE_SHA" "$SOURCE_RUN" >> "$GITHUB_OUTPUT"
+          if [ "$SOURCE_SHA" = "$current" ]; then
+            printf 'current=true\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'current=false\n' >> "$GITHUB_OUTPUT"
+            echo 'A newer main commit exists; this superseded release will not deploy.'
+          fi
+      - name: Download only the exact successful main run's static artifact
+        if: steps.identity.outputs.current == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: verified-web-${{ steps.identity.outputs.commit }}
+          path: verified-web
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.identity.outputs.run }}
+      - name: Verify identity without executing downloaded project code
+        if: steps.identity.outputs.current == 'true'
+        env:
+          EXPECTED_SHA: ${{ steps.identity.outputs.commit }}
+        run: |
+          python - <<'PYVERIFY'
+          import hashlib, json, os
+          from pathlib import Path, PurePosixPath
+          root = Path('verified-web')
+          identity = json.loads((root / 'runtime/build.json').read_text())
+          assert identity['schema'] == 'tk2-static-build-v1'
+          assert identity['commit'] == os.environ['EXPECTED_SHA']
+          files = identity['files']
+          expected = set(files) | {'runtime/build.json'}
+          actual = {p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()}
+          assert actual == expected, 'The release has missing or unexpected files'
+          for name, record in files.items():
+              relative = PurePosixPath(name)
+              assert not relative.is_absolute() and '..' not in relative.parts
+              target = root / relative
+              assert not target.is_symlink()
+              raw = target.read_bytes()
+              assert len(raw) == record['bytes']
+              assert hashlib.sha256(raw).hexdigest() == record['sha256']
+          encoded = (json.dumps(files, ensure_ascii=False, allow_nan=False, separators=(',', ':')) + '\n').encode()
+          assert hashlib.sha256(encoded).hexdigest() == identity['content_sha256']
+          print('Verified the exact tested release:', identity['commit'])
+          PYVERIFY
+      - name: Upload verified Pages release
+        if: steps.identity.outputs.current == 'true'
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: verified-web
+
+  deploy:
+    needs: prepare
+    if: needs.prepare.outputs.current == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Recheck main immediately before deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_SHA: ${{ needs.prepare.outputs.commit }}
+        run: test "$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)" = "$EXPECTED_SHA"
       - name: Deploy verified artifact
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

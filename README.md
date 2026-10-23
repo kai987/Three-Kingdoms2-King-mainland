@@ -30,6 +30,8 @@
 
 1ターンは**1旬＝10日**です。各月は30日として、上旬・中旬・下旬の順に進みます。プレイヤーの戦略段階の後、AI勢力が順番に行動し、次の旬へ進みます。月収、回復、登場判定などの月次処理は月が替わるときに行います。
 
+戦場の旗印は通常、姓名の最初の1文字を表示します。同じ陣営に同姓の武将が複数いる場合、その姓の旗印だけを姓名の最後の1文字に変えます。敵味方は別々に判定し、名簿と情報欄にはフルネームを表示します。都市の「練度」は駐軍訓練の指標で、原作の一時的な戦術「士気向上」とは別に扱います。
+
 肖像は人物IDにひも付けた128×160版を使用し、原画像も保存しています。地方文吏には3種類の共用肖像を用意しています。地図は原作のドット絵に合わせ、陰平西側の赤褐色の山裾と陰平―成都間の緑の山を調整しました。変更範囲と元の素材は[地形素材の記録](art/map-western-range-v3/README.md)で確認できます。
 
 ## ローカルで起動する
@@ -64,7 +66,7 @@ python3 -B game/build_web.py
 python3 -m http.server 8890 --bind 127.0.0.1 --directory build
 ```
 
-**http://127.0.0.1:8890/web/** を開きます。`file://`で直接開かず、HTTP経由で確認してください。生成先は`build/web/`です。`main`へのpushでは[公開ワークフロー](.github/workflows/pages.yml)がテスト、ビルド、GitHub Pagesへの配置を行います。公開ファイルの範囲、実際の配信内容の確認方法は[Web版の公開手順](docs/web-deployment.md)に記載しています。
+**http://127.0.0.1:8890/web/** を開きます。`file://`で直接開かず、HTTP経由で確認してください。生成先は`build/web/`です。`main`へのpushでは[共通の検証](.github/workflows/web-checks.yml)で規則、長期戦役、実際のブラウザー操作を確認し、[公開ワークフロー](.github/workflows/pages.yml)が、そのcommitで検証済みの同じ静的ファイルをGitHub Pagesへ配置します。公開ファイルの範囲、実際の配信内容の確認方法は[Web版の公開手順](docs/web-deployment.md)に記載しています。
 
 ## 保存とクラウドアカウント
 
@@ -85,16 +87,9 @@ python3 -m http.server 8890 --bind 127.0.0.1 --directory build
 ```sh
 # 編集元と生成済みの戦役データを照合
 python3 -B game/build_campaigns.py --check
-
-# Pythonのルール・保存・APIなどの回帰テスト
-python3 -B -m unittest discover -s tests -p 'test_remake_*.py' -v
-
-# ブラウザー側スクリプトと操作のテスト（Node.jsが必要）
-for file in tests/test_remake_*.cjs; do node "$file"; done
-
-# Rust版とWASM版の計算結果を照合（行軍コアのビルド後）
-node tests/march_wasm_parity.cjs
 ```
+
+規則の回帰テスト、画面操作のテスト用データ、実際のWASM実行、ブラウザー操作、複数年にわたる戦役の再現テストは[検証手順](docs/testing.md)にまとめています。長期テストは184年・217年・263年の3シナリオを各2種類の種子で進め、PythonとRustの結果、毎月と君主継承後の保存・復元、乱数、兵員の保存則を照合します。資源の増加、前線の人手不足、輸送の停滞は観察項目として記録し、テスト通過をゲームバランスの証明とはしません。
 
 シナリオデータを変更するとデータのSHAも変わります。保存データは現在のデータセットに対して検証されるため、変更前の保存がそのまま使えるとは限りません。生成手順は[操作とビルド](game/README.md)、CIの検証項目は[Web campaign checks](.github/workflows/remake.yml)を参照してください。
 

@@ -1,0 +1,9 @@
+{
+  "name": "tk2-browser-acceptance",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned Chromium acceptance tests of the immutable static campaign release",
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  }
+}

@@ -1,0 +1,218 @@
+name: Shared Web campaign verification
+on:
+  workflow_call:
+permissions:
+  contents: read
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+  RUSTUP_TOOLCHAIN: '1.93.0'
+jobs:
+  native-rules:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            crates/march-core/target
+            build/march-core-target
+          key: ${{ runner.os }}-march-rust-1.93.0-${{ hashFiles('crates/march-core/Cargo.lock') }}-${{ hashFiles('crates/march-core/**/*.rs', 'crates/march-core/Cargo.toml', 'game/build_march_core.py') }}
+          restore-keys: ${{ runner.os }}-march-rust-1.93.0-${{ hashFiles('crates/march-core/Cargo.lock') }}-
+      - name: Install pinned marching-core toolchain
+        run: rustup toolchain install 1.93.0 --profile minimal --component clippy,rustfmt --target wasm32-unknown-unknown
+      - name: Rust rules and reproducible native/WASM build
+        run: |
+          cargo fmt --manifest-path crates/march-core/Cargo.toml --check
+          cargo clippy --manifest-path crates/march-core/Cargo.toml --locked --all-targets -- -D warnings
+          cargo test --manifest-path crates/march-core/Cargo.toml --locked
+          python game/build_march_core.py --check
+          node tests/march_wasm_parity.cjs
+      - name: Preserve native executable modes for the dependent parity jobs
+        run: tar -cf build/native-reference.tar -C build march-core
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: native-reference-${{ github.sha }}
+          path: build/native-reference.tar
+          retention-days: 3
+  campaign-rules:
+    needs: native-rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [python, rust]
+        shard: [1, 2, 3]
+    env:
+      MARCH_CORE_BACKEND: ${{ matrix.backend }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - name: Install the pinned runtime so release-boundary tests cannot skip
+        run: |
+          npm ci --prefix tools/web-runtime --ignore-scripts
+          test -f tools/web-runtime/node_modules/pyodide/package.json
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: native-reference-${{ github.sha }}
+          path: build
+      - name: Restore this run's checked native reference
+        run: tar -xf build/native-reference.tar -C build
+      - name: Campaign behavior with ${{ matrix.backend }} marching, shard ${{ matrix.shard }}/3
+        env:
+          TEST_SHARD: ${{ matrix.shard }}
+        run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 3
+  campaign-soak:
+    needs: native-rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        case: [early, middle, late]
+        seed: [3, 2026]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: native-reference-${{ github.sha }}
+          path: build
+      - name: Restore this run's checked native reference
+        run: tar -xf build/native-reference.tar -C build
+      - name: Cross-year Python and Rust campaign replay
+        env:
+          SOAK_CASE: ${{ matrix.case }}
+          SOAK_SEED: ${{ matrix.seed }}
+        run: python -B tools/campaign-soak/run.py --case "$SOAK_CASE" --seeds "$SOAK_SEED" --output "build/soak/${SOAK_CASE}-${SOAK_SEED}.json" --progress
+      - name: Retain replay diagnostics even after failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: campaign-soak-${{ matrix.case }}-${{ matrix.seed }}-${{ github.sha }}
+          path: build/soak
+          if-no-files-found: ignore
+          retention-days: 7
+  source-and-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      MARCH_CORE_BACKEND: python
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: tools/portraits/requirements.txt
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/cloud-sdk/package-lock.json
+      - name: Current campaign and source builds
+        run: |
+          python game/build_campaigns.py --check
+          python game/build_map_anchors.py
+          python game/build_map_presentation.py
+          python game/build_message_locales.py
+          python game/build_locales.py
+          git diff --exit-code -- game/data game/assets game/locales
+      - name: Browser scripts and interaction checks
+        run: |
+          for file in game/*.js; do node --check "$file"; done
+          for file in tests/test_remake_*.cjs; do node "$file"; done
+      - name: Pinned self-hosted cloud SDK
+        run: |
+          npm ci --prefix tools/cloud-sdk --ignore-scripts
+          npm run check --prefix tools/cloud-sdk
+      - name: Original battle pixels and stable-ID portrait assets
+        run: |
+          python -m pip install -r tools/portraits/requirements.txt
+          python tools/portraits/build_generated.py --check
+          python game/build_portrait_manifest.py --check
+          python tools/battle-original/build.py --check
+          node tools/civil-portraits/build.cjs --check
+          node tools/battle-enhancement/build.cjs --check
+      - name: Offline source collector tests and whitespace
+        run: |
+          python -m unittest discover -s tools/officer-placement -p 'test_*.py' -v
+          git diff --check
+  web-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      MARCH_CORE_BACKEND: python
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: |
+            tools/web-runtime/package-lock.json
+            tools/browser-tests/package-lock.json
+      - name: Install integrity-pinned runtime and browser test client
+        run: |
+          npm ci --prefix tools/web-runtime --ignore-scripts
+          npm ci --prefix tools/browser-tests --ignore-scripts
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-chromium-${{ hashFiles('tools/browser-tests/package-lock.json') }}
+      - name: Install pinned Chromium and its system dependencies
+        run: node tools/browser-tests/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Build current immutable catalogs and approved public assets once
+        run: python -B game/build_web.py --output build/web
+      - name: Real WebAssembly campaign and CPU replay parity
+        run: node tests/browser_engine_smoke.mjs build/web
+      - name: Actual desktop and touch browser interaction acceptance
+        run: node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/playwright.config.mjs
+      - name: Retain browser screenshots and failure traces
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-acceptance-${{ github.sha }}
+          path: |
+            build/browser-results
+            build/browser-report
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Upload the exact tested static release
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: verified-web-${{ github.sha }}
+          path: build/web
+          include-hidden-files: true
+          retention-days: 7
