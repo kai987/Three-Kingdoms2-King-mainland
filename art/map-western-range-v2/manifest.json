@@ -1,0 +1,224 @@
+{
+  "schema": "tk2-western-range-art-v2",
+  "map": {
+    "width": 1352,
+    "height": 1024
+  },
+  "before": {
+    "path": "art/map-western-range-v2/before-map.png",
+    "sha256": "3ff9ce070e6424e7d3dae04fa7b08157ddf0659ebe70d80fca20d5e72c2c7de2"
+  },
+  "sources": [
+    {
+      "path": "art/map-western-range-v2/generated-range-first-pass.png",
+      "sha256": "ee752d3f35eccbc0dc1219cdfa5f038202d61f552af24727b12708f362727ad7"
+    },
+    {
+      "path": "art/map-western-range-v2/generated-north.png",
+      "sha256": "1ad5abebe16a9afd9cd632f707e8cc4f78ee476c20aedb6802fb943e3c2f8c8a"
+    }
+  ],
+  "source_mapping": {
+    "full_range": {
+      "x": 0,
+      "y": 280,
+      "width": 288,
+      "height": 432
+    },
+    "north_reference_in_full_source": {
+      "left": 650,
+      "top": 210,
+      "width": 320,
+      "height": 220
+    },
+    "resampling": "nearest-neighbor, hard native-pixel polygon mask; no alpha blending",
+    "original_grass_preserved": "North: keep all grass outside the former green-peak footprint. South: keep original green pixels when R>5, G>170, B>10 and the replacement is grass.",
+    "northern_grass_texture": {
+      "x": 268,
+      "y": 353,
+      "width": 16,
+      "height": 21,
+      "former_peak_polygon": [
+        [
+          238,
+          347
+        ],
+        [
+          250,
+          350
+        ],
+        [
+          253,
+          358
+        ],
+        [
+          266,
+          365
+        ],
+        [
+          269,
+          373
+        ],
+        [
+          250,
+          379
+        ],
+        [
+          219,
+          380
+        ],
+        [
+          211,
+          375
+        ],
+        [
+          218,
+          367
+        ],
+        [
+          229,
+          363
+        ]
+      ],
+      "rule": "For remaining new green pixels, repeat the adjacent original grass texture at native pixel spacing. Never recolor red-brown rock or black crevices."
+    }
+  },
+  "targets": [
+    {
+      "id": "north",
+      "bbox": {
+        "x": 208,
+        "y": 346,
+        "width": 63,
+        "height": 40
+      },
+      "polygon": [
+        [
+          210,
+          355
+        ],
+        [
+          227,
+          348
+        ],
+        [
+          241,
+          346
+        ],
+        [
+          253,
+          349
+        ],
+        [
+          267,
+          366
+        ],
+        [
+          270,
+          379
+        ],
+        [
+          251,
+          385
+        ],
+        [
+          225,
+          382
+        ],
+        [
+          209,
+          375
+        ]
+      ],
+      "preview": {
+        "left": 165,
+        "top": 325,
+        "width": 115,
+        "height": 95
+      },
+      "source": "generated-north.png",
+      "candidate_pixels": 1795,
+      "protected_pixels": 40,
+      "changed_pixels": 1353,
+      "rejected_generated_river_pixels": 0,
+      "preserved_original_grass_pixels": 387,
+      "preserved_original_brown_ridge_pixels": 11
+    },
+    {
+      "id": "south",
+      "bbox": {
+        "x": 109,
+        "y": 625,
+        "width": 59,
+        "height": 35
+      },
+      "polygon": [
+        [
+          120,
+          628
+        ],
+        [
+          139,
+          625
+        ],
+        [
+          155,
+          636
+        ],
+        [
+          167,
+          646
+        ],
+        [
+          166,
+          658
+        ],
+        [
+          140,
+          659
+        ],
+        [
+          117,
+          655
+        ],
+        [
+          109,
+          646
+        ]
+      ],
+      "preview": {
+        "left": 95,
+        "top": 592,
+        "width": 110,
+        "height": 95
+      },
+      "source": "generated-range-first-pass.png",
+      "candidate_pixels": 1398,
+      "protected_pixels": 268,
+      "changed_pixels": 976,
+      "rejected_generated_river_pixels": 0,
+      "preserved_original_grass_pixels": 151,
+      "preserved_original_brown_ridge_pixels": 0
+    }
+  ],
+  "verification": {
+    "changed_pixels": 2329,
+    "outside_pixels_identical": 1381255,
+    "protected_pixels_identical": 525280
+  },
+  "protection_inputs": [
+    {
+      "path": "game/assets/map-road-centers.png",
+      "sha256": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7"
+    },
+    {
+      "path": "game/map-source/hydrology-ground.png",
+      "sha256": "5d80752ee48778501d9652b968bbffad5fe72c7adb7d6e5dd5f617d5b3fcf093"
+    }
+  ],
+  "output": {
+    "path": "game/assets/map-western-range.png",
+    "sha256": "da66399bf99e50ebd9559957c686585292f3d974825004e14e60037257dafae2"
+  },
+  "rule": "Only two native-pixel polygons are editable. Original v1 map pixels outside the polygons, and all original road/castle/river protection pixels, are byte-identical. No city, route, distance, campaign or save data rebuilt."
+}
