@@ -5,7 +5,7 @@ const text=fs.readFileSync(require.resolve('../game/app.js'),'utf8');
 const body=text.slice(text.indexOf('async function command('),text.indexOf('\nfunction openDialog('));
 const effects=JSON.parse(fs.readFileSync(require.resolve('../game/assets/audio/effects.json'),'utf8'));
 async function check(kind,payload,previous,next,expected,{result=null,error=false}={}){
- const heard=[],context={busy:false,view:{revision:1,game:previous},audioOutcome:null,
+ const heard=[],context={busy:false,view:{revision:1,game:previous},audioOutcome:null,localAutosave:null,
   gameAudio:{play:id=>heard.push(id)},setBusy:value=>{context.busy=value;},
   notice:(_message,bad)=>{if(bad)context.gameAudio.play('error');},
   request:async()=>{if(error)throw Error('Rejected');return{revision:2,game:next};},

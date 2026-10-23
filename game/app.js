@@ -4,6 +4,9 @@ let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null,ma
 let cloudSave=null,cloudSaveUI=null;
 let civilStaffUI=null,domesticUI=null;
 let campaignDifficulty='normal';
+const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
+const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
+document.addEventListener('game-language-change',()=>localAutosave?.refresh());
 const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
 const gameAudio=GameAudio.create();
@@ -172,13 +175,18 @@ function refreshDomesticButton(){
 }
 function setBusy(value){busy=value;refreshDomesticButton();document.body.classList.toggle('busy',value);if($('#city-jump'))$('#city-jump').disabled=value;$('#main-menu').disabled=value||!view?.game||!!setupPreview;cloudSaveUI?.refreshButton();if($('#event-history'))$('#event-history').disabled=value||!!setupPreview||!view?.game?.extension?.events?.items?.length;if(!value)gameEvents?.pump();}
 async function request(path,body,{raw=false,text=false}={}){
- const response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:raw?body:JSON.stringify(body)});
- const value=text&&response.ok?await response.text():await response.json();
+ const settings=body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:raw?body:JSON.stringify(body)};
+ if(viewCache&&typeof GameBrowserEngine!=='undefined'&&['/api/state','/api/command','/api/load'].includes(path))settings.tk2ViewCache=viewCache.token();
+ const response=await fetch(path,settings);
+ const decoded=text&&response.ok?await response.text():await response.json();
+ const value=text&&response.ok?decoded:(viewCache?viewCache.hydrate(decoded):decoded);
  if(!response.ok){if(response.status===409){if(typeof battleScene!=='undefined')battleScene?.reset();view=await request('/api/state');gameEvents?.observe(view,{baseline:true});render();}throw new Error(value.error||'操作未完成。');}
  return value;
 }
 async function command(kind,payload={}){
  if(busy)return false;
+ const resumeAutosave=localAutosave?.status().state==='saving';
+ localAutosave?.invalidate();let checkpoint=null;
  setBusy(true);notice();
  try{
   const previousView=view,previousTurn=view.game?.turn,previousOutcome=audioOutcome,previousBattleLog=view.game?.battle?.log||[];
@@ -205,11 +213,14 @@ async function command(kind,payload={}){
    if(previousTurn!==undefined&&view.game?.turn>previousTurn)sound='turn';
    if(!scene?.state().queued)gameAudio.play(sound);
   }
+  if(kind==='new')checkpoint='new';
+  else if(kind==='settle'||['result','finished'].includes(view.game?.phase))checkpoint='battle';
+  else if(kind==='end_turn'||previousTurn!==view.game?.turn)checkpoint='turn';
   await scene?.play();
   return true;
  }
  catch(e){notice(e.message,true);return false;}
- finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}
+ finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);if(checkpoint||resumeAutosave)void localAutosave?.checkpoint(checkpoint||'progress');}
 }
 function openDialog(title,body,actions){
  if(busy)return;
@@ -293,11 +304,29 @@ function renderMap(){
  const world=(preview?preview.world:view.catalog.world)||{x:0,y:0,width:1352,height:1024,background:view.catalog.map_presentation.background};
  const backgroundHref=mapBackgroundHref(world.background);
  const cameraKey=[world.x,world.y||0,world.width,world.height,world.background].join(':');
- if(mapNavigation){mapNavigation.destroy();mapNavigation=null;}
+ const date={day:1,...(preview||game||view.catalog.scenarios.find(s=>s.id===view.catalog.scenario_id))};
+ // Only presentation inputs belong in this key. Troops, funds, RNG and command
+ // revisions do not change the map, and must not reset its DOM or gestures.
+ const mapRenderCache=typeof GameMapRenderCache==='undefined'?null:GameMapRenderCache;
+ const sceneKey=mapRenderCache?.key({
+  scenario:preview?.id||view.catalog.scenario_id,preview:!!preview,focused,previewFaction:preview?.faction,
+  mode:mapMode,labels:cityLabels,locale:GameI18n.locale,date:[date.year,date.month,date.day],world,backgroundHref,
+  positions:board.map(c=>[c.id,mapPosition(c)]),
+  cities:active.map(c=>[c.id,owners[c.id]||'neutral',mapColor(owners[c.id]||'neutral'),cityName(c.id),cityCaption(c.id),ownerName(owners[c.id],c.id)]),
+  added,presentation:view.catalog.map_presentation,
+  offsets:preview?.city_label_offsets||view.catalog.city_label_offsets||{},
+  roads:preview?.road_additions||view.catalog.road_additions,
+  hazards:!!(preview?preview.travel_hazards:view.catalog.travel_hazards),
+  seas:preview?.sea_routes||view.catalog.sea_routes||[],discovered:!preview?view.catalog.discovered_routes||[]:[],
+  regional:preview?.regional_roads||view.catalog.regional_roads||[],
+  action:mapAction?{kind:mapAction.kind,source:mapAction.source,targets:mapAction.targets}:null
+ });
+ const reuseMap=!!mapNavigation&&!!mapRenderCache?.matches($('#world-map'),sceneKey);
+ if(mapNavigation&&!reuseMap){mapNavigation.destroy();mapNavigation=null;}
  if(cameraKey!==mapCameraKey){mapCamera=null;mapCameraKey=cameraKey;}
  const box=`${world.x} ${world.y||0} ${world.width} ${world.height}`;
- const date={day:1,...(preview||game||view.catalog.scenarios.find(s=>s.id===view.catalog.scenario_id))};
  if(preview)$('#date').textContent=`${GameCalendar.text(date)} · 选择势力`;
+ if(!reuseMap){
  const spritePixels=pixels=>pixels.map(([x,y])=>`<rect x="${x}" y="${y}" width="4" height="4"/>`).join('');
  const spriteDefs=`<g id="castle-fill-pixels">${spritePixels(view.catalog.map_presentation.castle_fill_pixels)}</g><g id="castle-outline-pixels">${spritePixels(view.catalog.map_presentation.castle_outline_pixels)}</g>`;
  const recolor=view.catalog.map_presentation.mountain_recolors;
@@ -350,6 +379,10 @@ function renderMap(){
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
  <div class="map-bottom-bar">${toolbar}<time id="map-date" datetime="${GameCalendar.iso(date)}" aria-label="${GameCalendar.text(date)}">${date.year}年<span>${date.month}月${GameCalendar.period(date.day)}</span></time></div>
  ${mapAction?`<div class="map-action-prompt" role="status"><span>${escapeHtml(cityName(mapAction.source))} · ${mapAction.kind==='depart'?'请选择高亮城池出征':'请选择高亮城池招募或劝降'}</span><button id="cancel-map-action">取消选城</button></div>`:''}`;
+ mapRenderCache?.remember($('#world-map'),sceneKey);
+ }
+ // Refresh handlers even when the SVG is retained: commands replace the game
+ // snapshot, so city clicks must read the current phase, owners and board.
  const choose=(id,inspect=false)=>{
   if(busy)return;
   if(mapAction&&!preview&&game.phase==='city')return finishMapAction(id);
@@ -366,8 +399,11 @@ function renderMap(){
   $('#map-zoom-out').disabled=zoom<=1+1e-6;$('#map-zoom-in').disabled=zoom>=4-1e-6;
   for(const[id,selected]of [['region',mapMode==='region'],['all-map',zoom<=1+1e-6]]){$('#'+id).classList.toggle('selected',selected);$('#'+id).setAttribute('aria-pressed',String(selected));}
  };
- let initialCameraUpdate=true;
- mapNavigation=MapNavigation.attach($('#world-map'),{world,initial:mapCamera||(mapMode==='region'?{x:center[0],y:center[1],zoom:3}:null),onChange:camera=>{mapCamera=camera;if(!initialCameraUpdate)mapMode=camera.zoom<=1+1e-6?'all':'custom';initialCameraUpdate=false;navigationControls();}});
+ if(!reuseMap){
+  let initialCameraUpdate=true;
+  mapNavigation=MapNavigation.attach($('#world-map'),{world,initial:mapCamera||(mapMode==='region'?{x:center[0],y:center[1],zoom:3}:null),onChange:camera=>{mapCamera=camera;if(!initialCameraUpdate)mapMode=camera.zoom<=1+1e-6?'all':'custom';initialCameraUpdate=false;navigationControls();}});
+ }else navigationControls();
+ $('#city-jump').disabled=busy;
  $('#region').onclick=()=>{mapNavigation.focus(center[0],center[1],3);mapMode='region';navigationControls();};
  $('#all-map').onclick=()=>mapNavigation.reset();
  $('#map-zoom-out').onclick=()=>mapNavigation.zoomBy(1/1.25);$('#map-zoom-in').onclick=()=>mapNavigation.zoomBy(1.25);
@@ -818,21 +854,58 @@ $('#save').onclick=async()=>{
  if(busy)return;
  try{const save=await request('/api/save',undefined,{text:true});localStorage.setItem('three-kingdoms-save',save);const blob=new Blob([save],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=GameI18n.t(view.catalog.title)+' '+GameI18n.t('存档')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notice('进度已保存。可用“读取进度”恢复，也可保留下载的存档文件。');}catch(e){notice(e.message,true);}
 };
-async function loadSave(save,guard=()=>true){if(busy||!guard())return false;setBusy(true);try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});battleScene?.reset();gameEvents?.observe(view,{baseline:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');return true;}catch(e){notice(e.message,true);return false;}finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);}}
-$('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-save');openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>`,'<button data-cancel>取消</button>');$('#load-local').onclick=()=>{try{loadSave(saved);}catch(e){notice('存档无效，当前进度未改变。',true);}};$('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(await file.text());}catch(e){notice('存档无效，当前进度未改变。',true);}};};
+async function loadSave(save,guard=()=>true){
+ if(busy||!guard())return false;
+ const resumeAutosave=localAutosave?.status().state==='saving';
+ localAutosave?.invalidate();let loaded=false;setBusy(true);
+ try{view=await request('/api/load',SaveTransfer.loadBody(save,view.revision),{raw:true});battleScene?.reset();gameEvents?.observe(view,{baseline:true});setupPreview=null;selectedCity=null;actor=target=null;dialog.close();render();notice('进度已恢复。');loaded=true;return true;}
+ catch(e){notice(e.message,true);return false;}
+ finally{await new Promise(resolve=>setTimeout(resolve,180));setBusy(false);if(loaded||resumeAutosave)void localAutosave?.checkpoint(loaded?'load':'progress');}
+}
+function confirmAutosave(metadata,message){
+ return new Promise(resolve=>{
+  const finish=value=>{dialog.removeEventListener('cancel',cancel);dialog.removeEventListener('close',closed);resolve(value);};
+  const cancel=()=>finish(false),closed=()=>finish(false);
+  const both=(zh,ja)=>`<span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">${escapeHtml(zh)}</span><span data-locale-only="ja" data-l10n-native="ja">${escapeHtml(ja)}</span>`;
+  openDialog('確認恢復',`<p>${both('恢復此自動存檔？目前未保存的進度將被取代。','この自動セーブを復元しますか？現在の未保存の進行は置き換えられます。')}</p><p>${both(GameI18n.t(metadata.title,'zh-Hant'),GameI18n.t(metadata.title,'ja'))}</p>`, '<button id="recover-cancel" data-cancel>'+both('取消','キャンセル')+'</button><button id="recover-confirm" class="primary">'+both('恢復存檔','復元する')+'</button>');
+  $('#dialog-title').innerHTML=both('確認恢復','復元の確認');GameI18n.apply();
+  dialog.addEventListener('cancel',cancel,{once:true});dialog.addEventListener('close',closed,{once:true});
+  $('#recover-confirm').onclick=()=>{finish(true);dialog.close();};
+  $('#recover-cancel').onclick=()=>{finish(false);showLoadDialog();};
+ });
+}
+function showLoadDialog(){
+ if(busy||!view)return;
+ let saved=null;try{saved=localStorage.getItem('three-kingdoms-save');}catch{/* Recovery can explain blocked storage without interrupting play. */}
+ openDialog('读取进度',`<div class="save-actions"><button id="load-local" ${saved?'':'disabled'}>读取本机保存</button><label class="field" for="save-file">选择存档文件<input id="save-file" type="file" accept=".json,application/json"></label></div><p class="small">存档无效时会保留当前进度。</p>${localAutosave?.statusHtml()||''}${localAutosave?.recoveryHtml()||''}`,'<button data-cancel>取消</button>');
+ localAutosave?.bindRecovery(dialog,{confirm:confirmAutosave});
+ $('#load-local').onclick=()=>{try{loadSave(saved);}catch{notice('存档无效，当前进度未改变。',true);}};
+ $('#save-file').onchange=async()=>{try{const file=$('#save-file').files[0];if(!file)return;if(file.size>2*1024*1024)throw new Error('too large');await loadSave(await file.text());}catch{notice('存档无效，当前进度未改变。',true);}};
+}
+$('#load').onclick=showLoadDialog;
 const utilityMenu=$('#utility-menu'),utilityTrigger=utilityMenu?.querySelector?.('summary');
 if(utilityTrigger&&utilityMenu.addEventListener){
  utilityMenu.addEventListener('click',event=>{const button=event.target.closest('button');if(button&&!button.disabled)utilityMenu.removeAttribute('open');});
  document.addEventListener('pointerdown',event=>{if(utilityMenu.open&&!utilityMenu.contains(event.target))utilityMenu.removeAttribute('open');});
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&utilityMenu.open){utilityMenu.removeAttribute('open');utilityTrigger.focus();event.preventDefault();}});
 }
-GameI18n.ready.then(()=>Promise.all([request('/api/state'),request('/assets/city-positions.json'),request('/api/cloud-config').catch(()=>({enabled:false,slots:5}))])).then(([value,positions,cloudConfig])=>{
- view=value;gameEvents?.observe(view,{baseline:true});mapPositions=positions;render();if(view.game)selectFaction();
- cloudSave=CloudSave.create(cloudConfig);
- const cloudRecovery=CloudRecovery.create(cloudConfig);
- cloudSaveUI=CloudSaveUI.create({cloud:cloudSave,recovery:cloudRecovery,getView:()=>view,getRawSave:()=>request('/api/save',undefined,{text:true}),loadRawSave:loadSave,openDialog,notice,isBusy:()=>busy});
- cloudSave.init().catch(()=>cloudSaveUI.refreshButton());
- cloudRecovery.init().then(state=>{if(state.hasCallback)cloudSaveUI.open();}).catch(()=>cloudSaveUI.refreshButton());
- void GamePortraits.load();
- void battleScene?.load();
-}).catch(e=>notice('游戏未能载入，请确认本地服务正在运行。',true));
+let appInitialized=false,appInitializing=false;
+async function initializeApp(){
+ if(appInitialized||appInitializing)return;
+ appInitializing=true;
+ try{
+  await GameI18n.ready;
+  if(typeof GameBrowserEngine!=='undefined'&&typeof GameBrowserEngine.whenReady==='function')await GameBrowserEngine.whenReady();
+  const [value,positions,cloudConfig]=await Promise.all([request('/api/state'),request('/assets/city-positions.json'),request('/api/cloud-config').catch(()=>({enabled:false,slots:5}))]);
+  view=value;$('#load').disabled=false;gameEvents?.observe(view,{baseline:true});mapPositions=positions;render();if(view.game)selectFaction();
+  cloudSave=CloudSave.create(cloudConfig);
+  const cloudRecovery=CloudRecovery.create(cloudConfig);
+  cloudSaveUI=CloudSaveUI.create({cloud:cloudSave,recovery:cloudRecovery,getView:()=>view,getRawSave:()=>request('/api/save',undefined,{text:true}),loadRawSave:loadSave,openDialog,notice,isBusy:()=>busy});
+  cloudSave.init().catch(()=>cloudSaveUI.refreshButton());
+  cloudRecovery.init().then(state=>{if(state.hasCallback)cloudSaveUI.open();}).catch(()=>cloudSaveUI.refreshButton());
+  void GamePortraits.load();void battleScene?.load();appInitialized=true;
+ }catch(error){if(typeof GameBrowserEngine!=='undefined'&&GameBrowserEngine.failed)notice();else notice(GameI18n.locale==='ja'?'ゲームを読み込めません。ページを再読み込みしてください。':'遊戲無法載入，請重新整理頁面後重試。',true);}
+ finally{appInitializing=false;}
+}
+document.addEventListener('game-engine-ready',()=>{if(!appInitialized)void initializeApp();});
+void initializeApp();

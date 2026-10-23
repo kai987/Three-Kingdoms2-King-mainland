@@ -13,9 +13,11 @@
   <script src="/calendar.js" defer></script>
   <script src="/audio.js" defer></script>
   <script src="/map-navigation.js" defer></script>
+  <script src="/map-render-cache.js" defer></script>
   <script src="/map-terrain.js" defer></script>
   <script src="/march-core.js" defer></script>
   <script src="/save-transfer.js" defer></script>
+  <script src="/view-cache.js" defer></script>
   <script src="/vendor/supabase.min.js" defer></script>
   <script src="/cloud-save.js" defer></script>
   <script src="/cloud-recovery.js" defer></script>
@@ -29,6 +31,7 @@
   <script src="/route-options.js" defer></script>
   <script src="/duel-appearance.js" defer></script>
   <script src="/battle-scene.js" defer></script>
+  <script src="/autosave.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
@@ -37,7 +40,7 @@
     <nav aria-label="進度與規則">
       <button id="main-menu" aria-controls="inspector" aria-expanded="false" disabled><span class="nav-full">返回主選單</span><span class="nav-short" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">主選單</span><span class="nav-short" data-locale-only="ja" data-l10n-native="ja" hidden>メニュー</span></button>
       <button id="save" disabled>儲存進度</button>
-      <button id="load">讀取進度</button>
+      <button id="load" disabled>讀取進度</button>
       <button id="cloud-save" disabled>雲端存檔</button>
       <details class="utility-menu" id="utility-menu">
         <summary><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">更多</span><span data-locale-only="ja" data-l10n-native="ja" hidden>その他</span></summary>

@@ -215,6 +215,20 @@ def _tk2_response_semantic(body):
  assert.deepEqual(state('isolated'),isolatedMenu,'all primary commands leave the other instance untouched');
  assert.equal(JSON.parse(request('/api/march-status')).engine,'python');
 
+ // Exercise the real optional wire path, not only the legacy bridge used by
+ // CPU replay. Hydration must reconstruct the same complete current view.
+ const {default:wireModule}=await import(pathToFileURL(path.join(root,'game/view-cache.js')).href);
+ const wireClient=wireModule.create(),fullView=state(),beforeWire=request('/api/save');
+ function compactView(token){
+  const result=bridges.get('primary').dispatch_compact_json('/api/state','GET','',token);
+  try{const response=result.toJs({dict_converter:Object.fromEntries});assert.equal(response.status,200);return {raw:response.body,packet:JSON.parse(response.body)};}finally{result.destroy();}
+ }
+ const initialWire=compactView('');assert.deepEqual(wireClient.hydrate(initialWire.packet),fullView);
+ const cachedWire=compactView(wireClient.token());assert(!('static_catalog' in cachedWire.packet));
+ assert.deepEqual(wireClient.hydrate(cachedWire.packet),fullView);
+ assert.equal(request('/api/save'),beforeWire,'Compact reads retain every saved byte and RNG draw');
+ assert(Buffer.byteLength(cachedWire.raw)<Buffer.byteLength(JSON.stringify(fullView))*.6,'Cached responses omit the immutable catalog');
+ console.log('browser view cache: real WASM full/cached hydration matches legacy state and exact save bytes');
  console.log(`browser engine smoke: ${trace.length} real requests, one AI turn, ${battleSettlements} battle settlements; replaying identical trace on CPU Python`);
  // Snapshot the verified build inputs so a concurrent build cannot change the
  // reference interpreter's sources or catalog identities during this check.

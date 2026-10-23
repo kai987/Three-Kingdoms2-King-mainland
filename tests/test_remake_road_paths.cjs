@@ -69,7 +69,7 @@ assert.equal(context.mapBackgroundHref(world.background),'/assets/map-road-cente
 assert.equal(context.mapBackgroundHref('/assets/map-basin.png'),'/assets/map-basin.png');
 const cameraContext={preview:null,view:{catalog:{world}},mapBackgroundHref:context.mapBackgroundHref};
 vm.createContext(cameraContext);
-const worldStart=source.indexOf(' const world='),worldEnd=source.indexOf(' if(mapNavigation)',worldStart);
+const worldStart=source.indexOf(' const world='),worldEnd=source.indexOf(' const date=',worldStart);
 vm.runInContext(source.slice(worldStart,worldEnd)+'\nglobalThis.renderedWorld={world,backgroundHref,cameraKey};',cameraContext);
 assert.equal(cameraContext.renderedWorld.backgroundHref,'/assets/map-road-centers.png');
 assert.equal(cameraContext.renderedWorld.cameraKey,'0:0:1352:1024:/assets/map-navigation.png');

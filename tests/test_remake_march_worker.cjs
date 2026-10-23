@@ -1,7 +1,7 @@
 /* The browser adapter must remain read-only and reject stale Worker results. */
 'use strict';
 const assert=require('node:assert/strict');
-const{createMarchCore}=require('../game/march-core.js');
+const{createMarchCore,stateKey}=require('../game/march-core.js');
 const{createJsonClient}=require('../game/march-worker.js');
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
 class Worker{
@@ -23,7 +23,7 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  assert.throws(()=>createJsonClient({exports:{}}),/export missing/);
  const worker=new Worker(),urls=[];
  const adapter=createMarchCore({workerFactory:()=>worker,fetcher:async url=>{urls.push(url);return{ok:true,json:async()=>({travel_rules:{},links:[['a','b']]})};}});
- const v1=makeView(1),v2=makeView(2),before=JSON.stringify(v1);let notified=0;
+ const v1=makeView(1),v2=makeView(2),before=JSON.stringify(v1);v2.game.month=8;let notified=0;
  const unsubscribe=adapter.subscribe(()=>notified++);
  const old=adapter.update(v1);await tick();assert.equal(worker.sent[0].request.op,'register');worker.reply(0,7);await tick();
  assert.deepEqual(worker.sent[1].request,{op:'batch',context:7,cities:[{id:'a',owner:'shu'},{id:'b',owner:'wei'}],month:7,discovered:['seen-route'],player:'shu'});
@@ -33,6 +33,9 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  worker.reply(1,{'a:b:fastest':{days:999}});await old;
  assert.equal(adapter.quotesFor(v2)['a:b:fastest'].days,2);assert.equal(notified,1);assert.equal(urls.length,1);
  await adapter.update(v2);assert.equal(worker.sent.length,3);
+ const rerender=JSON.parse(JSON.stringify(v2));rerender.revision=999;rerender.game.day=21;rerender.game.phase='battle';rerender.game.turn=80;rerender.game.year=217;rerender.game.officers={1:{troops:999,health:60}};Object.assign(rerender.game.cities.a,{gold:1000,grain:5000,reserves:2000,action_used:true});
+ await adapter.update(rerender);assert.equal(worker.sent.length,3,'Roster, resources, date/phase and command revision reuse the existing quote batch');assert.equal(adapter.quotesFor(rerender),adapter.quotesFor(v2));
+ assert.equal(stateKey(rerender),stateKey(v2));
  const troops=[20,40],quote={routes:[{hazard:{kind:'monsoon_storm'}}]};
  const preview=adapter.survivalPreview(v2,quote,troops);await tick();assert.deepEqual(worker.sent[3].request,{op:'survival_preview',quote,troops:[20,40]});
  worker.reply(3,{minimum:[2,4],maximum:[4,8]});assert.deepEqual(await preview,{minimum:[2,4],maximum:[4,8]});assert.deepEqual(troops,[20,40]);assert.equal(JSON.stringify(v1),before);
@@ -44,6 +47,22 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  const badWorker=new Worker(),bad=createMarchCore({workerFactory:()=>badWorker,fetcher:async()=>({ok:true,json:async()=>({})})});const broken=bad.update(v1);await tick();badWorker.reply(0,'bad core',false);await broken;assert.equal(bad.status.engine,'fallback');assert(badWorker.terminated);
  const timedWorker=new Worker(),timed=createMarchCore({workerFactory:()=>timedWorker,fetcher:async()=>({ok:true,json:async()=>({})}),timeout:5});await timed.update(v1);assert.equal(timed.status.engine,'fallback');assert(timedWorker.terminated);
  class AutoWorker extends Worker{postMessage(message){super.postMessage(message);const index=this.sent.length-1;queueMicrotask(()=>this.reply(index,message.request.op==='register'?index+1:message.request.op==='unregister'?true:{}));}}
+ const routeWorker=new AutoWorker(),routeUrls=[],routeAdapter=createMarchCore({workerFactory:()=>routeWorker,fetcher:async url=>{routeUrls.push(url);return{ok:true,json:async()=>({})};}});
+ const routeBase=makeView(1);routeBase.game.extension.travel.discovered=['seen-route','another-route'];await routeAdapter.update(routeBase);
+ const orderOnly=JSON.parse(JSON.stringify(routeBase));orderOnly.revision=2;orderOnly.game.cities={b:orderOnly.game.cities.b,a:orderOnly.game.cities.a};orderOnly.game.extension.travel.discovered.reverse();const orderBefore=JSON.stringify(orderOnly);
+ await routeAdapter.update(orderOnly);assert.equal(routeWorker.sent.filter(row=>row.request.op==='batch').length,1,'Equivalent city/discovery ordering does not repeat a batch');assert.equal(JSON.stringify(orderOnly),orderBefore,'Canonical cache keys never reorder the supplied game state');
+ const changes=[
+  ['month',view=>{view.game.month=8;}],['ownership',view=>{view.game.cities.b.owner='neutral';}],
+  ['city opening',view=>{view.game.cities.c={id:'c',owner:'shu'};}],['city removal',view=>{delete view.game.cities.b;}],
+  ['discovered route',view=>{view.game.extension.travel.discovered.push('new-sea-route');}],
+  ['player',view=>{view.game.player='wei';}],['geometry',view=>{view.catalog.travel_rules.geometry_sha256='new-geometry';}],
+  ['scenario',view=>{view.catalog.scenario_id='another-scenario';}]
+ ];
+ for(const [reason,change]of changes){
+  const changed=JSON.parse(JSON.stringify(routeBase));change(changed);const immutable=JSON.stringify(changed),count=routeWorker.sent.filter(row=>row.request.op==='batch').length;
+  await routeAdapter.update(changed);assert.equal(routeWorker.sent.filter(row=>row.request.op==='batch').length,count+1,reason+' recalculates routes');assert.deepEqual(routeAdapter.quotesFor(changed),{});assert.equal(routeAdapter.quotesFor(routeBase),null);assert.equal(JSON.stringify(changed),immutable,reason+' leaves the game and RNG unchanged');
+ }
+ assert.equal(routeUrls.length,3,'Months, ownership, active cities, discoveries and players reuse their immutable graph; new geometry/scenarios register new graphs');
  const cachedWorker=new AutoWorker(),cached=createMarchCore({workerFactory:()=>cachedWorker,fetcher:async()=>({ok:true,json:async()=>({})})});
  const scenarioView=id=>({...makeView(1),catalog:{...makeView(1).catalog,scenario_id:id}});
  for(let i=0;i<10;i++)await cached.update(scenarioView('scenario-'+i));await tick();
@@ -84,5 +103,5 @@ const makeView=revision=>({revision,catalog:{scenario_id:'same-catalog',travel_r
  assert.equal(JSON.stringify(nextGeometry),unchanged,'Geometry invalidation preserves game state and RNG');
  const returnToFirst=revised.update(firstGeometry);await tick();assert.equal(revisedWorker.sent[4].request.context,101);
  revisedWorker.reply(4,{});await returnToFirst;assert.equal(revisedUrls.length,2,'An existing immutable geometry graph can still be reused');
- console.log('march Worker: read-only snapshots, geometry-aware graph invalidation, bounded LRU/context disposal, pending eviction, stale batches/previews, empty routes, unsupported/error/timeout fallbacks passed');
+ console.log('march Worker: road-input quote caching, read-only snapshots, month/ownership/active-city/discovery/player/geometry invalidation, bounded LRU/context disposal, pending eviction, stale batches/previews, empty routes, unsupported/error/timeout fallbacks passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

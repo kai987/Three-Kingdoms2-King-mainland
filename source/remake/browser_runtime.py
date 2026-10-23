@@ -4,6 +4,7 @@ The worker mounts trusted source/data files before creating this bridge. Request
 payloads can select a known scenario, never a filesystem path or Python code.
 Each browser worker owns one session; no shared HTTP game service is involved.
 """
+from .view_transport import ViewTransport
 from collections import OrderedDict
 from copy import deepcopy
 import json
@@ -79,6 +80,7 @@ class BrowserRuntime:
         # JSON-only configuration cannot retain caller-owned mutable containers.
         previews = deepcopy(opening_previews)
         _encode(previews)
+        self._view_transport = ViewTransport()
         self.catalog_paths = paths
         with using_backend('python'):
             self.session = CampaignSession([paths[initial_scenario]])
@@ -179,11 +181,19 @@ class BrowserRuntime:
         self._catalog(payload['save'].get('scenario'))
         return self.session.load_save(payload['save'], payload['revision'])
 
-    def dispatch_json(self, path, method='GET', body=None):
+    def dispatch_compact_json(self, path, method='GET', body=None, known=''):
+        """Opt-in wire optimization; old callers still receive complete views."""
+        if not isinstance(known, str) or (known and not re.fullmatch(r'[a-f0-9]{64}(?::[a-f0-9]{64})?', known)):
+            return {'status': 400, 'body': _encode({'error': '视图缓存标识无效。'})}
+        return self.dispatch_json(path, method, body, _known=known)
+
+    def dispatch_json(self, path, method='GET', body=None, *, _known=None):
         """Return only status and JSON text; caller input is never executable."""
         try:
             with self.session.lock, using_backend('python'):
                 result = self._dispatch(path, method, body)
+                if _known is not None:
+                    result = self._view_transport.pack(result, self.session.game.catalog.sha256, _known)
                 return {'status': 200, 'body': _encode(result)}
         except GameError as exc:
             return {'status': exc.status, 'body': _encode({'error': str(exc)})}

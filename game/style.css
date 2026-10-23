@@ -1035,3 +1035,6 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 .domestic-city-previews ul{list-style:none;display:grid;gap:10px;padding:0;margin:10px 0 0;max-height:280px;overflow:auto}
 .domestic-city-previews li{display:grid;gap:4px;border-top:1px solid #000;padding-top:8px;font-size:16px;overflow-wrap:anywhere}
 .domestic-city-previews summary{cursor:pointer;min-height:32px}
+
+[data-autosave-recovery]{display:grid;gap:12px;margin-top:20px;padding-top:16px;border-top:2px solid var(--line)}
+[data-autosave-recover]{white-space:normal;text-align:left;overflow-wrap:anywhere}

@@ -2,7 +2,14 @@
 'use strict';
 (function(root){
  const geometryKey=view=>view.catalog.travel_rules.geometry_sha256||'';
- const stateKey=view=>view?.game&&view.catalog?.travel_rules?JSON.stringify([view.catalog.scenario_id,geometryKey(view),view.revision,view.game.player]):null;
+ // Route quotes depend on road conditions, rather than the command revision.
+ // Canonical copies avoid recalculating the full batch when roster/resources,
+ // turn phase or insertion order changes, while retaining active-city changes.
+ const stateKey=view=>view?.game&&view.catalog?.travel_rules?JSON.stringify([
+  view.catalog.scenario_id,geometryKey(view),view.game.player,view.game.month,
+  Object.values(view.game.cities).map(({id,owner})=>[id,owner]).sort(([a],[b])=>a<b?-1:a>b?1:0),
+  [...(view.game.extension?.travel?.discovered||[])].sort()
+ ]):null;
  function createMarchCore({workerFactory=()=>new Worker(root.GamePaths?.asset('/march-worker.js')||'/march-worker.js'),fetcher=(...args)=>fetch(...args),timeout=30000}={}){
   let worker=null,failed=false,sequence=0,key=null,quotes=null,pendingUpdate=null,engine='idle',lastError=null;
   const requests=new Map(),contexts=new Map(),subscribers=new Set();

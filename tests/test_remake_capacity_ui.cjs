@@ -53,7 +53,7 @@ vm.runInContext(source.slice(source.indexOf('function officerAttributes('),sourc
   assert.equal(japanese(`每城${limit}人；每方出战最多10人，包含主将。`),`1都市${limit}人まで。主将を含め各軍10人まで出陣できます。`);
  }
  // The current server's complete scenario list is displayed directly.
- Object.assign(context,{gameAudio:{setScene(){}},setupPreview:null,busy:false,mapMode:'all',mapColor:()=> '#fff',renderMap(){},document:{querySelectorAll:()=>[]},GameI18n:{locale:'zh-Hant'}});
+ Object.assign(context,{gameAudio:{setScene(){}},setupPreview:null,busy:false,mapMode:'all',mapColor:()=> '#fff',renderMap(){},document:{querySelectorAll:()=>[],addEventListener(){}},GameI18n:{locale:'zh-Hant'}});
  context.view.catalog.scenarios=Array.from({length:25},(_,i)=>({id:`mainland${184+i}-01`,title:`本篇${i+1}`,year:184+i,month:1,cities:115,capacity:99,serving:1,free:0,configured:1023,initial_owners:{home:'wei'},factions:[{id:'wei',city:'home',name:'曹操勢力',captain:'曹操'}],main_scenario:{group:'base',summary:'目前本篇配置'}}));
  context.view.catalog.scenario_id=context.view.catalog.scenarios[3].id;
  vm.runInContext(source.slice(source.indexOf("let campaignDifficulty="),source.indexOf("const $=")),context);
