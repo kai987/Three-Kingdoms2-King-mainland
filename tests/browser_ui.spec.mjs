@@ -35,6 +35,15 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  await page.locator('#begin').click();
  await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
  await waitIdle(page);
+ // A real new campaign presents its illustrated opening event before commands.
+ // Acknowledge that visible modal instead of forcing clicks through its backdrop.
+ const openingEvent=page.locator('#event-dialog');
+ await expect(openingEvent).toBeVisible();
+ await expect(openingEvent.locator('#event-title')).not.toBeEmpty();
+ await expect(openingEvent.locator('.event-art svg')).toBeVisible();
+ const dismissBatch=openingEvent.locator('[data-event-skip]');
+ await (await dismissBatch.count()?dismissBatch:openingEvent.locator('[data-event-next]')).click();
+ await expect(openingEvent).not.toBeVisible();
  const city=await page.locator('#city-jump').inputValue();
  await page.locator('#load').click();
  await expect(page.locator('[data-autosave-recover]').first()).toBeVisible();
