@@ -41,16 +41,18 @@ node tests/browser_engine_smoke.mjs build/web
 ```sh
 # 先按前節建置build/web，再安裝鎖定的測試套件及瀏覽器
 npm ci --prefix tools/browser-tests --ignore-scripts
-node tools/browser-tests/node_modules/playwright/cli.js install --with-deps chromium
+node tools/browser-tests/install.mjs
 node tools/browser-tests/node_modules/@playwright/test/cli.js test \
   --config tools/browser-tests/playwright.config.mjs
 ```
 
 [設定檔](../tools/browser-tests/playwright.config.mjs)自動啟動[隔離靜態測試服務](../tests/browser_static_server.mjs)，只監聽`127.0.0.1:18917`，保留正式站的`/Three-Kingdoms2-King-mainland/`子路徑，不提供遊戲API。每項測試使用獨立瀏覽器環境，不接管玩家原有分頁、瀏覽器本地保存或雲端登入。
 
+[安裝工具](../tools/browser-tests/install.mjs)使用鎖定套件的官方安裝命令。Linux先檢查完整Chromium的共享函式庫，缺少依賴才安裝系統套件；安裝後仍有缺漏會直接失敗，不跳過測試。macOS使用相同的固定瀏覽器安裝，不執行Linux的`ldd`或APT。驗收指定完整Chromium，與依賴檢查使用同一個執行檔。
+
 檢查範圍包括開局圖文事件的確認與關閉、彈窗與即時繁中／日文切換、編兵輸入上限及最大值按鈕、確認後保留彈窗、手動存讀、自動恢復的確認／取消及匯出原始位元組比較、拒絕無效JSON、鍵盤選城、地圖100%–400%邊界、滑鼠與可信觸控拖移，以及版本清單首次失敗後的明確重試。戰役操作透過可見控制項執行，不注入城池、人物或存檔狀態；版面檢查包含窄螢幕無橫向溢出，並收集頁面與console錯誤。
 
-截圖與報告寫入`build/browser-results/`及`build/browser-report/`；失敗時保留trace與video。CI保留這些診斷檔7天，便於檢查實際畫面與失敗步驟。啟動失敗案例的預期404與非預期錯誤分開判定，不把故意中斷一次下載當作一般場景的載入錯誤。
+截圖與報告寫入`build/browser-results/`及`build/browser-report/`；失敗時保留trace與video。CI依執行次數分開保留診斷檔7天，任務重跑不與先前報告衝突，便於檢查實際畫面與失敗步驟。啟動失敗案例的預期404與非預期錯誤分開判定，不把故意中斷一次下載當作一般場景的載入錯誤。
 
 ## 多劇本、多種子的跨年戰役
 

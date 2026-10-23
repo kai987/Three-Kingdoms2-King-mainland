@@ -60,7 +60,7 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  await expect(page.locator('#allocation-troops')).toHaveValue(maximum);
  await page.locator('#dialog-language').selectOption('ja');
  await expect(page.locator('html')).toHaveAttribute('lang','ja');
- await expect(page.locator('#dialog-title')).toContainText('兵の編制');
+ await expect(page.locator('#dialog-title')).toContainText('兵の編制',{useInnerText:true});
  await expect(page.locator('#allocation-officer')).toHaveValue(officer);
  await page.locator('#dialog-language').selectOption('zh-Hant');
  await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');
@@ -82,7 +82,7 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  await page.locator('[data-autosave-recover]').first().click();
  await expect(page.locator('#recover-confirm')).toBeVisible();
  await page.locator('#dialog-language').selectOption('ja');
- await expect(page.locator('#dialog-title')).toHaveText('復元の確認');
+ await expect(page.locator('#dialog-title')).toHaveText('復元の確認',{useInnerText:true});
  await page.locator('#recover-cancel').click();
  await expect(page.locator('[data-autosave-recover]').first()).toBeVisible();
  await page.locator('[data-autosave-recover]').first().click();

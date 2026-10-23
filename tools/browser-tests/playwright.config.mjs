@@ -13,6 +13,7 @@ export default defineConfig({
  retries:0,
  reporter:[['list'],['html',{outputFolder:root+'build/browser-report',open:'never'}]],
  use:{
+  channel:'chromium',
   baseURL:'http://127.0.0.1:18917/Three-Kingdoms2-King-mainland/',
   actionTimeout:30_000,trace:'retain-on-failure',screenshot:'only-on-failure',video:'retain-on-failure',
  },

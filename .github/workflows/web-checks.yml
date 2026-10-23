@@ -44,6 +44,7 @@ jobs:
         with:
           name: native-reference-${{ github.sha }}
           path: build/native-reference.tar
+          overwrite: true
           retention-days: 3
   campaign-rules:
     needs: native-rules
@@ -113,7 +114,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: campaign-soak-${{ matrix.case }}-${{ matrix.seed }}-${{ github.sha }}
+          name: campaign-soak-${{ matrix.case }}-${{ matrix.seed }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: build/soak
           if-no-files-found: ignore
           retention-days: 7
@@ -191,8 +192,8 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-chromium-${{ hashFiles('tools/browser-tests/package-lock.json') }}
-      - name: Install pinned Chromium and its system dependencies
-        run: node tools/browser-tests/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Install pinned full Chromium and check actual system dependencies
+        run: node tools/browser-tests/install.mjs
       - name: Build current immutable catalogs and approved public assets once
         run: python -B game/build_web.py --output build/web
       - name: Real WebAssembly campaign and CPU replay parity
@@ -203,7 +204,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: browser-acceptance-${{ github.sha }}
+          name: browser-acceptance-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: |
             build/browser-results
             build/browser-report
@@ -214,5 +215,6 @@ jobs:
         with:
           name: verified-web-${{ github.sha }}
           path: build/web
+          overwrite: true
           include-hidden-files: true
           retention-days: 7
