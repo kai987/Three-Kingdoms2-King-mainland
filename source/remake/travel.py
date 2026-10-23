@@ -49,6 +49,10 @@ def build_routes(data, spec):
 
 
 class TravelCampaign:
+    def _process_march_supply(self, state, through_turn=None):
+        from .march_supply import process_march_supply
+        return process_march_supply(state, through_turn)
+
     def _march_ids(self, state):
         ids = {i for r in state.extension.get('travel', {}).get('marches', []) for i in r['officers']}
         if 'logistics' in state.extension:
@@ -222,7 +226,8 @@ class TravelCampaign:
             raise GameError('目的城武将容量不足。')
         if mode=='explore' and not sum(state.officers[i].troops for i in ids):
             raise GameError('探索航行至少需要一名带兵武将。')
-        grain = max(1, sum(state.officers[i].troops for i in ids)//25) if kind == 'attack' else len(ids)*quote['grain_per_officer']
+        from .march_supply import create, estimate
+        grain = estimate(state, ids, quote)
         if source.grain < grain: raise GameError('行军粮食不足。')
         source.grain -= grain
         source.action_used = True
@@ -234,14 +239,14 @@ class TravelCampaign:
                    arrival_turn=state.turn+quote['turns'], checked_turn=0, quote=quote)
         row.update(departure_year=state.year,departure_month=state.month,departure_day=state.day,
                    departure_troops={str(i):state.officers[i].troops for i in ids},
-                   risks=self._march_risks(quote,state.rng))
+                   risks=self._march_risks(quote,state.rng), supply=create(state,ids,quote))
         travel['marches'].append(row)
         if 'domestic' in state.extension:
             from .domestic import on_departure
             on_departure(self,state,ids,source.id)
         self._note(state, f'{len(ids)}将从{self.catalog.map_cities[source.id]["name"]}出发，'
                    f'至{self.catalog.map_cities[target.id]["name"]}约{quote["distance_km"]}公里、{quote["days"]}日，'
-                   f'{quote["turns"]}旬后到达（每旬10天），耗粮{grain}。')
+                   f'{quote["turns"]}旬后到达（每旬10天），预装随军粮{grain}，按实际行军日数持续消耗。')
 
     def _prune_marches(self, state):
         travel = state.extension['travel']
@@ -250,14 +255,22 @@ class TravelCampaign:
             row['officers'] = [i for i in row['officers'] if i in source.roster.officer_ids
                                and state.officers[i].alive and state.officers[i].faction_id == row['owner']]
             if not row['officers'] or source.owner != row['owner']:
+                refund = row['supply']['remaining'] if source.owner == row['owner'] else 0
+                if source.owner == row['owner']:
+                    source.grain += refund
                 travel['marches'].remove(row)
                 self._note(state, f'行军{row["id"]}因出发城失陷或人员退场取消。')
+                if refund:
+                    self._note(state,f'行军{row["id"]}退回未耗随军粮{refund}。')
+                elif row['supply']['remaining']:
+                    self._note(state,f'行军{row["id"]}未耗随军粮{row["supply"]["remaining"]}随原城失陷。')
                 if row['owner']==state.player:
                     self._emit_event(state,'march_returned',city_ids=[row['source'],row['target']],
                         factions=[row['owner']],details=dict(march_id=row['id'],reason='origin_changed'))
 
     def _arrivals(self, state, payload):
         if state.phase != 'arrivals': raise GameError('当前没有待处理的到达事件。')
+        self._process_march_supply(state)
         if 'logistics' in state.extension:
             from .logistics import process_arrivals
             process_arrivals(self,state)
@@ -272,6 +285,7 @@ class TravelCampaign:
             if row['kind']=='transfer' and any(state.cities[k].owner not in (row['owner'], 'neutral')
                                               for k in row['quote']['path'][1:-1]):
                 travel['marches'].remove(row)
+                source.grain += row['supply']['remaining']
                 self._note(state, f'调动{row["id"]}沿途城池易主，路线中断，部队返回出发城编制。')
                 if row['owner']==state.player:
                     self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
@@ -279,6 +293,7 @@ class TravelCampaign:
                 continue
             if row['kind']=='transfer' and target.owner!=row['owner']:
                 travel['marches'].remove(row)
+                source.grain += row['supply']['remaining']
                 self._note(state,f'目的城已易主，调动{row["id"]}取消，部队返回出发城编制。')
                 if row['owner']==state.player:
                     self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
@@ -299,6 +314,7 @@ class TravelCampaign:
                     from .domestic import on_arrival
                     on_arrival(self,state,ids,target.id)
                 transfer_officers(source.roster, target.roster, ids)
+                target.grain += row['supply']['remaining']
                 self._discover_march_route(state,row)
                 travel['marches'].remove(row)
                 state.extension['officer_actions'].update({str(i): state.turn for i in ids})
@@ -455,7 +471,7 @@ class TravelCampaign:
             raise ValueError('march queue')
         seen,serials=set(),set()
         fields={'id','source','target','owner','officers','kind','mode','departure_turn','arrival_turn','checked_turn','quote',
-                'departure_year','departure_month','departure_day','departure_troops','risks'}
+                'departure_year','departure_month','departure_day','departure_troops','risks','supply'}
         for row in x['marches']:
             if not isinstance(row,dict) or set(row)!=fields:
                 raise ValueError('hazard march fields')
@@ -536,6 +552,12 @@ class TravelCampaign:
                 integer(amount,0,999,'departure troops')
                 if ident not in ids and state.officers[ident].alive:
                     raise ValueError('live manifest officer omitted')
+            from .march_supply import validate as validate_supply
+            validate_supply(row['supply'],quote,row['departure_turn'],state.turn)
+            if (row['supply']['troops'] != sum(manifest.values())
+                    or row['supply']['officers'] != len(manifest) or row['supply']['reserves']
+                    or row['supply']['from_cargo'] or row['supply']['returned_to_cargo']):
+                raise ValueError('March supply departure manifest')
             expected=self._march_risks(quote)
             risks=row['risks']
             if not isinstance(risks,list) or len(risks)!=len(expected):

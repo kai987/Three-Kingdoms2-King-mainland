@@ -30,7 +30,7 @@ function fixture(items=[]){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,34);
+ assert.equal(Object.keys(KINDS).length,35);
  assert(validEvent(row(1)));for(const bad of [{id:0},{kind:'<script>'},{month:13},{day:31},{audience:'other'},{person_ids:[3]},{details:[]},{turn:0}])assert(!validEvent({...row(1),...bad}));
  assert.deepEqual(eventRows({game:{extension:{events:{items:{}}}}}),[]);
  assert.notEqual(campaignKey(view([])),campaignKey(view([],2027)));
@@ -80,6 +80,12 @@ function fixture(items=[]){
  const ai=h.events.description(row(99,'ai_campaign',{factions:['wei','shu'],details:{coordinated:true}}));assert(ai.includes('曹操勢力'));assert(!ai.startsWith('劉備勢力'));
  const capture=h.events.description(row(99,'city_captured',{factions:['wei','shu']}));assert(capture.includes('改為曹操勢力'));assert(!capture.includes('改為劉備勢力'));
  const founded=h.events.description(row(99,'city_founded',{city_ids:['home','enemy']}));assert(founded.startsWith('成都依年代建置'));assert(founded.includes('承接長安'));
+ const upgrade=row(100,'city_upgraded',{year:240,month:1,day:1,audience:'world',person_ids:[],city_ids:['home'],factions:['wei'],details:{from_tier:'large',to_tier:'giant',income:{gold:90,grain:180,reserves:45}}});
+ assert(validEvent(upgrade));
+ for(const bad of [{to_tier:'unknown'},{from_tier:'giant'},{income:{gold:-1,grain:180,reserves:45}},{unknown:1}])assert(!validEvent({...upgrade,details:{...upgrade.details,...bad}}));
+ const upgraded=fixture();upgraded.events.observe(view([]),{baseline:true});upgraded.events.observe(view([upgrade]));upgraded.drain();
+ assert(upgraded.modal.open,'A city upgrade is a world event, regardless of the owning faction');assert(upgraded.modal.innerHTML.includes('都市擴建'));assert(upgraded.modal.innerHTML.includes('240年1月'));assert(upgraded.modal.innerHTML.includes('巨大都市'));assert(upgraded.modal.innerHTML.includes('event-map'));
+ const upgradeSnapshot=upgraded.events.snapshot();upgraded.i18n.locale='ja';upgraded.doc.emit('game-language-change');assert(upgraded.modal.innerHTML.includes('都市の発展'));assert(upgraded.modal.innerHTML.includes('本作独自'));assert.deepEqual(upgraded.events.snapshot(),upgradeSnapshot);
  const returned=reason=>h.events.description(row(99,'march_returned',{city_ids:['home','enemy'],details:{reason}}));
  assert(returned('army_lost').includes('帶兵全損'));assert(returned('army_lost').includes('武將返回成都原編制'));assert(!returned('army_lost').includes('返回長安'));
  assert(returned('target_changed').includes('目的城長安已易主'));assert(returned('target_changed').includes('保留在成都'));
@@ -96,5 +102,5 @@ function fixture(items=[]){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,localAutosave:null,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
- console.log('events: 34 bilingual scenes, independent staff snapshots/shared portraits, same-turn staff batching and local audience, stable-ID historical portraits/map, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 35 bilingual scenes, dated city upgrades, independent staff snapshots/shared portraits, same-turn staff batching and local audience, stable-ID historical portraits/map, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

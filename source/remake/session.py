@@ -2,6 +2,7 @@
 from threading import RLock
 from .campaign import Campaign, Catalog, GameError
 from .map_presentation import city_names,presentation,faction_colors
+from .city_economy import profiles_at,incomes_at
 
 
 def faction_resources(catalog, state=None):
@@ -70,8 +71,11 @@ class CampaignSession:
         result['catalog']['cities']=[dict(c,name=names[c['id']],administrative_name=c['name'])
                                      for c in result['catalog']['cities']]
         result['catalog']['map_presentation']=presentation()
-        result['catalog']['city_profiles']=self.game.catalog.data.get('city_profiles',{})
-        result['catalog']['city_income']=self.game.catalog.data.get('city_income',{})
+        date=self.game.state or self.game.catalog.data
+        year=date.year if self.game.state else date['start_year']
+        month=date.month if self.game.state else date['start_month']
+        result['catalog']['city_profiles']=profiles_at(self.game.catalog.data,year,month)
+        result['catalog']['city_income']=incomes_at(self.game.catalog.data,year,month)
         result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
         result['catalog']['world']=self.game.catalog.data.get('world')
         result['catalog']['scenario_id']=self.game.catalog.data['id']

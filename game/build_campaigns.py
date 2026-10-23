@@ -16,6 +16,8 @@ from hashlib import sha256
 
 # Support both the CLI and callers loading this builder by absolute file path.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
+from remake.city_economy import apply_opening_sizes
 from route_timing import apply_route_timing
 from route_render_source import validate_geometry_sources
 from officer_stat_sources import validate_original_virtue
@@ -110,6 +112,7 @@ def load_sources(*, timing=True):
     people = json.loads((SOURCE / 'people.json').read_text(encoding='utf-8'))
     shared = json.loads((SOURCE / 'shared.json').read_text(encoding='utf-8'))
     original_stats = read('game/config/references/original-officer-stats.json')
+    city_scale_rules = read('game/config/city-scale-rules.json')
     original_identities = read('game/config/portrait-identity-map.json')
     if sha256((ROOT/'game/config/portrait-identity-map.json').read_bytes()).hexdigest() != original_stats['identity_source_sha256']:
         raise ValueError('Original officer identity source differs')
@@ -132,6 +135,7 @@ def load_sources(*, timing=True):
         if source.get('schema') != 'tk2-campaign-override-v1' or source.get('id') != entry['id']:
             raise ValueError('Campaign source identity mismatch')
         data = apply_patch(shared['catalog'], source.get('overrides', {}))
+        apply_opening_sizes(data, city_scale_rules)
         current_people = apply_patch(persons, source.get('people_overrides', {}))
         if set(current_people) != set(order):
             raise ValueError('A campaign may not add or remove canonical person identities')

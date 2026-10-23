@@ -6,7 +6,7 @@ import json
 SCHEMA = 'tk2-view-v1'
 STATIC_FIELDS = frozenset(('title', 'factions', 'links', 'rules', 'calendar_rules',
     'difficulties', 'notes', 'library_count', 'coverage', 'tactics',
-    'map_presentation', 'city_profiles', 'city_income', 'road_additions', 'world',
+    'map_presentation', 'road_additions', 'world',
     'scenario_id', 'faction_colors', 'sea_routes', 'travel_hazards',
     'added_city_ids', 'regional_roads', 'city_label_offsets', 'city_history', 'scenarios',
     'travel_rules', 'coastal_city_ids'))

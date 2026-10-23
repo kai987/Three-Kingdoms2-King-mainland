@@ -16,6 +16,65 @@ vm.createContext(context);
 context.isRuler=id=>context.GameOfficerChoices.isRuler(id,context.view.game.extension?.leaders);
 vm.runInContext(source.slice(source.indexOf('const capacity='),source.indexOf('\nconst marching=')),context);
 vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),context);
+async function weightedTransferChecks(){
+ const nodes=new Map(),get=selector=>{
+  if(!nodes.has(selector))nodes.set(selector,{innerHTML:'',textContent:'',value:'',disabled:false});
+  return nodes.get(selector);
+ };
+ const people=Object.fromEntries([999,0,300].map((troops,id)=>[id,{alive:true,health:80,troops,
+  loyalty:80,experience:0,profile:{martial_strength:90-id,intellect:70,virtue:60}}]));
+ const origin={id:'home',owner:'wei',grain:10,roster:{officer_ids:[0,1,2]}},destination={id:'away',owner:'wei',roster:{officer_ids:[]}},
+  full={id:'full',owner:'wei',roster:{officer_ids:[3,4,5]}},blocked={id:'blocked',owner:'wei',roster:{officer_ids:[]}};
+ const quotes={};
+ for(const to of ['away','full'])for(const [mode,days]of [['fastest',20],['land',20],['sea',30],['explore',20]])quotes[`home:${to}:${mode}`]={days};
+ let inputs=[],submitted=null;
+ const fixture={GameOfficerChoices:require('../game/officer-choice.js'),GameOfficerSelection:require('../game/officer-selection.js'),
+  GameMarchSupply:require('../game/march-supply.js'),GameI18n:{apply(){}},capacity:()=>3,$:get,
+  view:{catalog:{travel_rules:{},rules:{city_officer_capacity:3}},game:{player:'wei',turn:1,officers:people,
+   cities:{home:origin,away:destination,full,blocked},extension:{officer_actions:{}}}},
+  escapeHtml:String,name:id=>'武将'+id,cityName:String,isRuler:()=>false,marching:()=>new Set(),
+  routeModeSelect:()=>'<select id="route-mode"></select>',
+  syncRouteModes(from,to,preferred){const mode=quotes[`${from}:${to}:${preferred}`]?preferred:quotes[`${from}:${to}:fastest`]?'fastest':'';get('#route-mode').value=mode;return mode;},
+  travelQuote:(from,to,mode)=>quotes[`${from}:${to}:${mode}`],travelEstimate:()=>'<p>Actual route estimate</p>',
+  previewSurvivors(){},watchRouteDialog(){},notice(){},
+  command(kind,payload){submitted={kind,payload};return Promise.resolve(true);},
+  dialog:{close(){},querySelectorAll(selector){return selector.includes(':checked')?inputs.filter(input=>input.checked):inputs;}},
+  openDialog(title,body){
+   inputs=[...body.matchAll(/<input type="checkbox" name="transfer-officer" value="([^"]+)"([^>]*)>/g)].map(match=>({
+    value:match[1],checked:/\bchecked\b/.test(match[2]),disabled:/\bdisabled\b/.test(match[2]),
+    addEventListener(type,handler){this[type]=handler;}
+   }));
+   get('#transfer-city').value='away';get('#route-mode').value='fastest';
+  }
+ };
+ vm.createContext(fixture);vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('// Classify actual runtime entry')),fixture);
+ const checked=()=>inputs.filter(input=>input.checked).map(input=>Number(input.value)),input=id=>inputs.find(input=>Number(input.value)===id),
+  click=id=>{const row=input(id);assert(!row.disabled,'User can only activate affordable eligible officers');row.checked=!row.checked;row.change();},
+  supply=amount=>assert(get('#transfer-supply').innerHTML.includes(`data-supply-loaded="${amount}"`));
+ const before=JSON.stringify(fixture.view.game);
+ fixture.transferCity(origin);
+ assert(input(0).disabled,'999 troops plus the officer need 22 grain for 20 days, not the old five-grain person fee');
+ assert(!input(1).disabled&&!input(2).disabled,'Zero-troop officers and smaller units use their actual lower food budget');
+ assert(get('#confirm-transfer').disabled);
+ click(1);supply(2);assert(!input(2).disabled);
+ click(2);supply(10);assert.deepEqual(checked(),[1,2]);assert(!get('#confirm-transfer').disabled,'The exact combined loading budget can be submitted');
+ get('#route-mode').value='sea';get('#route-mode').onchange();
+ assert.deepEqual(checked(),[1],'A longer route trims the latest selection instead of submitting an unaffordable convoy');supply(3);
+ assert(input(0).disabled&&input(2).disabled);
+ get('#route-mode').value='explore';get('#route-mode').onchange();
+ assert(get('#confirm-transfer').disabled,'An affordable zero-troop group still cannot explore unknown sea routes');
+ click(2);supply(10);assert(!get('#confirm-transfer').disabled);
+ get('#transfer-city').value='full';get('#transfer-city').onchange();
+ assert.deepEqual(checked(),[]);assert(inputs.every(row=>row.disabled));assert(get('#confirm-transfer').disabled,'Destination space is independent of the grain limit');
+ get('#transfer-city').value='away';get('#transfer-city').onchange();
+ get('#route-mode').value='fastest';get('#route-mode').onchange();click(1);click(2);supply(10);
+ get('#transfer-city').value='blocked';get('#transfer-city').onchange();
+ assert.deepEqual(checked(),[]);assert(inputs.every(row=>row.disabled));assert(get('#confirm-transfer').disabled);
+ assert.equal(get('#transfer-supply').innerHTML,'','A disconnected destination must clear the previous route\'s loading estimate');
+ get('#transfer-city').value='away';get('#transfer-city').onchange();click(1);click(2);
+ await get('#confirm-transfer').onclick();assert.equal(submitted.kind,'transfer');assert.deepEqual(Array.from(submitted.payload.officers),[1,2]);
+ assert.equal(submitted.payload.route_mode,'fastest');assert.equal(JSON.stringify(fixture.view.game),before,'Weighted selection and confirmation do not change saves or grain before a command response');
+}
 (async()=>{
  const before=JSON.stringify(context.view.game);
  context.renderCity();
@@ -64,6 +123,7 @@ vm.runInContext(source.slice(source.indexOf('function officerAttributes('),sourc
  assert(menu.includes('mainland187-01" selected'));assert(menu.includes('每城99人'));
  assert(!menu.includes('旧存档'));assert(!menu.includes('旧版战役配置'));
  assert(menu.includes('继续当前战役'),'Current running campaign still has a return control');
+ await weightedTransferChecks();
  // Exercise city capacity and deployment as independent configured rules.
  const python=spawnSync(process.env.PYTHON||'python3',['-B','-c',`
 import sys
@@ -88,5 +148,5 @@ except CapacityError:pass
 else:raise AssertionError('configured smaller capacity ignored')
 `],{cwd:root,encoding:'utf8',env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});
  assert.equal(python.status,0,python.stderr||python.stdout);
- console.log('capacity UI: 99-member roster/recruit/transfer/troop input, 10-member deployment, configured capacity and atomic overflow passed');
+ console.log('capacity UI: 99-member roster, 10-member deployment, weighted daily ration selection, route/destination limits, exploration guards and atomic overflow passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

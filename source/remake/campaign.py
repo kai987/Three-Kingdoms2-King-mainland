@@ -16,6 +16,7 @@ from .errors import GameError
 from . import civil_staff, domestic, logistics, presentation
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
+from .city_economy import income_at
 from .difficulty import DIFFICULTIES, catalog_choices, get_settings
 from .events import empty as empty_events, emit as emit_event, transition as record_events, validate as validate_events
 from .officers import (CityRoster, GameRules, OfficerProfile, PersonDefinition,
@@ -443,8 +444,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             self._note(state, f'新年更新人物库，记录{count}项年代事件；未自动招募或复活人物。')
         for city in state.cities.values():
             if city.owner != 'neutral':
-                income=self.catalog.data.get('city_income',{}).get(city.id,
-                    {'gold':r['monthly_gold_income'],'grain':r['monthly_grain_income'],'reserves':0})
+                income=income_at(self.catalog.data,city.id,state.year,state.month) or {
+                    'gold':r['monthly_gold_income'],'grain':r['monthly_grain_income'],'reserves':0}
                 city.gold += income['gold']
                 city.grain += income['grain']
                 domestic.add_reserves(self,state,city,income['reserves'],recruited=True)
@@ -457,6 +458,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
     def _complete_turn(self, state):
         """Commit one fixed ten-day turn and begin the next strategic phase."""
         state.completed_ai_turns.append(state.turn)
+        self._process_march_supply(state,through_turn=state.turn+1)
         state.day += 10
         month_changed = state.day > 30
         if month_changed:
@@ -633,7 +635,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             if battle['id'] != f'battle-{state.battle_counter}' or battle['outcome'] not in {None, 'victory', 'defeat', 'retreat'}:
                 raise ValueError('battle identity/outcome')
             integer(battle['round'], 1, 100000, 'battle round')
-            integer(battle['supply_cost'], 1, 10000, 'supply cost')
+            integer(battle['supply_cost'], 0, 10000, 'supply cost')
             if not isinstance(battle['log'], list) or len(battle['log']) > 80 or any(not isinstance(t, str) or len(t) > 500 for t in battle['log']):
                 raise ValueError('battle log')
             connected = battle['target'] in self._neighbors(battle['source'], state)

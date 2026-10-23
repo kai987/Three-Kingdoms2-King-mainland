@@ -9,6 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
 from remake import civil_staff, domestic, logistics
+from remake.city_economy import (apply_opening_sizes, income_at, incomes_at,
+                                 profile_at, profiles_at, tier_at)
 from campaign_fixtures import advance_month
 
 FIELDS = ('gold', 'grain', 'reserves')
@@ -86,7 +88,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
 
     def test_city_size_and_dated_precision_are_visible_in_playable_values(self):
         data = self.catalogs[217, 7].data
-        self.assertEqual(data['city_profiles']['shujun']['tier'], 'large')
+        self.assertEqual(data['city_profiles']['shujun']['tier'], 'giant')
         self.assertEqual(data['city_profiles']['guanghan']['tier'], 'normal')
         self.assertEqual(data['city_profiles']['shujun']['economy_region'],
                          data['city_profiles']['guanghan']['economy_region'])
@@ -221,6 +223,68 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 restored = Campaign(game.catalog)
                 restored.load_save(saved, 0)
                 self.assertEqual(canonical(restored.export_save()), canonical(saved))
+
+    def test_reviewed_city_sizes_and_opening_economy_apply_to_all25_dates(self):
+        expected = {'jingzhao': 'large', 'qiao': 'large', 'bajun': 'large',
+                    'wujun': 'large', 'kuaiji': 'large', 'chenliu': 'normal',
+                    'shujun': 'giant'}
+        for date, catalog in self.catalogs.items():
+            with self.subTest(date=date):
+                data = catalog.data
+                self.assertEqual(data['city_scale_rules']['basis'],
+                                 'user_authored_remake_city_scale_setting')
+                for city, tier in dict(expected, danyang='giant' if date >= (240, 1) else 'large').items():
+                    self.assertEqual(data['city_profiles'][city]['tier'], tier, city)
+                    self.assertEqual(profile_at(data, city, *date)['tier'], tier)
+                    self.assertEqual(income_at(data, city, *date), data['city_income'][city])
+                # These two cities share an authored regional/production profile.
+                # Their sole opening-size difference is reflected in every stock.
+                # Canonical date values were already quantized before this size
+                # edit; changing tiers may differ by at most two stock quanta.
+                for field in FIELDS:
+                    self.assertLessEqual(abs(data['initial_city_resources']['qiao'][field] -
+                                             data['initial_city_resources']['chenliu'][field] * 2),
+                                         data['city_scale_rules']['stock_quantum'][field] * 2)
+                self.assertGreater(data['city_income']['qiao']['gold'], data['city_income']['chenliu']['gold'])
+                self.assertGreater(data['city_income']['qiao']['grain'], data['city_income']['chenliu']['grain'])
+                self.assertGreater(data['city_income']['qiao']['reserves'], data['city_income']['chenliu']['reserves'])
+
+    def test_jianye_size_240_boundary_uses_opening_income_without_mutating_catalog(self):
+        data = self.catalogs[238, 1].data
+        before = canonical(data)
+        self.assertEqual(tier_at(data, 'danyang', 239, 12), 'large')
+        self.assertEqual(tier_at(data, 'danyang', 240, 1), 'giant')
+        self.assertEqual(profile_at(data, 'danyang', 240, 1)['tier'], 'giant')
+        self.assertEqual(profiles_at(data, 240, 1)['danyang']['tier'], 'giant')
+        self.assertEqual(income_at(data, 'danyang', 239, 12), data['city_income']['danyang'])
+        for field in FIELDS:
+            # Half-up for a 3/2 increase, consistently recomputed from the opening.
+            expected = (data['city_income']['danyang'][field] * 3 + 1) // 2
+            self.assertEqual(income_at(data, 'danyang', 240, 1)[field], expected)
+            self.assertEqual(income_at(data, 'danyang', 249, 1)[field], expected)
+        self.assertEqual(incomes_at(data, 240, 1)['danyang'], income_at(data, 'danyang', 240, 1))
+        late = self.catalogs[249, 1].data
+        self.assertEqual(income_at(late, 'danyang', 263, 5), late['city_income']['danyang'],
+                         'A post-upgrade opening is already scaled and must never scale twice')
+        profile_at(data, 'danyang', 240, 1)['tier'] = 'corrupt'
+        income_at(data, 'danyang', 240, 1)['gold'] = -1
+        self.assertEqual(canonical(data), before)
+        self.assertEqual(income_at(data, 'missing-city', 240, 1), None)
+        zero = deepcopy(data)
+        zero['city_income']['danyang']['gold'] = 0
+        self.assertEqual(income_at(zero, 'danyang', 240, 1)['gold'], 0,
+                         'A size upgrade must not invent an absent type of production')
+
+    def test_city_scale_builder_rejects_double_application_and_changed_source_tier(self):
+        data = read('game/config/campaigns/shared.json')['catalog']
+        rules = read('game/config/city-scale-rules.json')
+        opening = deepcopy(data)
+        apply_opening_sizes(opening, rules)
+        with self.assertRaisesRegex(ValueError, 'already applied'):
+            apply_opening_sizes(opening, rules)
+        data['city_profiles']['jingzhao']['tier'] = 'normal'
+        with self.assertRaisesRegex(ValueError, 'Canonical source tier changed'):
+            apply_opening_sizes(data, rules)
 
 
 if __name__ == '__main__':

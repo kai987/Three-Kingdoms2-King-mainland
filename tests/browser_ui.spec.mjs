@@ -181,19 +181,103 @@ test('failed manifest has an explicit retry starting a fresh real Worker',async(
  expect(errors.get(page).filter(message=>!message.includes('404'))).toEqual([]);
 });
 
+test('daily marching grain loads once and consumes actual days through visible transfer controls',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland217-07');
+ await page.locator('input[name=faction][value=shu]').check();
+ await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);
+ const dismissEvents=async()=>{
+  const events=page.locator('#event-dialog');
+  if(await events.isVisible()){
+   const skip=events.locator('[data-event-skip]');
+   await (await skip.count()?skip:events.locator('[data-event-next]')).click();
+   await expect(events).not.toBeVisible();
+  }
+ };
+ const exported=async()=>{
+  const download=page.waitForEvent('download');
+  await page.locator('#save').click();
+  return JSON.parse(await readFile(await(await download).path(),'utf8'));
+ };
+ await dismissEvents();
+ await page.locator('#city-jump').selectOption('shujun');
+ const initial=await exported(),source='shujun',target='bajun';
+ expect(initial.state.extension.domestic.factions.shu.civil).toBeNull();
+ expect(initial.state.extension.domestic.factions.shu.military).toBeNull();
+ expect(initial.state.day).toBe(1);
+ const startingGrain=initial.state.cities[source].grain;
+ await page.locator('#transfer').click();
+ await expect(page.locator('#transfer-city')).toBeVisible();
+ await page.locator('#transfer-city').selectOption(target);
+ const leader=String(initial.state.extension.leaders.shu);
+ const officer=page.locator(`input[name=transfer-officer]:enabled:not([value="${leader}"])`).first();
+ const officerText=await officer.getAttribute('value');
+ expect(officerText).toBeTruthy();
+ expect(initial.state.officers[officerText].alive).toBe(true);
+ await officer.check();
+ const preview=page.locator('#transfer-supply [data-supply-loaded]');
+ await expect(preview).toHaveCount(1);
+ const loaded=Number(await preview.getAttribute('data-supply-loaded'));
+ expect(loaded).toBeGreaterThan(0);
+ await expect(preview).toHaveAttribute('data-supply-consumed','0');
+ await expect(preview).toHaveAttribute('data-supply-remaining',String(loaded));
+ await expect(page.locator('#confirm-transfer')).toBeEnabled();
+ await page.locator('#confirm-transfer').click();
+ await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ const departing=await exported();
+ const column=departing.state.extension.travel.marches.find(row=>row.source===source&&row.target===target);
+ expect(column).toBeTruthy();
+ expect(column.officers.map(String)).toEqual([officerText]);
+ expect(column.quote.routes.every(leg=>leg.mode==='land'&&!leg.hazard)).toBe(true);
+ const units=initial.state.officers[officerText].troops+100;
+ expect(loaded).toBe(Math.ceil(units*column.quote.days/1000));
+ expect(column.supply).toMatchObject({loaded,consumed:0,remaining:loaded,elapsed_days:0});
+ expect(departing.state.cities[source].grain).toBe(startingGrain-loaded);
+ const live=page.locator(`[data-march="${column.id}"] [data-supply-loaded]`);
+ await expect(live).toHaveAttribute('data-supply-loaded',String(loaded));
+ await expect(live).toHaveAttribute('data-supply-consumed','0');
+ await expect(live).toHaveAttribute('data-supply-remaining',String(loaded));
+ await page.locator('#end-turn').click();await waitIdle(page);
+ await dismissEvents();
+ await expect(page.locator('#run-ai')).toBeVisible();
+ await page.locator('#run-ai').click();await waitIdle(page);await dismissEvents();
+ await expect(page.locator('#run-ai')).not.toBeVisible();
+ const next=await exported();
+ expect(next.state.turn).toBe(departing.state.turn+1);
+ expect([next.state.year,next.state.month,next.state.day]).toEqual([217,7,11]);
+ const marched=next.state.extension.travel.marches.find(row=>row.id===column.id);
+ expect(marched).toBeTruthy();
+ const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/1000);
+ expect(marched.supply).toMatchObject({loaded,consumed,remaining:loaded-consumed,elapsed_days:elapsed});
+ // No delegate was appointed and no monthly income is due: all food spent
+ // this turn comes out of the travelling bag, never the origin store again.
+ expect(next.state.extension.domestic.factions.shu.civil).toBeNull();
+ expect(next.state.extension.domestic.factions.shu.military).toBeNull();
+ expect(next.state.cities[source].grain).toBe(departing.state.cities[source].grain);
+ expect(next.state.cities[source].owner).toBe('shu');
+ await expect(live).toHaveAttribute('data-supply-loaded',String(loaded));
+ await expect(live).toHaveAttribute('data-supply-consumed',String(consumed));
+ await expect(live).toHaveAttribute('data-supply-remaining',String(loaded-consumed));
+ await live.scrollIntoViewIfNeeded();
+ await page.screenshot({path:testInfo.outputPath('daily-march-grain.png'),fullPage:true});
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('city size labels and the report adapt to available space while retaining map controls',async({page},testInfo)=>{
  await opening(page);
  await page.locator('#scenario').selectOption('mainland217-07');
  const labels=page.locator('#map-labels'),names=page.locator('[data-city-label]');
  await expect(labels).toHaveAttribute('data-label-mode','major');
  const majorCount=await names.count();
- for(const [mode,count] of [['giant',4],['large',9],['all',110],['none',0],['major',majorCount]]){
+ for(const [mode,count] of [['giant',4],['large',12],['all',110],['none',0],['major',majorCount]]){
   await labels.click();await expect(labels).toHaveAttribute('data-label-mode',mode);await expect(names).toHaveCount(count);
  }
  await labels.click();await labels.click();
  await page.locator('#scenario').selectOption('mainland225-07');
- await expect(labels).toHaveAttribute('data-label-mode','large');await expect(names).toHaveCount(10);
- await page.locator('#scenario').selectOption('mainland217-07');await expect(names).toHaveCount(9);
+ await expect(labels).toHaveAttribute('data-label-mode','large');await expect(names).toHaveCount(13);
+ await page.locator('#scenario').selectOption('mainland217-07');await expect(names).toHaveCount(12);
  await page.locator('#map-zoom-in').click();
  const zoom=await page.locator('#world-map').getAttribute('data-zoom');
  const city=await page.locator('#city-jump').inputValue();

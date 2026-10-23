@@ -1,0 +1,13 @@
+'use strict';
+const assert=require('node:assert/strict'),{execFileSync}=require('node:child_process'),path=require('node:path');
+const supply=require('../game/march-supply.js');
+const cases=[];
+for(const troops of [0,1,300,999,9990,98901])for(const officers of [1,10,99])for(const days of [1,10,12,33,400])for(const reserves of [0,50,100000])cases.push([troops,officers,days,reserves]);
+const actual=cases.map(row=>supply.requiredGrain(...row));
+const expected=JSON.parse(execFileSync('python3',['-B','-c','import json,sys;from remake.march_supply import required_grain;print(json.dumps([required_grain(*x) for x in json.load(sys.stdin)]))'],{cwd:path.join(__dirname,'../source'),input:JSON.stringify(cases),encoding:'utf8'}));
+assert.deepEqual(actual,expected);
+assert.equal(supply.requiredGrain(1000,1,12),14);assert.equal(supply.requiredGrain(1000,1,10),11);
+assert.equal(supply.estimate({a:{troops:600},b:{troops:300}},['a','b'],{days:20},200),26);
+for(const bad of [-1,1.5,NaN,Infinity])assert.throws(()=>supply.requiredGrain(bad,1,10));
+assert.throws(()=>supply.requiredGrain(Number.MAX_SAFE_INTEGER,99,1000000));
+console.log(`march supply: ${cases.length} real Python/JS route-duration budgets, troop/escort/reserve accounting and numeric boundaries passed`);

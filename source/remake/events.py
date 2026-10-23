@@ -19,6 +19,7 @@ DETAILS = {
     'defection': {'from_faction', 'to_faction', 'actor'},
     'officer_death': {'released_troops'}, 'succession': {'previous'},
     'faction_ended': set(), 'city_founded': {'parent'},
+    'city_upgraded': {'from_tier','to_tier','income'},
     'city_captured': {'previous_owner'},
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
@@ -152,6 +153,14 @@ def transition(campaign, before, after, kind, payload):
             rule = campaign.catalog.data['city_foundings'][city]
             emit(campaign, after, 'city_founded', city_ids=[city, rule['parent']],
                  factions=[value.owner], details=dict(parent=rule['parent']), audience='world')
+        elif (before.year,before.month)!=(after.year,after.month):
+            from .city_economy import tier_at,income_at
+            previous=tier_at(campaign.catalog.data,city,before.year,before.month)
+            current=tier_at(campaign.catalog.data,city,after.year,after.month)
+            if current!=previous:
+                emit(campaign,after,'city_upgraded',city_ids=[city],factions=[value.owner],
+                     details=dict(from_tier=previous,to_tier=current,
+                                  income=income_at(campaign.catalog.data,city,after.year,after.month)),audience='world')
     for faction, leader in sorted(after.extension['leaders'].items()):
         previous = before.extension['leaders'].get(faction)
         if leader is not None and leader != previous and faction not in after.extension.get('pending_succession', {}) and kind != 'choose_successor':
@@ -233,6 +242,19 @@ def validate(campaign, state):
             raise ValueError('Campaign event JSON value')
         if row['kind'] in STAFF_KINDS:
             _validate_staff_event(row)
+        if row['kind']=='city_upgraded':
+            from .city_economy import tier_at,income_at
+            details=row['details']
+            if (set(details)!=DETAILS[row['kind']] or len(row['city_ids'])!=1 or row['person_ids']
+                    or len(row['factions'])!=1 or row['audience']!='world'):
+                raise ValueError('City size event fields')
+            city=row['city_ids'][0]
+            previous_year,previous_month=(row['year'],row['month']-1) if row['month']>1 else (row['year']-1,12)
+            if (details['from_tier']!=tier_at(campaign.catalog.data,city,previous_year,previous_month)
+                    or details['to_tier']!=tier_at(campaign.catalog.data,city,row['year'],row['month'])
+                    or details['from_tier']==details['to_tier'] or row['day']!=1
+                    or details['income']!=income_at(campaign.catalog.data,city,row['year'],row['month'])):
+                raise ValueError('City size event date or income')
         if row['kind'] in TRANSPORT_KINDS or row['kind']=='domestic_report':
             details=row['details']
             if set(details)!=DETAILS[row['kind']]:

@@ -11,6 +11,7 @@ from .difficulty import attack_budget, get_settings
 from .errors import GameError
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
+from .march_supply import estimate as march_grain
 from .route_hazards import allocate_survivors
 
 
@@ -122,12 +123,12 @@ class StrategicAI:
     def attack_option(self, city, target):
         ids = self.army(city, target.id)
         total = sum(self.state.officers[i].troops for i in ids)
-        if total < self.settings['min_attack_troops'] or city.grain < max(1, total//25):
+        if total < self.settings['min_attack_troops']:
             return None
         options = []
         for mode in ('land', 'fastest'):
             quote = self.quote(city, target, mode, adjacent=True)
-            if self.safe(quote, ids):
+            if self.safe(quote, ids) and city.grain >= march_grain(self.state, ids, quote):
                 survivors = self.survivors(quote, ids)
                 options.append(dict(source=city.id, target=target.id, officers=ids,
                                     mode=mode, quote=quote, survivors=survivors))
@@ -145,7 +146,8 @@ class StrategicAI:
                 found = None
                 for departure in range(arrival-1, turn-1, -1):
                     quote = self.quote(source, target, member['mode'], adjacent=True, departure=departure)
-                    if self.safe(quote, member['officers']) and departure+quote['turns'] == arrival:
+                    if (self.safe(quote, member['officers']) and departure+quote['turns'] == arrival
+                            and source.grain >= march_grain(self.state, member['officers'], quote)):
                         found = dict(source=source.id, target=target.id, mode=member['mode'],
                             departure_turn=departure, arrival_turn=arrival,
                             officers=list(member['officers']), march_id=None)
@@ -185,8 +187,13 @@ class StrategicAI:
                     orders = self.schedule(members)
                     if not orders:
                         continue
-                    days = sum(o['quote']['days'] for o in members)
-                    supply = sum(max(1, sum(self.state.officers[i].troops for i in o['officers'])//25) for o in members)
+                    # Delayed columns use their actual departure month's
+                    # routes, including any changed seasonal travel time.
+                    scheduled = [(o, self.quote(self.state.cities[o['source']], target,
+                        o['mode'], adjacent=True, departure=o['departure_turn'])) for o in orders]
+                    days = sum(quote['days'] for _, quote in scheduled)
+                    supply = sum(march_grain(self.state, order['officers'], quote)
+                                 for order, quote in scheduled)
                     score = min(power-required,required//3)-days*3-supply*2+min(200,target.gold//20+target.grain//200)
                     feasible.append((-score, size, target.id, tuple(o['source'] for o in members), orders))
                 if feasible:
@@ -244,7 +251,7 @@ class StrategicAI:
             ids = order['officers']
             quote = self.quote(city, target, order['mode'], adjacent=True) if target else None
             usable = target and target.owner != city.owner and all(i in self.army(city,target.id) for i in ids)
-            if (not usable or not self.safe(quote,ids) or city.grain < max(1,sum(self.state.officers[i].troops for i in ids)//25)
+            if (not usable or not self.safe(quote,ids) or city.grain < march_grain(self.state, ids, quote)
                     or self.state.turn+quote['turns'] > order['arrival_turn']
                     or self.state.extension['ai_attacks'] >= self.budget):
                 plan['orders'].remove(order)
@@ -281,7 +288,14 @@ class StrategicAI:
                 continue
             for mode in ('land','fastest'):
                 quote = self.quote(city,target,mode,adjacent=False)
-                chosen = ids[:min(3,room,city.grain//quote['grain_per_officer'])] if quote else []
+                chosen = []
+                if quote:
+                    for ident in ids:
+                        if len(chosen) >= min(3, room):
+                            break
+                        candidate = chosen + [ident]
+                        if march_grain(self.state, candidate, quote) <= city.grain:
+                            chosen = candidate
                 if chosen and self.safe(quote,chosen):
                     destinations.append((self.strength(target)-self.threat(target),quote['days'],target.id,mode,chosen))
         if not destinations:

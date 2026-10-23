@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake.officers import initialize_officer, PersonDefinition, OfficerProfile
+from remake.march_supply import estimate
 from campaign_fixtures import controlled_catalog, reach_battle
 
 
@@ -61,7 +62,10 @@ class CampaignTests(unittest.TestCase):
         self.assertEqual(self.game.state.rng.draws, 0)
         self.assertFalse(self.game.state.cities['xiangyang'].action_used)
         self.cmd('depart', dict(source='xiangyang', target='nanjun', officers=[999]))
-        self.assertEqual(self.game.state.cities['xiangyang'].grain, 3800 - 24)
+        row=self.game.state.extension['travel']['marches'][0]
+        self.assertEqual(self.game.state.cities['xiangyang'].grain,
+                         3800-estimate(self.game.state,[999],row['quote']))
+        self.assertEqual(row['supply']['consumed'],0)
         self.assertEqual(self.game.state.soldiers, ledger)
         self.assertIn(999, self.game.state.cities['xiangyang'].roster.officer_ids)
         self.assertEqual(self.game.state.phase, 'city')

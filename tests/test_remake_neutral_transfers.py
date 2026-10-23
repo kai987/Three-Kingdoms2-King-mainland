@@ -13,6 +13,7 @@ from remake.campaign import Campaign, Catalog
 from remake import civil_staff, domestic, logistics
 from remake.errors import GameError
 from remake.march_core import using_backend
+from remake.march_supply import estimate
 from remake.travel import TravelCampaign
 from campaign_fixtures import controlled_catalog
 from test_remake_march_core import neutral_transit_config, route_state
@@ -116,7 +117,8 @@ class NeutralTransferTests(unittest.TestCase):
                 grain = game.state.cities[CHAIN[0]].grain
                 rng = deepcopy(game.state.rng)
                 ident = self.queue(game)
-                self.assertEqual(game.state.cities[CHAIN[0]].grain, grain - 20)
+                self.assertEqual(game.state.cities[CHAIN[0]].grain, grain - estimate(game.state,[ident],quote))
+                self.assertEqual(game.state.extension['travel']['marches'][0]['supply']['consumed'],0)
                 game = self.restore(game, alternate)
                 self.arrive(game)
                 self.assertIn(ident, game.state.cities[CHAIN[-1]].roster.officer_ids)

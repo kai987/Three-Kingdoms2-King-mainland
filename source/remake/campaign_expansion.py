@@ -190,7 +190,7 @@ class ExpandedCampaign:
 
     def _start_expanded_battle(self,state,source,target,ids,*,paid=False):
         selected=select_deployment(source.roster,ids,state.officers)
-        cost=max(1,sum(state.officers[i].troops for i in selected)//25)
+        cost=0 if paid else max(1,sum(state.officers[i].troops for i in selected)//25)
         if not paid and source.grain<cost: raise GameError('出征粮食不足。')
         marching=self._march_ids(state)
         defenders=sorted((i for i in target.roster.officer_ids if i not in marching and state.officers[i].troops>0 and state.officers[i].health>0),key=lambda i:(-state.officers[i].troops,ref_sort_key(i)))[:10]

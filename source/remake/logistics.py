@@ -22,11 +22,12 @@ _ROW_FIELDS = {'id', 'owner', 'source', 'target', 'original_target', 'officers',
                'original_officers', 'cargo', 'initial_cargo', 'morale', 'status',
                'journeys', 'checked_turn', 'reason'}
 _JOURNEY_FIELDS = {'source', 'target', 'quote', 'mode', 'departure_turn', 'arrival_turn',
-                   'departure_year', 'departure_month', 'departure_day', 'risks'}
+                   'departure_year', 'departure_month', 'departure_day', 'risks', 'supply'}
 _CARGO_FIELDS = {'gold', 'grain', 'reserves'}
 _REASONS = {'outbound', 'arrived', 'returned', 'target_changed', 'route_blocked',
             'origin_changed', 'no_friendly_city', 'no_return_route', 'city_full',
             'resource_full', 'weather', 'waiting', 'journey_limit'}
+_REASONS.add('insufficient_grain')
 
 
 def _int(value, low, high):
@@ -211,8 +212,9 @@ def _present_count(game, state, source):
                and i not in busy for i in source.roster.officer_ids)
 
 
-def _rations(quote, ids, cargo):
-    return len(ids) * quote['grain_per_officer'] + (cargo['reserves'] * quote['days'] + 999) // 1000
+def _rations(state, quote, ids, cargo):
+    from .march_supply import estimate
+    return estimate(state, ids, quote, cargo['reserves'])
 
 
 def preview(game, state, city_id):
@@ -263,7 +265,7 @@ def preview(game, state, city_id):
     if selected is None:
         return None, 'no_route'
     mode, quote = selected
-    grain = _rations(quote, ids, cargo)
+    grain = _rations(state, quote, ids, cargo)
     if source.grain - cargo['grain'] - grain < policy['reserve_grain']:
         cargo['grain'] = max(0, source.grain - grain - policy['reserve_grain'])
     if source.grain - cargo['grain'] - grain < policy['reserve_grain']:
@@ -285,11 +287,13 @@ def _event(game, state, kind, row, *, lost=0, reason='outbound'):
             person_ids=[state.officers[i].person_id for i in ids], factions=[row['owner']], details=details)
 
 
-def _journey(game, state, source, target, mode, quote):
+def _journey(game, state, source, target, mode, quote, ids, reserves, *, from_cargo=False):
+    from .march_supply import create
     return dict(source=source, target=target, mode=mode, quote=deepcopy(quote),
         departure_turn=state.turn, arrival_turn=state.turn + quote['turns'],
         departure_year=state.year, departure_month=state.month, departure_day=state.day,
-        risks=game._march_risks(quote, state.rng))
+        risks=game._march_risks(quote, state.rng),
+        supply=create(state, ids, quote, reserves, from_cargo=from_cargo))
 
 
 def dispatch(game, state, payload, owner):
@@ -332,7 +336,7 @@ def dispatch(game, state, payload, owner):
         raise GameError('运输队超过本城的单次运输上限。')
     if any(getattr(source, field) - cargo[field] < policy['reserve_' + field] for field in _CARGO_FIELDS):
         raise GameError('运输后未达到本城保留物资数量。')
-    grain = _rations(quote, ids, cargo)
+    grain = _rations(state, quote, ids, cargo)
     if source.grain - cargo['grain'] - grain < policy['reserve_grain']:
         raise GameError('运输队粮食不足，或低于本城保留量。')
     if pool['next_id'] > 1000000:
@@ -347,7 +351,8 @@ def dispatch(game, state, payload, owner):
     row = dict(id=pool['next_id'], owner=owner, source=source.id, target=target.id,
         original_target=target.id, officers=list(ids), original_officers=list(ids), cargo=deepcopy(cargo),
         initial_cargo=deepcopy(cargo), morale=domestic.morale(state, source.id), status='outbound',
-        journeys=[_journey(game, state, source.id, target.id, mode, quote)], checked_turn=0, reason='outbound')
+        journeys=[_journey(game, state, source.id, target.id, mode, quote, ids, cargo['reserves'])],
+        checked_turn=0, reason='outbound')
     pool['next_id'] += 1
     pool['cities'][source.id]['last_dispatch_turn'] = state.turn
     pool['convoys'].append(row)
@@ -420,6 +425,7 @@ def _finish(game, state, row, target):
         _pool(state)['receipts'][str(ident)] = state.turn + RULES['receipt_turns']
     for field in ('gold', 'grain'):
         setattr(target, field, getattr(target, field) + row['cargo'][field])
+    target.grain += row['journeys'][-1]['supply']['remaining']
     domestic.add_reserves(game, state, target, row['cargo']['reserves'], row['morale'])
     _pool(state)['receipts']['city:' + target.id] = state.turn + RULES['receipt_turns']
     kind = 'transport_returned' if row['status'] == 'returning' else 'transport_arrived'
@@ -455,13 +461,31 @@ def _return(game, state, row, reason):
     if not choices or len(row['journeys']) >= RULES['max_journeys']:
         row.update(status='waiting', reason='no_return_route' if not choices else 'journey_limit')
         return
-    _, _, target, mode, quote = min(choices, key=lambda x: x[:3])
+    # Returning consumes real rations too. Convert delivered grain cargo into
+    # a new bag; never debit the now-hostile destination or the distant origin.
+    from .march_supply import estimate
+    available = row['cargo']['grain'] + current['supply']['remaining']
+    affordable = [choice for choice in choices
+        if estimate(state, row['officers'], choice[4], row['cargo']['reserves']) <= available]
+    if not affordable:
+        row.update(status='waiting', reason='insufficient_grain')
+        return
+    _, _, target, mode, quote = min(affordable, key=lambda x: x[:3])
+    returned = current['supply']['remaining']
+    current['supply']['remaining'] = 0
+    current['supply']['returned_to_cargo'] += returned
+    row['cargo']['grain'] += returned
+    grain = estimate(state, row['officers'], quote, row['cargo']['reserves'])
+    row['cargo']['grain'] -= grain
     row.update(status='returning', target=target, reason=reason)
-    row['journeys'].append(_journey(game, state, here, target, mode, quote))
+    row['journeys'].append(_journey(game, state, here, target, mode, quote,
+                                  row['officers'], row['cargo']['reserves'], from_cargo=True))
     _event(game, state, 'transport_returned', row, reason=reason)
 
 
 def process_arrivals(game, state):
+    from .march_supply import process_march_supply
+    process_march_supply(state)
     synchronize(game, state)
     for row in sorted(list(_pool(state)['convoys']), key=lambda x: (x['journeys'][-1]['arrival_turn'], x['id'])):
         journey = row['journeys'][-1]
@@ -580,6 +604,16 @@ def validate(game, state):
                 legs.append(evaluate_leg(game.catalog.data, raw, a, b, journey['departure_month']))
             if game._quote(quote['path'], legs) != quote:
                 raise ValueError('Logistics route arithmetic')
+            from .march_supply import validate as validate_supply
+            validate_supply(journey['supply'],quote,journey['departure_turn'],state.turn)
+            supply = journey['supply']
+            if (supply['officers'] > len(row['original_officers'])
+                    or index == 0 and (supply['officers'] != len(row['original_officers'])
+                        or supply['reserves'] != row['initial_cargo']['reserves'] or supply['from_cargo'])
+                    or index > 0 and supply['from_cargo'] != supply['loaded']
+                    or index < len(journeys)-1 and supply['remaining']
+                    or index == len(journeys)-1 and supply['returned_to_cargo']):
+                raise ValueError('Logistics supply departure manifest')
             expected = game._march_risks(quote)
             risks = journey['risks']
             if not isinstance(risks, list) or len(risks) != len(expected):
@@ -613,6 +647,9 @@ def validate(game, state):
                         raise ValueError('Logistics hazard arithmetic')
         cargo = deepcopy(row['initial_cargo'])
         for journey in journeys:
+            cargo['grain'] -= journey['supply']['from_cargo']
+            if cargo['grain'] < 0:
+                raise ValueError('Logistics supply cargo deficit')
             for risk in journey['risks']:
                 if risk['applied']:
                     if risk['before']['cargo'] != cargo['reserves']:
@@ -620,6 +657,7 @@ def validate(game, state):
                     cargo['reserves'] = risk['after']['cargo']
                     for field in ('gold', 'grain'):
                         cargo[field] = cargo[field] * risk['survival_numerator'] // risk['survival_denominator']
+            cargo['grain'] += journey['supply']['returned_to_cargo']
         if row['cargo'] != cargo:
             raise ValueError('Logistics cargo hazard balance')
     if not isinstance(pool['receipts'], dict) or len(pool['receipts']) > len(state.officers) + len(state.cities):

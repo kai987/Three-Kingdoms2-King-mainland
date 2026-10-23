@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog
 from remake.march_core import using_backend
+from remake.march_supply import estimate
 
 
 def read(name):
@@ -144,8 +145,10 @@ class RouteCorridorTests(unittest.TestCase):
                     rng = deepcopy(game.state.rng)
                     game.command('transfer', dict(source='zangke', target=target,
                                  officers=[ident], route_mode='land'), game.revision)
-                    self.assertEqual(game.state.cities['zangke'].grain, initial_grain - 5)
                     march = game.state.extension['travel']['marches'][0]
+                    self.assertEqual(game.state.cities['zangke'].grain,
+                                     initial_grain-estimate(game.state,[ident],march['quote']))
+                    self.assertEqual(march['supply']['consumed'],0)
                     self.assertEqual(march['arrival_turn'], game.state.turn + turns)
                     for _ in range(turns - 1):
                         game._complete_turn(game.state)
