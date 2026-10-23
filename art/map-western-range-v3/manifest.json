@@ -1,0 +1,378 @@
+{
+  "schema": "tk2-western-range-art-v3",
+  "map": {
+    "width": 1352,
+    "height": 1024
+  },
+  "before": {
+    "path": "art/map-western-range-v3/before-map.png",
+    "sha256": "da66399bf99e50ebd9559957c686585292f3d974825004e14e60037257dafae2"
+  },
+  "source": {
+    "path": "art/map-western-range-v3/generated-edit.png",
+    "sha256": "b74cbdc06081da99db4d9f515d18e10b596019f65b7450cc3df63f47a9fc9bfa",
+    "width": 1122,
+    "height": 1402
+  },
+  "source_mapping": {
+    "full_map_crop": {
+      "x": 150,
+      "y": 325,
+      "width": 160,
+      "height": 200
+    },
+    "resampling": "nearest-neighbor; no alpha blending",
+    "brown_foothill_grass_texture": {
+      "x": 268,
+      "y": 353,
+      "width": 16,
+      "height": 21
+    }
+  },
+  "targets": [
+    {
+      "id": "yinping-brown-foothill",
+      "polygon": [
+        [
+          198,
+          360
+        ],
+        [
+          211,
+          357
+        ],
+        [
+          220,
+          362
+        ],
+        [
+          225,
+          369
+        ],
+        [
+          234,
+          373
+        ],
+        [
+          241,
+          380
+        ],
+        [
+          233,
+          387
+        ],
+        [
+          218,
+          391
+        ],
+        [
+          201,
+          384
+        ],
+        [
+          190,
+          374
+        ],
+        [
+          191,
+          366
+        ]
+      ],
+      "bbox": {
+        "x": 190,
+        "y": 357,
+        "width": 52,
+        "height": 35
+      },
+      "candidate_pixels": 1047,
+      "protected_pixels": 0,
+      "preserved_original_grass_pixels": 152,
+      "preserved_original_brown_pixels": 0,
+      "grass_texture_pixels": 15,
+      "changed_pixels": 876
+    },
+    {
+      "id": "yinping-chengdu-green-mountain",
+      "source_polygon": [
+        [
+          213,
+          417
+        ],
+        [
+          220,
+          424
+        ],
+        [
+          226,
+          429
+        ],
+        [
+          234,
+          435
+        ],
+        [
+          235,
+          438
+        ],
+        [
+          231,
+          442
+        ],
+        [
+          227,
+          442
+        ],
+        [
+          225,
+          445
+        ],
+        [
+          220,
+          446
+        ],
+        [
+          214,
+          444
+        ],
+        [
+          210,
+          446
+        ],
+        [
+          205,
+          442
+        ],
+        [
+          198,
+          442
+        ],
+        [
+          192,
+          439
+        ],
+        [
+          194,
+          434
+        ],
+        [
+          204,
+          425
+        ],
+        [
+          209,
+          422
+        ]
+      ],
+      "source_bbox": {
+        "x": 192,
+        "y": 417,
+        "width": 44,
+        "height": 30
+      },
+      "source_shift": {
+        "x": 4,
+        "y": -5
+      },
+      "source_shape_pixels": 686,
+      "protected_pixels": 30,
+      "clearance_rejected_pixels": 71,
+      "rejected_generated_water_pixels": 0,
+      "minimum_grass_gap_pixels": 6,
+      "copied_pixels": 585,
+      "changed_pixels": 585,
+      "destination_bbox": {
+        "x": 196,
+        "y": 413,
+        "width": 43,
+        "height": 28
+      },
+      "destination_runs": [
+        [
+          413,
+          216,
+          2
+        ],
+        [
+          414,
+          215,
+          4
+        ],
+        [
+          415,
+          214,
+          6
+        ],
+        [
+          416,
+          213,
+          8
+        ],
+        [
+          417,
+          212,
+          10
+        ],
+        [
+          418,
+          210,
+          13
+        ],
+        [
+          419,
+          209,
+          16
+        ],
+        [
+          420,
+          207,
+          19
+        ],
+        [
+          421,
+          206,
+          21
+        ],
+        [
+          422,
+          205,
+          23
+        ],
+        [
+          423,
+          204,
+          25
+        ],
+        [
+          424,
+          203,
+          28
+        ],
+        [
+          425,
+          202,
+          30
+        ],
+        [
+          426,
+          201,
+          32
+        ],
+        [
+          427,
+          200,
+          35
+        ],
+        [
+          428,
+          199,
+          37
+        ],
+        [
+          429,
+          198,
+          39
+        ],
+        [
+          430,
+          197,
+          41
+        ],
+        [
+          431,
+          197,
+          41
+        ],
+        [
+          432,
+          197,
+          12
+        ],
+        [
+          432,
+          219,
+          20
+        ],
+        [
+          433,
+          196,
+          12
+        ],
+        [
+          433,
+          220,
+          18
+        ],
+        [
+          434,
+          197,
+          10
+        ],
+        [
+          434,
+          221,
+          16
+        ],
+        [
+          435,
+          199,
+          7
+        ],
+        [
+          435,
+          222,
+          14
+        ],
+        [
+          436,
+          201,
+          5
+        ],
+        [
+          436,
+          222,
+          13
+        ],
+        [
+          437,
+          222,
+          9
+        ],
+        [
+          438,
+          222,
+          8
+        ],
+        [
+          439,
+          222,
+          7
+        ],
+        [
+          440,
+          222,
+          4
+        ]
+      ]
+    }
+  ],
+  "verification": {
+    "changed_pixels": 1461,
+    "outside_pixels_identical": 1382715,
+    "protected_pixels_identical": 525280
+  },
+  "protection_inputs": [
+    {
+      "path": "game/assets/map-road-centers.png",
+      "sha256": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7"
+    },
+    {
+      "path": "game/map-source/hydrology-ground.png",
+      "sha256": "5d80752ee48778501d9652b968bbffad5fe72c7adb7d6e5dd5f617d5b3fcf093"
+    }
+  ],
+  "output": {
+    "path": "game/assets/map-western-range.png",
+    "sha256": "dbb1a196657bf1e0c7b768bfadb75bd362dbd63f2135ea5579b2478b4e970e8a"
+  },
+  "rule": "Only two tight terrain masks are editable. Outside-mask and original road/castle/river protection pixels remain byte-identical to v2. A complete tight mountain silhouette including its green face and left shadow is added with six native grass pixels of infrastructure clearance. No route/campaign/save data rebuilt."
+}
