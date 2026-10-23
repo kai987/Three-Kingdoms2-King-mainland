@@ -33,29 +33,35 @@
 </head>
 <body>
   <header class="topbar">
-    <h1>三國·大陸戰役</h1>
-    <p id="date">選擇勢力</p>
+    <div class="topbar-heading"><h1>三國·大陸戰役</h1><p id="date">選擇勢力</p></div>
     <nav aria-label="進度與規則">
-      <label class="language-picker">語言<select id="language" aria-label="切換語言"><option value="zh-Hant">繁體中文</option><option value="ja">日本語</option></select></label>
-      <button id="main-menu" aria-controls="inspector" aria-expanded="false" disabled>返回主選單</button>
-      <button id="faction-domestic" disabled><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">勢力內政</span><span data-locale-only="ja" data-l10n-native="ja">勢力の内政</span></button>
+      <button id="main-menu" aria-controls="inspector" aria-expanded="false" disabled><span class="nav-full">返回主選單</span><span class="nav-short" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">主選單</span><span class="nav-short" data-locale-only="ja" data-l10n-native="ja" hidden>メニュー</span></button>
       <button id="save" disabled>儲存進度</button>
       <button id="load">讀取進度</button>
       <button id="cloud-save" disabled>雲端存檔</button>
-      <button id="rules">規則說明</button>
-      <button id="library">人物庫</button>
-      <button id="audio-settings" aria-controls="dialog">音樂設定</button>
-      <button id="event-history" aria-controls="event-dialog" disabled>事件回顧</button>
+      <details class="utility-menu" id="utility-menu">
+        <summary><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">更多</span><span data-locale-only="ja" data-l10n-native="ja" hidden>その他</span></summary>
+        <div class="utility-panel">
+          <label class="language-picker">語言<select id="language" aria-label="切換語言"><option value="zh-Hant">繁體中文</option><option value="ja">日本語</option></select></label>
+          <button id="faction-domestic" disabled><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">勢力內政</span><span data-locale-only="ja" data-l10n-native="ja">勢力の内政</span></button>
+          <button id="library">人物庫</button>
+          <button id="event-history" aria-controls="event-dialog" disabled>事件回顧</button>
+          <button id="rules">規則說明</button>
+          <button id="audio-settings" aria-controls="dialog">音樂設定</button>
+        </div>
+      </details>
     </nav>
   </header>
   <p id="notice" role="status" aria-live="polite"></p>
   <main>
+    <div class="game-layout">
     <section id="stage" aria-label="戰役地圖"></section>
     <aside id="inspector" aria-label="目前操作"><p>正在準備戰役……</p></aside>
     <section class="journal" aria-labelledby="journal-title">
       <div class="journal-heading"><h2 id="journal-title">戰報</h2><button id="restart">重開戰役</button></div>
       <ol id="journal"><li>選擇勢力後開始。</li></ol>
     </section>
+    </div>
   </main>
   <dialog id="dialog" aria-labelledby="dialog-title"></dialog>
   <dialog id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"></dialog>
