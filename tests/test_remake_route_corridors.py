@@ -85,14 +85,15 @@ class RouteCorridorTests(unittest.TestCase):
         original = {r['id']: r for r in self.shared['travel_routes']}
         identity_fields = ('from', 'to', 'mode', 'terrain')
         for catalog in self.catalogs:
-            self.assertEqual(catalog.data['cities'], self.shared['cities'])
+            self.assertEqual([(c['id'],c['position']) for c in catalog.data['cities']],
+                             [(c['id'],c['position']) for c in self.shared['cities']])
             self.assertEqual(catalog.data['city_coordinates'], self.shared['city_coordinates'])
             compiled = {r['id']: r for r in catalog.data['travel_routes']}
             for key, row in original.items():
                 self.assertEqual({k: compiled[key][k] for k in identity_fields},
                                  {k: row[k] for k in identity_fields}, (catalog.data['id'], key))
                 self.assertEqual(compiled[key]['timing_geometry']['schema'], 'tk2-route-timing-v1')
-            self.assertEqual(len(compiled), len(original) + 2)
+            self.assertEqual(len(compiled), len(original) + len(self.navigation['land_roads']) + len(self.navigation.get('river_routes', [])))
 
     def test_new_roads_share_one_northern_approach_and_are_explicit_mountain_game_corridors(self):
         expected = {'bajun', 'fuling'}

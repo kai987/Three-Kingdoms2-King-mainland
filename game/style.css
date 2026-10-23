@@ -1086,3 +1086,5 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 
 [data-autosave-recovery]{display:grid;gap:12px;margin-top:20px;padding-top:16px;border-top:2px solid var(--line)}
 [data-autosave-recover]{white-space:normal;text-align:left;overflow-wrap:anywhere}
+
+.river-lane{fill:none;stroke:#d4e9ff;stroke-width:1.2;stroke-dasharray:3 3;stroke-linecap:butt;pointer-events:none}

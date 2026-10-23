@@ -98,7 +98,7 @@
   function rescueWritable(target){
    const march=(getView()?.game?.extension?.travel?.marches||[]).find(row=>row.id===target?.march_id);
    return canWrite()&&target?.can_dispatch===true&&!!target.city&&Number.isSafeInteger(target.march_id)&&target.march_id>0&&
-    march?.owner===getView()?.game?.player&&target.officers?.length>0&&['land','fastest','sea','special'].includes(target.route_mode);
+    march?.owner===getView()?.game?.player&&target.officers?.length>0&&['land','fastest','sea','special','river'].includes(target.route_mode);
   }
   function rescueControls(state){
    const {targets,target,maximum}=rescueSelection(state);
@@ -132,7 +132,7 @@
    for(const [id,key]of [['logistics-enabled','enabled'],['logistics-sea','allow_sea'],['logistics-special','allow_special']])query('#'+id).onchange=()=>{p[key]=query('#'+id).checked;};
    for(const key of [...moneyFields,...personFields])bindNumber('logistics-'+key,value=>{p[key]=value;},personFields.includes(key)?99:100000000,key==='max_officers'?1:0);
    query('#save-logistics').onclick=()=>submit('set_logistics',{city:active.city,policy:clone(p)});
-   query('#dispatch-logistics').onclick=()=>{const current=row('logistics');if(!canWrite()||!current?.can_dispatch||!current.preview)return;const q=current.preview;if(!['land','fastest','sea','special'].includes(q.route_mode))return;return submit('dispatch_transport',{source:active.city,target:q.target,officers:[...q.officers],cargo:clone(q.cargo),route_mode:q.route_mode});};bindRescue(state);i18n?.apply?.();
+   query('#dispatch-logistics').onclick=()=>{const current=row('logistics');if(!canWrite()||!current?.can_dispatch||!current.preview)return;const q=current.preview;if(!['land','fastest','sea','special','river'].includes(q.route_mode))return;return submit('dispatch_transport',{source:active.city,target:q.target,officers:[...q.officers],cargo:clone(q.cargo),route_mode:q.route_mode});};bindRescue(state);i18n?.apply?.();
   }
   async function submit(kind,payload){
    if(!canWrite()||kind==='set_domestic'&&active.draft.civil!==null&&String(active.draft.civil)===String(active.draft.military))return false;const token=active;pending=true;for(const button of dialog.querySelectorAll?.('.dialog-actions button')||[])button.disabled=true;

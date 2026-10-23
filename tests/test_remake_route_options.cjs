@@ -28,6 +28,38 @@ const shore=quote([leg('shore','a','b','sea',{land_km:40,sea_km:260})]);
 result=routes.build({fastest:shore,sea:copy(shore)});assert.equal(result.options[0].kind,'mixed');
 const combined=quote([leg('road','a','c'),leg('water','c','b','sea')],{path:['a','c','b']});
 assert.equal(routes.build({fastest:combined}).options[0].kind,'mixed');
+// Inland navigation is a separate physical option. Land approaches do not
+// label a river as an ocean voyage or apply a sea-only presentation warning.
+const riverLeg=leg('river','a','b','river',{land_km:20,sea_km:0,river_km:280,flow:'upstream',
+ river_segments:[{river:'yangtze',direction:'upstream',distance_km:180,speed_km_per_day:30},
+  {river:'xiang',direction:'upstream',distance_km:100,speed_km_per_day:30}]});
+const river=quote([riverLeg],{days:11});river.river_km=280;
+result=routes.build({fastest:plain,land:copy(plain),river});
+assert.deepEqual(modes(result.options),['fastest','river']);assert.equal(result.knownCount,2);
+assert.deepEqual(result.options.map(row=>[row.kind,row.indexWithinKind,row.kindCount]),[['land',1,1],['river',1,1]]);
+result=routes.build({fastest:river,river:copy(river),land:plain},{preferred:'river'});
+assert.equal(result.knownCount,2);assert.equal(result.value,'fastest');assert.deepEqual(result.options[1].aliases,['fastest','river']);
+assert.equal(result.options[1].kind,'river');assert.equal(result.options[1].shortest,false);
+assert.equal(routes.build({river}).value,'river');
+const riverRoad=quote([leg('road','a','c'),{...riverLeg,from:'c'}],{path:['a','c','b']});
+assert.equal(routes.build({fastest:riverRoad}).options[0].kind,'river');
+const riverSea=quote([riverLeg,leg('ocean','b','c','sea',{sea_km:200})],{path:['a','b','c']});
+result=routes.build({fastest:riverSea,river:copy(riverSea)});
+assert.equal(result.options[0].kind,'river_sea');assert.equal(result.options[0].kindCount,1);assert.equal(result.options[0].indexWithinKind,1);
+assert.equal(routes.build({river:quote([],{modes:['river']})}).options[0].kind,'river');
+// The same route IDs and rounded total days cannot erase flow direction or
+// segment speed differences. Object key order remains presentation-neutral.
+const reorderedRiver=copy(river);
+reorderedRiver.routes[0].river_segments=reorderedRiver.routes[0].river_segments.map(s=>({speed_km_per_day:s.speed_km_per_day,distance_km:s.distance_km,direction:s.direction,river:s.river}));
+assert.equal(routes.build({fastest:river,river:reorderedRiver}).knownCount,1);
+for(const edit of [
+ q=>{q.routes[0].flow='downstream';},q=>{q.routes[0].river_km+=1;},
+ q=>{q.routes[0].river_segments[0].direction='downstream';},q=>{q.routes[0].river_segments[0].speed_km_per_day=60;},
+ q=>{q.routes[0].river_segments.reverse();},q=>{q.river_km+=1;}
+]){const changed=copy(river);edit(changed);assert.equal(routes.build({fastest:river,river:changed}).knownCount,2);}
+const secondRiver=copy(river);secondRiver.routes[0].id='second-river';
+result=routes.build({fastest:river,river:secondRiver});
+assert.deepEqual(result.options.map(row=>[row.kind,row.indexWithinKind,row.kindCount]),[['river',1,2],['river',2,2]]);
 // Direction, ordered legs, route IDs, mode, special treatment and city path all
 // contribute to identity; coincident city centers cannot erase a real option.
 const variants=[
@@ -45,7 +77,7 @@ const reorderRoad=quote([leg('risky','a','b','land',{hazard:riskB,draw:{color:'t
 assert.equal(routes.build({fastest:hazardRoad,land:reorderRoad}).knownCount,1,'Object key order and presentation metadata do not create routes');
 const changedHazard=copy(hazardRoad);changedHazard.routes[0].hazard.loss.maximum=95;
 assert.equal(routes.build({fastest:hazardRoad,land:changedHazard}).knownCount,2);
-for(const field of ['terrain','days','distance_km','land_km','sea_km','base_days']){
+for(const field of ['terrain','days','distance_km','land_km','sea_km','river_km','base_days']){
  const changed=copy(plain);changed.routes[0][field]=field==='terrain'?'mountain':12;
  assert.equal(routes.build({fastest:plain,land:changed}).knownCount,2,`Different leg ${field} remains distinct`);
 }

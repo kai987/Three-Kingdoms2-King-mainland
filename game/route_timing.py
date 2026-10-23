@@ -4,6 +4,7 @@ The map has an artistic, nonuniform projection. Each road or harbour segment
 is therefore calibrated to its own geographic endpoints; there is no global
 kilometres-per-pixel scale. Existing terrain speeds and hazard rules remain.
 """
+from copy import deepcopy
 from math import asin, ceil, cos, hypot, isfinite, radians, sin, sqrt
 
 
@@ -43,6 +44,7 @@ def apply_route_timing(data, geometry, geometry_sha256):
                 metrics.append(entry)
                 ratios.append(ratio)
             a, b = coords[route['from']], coords[route['to']]
+            river = 0
             if route['mode'] == 'land':
                 if len(parts) != 1 or parts[0]['mode'] != 'land':
                     raise ValueError('Land timing requires one complete road curve')
@@ -60,14 +62,39 @@ def apply_route_timing(data, geometry, geometry_sha256):
                 sea = round(kilometers(ports[0], ports[-1])*ratios[1], 1)
                 days = max(1, ceil(land/rules['speeds']['plain'])
                            + ceil(sea/rules['speeds']['sea']) + rules['embark_days'])
+            elif route['mode'] == 'river':
+                segments, ports = route.get('river_segments'), route.get('geo')
+                if (not isinstance(segments, list) or not segments or not ports
+                        or len(ports) != len(segments)+1
+                        or [p['mode'] for p in parts] != ['land']+['river']*len(segments)+['land']):
+                    raise ValueError('River timing requires surveyed reaches and both approaches')
+                land = round((kilometers(a, ports[0])*ratios[0] + kilometers(ports[-1], b)*ratios[-1])
+                             * rules['detours']['plain'], 1)
+                water_time = 0
+                for i, segment in enumerate(segments):
+                    distance = round(kilometers(ports[i], ports[i+1])*ratios[i+1], 1)
+                    if distance <= 0 or segment.get('downstream_from') not in (route['from'], route['to']):
+                        raise ValueError('Invalid surveyed river reach')
+                    flow = 'downstream' if segment['downstream_from'] == route['from'] else 'upstream'
+                    speed = rules['river_speeds'][segment['speed_key']][flow]
+                    if type(speed) not in (int, float) or not isfinite(speed) or speed <= 0:
+                        raise ValueError('Invalid surveyed river speed')
+                    segment['distance_km'] = distance
+                    river += distance
+                    water_time += distance/speed
+                sea = 0
+                days = max(1, ceil(land/rules['speeds']['plain']) + ceil(water_time) + rules['river_embark_days'])
             else:
                 raise ValueError('Unknown travel mode')
-            route.update(distance_km=round(land+sea, 1), land_km=land, sea_km=sea, days=days,
+            route.update(distance_km=round(land+sea+river, 1), land_km=land, sea_km=sea, days=days,
                          timing_geometry=dict(schema='tk2-route-timing-v1', parts=metrics))
-            values = (land, sea, days, metrics)
+            if route['mode'] == 'river':
+                route['river_km'] = round(river, 1)
+            values = (land, sea, river, days, metrics)
             if route['id'] in seen and seen[route['id']] != values:
                 raise ValueError('One displayed route has inconsistent timing copies')
             seen[route['id']] = values
+    data['river_routes'] = [deepcopy(r) for r in data['travel_routes'] if r['mode'] == 'river']
     rules.update(geometry_sha256=geometry_sha256,
                  distance_policy='Geographic endpoint calibration per drawn segment, multiplied by SVG arc/chord ratio and existing land terrain detour; sea legs include both harbour approaches.',
                  resolution='Sum current curve-based edge days, ceil(total/10) ten-day arrivals; hazard multipliers are applied at departure.')

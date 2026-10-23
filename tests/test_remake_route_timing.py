@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / 'game'))
 sys.path.insert(0, str(ROOT / 'source'))
 import build_campaigns
 from route_timing import apply_route_timing, metric
+from remake.city_economy import apply_opening_sizes
 from remake.march_core import using_backend
 from remake.route_hazards import evaluate_leg
 from remake.travel import TravelCampaign
@@ -49,6 +50,25 @@ def fixture(mode='land', terrain='plain'):
                  curve('land', (300, 0), (400, 0), 200)]
     row = {**{k: route[k] for k in ('id', 'from', 'to', 'mode')}, 'parts': parts}
     return data, dict(schema='tk2-route-geometry-v1', routes={route['id']: row})
+
+
+def river_fixture():
+    data, geometry = fixture(mode='river', terrain='river')
+    route = data['travel_routes'][0]
+    route.update(geo=[[.05, 0], [.09, 0], [.15, 0]], river_km=99999,
+                 river_segments=[dict(id='yangtze', speed_key='yangtze', downstream_from='b'),
+                                 dict(id='xiang', speed_key='xiang', downstream_from='b')])
+    data['city_coordinates']['b'] = [.2, 0]
+    data['travel_rules'].update(river_speeds=dict(yangtze=dict(upstream=20, downstream=50),
+                                               xiang=dict(upstream=22.5, downstream=35)),
+                                river_embark_days=1)
+    geometry['routes'][route['id']]['parts'] = [
+        curve('land', (0, 0), (10, 0), 12),
+        curve('river', (10, 0), (30, 0), 25),
+        curve('river', (30, 0), (60, 0), 54),
+        curve('land', (60, 0), (70, 0), 15),
+    ]
+    return data, geometry
 
 
 class RouteTimingTests(unittest.TestCase):
@@ -99,6 +119,49 @@ class RouteTimingTests(unittest.TestCase):
         self.assertEqual(TravelCampaign._quote(['a', 'b'], [route])['turns'], 3)
         for days, turns in ((10, 1), (11, 2), (20, 2), (21, 3)):
             self.assertEqual(TravelCampaign._quote(['a', 'b'], [dict(route, days=days)])['turns'], turns)
+
+    def test_river_reaches_use_their_own_endpoints_and_round_total_water_time_once(self):
+        data, geometry = river_fixture()
+        original, original_geometry = deepcopy(data), deepcopy(geometry)
+        apply_route_timing(data, geometry, 'river-geometry')
+        route = data['travel_routes'][0]
+        distances = [segment['distance_km'] for segment in route['river_segments']]
+        # Independent equatorial geography: unequal reaches and unequal curve
+        # ratios must not share one global distance or kilometres-per-pixel.
+        self.assertEqual(distances, [round(EQUATOR_DEGREE*.04*1.25, 1),
+                                     round(EQUATOR_DEGREE*.06*1.8, 1)])
+        self.assertEqual(distances, [5.6, 12.0])
+        expected_land = round((EQUATOR_DEGREE*.05*1.2 + EQUATOR_DEGREE*.05*1.5)*1.18, 1)
+        self.assertEqual((route['land_km'], route['river_km'], route['sea_km'], route['distance_km']),
+                         (expected_land, 17.6, 0, 35.3))
+        water_days = ceil(distances[0]/20 + distances[1]/22.5)
+        self.assertEqual(water_days, 1)
+        self.assertEqual(sum(ceil(distance/speed) for distance, speed in zip(distances, (20, 22.5))), 2)
+        self.assertEqual(route['days'], ceil(expected_land/30) + water_days + 1)
+        self.assertEqual(route['days'], 3)
+        self.assertEqual([part['shape_ratio'] for part in route['timing_geometry']['parts']],
+                         [1.2, 1.25, 1.8, 1.5])
+        self.assertEqual(data['river_routes'], [route])
+        self.assertEqual(data['sea_routes'], [])
+        self.assertEqual(data['exploration_routes'], [])
+        self.assertEqual(data['city_coordinates'], original['city_coordinates'])
+        self.assertEqual(geometry, original_geometry)
+
+    def test_river_calibration_rejects_missing_reaches_or_approaches_and_wrong_modes(self):
+        for broken in ('missing_approach', 'missing_reach', 'missing_port', 'wrong_mode'):
+            data, geometry = river_fixture()
+            route = data['travel_routes'][0]
+            parts = geometry['routes'][route['id']]['parts']
+            if broken == 'missing_approach':
+                parts.pop()
+            elif broken == 'missing_reach':
+                route['river_segments'].pop()
+            elif broken == 'missing_port':
+                route['geo'].pop(1)
+            else:
+                parts[1]['mode'] = 'sea'
+            with self.subTest(broken=broken), self.assertRaisesRegex(ValueError, 'River timing requires'):
+                apply_route_timing(data, geometry, 'river-geometry')
 
     def test_stale_distances_are_replaced_but_special_and_monsoon_rules_are_retained(self):
         data, geometry = fixture(terrain='mountain')
@@ -176,12 +239,14 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
         fingerprint = sha256(geometry_path.read_bytes()+(ROOT/'game/route_timing.py').read_bytes()).hexdigest()
         shared = read('game/config/campaigns/shared.json')['catalog']
         navigation = read('game/config/navigation-geometry.json')
+        city_scale_rules = read('game/config/city-scale-rules.json')
         index = read('game/config/campaigns/index.json')
         self.assertEqual(len(index['scenarios']), 29)
         checked, changed, copies = 0, 0, {}
         for scenario in index['scenarios']:
             source = read('game/config/campaigns/'+scenario['file'])
             original = build_campaigns.apply_patch(shared, source.get('overrides', {}))
+            apply_opening_sizes(original, city_scale_rules)
             compiled = read('game/data/campaigns/'+scenario['id'].removeprefix('mainland')+'.json')
             expected_links = original['links']+[[r['from'], r['to']] for r in navigation['land_roads']]
             self.assertEqual(compiled['links'], expected_links, scenario['id'])
@@ -195,6 +260,7 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
                 expected_ids = [r['id'] for r in original[field]]
                 if field == 'travel_routes':
                     expected_ids += [f"{r['from']}:{r['to']}:land" for r in navigation['land_roads']]
+                    expected_ids += [r['id'] for r in navigation.get('river_routes', [])]
                 self.assertEqual([r['id'] for r in compiled[field]], expected_ids, (scenario['id'], field))
                 old_rows = {r['id']: r for r in original[field]}
                 for route in compiled[field]:
@@ -215,7 +281,7 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
                         self.assertEqual(route['land_km'], expected_land)
                         self.assertEqual(route['sea_km'], 0)
                         self.assertEqual(route['days'], ceil(expected_land/rules['speeds'][route['terrain']]))
-                    else:
+                    elif route['mode'] == 'sea':
                         self.assertEqual([m['mode'] for m in metrics], ['land', 'sea', 'land'])
                         ratios = [max(1, p['length_px']/p['chord_px']) if p['chord_px'] else 1 for p in row['parts']]
                         ports = route['geo']
@@ -226,7 +292,33 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
                         self.assertEqual((route['land_km'], route['sea_km']), (expected_land, expected_sea))
                         self.assertEqual(route['days'], ceil(route['land_km']/rules['speeds']['plain'])
                                          + ceil(route['sea_km']/rules['speeds']['sea']) + rules['embark_days'])
-                    self.assertEqual(route['distance_km'], round(route['land_km']+route['sea_km'], 1))
+                    elif route['mode'] == 'river':
+                        segments, ports = route['river_segments'], route['geo']
+                        self.assertEqual([m['mode'] for m in metrics],
+                                         ['land'] + ['river']*len(segments) + ['land'])
+                        self.assertEqual(len(ports), len(segments)+1)
+                        ratios = [max(1, p['length_px']/p['chord_px']) if p['chord_px'] else 1
+                                  for p in row['parts']]
+                        expected_land = round((geographic_distance(coords[route['from']], ports[0])*ratios[0]
+                                               + geographic_distance(ports[-1], coords[route['to']])*ratios[-1])
+                                              * rules['detours']['plain'], 1)
+                        expected_water, water_time = [], 0
+                        for i, segment in enumerate(segments):
+                            distance = round(geographic_distance(ports[i], ports[i+1])*ratios[i+1], 1)
+                            self.assertEqual(segment['distance_km'], distance)
+                            self.assertEqual(segment['downstream_from'], 'changsha')
+                            speed = {'yangtze': 20, 'xiang': 22.5}[segment['speed_key']]
+                            self.assertEqual(rules['river_speeds'][segment['speed_key']]['upstream'], speed)
+                            expected_water.append(distance)
+                            water_time += distance/speed
+                        self.assertEqual((route['land_km'], route['river_km'], route['sea_km']),
+                                         (expected_land, round(sum(expected_water), 1), 0))
+                        self.assertEqual(route['days'], ceil(expected_land/rules['speeds']['plain'])
+                                         + ceil(water_time) + rules['river_embark_days'])
+                    else:
+                        self.fail('Unexpected route mode: '+route['mode'])
+                    self.assertEqual(route['distance_km'], round(route['land_km']+route['sea_km']
+                                                                 + route.get('river_km', 0), 1))
                     physical = {k: route[k] for k in ('distance_km', 'land_km', 'sea_km', 'days', 'timing_geometry')}
                     if route['id'] in copies:
                         self.assertEqual(physical, copies[route['id']], (scenario['id'], field, route['id']))

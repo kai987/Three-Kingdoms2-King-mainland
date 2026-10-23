@@ -2,22 +2,22 @@
   "schema": "tk2-route-geometry-v1",
   "policy": "Existing logical legs only. Actual rendered SVG curves; no straight-line fallback. Reviewed shared-city passages do not insert logical links or intermediate stops. Geographic conversion belongs to the campaign compiler.",
   "sources": {
-    "game/build_route_geometry.cjs": "4a4a95ed6a7a264c798e1afd85c7e9d566309d63ebd82490d381cb7f976e4a5e",
+    "game/build_route_geometry.cjs": "6628e310d78c1b4cf6d90214523e366881e3d724ce4b2912bf65c6bbdbb1a33e",
     "game/config/road-centers.json": "0de6ed1949d8e00b074515a574c76a166af23be929e5c32234011c9520b98d50",
     "game/road_centers.py": "0c4228f180b6d5697326c16cff943162bc2435a2c4e8e02f8ff68ea9fe8b581c",
-    "game/config/navigation-geometry.json": "31eda355fb2a06328e6f2e85caace293454f94729f2f3d67631a711a25353fc0",
+    "game/config/navigation-geometry.json": "fcf9a4638b80f112a706fbc0ac0a6e37df68efcd40c62af919003d81a3fa2d21",
     "game/config/map-source.json": "9c6c905ac2b9253d7876bd156bd64c68b642e8a1bb6b03b7c0a1ab6c67f6b9cc",
-    "game/app.js": "2356fa94fba0f3fd7a4ab573b7cebdc333a1e71f4fce462bc4173306c778a43f",
-    "game/config/campaigns/shared.json": "5e9d5dfdbcd286d404dc0d8b1186055fe35ed16295f443da3d3d44acba3712ea",
+    "game/app.js": "3234d8a566af824be36267eea0b94bf9fe47fa0284feafc2d1aa12996aefa874",
+    "game/config/campaigns/shared.json": "f90c1c2b157424037bcf1b8a7ba077467bebe4ad4fe838a0f41ab3ec68d6fb08",
     "game/config/campaigns/index.json": "6a79fa707589da09b9b1df93e904b60062cb34e04eadeb74a140f2ebfd1bbf64",
-    "game/config/campaigns/scenarios/184-02.json": "0bccb9cc53c416776c6d5b962403c99a57aadbe696cb33b243f54282f1e7e985",
-    "game/config/campaigns/scenarios/188-06.json": "33bee4874f62d82d09622dbeaa0d615ea660ca24fb7212e8515edc0fa655026c",
+    "game/config/campaigns/scenarios/184-02.json": "3a90c31affa37ad729ccb2a06b16473590a021b76cac1aea1e2482814af7dbf8",
+    "game/config/campaigns/scenarios/188-06.json": "facaf4e88ad0c86eb08a9c2bc18cb51522c0ba1fae56e07599acc31f78833de9",
     "game/config/campaigns/scenarios/190-01.json": "e6485a403c79a8bbe87fc88342b8bbe2f6f9e711e2f5c9dd273c0466e73d4ca4",
     "game/config/campaigns/scenarios/191-10.json": "4af17cf0f8b15288474da3bd5c3b45ffd551d24aa30c2817c2ed649bb03f13b0",
     "game/config/campaigns/scenarios/194-06.json": "8935297646774ac29282685e2c51419ad4264c2e72203d7c26b54424c170c873",
     "game/config/campaigns/scenarios/196-06.json": "fcdced291c51703bc05060436e9c566f106413945b6282e2c78cd6be15fbdfae",
     "game/config/campaigns/scenarios/197-07.json": "c61e5099a76b09a473002500f3cd24fdf5a93146b914880f7e17a235ff2c1068",
-    "game/config/campaigns/scenarios/198-03.json": "5e3e3b99d73890d58bd963a2c760426e7937ba776a71df59a9f39974102c0682",
+    "game/config/campaigns/scenarios/198-03.json": "6697c2b2e93c755cb5bff78e5347ae319cf639a452f6f1cc4dc1d0f473f0b7c2",
     "game/config/campaigns/scenarios/200-01.json": "6ae50545929984db7b5030c3dfc043895cc507568b50c3eb3b85e624ab59115c",
     "game/config/campaigns/scenarios/201-05.json": "0708c3b1269073070fffda06663f2328ff31963a0c1de71cd4addaf031da3b57",
     "game/config/campaigns/scenarios/202-06.json": "ac354d43d8206f28e47b29b644985d0cfe3a5a8a7a0a517e20403e09cdc7489a",
@@ -40,7 +40,7 @@
     "game/config/campaigns/scenarios/263-05.json": "27e2e600d9792d8637ecdc5ea4e09433b4610bb80d5ffd7dbd8d087d6def14a3",
     "game/config/campaigns/scenarios/217-07.json": "5a493172553445381d5c6b9bb18ed69028a4ab7faedeb7e3482f1470f0c3080a"
   },
-  "input_geometry_sha256": "3c85007fb2b90efc79958c4d80c9bde8136f0c486e91831d4766d7c06ed15d59",
+  "input_geometry_sha256": "080f57a1c02e81fda546941f99bac910c91d1758b25dac11c05a941090043af3",
   "routes": {
     "anding:fufeng:land": {
       "from": "anding",
@@ -8060,6 +8060,124 @@
             },
             {
               "d": "M448 612Q448 592 444 588Q440 584 440 582Q440 580 448 572Q456 564 458 564Q460 564 466 558Q472 552 473 550.5L474 549",
+              "reverse": false
+            }
+          ]
+        }
+      ]
+    },
+    "jiangxia:changsha:land": {
+      "from": "jiangxia",
+      "to": "changsha",
+      "mode": "land",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            817,
+            496
+          ],
+          "end": [
+            727,
+            577
+          ],
+          "d": "M817 496Q816 500 816 524Q816 548 818 550L820 552M820 552Q780 552 778 554Q776 556 772 556Q768 556 766 558Q764 560 762 560Q760 560 758 562Q756 564 754 564Q752 564 750 566Q748 568 746 568Q744 568 742 570Q740 572 736 572Q732 572 729.5 574.5L727 577",
+          "length_px": 157.002644,
+          "chord_px": 121.082616,
+          "pieces": [
+            {
+              "d": "M817 496Q816 500 816 524Q816 548 818 550L820 552",
+              "reverse": false
+            },
+            {
+              "d": "M820 552Q780 552 778 554Q776 556 772 556Q768 556 766 558Q764 560 762 560Q760 560 758 562Q756 564 754 564Q752 564 750 566Q748 568 746 568Q744 568 742 570Q740 572 736 572Q732 572 729.5 574.5L727 577",
+              "reverse": false
+            }
+          ]
+        }
+      ]
+    },
+    "jiangxia:changsha:river": {
+      "from": "jiangxia",
+      "to": "changsha",
+      "mode": "river",
+      "parts": [
+        {
+          "mode": "land",
+          "start": [
+            817,
+            496
+          ],
+          "end": [
+            817,
+            527
+          ],
+          "d": "M817 496L817 527",
+          "length_px": 31,
+          "chord_px": 31,
+          "pieces": [
+            {
+              "d": "M817 496L817 527",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "river",
+          "start": [
+            817,
+            527
+          ],
+          "end": [
+            737,
+            525
+          ],
+          "d": "M817 527Q812 527 809.5 527Q807 527 804.5 527Q802 527 799.5 527.5Q797 528 794.5 528Q792 528 789.5 528Q787 528 784.5 528Q782 528 779.5 528Q777 528 774.5 529Q772 530 769.5 530Q767 530 764.5 530Q762 530 759.5 530Q757 530 754.5 529.5Q752 529 749.5 528Q747 527 744.5 525Q742 523 739.5 523.5Q737 524 737 524.5L737 525",
+          "length_px": 82.620049,
+          "chord_px": 80.024996,
+          "pieces": [
+            {
+              "d": "M817 527Q812 527 809.5 527Q807 527 804.5 527Q802 527 799.5 527.5Q797 528 794.5 528Q792 528 789.5 528Q787 528 784.5 528Q782 528 779.5 528Q777 528 774.5 529Q772 530 769.5 530Q767 530 764.5 530Q762 530 759.5 530Q757 530 754.5 529.5Q752 529 749.5 528Q747 527 744.5 525Q742 523 739.5 523.5Q737 524 737 524.5L737 525",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "river",
+          "start": [
+            737,
+            525
+          ],
+          "end": [
+            701,
+            580
+          ],
+          "d": "M737 525Q735 530 734 532.5Q733 535 732 537.5Q731 540 728.5 542Q726 544 723.5 545Q721 546 718.5 547.5Q716 549 713.5 550.5Q711 552 708.5 553.5Q706 555 704.5 557.5Q703 560 702 562.5Q701 565 701 567.5Q701 570 701 572.5Q701 575 701 577.5L701 580",
+          "length_px": 71.280342,
+          "chord_px": 65.734314,
+          "pieces": [
+            {
+              "d": "M737 525Q735 530 734 532.5Q733 535 732 537.5Q731 540 728.5 542Q726 544 723.5 545Q721 546 718.5 547.5Q716 549 713.5 550.5Q711 552 708.5 553.5Q706 555 704.5 557.5Q703 560 702 562.5Q701 565 701 567.5Q701 570 701 572.5Q701 575 701 577.5L701 580",
+              "reverse": false
+            }
+          ]
+        },
+        {
+          "mode": "land",
+          "start": [
+            701,
+            580
+          ],
+          "end": [
+            727,
+            577
+          ],
+          "d": "M701 580L716 580L727 577",
+          "length_px": 26.401754,
+          "chord_px": 26.172505,
+          "pieces": [
+            {
+              "d": "M701 580L716 580L727 577",
               "reverse": false
             }
           ]
@@ -17583,10 +17701,10 @@
   },
   "audit": {
     "catalogs": 29,
-    "input_routes": 362,
-    "compiled_routes": 362,
-    "graph_nodes": 269,
-    "graph_strokes": 361,
+    "input_routes": 364,
+    "compiled_routes": 364,
+    "graph_nodes": 270,
+    "graph_strokes": 363,
     "unmatched": [],
     "shared_city_pass_through": [
       {
@@ -17614,7 +17732,7 @@
     "curvature": {
       "land": {
         "min": {
-          "id": "explore:liaodong:linhai:sea",
+          "id": "jiangxia:changsha:river",
           "ratio": 1
         },
         "max": {
@@ -17630,6 +17748,16 @@
         "max": {
           "id": "explore:bohai:donghai:sea",
           "ratio": 2.433935613331244
+        }
+      },
+      "river": {
+        "min": {
+          "id": "jiangxia:changsha:river",
+          "ratio": 1.0324280303619133
+        },
+        "max": {
+          "id": "jiangxia:changsha:river",
+          "ratio": 1.0843703640080584
         }
       }
     }

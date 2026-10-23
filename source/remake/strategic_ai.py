@@ -466,7 +466,7 @@ def validate_strategies(campaign, state):
                 raise ValueError('AI strategy order fields')
             if (order['source'] not in campaign.catalog.map_cities or order['target']!=plan['target']
                     or order['source']==order['target'] or order['source'] in sources
-                    or order['mode'] not in ('fastest','land','sea','special')):
+                    or order['mode'] not in ('fastest','land','sea','river','special')):
                 raise ValueError('AI strategy route')
             sources.add(order['source'])
             integer(order['departure_turn'],plan['created_turn'],1000000,'AI departure schedule')

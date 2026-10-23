@@ -92,5 +92,5 @@ assert.equal((rendered.match(/class="castle-border"/g)||[]).length,2,'Every city
 assert(rendered.includes('href="#castle-outline-pixels" x="100" y="200" fill="#000"'));
 assert(rendered.includes('href="#castle-outline-pixels" x="300" y="400" fill="#fff"'),'Unowned borders remain pure white');
 assert(rendered.includes('href="#castle-fill-pixels" x="300" y="400" fill="#ffffff"'));
-assert(source.includes('${roads}${expansionRoads}${regionalRoads}${navigableSeas}${bridges}${castles}${labels}'),'All road layers precede complete castle sprites');
+assert(source.includes('${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${castles}${labels}'),'All road layers precede complete castle sprites');
 console.log('road paths: semantic endpoints, preview board, native-grid junctions, untouched ports/bypasses/inputs, original draw indices, Yinping junction and presentation-only background alias and complete castles above every road layer passed');

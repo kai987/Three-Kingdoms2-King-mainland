@@ -61,7 +61,7 @@ class TravelCampaign:
         return ids
 
     def _travel_modes(self):
-        return ('fastest','land','sea','special','explore')
+        return ('fastest','land','river','sea','special','explore')
 
     def _known_routes(self, state):
         routes = self.catalog.data['travel_routes']
@@ -109,7 +109,7 @@ class TravelCampaign:
         if not adjacent and state.cities[target].owner != owner:
             return None
         routes = self._known_routes(state)
-        if mode in ('sea','special','explore'):
+        if mode in ('river','sea','special','explore'):
             if mode == 'explore':
                 raw = self._exploration_route(source,target)
                 if raw is None or any(row['mode']=='sea' and {row['from'],row['to']}=={source,target}
@@ -118,7 +118,7 @@ class TravelCampaign:
                 candidates = [raw]
             else:
                 candidates = [row for row in routes if {row['from'],row['to']}=={source,target}
-                              and (row['mode']=='sea' if mode=='sea' else row.get('special') in ('yinping','ziwu'))]
+                              and (row['mode']==mode if mode in ('river','sea') else row.get('special') in ('yinping','ziwu'))]
                 # The current Yinping route is identified by its endpoint pair.
                 if mode == 'special':
                     candidates += [row for row in routes if row not in candidates
@@ -141,7 +141,7 @@ class TravelCampaign:
             if here == target and legs:
                 return self._quote(path,legs)
             for raw in routes:
-                if here not in (raw['from'],raw['to']) or mode=='land' and raw['mode']=='sea':
+                if here not in (raw['from'],raw['to']) or mode=='land' and raw['mode']!='land':
                     continue
                 nxt = raw['to'] if here==raw['from'] else raw['from']
                 if nxt not in state.cities or nxt in seen:
@@ -489,7 +489,7 @@ class TravelCampaign:
                         quotes[f'{source}:{here}:{mode}']=self._quote(path,legs)
                     for leg in adjacency[here]:
                         target=leg['to']
-                        if target in seen or state.cities[target].owner not in (state.player, 'neutral') or mode=='land' and leg['mode']=='sea':
+                        if target in seen or state.cities[target].owner not in (state.player, 'neutral') or mode=='land' and leg['mode']!='land':
                             continue
                         heappush(queue,(days+leg['days'],distance+leg['distance_km'],target,next(serial),path+[target],legs+[leg]))
                 # Attacks remain direct city-to-city legs; friendly paths above
@@ -500,13 +500,13 @@ class TravelCampaign:
                     if options:
                         leg=min(options,key=lambda r:(r['days'],r['distance_km']))
                         quotes[f'{source}:{target}:{mode}']=self._quote([source,target],[leg])
-            for mode in ('sea','special'):
-                targets=({leg['to'] for leg in adjacency[source] if leg['mode']=='sea'} if mode=='sea'
+            for mode in ('river','sea','special'):
+                targets=({leg['to'] for leg in adjacency[source] if leg['mode']==mode} if mode in ('river','sea')
                          else {leg['to'] for leg in adjacency[source] if leg.get('hazard') and
                                leg['hazard']['kind'] in ('yinping','ziwu_rain','ziwu_dry')})
                 for target in targets:
                     options=[leg for leg in adjacency[source] if leg['to']==target and
-                             (leg['mode']=='sea' if mode=='sea' else leg.get('hazard') and
+                             (leg['mode']==mode if mode in ('river','sea') else leg.get('hazard') and
                               leg['hazard']['kind'] in ('yinping','ziwu_rain','ziwu_dry'))]
                     leg=min(options,key=lambda r:(r['days'],r['distance_km']))
                     quotes[f'{source}:{target}:{mode}']=self._quote([source,target],[leg])
@@ -530,14 +530,20 @@ class TravelCampaign:
                     or any(c not in state.cities for c in path) or path[0]!=old['journey_source']
                     or path[-1]!=old['target'] or len(quote['routes'])!=len(path)-1):
                 raise ValueError('March history path')
+            if old['mode'] not in self._travel_modes():
+                raise ValueError('March history mode')
             legs=[]
             for a,b,leg in zip(path,path[1:],quote['routes']):
                 raw=known.get(leg['id'])
                 if raw is None or {raw['from'],raw['to']}!={a,b} or not route_allowed(self.catalog.data,raw,a,b):
                     raise ValueError('March history route')
+                if old['mode']=='land' and raw['mode']!='land':
+                    raise ValueError('March history land route uses water')
                 expected=evaluate_leg(self.catalog.data,raw,a,b,old['departure_month'])
                 if expected!=leg:raise ValueError('March history weather')
                 legs.append(leg)
+            if old['mode'] in ('river','sea') and (len(legs)!=1 or legs[0]['mode']!=old['mode']):
+                raise ValueError('March history direct water mode')
             if quote!=self._quote(path,legs):raise ValueError('March history quote')
             validate(old['supply'],quote,old['departure_turn'],state.turn)
             validate_departures(old['supply'],quote,returning=index>0)
@@ -681,19 +687,21 @@ class TravelCampaign:
                 raw=all_routes[leg['id']]
                 if {raw['from'],raw['to']}!={a,b} or not route_allowed(self.catalog.data,raw,a,b):
                     raise ValueError('march direction')
-                if row['mode']=='land' and raw['mode']=='sea':
-                    raise ValueError('land march uses sea')
+                if row['mode']=='land' and raw['mode']!='land':
+                    raise ValueError('land march uses water')
                 if leg!=evaluate_leg(self.catalog.data,raw,a,b,row['departure_month']):
                     raise ValueError('altered departure weather or route')
                 sailed={r['id'] for h in row['history'] for r in h['quote']['routes']}
                 if (leg['id'] in exploration and row['mode']!='explore' and leg['id'] not in discovered
                         and not (returning_trip and leg['id'] in sailed)):
                     raise ValueError('undiscovered route used as known')
-            if row['mode'] in ('sea','special','explore') or row['kind']=='attack':
+            if row['mode'] in ('river','sea','special','explore') or row['kind']=='attack':
                 if len(legs)!=1:
                     raise ValueError('direct route mode needs one leg')
             if row['mode']=='sea' and legs[0]['mode']!='sea':
                 raise ValueError('sea mode needs sea leg')
+            if row['mode']=='river' and legs[0]['mode']!='river':
+                raise ValueError('river mode needs river leg')
             if row['mode']=='special' and not legs[0].get('hazard',{}):
                 raise ValueError('special mode needs valley hazard')
             if row['mode']=='special' and legs[0]['hazard']['kind'] not in ('yinping','ziwu_rain','ziwu_dry'):

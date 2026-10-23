@@ -33,7 +33,7 @@ function fixture(items=[]){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,38);
+ assert.equal(Object.keys(KINDS).length,39);
  assert(validEvent(row(1)));for(const bad of [{id:0},{kind:'<script>'},{month:13},{day:31},{audience:'other'},{person_ids:[3]},{details:[]},{turn:0}])assert(!validEvent({...row(1),...bad}));
  assert.deepEqual(eventRows({game:{extension:{events:{items:{}}}}}),[]);
  assert.notEqual(campaignKey(view([])),campaignKey(view([],2027)));
@@ -116,6 +116,21 @@ function fixture(items=[]){
  const upgraded=fixture();upgraded.events.observe(view([]),{baseline:true});upgraded.events.observe(view([upgrade]));upgraded.drain();
  assert(upgraded.modal.open,'A city upgrade is a world event, regardless of the owning faction');assert(upgraded.modal.innerHTML.includes('都市擴建'));assert(upgraded.modal.innerHTML.includes('240年1月'));assert(upgraded.modal.innerHTML.includes('巨大都市'));assert(upgraded.modal.innerHTML.includes('event-map'));
  const upgradeSnapshot=upgraded.events.snapshot();upgraded.i18n.locale='ja';upgraded.doc.emit('game-language-change');assert(upgraded.modal.innerHTML.includes('都市の発展'));assert(upgraded.modal.innerHTML.includes('本作独自'));assert.deepEqual(upgraded.events.snapshot(),upgradeSnapshot);
+ const renamed=row(101,'city_renamed',{year:219,month:1,day:1,audience:'world',person_ids:[],city_ids:['qiao'],factions:['wei'],details:{from_name:'小沛',to_name:'譙郡'}});
+ assert(validEvent(renamed));
+ for(const bad of [{day:11},{audience:'player'},{person_ids:['person-a']},{city_ids:[]},{factions:[]}])assert(!validEvent({...renamed,...bad}));
+ for(const bad of [{from_name:'譙郡'},{from_name:''},{to_name:42},{to_name:'bad\nname'},{extra:1}])assert(!validEvent({...renamed,details:{...renamed.details,...bad}}));
+ const dates=fixture(),datedView=view([renamed,{...upgrade,id:102,year:221,city_ids:['qiao'],details:{...upgrade.details,from_tier:'normal',to_tier:'large'}}]);
+ datedView.catalog={...catalog,cities:[...catalog.cities,{id:'qiao',name:'譙郡',position:[700,300]}]};const datedBefore=JSON.stringify(datedView);
+ dates.events.observe(datedView,{newGame:true});dates.drain();
+ assert(dates.modal.innerHTML.includes('城名顯示變更'));assert(dates.modal.innerHTML.includes('data-event-history="qiao-219"'));
+ assert(dates.modal.innerHTML.includes('史實背景'));assert(dates.modal.innerHTML.includes('不是史實上小沛於219年改名譙郡'));assert(dates.modal.innerHTML.includes('event-map'));
+ assert(dates.modal.innerHTML.includes('https://zh.wikisource.org/zh-hant/三國志/卷32'));assert(dates.modal.innerHTML.includes('rel="noopener noreferrer"'));
+ const renameSnapshot=dates.events.snapshot();dates.i18n.locale='ja';dates.doc.emit('game-language-change');assert(dates.modal.innerHTML.includes('史実の背景'));assert(dates.modal.innerHTML.includes('別の都市'));assert.deepEqual(dates.events.snapshot(),renameSnapshot);
+ dates.modal.querySelector('[data-event-next]').onclick();assert(dates.modal.innerHTML.includes('data-event-history="qiao-221"'));assert(dates.modal.innerHTML.includes('五都'));assert(dates.modal.innerHTML.includes('巻2'));assert(dates.modal.innerHTML.includes('ゲーム独自の設定'));
+ dates.i18n.locale='zh-Hant';dates.doc.emit('game-language-change');assert(dates.modal.innerHTML.includes('黃初二年（221年）'));assert(dates.modal.innerHTML.includes('今後每月收入'));assert.equal(JSON.stringify(datedView),datedBefore,'Historical text, locale changes and acknowledgements cannot change actual troops, stores or RNG');
+ dates.modal.querySelector('[data-event-next]').onclick();dates.events.observe(datedView);dates.drain();assert(!dates.modal.open,'A dated scene is not replayed after acknowledgement');
+ const hostile=fixture();hostile.events.observe(view([{...renamed,details:{from_name:'<img src=x>',to_name:'譙郡'}}]),{newGame:true});hostile.drain();assert(hostile.modal.innerHTML.includes('&lt;img src=x&gt;'));assert(!hostile.modal.innerHTML.includes('<img src=x>'));
  const returned=reason=>h.events.description(row(99,'march_returned',{city_ids:['home','enemy'],details:{reason}}));
  assert(returned('army_lost').includes('帶兵全損'));assert(returned('army_lost').includes('武將返回成都原編制'));assert(!returned('army_lost').includes('返回長安'));
  assert(returned('target_changed').includes('目的城長安已易主'));assert(returned('target_changed').includes('保留在成都'));
@@ -132,5 +147,5 @@ function fixture(items=[]){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,localAutosave:null,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
- console.log('events: 38 bilingual scenes, strict supply/starvation/retreat snapshots, local batching, dated city upgrades, independent staff portraits, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 39 bilingual scenes, strict supply and city-name snapshots, dated city upgrades with historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

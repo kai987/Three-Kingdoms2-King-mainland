@@ -55983,6 +55983,29 @@
             "https://zh.wikisource.org/wiki/三國志/卷47"
           ]
         }
+      },
+      "qiao": {
+        "detail": "本作qiao固定節點在219年以前以小沛顯示，219年起以譙郡顯示，221年起升為大都市。這是使用者指定的區域代理切換：史實小沛（沛縣）與譙（今亳州）是不同城池，不能視為小沛於219年改名譙郡。譙為曹操故鄉，《三國志·文帝紀》裴注引《魏略》記黃初二年以長安、譙、許昌、鄴、洛陽為五都；本作以221年1月上旬作規模變更界點。切換不改變實際佔領、武將、兵數或庫存。",
+        "detail_ja": "本作の固定qiao拠点は219年より前は小沛、219年から譙郡と表示し、221年から大都市になります。ユーザー指定の地域代理拠点の切り替えです。史実の小沛（沛県）と譙（現在の亳州）は別の都市であり、219年に小沛が譙郡へ改称されたという意味ではありません。譙は曹操の故郷で、『三國志』文帝紀の裴松之注が引く『魏略』には黄初二年に長安・譙・許昌・鄴・洛陽を五都とした記録があります。本作では221年1月上旬を規模変更の区切りとし、現在の支配・武将・兵力・在庫は変更しません。",
+        "names": [
+          {
+            "start": 1,
+            "end": 218,
+            "name": "小沛"
+          },
+          {
+            "start": 219,
+            "end": 9999,
+            "name": "譙郡"
+          }
+        ],
+        "announce_name_changes": true,
+        "name_date_precision": "user_authored_region_proxy_year_boundary_not_historical_city_rename",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷01",
+          "https://zh.wikisource.org/zh-hant/三國志/卷02",
+          "https://zh.wikisource.org/zh-hant/三國志/卷32"
+        ]
       }
     },
     "travel_hazards": {

@@ -8,7 +8,7 @@ STATIC_FIELDS = frozenset(('title', 'factions', 'links', 'rules', 'calendar_rule
     'difficulties', 'notes', 'library_count', 'coverage', 'tactics',
     'map_presentation', 'road_additions', 'world',
     'scenario_id', 'faction_colors', 'sea_routes', 'travel_hazards',
-    'added_city_ids', 'regional_roads', 'city_label_offsets', 'city_history', 'scenarios',
+    'added_city_ids', 'regional_roads', 'river_routes', 'city_label_offsets', 'city_history', 'scenarios',
     'travel_rules', 'coastal_city_ids'))
 PERSON_STATE = frozenset(('year_state', 'faction', 'alive', 'location'))
 

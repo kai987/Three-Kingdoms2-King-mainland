@@ -4,7 +4,7 @@ These are the user's game rules, not historical casualty measurements or a
 weather forecast.  Quotes never draw random numbers or mutate raw route data.
 The campaign runtime owns random storm severity and exactly-once settlement.
 """
-from math import ceil, cos, radians
+from math import ceil, cos, isfinite, radians
 
 
 def _json_numbers(value):
@@ -57,6 +57,56 @@ def _monsoon(policy, month):
     return rule, None, None, None
 
 
+def _river_number(value, message, *, zero=False):
+    if type(value) not in (int, float) or not isfinite(value) or (value < 0 if zero else value <= 0):
+        raise ValueError(message)
+    return value
+
+
+def _river_leg(rules, route, leg, source, plain_speed):
+    """Quote surveyed river reaches without sea weather or casualty rolls.
+
+    ``downstream_from`` names the endpoint from which a reach is downstream;
+    an explicit null marks still lake water. ``speed_key`` selects that reach's
+    historical-reference speed table, rather than inferring flow from pixels.
+    Land access and one embarkation are charged once for the whole city link.
+    """
+    segments = route.get('river_segments')
+    speeds = rules.get('river_speeds')
+    if not isinstance(segments, list) or not segments or not isinstance(speeds, dict):
+        raise ValueError('Invalid river segments or speeds')
+    water_time, quoted = 0, []
+    for segment in segments:
+        if not isinstance(segment, dict) or 'downstream_from' not in segment:
+            raise ValueError('Invalid river segment flow')
+        downstream = segment['downstream_from']
+        if downstream is not None and downstream not in (route['from'], route['to']):
+            raise ValueError('Invalid river segment flow')
+        flow = 'still' if downstream is None else 'downstream' if source == downstream else 'upstream'
+        table = speeds
+        if 'speed_key' in segment:
+            key = segment['speed_key']
+            if not isinstance(key, str) or not isinstance(speeds.get(key), dict):
+                raise ValueError('Invalid river speed table')
+            table = speeds[key]
+        speed = _river_number(table.get(flow), 'Invalid river speed')
+        distance = _river_number(segment.get('distance_km'), 'Invalid river segment distance')
+        water_time += distance / speed
+        quoted.append(dict(_json_numbers(segment), flow=flow, speed_km_per_day=_json_numbers(speed)))
+    land = _river_number(route.get('land_km', 0), 'Invalid river land distance', zero=True)
+    embark = rules.get('river_embark_days', 1)
+    if type(embark) is not int or embark < 0:
+        raise ValueError('Invalid river embark days')
+    flows = {segment['flow'] for segment in quoted}
+    speed_values = {segment['speed_km_per_day'] for segment in quoted}
+    leg.update(river_segments=quoted,
+               flow=next(iter(flows)) if len(flows) == 1 else 'mixed',
+               speed_km_per_day=next(iter(speed_values)) if len(speed_values) == 1 else None,
+               land_access_days=ceil(land / plain_speed), water_days=ceil(water_time), embark_days=embark)
+    leg['days'] = max(1, leg['land_access_days'] + leg['water_days'] + embark)
+    return leg
+
+
 def evaluate_leg(data, route, source, target, departure_month):
     """Return a directional, deterministic time quote from an immutable leg.
 
@@ -66,6 +116,7 @@ def evaluate_leg(data, route, source, target, departure_month):
 
     Land special times multiply the integer plain-road baseline, so a10-day
     plain leg is20 days in the dry Ziwu season and40 in its rainy season.
+    River flow changes surveyed reach speed; it never uses sea weather rules.
     Sea wind changes sailing speed only; land access and embark time remain.
     All sea legs of a single march are merged into one storm by the runtime.
     """
@@ -105,6 +156,8 @@ def evaluate_leg(data, route, source, target, departure_month):
                 100 - loss, 100, month=departure_month,
                 season='rainy' if rainy else 'dry')
         return leg
+    if route['mode'] == 'river':
+        return _river_leg(data['travel_rules'], route, leg, source, plain_speed)
     if route['mode'] != 'sea':
         return leg
     monsoon, season, vector, season_label = _monsoon(policy, departure_month)

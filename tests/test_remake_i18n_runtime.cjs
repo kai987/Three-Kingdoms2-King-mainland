@@ -54,6 +54,11 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
   ['陆路 · 57日','陸路 · 57日'],
   ['最短日数（陆路1） · 10日','最短日数（陸路1） · 10日'],
   ['未知航路探索（海路） · 35日','未知航路の探索（海路） · 35日'],
+  ['内河水路','内陸水路'],['海河并用','海路・内陸水路併用'],
+  ['含内河水路及陆地接入。','内陸水路と接続する陸路を含みます。'],
+  ['内河不适用海路季风、暴风雨减员。','内陸水路には海路の季節風・暴風雨による兵力損失は適用されません。'],
+  ['长江','長江'],['湘水（含洞庭出口）','湘水（洞庭湖の出口を含む）'],
+  ['顺流','下り'],['逆流','上り'],['航速','航海速度'],
   ['探索未知航路','未知航路を探索'],
   ['城名：巨大都市','都市名：巨大都市'],['城名：大都市','都市名：大都市'],
   ['名：巨','名：巨'],['名：大','名：大'],
@@ -69,6 +74,7 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
  for(const[source,expected]of cases){const translated=i18n.t(source,'ja');assert.equal(translated,expected,source);assert.equal(i18n.t(translated,'ja'),expected,'Japanese translation must be idempotent: '+source);}
  for(const row of rows){const once=i18n.t(row.title,'ja');assert.equal(i18n.t(once,'ja'),once,row.title);assert(!once.includes('の戦いの戦い'),row.title);}
  assert.equal(i18n.t('关羽','zh-Hant'),'關羽');
+ assert.equal(i18n.t('内河水路：顺流、逆流；长江与湘水（含洞庭出口）。','zh-Hant'),'內河水路：順流、逆流；長江與湘水（含洞庭出口）。');
  for(let n=0;n<2;n++){assert(i18n.setLocale('ja'));assert.equal(heading.data,'セーブ');assert.equal(document.title,'三国志・大陸戦役');assert(i18n.setLocale('zh-Hant'));assert.equal(heading.data,'保存進度');assert.equal(document.title,'三國·大陸戰役');}
  const storageBefore=[...storage];assert.equal(i18n.setLocale('zh-CN'),false);assert.equal(i18n.locale,'zh-Hant');assert.deepEqual([...storage],storageBefore);
  assert.equal(input.value,'13579');assert.equal(input.checked,true);assert.equal(language.children[0].children[0].data,'繁體中文');assert.equal(language.children[1].children[0].data,'日本語');

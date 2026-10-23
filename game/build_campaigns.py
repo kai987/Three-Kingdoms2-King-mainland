@@ -98,6 +98,14 @@ def apply_navigation_sources(data, navigation):
             draw=deepcopy(corridor['draw']), history=deepcopy(corridor['history'])))
         data['regional_roads'].append(deepcopy(corridor))
 
+    # Inland reaches have independent flow rules and never enter the sea or
+    # unknown-ocean catalogues. Both players and AI read this same link set.
+    data['travel_rules'].update(deepcopy(navigation.get('river_rules', {})))
+    data['river_routes'] = deepcopy(navigation.get('river_routes', []))
+    for river in data['river_routes']:
+        river.update(distance_km=1, land_km=0, river_km=1, sea_km=0, days=1)
+        data['travel_routes'].append(river)
+
 
 def load_sources(*, timing=True):
     navigation = read('game/config/navigation-geometry.json')

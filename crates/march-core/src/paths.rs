@@ -251,7 +251,7 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
         None => "fastest",
         Some(value) => value.as_str().ok_or("请选择有效的行军路线。")?,
     };
-    if !["fastest", "land", "sea", "special", "explore"].contains(&mode) {
+    if !["fastest", "land", "river", "sea", "special", "explore"].contains(&mode) {
         return Err("请选择有效的行军路线。".into());
     }
     let (source, target) = (string(request, "source")?, string(request, "target")?);
@@ -270,7 +270,7 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
     }
     let routes = known_routes(data, request)?;
     let month = request.get("month").unwrap_or(&Value::Null);
-    if ["sea", "special", "explore"].contains(&mode) {
+    if ["river", "sea", "special", "explore"].contains(&mode) {
         let mut candidates = vec![];
         if mode == "explore" {
             let Some(raw) = exploration(data, source, target)? else {
@@ -286,8 +286,8 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
             candidates.push(raw);
         } else {
             for row in &routes {
-                let suitable = if mode == "sea" {
-                    row.get("mode").and_then(Value::as_str) == Some("sea")
+                let suitable = if ["river", "sea"].contains(&mode) {
+                    row.get("mode").and_then(Value::as_str) == Some(mode)
                 } else {
                     row.get("special")
                         .and_then(Value::as_str)
@@ -336,7 +336,7 @@ pub(crate) fn path(data: &Value, request: &Value) -> Result<Value> {
             let Some(next) = other(raw, &current.city)? else {
                 continue;
             };
-            if mode == "land" && raw.get("mode").and_then(Value::as_str) == Some("sea") {
+            if mode == "land" && raw.get("mode").and_then(Value::as_str) != Some("land") {
                 continue;
             }
             if !cities.owners.contains_key(next) || seen.contains(next) {
@@ -453,7 +453,7 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
                         let target = string(leg, "to")?;
                         if seen.contains(target)
                             || !can_transit(cities.owners.get(target), player)
-                            || mode == "land" && string(leg, "mode")? == "sea"
+                            || mode == "land" && string(leg, "mode")? != "land"
                         {
                             continue;
                         }
@@ -480,11 +480,11 @@ pub(crate) fn batch(data: &Value, request: &Value) -> Result<Value> {
                 insert_direct(&mut quotes, source, target, mode, options)?;
             }
         }
-        for mode in ["sea", "special"] {
+        for mode in ["river", "sea", "special"] {
             let legs = &adjacency[source];
             let suitable = |leg: &&Value| {
-                if mode == "sea" {
-                    leg.get("mode").and_then(Value::as_str) == Some("sea")
+                if ["river", "sea"].contains(&mode) {
+                    leg.get("mode").and_then(Value::as_str) == Some(mode)
                 } else {
                     special(leg)
                 }

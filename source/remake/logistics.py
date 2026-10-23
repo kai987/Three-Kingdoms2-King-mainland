@@ -241,8 +241,13 @@ def _safe_path(game, state, source, target, owner, mode, policy):
 
 def _safe_quote(game, state, source, target, policy):
     choices = []
-    for mode in (('land', 'fastest') if policy['allow_sea'] else ('land',)):
+    # Ocean permission never disables a safe inland shipping route. Retain
+    # the old land-only answer (and its saved mode) when no river is involved.
+    for mode in ('land', 'fastest'):
         quote = _safe_path(game, state, source.id, target.id, source.owner, mode, policy)
+        if (quote is not None and mode == 'fastest' and not policy['allow_sea']
+                and not any(leg['mode'] == 'river' for leg in quote['routes'])):
+            continue
         if quote is not None and not _dangerous(quote, policy):
             choices.append((quote['days'], quote['distance_km'], mode, quote))
     if not choices:
@@ -459,7 +464,7 @@ def dispatch(game, state, payload, owner):
         raise GameError('运输物资数量无效。')
     if army is not None and (cargo['gold'] or cargo['reserves'] or not cargo['grain']):
         raise GameError('行军补给队只能运送兵粮。')
-    if not isinstance(mode, str) or mode not in {'land', 'fastest', 'sea', 'special'}:
+    if not isinstance(mode, str) or mode not in {'land', 'fastest', 'river', 'sea', 'special'}:
         raise GameError('请选择已知的运输路线。')
     if army is not None:
         selected=_meeting_quote(game,state,source,army,policy)
@@ -1026,7 +1031,7 @@ def validate(game, state):
         for index, journey in enumerate(journeys):
             if (not isinstance(journey, dict) or set(journey) != _JOURNEY_FIELDS
                     or any(journey[k] not in state.cities for k in ('source', 'target'))
-                    or journey['mode'] not in {'land', 'fastest', 'sea', 'special'}
+                    or journey['mode'] not in {'land', 'fastest', 'river', 'sea', 'special'}
                     or not _int(journey['departure_turn'], 1, state.turn)
                     or not _int(journey['departure_year'], 1, state.year)
                     or not _int(journey['departure_month'], 1, 12) or journey['departure_day'] not in {1, 11, 21}
@@ -1055,7 +1060,11 @@ def validate(game, state):
                 raw = routes.get(leg.get('id'))
                 if raw is None or not route_allowed(game.catalog.data, raw, a, b):
                     raise ValueError('Logistics route identity')
+                if journey['mode'] == 'land' and raw['mode'] != 'land':
+                    raise ValueError('Logistics land route uses water')
                 legs.append(evaluate_leg(game.catalog.data, raw, a, b, journey['departure_month']))
+            if journey['mode'] in {'river', 'sea'} and (len(legs) != 1 or legs[0]['mode'] != journey['mode']):
+                raise ValueError('Logistics direct water route mode')
             if game._quote(quote['path'], legs) != quote:
                 raise ValueError('Logistics route arithmetic')
             from .march_supply import validate as validate_supply,validate_departures

@@ -1,42 +1,42 @@
 {
   "plain": {
     "before": {
-      "save": "679e2b740a244d1a9a69f1a12adbd8445d22d1b1104f9bb34e0389701252ad31",
-      "state": "36f5ace52f88a88ff702aa7083b960b113a4fc37e648cc5d8bae5279c88aed89",
+      "save": "e30f63de940fd9e14d987ca453d87716e76530d7231610206952bc45b3a94510",
+      "state": "f1efa5f9bacc9dc6699955aef86e359a76ade1bd39550cc01c84d98a71e2d77e",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "preview": {
-      "save": "679e2b740a244d1a9a69f1a12adbd8445d22d1b1104f9bb34e0389701252ad31",
-      "state": "36f5ace52f88a88ff702aa7083b960b113a4fc37e648cc5d8bae5279c88aed89",
+      "save": "e30f63de940fd9e14d987ca453d87716e76530d7231610206952bc45b3a94510",
+      "state": "f1efa5f9bacc9dc6699955aef86e359a76ade1bd39550cc01c84d98a71e2d77e",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "queued": {
-      "save": "eb835069db6f7fb317c191e5f522459518476cbe0d4e1b8f130fe836dec824a2",
-      "state": "4075c8c6accf1bb8cc923a280f52ef436cd36c5f483510d2cb06e4bb54529a7d",
+      "save": "66548f4de3d065243c7fffa79ba9940619b73fb211418954947282f8894ebd04",
+      "state": "40c7198044c1a38151bcf82781b595b60f887fa715cecc662c1d7d73f951d34a",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
@@ -108,14 +108,14 @@
       ]
     },
     "arrived": {
-      "save": "b99501a876f50afa578fb4d03d16159e738950e712f77b638bab66a568a1bc60",
-      "state": "50b3b0bc70cf85c73d1a9709cc4e5e0b0e00ce997acadfe7aed14c82f98cd37b",
+      "save": "88e29528b9c0a09e12b1e4dc5e416851c0a192849d7c6ce22e4528a5f5e7941e",
+      "state": "e9f63a85e6f33910d9a31b4ff472281a6ab83c0fb5bf6e2c8a4e49abf4cd01c7",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
@@ -129,42 +129,42 @@
   },
   "yinping": {
     "before": {
-      "save": "ead69b5063140098b3945573fe643d7ecdd571ecb4477e22234fff1ee53abba6",
-      "state": "4a0304591d303e0324e3cf3af8db6b20307d69f9feb60eb567ebb82d04b2f990",
+      "save": "7c1acb48361aba7edf4e44b47486634165b034889c3277ac1bda57b767d51b9a",
+      "state": "c8400fefaf76e5ce1c1984cedb21005081bce011e3f0507002b23cae572cb274",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "preview": {
-      "save": "ead69b5063140098b3945573fe643d7ecdd571ecb4477e22234fff1ee53abba6",
-      "state": "4a0304591d303e0324e3cf3af8db6b20307d69f9feb60eb567ebb82d04b2f990",
+      "save": "7c1acb48361aba7edf4e44b47486634165b034889c3277ac1bda57b767d51b9a",
+      "state": "c8400fefaf76e5ce1c1984cedb21005081bce011e3f0507002b23cae572cb274",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "queued": {
-      "save": "f64c10e2efeea75998e097e124cf563d3dd5b1d276aa247116254e3adccdecb2",
-      "state": "a6206f0619c4d594ed6e957038c6b64bd82ae48c73e544f66cd76f7b841bde7a",
+      "save": "dcdd535ddbb89b254da25bbd57ef8f741dc6a70acbce623dc74359a322d72bca",
+      "state": "8d30db153ac503a5cb13601708f34df3b43a671e805e99006955ed7b42ad66b4",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
@@ -223,15 +223,15 @@
       ]
     },
     "arrived": {
-      "save": "1acb5a3c3f63b22cbc56223967557d8235f72128ed341e1f032478de022abe68",
-      "state": "1df9bed34bd349bc6d92ec8cf8b705df2ad14c85c6d2b42df4a4197bf73b7a28",
+      "save": "29e05a35541894f6c9aaad6d3653e9acf391a5adfb424f5cfb11f82f2f57d014",
+      "state": "76f224cb40ae35063a305bab8ffd90a1acea8b35d926fe21cd05ea60fa8f5054",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 8646,
+        "initial": 283620,
+        "recruited": 8508,
         "lost": 600
       },
       "turn": 7
@@ -244,42 +244,42 @@
   },
   "ziwu-rain": {
     "before": {
-      "save": "fce7d0395a91d97ca3440a61d327730c728cf450743dcceeb21bb4cac0a0ccef",
-      "state": "a64af2453bd9147a818360f2486398d00ea41cf2fc0edbfb5e65d05af3f96393",
+      "save": "be28b994d2a40505f27d1b85181eccf2902e78839fba05828cc751f1df37a467",
+      "state": "5b97caad93a6d23eb5fa4a991fa38d1e88ce9debfa5e85aa5907b119ff7d1c9b",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "preview": {
-      "save": "fce7d0395a91d97ca3440a61d327730c728cf450743dcceeb21bb4cac0a0ccef",
-      "state": "a64af2453bd9147a818360f2486398d00ea41cf2fc0edbfb5e65d05af3f96393",
+      "save": "be28b994d2a40505f27d1b85181eccf2902e78839fba05828cc751f1df37a467",
+      "state": "5b97caad93a6d23eb5fa4a991fa38d1e88ce9debfa5e85aa5907b119ff7d1c9b",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "queued": {
-      "save": "456302fd6580f06cd9913a330807869b8a527aa2f6cab9d9cdda896c82a9b229",
-      "state": "66ccc5dfb0f753fbd81df15a708509db6100b81fcea92230a0f3f7565379263b",
+      "save": "eb2cdc42b3493335632ff682eeb62eeac8aa701b6c4fff7b3decc3203d554e2e",
+      "state": "47bf62c1ab702cb08801f256f80c6df0f54e0a5a1b412af4bc1caa1f05fc94ed",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
@@ -338,15 +338,15 @@
       ]
     },
     "arrived": {
-      "save": "b86c9d311b886710b5bb95c216155cd2c6723070768ecdc8d2ad118c47efa39b",
-      "state": "1c339ebd66cb8f2cc460a868537d48838bb2ef11b148c8d20851a897be08b65d",
+      "save": "3f474ac3767da929328c7fed5510fab71ccefbba894d685961b7b9fa8d15cf82",
+      "state": "1736f554eca11b71caa93cebd30777f3883a4fbe27d3621c5dc2a75809cb5039",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 4323,
+        "initial": 283620,
+        "recruited": 4254,
         "lost": 450
       },
       "turn": 6
@@ -359,43 +359,43 @@
   },
   "ziwu-dry": {
     "before": {
-      "save": "e54a9e4e83f273487b7f5333cfdd647ec314565897d7ce23172ae04fb9e617bc",
-      "state": "dfd99e5b5543e209d6dd50bb7b57022372e6f4d8448f28af6dc3778a740dcefc",
+      "save": "0a52ee106741c63808713b180242f5dfb31c5072eba9f5491752a41be62cd241",
+      "state": "a2645d2c2ef9c94beff683eedd2b9958109a3f776e73383d4fc762efba608597",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 38907,
+        "initial": 283620,
+        "recruited": 38286,
         "lost": 0
       },
       "turn": 28
     },
     "preview": {
-      "save": "e54a9e4e83f273487b7f5333cfdd647ec314565897d7ce23172ae04fb9e617bc",
-      "state": "dfd99e5b5543e209d6dd50bb7b57022372e6f4d8448f28af6dc3778a740dcefc",
+      "save": "0a52ee106741c63808713b180242f5dfb31c5072eba9f5491752a41be62cd241",
+      "state": "a2645d2c2ef9c94beff683eedd2b9958109a3f776e73383d4fc762efba608597",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 38907,
+        "initial": 283620,
+        "recruited": 38286,
         "lost": 0
       },
       "turn": 28
     },
     "queued": {
-      "save": "d9649085545fba8b6c8d274f51bf0078eff8160837b3a839dc925df5d28c6788",
-      "state": "9e58a985b6502c12a28b62c522147afcaa20cc311e6d847e381487e91188e75a",
+      "save": "183a8cb6d6c18b8110186f01228969894cf66008880e89054d11f96be91a25fb",
+      "state": "7fcfc2b423d72355f662e11035f4195572237503bfadff2a3e9986194c5e5d1e",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 38907,
+        "initial": 283620,
+        "recruited": 38286,
         "lost": 0
       },
       "turn": 28
@@ -453,15 +453,15 @@
       ]
     },
     "arrived": {
-      "save": "fdb810db817d687a7ef433907d34d2d2b0cee9badbfec6df428453a89bc01523",
-      "state": "4ea449c036c7406a703aac8016828598bc226fb7556f8ea9f7070e2450daf1ac",
+      "save": "90715ec1ebb9fbf70e7e1b4ba9912223822f111e37192b0f681399b207cbd545",
+      "state": "14b5b12610788cec04bb724403e64b81edaa3a64ebe45f551d9d59372a4cd8a5",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 43230,
+        "initial": 283620,
+        "recruited": 42540,
         "lost": 180
       },
       "turn": 31
@@ -474,43 +474,43 @@
   },
   "sea-tail": {
     "before": {
-      "save": "3cff7492e5776585ae5da7ab9ec83f3a751794cfc6f81785c5ea31bc9a077abd",
-      "state": "369008a3ca5d8cb3ec92df75ecc50e1684cebc755ed4b11661e4a318cb3a3356",
+      "save": "340f67f905dcc88b702f8698f6b53b96c49765fdf7e22bda174993f86c1940a3",
+      "state": "e4983cab8cf7a6bfd4c4032768c09b76572adb5d0f856b77738e86e612aa8fea",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 25938,
+        "initial": 283620,
+        "recruited": 25524,
         "lost": 0
       },
       "turn": 19
     },
     "preview": {
-      "save": "3cff7492e5776585ae5da7ab9ec83f3a751794cfc6f81785c5ea31bc9a077abd",
-      "state": "369008a3ca5d8cb3ec92df75ecc50e1684cebc755ed4b11661e4a318cb3a3356",
+      "save": "340f67f905dcc88b702f8698f6b53b96c49765fdf7e22bda174993f86c1940a3",
+      "state": "e4983cab8cf7a6bfd4c4032768c09b76572adb5d0f856b77738e86e612aa8fea",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 25938,
+        "initial": 283620,
+        "recruited": 25524,
         "lost": 0
       },
       "turn": 19
     },
     "queued": {
-      "save": "4316b7d02f824a6de281187f842a9eefc6187050dcf5ccd740fdc841a1e1a896",
-      "state": "b75ed53ccf2a77f511264ccbe8dbdb970dbd8730f9982ce242a30e06bffa761f",
+      "save": "a4660a12bca572618cbd277359fffbf94aa35fe70bdcd83f8d2ea53dd4ef6a82",
+      "state": "d1130a9157b21695772addb2dcae5d4bdde90874432c79202a4a7a35597955fa",
       "rng": {
         "state": 525710612,
         "draws": 1
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 25938,
+        "initial": 283620,
+        "recruited": 25524,
         "lost": 0
       },
       "turn": 19
@@ -660,15 +660,15 @@
       ]
     },
     "arrived": {
-      "save": "b00a979204ddf83073b5eed2cd8a29e9a64c0dfe5c1ce9ceebf27756febcf295",
-      "state": "bcc2c703cba4dc969ead25f482682e00b0a7308ecfca37b9b988a733d6ae3624",
+      "save": "cb2c008d4c80ea524e9482c3a7a79e02958706a819225494639867cd4c09aec1",
+      "state": "5151806cae1966ac774a3169d5e825af813246c70c79e14bbd49267af2bda0e2",
       "rng": {
         "state": 525710612,
         "draws": 1
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 25938,
+        "initial": 283620,
+        "recruited": 25524,
         "lost": 801
       },
       "turn": 20
@@ -681,42 +681,42 @@
   },
   "sea-head": {
     "before": {
-      "save": "04239d94f4bfc7a5f66f052430bdcac812a2f1ad3ec0928592134dd79b0b7a33",
-      "state": "2e442a7d5d4fd251989e4b9aa2d0928f9eacb88f56e6b9dbaeb1eab4670e58ce",
+      "save": "d486ec390fcf9cdb9f2b06c9f4f471898e6d8763eb13aa015e9e1caf6cae5d00",
+      "state": "798363613f775dc4101c2020e6f2a61de25487a9d94cfc266257a72b3b8664c9",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "preview": {
-      "save": "04239d94f4bfc7a5f66f052430bdcac812a2f1ad3ec0928592134dd79b0b7a33",
-      "state": "2e442a7d5d4fd251989e4b9aa2d0928f9eacb88f56e6b9dbaeb1eab4670e58ce",
+      "save": "d486ec390fcf9cdb9f2b06c9f4f471898e6d8763eb13aa015e9e1caf6cae5d00",
+      "state": "798363613f775dc4101c2020e6f2a61de25487a9d94cfc266257a72b3b8664c9",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "queued": {
-      "save": "ac6bcce32e4a21450f2f54afe2318aff9a1fe6a1ca275530306953e63ba34097",
-      "state": "1af01816ad4d2392c3b9aa78708b508e05fbafddd841010b102aebcd65de23f7",
+      "save": "51ae4032454b2664b6d1b8bc3f29fc98277cb6896e99a55b3d767e5d46a13144",
+      "state": "dc0f6d4c052ae46935705916f1a9e23183c436e9c75eb1af914a34a60a776201",
       "rng": {
         "state": 525710612,
         "draws": 1
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
@@ -867,15 +867,15 @@
       ]
     },
     "arrived": {
-      "save": "8fd49ad2d770aec12b2332931a7b608330dc4bf2af4098137407e214455b8566",
-      "state": "f4151d71f49e53655c44c9a1cb9c5bd669e3ef81d34cf5e08fd1fe4cb7c8f716",
+      "save": "f45dfcfb6de8b643d89b977fd7c318323dd633e922a880280e555ff44992ea6e",
+      "state": "ba862e917d4bebe06d99e144a319e6ab4d5a1c9e0a3be614b6d5109b792b7de1",
       "rng": {
         "state": 525710612,
         "draws": 1
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 4343,
+        "initial": 283620,
+        "recruited": 4274,
         "lost": 801
       },
       "turn": 5
@@ -888,43 +888,43 @@
   },
   "sea-calm": {
     "before": {
-      "save": "a487d41a2b747efab83e1a2df031d7c022b52b9b97d3660d183482275a235b58",
-      "state": "85155510dda66b02f54a9dda55a2f6319442625d79f9eb8eb0eaf933c9caa1a6",
+      "save": "981c4f9d5ad8496cd50d4c176f7b9fc1a0139562cff8e9c1e0e9d678c572774b",
+      "state": "6ae2b3c9e557dbc38c51aed8d6f911dc21fe3b0f280d420a1c302e17f05c567a",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 38907,
+        "initial": 283620,
+        "recruited": 38286,
         "lost": 0
       },
       "turn": 28
     },
     "preview": {
-      "save": "a487d41a2b747efab83e1a2df031d7c022b52b9b97d3660d183482275a235b58",
-      "state": "85155510dda66b02f54a9dda55a2f6319442625d79f9eb8eb0eaf933c9caa1a6",
+      "save": "981c4f9d5ad8496cd50d4c176f7b9fc1a0139562cff8e9c1e0e9d678c572774b",
+      "state": "6ae2b3c9e557dbc38c51aed8d6f911dc21fe3b0f280d420a1c302e17f05c567a",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 38907,
+        "initial": 283620,
+        "recruited": 38286,
         "lost": 0
       },
       "turn": 28
     },
     "queued": {
-      "save": "5ac89382a6ff16ff59e2a7f1a97928c29f629db48bdddf799aaf4d4cc05ee208",
-      "state": "160ac69b29be302a814d5b89abd798bfd9d5e893af8e61998304ca46fa617775",
+      "save": "256dd3557a625428e7b512223adf19a8517479c1ea461e81c25c9d949fba6b0a",
+      "state": "ff6f08b59626c7f8fa6a953f1f817e7a60f7e6f76f845a0e053ef164e964e494",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 38907,
+        "initial": 283620,
+        "recruited": 38286,
         "lost": 0
       },
       "turn": 28
@@ -1062,15 +1062,15 @@
       ]
     },
     "arrived": {
-      "save": "d7f5cdfe4245f7471be6e09f2cd4eebbab7513245693a8e76a1cfe69d271daba",
-      "state": "88d21d5b3dfc32c37c61d2090f815f85e677403ba286f7f511b0736ef0c281af",
+      "save": "2c9f2dc811fa297a0043100c558d74fe73e0e4fc65d02cd79bdf5d687e8770fe",
+      "state": "ab97f63e361e23d8a20332f9cb64dd69f06a4316a6a3635d58e348a81a620e90",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
-        "recruited": 38907,
+        "initial": 283620,
+        "recruited": 38286,
         "lost": 0
       },
       "turn": 29
@@ -1083,42 +1083,42 @@
   },
   "explore": {
     "before": {
-      "save": "2394cdc79775ea29e4b480508b41e8d73f1db37f52ccd5e47b997a9c2ef7792c",
-      "state": "bd2ed39713a614d3e11cbf11e7a6999d56150c9bb18e80a250d1d32563d11017",
+      "save": "a6bf5d880db60313c145ee50218d8773d6fb67183aaa2a05d1ea928e656361f2",
+      "state": "2a9896d1ae5d3b073705c3ae45a93f0654a14f7efbbb59e600c56e94105bfd76",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "preview": {
-      "save": "2394cdc79775ea29e4b480508b41e8d73f1db37f52ccd5e47b997a9c2ef7792c",
-      "state": "bd2ed39713a614d3e11cbf11e7a6999d56150c9bb18e80a250d1d32563d11017",
+      "save": "a6bf5d880db60313c145ee50218d8773d6fb67183aaa2a05d1ea928e656361f2",
+      "state": "2a9896d1ae5d3b073705c3ae45a93f0654a14f7efbbb59e600c56e94105bfd76",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
       "turn": 1
     },
     "queued": {
-      "save": "cbbfbf33504a8fb0fed93517315c4a3e61dd2094b408a1f1489f6e8e71df5a37",
-      "state": "36a2be4eb7d029adf118e0a241625356e3fa2680c32df21485b9222f5455db1d",
+      "save": "35a852b5115652fd20df39924091c2af48824586ab72f7d24218dc4543db6deb",
+      "state": "9122ef712d878a74bce51e507155ae65ddc8b8ee678a821e5333c4c9973aae25",
       "rng": {
         "state": 525710612,
         "draws": 1
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 0
       },
@@ -1413,14 +1413,14 @@
       ]
     },
     "arrived": {
-      "save": "7dc5f5234ead1495c8c901e6a9461217a7eb4d1a8b1746405265f9cccff7bbbb",
-      "state": "fd90e4da1946b3119f97d23c267ed7d7688ba97c2cc47b17dfa627c5c218cd9e",
+      "save": "b8d143cfdcf29c4df29fec5abc8bbfc1fefe568949c5d9d7e269b4998a7a04d4",
+      "state": "cff3241954a5286846be29cb46bc1087c888218bf6620368d1df5164e8f960fd",
       "rng": {
         "state": 525710612,
         "draws": 1
       },
       "soldiers": {
-        "initial": 286380,
+        "initial": 283620,
         "recruited": 0,
         "lost": 801
       },

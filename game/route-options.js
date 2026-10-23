@@ -6,7 +6,7 @@
  else root.GameRouteOptions=api;
 })(typeof window==='object'?window:globalThis,function(){
  'use strict';
- const knownModes=Object.freeze(['fastest','land','special','sea']);
+ const knownModes=Object.freeze(['fastest','land','special','sea','river']);
  const valid=quote=>quote!==null&&typeof quote==='object';
  const number=value=>typeof value==='number'&&Number.isFinite(value)?value:Infinity;
  const stable=value=>Array.isArray(value)?value.map(stable):value!==null&&typeof value==='object'?
@@ -16,19 +16,22 @@
  const identity=quote=>JSON.stringify([
   quote.path||[],
   (quote.routes||[]).map(leg=>[leg.id,leg.from,leg.to,leg.mode,leg.special,leg.terrain,
-   leg.days,leg.distance_km,leg.land_km,leg.sea_km,leg.base_days,stable(leg.hazard)]),
-  [quote.days,quote.turns,quote.distance_km,quote.grain_per_officer]
+   leg.days,leg.distance_km,leg.land_km,leg.sea_km,leg.river_km,leg.flow,
+   stable(leg.river_segments),leg.base_days,stable(leg.hazard)]),
+  [quote.days,quote.turns,quote.distance_km,quote.river_km,quote.grain_per_officer]
  ]);
  function kind(quote){
-  let land=(quote.modes||[]).includes('land'),sea=(quote.modes||[]).includes('sea');
+  let land=(quote.modes||[]).includes('land'),sea=(quote.modes||[]).includes('sea'),
+   river=(quote.modes||[]).includes('river')||quote.river_km>0;
   for(const leg of quote.routes||[]){
    land=land||leg.mode==='land'||leg.land_km>0;
    sea=sea||leg.mode==='sea'||leg.sea_km>0;
+   river=river||leg.mode==='river'||leg.river_km>0;
   }
-  return land&&sea?'mixed':sea?'sea':'land';
+  return river?(sea?'river_sea':'river'):land&&sea?'mixed':sea?'sea':'land';
  }
  function decorate(groups){
-  const counts={land:0,sea:0,mixed:0},indexes={land:0,sea:0,mixed:0};
+  const counts={land:0,sea:0,mixed:0,river:0,river_sea:0},indexes={land:0,sea:0,mixed:0,river:0,river_sea:0};
   for(const group of groups)counts[kind(group.quote)]++;
   const shortest=groups.length?number(groups[0].quote.days):Infinity;
   return groups.map(group=>{

@@ -1,14 +1,15 @@
 {
   "schema": "tk2-city-scale-rules-v1",
   "basis": "user_authored_remake_city_scale_setting",
-  "scope": "本作都市規模設定，並非史實都市等級或《三國志14》數值匯出。240年建業升級為巨大都市屬本作設定，從240年1月上旬生效。",
-  "scope_ja": "本作独自の都市規模設定であり、史実の都市等級や『三國志14』の数値ではありません。建業は本作設定により240年1月上旬から巨大都市になります。",
+  "scope": "本作都市規模設定，並非史實都市等級或《三國志14》數值匯出。譙郡自221年1月上旬升為大都市，參照黃初二年譙列五都的記載；建業自240年1月上旬升為巨大都市，濮陽為通常都市。",
+  "scope_ja": "本作独自の都市規模設定であり、史実の都市等級や『三國志14』の数値ではありません。譙郡は黄初二年に譙が五都に数えられた記録を参考に、221年1月上旬から大都市になります。建業は240年1月上旬から巨大都市、濮陽は通常都市です。",
   "ongoing_policy": "future_monthly_production_only_never_refill_existing_stocks_or_troops",
   "tier_multipliers": {"normal": 1, "large": 2, "giant": 3},
   "stock_quantum": {"gold": 10, "grain": 25, "reserves": 10},
   "cities": {
     "jingzhao": {"source_tier": "giant", "tier": "large"},
-    "qiao": {"source_tier": "normal", "tier": "large"},
+    "qiao": {"source_tier": "normal", "tier": "normal", "changes": [{"from_date": [221, 1], "tier": "large"}]},
+    "dongjun": {"source_tier": "large", "tier": "normal"},
     "bajun": {"source_tier": "normal", "tier": "large"},
     "wujun": {"source_tier": "normal", "tier": "large"},
     "kuaiji": {"source_tier": "normal", "tier": "large"},

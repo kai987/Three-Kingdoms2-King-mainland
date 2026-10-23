@@ -135,6 +135,101 @@ fn coordinates(data: &Value, city: &str) -> Result<(f64, f64)> {
     ))
 }
 
+fn river_number(value: Option<&Value>, error: &str, zero: bool) -> Result<f64> {
+    let value = number(value.unwrap_or(&Value::Null), error)?;
+    if if zero { value < 0.0 } else { value <= 0.0 } {
+        return Err(error.into());
+    }
+    Ok(value)
+}
+
+/// Surveyed river reaches have directional current, never ocean weather.
+fn river(rules: &Value, route: &Value, mut leg: Value, source: &str, plain: f64) -> Result<Value> {
+    let segments = route
+        .get("river_segments")
+        .and_then(Value::as_array)
+        .filter(|v| !v.is_empty())
+        .ok_or("Invalid river segments or speeds")?;
+    let speeds = rules
+        .get("river_speeds")
+        .filter(|v| v.is_object())
+        .ok_or("Invalid river segments or speeds")?;
+    let mut water_time = 0.0;
+    let mut quoted = Vec::with_capacity(segments.len());
+    for segment in segments {
+        let downstream = segment
+            .get("downstream_from")
+            .ok_or("Invalid river segment flow")?;
+        let flow = if downstream.is_null() {
+            "still"
+        } else {
+            let downstream = downstream.as_str().ok_or("Invalid river segment flow")?;
+            if downstream != string(route, "from")? && downstream != string(route, "to")? {
+                return Err("Invalid river segment flow".into());
+            }
+            if source == downstream {
+                "downstream"
+            } else {
+                "upstream"
+            }
+        };
+        let table = if let Some(key) = segment.get("speed_key") {
+            let key = key.as_str().ok_or("Invalid river speed table")?;
+            speeds
+                .get(key)
+                .filter(|v| v.is_object())
+                .ok_or("Invalid river speed table")?
+        } else {
+            speeds
+        };
+        let speed = river_number(table.get(flow), "Invalid river speed", false)?;
+        let distance = river_number(
+            segment.get("distance_km"),
+            "Invalid river segment distance",
+            false,
+        )?;
+        water_time += distance / speed;
+        let mut item = normalized(segment)?;
+        item["flow"] = json!(flow);
+        item["speed_km_per_day"] = numeric(speed, true)?;
+        quoted.push(item);
+    }
+    let zero = json!(0);
+    let land = river_number(
+        Some(route.get("land_km").unwrap_or(&zero)),
+        "Invalid river land distance",
+        true,
+    )?;
+    let one = json!(1);
+    let embark = integer(
+        rules.get("river_embark_days").unwrap_or(&one),
+        "Invalid river embark days",
+    )?;
+    let same_flow = quoted.iter().all(|v| v["flow"] == quoted[0]["flow"]);
+    let same_speed = quoted
+        .iter()
+        .all(|v| v["speed_km_per_day"] == quoted[0]["speed_km_per_day"]);
+    leg["flow"] = if same_flow {
+        quoted[0]["flow"].clone()
+    } else {
+        json!("mixed")
+    };
+    leg["speed_km_per_day"] = if same_speed {
+        quoted[0]["speed_km_per_day"].clone()
+    } else {
+        Value::Null
+    };
+    leg["river_segments"] = json!(quoted);
+    leg["land_access_days"] = numeric((land / plain).ceil(), true)?;
+    leg["water_days"] = numeric(water_time.ceil(), true)?;
+    leg["embark_days"] = json!(embark);
+    leg["days"] = numeric(
+        ((land / plain).ceil() + water_time.ceil() + embark as f64).max(1.0),
+        true,
+    )?;
+    Ok(leg)
+}
+
 pub(crate) fn evaluate(
     data: &Value,
     route: &Value,
@@ -234,6 +329,7 @@ pub(crate) fn evaluate(
                 )?;
             }
         }
+        "river" => return river(rules, route, leg, source, plain),
         "sea" => {
             let monsoon = &policy["monsoon"];
             let (season, label, vector) =

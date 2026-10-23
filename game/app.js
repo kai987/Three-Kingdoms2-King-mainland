@@ -43,12 +43,12 @@ const portraitHtml=(id,size='roster',source=false,personId=null,displayName=null
 const faction=id=>id==='neutral'?'无主':view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
 const capacity=()=>view.catalog.rules.city_officer_capacity;
 const marching=()=>new Set([...(view.game?.extension?.travel?.marches||[]).flatMap(r=>r.officers),...(view.catalog.logistics?.marching_officers||[])]);
-const routeModes=()=>['fastest','land',...(view.catalog.travel_hazards?['special','sea','explore']:[])];
+const routeModes=()=>['fastest','land',...(view.catalog.river_routes?.length?['river']:[]),...(view.catalog.travel_hazards?['special','sea','explore']:[])];
 const routeModeSelect=(mode='fastest')=>`<div class="route-choice"><label class="field" id="route-field">行军路线<select id="route-mode" data-exploring="${mode==='explore'}"></select></label><p class="small" id="route-unavailable" hidden>没有已知的可用路线。</p><button type="button" id="route-explore" aria-pressed="false" hidden>探索未知航路</button></div>`;
 const travelQuote=(source,target,mode='fastest')=>(MarchCore.quotesFor(view)??view.catalog.travel_quotes)?.[`${source}:${target}:${mode}`];
 const availableRouteModes=(source,target)=>routeModes().filter(mode=>travelQuote(source,target,mode));
 function routeOptionLabel(option,count){
- const type={land:'陆路',sea:'海路',mixed:'海陆并用'}[option.kind],number=count>1&&option.kindCount>1?option.indexWithinKind:'';
+ const type={land:'陆路',sea:'海路',mixed:'海陆并用',river:'内河水路',river_sea:'海河并用'}[option.kind],number=count>1&&option.kindCount>1?option.indexWithinKind:'';
  const title=option.mode==='explore'?`未知航路探索（${type}）`:option.shortest?`最短日数${count>1||option.kind!=='land'?`（${type}${number}）`:''}`:`${type}${number}`;
  return `${title} · ${option.quote.days}日`;
 }
@@ -98,13 +98,15 @@ function routeRisk(quote){
  if(view.catalog.travel_hazards&&(quote.routes||[]).some(r=>r.mode==='sea'&&!r.hazard))lines.push('季风过渡期：本次海段不叠加季风暴风雨减员。');
  if((quote.routes||[]).some(r=>r.exploration))lines.push('未知海路：成功完成航行后才会显示在地图上。');
  if((quote.routes||[]).some(r=>r.hazard?.kind==='monsoon_storm'))lines.push('暴风雨减员按整次航行结算一次，不按海路分段重复扣减。');
- return lines.length?`<div class="route-risks" role="note">${[...new Set(lines)].map(line=>`<p>${line}</p>`).join('')}<p>损耗从行军武将的带兵中结算；确认前不抽取事件结果、不扣兵。</p></div>`:'';
+ const inland=(quote.routes||[]).filter(r=>r.mode==='river');
+ const riverInfo=inland.length?`<div class="river-flow-info" role="note"><p>内河不适用海路季风、暴风雨减员。</p>${inland.flatMap(r=>(r.river_segments||[]).map(segment=>{const riverName=segment.speed_key==='yangtze'?['長江','長江']:['湘水（含洞庭出口）','湘水（洞庭出口を含む）'],flow=segment.flow==='downstream'?['順流','下り']:['逆流','上り'];return `<p data-locale-only="zh-Hant" data-l10n-native="zh-Hant">${riverName[0]}：${flow[0]} · 航速${segment.speed_km_per_day}公里/日。</p><p data-locale-only="ja" data-l10n-native="ja">${riverName[1]}：${flow[1]} · 航速${segment.speed_km_per_day}km/日。</p>`;})).join('')}</div>`:'';
+ return riverInfo+(lines.length?`<div class="route-risks" role="note">${[...new Set(lines)].map(line=>`<p>${line}</p>`).join('')}<p>损耗从行军武将的带兵中结算；确认前不抽取事件结果、不扣兵。</p></div>`:'');
 }
 function travelEstimate(source,target,mode='fastest'){
  const q=travelQuote(source,target,mode);
  if(!q)return '<p class="small">没有符合条件的路线。</p>';
  const arrival=GameCalendar.advance(view.game,q.turns);
- return `<p class="travel-estimate">${q.path.map(id=>escapeHtml(cityName(id))).join(' → ')}<br>约${q.distance_km}公里 · 估算${q.days}日 · ${q.turns}旬（每旬10日）<br>预计${GameCalendar.text(arrival)}到达。${q.modes.includes('sea')?'含海路及上岸接驳。':'陆路行军。'}</p>${routeRisk(q)}`;
+ return `<p class="travel-estimate">${q.path.map(id=>escapeHtml(cityName(id))).join(' → ')}<br>约${q.distance_km}公里 · 估算${q.days}日 · ${q.turns}旬（每旬10日）<br>预计${GameCalendar.text(arrival)}到达。${q.modes.includes('sea')?'含海路及上岸接驳。':q.modes.includes('river')?'含内河水路及陆地接入。':'陆路行军。'}</p>${routeRisk(q)}`;
 }
 function previewSurvivors(element,quote,ids){
  if(!element)return;
@@ -299,7 +301,7 @@ function renderMap(){
  const game=view.game,preview=setupPreview,owners=preview?.initial_owners||Object.fromEntries(Object.values(game?.cities||{}).map(c=>[c.id,c.owner]));
  const board=preview?.map_cities||view.catalog.cities;
  const active=board.filter(c=>(preview?.active_cities||view.catalog.active_cities).includes(c.id));
- const factions=preview?.factions||view.catalog.factions,ownerName=(id,city)=>id==='neutral'?(preview?.city_history?.[city]?.opening.basis==='unmapped_local_han_administration'?'地方汉郡（中立）':'无主'):factions.find(f=>f.id===id)?.name||'守备军';
+ const factions=preview?.factions||view.catalog.factions,ownerName=(id,city)=>id==='neutral'?(preview?.city_history?.[city]?.opening?.basis==='unmapped_local_han_administration'?'地方汉郡（中立）':'无主'):factions.find(f=>f.id===id)?.name||'守备军';
  const added=preview?.added_city_ids||view.catalog.added_city_ids||[],activeIds=new Set(active.map(c=>c.id));
  const cityProfiles=preview?.city_profiles||view.catalog.city_profiles||{};
  const focused=preview?.focus||selectedCity,selected=board.find(c=>c.id===focused),center=selected?mapPosition(selected):[760,440];
@@ -320,6 +322,7 @@ function renderMap(){
   roads:preview?.road_additions||view.catalog.road_additions,
   hazards:!!(preview?preview.travel_hazards:view.catalog.travel_hazards),
   seas:preview?.sea_routes||view.catalog.sea_routes||[],discovered:!preview?view.catalog.discovered_routes||[]:[],
+  rivers:preview?.river_routes||view.catalog.river_routes||[],
   regional:preview?.regional_roads||view.catalog.regional_roads||[],
   action:mapAction?{kind:mapAction.kind,source:mapAction.source,targets:mapAction.targets}:null
  });
@@ -359,7 +362,7 @@ function renderMap(){
   return `<g data-road="${r.from}-${r.to}"${oneway?' data-oneway="yinping-shujun"':''}><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"${oneway?' marker-end="url(#oneway-road-arrow)"':''}/></g>`;
  }).join('');
  const drawnAccess=new Set();
- const firstAccess=part=>{if(part.mode==='sea')return true;const key=mapAccessKey(part.points);if(drawnAccess.has(key))return false;drawnAccess.add(key);return true;};
+ const firstAccess=part=>{if(part.mode!=='land')return true;const key=mapAccessKey(part.points);if(drawnAccess.has(key))return false;drawnAccess.add(key);return true;};
  const expansionRoads=preview?.world||!preview&&view.catalog.world?view.catalog.map_presentation.expansion_connections.filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.map((part,index)=>{if(hazardous&&(part.mode==='sea'||!firstAccess(part)))return '';const d=part.mode==='sea'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false,from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});return part.mode==='sea'?`<path class="coastal-lane" d="${d}" data-coastal-route="${r.from}-${r.to}"/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;})).join(''):'';
  const seaRoutes=hazardous?[...(preview?.sea_routes||view.catalog.sea_routes||[]),...(!preview?view.catalog.discovered_routes||[]:[])]:[];
  const discoveredIds=new Set(!preview?(view.catalog.discovered_routes||[]).map(r=>r.id||[r.from,r.to].sort().join(':')):[]);
@@ -372,6 +375,11 @@ function renderMap(){
   const discovered=discoveredIds.has(r.id||[r.from,r.to].sort().join(':'));
   return part.mode==='sea'?`<path class="coastal-lane${discovered?' discovered-lane':''}" d="${d}" data-coastal-route="${r.from}-${r.to}" data-sea-route="${escapeHtml(r.id||r.from+'-'+r.to)}"${discovered?' data-discovered-route="'+escapeHtml(r.id||r.from+'-'+r.to)+'"':''}/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
  })).join('');
+ const navigableRivers=(preview?.river_routes||view.catalog.river_routes||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>(r.draw||[]).map((part,index)=>{
+  if(!firstAccess(part))return '';
+  const d=part.mode==='river'?smoothMapPath(part.points):landMapPath(part.points,{smooth:false,from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});
+  return part.mode==='river'?`<path class="river-lane" d="${d}" data-river-route="${escapeHtml(r.id)}"/>`:`<g data-access-road="${r.from}-${r.to}-${index}"><path class="road-underlay" d="${d}"/><path class="road-line" d="${d}"/></g>`;
+ })).join('');
  const regionalRoads=(preview?.regional_roads||view.catalog.regional_roads||[]).filter(r=>activeIds.has(r.from)&&activeIds.has(r.to)).flatMap(r=>r.draw.map((part,index)=>{
   if(!firstAccess(part))return '';
   const d=landMapPath(part.points,{from:index===0?r.from:null,to:index===r.draw.length-1?r.to:null});
@@ -381,10 +389,10 @@ function renderMap(){
  const labels=cityLabels==='none'?'':active.filter(c=>cityLabels==='all'||(['giant','large'].includes(cityLabels)?cityProfiles[c.id]?.tier===cityLabels:added.includes(c.id)||view.catalog.map_presentation.labelled_city_ids.includes(c.id)||c.id===focused)).map(c=>{
   const [x,y]=mapPosition(c),[dx,dy,anchor]=offsets[c.id]||[0,-24,'middle'];return `<text class="map-city-name" x="${x+dx}" y="${y+dy}" text-anchor="${anchor}" data-city-label="${c.id}" aria-hidden="true">${escapeHtml(cityName(c.id))}</text>`;
  }).join('');
- const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas]);
+ const bridges=mapBridgeLayer([roads,expansionRoads,regionalRoads,navigableSeas,navigableRivers]);
  const labelName={major:'主城',giant:'巨大都市',large:'大都市',all:'全部',none:'关闭'}[cityLabels];
  const toolbar=`<div class="map-toolbar" role="group" aria-label="地图视角"><button id="region" class="${mapMode==='region'?'selected':''}" aria-pressed="${mapMode==='region'}">本城</button><button id="all-map" class="${mapMode==='all'?'selected':''}" aria-pressed="${mapMode==='all'}">全图</button><label class="city-jump">城池 <select id="city-jump" aria-label="选择城池" ${busy?'disabled':''}>${active.map(c=>`<option value="${c.id}" ${c.id===focused?'selected':''} ${mapAction&&!mapAction.targets.includes(c.id)?'disabled':''}>${escapeHtml(cityCaption(c.id))} · ${escapeHtml(ownerName(owners[c.id],c.id))}</option>`).join('')}</select></label><button id="map-labels" data-label-mode="${cityLabels}" aria-label="切换城名显示" title="城名：${labelName}"><span class="map-labels-full">城名：${labelName}</span><span class="map-labels-compact">${{major:'名：主',giant:'名：巨',large:'名：大',all:'名：全',none:'名：隐'}[cityLabels]}</span></button></div>`;
- $('#stage').innerHTML=`<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${bridges}${castles}${labels}</svg>
+ $('#stage').innerHTML=`<svg id="world-map" viewBox="${box}" aria-label="${active.length}城地图，${active.length}城开放" aria-describedby="map-gesture-help"><defs>${spriteDefs}${mountainDefs}<marker id="oneway-road-arrow" viewBox="0 0 10 10" refX="26" refY="5" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 5L0 10Z" fill="#704518" stroke="#e4b45e" stroke-width="1"/></marker></defs><image href="${backgroundHref}" x="${world.x}" y="${world.y||0}" width="${world.width}" height="${world.height}"/>${inactiveCastles}${mountainColors}${roads}${expansionRoads}${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${castles}${labels}</svg>
  <div class="map-zoom-controls" role="group" aria-label="地图缩放比例（1–4倍）"><button id="map-zoom-out" aria-label="缩小地图" title="缩小地图">−</button><output id="map-zoom" aria-label="地图缩放比例（1–4倍）">100%</output><button id="map-zoom-in" aria-label="放大地图" title="放大地图">＋</button></div>
  <p id="map-gesture-help" class="visually-hidden">拖动地图；滚轮或双指缩放，范围1到4倍。</p>
  <div class="map-bottom-bar">${toolbar}<time id="map-date" datetime="${GameCalendar.iso(date)}" aria-label="${GameCalendar.text(date)}">${date.year}年<span>${date.month}月${GameCalendar.period(date.day)}</span></time></div>
@@ -446,7 +454,7 @@ async function showCityInformation(id){
    <p class="city-information-owner">归属：${escapeHtml(c.owner_name)}</p>
    ${period!==cityName(id)?`<p class="small">本年代地名：${escapeHtml(period)}</p>`:''}
    ${naming?.detail?`<p class="small">${escapeHtml(naming.detail)}</p>`:''}
-   ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening.note)}</p>${historySources}`,'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${history.garrisons?.length?`<p>开局驻防：${history.garrisons.map(g=>`${escapeHtml(g.name)}（${garrisonLabels[g.basis]||'区域防务调配'}）`).join('、')}</p>`:'<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>'}</details>`:''}
+   ${history?`<details class="scenario-notes city-history"><summary>年代与开局归属依据</summary>${sourceEvidence(`<p>${escapeHtml(history.detail)}</p><p>${escapeHtml(history.opening?.note||'')}</p>${historySources}`,'都市の年代・開始時所属について、史料の記録と本作の配置設定を区別しています。詳細な根拠と資料の精度は原資料で確認できます。')}<p>驻将按攻略参考、君主营地和同势力防务调配安排；史料任职会单独注明，不代表所有驻将均为史实郡守。</p>${history.garrisons?.length?`<p>开局驻防：${history.garrisons.map(g=>`${escapeHtml(g.name)}（${garrisonLabels[g.basis]||'区域防务调配'}）`).join('、')}</p>`:'<p>未虚构初始郡守，驻防名册暂空，可在战役中调将或招募。</p>'}</details>`:''}
    <p class="small">${escapeHtml(c.profile?.label||'旧版城市')} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
    ${cityEconomyNote(c.profile)}
    ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}

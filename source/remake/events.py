@@ -24,6 +24,7 @@ DETAILS = {
     'officer_death': {'released_troops'}, 'succession': {'previous'},
     'faction_ended': set(), 'city_founded': {'parent'},
     'city_upgraded': {'from_tier','to_tier','income'},
+    'city_renamed': {'from_name', 'to_name'},
     'city_captured': {'previous_owner'},
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
@@ -181,6 +182,13 @@ def transition(campaign, before, after, kind, payload):
                  factions=[value.owner], details=dict(parent=rule['parent']), audience='world')
         elif (before.year,before.month)!=(after.year,after.month):
             from .city_economy import tier_at,income_at
+            from .map_presentation import city_names
+            if campaign.catalog.data.get('city_history', {}).get(city, {}).get('announce_name_changes') is True:
+                old_name = city_names(campaign.catalog, before.year, before.month)[city]
+                new_name = city_names(campaign.catalog, after.year, after.month)[city]
+                if old_name != new_name:
+                    emit(campaign, after, 'city_renamed', city_ids=[city], factions=[value.owner],
+                         details=dict(from_name=old_name, to_name=new_name), audience='world')
             previous=tier_at(campaign.catalog.data,city,before.year,before.month)
             current=tier_at(campaign.catalog.data,city,after.year,after.month)
             if current!=previous:
@@ -283,6 +291,21 @@ def validate(campaign, state):
                     or details['from_tier']==details['to_tier'] or row['day']!=1
                     or details['income']!=income_at(campaign.catalog.data,city,row['year'],row['month'])):
                 raise ValueError('City size event date or income')
+        if row['kind'] == 'city_renamed':
+            from .map_presentation import city_names
+            details = row['details']
+            if (set(details) != DETAILS[row['kind']] or len(row['city_ids']) != 1
+                    or row['person_ids'] or len(row['factions']) != 1
+                    or row['audience'] != 'world' or row['day'] != 1):
+                raise ValueError('City name event fields')
+            city = row['city_ids'][0]
+            previous_year, previous_month = ((row['year'], row['month'] - 1)
+                if row['month'] > 1 else (row['year'] - 1, 12))
+            if (campaign.catalog.data.get('city_history', {}).get(city, {}).get('announce_name_changes') is not True
+                    or details['from_name'] != city_names(campaign.catalog, previous_year, previous_month)[city]
+                    or details['to_name'] != city_names(campaign.catalog, row['year'], row['month'])[city]
+                    or details['from_name'] == details['to_name']):
+                raise ValueError('City name event date or names')
         if row['kind'] in TRANSPORT_KINDS or row['kind']=='domestic_report':
             details=row['details']
             if set(details)!=DETAILS[row['kind']]:

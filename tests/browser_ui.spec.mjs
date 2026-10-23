@@ -281,13 +281,13 @@ test('city size labels and the report adapt to available space while retaining m
  const labels=page.locator('#map-labels'),names=page.locator('[data-city-label]');
  await expect(labels).toHaveAttribute('data-label-mode','major');
  const majorCount=await names.count();
- for(const [mode,count] of [['giant',4],['large',12],['all',110],['none',0],['major',majorCount]]){
+ for(const [mode,count] of [['giant',4],['large',10],['all',110],['none',0],['major',majorCount]]){
   await labels.click();await expect(labels).toHaveAttribute('data-label-mode',mode);await expect(names).toHaveCount(count);
  }
  await labels.click();await labels.click();
  await page.locator('#scenario').selectOption('mainland225-07');
- await expect(labels).toHaveAttribute('data-label-mode','large');await expect(names).toHaveCount(13);
- await page.locator('#scenario').selectOption('mainland217-07');await expect(names).toHaveCount(12);
+ await expect(labels).toHaveAttribute('data-label-mode','large');await expect(names).toHaveCount(12);
+ await page.locator('#scenario').selectOption('mainland217-07');await expect(names).toHaveCount(10);
  await page.locator('#map-zoom-in').click();
  const zoom=await page.locator('#world-map').getAttribute('data-zoom');
  const city=await page.locator('#city-jump').inputValue();
@@ -558,5 +558,96 @@ test('four DLC openings share two translated categories and preserve distinct sa
  expect(variant.state.player).toBe('ma_teng');
  expect(variant.state.year).toBe(211);expect(variant.state.month).toBe(7);expect(variant.state.day).toBe(1);
  expect(variant.state.cities.fengyi.owner).toBe('ma_teng');
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('dated Xiaopei Qiao names and city scales appear in real scenario information',async({page},testInfo)=>{
+ await opening(page);
+ for(const[scenario,name,scale]of[
+  ['mainland217-07','小沛','普通城'],
+  ['mainland219-07','譙郡','普通城'],
+  ['mainland221-07','譙郡','大城'],
+ ]){
+  await page.locator('#scenario').selectOption(scenario);
+  await expect(page.locator('#city-jump option[value=qiao]')).toContainText(name);
+  await page.locator('#city-jump').selectOption('qiao');
+  const info=page.locator('.city-information[data-inspected-city=qiao]');
+  await expect(info).toBeVisible();
+  await expect(page.locator('#dialog-title')).toContainText(name);
+  await expect(info.locator('p.small').filter({hasText:/地形/})).toContainText(scale);
+  await closeDialog(page);
+ }
+ await page.locator('#city-jump').selectOption('dongjun');
+ const puyang=page.locator('.city-information[data-inspected-city=dongjun]');
+ await expect(puyang).toBeVisible();
+ await expect(page.locator('#dialog-title')).toContainText('濮陽');
+ await expect(puyang.locator('p.small').filter({hasText:/地形/})).toContainText('普通城');
+ await page.locator('#dialog-language').selectOption('ja');
+ await expect(puyang.locator('p.small').filter({hasText:/地形/})).toContainText('通常都市');
+ await historyScreenshot(page,testInfo,'qiao-dated-scale-puyang-normal-ja');
+ await closeDialog(page);
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('Jiangxia Changsha offers distinct inland water and land routes through real WASM and saved commands',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland217-07');
+ await expect(page.locator('#world-map [data-river-route]')).not.toHaveCount(0);
+ await expect(page.locator('#world-map [data-regional-road="jiangxia-changsha"]')).not.toHaveCount(0);
+ await page.locator('input[name=faction][value=wu]').check();
+ await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await page.locator('#city-jump').selectOption('jiangxia');
+ await expect.poll(()=>page.evaluate(()=>MarchCore.status.engine)).toBe('wasm');
+ const exportSave=async()=>{
+  const download=page.waitForEvent('download');await page.locator('#save').click();
+  return readFile(await(await download).path(),'utf8');
+ };
+ const initial=JSON.parse(await exportSave());
+ await page.locator('#transfer').click();
+ await expect(page.locator('#transfer-city')).toBeVisible();
+ await page.locator('#transfer-city').selectOption('changsha');
+ const select=page.locator('#route-mode'),river=select.locator('option[data-route-kind=river]');
+ await expect(river).toHaveCount(1);
+ await expect(select.locator('option[data-route-kind=land]')).toHaveCount(1);
+ await expect(select.locator('option')).toHaveCount(2);
+ const mode=await river.getAttribute('value');
+ await select.selectOption(mode);
+ await expect(page.locator('#transfer-estimate .river-flow-info')).toBeVisible();
+ await expect(page.locator('#transfer-estimate .river-flow-info')).toContainText('逆流',{useInnerText:true});
+ await expect(page.locator('#transfer-estimate .river-flow-info')).toContainText('20',{useInnerText:true});
+ await expect(page.locator('#transfer-estimate .river-flow-info')).toContainText('22.5',{useInnerText:true});
+ await expect(page.locator('#transfer-estimate .route-risks')).toHaveCount(0);
+ const officer=page.locator('input[name=transfer-officer]:enabled').first();
+ const ident=await officer.getAttribute('value');await officer.check();
+ await page.locator('#dialog-language').selectOption('ja');
+ await expect(select).toHaveValue(mode);
+ await expect(page.locator('#transfer-estimate .river-flow-info')).toContainText('上り',{useInnerText:true});
+ await expect(river).toContainText('内陸水路');
+ await historyScreenshot(page,testInfo,'river-upstream-select-ja');
+ await page.locator('#confirm-transfer').click();
+ await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ const departing=await exportSave(),saved=JSON.parse(departing);
+ const column=saved.state.extension.travel.marches.find(row=>row.source==='jiangxia'&&row.target==='changsha');
+ expect(column).toBeTruthy();expect(column.officers.map(String)).toEqual([ident]);
+ expect(column.quote.modes).toEqual(['river']);expect(column.risks).toEqual([]);
+ expect(column.quote.routes[0].flow).toBe('upstream');
+ expect(column.quote.routes[0].hazard).toBeNull();
+ expect(column.quote.routes[0].river_segments.map(row=>row.speed_km_per_day)).toEqual([20,22.5]);
+ expect(saved.state.rng).toEqual(initial.state.rng);
+ expect(saved.state.officers[ident].troops).toBe(initial.state.officers[ident].troops);
+ await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+ await page.locator('#load').click();await page.locator('#load-local').click();
+ await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ expect(await exportSave()).toBe(departing);
+ await expect(page.locator('#world-map [data-river-route]')).not.toHaveCount(0);
+ await historyScreenshot(page,testInfo,'river-march-save-reloaded');
+ await page.locator('#city-jump').selectOption('jiangxia');
+ for(let step=0;step<3;step++)await page.locator('#map-zoom-in').click();
+ const directory=process.env.TK2_HISTORY_SCREENSHOTS;
+ if(directory)await mkdir(directory,{recursive:true});
+ await page.locator('#world-map').screenshot({path:directory?
+  join(directory,`${testInfo.project.name}-river-land-route-map.png`):testInfo.outputPath('river-land-route-map.png')});
  expect(errors.get(page)).toEqual([]);
 });

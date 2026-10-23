@@ -19,15 +19,17 @@ let html=context.mapBridgeLayer(['<path class="road-underlay" d="LAND"/><path cl
 assert.equal((html.match(/data-river-bridge="b1"/g)||[]).length,1,'A shared baked/dynamic bridge draws once');
 assert.equal((html.match(/data-river-bridge="b2"/g)||[]).length,1);assert(html.includes('stroke="#51371e" stroke-width="5.4"'));assert(html.includes('stroke="#e9bf7a" stroke-width="2.8"'));
 assert(!context.mapBridgeLayer(['<path class="coastal-lane" d="SEA"/>']).includes('data-river-bridge="b2"'),'Sea-lane geometry never requests a bridge');
+assert(!context.mapBridgeLayer(['<path class="river-lane" d="SEA"/>']).includes('data-river-bridge="b2"'),'Sailing along an inland river never requests a bridge');
 assert(!context.mapBridgeLayer([]).includes('data-river-bridge="b2"'),'An inactive dynamic road does not show its bridge');
 context.view.catalog.map_presentation={};assert.equal(context.mapBridgeLayer([]),'','Absent optional metadata retains legacy display');
-assert(app.includes('${regionalRoads}${navigableSeas}${bridges}${castles}${labels}'),'Every bridge remains below complete castle sprites');
+assert(app.includes('${regionalRoads}${navigableSeas}${navigableRivers}${bridges}${castles}${labels}'),'Every bridge remains below complete castle sprites');
 const metadata=require('node:path').resolve(__dirname,'../game/assets/map-bridges.json');
 if(fs.existsSync(metadata)){
  const data=JSON.parse(fs.readFileSync(metadata));assert.equal(data.schema,'tk2-map-bridges-v1');assert.deepEqual(data.world,[0,0,1352,1024]);
  for(const id of data.baked)assert(data.bridges[id]);for(const ids of Object.values(data.by_path))for(const id of ids)assert(data.bridges[id]);
  assert(data.audit.route_bridges['bajun:zangke']?.length>0,'Zangke–Jiangzhou river crossing has a bridge');
  assert(data.audit.route_bridges['fuling:zangke']?.length>0,'Zangke–Fuling river crossing has a bridge');
+ assert(data.audit.route_bridges['changsha:jiangxia']?.length>0,'Jiangxia–Changsha land crossing has a bridge');
  assert(data.audit.baked_bridges>0);assert(data.audit.dynamic_bridge_paths>0);
 }
 console.log('map bridges: exact water runs/banks, curved paths, harbour exclusions, shared crossings, native bridge style, active land roads and castles above bridges passed');

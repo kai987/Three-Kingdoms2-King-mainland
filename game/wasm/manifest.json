@@ -2,19 +2,20 @@
   "abi": 1,
   "build_host": "aarch64-apple-darwin",
   "builder_sha256": "e2c581a185539df582541cbd0b9a8060d79e68b570ef96dc27abaa43a170989a",
-  "bytes": 338391,
+  "bytes": 343968,
   "crate": "march-core",
   "file": "march_core.wasm",
   "rust": "1.93.0",
-  "sha256": "e9d5db73d1cd1638b07cf69a3d2c4d4106411e07ad93dbf72bbdaf3c0b4fed33",
+  "sha256": "7c546d44a28f4305a7cbc6f5a3d77c380c5b9c6531f7d022073c4f7cda6e515b",
   "sources_sha256": {
     "Cargo.lock": "9b51622445815199b04aea76b6983d42616f85f19d8963fabc3932d8b25223a2",
     "Cargo.toml": "79fa9377cbafc659413f7e05d212b2a0379fc5f2058e470f567cb9f4c6e2192d",
-    "src/hazards.rs": "31e134dbdcc6147871bea92b4937b2614cc3fd36866722027ccac838a70451c9",
+    "src/hazards.rs": "7e26272aa86102c05a7440e1c4847f4d733dbba564c8534e1aef75dd7dcefd19",
     "src/lib.rs": "fcffab7aece196a73a37696fef79211e5769198e97cc900b1a1e83b808a30644",
     "src/main.rs": "eef1ba77e410ff8726503e1727c2a414b28d3291d62c722ce709882fe632a04a",
-    "src/paths.rs": "4d2d99c7dd309b63f3b04a45ac7e6979ad289629d5eb8d704e1626d6b0a09a6f",
-    "tests/protocol.rs": "92ca4efabe7345307d1452c0dd3fb1684bbaa710017137e7281b7881e938053d"
+    "src/paths.rs": "db2901a7b7b187be3a78c79525b92c18ca4c05e090f4a5de913a7c0b3d6b9ecc",
+    "tests/protocol.rs": "92ca4efabe7345307d1452c0dd3fb1684bbaa710017137e7281b7881e938053d",
+    "tests/river.rs": "c8bebfd71b022a460e03a3947dc95a4a8843a4c2f4d245be41e1508063ba97a5"
   },
   "target": "wasm32-unknown-unknown"
 }

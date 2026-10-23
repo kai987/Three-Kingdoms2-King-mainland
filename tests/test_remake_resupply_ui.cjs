@@ -58,6 +58,28 @@ const get=id=>elements.get('#'+id),refresh=()=>listeners.get('game-language-chan
  assert.deepEqual(submitted.at(-1),{kind:'dispatch_transport',payload:{source:'home',target:'depot',target_march:7,
   officers:[2],cargo:{gold:0,grain:50,reserves:0},route_mode:'land'}});
  assert(!('target_city'in submitted.at(-1).payload),'Rescue selection does not rewrite the saved city policy');
+ // A service-provided inland route is legal for both rendezvous rescue and
+ // ordinary frontline cargo. Viewing and confirming only submit the payload;
+ // the local UI never applies food, troop or policy edits to the game query.
+ target.route_mode='river';const riverRescueBefore=JSON.stringify(view);refresh();
+ assert(!get('dispatch-rescue').disabled);assert.equal(JSON.stringify(view),riverRescueBefore);
+ await get('dispatch-rescue').onclick();
+ assert.deepEqual(submitted.at(-1),{kind:'dispatch_transport',payload:{source:'home',target:'depot',target_march:7,
+  officers:[2],cargo:{gold:0,grain:50,reserves:0},route_mode:'river'}});
+ assert.equal(JSON.stringify(view),riverRescueBefore,'An inland rescue confirmation does not mutate the read-only query');
+ const logistics=view.catalog.logistics.cities.home;
+ logistics.can_dispatch=true;logistics.blocked_reason=null;
+ logistics.preview={target:'front',officers:[2],cargo:{gold:10,grain:35,reserves:20},route_mode:'river',
+  quote:{days:6},cost_grain:3};
+ const riverCargoBefore=JSON.stringify(view);refresh();assert(!get('dispatch-logistics').disabled);
+ await get('dispatch-logistics').onclick();
+ assert.deepEqual(submitted.at(-1),{kind:'dispatch_transport',payload:{source:'home',target:'front',
+  officers:[2],cargo:{gold:10,grain:35,reserves:20},route_mode:'river'}});
+ assert.equal(JSON.stringify(view),riverCargoBefore,'An inland cargo confirmation does not mutate the read-only query');
+ const knownCount=submitted.length;target.route_mode='explore';logistics.preview.route_mode='explore';refresh();
+ assert(get('dispatch-rescue').disabled);await get('dispatch-rescue').onclick();await get('dispatch-logistics').onclick();
+ assert.equal(submitted.length,knownCount,'Recognizing inland routes must not authorize unknown-route exploration');
+ target.route_mode='land';logistics.preview=null;logistics.can_dispatch=false;logistics.blocked_reason='disabled';refresh();
  const count=submitted.length;
  get('rescue-target').value='8';get('rescue-target').onchange();assert(get('dispatch-rescue').disabled);assert.equal(get('rescue-grain').value,'0');
  await get('dispatch-rescue').onclick();assert.equal(submitted.length,count);assert(shown.body.includes('既知の経路がありません'));

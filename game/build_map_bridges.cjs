@@ -43,13 +43,13 @@ async function build({ground='game/map-source/hydrology-ground.png',output='game
  for(const {data:catalog}of catalogs){
   const context={view:{catalog},setupPreview:null,mapPosition:city=>city.position};vm.createContext(context);vm.runInContext(appSource,context);
   const add=(route,part,index,{smooth=false}={})=>{
-   if(part.mode==='sea')return;
+   if(part.mode!=='land')return;
    const d=context.landMapPath(part.points,{smooth,from:index===0?route.from:null,to:index===route.draw.length-1?route.to:null});
    if(!d)return;const key=[route.from,route.to].sort().join(':');
    dynamic.set(d,true);(routePaths[key]??=[]);if(!routePaths[key].includes(d))routePaths[key].push(d);
   };
   for(const route of catalog.regional_roads||[])route.draw.forEach((part,i)=>add(route,part,i,{smooth:true}));
-  for(const route of [...(catalog.sea_routes||[]),...(catalog.exploration_routes||[]),...presentation.expansion_connections])route.draw?.forEach((part,i)=>add(route,part,i));
+  for(const route of [...(catalog.river_routes||[]),...(catalog.sea_routes||[]),...(catalog.exploration_routes||[]),...presentation.expansion_connections])route.draw?.forEach((part,i)=>add(route,part,i));
   for(const route of presentation.added_land_roads){
    const d=context.landMapPath(route.new_branch,{to:route.to});dynamic.set(d,true);const key=[route.from,route.to].sort().join(':');
    (routePaths[key]??=[]);if(!routePaths[key].includes(d))routePaths[key].push(d);

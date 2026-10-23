@@ -54,7 +54,7 @@ const {chromium}=require('playwright'),root=path.resolve(__dirname,'..');
    const from=coastalIds[a],to=coastalIds[b],points=route(ports[from],ports[to],true);
    routes.push({from,to,draw:[{mode:'land',points:access[from]},{mode:'sea',points:simplify(points)},{mode:'land',points:[...access[to]].reverse()}]});
   }
-  return {schema:'sea-mask-navigation-geometry-v1',coastal_cities:coastalIds,land_roads,ports:Object.fromEntries(Object.entries(ports).map(([id,i])=>[id,point(i)])),routes,
+  return {schema:'sea-mask-navigation-geometry-v1',coastal_cities:coastalIds,land_roads,river_routes:corridors.river_routes||[],river_rules:corridors.river_rules||{},ports:Object.fromEntries(Object.entries(ports).map(([id,i])=>[id,point(i)])),routes,
    method:'4px ocean-connected sea mask and A-star; smooth display follows sea cells. Approximate game ports, not identified historical harbours. Distances use separate geographic marine waypoints, never art pixels.'};
  },{png:'data:image/png;base64,'+fs.readFileSync(path.join(__dirname,'assets/map-navigation.png')).toString('base64'),positions,corridors});
  fs.writeFileSync(file,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({routes:result.routes.length,coastal_cities:result.coastal_cities.length}));

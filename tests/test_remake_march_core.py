@@ -181,14 +181,32 @@ def neutral_transit_config():
                     for a, b in pairs], exploration_routes=[], links=[list(p) for p in pairs])
 
 
+def river_config():
+    """Two surveyed water reaches with distinct directional cargo speeds."""
+    return dict(travel_rules=dict(speeds={'plain': 30, 'sea': 70}, embark_days=2,
+                    river_embark_days=1, river_speeds=dict(
+                        yangtze=dict(upstream=20, downstream=50),
+                        xiang=dict(upstream=22.5, downstream=35))),
+                travel_hazards={'schema': 'parity', 'coastal_cities': []},
+                city_coordinates={'s': [114.3, 30.5], 't': [112.9, 28.2]},
+                travel_routes=[dict(id='s:t:river', **{'from': 's', 'to': 't'},
+                    mode='river', terrain='river', distance_km=556, land_km=31,
+                    river_km=525, sea_km=0, days=28,
+                    river_segments=[dict(speed_key='yangtze', distance_km=300, downstream_from='t'),
+                                    dict(speed_key='xiang', distance_km=225, downstream_from='t')]),
+                    dict(id='s:t:land', **{'from': 's', 'to': 't'}, mode='land',
+                    terrain='plain', distance_km=600, land_km=600, sea_km=0, days=20)],
+                exploration_routes=[], links=[['s', 't']])
+
+
 def vector_document():
     """Reference matrices cover every current leg in both directions/months."""
     current = config_for(Catalog(ROOT / 'game/data/campaigns/217-07.json').data)
-    return [current, synthetic_config(), neutral_transit_config()]
+    return [current, synthetic_config(), neutral_transit_config(), river_config()]
 
 
 def vectors(configs):
-    current, synthetic, neutral = configs
+    current, synthetic, neutral, river = configs
     for index, data in enumerate(configs):
         routes = data['travel_routes'] + data.get('exploration_routes', [])
         months = range(1, 13)
@@ -205,7 +223,7 @@ def vectors(configs):
     for month in (4, 7, 11):
         # Every physical connection, not only routes held by the player's faction.
         for row in data['travel_routes']:
-            for mode in ('fastest', 'land', 'sea', 'special', 'explore'):
+            for mode in ('fastest', 'land', 'river', 'sea', 'special', 'explore'):
                 request = dict(op='path', config=0, cities=cities, month=month, discovered=[],
                                source=row['from'], target=row['to'], owner='friendly', mode=mode, adjacent=True)
                 yield f'path:{row["id"]}:{month}:{mode}', request
@@ -219,7 +237,7 @@ def vectors(configs):
                 yield f'batch:tie:{ownership}:{discovered}:{month}', dict(base, op='batch', player='friendly')
                 for source in keys:
                     for target in keys + ['missing']:
-                        for mode in ('fastest', 'land', 'sea', 'special', 'explore'):
+                        for mode in ('fastest', 'land', 'river', 'sea', 'special', 'explore'):
                             yield f'tie:{source}:{target}:{mode}:{month}', dict(
                                 base, op='path', source=source, target=target,
                                 owner='friendly', mode=mode, adjacent=ownership[keys.index(target)] != 'friendly' if target in keys else True)
@@ -246,6 +264,30 @@ def vectors(configs):
                     yield f'path:neutral:{changed}:{owner}:{source}:{target}:{mode}:{adjacent}', dict(
                         base, op='path', source=source, target=target, owner='friendly',
                         mode=mode, adjacent=adjacent)
+    for month in range(1, 13):
+        for destination_owner in ('friendly', 'neutral', 'enemy'):
+            base = dict(config=3, cities=[dict(id='s', owner='friendly'),
+                        dict(id='t', owner=destination_owner)], month=month, discovered=[])
+            yield f'batch:river:{month}:{destination_owner}', dict(base, op='batch', player='friendly')
+            for source, target in (('s', 't'), ('t', 's')):
+                for mode in ('fastest', 'land', 'river', 'sea', 'explore'):
+                    for adjacent in (False, True):
+                        yield f'path:river:{month}:{destination_owner}:{source}:{mode}:{adjacent}', dict(
+                            base, op='path', source=source, target=target, owner='friendly',
+                            mode=mode, adjacent=adjacent)
+    for name, patch in (
+            ('no-segments', {'river_segments': []}),
+            ('missing-flow', {'river_segments': [dict(distance_km=30)]}),
+            ('unknown-flow', {'river_segments': [dict(distance_km=30, downstream_from='missing')]}),
+            ('boolean-flow', {'river_segments': [dict(distance_km=30, downstream_from=True)]}),
+            ('zero-distance', {'river_segments': [dict(distance_km=0, downstream_from='t')]}),
+            ('boolean-distance', {'river_segments': [dict(distance_km=True, downstream_from='t')]}),
+            ('unknown-speed', {'river_segments': [dict(distance_km=30, downstream_from='t', speed_key='missing')]}),
+            ('bad-speed-key', {'river_segments': [dict(distance_km=30, downstream_from='t', speed_key=[])]}),
+            ('negative-land', {'land_km': -1})):
+        raw = dict(river['travel_routes'][0], **patch)
+        yield f'invalid-river:{name}', dict(op='evaluate_leg', config=3, route=raw,
+            source='s', target='t', month=7)
     seeded = random.Random(20261022)
     counts = [[], [0], [1, 1, 1], [1, 2], [0, 1, 2, 999, 1000], [999] * 30, [1000] * 30, [1000] * 99]
     counts += [[seeded.randrange(100001) for _ in range(seeded.randrange(31))] for _ in range(40)]

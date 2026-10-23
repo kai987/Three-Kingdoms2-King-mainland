@@ -45,14 +45,14 @@ async function build({output='game/config/route-geometry.json'}={}){
  const replacements=new Map(corrected.changes.map(c=>[c.index,c.new_d])),removed=new Set(corrected.removed_obsolete_paths.map(c=>c.index));
  const strokes=source.original_paths.flatMap((d,i)=>removed.has(i)?[]:[{d:replacements.get(i)??d,source:'baked:'+i}]).filter(x=>x.d);
  const dynamic=new Map();
- const draw=(route,{smooth=false}={})=>route.draw.map((part,index)=>({mode:part.mode,d:part.mode==='sea'?context.smoothMapPath(part.points):context.landMapPath(part.points,{smooth,from:index===0?route.from:null,to:index===route.draw.length-1?route.to:null})}));
+ const draw=(route,{smooth=false}={})=>route.draw.map((part,index)=>({mode:part.mode,d:part.mode!=='land'?context.smoothMapPath(part.points):context.landMapPath(part.points,{smooth,from:index===0?route.from:null,to:index===route.draw.length-1?route.to:null})}));
  function explicit(route,options){const parts=draw(route,options);dynamic.set(pair(route.from,route.to),{from:route.from,to:route.to,parts});for(const part of parts)if(part.mode==='land')strokes.push({d:part.d,source:'dynamic:'+route.from+':'+route.to});}
  for(const route of current.regional_roads||[])explicit(route,{smooth:true});
  for(const route of presentation.expansion_connections)if(route.mode==='land')explicit(route);
  for(const route of presentation.added_land_roads){const d=context.landMapPath(route.new_branch,{to:route.to});strokes.push({d,source:'branch:'+route.from+':'+route.to});}
  const routes=[...current.travel_routes,...current.exploration_routes];
  const allPaths=new Set(strokes.flatMap(s=>s.d.match(/M[^M]*/g)||[]));
- for(const route of routes)if(route.mode==='sea')for(const part of draw(route))for(const d of part.d.match(/M[^M]*/g)||[])allPaths.add(d);
+ for(const route of routes)if(route.mode==='sea'||route.mode==='river')for(const part of draw(route))for(const d of part.d.match(/M[^M]*/g)||[])allPaths.add(d);
  for(const entry of dynamic.values())for(const part of entry.parts)for(const d of part.d.match(/M[^M]*/g)||[])allPaths.add(d);
  const browser=await chromium.launch({channel:'chrome',headless:true});let measured;
  try{const page=await browser.newPage();measured=await page.evaluate(paths=>{
@@ -73,9 +73,9 @@ async function build({output='game/config/route-geometry.json'}={}){
  for(const route of routes){
   const id=route.id;
   if(compiled[id])throw Error('Duplicate logical route ID: '+id);
-  if(route.mode==='sea'){
+  if(route.mode==='sea'||route.mode==='river'){
    const parts=draw(route).map(p=>part(p.mode,(p.d.match(/M[^M]*/g)||[]).map(d=>({d,reverse:false}))));
-   compiled[id]={from:route.from,to:route.to,mode:'sea',parts};continue;
+   compiled[id]={from:route.from,to:route.to,mode:route.mode,parts};continue;
   }
   const specific=dynamic.get(pair(route.from,route.to));
   if(specific){let pieces=specific.parts.flatMap(p=>(p.d.match(/M[^M]*/g)||[]).map(d=>({d,reverse:false})));
@@ -87,7 +87,7 @@ async function build({output='game/config/route-geometry.json'}={}){
   if(!found){const loose=shortest(graph,start,end);if(loose){thirdCityExceptions.push({id,via:loose.edges.map(e=>e.to).filter(n=>blocked.has(n)).map(n=>Object.keys(positions).find(c=>key(positions[c])===n)),policy:'Existing direct logical leg shares a displayed city-center road; no intermediate stop or route link is inserted'});found=loose;}else {unmatched.push(id);continue;}}
   compiled[id]={from:route.from,to:route.to,mode:'land',parts:[part('land',found.edges)]};
  }
- const ratios={land:[],sea:[]};for(const[id,r]of Object.entries(compiled))for(const p of r.parts)if(p.chord_px)ratios[p.mode].push({id,ratio:p.length_px/p.chord_px});
+ const ratios={land:[],sea:[],river:[]};for(const[id,r]of Object.entries(compiled))for(const p of r.parts)if(p.chord_px)ratios[p.mode].push({id,ratio:p.length_px/p.chord_px});
  const extrema=Object.fromEntries(Object.entries(ratios).map(([mode,rows])=>[mode,{min:rows.sort((a,b)=>a.ratio-b.ratio)[0],max:rows.at(-1)}]));
  const sourceIndex=json('game/config/campaigns/index.json');
  const inputs=['game/build_route_geometry.cjs','game/config/road-centers.json','game/road_centers.py','game/config/navigation-geometry.json','game/config/map-source.json','game/app.js','game/config/campaigns/shared.json','game/config/campaigns/index.json',...sourceIndex.scenarios.map(s=>'game/config/campaigns/'+s.file)];

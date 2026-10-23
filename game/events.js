@@ -7,7 +7,7 @@
   defection:['武將轉屬','武将の移籍'],officer_death:['武將逝世','武将の死去'],
   succession:['主將繼任','君主の継承'],faction_ended:['勢力滅亡','勢力の滅亡'],
   city_founded:['新城建置','新都市の開設'],city_captured:['城池易主','都市の陥落'],
-  city_upgraded:['都市擴建','都市の発展'],
+  city_upgraded:['都市擴建','都市の発展'],city_renamed:['城名顯示變更','都市名表示の変更'],
   battle_started:['戰鬥開始','戦闘開始'],battle_result:['戰果揭曉','戦闘の結果'],
   duel_started:['單挑交鋒','一騎討ち開始'],duel_result:['單挑結果','一騎討ちの結果'],
   tactic:['計略發動','計略の発動'],march_weather:['行軍遇險','行軍中の災害'],
@@ -26,14 +26,20 @@
  const SUPPLY=new Set(['march_resupplied','march_starvation','march_retreat']);
  const SUPPLY_REASONS=new Set(['city','convoy','cargo','shortage','route_blocked','no_friendly_city','origin_changed','target_changed','completed']);
  const BATCH=new Set(['officer_appeared','officer_death','recruit_success','recruit_failure','march_arrived','march_returned']);
- const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','city_founded','city_upgraded','city_captured','new_year','campaign_victory','campaign_defeat']);
+ const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const clone=value=>JSON.parse(JSON.stringify(value));
  function validEvent(row){
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
+ }
+ function validNameEvent(row){
+  const d=row.details;
+  return row.audience==='world'&&row.day===1&&!row.person_ids.length&&row.city_ids.length===1&&row.factions.length===1&&
+   Object.keys(d).sort().join(',')==='from_name,to_name'&&
+   ['from_name','to_name'].every(key=>typeof d[key]==='string'&&d[key].trim().length>0&&d[key].length<=40&&!/[\u0000-\u001f\u007f]/u.test(d[key]))&&d.from_name!==d.to_name;
  }
  function validSupplyEvent(row){
   const d=row.details;
@@ -110,6 +116,7 @@
     case 'succession':return text(`${p}接任${f}主將，勢力繼續行動。`,`${p}が${f}の君主を継承し、勢力の活動を続けます。`);
     case 'faction_ended':return text(`${f}失去繼續作戰的條件，退出戰役。`,`${f}は戦いを続けられなくなり、戦役から退場しました。`);
     case 'city_founded':{const founded=n.cities[0]||c,parent=n.cities[1];return text(`${founded}依年代建置，承接${parent||'原城'}目前歸屬及部分資源。`,`${founded}が設定年代に開設され、${parent||'元の都市'}の現在の所属と一部の資源を引き継ぎました。`);}
+    case 'city_renamed':return text(`${row.year}年${row.month}月起，本作節點的顯示城名由${label(d.from_name)}切換為${label(d.to_name)}。目前歸屬、武將、兵數與庫存保持實際戰局狀態。`,`${row.year}年${row.month}月から、本作の拠点表示名が${label(d.from_name)}から${label(d.to_name)}へ切り替わりました。現在の支配・武将・兵力・在庫は実際の戦況を引き継ぎます。`);
     case 'city_upgraded':{
      const tiers={normal:text('通常都市','通常都市'),large:text('大都市','大都市'),giant:text('巨大都市','巨大都市')},income=d.income||{};
      return text(`${c}於${row.year}年${row.month}月由${tiers[d.from_tier]||'大都市'}升為${tiers[d.to_tier]||'巨大都市'}。今後每月收入：金${income.gold??0}、糧${income.grain??0}、預備兵${income.reserves??0}。這是本作的都市規模設定。`,`${row.year}年${row.month}月、${c}が${tiers[d.from_tier]||'大都市'}から${tiers[d.to_tier]||'巨大都市'}へ発展しました。以後の月収は資金${income.gold??0}・兵糧${income.grain??0}・予備兵${income.reserves??0}です。本作独自の都市規模設定です。`);
@@ -180,6 +187,16 @@
     default:{const attacker=n.factions[0]||f;return text(`${attacker}的${d.coordinated?'多路部隊正協同':'部隊正'}朝${c}推進。`,`${attacker}の${d.coordinated?'複数部隊が連携して':'部隊が'}${c}へ進軍しています。`);}
    }
   }
+  function historicalIntroduction(row){
+   if(row.city_ids.length!==1||row.city_ids[0]!=='qiao')return '';
+   const renamed=row.kind==='city_renamed'&&row.year===219&&row.month===1,
+    upgraded=row.kind==='city_upgraded'&&row.year===221&&row.month===1;
+   if(!renamed&&!upgraded)return '';
+   const body=renamed?text('史實的小沛（沛縣）與譙（今亳州）是不同城池。劉備曾駐小沛，譙則為曹操故鄉。本作依指定設定，在219年以前以此固定節點代理小沛，219年起改為顯示譙郡；這不是史實上小沛於219年改名譙郡，也不代表城池遷移或易主。','史実の小沛（沛県）と譙（現在の亳州）は別の都市です。劉備は小沛に駐屯し、譙は曹操の故郷でした。本作では指定された設定により、この固定拠点を219年より前は小沛の代理とし、219年から譙郡と表示します。史実で219年に小沛が譙郡へ改称されたことや、都市の移転・支配変更を意味するものではありません。'):
+    text('《三國志·文帝紀》裴松之注引《魏略》記載，黃初二年（221年）以長安、譙、許昌、鄴、洛陽為五都。譙亦為曹操故鄉。本作參照譙在曹魏的地位，自221年1月上旬升為大都市；「大都市」及收入倍率是遊戲設定，不是史書的都市規模分級。','『三國志』文帝紀の裴松之注が引く『魏略』には、黄初二年（221年）に長安・譙・許昌・鄴・洛陽を五都とした記録があります。譙は曹操の故郷でもありました。本作では曹魏における譙の地位を参考に、221年1月上旬から大都市とします。「大都市」という等級と収入倍率はゲーム独自の設定で、史書の都市規模分類ではありません。');
+   const sources=renamed?[['卷01','巻1'],['卷32','巻32']]:[['卷01','巻1'],['卷02','巻2']];
+   return `<aside class="event-history" data-event-history="qiao-${row.year}"><h3>${text('史實背景','史実の背景')}</h3><p>${escape(body)}</p><p class="event-history-sources">${text('史料：','史料：')}${sources.map(([tc,ja])=>`<a href="https://zh.wikisource.org/zh-hant/三國志/${tc}" target="_blank" rel="noopener noreferrer">${escape(text(`《三國志》${tc}`,`『三國志』${ja}`))}</a>`).join(' · ')}</p></aside>`;
+  }
   function illustration(rows){
    const row=rows[0],catalog=view?.catalog||{},world=catalog.world||{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'};
    const ids=[...new Set(rows.flatMap(e=>[...e.person_ids,...(typeof e.details.actor==='string'?[e.details.actor]:[])]))].slice(0,4);
@@ -203,7 +220,7 @@
   function render(){
    if(!active||!modal||disposed)return;
    const row=active[0],period={1:'上旬',11:'中旬',21:'下旬'}[row.day],count=active.length>1?text(` · 共${active.length}項`,` · ${active.length}件`):'';
-   modal.innerHTML=`<div data-event-root data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(historyMode?text('事件回顧','出来事の記録'):text('戰役事件','戦役の出来事'))} · ${shown}/${total}</p><h2 id="event-title">${escape(KINDS[row.kind][locale()==='ja'?1:0])}${escape(count)}</h2></div><label class="language-picker">${text('語言','言語')}<select data-language-picker aria-label="${text('切換語言','言語切替')}"><option value="zh-Hant" ${locale()==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${locale()==='ja'?'selected':''}>日本語</option></select></label></div><p class="event-date">${row.year}年${row.month}月${period}</p>${illustration(active)}<div id="event-description" class="event-description">${active.map(e=>`<p>${escape(description(e))}</p>`).join('')}</div><div class="dialog-actions event-actions">${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button class="primary" data-event-next autofocus>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button></div></div>`;
+   modal.innerHTML=`<div data-event-root data-l10n-native="${locale()}"><div class="event-heading"><div><p class="event-kicker">${escape(historyMode?text('事件回顧','出来事の記録'):text('戰役事件','戦役の出来事'))} · ${shown}/${total}</p><h2 id="event-title">${escape(KINDS[row.kind][locale()==='ja'?1:0])}${escape(count)}</h2></div><label class="language-picker">${text('語言','言語')}<select data-language-picker aria-label="${text('切換語言','言語切替')}"><option value="zh-Hant" ${locale()==='zh-Hant'?'selected':''}>繁體中文</option><option value="ja" ${locale()==='ja'?'selected':''}>日本語</option></select></label></div><p class="event-date">${row.year}年${row.month}月${period}</p>${illustration(active)}<div id="event-description" class="event-description">${active.map(e=>`<p>${escape(description(e))}</p>${historicalIntroduction(e)}`).join('')}</div><div class="dialog-actions event-actions">${queue.length?`<button data-event-skip>${text('略過本批','この一括表示を終了')}</button>`:''}<button class="primary" data-event-next autofocus>${queue.length?text('下一則','次へ'):text('返回戰役','戦役に戻る')}</button></div></div>`;
    modal.querySelector('[data-event-next]').onclick=advance;
    const skip=modal.querySelector('[data-event-skip]');if(skip)skip.onclick=clear;
    if(!modal.open)modal.showModal();

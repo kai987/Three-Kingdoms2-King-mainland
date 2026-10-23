@@ -227,7 +227,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 self.assertEqual(canonical(restored.export_save()), canonical(saved))
 
     def test_reviewed_city_sizes_and_opening_economy_apply_to_all_current_dates(self):
-        expected = {'jingzhao': 'large', 'qiao': 'large', 'bajun': 'large',
+        expected = {'jingzhao': 'large', 'dongjun': 'normal', 'bajun': 'large',
                     'wujun': 'large', 'kuaiji': 'large', 'chenliu': 'normal',
                     'shujun': 'giant'}
         for date, catalog in self.catalogs.items():
@@ -235,21 +235,30 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 data = catalog.data
                 self.assertEqual(data['city_scale_rules']['basis'],
                                  'user_authored_remake_city_scale_setting')
-                for city, tier in dict(expected, danyang='giant' if date[:2] >= (240, 1) else 'large').items():
+                qiao_tier = 'large' if date[:2] >= (221, 1) else 'normal'
+                for city, tier in dict(expected, qiao=qiao_tier,
+                        danyang='giant' if date[:2] >= (240, 1) else 'large').items():
                     self.assertEqual(data['city_profiles'][city]['tier'], tier, city)
                     self.assertEqual(profile_at(data, city, *date[:2])['tier'], tier)
                     self.assertEqual(income_at(data, city, *date[:2]), data['city_income'][city])
                 # These two cities share an authored regional/production profile.
-                # Their sole opening-size difference is reflected in every stock.
+                # Qiao's size difference starts in 221 and appears in every stock.
                 # Canonical date values were already quantized before this size
                 # edit; changing tiers may differ by at most two stock quanta.
+                multiplier = 2 if qiao_tier == 'large' else 1
                 for field in FIELDS:
                     self.assertLessEqual(abs(data['initial_city_resources']['qiao'][field] -
-                                             data['initial_city_resources']['chenliu'][field] * 2),
+                                             data['initial_city_resources']['chenliu'][field] * multiplier),
                                          data['city_scale_rules']['stock_quantum'][field] * 2)
-                self.assertGreater(data['city_income']['qiao']['gold'], data['city_income']['chenliu']['gold'])
-                self.assertGreater(data['city_income']['qiao']['grain'], data['city_income']['chenliu']['grain'])
-                self.assertGreater(data['city_income']['qiao']['reserves'], data['city_income']['chenliu']['reserves'])
+                for field in FIELDS:
+                    # Chenliu's canonical large income was rounded before
+                    # being halved; Qiao's normal baseline was rounded once.
+                    self.assertLessEqual(abs(data['city_income']['qiao'][field] -
+                                             data['city_income']['chenliu'][field] * multiplier),
+                                         multiplier)
+                    if multiplier == 2:
+                        self.assertGreater(data['city_income']['qiao'][field],
+                                           data['city_income']['chenliu'][field])
 
     def test_jianye_size_240_boundary_uses_opening_income_without_mutating_catalog(self):
         data = self.catalogs[238, 1].data

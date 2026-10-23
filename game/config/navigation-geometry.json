@@ -212,8 +212,331 @@
           ]
         }
       ]
+    },
+    {
+      "from": "jiangxia",
+      "to": "changsha",
+      "mode": "land",
+      "terrain": "plain",
+      "junction": [
+        820,
+        550
+      ],
+      "history": {
+        "classification": "authorial_regional_land_corridor",
+        "is_proven_direct_Han_road": false,
+        "basis": "依長江南岸與洞庭東岸區域交通概化江夏—長沙陸路，跨河處繪製橋梁表示渡越；不是已考證的連續漢代官道或古橋復原。",
+        "source": "https://zh.wikisource.org/zh-hant/三國志/卷54"
+      },
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              817,
+              496
+            ],
+            [
+              816,
+              500
+            ],
+            [
+              816,
+              548
+            ],
+            [
+              820,
+              552
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "points": [
+            [
+              820,
+              552
+            ],
+            [
+              780,
+              552
+            ],
+            [
+              776,
+              556
+            ],
+            [
+              768,
+              556
+            ],
+            [
+              764,
+              560
+            ],
+            [
+              760,
+              560
+            ],
+            [
+              756,
+              564
+            ],
+            [
+              752,
+              564
+            ],
+            [
+              748,
+              568
+            ],
+            [
+              744,
+              568
+            ],
+            [
+              740,
+              572
+            ],
+            [
+              732,
+              572
+            ],
+            [
+              727,
+              577
+            ]
+          ]
+        }
+      ]
     }
   ],
+  "river_routes": [
+    {
+      "id": "jiangxia:changsha:river",
+      "from": "jiangxia",
+      "to": "changsha",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          114.3,
+          30.27
+        ],
+        [
+          113.13,
+          29.43
+        ],
+        [
+          112.97,
+          28.24
+        ]
+      ],
+      "river_segments": [
+        {
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "changsha"
+        },
+        {
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "changsha"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "points": [
+            [
+              817,
+              496
+            ],
+            [
+              817,
+              527
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "points": [
+            [
+              817,
+              527
+            ],
+            [
+              812,
+              527
+            ],
+            [
+              807,
+              527
+            ],
+            [
+              802,
+              527
+            ],
+            [
+              797,
+              528
+            ],
+            [
+              792,
+              528
+            ],
+            [
+              787,
+              528
+            ],
+            [
+              782,
+              528
+            ],
+            [
+              777,
+              528
+            ],
+            [
+              772,
+              530
+            ],
+            [
+              767,
+              530
+            ],
+            [
+              762,
+              530
+            ],
+            [
+              757,
+              530
+            ],
+            [
+              752,
+              529
+            ],
+            [
+              747,
+              527
+            ],
+            [
+              742,
+              523
+            ],
+            [
+              737,
+              524
+            ],
+            [
+              737,
+              525
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "points": [
+            [
+              737,
+              525
+            ],
+            [
+              735,
+              530
+            ],
+            [
+              733,
+              535
+            ],
+            [
+              731,
+              540
+            ],
+            [
+              726,
+              544
+            ],
+            [
+              721,
+              546
+            ],
+            [
+              716,
+              549
+            ],
+            [
+              711,
+              552
+            ],
+            [
+              706,
+              555
+            ],
+            [
+              703,
+              560
+            ],
+            [
+              701,
+              565
+            ],
+            [
+              701,
+              570
+            ],
+            [
+              701,
+              575
+            ],
+            [
+              701,
+              580
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "points": [
+            [
+              701,
+              580
+            ],
+            [
+              716,
+              580
+            ],
+            [
+              727,
+              577
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "江夏—長江—巴丘洞庭口—湘水—長沙（臨湘）。江夏往長沙為逆流，返程順流；洞庭出口併入湘水水系概化。速度跨期參照《唐六典》卷三載重船行程定額，里公里換算與地圖校準為本作設定，不是三國實測。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/水經注/38",
+          "https://www.shidianguji.com/zh/book/SK1116/chapter/1jzwtzmscgcnv"
+        ]
+      }
+    }
+  ],
+  "river_rules": {
+    "river_speeds": {
+      "yangtze": {
+        "upstream": 20,
+        "downstream": 50
+      },
+      "xiang": {
+        "upstream": 22.5,
+        "downstream": 35
+      }
+    },
+    "river_embark_days": 1
+  },
   "ports": {
     "liaodong": [
       1188,

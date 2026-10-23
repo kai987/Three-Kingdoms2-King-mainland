@@ -3920,7 +3920,7 @@
     ],
     "policy": "Presentation-only bridges over blue inland water along actual rendered land paths; sea lanes and terminal harbour water are excluded. Shared bridge IDs are drawn once, before castle sprites.",
     "sources": {
-      "compiler_sha256": "742bdc238b6a73335a6484b440114a971374215500e1c0f1b3d7aebf7e657335",
+      "compiler_sha256": "21aabf49c132a09c553ec5e0d046badf082bb8ce25ba8b6aee042990439db8d1",
       "ground": {
         "path": "game/map-source/hydrology-ground.png",
         "sha256": "5d80752ee48778501d9652b968bbffad5fe72c7adb7d6e5dd5f617d5b3fcf093"
@@ -3928,35 +3928,35 @@
       "road_geometry_sha256": "0de6ed1949d8e00b074515a574c76a166af23be929e5c32234011c9520b98d50",
       "land_path_sha256": "24be510503249293815591a1ef66d2f4f6d06ac735fd1bf0080c9e76df2e5798",
       "catalogs": {
-        "game/data/campaigns/184-02.json": "6c534db13af290afc068121775cbd09c2d36e24b814a4d439b30d57fa79adf69",
-        "game/data/campaigns/188-06.json": "004c8b0b99769883325c919997fc0425ba7462827aa04c0b331a5cc3261d172d",
-        "game/data/campaigns/190-01.json": "5a95523a425d98b12133f3311ecad5f7a2ec9fa32a10f1230f1ad738af558c68",
-        "game/data/campaigns/191-10.json": "126a3097f12a12bade8079bfad17ccaf6b47a8d87174719d238732c59fa2b8d7",
-        "game/data/campaigns/194-06.json": "1d2f6966901dcc738d708fedfa6bd8dfc01c168bdad8bfdffd54c0e969380951",
-        "game/data/campaigns/196-06.json": "28e25fb35580f44b6de5fb43b622a992ffe435cde7476f0ba7d5ec6393c02c92",
-        "game/data/campaigns/197-07.json": "d34b128cee4c0efbeba4d42971727786d2a0538a5ebe5b34352feb30663d81ab",
-        "game/data/campaigns/198-03.json": "e7f4232efd6c945399f36c3fb60a011fe5c5567e3b7bcd88d6511e62016d7e78",
-        "game/data/campaigns/200-01.json": "94ae6daa889c7f55d8800c9bb942d54e8d1baebc1773cf60eb339d3fa4922a06",
-        "game/data/campaigns/201-05.json": "acef7559bdf93314acb8496ce4ee40c670b92c2b2118ea1718d888fd68affe52",
-        "game/data/campaigns/202-06.json": "3b343abddbc5fd58b9d773cfefe74c60ce11c5428fb411334be5a59b15919811",
-        "game/data/campaigns/207-09.json": "70d4d7352b1636ed9d1dc798f71c625543248df31dc29cdbd40a865f7d2ae5f6",
-        "game/data/campaigns/208-10.json": "8f688446826245123f970db7a5ed8f34257de87883b7e791fdd6d74551823575",
-        "game/data/campaigns/209-06.json": "b9bc608d16b8694d98db847e08f9cb1dbff12809dd2eb398c2a152df104e2fea",
-        "game/data/campaigns/210-11.json": "029969a0933d14342ca34191b4ed825344bbaa54224beeed2a74380d4ff54dc1",
-        "game/data/campaigns/211-07.json": "d0dded492410084e7d433d063bed39c4003a8f30efb053646f608b1dda7e82d8",
-        "game/data/campaigns/211-07-tongguan.json": "925b6cc528d5fa96fb98e2489118b86125ca6458b410bdc237a8d6d6bee22b2f",
-        "game/data/campaigns/212-06.json": "7b7e6cab5e0d28c7d49d89885972c3ce100bb2019c81f85bf3f313955572b53b",
-        "game/data/campaigns/215-08.json": "872c8c27553827ab88d883811e0951152302efec4bb18661b5969cb14567a36d",
-        "game/data/campaigns/219-07.json": "8216ae31c64b3cd15d979522051f6e9c7abdb0ec65e81305e6094e14c2d91b5d",
-        "game/data/campaigns/221-07.json": "afecf51fd75f649ce62c2273474d681471254a1533014c627380f9f2f1828084",
-        "game/data/campaigns/225-07.json": "8f0719e12d76ab2181f88fa1c460f22f4f28e90b4cbd036b37b9b85b880776de",
-        "game/data/campaigns/227-02.json": "c6198efa6b86aee348716d9b20e00ce4c0532d126a092af0cecb0e2f473d5fab",
-        "game/data/campaigns/234-02.json": "f2697a1dff54d5ba4d5c59241233a3ea0b07b8318ebeca572b1955702bda6598",
-        "game/data/campaigns/235-01.json": "5edd58f36ce05e3c763caacf03617f7e815f5dc8b2227507974ca2cdfc61d6ae",
-        "game/data/campaigns/238-01.json": "25933e3b975bb64f4777235c027f1c8e7e4a17e617a2fc5920f928e6b91b8ad9",
-        "game/data/campaigns/249-01.json": "4016acaf8b45b7e68ab33a627a171ce2162c05e64cdb21d94264a8febe4d53a7",
-        "game/data/campaigns/263-05.json": "1638228b0bfdc0ccfdfb2be49fb827c95fd2192f06b802b3c49cf502d98a0bd0",
-        "game/data/campaigns/217-07.json": "198416e802c3ce0985164a4a74affacf7596324725228dbbd5420540678e06d2"
+        "game/data/campaigns/184-02.json": "2a6e9545a9479f9072eef09b8363229106f20c640234447e4d289428093b9db4",
+        "game/data/campaigns/188-06.json": "2ca6ca1744cac0687d21dd5286fcd7739271999f6b4ad0020ea2ce0b7e966bee",
+        "game/data/campaigns/190-01.json": "df1072c5be3101118e50ec7fe3180685dc978a3d1eac0ff557af74473d527300",
+        "game/data/campaigns/191-10.json": "df6bf626f4cc95ae5f7bf1d4fadc15f5c3da449d1304edd3109d797623b75a26",
+        "game/data/campaigns/194-06.json": "7f96245fe6ac25bbb142a3fa770ebafec482ee6ec944364ad62fe6f1292df806",
+        "game/data/campaigns/196-06.json": "9d06327a487f0d5b41c57d6fba87784c2a46593fcf0b039f66f4882630a1bd78",
+        "game/data/campaigns/197-07.json": "9fa6ef069e84984d8094853a0171b66cf4bd7ccc22b4f4945afa18895e769ccd",
+        "game/data/campaigns/198-03.json": "91dbfb778eddb4be1d02fe88402d0d4d486b4df516a02b3ef46b49b422ca670d",
+        "game/data/campaigns/200-01.json": "2f143a21d0bc201b395b17edc1e81782483cbb926f9dc4e7609ed9043ad37faf",
+        "game/data/campaigns/201-05.json": "d605337b2325a502ec524dd9292763dce0495be4114e2b0d0918626b0259d307",
+        "game/data/campaigns/202-06.json": "fd871b51707234211a56860a9dc9782b91deba936df010a0417d30715ede9476",
+        "game/data/campaigns/207-09.json": "b46ec1a04a05dc8be6541e44919df0c02149aadd90e5293978edb7491804b6f5",
+        "game/data/campaigns/208-10.json": "b2a7495295dadffcf42f958b366dd7a6cc58b2435f25dea055d3a4848d81e431",
+        "game/data/campaigns/209-06.json": "edf8f538480e313dd11962bc3209390d9f56a797f24a20c2e87d0af356dd3aa3",
+        "game/data/campaigns/210-11.json": "dd27c9b1cc6a3a63459c7a7054d2833a1ac95ab35c5bd95ec6dc418d17422c81",
+        "game/data/campaigns/211-07.json": "928528b111f381cad8540f0050313718d711ae258797da2afe0e4ccc0d9f7c85",
+        "game/data/campaigns/211-07-tongguan.json": "5013ab9aac47e72e6767bc9903a42e02486a833207d528216f50ce7a41248d97",
+        "game/data/campaigns/212-06.json": "4a63433de2224835c85947e77d1a5c909f42427e7d72cf58cec717dbbbd1bd4e",
+        "game/data/campaigns/215-08.json": "5ed901f4eab79373f9d904da752bb555bd4ad53dfa743e5d93f0458c2324770d",
+        "game/data/campaigns/219-07.json": "762f96381e9752b5cd17f73f56706c0f37a47737c7b2d9d52b680f08d8b0631a",
+        "game/data/campaigns/221-07.json": "972d52e06d5102afed0274a90aab173251a44de0214c1004730be0c9f39c0ed3",
+        "game/data/campaigns/225-07.json": "22b57f1bb4a6fea0c56a1f76882d2758d77486ff7a5e16d67135050efffdba56",
+        "game/data/campaigns/227-02.json": "2edbe4da0a0ce6937e1007c7a676ecca4b1c4c4b1143b2412105dd0f637932fe",
+        "game/data/campaigns/234-02.json": "d3f4a4e5bae425f998f2e752875e5fd8bbbac733d418a7f6b4603bbeb2686164",
+        "game/data/campaigns/235-01.json": "e96a8411c612cdb5cc48e8af3b34c7d1e3b6e0985b8a2d476a5cfe5c9156cef2",
+        "game/data/campaigns/238-01.json": "5a18b54857b5fc6f1c42b46e2779dea9135c7fb7bd27a5afdace1f794c4f747a",
+        "game/data/campaigns/249-01.json": "d39d236dde04f45a1c04818c6c33f69b522ecf5c56ed05a5ed6b919ecbfdfa9c",
+        "game/data/campaigns/263-05.json": "a8ed2ac54215f94b27e8b05d884b98b81f34ebde92382220d6040e815cc52d62",
+        "game/data/campaigns/217-07.json": "c4020a377bc486f8d12569ca9d20d5b6a692c93d97ced5c6e93bc3edd1a08d1f"
       }
     },
     "style": [
@@ -4727,6 +4727,18 @@
         "water_length": 4.5
       },
       "bridge-064": {
+        "d": "M816 520.96L816 525.96L816.01 526.46L816.01 527.46L816.02 527.96L816.02 528.96L816.03 529.46",
+        "center": [
+          816,
+          524.96
+        ],
+        "axis": [
+          0.003,
+          1
+        ],
+        "water_length": 6
+      },
+      "bridge-065": {
         "d": "M785.04 809.04L784.33 808.33L784.02 807.98L786.85 805.15",
         "center": [
           784.73,
@@ -4738,7 +4750,7 @@
         ],
         "water_length": 3
       },
-      "bridge-065": {
+      "bridge-066": {
         "d": "M1065 176L1060 176L1058.94 174.94",
         "center": [
           1062,
@@ -4750,7 +4762,7 @@
         ],
         "water_length": 4
       },
-      "bridge-066": {
+      "bridge-067": {
         "d": "M226.68 473.09L226.4 473.51L225.05 475.61L224.78 476.04L223.43 478.14",
         "center": [
           225.05,
@@ -4845,30 +4857,33 @@
       "M448 612Q448 592 444 588Q440 584 440 582Q440 580 448 572Q456 564 458 564Q460 564 466 558Q472 552 473 550.5L474 549": [
         "bridge-063"
       ],
-      "M796 824L796 820L784 808L788 804L784 800L772 800L768 796L760 796L744 780L741 775": [
+      "M817 496Q816 500 816 524Q816 548 818 550L820 552": [
         "bridge-064"
+      ],
+      "M796 824L796 820L784 808L788 804L784 800L772 800L768 796L760 796L744 780L741 775": [
+        "bridge-065"
       ],
       "M741 775L744 780L760 796L768 796L772 800L784 800L788 804L784 808L796 820L796 824": [
-        "bridge-064"
+        "bridge-065"
       ],
       "M1068 176L1060 176L1052 168L1048 168L1044 164L1040 164L1036 160L1032 160L1028 156L928 156L924 157": [
-        "bridge-065"
+        "bridge-066"
       ],
       "M924 157L928 156L1028 156L1032 160L1036 160L1040 164L1044 164L1048 168L1052 168L1060 176L1068 176": [
-        "bridge-065"
+        "bridge-066"
       ],
       "M244 448Q238 456 232 465Q226 474 221 482Q216 490 215 496L214 502": [
-        "bridge-066"
+        "bridge-067"
       ]
     },
     "audit": {
-      "land_strokes": 394,
+      "land_strokes": 398,
       "baked_strokes": 320,
-      "dynamic_strokes": 74,
-      "water_crossings": 68,
-      "unique_bridges": 66,
+      "dynamic_strokes": 78,
+      "water_crossings": 69,
+      "unique_bridges": 67,
       "baked_bridges": 55,
-      "dynamic_bridge_paths": 13,
+      "dynamic_bridge_paths": 14,
       "existing_bridge_marks": 50,
       "route_bridges": {
         "wei:zhao": [],
@@ -4919,16 +4934,19 @@
         "fuling:zangke": [
           "bridge-063"
         ],
+        "changsha:jiangxia": [
+          "bridge-064"
+        ],
         "liaodong:wujun": [],
         "beihai:lelang": [],
         "beihai:daifang": [],
         "kuaiji:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "jiaozhi:kuaiji": [],
         "kuaiji:yizhou": [],
         "gaoliang:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "gaoliang:hepu": [],
         "hepu:jiaozhi": [],
@@ -4936,7 +4954,7 @@
         "jiaozhi:rinan": [],
         "liaodong:liaoxi": [],
         "bohai:liaodong": [
-          "bridge-065"
+          "bridge-066"
         ],
         "donghai:liaodong": [],
         "beihai:liaodong": [],
@@ -4945,7 +4963,7 @@
         "kuaiji:liaodong": [],
         "liaodong:linhai": [],
         "liaodong:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "gaoliang:liaodong": [],
         "hepu:liaodong": [],
@@ -4955,7 +4973,7 @@
         "liaodong:zhuya": [],
         "liaodong:yizhou": [],
         "bohai:liaoxi": [
-          "bridge-065"
+          "bridge-066"
         ],
         "donghai:liaoxi": [],
         "beihai:liaoxi": [],
@@ -4965,7 +4983,7 @@
         "kuaiji:liaoxi": [],
         "liaoxi:linhai": [],
         "liaoxi:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "gaoliang:liaoxi": [],
         "hepu:liaoxi": [],
@@ -4975,50 +4993,50 @@
         "liaoxi:zhuya": [],
         "liaoxi:yizhou": [],
         "bohai:donghai": [
-          "bridge-065"
+          "bridge-066"
         ],
         "beihai:bohai": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:lelang": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:daifang": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:wujun": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:kuaiji": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:linhai": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:nanhai": [
-          "bridge-065",
-          "bridge-064"
+          "bridge-066",
+          "bridge-065"
         ],
         "bohai:gaoliang": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:hepu": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:jiaozhi": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:jiuzhen": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:rinan": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:zhuya": [
-          "bridge-065"
+          "bridge-066"
         ],
         "bohai:yizhou": [
-          "bridge-065"
+          "bridge-066"
         ],
         "beihai:donghai": [],
         "donghai:lelang": [],
@@ -5027,7 +5045,7 @@
         "donghai:kuaiji": [],
         "donghai:linhai": [],
         "donghai:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "donghai:gaoliang": [],
         "donghai:hepu": [],
@@ -5040,7 +5058,7 @@
         "beihai:kuaiji": [],
         "beihai:linhai": [],
         "beihai:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "beihai:gaoliang": [],
         "beihai:hepu": [],
@@ -5054,7 +5072,7 @@
         "kuaiji:lelang": [],
         "lelang:linhai": [],
         "lelang:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "gaoliang:lelang": [],
         "hepu:lelang": [],
@@ -5067,7 +5085,7 @@
         "daifang:kuaiji": [],
         "daifang:linhai": [],
         "daifang:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "daifang:gaoliang": [],
         "daifang:hepu": [],
@@ -5079,7 +5097,7 @@
         "kuaiji:wujun": [],
         "linhai:wujun": [],
         "nanhai:wujun": [
-          "bridge-064"
+          "bridge-065"
         ],
         "gaoliang:wujun": [],
         "hepu:wujun": [],
@@ -5094,7 +5112,7 @@
         "kuaiji:rinan": [],
         "kuaiji:zhuya": [],
         "linhai:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "gaoliang:linhai": [],
         "hepu:linhai": [],
@@ -5104,22 +5122,22 @@
         "linhai:zhuya": [],
         "linhai:yizhou": [],
         "hepu:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "jiaozhi:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "jiuzhen:nanhai": [
-          "bridge-064"
+          "bridge-065"
         ],
         "nanhai:rinan": [
-          "bridge-064"
+          "bridge-065"
         ],
         "nanhai:zhuya": [
-          "bridge-064"
+          "bridge-065"
         ],
         "nanhai:yizhou": [
-          "bridge-064"
+          "bridge-065"
         ],
         "gaoliang:jiaozhi": [],
         "gaoliang:jiuzhen": [],
@@ -5145,7 +5163,7 @@
         "wuwei:xiping": [],
         "jincheng:wuwei": [],
         "shujun:yinping": [
-          "bridge-066"
+          "bridge-067"
         ]
       },
       "long_crossings": []

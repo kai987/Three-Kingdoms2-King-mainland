@@ -86,8 +86,8 @@ class CampaignSession:
         result['catalog']['faction_colors']=faction_colors(self.game.catalog)
         result['catalog']['sea_routes']=self.game.catalog.data.get('sea_routes',[])
         result['catalog']['travel_hazards']=self.game.catalog.data.get('travel_hazards')
-        for field in ('added_city_ids','regional_roads','city_label_offsets','city_history'):
-            result['catalog'][field]=self.game.catalog.data.get(field,[] if field in ('added_city_ids','regional_roads') else {})
+        for field in ('added_city_ids','regional_roads','river_routes','city_label_offsets','city_history'):
+            result['catalog'][field]=self.game.catalog.data.get(field,[] if field in ('added_city_ids','regional_roads','river_routes') else {})
         result['catalog']['scenarios']=self._scenario_previews()
         return result
 
@@ -117,6 +117,7 @@ class CampaignSession:
                                            'road_additions':c.data.get('road_additions',[]),
                                            'added_city_ids':c.data.get('added_city_ids',[]),
                                            'regional_roads':c.data.get('regional_roads',[]),
+                                           'river_routes':c.data.get('river_routes',[]),
                                            'city_label_offsets':c.data.get('city_label_offsets',{}),
                                            'city_history':c.data.get('city_history',{}),
                                            'faction_resources':faction_resources(c),
