@@ -177,7 +177,7 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
         shared = read('game/config/campaigns/shared.json')['catalog']
         navigation = read('game/config/navigation-geometry.json')
         index = read('game/config/campaigns/index.json')
-        self.assertEqual(len(index['scenarios']), 25)
+        self.assertEqual(len(index['scenarios']), 29)
         checked, changed, copies = 0, 0, {}
         for scenario in index['scenarios']:
             source = read('game/config/campaigns/'+scenario['file'])

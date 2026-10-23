@@ -2,13 +2,15 @@
 
 **日本語** · [繁體中文](README.zh-TW.md) · [オンラインで遊ぶ](https://kai987.github.io/Three-Kingdoms2-King-mainland/)
 
-原作のドット絵を生かした、ブラウザーで遊べる三国志戦略ゲームです。25本のシナリオ、最大115都市、1,023人の歴史人物を収録。内政と人材登用で国力を整え、陸路や沿岸航路から出陣し、計略や一騎討ちを交えて天下統一を目指します。画面は日本語と繁体字中国語に切り替えられます。
+原作のドット絵を生かした、ブラウザーで遊べる三国志戦略ゲームです。29本のシナリオ（史実23本・仮想6本）、最大115都市、1,023人の歴史人物を収録。内政と人材登用で国力を整え、陸路や沿岸航路から出陣し、計略や一騎討ちを交えて天下統一を目指します。画面は日本語と繁体字中国語に切り替えられます。
 
 ## オンラインで遊ぶ
 
 **[ゲームを開く](https://kai987.github.io/Three-Kingdoms2-King-mainland/)**
 
 シナリオ、難易度、勢力を選んで新しい戦役を開始します。地図上の都市を選ぶと、都市情報や武将の能力、実行できる命令を確認できます。
+
+シナリオの選択欄は「史実」「仮想」の2分類です。「呂布討伐戦」（198年3月）、「河北争乱」（202年6月）、「潼関の戦い」（211年7月）、「合肥の戦い」（215年8月）を追加し、同じ211年7月の「入蜀争奪戦」も別シナリオとして残しています。史料で確認できる年月と、限られた地図で客軍を表すための配置は、[追加シナリオの資料と配置](docs/dlc-scenarios.md)で区別しています。
 
 - **地図の操作**：マウスのドラッグや指のスワイプで移動し、ホイールや2本指のピンチで拡大・縮小できます。表示倍率は100〜400％です。シナリオ選択中に所属都市をクリックすると、右側の勢力選択も切り替わります。
 - **都市名の表示**：地図右下の「名：主」は、主要都市→巨大都市のみ→大都市のみ→全都市→非表示の順に切り替わります。都市規模は選択したシナリオの年代に従います。
@@ -105,7 +107,7 @@ python3 -B game/build_campaigns.py --check
 | `crates/march-core/` | Rustの経路探索、地形、季風、損耗計算 |
 | `game/` | 地図、戦場、肖像、音声、言語切替、保存のUI |
 | `game/config/campaigns/` | 共通データとシナリオ差分の編集元 |
-| `game/data/campaigns/` | 現行25シナリオの生成結果 |
+| `game/data/campaigns/` | 現行29シナリオの生成結果 |
 | `game/config/references/` | 人物の年代、能力、任地などの参照資料 |
 | `art/`・`tools/` | 素材、出典記録、オフラインでの生成・整理ツール |
 | `supabase/`・`tools/cloud-sdk/` | クラウドセーブのテーブル、アカウント連携、固定版SDK |
@@ -123,6 +125,7 @@ python3 -B game/build_campaigns.py --check
 - [戦闘画面と原作素材](docs/battle-scenes.md)／[一騎討ちの招式](docs/duel-actions.md)／[武器と馬の出典](docs/duel-appearances.md)
 - [地方文吏](docs/civil-staff.md)／[内政委任と前線輸送](docs/domestic-delegation.md)
 - [都市名・年代・帰属](docs/city-history-rules.md)／[追加19都市・史実19シナリオの帰属レビュー](docs/city-ownership-audit-20261024.md)
+- [追加DLCシナリオの年月・配置と史実／仮想の分類](docs/dlc-scenarios.md)
 - [武将の登場・都市配置](docs/officer-placement-audit.md)／[徳・能力・経験の出典](docs/officer-attribute-sources.md)
 - [危険な行軍経路と季風](docs/hazardous-travel.md)／[経路の形状と行軍時間](docs/route-time-calibration.md)
 - [肖像の出典](docs/officer-portraits.md)／[128×160版と原画像の保存](docs/portrait-enhancement.md)

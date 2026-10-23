@@ -21,8 +21,8 @@ class MapPresentationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         index=json.loads((ROOT/'game/data/campaigns/index.json').read_text())
-        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=25:
-            raise AssertionError('Expected25 current campaign catalogs')
+        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=29:
+            raise AssertionError('Expected29 current campaign catalogs')
         cls.paths=[ROOT/'game/data'/p for p in index['catalogs']]
 
     def test_state_seat_city_labels_and212_name_change_are_presentation_only(self):
@@ -42,9 +42,9 @@ class MapPresentationTests(unittest.TestCase):
         for year,expected_name in ((184,'许县'),(220,'许县'),(221,'许昌'),(238,'许昌')):
             self.assertEqual(city_names(s.game.catalog,year)['yingchuan'],expected_name)
 
-    def test_all25_previews_use_their_own_opening_ownership_and_active_domain(self):
+    def test_all_current_previews_use_their_own_opening_ownership_and_active_domain(self):
         s=CampaignSession(self.paths);view=s.view()
-        self.assertEqual(len(view['catalog']['scenarios']),25)
+        self.assertEqual(len(view['catalog']['scenarios']),29)
         for option in view['catalog']['scenarios']:
             c=s.catalogs[option['id']]
             self.assertEqual(option['initial_owners'],c.data['initial_owners'])

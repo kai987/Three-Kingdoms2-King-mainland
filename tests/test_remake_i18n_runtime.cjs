@@ -26,10 +26,14 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
  const i18n=context.window.GameI18n;await i18n.ready;
  assert.equal(i18n.locale,'zh-Hant');assert.equal(document.title,'三國·大陸戰役');assert.equal(heading.data,'保存進度');
  const index=JSON.parse(fs.readFileSync(path.join(root,'game/data/campaigns/index.json')));
- assert.equal(index.schema,'tk2-campaign-index-v1');assert.equal(index.catalogs.length,25);
+ assert.equal(index.schema,'tk2-campaign-index-v1');assert.equal(index.catalogs.length,29);
  const rows=index.catalogs.map(file=>{const data=JSON.parse(fs.readFileSync(path.join(root,'game/data',file)));return{title:data.title,year:data.start_year,month:data.start_month,main_scenario:data.main_scenario};});
  const before=JSON.stringify(rows);i18n.registerScenarios(rows);
  const cases=[
+  ['史实','史実'],['假想','仮想'],
+  ['河北爭亂','河北争乱'],['合淝之戰','合肥の戦い'],
+  ['呂布討伐戰','呂布討伐戦'],['潼關之戰','潼関の戦い'],
+  ['袁尚势力 · 9座城池 · 根据地邺。钱 100 · 粮 200 · 预备兵 300 · 武将 40人 · 文吏 0人。地图已预览本剧本归属，开始后才建立新战役。','袁尚勢力 · 9都市 · 本拠鄴。資金100 · 兵糧200 · 予備兵300 · 武将40人 · 文吏0人。開始時の所属を表示中です。確定すると新しく開始します。'],
   ['200年1月 · 官渡之战','200年1月 · 官渡の戦い'],
   ['208年10月 · 赤壁之战','208年10月 · 赤壁の戦い'],
   ['官渡之战','官渡の戦い'],['赤壁之战','赤壁の戦い'],

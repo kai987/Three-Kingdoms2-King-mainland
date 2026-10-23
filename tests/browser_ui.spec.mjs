@@ -451,3 +451,112 @@ test('Jingzhou dated names and withdrawn cities match previews and live campaign
  await historyScreenshot(page,testInfo,'249-live-return-to-menu-ja');
  expect(errors.get(page)).toEqual([]);
 });
+
+test('four DLC openings share two translated categories and preserve distinct same-month campaigns',async({page},testInfo)=>{
+ await opening(page);
+ const scenarios=page.locator('#scenario'),groups=scenarios.locator('optgroup');
+ await expect(groups).toHaveCount(2);
+ expect(await groups.evaluateAll(nodes=>nodes.map(node=>node.label))).toEqual(['史實','假想']);
+ const marker=id=>page.locator(`#world-map .city-hit[data-city="${id}"]`);
+ // Both July 211 campaigns must remain individually selectable; a shared
+ // date is not a scenario ID and must never replace the existing opening.
+ await expect(scenarios.locator('option[value="mainland211-07"]')).toContainText('入蜀爭奪戰');
+ await expect(scenarios.locator('option[value="mainland211-07-tongguan"]')).toContainText('潼關之戰');
+ await scenarios.selectOption('mainland211-07');
+ await expect(scenarios.locator('option:checked')).toContainText('入蜀爭奪戰');
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0211-07-01');
+ await expect(marker('fengyi')).toHaveAttribute('data-owner','wei');
+ await expect(scenarios.locator('optgroup[label="假想"] option[value="mainland209-06"]')).toHaveCount(1);
+ for(const[id,title,date,city,owner]of[
+  ['mainland198-03','呂布討伐戰','0198-03-01','xiapi','lubu'],
+  ['mainland215-08','合淝之戰','0215-08-01','hanzhong','wei'],
+  ['mainland211-07-tongguan','潼關之戰','0211-07-01','tianshui','ma_teng'],
+  ['mainland202-06','河北爭亂','0202-06-01','wei','yuan_shang'],
+ ]){
+  await scenarios.selectOption(id);
+  await expect(scenarios.locator('option:checked')).toContainText(title);
+  await expect(scenarios.locator(`optgroup[label="史實"] option[value="${id}"]`)).toHaveCount(1);
+  await expect(page.locator('#map-date')).toHaveAttribute('datetime',date);
+  await expect(marker(city)).toHaveAttribute('data-owner',owner);
+  await expect(page.locator(`input[name=faction][value="${owner}"]`)).toHaveCount(1);
+  if(id==='mainland211-07-tongguan'){
+   await expect(marker('fengyi')).toHaveAttribute('data-owner','ma_teng');
+   await expect(marker('fufeng')).toHaveAttribute('data-owner','ma_teng');
+   await expect(marker('jingzhao')).toHaveAttribute('data-owner','wei');
+  }
+  if(id==='mainland202-06')for(const[city,owner]of[['beihai','yuan_tan'],['yan','yuan_xi'],['taiyuan','gao_gan']]){
+   await expect(marker(city)).toHaveAttribute('data-owner',owner);
+   await expect(page.locator(`input[name=faction][value="${owner}"]`)).toHaveCount(1);
+  }
+  await historyScreenshot(page,testInfo,`${id}-opening-tc`);
+ }
+ const faction=page.locator('input[name=faction][value="yuan_shang"]');
+ await faction.check();
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#language').selectOption('ja');
+ await expect(page.locator('html')).toHaveAttribute('lang','ja');
+ expect(await groups.evaluateAll(nodes=>nodes.map(node=>node.label))).toEqual(['史実','仮想']);
+ await expect(scenarios).toHaveValue('mainland202-06');
+ await expect(faction).toBeChecked();
+ await expect(page.locator('#setup-summary')).toContainText('開始時の所属を表示中です。');
+ await expect(scenarios.locator('option[value="mainland198-03"]')).toContainText('呂布討伐戦');
+ await expect(scenarios.locator('option[value="mainland202-06"]')).toContainText('河北争乱');
+ await expect(scenarios.locator('option[value="mainland215-08"]')).toContainText('合肥の戦い');
+ await expect(scenarios.locator('option[value="mainland211-07-tongguan"]')).toContainText('潼関の戦い');
+ await page.locator('#utility-menu summary').click();
+ await historyScreenshot(page,testInfo,'dlc-two-categories-hebei-ja');
+ await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0202-06-01');
+ await expect(page.locator('#city-jump')).toHaveValue('wei');
+ await expect(page.locator('#inspector .owner')).toContainText('袁尚');
+ const exportSave=async()=>{
+  const download=page.waitForEvent('download');await page.locator('#save').click();
+  return readFile(await(await download).path(),'utf8');
+ };
+ const baseline=await exportSave(),saved=JSON.parse(baseline);
+ expect(saved.scenario).toBe('mainland202-06');
+ expect(saved.state.player).toBe('yuan_shang');
+ expect(saved.state.year).toBe(202);expect(saved.state.month).toBe(6);expect(saved.state.day).toBe(1);
+ expect(saved.state.cities.wei.owner).toBe('yuan_shang');
+ await page.locator('#main-menu').click();
+ await expect(scenarios).toHaveValue('mainland202-06');
+ await scenarios.selectOption('mainland211-07-tongguan');
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0211-07-01');
+ await page.locator('#load').click();await page.locator('#load-local').click();
+ await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0202-06-01');
+ await expect(page.locator('#inspector .owner')).toContainText('袁尚');
+ expect(await exportSave()).toBe(baseline);
+ await page.locator('#main-menu').click();
+ await expect(scenarios).toHaveValue('mainland202-06');
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#language').selectOption('zh-Hant');
+ await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');
+ expect(await groups.evaluateAll(nodes=>nodes.map(node=>node.label))).toEqual(['史實','假想']);
+ await expect(scenarios).toHaveValue('mainland202-06');await expect(faction).toBeChecked();
+ await page.locator('#utility-menu summary').click();
+ await historyScreenshot(page,testInfo,'dlc-hebei-save-reloaded-tc');
+ // Starting the date-suffixed variant exercises the shipped lazy catalog
+ // manifest and Worker, beyond the immutable setup preview checked above.
+ await scenarios.selectOption('mainland211-07-tongguan');
+ await page.locator('input[name=faction][value="ma_teng"]').check();
+ await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0211-07-01');
+ await expect(page.locator('#city-jump')).toHaveValue('wuwei');
+ await expect(page.locator('#inspector .owner')).toContainText('馬超');
+ await openAllocation(page);
+ await expect(page.locator('#allocation-officer option')).not.toHaveCount(0);
+ await expect(page.locator('#allocation-officer')).toContainText('馬超');
+ await historyScreenshot(page,testInfo,'dlc-tongguan-playable-officers-tc');
+ await closeDialog(page);
+ const variant=JSON.parse(await exportSave());
+ expect(variant.scenario).toBe('mainland211-07-tongguan');
+ expect(variant.state.player).toBe('ma_teng');
+ expect(variant.state.year).toBe(211);expect(variant.state.month).toBe(7);expect(variant.state.day).toBe(1);
+ expect(variant.state.cities.fengyi.owner).toBe('ma_teng');
+ expect(errors.get(page)).toEqual([]);
+});

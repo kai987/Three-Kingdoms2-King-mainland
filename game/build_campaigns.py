@@ -25,7 +25,7 @@ from officer_stat_sources import validate_original_virtue
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'game/config/campaigns'
 OUTPUT = ROOT / 'game/data/campaigns'
-SCENARIO_FILE = re.compile(r'scenarios/[0-9]{3}-[0-9]{2}\.json\Z')
+SCENARIO_FILE = re.compile(r'scenarios/(?P<date>[0-9]{3}-[0-9]{2})(?:-(?P<variant>[a-z][a-z0-9]*(?:-[a-z0-9]+)*))?\.json\Z')
 
 
 def read(path):
@@ -123,12 +123,13 @@ def load_sources(*, timing=True):
         raise ValueError('The canonical pool must contain 1023 unique identities')
     if any(persons[pid]['person_id'] != pid for pid in order):
         raise ValueError('Person pool identity mismatch')
-    if len(index['scenarios']) != 25:
-        raise ValueError('Expected the 25 reviewed playable campaigns')
+    if not isinstance(index['scenarios'], list) or not index['scenarios']:
+        raise ValueError('Reviewed playable campaigns are required')
     catalogs, seen_ids, seen_files = [], set(), set()
     for entry in index['scenarios']:
         name = entry['file']
-        if not isinstance(name, str) or SCENARIO_FILE.fullmatch(name) is None or name in seen_files:
+        match = SCENARIO_FILE.fullmatch(name) if isinstance(name, str) else None
+        if match is None or name in seen_files:
             raise ValueError('Invalid or duplicate campaign source file')
         seen_files.add(name)
         source = json.loads((SOURCE / name).read_text(encoding='utf-8'))
@@ -144,7 +145,12 @@ def load_sources(*, timing=True):
         apply_navigation_sources(data, navigation)
         if timing:
             apply_route_timing(data, geometry, geometry_sha256)
-        expected_id = f'mainland{data["start_year"]}-{data["start_month"]:02d}'
+        date = f'{data["start_year"]}-{data["start_month"]:02d}'
+        variant = data.get('scenario_variant')
+        if (match['date'] != date or match['variant'] != variant
+                or (entry.get('year'), entry.get('month')) != (data['start_year'], data['start_month'])):
+            raise ValueError('Campaign date or variant differs from its source entry')
+        expected_id = 'mainland' + date + ('-' + variant if variant else '')
         if data.get('schema') != 'tk2-campaign-v1' or data.get('id') != expected_id or data['id'] != entry['id'] or data['id'] in seen_ids:
             raise ValueError('Invalid or duplicate playable campaign identity')
         if data.get('calendar_rules') != dict(turn_days=10, month_days=30, turn_start_days=[1, 11, 21], monthly_settlement='month_rollover'):
@@ -169,7 +175,7 @@ def build(check=False, output=OUTPUT):
     source_index, catalogs = load_sources()
     paths, summary, files = [], [], {}
     for data in catalogs:
-        name = f'{data["start_year"]}-{data["start_month"]:02d}.json'
+        name = data['id'].removeprefix('mainland') + '.json'
         files[name] = encoded(data)
         paths.append('campaigns/' + name)
         summary.append(dict(id=data['id'], year=data['start_year'], month=data['start_month'],

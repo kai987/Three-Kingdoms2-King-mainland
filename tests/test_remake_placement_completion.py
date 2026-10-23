@@ -60,7 +60,8 @@ class PlacementCompletionTests(unittest.TestCase):
         for filename in cls.index['catalogs']:
             catalog = Catalog(ROOT / 'game/data' / filename)
             date = catalog.data['start_year'], catalog.data['start_month']
-            cls.catalogs[date] = catalog
+            key = date + (catalog.data['scenario_variant'],) if catalog.data.get('scenario_variant') else date
+            cls.catalogs[key] = catalog
         cls.portrait_index = read('game/assets/portraits/index.json')
 
     def game(self, date, faction=None):
@@ -78,8 +79,8 @@ class PlacementCompletionTests(unittest.TestCase):
         game._reconcile_factions(game.state)
         game.validate(game.state)
 
-    def test_all25_current_catalogs_have_complete_stable_person_and_board_identities(self):
-        self.assertEqual(len(self.catalogs), 25)
+    def test_all_current_catalogs_have_complete_stable_person_and_board_identities(self):
+        self.assertEqual(len(self.catalogs), 29)
         self.assertEqual(self.index['schema'], 'tk2-campaign-index-v1')
         self.assertEqual(self.index['default'], 'mainland217-07')
         portrait_people = self.portrait_index['people']
@@ -89,7 +90,7 @@ class PlacementCompletionTests(unittest.TestCase):
         for date, catalog in self.catalogs.items():
             data = catalog.data
             with self.subTest(date=date):
-                self.assertEqual(data['id'], f'mainland{date[0]}-{date[1]:02d}')
+                self.assertEqual(data['id'], f'mainland{date[0]}-{date[1]:02d}' + ('-' + date[2] if len(date) == 3 else ''))
                 self.assertEqual(data['schema'], 'tk2-campaign-v1')
                 self.assertNotIn('content_generation', data)
                 self.assertEqual(catalog.rules.city_officer_capacity, 99)
@@ -336,7 +337,7 @@ class PlacementCompletionTests(unittest.TestCase):
         before = {p: file_hash(p) for p in paths}
         result = subprocess.run([sys.executable, '-B', 'game/build_campaigns.py', '--check'],
                                 cwd=ROOT, check=True, capture_output=True, text=True)
-        self.assertEqual(json.loads(result.stdout)['catalogs'], 25)
+        self.assertEqual(json.loads(result.stdout)['catalogs'], 29)
         # Fail any attempt to read a generated catalog while independently
         # rebuilding. Canonical inputs alone must reproduce every current byte.
         with tempfile.TemporaryDirectory() as directory:

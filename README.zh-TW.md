@@ -2,7 +2,9 @@
 
 [日本語（主文件）](README.md) · **繁體中文** · [線上遊玩](https://kai987.github.io/Three-Kingdoms2-King-mainland/)
 
-原版像素風格的 Web 戰略遊戲：25 個劇本、最多 115 城、每城歷史武將與文吏合計 99 人、每方出戰 10 人、1,023 名歷史人物，繁體中文／日本語切換。每旬10日，城池與人物按年月登場，開局資源依劇本配置；四種主要場景使用原版配樂。
+原版像素風格的 Web 戰略遊戲：29 個劇本（史實23個、假想6個）、最多 115 城、每城歷史武將與文吏合計 99 人、每方出戰 10 人、1,023 名歷史人物，繁體中文／日本語切換。每旬10日，城池與人物按年月登場，開局資源依劇本配置；四種主要場景使用原版配樂。
+
+劇本選擇下拉框只分「史實」「假想」。新增198年3月「呂布討伐戰」、202年6月「河北爭亂」、211年7月「潼關之戰」、215年8月「合淝之戰」；原有同月「入蜀爭奪戰」保留為獨立劇本。原典確定年月與客軍在現有地圖上的代理配置分開記錄，見[追加劇本、史料與配置界線](docs/dlc-scenarios.md)。
 
 線上版在每個瀏覽器分頁的 Worker 中執行相同戰役規則，無需開啟本機伺服器。首次需下載 Python／WASM 與劇本；關閉或重新整理前，請明確保存至瀏覽器、JSON 檔案或雲端槽位。新戰役建立、旬末、戰鬥結算及載入後，另在本瀏覽器保留最近3份自動恢復點；空間不足時可能減少份數。「讀取進度」可選擇恢復點，確認後才取代目前戰役。自動恢復點不覆寫手動存檔、不自動傳到雲端，並保留原始JSON存檔格式。靜態建置與部署方式見[線上發布](docs/web-deployment.md)。
 
@@ -33,6 +35,7 @@ python3 -I -S -B game/serve.py --port 8878
 - [地方文吏的候選、雇用、薪俸與獨立身分](docs/civil-staff.md)
 - [兩名內政官、共用自動人事與前線運輸](docs/domestic-delegation.md)
 - [城名、年代與歸屬規則](docs/city-history-rules.md)／[19城×19史實劇本核查](docs/city-ownership-audit-20261024.md)
+- [追加DLC劇本的年月、歸屬及史實／假想分類](docs/dlc-scenarios.md)
 - [武將歸城與登場統計](docs/officer-placement-audit.md)
 - [原版德、SAN14能力與經驗欄位來源](docs/officer-attribute-sources.md)
 - [雲端帳號存檔](docs/cloud-save-options.md)
@@ -55,7 +58,7 @@ python3 -I -S -B game/serve.py --port 8878
 | `game/` | 畫面、地圖、肖像、語言與本地／雲端存檔介面 |
 | `game/config/campaigns/` | 劇本來源：共享人物、地圖資料與逐劇本差異 |
 | `game/config/city-scale-rules.json` | 共用都市規模與成長年月設定 |
-| `game/data/campaigns/` | 25 份目前可玩的生成資料 |
+| `game/data/campaigns/` | 29 份目前可玩的生成資料 |
 | `game/config/references/` | 原典任職、年代、能力及遊戲參考資料 |
 | `game/config/map-source.json` | 已批准地圖、城標與座標來源 |
 | `art/portraits/`、`tools/portraits/` | 肖像素材、來源證據及離線處理工具 |

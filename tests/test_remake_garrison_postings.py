@@ -118,7 +118,7 @@ class GarrisonPostingTests(unittest.TestCase):
 
     def test_all_current_chapters_keep_existing_people_membership_profiles_and_capacity(self):
         index = json.loads((ROOT / 'game/data/campaigns/index.json').read_text())
-        self.assertEqual(len(index['catalogs']),25)
+        self.assertEqual(len(index['catalogs']),29)
         for filename in index['catalogs']:
             data = json.loads((ROOT / 'game/data' / filename).read_text())
             before = deepcopy(data)

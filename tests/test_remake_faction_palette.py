@@ -17,8 +17,8 @@ class FactionPaletteTests(unittest.TestCase):
     def setUpClass(cls):
         cls.catalogs={}
         index=json.loads((ROOT/'game/data/campaigns/index.json').read_text())
-        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=25:
-            raise AssertionError('Expected25 current campaign catalogs')
+        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=29:
+            raise AssertionError('Expected29 current campaign catalogs')
         for name in index['catalogs']:
             path=ROOT/'game/data'/name
             data=json.loads(path.read_text())
@@ -26,8 +26,8 @@ class FactionPaletteTests(unittest.TestCase):
             cls.catalogs[data['id']]=SimpleNamespace(data={'id':data['id']},
                 factions={row['id']:row for row in data['factions']})
 
-    def test_all25_current_scenarios_have_separated_visible_fills(self):
-        self.assertEqual(len(self.catalogs),25)
+    def test_all_current_scenarios_have_separated_visible_fills(self):
+        self.assertEqual(len(self.catalogs),29)
         for identity,catalog in self.catalogs.items():
             palette=faction_colors(catalog)
             self.assertEqual(set(palette),{'neutral',*catalog.factions},identity)
@@ -46,7 +46,7 @@ class FactionPaletteTests(unittest.TestCase):
 
     def test_nanman_is_cyan_and_shu_gold_in_every_current_preview(self):
         current=list(self.catalogs.values())
-        self.assertEqual(len(current),25)
+        self.assertEqual(len(current),29)
         for catalog in current:
             palette=faction_colors(catalog)
             for key,expected in [('wei','#0078f8'),('shu','#f8b800'),('wu','#f85898')]:

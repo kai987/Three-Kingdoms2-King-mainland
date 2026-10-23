@@ -34,7 +34,9 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         cls.catalogs = {}
         for path in cls.index['catalogs']:
             catalog = Catalog(ROOT / 'game/data' / path)
-            cls.catalogs[catalog.data['start_year'], catalog.data['start_month']] = catalog
+            date = catalog.data['start_year'], catalog.data['start_month']
+            key = date + (catalog.data['scenario_variant'],) if catalog.data.get('scenario_variant') else date
+            cls.catalogs[key] = catalog
 
     def game(self, date=(217, 7), side='wu'):
         game = Campaign(self.catalogs[date])
@@ -42,8 +44,8 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         game.validate(game.state)
         return game
 
-    def test_all25_current_openings_have_dated_nonuniform_stocks_and_income(self):
-        self.assertEqual(len(self.catalogs), 25)
+    def test_all_current_openings_have_dated_nonuniform_stocks_and_income(self):
+        self.assertEqual(len(self.catalogs), 29)
         self.assertEqual(self.index['default'], 'mainland217-07')
         for date, catalog in self.catalogs.items():
             data = catalog.data
@@ -61,7 +63,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                     profile = data['city_profiles'][key]
                     self.assertIn(profile['tier'], ('normal', 'large', 'giant'))
                     self.assertIs(profile['is_SAN14_starting_resources'], False)
-                    self.assertEqual(profile['economy_reference_date'], list(date))
+                    self.assertEqual(profile['economy_reference_date'], list(date[:2]))
                     self.assertEqual(profile['economy_numeric_basis'], 'authorial_remake_balance_not_historical_measurement')
                     self.assertTrue(profile['economy_period_label_tc'])
                     self.assertTrue(profile['economy_period_label_ja'])
@@ -224,7 +226,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 restored.load_save(saved, 0)
                 self.assertEqual(canonical(restored.export_save()), canonical(saved))
 
-    def test_reviewed_city_sizes_and_opening_economy_apply_to_all25_dates(self):
+    def test_reviewed_city_sizes_and_opening_economy_apply_to_all_current_dates(self):
         expected = {'jingzhao': 'large', 'qiao': 'large', 'bajun': 'large',
                     'wujun': 'large', 'kuaiji': 'large', 'chenliu': 'normal',
                     'shujun': 'giant'}
@@ -233,10 +235,10 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 data = catalog.data
                 self.assertEqual(data['city_scale_rules']['basis'],
                                  'user_authored_remake_city_scale_setting')
-                for city, tier in dict(expected, danyang='giant' if date >= (240, 1) else 'large').items():
+                for city, tier in dict(expected, danyang='giant' if date[:2] >= (240, 1) else 'large').items():
                     self.assertEqual(data['city_profiles'][city]['tier'], tier, city)
-                    self.assertEqual(profile_at(data, city, *date)['tier'], tier)
-                    self.assertEqual(income_at(data, city, *date), data['city_income'][city])
+                    self.assertEqual(profile_at(data, city, *date[:2])['tier'], tier)
+                    self.assertEqual(income_at(data, city, *date[:2]), data['city_income'][city])
                 # These two cities share an authored regional/production profile.
                 # Their sole opening-size difference is reflected in every stock.
                 # Canonical date values were already quantized before this size

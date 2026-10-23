@@ -14,8 +14,8 @@ class CityPreviewTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         index=json.loads((ROOT/'game/data/campaigns/index.json').read_text())
-        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=25:
-            raise AssertionError('Expected all25 current scenarios')
+        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=29:
+            raise AssertionError('Expected all29 current scenarios')
         paths=[ROOT/'game/data'/p for p in index['catalogs']]
         cls.session=CampaignSession(paths)
 
@@ -27,7 +27,7 @@ class CityPreviewTests(unittest.TestCase):
         s=self.session;before=s.to_dict();revision=s.revision;count=0
         for key,c in s.catalogs.items():
             self.assertEqual(c.data['schema'],'tk2-campaign-v1')
-            self.assertRegex(key,r'^mainland\d{3}-\d{2}$')
+            self.assertRegex(key,r'^mainland\d{3}-\d{2}(?:-[a-z][a-z0-9]*(?:-[a-z0-9]+)*)?$')
             g=Campaign(c);g.state=g._new(next(iter(c.factions)),2026);g.validate(g.state)
             for ident,city in g.state.cities.items():
                 preview=s.preview_city(key,ident);row=preview['city']

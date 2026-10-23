@@ -114,9 +114,9 @@ class CivilStaffCampaignTests(unittest.TestCase):
         self.assertEqual(sum(type(i) is int for i in target.roster.officer_ids), historical_count)
         game.validate(game.state)
 
-    def test_all_25_actual_openings_keep_historical_ids_and_offer_only_owned_empty_cities(self):
+    def test_all_current_actual_openings_keep_historical_ids_and_offer_only_owned_empty_cities(self):
         index = json.loads((ROOT / 'game/data/campaigns/index.json').read_text())
-        self.assertEqual(len(index['catalogs']), 25)
+        self.assertEqual(len(index['catalogs']), 29)
         for filename in index['catalogs']:
             with self.subTest(scenario=filename):
                 game = Campaign(Catalog(ROOT / 'game/data' / filename))

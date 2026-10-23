@@ -133,7 +133,7 @@ class MessageLocaleTests(unittest.TestCase):
         path = ROOT / 'game/locales/messages-ja.json'
         before = path.read_bytes()
         catalogs = sorted((ROOT / 'game/data/campaigns').glob('*.json'))
-        self.assertEqual(len(catalogs),26)
+        self.assertEqual(len(catalogs),30)
         original = {path:path.read_bytes() for path in catalogs}
         subprocess.run([sys.executable, '-B', 'game/build_message_locales.py'], cwd=ROOT,
                        check=True, capture_output=True)

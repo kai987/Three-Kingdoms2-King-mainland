@@ -17,8 +17,8 @@ class FactionOfficerCountTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         index=json.loads((ROOT/'game/data/campaigns/index.json').read_text())
-        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=25:
-            raise AssertionError('Expected25 current campaign catalogs')
+        if index['schema']!='tk2-campaign-index-v1' or len(index['catalogs'])!=29:
+            raise AssertionError('Expected29 current campaign catalogs')
         cls.paths=[ROOT/'game/data'/name for name in index['catalogs']]
 
     def session(self):

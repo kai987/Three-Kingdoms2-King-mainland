@@ -45,6 +45,12 @@
       "file": "scenarios/197-07.json"
     },
     {
+      "id": "mainland198-03",
+      "year": 198,
+      "month": 3,
+      "file": "scenarios/198-03.json"
+    },
+    {
       "id": "mainland200-01",
       "year": 200,
       "month": 1,
@@ -55,6 +61,12 @@
       "year": 201,
       "month": 5,
       "file": "scenarios/201-05.json"
+    },
+    {
+      "id": "mainland202-06",
+      "year": 202,
+      "month": 6,
+      "file": "scenarios/202-06.json"
     },
     {
       "id": "mainland207-09",
@@ -87,10 +99,22 @@
       "file": "scenarios/211-07.json"
     },
     {
+      "id": "mainland211-07-tongguan",
+      "year": 211,
+      "month": 7,
+      "file": "scenarios/211-07-tongguan.json"
+    },
+    {
       "id": "mainland212-06",
       "year": 212,
       "month": 6,
       "file": "scenarios/212-06.json"
+    },
+    {
+      "id": "mainland215-08",
+      "year": 215,
+      "month": 8,
+      "file": "scenarios/215-08.json"
     },
     {
       "id": "mainland219-07",

@@ -79,7 +79,7 @@ class OriginalVirtueTests(unittest.TestCase):
     def test_every_scenario_source_retains_the_220_original_virtue_values(self):
         from build_campaigns import load_sources
         _, catalogs = load_sources(timing=False)
-        self.assertEqual(len(catalogs), 25)
+        self.assertEqual(len(catalogs), 29)
         for catalog in catalogs:
             people = {p['person_id']: p for p in catalog['people']}
             self.assertEqual(len(validate_original_virtue(people, self.reference, self.identities)), 220)

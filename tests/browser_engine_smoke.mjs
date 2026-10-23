@@ -19,7 +19,7 @@ const manifest=jsonFile(path.join(build,'runtime/engine-manifest.json'));
 assert.equal(manifest.schema,'tk2-browser-engine-v1');
 assert.equal(manifest.pyodide_version,'314.0.7');
 assert.equal(jsonFile(path.join(runtimeDirectory,'package.json')).version,manifest.pyodide_version);
-assert.equal(manifest.catalogs.length,25,'the release includes all 25 scenarios');
+assert.equal(manifest.catalogs.length,29,'the release includes all 29 scenarios');
 function artifact(url){
  assert.equal(typeof url,'string');
  const resolved=path.resolve(build,url);
@@ -30,7 +30,7 @@ const bundle=artifact(manifest.python_bundle.url),previewBytes=artifact(manifest
 assert.equal(sha(bundle),manifest.python_bundle.sha256,'shipped Python bundle integrity');
 assert.equal(sha(previewBytes),manifest.previews.sha256,'shipped opening preview integrity');
 const previews=JSON.parse(decode(previewBytes));
-assert.equal(previews.length,25);
+assert.equal(previews.length,29);
 const initial=manifest.initial_scenario;
 const another=manifest.catalogs.find(row=>row.id!==initial)?.id;
 assert(another,'a second scenario is required for the lazy switching check');
@@ -144,10 +144,10 @@ def _tk2_response_semantic(body):
  createBridge('primary');createBridge('isolated');
  const isolatedMenu=state('isolated');
  assert.equal(isolatedMenu.game,null);
- assert.equal(isolatedMenu.catalog.scenarios.length,25);
+ assert.equal(isolatedMenu.catalog.scenarios.length,29);
  let view=state();
  assert.equal(view.game,null);
- assert.equal(view.catalog.scenarios.length,25);
+ assert.equal(view.catalog.scenarios.length,29);
  assert.deepEqual(view.catalog.scenarios.map(row=>row.id),previews.map(row=>row.id));
  const opening=previews.find(row=>row.id===initial);
  const eligible=opening.factions.map(row=>row.id).filter(id=>opening.faction_officers[id]>=2&&opening.faction_resources[id]?.cities>0);
@@ -257,7 +257,7 @@ def _tk2_response_semantic(body):
  assert(cpu.save===finalSave,'final raw save agrees across CPython and real Python WebAssembly');
  const rng=JSON.parse(finalSave).state.rng;
  assert.deepEqual(cpu.rng,rng,'final RNG state and draw count agree');
- console.log(JSON.stringify({ok:true,pyodide:py.version,previews:25,catalogs:catalogs.size,
+ console.log(JSON.stringify({ok:true,pyodide:py.version,previews:previews.length,catalogs:catalogs.size,
   requests:trace.length,ai_turns:1,battle_settlements:battleSettlements,
   save_sha256:sha(finalSave),rng,cpu_save_bytes_equal:true}));
 }finally{

@@ -243,11 +243,12 @@ function selectFaction(){
   const option=scenarios.find(x=>x.id===scenario);
   const preferred=option.factions.some(f=>f.id===view.game?.player)?view.game.player:option.factions.some(f=>f.id==='shu')?'shu':option.factions[0].id;
   setupPreview={...option,faction:preferred,focus:option.factions.find(f=>f.id===preferred).city};
-  const groups=[['base','原版本篇'],['pk','威力加强版本篇'],['dlc','DLC历史剧本'],['if','更新IF剧本'],['bonus','特典剧本'],['custom','用户自订剧本'],['supplement','补充年代']];
-  const options=groups.map(([group,label])=>{const rows=scenarios.filter(x=>x.main_scenario.group===group).sort((a,b)=>a.year-b.year||a.month-b.month);return rows.length?`<optgroup label="${label} · ${rows.length}剧本">${rows.map(x=>`<option value="${x.id}" ${x.id===scenario?'selected':''}>${escapeHtml(x.title)}</option>`).join('')}</optgroup>`:'';}).join('');
+  const groups=[[false,'史实'],[true,'假想']];
+  const fictional=x=>!!x.main_scenario?.fictional;
+  const options=groups.map(([kind,label])=>{const rows=scenarios.filter(x=>fictional(x)===kind).sort((a,b)=>a.year-b.year||a.month-b.month||a.id.localeCompare(b.id));return rows.length?`<optgroup label="${label}">${rows.map(x=>`<option value="${x.id}" ${x.id===scenario?'selected':''}>${escapeHtml(x.title)}</option>`).join('')}</optgroup>`:'';}).join('');
   const meta=option.main_scenario||{},sources=meta.official_source?[meta.official_source]:meta.source_urls||[];
   const scenarioSource=sources.length?sources.map(url=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">查看官方剧本目录</a>`).join(' · '):'<p>补充年代采用本作的城池、人物与年代配置。</p>';
-  const category=groups.find(([group])=>group===meta.group)?.[1]||'补充年代';
+  const category=fictional(option)?'假想':'史实';
   const chronology=(meta.chronology_overrides||[]).map(row=>{const changes=Object.entries({birth_year:'出生年',service_year:'出仕年',death_year:'卒年'}).filter(([key])=>row.before[key]!==row.after[key]).map(([key,label])=>`${label} ${row.before[key]??'未详'} → ${row.after[key]??'未详'}`).join('、');return `<li>${escapeHtml(row.name)}：${changes}（${row.is_historical_correction?'史料修订':'本作游戏设定'}）。</li>`;}).join('');
   const scenarioKind=`<p class="small scenario-kind" data-scenario-kind>剧本类型：${escapeHtml(category)}${meta.fictional?' · 假想剧本（IF）':''}</p>`;
   const scenarioExtra=`${meta.story_note_i18n?.['zh-Hant']?`<p>${escapeHtml(meta.story_note_i18n['zh-Hant'])}</p>`:''}${meta.official_same_date_title?`<p>同年月官方剧本：${escapeHtml(meta.official_same_date_title['zh-Hant'])}。</p>`:''}${meta.scope_note?`<p>${escapeHtml(meta.scope_note)}</p>`:''}${chronology?`<details class="chronology-exceptions"><summary>人物年代例外</summary><p>以下个别年代修订仅适用于本剧本。游戏设定不等同史实。</p><ul>${chronology}</ul></details>`:''}`;
