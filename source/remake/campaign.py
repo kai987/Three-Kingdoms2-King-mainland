@@ -178,6 +178,26 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         self._owned_city(state,payload.get('source'),action=True)
         dispatch(self,state,payload,state.player)
 
+    def _supply_event(self,state,kind,*,unit_kind,unit_id,city,owner,grain=0,lost=0,
+                      shortage_days=0,reason='city'):
+        """Player-facing receipts for changes already made by the common service."""
+        if owner != state.player or city not in state.cities:
+            return
+        details=dict(unit_kind=unit_kind,unit_id=unit_id,grain=grain,lost=lost,
+                     shortage_days=shortage_days,reason=reason)
+        items=state.extension.get('events',{}).get('items',[])
+        previous=next((r for r in reversed(items) if r['turn']==state.turn
+            and r['id']>=getattr(self,'_supply_event_floor',state.extension['events']['next_id'])
+            and r['kind']==kind and r.get('details',{}).get('unit_kind')==unit_kind
+            and r.get('details',{}).get('unit_id')==unit_id and r['city_ids']==[city]
+            and r['details'].get('reason')==reason),None)
+        if previous is not None:
+            previous['details']['grain']+=grain
+            previous['details']['lost']+=lost
+            previous['details']['shortage_days']=shortage_days
+            return
+        self._emit_event(state,kind,city_ids=[city],factions=[owner],details=details)
+
     def _civil_staff_view(self, state):
         result = civil_staff.view(self, state)
         if state is None:
@@ -286,6 +306,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                     if self.state is None:
                         raise GameError('请先选择势力。')
                     candidate = deepcopy(self.state)
+                    self._supply_event_floor=candidate.extension['events']['next_id']
                     methods = {'persuade_officer': self._persuade_officer, 'recruit_officer': self._recruit_officer, 'transfer': self._transfer,
                                'tactic': self._tactic, 'duel_start': self._duel_start, 'duel_action': self._duel_action,
                                'allocate': self._allocate, 'recruit': self._recruit, 'depart': self._depart,
@@ -469,6 +490,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 state.year += 1
             self._monthly_calendar(state)
         state.turn += 1
+        self._resolve_supply_retreats(state)
+        logistics.resolve_supply_retreats(self,state)
         for city in state.cities.values():
             city.action_used = False
         state.phase = 'city'

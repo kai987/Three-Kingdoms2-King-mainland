@@ -200,16 +200,19 @@ class ConvoySupplyTests(unittest.TestCase):
         returning = row['journeys'][-1]['supply']
         self.assertEqual(row['status'],'returning')
         self.assertEqual(row['journeys'][0]['supply']['remaining'],0)
-        self.assertEqual(returning['from_cargo'],returning['loaded'])
-        self.assertEqual(row['cargo']['grain'],200-returning['loaded'])
+        self.assertEqual(returning['loaded'],0)
+        return_food=sum(r['grain'] for r in returning['refills'] if r['kind']=='cargo')
+        self.assertGreater(return_food,0)
+        self.assertEqual(returning['received'],return_food)
+        self.assertEqual(row['cargo']['grain'],200-return_food)
         saved = game.export_save()
         loaded = Campaign(game.catalog); loaded.load_save(saved,0)
         self.assertEqual(loaded.export_save(),saved)
         self.advance_due(loaded)
         self.assertFalse(loaded.state.extension['logistics']['convoys'])
-        self.assertEqual(loaded.state.cities['xiangyang'].grain,before-budget-returning['loaded'])
+        self.assertEqual(loaded.state.cities['xiangyang'].grain,before-budget-return_food)
 
-    def test_no_grain_for_return_waits_without_free_trip_or_negative_cargo(self):
+    def test_no_grain_for_return_walks_and_suffers_hunger_without_free_trip_or_negative_cargo(self):
         game = self.game()
         self.dispatch(game,grain=0)
         game.state.cities['nanjun'].owner = 'wei'
@@ -218,14 +221,16 @@ class ConvoySupplyTests(unittest.TestCase):
         civil_staff.synchronize(game,game.state,checks=False)
         self.advance_due(game)
         row = game.state.extension['logistics']['convoys'][0]
-        self.assertEqual((row['status'],row['reason']),('waiting','insufficient_grain'))
-        self.assertEqual(len(row['journeys']),1)
-        supply,cargo = deepcopy(row['journeys'][0]['supply']),deepcopy(row['cargo'])
+        self.assertEqual(row['status'],'returning')
+        self.assertEqual(len(row['journeys']),2)
+        supply=deepcopy(row['journeys'][-1]['supply'])
+        before_lost=game.state.soldiers['lost']
+        self.assertEqual(supply['remaining'],0)
         game._complete_turn(game.state)
-        game.command('arrivals',{},game.revision)
         row = game.state.extension['logistics']['convoys'][0]
-        self.assertEqual(row['cargo'],cargo)
-        self.assertEqual(row['journeys'][0]['supply'],supply)
+        self.assertGreater(row['journeys'][-1]['supply']['route_days'],0)
+        self.assertGreater(game.state.soldiers['lost'],before_lost)
+        self.assertLess(row['cargo']['reserves'],300)
         self.assertEqual(row['cargo']['grain'],0)
         game.validate(game.state)
 

@@ -11,7 +11,7 @@ from .difficulty import attack_budget, get_settings
 from .errors import GameError
 from .officers import integer, recruitment_loyalty, ref_sort_key
 from . import civil_staff
-from .march_supply import estimate as march_grain
+from .march_supply import DENOMINATOR, OFFICER_UNITS, estimate as march_grain, next_supply_days
 from .route_hazards import allocate_survivors
 
 
@@ -120,6 +120,35 @@ class StrategicAI:
         total = sum(self.state.officers[i].troops for i in ids)
         return bool(total) and self.survivors(quote, ids)*100 >= total*(100-self.settings['max_route_loss_percent'])
 
+    def provisioned(self, city, ids, quote):
+        """Read-only forecast of the same first loading and friendly stops.
+
+        Neutral cities cannot supply grain. Carry the rounding credit between
+        segments, so an intermediate city need not pay a second rounding unit.
+        Actual departure rechecks this forecast; later capture or spending is
+        still handled by the ordinary daily supply and rescue services.
+        """
+        if not quote:
+            return False
+        loaded = march_grain(self.state, ids, quote)
+        if city.grain < loaded:
+            return False
+        units = sum(self.state.officers[i].troops for i in ids) + OFFICER_UNITS * len(ids)
+        credit, progress = loaded * DENOMINATOR, 0
+        for index, leg in enumerate(quote['routes']):
+            progress += leg['days']
+            credit -= units * leg['days']
+            if credit < 0:
+                return False
+            checkpoint = self.state.cities[quote['path'][index + 1]]
+            if index < len(quote['routes']) - 1 and checkpoint.owner == city.owner:
+                days = next_supply_days(self.state, quote, city.owner, progress)
+                needed = max(0, (units * days - credit + DENOMINATOR - 1) // DENOMINATOR)
+                if checkpoint.grain < needed:
+                    return False
+                credit += needed * DENOMINATOR
+        return True
+
     def attack_option(self, city, target):
         ids = self.army(city, target.id)
         total = sum(self.state.officers[i].troops for i in ids)
@@ -128,7 +157,7 @@ class StrategicAI:
         options = []
         for mode in ('land', 'fastest'):
             quote = self.quote(city, target, mode, adjacent=True)
-            if self.safe(quote, ids) and city.grain >= march_grain(self.state, ids, quote):
+            if self.safe(quote, ids) and self.provisioned(city, ids, quote):
                 survivors = self.survivors(quote, ids)
                 options.append(dict(source=city.id, target=target.id, officers=ids,
                                     mode=mode, quote=quote, survivors=survivors))
@@ -147,7 +176,7 @@ class StrategicAI:
                 for departure in range(arrival-1, turn-1, -1):
                     quote = self.quote(source, target, member['mode'], adjacent=True, departure=departure)
                     if (self.safe(quote, member['officers']) and departure+quote['turns'] == arrival
-                            and source.grain >= march_grain(self.state, member['officers'], quote)):
+                            and self.provisioned(source, member['officers'], quote)):
                         found = dict(source=source.id, target=target.id, mode=member['mode'],
                             departure_turn=departure, arrival_turn=arrival,
                             officers=list(member['officers']), march_id=None)
@@ -251,7 +280,7 @@ class StrategicAI:
             ids = order['officers']
             quote = self.quote(city, target, order['mode'], adjacent=True) if target else None
             usable = target and target.owner != city.owner and all(i in self.army(city,target.id) for i in ids)
-            if (not usable or not self.safe(quote,ids) or city.grain < march_grain(self.state, ids, quote)
+            if (not usable or not self.safe(quote,ids) or not self.provisioned(city, ids, quote)
                     or self.state.turn+quote['turns'] > order['arrival_turn']
                     or self.state.extension['ai_attacks'] >= self.budget):
                 plan['orders'].remove(order)
@@ -294,7 +323,7 @@ class StrategicAI:
                         if len(chosen) >= min(3, room):
                             break
                         candidate = chosen + [ident]
-                        if march_grain(self.state, candidate, quote) <= city.grain:
+                        if self.provisioned(city, candidate, quote):
                             chosen = candidate
                 if chosen and self.safe(quote,chosen):
                     destinations.append((self.strength(target)-self.threat(target),quote['days'],target.id,mode,chosen))
@@ -457,7 +486,17 @@ def validate_strategies(campaign, state):
             ident = order['march_id']
             if ident is not None:
                 integer(ident,1,state.extension['travel']['counter'],'AI march receipt')
-                if ident in marches and any(marches[ident][key]!=value for key,value in
-                    (('source',order['source']),('target',order['target']),('owner',owner),
-                     ('kind','attack'),('departure_turn',order['departure_turn']),('arrival_turn',order['arrival_turn']))):
-                    raise ValueError('AI march does not match its plan')
+                if ident in marches:
+                    march = marches[ident]
+                    mission = march.get('mission')
+                    # Supply stops can postpone the active arrival, and a
+                    # shortage can redirect a real column toward a friendly
+                    # city. Travel validates those current journeys; link the
+                    # strategy to the unchanged original order instead.
+                    if (march['owner'] != owner or not isinstance(mission,dict)
+                            or any(mission.get(key) != value for key,value in
+                                (('source',order['source']),('target',order['target']),
+                                 ('kind','attack'),('mode',order['mode']),
+                                 ('departure_turn',order['departure_turn']),
+                                 ('arrival_turn',order['arrival_turn'])))):
+                        raise ValueError('AI march does not match its plan')

@@ -4,12 +4,13 @@ from pathlib import Path
 import sys
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, GameError, digest
 from remake.difficulty import attack_budget, get_settings
-from remake.events import LIMIT, STAFF_KINDS, empty, emit, transition, validate as validate_events
+from remake.events import LIMIT, STAFF_KINDS, SUPPLY_KINDS, empty, emit, transition, validate as validate_events
 from campaign_fixtures import controlled_catalog, reach_battle
 
 
@@ -153,6 +154,53 @@ class CampaignEventsTests(unittest.TestCase):
         for key in saved['state']:
             if key != 'extension':
                 self.assertEqual(restored[key], saved['state'][key])
+
+    def test_supply_snapshots_survive_completed_columns_and_reject_invalid_saved_receipts(self):
+        game = new_game()
+        for unit_kind in ('march', 'convoy'):
+            for kind in ('march_resupplied','march_starvation','march_retreat'):
+                details = dict(unit_kind=unit_kind,unit_id=42,grain=20 if kind=='march_resupplied' else 0,
+                    lost=3 if kind=='march_starvation' else 0,shortage_days=10,
+                    reason='city' if kind=='march_resupplied' else 'shortage')
+                game._emit_event(game.state,kind,city_ids=['xiangyang'],factions=['shu'],details=details)
+        self.assertEqual({row['kind'] for row in game.state.extension['events']['items'][1:]},SUPPLY_KINDS)
+        self.assertFalse(game.state.extension['travel']['marches'])
+        self.assertFalse(game.state.extension['logistics']['convoys'])
+        game.validate(game.state)
+        saved = game.export_save()
+        twin = Campaign(game.catalog);twin.load_save(saved,0)
+        self.assertEqual(twin.export_save(),saved,'Event snapshots never depend on a currently active convoy ID')
+        for field,value in [('unit_kind','battle'),('unit_kind',[]),('unit_id',0),('unit_id',True),
+                            ('grain',1),('lost',1),('shortage_days',-1),('shortage_days',True),
+                            ('reason','<img src=x onerror=alert(1)>'),('extra',0)]:
+            with self.subTest(field=field,value=value):
+                bad = deepcopy(saved)
+                bad['state']['extension']['events']['items'][-1]['details'][field] = value
+                bad['checksum'] = digest({k:v for k,v in bad.items() if k!='checksum'})
+                with self.assertRaises((ValueError,GameError)):
+                    game.load_save(bad,game.revision)
+                self.assertEqual(game.export_save(),saved)
+
+    def test_supply_receipts_aggregate_within_a_command_and_keep_committed_ids_immutable(self):
+        game=new_game()
+        original=deepcopy(game.state.rng)
+        def supply_only(state,payload):
+            for grain in (4,6):
+                game._supply_event(state,'march_resupplied',unit_kind='march',unit_id=42,
+                    city='xiangyang',owner='shu',grain=grain,reason='convoy')
+        with patch.object(game,'_allocate',supply_only):
+            game.command('allocate',{},game.revision)
+            receipts=[row for row in game.state.extension['events']['items'] if row['kind']=='march_resupplied']
+            self.assertEqual(len(receipts),1)
+            self.assertEqual(receipts[0]['details']['grain'],10)
+            committed=deepcopy(receipts[0])
+            game.command('allocate',{},game.revision)
+        receipts=[row for row in game.state.extension['events']['items'] if row['kind']=='march_resupplied']
+        self.assertEqual(len(receipts),2,'A second same-turn command needs a new event ID for live playback')
+        self.assertEqual(receipts[0],committed)
+        self.assertGreater(receipts[1]['id'],receipts[0]['id'])
+        self.assertEqual(receipts[1]['details']['grain'],10)
+        self.assertEqual(game.state.rng,original)
 
 
 class CivilStaffEventTests(unittest.TestCase):

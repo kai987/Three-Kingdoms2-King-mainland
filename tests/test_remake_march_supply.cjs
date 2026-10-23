@@ -8,6 +8,25 @@ const expected=JSON.parse(execFileSync('python3',['-B','-c','import json,sys;fro
 assert.deepEqual(actual,expected);
 assert.equal(supply.requiredGrain(1000,1,12),14);assert.equal(supply.requiredGrain(1000,1,10),11);
 assert.equal(supply.estimate({a:{troops:600},b:{troops:300}},['a','b'],{days:20},200),26);
+const quote={days:30,path:['home','empty','depot','front'],routes:[{days:7},{days:13},{days:10}]},
+ cities={home:{owner:'wei'},empty:{owner:'neutral'},depot:{owner:'wei'},front:{owner:'wei'}},
+ people={a:{troops:900}},snapshot=JSON.stringify({quote,cities,people});
+assert.equal(supply.initialDays(quote,cities,'wei'),20,'A neutral city cannot supply the column');
+assert.equal(supply.estimate(people,['a'],quote,0,cities,'wei'),20,'Only the first friendly supply interval is loaded');
+assert.equal(supply.estimate(people,['a'],quote),30,'A bare duration remains valid for callers without ownership context');
+assert.deepEqual(supply.position(quote,0),{city:'home',from:'home',to:'empty',progress_days:0,leg_days:7,arrived:false});
+assert.equal(supply.position(quote,7).city,'empty');
+assert.deepEqual(supply.position(quote,10),{city:null,from:'empty',to:'depot',progress_days:3,leg_days:13,arrived:false});
+assert.equal(supply.position(quote,20).city,'depot');assert.equal(supply.position(quote,30).arrived,true);
+assert.equal(supply.position(quote,999).city,'front');
+assert.deepEqual(supply.nextStop(quote,10,cities,'wei'),{city:'depot',days:10});
+assert.deepEqual(supply.nextStop(quote,20,cities,'wei'),{city:'depot',days:0});
+assert.deepEqual(supply.nextStop(quote,21,cities,'wei'),{city:'front',days:9});
+assert.equal(JSON.stringify({quote,cities,people}),snapshot,'Budgets and position previews do not mutate authoritative state');
+cities.depot.owner='shu';assert.equal(supply.initialDays(quote,cities,'wei'),30,'Actual ownership changes invalidate the resupply stop');
+cities.front.owner='shu';assert.equal(supply.initialDays(quote,cities,'wei'),30,'With no friendly stop, prepare the whole journey');
+assert.equal(supply.nextStop(quote,10,cities,'wei'),null);
 for(const bad of [-1,1.5,NaN,Infinity])assert.throws(()=>supply.requiredGrain(bad,1,10));
 assert.throws(()=>supply.requiredGrain(Number.MAX_SAFE_INTEGER,99,1000000));
-console.log(`march supply: ${cases.length} real Python/JS route-duration budgets, troop/escort/reserve accounting and numeric boundaries passed`);
+assert.throws(()=>supply.initialDays({days:10,path:['home','away'],routes:[{days:0.5}]},cities,'wei'));
+console.log(`march supply: ${cases.length} real Python/JS budgets, first friendly supply interval, neutral/changed ownership, actual route positions and numeric boundaries passed`);

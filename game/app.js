@@ -125,7 +125,7 @@ function watchRouteDialog(refresh){
 MarchCore.subscribe(()=>refreshRouteDialog?.());
 function renderMarches(){
  const rows=view.game?.extension?.travel?.marches||[];
- return rows.length?`<div class="marches"><h3>在途部队</h3>${rows.filter(r=>r.owner===view.game.player).map(r=>`<p data-march="${r.id}">${escapeHtml(cityName(r.source))} → ${escapeHtml(cityName(r.target))}<br>${r.officers.map(i=>escapeHtml(name(i))).join('、')} · ${r.quote.distance_km}公里<br>${r.arrival_turn<=view.game.turn?'已抵达，等待处理':`还需${r.arrival_turn-view.game.turn}旬`}${r.supply?'<br>'+marchSupplyHtml(r.supply):''}</p>`).join('')||'<p>本方暂无在途部队。</p>'}<p class="small">在途者保留出发城编制与容量，不参加守城，不能再次行动。每旬固定10日，每月3旬。</p></div>`:'';
+ return rows.length?`<div class="marches"><h3>在途部队</h3>${rows.filter(r=>r.owner===view.game.player).map(r=>`<p data-march="${r.id}">${escapeHtml(cityName(r.journey_source||r.source))} → ${escapeHtml(cityName(r.target))}<br>${r.officers.map(i=>escapeHtml(name(i))).join('、')} · ${r.quote.distance_km}公里<br>${marchStatusHtml(r)}${marchPositionHtml(r)}${r.supply?'<br>'+marchSupplyHtml(r.supply,r.history):''}</p>`).join('')||'<p>本方暂无在途部队。</p>'}<p class="small">在途者保留出发城编制与容量，不参加守城，不能再次行动。每旬固定10日，每月3旬。</p></div>`:'';
 }
 const mapPosition=c=>(setupPreview?setupPreview.world:view.catalog.world)?c.position:mapPositions?.positions[c.id]||c.position;
 const periodCityName=id=>setupPreview?.city_names[id]||view.catalog.cities.find(c=>c.id===id)?.name||id;
@@ -575,14 +575,29 @@ function finishMapAction(id){
  if(choice.kind==='depart')departure(city,id);else recruitOfficer(city,id);
  GameI18n.apply();
 }
-function marchSupplyHtml(s){
+function marchStatusHtml(row){
+ const s=row.supply,arrived=s?(s.route_days??s.elapsed_days??0)>=row.quote.days:row.arrival_turn<=view.game.turn,
+  message=row.status==='returning'||row.returning||row.retreating||s?.retreat_requested?['撤退返程中','撤退・帰還中']:s?.waiting?['等待補給／接收','補給・受け入れ待ち']:arrived?['已抵達，等待處理','到着済み・処理待ち']:[`預計還需${Math.max(1,row.arrival_turn-view.game.turn)}旬`,`到着まで推定${Math.max(1,row.arrival_turn-view.game.turn)}旬`];
+ return `<span data-march-status><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">${message[0]}</span><span data-locale-only="ja" data-l10n-native="ja" hidden>${message[1]}</span></span>`;
+}
+function marchPositionHtml(row){
+ if(!row?.quote||typeof GameMarchSupply.position!=='function')return '';
+ const progress=GameMarchSupply.position(row.quote,row.supply?.route_days??row.supply?.elapsed_days??0),
+  next=GameMarchSupply.nextStop(row.quote,row.supply?.route_days??0,view.game.cities,row.owner),
+  place=progress.city?escapeHtml(cityName(progress.city)):progress.from&&progress.to?`${escapeHtml(cityName(progress.from))} → ${escapeHtml(cityName(progress.to))}（${progress.progress_days}/${progress.leg_days}日）`:'—',
+  stop=next?`${escapeHtml(cityName(next.city))}（${next.days}日）`:'—';
+ return `<br><span data-march-position><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">目前位置：${place} · 下一補給點：${stop}</span><span data-locale-only="ja" data-l10n-native="ja" hidden>現在地：${place}・次の補給地：${stop}</span></span>`;
+}
+function marchSupplyHtml(s,history=[]){
  if(!s)return '';
- return `<span data-supply-loaded="${s.loaded}" data-supply-consumed="${s.consumed}" data-supply-remaining="${s.remaining}"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">隨軍糧：預裝${s.loaded} · 已耗${s.consumed} · 剩餘${s.remaining} · 已行${s.elapsed_days}日</span><span data-locale-only="ja" data-l10n-native="ja" hidden>携行兵糧：積載${s.loaded}・消費${s.consumed}・残り${s.remaining}・行軍済み${s.elapsed_days}日</span></span>`;
+ const route=s.route_days??s.elapsed_days??0,waiting=Math.max(0,(s.elapsed_days??0)-route),received=s.received??0,lost=s.lost??0,shortage=s.shortage_days??0,streak=s.shortage_streak??0,
+  total=history.reduce((sum,row)=>({consumed:sum.consumed+(row.supply?.consumed??0),lost:sum.lost+(row.supply?.lost??0)}),{consumed:s.consumed,lost});
+ return `<span data-supply-loaded="${s.loaded}" data-supply-consumed="${s.consumed}" data-supply-remaining="${s.remaining}" data-supply-route-days="${route}" data-supply-waiting-days="${waiting}" data-supply-shortage="${streak}"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">本程隨軍糧：初裝${s.loaded} · 途中補給${received} · 已耗${s.consumed} · 剩餘${s.remaining}<br>前進${route}日 · 等待${waiting}日 · 缺糧${shortage}日（連續${streak}日） · 斷糧減員${lost}${s.retreat_requested?' · 已觸發撤退':''}${history.length?`<br>往返累計耗糧${total.consumed} · 斷糧減員${total.lost}`:''}</span><span data-locale-only="ja" data-l10n-native="ja" hidden>現在の行程の兵糧：初期積載${s.loaded}・途中補給${received}・消費${s.consumed}・残り${s.remaining}<br>前進${route}日・待機${waiting}日・食糧不足${shortage}日（連続${streak}日）・飢餓損耗${lost}${s.retreat_requested?'・撤退が発動':''}${history.length?`<br>往復の累計消費${total.consumed}・飢餓損耗${total.lost}`:''}</span></span>`;
 }
 function marchSupplyRuleHtml(){
- return '<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">出發預裝全程隨軍糧，每旬按實際行走天數消耗。每1000兵每日1糧、每10名武將每日1糧，按累計日數向上取整；運輸預備兵同樣計糧。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>全行程分の兵糧を積載し、各旬の実際の行軍日数分を消費します。1000兵につき1日1兵糧、武将10人につき1日1兵糧を累計日数で切り上げます。輸送中の予備兵も対象です。</span></p>';
+ return '<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">出發只預裝至下一座本方城的口糧，途中依友城庫存補給；沒有友城則預裝全程。等待也每日耗糧，缺糧會暫停前進並每日損兵1%，連續10日於旬末撤退。可從本方城派運輸隊向在途部隊送糧。兵糧按兵數、隨行人數與實際日數累計取整。</span><span data-locale-only="ja" data-l10n-native="ja" hidden>次の自勢力都市までの兵糧を積み、途中は友軍都市の在庫から補給します。友軍都市がなければ全行程分を積みます。待機中も毎日消費し、不足時は前進を止め、1日1%の兵を失います。10日連続で不足すると旬末に撤退します。自勢力の都市から行軍部隊へ兵糧を届けられます。兵数・同行人数・実際の日数に基づき累計で切り上げます。</span></p>';
 }
-function marchGrain(ids,quote){return GameMarchSupply.estimate(view.game.officers,ids,quote);}
+function marchGrain(ids,quote){return GameMarchSupply.estimate(view.game.officers,ids,quote,0,view.game.cities,view.game.cities[quote.path?.[0]]?.owner??view.game.player);}
 function departureBudget(city,destination,ids){
  if(!view.catalog.travel_rules)return Math.max(1,Math.floor(ids.reduce((sum,id)=>sum+view.game.officers[id].troops,0)/25));
  return Math.min(Infinity,...availableRouteModes(city.id,destination).map(mode=>marchGrain(ids,travelQuote(city.id,destination,mode))));

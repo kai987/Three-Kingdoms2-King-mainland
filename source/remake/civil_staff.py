@@ -97,13 +97,8 @@ def _effective_count(state, city):
                     or any(key not in state.cities or state.cities[key].owner not in {city.owner, 'neutral'} for key in path)):
                 continue
             ids.update(i for i in march['officers'] if i in state.officers and state.officers[i].alive)
-    for convoy in state.extension.get('logistics', {}).get('convoys', []):
-        journey = convoy['journeys'][-1]
-        if (convoy['target'] == city.id and convoy['owner'] == city.owner
-                and state.turn <= journey['arrival_turn'] <= state.turn + 3
-                and all(key in state.cities and state.cities[key].owner in {city.owner, 'neutral'}
-                        for key in journey['quote']['path'])):
-            ids.update(i for i in convoy['officers'] if i in state.officers and state.officers[i].alive)
+    # Transport escorts unload and return home; they never fill a permanent
+    # administrative post in the receiving city.
     return len(ids)
 
 

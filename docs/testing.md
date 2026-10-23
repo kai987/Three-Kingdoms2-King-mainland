@@ -56,6 +56,15 @@ node tools/browser-tests/node_modules/@playwright/test/cli.js test \
 
 截圖與報告寫入`build/browser-results/`及`build/browser-report/`；失敗時保留trace與video。CI依執行次數分開保留診斷檔7天，任務重跑不與先前報告衝突，便於檢查實際畫面與失敗步驟。啟動失敗案例的預期404與非預期錯誤分開判定，不把故意中斷一次下載當作一般場景的載入錯誤。
 
+分段補給另有[受控實際操作驗收](../tests/browser_resupply.spec.mjs)，透過[五城測試目錄](../tests/browser_resupply_fixture.py)啟動原本HTTP處理器及頁面，使用真實交易、日曆、AI、每日減員、運輸與存讀服務，沒有向瀏覽器注入狀態。桌面1280×900及觸控390×844各跑兩例：首段備糧→缺糧友城→運輸隊同城會合送糧→押運真實返原城，以及未救援時十日缺糧減員並開始撤退。另核對送糧數字上限、最大值、繁中／日文草稿、原城名冊、非即時交付及console錯誤；受控目錄不代表各歷史戰役都自然出現相同路徑。
+
+```sh
+node tools/browser-tests/node_modules/@playwright/test/cli.js test \
+  --config tools/browser-tests/resupply.config.mjs
+```
+
+[補給驗收設定](../tools/browser-tests/resupply.config.mjs)自行啟閉`127.0.0.1:18919`測試服務，不使用玩家的8878服務；截圖與失敗trace保存在`build/resupply-browser-results/`。這項檢查驗證真實CPU服務與UI；前述靜態驗收仍負責發布包的Worker及Pyodide邊界。
+
 ## 多劇本、多種子的跨年戰役
 
 [長期回放工具](../tools/campaign-soak/run.py)使用普通`Campaign.command`交易、戰略／戰術AI、內政、運輸、事件、亂數與存讀服務。`HeadlessCampaign.view()`只省略回放未使用的介面目錄與路線回應，不直接修改城池、人物、資源、日期或天候收據。玩家策略固定為防守與內政管理，用於可重現地推進戰局，不代表最優玩家打法。

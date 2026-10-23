@@ -200,6 +200,8 @@ jobs:
         run: node tests/browser_engine_smoke.mjs build/web
       - name: Actual desktop and touch browser interaction acceptance
         run: node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/playwright.config.mjs
+      - name: Segmented supply, convoy rendezvous and physical return in the UI
+        run: node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/resupply.config.mjs
       - name: Retain browser screenshots and failure traces
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -208,6 +210,7 @@ jobs:
           path: |
             build/browser-results
             build/browser-report
+            build/resupply-browser-results
           if-no-files-found: ignore
           retention-days: 7
       - name: Upload the exact tested static release

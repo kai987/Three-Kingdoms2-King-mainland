@@ -300,6 +300,94 @@ class StrategicAITests(unittest.TestCase):
                 self.assertEqual(game.state.rng.draws,0)
                 game.validate(game.state)
 
+    def test_segment_rations_forecast_friendly_stops_neutral_transit_and_rounding_credit(self):
+        for backend in ('python','rust'):
+            for neutral in (False,True):
+                with self.subTest(backend=backend,neutral=neutral), using_backend(backend):
+                    data=deepcopy(strategic_catalog().data)
+                    pairs=[('runan','nanyang',20),('nanyang','yingchuan',20),('yingchuan','xiangyang',10)]
+                    data['links']=[[a,b] for a,b,_ in pairs]
+                    data['travel_routes']=[dict(id=f'segments:{a}:{b}',**{'from':a,'to':b},mode='land',
+                        terrain='plain',days=days,distance_km=days*30,land_km=days*30,sea_km=0) for a,b,days in pairs]
+                    if neutral:
+                        data['initial_owners']['nanyang']='neutral'
+                        for row in data['initial_officers']:
+                            if row['city']=='nanyang':row['city']='runan'
+                        next(f for f in data['factions'] if f['id']=='wei')['city']='runan'
+                    game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                    source,middle,target=(game.state.cities[k] for k in ('runan','nanyang','yingchuan'))
+                    ident=next(i for i in source.roster.officer_ids if game.state.officers[i].troops==600)
+                    quote=game._travel_path(game.state,source.id,target.id,'wei','land')
+                    self.assertEqual(quote['path'],['runan','nanyang','yingchuan'])
+                    source.grain=14;middle.grain=0
+                    ai=StrategicAI(game,game.state)
+                    self.assertEqual(march_grain(game.state,[ident],quote),28 if neutral else 14)
+                    self.assertFalse(ai.provisioned(source,[ident],quote))
+                    if neutral:
+                        source.grain=28
+                        self.assertTrue(ai.provisioned(source,[ident],quote),'Neutral transit cannot refill but fully carried grain can pass')
+                    else:
+                        middle.grain=13
+                        self.assertFalse(ai.provisioned(source,[ident],quote),'A known shortage at the next friendly stop prevents an intentional AI starvation march')
+                        middle.grain=14
+                        before=game.export_save()
+                        self.assertTrue(ai.provisioned(source,[ident],quote))
+                        self.assertEqual(game.export_save(),before,'Route budgeting never reserves supplies or changes RNG during planning')
+            # A 300-soldier officer uses 400 ration units per day. One grain
+            # loaded for the first one-day leg also covers the next one-day
+            # leg, so the intermediate city can legitimately have no grain.
+            with self.subTest(backend=backend,rounding=True), using_backend(backend):
+                data=deepcopy(strategic_catalog().data)
+                pairs=[('runan','nanyang',1),('nanyang','yingchuan',1)]
+                data['links']=[[a,b] for a,b,_ in pairs]
+                data['travel_routes']=[dict(id=f'credit:{a}:{b}',**{'from':a,'to':b},mode='land',terrain='plain',
+                    days=days,distance_km=30,land_km=30,sea_km=0) for a,b,days in pairs]
+                game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                source=game.state.cities['runan'];source.grain=1;game.state.cities['nanyang'].grain=0
+                ident=next(i for i in source.roster.officer_ids if game.state.officers[i].troops==300)
+                quote=game._travel_path(game.state,'runan','yingchuan','wei','land')
+                self.assertEqual(march_grain(game.state,[ident],quote),1)
+                self.assertTrue(StrategicAI(game,game.state).provisioned(source,[ident],quote))
+
+    def test_real_ai_reinforcement_waits_for_segment_food_then_refills_without_starvation(self):
+        data=deepcopy(strategic_catalog(second=100,troops=999).data)
+        used={r['person_id'] for r in data['initial_officers']}
+        actual=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
+        extra=next(r for r in actual['initial_officers'] if r['person_id'] not in used)
+        data['initial_officers'].append(dict(extra,city='runan',troops=600,ruler=False))
+        pairs=[('runan','nanyang',20),('nanyang','yingchuan',20),('yingchuan','xiangyang',10)]
+        data['links']=[[a,b] for a,b,_ in pairs]
+        data['travel_routes']=[dict(id=f'ai-refill:{a}:{b}',**{'from':a,'to':b},mode='land',terrain='plain',
+            days=days,distance_km=days*30,land_km=days*30,sea_km=0) for a,b,days in pairs]
+        for backend in ('python','rust'):
+            with self.subTest(backend=backend), using_backend(backend):
+                game=Campaign(catalog_from_data(data));game.command('new',dict(faction='shu',seed=2026),0)
+                source,middle,target=(game.state.cities[k] for k in ('runan','nanyang','yingchuan'))
+                source.grain=14;middle.grain=13
+                plan=dict(target='xiangyang')
+                self.assertFalse(StrategicAI(game,game.state).reinforce(source,plan))
+                self.assertFalse(game.state.extension['travel']['marches'])
+                middle.grain=14
+                self.assertTrue(StrategicAI(game,game.state).reinforce(source,plan))
+                march=game.state.extension['travel']['marches'][0];ident=march['officers'][0]
+                self.assertEqual((march['target'],march['quote']['days'],march['supply']['loaded']),('yingchuan',40,14))
+                self.assertEqual(source.grain,0);self.assertEqual(middle.grain,14)
+                initial=deepcopy(game.state.soldiers)
+                for _ in range(4):
+                    game._complete_turn(game.state)
+                    game.validate(game.state)
+                self.assertEqual(march['supply']['route_days'],40)
+                self.assertEqual(march['supply']['received'],14)
+                self.assertEqual(march['supply']['shortage_days'],0)
+                self.assertEqual(march['supply']['lost'],0)
+                self.assertEqual(middle.grain,0)
+                self.assertEqual(game.state.soldiers,initial)
+                self.assertEqual(game.state.rng.draws,0)
+                game.command('arrivals',{},game.revision)
+                self.assertIn(ident,game.state.cities[target.id].roster.officer_ids)
+                self.assertFalse(game.state.extension['travel']['marches'])
+                game.validate(game.state)
+
     def test_dangerous_shortcuts_are_rejected_without_random_weather_rolls(self):
         game=self.new(unsafe=True)
         ai=StrategicAI(game,game.state);before=game.export_save()
@@ -391,6 +479,27 @@ class StrategicAITests(unittest.TestCase):
             else:plan['orders'][0]['departure_turn']+=1
             with self.subTest(kind=kind), self.assertRaises(ValueError):
                 validate_strategies(game,state)
+
+    def test_supply_delays_and_returning_columns_keep_immutable_strategy_receipts(self):
+        game=self.new();self.ai_turn(game)
+        state=deepcopy(game.state)
+        march=next(m for m in state.extension['travel']['marches'] if m['owner']=='wei' and m['kind']=='attack')
+        original=deepcopy(march['mission'])
+        march['arrival_turn']+=2
+        march['status']='waiting'
+        validate_strategies(game,state)
+        march['target']='runan';march['status']='returning'
+        march['supply']['retreat_requested']=True
+        validate_strategies(game,state)
+        self.assertEqual(march['mission'],original,'Supply delays and actual return routes do not rewrite the attack order')
+        for field,value in [('source','runan'),('target','nanjun'),('kind','transfer'),('mode','sea'),
+                            ('departure_turn',original['departure_turn']+1),('arrival_turn',original['arrival_turn']+1)]:
+            with self.subTest(field=field):
+                bad=deepcopy(state)
+                altered=next(m for m in bad.extension['travel']['marches'] if m['id']==march['id'])
+                altered['mission'][field]=value
+                with self.assertRaisesRegex(ValueError,'AI march does not match'):
+                    validate_strategies(game,bad)
 
     def test_changed_city_ownership_cancels_an_unlaunched_column_legally(self):
         game=self.new();self.ai_turn(game)

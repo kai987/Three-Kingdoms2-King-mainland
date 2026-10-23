@@ -13,6 +13,10 @@ STAFF_KINDS = {'staff_candidate', 'staff_hired', 'staff_declined', 'staff_expire
 STAFF_DETAILS = {'staff_id', 'name', 'portrait', 'reason', 'amount', 'paid', 'bonus', 'counts'}
 TRANSPORT_KINDS = {'transport_departed','transport_arrived','transport_returned','transport_weather'}
 TRANSPORT_DETAILS = {'convoy_id','gold','grain','reserves','lost','reason'}
+SUPPLY_KINDS = {'march_resupplied', 'march_starvation', 'march_retreat'}
+SUPPLY_DETAILS = {'unit_kind', 'unit_id', 'grain', 'lost', 'shortage_days', 'reason'}
+SUPPLY_REASONS = {'city', 'convoy', 'cargo', 'shortage', 'route_blocked',
+                  'no_friendly_city', 'origin_changed', 'target_changed', 'completed'}
 DETAILS = {
     'campaign_start': {'difficulty', 'scenario_title'}, 'officer_appeared': set(),
     'recruit_success': {'actor'}, 'recruit_failure': {'actor'},
@@ -33,8 +37,30 @@ DETAILS = {
     'ai_campaign': {'target', 'sources', 'arrival_turn', 'coordinated'},
     **{kind: set(STAFF_DETAILS) for kind in STAFF_KINDS},
     **{kind: set(TRANSPORT_DETAILS) for kind in TRANSPORT_KINDS},
+    **{kind: set(SUPPLY_DETAILS) for kind in SUPPLY_KINDS},
     'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
 }
+
+
+def _validate_supply_event(row):
+    """Bounded historical snapshots, independent of a still-live march queue."""
+    details = row['details']
+    if (set(details) != SUPPLY_DETAILS or not isinstance(details['unit_kind'], str)
+            or details['unit_kind'] not in {'march', 'convoy'}
+            or not isinstance(details['reason'], str) or details['reason'] not in SUPPLY_REASONS
+            or len(row['factions']) != 1 or row['audience'] != 'player'
+            or not 1 <= len(row['city_ids']) <= 2):
+        raise ValueError('March supply event fields')
+    for key, low, high in (('unit_id', 1, 1000000), ('grain', 0, 100000000),
+                           ('lost', 0, 100000000), ('shortage_days', 0, 10000000)):
+        if type(details[key]) is not int or not low <= details[key] <= high:
+            raise ValueError('March supply event values')
+    if row['kind'] == 'march_resupplied' and (details['grain'] < 1 or details['lost']):
+        raise ValueError('March supply receipt')
+    if row['kind'] == 'march_starvation' and (details['grain'] or details['shortage_days'] < 1):
+        raise ValueError('March starvation receipt')
+    if row['kind'] == 'march_retreat' and (details['grain'] or details['lost']):
+        raise ValueError('March retreat receipt')
 
 
 def _validate_staff_event(row):
@@ -242,6 +268,8 @@ def validate(campaign, state):
             raise ValueError('Campaign event JSON value')
         if row['kind'] in STAFF_KINDS:
             _validate_staff_event(row)
+        if row['kind'] in SUPPLY_KINDS:
+            _validate_supply_event(row)
         if row['kind']=='city_upgraded':
             from .city_economy import tier_at,income_at
             details=row['details']

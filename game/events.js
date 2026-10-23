@@ -12,6 +12,7 @@
   duel_started:['單挑交鋒','一騎討ち開始'],duel_result:['單挑結果','一騎討ちの結果'],
   tactic:['計略發動','計略の発動'],march_weather:['行軍遇險','行軍中の災害'],
   route_discovered:['發現新航路','新航路の発見'],march_arrived:['部隊抵達','部隊の到着'],
+  march_resupplied:['行軍補給到達','行軍部隊への補給'],march_starvation:['行軍兵糧短缺','行軍中の兵糧不足'],march_retreat:['部隊自動撤退','部隊の自動撤退'],
   march_returned:['部隊折返','部隊の帰還'],new_year:['新年更始','新年の到来'],
   campaign_victory:['天下歸一','天下統一'],campaign_defeat:['戰役結束','戦役の終了'],
   ai_campaign:['敵軍動向','敵軍の動向'],
@@ -22,6 +23,8 @@
  });
  const STAFF=new Set(['staff_candidate','staff_hired','staff_declined','staff_expired','staff_salary','staff_allegiance']);
  const OPERATIONS=new Set(['domestic_report','transport_departed','transport_arrived','transport_returned','transport_weather']);
+ const SUPPLY=new Set(['march_resupplied','march_starvation','march_retreat']);
+ const SUPPLY_REASONS=new Set(['city','convoy','cargo','shortage','route_blocked','no_friendly_city','origin_changed','target_changed','completed']);
  const BATCH=new Set(['officer_appeared','officer_death','recruit_success','recruit_failure','march_arrived','march_returned']);
  const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','city_founded','city_upgraded','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -30,7 +33,18 @@
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row));
+ }
+ function validSupplyEvent(row){
+  const d=row.details;
+  if(Object.keys(d).sort().join(',')!=='grain,lost,reason,shortage_days,unit_id,unit_kind'||
+   !['march','convoy'].includes(d.unit_kind)||!SUPPLY_REASONS.has(d.reason)||row.audience!=='player'||
+   row.factions.length!==1||row.city_ids.length<1||row.city_ids.length>2||
+   new Set(row.city_ids).size!==row.city_ids.length||row.person_ids.length>99||
+   new Set(row.person_ids).size!==row.person_ids.length)return false;
+  for(const [key,min,max]of [['unit_id',1,1000000],['grain',0,100000000],['lost',0,100000000],['shortage_days',0,10000000]])
+   if(!Number.isSafeInteger(d[key])||d[key]<min||d[key]>max)return false;
+  return row.kind==='march_resupplied'?d.grain>0&&d.lost===0:row.kind==='march_starvation'?d.grain===0&&d.shortage_days>0:d.grain===0&&d.lost===0;
  }
  function validSizeEvent(row){
   const d=row.details,tiers=['normal','large','giant'];
@@ -61,11 +75,11 @@
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){const rows=view?.game?.extension?.events?.items;return Array.isArray(rows)?rows.filter(validEvent).sort((a,b)=>a.id-b.id):[];}
- function automatic(row,player){return STAFF.has(row.kind)||OPERATIONS.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
+ function automatic(row,player){return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
  function groupRows(rows){
   const groups=[],staffGroups=new Map();
   for(const row of rows){
-   if(STAFF.has(row.kind)||OPERATIONS.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
+   if(STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
    const last=groups.at(-1);if(last&&BATCH.has(row.kind)&&last[0].kind===row.kind&&last[0].turn===row.turn)last.push(row);else groups.push([row]);
   }
   return groups;
@@ -113,6 +127,22 @@
      return text(`${n.people[0]||p}施放${title}。${d.success===false?'未能奏效。':'效果與氣力消耗已結算。'}`,`${n.people[0]||p}が${title}を使用。${d.success===false?'効果はありませんでした。':'効果と気力の消費は精算されています。'}`);
     }
     case 'march_weather':return text(`${c}行軍途中遭遇險阻或暴風雨。${typeof d.lost==='number'?`減員${d.lost}兵。`:'實際兵損已計入部隊。'}`,`${c}への行軍中に難所や暴風雨に遭遇しました。${typeof d.lost==='number'?`${d.lost}の兵を失いました。`:'実際の損失を部隊に反映しています。'}`);
+    case 'march_resupplied':{
+     const unit=d.unit_kind==='convoy'?text('運輸隊','輸送隊'):text('行軍部隊','行軍部隊'),
+      from=d.reason==='city'?text(`由${c}取得補給`,`${c}から補給を受け`):d.reason==='cargo'?text('從本隊貨糧轉裝口糧','輸送貨物の兵糧を携行分へ積み替え'):text('收到補給隊交付的兵糧','補給隊から兵糧を受け取り');
+     return text(`${unit}${from}，增加隨軍糧${d.grain}。來源兵糧已實際扣除，後續行軍與等候依目前補給狀態處理。`,`${unit}が${from}、携行兵糧を${d.grain}補充しました。供給元の兵糧は差し引き済みで、以後の行軍・待機は現在の補給状況に従います。`);
+    }
+    case 'march_starvation':{
+     const unit=d.unit_kind==='convoy'?text('運輸隊','輸送隊'):text('行軍部隊','行軍部隊');
+     return text(`${c}附近的${unit}兵糧不足，目前缺糧${d.shortage_days}日，本次減員${d.lost}兵。缺糧損失已計入兵員帳本，武將不因這項減員被判定陣亡；請安排途中補給。`,`${c}付近の${unit}で兵糧が不足しています。欠乏日数は${d.shortage_days}日、今回の兵力損失は${d.lost}です。損失は兵力台帳に反映済みで、この減員による武将の戦死はありません。途中補給を手配してください。`);
+    }
+    case 'march_retreat':{
+     const unit=d.unit_kind==='convoy'?text('運輸隊','輸送隊'):text('部隊','部隊');
+     if(d.reason==='no_friendly_city')return text(`${unit}已無可達的本方城池，暫時原地等候。缺糧仍會按實際等候日數結算，請安排救援。`,`${unit}が到達できる自勢力の都市を失い、現地で待機しています。待機中も実際の日数に応じて兵糧不足を処理するため、救援を手配してください。`);
+     if(d.reason==='completed')return text(`${unit}已完成撤退並抵達${c}，人員與剩餘物資按實際狀態入城。`,`${unit}は撤退を終えて${c}へ到着し、武将と残る物資を実際の状況に従って収容しました。`);
+     const reason={shortage:text('持續缺糧','兵糧不足の継続'),route_blocked:text('行軍道路中斷','行軍経路の遮断'),origin_changed:text('出發城易主','出発都市の所属変更'),target_changed:text('目的城易主','目的都市の所属変更')}[d.reason]||text('目前補給狀況','現在の補給状況');
+     return text(`${unit}因${reason}停止原任務，改向${c}撤退。撤退按實際道路與日數行走，不會立即返回原城。`,`${unit}は${reason}により元の任務を中止し、${c}への撤退に移りました。実際の経路と日数を使って移動し、出発都市へ瞬時には戻りません。`);
+    }
     case 'route_discovered':return text(`${c}之間的探索航行成功，新航路已顯示於地圖。`,`${c}を結ぶ探索航行が成功し、新航路が地図に表示されました。`);
     case 'march_arrived':return text(`${p}抵達${c}。入城或戰鬥依抵達時狀態處理。`,`${p}が${c}へ到着しました。到着時の状況に従い入城・戦闘を処理します。`);
     case 'march_returned':{
@@ -140,7 +170,10 @@
     case 'domestic_report':return d.reason==='month'?text(`${f}本月${d.cities}城的商農增收已入庫：金${d.gold}、糧${d.grain}。按實際任職旬數結算，不重複領取。`,`${f}の${d.cities}都市で、今月の商農加算を入庫しました。資金${d.gold}・兵糧${d.grain}。実際の勤務旬数で一度だけ精算しています。`):text(`${f}本旬${d.cities}城完成委任工作，花費金${d.gold}、糧${d.grain}；募得預備兵${d.reserves}，訓練度成果${d.morale}。`,`${f}の${d.cities}都市で今旬の担当業務を実行しました。支出は資金${d.gold}・兵糧${d.grain}、募兵は予備兵${d.reserves}、練度の成果は${d.morale}です。`);
     case 'transport_departed':return text(`${c}的運輸隊已出發，攜帶金${d.gold}、糧${d.grain}、預備兵${d.reserves}。貨物已從出發城扣除，正在途中，抵達後才入庫。`,`${c}への輸送隊が出発しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}を運びます。出発都市から差し引き、到着時に入庫します。`);
     case 'transport_arrived':return text(`${c}的運輸隊已抵達，金${d.gold}、糧${d.grain}、預備兵${d.reserves}已按實際狀態入庫，人員與兵員帳本已核對。`,`${c}への輸送隊が到着しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}を実際の状況に従って入庫し、人員と兵力の集計を確認しました。`);
-    case 'transport_returned':return text(`${c}的原運輸任務已中止或折返，現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}按實際返程結算。`,`${c}への元の輸送任務は中止または帰還となりました。残る資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}は実際の帰路に従って精算します。`);
+    case 'transport_returned':{
+     const reason={army_missing:text('受補給部隊已不在途中','補給先の部隊がすでに行軍中ではないため'),army_changed:text('受補給部隊的任務或歸屬改變','補給先部隊の任務・所属が変わったため'),rendezvous_wait:text('在會合點等待受補給部隊','会合地点で補給先の部隊を待つため'),rendezvous_missed:text('未能在會合點接上部隊','会合地点で部隊と合流できなかったため'),delivered:text('途中補給交付完成','途中補給の引き渡しを終えたため'),escort_return:text('押運武將沿實際道路返程','護送武将が実際の経路で帰還するため'),retreat:text('運輸隊改向友城撤退','輸送隊が友軍都市への撤退に移ったため')}[d.reason];
+     return reason?text(`${c}：${reason}。現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}仍按實際位置及返程處理，不會立即送回原城。`,`${c}：${reason}、資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}を実際の位置と帰路に従って処理します。出発都市へ瞬時に戻しません。`):text(`${c}的原運輸任務已中止或折返，現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}按實際返程結算。`,`${c}への元の輸送任務は中止または帰還となりました。残る資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}は実際の帰路に従って精算します。`);
+    }
     case 'transport_weather':return text(`${c}的運輸隊途中遇險，預備兵損失${d.lost}。現有貨物：金${d.gold}、糧${d.grain}、預備兵${d.reserves}；不重複結算同次災害。`,`${c}への輸送中に災害が発生し、予備兵${d.lost}を失いました。現在の貨物は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}です。同じ災害を重複精算しません。`);
     case 'campaign_victory':return text(`${f}完成天下統一。本次戰役已結算，可保存進度。`,`${f}が天下を統一しました。戦役の精算を終え、進行状況を保存できます。`);
     case 'campaign_defeat':return text(`${f}已無法繼續作戰。可保存結果或重新選擇劇本。`,`${f}は戦いを続けられなくなりました。結果を保存するか、シナリオを選び直せます。`);
@@ -150,7 +183,7 @@
   function illustration(rows){
    const row=rows[0],catalog=view?.catalog||{},world=catalog.world||{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'};
    const ids=[...new Set(rows.flatMap(e=>[...e.person_ids,...(typeof e.details.actor==='string'?[e.details.actor]:[])]))].slice(0,4);
-   const targetScene=new Set(['battle_started','battle_result','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign']);
+   const targetScene=new Set(['battle_started','battle_result','tactic','duel_started','duel_result','march_weather','route_discovered','march_arrived','ai_campaign','march_resupplied','march_starvation','march_retreat']);
    const cityIds=targetScene.has(row.kind)?[...row.city_ids].reverse():row.city_ids;
    const cityId=cityIds.find(id=>catalog.cities?.some(c=>c.id===id))||catalog.factions?.find(f=>f.id===view?.game?.player)?.city;
    const city=catalog.cities?.find(c=>c.id===cityId),center=city?.position||[(world.x||0)+world.width/2,(world.y||0)+world.height/2];

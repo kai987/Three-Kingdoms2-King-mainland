@@ -51,7 +51,7 @@ def build_routes(data, spec):
 class TravelCampaign:
     def _process_march_supply(self, state, through_turn=None):
         from .march_supply import process_march_supply
-        return process_march_supply(state, through_turn)
+        return process_march_supply(self,state, through_turn)
 
     def _march_ids(self, state):
         ids = {i for r in state.extension.get('travel', {}).get('marches', []) for i in r['officers']}
@@ -240,6 +240,8 @@ class TravelCampaign:
         row.update(departure_year=state.year,departure_month=state.month,departure_day=state.day,
                    departure_troops={str(i):state.officers[i].troops for i in ids},
                    risks=self._march_risks(quote,state.rng), supply=create(state,ids,quote))
+        row.update(status='outbound',reason='outbound',history=[],journey_source=source.id,
+            mission={key:row[key] for key in ('source','target','kind','mode','departure_turn','arrival_turn')})
         travel['marches'].append(row)
         if 'domestic' in state.extension:
             from .domestic import on_departure
@@ -247,6 +249,74 @@ class TravelCampaign:
         self._note(state, f'{len(ids)}将从{self.catalog.map_cities[source.id]["name"]}出发，'
                    f'至{self.catalog.map_cities[target.id]["name"]}约{quote["distance_km"]}公里、{quote["days"]}日，'
                    f'{quote["turns"]}旬后到达（每旬10天），预装随军粮{grain}，按实际行军日数持续消耗。')
+
+    def _resolve_supply_retreats(self,state):
+        """Change a hungry column's real route at a reached node, never teleport."""
+        from copy import deepcopy
+        from .march_supply import current_city,create,close
+        from .logistics import _safe_path
+        for row in list(state.extension['travel']['marches']):
+            if not row['supply']['retreat_requested'] or (row['status']=='returning'
+                    and state.cities[row['target']].owner==row['owner'] and row['reason']!='route_blocked'):
+                continue
+            here=current_city(row)
+            if here is None:
+                continue
+            ids=row['officers']
+            choices=[]
+            for city in state.cities.values():
+                if city.owner!=row['owner'] or (city.id!=row['source'] and
+                        self._city_occupancy(state,city)+len(ids)>self.catalog.rules.city_officer_capacity):
+                    continue
+                quote=self._quote([here],[]) if city.id==here else _safe_path(self,state,here,city.id,
+                    row['owner'],'land',dict(allow_sea=False,allow_special=False))
+                if quote is None:
+                    quote=self._travel_path(state,here,city.id,row['owner'],'fastest')
+                if quote is None:
+                    # A failed exploration still knows the water physically
+                    # sailed. Reverse that reached leg without publishing it.
+                    from .route_hazards import evaluate_leg,route_allowed
+                    if len(row['quote']['routes'])==1 and city.id==row['journey_source']:
+                        ident=row['quote']['routes'][0]['id']
+                        raw=next((r for r in self.catalog.data.get('exploration_routes',[]) if r['id']==ident),None)
+                        if raw is not None and route_allowed(self.catalog.data,raw,here,city.id):
+                            quote=self._quote([here,city.id],[evaluate_leg(self.catalog.data,raw,here,city.id,state.month)])
+                if quote is not None:
+                    choices.append((city.id!=row['source'],quote['days'],city.id,quote))
+            if not choices:
+                if row['reason']!='no_return_route':
+                    self._supply_event(state,'march_retreat',unit_kind='march',unit_id=row['id'],
+                        city=here,owner=row['owner'],shortage_days=row['supply']['shortage_streak'],reason='no_friendly_city')
+                row['status']='waiting';row['reason']='no_return_route';row['supply']['waiting']=True
+                continue
+            _,_,destination,quote=min(choices,key=lambda item:item[:3])
+            reason=row['reason'] if row['reason'] in {'route_blocked','target_changed'} else 'shortage'
+            self._supply_event(state,'march_retreat',unit_kind='march',unit_id=row['id'],
+                city=destination,owner=row['owner'],shortage_days=row['supply']['shortage_streak'],reason=reason)
+            if not quote['days']:
+                source=state.cities[row['source']];target=state.cities[destination]
+                if target.grain+row['supply']['remaining']>100000000:
+                    row['status']='waiting';row['reason']='resource_full';row['supply']['waiting']=True
+                    continue
+                if source.id!=target.id:transfer_officers(source.roster,target.roster,ids)
+                target.grain+=row['supply']['remaining']
+                state.extension['travel']['marches'].remove(row)
+                state.extension['officer_actions'].update({str(i):state.turn for i in ids})
+                continue
+            close(row['supply'],state.turn)
+            fields=('source','journey_source','target','officers','kind','mode','departure_turn','arrival_turn',
+                    'checked_turn','departure_year','departure_month','departure_day','departure_troops','quote','risks','supply')
+            row['history'].append({key:deepcopy(row[key]) for key in fields})
+            remaining=row['supply']['remaining']
+            row['supply']['remaining']=0
+            row['supply']['returned_to_cargo']+=remaining
+            # Archive the settled old bag, then retain only its physical spare grain.
+            row['history'][-1]['supply']=deepcopy(row['supply'])
+            row.update(journey_source=here,target=destination,kind='transfer',mode='fastest',status='returning',
+                reason=reason,departure_turn=state.turn,departure_year=state.year,departure_month=state.month,
+                departure_day=state.day,arrival_turn=state.turn+quote['turns'],checked_turn=0,quote=quote,
+                departure_troops={str(i):state.officers[i].troops for i in ids},risks=self._march_risks(quote,state.rng),
+                supply=create(state,ids,quote,initial_grain=remaining))
 
     def _prune_marches(self, state):
         travel = state.extension['travel']
@@ -278,26 +348,18 @@ class TravelCampaign:
         self._prune_marches(state)
         for row in sorted(list(travel['marches']), key=lambda r: (r['arrival_turn'], r['id'])):
             if row not in travel['marches']: continue  # Earlier conquest may cancel a later column.
-            if row['arrival_turn'] > state.turn or row['checked_turn'] == state.turn: continue
+            if row['supply']['route_days'] < row['quote']['days'] or row['checked_turn'] == state.turn: continue
             row['checked_turn'] = state.turn
             source, target = (state.cities[row[k]] for k in ('source', 'target'))
             ids = row['officers']
-            if row['kind']=='transfer' and any(state.cities[k].owner not in (row['owner'], 'neutral')
+            if row['status']!='returning' and row['kind']=='transfer' and any(state.cities[k].owner not in (row['owner'], 'neutral')
                                               for k in row['quote']['path'][1:-1]):
-                travel['marches'].remove(row)
-                source.grain += row['supply']['remaining']
-                self._note(state, f'调动{row["id"]}沿途城池易主，路线中断，部队返回出发城编制。')
-                if row['owner']==state.player:
-                    self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
-                        details=dict(march_id=row['id'],reason='route_blocked'))
+                row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='route_blocked'
+                self._resolve_supply_retreats(state)
                 continue
             if row['kind']=='transfer' and target.owner!=row['owner']:
-                travel['marches'].remove(row)
-                source.grain += row['supply']['remaining']
-                self._note(state,f'目的城已易主，调动{row["id"]}取消，部队返回出发城编制。')
-                if row['owner']==state.player:
-                    self._emit_event(state,'march_returned',city_ids=[source.id,target.id],factions=[row['owner']],
-                        details=dict(march_id=row['id'],reason='target_changed'))
+                row['supply']['retreat_requested']=True;row['supply']['waiting']=True;row['reason']='target_changed'
+                self._resolve_supply_retreats(state)
                 continue
             if row['risks'] and not self._apply_march_risks(state,row):
                 travel['marches'].remove(row)
@@ -307,13 +369,20 @@ class TravelCampaign:
                         details=dict(march_id=row['id'],reason='army_lost'))
                 continue
             if target.owner == row['owner']:
-                if self._city_occupancy(state,target)+len(ids)>self.catalog.rules.city_officer_capacity:
-                    self._note(state, f'{self.catalog.map_cities[target.id]["name"]}已满员，行军{row["id"]}等待下一旬入城。')
+                if target.grain+row['supply']['remaining']>100000000:
+                    row['supply']['waiting']=True
                     continue
+                if self._city_occupancy(state,target)+len(ids)>self.catalog.rules.city_officer_capacity:
+                    if source.id==target.id:
+                        pass
+                    else:
+                        row['supply']['waiting']=True
+                        self._note(state, f'{self.catalog.map_cities[target.id]["name"]}已满员，行军{row["id"]}等待下一旬入城。')
+                        continue
                 if 'domestic' in state.extension:
                     from .domestic import on_arrival
                     on_arrival(self,state,ids,target.id)
-                transfer_officers(source.roster, target.roster, ids)
+                if source.id!=target.id:transfer_officers(source.roster, target.roster, ids)
                 target.grain += row['supply']['remaining']
                 self._discover_march_route(state,row)
                 travel['marches'].remove(row)
@@ -445,6 +514,79 @@ class TravelCampaign:
                 quotes[f'{source}:{leg["to"]}:explore']=self._quote([source,leg['to']],[leg])
         return result
 
+    def _validate_march_history(self,state,row):
+        """Retreats retain the settled route/food/loss receipts of every leg."""
+        from .march_supply import validate,current_city,validate_departures,validate_strength_manifests
+        from .route_hazards import evaluate_leg,route_allowed,allocate_survivors
+        fields={'source','journey_source','target','officers','kind','mode','departure_turn','arrival_turn',
+            'checked_turn','departure_year','departure_month','departure_day','departure_troops','quote','risks','supply'}
+        known={r['id']:r for r in self.catalog.data['travel_routes']+self.catalog.data.get('exploration_routes',[])}
+        chain=[*row['history'],row]
+        for index,old in enumerate(row['history']):
+            if not isinstance(old,dict) or set(old)!=fields or old['source']!=row['source']:
+                raise ValueError('March journey history fields')
+            following=chain[index+1];quote=old['quote'];path=quote['path']
+            if (not isinstance(path,list) or len(path)<2 or len(path)!=len(set(path))
+                    or any(c not in state.cities for c in path) or path[0]!=old['journey_source']
+                    or path[-1]!=old['target'] or len(quote['routes'])!=len(path)-1):
+                raise ValueError('March history path')
+            legs=[]
+            for a,b,leg in zip(path,path[1:],quote['routes']):
+                raw=known.get(leg['id'])
+                if raw is None or {raw['from'],raw['to']}!={a,b} or not route_allowed(self.catalog.data,raw,a,b):
+                    raise ValueError('March history route')
+                expected=evaluate_leg(self.catalog.data,raw,a,b,old['departure_month'])
+                if expected!=leg:raise ValueError('March history weather')
+                legs.append(leg)
+            if quote!=self._quote(path,legs):raise ValueError('March history quote')
+            validate(old['supply'],quote,old['departure_turn'],state.turn)
+            validate_departures(old['supply'],quote,returning=index>0)
+            if (old['supply']['closed_tick']!=(following['departure_turn']-1)*10
+                    or current_city(old)!=following['journey_source']
+                    or old['supply']['remaining'] or old['supply']['returned_to_cargo']!=following['supply']['loaded']):
+                raise ValueError('March history transition')
+            manifest=old['departure_troops']
+            if (not isinstance(manifest,dict) or old['supply']['troops']!=sum(manifest.values())
+                    or old['supply']['officers']!=len(manifest) or old['supply']['reserves']):
+                raise ValueError('March history departure manifest')
+            prior=dict(manifest)
+            expected_risks=self._march_risks(quote)
+            if len(old['risks'])!=len(expected_risks):raise ValueError('March history risk count')
+            for count in range(len(old['risks'])+1):
+                for receipt in old['supply']['starvation']:
+                    if receipt['after_risks']==count:
+                        if any(prior.get(k)!=n for k,n in receipt['before'].items()):
+                            raise ValueError('March history starvation strength')
+                        prior.update(receipt['after'])
+                if count==len(old['risks']):break
+                actual=old['risks'][count];template=expected_risks[count]
+                if (set(actual)!=set(template) or any(actual[k]!=template[k] for k in ('legs','kind','survival_denominator'))
+                        or type(actual['applied'])is not bool):
+                    raise ValueError('March history risk identity')
+                numerator=actual['survival_numerator'];denominator=actual['survival_denominator']
+                if type(numerator)is not int or not 0<=numerator<=denominator:
+                    raise ValueError('March history risk ratio')
+                if template['kind']=='monsoon_storm':
+                    hazard=legs[template['legs'][0]]['hazard']
+                    if not 100-hazard['loss_percent_max']<=numerator<=100-hazard['loss_percent_min']:
+                        raise ValueError('March history storm ratio')
+                elif numerator!=template['survival_numerator']:
+                    raise ValueError('March history valley ratio')
+                if actual['applied']:
+                    if old['supply']['route_days']<quote['days'] or any(prior.get(k)!=n for k,n in actual['before'].items()):
+                        raise ValueError('March history weather strength')
+                    keys=sorted(actual['before'],key=lambda k:ref_sort_key(deserialize_officer_ref(k,self.catalog.rules)))
+                    expected_after=dict(zip(keys,allocate_survivors([actual['before'][k] for k in keys],numerator,denominator)))
+                    if actual['after']!=expected_after or actual['lost']!=sum(actual['before'].values())-sum(expected_after.values()):
+                        raise ValueError('March history weather loss')
+                    prior.update(actual['after'])
+                elif actual['before'] or actual['after'] or actual['lost']:
+                    raise ValueError('March history uncommitted weather')
+            if any(prior.get(k)!=n for k,n in following['departure_troops'].items()):
+                raise ValueError('March history carried strength')
+            validate_strength_manifests(old['supply'],manifest,old['risks'],
+                dead_keys=[str(i) for i,p in state.officers.items() if not p.alive])
+
     def _validate_travel(self, state):
         from .route_hazards import allocate_survivors, evaluate_leg, route_allowed
         x=state.extension['travel']
@@ -471,7 +613,8 @@ class TravelCampaign:
             raise ValueError('march queue')
         seen,serials=set(),set()
         fields={'id','source','target','owner','officers','kind','mode','departure_turn','arrival_turn','checked_turn','quote',
-                'departure_year','departure_month','departure_day','departure_troops','risks','supply'}
+                'departure_year','departure_month','departure_day','departure_troops','risks','supply',
+                'status','reason','mission','history','journey_source'}
         for row in x['marches']:
             if not isinstance(row,dict) or set(row)!=fields:
                 raise ValueError('hazard march fields')
@@ -480,7 +623,20 @@ class TravelCampaign:
                 raise ValueError('duplicate march id')
             serials.add(row['id'])
             if row['source']==row['target'] or any(row[k] not in state.cities for k in ('source','target')):
-                raise ValueError('march city')
+                if row['status']!='returning' or row['source']!=row['target']:
+                    raise ValueError('march city')
+            if (row['journey_source'] not in state.cities or row['status'] not in {'outbound','waiting','returning'}
+                    or row['reason'] not in {'outbound','shortage','route_blocked','target_changed','no_return_route','resource_full'}
+                    or not isinstance(row['mission'],dict)
+                    or set(row['mission'])!={'source','target','kind','mode','departure_turn','arrival_turn'}
+                    or not isinstance(row['history'],list) or len(row['history'])>16):
+                raise ValueError('march mission fields')
+            original=row['history'][0] if row['history'] else row
+            mission=row['mission']
+            if (mission['source']!=row['source'] or any(mission[k]!=original[k] for k in
+                    ('source','target','kind','mode','departure_turn'))
+                    or mission['arrival_turn']!=original['departure_turn']+original['quote']['turns']):
+                raise ValueError('altered original march mission')
             source=state.cities[row['source']]
             if source.owner!=row['owner'] or row['owner'] not in self.catalog.factions or row['kind'] not in {'attack','transfer'}:
                 raise ValueError('march ownership')
@@ -515,7 +671,7 @@ class TravelCampaign:
             for key in ('days','months','turns','grain_per_officer'):
                 integer(quote[key],1,1000000,'march '+key)
             path,legs=quote['path'],quote['routes']
-            if not isinstance(path,list) or len(path)<2 or len(path)!=len(set(path)) or any(k not in state.cities for k in path) or path[0]!=row['source'] or path[-1]!=row['target'] or not isinstance(legs,list) or len(legs)!=len(path)-1:
+            if not isinstance(path,list) or len(path)<2 or len(path)!=len(set(path)) or any(k not in state.cities for k in path) or path[0]!=row['journey_source'] or path[-1]!=row['target'] or not isinstance(legs,list) or len(legs)!=len(path)-1:
                 raise ValueError('march path')
             for a,b,leg in zip(path,path[1:],legs):
                 if not isinstance(leg,dict) or leg.get('id') not in all_routes:
@@ -527,7 +683,9 @@ class TravelCampaign:
                     raise ValueError('land march uses sea')
                 if leg!=evaluate_leg(self.catalog.data,raw,a,b,row['departure_month']):
                     raise ValueError('altered departure weather or route')
-                if leg['id'] in exploration and row['mode']!='explore' and leg['id'] not in discovered:
+                sailed={r['id'] for h in row['history'] for r in h['quote']['routes']}
+                if (leg['id'] in exploration and row['mode']!='explore' and leg['id'] not in discovered
+                        and not (row['status']=='returning' and leg['id'] in sailed)):
                     raise ValueError('undiscovered route used as known')
             if row['mode'] in ('sea','special','explore') or row['kind']=='attack':
                 if len(legs)!=1:
@@ -540,8 +698,12 @@ class TravelCampaign:
                 raise ValueError('special mode is not a valley')
             if row['mode']=='explore' and legs[0]['id'] not in exploration:
                 raise ValueError('exploration needs coastal candidate')
-            if quote!=self._quote(path,legs) or row['arrival_turn']!=row['departure_turn']+quote['turns']:
+            if quote!=self._quote(path,legs):
                 raise ValueError('march ETA')
+            remaining=quote['days']-row['supply']['route_days']
+            expected_eta=state.turn+max(1,(remaining+9)//10) if remaining else state.turn
+            if row['arrival_turn']!=expected_eta:
+                raise ValueError('march progress ETA')
             manifest=row['departure_troops']
             if not isinstance(manifest,dict) or not manifest or not {str(i) for i in ids}<=manifest.keys():
                 raise ValueError('march departure manifest')
@@ -552,19 +714,34 @@ class TravelCampaign:
                 integer(amount,0,999,'departure troops')
                 if ident not in ids and state.officers[ident].alive:
                     raise ValueError('live manifest officer omitted')
-            from .march_supply import validate as validate_supply
+            from .march_supply import validate as validate_supply,validate_departures
             validate_supply(row['supply'],quote,row['departure_turn'],state.turn)
+            validate_departures(row['supply'],quote,returning=bool(row['history']) or row['status']=='returning')
             if (row['supply']['troops'] != sum(manifest.values())
                     or row['supply']['officers'] != len(manifest) or row['supply']['reserves']
-                    or row['supply']['from_cargo'] or row['supply']['returned_to_cargo']):
+                    or row['supply']['from_cargo'] or row['supply']['returned_to_cargo']
+                    or row['supply']['closed_tick'] is not None):
                 raise ValueError('March supply departure manifest')
+            for receipt in row['supply']['refills']:
+                if receipt['kind']=='cargo' or receipt['kind']=='city' and receipt['source'] not in path:
+                    raise ValueError('March supply refill location')
             expected=self._march_risks(quote)
             risks=row['risks']
             if not isinstance(risks,list) or len(risks)!=len(expected):
                 raise ValueError('march risk count')
             applied=[]
             prior=dict(manifest)
-            for actual,template in zip(risks,expected):
+            hunger=row['supply']['starvation']
+            def apply_hunger(count):
+                for receipt in hunger:
+                    if receipt['after_risks']!=count:continue
+                    if receipt['reserves_before'] or receipt['reserves_after']:
+                        raise ValueError('Army carries no convoy reserves')
+                    if any(k not in prior or prior[k]!=n for k,n in receipt['before'].items()):
+                        raise ValueError('Army starvation troop manifest')
+                    prior.update(receipt['after'])
+            for risk_index,(actual,template) in enumerate(zip(risks,expected)):
+                apply_hunger(risk_index)
                 if not isinstance(actual,dict) or set(actual)!=set(template):
                     raise ValueError('march risk fields')
                 for key in ('legs','kind','survival_denominator'):
@@ -585,7 +762,7 @@ class TravelCampaign:
                     if actual['before']!={} or actual['after']!={} or actual['lost']!=0:
                         raise ValueError('unapplied march loss')
                     continue
-                if state.turn<row['arrival_turn'] or not row['checked_turn']:
+                if row['supply']['route_days']<quote['days'] or not row['checked_turn']:
                     raise ValueError('march loss before arrival')
                 before,after=actual['before'],actual['after']
                 if not isinstance(before,dict) or not isinstance(after,dict) or set(before)!=set(after) or not {str(i) for i in ids}<=before.keys() or not before.keys()<=manifest.keys():
@@ -604,8 +781,15 @@ class TravelCampaign:
                 if actual['lost']!=sum(before.values())-sum(after.values()):
                     raise ValueError('march lost troop receipt')
                 prior.update(after)
+            apply_hunger(len(risks))
+            if any(r['after_risks']>sum(applied) for r in hunger):
+                raise ValueError('Starvation refers to unapplied weather')
+            self._validate_march_history(state,row)
             if applied and any(applied)!=all(applied):
                 raise ValueError('partially committed march hazards')
+            from .march_supply import validate_strength_manifests
+            validate_strength_manifests(row['supply'],manifest,risks,
+                dead_keys=[str(i) for i,p in state.officers.items() if not p.alive])
             for ident in ids:
                 if state.officers[ident].troops!=prior[str(ident)]:
                     raise ValueError('inconsistent marching troop strength')

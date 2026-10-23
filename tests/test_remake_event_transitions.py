@@ -14,7 +14,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, GameError
-from remake import civil_staff, domestic, logistics
+from remake import civil_staff, domestic, logistics, march_supply
 from campaign_fixtures import controlled_catalog
 
 
@@ -268,7 +268,7 @@ class CampaignEventTransitionTests(unittest.TestCase):
         self.assertIn(ident, game.state.cities['hepu'].roster.officer_ids)
         game.validate(game.state)
 
-    def test_target_changes_return_before_weather_and_do_not_discover(self):
+    def test_captured_island_starts_real_reverse_voyage_without_discovering_or_teleporting(self):
         game, ident, march = self.sailing()
         # Controlled ownership change after departure: move the existing friendly
         # residents out intact, then use the actual arrival invalidation branch.
@@ -286,9 +286,28 @@ class CampaignEventTransitionTests(unittest.TestCase):
         before_rng = deepcopy(game.state.rng)
         game.command('arrivals', {}, game.revision)
         self.assertEqual(game.state.officers[ident].troops, before_troops)
-        self.assertEqual(game.state.rng, before_rng)
-        self.assertEqual(len(events(game, 'march_returned')), 1)
-        self.assertEqual(events(game, 'march_returned')[0]['details'], dict(march_id=march['id'], reason='target_changed'))
+        self.assertEqual(game.state.rng.draws,before_rng.draws+1,
+            'The new return voyage owns its normal monsoon roll; the original weather is not applied')
+        self.assertFalse(events(game, 'march_returned'),'An island changing ownership does not instantly return its officers to the origin')
+        returning=game.state.extension['travel']['marches'][0]
+        self.assertEqual(returning['id'],march['id'])
+        self.assertEqual((returning['status'],returning['reason']),('returning','target_changed'))
+        self.assertEqual(returning['mission'],march['mission'])
+        self.assertEqual((returning['journey_source'],returning['target']),('yizhou','hepu'))
+        self.assertEqual(returning['quote']['path'],['yizhou','hepu'])
+        self.assertEqual(returning['quote']['days'],18,'120km at the existing 7.5km/day headwind speed plus two embarkation days')
+        self.assertEqual(returning['arrival_turn'],game.state.turn+2)
+        self.assertEqual(march_supply.current_city(returning),'yizhou')
+        self.assertEqual(returning['supply']['route_days'],0)
+        self.assertIn(ident,game._march_ids(game.state),'A returning officer remains physically in transit')
+        self.assertEqual(len(returning['history']),1)
+        self.assertFalse(any(risk['applied'] for risk in returning['history'][0]['risks']))
+        self.assertFalse(any(risk['applied'] for risk in returning['risks']))
+        retreat=events(game,'march_retreat')
+        self.assertEqual(len(retreat),1)
+        self.assertEqual(retreat[0]['details'],dict(unit_kind='march',unit_id=march['id'],
+            grain=0,lost=0,shortage_days=0,reason='target_changed'))
+        self.assertEqual(retreat[0]['city_ids'],['hepu'])
         self.assertFalse(events(game, 'march_weather'))
         self.assertFalse(events(game, 'route_discovered'))
         self.assertFalse(events(game, 'march_arrived'))

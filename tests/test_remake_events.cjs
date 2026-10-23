@@ -4,6 +4,9 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const {create,validEvent,eventRows,campaignKey,groupRows,KINDS}=require('../game/events.js');
 const row=(id,kind='recruit_success',extra={})=>({id,kind,year:190,month:1,day:1,turn:1,person_ids:['person-a'],city_ids:['home'],factions:['shu'],details:{},audience:'player',...extra});
 const staffRow=(id,kind='staff_candidate',extra={})=>row(id,kind,{person_ids:[],audience:'world',details:{staff_id:'clerk-000001',name:'王安',portrait:'clerk-1',reason:'opening'},...extra});
+const supplyRow=(id,kind='march_resupplied',extra={})=>row(id,kind,{details:{unit_kind:'march',unit_id:7,
+ grain:kind==='march_resupplied'?20:0,lost:kind==='march_starvation'?3:0,shortage_days:10,
+ reason:kind==='march_resupplied'?'city':'shortage'},...extra});
 const catalog={scenario_id:'mainland190-01',title:'190年',library:[{id:0,person_id:'person-a',name:'劉備'},{id:1,person_id:'person-b',name:'曹操'}],names:{0:'劉備',1:'曹操'},factions:[{id:'shu',name:'劉備勢力',city:'home'},{id:'wei',name:'曹操勢力',city:'enemy'}],cities:[{id:'home',name:'成都',position:[120,300]},{id:'enemy',name:'長安',position:[600,300]}],world:{x:0,y:0,width:1352,height:1024,background:'/assets/map-navigation.png'},map_presentation:{road_center_corrections:{backgrounds:{'/assets/map-navigation.png':'/assets/map-road-centers.png'}},castle_fill_pixels:[[0,0]],castle_outline_pixels:[[4,4]]},tactics:[{name:'火計'}]};
 const view=(items,seed=2026)=>({revision:4,catalog,game:{seed,player:'shu',year:190,month:1,day:1,turn:1,rng:{state:2026,draws:0},officers:{0:{person_id:'person-a'}},extension:{events:{next_id:(items.at(-1)?.id||0)+1,items}}}});
 class Target{
@@ -30,7 +33,7 @@ function fixture(items=[]){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,35);
+ assert.equal(Object.keys(KINDS).length,38);
  assert(validEvent(row(1)));for(const bad of [{id:0},{kind:'<script>'},{month:13},{day:31},{audience:'other'},{person_ids:[3]},{details:[]},{turn:0}])assert(!validEvent({...row(1),...bad}));
  assert.deepEqual(eventRows({game:{extension:{events:{items:{}}}}}),[]);
  assert.notEqual(campaignKey(view([])),campaignKey(view([],2027)));
@@ -42,6 +45,33 @@ function fixture(items=[]){
  const training=fixture([work]),trainingBefore=JSON.stringify(work);for(const locale of ['zh-Hant','ja']){training.i18n.locale=locale;const message=training.events.description(work);assert(message.includes(locale==='ja'?'練度の成果は150':'訓練度成果150'));assert(!message.includes('士氣'));assert(!message.includes('士気'));}assert.equal(JSON.stringify(work),trainingBefore,'Renaming historical training reports preserves their saved numerical details');
  assert(!validEvent({...work,details:{...work.details,cities:116}}));assert(!validEvent({...work,details:{...work.details,reason:'unknown'}}));
  assert.deepEqual(groupRows([transport,{...transport,id:9},work]).map(g=>g.length),[2,1]);
+ for(const kind of ['march_resupplied','march_starvation','march_retreat']){
+  const sample=supplyRow(20,kind);assert(validEvent(sample));
+  for(const details of [{unit_kind:'battle'},{unit_kind:[]},{unit_id:0},{unit_id:true},{grain:-1},{lost:1.5},
+   {shortage_days:-1},{shortage_days:true},{reason:'<script>'},{extra:1}])assert(!validEvent({...sample,details:{...sample.details,...details}}));
+  assert(!validEvent({...sample,audience:'world'}));assert(!validEvent({...sample,factions:[]}));assert(!validEvent({...sample,city_ids:[]}));
+  assert(!validEvent({...sample,city_ids:['home','home']}));assert(!validEvent({...sample,person_ids:['person-a','person-a']}));
+  assert(!validEvent({...sample,person_ids:Array.from({length:100},(_,i)=>'person-'+i)}));
+ }
+ assert(!validEvent({...supplyRow(20),details:{...supplyRow(20).details,grain:0}}));
+ assert(!validEvent({...supplyRow(20,'march_starvation'),details:{...supplyRow(20,'march_starvation').details,shortage_days:0}}));
+ assert(!validEvent({...supplyRow(20,'march_retreat'),details:{...supplyRow(20,'march_retreat').details,lost:1}}));
+ const supplies=fixture(),supplyView=view([supplyRow(20),supplyRow(21,'march_starvation'),
+  supplyRow(22,'march_resupplied',{details:{...supplyRow(22).details,unit_kind:'convoy',unit_id:8,reason:'convoy'}}),
+  supplyRow(23,'march_retreat'),supplyRow(24,'march_starvation',{factions:['wei']})]),supplyBefore=JSON.stringify(supplyView);
+ supplies.events.observe(supplyView,{newGame:true});supplies.drain();
+ assert.deepEqual(supplies.events.snapshot().active,[20,22],'Same-turn replenishments share one read-only scene');
+ assert.deepEqual(supplies.events.snapshot().pending,[[21],[23]],'AI supply events do not interrupt the player');
+ assert(supplies.modal.innerHTML.includes('行軍補給到達'));assert(supplies.modal.innerHTML.includes('event-map'));
+ assert(supplies.modal.innerHTML.includes('data-portrait-person="person-a"'));assert(supplies.modal.innerHTML.includes('增加隨軍糧20'));
+ const supplySnapshot=supplies.events.snapshot();supplies.i18n.locale='ja';supplies.doc.emit('game-language-change');
+ assert(supplies.modal.innerHTML.includes('行軍部隊への補給'));assert(supplies.modal.innerHTML.includes('携行兵糧を20補充'));
+ assert.deepEqual(supplies.events.snapshot(),supplySnapshot);assert.equal(JSON.stringify(supplyView),supplyBefore);
+ supplies.modal.querySelector('[data-event-next]').onclick();assert(supplies.modal.innerHTML.includes('今回の兵力損失は3'));
+ assert(supplies.modal.innerHTML.includes('武将の戦死はありません'));
+ supplies.modal.querySelector('[data-event-next]').onclick();assert(supplies.modal.innerHTML.includes('部隊の自動撤退'));
+ assert(supplies.modal.innerHTML.includes('瞬時には戻りません'));supplies.modal.querySelector('[data-event-next]').onclick();assert(!supplies.modal.open);
+ assert.equal(JSON.stringify(supplyView),supplyBefore,'Acknowledging supply, hunger and retreat never changes a save or RNG');
  assert(validEvent(staffRow(1)));assert(validEvent(salary));
  for(const details of [{staff_id:'san14-candidate-0952'},{staff_id:'clerk-000000'},{staff_id:12},{portrait:'../portrait'},{name:''},{reason:'<script>'},{amount:-1},{paid:1.5}])assert(!validEvent(staffRow(1,'staff_candidate',{details:{...staffRow(1).details,...details}})));
  assert(!validEvent(staffRow(1,'staff_candidate',{person_ids:['person-a']})));assert(!validEvent(staffRow(1,'staff_candidate',{city_ids:[]})));
@@ -102,5 +132,5 @@ function fixture(items=[]){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,localAutosave:null,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
- console.log('events: 35 bilingual scenes, dated city upgrades, independent staff snapshots/shared portraits, same-turn staff batching and local audience, stable-ID historical portraits/map, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 38 bilingual scenes, strict supply/starvation/retreat snapshots, local batching, dated city upgrades, independent staff portraits, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

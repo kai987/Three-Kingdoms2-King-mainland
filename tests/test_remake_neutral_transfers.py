@@ -173,7 +173,7 @@ class NeutralTransferTests(unittest.TestCase):
                 self.assertEqual(game.state.cities[CHAIN[1]].owner, 'neutral')
                 self.assertEqual(game.state.cities[CHAIN[2]].owner, 'wei')
 
-    def test_new_enemy_on_path_or_lost_destination_cancels_only_at_arrival_after_reload(self):
+    def test_new_enemy_or_lost_destination_requires_a_real_supplied_return_after_reload(self):
         for backend, alternate in (('python', 'rust'), ('rust', 'python')):
             for key, owner in ((CHAIN[2], 'shu'), (CHAIN[-1], 'neutral'), (CHAIN[-1], 'shu')):
                 with self.subTest(backend=backend, city=key, owner=owner), using_backend(backend):
@@ -181,19 +181,45 @@ class NeutralTransferTests(unittest.TestCase):
                     ident = self.queue(game)
                     troops, rng = game.state.officers[ident].troops, deepcopy(game.state.rng)
                     grain = game.state.cities[CHAIN[0]].grain
+                    loaded = game.state.extension['travel']['marches'][0]['supply']['loaded']
+                    initial_lost = game.state.soldiers['lost']
+                    other_grain = {city:game.state.cities[city].grain for city in CHAIN[1:]}
                     game.state.cities[key].owner = owner
                     synchronize(game, game.state, checks=False)
                     game.validate(game.state)
-                    # Ownership may change while in transit; this pending
-                    # order is a valid save, then arrivals applies the block.
+                    # A changed owner does not invalidate an in-flight save.
+                    # A blocked checkpoint or changed destination then starts
+                    # physical travel home, with the same daily food service.
                     game = self.restore(game, alternate)
                     self.assertTrue(game.state.extension['travel']['marches'])
-                    self.arrive(game)
+                    saw_return = False;consumed = 0
+                    for _ in range(12):
+                        if not game.state.extension['travel']['marches']:break
+                        game._complete_turn(game.state)
+                        row = game.state.extension['travel']['marches'][0]
+                        if game.state.phase == 'arrivals':
+                            game.command('arrivals', {}, game.revision)
+                        if game.state.extension['travel']['marches']:
+                            row = game.state.extension['travel']['marches'][0]
+                        if row['status'] == 'returning':
+                            saw_return = True
+                            self.assertEqual(row['quote']['path'][-1], CHAIN[0])
+                            self.assertEqual(row['quote']['path'][0], row['journey_source'])
+                            self.assertGreater(row['quote']['days'], 0)
+                            self.assertEqual(row['history'][0]['supply']['closed_tick'],
+                                             row['supply']['start_tick'])
+                        consumed = row['supply']['consumed'] + sum(
+                            trip['supply']['consumed'] for trip in row['history'])
+                        if game.state.extension['travel']['marches']:
+                            game = self.restore(game, alternate)
+                    self.assertTrue(saw_return)
                     self.assertFalse(game.state.extension['travel']['marches'])
                     self.assertIn(ident, game.state.cities[CHAIN[0]].roster.officer_ids)
                     self.assertNotIn(ident, game.state.cities[CHAIN[-1]].roster.officer_ids)
-                    self.assertEqual(game.state.officers[ident].troops, troops)
-                    self.assertEqual(game.state.cities[CHAIN[0]].grain, grain)
+                    self.assertEqual(game.state.soldiers['lost']-initial_lost,
+                                     troops-game.state.officers[ident].troops)
+                    self.assertEqual(game.state.cities[CHAIN[0]].grain, grain+loaded-consumed)
+                    self.assertEqual({city:game.state.cities[city].grain for city in CHAIN[1:]}, other_grain)
                     self.assertEqual(game.state.rng, rng)
                     self.restore(game, alternate)
 

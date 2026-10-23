@@ -164,7 +164,13 @@ class DesperateDuelTests(unittest.TestCase):
             with self.subTest(seed=row['seed'], move=row['move']):
                 game = active_duel(row['seed'])
                 scene = self.perform(game, row['move'])
-                self.assertEqual(digest(game.to_dict()), row['state_sha256'])
+                state = game.to_dict()
+                self.assertEqual(state['extension']['logistics']['schema'], 'tk2-logistics-v2')
+                self.assertFalse(state['extension']['logistics']['convoys'])
+                # Preserve the frozen pre-desperate artifact byte for byte;
+                # only project the unrelated empty logistics schema marker.
+                state['extension']['logistics']['schema'] = 'tk2-logistics-v1'
+                self.assertEqual(digest(state), row['state_sha256'])
                 self.assertEqual(vars(game.state.rng), row['rng'])
                 self.assertEqual(scene, row['presentation'])
 

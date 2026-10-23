@@ -98,21 +98,26 @@ class LogisticsTests(unittest.TestCase):
         self.advance_due(game)
         target = game.state.cities['nanjun']
         self.assertEqual(target.gold, destination['gold'] + 100)
-        self.assertEqual(target.grain, destination['grain'] + 200)
+        row=game.state.extension['logistics']['convoys'][0]
+        return_food=sum(r['grain'] for r in row['journeys'][-1]['supply']['refills'] if r['kind']=='city')
+        self.assertEqual(target.grain, destination['grain'] + 200-return_food)
         self.assertEqual(target.reserves, destination['reserves'] + 300)
-        self.assertIn(999, target.roster.officer_ids)
-        self.assertNotIn(999, game.state.cities['xiangyang'].roster.officer_ids)
+        self.assertTrue(row['delivery_done']);self.assertEqual(row['status'],'returning')
+        self.assertNotIn(999,target.roster.officer_ids)
+        self.assertIn(999,game.state.cities['xiangyang'].roster.officer_ids)
+        self.assertIn(999,logistics.marching_ids(game.state))
+        self.advance_due(game)
         self.assertFalse(game.state.extension['logistics']['convoys'])
         self.assertFalse(logistics.marching_ids(game.state))
         self.assertIn('city:nanjun', game.state.extension['logistics']['receipts'])
         game.validate(game.state)
 
-    def test_incoming_convoys_count_for_staff_shortage_only_when_near_and_friendly(self):
+    def test_returning_escorts_never_count_as_permanent_front_administrators(self):
         game = self.game()
         target = game.state.cities['nanjun']
         before = civil_staff._effective_count(game.state, target)
         self.dispatch(game)
-        self.assertEqual(civil_staff._effective_count(game.state, game.state.cities['nanjun']), before + 1)
+        self.assertEqual(civil_staff._effective_count(game.state, game.state.cities['nanjun']), before)
         game.state.cities['nanjun'].owner = 'wei'
         self.assertEqual(civil_staff._effective_count(game.state, game.state.cities['nanjun']), before)
         # More than three turns away must not suppress a current staff shortage.
@@ -127,16 +132,14 @@ class LogisticsTests(unittest.TestCase):
         self.assertGreater(game.state.extension['logistics']['convoys'][0]['journeys'][0]['arrival_turn'] - game.state.turn, 3)
         self.assertEqual(civil_staff._effective_count(game.state, game.state.cities['nanjun']), before)
 
-    def test_arrival_morale_includes_both_escort_troops_and_cargo_reserves(self):
+    def test_arrival_training_counts_delivered_reserves_without_temporary_escort_troops(self):
         game = self.game()
         game.state.extension['domestic']['cities']['xiangyang']['morale'] = 90
         game.state.extension['domestic']['cities']['nanjun']['morale'] = 50
         target = game.state.cities['nanjun']
         before = domestic._garrison_troops(game, game.state, target)
-        troops = game.state.officers[999].troops
         self.dispatch(game)
-        with_escort = (before * 50 + troops * 90) // (before + troops)
-        expected = ((before + troops) * with_escort + 300 * 90) // (before + troops + 300)
+        expected = (before * 50 + 300 * 90) // (before + 300)
         self.advance_due(game)
         self.assertEqual(domestic.morale(game.state, 'nanjun'), expected)
         game.validate(game.state)
@@ -158,6 +161,7 @@ class LogisticsTests(unittest.TestCase):
         self.assertEqual(game.state.cities['nanjun'].gold, target.gold + 100)
         self.assertEqual(game.state.cities['nanjun'].reserves, target.reserves + 300)
         self.assertIn(999, game.state.cities['nanjun'].roster.officer_ids)
+        # The refuge is the actual unloading node; there is no zero-day queue.
         self.assertFalse(game.state.extension['logistics']['convoys'])
 
     def test_manual_limits_and_malformed_requests_are_atomic(self):
@@ -198,6 +202,24 @@ class LogisticsTests(unittest.TestCase):
         self.fails(game, dict(source='xiangyang', target='nanjun', officers=[439], route_mode='land',
                              cargo=dict(gold=0, grain=0, reserves=0)))
 
+    def test_personnel_only_automatic_support_uses_permanent_transfer_not_an_empty_convoy(self):
+        game=self.game()
+        game.command('set_logistics',dict(city='xiangyang',policy=dict(enabled=True,
+            target_gold=0,target_grain=0,target_reserves=0,target_officers=1)),game.revision)
+        proposed,reason=logistics.preview(game,game.state,'xiangyang')
+        self.assertIsNone(proposed);self.assertEqual(reason,'no_surplus')
+        self.assertTrue(logistics.auto_dispatch_city(game,game.state,'xiangyang'))
+        self.assertFalse(game.state.extension['logistics']['convoys'])
+        rows=game.state.extension['travel']['marches']
+        self.assertEqual(len(rows),1);self.assertEqual(rows[0]['kind'],'transfer')
+        self.assertEqual(rows[0]['target'],'nanjun')
+        self.assertEqual(len(rows[0]['officers']),1)
+        self.assertTrue(game.state.cities['xiangyang'].action_used)
+        before=game.export_save()
+        self.assertFalse(logistics.auto_dispatch_city(game,game.state,'xiangyang'))
+        self.assertEqual(game.export_save(),before)
+        game.validate(game.state)
+
     def test_below_reserve_source_cannot_create_a_false_dispatch_preview(self):
         for resource in ('gold', 'grain', 'reserves'):
             game = self.game()
@@ -236,22 +258,18 @@ class LogisticsTests(unittest.TestCase):
         self.assertFalse(game.state.extension['logistics']['convoys'])
         game.validate(game.state)
 
-    def test_full_destination_waits_without_duplication_and_receipts_stop_bounce(self):
+    def test_full_destination_accepts_cargo_without_inserting_escorts_or_repeating_delivery(self):
         game = self.game()
         self.dispatch(game)
         self.fill(game, 'nanjun', 99)
         self.advance_due(game)
         row = game.state.extension['logistics']['convoys'][0]
-        self.assertEqual(row['status'], 'waiting'); self.assertEqual(row['reason'], 'city_full')
-        self.assertEqual(logistics.in_transit_reserves(game.state), 300)
+        self.assertEqual(row['status'], 'returning');self.assertTrue(row['delivery_done'])
+        self.assertEqual(logistics.in_transit_reserves(game.state), 0)
         before = game.export_save()
         logistics.process_arrivals(game, game.state)
         self.assertEqual(before, game.export_save())
-        moved = game.state.cities['nanjun'].roster.officer_ids.pop()
-        game.state.officers[moved].faction_id = None; game.state.officers[moved].loyalty = 0
-        game.state.extension['free_locations'][str(moved)] = 'nanjun'
-        self.sync(game); game._complete_turn(game.state)
-        game.command('arrivals', {}, game.revision)
+        self.advance_due(game)
         self.assertFalse(game.state.extension['logistics']['convoys'])
         self.assertEqual(game._city_occupancy(game.state, game.state.cities['nanjun']), 99)
         self.assertGreater(game.state.extension['logistics']['receipts'][str(999)], game.state.turn)
@@ -263,6 +281,7 @@ class LogisticsTests(unittest.TestCase):
         game.command('set_logistics', dict(city='xiangyang', policy=dict(allow_sea=True)), game.revision)
         draws = game.state.rng.draws
         self.dispatch(game, mode='fastest')
+        game.state.cities['nanjun'].gold=logistics.LIMIT
         self.assertEqual(game.state.rng.draws, draws + 1)
         self.fill(game, 'nanjun', 99)
         self.advance_due(game)
@@ -322,13 +341,15 @@ class LogisticsTests(unittest.TestCase):
         restored = Campaign(game.catalog); restored.load_save(saved, 0)
         self.assertEqual(saved, restored.export_save())
         self.advance_due(game)
-        self.assertIn(999, game.state.cities['nanjun'].roster.officer_ids)
-        self.assertIn(candidate, game.state.cities['nanjun'].roster.officer_ids)
+        self.assertIn(999,game._march_ids(game.state))
+        self.advance_due(game)
+        self.assertIn(999, game.state.cities['xiangyang'].roster.officer_ids)
+        self.assertIn(candidate, game.state.cities['xiangyang'].roster.officer_ids)
         self.assertEqual(game.state.officers[candidate].faction_id, 'shu')
-        self.assertEqual(game.state.extension['civil_staff']['people'][candidate]['city'], 'nanjun')
+        self.assertEqual(game.state.extension['civil_staff']['people'][candidate]['city'], 'xiangyang')
         game.validate(game.state)
 
-    def test_zero_edge_return_still_takes_one_turn_and_never_duplicates_cargo(self):
+    def test_blocked_intermediate_city_keeps_party_at_real_origin_without_duplicate_cargo(self):
         data = deepcopy(transport_catalog().data)
         data['initial_owners']['nanyang'] = 'neutral'
         data['initial_owners']['jiangxia'] = 'wei'
@@ -346,23 +367,17 @@ class LogisticsTests(unittest.TestCase):
             p = Path(tmp) / 'corridor.json'; p.write_text(json.dumps(data))
             game = Campaign(Catalog(p)); game.command('new', dict(faction='shu', seed=2026), 0)
         game.command('set_logistics', dict(city='xiangyang', policy=dict(target_city='nanjun')), game.revision)
+        original=deepcopy(game.state.cities['xiangyang'])
         self.dispatch(game)
         self.assertEqual(game.state.extension['logistics']['convoys'][0]['journeys'][0]['quote']['path'],
                          ['xiangyang', 'nanyang', 'nanjun'])
         game.state.cities['nanyang'].owner = 'wei'; self.sync(game)
         self.advance_due(game)
-        row = game.state.extension['logistics']['convoys'][0]
-        self.assertEqual(row['status'], 'returning')
-        self.assertEqual(row['journeys'][-1]['quote']['path'], ['xiangyang'])
-        self.assertEqual(row['journeys'][-1]['arrival_turn'], game.state.turn + 1)
-        snapshot = deepcopy(row['cargo'])
-        loaded = Campaign(game.catalog); loaded.load_save(game.export_save(), 0)
-        game.validate(game.state)
-        source = deepcopy(game.state.cities['xiangyang'])
-        self.advance_due(game)
         self.assertFalse(game.state.extension['logistics']['convoys'])
-        self.assertEqual(game.state.cities['xiangyang'].gold, source.gold + snapshot['gold'])
-        self.assertEqual(game.state.cities['xiangyang'].reserves, source.reserves + snapshot['reserves'])
+        self.assertEqual(game.state.cities['xiangyang'].gold,original.gold)
+        self.assertEqual(game.state.cities['xiangyang'].reserves,original.reserves)
+        loaded=Campaign(game.catalog);loaded.load_save(game.export_save(),0)
+        self.assertEqual(loaded.export_save(),game.export_save())
 
 
 if __name__ == '__main__':

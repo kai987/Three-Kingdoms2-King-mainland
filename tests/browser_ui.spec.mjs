@@ -232,8 +232,14 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(column.officers.map(String)).toEqual([officerText]);
  expect(column.quote.routes.every(leg=>leg.mode==='land'&&!leg.hazard)).toBe(true);
  const units=initial.state.officers[officerText].troops+100;
- expect(loaded).toBe(Math.ceil(units*column.quote.days/1000));
- expect(column.supply).toMatchObject({loaded,consumed:0,remaining:loaded,elapsed_days:0});
+ let firstStage=0;
+ for(let index=0;index<column.quote.routes.length;index++){
+  firstStage+=column.quote.routes[index].days;
+  if(initial.state.cities[column.quote.path[index+1]]?.owner===initial.state.player)break;
+ }
+ expect(firstStage).toBeLessThan(column.quote.days);
+ expect(loaded).toBe(Math.ceil(units*firstStage/1000));
+ expect(column.supply).toMatchObject({loaded,received:0,consumed:0,remaining:loaded,elapsed_days:0,route_days:0});
  expect(departing.state.cities[source].grain).toBe(startingGrain-loaded);
  const live=page.locator(`[data-march="${column.id}"] [data-supply-loaded]`);
  await expect(live).toHaveAttribute('data-supply-loaded',String(loaded));
@@ -249,8 +255,9 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect([next.state.year,next.state.month,next.state.day]).toEqual([217,7,11]);
  const marched=next.state.extension.travel.marches.find(row=>row.id===column.id);
  expect(marched).toBeTruthy();
- const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/1000);
- expect(marched.supply).toMatchObject({loaded,consumed,remaining:loaded-consumed,elapsed_days:elapsed});
+ const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/1000),received=marched.supply.received;
+ expect(marched.supply).toMatchObject({loaded,consumed,remaining:loaded+received-consumed,elapsed_days:elapsed,route_days:elapsed,shortage_days:0,lost:0});
+ expect(received).toBe(marched.supply.refills.reduce((sum,row)=>sum+row.grain,0));
  // No delegate was appointed and no monthly income is due: all food spent
  // this turn comes out of the travelling bag, never the origin store again.
  expect(next.state.extension.domestic.factions.shu.civil).toBeNull();
@@ -259,7 +266,9 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(next.state.cities[source].owner).toBe('shu');
  await expect(live).toHaveAttribute('data-supply-loaded',String(loaded));
  await expect(live).toHaveAttribute('data-supply-consumed',String(consumed));
- await expect(live).toHaveAttribute('data-supply-remaining',String(loaded-consumed));
+ await expect(live).toHaveAttribute('data-supply-remaining',String(loaded+received-consumed));
+ await expect(live).toHaveAttribute('data-supply-route-days',String(elapsed));
+ await expect(live).toHaveAttribute('data-supply-shortage','0');
  await live.scrollIntoViewIfNeeded();
  await page.screenshot({path:testInfo.outputPath('daily-march-grain.png'),fullPage:true});
  expect(errors.get(page)).toEqual([]);
