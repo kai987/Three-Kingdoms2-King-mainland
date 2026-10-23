@@ -96,7 +96,11 @@ jobs:
 
   deploy:
     needs: prepare
-    if: needs.prepare.outputs.current == 'true'
+    # Automatic releases intentionally skip the manual-verification ancestor.
+    # Override the implicit success() check without deploying cancelled runs.
+    if: >-
+      always() && !cancelled() &&
+      needs.prepare.result == 'success' && needs.prepare.outputs.current == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
