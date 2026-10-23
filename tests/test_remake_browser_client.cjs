@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const scripts=['paths.js','browser-engine.js'].map(name=>fs.readFileSync(require('node:path').join(__dirname,'../game',name),'utf8'));
-function fixture(prefix='/Three-Kingdoms2-King-mainland/'){
+function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true}={}){
  const requests=[],workers=[],timers=[],nodes=new Map(),events=[],listeners=new Map();
  function element(tag='p'){
   const node={tagName:tag.toUpperCase(),textContent:'',hidden:false,disabled:false,attributes:{},style:{},children:[],classList:{toggle(){}},setAttribute(name,value){this.attributes[name]=value;},append(...children){this.children.push(...children);},insertAdjacentElement(where,value){nodes.set(value.id,value);}};return node;
@@ -16,10 +16,17 @@ function fixture(prefix='/Three-Kingdoms2-King-mainland/'){
  }
  const window={document,Worker,fetch:(...args)=>{requests.push(args);return Promise.resolve(new Response('{}'));}};
  const context={window,document,Worker,URL,Response,CustomEvent:class{constructor(type){this.type=type;}},setTimeout:(fn,ms)=>{const timer={fn,ms};timers.push(timer);return timer;},clearTimeout:timer=>{if(timer)timer.cancelled=true;},console};
- vm.createContext(context);for(const script of scripts)vm.runInContext(script,context);
+ vm.createContext(context);for(const script of paths?scripts:scripts.slice(1))vm.runInContext(script,context);
  return{window,requests,worker:workers[0],workers,timers,node,nodes,events,document};
 }
 (async()=>{
+ for(const prefix of ['/nested-game/','/']){
+  const fallback=fixture(prefix,{paths:false});
+  await fallback.window.fetch('/locales/zh-hant.json');
+  assert.equal(fallback.requests[0][0],prefix+'locales/zh-hant.json','Missing optional path helper still loads language data under the project prefix');
+  assert(Object.isFrozen(fallback.window.GamePaths));
+  for(const path of ['https://auth.example/token','/config/cloud-save-public.json','/another-project/file'])assert.equal(fallback.window.GamePaths.asset(path),path);
+ }
  const e=fixture();assert.equal(e.worker.url,'https://game.example/Three-Kingdoms2-King-mainland/browser-engine-worker.js');assert.equal(e.worker.options.type,'module');
  assert.equal(e.window.GamePaths.asset('/assets/map.png'),'/Three-Kingdoms2-King-mainland/assets/map.png');
  assert.equal(e.window.GamePaths.asset('/config/duel-appearances.json'),'/Three-Kingdoms2-King-mainland/config/duel-appearances.json');
