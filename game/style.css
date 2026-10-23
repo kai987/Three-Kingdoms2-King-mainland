@@ -99,7 +99,7 @@ background:var(--paper);
 border:4px double #000;
 padding:6px 12px
 }
-.topbar-heading{min-width:0;display:grid;gap:2px}
+.topbar-heading{min-width:0;width:max-content;max-width:100%;display:grid;gap:2px}
 .nav-short{display:none}
 .topbar h1{
 font-size:24px;
@@ -371,11 +371,13 @@ min-height:44px
 }
 .journal{
 grid-area:journal;
+display:grid;
+grid-template-rows:auto minmax(0,1fr);
 padding:8px 16px;
 border:4px double #000;
 outline:2px solid var(--paper);
 outline-offset:-2px;
-overflow:auto;
+overflow:hidden;
 min-height:0;
 background:var(--paper);
 margin-top:0
@@ -400,7 +402,53 @@ font-size:16px
 list-style:none;
 padding:0;
 margin:0;
-font:16px/1.5 var(--ui)
+font:16px/1.5 var(--ui);
+min-height:0;
+overflow:auto;
+scrollbar-gutter:stable;
+overscroll-behavior:contain
+}
+/* Wide screens give the report the unused space between title and controls.
+   The same DOM node returns below the map when the header no longer fits. */
+.topbar.has-journal{
+grid-template-columns:max-content minmax(320px,1fr) max-content;
+gap:8px 16px
+}
+.topbar>.journal{
+grid-area:auto;
+min-width:0;
+height:88px;
+padding:4px 10px;
+display:grid;
+grid-template-rows:auto minmax(0,1fr);
+gap:4px;
+overflow:hidden
+}
+.topbar>.journal .journal-heading{
+min-width:0;
+gap:8px;
+margin:0;
+padding-bottom:2px
+}
+.topbar>.journal .journal-heading button{
+min-height:24px;
+min-width:0;
+padding:0 6px;
+font-size:14px
+}
+.wide-map-layout .game-layout{
+grid-template-columns:minmax(0,1fr) minmax(320px,.42fr);
+grid-template-rows:minmax(0,1fr);
+grid-template-areas:"stage inspector"
+}
+.wide-map-layout #inspector{padding:12px;gap:10px}
+.wide-map-layout .setup-fields{grid-template-columns:1fr}
+@supports(width:1cqh){
+body.wide-map-layout main:has(#world-map) .game-layout{
+--map-panel-height:min(100cqh,calc((100cqw - 336px)/1.3203125 + 8px));
+grid-template-columns:minmax(0,calc((var(--map-panel-height) - 8px)*1.3203125 + 8px)) minmax(320px,1fr);
+grid-template-rows:minmax(0,1fr)
+}
 }
 .choice-list{
 display:grid;

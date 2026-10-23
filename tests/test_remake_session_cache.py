@@ -44,12 +44,26 @@ class SessionPreviewCacheTests(unittest.TestCase):
         row['id']='corrupt';row['initial_owners']['nanyang']='corrupt'
         row['active_cities'].clear();row['city_names'].clear()
         row['map_cities'].clear();row['factions'].clear()
+        row['city_profiles']['shujun']['tier']='corrupt'
         row['faction_resources'][side]['gold']=-1
         row['faction_officers'][side]=-1;row['faction_colors'][side]='#000000'
         previews.pop()
         self.assertEqual(session.view()['catalog']['scenarios'],expected)
         self.assertEqual({key:digest(c.data) for key,c in session.catalogs.items()},catalog_hashes)
         self.assertEqual(session.revision,0);self.assertIsNone(session.to_dict())
+
+    def test_preview_city_tiers_use_each_catalog_without_copying_economy_metadata(self):
+        session=CampaignSession(self.paths)
+        for row in session.view()['catalog']['scenarios']:
+            expected={key:{'tier':profile['tier']} for key,profile in
+                      session.catalogs[row['id']].data['city_profiles'].items()}
+            self.assertEqual(row['city_profiles'],expected,row['id'])
+            for tier in ('giant','large'):
+                expected_ids={key for key,profile in expected.items()
+                              if profile['tier']==tier and key in row['active_cities']}
+                self.assertTrue(expected_ids,(row['id'],tier))
+                self.assertEqual({key for key,profile in row['city_profiles'].items()
+                                  if profile['tier']==tier and key in row['active_cities']},expected_ids)
 
     def test_cached_openings_do_not_rescan_other_scenarios(self):
         session=CampaignSession(self.paths)

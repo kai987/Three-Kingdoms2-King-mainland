@@ -564,6 +564,7 @@ def main():
               '/wasm/THIRD-PARTY-LICENSES.txt': ('wasm/THIRD-PARTY-LICENSES.txt', 'text/plain; charset=utf-8'),
               '/wasm/manifest.json': ('wasm/manifest.json', 'application/json; charset=utf-8'),
               '/map-navigation.js': ('map-navigation.js', 'text/javascript; charset=utf-8'),
+              '/layout.js': ('layout.js', 'text/javascript; charset=utf-8'),
               '/map-terrain.js': ('map-terrain.js', 'text/javascript; charset=utf-8'),
               '/locales/zh-hant.json': ('locales/zh-hant.json', 'application/json; charset=utf-8'),
               '/locales/ui-ja.json': ('locales/ui-ja.json', 'application/json; charset=utf-8'),

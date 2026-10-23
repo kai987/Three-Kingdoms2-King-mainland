@@ -22,6 +22,7 @@ function environment(){
  const presentation={colors:{wei:'#00f',wu:'#f00',neutral:'#fff'},castle_fill_pixels:[[0,0]],castle_outline_pixels:[[-4,-4]],
   city_names:{},labelled_city_ids:['a','b'],added_land_roads:[{from:'a',to:'b',new_branch:[[100,100],[200,200]]}],expansion_connections:[]};
  const catalog={scenario_id:'scenario-200',cities:[{id:'a',name:'甲',position:[100,100]},{id:'b',name:'乙',position:[200,200]}],active_cities:['a','b'],
+  city_profiles:{a:{tier:'giant'},b:{tier:'large'}},
   factions:[{id:'wei',name:'曹操'},{id:'wu',name:'孫權'}],world:{x:0,y:0,width:1352,height:1024,background:'/map.png'},map_presentation:presentation,
   road_additions:[['a','b']],travel_hazards:true,sea_routes:[],discovered_routes:[],regional_roads:[],scenarios:[]};
  const context={view:{game,catalog},setupPreview:null,selectedCity:'a',busy:false,mapMode:'all',cityLabels:'major',mapAction:null,
@@ -81,6 +82,7 @@ invalidates('city positions',()=>context.view.catalog.cities[1].position=[210,22
 invalidates('label layout',()=>context.view.catalog.city_label_offsets={b:[20,-20,'start']});
 invalidates('selected city and its major label',()=>context.selectedCity='b');
 invalidates('label mode',()=>context.cityLabels='none');assert(!env.markup().includes('data-city-label'));
+invalidates('city scale',()=>context.view.catalog.city_profiles.a.tier='normal');
 invalidates('language',()=>context.GameI18n.locale='ja');
 invalidates('city action highlight',()=>context.mapAction={source:'a',kind:'depart',targets:['b']});assert(env.markup().includes('data-action-eligible="true"'));
 invalidates('action target change',()=>context.mapAction.targets=['a']);
@@ -104,4 +106,24 @@ assert(GameMapRenderCache.matches(first,key));assert(!GameMapRenderCache.matches
 env.stage.innerHTML='<section id="battle"></section>';env.render();assert(elements.get('world-map'));
 context.mapNavigation=null;const prior=elements.get('world-map');env.render();assert.notEqual(elements.get('world-map'),prior);
 const legacy=environment();delete legacy.context.GameMapRenderCache;legacy.render();legacy.render();assert.equal(legacy.counts.writes,2,'A previously cached HTML shell without the optional module retains legacy map rendering');
+// Scale filters are exact catalog tiers; selecting an ordinary or newly added
+// city must not leak its label into the giant/large modes. Cycling is UI only.
+const filtered=environment(),filteredView=filtered.context.view;
+filteredView.catalog.cities.push({id:'c',name:'丙',position:[300,300]});
+filteredView.catalog.active_cities.push('c');filteredView.catalog.added_city_ids=['c'];
+filteredView.catalog.city_profiles.c={tier:'normal'};filtered.context.selectedCity='c';
+const stateBefore=JSON.stringify(filteredView.game),labels=()=>[...filtered.markup().matchAll(/data-city-label="([^"]+)"/g)].map(match=>match[1]);
+filtered.render();assert.deepEqual(labels(),['a','b','c']);
+for(const[mode,expected,compact]of [['giant',['a'],'名：巨'],['large',['b'],'名：大'],['all',['a','b','c'],'名：全'],['none',[],'名：隐'],['major',['a','b','c'],'名：主']]){
+ filtered.elements.get('map-labels').onclick();assert.equal(filtered.context.cityLabels,mode);assert.deepEqual(labels(),expected,mode);
+ assert(filtered.markup().includes(`data-label-mode="${mode}"`));assert(filtered.markup().includes(compact));
+}
+filtered.context.setupPreview={id:'different-year',year:225,month:7,day:1,initial_owners:{a:'wei',b:'wu',c:'neutral'},factions:filteredView.catalog.factions,
+ map_cities:filteredView.catalog.cities,active_cities:['a','b','c'],city_names:{a:'甲',b:'乙',c:'丙'},faction:'wu',focus:'c',
+ city_profiles:{a:{tier:'normal'},b:{tier:'giant'},c:{tier:'large'}},added_city_ids:['a']};
+filtered.context.cityLabels='giant';filtered.render();assert.deepEqual(labels(),['b'],'A different scenario uses its own scale metadata');
+filtered.context.GameI18n.locale='ja';filtered.render();assert.deepEqual(labels(),['b']);assert.equal(filtered.context.cityLabels,'giant');
+filtered.elements.get('map-labels').onclick();assert.deepEqual(labels(),['c']);
+filtered.context.GameI18n.locale='zh-Hant';filtered.render();assert.deepEqual(labels(),['c']);
+assert.equal(JSON.stringify(filteredView.game),stateBefore,'City label modes, preview and language changes never alter campaign state/RNG');
 console.log('map render cache: same-scene SVG/control/focus/navigation reuse, current-snapshot handlers, full visual invalidation, new routes and battle/stage recovery passed');

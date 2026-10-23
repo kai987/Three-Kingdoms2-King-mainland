@@ -180,3 +180,63 @@ test('failed manifest has an explicit retry starting a fresh real Worker',async(
  await page.screenshot({path:testInfo.outputPath('boot-retried.png'),fullPage:true});
  expect(errors.get(page).filter(message=>!message.includes('404'))).toEqual([]);
 });
+
+test('city size labels and the report adapt to available space while retaining map controls',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland217-07');
+ const labels=page.locator('#map-labels'),names=page.locator('[data-city-label]');
+ await expect(labels).toHaveAttribute('data-label-mode','major');
+ const majorCount=await names.count();
+ for(const [mode,count] of [['giant',4],['large',9],['all',110],['none',0],['major',majorCount]]){
+  await labels.click();await expect(labels).toHaveAttribute('data-label-mode',mode);await expect(names).toHaveCount(count);
+ }
+ await labels.click();await labels.click();
+ await page.locator('#scenario').selectOption('mainland225-07');
+ await expect(labels).toHaveAttribute('data-label-mode','large');await expect(names).toHaveCount(10);
+ await page.locator('#scenario').selectOption('mainland217-07');await expect(names).toHaveCount(9);
+ await page.locator('#map-zoom-in').click();
+ const zoom=await page.locator('#world-map').getAttribute('data-zoom');
+ const city=await page.locator('#city-jump').inputValue();
+ const geometry=()=>page.evaluate(()=>{
+  const rect=selector=>{const r=document.querySelector(selector).getBoundingClientRect();return{x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
+  return{docked:document.querySelector('.topbar').contains(document.querySelector('.journal')),reports:document.querySelectorAll('#journal').length,restarts:document.querySelectorAll('#restart').length,header:rect('.topbar'),heading:rect('.topbar-heading'),nav:rect('.topbar nav'),report:rect('.journal'),stage:rect('#stage'),main:rect('main'),side:rect('#inspector'),scrollWidth:document.documentElement.scrollWidth,width:innerWidth};
+ });
+ for(const viewport of [{width:1920,height:1080},{width:1440,height:900},{width:1280,height:800}]){
+  await page.setViewportSize(viewport);
+  await expect.poll(async()=>(await geometry()).docked).toBe(true);
+  const g=await geometry();
+  expect(g.reports).toBe(1);expect(g.restarts).toBe(1);
+  expect(g.heading.right).toBeLessThanOrEqual(g.report.x);
+  expect(g.report.right).toBeLessThanOrEqual(g.nav.x);
+  expect(g.report.bottom).toBeLessThanOrEqual(g.header.bottom);
+  expect(Math.abs(g.stage.bottom-g.main.bottom)).toBeLessThan(2);
+  expect(Math.abs((g.stage.width-8)/(g.stage.height-8)-1352/1024)).toBeLessThan(.002);
+  expect(g.side.width).toBeLessThan(viewport.width*.4);
+  await expect(page.locator('#world-map')).toHaveAttribute('data-zoom',zoom);
+  await expect(page.locator('#city-jump')).toHaveValue(city);
+ }
+ await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('ja');
+ await expect(labels).toHaveAttribute('title','都市名：大都市');
+ await page.locator('#utility-menu summary').click();
+ await expect.poll(async()=>(await geometry()).docked).toBe(true);
+ await page.screenshot({path:testInfo.outputPath('wide-report-map.png'),fullPage:true});
+ for(const viewport of [{width:1280,height:850},{width:1024,height:768},{width:1000,height:768},{width:390,height:844},{width:844,height:390}]){
+  await page.setViewportSize(viewport);
+  await expect.poll(async()=>(await geometry()).docked).toBe(false);
+  await expect(page.locator('.game-layout>.journal')).toHaveCount(1);
+  const g=await geometry();expect(g.reports).toBe(1);expect(g.restarts).toBe(1);expect(g.scrollWidth).toBeLessThanOrEqual(g.width);
+  if(viewport.width<=1000)expect(g.report.y).toBeGreaterThanOrEqual(g.side.bottom);
+  await expect(page.locator('#world-map')).toHaveAttribute('data-zoom',zoom);
+  await expect(labels).toHaveAttribute('data-label-mode','large');
+ }
+ await page.setViewportSize({width:390,height:844});
+ await page.screenshot({path:testInfo.outputPath('compact-report-map.png'),fullPage:true});
+ await page.setViewportSize({width:1440,height:900});
+ await expect(page.locator('.topbar>.journal')).toHaveCount(1);
+ await expect(page.locator('#world-map')).toHaveAttribute('data-zoom',zoom);
+ await labels.click();await expect(labels).toHaveAttribute('data-label-mode','all');
+ await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('zh-Hant');
+ await expect(labels).toHaveAttribute('title','城名：全部');
+ await page.locator('#utility-menu summary').click();
+ expect(errors.get(page)).toEqual([]);
+});
