@@ -33970,23 +33970,23 @@
         "set": {
           "group": "bonus",
           "title": "秋風五丈原",
+          "official_source": "https://www.gamecity.ne.jp/sangokushi14/scenario.html",
+          "summary": "諸葛亮在五丈原最後一次北伐，魏方由司馬懿督軍；此時諸葛亮尚在世。",
+          "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
+          "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
+          "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
           "title_i18n": {
             "zh-Hant": "秋風五丈原",
             "ja": "秋風五丈原"
           },
-          "summary": "諸葛亮在五丈原最後一次北伐，魏方由司馬懿督軍；此時諸葛亮尚在世。",
           "summary_i18n": {
             "zh-Hant": "諸葛亮在五丈原最後一次北伐，魏方由司馬懿督軍；此時諸葛亮尚在世。",
             "ja": "諸葛亮が最後の北伐を開始し、魏では司馬懿が迎え撃つ。開幕時の諸葛亮は存命。"
           },
           "fictional": false,
-          "official_source": "https://www.gamecity.ne.jp/sangokushi14/scenario.html",
           "source_urls": [
             "https://www.gamecity.ne.jp/sangokushi14/scenario.html"
           ],
-          "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
-          "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
-          "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
           "category": "official_bonus",
           "chronology_overrides": [],
           "chronology_policy": "All births/service/deaths stay in force. Only per-catalog explicit story/official-game exceptions listed below apply; future IF death boundaries are authorial and not claimed official.",
@@ -36728,6 +36728,15 @@
                   "sources": [
                     "https://www.gamecity.ne.jp/sangokushi14/scenario.html"
                   ]
+                }
+              }
+            }
+          },
+          "yidu": {
+            "update": {
+              "opening": {
+                "set": {
+                  "owner": "wu"
                 }
               }
             }

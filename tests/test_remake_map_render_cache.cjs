@@ -91,6 +91,16 @@ invalidates('discovered sea route',()=>context.view.catalog.discovered_routes.pu
 invalidates('route geometry in place',()=>context.view.catalog.discovered_routes[0].draw[0].points[1]=[220,220]);
 invalidates('road geometry',()=>context.view.catalog.map_presentation.added_land_roads[0].new_branch[1]=[205,205]);
 invalidates('active city set',()=>context.view.catalog.active_cities=['a']);assert(!env.markup().includes('data-city="b"'));
+// Inactive historical nodes also exist in the native background. Restore only
+// their original sprite pixels from the audited ground, below roads and cities.
+invalidates('inactive native castle mask',()=>Object.assign(context.view.catalog.map_presentation,
+ {inactive_castle_ids:['b'],inactive_castle_ground:'/assets/map-city-ground.png'}));
+assert(env.markup().includes('data-inactive-city="b"'));
+assert(env.markup().includes('href="/assets/map-city-ground.png"'));
+assert(env.markup().indexOf('data-inactive-city="b"')<env.markup().indexOf('data-city="a"'));
+assert(env.markup().includes('clip-path="url(#inactive-castle-b)"'));
+invalidates('historical city reappears',()=>context.view.catalog.active_cities=['a','b']);
+assert(!env.markup().includes('data-inactive-city="b"'));
 invalidates('world/background',()=>context.view.catalog.world={...context.view.catalog.world,width:1400,background:'/next.png'});
 assert.equal(context.mapCamera.zoom,1,'A changed world retains the existing reset-to-fit rule');
 const preview={id:'preview-225',year:225,month:7,day:1,initial_owners:{a:'wu',b:'wei'},factions:context.view.catalog.factions,

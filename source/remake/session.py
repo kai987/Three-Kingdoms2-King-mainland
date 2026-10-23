@@ -67,7 +67,9 @@ class CampaignSession:
 
     def _decorate_view(self, result):
         """Add session metadata to one fresh campaign response under our lock."""
-        names=city_names(self.game.catalog,self.game.state.year if self.game.state else self.game.catalog.data['start_year'])
+        names=city_names(self.game.catalog,
+            self.game.state.year if self.game.state else self.game.catalog.data['start_year'],
+            self.game.state.month if self.game.state else self.game.catalog.data['start_month'])
         result['catalog']['cities']=[dict(c,name=names[c['id']],administrative_name=c['name'])
                                      for c in result['catalog']['cities']]
         result['catalog']['map_presentation']=presentation()
@@ -108,7 +110,7 @@ class CampaignSession:
                                            'main_scenario':c.data.get('main_scenario'),
                                            'initial_owners':dict(c.data['initial_owners']),
                                            'active_cities':list(c.data['active_cities']),
-                                           'city_names':city_names(c,c.data['start_year']),
+                                           'city_names':city_names(c,c.data['start_year'],c.data['start_month']),
                                            'map_cities':list(c.map_cities.values()),
                                            'city_profiles':{key:{'tier':profile['tier']} for key,profile in c.data.get('city_profiles',{}).items()},
                                            'world':c.data.get('world'),

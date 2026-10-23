@@ -3517,6 +3517,11 @@
     ],
     "green_contour_expansion_pixels": 6
   },
+  "inactive_castle_ids": [
+    "yiyang",
+    "yidu"
+  ],
+  "inactive_castle_ground": "/assets/map-city-ground.png",
   "road_center_corrections": {
     "schema": "tk2-road-center-corrections-v1",
     "backgrounds": {
@@ -3904,6 +3909,7 @@
       }
     ]
   },
+  "inactive_castle_ground_sha256": "5d80752ee48778501d9652b968bbffad5fe72c7adb7d6e5dd5f617d5b3fcf093",
   "road_bridges": {
     "schema": "tk2-map-bridges-v1",
     "world": [
@@ -3922,31 +3928,31 @@
       "road_geometry_sha256": "0de6ed1949d8e00b074515a574c76a166af23be929e5c32234011c9520b98d50",
       "land_path_sha256": "24be510503249293815591a1ef66d2f4f6d06ac735fd1bf0080c9e76df2e5798",
       "catalogs": {
-        "game/data/campaigns/184-02.json": "e6e2d664a91f88d24b62f176950cdeb77f5e434d88ba30d25fcf71b1d22d82ba",
-        "game/data/campaigns/188-06.json": "0900eb75a420edc25b43523a0df9914c100cb3692fd6a55a2665ceca618af97e",
-        "game/data/campaigns/190-01.json": "33c47d63a6c97cbcee3d6d0529d236af0ce131f2fa759caf7a8fbe0a49cf75aa",
-        "game/data/campaigns/191-10.json": "540f420fbdbaf1c17a53beee824fb9832e5eaf25009a1dde0c41c193e0131180",
-        "game/data/campaigns/194-06.json": "d6d52c88b45d643bb7ad5baedccdbce2e7617b4ec127bb7c7db23b97b3073278",
-        "game/data/campaigns/196-06.json": "2d3edd0b000037a753dfc9b02c13898187762bd2f8851bb80221bb5d83f4b8c0",
-        "game/data/campaigns/197-07.json": "1beb05f3eb7a0e27b1c1d44c24a618693254fd27028e7ee8dbfa679fbcd51d37",
-        "game/data/campaigns/200-01.json": "21f962eda726088752029d48b3d9c56c0b6b11d1d137aa2da0a39954d530f197",
-        "game/data/campaigns/201-05.json": "581ba5e9b533313f2a66d6beeed9d0c81e9d0419620acb2d2b3e8a0923357f5b",
-        "game/data/campaigns/207-09.json": "45d8085ff8ee17973175f777aa49dce22ee45bae84a3ad8bc6f2efa7b093be3b",
-        "game/data/campaigns/208-10.json": "41f66945f74581b4f30bae7f59929be514d10838442fcdedea4ee8d73e76c344",
-        "game/data/campaigns/209-06.json": "65689969a23777616df53687983a29ae05434645c96bd87e87fa64f293e7fd4b",
-        "game/data/campaigns/210-11.json": "385c7fe3789eec6d7840fbcd3657266490e3752f4208223c026f746518a0b4e2",
-        "game/data/campaigns/211-07.json": "d079bd4cd47f248e10493e64d697dfaa203550caa18938462cda22091a6a7f8d",
-        "game/data/campaigns/212-06.json": "c44cbb6dba9ff53b83cdc462e5617ce120e08bd26b9277415d56e8d7ce912372",
-        "game/data/campaigns/219-07.json": "3491a2eccfcfe5b3e81c83f7454de057e4ab3e4a2f85b5e87e4ba78b7c890203",
-        "game/data/campaigns/221-07.json": "729e8319482246a73b38bdfa17c8067b70f12a310bab042009b123061968b051",
-        "game/data/campaigns/225-07.json": "7840ea6f3624bedbadb542db34807c8efaa2068b27d8ffdfa1234a6f4b6a1131",
-        "game/data/campaigns/227-02.json": "1b7a6934f87c380393218f6c6877a9de9ead18f3631a6581ee5f4855a1ef940d",
-        "game/data/campaigns/234-02.json": "09e9db099364ecef064b199eaeb46162de3a7f5a79b5cd4641fa0983f7efe6a8",
-        "game/data/campaigns/235-01.json": "8cef0f641b68b62d155e8d65136d7183eecfeedade06c98107732998f6ce4e90",
-        "game/data/campaigns/238-01.json": "074160e2464ab38ce02ed42b916d45858a53ff99f8bd55c144e42064dc35cb39",
-        "game/data/campaigns/249-01.json": "b163d7e51bf44b2d3fff8f7098e4c675118d3f5c266a1c3baa63e47deca52eca",
-        "game/data/campaigns/263-05.json": "134613b25d5470a534a88b690ef252eac11840b66e01a5a0920c2cec5b922b54",
-        "game/data/campaigns/217-07.json": "117a2722563c7db7f1425e3787e086ec350476fa3912f2fca049461d1fa7147c"
+        "game/data/campaigns/184-02.json": "2fee82184b4d7819b847b2d4127cccf518b7bd468aea6f144a1d3dddd128933d",
+        "game/data/campaigns/188-06.json": "65f2cb85c17e72c5d47ed627cdf68a5ce156e48bde5cb7d33ced2c066c76a728",
+        "game/data/campaigns/190-01.json": "a51d8b78ba45e1a95f80c6a6ada5e2f1b725304d69acb32375b8e4e4f877e8ab",
+        "game/data/campaigns/191-10.json": "c8a6fc8ae95ab1c080c6782945e1aee76bc1f48f9e6a8e052c15635de6bca69b",
+        "game/data/campaigns/194-06.json": "c323ec810151684edb37d8f69d52163c14a8df30ae24925f03c2f69f89da2f9a",
+        "game/data/campaigns/196-06.json": "a91eaf493c9054f44d48e9e48b955b9b23614cd30498aa789826a020435d45e7",
+        "game/data/campaigns/197-07.json": "0f7b82750b9b1e05e65b6d32c5492f5377f68ef0ce10b440ec1d8d470bf8e5c1",
+        "game/data/campaigns/200-01.json": "5c507c7b0520278a7d9f99710993f206206e79e3c5e250c15d0cf3f86ab2ed93",
+        "game/data/campaigns/201-05.json": "80b185613771e85c8648a962b6de6f96290a743a2c803aadb36521160d870c00",
+        "game/data/campaigns/207-09.json": "27c457fc79bf3745d2b430d04ac56932df335c00a925d6fafcac6b3b15664206",
+        "game/data/campaigns/208-10.json": "8da714f4075ee49388cdb17f623a329ec5e6c107a2f161a32b1a8d54fd2ecce1",
+        "game/data/campaigns/209-06.json": "88b275d8322d07bcaaf7add88590f1fa3560ffe5acc098cd28f14836ea5e3205",
+        "game/data/campaigns/210-11.json": "cd040a8f9eb3063071c5e69a972f956063dd86bc688f240d3fc1b1be669af806",
+        "game/data/campaigns/211-07.json": "8aa64f59f30845639f4279b945ed8907fedfc606d022710986b6941f4ed157a1",
+        "game/data/campaigns/212-06.json": "c9202c840d33f861c027a13ed2c8ad322fdd0168f9815bd26253f050ae237338",
+        "game/data/campaigns/219-07.json": "2fc707d5f6aa0602bcffd091bd3f4a4fa93d7f61943fde23f85de58a749d8fd0",
+        "game/data/campaigns/221-07.json": "74315296dbd638993b747d70ac6f69f44d48bdcfe607ddc1486a0192773c64c7",
+        "game/data/campaigns/225-07.json": "906efc56a543d2220b2b05e8fdb2126c5798e9a7c358a66d05784c994de42b7f",
+        "game/data/campaigns/227-02.json": "e99152ee6fbfe81b329fee6335196034f1106237221e69015858aa28dfb46be7",
+        "game/data/campaigns/234-02.json": "8075e8d05b3d4118f69fe447d1fdca56d47ae1df32667cdc63891d7fa99f0dc3",
+        "game/data/campaigns/235-01.json": "c1e4ced033cfb70eb4134ef89fcb324a6a80524c64e2914d5cf34375eba8732d",
+        "game/data/campaigns/238-01.json": "09ef8ef81db40c1081b2d8355bbbe1b3685b8837e654296ee99d87a2bdc138ca",
+        "game/data/campaigns/249-01.json": "751d84e5c1978b84315d0f1b5ed672a0014e7d726c917729b35ffb597d981432",
+        "game/data/campaigns/263-05.json": "0db742b2b188031816bef45458dc74e3aa83194edda1000d311cbbd64f458056",
+        "game/data/campaigns/217-07.json": "78b28a4ace81f03c4ad0080a5a4c43b989a356c6820cb33905b70c7081d3241b"
       }
     },
     "style": [

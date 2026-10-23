@@ -157,7 +157,6 @@
         "xindu",
         "poyang",
         "luling",
-        "yidu",
         "qichun",
         "linhe",
         "nanhai",
@@ -462,7 +461,7 @@
         },
         {
           "person_id": "san14-candidate-0099",
-          "city": "nanjun",
+          "city": "yiyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -553,7 +552,7 @@
         },
         {
           "person_id": "san14-candidate-0158",
-          "city": "yidu",
+          "city": "yiyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -588,7 +587,7 @@
         },
         {
           "person_id": "san14-candidate-0165",
-          "city": "yiyang",
+          "city": "anping",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -693,7 +692,7 @@
         },
         {
           "person_id": "san14-candidate-0220",
-          "city": "nanjun",
+          "city": "yiyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -735,7 +734,7 @@
         },
         {
           "person_id": "san14-candidate-0244",
-          "city": "yidu",
+          "city": "nanjun",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -931,7 +930,7 @@
         },
         {
           "person_id": "san14-candidate-0325",
-          "city": "yidu",
+          "city": "nanjun",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1162,7 +1161,7 @@
         },
         {
           "person_id": "san14-candidate-0454",
-          "city": "yiyang",
+          "city": "beihai",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1687,7 +1686,7 @@
         },
         {
           "person_id": "san14-candidate-0721",
-          "city": "yidu",
+          "city": "nanjun",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1743,7 +1742,7 @@
         },
         {
           "person_id": "san14-candidate-0758",
-          "city": "yiyang",
+          "city": "bohai",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -3192,7 +3191,7 @@
           "donghai": "yuan_shao",
           "shanyang": "yuan_shao",
           "henan": "yuan_shao",
-          "yiyang": "yuan_shao",
+          "yiyang": "liu_biao",
           "yingchuan": "shu",
           "jiujiang": "yuan_shao",
           "jiangxia": "liu_biao",
@@ -3230,7 +3229,6 @@
           "xinggu": "liu_zhang",
           "yinping": "yuan_shao",
           "fuling": "liu_zhang",
-          "yidu": "liu_biao",
           "yan": "yuan_shao",
           "yuyang": "yuan_shao",
           "shanggu": "yuan_shao",
@@ -3266,74 +3264,51 @@
           "nanguang": "liu_zhang"
         },
         "delete": [
+          "yidu",
           "xinxing"
         ]
       },
       "appearance_locations": {
         "set": {
-          "san14-candidate-0002": "hanzhong",
-          "san14-candidate-0003": "jingzhao",
           "san14-candidate-0005": "xiangyang",
-          "san14-candidate-0006": "fengyi",
-          "san14-candidate-0008": "wei",
           "san14-candidate-0013": "zitong",
           "san14-candidate-0014": "runan",
           "san14-candidate-0015": "wujun",
           "san14-candidate-0016": "runan",
           "san14-candidate-0022": "nanyang",
-          "san14-candidate-0027": "tianshui",
           "san14-candidate-0028": "runan",
-          "san14-candidate-0029": "hedong",
           "san14-candidate-0030": "fufeng",
           "san14-candidate-0031": "henan",
-          "san14-candidate-0033": "henei",
-          "san14-candidate-0034": "jiujiang",
-          "san14-candidate-0035": "wei",
-          "san14-candidate-0037": "jiyin",
-          "san14-candidate-0039": "danyang",
-          "san14-candidate-0040": "changsha",
           "san14-candidate-0044": "dongjun",
           "san14-candidate-0051": "shujun",
-          "san14-candidate-0053": "guiyang",
           "san14-candidate-0055": "nanyang",
           "san14-candidate-0057": "liaoxi",
           "san14-candidate-0059": "henan",
           "san14-candidate-0061": "lujiang",
-          "san14-candidate-0062": "qiao",
-          "san14-candidate-0063": "badong",
-          "san14-candidate-0067": "runan",
           "san14-candidate-0068": "taiyuan",
           "san14-candidate-0071": "nanyang",
           "san14-candidate-0072": "zitong",
           "san14-candidate-0073": "baxi",
           "san14-candidate-0075": "fuling",
-          "san14-candidate-0076": "wudu",
           "san14-candidate-0077": "taiyuan",
-          "san14-candidate-0078": "guanghan",
           "san14-candidate-0079": "shujun",
           "san14-candidate-0080": "runan",
           "san14-candidate-0082": "qiao",
           "san14-candidate-0083": "wei",
-          "san14-candidate-0084": "jiangxia",
-          "san14-candidate-0085": "lingling",
           "san14-candidate-0089": "henan",
           "san14-candidate-0091": "kuaiji",
           "san14-candidate-0092": "nanyang",
           "san14-candidate-0093": "yingchuan",
-          "san14-candidate-0094": "xihe",
-          "san14-candidate-0095": "runan",
-          "san14-candidate-0099": "nanjun",
+          "san14-candidate-0099": "yiyang",
           "san14-candidate-0100": "taiyuan",
           "san14-candidate-0101": "wei",
           "san14-candidate-0102": "nanyang",
           "san14-candidate-0104": "dongjun",
-          "san14-candidate-0105": "xincheng",
           "san14-candidate-0107": "nanyang",
           "san14-candidate-0109": "nanyang",
           "san14-candidate-0111": "taiyuan",
           "san14-candidate-0113": "yingchuan",
           "san14-candidate-0114": "runan",
-          "san14-candidate-0115": "nanyang",
           "san14-candidate-0120": "chenliu",
           "san14-candidate-0121": "yingchuan",
           "san14-candidate-0122": "runan",
@@ -3349,123 +3324,74 @@
           "san14-candidate-0148": "wuling",
           "san14-candidate-0150": "nanyang",
           "san14-candidate-0153": "henan",
-          "san14-candidate-0158": "yidu",
           "san14-candidate-0159": "nanyang",
-          "san14-candidate-0160": "yinping",
           "san14-candidate-0161": "nanyang",
           "san14-candidate-0162": "nanyang",
-          "san14-candidate-0163": "yingchuan",
-          "san14-candidate-0165": "yiyang",
-          "san14-candidate-0166": "hongnong",
-          "san14-candidate-0167": "changsha",
           "san14-candidate-0171": "kuaiji",
           "san14-candidate-0172": "guiyang",
-          "san14-candidate-0174": "liaodong",
-          "san14-candidate-0177": "fengyi",
           "san14-candidate-0179": "jiangxia",
-          "san14-candidate-0181": "hedong",
           "san14-candidate-0183": "henan",
           "san14-candidate-0185": "chenliu",
           "san14-candidate-0189": "nanyang",
           "san14-candidate-0195": "qiao",
           "san14-candidate-0197": "nanyang",
           "san14-candidate-0204": "wuling",
-          "san14-candidate-0212": "lingling",
           "san14-candidate-0213": "jiaozhi",
           "san14-candidate-0214": "jiaozhi",
           "san14-candidate-0215": "nanyang",
           "san14-candidate-0216": "runan",
-          "san14-candidate-0217": "henan",
-          "san14-candidate-0218": "danyang",
-          "san14-candidate-0220": "nanjun",
-          "san14-candidate-0223": "wuling",
+          "san14-candidate-0220": "yiyang",
           "san14-candidate-0225": "luling",
-          "san14-candidate-0228": "lingling",
           "san14-candidate-0231": "wenshan",
           "san14-candidate-0235": "wujun",
           "san14-candidate-0236": "henei",
           "san14-candidate-0241": "zangke",
-          "san14-candidate-0244": "yidu",
           "san14-candidate-0245": "yingchuan",
           "san14-candidate-0246": "nanyang",
           "san14-candidate-0247": "qichun",
-          "san14-candidate-0248": "jiujiang",
           "san14-candidate-0249": "nanyang",
           "san14-candidate-0250": "zitong",
           "san14-candidate-0253": "jiyin",
           "san14-candidate-0259": "jingzhao",
-          "san14-candidate-0260": "changsha",
-          "san14-candidate-0264": "liaodong",
-          "san14-candidate-0268": "liaodong",
           "san14-candidate-0271": "guiyang",
           "san14-candidate-0273": "chenliu",
-          "san14-candidate-0274": "badong",
-          "san14-candidate-0275": "liaoxi",
-          "san14-candidate-0280": "nanyang",
-          "san14-candidate-0281": "qiao",
-          "san14-candidate-0285": "jiangxia",
           "san14-candidate-0287": "liaodong",
           "san14-candidate-0288": "wujun",
-          "san14-candidate-0289": "yulin",
-          "san14-candidate-0292": "yuzhang",
           "san14-candidate-0293": "yuzhang",
           "san14-candidate-0295": "beihai",
-          "san14-candidate-0296": "runan",
-          "san14-candidate-0300": "wujun",
           "san14-candidate-0303": "danyang",
-          "san14-candidate-0308": "nanyang",
           "san14-candidate-0309": "dongjun",
           "san14-candidate-0311": "kuaiji",
           "san14-candidate-0314": "wujun",
           "san14-candidate-0315": "fuling",
-          "san14-candidate-0317": "wudu",
           "san14-candidate-0318": "taiyuan",
-          "san14-candidate-0319": "lingling",
-          "san14-candidate-0320": "nanjun",
-          "san14-candidate-0321": "wuling",
-          "san14-candidate-0322": "pingyuan",
-          "san14-candidate-0324": "xiangyang",
-          "san14-candidate-0325": "yidu",
           "san14-candidate-0328": "pingyuan",
-          "san14-candidate-0333": "runan",
           "san14-candidate-0335": "kuaiji",
           "san14-candidate-0344": "henan",
           "san14-candidate-0347": "xiangyang",
           "san14-candidate-0350": "henan",
-          "san14-candidate-0353": "nanyang",
           "san14-candidate-0355": "guanghan",
           "san14-candidate-0357": "jiameng",
           "san14-candidate-0358": "danyang",
           "san14-candidate-0361": "wujun",
           "san14-candidate-0366": "shujun",
           "san14-candidate-0369": "lujiang",
-          "san14-candidate-0370": "lujiang",
           "san14-candidate-0371": "runan",
           "san14-candidate-0373": "hepu",
           "san14-candidate-0376": "xiangyang",
           "san14-candidate-0377": "xiangyang",
-          "san14-candidate-0379": "kuaiji",
           "san14-candidate-0380": "yingchuan",
           "san14-candidate-0381": "wujun",
           "san14-candidate-0382": "wujun",
           "san14-candidate-0383": "yunnan",
-          "san14-candidate-0384": "jiujiang",
           "san14-candidate-0385": "yingchuan",
           "san14-candidate-0386": "henan",
           "san14-candidate-0389": "linhe",
           "san14-candidate-0390": "lujiang",
-          "san14-candidate-0393": "nanyang",
           "san14-candidate-0394": "yingchuan",
-          "san14-candidate-0399": "xihe",
-          "san14-candidate-0402": "runan",
           "san14-candidate-0405": "lingling",
           "san14-candidate-0407": "nanyang",
-          "san14-candidate-0409": "xiapi",
-          "san14-candidate-0410": "xincheng",
-          "san14-candidate-0411": "luling",
           "san14-candidate-0412": "qichun",
-          "san14-candidate-0416": "yinping",
-          "san14-candidate-0417": "yingchuan",
           "san14-candidate-0418": "donghai",
           "san14-candidate-0419": "xiangyang",
           "san14-candidate-0424": "runan",
@@ -3475,26 +3401,18 @@
           "san14-candidate-0430": "wujun",
           "san14-candidate-0433": "xiangyang",
           "san14-candidate-0440": "xiangyang",
-          "san14-candidate-0441": "runan",
           "san14-candidate-0442": "nanyang",
-          "san14-candidate-0443": "wujun",
           "san14-candidate-0446": "xiangyang",
           "san14-candidate-0447": "taiyuan",
           "san14-candidate-0448": "wujun",
           "san14-candidate-0449": "wujun",
           "san14-candidate-0450": "runan",
           "san14-candidate-0451": "yan",
-          "san14-candidate-0454": "yiyang",
           "san14-candidate-0457": "wei",
           "san14-candidate-0459": "fengyi",
-          "san14-candidate-0460": "nanyang",
-          "san14-candidate-0462": "yuzhang",
-          "san14-candidate-0464": "hedong",
           "san14-candidate-0465": "henan",
-          "san14-candidate-0466": "henei",
           "san14-candidate-0467": "shujun",
           "san14-candidate-0468": "wei",
-          "san14-candidate-0474": "longxi",
           "san14-candidate-0475": "tianshui",
           "san14-candidate-0479": "xiangyang",
           "san14-candidate-0484": "jiaozhi",
@@ -3511,30 +3429,21 @@
           "san14-candidate-0509": "wei",
           "san14-candidate-0511": "runan",
           "san14-candidate-0513": "jiujiang",
-          "san14-candidate-0514": "nanyang",
           "san14-candidate-0515": "yingchuan",
           "san14-candidate-0516": "yingchuan",
           "san14-candidate-0517": "yingchuan",
           "san14-candidate-0518": "nanyang",
           "san14-candidate-0520": "wei",
           "san14-candidate-0521": "nanyang",
-          "san14-candidate-0523": "yingchuan",
           "san14-candidate-0524": "guiyang",
           "san14-candidate-0525": "runan",
           "san14-candidate-0526": "nanyang",
           "san14-candidate-0528": "wei",
           "san14-candidate-0531": "wei",
           "san14-candidate-0532": "nanyang",
-          "san14-candidate-0534": "jiujiang",
-          "san14-candidate-0535": "jiyin",
           "san14-candidate-0536": "anding",
           "san14-candidate-0537": "jiangxia",
-          "san14-candidate-0539": "liaoxi",
-          "san14-candidate-0543": "kuaiji",
           "san14-candidate-0544": "wujun",
-          "san14-candidate-0545": "runan",
-          "san14-candidate-0549": "linhe",
-          "san14-candidate-0552": "yingchuan",
           "san14-candidate-0553": "wujun",
           "san14-candidate-0555": "lujiang",
           "san14-candidate-0558": "wujun",
@@ -3542,131 +3451,81 @@
           "san14-candidate-0562": "wujun",
           "san14-candidate-0564": "wujun",
           "san14-candidate-0565": "wujun",
-          "san14-candidate-0567": "luling",
-          "san14-candidate-0572": "qichun",
-          "san14-candidate-0574": "wujun",
-          "san14-candidate-0575": "yulin",
-          "san14-candidate-0576": "yuzhang",
           "san14-candidate-0579": "yan",
           "san14-candidate-0581": "wujun",
           "san14-candidate-0582": "wujun",
-          "san14-candidate-0583": "danyang",
-          "san14-candidate-0584": "danyang",
           "san14-candidate-0585": "danyang",
-          "san14-candidate-0586": "hepu",
           "san14-candidate-0587": "yunnan",
           "san14-candidate-0589": "bajun",
           "san14-candidate-0591": "wuling",
-          "san14-candidate-0592": "nanyang",
           "san14-candidate-0593": "taiyuan",
-          "san14-candidate-0595": "lingling",
           "san14-candidate-0596": "runan",
-          "san14-candidate-0597": "hanzhong",
           "san14-candidate-0600": "wenshan",
-          "san14-candidate-0601": "taiyuan",
-          "san14-candidate-0602": "taiyuan",
-          "san14-candidate-0603": "anding",
-          "san14-candidate-0606": "jiujiang",
           "san14-candidate-0608": "runan",
-          "san14-candidate-0609": "qiao",
           "san14-candidate-0613": "shujun",
-          "san14-candidate-0614": "jiujiang",
           "san14-candidate-0615": "nanyang",
           "san14-candidate-0616": "taiyuan",
-          "san14-candidate-0617": "kuaiji",
           "san14-candidate-0618": "wudu",
           "san14-candidate-0621": "tianshui",
           "san14-candidate-0623": "nanyang",
-          "san14-candidate-0625": "runan",
           "san14-candidate-0626": "jingzhao",
-          "san14-candidate-0627": "zangke",
           "san14-candidate-0630": "henan",
           "san14-candidate-0631": "linhe",
-          "san14-candidate-0632": "zitong",
           "san14-candidate-0633": "nanyang",
           "san14-candidate-0634": "lujiang",
-          "san14-candidate-0635": "runan",
-          "san14-candidate-0637": "badong",
-          "san14-candidate-0642": "nanjun",
           "san14-candidate-0643": "nanyang",
           "san14-candidate-0644": "badong",
           "san14-candidate-0645": "wujun",
-          "san14-candidate-0651": "xihe",
           "san14-candidate-0652": "wuling",
           "san14-candidate-0654": "wuling",
-          "san14-candidate-0655": "runan",
           "san14-candidate-0656": "chenliu",
           "san14-candidate-0658": "nanyang",
           "san14-candidate-0663": "nanyang",
           "san14-candidate-0665": "nanjun",
-          "san14-candidate-0666": "hanzhong",
-          "san14-candidate-0668": "guiyang",
           "san14-candidate-0669": "kuaiji",
           "san14-candidate-0672": "donghai",
           "san14-candidate-0673": "runan",
-          "san14-candidate-0674": "yingchuan",
-          "san14-candidate-0678": "xiangyang",
           "san14-candidate-0679": "lujiang",
           "san14-candidate-0680": "bajun",
           "san14-candidate-0681": "xincheng",
-          "san14-candidate-0683": "chenliu",
           "san14-candidate-0684": "runan",
-          "san14-candidate-0686": "luling",
-          "san14-candidate-0687": "jiujiang",
-          "san14-candidate-0688": "yinping",
           "san14-candidate-0689": "nanyang",
           "san14-candidate-0692": "qiao",
-          "san14-candidate-0693": "fufeng",
           "san14-candidate-0695": "kuaiji",
           "san14-candidate-0696": "runan",
           "san14-candidate-0697": "wujun",
           "san14-candidate-0698": "yingchuan",
-          "san14-candidate-0701": "fuling",
           "san14-candidate-0702": "nanyang",
-          "san14-candidate-0703": "qichun",
           "san14-candidate-0704": "dongjun",
           "san14-candidate-0705": "jiaozhi",
           "san14-candidate-0707": "lujiang",
-          "san14-candidate-0712": "yuyang",
           "san14-candidate-0714": "runan",
           "san14-candidate-0715": "yan",
           "san14-candidate-0718": "bajun",
           "san14-candidate-0719": "guanghan",
-          "san14-candidate-0721": "yidu",
           "san14-candidate-0725": "shujun",
           "san14-candidate-0728": "anding",
           "san14-candidate-0729": "nanyang",
-          "san14-candidate-0731": "wujun",
           "san14-candidate-0735": "nanyang",
-          "san14-candidate-0740": "yuyang",
           "san14-candidate-0745": "nanjun",
-          "san14-candidate-0747": "changsha",
           "san14-candidate-0749": "shujun",
           "san14-candidate-0750": "nanyang",
           "san14-candidate-0751": "runan",
           "san14-candidate-0756": "xiangyang",
           "san14-candidate-0757": "hongnong",
-          "san14-candidate-0758": "yiyang",
-          "san14-candidate-0759": "jingzhao",
-          "san14-candidate-0760": "longxi",
           "san14-candidate-0764": "tianshui",
           "san14-candidate-0765": "xiangyang",
           "san14-candidate-0766": "tianshui",
           "san14-candidate-0767": "yuzhang",
           "san14-candidate-0768": "zitong",
           "san14-candidate-0769": "anding",
-          "san14-candidate-0770": "fufeng",
-          "san14-candidate-0771": "wuwei",
           "san14-candidate-0774": "xiangyang",
           "san14-candidate-0776": "badong",
-          "san14-candidate-0778": "wei",
           "san14-candidate-0780": "wuling",
           "san14-candidate-0781": "yulin",
           "san14-candidate-0787": "bajun",
           "san14-candidate-0789": "bajun",
-          "san14-candidate-0790": "danyang",
           "san14-candidate-0791": "jiameng",
-          "san14-candidate-0792": "yingchuan",
           "san14-candidate-0793": "chenliu",
           "san14-candidate-0795": "yingchuan",
           "san14-candidate-0796": "tianshui",
@@ -3680,92 +3539,59 @@
           "san14-candidate-0810": "yingchuan",
           "san14-candidate-0814": "jiangxia",
           "san14-candidate-0816": "nanyang",
-          "san14-candidate-0819": "wuwei",
-          "san14-candidate-0822": "fengyi",
           "san14-candidate-0823": "shujun",
           "san14-candidate-0824": "dongjun",
           "san14-candidate-0827": "wenshan",
-          "san14-candidate-0828": "xiangyang",
           "san14-candidate-0830": "jingzhao",
-          "san14-candidate-0831": "guiyang",
           "san14-candidate-0832": "xiangyang",
           "san14-candidate-0834": "xiangyang",
           "san14-candidate-0838": "wujun",
           "san14-candidate-0841": "wujun",
           "san14-candidate-0842": "runan",
-          "san14-candidate-0844": "nanyang",
           "san14-candidate-0845": "yunnan",
           "san14-candidate-0846": "xiangyang",
           "san14-candidate-0847": "zangke",
           "san14-candidate-0849": "zitong",
           "san14-candidate-0850": "yunnan",
           "san14-candidate-0851": "jingzhao",
-          "san14-candidate-0852": "danyang",
-          "san14-candidate-0854": "badong",
           "san14-candidate-0855": "jianning",
           "san14-candidate-0856": "xiangyang",
           "san14-candidate-0857": "shujun",
-          "san14-candidate-0862": "hanzhong",
           "san14-candidate-0863": "zitong",
-          "san14-candidate-0864": "longxi",
           "san14-candidate-0866": "runan",
           "san14-candidate-0867": "tianshui",
-          "san14-candidate-0868": "hanzhong",
-          "san14-candidate-0869": "hanzhong",
           "san14-candidate-0872": "bajun",
-          "san14-candidate-0876": "hanzhong",
           "san14-candidate-0877": "nanyang",
           "san14-candidate-0879": "tianshui",
           "san14-candidate-0883": "lingling",
-          "san14-candidate-0884": "lujiang",
           "san14-candidate-0886": "baxi",
-          "san14-candidate-0887": "jiujiang",
           "san14-candidate-0888": "fuling",
           "san14-candidate-0889": "kuaiji",
           "san14-candidate-0891": "wuling",
           "san14-candidate-0892": "jianning",
-          "san14-candidate-0895": "anding",
           "san14-candidate-0899": "wujun",
           "san14-candidate-0901": "wujun",
           "san14-candidate-0902": "wujun",
           "san14-candidate-0904": "nanyang",
           "san14-candidate-0910": "shujun",
-          "san14-candidate-0911": "runan",
           "san14-candidate-0912": "shujun",
-          "san14-candidate-0913": "nanyang",
-          "san14-candidate-0914": "hedong",
           "san14-candidate-0915": "guanghan",
           "san14-candidate-0926": "runan",
-          "san14-candidate-0928": "jiameng",
-          "san14-candidate-0929": "lingling",
           "san14-candidate-0930": "yuzhang",
-          "san14-candidate-0931": "liaodong",
-          "san14-candidate-0933": "nanyang",
           "san14-candidate-0934": "lingling",
           "san14-candidate-0935": "kuaiji",
-          "san14-candidate-0936": "henan",
           "san14-candidate-0937": "shujun",
           "san14-candidate-0938": "shujun",
           "san14-candidate-0939": "wei",
           "san14-candidate-0944": "nanjun",
-          "san14-candidate-0946": "xiangyang",
-          "san14-candidate-0947": "runan",
-          "san14-candidate-0949": "wuling",
           "san14-candidate-0950": "lingling",
-          "san14-candidate-0951": "xiangyang",
           "san14-candidate-0952": "yingchuan",
-          "san14-candidate-0953": "xiangyang",
           "san14-candidate-0955": "lingling",
-          "san14-candidate-0956": "nanyang",
-          "san14-candidate-0958": "runan",
           "san14-candidate-0959": "changsha",
           "san14-candidate-0960": "yan",
-          "san14-candidate-0961": "wenshan",
           "san14-candidate-0962": "runan",
           "san14-candidate-0968": "runan",
-          "san14-candidate-0969": "fufeng",
           "san14-candidate-0971": "nanyang",
-          "san14-candidate-0973": "danyang",
           "san14-candidate-0974": "wujun",
           "san14-candidate-0975": "runan",
           "san14-candidate-0976": "wuling",
@@ -3773,29 +3599,202 @@
           "san14-candidate-0979": "runan",
           "san14-candidate-0980": "nanyang",
           "san14-candidate-0981": "taiyuan",
-          "san14-candidate-0983": "henei",
-          "san14-candidate-0984": "jiujiang",
           "san14-candidate-0985": "danyang",
           "san14-candidate-0986": "hepu",
           "san14-candidate-0988": "kuaiji",
-          "san14-candidate-0992": "shujun",
           "san14-candidate-0993": "yan",
-          "san14-candidate-0994": "nanyang",
-          "san14-candidate-0996": "yuyang",
-          "san14-candidate-0997": "linhe",
           "san14-candidate-0999": "runan",
           "historical-expansion-0001": "dai",
-          "historical-expansion-0002": "fanyang"
+          "historical-expansion-0002": "fanyang",
+          "san14-candidate-0002": "hanzhong",
+          "san14-candidate-0003": "jingzhao",
+          "san14-candidate-0006": "fengyi",
+          "san14-candidate-0008": "wei",
+          "san14-candidate-0027": "tianshui",
+          "san14-candidate-0029": "hedong",
+          "san14-candidate-0033": "henei",
+          "san14-candidate-0034": "jiujiang",
+          "san14-candidate-0035": "wei",
+          "san14-candidate-0037": "jiyin",
+          "san14-candidate-0039": "danyang",
+          "san14-candidate-0040": "changsha",
+          "san14-candidate-0053": "guiyang",
+          "san14-candidate-0062": "qiao",
+          "san14-candidate-0063": "badong",
+          "san14-candidate-0067": "runan",
+          "san14-candidate-0076": "wudu",
+          "san14-candidate-0078": "guanghan",
+          "san14-candidate-0084": "jiangxia",
+          "san14-candidate-0085": "lingling",
+          "san14-candidate-0094": "xihe",
+          "san14-candidate-0095": "runan",
+          "san14-candidate-0105": "xincheng",
+          "san14-candidate-0115": "nanyang",
+          "san14-candidate-0158": "yiyang",
+          "san14-candidate-0160": "yinping",
+          "san14-candidate-0163": "yingchuan",
+          "san14-candidate-0165": "anping",
+          "san14-candidate-0166": "hongnong",
+          "san14-candidate-0167": "changsha",
+          "san14-candidate-0174": "liaodong",
+          "san14-candidate-0177": "fengyi",
+          "san14-candidate-0181": "hedong",
+          "san14-candidate-0212": "lingling",
+          "san14-candidate-0217": "henan",
+          "san14-candidate-0218": "danyang",
+          "san14-candidate-0223": "wuling",
+          "san14-candidate-0228": "lingling",
+          "san14-candidate-0244": "nanjun",
+          "san14-candidate-0248": "jiujiang",
+          "san14-candidate-0260": "changsha",
+          "san14-candidate-0264": "liaodong",
+          "san14-candidate-0268": "liaodong",
+          "san14-candidate-0274": "badong",
+          "san14-candidate-0275": "liaoxi",
+          "san14-candidate-0280": "nanyang",
+          "san14-candidate-0281": "qiao",
+          "san14-candidate-0285": "jiangxia",
+          "san14-candidate-0289": "yulin",
+          "san14-candidate-0292": "yuzhang",
+          "san14-candidate-0296": "runan",
+          "san14-candidate-0300": "wujun",
+          "san14-candidate-0308": "nanyang",
+          "san14-candidate-0317": "wudu",
+          "san14-candidate-0319": "lingling",
+          "san14-candidate-0320": "nanjun",
+          "san14-candidate-0321": "wuling",
+          "san14-candidate-0322": "pingyuan",
+          "san14-candidate-0324": "xiangyang",
+          "san14-candidate-0325": "nanjun",
+          "san14-candidate-0333": "runan",
+          "san14-candidate-0353": "nanyang",
+          "san14-candidate-0370": "lujiang",
+          "san14-candidate-0379": "kuaiji",
+          "san14-candidate-0384": "jiujiang",
+          "san14-candidate-0393": "nanyang",
+          "san14-candidate-0399": "xihe",
+          "san14-candidate-0402": "runan",
+          "san14-candidate-0409": "xiapi",
+          "san14-candidate-0410": "xincheng",
+          "san14-candidate-0411": "luling",
+          "san14-candidate-0416": "yinping",
+          "san14-candidate-0417": "yingchuan",
+          "san14-candidate-0441": "runan",
+          "san14-candidate-0443": "wujun",
+          "san14-candidate-0454": "beihai",
+          "san14-candidate-0460": "nanyang",
+          "san14-candidate-0462": "yuzhang",
+          "san14-candidate-0464": "hedong",
+          "san14-candidate-0466": "henei",
+          "san14-candidate-0474": "longxi",
+          "san14-candidate-0514": "nanyang",
+          "san14-candidate-0523": "yingchuan",
+          "san14-candidate-0534": "jiujiang",
+          "san14-candidate-0535": "jiyin",
+          "san14-candidate-0539": "liaoxi",
+          "san14-candidate-0543": "kuaiji",
+          "san14-candidate-0545": "runan",
+          "san14-candidate-0549": "linhe",
+          "san14-candidate-0552": "yingchuan",
+          "san14-candidate-0567": "luling",
+          "san14-candidate-0572": "qichun",
+          "san14-candidate-0574": "wujun",
+          "san14-candidate-0575": "yulin",
+          "san14-candidate-0576": "yuzhang",
+          "san14-candidate-0583": "danyang",
+          "san14-candidate-0584": "danyang",
+          "san14-candidate-0586": "hepu",
+          "san14-candidate-0592": "nanyang",
+          "san14-candidate-0595": "lingling",
+          "san14-candidate-0597": "hanzhong",
+          "san14-candidate-0601": "taiyuan",
+          "san14-candidate-0602": "taiyuan",
+          "san14-candidate-0603": "anding",
+          "san14-candidate-0606": "jiujiang",
+          "san14-candidate-0609": "qiao",
+          "san14-candidate-0614": "jiujiang",
+          "san14-candidate-0617": "kuaiji",
+          "san14-candidate-0625": "runan",
+          "san14-candidate-0627": "zangke",
+          "san14-candidate-0632": "zitong",
+          "san14-candidate-0635": "runan",
+          "san14-candidate-0637": "badong",
+          "san14-candidate-0642": "nanjun",
+          "san14-candidate-0651": "xihe",
+          "san14-candidate-0655": "runan",
+          "san14-candidate-0666": "hanzhong",
+          "san14-candidate-0668": "guiyang",
+          "san14-candidate-0674": "yingchuan",
+          "san14-candidate-0678": "xiangyang",
+          "san14-candidate-0683": "chenliu",
+          "san14-candidate-0686": "luling",
+          "san14-candidate-0687": "jiujiang",
+          "san14-candidate-0688": "yinping",
+          "san14-candidate-0693": "fufeng",
+          "san14-candidate-0701": "fuling",
+          "san14-candidate-0703": "qichun",
+          "san14-candidate-0712": "yuyang",
+          "san14-candidate-0721": "nanjun",
+          "san14-candidate-0731": "wujun",
+          "san14-candidate-0740": "yuyang",
+          "san14-candidate-0747": "changsha",
+          "san14-candidate-0758": "bohai",
+          "san14-candidate-0759": "jingzhao",
+          "san14-candidate-0760": "longxi",
+          "san14-candidate-0770": "fufeng",
+          "san14-candidate-0771": "wuwei",
+          "san14-candidate-0778": "wei",
+          "san14-candidate-0790": "danyang",
+          "san14-candidate-0792": "yingchuan",
+          "san14-candidate-0819": "wuwei",
+          "san14-candidate-0822": "fengyi",
+          "san14-candidate-0828": "xiangyang",
+          "san14-candidate-0831": "guiyang",
+          "san14-candidate-0844": "nanyang",
+          "san14-candidate-0852": "danyang",
+          "san14-candidate-0854": "badong",
+          "san14-candidate-0862": "hanzhong",
+          "san14-candidate-0864": "longxi",
+          "san14-candidate-0868": "hanzhong",
+          "san14-candidate-0869": "hanzhong",
+          "san14-candidate-0876": "hanzhong",
+          "san14-candidate-0884": "lujiang",
+          "san14-candidate-0887": "jiujiang",
+          "san14-candidate-0895": "anding",
+          "san14-candidate-0911": "runan",
+          "san14-candidate-0913": "nanyang",
+          "san14-candidate-0914": "hedong",
+          "san14-candidate-0928": "jiameng",
+          "san14-candidate-0929": "lingling",
+          "san14-candidate-0931": "liaodong",
+          "san14-candidate-0933": "nanyang",
+          "san14-candidate-0936": "henan",
+          "san14-candidate-0946": "xiangyang",
+          "san14-candidate-0947": "runan",
+          "san14-candidate-0949": "wuling",
+          "san14-candidate-0951": "xiangyang",
+          "san14-candidate-0953": "xiangyang",
+          "san14-candidate-0956": "nanyang",
+          "san14-candidate-0958": "runan",
+          "san14-candidate-0961": "wenshan",
+          "san14-candidate-0969": "fufeng",
+          "san14-candidate-0973": "danyang",
+          "san14-candidate-0983": "henei",
+          "san14-candidate-0984": "jiujiang",
+          "san14-candidate-0992": "shujun",
+          "san14-candidate-0994": "nanyang",
+          "san14-candidate-0996": "yuyang",
+          "san14-candidate-0997": "linhe"
         }
       },
       "faction_rulers": {
         "set": {
+          "gongsun": 267,
           "yuan_shao": 34,
           "liu_biao": 952,
           "liu_zhang": 937,
           "ma_teng": 770,
-          "zhang_lu": 665,
-          "gongsun": 267
+          "zhang_lu": 665
         }
       },
       "coverage": {
@@ -6994,7 +6993,7 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "nanjun",
+              "city": "yiyang",
               "death_year_resolved": false,
               "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
               "source_snapshot": "mainland200-01-v11"
@@ -7004,17 +7003,17 @@
                 "set": {
                   "faction": "liu_biao",
                   "origin": "xiangyang",
-                  "city": "nanjun"
+                  "city": "yiyang"
                 }
               },
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "城池歸屬修正後，自同勢力現有武將中均衡補駐；並非聲稱該人物有確證的本城任官記錄。"
                 }
               },
               "appearance_plan": {
@@ -7023,7 +7022,7 @@
                     201,
                     5
                   ],
-                  "city": "nanjun"
+                  "city": "yiyang"
                 }
               }
             }
@@ -8578,14 +8577,14 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "yidu",
+              "city": "yiyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0158",
                 "faction": "liu_biao",
                 "origin": "xiangyang",
-                "city": "yidu",
+                "city": "yiyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -8597,12 +8596,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "note": "城池歸屬修正後，自同勢力現有武將中均衡補駐；並非聲稱該人物有確證的本城任官記錄。",
                   "historical_certainty": "authorial_region_placement"
                 }
               },
@@ -8616,7 +8615,7 @@
                     208,
                     12
                   ],
-                  "city": "yidu",
+                  "city": "yiyang",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -8877,14 +8876,14 @@
               "source_ruler": "袁绍",
               "year_state": "available",
               "faction": "yuan_shao",
-              "city": "yiyang",
+              "city": "anping",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0165",
                 "faction": "yuan_shao",
                 "origin": "wei",
-                "city": "yiyang",
+                "city": "anping",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -8896,12 +8895,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。",
                   "historical_certainty": "authorial_region_placement"
                 }
               },
@@ -8915,7 +8914,7 @@
                     207,
                     12
                   ],
-                  "city": "yiyang",
+                  "city": "anping",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -10533,7 +10532,7 @@
             "set": {
               "source_ruler": "刘表",
               "faction": "liu_biao",
-              "city": "nanjun",
+              "city": "yiyang",
               "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
               "source_snapshot": "mainland200-01-v11"
             },
@@ -10542,17 +10541,17 @@
                 "set": {
                   "faction": "liu_biao",
                   "origin": "xiangyang",
-                  "city": "nanjun"
+                  "city": "yiyang"
                 }
               },
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "城池歸屬修正後，自同勢力現有武將中均衡補駐；並非聲稱該人物有確證的本城任官記錄。"
                 }
               },
               "appearance_plan": {
@@ -10561,7 +10560,7 @@
                     201,
                     5
                   ],
-                  "city": "nanjun"
+                  "city": "yiyang"
                 }
               }
             }
@@ -11191,14 +11190,14 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "yidu",
+              "city": "nanjun",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0244",
                 "faction": "liu_biao",
                 "origin": "xiangyang",
-                "city": "yidu",
+                "city": "nanjun",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -11210,12 +11209,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。",
                   "historical_certainty": "authorial_region_placement"
                 }
               },
@@ -11229,7 +11228,7 @@
                     208,
                     12
                   ],
-                  "city": "yidu",
+                  "city": "nanjun",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -13824,14 +13823,14 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "yidu",
+              "city": "nanjun",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0325",
                 "faction": "liu_biao",
                 "origin": "xiangyang",
-                "city": "yidu",
+                "city": "nanjun",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -13843,12 +13842,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。",
                   "historical_certainty": "authorial_region_placement"
                 }
               },
@@ -13862,7 +13861,7 @@
                     208,
                     12
                   ],
-                  "city": "yidu",
+                  "city": "nanjun",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -17374,14 +17373,14 @@
               "source_ruler": "袁绍",
               "year_state": "available",
               "faction": "yuan_shao",
-              "city": "yiyang",
+              "city": "beihai",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0454",
                 "faction": "yuan_shao",
                 "origin": "wei",
-                "city": "yiyang",
+                "city": "beihai",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -17393,12 +17392,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。",
                   "historical_certainty": "authorial_region_placement"
                 }
               },
@@ -17412,7 +17411,7 @@
                     209,
                     12
                   ],
-                  "city": "yiyang",
+                  "city": "beihai",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -19256,6 +19255,15 @@
                   }
                 }
               },
+              "source_city_reference": {
+                "set": {
+                  "source_scenario_date": [
+                    201,
+                    5
+                  ],
+                  "title": "華北の覇者・袁紹"
+                }
+              },
               "placement_review": {
                 "set": {
                   "basis": "retained_explicit_IF_membership",
@@ -19267,15 +19275,6 @@
                   "reference_date": null,
                   "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "source_city_reference": {
-                "set": {
-                  "source_scenario_date": [
-                    201,
-                    5
-                  ],
-                  "title": "華北の覇者・袁紹"
                 }
               },
               "appearance_plan": {
@@ -25754,14 +25753,14 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "yidu",
+              "city": "nanjun",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0721",
                 "faction": "liu_biao",
                 "origin": "xiangyang",
-                "city": "yidu",
+                "city": "nanjun",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -25773,12 +25772,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。",
                   "historical_certainty": "authorial_region_placement"
                 }
               },
@@ -25792,7 +25791,7 @@
                     216,
                     12
                   ],
-                  "city": "yidu",
+                  "city": "nanjun",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -26729,14 +26728,14 @@
               "source_ruler": "袁绍",
               "year_state": "available",
               "faction": "yuan_shao",
-              "city": "yiyang",
+              "city": "bohai",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0758",
                 "faction": "yuan_shao",
                 "origin": "wei",
-                "city": "yiyang",
+                "city": "bohai",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -26748,12 +26747,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_IF_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                    "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。",
                   "historical_certainty": "authorial_region_placement"
                 }
               },
@@ -26767,7 +26766,7 @@
                     208,
                     12
                   ],
-                  "city": "yiyang",
+                  "city": "bohai",
                   "status": "serving",
                   "basis": "person_specific_SAN14_location_board_proxy"
                 }
@@ -34421,6 +34420,11 @@
             "set": {
               "year_state": "not_born"
             }
+          },
+          "historical-expansion-0023": {
+            "set": {
+              "city": "nanjun"
+            }
           }
         }
       },
@@ -34428,24 +34432,24 @@
         "set": {
           "group": "if",
           "title": "華北霸者・袁紹",
+          "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+          "summary": "袁紹勝官渡；劉備取得許昌、馬騰取得長安，曹操退據宛城。",
+          "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
+          "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
+          "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
           "title_i18n": {
             "zh-Hant": "華北霸者・袁紹",
             "ja": "華北の覇者・袁紹"
           },
-          "summary": "袁紹勝官渡；劉備取得許昌、馬騰取得長安，曹操退據宛城。",
           "summary_i18n": {
             "zh-Hant": "袁紹勝官渡；劉備取得許昌、馬騰取得長安，曹操退據宛城。",
             "ja": "袁紹が官渡に勝利し、劉備は許昌、馬騰は長安を得る。曹操は宛へ退く。"
           },
           "fictional": true,
-          "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
           "source_urls": [
             "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
             "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
           ],
-          "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
-          "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
-          "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
           "category": "free_IF_update",
           "chronology_overrides": [],
           "chronology_policy": "All births/service/deaths stay in force. Only per-catalog explicit story/official-game exceptions listed below apply; future IF death boundaries are authorial and not claimed official.",
@@ -35722,9 +35726,9 @@
           },
           "nanjun": {
             "set": {
-              "gold": 3170,
-              "grain": 10875,
-              "reserves": 2760
+              "gold": 4760,
+              "grain": 16300,
+              "reserves": 4140
             }
           },
           "cangwu": {
@@ -37431,6 +37435,26 @@
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ]
+                }
+              }
+            }
+          },
+          "yiyang": {
+            "update": {
+              "opening": {
+                "set": {
+                  "owner": "liu_biao",
+                  "basis": "fictional_scenario_territory"
+                }
+              }
+            }
+          },
+          "yidu": {
+            "update": {
+              "opening": {
+                "set": {
+                  "owner": null,
+                  "basis": "not_yet_established"
                 }
               }
             }
@@ -39963,7 +39987,11 @@
       },
       "placement_completion": {
         "set": {
-          "future_plans": 429
+          "future_plans": 429,
+          "city_owner_corrections": [
+            "yiyang",
+            "yidu"
+          ]
         },
         "update": {
           "reference_classes": {
@@ -39979,11 +40007,12 @@
             "set": {
               "person_specific_future_free_appearance": 429,
               "same_date_SAN14_guide_free_location": 3,
-              "retained_explicit_IF_membership": 278,
+              "retained_explicit_IF_membership": 269,
               "same_date_SAN14_guide_affiliation": 1,
               "retained_chronology_or_explicit_exclusion": 178,
               "retained_person_specific_free_location": 122,
-              "retained_explicit_scenario_ruler": 10
+              "retained_explicit_scenario_ruler": 10,
+              "historical_city_owner_relocation_authorial_garrison": 9
             },
             "delete": [
               "same_date_SAN14_recorded_death",

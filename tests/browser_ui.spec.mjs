@@ -2,7 +2,8 @@
  * Campaign changes use visible controls, never injected game state.
  */
 import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
-import {readFile} from 'node:fs/promises';
+import {readFile,mkdir} from 'node:fs/promises';
+import {join} from 'node:path';
 
 const errors=new WeakMap();
 test.beforeEach(async({page})=>{
@@ -331,5 +332,122 @@ test('city size labels and the report adapt to available space while retaining m
  await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('zh-Hant');
  await expect(labels).toHaveAttribute('title','城名：全部');
  await page.locator('#utility-menu summary').click();
+ expect(errors.get(page)).toEqual([]);
+});
+
+async function historyScreenshot(page,testInfo,name){
+ const directory=process.env.TK2_HISTORY_SCREENSHOTS;
+ if(directory)await mkdir(directory,{recursive:true});
+ const path=directory?join(directory,`${testInfo.project.name}-${name}.png`):testInfo.outputPath(`${name}.png`);
+ await page.screenshot({path,fullPage:true});
+}
+
+async function dismissHistoryOpening(page){
+ const events=page.locator('#event-dialog');
+ await expect(events).toBeVisible();
+ const skip=events.locator('[data-event-skip]');
+ await (await skip.count()?skip:events.locator('[data-event-next]')).click();
+ await expect(events).not.toBeVisible();
+}
+
+test('Jingzhou historical openings show Zhangling and playable Jingnan prefects',async({page},testInfo)=>{
+ await opening(page);
+ await expect(page).toHaveTitle('三國·大陸戰役');
+ const marker=id=>page.locator(`#world-map .city-hit[data-city="${id}"]`);
+ for(const scenario of ['mainland191-10','mainland200-01']){
+  await page.locator('#scenario').selectOption(scenario);
+  await expect(marker('yiyang')).toHaveAttribute('data-owner','liu_biao');
+  await expect(marker('yiyang')).toHaveAttribute('aria-label',/章陵/);
+  await expect(page.locator('#city-jump option[value=yiyang]')).toContainText('章陵');
+  await expect(marker('yidu')).toHaveCount(0);
+  await expect(page.locator('#city-jump option[value=yidu]')).toHaveCount(0);
+  expect(await marker('yiyang').locator('.castle-fill').getAttribute('fill')).toBe(
+   await marker('xiangyang').locator('.castle-fill').getAttribute('fill'));
+  // Real preview lookup through the city selector also chooses Liu Biao.
+  await page.locator('#city-jump').selectOption('yiyang');
+  await expect(page.locator('.city-information[data-inspected-city=yiyang]')).toBeVisible();
+  await expect(page.locator('#dialog-title')).toContainText('章陵');
+  await expect(page.locator('.city-information-owner')).toContainText('劉表');
+  await expect(page.locator('input[name=faction][value=liu_biao]')).toBeChecked();
+  await closeDialog(page);
+  if(scenario==='mainland191-10')await historyScreenshot(page,testInfo,'191-unfounded-linjiang-preview');
+ }
+
+ await page.locator('#scenario').selectOption('mainland208-10');
+ const prefects=[['changsha','han_xuan','韓玄'],['wuling','jin_xuan','金旋'],
+  ['guiyang','zhao_fan','趙範'],['lingling','liu_du','劉度']];
+ const fills=[];
+ for(const[city,side,name]of prefects){
+  await expect(page.locator(`input[name=faction][value=${side}]`)).toHaveCount(1);
+  await expect(page.locator(`input[name=faction][value=${side}]`).locator('..')).toContainText(name);
+  await expect(marker(city)).toHaveAttribute('data-owner',side);
+  await expect(marker(city)).toHaveAttribute('aria-label',new RegExp(name));
+  const fill=await marker(city).locator('.castle-fill').getAttribute('fill');
+  expect(fill).not.toBe('#ffffff');fills.push(fill);
+ }
+ expect(new Set(fills).size).toBe(4);
+ await expect(marker('yidu')).toHaveAttribute('data-owner','wei');
+ await expect(marker('yidu')).toHaveAttribute('aria-label',/臨江/);
+ await expect(page.locator('#city-jump option[value=yidu]')).toContainText('臨江');
+ expect(await marker('yidu').locator('.castle-fill').getAttribute('fill')).toBe('#0078f8');
+ await page.locator('input[name=faction][value=han_xuan]').check();
+ await historyScreenshot(page,testInfo,'red-cliffs-prefects-preview');
+ await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await expect(page.locator('#city-jump')).toHaveValue('changsha');
+ await expect(page.locator('#inspector .owner')).toContainText('韓玄');
+ await expect(page.locator('#inspector .roster-table tbody tr')).toHaveCount(2);
+ // Keyboard activation exercises the map's accessible city button on both
+ // viewports, without forced clicks through the compact map toolbar.
+ await marker('changsha').focus();await page.keyboard.press('Enter');
+ const information=page.locator('.city-information[data-inspected-city=changsha]');
+ await expect(information).toHaveAttribute('data-information-mode','live');
+ await expect(information).toBeVisible();
+ const ruler=information.locator('.roster-table tbody tr').filter({hasText:'韓玄'});
+ await expect(ruler).toHaveCount(1);await expect(ruler.locator('td').nth(5)).toHaveText('--');
+ await expect(information.locator('.roster-table tbody tr').filter({hasText:'黃忠'})).toHaveCount(1);
+ await page.locator('#dialog-language').selectOption('ja');
+ await expect(page.locator('html')).toHaveAttribute('lang','ja');
+ await expect(ruler.locator('td').nth(5)).toHaveText('--');
+ await expect(page.locator('#dialog-title')).toContainText('長沙');
+ await historyScreenshot(page,testInfo,'han-xuan-live-information-ja');
+ await ruler.locator('td').nth(5).scrollIntoViewIfNeeded();
+ await expect(ruler.locator('td').nth(5)).toBeInViewport();
+ await historyScreenshot(page,testInfo,'han-xuan-loyalty-ja');
+ await closeDialog(page);
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('Jingzhou dated names and withdrawn cities match previews and live campaigns',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland211-07');
+ await expect(page.locator('#city-jump option[value=yidu]')).toContainText('宜都');
+ await expect(page.locator('#world-map .city-hit[data-city=yidu]')).toHaveAttribute('aria-label',/宜都/);
+ await expect(page.locator('#city-jump option[value=yiyang]')).toContainText('章陵');
+ for(const scenario of ['mainland249-01','mainland263-05']){
+  await page.locator('#scenario').selectOption(scenario);
+  await expect(page.locator('#world-map .city-hit[data-city=yiyang]')).toHaveCount(0);
+  await expect(page.locator('#world-map [data-city-label=yiyang]')).toHaveCount(0);
+  await expect(page.locator('#city-jump option[value=yiyang]')).toHaveCount(0);
+  await expect(page.locator('#city-jump option[value=yidu]')).toContainText('宜都');
+ }
+ await historyScreenshot(page,testInfo,'263-withdrawn-yiyang-preview');
+ await page.locator('#scenario').selectOption('mainland249-01');
+ await page.locator('input[name=faction][value=wei]').check();
+ await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await expect(page.locator('#world-map .city-hit[data-city=yiyang]')).toHaveCount(0);
+ await expect(page.locator('#city-jump option[value=yiyang]')).toHaveCount(0);
+ await page.locator('#main-menu').click();
+ await expect(page.locator('#scenario')).toHaveValue('mainland249-01');
+ await expect(page.locator('#world-map .city-hit[data-city=yiyang]')).toHaveCount(0);
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#language').selectOption('ja');
+ await expect(page.locator('html')).toHaveAttribute('lang','ja');
+ await page.locator('#utility-menu summary').click();
+ await expect(page.locator('#city-jump option[value=yidu]')).toContainText('宜都');
+ await historyScreenshot(page,testInfo,'249-live-return-to-menu-ja');
  expect(errors.get(page)).toEqual([]);
 });

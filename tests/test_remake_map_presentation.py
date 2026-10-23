@@ -73,7 +73,11 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta['background_sha256'],hashlib.sha256((ROOT/'game'/meta['background'].lstrip('/')).read_bytes()).hexdigest())
         source=json.loads((ROOT/'game/config/map-source.json').read_text())
         self.assertEqual(source['schema'],'tk2-map-source-v1')
-        base=deepcopy(meta);base.pop('road_center_corrections');base.pop('road_bridges')
+        ground_sha=hashlib.sha256((ROOT/'game/map-source/hydrology-ground.png').read_bytes()).hexdigest()
+        self.assertEqual(meta['inactive_castle_ground_sha256'],ground_sha)
+        self.assertEqual(meta['inactive_castle_ids'],['yiyang','yidu'])
+        self.assertEqual(meta['inactive_castle_ground'],'/assets/map-city-ground.png')
+        base=deepcopy(meta);base.pop('road_center_corrections');base.pop('road_bridges');base.pop('inactive_castle_ground_sha256')
         self.assertEqual(source['presentation'],base)
         self.assertEqual(set(source['approved_asset_sha256']),
                          {'map.png','map-basin.png','map-campaign.png','map-clean.png','map-navigation.png','map-road-centers.png'})

@@ -119,6 +119,11 @@ class Catalog:
         for key, rule in self.data.get('city_foundings', {}).items():
             if (year,month) >= (rule['year'],rule.get('month',1)): opened.add(key)
             else: opened.discard(key)
+        # Administrative abolition affects later scenario openings. An older
+        # campaign keeps its existing node, troops and actual ownership.
+        opening=(self.data['start_year'],self.data['start_month'])
+        for key,rule in self.data.get('city_retirements',{}).items():
+            if opening>=(rule['year'],rule.get('month',1)):opened.discard(key)
         return [key for key in self.map_cities if key in opened]
 
     def name(self, ident):

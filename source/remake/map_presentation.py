@@ -10,7 +10,7 @@ def presentation():
     return json.loads(path.read_text())
 
 
-def city_names(catalog,year):
+def city_names(catalog,year,month=1):
     overrides=presentation()['city_names']
     names={}
     for city in catalog.data['cities']:
@@ -19,7 +19,9 @@ def city_names(catalog,year):
         if year<212:label=row.get('before212',label)
         if year<221:label=row.get('before221',label)
         for period in catalog.data.get('city_history',{}).get(city['id'],{}).get('names',[]):
-            if period['start']<=year<=period['end']:label=period['name']
+            start=tuple(period.get('from_date',[period.get('start',1),1]))
+            end=tuple(period.get('to_date',[period.get('end',9999),12]))
+            if start<=(year,month)<=end:label=period['name']
         names[city['id']]=label
     return names
 

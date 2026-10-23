@@ -35224,24 +35224,24 @@
         "set": {
           "group": "if",
           "title": "越過秋風",
+          "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
+          "summary": "諸葛亮延壽並取得長安，曹叡遷都鄴；其餘三國戰局沿本作地圖展開。",
+          "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
+          "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
+          "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
           "title_i18n": {
             "zh-Hant": "越過秋風",
             "ja": "秋風越えて"
           },
-          "summary": "諸葛亮延壽並取得長安，曹叡遷都鄴；其餘三國戰局沿本作地圖展開。",
           "summary_i18n": {
             "zh-Hant": "諸葛亮延壽並取得長安，曹叡遷都鄴；其餘三國戰局沿本作地圖展開。",
             "ja": "諸葛亮は命を延ばして長安を占領し、曹叡は鄴へ遷都する。"
           },
           "fictional": true,
-          "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
           "source_urls": [
             "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
             "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
           ],
-          "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
-          "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
-          "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
           "category": "free_IF_update",
           "chronology_overrides": [
             {
@@ -38173,6 +38173,25 @@
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ]
+                }
+              }
+            }
+          },
+          "yiyang": {
+            "update": {
+              "opening": {
+                "set": {
+                  "basis": "fictional_scenario_territory"
+                }
+              }
+            }
+          },
+          "yidu": {
+            "update": {
+              "opening": {
+                "set": {
+                  "owner": "wu",
+                  "basis": "fictional_scenario_territory"
                 }
               }
             }

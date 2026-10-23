@@ -47,7 +47,6 @@
         "donghai",
         "shanyang",
         "henan",
-        "yiyang",
         "yingchuan",
         "danyang",
         "jiujiang",
@@ -205,7 +204,7 @@
         },
         {
           "person_id": "san14-candidate-0044",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -296,7 +295,7 @@
         },
         {
           "person_id": "san14-candidate-0069",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -394,7 +393,7 @@
         },
         {
           "person_id": "san14-candidate-0128",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -506,7 +505,7 @@
         },
         {
           "person_id": "san14-candidate-0232",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -639,7 +638,7 @@
         },
         {
           "person_id": "san14-candidate-0346",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -737,7 +736,7 @@
         },
         {
           "person_id": "san14-candidate-0404",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -884,7 +883,7 @@
         },
         {
           "person_id": "san14-candidate-0461",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1087,7 +1086,7 @@
         },
         {
           "person_id": "san14-candidate-0559",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1304,7 +1303,7 @@
         },
         {
           "person_id": "san14-candidate-0711",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1451,7 +1450,7 @@
         },
         {
           "person_id": "san14-candidate-0811",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1766,7 +1765,7 @@
         },
         {
           "person_id": "san14-candidate-0991",
-          "city": "yiyang",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": true
@@ -2032,7 +2031,10 @@
           "jiuzhen": "wu",
           "rinan": "wu",
           "wuchang": "wu"
-        }
+        },
+        "delete": [
+          "yiyang"
+        ]
       },
       "appearance_locations": {
         "set": {
@@ -2043,7 +2045,7 @@
           "san14-candidate-0020": "xiangyang",
           "san14-candidate-0022": "xincheng",
           "san14-candidate-0026": "fuling",
-          "san14-candidate-0044": "yiyang",
+          "san14-candidate-0044": "nanyang",
           "san14-candidate-0045": "fufeng",
           "san14-candidate-0046": "jingzhao",
           "san14-candidate-0048": "jingzhao",
@@ -2055,7 +2057,7 @@
           "san14-candidate-0059": "runan",
           "san14-candidate-0061": "tianshui",
           "san14-candidate-0064": "xiangyang",
-          "san14-candidate-0069": "yiyang",
+          "san14-candidate-0069": "nanyang",
           "san14-candidate-0070": "lujiang",
           "san14-candidate-0077": "fufeng",
           "san14-candidate-0083": "jingzhao",
@@ -2069,7 +2071,7 @@
           "san14-candidate-0121": "xiangyang",
           "san14-candidate-0125": "xincheng",
           "san14-candidate-0126": "wuwei",
-          "san14-candidate-0128": "yiyang",
+          "san14-candidate-0128": "nanyang",
           "san14-candidate-0130": "fufeng",
           "san14-candidate-0135": "jingzhao",
           "san14-candidate-0139": "jiujiang",
@@ -2085,7 +2087,7 @@
           "san14-candidate-0210": "xincheng",
           "san14-candidate-0224": "nanjun",
           "san14-candidate-0230": "fuling",
-          "san14-candidate-0232": "yiyang",
+          "san14-candidate-0232": "nanyang",
           "san14-candidate-0242": "hanzhong",
           "san14-candidate-0251": "wudu",
           "san14-candidate-0253": "fufeng",
@@ -2103,7 +2105,7 @@
           "san14-candidate-0313": "runan",
           "san14-candidate-0316": "tianshui",
           "san14-candidate-0339": "xiangyang",
-          "san14-candidate-0346": "yiyang",
+          "san14-candidate-0346": "nanyang",
           "san14-candidate-0348": "fufeng",
           "san14-candidate-0349": "jingzhao",
           "san14-candidate-0350": "jiujiang",
@@ -2117,7 +2119,7 @@
           "san14-candidate-0396": "tianshui",
           "san14-candidate-0397": "xiangyang",
           "san14-candidate-0403": "xincheng",
-          "san14-candidate-0404": "yiyang",
+          "san14-candidate-0404": "nanyang",
           "san14-candidate-0406": "fufeng",
           "san14-candidate-0408": "zangke",
           "san14-candidate-0413": "badong",
@@ -2137,7 +2139,7 @@
           "san14-candidate-0451": "tianshui",
           "san14-candidate-0455": "xiangyang",
           "san14-candidate-0457": "xincheng",
-          "san14-candidate-0461": "yiyang",
+          "san14-candidate-0461": "nanyang",
           "san14-candidate-0463": "fufeng",
           "san14-candidate-0478": "jingzhao",
           "san14-candidate-0480": "jiujiang",
@@ -2165,7 +2167,7 @@
           "san14-candidate-0550": "lingling",
           "san14-candidate-0556": "lujiang",
           "san14-candidate-0558": "nanjun",
-          "san14-candidate-0559": "yiyang",
+          "san14-candidate-0559": "nanyang",
           "san14-candidate-0560": "wujun",
           "san14-candidate-0561": "wuling",
           "san14-candidate-0571": "yidu",
@@ -2194,7 +2196,7 @@
           "san14-candidate-0704": "xincheng",
           "san14-candidate-0706": "wuling",
           "san14-candidate-0707": "yidu",
-          "san14-candidate-0711": "yiyang",
+          "san14-candidate-0711": "nanyang",
           "san14-candidate-0715": "fufeng",
           "san14-candidate-0717": "yuzhang",
           "san14-candidate-0720": "jingzhao",
@@ -2216,7 +2218,7 @@
           "san14-candidate-0806": "wudu",
           "san14-candidate-0809": "xiangyang",
           "san14-candidate-0810": "xincheng",
-          "san14-candidate-0811": "yiyang",
+          "san14-candidate-0811": "nanyang",
           "san14-candidate-0820": "fufeng",
           "san14-candidate-0833": "lingling",
           "san14-candidate-0836": "lujiang",
@@ -2260,7 +2262,7 @@
           "san14-candidate-0978": "wudu",
           "san14-candidate-0979": "wujun",
           "san14-candidate-0985": "wuling",
-          "san14-candidate-0991": "yiyang",
+          "san14-candidate-0991": "nanyang",
           "san14-candidate-0993": "fufeng",
           "san14-candidate-0995": "yidu",
           "san14-candidate-0998": "yuzhang",
@@ -3470,13 +3472,23 @@
           "san14-candidate-0044": {
             "set": {
               "source_ruler": "曹芳",
-              "city": "yiyang"
+              "city": "nanyang"
             },
             "update": {
               "posting_reference": {
                 "set": {
                   "origin": "henan",
-                  "city": "yiyang"
+                  "city": "nanyang"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
+                  "source_urls": [
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
+                  ],
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -3485,7 +3497,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang"
+                  "city": "nanyang"
                 }
               }
             }
@@ -4129,14 +4141,14 @@
               "source_city": null,
               "year_state": "available",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0069",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -4146,11 +4158,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-a-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -4159,7 +4172,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -5562,14 +5575,14 @@
               "source_city": null,
               "year_state": "available",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0128",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -5579,11 +5592,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -5592,7 +5606,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -7693,14 +7707,14 @@
               "source_city": null,
               "year_state": "available",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0232",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -7710,11 +7724,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -7723,7 +7738,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -9844,14 +9859,14 @@
               "source_city": null,
               "year_state": "available",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0346",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -9878,11 +9893,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -9891,7 +9907,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -11234,14 +11250,14 @@
               "source_city": null,
               "year_state": "available",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0404",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -11251,11 +11267,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -11264,7 +11281,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -12773,14 +12790,14 @@
               "source_city": null,
               "year_state": "available",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0461",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -12790,11 +12807,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -12803,7 +12821,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -15069,13 +15087,23 @@
           "san14-candidate-0559": {
             "set": {
               "source_ruler": "曹芳",
-              "city": "yiyang"
+              "city": "nanyang"
             },
             "update": {
               "posting_reference": {
                 "set": {
                   "origin": "henan",
-                  "city": "yiyang"
+                  "city": "nanyang"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
+                  "source_urls": [
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
+                  ],
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -15084,7 +15112,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang"
+                  "city": "nanyang"
                 }
               }
             }
@@ -17899,14 +17927,14 @@
               "source_city": null,
               "year_state": "available",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0711",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -17916,11 +17944,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -17929,7 +17958,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -20124,14 +20153,14 @@
               "source_city": null,
               "year_state": "available",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0811",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -20141,11 +20170,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -20154,7 +20184,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -23963,7 +23993,7 @@
               "source_city": null,
               "year_state": "death_year_review",
               "faction": "wei",
-              "city": "yiyang",
+              "city": "nanyang",
               "placement_basis": "authored_enemy_frontier_balanced",
               "status": "serving",
               "death_year_resolved": true,
@@ -23971,7 +24001,7 @@
                 "person_id": "san14-candidate-0991",
                 "faction": "wei",
                 "origin": "henan",
-                "city": "yiyang",
+                "city": "nanyang",
                 "basis": "authored_enemy_frontier_balanced",
                 "source_city": null,
                 "source_disposition": "missing_source_city",
@@ -23981,11 +24011,12 @@
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_city_owner_relocation_authorial_garrison",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+                    "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "note": "因原駐城建置/歸屬核對，保留人物原勢力及兵數，調至該勢力現有城；駐城為本作配置，非史實太守任命。"
                 }
               },
               "appearance_plan": {
@@ -23994,7 +24025,7 @@
                     249,
                     1
                   ],
-                  "city": "yiyang",
+                  "city": "nanyang",
                   "status": "serving"
                 }
               }
@@ -24705,10 +24736,10 @@
         "set": {
           "group": "supplement",
           "title": "正始之变",
-          "summary": "合并旧版独有年代，使用统一地图、千人属性库、30人容量与行军规则。",
           "official_source": null,
-          "reviewed_source_city_records": 0,
-          "membership_basis": "reviewed_overrides_and_labelled_bracketing_inference; source_referenced_v13_career_windows_and_explicit_new_person_game_design"
+          "summary": "合并旧版独有年代，使用统一地图、千人属性库、30人容量与行军规则。",
+          "membership_basis": "reviewed_overrides_and_labelled_bracketing_inference; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
+          "reviewed_source_city_records": 0
         },
         "delete": [
           "scope",
@@ -26002,9 +26033,9 @@
           },
           "nanyang": {
             "set": {
-              "gold": 2810,
-              "grain": 9225,
-              "reserves": 3600
+              "gold": 4370,
+              "grain": 14350,
+              "reserves": 5100
             }
           },
           "bohai": {
@@ -27568,6 +27599,25 @@
                 }
               }
             }
+          },
+          "yiyang": {
+            "update": {
+              "opening": {
+                "set": {
+                  "owner": null,
+                  "basis": "abolished_before_scenario_opening"
+                }
+              }
+            }
+          },
+          "yidu": {
+            "update": {
+              "opening": {
+                "set": {
+                  "owner": "wu"
+                }
+              }
+            }
           }
         }
       },
@@ -27786,7 +27836,8 @@
           "city_owner_corrections": [
             "liaodong",
             "lelang",
-            "daifang"
+            "daifang",
+            "yiyang"
           ]
         },
         "update": {
@@ -27801,7 +27852,8 @@
             "set": {
               "same_date_SAN14_recorded_death": 701,
               "same_date_SAN14_guide_affiliation": 5,
-              "retained_reviewed_opening_membership": 232,
+              "retained_reviewed_opening_membership": 221,
+              "historical_city_owner_relocation_authorial_garrison": 11,
               "person_specific_future_free_appearance": 44,
               "retained_person_specific_free_location": 34,
               "bounded_career_inference": 2,

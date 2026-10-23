@@ -9455,15 +9455,6 @@
                   }
                 }
               },
-              "placement_review": {
-                "set": {
-                  "reference_date": [
-                    221,
-                    7
-                  ],
-                  "reference_scenario": "夷陵の戦い"
-                }
-              },
               "source_city_reference": {
                 "set": {
                   "source_scenario_date": [
@@ -9471,6 +9462,15 @@
                     7
                   ],
                   "title": "夷陵の戦い"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "reference_date": [
+                    221,
+                    7
+                  ],
+                  "reference_scenario": "夷陵の戦い"
                 }
               },
               "appearance_plan": {
@@ -15194,10 +15194,10 @@
         "set": {
           "group": "supplement",
           "title": "夷陵前夕",
-          "summary": "合并旧版独有年代，使用统一地图、千人属性库、30人容量与行军规则。",
           "official_source": null,
-          "reviewed_source_city_records": 0,
-          "membership_basis": "reviewed_overrides_and_labelled_bracketing_inference; source_referenced_v13_career_windows_and_explicit_new_person_game_design"
+          "summary": "合并旧版独有年代，使用统一地图、千人属性库、30人容量与行军规则。",
+          "membership_basis": "reviewed_overrides_and_labelled_bracketing_inference; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
+          "reviewed_source_city_records": 0
         },
         "delete": [
           "scope",
@@ -17770,6 +17770,15 @@
                   "owner": "wu",
                   "basis": "dated_southern_chapter_territory_adaptation",
                   "note": "221年后吴方武昌郡及都城区域；各剧本独立配置，长期开城继承江夏当时实际控制者。"
+                }
+              }
+            }
+          },
+          "yidu": {
+            "update": {
+              "opening": {
+                "set": {
+                  "owner": "wu"
                 }
               }
             }

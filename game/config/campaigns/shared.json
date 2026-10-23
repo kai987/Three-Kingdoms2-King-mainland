@@ -46407,7 +46407,7 @@
       "virtue_default_policy": "virtue-default-60-2026-10-21",
       "city_economy": "dated-scenario-economy-v1",
       "travel": "hazardous-marches-v1",
-      "city_chronology_note": "蜀地新增葭萌／汉寿、涪县、宕渠、南广；武昌221年4月开放。临海、临川257年起、建安260年起、吴兴266年起在长期战役按配置开放；日期精度见城池说明。",
+      "city_chronology_note": "章陵222年改義陽；240年後開局不設義陽，進行中戰役保留。臨江208年9月開、210年12月改宜都，月份為使用者指定；假想劇本維持其世界線。",
       "garrison_basis": "reviewed_source_city_then_even_enemy_frontier",
       "reviewed_source_city_records": 9,
       "roster_completeness_scope": "all1023 opening/excluded/future plans, not attested complete historical garrisons"
@@ -54517,6 +54517,15 @@
         "resource_divisor": 4,
         "precision": "annal_context_game_month",
         "date_note": "史料载266年置郡，未单列确月；本作保守约定266年12月开放，非史实确切设郡月。"
+      },
+      "yidu": {
+        "year": 208,
+        "month": 9,
+        "parent": "nanjun",
+        "resource_divisor": 4,
+        "precision": "attested_year_user_authored_month",
+        "date_note": "史料確證208年，9月為本作依使用者指定的建置月份。",
+        "source": "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538"
       }
     },
     "added_city_ids": [
@@ -55890,6 +55899,88 @@
             "https://zh.wikisource.org/wiki/後漢書/卷113",
             "https://zh.wikisource.org/wiki/華陽國志/卷四",
             "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_80417"
+          ]
+        }
+      },
+      "yiyang": {
+        "kind": "commandery",
+        "detail": "222年以前稱章陵，222年改義陽。240年廢入南陽採考證推定年、1月為遊戲年界；僅影響240年後新劇本，已開戰役保留節點。劉表自190年領荊州，208年8月歸曹操依使用者指定；《武帝紀》原記九月劉琮降。",
+        "names": [
+          {
+            "start": 1,
+            "end": 221,
+            "name": "章陵"
+          },
+          {
+            "start": 222,
+            "end": 9999,
+            "name": "义阳"
+          }
+        ],
+        "sources": [
+          "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+          "https://zh.wikisource.org/wiki/三國志/卷01"
+        ],
+        "retirement": {
+          "year": 240,
+          "month": 1,
+          "parent": "nanyang",
+          "scope": "scenario_opening_only",
+          "precision": "scholarly_inferred_year_game_january"
+        },
+        "opening": {
+          "owner": "wei",
+          "basis": "primary_chronology_with_user_authored_month",
+          "note": "222年以前稱章陵，222年改義陽。240年廢入南陽採考證推定年、1月為遊戲年界；僅影響240年後新劇本，已開戰役保留節點。劉表自190年領荊州，208年8月歸曹操依使用者指定；《武帝紀》原記九月劉琮降。",
+          "sources": [
+            "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34534",
+            "https://zh.wikisource.org/wiki/三國志/卷01"
+          ]
+        }
+      },
+      "yidu": {
+        "kind": "commandery",
+        "detail": "208年曹操分置臨江郡，210年劉備改宜都。開城208年9月、孫權取得208年12月、改宜都210年12月為本作按使用者要求細化的月份；原典可確證年份、不能據此稱月日已考定。假想劇本依其世界線。",
+        "names": [
+          {
+            "from_date": [
+              1,
+              1
+            ],
+            "to_date": [
+              210,
+              11
+            ],
+            "name": "临江"
+          },
+          {
+            "from_date": [
+              210,
+              12
+            ],
+            "to_date": [
+              9999,
+              12
+            ],
+            "name": "宜都"
+          }
+        ],
+        "sources": [
+          "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538",
+          "https://zh.wikisource.org/wiki/三國志/卷47"
+        ],
+        "founding": {
+          "year": 208,
+          "month": 9,
+          "precision": "attested_year_user_authored_month"
+        },
+        "opening": {
+          "owner": "shu",
+          "basis": "primary_chronology_with_user_authored_month",
+          "note": "208年曹操分置臨江郡，210年劉備改宜都。開城208年9月、孫權取得208年12月、改宜都210年12月為本作按使用者要求細化的月份；原典可確證年份、不能據此稱月日已考定。假想劇本依其世界線。",
+          "sources": [
+            "https://tgaz.fudan.edu.cn/tgaz/placename/hvd_34538",
+            "https://zh.wikisource.org/wiki/三國志/卷47"
           ]
         }
       }
@@ -98657,6 +98748,15 @@
         21
       ],
       "monthly_settlement": "month_rollover"
+    },
+    "city_retirements": {
+      "yiyang": {
+        "year": 240,
+        "month": 1,
+        "parent": "nanyang",
+        "scope": "scenario_opening_only",
+        "precision": "scholarly_inferred_year_game_january"
+      }
     }
   }
 }

@@ -4011,7 +4011,12 @@
         }
       ],
       "green_contour_expansion_pixels": 6
-    }
+    },
+    "inactive_castle_ids": [
+      "yiyang",
+      "yidu"
+    ],
+    "inactive_castle_ground": "/assets/map-city-ground.png"
   },
   "provenance": {
     "plan": {

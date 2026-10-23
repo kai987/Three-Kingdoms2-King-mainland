@@ -578,6 +578,7 @@ def main():
               '/assets/map-campaign.png': ('assets/map-campaign.png', 'image/png'),
               '/assets/map-navigation.png': ('assets/map-navigation.png', 'image/png'),
               '/assets/map-road-centers.png': ('assets/map-road-centers.png', 'image/png'),
+              '/assets/map-city-ground.png': ('map-source/hydrology-ground.png', 'image/png'),
               '/assets/map-western-range.png': ('assets/map-western-range.png', 'image/png'),
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}

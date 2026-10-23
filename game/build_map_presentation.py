@@ -84,6 +84,10 @@ def build():
     if result['background_sha256'] != source['approved_asset_sha256']['map-basin.png'] or result['campaign_background_sha256'] != source['approved_asset_sha256']['map-campaign.png']:
         raise ValueError('Presentation refers to different map pixels')
     result['road_center_corrections'] = road_center_corrections(ROOT, source['approved_asset_sha256'])
+    # Existing terrain repairs remove baked castles for unopened/abolished
+    # nodes. The raster itself is kept intact and shared with water rendering.
+    ground = json.loads((ROOT / 'game/map-source/water-render.json').read_bytes())['output']
+    result['inactive_castle_ground_sha256'] = ground['sha256']
     bridges_path = ROOT / 'game/assets/map-bridges.json'
     if bridges_path.exists():
         bridges = json.loads(bridges_path.read_bytes())
