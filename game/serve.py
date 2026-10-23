@@ -9,7 +9,6 @@ import argparse
 import gzip
 import hashlib
 import json
-import math
 import re
 import signal
 import socket
@@ -24,7 +23,6 @@ ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'game'
 ORIGINAL_EFFECT_CUES = ('5a', '5d', '5e', '60', '61', '62', '65', '68', '69', '88', '8d', '91', '95')
 MAX_BODY_BYTES = 2 * 1024 * 1024
-MAX_JSON_DEPTH = 64
 AUDIT_LIMITS = {'file_opens': 5000, 'imports': 1024, 'requests': 4096, 'denied_access': 1024}
 
 
@@ -68,44 +66,13 @@ class AuditLog:
 
 def strict_json(raw):
     """Reject ambiguous or excessive JSON before any campaign operation runs."""
-    depth = 0
-    quoted = escaped = False
-    for char in raw:
-        if quoted:
-            if escaped:
-                escaped = False
-            elif char == 92:
-                escaped = True
-            elif char == 34:
-                quoted = False
-        elif char == 34:
-            quoted = True
-        elif char in (91, 123):
-            depth += 1
-            if depth > MAX_JSON_DEPTH:
-                raise ValueError('JSON nesting limit')
-        elif char in (93, 125):
-            depth -= 1
-
-    def unique_object(pairs):
-        value = {}
-        for key, item in pairs:
-            if key in value:
-                raise ValueError('Duplicate JSON key')
-            value[key] = item
-        return value
-
-    def finite_number(text):
-        value = float(text)
-        if not math.isfinite(value):
-            raise ValueError('Non-finite JSON number')
-        return value
-
-    def reject_constant(unused):
-        raise ValueError('Non-finite JSON constant')
-
-    return json.loads(raw.decode('utf-8'), object_pairs_hook=unique_object,
-                      parse_float=finite_number, parse_constant=reject_constant)
+    # main() sets the source path; static-asset tools import this file without
+    # booting the campaign, so keep the shared parser import lazy.
+    from remake.json_boundary import DepthLimitError, loads
+    try:
+        return loads(raw)
+    except DepthLimitError as exc:
+        raise ValueError(str(exc)) from None
 
 
 def accepts_gzip(headers):

@@ -7,18 +7,17 @@ Each browser worker owns one session; no shared HTTP game service is involved.
 from collections import OrderedDict
 from copy import deepcopy
 import json
-import math
 from pathlib import Path
 import re
 from urllib.parse import parse_qs, urlsplit
 
 from .campaign import Catalog, GameError
+from .json_boundary import DepthLimitError, loads
 from .march_core import config_for, using_backend
 from .session import CampaignSession
 
 
 MAX_BODY_BYTES = 2 * 1024 * 1024
-MAX_JSON_DEPTH = 64
 MAX_CATALOGS = 2
 IDENTIFIER = re.compile(r'[a-z0-9][a-z0-9_-]{0,79}')
 GET_PATHS = frozenset(('/api/state', '/api/city-preview', '/api/march-config',
@@ -43,44 +42,10 @@ def _strict_json(body):
     raw = body.encode('utf-8') if isinstance(body, str) else body
     if not raw or len(raw) > MAX_BODY_BYTES:
         raise GameError('存档或操作数据大小无效。', 413 if raw else 400)
-    depth = 0
-    quoted = escaped = False
-    for char in raw:
-        if quoted:
-            if escaped:
-                escaped = False
-            elif char == 92:
-                escaped = True
-            elif char == 34:
-                quoted = False
-        elif char == 34:
-            quoted = True
-        elif char in (91, 123):
-            depth += 1
-            if depth > MAX_JSON_DEPTH:
-                raise GameError('操作数据层级过多。')
-        elif char in (93, 125):
-            depth -= 1
-
-    def unique_object(pairs):
-        value = {}
-        for key, item in pairs:
-            if key in value:
-                raise ValueError('Duplicate JSON key')
-            value[key] = item
-        return value
-
-    def finite_number(text):
-        value = float(text)
-        if not math.isfinite(value):
-            raise ValueError('Non-finite JSON number')
-        return value
-
-    def reject_constant(unused):
-        raise ValueError('Non-finite JSON constant')
-
-    return json.loads(raw.decode('utf-8'), object_pairs_hook=unique_object,
-                      parse_float=finite_number, parse_constant=reject_constant)
+    try:
+        return loads(raw)
+    except DepthLimitError:
+        raise GameError('操作数据层级过多。') from None
 
 
 class BrowserRuntime:
