@@ -1,6 +1,12 @@
 /* Account-private raw-text saves. Game state and RNG stay in the existing engine. */
 'use strict';
 (function(root){
+ // Confirmation is completed by Auth; this game still requires manual login.
+ // Discard the returned fragment before any UI or SDK work, rather than leaving
+ // bearer/refresh credentials in the address bar or interpreting them as login.
+ if(root.location&&/(?:^#|&)(?:access_token|refresh_token|error_code|error_description)=/.test(root.location.hash||'')){
+  try{root.history?.replaceState(root.history.state,'',root.location.pathname+root.location.search);}catch{}
+ }
  const TABLE='tk2_cloud_saves',MAX_BYTES=2*1024*1024-128,CONFIRMATION_COOLDOWN_MS=60000;
  const META='save_id,slot,label,revision,scenario,game_year,game_month,game_turn,save_sha256,created_at,updated_at';
  const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;

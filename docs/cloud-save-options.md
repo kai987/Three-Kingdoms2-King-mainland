@@ -12,7 +12,31 @@
 
 測試使用實際 SDK 與受控 Auth／PostgREST 回應，覆蓋跨裝置、版本衝突、帳號隔離、離線、損壞存檔與原文傳輸；這不等於已代替玩家完成真實信箱註冊及確認。
 
+## 忘記密碼與共用帳號
+
+登入頁提供繁中／日文的「忘記密碼」。玩家填入信箱後明確提交才寄信；請求結果採中性文案，重寄至少間隔60秒。重新註冊既有信箱不會重設密碼，也不能用來判定確認信是否送達。
+
+密碼重設只在公開設定有明確的 `confirmationRedirectUrl`、網址與目前遊戲來源及目錄完全相符，且以 `/` 結尾、沒有 query 時啟用。使用獨立的 PKCE client 與儲存空間，不匯入普通雲端登入的 session。回跳後先核對 `redirectType` 為 `recovery`，再向 Auth 取得並核對使用者，才顯示新密碼表單。兩次新密碼需相同且至少8位，由玩家親自輸入及提交；畫面提示此密碼也適用於共享 Supabase 專案中的同一帳號。
+
+重設連結必須在發起請求的同一瀏覽器完成。首頁只接受有長度及字元限制的 PKCE `code` 與可選 `sb_flow_id`，收到後立即從網址列移除；伺服器審計記錄省略 query 內容。連結過期或核對失敗時不接受密碼更新，需重新發起。更新後仍以普通登入流程取得雲端槽位，登入本身不替換戰役。
+
+2026-10-23 經管理者逐項核准，已在共享專案的 Redirect URLs 加入精確的 `http://127.0.0.1:8878/`，並同步公開設定。原有 Site URL、其他回跳項目及郵件範本保留。實測 Outlook 的密碼重設郵件已送達垃圾郵件資料夾，回跳、驗證身分及玩家自行更新密碼成功。這不代表其他郵件服務都會投遞至收件匣。
+
+同次已核對 Outlook 帳號普通登入及5個槽位列表，並用空的第5槽完成保存、重新取得列表、實際載入。雲端與讀回後本機均為390,762位元組，SHA-256、狀態 checksum 與 RNG 與測試前一致，未推進戰役。測試存檔保留在該帳號第5槽；此驗收未使用另一台實體裝置。
+
 ## 確認信與郵件服務
+
+### 2026-10-23 SMTP 接通後實測
+
+管理者已啟用 Gmail 自訂 SMTP（465），應用程式專用密碼只在控制台保存。使用獨立測試帳號實際完成註冊、Gmail 收件匣接收確認信、點選確認及密碼登入；資料庫的 `email_confirmed_at` 已寫入。以正式戰役的副本在獨立本機埠測試第5槽保存，在全新頁面重新取得列表，將測試副本改成另一份進度後再從雲端讀回。390,762 位元組的原始 JSON、SHA-256、狀態 checksum 與 RNG 完全一致；正式戰役未被測試指令修改。
+
+同次已在遠端執行會回滾的資料表測試：帳號隔離、匿名拒絕、原文與衍生欄位、版本衝突及刪除重建後的舊操作防護通過。這些測試未建立其他 Auth 帳號，也未保留測試列；另有實際瀏覽器測試存檔保留在獨立測試帳號第5槽。瀏覽器驗收涵蓋繁中及日文桌面介面，尚未使用另一台實體裝置或其他收件服務重測。
+
+確認信返回本機頁面曾被跨站檢查擋住，已限定允許 `GET /` 的頂層文件導覽；API、框架、子資源、寫入、無效 Host／Origin 仍受原檢查。頁面丟棄認證回應的 fragment，仍維持手動密碼登入，不匯入網址中的 session。新增 HTTP 邊界及 fragment 回歸檢查。
+
+上述 Gmail 測試當時未修改共享專案的 Site URL、redirect allowlist 或郵件範本；獨立測試信實際返回其測試埠。其後已另經管理者核准加入正式 `8878` 回跳，詳見前節密碼重設記錄。
+
+### 接通前的排查記錄
 
 2026-10-23 的唯讀排查已在本遊戲使用的 Supabase 專案控制台確認：`Enable custom SMTP` 未啟用，目前使用預設 SMTP。最近 Auth 日誌有 `/signup` HTTP 200 與 `/token` 的 `Invalid login credentials`，未找到 SMTP 錯誤紀錄；HTTP 200 只代表註冊請求被處理，不能證明郵件已送達，也不能單憑登入失敗判定密碼或信箱是否已確認。
 
@@ -22,7 +46,7 @@
 
 遊戲提供明確的「重寄確認信」按鈕，使用 [Auth `resend({type:'signup',email})`](https://supabase.com/docs/reference/javascript/auth-resend)，不需要輸入密碼。註冊或重寄請求成功後需等待 60 秒才能再次重寄；服務端限流可能更久。按鈕不會自動發信、建立新帳號或改動存檔。畫面只顯示中性的請求結果，不宣稱郵件已送達，也不顯示原始服務錯誤中的收件者或其他私人資料。未授權的收件地址與停用註冊會顯示對應的設定問題，不再一律顯示密碼錯誤。
 
-目前維持確認信完成後回到遊戲手動登入的流程，`detectSessionInUrl` 仍為 `false`。唯讀核對發現，共享專案的 Site URL 為 `https://kai987.github.io/n1-wrong-answer-site/`，allowlist 也只有該站的 `/**`；因此目前確認成功後可能返回另一個應用程式。沒有修改共享 Site URL／allowlist，本機 `http://127.0.0.1:8878/` 尚不能視為已核准的回跳網址。
+接通前唯讀核對時，共享專案的 Site URL 為 `https://kai987.github.io/n1-wrong-answer-site/`，allowlist 當時只有該站的 `/**`，確認後可能返回另一個應用程式。此為歷史排查狀態；其後核准的本機回跳見前節。普通登入仍維持 `detectSessionInUrl: false`，不接受網址中的 session。
 
 公開設定可選填 `confirmationRedirectUrl`。只有管理者先在 Supabase allowlist 加入本遊戲的精確回跳網址後，才應填入；註冊和重寄會以 `options.emailRedirectTo` 傳入該網址。空值或未設定時保持原有行為，不從瀏覽器位置自動猜測。僅接受 HTTPS，或僅限 `localhost`／`127.0.0.1`／`[::1]` 的 HTTP，不接受帳號密碼或 fragment。此選項不會自行修改遠端 allowlist。
 
@@ -34,3 +58,9 @@
 2. 在 [SMTP 控制台](https://supabase.com/dashboard/project/flpmblfscgcbrprwwckz/auth/smtp) 啟用自訂 SMTP，填入寄件地址、顯示名稱及供應商資料；密碼僅在控制台輸入，不放進本專案或聊天紀錄。
 3. 在 [URL Configuration](https://supabase.com/dashboard/project/flpmblfscgcbrprwwckz/auth/url-configuration) 的 Redirect URLs 加入本遊戲的精確網址。本機測試為 `http://127.0.0.1:8878/`；其他裝置需使用可連線的正式 HTTPS 網址。保留其他應用程式現有 Site URL 與 allowlist。
 4. 在公開設定填入與 allowlist 一致的 `confirmationRedirectUrl`，重新啟動遊戲服務。由玩家主動重寄、檢查供應商投遞紀錄及收件匣，點選確認後回到遊戲登入，再驗證雲端槽位保存和跨裝置讀取。
+
+### 專用寄件信箱與線上入口
+
+2026-10-23 管理者確認已將 SMTP 寄件地址與使用者名稱換為 `sangokushi2.mainland@gmail.com`，寄件名稱為「三國志Ⅱ・大陸戰役」，並在控制台保存新信箱的應用程式專用密碼；共享專案的其他應用也會使用這個寄件設定。此為管理者的保存確認，新寄件地址的實際投遞尚未在本次發布中重測。
+
+管理者同時確認已將精確的 `https://kai987.github.io/Three-Kingdoms2-King-mainland/` 加入回跳白名單。靜態發布僅使用該正式回跳，本機設定保留 `http://127.0.0.1:8878/`；不改共享專案的 Site URL。正式版部署與存檔隔離方式見[線上發布](web-deployment.md)。

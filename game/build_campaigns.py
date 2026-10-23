@@ -17,6 +17,7 @@ from hashlib import sha256
 # Support both the CLI and callers loading this builder by absolute file path.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from route_timing import apply_route_timing
+from route_render_source import validate_geometry_sources
 from officer_stat_sources import validate_original_virtue
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -104,9 +105,7 @@ def load_sources(*, timing=True):
     geometry_sha256 = sha256((ROOT/'game/config/route-geometry.json').read_bytes()
                             + (ROOT/'game/route_timing.py').read_bytes()).hexdigest() if timing else None
     if timing:
-        for name, expected in geometry['sources'].items():
-            if sha256((ROOT/name).read_bytes()).hexdigest() != expected:
-                raise ValueError('Rendered timing geometry source differs: ' + name)
+        validate_geometry_sources(ROOT, geometry['sources'])
     index = json.loads((SOURCE / 'index.json').read_text(encoding='utf-8'))
     people = json.loads((SOURCE / 'people.json').read_text(encoding='utf-8'))
     shared = json.loads((SOURCE / 'shared.json').read_text(encoding='utf-8'))

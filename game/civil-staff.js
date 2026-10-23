@@ -17,7 +17,7 @@
   if(!['civil-staff-portrait','event-staff-face'].includes(className))className='civil-staff-portrait';
   const title=choose(locale,'架空文吏・共用像素肖像','架空の文吏・共用ドット肖像');
   if(root.GamePortraits?.civilHtml)return root.GamePortraits.civilHtml(record?.portrait,record?.name||'',{className,locale});
-  return /^clerk-[123]$/.test(record?.portrait||'')?`<img data-civil-portrait="${record.portrait}" class="${className}" src="/assets/civil-staff/enhanced/${record.portrait}.png" width="128" height="160" alt="${title}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${title}">吏</span>`;
+  return /^clerk-[123]$/.test(record?.portrait||'')?`<img data-civil-portrait="${record.portrait}" class="${className}" src="${root.GamePaths?.asset(`/assets/civil-staff/enhanced/${record.portrait}.png`)||`/assets/civil-staff/enhanced/${record.portrait}.png`}" width="128" height="160" alt="${title}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${title}">吏</span>`;
  }
  function stat(value){return Number.isInteger(value)&&value>=0?value:'—';}
  function attributes(record,locale='zh-Hant',isRuler=record?.is_ruler===true){

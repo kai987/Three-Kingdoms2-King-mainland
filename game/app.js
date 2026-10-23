@@ -152,7 +152,8 @@ function landMapPath(points,{smooth=true,from=null,to=null}={}){
  return path;
 }
 function mapBackgroundHref(original){
- return view.catalog.map_presentation?.road_center_corrections?.backgrounds?.[original]||original;
+ const value=view.catalog.map_presentation?.road_center_corrections?.backgrounds?.[original]||original;
+ return typeof GamePaths==='undefined'?value:GamePaths.asset(value);
 }
 function mapBridgeLayer(layers){
  const meta=view.catalog.map_presentation?.road_bridges;if(!meta)return '';
@@ -492,14 +493,16 @@ function allocate(city,preferred=null){
  const ids=sortedOfficers(city.roster.officer_ids.filter(i=>!marching().has(i)));
  if(!ids.length)return notice('本城武将均在行军。');
  const selected=ids.includes(preferred)?preferred:ids[0],officer=view.game.officers[selected],maximum=Math.min(999,officer.troops+city.reserves);
- openDialog('编兵',`<p>本城预备兵 ${city.reserves}。调整兵力不消耗城池行动。</p><label class="field" for="allocation-officer">武将<select id="allocation-officer">${ids.map(i=>`<option value="${i}" ${i===selected?'selected':''}>${escapeHtml(officerChoiceText(i))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="allocation-officer-summary"></p><label class="field" for="allocation-troops">目标兵力<input id="allocation-troops" type="number" min="0" max="${maximum}" step="1" value="${officer.troops}"></label><p class="small" id="allocation-preview"></p>`, '<button data-cancel>取消</button><button id="confirm-allocation" class="primary">确认编兵</button>');
- const input=$('#allocation-troops'),preview=()=>{
+ openDialog('编兵',`<p>本城预备兵 ${city.reserves}。调整兵力不消耗城池行动。</p><label class="field" for="allocation-officer">武将<select id="allocation-officer">${ids.map(i=>`<option value="${i}" ${i===selected?'selected':''}>${escapeHtml(officerChoiceText(i))}</option>`).join('')}</select></label><p class="small officer-choice-summary" id="allocation-officer-summary"></p><div class="allocation-value"><label class="field" for="allocation-troops">目标兵力<input id="allocation-troops" type="number" min="0" max="${maximum}" step="1" value="${officer.troops}"></label><button type="button" id="allocation-max">最大值</button></div><p class="small" id="allocation-preview"></p>`, '<button data-cancel>取消</button><button id="confirm-allocation" class="primary">确认编兵</button>');
+ const input=$('#allocation-troops'),preview=(fillMaximum=false)=>{
   const current=view.game.cities[city.id],o=view.game.officers[$('#allocation-officer').value];
   input.max=String(Math.min(999,o.troops+current.reserves));
+  if(fillMaximum===true)input.value=input.max;
   $('#allocation-officer-summary').textContent=officerChoiceText($('#allocation-officer').value);
   const n=clampNumberInput(input);$('#allocation-preview').textContent=n===null?'':`确认后本城预备兵 ${Math.max(0,current.reserves+o.troops-n)}。`;
  };
  $('#allocation-officer').onchange=()=>{input.value=String(view.game.officers[$('#allocation-officer').value].troops);preview();};bindNumberInput(input,preview);preview();
+ $('#allocation-max').onclick=()=>preview(true);
  $('#confirm-allocation').onclick=async()=>{
   preview();const id=GameOfficerChoices.ref($('#allocation-officer').value),troops=clampNumberInput(input,true);
   if(await command('allocate',{city:city.id,officer:id,troops}))allocate(view.game.cities[city.id],id);
@@ -817,8 +820,10 @@ $('#load').onclick=()=>{const saved=localStorage.getItem('three-kingdoms-save');
 GameI18n.ready.then(()=>Promise.all([request('/api/state'),request('/assets/city-positions.json'),request('/api/cloud-config').catch(()=>({enabled:false,slots:5}))])).then(([value,positions,cloudConfig])=>{
  view=value;gameEvents?.observe(view,{baseline:true});mapPositions=positions;render();if(view.game)selectFaction();
  cloudSave=CloudSave.create(cloudConfig);
- cloudSaveUI=CloudSaveUI.create({cloud:cloudSave,getView:()=>view,getRawSave:()=>request('/api/save',undefined,{text:true}),loadRawSave:loadSave,openDialog,notice,isBusy:()=>busy});
+ const cloudRecovery=CloudRecovery.create(cloudConfig);
+ cloudSaveUI=CloudSaveUI.create({cloud:cloudSave,recovery:cloudRecovery,getView:()=>view,getRawSave:()=>request('/api/save',undefined,{text:true}),loadRawSave:loadSave,openDialog,notice,isBusy:()=>busy});
  cloudSave.init().catch(()=>cloudSaveUI.refreshButton());
+ cloudRecovery.init().then(state=>{if(state.hasCallback)cloudSaveUI.open();}).catch(()=>cloudSaveUI.refreshButton());
  void GamePortraits.load();
  void battleScene?.load();
 }).catch(e=>notice('游戏未能载入，请确认本地服务正在运行。',true));

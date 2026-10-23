@@ -578,6 +578,10 @@ width:100%;
 min-width:0;
 max-width:100%
 }
+.allocation-value{display:flex;align-items:flex-end;gap:8px;margin-bottom:16px}
+.allocation-value>label.field{flex:1;min-width:0;margin-bottom:0}
+.allocation-value input{width:100%;min-width:0}
+.allocation-value>button{flex-shrink:0;white-space:nowrap}
 .route-choice [hidden]{display:none!important}
 .route-choice{margin-bottom:16px}
 dialog .dialog-actions{

@@ -2,5 +2,6 @@
   "enabled": true,
   "url": "https://flpmblfscgcbrprwwckz.supabase.co",
   "publishableKey": "sb_publishable_l2Gja5i6yw4CLv54fJqvWg_01YKpu4Y",
-  "slots": 5
+  "slots": 5,
+  "confirmationRedirectUrl": "http://127.0.0.1:8878/"
 }

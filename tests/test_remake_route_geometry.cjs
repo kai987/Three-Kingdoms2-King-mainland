@@ -12,9 +12,41 @@ assert.equal(reversePath('M1 2L3 4Q5 6 7 8L9 10'),'M9 10L7 8Q5 6 3 4L1 2');
 assert.equal(reversePath(reversePath('M1 2L3 4Q5 6 7 8L9 10')),'M1 2L3 4Q5 6 7 8L9 10');
 assert.throws(()=>reversePath('M0 0C1 2 3 4 5 6'),/Unsupported/);
 const root=path.resolve(__dirname,'..'),file=path.join(root,'game/config/route-geometry.json');
+const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+const appSource='game/app.js',compilerSource='game/build_route_geometry.cjs';
+function rendererProjection(source){
+ const text=source.toString('utf8'),start='function smoothMapPath(',end='function mapBackgroundHref(';
+ assert.equal(text.split(start).length,2,'unique start of compiler-extracted renderer');
+ assert.equal(text.split(end).length,2,'unique end of compiler-extracted renderer');
+ assert(text.indexOf(start)<text.indexOf(end),'ordered renderer projection bounds');
+ return Buffer.from(text.slice(text.indexOf(start),text.indexOf(end)),'utf8');
+}
+function validateSource(name,source,expected,sources,attestation){
+ if(sha(source)===expected)return;
+ assert.equal(name,appSource,name+': full source pin remains required');
+ assert.deepEqual(Object.keys(attestation).sort(),['schema','source','original_source_sha256','compiler','compiler_sha256','start','end','projection_sha256','projection_bytes','baseline_commit'].sort());
+ assert.equal(attestation.schema,'tk2-route-render-source-v1');
+ assert.equal(attestation.source,appSource);assert.equal(attestation.compiler,compilerSource);
+ assert.equal(attestation.original_source_sha256,expected,'attestation belongs to the frozen original source');
+ assert.equal(attestation.compiler_sha256,sources[compilerSource],'the exact compiler still determines the projected range');
+ assert.match(expected,/^[a-f0-9]{64}$/);assert.match(attestation.compiler_sha256,/^[a-f0-9]{64}$/);
+ assert.equal(attestation.start,'function smoothMapPath(');assert.equal(attestation.end,'function mapBackgroundHref(');
+ assert.match(attestation.baseline_commit,/^[a-f0-9]{40}$/);
+ assert.match(attestation.projection_sha256,/^[a-f0-9]{64}$/);
+ assert(Number.isSafeInteger(attestation.projection_bytes)&&attestation.projection_bytes>0);
+ const projection=rendererProjection(source);
+ assert.equal(projection.length,attestation.projection_bytes,'the complete extracted input is unchanged');
+ assert.equal(sha(projection),attestation.projection_sha256,'every compiler-extracted renderer byte is unchanged');
+}
 if(fs.existsSync(file)){
  const compiled=JSON.parse(fs.readFileSync(file));
- for(const [name,hash]of Object.entries(compiled.sources))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,name))).digest('hex'),hash,name+': compiled geometry matches current source');
+ const attestation=JSON.parse(fs.readFileSync(path.join(root,'game/config/route-render-source.json')));
+ for(const [name,hash]of Object.entries(compiled.sources))validateSource(name,fs.readFileSync(path.join(root,name)),hash,compiled.sources,attestation);
+ const app=fs.readFileSync(path.join(root,appSource)),pin=compiled.sources[appSource];
+ assert.doesNotThrow(()=>validateSource(appSource,Buffer.concat([Buffer.from('// Display-only metadata.\n'),app]),pin,compiled.sources,attestation),'unrelated UI changes do not rewrite campaign hashes');
+ assert.throws(()=>validateSource(appSource,Buffer.from(app.toString().replace('return d+`L','return d +`L')),pin,compiled.sources,attestation),'even whitespace changes inside path functions require rebuilding geometry');
+ assert.throws(()=>validateSource(appSource,app,pin,compiled.sources,{...attestation,original_source_sha256:'0'.repeat(64)}),'an attestation cannot substitute a different baseline');
+ assert.throws(()=>validateSource(compilerSource,Buffer.from('// compiler changed'),compiled.sources[compilerSource],compiled.sources,attestation),'compiler changes retain full-file validation');
  assert.equal(compiled.schema,'tk2-route-geometry-v1');assert.equal(compiled.audit.input_routes,362);assert.equal(compiled.audit.compiled_routes,362);assert.deepEqual(compiled.audit.unmatched,[]);
  for(const [id,r]of Object.entries(compiled.routes)){
   assert.equal(r.parts.length,r.mode==='sea'?3:1,id);

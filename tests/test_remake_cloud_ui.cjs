@@ -68,6 +68,15 @@ function mockCloud(user=null){
 }
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
 const deferred=()=>{let resolve;const promise=new Promise(done=>{resolve=done;});return {promise,resolve};};
+function mockRecovery(user=null){
+ const listeners=new Set(),state={enabled:true,ready:true,busy:false,user,error:null,retryAt:0,hasCallback:!!user},calls=[];
+ const recovery={state,calls,subscribe(fn){listeners.add(fn);fn(state);return()=>listeners.delete(fn);},
+  change(user){state.user=user;for(const fn of listeners)fn(state);},
+  async request(email){calls.push(['request',email]);state.retryAt=Date.now()+60000;},
+  async update(password){calls.push(['update',password]);recovery.change(null);return {passwordUpdated:true};},
+  async cancel(){calls.push(['cancel']);recovery.change(null);}
+ };return recovery;
+}
 function setup(cloud=mockCloud(),extraOptions={}){
  const surface=dom(),i18n={locale:'zh-Hant',apply(){}},notices=[],loaded=[];let game={year:190},busy=false;
  const options={cloud,document:surface.doc,dialog:surface.dialog,button:surface.button,i18n,openDialog:surface.openDialog,
@@ -140,5 +149,23 @@ function setup(cloud=mockCloud(),extraOptions={}){
  assert(readable.dialog.textContent.includes('反董卓聯盟'));assert(!readable.dialog.textContent.includes(row().scenario));readable.language('ja');assert(readable.dialog.textContent.includes('反董卓連合'));
  readable.cloud.setRows([row(1,{label:'新遠端名稱',revision:4})]);readable.el('cloud-refresh').click();await tick();assert.equal(readable.el('cloud-label-1').value,'新遠端名稱');
  readable.el('cloud-label-1').value='自己編輯的草稿';readable.el('cloud-label-1').dispatchEvent({type:'input'});readable.cloud.setRows([row(1,{label:'又一次遠端名稱',revision:5})]);readable.el('cloud-refresh').click();await tick();assert.equal(readable.el('cloud-label-1').value,'自己編輯的草稿');assert(readable.dialog.textContent.includes('又一次遠端名稱'));readable.ui.destroy();
+ // Recovery asks only for the email, has an explicit send, and cannot reveal
+ // account existence or quietly replace the normal cloud identity.
+ const recovery=mockRecovery(),forgot=setup(mockCloud(),{recovery});forgot.ui.open();
+ forgot.el('cloud-email').value='person@example.test';forgot.el('cloud-password').value='old-private-password';forgot.el('cloud-forgot').click();
+ assert(forgot.el('cloud-recovery-form'));assert(!forgot.el('cloud-password'));assert.equal(forgot.el('cloud-email').value,'person@example.test');assert.equal(recovery.calls.length,0);
+ forgot.language('ja');assert(forgot.dialog.textContent.includes('同じブラウザー'));assert(forgot.dialog.textContent.includes('再設定メールを送信'));
+ await forgot.el('cloud-recovery-form').dispatchEvent({type:'submit',preventDefault(){}});assert.deepEqual(recovery.calls,[['request','person@example.test']]);assert(forgot.dialog.textContent.includes('対象のアカウントがある場合'));assert.equal(forgot.cloud.calls.length,0);
+ forgot.el('cloud-back-login').click();assert(forgot.el('cloud-password'));assert.equal(forgot.el('cloud-password').value,'');forgot.ui.destroy();
+ const unavailableRecovery=mockRecovery();unavailableRecovery.state.enabled=false;const gated=setup(mockCloud(),{recovery:unavailableRecovery});gated.ui.open();gated.el('cloud-forgot').click();assert(gated.dialog.textContent.includes('尚未設定本遊戲'));gated.ui.destroy();
+ // Only the verified recovery identity gets an update form, with shared-account
+ // notice and matching password validation in both interface languages.
+ const activeRecovery=mockRecovery({id:b,email:'verified@example.test'}),reset=setup(mockCloud(),{recovery:activeRecovery});reset.ui.open();
+ assert(reset.dialog.textContent.includes('verified@example.test'));assert(reset.dialog.textContent.includes('其他應用程式'));assert(!reset.el('cloud-write-1'));
+ reset.el('cloud-new-password').value='new-password';reset.el('cloud-confirm-password').value='different-password';
+ await reset.el('cloud-reset-form').dispatchEvent({type:'submit',preventDefault(){}});assert.equal(activeRecovery.calls.length,0);assert(reset.dialog.textContent.includes('兩次新密碼必須相同'));
+ reset.el('cloud-confirm-password').value='new-password';reset.language('ja');assert.equal(reset.el('cloud-new-password').value,'new-password');assert.equal(reset.el('cloud-confirm-password').value,'new-password');assert(reset.dialog.textContent.includes('他のアプリ'));
+ await reset.el('cloud-reset-form').dispatchEvent({type:'submit',preventDefault(){}});assert.deepEqual(activeRecovery.calls,[['update','new-password']]);assert.equal(reset.el('cloud-password').value,'');assert.equal(reset.el('cloud-email').value,'verified@example.test');assert(reset.dialog.textContent.includes('パスワードを更新しました'));assert.equal(reset.cloud.calls.length,0);reset.ui.destroy();
+ const lateRecovery=mockRecovery(),lateReset=setup(mockCloud(),{recovery:lateRecovery}),pendingReset=deferred();lateRecovery.request=()=>pendingReset.promise;lateReset.ui.open();lateReset.el('cloud-forgot').click();lateReset.el('cloud-email').value='person@example.test';lateReset.el('cloud-recovery-form').dispatchEvent({type:'submit',preventDefault(){}});lateReset.dialog.close();pendingReset.resolve();await tick();assert.equal(lateReset.dialog.open,false);lateReset.ui.destroy();
  console.log('cloud UI: login/registration, native languages and input preservation, explicit raw-text save/load/delete, revision+UUID conflicts, disabled local-game save, Auth-ready and stale-account/modal responses passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

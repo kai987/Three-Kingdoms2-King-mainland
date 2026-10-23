@@ -59,8 +59,10 @@ def isolated_server(game=None, *, timeout=.3, workers=32, audit=None):
     with tempfile.TemporaryDirectory() as directory:
         here = Path(directory)
         (here / 'asset.txt').write_bytes(b'static version one')
+        (here / 'index.html').write_bytes(b'<!doctype html><title>Game shell</title>')
         handler = transport.make_handler(game, {'enabled': False}, "default-src 'self'",
-                                         {'/asset': ('asset.txt', 'text/plain')}, audit, here)
+                                         {'/asset': ('asset.txt', 'text/plain'),
+                                          '/': ('index.html', 'text/html')}, audit, here)
         server = transport.GameHTTPServer(('127.0.0.1', 0), handler,
                                           max_workers=workers, request_timeout=timeout)
         thread = Thread(target=lambda: server.serve_forever(poll_interval=.01))
@@ -96,6 +98,47 @@ def raw_exchange(port, headers, body=b'', *, method='POST', path='/api/command')
 
 
 class HTTPBoundaryTests(unittest.TestCase):
+    def test_pkce_entry_does_not_log_auth_codes_or_expose_state(self):
+        audit = transport.AuditLog()
+        with isolated_server(audit=audit) as (server, game, _):
+            port = server.server_address[1]
+            headers = {'Sec-Fetch-Site': 'cross-site', 'Sec-Fetch-Mode': 'navigate',
+                       'Sec-Fetch-Dest': 'document'}
+            for path in ('/?code=fixture-code-1234', '/?sb_flow_id=flow1234&code=fixture-code-1234'):
+                self.assertEqual(exchange(port, path=path, headers=headers)[0], 200)
+            for path in ('/?code=short', '/?code=fixture-code-1234&code=other-code',
+                         '/?code=fixture-code-1234&token=forbidden', '/?sb_flow_id=flow1234',
+                         '/api/save?code=fixture-code-1234'):
+                self.assertEqual(exchange(port, path=path, headers=headers)[0], 403)
+            self.assertNotIn('fixture-code-1234', json.dumps(audit.snapshot()))
+            self.assertEqual((game.reads, game.writes, game.loads), (0, 0, 0))
+
+    def test_cross_site_links_only_open_the_static_top_level_shell(self):
+        with isolated_server() as (server, game, _):
+            port = server.server_address[1]
+            base = [f'Host: 127.0.0.1:{port}', 'Sec-Fetch-Site: cross-site',
+                    'Sec-Fetch-Mode: navigate', 'Sec-Fetch-Dest: document']
+            for site in ('same-site', 'cross-site'):
+                headers = [base[0], f'Sec-Fetch-Site: {site}', *base[2:]]
+                status, _, body = raw_exchange(port, headers, method='GET', path='/')
+                self.assertEqual(status, 200)
+                self.assertIn(b'Game shell', body)
+                for path in ('/index.html', '/api/state', '/api/save', '/api/cloud-config', '/asset'):
+                    self.assertEqual(raw_exchange(port, headers, method='GET', path=path)[0], 403)
+                for path in ('/', '/api/command', '/api/load'):
+                    self.assertEqual(raw_exchange(port, headers, b'{}', path=path)[0], 403)
+            invalid = [base[:2], [*base[:2], 'Sec-Fetch-Mode: cors', base[3]],
+                       [*base[:3], 'Sec-Fetch-Dest: iframe'],
+                       [*base[:3], 'Sec-Fetch-Dest: empty'],
+                       [*base, 'Sec-Fetch-Mode: navigate'],
+                       [*base, 'Sec-Fetch-Dest: document'],
+                       [*base, 'Sec-Fetch-Site: cross-site'],
+                       [*base, 'Origin: https://attacker.example'],
+                       ['Host: attacker.example', *base[1:]], [*base, base[0]]]
+            for headers in invalid:
+                self.assertEqual(raw_exchange(port, headers, method='GET', path='/')[0], 403)
+            self.assertEqual((game.reads, game.writes, game.loads), (0, 0, 0))
+
     def test_untrusted_requests_are_rejected_before_state_access(self):
         with isolated_server() as (server, game, _):
             port = server.server_address[1]

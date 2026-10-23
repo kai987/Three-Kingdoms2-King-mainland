@@ -75,6 +75,35 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  assert(hdFrame.innerHTML.includes(`src="${manifest.people['san14-person-a'].path}"`));
  enhanced.imageError({target:attemptedImage(manifest.people['san14-person-a'].path)});
  assert(!hdFrame.innerHTML.includes('<img'));assert(hdFrame.innerHTML.includes('肖像を読み込めませんでした'));
+ // The actual Pages resolver changes DOM URLs while failedPaths and registry
+ // identity remain canonical. Both historical and civil HD failures must load
+ // their native asset under the same project path, never the domain root.
+ const subpath='/Three-Kingdoms2-King-mainland',subFrames=[],subEvents=new Map();
+ const subDoc={currentScript:{src:`https://kai987.github.io${subpath}/paths.js`},querySelectorAll:()=>subFrames,addEventListener:(name,fn)=>subEvents.set(name,fn),createElement:()=>({setAttribute(){}})};
+ const subWindow={document:subDoc,GameI18n:{locale:'zh-Hant',t:value=>value},fetch:async()=>({ok:true,json:async()=>enhancedManifest})};
+ const subContext=vm.createContext({window:subWindow,URL,AbortController,setTimeout,clearTimeout});
+ vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../game/paths.js'),'utf8'),subContext);
+ vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../game/portraits.js'),'utf8'),subContext);
+ const subPortraits=subWindow.GamePortraits;assert(await subPortraits.load());
+ const subFrame={dataset:{portraitPerson:'san14-person-a',portraitName:'曹操',portraitSource:'1'},setAttribute(){},innerHTML:''};subFrames.push(subFrame);subPortraits.refresh();
+ assert(subFrame.innerHTML.includes(`src="${subpath}${enhancedPath('san14-person-a')}"`));
+ const subImage=path=>({hasAttribute:key=>key==='data-portrait-image',getAttribute:key=>key==='src'?path:null,closest:()=>subFrame});
+ subPortraits.imageError({target:subImage(`${subpath}${enhancedPath('san14-person-a')}`)});
+ assert(subFrame.innerHTML.includes(`src="${subpath}${manifest.people['san14-person-a'].path}"`));
+ assert(subFrame.innerHTML.includes('width="32" height="40"'));
+ assert.equal(subPortraits.asset('san14-person-a').path,manifest.people['san14-person-a'].path);
+ assert.equal(subPortraits.asset('san14-person-b').path,enhancedPath('san14-person-b'));
+ subPortraits.imageError({target:subImage(`${subpath}${enhancedPath('san14-person-a')}`)});
+ assert.equal(subPortraits.asset('san14-person-a').path,manifest.people['san14-person-a'].path);
+ subPortraits.imageError({target:subImage(`${subpath}${manifest.people['san14-person-a'].path}`)});
+ assert.equal(subPortraits.asset('san14-person-a'),null);assert(!subFrame.innerHTML.includes('<img'));
+ const civilAttrs={'data-civil-portrait':'clerk-1',src:`${subpath}/assets/civil-staff/enhanced/clerk-1.png`,alt:'文吏'};
+ const subCivil={className:'civil-staff-portrait',hasAttribute:key=>key in civilAttrs,getAttribute:key=>civilAttrs[key]??null,setAttribute:(key,value)=>{civilAttrs[key]=value;},replaceWith(node){this.replacement=node;}};
+ subPortraits.imageError({target:subCivil});
+ assert.equal(civilAttrs.src,`${subpath}/assets/civil-staff/clerk-1.png`);assert.equal(civilAttrs.width,'32');assert.equal(civilAttrs.height,'40');
+ assert.equal(subPortraits.civilAsset('clerk-1').path,'/assets/civil-staff/clerk-1.png');
+ assert(subPortraits.civilHtml('clerk-1','文吏').includes(`src="${subpath}/assets/civil-staff/clerk-1.png"`));
+ subPortraits.imageError({target:subCivil});assert.equal(subPortraits.civilAsset('clerk-1'),null);assert.equal(subCivil.replacement.textContent,'吏');
  // A language change updates only portrait nodes, preserving unrelated inputs.
  const frame={dataset:{portraitPerson:'san14-person-b',portraitName:'趙雲',portraitSource:'1'},setAttribute(key,value){this[key]=value;},innerHTML:''};frames.push(frame);
  const untouchedInput={value:'unsaved search and cloud label'},unchanged=JSON.stringify(untouchedInput);

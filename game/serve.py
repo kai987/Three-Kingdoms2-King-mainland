@@ -28,6 +28,23 @@ MAX_JSON_DEPTH = 64
 AUDIT_LIMITS = {'file_opens': 5000, 'imports': 1024, 'requests': 4096, 'denied_access': 1024}
 
 
+def document_entry_path(path):
+    """Only the static root and bounded PKCE callback parameters are entry URLs."""
+    try:
+        url = urlsplit(path)
+        if url.path != '/' or url.fragment:
+            return False
+        if not url.query:
+            return True
+        args = parse_qs(url.query, keep_blank_values=True, max_num_fields=2)
+        return ('code' in args and set(args) <= {'code', 'sb_flow_id'}
+                and len(args['code']) == 1 and re.fullmatch(r'[A-Za-z0-9_-]{8,512}', args['code'][0])
+                and ('sb_flow_id' not in args or len(args['sb_flow_id']) == 1
+                     and re.fullmatch(r'[A-Za-z0-9_-]{1,128}', args['sb_flow_id'][0])))
+    except ValueError:
+        return False
+
+
 class AuditLog:
     """Optional diagnostics have fixed storage bounds and retain dropped counts."""
     def __init__(self, limits=None):
@@ -351,10 +368,19 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
             hosts = self.headers.get_all('Host', [])
             origins = self.headers.get_all('Origin', [])
             sites = self.headers.get_all('Sec-Fetch-Site', [])
+            # Email confirmations and ordinary links may navigate to the static
+            # shell from another site. This exception never covers API data,
+            # subresources, frames, writes, or invalid Host/Origin headers.
+            document_entry = (self.command == 'GET' and document_entry_path(self.path)
+                              and self.headers.get_all('Sec-Fetch-Mode', []) == ['navigate']
+                              and self.headers.get_all('Sec-Fetch-Dest', []) == ['document'])
+            site_allowed = (not sites or len(sites) == 1 and
+                            (sites[0] in ('same-origin', 'none') or
+                             document_entry and sites[0] in ('same-site', 'cross-site')))
             target = self.requestline.split()[1]
             if (len(hosts) != 1 or hosts[0] not in authorities
                     or origins and (len(origins) != 1 or origins[0] not in {'http://' + host for host in authorities})
-                    or sites and (len(sites) != 1 or sites[0] not in ('same-origin', 'none'))
+                    or not site_allowed
                     or not target.startswith('/') or target.startswith('//')):
                 self.send(403, {'error': '请在本地游戏页面操作。'})
                 return False
@@ -393,7 +419,9 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
                 complete = True
             finally:
                 if audit is not None:
-                    audit.record('requests', {'method': self.command[:32], 'path': self.path[:2048],
+                    safe_path = (self.path.split('?', 1)[0][:2048] + '?[query omitted]'
+                                 if '?' in self.path else self.path[:2048])
+                    audit.record('requests', {'method': self.command[:32], 'path': safe_path,
                                              'status': status, 'bytes': len(data) if complete else 0,
                                              'complete': complete})
 
@@ -430,8 +458,9 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
                     return self.send(200, game.preview_city(query['scenario'][0], query['city'][0]))
                 if self.path == '/favicon.ico':
                     return self.send(204, b'', 'image/x-icon')
-                if self.path in static:
-                    name, mime = static[self.path]
+                static_path = '/' if document_entry_path(self.path) else self.path
+                if static_path in static:
+                    name, mime = static[static_path]
                     try:
                         data = static_file_bytes(here, name)
                     except OSError:
@@ -530,6 +559,7 @@ def main():
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
               '/save-transfer.js': ('save-transfer.js', 'text/javascript; charset=utf-8'),
               '/cloud-save.js': ('cloud-save.js', 'text/javascript; charset=utf-8'),
+              '/cloud-recovery.js': ('cloud-recovery.js', 'text/javascript; charset=utf-8'),
               '/cloud-save-ui.js': ('cloud-save-ui.js', 'text/javascript; charset=utf-8'),
               '/cloud-save.css': ('cloud-save.css', 'text/css; charset=utf-8'),
               '/vendor/supabase.min.js': ('vendor/supabase.min.js', 'text/javascript; charset=utf-8'),
@@ -564,6 +594,7 @@ def main():
               '/wasm/THIRD-PARTY-LICENSES.txt': ('wasm/THIRD-PARTY-LICENSES.txt', 'text/plain; charset=utf-8'),
               '/wasm/manifest.json': ('wasm/manifest.json', 'application/json; charset=utf-8'),
               '/map-navigation.js': ('map-navigation.js', 'text/javascript; charset=utf-8'),
+              '/map-terrain.js': ('map-terrain.js', 'text/javascript; charset=utf-8'),
               '/locales/zh-hant.json': ('locales/zh-hant.json', 'application/json; charset=utf-8'),
               '/locales/ui-ja.json': ('locales/ui-ja.json', 'application/json; charset=utf-8'),
               '/locales/messages-ja.json': ('locales/messages-ja.json', 'application/json; charset=utf-8'),
@@ -575,6 +606,7 @@ def main():
               '/assets/map-campaign.png': ('assets/map-campaign.png', 'image/png'),
               '/assets/map-navigation.png': ('assets/map-navigation.png', 'image/png'),
               '/assets/map-road-centers.png': ('assets/map-road-centers.png', 'image/png'),
+              '/assets/map-western-range.png': ('assets/map-western-range.png', 'image/png'),
               '/assets/city-positions.json': ('assets/city-positions.json', 'application/json; charset=utf-8'),
               '/assets/unifont.woff': ('assets/unifont.woff', 'font/woff')}
     static.update(portrait_static_assets())

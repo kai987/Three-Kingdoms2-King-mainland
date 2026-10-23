@@ -135,7 +135,7 @@
     if(!ImageType){row.status='unavailable';resolve(false);return;}
     const image=new ImageType();row.image=image;let timeout;
     const finish=okay=>{if(row.status!=='loading')return;clearTimeout(timeout);row.status=okay?'ready':'unavailable';resolve(okay);if(!disposed&&host?.isConnected!==false)draw();};
-    image.onload=()=>finish(true);image.onerror=()=>finish(false);timeout=setTimeout(()=>finish(false),6000);image.src=path;
+    image.onload=()=>finish(true);image.onerror=()=>finish(false);timeout=setTimeout(()=>finish(false),6000);image.src=root.GamePaths?.asset(path)||path;
    });return row;
   }
   function imageFor(path){if(!path)return null;const row=loadImage(path);return row.status==='ready'?row.image:null;}

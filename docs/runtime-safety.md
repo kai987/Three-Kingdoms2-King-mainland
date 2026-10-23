@@ -4,11 +4,11 @@
 
 ## HTTP 邊界
 
-讀取、操作及載入存檔共用本機請求檢查。`Host` 必須唯一且指向實際埠的 `localhost` 或 `127.0.0.1`；有 `Origin` 時，也必須唯一且屬於允許的本機來源。瀏覽器的跨站 Fetch Metadata 會被拒絕。沒有這些瀏覽器標頭的正常本機工具仍可使用 API，但仍須提供合法 `Host`。因此，本機腳本存取與雲端帳號登入是兩個不同的邊界。
+讀取、操作及載入存檔共用本機請求檢查。`Host` 必須唯一且指向實際埠的 `localhost` 或 `127.0.0.1`；有 `Origin` 時，也必須唯一且屬於允許的本機來源。瀏覽器的跨站 Fetch Metadata 會被拒絕，僅首頁的 `GET /` 可在唯一的 `Sec-Fetch-Mode: navigate` 及 `Sec-Fetch-Dest: document` 下開啟靜態文件，供郵件確認與一般連結返回。首頁可接受經長度及字元檢查的 PKCE `code` 與可選 `sb_flow_id`，其他 query 拒絕；審計記錄一律省略 query 內容。這個例外不讀取戰役、不涵蓋 API、框架、子資源或寫入，仍核對 Host／Origin。沒有這些瀏覽器標頭的正常本機工具仍可使用 API，但仍須提供合法 `Host`。因此，本機腳本存取與雲端帳號登入是兩個不同的邊界。
 
 POST 只接受明確長度、最多 2 MiB 的 JSON 物件。重複或含糊的長度標頭、傳輸編碼、截斷內容、重複 JSON 鍵、非有限數及過深資料會在執行指令前拒絕。連線、工作執行緒與可選審計記錄均有上限；上述不合法請求不會進入戰役操作。
 
-靜態檔案繼續使用明列 URL 白名單與實際路徑檢查，不提供目錄瀏覽。CSP 限制腳本、Worker、圖片與連線來源。雲端只公開通過驗證的 Supabase publishable key；私人存檔的真正帳號隔離仍由資料庫的 owner RLS 與 UUID／revision 條件負責。這次程式碼修改沒有變更遠端 Auth、SMTP 或資料庫設定。
+靜態檔案繼續使用明列 URL 白名單與實際路徑檢查，不提供目錄瀏覽。CSP 限制腳本、Worker、圖片與連線來源。雲端只公開通過驗證的 Supabase publishable key；私人存檔的真正帳號隔離仍由資料庫的 owner RLS 與 UUID／revision 條件負責。程式碼本身不變更遠端 Auth、SMTP 或資料庫設定；經管理者另行核准的回跳網址修改記錄見 `docs/cloud-save-options.md`。
 
 ## 回應與存檔
 

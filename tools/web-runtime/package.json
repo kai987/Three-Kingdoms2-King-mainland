@@ -1,0 +1,9 @@
+{
+  "name": "tk2-browser-python-runtime",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned self-hosted Pyodide core for the static campaign release",
+  "dependencies": {
+    "pyodide": "314.0.7"
+  }
+}

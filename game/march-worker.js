@@ -24,7 +24,7 @@
  let core=null,serial=Promise.resolve();
  async function load(){
   if(!core)core=(async()=>{
-   const response=await fetch('/wasm/march_core.wasm');
+   const response=await fetch(typeof location==='object'?new URL('wasm/march_core.wasm',location.href).href:'/wasm/march_core.wasm');
    if(!response.ok)throw new Error('March core unavailable');
    const {instance}=await WebAssembly.instantiate(await response.arrayBuffer(),{});
    return createJsonClient(instance);

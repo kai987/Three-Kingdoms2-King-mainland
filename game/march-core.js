@@ -3,7 +3,7 @@
 (function(root){
  const geometryKey=view=>view.catalog.travel_rules.geometry_sha256||'';
  const stateKey=view=>view?.game&&view.catalog?.travel_rules?JSON.stringify([view.catalog.scenario_id,geometryKey(view),view.revision,view.game.player]):null;
- function createMarchCore({workerFactory=()=>new Worker('/march-worker.js'),fetcher=(...args)=>fetch(...args),timeout=30000}={}){
+ function createMarchCore({workerFactory=()=>new Worker(root.GamePaths?.asset('/march-worker.js')||'/march-worker.js'),fetcher=(...args)=>fetch(...args),timeout=30000}={}){
   let worker=null,failed=false,sequence=0,key=null,quotes=null,pendingUpdate=null,engine='idle',lastError=null;
   const requests=new Map(),contexts=new Map(),subscribers=new Set();
   function stop(error){

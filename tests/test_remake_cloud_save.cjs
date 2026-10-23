@@ -2,6 +2,23 @@
 'use strict';
 const assert=require('node:assert/strict'),{createHash}=require('node:crypto');
 const {create,MAX_BYTES}=require('../game/cloud-save.js');
+// A confirmation return must discard credentials without importing a session,
+// contacting Auth, or disturbing ordinary page fragments and query parameters.
+{
+ const vm=require('node:vm'),fs=require('node:fs');
+ const source=fs.readFileSync(require.resolve('../game/cloud-save.js'),'utf8');
+ for(const fragment of ['#access_token=test-only&refresh_token=test-only&type=signup',
+  '#refresh_token=test-only','#error=access_denied&error_code=otp_expired&error_description=expired',
+  '#map','#runtime','']){
+  const calls=[],state={view:'retained'},location={hash:fragment,pathname:'/',search:'?language=ja'};
+  const context={window:{location,history:{state,replaceState(...args){calls.push(args);}}}};
+  vm.runInNewContext(source,context);
+  const authFragment=/access_token|refresh_token|error_code/.test(fragment);
+  assert.equal(calls.length,authFragment?1:0);
+  if(authFragment){assert.equal(calls[0][0],state);assert.equal(calls[0][2],'/?language=ja');}
+  assert.equal(typeof context.window.CloudSave.create,'function');
+ }
+}
 const A='11111111-1111-4111-8111-111111111111',B='22222222-2222-4222-8222-222222222222';
 const config={enabled:true,url:'https://test-cloud.supabase.co',publishableKey:'sb_publishable_test',slots:5};
 const hash=text=>createHash('sha256').update(text).digest('hex');

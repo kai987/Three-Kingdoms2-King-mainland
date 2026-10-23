@@ -1,0 +1,98 @@
+{
+  "schema": "tk2-western-range-art-v1",
+  "region": {
+    "x": 0,
+    "y": 280,
+    "width": 288,
+    "height": 432
+  },
+  "boundary": [
+    [
+      0,
+      0
+    ],
+    [
+      185,
+      0
+    ],
+    [
+      181,
+      42
+    ],
+    [
+      185,
+      82
+    ],
+    [
+      208,
+      118
+    ],
+    [
+      180,
+      145
+    ],
+    [
+      166,
+      170
+    ],
+    [
+      176,
+      198
+    ],
+    [
+      173,
+      226
+    ],
+    [
+      186,
+      251
+    ],
+    [
+      179,
+      276
+    ],
+    [
+      174,
+      298
+    ],
+    [
+      166,
+      323
+    ],
+    [
+      135,
+      346
+    ],
+    [
+      119,
+      370
+    ],
+    [
+      0,
+      390
+    ]
+  ],
+  "changed_pixels": 60501,
+  "protected_pixels": 22006,
+  "verification": {
+    "outside_pixels_identical": 1318250,
+    "protected_pixels_identical": 22006
+  },
+  "baseline": {
+    "path": "game/assets/map-road-centers.png",
+    "sha256": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7"
+  },
+  "ground": {
+    "path": "game/map-source/hydrology-ground.png",
+    "sha256": "5d80752ee48778501d9652b968bbffad5fe72c7adb7d6e5dd5f617d5b3fcf093"
+  },
+  "generated": {
+    "path": "art/map-western-range-v1/generated-range.png",
+    "sha256": "820a17dbd906d73187d9bc061f15c4d84cba5e53c62024900abaf3b3524166a1"
+  },
+  "output": {
+    "path": "game/assets/map-western-range.png",
+    "sha256": "3ff9ce070e6424e7d3dae04fa7b08157ddf0659ebe70d80fca20d5e72c2c7de2"
+  },
+  "rule": "One continuous mountain region; original raster roads, rivers and castle pixels protected. Outside region pixels identical."
+}

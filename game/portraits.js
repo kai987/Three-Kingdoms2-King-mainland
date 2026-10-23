@@ -30,6 +30,7 @@
   const locale=()=>i18n?.locale==='ja'?'ja':'zh-Hant';
   const text=(tc,ja)=>locale()==='ja'?ja:tc;
   const labelName=value=>i18n?.t?i18n.t(String(value??''),locale()):String(value??'');
+  const displayedPath=path=>root.GamePaths?.asset(path)||path;
   function personId(catalog,runtimeId){
    if(typeof runtimeId==='string'&&/^clerk-[0-9]{6,12}$/.test(runtimeId))return runtimeId;
    if(!catalog||typeof catalog!=='object'||!Array.isArray(catalog.library))return null;
@@ -58,7 +59,7 @@
   function civilHtml(key,rawName,{className='civil-staff-portrait',locale:language=locale()}={}){
    if(!['civil-staff-portrait','event-staff-face'].includes(className))className='civil-staff-portrait';
    const value=civilAsset(key),title=language==='ja'?'架空の文吏・共用ドット肖像':'架空文吏・共用像素肖像',name=i18n?.t?i18n.t(String(rawName||''),language):String(rawName||'');
-   return value?`<img data-civil-portrait="${escape(key)}" data-civil-name="${escape(rawName||'')}" class="${className}" src="${value.path}" width="${value.width}" height="${value.height}" alt="${escape(name?name+'・'+title:title)}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${escape(title)}">吏</span>`;
+   return value?`<img data-civil-portrait="${escape(key)}" data-civil-name="${escape(rawName||'')}" class="${className}" src="${escape(root.GamePaths?.asset(value.path)||value.path)}" width="${value.width}" height="${value.height}" alt="${escape(name?name+'・'+title:title)}" loading="lazy" decoding="async">`:`<span class="${className} civil-staff-placeholder" role="img" aria-label="${escape(title)}">吏</span>`;
   }
   function description(row,enhanced=false){
    if(!row)return text(status==='idle'||status==='loading'?'肖像準備中':'肖像待補',status==='idle'||status==='loading'?'肖像を準備中':'肖像は未設定です');
@@ -70,7 +71,7 @@
    const row=entry(id),asset=selectedAsset(row),available=!!asset,name=labelName(rawName),width=asset?.width||index?.width||32,height=asset?.height||index?.height||40;
    const missing=row&&!available?text('肖像載入失敗','肖像を読み込めませんでした'):description(null);
    const alt=available?`${name}${text('的肖像','の肖像')}`:`${name} · ${missing}`;
-   const image=available?`<img data-portrait-image src="${escape(asset.path)}" width="${width}" height="${height}" alt="${escape(alt)}" loading="lazy" decoding="async" draggable="false">`:
+   const image=available?`<img data-portrait-image src="${escape(root.GamePaths?.asset(asset.path)||asset.path)}" width="${width}" height="${height}" alt="${escape(alt)}" loading="lazy" decoding="async" draggable="false">`:
     `<span class="portrait-placeholder" role="img" aria-label="${escape(alt)}"><span aria-hidden="true">？</span></span>`;
    return `<span class="portrait-frame">${image}</span>${source?`<span class="portrait-source" data-l10n-native="${locale()}">${escape(available?description(row,asset.enhanced):missing)}</span>`:''}`;
   }
@@ -90,9 +91,11 @@
    const image=event.target;
    if(image?.hasAttribute?.('data-civil-portrait')){
     const key=image.getAttribute?.('data-civil-portrait')||image.dataset?.civilPortrait,attempted=image.getAttribute?.('src');
-    if(!/^clerk-[123]$/.test(key||'')||![`/assets/civil-staff/enhanced/${key}.png`,`/assets/civil-staff/${key}.png`].includes(attempted))return;
-    failedPaths.add(attempted);const next=civilAsset(key);
-    if(next){image.setAttribute('src',next.path);image.setAttribute('width',String(next.width));image.setAttribute('height',String(next.height));}
+    if(!/^clerk-[123]$/.test(key||''))return;
+    const canonical=[`/assets/civil-staff/enhanced/${key}.png`,`/assets/civil-staff/${key}.png`].find(path=>path===attempted||displayedPath(path)===attempted);
+    if(!canonical)return;
+    failedPaths.add(canonical);const next=civilAsset(key);
+    if(next){image.setAttribute('src',displayedPath(next.path));image.setAttribute('width',String(next.width));image.setAttribute('height',String(next.height));}
     else{const holder=doc?.createElement?.('span');if(holder){holder.className=image.className+' civil-staff-placeholder';holder.setAttribute('role','img');holder.setAttribute('aria-label',image.getAttribute?.('alt')||'');holder.textContent='吏';image.replaceWith?.(holder);}}
     return;
    }
@@ -100,8 +103,9 @@
    const frame=image.closest?.('[data-portrait-person]'),row=entry(frame?.dataset?.portraitPerson);
    if(!row)return;
    const attempted=image.getAttribute?.('src')||selectedAsset(row)?.path;
-   if(attempted!==row.path&&attempted!==row.enhanced?.path)return;
-   failAsset(frame.dataset.portraitPerson,attempted);
+   const canonical=[row.path,row.enhanced?.path].find(path=>typeof path==='string'&&(path===attempted||displayedPath(path)===attempted));
+   if(!canonical)return;
+   failAsset(frame.dataset.portraitPerson,canonical);
   }
   function attach(){
    if(attached||!doc?.addEventListener)return;attached=true;

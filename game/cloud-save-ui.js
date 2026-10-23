@@ -8,6 +8,19 @@
   intro:['使用同一帳號，可在其他裝置讀取本遊戲的雲端存檔。登入不會自動上傳或替換目前戰役。','同じアカウントで、別の端末から本作のセーブを読み込めます。ログインだけでは送信や戦役の切り替えは行いません。'],
   email:['電子郵件','メールアドレス'],password:['密碼','パスワード'],
   login:['登入','ログイン'],register:['註冊新帳號','新規登録'],
+  forgot:['忘記密碼','パスワードを忘れた場合'],backLogin:['返回登入','ログインに戻る'],
+  resetSend:['發送密碼重設信','再設定メールを送信'],
+  resetHelp:['請輸入原帳號信箱。收到信後，請在發送請求的同一個瀏覽器開啟連結。重新註冊不會變更原密碼。','登録済みのアドレスを入力してください。メールのリンクは、この操作を行った同じブラウザーで開いてください。再登録では元のパスワードは変更されません。'],
+  resetRequested:['重設請求已處理。若此信箱可以找回帳號，系統將寄送重設信，請查看收件匣與垃圾郵件。','再設定を依頼しました。対象のアカウントがある場合はメールを送信します。受信箱と迷惑メールを確認してください。'],
+  resetUnavailable:['管理者尚未設定本遊戲的密碼重設回跳網址，目前無法寄送重設信。','このゲームの再設定用URLが未設定です。管理者による設定後に送信できます。'],
+  resetTitle:['設定新密碼','新しいパスワードを設定'],newPassword:['新密碼','新しいパスワード'],confirmPassword:['再次輸入新密碼','新しいパスワード（確認）'],
+  resetWarning:['此帳號屬於共用認證專案。更新密碼也會影響使用同一帳號的其他應用程式；雲端存檔不會被刪除。','このアカウントは共通の認証プロジェクトに属します。同じアカウントを使う他のアプリのパスワードも変わります。クラウドセーブは削除されません。'],
+  resetUpdate:['確認更新密碼','パスワードを更新'],resetCancel:['取消密碼重設','パスワードの再設定を中止'],
+  passwordUpdated:['密碼已更新。請使用新密碼登入。','パスワードを更新しました。新しいパスワードでログインしてください。'],
+  passwordMismatch:['兩次新密碼必須相同，並且至少8個字元。','確認用と同じパスワードを8文字以上で入力してください。'],
+  recoveryExpired:['重設連結已失效或不屬於此瀏覽器。請重新發送重設信，並在同一瀏覽器開啟。','リンクが無効、期限切れ、または別のブラウザー用です。再設定メールを送り直し、同じブラウザーで開いてください。'],
+  passwordUnchanged:['新密碼與原密碼相同，請換一組新密碼。','元と同じパスワードです。別の新しいパスワードを入力してください。'],
+  invalidPassword:['新密碼不符合帳號安全要求，請至少使用8個字元。','新しいパスワードが要件を満たしていません。8文字以上で入力してください。'],
   loginHelp:['使用電子郵件與密碼登入。','メールアドレスとパスワードでログインします。'],
   registerHelp:['密碼至少8個字元。若需要確認信，請完成電子郵件確認後，回到本遊戲登入。若此信箱已註冊，請使用原密碼登入；重複註冊不會變更密碼。','パスワードは8文字以上です。確認メールで認証後、このゲームに戻ってログインしてください。登録済みのアドレスは元のパスワードでログインしてください。再登録ではパスワードは変更されません。'],
   confirmEmail:['註冊請求已處理。請查看註冊信箱與垃圾郵件；完成確認後，回到本遊戲登入。若未收到確認信，可稍後重寄。已確認的帳號可直接登入；重複註冊不會變更原密碼。','登録したメールを確認し、迷惑メールも確認してください。認証後にこのゲームに戻ってログインしてください。届かない場合は、しばらく待って再送できます。認証済みのアカウントはそのままログインできます。再登録では元のパスワードは変更されません。'],
@@ -28,7 +41,7 @@
   updated:['更新時間','更新日時'],version:['版本','版'],turn:['回合','ターン'],
   unavailableError:['雲端服務目前無法使用，仍可保存本機進度。','現在クラウドを利用できません。本機には保存できます。'],
   authError:['請先登入帳號，再使用雲端存檔。','ログインしてからクラウドセーブを使ってください。'],
-  authFailed:['電子郵件或密碼不正確，請重新確認。','メールアドレスまたはパスワードを確認してください。'],
+  authFailed:['電子郵件或密碼不正確。若忘記原密碼，請選擇「忘記密碼」，重新註冊不會更新密碼。','メールアドレスまたはパスワードを確認してください。元のパスワードを忘れた場合は再設定してください。再登録では変更されません。'],
   unconfirmed:['電子郵件尚未確認，請先完成信箱確認再登入。','メールアドレスが未認証です。認証後にログインしてください。'],
   deliveryUnavailable:['確認信服務未能寄送到此信箱，遊戲管理者需檢查郵件服務設定。重複註冊無法解除此限制。','このアドレスには確認メールを送信できません。ゲーム管理者によるメール配信設定の確認が必要です。登録を繰り返しても制限は解除されません。'],
   registrationDisabled:['目前未開放電子郵件註冊，請由遊戲管理者檢查帳號服務設定。','現在メールアドレスによる登録は無効です。ゲーム管理者による認証設定の確認が必要です。'],
@@ -43,10 +56,10 @@
   busy:['已有操作正在進行，請稍候再試。','別の操作を処理中です。完了後にやり直してください。'],
   loadFailed:['雲端存檔未能讀入，請查看遊戲提示。目前進度未改變。','クラウドセーブを読み込めませんでした。ゲームの通知を確認してください。現在の進行は変更していません。'],
  };
- const errorKeys={unavailable:'unavailableError',auth_required:'authError',auth_failed:'authFailed',email_unconfirmed:'unconfirmed',email_delivery_unavailable:'deliveryUnavailable',registration_disabled:'registrationDisabled',conflict:'conflict',network:'network',invalid:'invalid',rate_limited:'rateLimited',session_changed:'sessionChanged',not_found:'notFound',busy:'busy'};
+ const errorKeys={unavailable:'unavailableError',auth_required:'authError',auth_failed:'authFailed',email_unconfirmed:'unconfirmed',email_delivery_unavailable:'deliveryUnavailable',registration_disabled:'registrationDisabled',conflict:'conflict',network:'network',invalid:'invalid',rate_limited:'rateLimited',session_changed:'sessionChanged',not_found:'notFound',busy:'busy',recovery_unavailable:'resetUnavailable',recovery_expired:'recoveryExpired',password_unchanged:'passwordUnchanged',invalid_password:'invalidPassword'};
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function create(options){
-  const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,cloud=options.cloud;
+  const doc=options.document||root.document,i18n=options.i18n||root.GameI18n,cloud=options.cloud,recovery=options.recovery;
   const dialog=options.dialog||doc.querySelector('#dialog'),button=options.button||doc.querySelector('#cloud-save');
   if(!dialog||!cloud)throw new Error('Cloud save UI requires a dialog and controller');
   let panel=null,generation=0,pending=false,rows=[],listed=false,currentUser=cloud.state.user?.id||null;
@@ -56,21 +69,22 @@
   const t=key=>copy[key]?.[locale()==='ja'?1:0]||key;
   const now=()=>typeof options.now==='function'?options.now():Date.now();
   const resendWait=()=>Math.max(0,Math.ceil(((Number(cloud.state.confirmationRetryAt)||0)-now())/1000));
+  const resetWait=()=>Math.max(0,Math.ceil(((Number(recovery?.state.retryAt)||0)-now())/1000));
   const query=selector=>panel?.querySelector(selector);
-  const isBusy=()=>pending||!!options.isBusy?.()||!!cloud.state.authBusy;
+  const isBusy=()=>pending||!!options.isBusy?.()||!!cloud.state.authBusy||!!recovery?.state.busy;
   const isOpen=()=>!!panel&&dialog.open&&dialog.querySelector('[data-cloud-panel]')===panel;
   const stamp=()=>({generation,user:cloud.state.user?.id||null,panel});
   const valid=point=>!destroyed&&isOpen()&&point.generation===generation&&point.panel===panel&&point.user===(cloud.state.user?.id||null);
   function clear(){
    clearTimeout(resendTimer);resendTimer=null;
-   const password=query('#cloud-password');if(password)password.value='';
+   for(const id of ['#cloud-password','#cloud-new-password','#cloud-confirm-password']){const password=query(id);if(password)password.value='';}
    panel=null;generation++;pending=false;rows=[];listed=false;confirmation=null;message=null;email='';labels.clear();dirtyLabels.clear();conflicts.clear();
    dialog.classList.remove('cloud-save-dialog');refreshButton();
   }
   function refreshButton(){
    if(!button)return;
    button.textContent=t('title');button.setAttribute('data-l10n-native',locale());
-   button.setAttribute('aria-haspopup','dialog');button.disabled=!!options.isBusy?.()||pending||!!cloud.state.authBusy;
+   button.setAttribute('aria-haspopup','dialog');button.disabled=!!options.isBusy?.()||pending||!!cloud.state.authBusy||!!recovery?.state.busy;
   }
   function date(row){
    const y=Number(row.game_year),m=Number(row.game_month),turn=Number(row.game_turn);
@@ -90,7 +104,7 @@
    const input=query('#cloud-email');if(input)email=input.value;
    for(const input of panel.querySelectorAll('[data-cloud-label]'))if(input.value!==input.dataset.cloudRenderedLabel){const slot=Number(input.dataset.cloudLabel);labels.set(slot,input.value);dirtyLabels.add(slot);}
    const focus=panel.contains(doc.activeElement)?doc.activeElement:null;
-   return {password:query('#cloud-password')?.value||'',focus:focus?.id,start:focus?.selectionStart,end:focus?.selectionEnd,scroll:dialog.scrollTop};
+   return {password:query('#cloud-password')?.value||'',newPassword:query('#cloud-new-password')?.value||'',confirmPassword:query('#cloud-confirm-password')?.value||'',focus:focus?.id,start:focus?.selectionStart,end:focus?.selectionEnd,scroll:dialog.scrollTop};
   }
   function confirmationHtml(){
    if(!confirmation)return '';
@@ -113,15 +127,22 @@
    let body='';
    if(!state.configured)body=`<p>${t('unavailable')}</p>`;
    else if(!state.ready)body=`<p>${t('preparing')}</p>`;
+   else if(recovery?.state.user){
+    body=`<h3>${t('resetTitle')}</h3><p>${t('account')}：<strong>${escape(recovery.state.user.email)}</strong></p><p>${t('resetWarning')}</p><form id="cloud-reset-form"><label class="field" for="cloud-new-password">${t('newPassword')}<input id="cloud-new-password" type="password" required minlength="8" maxlength="256" autocomplete="new-password"></label><label class="field" for="cloud-confirm-password">${t('confirmPassword')}<input id="cloud-confirm-password" type="password" required minlength="8" maxlength="256" autocomplete="new-password"></label><button type="submit" class="primary">${t('resetUpdate')}</button></form><button id="cloud-reset-cancel" type="button">${t('resetCancel')}</button>`;
+   }
    else if(!user){
-    const wait=resendWait();
+    const wait=authMode==='recover'?resetWait():resendWait();
+    if(authMode==='recover')body=`<h3>${t('forgot')}</h3><p>${t('resetHelp')}</p>${!recovery?.state.enabled?`<p>${t('resetUnavailable')}</p>`:''}<form id="cloud-recovery-form"><label class="field" for="cloud-email">${t('email')}<input id="cloud-email" name="email" type="email" required autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="254" value="${escape(email)}"></label><button type="submit" class="primary" ${!recovery?.state.enabled||wait?'disabled':''}>${t('resetSend')}${wait?` (${wait}${t('seconds')})`:''}</button></form><button id="cloud-back-login" type="button">${t('backLogin')}</button>`;
+    else{
     body=`<p>${t('intro')}</p><div class="cloud-auth-modes" role="tablist" aria-label="${t('title')}"><button id="cloud-login-mode" role="tab" aria-selected="${authMode==='login'}" ${authMode==='login'?'class="primary"':''}>${t('login')}</button><button id="cloud-register-mode" role="tab" aria-selected="${authMode==='register'}" ${authMode==='register'?'class="primary"':''}>${t('register')}</button></div><form id="cloud-auth-form" class="cloud-auth-form"><p class="small">${t(authMode==='login'?'loginHelp':'registerHelp')}</p><label class="field" for="cloud-email">${t('email')}<input id="cloud-email" name="email" type="email" required autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="254" value="${escape(email)}"></label><label class="field" for="cloud-password">${t('password')}<input id="cloud-password" name="password" type="password" required minlength="${authMode==='register'?8:1}" maxlength="256" autocomplete="${authMode==='register'?'new-password':'current-password'}"></label><button id="cloud-auth-submit" type="submit" class="primary">${t(authMode==='login'?'login':'register')}</button></form><div class="cloud-confirmation-help"><p class="small">${t('resendHelp')}</p><button id="cloud-resend" type="button" ${wait?'disabled':''}>${t('resend')}${wait?` (${wait}${t('seconds')})`:''}</button></div>`;
+    body+=`<button id="cloud-forgot" type="button">${t('forgot')}</button>`;
+    }
     if(wait){resendTimer=setTimeout(()=>{resendTimer=null;draw();},1000);resendTimer.unref?.();}
    }else{
     body=`<div class="cloud-account"><p>${t('account')}：<strong>${escape(user.email||user.id)}</strong></p><div class="cloud-slot-actions"><button id="cloud-refresh">${t('refresh')}</button><button id="cloud-logout">${t('logout')}</button></div></div><p class="small">${t('slotsHelp')}</p>${!options.getView?.()?.game?`<p>${t('noCampaign')}</p>`:''}${confirmationHtml()}<div class="cloud-slots">${Array.from({length:5},(_,i)=>slotHtml(i+1)).join('')}</div>`;
    }
    panel.innerHTML=`<div id="cloud-status" class="cloud-status${message?.error?' error':''}" role="${message?.error?'alert':'status'}" aria-live="polite">${pending?t('loading'):message?t(message.key):''}</div>${body}`;
-   const password=query('#cloud-password');if(password&&keepPassword)password.value=before.password;
+   for(const [id,key] of [['#cloud-password','password'],['#cloud-new-password','newPassword'],['#cloud-confirm-password','confirmPassword']]){const input=query(id);if(input&&keepPassword)input.value=before[key]||'';}
    for(const node of panel.querySelectorAll('button,input'))if(isBusy())node.disabled=true;
    bind();refreshButton();i18n?.apply?.();
    if(before.focus){const focus=doc.getElementById(before.focus);if(focus&&panel.contains(focus)&&!focus.disabled){try{focus.focus({preventScroll:true});if(before.start!==null&&typeof focus.setSelectionRange==='function')focus.setSelectionRange(before.start,before.end);}catch{}}}
@@ -181,6 +202,25 @@
    try{await cloud.signOut();if(valid(point)){pending=false;draw({keepPassword:false});}}
    catch(error){fail(error,point);}
   }
+  async function requestRecovery(event){
+   event.preventDefault();const input=query('#cloud-email');email=input.value.trim();
+   if(!input.checkValidity()){message={key:'invalidEmail',error:true};draw();return;}
+   const point=begin();if(!point)return;
+   try{await recovery.request(email);if(valid(point)){pending=false;message={key:'resetRequested'};draw({keepPassword:false});}}
+   catch(error){fail(error,point);}
+  }
+  async function updatePassword(event){
+   event.preventDefault();const password=query('#cloud-new-password').value,again=query('#cloud-confirm-password').value;
+   if(password.length<8||password.length>256||password!==again){message={key:'passwordMismatch',error:true};draw();return;}
+   email=recovery.state.user?.email||email;const point=begin();if(!point)return;
+   try{await recovery.update(password);if(valid(point)){pending=false;authMode='login';message={key:'passwordUpdated'};draw({keepPassword:false});}}
+   catch(error){fail(error,point);}
+  }
+  async function cancelRecovery(){
+   const point=begin();if(!point)return;
+   try{await recovery.cancel();if(valid(point)){pending=false;authMode='login';message=null;draw({keepPassword:false});}}
+   catch(error){fail(error,point);}
+  }
   async function write(slot,row){
    if(!options.getView?.()?.game)return;
    const label=(labels.get(slot)||'').trim()||`${t('slot')} ${slot}`;
@@ -219,6 +259,11 @@
    bindClick('#cloud-login-mode',()=>{if(isBusy())return;authMode='login';message=null;draw();});
    bindClick('#cloud-register-mode',()=>{if(isBusy())return;authMode='register';message=null;draw();});
    bindClick('#cloud-resend',()=>void resend());
+   bindClick('#cloud-forgot',()=>{if(isBusy())return;authMode='recover';message=null;draw({keepPassword:false});});
+   bindClick('#cloud-back-login',()=>{if(isBusy())return;authMode='login';message=null;draw({keepPassword:false});});
+   bindClick('#cloud-reset-cancel',()=>void cancelRecovery());
+   if(query('#cloud-recovery-form'))query('#cloud-recovery-form').onsubmit=requestRecovery;
+   if(query('#cloud-reset-form'))query('#cloud-reset-form').onsubmit=updatePassword;
    if(query('#cloud-auth-form'))query('#cloud-auth-form').onsubmit=authenticate;
    if(query('#cloud-email'))query('#cloud-email').oninput=event=>{email=event.target.value;};
    bindClick('#cloud-refresh',()=>void refresh());bindClick('#cloud-logout',()=>void signOut());
@@ -240,12 +285,13 @@
   function open(){
    if(destroyed||isBusy())return false;
    generation++;pending=false;rows=[];listed=false;confirmation=null;message=null;labels.clear();dirtyLabels.clear();conflicts.clear();
+   if(recovery?.state.error&&recovery.state.hasCallback){authMode='recover';message={key:errorKeys[recovery.state.error]||'recoveryExpired',error:true};}
    const token=generation;
    options.openDialog(t('title'),`<div class="cloud-panel" data-cloud-panel="${token}" data-l10n-native="${locale()}"></div>`,`<button data-cancel data-l10n-native="${locale()}">${t('close')}</button>`);
    panel=dialog.querySelector(`[data-cloud-panel="${token}"]`);
    if(!panel||!dialog.open){panel=null;return false;}
    dialog.classList.add('cloud-save-dialog');draw();
-   if(cloud.state.ready&&cloud.state.user)void refresh();
+   if(cloud.state.ready&&cloud.state.user&&!recovery?.state.user)void refresh();
    return true;
   }
   function stateChanged(){
@@ -255,15 +301,17 @@
     const password=query('#cloud-password');if(password)password.value='';
     generation++;pending=false;rows=[];listed=false;confirmation=null;message=null;labels.clear();dirtyLabels.clear();conflicts.clear();
    }
-   if(isOpen()){draw({keepPassword:!changed,keepDrafts:!changed});if(id&&cloud.state.ready&&!listed&&!isBusy())void refresh();}
+   if(isOpen()){draw({keepPassword:!changed,keepDrafts:!changed});if(id&&cloud.state.ready&&!listed&&!isBusy()&&!recovery?.state.user)void refresh();}
   }
   const unsubscribe=cloud.subscribe(stateChanged);
+  let recoveryId=recovery?.state.user?.id||null;
+  const unsubscribeRecovery=recovery?.subscribe(value=>{const next=value.user?.id||null,changed=next!==recoveryId;recoveryId=next;refreshButton();if(isOpen())draw({keepPassword:!changed});});
   const languageChanged=()=>{refreshButton();draw();};
   const closed=()=>{if(panel)clear();};
   const observer=typeof root.MutationObserver==='function'?new root.MutationObserver(()=>{if(panel&&!dialog.contains(panel))clear();}):null;
   observer?.observe(dialog,{childList:true});
   doc.addEventListener('game-language-change',languageChanged);dialog.addEventListener('close',closed);button?.addEventListener('click',open);refreshButton();
-  return {open,refreshButton,destroy(){destroyed=true;unsubscribe?.();observer?.disconnect();doc.removeEventListener('game-language-change',languageChanged);dialog.removeEventListener('close',closed);button?.removeEventListener('click',open);clear();}};
+  return {open,refreshButton,destroy(){destroyed=true;unsubscribe?.();unsubscribeRecovery?.();observer?.disconnect();doc.removeEventListener('game-language-change',languageChanged);dialog.removeEventListener('close',closed);button?.removeEventListener('click',open);clear();}};
  }
  const api={create};if(typeof module==='object'&&module.exports)module.exports=api;else root.CloudSaveUI=api;
 })(typeof window==='object'?window:globalThis);

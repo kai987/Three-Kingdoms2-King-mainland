@@ -1,6 +1,10 @@
 # 三國・大陸戰役
 
+[繁體中文](README.md) · [日本語](README.ja.md) · [線上遊玩](https://kai987.github.io/Three-Kingdoms2-King-mainland/)
+
 原版像素風格的 Web 戰略遊戲：25 個劇本、最多 115 城、每城歷史武將與文吏合計 99 人、每方出戰 10 人、1,023 名歷史人物，繁體中文／日本語切換。每旬10日，城池與人物按年月登場，開局資源依劇本配置；四種主要場景使用原版配樂。
+
+線上版在每個瀏覽器分頁的 Worker 中執行相同戰役規則，無需開啟本機伺服器。首次需下載 Python／WASM 與劇本；關閉或重新整理前，請明確保存至瀏覽器、JSON 檔案或雲端槽位。靜態建置與部署方式見[線上發布](docs/web-deployment.md)。
 
 ```sh
 python3 -B game/build_march_core.py
