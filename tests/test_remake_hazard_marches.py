@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 import sys
 import tempfile
-import time
 import unittest
+from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
@@ -99,8 +99,18 @@ class HazardMarchTests(unittest.TestCase):
         self.assertIsNone(game._travel_path(game.state,'shujun','yinping','shu','special',adjacent=True))
         ziwu=game._travel_path(game.state,'hanzhong','jingzhao','wei','special')
         self.assertEqual(ziwu['days'],40)
-        started=time.monotonic();view=game.view()
-        self.assertLess(time.monotonic()-started,1.5)
+        from remake.march_core import enabled, invoke
+        native=enabled()
+        # Assert the bounded batch work directly; a wall-clock cutoff changes
+        # with shared-runner contention and the size of the authored graph.
+        with patch('remake.march_core.invoke',wraps=invoke) as calls, \
+             patch.object(game,'_python_travel_view',wraps=game._python_travel_view) as python_views:
+            view=game.view()
+        self.assertEqual(sum(call.args[0]=='batch' for call in calls.call_args_list),1 if native else 0)
+        if native:
+            self.assertTrue(python_views.call_args_list)
+            self.assertTrue(all(call.args==(None,) for call in python_views.call_args_list),
+                            'Native view construction must not repeat Python graph searches')
         self.assertEqual(view['catalog']['travel_quotes']['hanzhong:jingzhao:special'],ziwu)
         self.assertEqual(game.export_save(),before)
 

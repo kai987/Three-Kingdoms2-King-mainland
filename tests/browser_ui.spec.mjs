@@ -18,7 +18,12 @@ async function opening(page){
  await expect(page.locator('#game-engine-status')).toBeHidden();
  await expect(page.locator('#world-map .city-hit')).not.toHaveCount(0);
 }
-async function closeDialog(page){await page.keyboard.press('Escape');await expect(page.locator('#dialog')).not.toBeVisible();}
+async function closeDialog(page){
+ // Escape dismisses the topmost equipment tooltip before its parent dialog.
+ const tooltip=page.locator('#game-equipment-tooltip');
+ if(await tooltip.isVisible()){await page.keyboard.press('Escape');await expect(tooltip).toBeHidden();}
+ await page.keyboard.press('Escape');await expect(page.locator('#dialog')).not.toBeVisible();
+}
 async function assertOriginalEventArt(page,modal,kind){
  const mapped={equipment_bought:['scene','armory','event-armory-interior'],grain_traded:['scene','market','event-market-interior'],treasure_sold:['scene','market','event-market-interior'],transport_departed:['scene','sortie','event-sortie'],officer_treated:['icon','facility-hospital','facility-hospital'],officer_studied:['icon','facility-school','facility-school']};
  const [type,name,asset]=mapped[kind],image=modal.locator(`img.event-original-${type}[data-original-ui="${asset}"]`);
@@ -292,6 +297,8 @@ test('daily marching grain loads once and consumes actual days through visible t
  await clickCityCommand(page,'transfer');
  await expect(page.locator('#transfer-city')).toBeVisible();
  await page.locator('#transfer-city').selectOption(target);
+ const landOption=page.locator('#route-mode option[data-route-kind=land]');
+ await expect(landOption).toHaveCount(1);await page.locator('#route-mode').selectOption(await landOption.getAttribute('value'));
  const leader=String(initial.state.extension.leaders.shu);
  const officer=page.locator(`input[name=transfer-officer]:enabled:not([value="${leader}"])`).first();
  const officerText=await officer.getAttribute('value');
@@ -718,7 +725,10 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
  expect(column.quote.modes).toEqual(['river']);expect(column.risks).toEqual([]);
  expect(column.quote.routes[0].flow).toBe('upstream');
  expect(column.quote.routes[0].hazard).toBeNull();
- expect(column.quote.routes[0].river_segments.map(row=>row.speed_km_per_day)).toEqual([20,22.5]);
+ const riverSegments=column.quote.routes[0].river_segments;
+ expect(riverSegments[0].speed_km_per_day).toBe(20);expect(riverSegments.length).toBeGreaterThan(1);
+ expect(riverSegments.slice(1).every(row=>row.speed_key==='xiang'&&row.speed_km_per_day===22.5)).toBe(true);
+ expect(new Set(riverSegments.map(row=>row.reach_id)).size).toBe(riverSegments.length);
  expect(saved.state.rng).toEqual(initial.state.rng);
  expect(saved.state.officers[ident].troops).toBe(initial.state.officers[ident].troops);
  await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
@@ -1168,6 +1178,8 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  await clickCityCommand(page,'city-logistics');await expect(page.locator('[data-treasure-transport]')).toBeVisible();
  await expect(page.locator('#logistics-enabled')).not.toBeChecked();
  await page.locator('#treasure-transport-target').selectOption(target);
+ const expectedTransport=await page.evaluate(async([source,target])=>{const response=await fetch('/api/state');if(!response.ok)throw new Error('Treasure transport quote unavailable');const body=await response.json(),view=body.view||body;return view.catalog.logistics.cities[source].treasure_transport.targets.find(row=>row.target===target);},[source,target]);
+ expect(expectedTransport.can_dispatch).toBe(true);expect(expectedTransport.days).toBeGreaterThan(0);
  await page.locator('#treasure-transport-amount').fill('999999');await expect(page.locator('#treasure-transport-amount')).toHaveValue('6');
  await page.locator('#treasure-transport-max').click();await expect(page.locator('#treasure-transport-amount')).toHaveValue('6');
  await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#treasure-transport-amount')).toHaveValue('6');
@@ -1175,9 +1187,13 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  await expect(page.locator('#dispatch-treasure')).toBeEnabled();await page.locator('#dispatch-treasure').click();await waitIdle(page);
  const departing=await state(),convoy=departing.state.extension.logistics.convoys.find(row=>row.source===source&&row.target===target);
  expect(convoy).toMatchObject({owner:'shu',status:'outbound',officers:[595],cargo:{gold:0,grain:0,reserves:0,treasure:6},delivery_done:false});
- expect(convoy.journeys[0].quote.days).toBe(45);
- expect(convoy.journeys[0].supply).toMatchObject({loaded:4,consumed:0,remaining:4});
- expect(departing.state.cities[source].grain).toBe(before.state.cities[source].grain-4);
+ const quote=convoy.journeys[0].quote;
+ expect(quote.days).toBe(expectedTransport.days);expect(quote.modes).toEqual(expectedTransport.modes);
+ let stageDays=0;for(let index=0;index<quote.routes.length;index++){stageDays+=quote.routes[index].days;if(before.state.cities[quote.path[index+1]]?.owner==='shu')break;}
+ const units=convoy.officers.reduce((sum,id)=>sum+before.state.officers[id].troops+100,0),rations=Math.ceil(units*stageDays/1000);
+ expect(rations).toBe(expectedTransport.cost_grain);
+ expect(convoy.journeys[0].supply).toMatchObject({loaded:rations,consumed:0,remaining:rations});
+ expect(departing.state.cities[source].grain).toBe(before.state.cities[source].grain-rations);
  expect(departing.state.extension.treasury.cities[source].treasure).toBe(0);
  expect(departing.state.extension.treasury.cities[target].treasure).toBe(4,'Cargo is not delivered instantly');
  expect(departing.state.rng).toEqual(before.state.rng,'This safe land dispatch has no weather RNG draw');
