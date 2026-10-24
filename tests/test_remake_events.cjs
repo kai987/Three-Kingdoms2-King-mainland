@@ -33,12 +33,30 @@ function fixture(items=[]){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,44);
+ assert.equal(Object.keys(KINDS).length,51);
  assert(validEvent(row(1)));for(const bad of [{id:0},{kind:'<script>'},{month:13},{day:31},{audience:'other'},{person_ids:[3]},{details:[]},{turn:0}])assert(!validEvent({...row(1),...bad}));
  assert.deepEqual(eventRows({game:{extension:{events:{items:{}}}}}),[]);
  assert.notEqual(campaignKey(view([])),campaignKey(view([],2027)));
  const originalRows=[row(3),row(2),row(1)];const source=JSON.stringify(originalRows);assert.deepEqual(eventRows(view(originalRows)).map(x=>x.id),[1,2,3]);assert.equal(JSON.stringify(originalRows),source);
  assert.deepEqual(groupRows([row(1,'officer_appeared'),row(2,'officer_appeared'),row(3,'officer_death'),row(4,'officer_death',{turn:2})]).map(g=>g.length),[2,1,1]);
+ const facilityRows=[
+  row(1,'town_developed',{details:{actor:'person-a',from_town:1,to_town:2,gold:200}}),
+  row(2,'officer_treated',{details:{actor:'person-a',target:'person-a',gold:50,before:40,after:80}}),
+  row(3,'officer_studied',{details:{actor:'person-a',target:'person-a',gold:10,before:79,after:88,bonus:9}}),
+  row(4,'grain_traded',{details:{actor:'person-a',direction:'buy',batches:3,grain:300,gold:30,rate:10}}),
+  row(5,'equipment_bought',{details:{actor:'person-a',target:'person-a',slot:'weapon',item:4,previous:0,gold:250}}),
+  row(6,'prevention_improved',{details:{actor:'person-a',gold:18,gain:12,repair:4,preparedness_before:60,preparedness_after:72,damage_before:4,damage_after:0}}),
+  row(7,'city_disaster',{person_ids:[],details:{disaster:'drought',gold:0,grain:80,reserves:40,rate:4,preparedness_before:60,preparedness_after:54,damage_before:0,damage_after:4}})
+ ];
+ for(const r of facilityRows){assert(validEvent(r));assert(!validEvent({...r,details:{...r.details,extra:1}}));assert(!validEvent({...r,details:{...r.details,gold:-1}}));}
+ assert(!validEvent({...facilityRows[6],details:{...facilityRows[6].details,preparedness_before:99}}));
+ assert(!validEvent({...facilityRows[3],details:{...facilityRows[3].details,grain:301}}));
+ assert(!validEvent({...facilityRows[2],details:{...facilityRows[2].details,before:80}}));
+ const sites=fixture(),sitesView=view([...facilityRows,{...facilityRows[5],id:8,factions:['wei']}]);const sitesBytes=JSON.stringify(sitesView);
+ sites.events.observe(sitesView,{newGame:true});sites.drain();assert(sites.modal.innerHTML.includes('event-facility'));assert(sites.modal.innerHTML.includes('町等級')||sites.modal.innerHTML.includes('城町'));
+ for(let n=0;n<5;n++)sites.modal.querySelector('[data-event-next]').onclick();
+ assert(sites.modal.innerHTML.includes('60 → 72'));sites.i18n.locale='ja';sites.doc.emit('game-language-change');assert(sites.modal.innerHTML.includes('防災整備'));
+ sites.modal.querySelector('[data-event-next]').onclick();assert(sites.modal.innerHTML.includes('干ばつ'));assert(!sites.events.snapshot().pending.length);assert.equal(JSON.stringify(sitesView),sitesBytes);sites.events.dispose();
  const reward=row(1,'officer_rewarded',{person_ids:['person-a','person-b'],details:{actor:'person-a',target:'person-b',kind:'gold',amount:100,gain:5,loyalty_before:80,loyalty_after:85}});
  assert(validEvent(reward));
  for(const bad of [{amount:101},{gain:0},{gain:6},{loyalty_after:101},{loyalty_before:80.5},{kind:'evil'}])assert(!validEvent({...reward,details:{...reward.details,...bad}}));
@@ -166,5 +184,5 @@ function fixture(items=[]){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,localAutosave:null,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
- console.log('events: 44 bilingual scenes, strict supply and city-name snapshots, dated city upgrades with historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 51 bilingual scenes, strict supply and city-name snapshots, dated city upgrades with historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

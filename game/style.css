@@ -1105,3 +1105,5 @@ dialog:has([data-domestic-dialog]) .dialog-actions{position:sticky;bottom:-24px;
 .treasury-amount .field{flex:1}
 .treasury-panel p{margin:0;overflow-wrap:anywhere}
 @media(max-width:600px){.treasury-panel fieldset{padding:8px}.treasury-amount{gap:6px}.treasury-panel button{white-space:normal}}
+
+.facilities-panel{display:grid;gap:12px;min-width:0}.facilities-panel fieldset{min-width:0;padding:10px;border:2px solid currentColor;display:grid;gap:10px;margin:0}.facilities-panel legend{padding:0 6px}.facilities-panel .field{min-width:0;margin:0}.facilities-panel select{max-width:100%;width:100%}.facility-amount{display:flex;align-items:end;gap:8px}.facility-amount .field{flex:1}.facilities-panel p{margin:0;overflow-wrap:anywhere}.facility-policy{padding:10px;border:2px solid currentColor}.facility-policy[open]>summary{margin-bottom:10px}.facility-policy .field,.facility-policy .domestic-toggle{margin-bottom:8px}@media(max-width:600px){.facilities-panel fieldset{padding:8px}.facilities-panel button{white-space:normal}}

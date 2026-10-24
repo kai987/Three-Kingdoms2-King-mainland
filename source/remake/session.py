@@ -79,6 +79,10 @@ class CampaignSession:
         month=date.month if self.game.state else date['start_month']
         result['catalog']['city_profiles']=profiles_at(self.game.catalog.data,year,month)
         result['catalog']['city_income']=incomes_at(self.game.catalog.data,year,month)
+        if self.game.state:
+            from .facilities import adjusted_income
+            result['catalog']['city_income']={key:adjusted_income(self.game.state,key,income)
+                for key,income in result['catalog']['city_income'].items()}
         result['catalog']['road_additions']=self.game.catalog.data.get('road_additions',[])
         result['catalog']['world']=self.game.catalog.data.get('world')
         result['catalog']['scenario_id']=self.game.catalog.data['id']
@@ -175,11 +179,14 @@ class CampaignSession:
             owner=d['initial_owners'][city]
             from .city_economy import tier_at
             treasure = {'normal':2,'large':4,'giant':6}[tier_at(d,city,d['start_year'],d['start_month'])] if owner!='neutral' else 0
+            town={'normal':1,'large':2,'giant':3}[tier_at(d,city,d['start_year'],d['start_month'])]
+            facilities=dict(town=town,preparedness=d.get('facility_rules',{}).get('initial_preparedness',40),
+                damage=0,services=['hospital','market']+(['school','armory'] if town>=2 else []))
             history=d.get('city_history',{}).get(city,{})
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,
-                city=dict(id=city,owner=owner,treasure=treasure,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
+                city=dict(id=city,owner=owner,treasure=treasure,facilities=facilities,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
                     profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),history=d.get('city_history',{}).get(city),
                     **d.get('initial_city_resources',{}).get(city,d['initial_resources'])))

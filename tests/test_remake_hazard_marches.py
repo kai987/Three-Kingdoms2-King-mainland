@@ -10,7 +10,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
-from remake import civil_staff, domestic, logistics, treasures
+from remake import civil_staff, domestic, facilities, logistics, treasures
 from remake.errors import GameError
 from remake.route_hazards import evaluate_leg
 
@@ -19,6 +19,9 @@ class HazardMarchTests(unittest.TestCase):
     def catalog(self):
         data=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
         data['id']='hazard-march-fixture'
+        # Isolate voyage/route losses from unrelated monthly city disasters;
+        # monsoons, exploration and special-road hazard draws remain enabled.
+        data.setdefault('facility_rules',{})['disasters_enabled']=False
         data['travel_hazards']=dict(
             yinping=dict(from_='yinping'),
             ziwu=dict(rain_months=[7,8,9]),
@@ -56,6 +59,7 @@ class HazardMarchTests(unittest.TestCase):
         domestic.synchronize(game, game.state)
         civil_staff.synchronize(game,game.state,checks=False)
         treasures.synchronize(game,game.state)
+        facilities.synchronize(game,game.state)
         game.validate(game.state)
         return city
 

@@ -35,3 +35,5 @@
 }
 
 .event-treasure{position:absolute;bottom:10px;left:12px;width:96px;height:84px;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)}
+
+.event-facility{position:absolute;bottom:10px;left:12px;width:120px;height:96px;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)}

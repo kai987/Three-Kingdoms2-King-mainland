@@ -3,12 +3,18 @@
 No fixture rewrites ownership, dates, profiles, RNG or starting resources. Every
 phase is saved as JSON, restored and continued; the small 184 faction is also
 replayed command-for-command through both marching engines.
+
+Automatic facility visits are disabled in the copied catalog to preserve the
+office-only persuasion/reappointment regression. Actual facility AI, its action
+competition and seasonal disasters are covered by the facility campaign tests
+and the unmodified cross-year campaign soak.
 """
 from collections import Counter
 from copy import deepcopy
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -233,7 +239,12 @@ class DelegationReplayTests(unittest.TestCase):
         self.player_reports, self.ai_reports, self.ai_work, self.convoy_reports = set(), set(), set(), set()
         self.generated, self.staff_attack_sent, self.staff_battles = None, False, set()
         self.reappointed_military = []
-        catalog = Catalog(ROOT / 'game/data/campaigns' / filename)
+        data = json.loads((ROOT / 'game/data/campaigns' / filename).read_text())
+        data['facility_ai_default'] = False
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / filename
+            path.write_text(json.dumps(data, ensure_ascii=False))
+            catalog = Catalog(path)
         original_catalog = digest(catalog.data)
         for backend in backends:
             game = Campaign(catalog)

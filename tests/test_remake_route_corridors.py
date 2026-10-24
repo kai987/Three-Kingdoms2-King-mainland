@@ -4,6 +4,7 @@ from math import atan2, ceil, cos, radians, sin, sqrt
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -120,7 +121,14 @@ class RouteCorridorTests(unittest.TestCase):
                 self.assertEqual(sum(set(edge) == {'zangke', road['to']} for edge in catalog.data['links']), 1)
 
     def test_actual_transfers_use_new_roads_both_directions_and_arrive_at_the_correct_ten_day_boundary(self):
-        catalog = next(c for c in self.catalogs if c.data['id'] == 'mainland217-07')
+        data = deepcopy(next(c for c in self.catalogs if c.data['id'] == 'mainland217-07').data)
+        # This fixture isolates route timing and its RNG-free land movement;
+        # unrelated monthly city disasters are tested by the facility suite.
+        data.setdefault('facility_rules', {})['disasters_enabled'] = False
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'route-movement.json'
+            path.write_text(json.dumps(data, ensure_ascii=False))
+            catalog = Catalog(path)
         for target in ('bajun', 'fuling'):
             route = next(r for r in catalog.data['travel_routes']
                          if {r['from'], r['to']} == {'zangke', target} and r['mode'] == 'land')

@@ -3,12 +3,13 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
-from remake import civil_staff, domestic, logistics, treasures
+from remake import civil_staff, domestic, facilities, logistics, treasures
 from remake.city_economy import (apply_opening_sizes, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
 from campaign_fixtures import advance_month
@@ -22,6 +23,7 @@ def synchronize(game, state, **options):
     domestic.synchronize(game, state)
     civil_staff.synchronize(game, state, **options)
     treasures.synchronize(game, state)
+    facilities.synchronize(game, state)
 
 
 def read(path):
@@ -39,8 +41,18 @@ class DatedScenarioEconomyTests(unittest.TestCase):
             key = date + (catalog.data['scenario_variant'],) if catalog.data.get('scenario_variant') else date
             cls.catalogs[key] = catalog
 
-    def game(self, date=(217, 7), side='wu'):
-        game = Campaign(self.catalogs[date])
+    def game(self, date=(217, 7), side='wu', *, city_disasters=True):
+        catalog = self.catalogs[date]
+        if not city_disasters:
+            # Exact production/stock assertions exclude separate disaster
+            # losses; do not mutate the shared opening-data catalogs.
+            data = deepcopy(catalog.data)
+            data.setdefault('facility_rules', {})['disasters_enabled'] = False
+            with tempfile.TemporaryDirectory() as temporary:
+                path = Path(temporary) / 'dated-income.json'
+                path.write_text(json.dumps(data, ensure_ascii=False))
+                catalog = Catalog(path)
+        game = Campaign(catalog)
         game.state = game._new(side, 2026)
         game.validate(game.state)
         return game
@@ -128,7 +140,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         self.assertGreaterEqual(starts, 200)
 
     def test_monthly_income_and_real_spending_preserve_live_stocks_and_rng(self):
-        game = self.game()
+        game = self.game(city_disasters=False)
         city = next(c for c in game.state.cities.values()
                     if c.owner == game.state.player and c.roster.officer_ids and c.gold > 100 and c.grain > 100)
         officer = city.roster.officer_ids[0]
@@ -160,7 +172,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         self.assertEqual(canonical(restored.export_save()), canonical(saved))
 
     def test_foundation_still_transfers_actual_parent_resources_not_future_static_stocks(self):
-        game = self.game((249, 1))
+        game = self.game((249, 1), city_disasters=False)
         # Direct calendar-service boundary fixture: historical event only opens
         # the node, while actual holdings and current resources are conserved.
         while (game.state.year, game.state.month) < (257, 1):

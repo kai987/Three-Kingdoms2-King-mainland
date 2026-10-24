@@ -10,7 +10,7 @@ STATIC_FIELDS = frozenset(('title', 'factions', 'links', 'rules', 'calendar_rule
     'scenario_id', 'faction_colors', 'sea_routes', 'travel_hazards',
     'added_city_ids', 'regional_roads', 'river_routes', 'city_label_offsets', 'city_history', 'scenarios',
     'travel_rules', 'coastal_city_ids'))
-PERSON_STATE = frozenset(('year_state', 'faction', 'alive', 'location'))
+PERSON_STATE = frozenset(('year_state', 'faction', 'alive', 'location', 'intellect', 'study_gain'))
 
 
 class ViewTransport:

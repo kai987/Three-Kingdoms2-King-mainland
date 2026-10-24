@@ -3,8 +3,11 @@
 Month boundaries are authored game dates where the historical source gives only
 a year. The 209-06 opening's Cao ownership is an explicit scenario exception.
 """
+from copy import deepcopy
+import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,8 +27,17 @@ def catalog(chapter):
     return Catalog(CAMPAIGNS / f'{chapter}.json')
 
 
-def start(chapter, faction=None):
-    game = Campaign(catalog(chapter))
+def start(chapter, faction=None, *, city_disasters=True):
+    source = catalog(chapter)
+    if not city_disasters:
+        # Chronology-only replay: preserve the catalog used by other cases.
+        data = deepcopy(source.data)
+        data.setdefault('facility_rules', {})['disasters_enabled'] = False
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'chronology.json'
+            path.write_text(json.dumps(data, ensure_ascii=False))
+            source = Catalog(path)
+    game = Campaign(source)
     faction = faction or next(iter(game.catalog.factions))
     game.command('new', dict(faction=faction, seed=2026), 0)
     return game
@@ -132,7 +144,7 @@ class JingzhouChronologyTests(unittest.TestCase):
                 game.validate(game.state)
 
     def test_continuing_217_campaign_keeps_its_city_after_240(self):
-        game = start('217-07', 'wu')
+        game = start('217-07', 'wu', city_disasters=False)
         city = game.state.cities['yiyang']
         original_owner = city.owner
         original_rng = game.state.rng.state, game.state.rng.draws

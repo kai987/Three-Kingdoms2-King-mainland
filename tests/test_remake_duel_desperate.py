@@ -187,6 +187,7 @@ class DesperateDuelTests(unittest.TestCase):
                 # Preserve the frozen pre-desperate artifact byte for byte;
                 # project the unrelated empty cargo schema and initial treasury.
                 state['extension'].pop('treasury')
+                state['extension'].pop('facilities')
                 state['extension']['logistics']['schema'] = 'tk2-logistics-v1'
                 self.assertEqual(digest(state), row['state_sha256'])
                 self.assertEqual(vars(game.state.rng), row['rng'])

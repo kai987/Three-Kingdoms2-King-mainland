@@ -419,6 +419,11 @@ class ExpandedCampaign:
                 martial=state.officers[first['id']].profile.martial_strength
                 other=state.officers[second['id']].profile.martial_strength
                 base=max(2,10+(martial-other)//6+state.rng.next()%7)
+                from .facility_equipment import duel_adjustment
+                equipped=state.officers[first['id']];protected=state.officers[second['id']]
+                attack_bonus=duel_adjustment(equipped.weapon_id,equipped.armor_id,martial)['attack']
+                defense_bonus=duel_adjustment(protected.weapon_id,protected.armor_id,other)['defense']
+                base=max(2,base+attack_bonus-defense_bonus)
                 if attack=='desperate':
                     if quality<30:base*=2
                     else:
@@ -543,6 +548,9 @@ class ExpandedCampaign:
         if 'treasury' in x:
             from . import treasures
             treasures.synchronize(self,state)
+        if 'facilities' in x:
+            from . import facilities
+            facilities.synchronize(self,state)
 
     def _choose_successor(self,state,payload):
         pending=state.extension['pending_succession'].get(state.player)
@@ -580,7 +588,9 @@ class ExpandedCampaign:
                             'year_state':year_state(person,state.year if state else self.catalog.data['start_year']).value,
                             'faction':officer.faction_id if officer else None,'alive':officer.alive if officer else None,
                             'location':state.extension['free_locations'].get(str(ident)) if state else self.catalog.data['appearance_locations'].get(person.person_id),
-                            'martial':profile.martial_strength,'intellect':profile.intellect,'virtue':profile.virtue,
+                            'martial':profile.martial_strength,'intellect':officer.profile.intellect if officer else profile.intellect,'virtue':profile.virtue,
+                            'base_intellect':profile.intellect,
+                            'study_gain':officer.profile.intellect-profile.intellect if officer else 0,
                             'health_max':profile.health_max,'affinity':profile.terrain_affinity,
                             'aliases':sorted(set(row.get('aliases',[])+self.catalog.data.get(
                                 'additional_person_aliases',{}).get(person.person_id,[]))),
@@ -596,7 +606,7 @@ class ExpandedCampaign:
 
     def _validate_expansion(self,state):
         x=state.extension
-        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury'}
+        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities'}
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')

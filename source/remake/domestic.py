@@ -264,10 +264,15 @@ def on_arrival(game, state, ids, city_id):
         values.pop(str(ident), None)
 
 
-def _income(game, city_id):
-    return game.catalog.data.get('city_income', {}).get(city_id,
+def _income(game, city_id, state=None):
+    value = game.catalog.data.get('city_income', {}).get(city_id,
         dict(gold=game.catalog.data['rules'].get('monthly_gold_income', 0),
              grain=game.catalog.data['rules'].get('monthly_grain_income', 0), reserves=0))
+    if state is not None:
+        from .city_economy import income_at
+        from .facilities import adjusted_income
+        value=adjusted_income(state,city_id,income_at(game.catalog.data,city_id,state.year,state.month) or value)
+    return value
 
 
 def month_rollover(game, state):
@@ -281,7 +286,7 @@ def month_rollover(game, state):
         if row['last_income_month'] >= current:
             continue
         points = row['income_points'] if row['income_month'] == current - 1 else 0
-        base = _income(game, key)
+        base = _income(game, key, state)
         bonus = {field: min(LIMIT - getattr(city, field), int(base[field]) * 40 * points // (100 * 99 * 6))
                  for field in ('gold', 'grain')}
         if city.owner == 'neutral':
@@ -601,6 +606,9 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
     """After manual commands and before the calendar advances, once per city."""
     if automatic:
         run_automatic(game, state, owner)
+        from . import facilities
+        facilities.synchronize(game,state)
+        facilities.auto_turn(game,state,owner)
         from . import treasures
         treasures.synchronize(game,state)
         treasures.auto_turn(game,state,owner)
@@ -683,7 +691,7 @@ def view(game, state):
             recruit_preview=recruitment_preview(game, state, key), training_preview=training_preview(game, state, key),
             allocation_preview=allocation_preview(game, state, key),
             personnel_targets=personnel_targets(game, state, key) if city.owner == state.player else [])
-        base = _income(game, key)
+        base = _income(game, key, state)
         intellect = state.officers[row['civil']].profile.intellect if row['civil_active'] else 0
         row['monthly_bonus_preview'] = {field: int(base[field]) * 40 * intellect // (100 * 99) for field in ('gold', 'grain')}
         result['cities'][key] = row

@@ -1117,3 +1117,140 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  await historyScreenshot(page,testInfo,'treasure-convoy-restored-ja');await closeDialog(page);
  expect(errors.get(page)).toEqual([]);
 });
+
+test('facility visits, trade, study, equipment, prevention and town development share bounded real actions and saves',async({page},testInfo)=>{
+ await opening(page);await page.locator('#scenario').selectOption('mainland217-07');
+ await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();
+ await expect(page.locator('#city-facilities')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);
+ const read=()=>page.evaluate(async()=>{
+  const saved=await fetch('/api/save'),shown=await fetch('/api/state');
+  if(!saved.ok||!shown.ok)throw new Error('Read-only facility view failed');
+  const value=await shown.json();return {save:await saved.json(),facilities:(value.view||value).catalog.facilities};
+ });
+ const chooseCity=(snapshot,predicate)=>Object.entries(snapshot.facilities.cities).find(([id,row])=>row.owner==='shu'&&row.can_act&&predicate(row,snapshot.save.state.cities[id]));
+ const open=async id=>{await page.locator('#city-jump').selectOption(id);await page.locator('#city-facilities').click();await expect(page.locator(`[data-facilities-dialog][data-facilities-city="${id}"]`)).toBeVisible();};
+ const events=async(label,kind)=>{
+  await closeDialog(page);const modal=page.locator('#event-dialog');await expect(modal).toBeVisible();
+  await expect(modal.locator('#event-title')).not.toBeEmpty();await expect(modal.locator('.event-map')).toBeVisible();await expect(modal.locator('.event-facility')).toBeVisible();
+  const latest=await read();expect(latest.save.state.extension.events.items.some(row=>row.kind===kind)).toBe(true);
+  await historyScreenshot(page,testInfo,`facility-${label}-event`,{fullPage:false});
+  const skip=modal.locator('[data-event-skip]');await (await skip.count()?skip:modal.locator('[data-event-next]')).click();await expect(modal).not.toBeVisible();
+ };
+ let before=await read();const clinic=chooseCity(before,row=>row.town===1&&row.patients.some(p=>p.can_treat))||chooseCity(before,row=>row.patients.some(p=>p.can_treat));
+ expect(clinic).toBeTruthy();await open(clinic[0]);
+ await expect(page.locator('#dialog-title')).toBeInViewport();
+ const dimensions=await page.locator('#dialog').evaluate(node=>({top:node.getBoundingClientRect().top,bottom:node.getBoundingClientRect().bottom,viewport:innerHeight,scrollTop:node.scrollTop,scrollWidth:node.scrollWidth,clientWidth:node.clientWidth}));
+ expect(dimensions.top).toBeGreaterThanOrEqual(0);expect(dimensions.bottom).toBeLessThanOrEqual(dimensions.viewport+1);expect(dimensions.scrollTop).toBe(0);expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth+1);
+ await historyScreenshot(page,testInfo,'facilities-opening-viewport',{fullPage:false});
+ const patient=await page.locator('#facility-patient').inputValue(),actor=await page.locator('#facility-actor').inputValue(),clinicQuote=clinic[1].patients.find(row=>String(row.id)===patient);
+ expect(clinicQuote.can_treat).toBe(true);await expect(page.locator('#facility-patient option:checked')).toContainText(/兵.*武.*知.*德.*忠.*體/);
+ await page.locator('.facility-policy > summary').click();await page.locator('#facility-policy-gold_budget').fill('321');
+ await page.locator('#facility-policy-grain_floor').fill('5000');await page.locator('#facility-policy-grain_target').fill('1');
+ await expect(page.locator('#facility-policy-grain_target')).toHaveValue('5000');
+ await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#dialog-title')).toContainText('施設と防災');
+ await expect(page.locator('#facility-policy-gold_budget')).toHaveValue('321');await expect(page.locator('.facility-policy')).toHaveAttribute('open','');
+ expect((await read()).save).toEqual(before.save,'Facility inspection, policy drafts and language must not spend or draw RNG');
+ await page.locator('#facility-treat').click();await waitIdle(page);let after=await read();
+ expect(after.save.state.cities[clinic[0]].gold).toBe(before.save.state.cities[clinic[0]].gold-clinicQuote.gold);
+ expect(after.save.state.officers[patient].health).toBeGreaterThanOrEqual(clinicQuote.after_min);expect(after.save.state.officers[patient].health).toBeLessThanOrEqual(clinicQuote.after_max);
+ expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+1);
+ expect(after.save.state.cities[clinic[0]].action_used).toBe(true);expect(after.save.state.extension.officer_actions[actor]).toBe(after.save.state.turn);
+ await expect(page.locator('#facility-treat')).toBeDisabled();await expect(page.locator('#facility-prevent')).toBeDisabled();await expect(page.locator('#facility-policy-gold_budget')).toHaveValue('321');
+ await page.locator('#facility-save-policy').click();await waitIdle(page);const configured=await read();
+ expect(configured.save.state.extension.facilities.factions.shu).toMatchObject({enabled:false,gold_budget:321,grain_floor:5000,grain_target:5000});
+ expect(configured.save.state.rng).toEqual(after.save.state.rng);await events('clinic-ja','officer_treated');
+ before=await read();const market=chooseCity(before,row=>row.town===1&&row.trade.buy.max_batches>1)||chooseCity(before,row=>row.trade.buy.max_batches>1);expect(market).toBeTruthy();await open(market[0]);
+ await page.locator('#facility-service').selectOption('market');await page.locator('#facility-trade-batches').fill('999999999');
+ await expect(page.locator('#facility-trade-batches')).toHaveValue(String(market[1].trade.buy.max_batches));await page.locator('#facility-trade-max').click();
+ const batches=Math.min(2,market[1].trade.buy.max_batches);await page.locator('#facility-trade-batches').fill(String(batches));await page.locator('#dialog-language').selectOption('zh-Hant');
+ await expect(page.locator('#facility-trade-batches')).toHaveValue(String(batches));expect((await read()).save).toEqual(before.save);
+ await page.locator('#facility-trade').click();await waitIdle(page);after=await read();
+ expect(after.save.state.cities[market[0]].gold).toBe(before.save.state.cities[market[0]].gold-batches*market[1].trade.buy.rate);
+ expect(after.save.state.cities[market[0]].grain).toBe(before.save.state.cities[market[0]].grain+batches*market[1].trade.buy.batch_grain);expect(after.save.state.rng).toEqual(before.save.state.rng);
+ await expect(page.locator('#facility-trade')).toBeDisabled();await events('market-tc','grain_traded');
+ before=await read();const school=chooseCity(before,row=>row.services.includes('school')&&row.students.some(s=>s.can_study));expect(school).toBeTruthy();await open(school[0]);await page.locator('#facility-service').selectOption('school');
+ const student=await page.locator('#facility-student').inputValue(),studyQuote=school[1].students.find(row=>String(row.id)===student);expect(studyQuote.can_study).toBe(true);
+ await expect(page.locator('#facility-study-preview')).toContainText(String(studyQuote.gold));await page.locator('#facility-study').click();await waitIdle(page);after=await read();
+ const learned=after.save.state.officers[student].profile.intellect;
+ expect(learned).toBeGreaterThanOrEqual(studyQuote.after_min);expect(learned).toBeLessThanOrEqual(studyQuote.after_max);
+ expect(after.save.state.cities[school[0]].gold).toBe(before.save.state.cities[school[0]].gold-studyQuote.gold);expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+1);
+ expect(after.save.state.extension.facilities.study[student]).toBe((before.save.state.extension.facilities.study[student]||0)+learned-studyQuote.before);
+ await expect(page.locator('#facility-study')).toBeDisabled();await events('school-tc','officer_studied');
+ before=await read();const armory=chooseCity(before,row=>row.services.includes('armory')&&row.stock.weapon.some(item=>item.can_buy&&item.eligible_targets.length));expect(armory).toBeTruthy();await open(armory[0]);await page.locator('#facility-service').selectOption('armory');
+ const item=armory[1].stock.weapon.find(item=>item.can_buy&&item.eligible_targets.length),recipient=String(item.eligible_targets[0]);
+ await page.locator('#facility-equipment-officer').selectOption(recipient);await page.locator('#facility-equipment-item').selectOption(String(item.id));
+ await expect(page.locator('#facility-equipment-buy')).toBeEnabled();await page.locator('#facility-equipment-buy').click();await waitIdle(page);after=await read();
+ expect(after.save.state.officers[recipient].weapon_id).toBe(item.id);expect(after.save.state.cities[armory[0]].gold).toBe(before.save.state.cities[armory[0]].gold-item.price);expect(after.save.state.rng).toEqual(before.save.state.rng);
+ await expect(page.locator('#facility-equipment-buy')).toBeDisabled();await events('equipment-tc','equipment_bought');
+ before=await read();const prevention=chooseCity(before,row=>Object.values(row.prevention_quotes).some(q=>q.can_prevent));expect(prevention).toBeTruthy();await open(prevention[0]);
+ const engineer=await page.locator('#facility-actor').inputValue(),preventionQuote=prevention[1].prevention_quotes[engineer];expect(preventionQuote.can_prevent).toBe(true);
+ await expect(page.locator('#facility-prevention-preview')).toContainText(String(preventionQuote.gold_min));await page.locator('#dialog-language').selectOption('ja');expect((await read()).save).toEqual(before.save);
+ await page.locator('#facility-prevent').click();await waitIdle(page);after=await read();
+ const protectedCity=after.save.state.extension.facilities.cities[prevention[0]],expense=before.save.state.cities[prevention[0]].gold-after.save.state.cities[prevention[0]].gold;
+ expect(expense).toBeGreaterThanOrEqual(preventionQuote.gold_min);expect(expense).toBeLessThanOrEqual(preventionQuote.gold_max);
+ expect(protectedCity.preparedness).toBeGreaterThanOrEqual(preventionQuote.preparedness_min);expect(protectedCity.preparedness).toBeLessThanOrEqual(preventionQuote.preparedness_max);
+ expect(protectedCity.damage).toBeGreaterThanOrEqual(preventionQuote.damage_min);expect(protectedCity.damage).toBeLessThanOrEqual(preventionQuote.damage_max);expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+2);
+ await expect(page.locator('#facility-prevent')).toBeDisabled();await events('prevention-ja','prevention_improved');
+ before=await read();const town=chooseCity(before,row=>row.develop.can_develop);expect(town).toBeTruthy();await open(town[0]);
+ await page.locator('#facility-develop').click();await waitIdle(page);after=await read();
+ expect(after.save.state.extension.facilities.cities[town[0]].town).toBe(town[1].develop.to_town);expect(after.save.state.cities[town[0]].gold).toBe(before.save.state.cities[town[0]].gold-town[1].develop.gold);expect(after.save.state.rng).toEqual(before.save.state.rng);
+ await expect(page.locator('#facility-develop')).toBeDisabled();await expect(page.locator('#facility-service option[value=school]')).toHaveCount(1);await expect(page.locator('#facility-service option[value=armory]')).toHaveCount(1);await events('development-ja','town_developed');
+ const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
+ await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
+ const loaded=await read();expect(loaded.save.state.officers[student].profile.intellect).toBe(learned);expect(loaded.save.state.officers[recipient].weapon_id).toBe(item.id);
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('a natural August drought shows bilingual illustrated losses and preserves the actual soldier ledger',async({page},testInfo)=>{
+ await opening(page);await page.locator('#scenario').selectOption('mainland217-07');
+ await page.locator('input[name=faction][value=wei]').check();await page.locator('#begin').click();
+ await expect(page.locator('#city-facilities')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);
+ const read=()=>page.evaluate(async()=>{const a=await fetch('/api/save'),b=await fetch('/api/state');if(!a.ok||!b.ok)throw new Error('Read-only disaster state failed');const result=await b.json(),view=result.view||result;return {save:await a.json(),income:view.catalog.city_income};});
+ const original=await read();expect(original.save.state.month).toBe(7);expect(original.save.state.player).toBe('wei');
+ const dismiss=async()=>{const modal=page.locator('#event-dialog');if(await modal.isVisible()){const skip=modal.locator('[data-event-skip]');await (await skip.count()?skip:modal.locator('[data-event-next]')).click();await expect(modal).not.toBeVisible();}};
+ let current=original,steps=0;
+ for(;steps<60;steps++){
+  current=await read();if(current.save.state.month>=8)break;
+  await dismiss();const phase=current.save.state.phase;
+  if(phase==='city')await page.locator('#end-turn').click();
+  else if(phase==='ai')await page.locator('#run-ai').click();
+  else if(phase==='arrivals')await page.locator('#process-arrivals').click();
+  else if(phase==='battle'){
+   await page.locator('#retreat').click();await expect(page.locator('#confirm-retreat')).toBeVisible();await page.locator('#confirm-retreat').click();
+  }else if(phase==='result')await page.locator('#settle').click();
+  else throw new Error('The natural drought campaign unexpectedly finished before August: '+phase);
+  await waitIdle(page);
+ }
+ expect(steps).toBeLessThan(60);expect(current.save.state.year).toBe(217);expect(current.save.state.month).toBe(8);expect(current.save.state.day).toBe(1);
+ const all=current.save.state.extension.events.items.filter(event=>event.kind==='city_disaster'&&event.year===217&&event.month===8),own=all.filter(event=>event.factions.includes('wei'));
+ expect(own.length).toBeGreaterThan(0);expect(own.every(event=>event.details.disaster==='drought')).toBe(true);
+ const unique=own.map(event=>event.city_ids[0]);expect(new Set(unique).size).toBe(unique.length);
+ for(const event of own){
+  const details=event.details,city=event.city_ids[0],actual=current.save.state.extension.facilities.cities[city];
+  expect(details.gold).toBe(0);expect(details.grain).toBeGreaterThanOrEqual(0);expect(details.reserves).toBeGreaterThanOrEqual(0);
+  expect(actual.preparedness).toBe(details.preparedness_after);expect(actual.damage).toBe(details.damage_after);expect(actual.damage).toBeGreaterThan(0);
+  for(const resource of ['gold','grain','reserves'])expect(current.income[city][resource]).toBe(Math.floor(original.income[city][resource]*(100-actual.damage)/100));
+ }
+ const live=current.save.state,currentSoldiers=Object.values(live.cities).reduce((sum,c)=>sum+c.reserves,0)+Object.values(live.officers).reduce((sum,o)=>sum+o.troops,0)+(live.extension.logistics?.convoys||[]).reduce((sum,c)=>sum+c.cargo.reserves,0);
+ expect(currentSoldiers+live.soldiers.lost).toBe(live.soldiers.initial+live.soldiers.recruited);
+ expect(live.soldiers.lost).toBeGreaterThanOrEqual(all.reduce((sum,event)=>sum+event.details.reserves,0));
+ expect(live.extension.facilities.last_disaster_month).toBe(217*12+8-1);
+ const modal=page.locator('#event-dialog');await expect(modal).toBeVisible();
+ for(let count=0;count<50&&!/城池災情|都市の災害/.test(await modal.locator('#event-title').innerText());count++){
+  await modal.locator('[data-event-next]').click();await expect(modal).toBeVisible();
+ }
+ await expect(modal.locator('#event-title')).toContainText(/城池災情|都市の災害/);await expect(modal.locator('.event-facility')).toBeVisible();
+ await expect(modal.locator('#event-description')).toContainText('旱災',{useInnerText:true});
+ await expect(modal.locator('#event-description > p')).toHaveCount(own.length);
+ await historyScreenshot(page,testInfo,'natural-drought-tc',{fullPage:false});
+ await modal.locator('[data-language-picker]').selectOption('ja');await expect(modal.locator('#event-title')).toContainText('都市の災害');await expect(modal.locator('#event-description')).toContainText('干ばつ',{useInnerText:true});
+ expect((await read()).save).toEqual(current.save,'Reading and translating a real disaster receipt never reapplies losses or draws RNG');
+ await historyScreenshot(page,testInfo,'natural-drought-ja',{fullPage:false});
+ const skip=modal.locator('[data-event-skip]');await (await skip.count()?skip:modal.locator('[data-event-next]')).click();await expect(modal).not.toBeVisible();
+ const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
+ await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
+ expect((await read()).save).toEqual(current.save,'Loading an August save cannot settle the same monthly drought twice');
+ expect(errors.get(page)).toEqual([]);
+});

@@ -2,7 +2,7 @@
 let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
 let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null,mapAction=null;
 let cloudSave=null,cloudSaveUI=null;
-let civilStaffUI=null,domesticUI=null,treasuryUI=null;
+let civilStaffUI=null,domesticUI=null,treasuryUI=null,facilitiesUI=null;
 let campaignDifficulty='normal';
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
 const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
@@ -463,6 +463,8 @@ async function showCityInformation(id){
    <p class="small">${escapeHtml(c.profile?.label||'旧版城市')} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
    ${cityEconomyNote(c.profile)}
    ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}
+   ${!preview&&typeof GameFacilities!=='undefined'?GameFacilities.summary(view,id):''}
+   ${preview&&c.facilities?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">開局町等級 ${c.facilities.town}/3 · 防災 ${c.facilities.preparedness}/99 · ${c.facilities.services.map(service=>({hospital:'醫館',market:'市場',school:'學問所',armory:'武器屋'}[service])).join('、')}</p><p class="small" data-locale-only="ja" data-l10n-native="ja">開始時の町 ${c.facilities.town}/3・防災 ${c.facilities.preparedness}/99・${c.facilities.services.map(service=>({hospital:'医館',market:'市場',school:'学問所',armory:'武器屋'}[service])).join('・')}</p>`:''}
    ${preview?`<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶 ${c.treasure??0}/99</span><span data-locale-only="ja" data-l10n-native="ja">宝 ${c.treasure??0}/99</span></p>`:typeof GameTreasury!=='undefined'?GameTreasury.summary(view,id):''}
    <dl class="resources"><dt>金钱</dt><dd>${c.gold}</dd><dt>粮食</dt><dd>${c.grain}</dd><dt>预备兵</dt><dd>${c.reserves}</dd></dl>
    ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
@@ -492,6 +494,10 @@ function delegationInterface(){
 function treasuryInterface(){
  if(!treasuryUI&&typeof GameTreasury!=='undefined')treasuryUI=GameTreasury.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
  return treasuryUI;
+}
+function facilitiesInterface(){
+ if(!facilitiesUI&&typeof GameFacilities!=='undefined')facilitiesUI=GameFacilities.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
+ return facilitiesUI;
 }
 
 // Keep every officer choice comparable without opening a separate profile.
@@ -538,8 +544,9 @@ function renderCity(){
  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>${escapeHtml(cityName(city.id))}</h2><span class="owner">${faction(city.owner)}</span></div>
  ${typeof GameDomestic!=='undefined'?GameDomestic.summary(view,city.id):''}
  ${typeof GameTreasury!=='undefined'?GameTreasury.summary(view,city.id):''}
+ ${typeof GameFacilities!=='undefined'?GameFacilities.summary(view,city.id):''}
  <dl class="resources"><dt>金钱</dt><dd>${city.gold}</dd><dt>粮食</dt><dd>${city.grain}</dd><dt>预备兵</dt><dd>${city.reserves}</dd></dl>
- <div class="actions">${owned?`<div class="action-pair"><button id="allocate" class="primary" ${!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${city.action_used||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div><div class="action-pair secondary-row"><button id="recruit-officer" ${city.action_used||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button><button id="transfer" ${city.action_used||!available.length?'disabled':''}>调动武将</button></div>${view.catalog.civil_staff?'<div class="secondary-row"><button id="civil-staff">地方文吏</button></div>':''}${view.catalog.treasury?'<div class="secondary-row"><button id="city-treasury"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶庫與賞賜</span><span data-locale-only="ja" data-l10n-native="ja">宝庫・褒美</span></button></div>':''}${view.catalog.domestic?'<div class="action-pair secondary-row"><button id="city-domestic"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">勢力內政委任</span><span data-locale-only="ja" data-l10n-native="ja">勢力の内政担当</span></button><button id="city-logistics">前線支援</button></div>':''}<div class="secondary-row"><button id="recruit" ${city.action_used||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:'<button id="home">返回本城</button>'}<button id="end-turn">结束本旬</button></div>
+ <div class="actions">${owned?`<div class="action-pair"><button id="allocate" class="primary" ${!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${city.action_used||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div><div class="action-pair secondary-row"><button id="recruit-officer" ${city.action_used||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button><button id="transfer" ${city.action_used||!available.length?'disabled':''}>调动武将</button></div>${view.catalog.civil_staff?'<div class="secondary-row"><button id="civil-staff">地方文吏</button></div>':''}${view.catalog.facilities?'<div class="secondary-row"><button id="city-facilities"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">城內設施與防災</span><span data-locale-only="ja" data-l10n-native="ja">都市施設・防災</span></button></div>':''}${view.catalog.treasury?'<div class="secondary-row"><button id="city-treasury"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶庫與賞賜</span><span data-locale-only="ja" data-l10n-native="ja">宝庫・褒美</span></button></div>':''}${view.catalog.domestic?'<div class="action-pair secondary-row"><button id="city-domestic"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">勢力內政委任</span><span data-locale-only="ja" data-l10n-native="ja">勢力の内政担当</span></button><button id="city-logistics">前線支援</button></div>':''}<div class="secondary-row"><button id="recruit" ${city.action_used||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:'<button id="home">返回本城</button>'}<button id="end-turn">结束本旬</button></div>
  <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>兵</th><th>武</th><th>知</th><th>德</th><th>忠</th><th>经</th><th>体</th></tr></thead><tbody>${rosterRows(city)||'<tr><td colspan="8">暂无驻军</td></tr>'}</tbody></table></div>
  <p class="small">驻城 ${cityOccupancy(city)}/${capacity()}；每方出战上限10人。${city.action_used?'本城本回合已行动。':''}</p>
  ${typeof GameCivilStaff!=='undefined'?GameCivilStaff.summary(view,city.id,{locale:GameI18n.locale,cityName,bilingual:true}):''}
@@ -557,6 +564,7 @@ function renderCity(){
  if($('#city-domestic'))$('#city-domestic').onclick=()=>delegationInterface()?.open(city.id,'domestic');
  if($('#city-logistics'))$('#city-logistics').onclick=()=>delegationInterface()?.open(city.id,'logistics');
  if($('#city-treasury'))$('#city-treasury').onclick=()=>treasuryInterface()?.open(city.id);
+ if($('#city-facilities'))$('#city-facilities').onclick=()=>facilitiesInterface()?.open(city.id);
  $('#end-turn').onclick=()=>command('end_turn');
 }
 function allocate(city,preferred=null){
@@ -820,7 +828,7 @@ function showPerson(id){
  const sourceLinks=(p.ability_source?.source_urls||[]).filter(url=>typeof url==='string'&&url.startsWith('https://')).map(url=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">查看人物史料</a>`).join(' · ');
  const abilityEvidence=p.ability_source?.kind==='historical_authorial_game_design'?sourceEvidence(`<p>${escapeHtml(p.ability_source.notes||'事迹参考与本作能力设计。')}</p>${sourceLinks?`<p>${sourceLinks}</p>`:''}`,'能力は事績を参考にした独自設定です。年代の一部はゲーム用の推定です。採用根拠と出典は原資料で確認できます。'):'';
  const pendingNote=p.alive==null?{pending_capacity:'本剧本所属势力的城内容量不足，本人尚未加入战局，不计入在籍人数。',scenario_excluded:'本剧本明确设为不登场，不会在后续月份自动加入。',pending_history:'本剧本的所属或驻城尚待考证，未自动加入战局。',pending_faction:'本剧本尚未接入所属势力，未自动加入战局。'}[a?.status]:null;
- openDialog(`${p.name} · 人物配置`,`<div class="person-profile-head">${portraitHtml(id,'detail',true,p.person_id,p.name)}<div class="person-profile-summary"><p>武 ${p.martial??'待填'} / 知 ${p.intellect??'待填'} / 德 ${p.virtue??'待考'} / <span>经</span> ${experience}。</p></div></div>${initialStatDescription(p,runtime)}${runtime?sourceEvidence(`<p>经 ${experience} · 原始经验 ${runtime.experience} · 经验等级 ${runtime.tier}。经沿用原版显示规则：原始经验每50点显示1；战斗等级单独按经验门槛判定。</p>`,`経 ${experience}・累積経験値 ${runtime.experience}・経験段階 ${runtime.tier}。原作と同じく累積経験値50点を「経」1として表示し、戦闘の段階は別の経験値境界で判定します。`):''}<p>${abilityNote}</p>${abilityEvidence}${pendingNote?`<p class="person-entry-status">${pendingNote}</p>`:''}${virtueDescription(p)}${a?.placement_review||a?.appearance_plan?personPlacementEvidence(a):''}${p.alive?`<p>当前战局：${escapeHtml(p.faction?faction(p.faction):'在野')} · ${escapeHtml(cityName(current||p.location||'待归城'))}</p>`:''}`,'<button id="back-library">返回武将库</button><button data-cancel>返回战役</button>');
+ openDialog(`${p.name} · 人物配置`,`<div class="person-profile-head">${portraitHtml(id,'detail',true,p.person_id,p.name)}<div class="person-profile-summary"><p>武 ${p.martial??'待填'} / 知 ${p.intellect??'待填'} / 德 ${p.virtue??'待考'} / <span>经</span> ${experience}。</p></div></div>${initialStatDescription(p,runtime)}${p.study_gain?`<p class="small" data-locale-only="zh-Hant" data-l10n-native="zh-Hant">目前知 ${p.intellect}＝開局來源知 ${p.base_intellect}＋本局學問所成長 ${p.study_gain}；學習不會改寫人物來源資料。</p><p class="small" data-locale-only="ja" data-l10n-native="ja">現在の知 ${p.intellect}＝開始時の知 ${p.base_intellect}＋この戦役の学問所の成長 ${p.study_gain}。人物の出典データは書き換えません。</p>`:''}${runtime?sourceEvidence(`<p>经 ${experience} · 原始经验 ${runtime.experience} · 经验等级 ${runtime.tier}。经沿用原版显示规则：原始经验每50点显示1；战斗等级单独按经验门槛判定。</p>`,`経 ${experience}・累積経験値 ${runtime.experience}・経験段階 ${runtime.tier}。原作と同じく累積経験値50点を「経」1として表示し、戦闘の段階は別の経験値境界で判定します。`):''}<p>${abilityNote}</p>${abilityEvidence}${pendingNote?`<p class="person-entry-status">${pendingNote}</p>`:''}${virtueDescription(p)}${a?.placement_review||a?.appearance_plan?personPlacementEvidence(a):''}${p.alive?`<p>当前战局：${escapeHtml(p.faction?faction(p.faction):'在野')} · ${escapeHtml(cityName(current||p.location||'待归城'))}</p>`:''}`,'<button id="back-library">返回武将库</button><button data-cancel>返回战役</button>');
  $('#back-library').onclick=showLibrary;
 }
 function tacticUnavailable(t,b){

@@ -20,6 +20,17 @@ TREASURY_DETAILS = {
     'officer_rewarded': {'actor','target','kind','amount','gain','loyalty_before','loyalty_after'},
     'governor_assigned': {'governor','mode'},
 }
+FACILITY_DETAILS = {
+    'town_developed': {'actor','from_town','to_town','gold'},
+    'officer_treated': {'actor','target','gold','before','after'},
+    'officer_studied': {'actor','target','gold','before','after','bonus'},
+    'grain_traded': {'actor','direction','batches','grain','gold','rate'},
+    'equipment_bought': {'actor','target','slot','item','previous','gold'},
+    'prevention_improved': {'actor','gold','gain','repair','preparedness_before',
+        'preparedness_after','damage_before','damage_after'},
+    'city_disaster': {'disaster','gold','grain','reserves','rate','preparedness_before',
+        'preparedness_after','damage_before','damage_after'},
+}
 SUPPLY_KINDS = {'march_resupplied', 'march_starvation', 'march_retreat'}
 SUPPLY_DETAILS = {'unit_kind', 'unit_id', 'grain', 'lost', 'shortage_days', 'reason'}
 SUPPLY_REASONS = {'city', 'convoy', 'cargo', 'shortage', 'route_blocked',
@@ -47,8 +58,50 @@ DETAILS = {
     **{kind: set(TRANSPORT_DETAILS) for kind in TRANSPORT_KINDS},
     **{kind: set(SUPPLY_DETAILS) for kind in SUPPLY_KINDS},
     **TREASURY_DETAILS,
+    **FACILITY_DETAILS,
     'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
 }
+
+
+def _validate_facility_event(row):
+    d, kind = row['details'], row['kind']
+    if (set(d) != FACILITY_DETAILS[kind] or row['audience'] != 'player'
+            or len(row['city_ids']) != 1 or len(row['factions']) != 1):
+        raise ValueError('Facility event fields')
+    def number(key, low, high):
+        return type(d[key]) is int and low <= d[key] <= high
+    people=[] if kind=='city_disaster' else list(dict.fromkeys([d['actor']]+([d['target']] if 'target' in d else [])))
+    if row['person_ids'] != people or not number('gold',0,100000000):
+        raise ValueError('Facility event references/price')
+    if kind=='town_developed':
+        valid=number('from_town',1,2) and d['to_town']==d['from_town']+1 and d['gold']>0
+    elif kind in ('officer_treated','officer_studied'):
+        valid=(number('before',0 if kind=='officer_treated' else 1,99 if kind=='officer_treated' else 79)
+            and number('after',1,99 if kind=='officer_treated' else 89)
+            and d['after']>d['before'] and d['gold']>0)
+        if kind=='officer_studied':
+            valid=valid and number('bonus',1,88) and 5<=d['after']-d['before']<=12
+    elif kind=='grain_traded':
+        valid=(d['direction'] in ('buy','sell') and number('batches',1,1000)
+            and number('rate',1,100) and d['grain']==d['batches']*100 and d['gold']==d['batches']*d['rate'])
+    elif kind=='equipment_bought':
+        valid=(d['slot'] in ('weapon','armor') and number('item',0,23 if d['slot']=='weapon' else 7)
+            and number('previous',0,23 if d['slot']=='weapon' else 7) and d['item']!=d['previous'] and d['gold']>0)
+    else:
+        valid=all(number(key,0,99) for key in ('preparedness_before','preparedness_after'))
+        valid=valid and all(number(key,0,50) for key in ('damage_before','damage_after'))
+        if kind=='prevention_improved':
+            valid=(valid and number('gain',0,99) and number('repair',0,50) and 1<=d['gold']<=100
+                and d['preparedness_after']-d['preparedness_before']==d['gain']
+                and d['damage_before']-d['damage_after']==d['repair'])
+        else:
+            valid=(valid and d['disaster'] in ('flood','drought') and number('rate',0,100)
+                and number('grain',0,100000000) and number('reserves',0,100000000)
+                and d['preparedness_after']<=d['preparedness_before'] and d['damage_after']>=d['damage_before']
+                and (d['gold']==0 if d['disaster']=='drought' else d['reserves']==0)
+                and (d['preparedness_before']!=99 or not any(d[k] for k in ('gold','grain','reserves','rate'))))
+    if not valid:
+        raise ValueError('Facility event receipt')
 
 
 def _validate_treasury_event(row):
@@ -316,6 +369,8 @@ def validate(campaign, state):
             _validate_supply_event(row)
         if row['kind'] in TREASURY_DETAILS:
             _validate_treasury_event(row)
+        if row['kind'] in FACILITY_DETAILS:
+            _validate_facility_event(row)
         if row['kind'] in TRANSPORT_KINDS:
             if (set(row['details']) != TRANSPORT_DETAILS
                     or type(row['details']['treasure']) is not int

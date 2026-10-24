@@ -10,7 +10,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog
-from remake import civil_staff, domestic, logistics, treasures
+from remake import civil_staff, domestic, facilities, logistics, treasures
 from remake.errors import GameError
 from remake.march_core import using_backend
 from remake.march_supply import estimate
@@ -28,6 +28,7 @@ def synchronize(game, state, **options):
     domestic.synchronize(game, state)
     civil_staff.synchronize(game, state, **options)
     treasures.synchronize(game, state)
+    facilities.synchronize(game, state)
 
 
 def transit_catalog():

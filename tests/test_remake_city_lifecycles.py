@@ -9,7 +9,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
-from remake import civil_staff, domestic, logistics, treasures
+from remake import civil_staff, domestic, facilities, logistics, treasures
 from campaign_fixtures import advance_month as advance_calendar_month
 
 
@@ -19,6 +19,7 @@ def synchronize(game, state, **options):
     domestic.synchronize(game, state)
     civil_staff.synchronize(game, state, **options)
     treasures.synchronize(game, state)
+    facilities.synchronize(game, state)
 
 
 def advance_month(game):

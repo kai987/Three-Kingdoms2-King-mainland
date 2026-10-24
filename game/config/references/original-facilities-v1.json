@@ -1,0 +1,631 @@
+{
+  "schema": "tk2-original-facilities-evidence-v1",
+  "retrieved": "2026-10-24",
+  "scope": "Read-only transcription of the original 30-city table reproduced in the user-supplied FC guide. Not a runtime assignment to the remake map.",
+  "provenance": "Third-party game-data transcription; not an official Namco export or an independently verified ROM extraction. Labels are retained literally, including source spellings.",
+  "source": {
+    "title": "FC游戏《三国志2-霸王的大陆》攻略：城市情况",
+    "author": "咖啡机（K.F.J）",
+    "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+    "images": [
+      {
+        "url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "sha256": "7f413bf502a49873fac559ec2c179b822983070fa65dab90b06c47c1b698e31d",
+        "rows": [
+          1,
+          15
+        ]
+      },
+      {
+        "url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "sha256": "5bcdf66bf1bccec0ee3e453544eb1b1de063881f64ae95dd0a57911b93cdb716",
+        "rows": [
+          16,
+          30
+        ]
+      }
+    ]
+  },
+  "field_policy": {
+    "store_columns": "Four fixed columns in order 武=armory, 知=school, 医=hospital, 商=market; ◇ is absent.",
+    "rice_quotes": "Literal integers from the columns 卖米 and 买米. The displayed table does not attest a conversion denominator or transaction unit. Zero values are preserved as printed, not treated as free market offers.",
+    "city_identity": "Original city numbers and labels only. No automatic identity join to remake city IDs; original regional labels, historical proxy nodes and source spellings require review.",
+    "runtime": "Evidence only. No city stocks, reserve field, ownership or facility layout is imported into the 115-city campaign."
+  },
+  "source_records": 30,
+  "records": [
+    {
+      "source_row_id": "cnblogs-city-01",
+      "original_city_number": 1,
+      "source_city_label": "辽东",
+      "store_columns_raw": "◇知◇商",
+      "services": [
+        "school",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 84,
+        "buy_rice": 68
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 1
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-02",
+      "original_city_number": 2,
+      "source_city_label": "幽州",
+      "store_columns_raw": "武◇医◇",
+      "services": [
+        "armory",
+        "hospital"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 0,
+        "buy_rice": 0
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 2
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-03",
+      "original_city_number": 3,
+      "source_city_label": "并州",
+      "store_columns_raw": "武◇医商",
+      "services": [
+        "armory",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 75,
+        "buy_rice": 86
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 3
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-04",
+      "original_city_number": 4,
+      "source_city_label": "青州",
+      "store_columns_raw": "◇知医商",
+      "services": [
+        "school",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 84,
+        "buy_rice": 77
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 4
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-05",
+      "original_city_number": 5,
+      "source_city_label": "冀州",
+      "store_columns_raw": "武知医商",
+      "services": [
+        "armory",
+        "school",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 96,
+        "buy_rice": 79
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 5
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-06",
+      "original_city_number": 6,
+      "source_city_label": "西安阳",
+      "store_columns_raw": "武◇医◇",
+      "services": [
+        "armory",
+        "hospital"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 0,
+        "buy_rice": 0
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 6
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-07",
+      "original_city_number": 7,
+      "source_city_label": "凉州",
+      "store_columns_raw": "武知医商",
+      "services": [
+        "armory",
+        "school",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 62,
+        "buy_rice": 73
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 7
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-08",
+      "original_city_number": 8,
+      "source_city_label": "安定",
+      "store_columns_raw": "◇◇医商",
+      "services": [
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 73,
+        "buy_rice": 61
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 8
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-09",
+      "original_city_number": 9,
+      "source_city_label": "长安",
+      "store_columns_raw": "武知医商",
+      "services": [
+        "armory",
+        "school",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 97,
+        "buy_rice": 92
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 9
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-10",
+      "original_city_number": 10,
+      "source_city_label": "西平关",
+      "store_columns_raw": "武◇医◇",
+      "services": [
+        "armory",
+        "hospital"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 0,
+        "buy_rice": 0
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 10
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-11",
+      "original_city_number": 11,
+      "source_city_label": "徐州",
+      "store_columns_raw": "◇知医商",
+      "services": [
+        "school",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 78,
+        "buy_rice": 86
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 11
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-12",
+      "original_city_number": 12,
+      "source_city_label": "兖州",
+      "store_columns_raw": "武◇医商",
+      "services": [
+        "armory",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 84,
+        "buy_rice": 88
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 12
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-13",
+      "original_city_number": 13,
+      "source_city_label": "洛阳",
+      "store_columns_raw": "武知医商",
+      "services": [
+        "armory",
+        "school",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 96,
+        "buy_rice": 97
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 13
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-14",
+      "original_city_number": 14,
+      "source_city_label": "新野",
+      "store_columns_raw": "武◇医商",
+      "services": [
+        "armory",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 70,
+        "buy_rice": 82
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 14
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-15",
+      "original_city_number": 15,
+      "source_city_label": "予州",
+      "store_columns_raw": "武◇医商",
+      "services": [
+        "armory",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 65,
+        "buy_rice": 72
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105921470-1633895548.jpg",
+        "image_row": 15
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-16",
+      "original_city_number": 16,
+      "source_city_label": "建业",
+      "store_columns_raw": "武知医商",
+      "services": [
+        "armory",
+        "school",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 86,
+        "buy_rice": 91
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 1
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-17",
+      "original_city_number": 17,
+      "source_city_label": "扬州",
+      "store_columns_raw": "◇知◇商",
+      "services": [
+        "school",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 81,
+        "buy_rice": 76
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 2
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-18",
+      "original_city_number": 18,
+      "source_city_label": "建安",
+      "store_columns_raw": "武◇医◇",
+      "services": [
+        "armory",
+        "hospital"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 0,
+        "buy_rice": 0
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 3
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-19",
+      "original_city_number": 19,
+      "source_city_label": "交州",
+      "store_columns_raw": "武◇◇商",
+      "services": [
+        "armory",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 68,
+        "buy_rice": 69
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 4
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-20",
+      "original_city_number": 20,
+      "source_city_label": "郁林",
+      "store_columns_raw": "武◇医◇",
+      "services": [
+        "armory",
+        "hospital"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 0,
+        "buy_rice": 0
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 5
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-21",
+      "original_city_number": 21,
+      "source_city_label": "江夏",
+      "store_columns_raw": "武◇医商",
+      "services": [
+        "armory",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 74,
+        "buy_rice": 81
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 6
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-22",
+      "original_city_number": 22,
+      "source_city_label": "荆州",
+      "store_columns_raw": "武知◇商",
+      "services": [
+        "armory",
+        "school",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 85,
+        "buy_rice": 93
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 7
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-23",
+      "original_city_number": 23,
+      "source_city_label": "衡阳",
+      "store_columns_raw": "◇知医◇",
+      "services": [
+        "school",
+        "hospital"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 0,
+        "buy_rice": 0
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 8
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-24",
+      "original_city_number": 24,
+      "source_city_label": "长沙",
+      "store_columns_raw": "武知◇商",
+      "services": [
+        "armory",
+        "school",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 79,
+        "buy_rice": 71
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 9
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-25",
+      "original_city_number": 25,
+      "source_city_label": "零陵",
+      "store_columns_raw": "◇◇医商",
+      "services": [
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 69,
+        "buy_rice": 70
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 10
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-26",
+      "original_city_number": 26,
+      "source_city_label": "汉中",
+      "store_columns_raw": "武◇医商",
+      "services": [
+        "armory",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 53,
+        "buy_rice": 82
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 11
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-27",
+      "original_city_number": 27,
+      "source_city_label": "成都",
+      "store_columns_raw": "武知医商",
+      "services": [
+        "armory",
+        "school",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 92,
+        "buy_rice": 94
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 12
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-28",
+      "original_city_number": 28,
+      "source_city_label": "涪陵",
+      "store_columns_raw": "武◇◇商",
+      "services": [
+        "armory",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 83,
+        "buy_rice": 61
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 13
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-29",
+      "original_city_number": 29,
+      "source_city_label": "云南",
+      "store_columns_raw": "武◇医商",
+      "services": [
+        "armory",
+        "hospital",
+        "market"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 77,
+        "buy_rice": 55
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 14
+      }
+    },
+    {
+      "source_row_id": "cnblogs-city-30",
+      "original_city_number": 30,
+      "source_city_label": "永晶",
+      "store_columns_raw": "武知◇◇",
+      "services": [
+        "armory",
+        "school"
+      ],
+      "rice_quotes_raw": {
+        "sell_rice": 0,
+        "buy_rice": 0
+      },
+      "source": {
+        "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+        "image_url": "https://img2018.cnblogs.com/blog/211606/201911/211606-20191129105929069-369282636.jpg",
+        "image_row": 15
+      }
+    }
+  ]
+}

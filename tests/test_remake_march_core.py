@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import random
 import sys
+import tempfile
 from types import SimpleNamespace
 import unittest
 
@@ -34,7 +35,15 @@ CASES = [
 
 def campaign_fixture(case):
     name, side, source, target, mode, month = case
-    catalog = Catalog(ROOT / 'game/data/campaigns/217-07.json')
+    # Keep the fixed march vectors independent of seasonal city disasters.
+    # Dedicated facility tests exercise those new calendar RNG draws.
+    data=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
+    data['facility_rules']['disasters_enabled']=False
+    data['facility_ai_default']=False
+    with tempfile.TemporaryDirectory() as tmp:
+        path=Path(tmp)/'march-fixture.json'
+        path.write_text(json.dumps(data,ensure_ascii=False))
+        catalog=Catalog(path)
     game = Campaign(catalog)
     game.command('new', dict(faction=side, seed=2026), 0)
     while game.state.month != month:

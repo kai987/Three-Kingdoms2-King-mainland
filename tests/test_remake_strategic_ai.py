@@ -9,7 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign, Catalog, canonical
-from remake import treasures
+from remake import facilities, treasures
 from remake.march_core import using_backend
 from remake.march_supply import estimate as march_grain
 from remake.strategic_ai import StrategicAI, validate_strategies
@@ -527,6 +527,7 @@ class StrategicAITests(unittest.TestCase):
         logistics.synchronize(game,game.state)
         domestic.synchronize(game,game.state)
         treasures.synchronize(game,game.state)
+        facilities.synchronize(game,game.state)
         game.validate(game.state);game=self.resume(game)
         self.ai_turn(game)
         plan=game.state.extension['ai_strategy']['wei']

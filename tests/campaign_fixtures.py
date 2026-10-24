@@ -18,6 +18,10 @@ def controlled_catalog():
                 title='受控規則測試', active_cities=active, city_foundings={},
                 initial_owners=dict(zip(active, ['wei', 'shu', 'neutral', 'wu'])))
     data['rules']['ai_max_attacks_per_turn'] = 0
+    # These small legacy fixtures isolate battle/calendar rules. Seasonal
+    # disasters and autonomous town visits have their own real-campaign tests.
+    data['facility_rules']['disasters_enabled'] = False
+    data['facility_ai_default'] = False
     data['factions'] = [dict(id=key, name=key, captain=name, city=city, color='#ff0000')
         for key, name, city in [('wei', '夏侯惇', 'nanyang'), ('shu', '刘备', 'xiangyang'), ('wu', '甘宁', 'jiangxia')]]
     rows = [('san14-candidate-0124', 'nanyang', 480, True),

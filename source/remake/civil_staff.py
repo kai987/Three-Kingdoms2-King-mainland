@@ -567,7 +567,8 @@ def validate(campaign, state):
             raise ValueError('Civil staff registry identity')
         record(person, employee=True)
         officer = state.officers.get(key)
-        if officer is None or officer.person_id != key or officer.profile != officer_profile(person):
+        from .facilities import learned_profile
+        if officer is None or officer.person_id != key or officer.profile != learned_profile(state,key,officer_profile(person)):
             raise ValueError('Civil staff runtime identity/profile')
         actual_city = next((c.id for c in state.cities.values() if key in c.roster.officer_ids),
             state.extension.get('free_locations', {}).get(key, person['city']))
