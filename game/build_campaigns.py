@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools/officer-placement'))
 from remake.city_economy import apply_opening_sizes
+from remake.treasures import RULES as TREASURY_RULES
 from route_timing import apply_route_timing
 from route_render_source import validate_geometry_sources
 from officer_stat_sources import validate_original_virtue, validate_campaign_stats
@@ -165,6 +166,8 @@ def load_sources(*, timing=True):
         old_note = '追加人物的武、知、體力與適性為本作設計值；未具充分德行記錄者沿用用戶指定德60。'
         stat_note = '德採SAN14魅力，缺魅力資料者設60；原表初始體力與勢力語境忠誠分開配置，恢復上限與適性為本作設定。'
         data['design_notes'] = [stat_note if note == old_note else note for note in data['design_notes']]
+        data['treasury_rules'] = dict(TREASURY_RULES)
+        data['design_notes'].append('寶可搜尋、運送、賞賜或每個售100金；初始庫存、搜尋機率與忠誠增幅為本作設定，玩家和AI共用規則。')
         if data.get('main_scenario', {}).get('virtue_default_policy'):
             data['main_scenario']['virtue_default_policy'] = 'campaign-officer-stats-v1'
         data['people'] = [current_people[pid] for pid in order]

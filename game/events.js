@@ -16,6 +16,7 @@
   march_returned:['部隊折返','部隊の帰還'],new_year:['新年更始','新年の到来'],
   campaign_victory:['天下歸一','天下統一'],campaign_defeat:['戰役結束','戦役の終了'],
   ai_campaign:['敵軍動向','敵軍の動向'],
+  treasure_found:['尋得寶物','宝の発見'],treasure_search_failed:['尋寶未果','宝の探索結果'],treasure_sold:['寶物出售','宝の売却'],officer_rewarded:['賞賜武將','武将への褒美'],governor_assigned:['太守任命','太守の任命'],
   staff_candidate:['地方文吏推薦','在地文官の推薦'],staff_hired:['文吏受聘','文官の雇用'],
   staff_declined:['婉拒文吏','文官の採用見送り'],staff_expired:['文吏候選撤回','文官候補の取り下げ'],
   staff_salary:['文吏月俸與成果','文官の俸給と業務成果'],staff_allegiance:['文吏留任','文官の留任'],
@@ -23,6 +24,7 @@
  });
  const STAFF=new Set(['staff_candidate','staff_hired','staff_declined','staff_expired','staff_salary','staff_allegiance']);
  const OPERATIONS=new Set(['domestic_report','transport_departed','transport_arrived','transport_returned','transport_weather']);
+ const TREASURY=new Set(['treasure_found','treasure_search_failed','treasure_sold','officer_rewarded','governor_assigned']);
  const SUPPLY=new Set(['march_resupplied','march_starvation','march_retreat']);
  const SUPPLY_REASONS=new Set(['city','convoy','cargo','shortage','route_blocked','no_friendly_city','origin_changed','target_changed','completed']);
  const BATCH=new Set(['officer_appeared','officer_death','recruit_success','recruit_failure','march_arrived','march_returned']);
@@ -33,7 +35,16 @@
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
+ }
+ function validTreasuryEvent(row){
+  const d=row.details,k=row.kind,keys={treasure_found:['actor','amount','chance','gold'],treasure_search_failed:['actor','amount','chance','gold'],treasure_sold:['actor','amount','gold'],officer_rewarded:['actor','target','kind','amount','gain','loyalty_before','loyalty_after'],governor_assigned:['governor','mode']}[k];
+  if(row.audience!=='player'||row.factions.length!==1||row.city_ids.length!==1||Object.keys(d).sort().join(',')!==keys.sort().join(','))return false;
+  const num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
+  if(k==='governor_assigned')return ['auto','manual'].includes(d.mode)&&(d.mode!=='manual'||d.governor!==null)&&JSON.stringify(row.person_ids)===JSON.stringify(d.governor===null?[]:[d.governor]);
+  if(k==='officer_rewarded')return JSON.stringify(row.person_ids)===JSON.stringify([...new Set([d.actor,d.target])])&&['gold','treasure'].includes(d.kind)&&num('amount',1,d.kind==='gold'?100:1)&&num('gain',1,9)&&num('loyalty_before',0,99)&&num('loyalty_after',1,100)&&d.loyalty_after-d.loyalty_before===d.gain;
+  if(JSON.stringify(row.person_ids)!==JSON.stringify([d.actor]))return false;
+  return k==='treasure_sold'?num('amount',1,99)&&d.gold===d.amount*100:num('chance',15,80)&&d.amount===(k==='treasure_found'?1:0)&&d.gold===20;
  }
  function validNameEvent(row){
   const d=row.details;
@@ -60,10 +71,10 @@
    Object.values(d.income).every(value=>Number.isSafeInteger(value)&&value>=0&&value<=100000000);
  }
  function validOperationEvent(row){
-  const d=row.details,domestic=row.kind==='domestic_report',fields=domestic?['gold','grain','reserves','morale','cities','reason']:['convoy_id','gold','grain','reserves','lost','reason'];
+  const d=row.details,domestic=row.kind==='domestic_report',fields=domestic?['gold','grain','reserves','morale','cities','reason']:['convoy_id','gold','grain','reserves','treasure','lost','reason'];
   if(Object.keys(d).some(key=>!fields.includes(key))||fields.some(key=>!Object.hasOwn(d,key))||typeof d.reason!=='string'||!/^[a-z_]{1,80}$/.test(d.reason))return false;
   for(const key of fields)if(key!=='reason'&&(!Number.isInteger(d[key])||d[key]<0||d[key]>100000000))return false;
-  return domestic?['turn','month'].includes(d.reason)&&d.morale<=11500&&d.cities>=1&&d.cities<=115:d.convoy_id>=1;
+  return domestic?['turn','month'].includes(d.reason)&&d.morale<=11500&&d.cities>=1&&d.cities<=115:d.convoy_id>=1&&d.treasure<=99;
  }
  function validStaffEvent(row){
   const d=row.details,allowed=['staff_id','name','portrait','reason','amount','paid','bonus','counts'];
@@ -81,11 +92,11 @@
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){const rows=view?.game?.extension?.events?.items;return Array.isArray(rows)?rows.filter(validEvent).sort((a,b)=>a.id-b.id):[];}
- function automatic(row,player){return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
+ function automatic(row,player){return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
  function groupRows(rows){
   const groups=[],staffGroups=new Map();
   for(const row of rows){
-   if(STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
+   if(STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
    const last=groups.at(-1);if(last&&BATCH.has(row.kind)&&last[0].kind===row.kind&&last[0].turn===row.turn)last.push(row);else groups.push([row]);
   }
   return groups;
@@ -107,6 +118,14 @@
   function description(row){
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
    switch(row.kind){
+    case 'treasure_found':return text(`${p}在${c}尋得寶1件，已入本城寶庫。本次花費20金，搜尋成功率${d.chance}%。`,`${p}が${c}で宝を1個発見し、都市の宝庫に収めました。探索費用は資金20、成功率は${d.chance}%でした。`);
+    case 'treasure_search_failed':return text(`${p}在${c}尋寶未果。本次花費20金，成功率${d.chance}%；已使用本城與執行武將的本旬行動。`,`${p}は${c}で宝を発見できませんでした。費用は資金20、成功率は${d.chance}%。都市と実行武将の今旬の行動を使用しました。`);
+    case 'treasure_sold':return text(`${c}出售寶${d.amount}件，取得金${d.gold}，款項已入本城。`,`${c}で宝${d.amount}個を売却し、資金${d.gold}を都市に収めました。`);
+    case 'officer_rewarded':{
+     const recipient=names({...row,person_ids:[d.target]}).people[0],gift=d.kind==='gold'?text(`金${d.amount}`,`資金${d.amount}`):text(`寶${d.amount}件`,`宝${d.amount}個`);
+     return text(`${c}賞賜${recipient}${gift}，忠誠${d.loyalty_before} → ${d.loyalty_after}（+${d.gain}）。費用已扣除，依太守德值與本作規則結算。`,`${c}で${recipient}に${gift}を与え、忠誠が${d.loyalty_before} → ${d.loyalty_after}（+${d.gain}）になりました。費用は差し引き済みで、太守の徳と本作のルールに従って精算しました。`);
+    }
+    case 'governor_assigned':return text(`${c}太守：${d.governor?p:'尚無適任者'}（${d.mode==='auto'?'自動選任':'指定'}）。任命不消耗城池行動；兩名全勢力內政官的委任另行管理。`,`${c}の太守は${d.governor?p:'該当者なし'}（${d.mode==='auto'?'自動選任':'指定'}）です。任命では都市行動を使いません。勢力全体の内政担当2名は別に管理します。`);
     case 'campaign_start':return text(`${f}展開新的戰役。每旬10日，請安排人事、兵力與行軍。`,`${f}による新たな戦役が始まります。1旬10日、人事・兵力・行軍を整えましょう。`);
     case 'officer_appeared':return text(`${p}已到登場年代，在${c}待訪。`,`${p}が登場年を迎え、${c}で仕官先を待っています。`);
     case 'recruit_success':return text(`${p}接受登用，加入${f}。`,`${p}が登用に応じ、${f}へ加わりました。`);
@@ -175,13 +194,13 @@
     }
     case 'staff_allegiance':return text(`${c}的行政歸屬改變，文吏${label(d.name||'文吏')}留在本城，現隨${f}管理地方事務。`,`${c}の行政上の所属が変わり、文官${label(d.name||'文官')}は都市に留任し、現在は${f}のもとで地方行政に従事します。`);
     case 'domestic_report':return d.reason==='month'?text(`${f}本月${d.cities}城的商農增收已入庫：金${d.gold}、糧${d.grain}。按實際任職旬數結算，不重複領取。`,`${f}の${d.cities}都市で、今月の商農加算を入庫しました。資金${d.gold}・兵糧${d.grain}。実際の勤務旬数で一度だけ精算しています。`):text(`${f}本旬${d.cities}城完成委任工作，花費金${d.gold}、糧${d.grain}；募得預備兵${d.reserves}，訓練度成果${d.morale}。`,`${f}の${d.cities}都市で今旬の担当業務を実行しました。支出は資金${d.gold}・兵糧${d.grain}、募兵は予備兵${d.reserves}、練度の成果は${d.morale}です。`);
-    case 'transport_departed':return text(`${c}的運輸隊已出發，攜帶金${d.gold}、糧${d.grain}、預備兵${d.reserves}。貨物已從出發城扣除，正在途中，抵達後才入庫。`,`${c}への輸送隊が出発しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}を運びます。出発都市から差し引き、到着時に入庫します。`);
-    case 'transport_arrived':return text(`${c}的運輸隊已抵達，金${d.gold}、糧${d.grain}、預備兵${d.reserves}已按實際狀態入庫，人員與兵員帳本已核對。`,`${c}への輸送隊が到着しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}を実際の状況に従って入庫し、人員と兵力の集計を確認しました。`);
+    case 'transport_departed':return text(`${c}的運輸隊已出發，攜帶金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}。貨物已從出發城扣除，正在途中，抵達後才入庫。`,`${c}への輸送隊が出発しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を運びます。出発都市から差し引き、到着時に入庫します。`);
+    case 'transport_arrived':return text(`${c}的運輸隊已抵達，金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}已按實際狀態入庫，人員與兵員帳本已核對。`,`${c}への輸送隊が到着しました。資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を実際の状況に従って入庫し、人員と兵力の集計を確認しました。`);
     case 'transport_returned':{
      const reason={army_missing:text('受補給部隊已不在途中','補給先の部隊がすでに行軍中ではないため'),army_changed:text('受補給部隊的任務或歸屬改變','補給先部隊の任務・所属が変わったため'),rendezvous_wait:text('在會合點等待受補給部隊','会合地点で補給先の部隊を待つため'),rendezvous_missed:text('未能在會合點接上部隊','会合地点で部隊と合流できなかったため'),delivered:text('途中補給交付完成','途中補給の引き渡しを終えたため'),escort_return:text('押運武將沿實際道路返程','護送武将が実際の経路で帰還するため'),retreat:text('運輸隊改向友城撤退','輸送隊が友軍都市への撤退に移ったため')}[d.reason];
-     return reason?text(`${c}：${reason}。現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}仍按實際位置及返程處理，不會立即送回原城。`,`${c}：${reason}、資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}を実際の位置と帰路に従って処理します。出発都市へ瞬時に戻しません。`):text(`${c}的原運輸任務已中止或折返，現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}按實際返程結算。`,`${c}への元の輸送任務は中止または帰還となりました。残る資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}は実際の帰路に従って精算します。`);
+     return reason?text(`${c}：${reason}。現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}仍按實際位置及返程處理，不會立即送回原城。`,`${c}：${reason}、資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}を実際の位置と帰路に従って処理します。出発都市へ瞬時に戻しません。`):text(`${c}的原運輸任務已中止或折返，現有金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}按實際返程結算。`,`${c}への元の輸送任務は中止または帰還となりました。残る資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}は実際の帰路に従って精算します。`);
     }
-    case 'transport_weather':return text(`${c}的運輸隊途中遇險，預備兵損失${d.lost}。現有貨物：金${d.gold}、糧${d.grain}、預備兵${d.reserves}；不重複結算同次災害。`,`${c}への輸送中に災害が発生し、予備兵${d.lost}を失いました。現在の貨物は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}です。同じ災害を重複精算しません。`);
+    case 'transport_weather':return text(`${c}的運輸隊途中遇險，預備兵損失${d.lost}。現有貨物：金${d.gold}、糧${d.grain}、預備兵${d.reserves}、寶${d.treasure??0}；不重複結算同次災害。`,`${c}への輸送中に災害が発生し、予備兵${d.lost}を失いました。現在の貨物は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}・宝${d.treasure??0}です。同じ災害を重複精算しません。`);
     case 'campaign_victory':return text(`${f}完成天下統一。本次戰役已結算，可保存進度。`,`${f}が天下を統一しました。戦役の精算を終え、進行状況を保存できます。`);
     case 'campaign_defeat':return text(`${f}已無法繼續作戰。可保存結果或重新選擇劇本。`,`${f}は戦いを続けられなくなりました。結果を保存するか、シナリオを選び直せます。`);
     default:{const attacker=n.factions[0]||f;return text(`${attacker}的${d.coordinated?'多路部隊正協同':'部隊正'}朝${c}推進。`,`${attacker}の${d.coordinated?'複数部隊が連携して':'部隊が'}${c}へ進軍しています。`);}
@@ -215,7 +234,8 @@
     const staff=[...new Map(rows.filter(e=>/^clerk-[0-9]{6,12}$/.test(e.details.staff_id||'')&&['clerk-1','clerk-2','clerk-3'].includes(e.details.portrait)).map(e=>[e.details.staff_id,e.details])).values()].slice(0,4);
     people+=staff.map(d=>`<figure class="event-person" data-event-staff="${escape(d.staff_id)}">${portraits?.civilHtml?portraits.civilHtml(d.portrait,d.name,{className:'event-staff-face',locale:locale()}):`<img class="event-staff-face" src="${root.GamePaths?.asset(`/assets/civil-staff/${d.portrait}.png`)||`/assets/civil-staff/${d.portrait}.png`}" width="32" height="40" alt="${escape(text(`${label(d.name)}・架空文吏共用像素肖像`,`${label(d.name)}・架空文官の共通ドット肖像`))}"/>`}<figcaption>${escape(label(d.name))}</figcaption></figure>`).join('');
    }
-   return `<div class="event-art">${art}${people?`<div class="event-people">${people}</div>`:''}</div><p class="event-art-caption">${escape(STAFF.has(row.kind)?text('事件示意：目前地圖與架空文吏共用像素肖像；文吏另建名冊，不占歷史人物身分。','場面イメージ：現在の地図と架空文官の共通ドット肖像。文官は歴史人物とは別の名簿で管理します。'):text('事件示意：目前地圖與武將像素肖像','場面イメージ：現在の地図と武将のドット肖像'))}</p>`;
+   const treasureArt=TREASURY.has(row.kind)?`<svg class="event-treasure" viewBox="0 0 32 28" shape-rendering="crispEdges" role="img" aria-label="${escape(text('寶箱與賞賜金錢示意','宝箱と褒美の資金のイメージ'))}"><path fill="#000" d="M4 3h20v3h3v17H1V6h3z"/><path fill="#aa4b00" d="M4 6h20v14H4z"/><path fill="#ffac20" d="M4 6h20v4H4zM4 13h20v2H4z"/><path fill="#ffdd60" d="M7 6h3v14H7zM18 6h3v14h-3zM12 11h4v6h-4z"/><path fill="#000" d="M21 20h9v6H18v-3h3z"/><path fill="#ffdd60" d="M22 21h6v3h-6zM19 24h9v1h-9z"/></svg>`:'';
+   return `<div class="event-art">${art}${treasureArt}${people?`<div class="event-people">${people}</div>`:''}</div><p class="event-art-caption">${escape(STAFF.has(row.kind)?text('事件示意：目前地圖與架空文吏共用像素肖像；文吏另建名冊，不占歷史人物身分。','場面イメージ：現在の地図と架空文官の共通ドット肖像。文官は歴史人物とは別の名簿で管理します。'):text('事件示意：目前地圖與武將像素肖像','場面イメージ：現在の地図と武将のドット肖像'))}</p>`;
   }
   function render(){
    if(!active||!modal||disposed)return;

@@ -9,6 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign, Catalog, canonical
+from remake import treasures
 from remake.march_core import using_backend
 from remake.march_supply import estimate as march_grain
 from remake.strategic_ai import StrategicAI, validate_strategies
@@ -254,6 +255,9 @@ class StrategicAITests(unittest.TestCase):
                 self.assertEqual(march['supply']['loaded'],32)
                 self.assertEqual(march['supply']['consumed'],0)
                 self.assertEqual(source.grain,0)
+                # This fixture calls the shared departure service directly,
+                # outside command()'s governor synchronization boundary.
+                treasures.synchronize(game,game.state)
                 game.validate(game.state)
 
     def test_due_column_with_insufficient_current_grain_is_cancelled_without_side_effects(self):
@@ -463,7 +467,16 @@ class StrategicAITests(unittest.TestCase):
                 attacks=[m for m in game.state.extension['travel']['marches'] if m['kind']=='attack']
                 self.assertEqual(len(attacks),expected,'Easy cannot assemble the two columns this defended objective needs')
                 self.assertEqual(game.state.soldiers,before)
-                self.assertTrue(all(c.gold==0 for c in game.state.cities.values()))
+                # An idle AI may sell actual opening treasure. This is an
+                # explicit asset conversion, never a difficulty gold bonus.
+                sales=[event for event in game.state.extension['events']['items']
+                       if event['kind']=='treasure_sold']
+                sold={key:sum(event['details']['amount'] for event in sales if event['city_ids']==[key])
+                      for key in game.state.cities}
+                self.assertEqual(sum(sold.values()),game.state.extension['treasury']['ledger']['sold'])
+                for key,city in game.state.cities.items():
+                    self.assertEqual(city.gold,sold[key]*100)
+                treasures.validate(game,game.state)
         game=self.new()
         for city in game.state.cities.values():city.grain=0
         self.ai_turn(game)
@@ -513,6 +526,7 @@ class StrategicAITests(unittest.TestCase):
         from remake import logistics, domestic
         logistics.synchronize(game,game.state)
         domestic.synchronize(game,game.state)
+        treasures.synchronize(game,game.state)
         game.validate(game.state);game=self.resume(game)
         self.ai_turn(game)
         plan=game.state.extension['ai_strategy']['wei']

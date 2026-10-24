@@ -14,7 +14,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, GameError
-from remake import civil_staff, domestic, logistics, march_supply
+from remake import civil_staff, domestic, logistics, march_supply, treasures
 from campaign_fixtures import controlled_catalog
 
 
@@ -281,6 +281,7 @@ class CampaignEventTransitionTests(unittest.TestCase):
         logistics.synchronize(game, game.state)
         domestic.synchronize(game, game.state)
         civil_staff.synchronize(game, game.state, checks=False)
+        treasures.synchronize(game, game.state)
         game.validate(game.state)
         before_troops = game.state.officers[ident].troops
         before_rng = deepcopy(game.state.rng)

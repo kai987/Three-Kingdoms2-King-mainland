@@ -2,7 +2,7 @@
 let view=null, busy=false, selectedCity=null, mapMode='all', actor=null, target=null, mapPositions=null, setupPreview=null, cityLabels='major', dialogGeneration=0;
 let mapNavigation=null,mapCamera=null,mapCameraKey='',refreshRouteDialog=null,mapAction=null;
 let cloudSave=null,cloudSaveUI=null;
-let civilStaffUI=null,domesticUI=null;
+let civilStaffUI=null,domesticUI=null,treasuryUI=null;
 let campaignDifficulty='normal';
 const viewCache=typeof GameViewCache==='undefined'?null:GameViewCache.create();
 const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({getRawSave:()=>request('/api/save',undefined,{text:true}),getView:()=>view,isBusy:()=>busy,loadRawSave:loadSave,locale:()=>GameI18n.locale,onStatus:state=>{if(state.state==='error')notice(localAutosave.statusText(),true);}});
@@ -463,6 +463,7 @@ async function showCityInformation(id){
    <p class="small">${escapeHtml(c.profile?.label||'旧版城市')} · 地形：${{plain:'平地',mountain:'山地',water:'水地'}[c.terrain]||'未配置'}</p>
    ${cityEconomyNote(c.profile)}
    ${!preview&&typeof GameDomestic!=='undefined'?GameDomestic.summary(view,id):''}
+   ${preview?`<p class="small"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶 ${c.treasure??0}/99</span><span data-locale-only="ja" data-l10n-native="ja">宝 ${c.treasure??0}/99</span></p>`:typeof GameTreasury!=='undefined'?GameTreasury.summary(view,id):''}
    <dl class="resources"><dt>金钱</dt><dd>${c.gold}</dd><dt>粮食</dt><dd>${c.grain}</dd><dt>预备兵</dt><dd>${c.reserves}</dd></dl>
    ${c.income?`<p class="small">${c.owner==='neutral'?'无主城暂无月收入':`每月金${c.income.gold} / 粮${c.income.grain} / 预备兵${c.income.reserves}`}</p>`:''}
    <p class="city-information-strength">驻城 ${c.officers.length}/${data.capacity}人 · 武将带兵合计 ${troops}</p>
@@ -487,6 +488,10 @@ function showCivilStaff(id){staffInterface()?.open(id);}
 function delegationInterface(){
  if(!domesticUI&&typeof GameDomestic!=='undefined')domesticUI=GameDomestic.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
  return domesticUI;
+}
+function treasuryInterface(){
+ if(!treasuryUI&&typeof GameTreasury!=='undefined')treasuryUI=GameTreasury.create({getView:()=>view,cityName:id=>cityName(id),openDialog:(...args)=>openDialog(...args),command:(kind,payload)=>command(kind,payload),dialog,i18n:GameI18n,isBusy:()=>busy,isPreview:()=>!!setupPreview});
+ return treasuryUI;
 }
 
 // Keep every officer choice comparable without opening a separate profile.
@@ -532,8 +537,9 @@ function renderCity(){
  const scale=view.catalog.city_profiles[city.id],income=view.catalog.city_income[city.id],naming=view.catalog.map_presentation.city_names[city.id];
  $('#inspector').innerHTML=`<div class="inspector-heading"><h2>${escapeHtml(cityName(city.id))}</h2><span class="owner">${faction(city.owner)}</span></div>
  ${typeof GameDomestic!=='undefined'?GameDomestic.summary(view,city.id):''}
+ ${typeof GameTreasury!=='undefined'?GameTreasury.summary(view,city.id):''}
  <dl class="resources"><dt>金钱</dt><dd>${city.gold}</dd><dt>粮食</dt><dd>${city.grain}</dd><dt>预备兵</dt><dd>${city.reserves}</dd></dl>
- <div class="actions">${owned?`<div class="action-pair"><button id="allocate" class="primary" ${!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${city.action_used||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div><div class="action-pair secondary-row"><button id="recruit-officer" ${city.action_used||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button><button id="transfer" ${city.action_used||!available.length?'disabled':''}>调动武将</button></div>${view.catalog.civil_staff?'<div class="secondary-row"><button id="civil-staff">地方文吏</button></div>':''}${view.catalog.domestic?'<div class="action-pair secondary-row"><button id="city-domestic"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">勢力內政委任</span><span data-locale-only="ja" data-l10n-native="ja">勢力の内政担当</span></button><button id="city-logistics">前線支援</button></div>':''}<div class="secondary-row"><button id="recruit" ${city.action_used||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:'<button id="home">返回本城</button>'}<button id="end-turn">结束本旬</button></div>
+ <div class="actions">${owned?`<div class="action-pair"><button id="allocate" class="primary" ${!city.roster.officer_ids.some(i=>!marching().has(i))?'disabled':''}>编兵</button><button id="depart" class="primary" ${city.action_used||!fighters.length||noDepartureFood?'disabled':''}>出征</button></div><div class="action-pair secondary-row"><button id="recruit-officer" ${city.action_used||!available.length||cityOccupancy(city)>=capacity()||city.gold<60?'disabled':''}>招募 / 劝降</button><button id="transfer" ${city.action_used||!available.length?'disabled':''}>调动武将</button></div>${view.catalog.civil_staff?'<div class="secondary-row"><button id="civil-staff">地方文吏</button></div>':''}${view.catalog.treasury?'<div class="secondary-row"><button id="city-treasury"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">寶庫與賞賜</span><span data-locale-only="ja" data-l10n-native="ja">宝庫・褒美</span></button></div>':''}${view.catalog.domestic?'<div class="action-pair secondary-row"><button id="city-domestic"><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">勢力內政委任</span><span data-locale-only="ja" data-l10n-native="ja">勢力の内政担当</span></button><button id="city-logistics">前線支援</button></div>':''}<div class="secondary-row"><button id="recruit" ${city.action_used||city.gold<20||city.grain<30?'disabled':''}>征募预备兵</button></div>`:'<button id="home">返回本城</button>'}<button id="end-turn">结束本旬</button></div>
  <div class="roster-scroll"><table class="roster-table"><thead><tr><th>武将</th><th>兵</th><th>武</th><th>知</th><th>德</th><th>忠</th><th>经</th><th>体</th></tr></thead><tbody>${rosterRows(city)||'<tr><td colspan="8">暂无驻军</td></tr>'}</tbody></table></div>
  <p class="small">驻城 ${cityOccupancy(city)}/${capacity()}；每方出战上限10人。${city.action_used?'本城本回合已行动。':''}</p>
  ${typeof GameCivilStaff!=='undefined'?GameCivilStaff.summary(view,city.id,{locale:GameI18n.locale,cityName,bilingual:true}):''}
@@ -550,6 +556,7 @@ function renderCity(){
  if(view.catalog.civil_staff&&$('#civil-staff'))$('#civil-staff').onclick=()=>showCivilStaff(city.id);
  if($('#city-domestic'))$('#city-domestic').onclick=()=>delegationInterface()?.open(city.id,'domestic');
  if($('#city-logistics'))$('#city-logistics').onclick=()=>delegationInterface()?.open(city.id,'logistics');
+ if($('#city-treasury'))$('#city-treasury').onclick=()=>treasuryInterface()?.open(city.id);
  $('#end-turn').onclick=()=>command('end_turn');
 }
 function allocate(city,preferred=null){

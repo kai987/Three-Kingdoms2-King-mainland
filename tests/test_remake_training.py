@@ -8,7 +8,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake.campaign import Campaign
-from remake import domestic
+from remake import domestic, treasures
 from remake.tactical_ai import expected_attack
 from campaign_fixtures import controlled_catalog
 from test_remake_tactical_ai import battle, actors
@@ -57,6 +57,7 @@ class TrainingDegreeTests(unittest.TestCase):
         game._start_expanded_battle(state, source, target, [146])
         self.assertEqual(state.battle['extended']['support']['146']['morale'], 95)
         self.assertEqual(row['morale'], 10)
+        treasures.synchronize(game,state)
         game.validate(state)
         saved = game.export_save()
         loaded = Campaign(game.catalog); loaded.load_save(saved, 0)

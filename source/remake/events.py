@@ -12,7 +12,14 @@ STAFF_KINDS = {'staff_candidate', 'staff_hired', 'staff_declined', 'staff_expire
                'staff_salary', 'staff_allegiance'}
 STAFF_DETAILS = {'staff_id', 'name', 'portrait', 'reason', 'amount', 'paid', 'bonus', 'counts'}
 TRANSPORT_KINDS = {'transport_departed','transport_arrived','transport_returned','transport_weather'}
-TRANSPORT_DETAILS = {'convoy_id','gold','grain','reserves','lost','reason'}
+TRANSPORT_DETAILS = {'convoy_id','gold','grain','reserves','treasure','lost','reason'}
+TREASURY_DETAILS = {
+    'treasure_found': {'actor','amount','chance','gold'},
+    'treasure_search_failed': {'actor','amount','chance','gold'},
+    'treasure_sold': {'actor','amount','gold'},
+    'officer_rewarded': {'actor','target','kind','amount','gain','loyalty_before','loyalty_after'},
+    'governor_assigned': {'governor','mode'},
+}
 SUPPLY_KINDS = {'march_resupplied', 'march_starvation', 'march_retreat'}
 SUPPLY_DETAILS = {'unit_kind', 'unit_id', 'grain', 'lost', 'shortage_days', 'reason'}
 SUPPLY_REASONS = {'city', 'convoy', 'cargo', 'shortage', 'route_blocked',
@@ -39,8 +46,37 @@ DETAILS = {
     **{kind: set(STAFF_DETAILS) for kind in STAFF_KINDS},
     **{kind: set(TRANSPORT_DETAILS) for kind in TRANSPORT_KINDS},
     **{kind: set(SUPPLY_DETAILS) for kind in SUPPLY_KINDS},
+    **TREASURY_DETAILS,
     'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
 }
+
+
+def _validate_treasury_event(row):
+    d, kind = row['details'], row['kind']
+    if (set(d) != TREASURY_DETAILS[kind] or row['audience'] != 'player'
+            or len(row['city_ids']) != 1 or len(row['factions']) != 1):
+        raise ValueError('Treasury event fields')
+    def number(key, low, high):
+        return type(d[key]) is int and low <= d[key] <= high
+    if kind == 'governor_assigned':
+        if (d['mode'] not in ('auto','manual') or d['mode']=='manual' and d['governor'] is None
+                or row['person_ids'] != ([d['governor']] if d['governor'] is not None else [])):
+            raise ValueError('Governor event identity')
+    elif kind == 'officer_rewarded':
+        if (row['person_ids'] != list(dict.fromkeys([d['actor'],d['target']]))
+                or d['kind'] not in ('gold','treasure')
+                or not number('amount',1,100 if d['kind']=='gold' else 1)
+                or not number('gain',1,9) or not number('loyalty_before',0,99)
+                or not number('loyalty_after',1,100)
+                or d['loyalty_after']-d['loyalty_before'] != d['gain']):
+            raise ValueError('Reward event receipt')
+    elif kind == 'treasure_sold':
+        if row['person_ids'] != [d['actor']] or not number('amount',1,99) or d['gold'] != d['amount']*100:
+            raise ValueError('Treasure sale receipt')
+    elif (row['person_ids'] != [d['actor']] or not number('chance',15,80)
+            or type(d['amount']) is not int or d['amount'] != (1 if kind=='treasure_found' else 0)
+            or type(d['gold']) is not int or d['gold'] != 20):
+        raise ValueError('Treasure search receipt')
 
 
 def _validate_supply_event(row):
@@ -278,6 +314,13 @@ def validate(campaign, state):
             _validate_staff_event(row)
         if row['kind'] in SUPPLY_KINDS:
             _validate_supply_event(row)
+        if row['kind'] in TREASURY_DETAILS:
+            _validate_treasury_event(row)
+        if row['kind'] in TRANSPORT_KINDS:
+            if (set(row['details']) != TRANSPORT_DETAILS
+                    or type(row['details']['treasure']) is not int
+                    or not 0 <= row['details']['treasure'] <= 99):
+                raise ValueError('Transport treasure receipt')
         if row['kind']=='city_upgraded':
             from .city_economy import tier_at,income_at
             details=row['details']

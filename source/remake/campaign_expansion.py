@@ -215,6 +215,9 @@ class ExpandedCampaign:
                 city_ids=[source.id,target.id],factions=[source.owner,target.owner],
                 details=dict(battle_id=state.battle['id'],attacker=source.owner,defender=target.owner))
         if not defenders: state.battle['outcome']='victory';state.phase='result'
+        # Deployment makes participants unavailable for local civil duties.
+        from . import treasures
+        treasures.synchronize(self,state)
 
     def _player_sides(self,state):
         return ('attackers','defenders') if state.battle['attacker']==state.player else ('defenders','attackers')
@@ -537,6 +540,9 @@ class ExpandedCampaign:
             from . import logistics,domestic
             logistics.synchronize(self,state)
             domestic.synchronize(self,state)
+        if 'treasury' in x:
+            from . import treasures
+            treasures.synchronize(self,state)
 
     def _choose_successor(self,state,payload):
         pending=state.extension['pending_succession'].get(state.player)
@@ -590,7 +596,7 @@ class ExpandedCampaign:
 
     def _validate_expansion(self,state):
         x=state.extension
-        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics'}
+        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury'}
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')

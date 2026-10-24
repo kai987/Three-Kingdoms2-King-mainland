@@ -89,6 +89,9 @@ class CityTimelineTests(unittest.TestCase):
     def new_game(self, start):
         game = Campaign(timeline_catalog(start))
         game.command('new', dict(faction='wei', seed=2026), 0)
+        # Isolate the calendar/name test from optional treasury spending.
+        for policy in game.state.extension['treasury']['factions'].values():
+            policy.update(enabled=False,gold_floor=0)
         return game
 
     def test_all_29_source_chapters_inherit_names_and_preserve_opening_proxy_notes(self):

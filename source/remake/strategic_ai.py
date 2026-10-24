@@ -433,9 +433,11 @@ def run(campaign, state, payload):
     x['ai_queue'] = [];x['ai_cursor'] = 0;x['ai_attacks'] = 0
     if 'domestic' in x:
         from .domestic import finish_faction_turn
+        from . import treasures
         for owner in sorted(campaign.catalog.factions):
             if owner != state.player:
                 finish_faction_turn(campaign,state,owner)
+                treasures.ai_idle_turn(campaign,state,owner)
     campaign._complete_turn(state)
     campaign._reconcile_factions(state)
 

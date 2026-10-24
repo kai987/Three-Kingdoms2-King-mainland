@@ -33,14 +33,33 @@ function fixture(items=[]){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,39);
+ assert.equal(Object.keys(KINDS).length,44);
  assert(validEvent(row(1)));for(const bad of [{id:0},{kind:'<script>'},{month:13},{day:31},{audience:'other'},{person_ids:[3]},{details:[]},{turn:0}])assert(!validEvent({...row(1),...bad}));
  assert.deepEqual(eventRows({game:{extension:{events:{items:{}}}}}),[]);
  assert.notEqual(campaignKey(view([])),campaignKey(view([],2027)));
  const originalRows=[row(3),row(2),row(1)];const source=JSON.stringify(originalRows);assert.deepEqual(eventRows(view(originalRows)).map(x=>x.id),[1,2,3]);assert.equal(JSON.stringify(originalRows),source);
  assert.deepEqual(groupRows([row(1,'officer_appeared'),row(2,'officer_appeared'),row(3,'officer_death'),row(4,'officer_death',{turn:2})]).map(g=>g.length),[2,1,1]);
+ const reward=row(1,'officer_rewarded',{person_ids:['person-a','person-b'],details:{actor:'person-a',target:'person-b',kind:'gold',amount:100,gain:5,loyalty_before:80,loyalty_after:85}});
+ assert(validEvent(reward));
+ for(const bad of [{amount:101},{gain:0},{gain:6},{loyalty_after:101},{loyalty_before:80.5},{kind:'evil'}])assert(!validEvent({...reward,details:{...reward.details,...bad}}));
+ assert(!validEvent({...reward,person_ids:['person-b']}));
+ const found=row(2,'treasure_found',{details:{actor:'person-a',amount:1,chance:60,gold:20}});
+ assert(validEvent(found));assert(!validEvent({...found,details:{...found.details,chance:99}}));
+ assert(validEvent(row(3,'treasure_search_failed',{details:{actor:'person-a',amount:0,chance:60,gold:20}})));
+ assert(validEvent(row(4,'treasure_sold',{details:{actor:'person-a',amount:2,gold:200}})));
+ assert(!validEvent(row(4,'treasure_sold',{details:{actor:'person-a',amount:2,gold:201}})));
+ assert(validEvent(row(5,'governor_assigned',{person_ids:[],details:{governor:null,mode:'auto'}})));
+ assert(!validEvent(row(5,'governor_assigned',{person_ids:[],details:{governor:null,mode:'manual'}})));
+ const gifts=fixture();gifts.parent.open=true;
+ const giftView=view([reward,{...reward,id:2,factions:['wei']},{...found,id:3}]);const giftBytes=JSON.stringify(giftView);
+ gifts.events.observe(giftView,{newGame:true});gifts.drain();assert(!gifts.modal.open);
+ gifts.parent.open=false;gifts.parent.emit('close');gifts.drain();assert.deepEqual(gifts.events.snapshot().active,[1]);
+ assert(gifts.modal.innerHTML.includes('80 → 85'));assert(gifts.modal.innerHTML.includes('event-treasure'));assert(gifts.modal.innerHTML.includes('曹操'));
+ gifts.i18n.locale='ja';gifts.doc.emit('game-language-change');assert(gifts.modal.innerHTML.includes('武将への褒美'));assert(gifts.modal.innerHTML.includes('資金100'));
+ gifts.modal.querySelector('[data-event-next]').onclick();assert.deepEqual(gifts.events.snapshot().active,[3]);
+ assert(gifts.modal.innerHTML.includes('宝の発見'));assert.equal(JSON.stringify(giftView),giftBytes);gifts.events.dispose();
  const salary=staffRow(2,'staff_salary',{details:{amount:5,paid:0,bonus:{gold:0,grain:0,reserves:0},counts:{staff:1,total_unpaid:1,cities:1}}});
- const transport=row(8,'transport_departed',{person_ids:['clerk-000001'],city_ids:['home','enemy'],details:{convoy_id:1,gold:100,grain:300,reserves:50,lost:0,reason:'outbound'}}),work=row(9,'domestic_report',{person_ids:[],details:{gold:20,grain:30,reserves:180,morale:150,cities:30,reason:'turn'}});
+ const transport=row(8,'transport_departed',{person_ids:['clerk-000001'],city_ids:['home','enemy'],details:{convoy_id:1,gold:100,grain:300,reserves:50,treasure:2,lost:0,reason:'outbound'}}),work=row(9,'domestic_report',{person_ids:[],details:{gold:20,grain:30,reserves:180,morale:150,cities:30,reason:'turn'}});
  assert(validEvent(transport));assert(validEvent(work));for(const bad of [{convoy_id:0},{gold:-1},{lost:1.5},{reason:'<script>'},{unknown:1}])assert(!validEvent({...transport,details:{...transport.details,...bad}}));
  const training=fixture([work]),trainingBefore=JSON.stringify(work);for(const locale of ['zh-Hant','ja']){training.i18n.locale=locale;const message=training.events.description(work);assert(message.includes(locale==='ja'?'練度の成果は150':'訓練度成果150'));assert(!message.includes('士氣'));assert(!message.includes('士気'));}assert.equal(JSON.stringify(work),trainingBefore,'Renaming historical training reports preserves their saved numerical details');
  assert(!validEvent({...work,details:{...work.details,cities:116}}));assert(!validEvent({...work,details:{...work.details,reason:'unknown'}}));
@@ -147,5 +166,5 @@ function fixture(items=[]){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,localAutosave:null,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
- console.log('events: 39 bilingual scenes, strict supply and city-name snapshots, dated city upgrades with historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 44 bilingual scenes, strict supply and city-name snapshots, dated city upgrades with historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

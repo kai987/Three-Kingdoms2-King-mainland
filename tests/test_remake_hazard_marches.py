@@ -10,7 +10,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
 from remake.campaign import Campaign,Catalog,digest
-from remake import civil_staff, domestic, logistics
+from remake import civil_staff, domestic, logistics, treasures
 from remake.errors import GameError
 from remake.route_hazards import evaluate_leg
 
@@ -55,6 +55,7 @@ class HazardMarchTests(unittest.TestCase):
         logistics.synchronize(game, game.state)
         domestic.synchronize(game, game.state)
         civil_staff.synchronize(game,game.state,checks=False)
+        treasures.synchronize(game,game.state)
         game.validate(game.state)
         return city
 
@@ -66,6 +67,7 @@ class HazardMarchTests(unittest.TestCase):
             for ident in list(city.roster.officer_ids):
                 if ident in marching:continue
                 if len(target.roster.officer_ids)==game.catalog.rules.city_officer_capacity:
+                    treasures.synchronize(game,game.state)
                     return moved
                 city.roster.officer_ids.remove(ident);target.roster.officer_ids.append(ident)
                 moved.append((ident,city.id))

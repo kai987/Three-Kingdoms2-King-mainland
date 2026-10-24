@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import civil_staff, domestic, logistics
+from remake import civil_staff, domestic, logistics, treasures
 from remake.officers import YearState, initialize_officer, year_state
 from test_remake_domestic import domestic_catalog
 
@@ -53,6 +53,7 @@ class LogisticsTests(unittest.TestCase):
         civil_staff.synchronize(game, game.state, checks=False)
         logistics.synchronize(game, game.state)
         domestic.synchronize(game, game.state)
+        treasures.synchronize(game, game.state)
 
     def fill(self, game, city_id, count):
         city = game.state.cities[city_id]
@@ -242,7 +243,7 @@ class LogisticsTests(unittest.TestCase):
         self.dispatch(game)
         game.state.cities['nanjun'].owner = 'wei'
         game._reconcile_factions(game.state); self.sync(game)
-        self.assertEqual(logistics._inbound(game.state, 'nanjun'), dict(gold=0, grain=0, reserves=0, officers=0))
+        self.assertEqual(logistics._inbound(game.state, 'nanjun'), dict(gold=0, grain=0, reserves=0, treasure=0, officers=0))
         self.advance_due(game)
         row = game.state.extension['logistics']['convoys'][0]
         self.assertEqual(row['status'], 'returning')

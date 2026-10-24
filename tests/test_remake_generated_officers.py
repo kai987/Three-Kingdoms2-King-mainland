@@ -8,7 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, digest
-from remake import civil_staff
+from remake import civil_staff, treasures
 from remake.errors import GameError
 from remake.officers import (parse_officer_ref, deserialize_officer_ref,
     ref_sort_key, select_deployment, year_state, YearState, advance_year, CityRoster)
@@ -30,6 +30,7 @@ class GeneratedOfficerTests(unittest.TestCase):
         game._complete_turn(game.state)
         game._reconcile_factions(game.state)
         civil_staff.synchronize(game, game.state, monthly=game.state.day == 1)
+        treasures.synchronize(game, game.state)
         game.validate(game.state)
 
     def test_bounded_namespace_never_aliases_historical_integers(self):

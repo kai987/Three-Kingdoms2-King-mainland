@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog
 from remake.march_core import using_backend
 from remake.march_supply import estimate
+from remake import treasures
 
 
 def read(name):
@@ -141,6 +142,7 @@ class RouteCorridorTests(unittest.TestCase):
                     ident = next(i for i in origin.roster.officer_ids if i != game.state.extension['leaders']['shu'])
                     origin.roster.officer_ids.remove(ident)
                     source.roster.officer_ids.append(ident)
+                    treasures.synchronize(game,game.state)
                     game.validate(game.state)
                     initial_grain = source.grain
                     rng = deepcopy(game.state.rng)

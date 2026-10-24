@@ -29,7 +29,8 @@ COMMANDS = frozenset(('new', 'persuade_officer', 'recruit_officer', 'transfer',
                      'depart', 'attack', 'retreat', 'settle', 'end_turn', 'ai',
                      'arrivals', 'hire_staff', 'reject_staff', 'staff_recruit',
                      'choose_successor', 'set_domestic', 'set_logistics',
-                     'dispatch_transport'))
+                     'dispatch_transport', 'search_treasure', 'reward_officer',
+                     'sell_treasure', 'set_governor', 'set_treasury_policy'))
 
 
 def _encode(value):

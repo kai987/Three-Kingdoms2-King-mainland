@@ -7,7 +7,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
-from remake import domestic, logistics
+from remake import domestic, logistics, treasures
 from remake.campaign import Campaign, digest
 from remake.errors import GameError
 from test_remake_faction_domestic import faction_catalog
@@ -123,6 +123,7 @@ class AutoAllocationTests(unittest.TestCase):
         self.assertEqual({i: state.officers[i].troops for i in original}, original)
         self.assertEqual(state.officers[439].troops, 999)
         self.assertEqual(state.cities['xiangyang'].reserves, 321)
+        treasures.synchronize(game,state)
         game.validate(state)
 
     def test_unavailable_military_official_pauses_every_city(self):

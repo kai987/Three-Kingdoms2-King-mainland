@@ -601,6 +601,9 @@ def finish_faction_turn(game, state, owner, *, automatic=True):
     """After manual commands and before the calendar advances, once per city."""
     if automatic:
         run_automatic(game, state, owner)
+        from . import treasures
+        treasures.synchronize(game,state)
+        treasures.auto_turn(game,state,owner)
     synchronize(game, state)
     summary = dict(gold=0, grain=0, reserves=0, morale=0, cities=0, reason='turn')
     first_city = None

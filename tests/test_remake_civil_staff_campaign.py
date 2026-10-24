@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import domestic
+from remake import domestic, treasures
 from remake.officers import YearState, initialize_officer, year_state
 from campaign_fixtures import controlled_catalog
 
@@ -112,6 +112,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
                 resolve_death_year=True, rules=game.catalog.rules)
             target.roster.officer_ids.append(ident)
         self.assertEqual(sum(type(i) is int for i in target.roster.officer_ids), historical_count)
+        treasures.synchronize(game,game.state)
         game.validate(game.state)
 
     def test_all_current_actual_openings_keep_historical_ids_and_offer_only_owned_empty_cities(self):

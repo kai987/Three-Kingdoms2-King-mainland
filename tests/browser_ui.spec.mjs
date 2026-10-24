@@ -340,11 +340,11 @@ test('city size labels and the report adapt to available space while retaining m
  expect(errors.get(page)).toEqual([]);
 });
 
-async function historyScreenshot(page,testInfo,name){
+async function historyScreenshot(page,testInfo,name,{fullPage=true}={}){
  const directory=process.env.TK2_HISTORY_SCREENSHOTS;
  if(directory)await mkdir(directory,{recursive:true});
  const path=directory?join(directory,`${testInfo.project.name}-${name}.png`):testInfo.outputPath(`${name}.png`);
- await page.screenshot({path,fullPage:true});
+ await page.screenshot({path,fullPage});
 }
 
 async function dismissHistoryOpening(page){
@@ -947,5 +947,173 @@ test('successful recruitment preserves source initial body and applies dynamic p
  await expect(info.locator('[data-current-loyalty]')).toHaveText('77');
  await historyScreenshot(page,testInfo,'shenpei-recruited-body66-cap80-ja');
  await closeDialog(page);
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('treasury drafts, governor rewards, treasure sale and search use real saved state and illustrated events',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland217-07');
+ await page.locator('input[name=faction][value=shu]').check();
+ await page.locator('#begin').click();
+ await expect(page.locator('#city-treasury')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ const save=()=>page.evaluate(async()=>{
+  const response=await fetch('/api/save');if(!response.ok)throw new Error('Read-only treasury save failed');return response.json();
+ });
+ const currentTreasury=()=>page.evaluate(async()=>{
+  const response=await fetch('/api/state'),value=await response.json();return (value.view||value).catalog.treasury;
+ });
+ const open=async city=>{
+  await page.locator('#city-jump').selectOption(city);await page.locator('#city-treasury').click();
+  await expect(page.locator(`[data-treasury-dialog][data-treasury-city="${city}"]`)).toBeVisible();
+ };
+ const events=async name=>{
+  await closeDialog(page);
+  const event=page.locator('#event-dialog');await expect(event).toBeVisible();
+  await expect(event.locator('.event-treasure')).toBeVisible();
+  await expect(event.locator('#event-title')).not.toBeEmpty();
+  if(name==='reward'){
+   for(let step=0;step<10&&!/賞賜武將|武将への褒美/.test(await event.locator('#event-title').innerText());step++){
+    await event.locator('[data-event-next]').click();await expect(event).toBeVisible();
+   }
+   await expect(event.locator('#event-title')).toContainText(/賞賜武將|武将への褒美/);
+  }
+  await historyScreenshot(page,testInfo,`treasury-${name}-event`);
+  if(name==='reward'){
+   await event.locator('.event-treasure').scrollIntoViewIfNeeded();
+   await expect(event.locator('.event-treasure')).toBeInViewport();
+   await historyScreenshot(page,testInfo,'treasury-reward-event-viewport',{fullPage:false});
+  }
+  const skip=event.locator('[data-event-skip]');await (await skip.count()?skip:event.locator('[data-event-next]')).click();
+  await expect(event).not.toBeVisible();
+ };
+ const home='shujun';await page.locator('#city-jump').selectOption(home);
+ const initial=await save();
+ expect(initial.state.extension.treasury.cities[home].treasure).toBe(6);
+ await page.locator('#city-treasury').click();
+ await expect(page.locator('#dialog [data-city-treasure]')).toHaveText('6');
+ await expect(page.locator('#dialog-title')).toBeInViewport();
+ const dimensions=await page.locator('#dialog').evaluate(node=>({scrollTop:node.scrollTop,scrollHeight:node.scrollHeight,clientHeight:node.clientHeight,scrollWidth:node.scrollWidth,clientWidth:node.clientWidth,top:node.getBoundingClientRect().top,bottom:node.getBoundingClientRect().bottom,viewport:window.innerHeight}));
+ expect(dimensions.scrollTop).toBe(0);expect(dimensions.top).toBeGreaterThanOrEqual(0);expect(dimensions.bottom).toBeLessThanOrEqual(dimensions.viewport+1);
+ expect(dimensions.scrollHeight).toBeGreaterThan(dimensions.clientHeight);expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth+1);
+ await historyScreenshot(page,testInfo,'treasury-opening-viewport',{fullPage:false});
+ const target=await page.locator('#treasury-reward-officer').inputValue();
+ expect(target).not.toBe('');
+ expect(Object.values(initial.state.extension.leaders).map(String)).not.toContain(target);
+ const selectedLabel=page.locator('#treasury-reward-officer option:checked');
+ await expect(selectedLabel).toContainText(/兵.*武.*知.*德.*忠.*體/);
+ await page.locator('#treasury-reward-amount').fill('999999');
+ await expect(page.locator('#treasury-reward-amount')).toHaveValue('100');
+ await page.locator('#treasury-reward-kind').selectOption('treasure');
+ await page.locator('#treasury-reward-amount').fill('999999');
+ await expect(page.locator('#treasury-reward-amount')).toHaveValue('1');
+ await page.locator('#treasury-reward-max').click();
+ await expect(page.locator('#treasury-reward-amount')).toHaveValue('1');
+ await page.locator('#treasury-policy-enabled').check();
+ await page.locator('#treasury-policy-budget').fill('201');
+ await page.locator('#treasury-policy-prefer').selectOption('treasure');
+ await page.locator('#dialog-language').selectOption('ja');
+ await expect(page.locator('#dialog-title')).toContainText('宝と褒美');
+ await expect(page.locator('#treasury-reward-amount')).toHaveValue('1');
+ await expect(page.locator('#treasury-policy-budget')).toHaveValue('201');
+ await expect(page.locator('#treasury-policy-enabled')).toBeChecked();
+ expect(await save()).toEqual(initial,'Inventory inspection, max buttons and language/policy drafts must not change state or RNG');
+ await historyScreenshot(page,testInfo,'treasury-drafts-ja');
+ // A faction may reward its own governor. Assignment is separate from the
+ // reward and must leave the city's and officer's action available.
+ await page.locator('#treasury-governor').selectOption(target);
+ await page.locator('#treasury-set-governor').click();await waitIdle(page);
+ await expect(page.locator('[data-treasury-dialog]')).toBeVisible();
+ await expect(page.locator('#treasury-policy-budget')).toHaveValue('201');
+ const appointed=await save();
+ expect(appointed.state.extension.treasury.cities[home]).toMatchObject({governor:Number(target),governor_mode:'manual',treasure:6});
+ expect(appointed.state.cities[home].action_used).toBe(false);
+ expect(appointed.state.rng).toEqual(initial.state.rng);
+ await page.locator('#treasury-reward-officer').selectOption(target);
+ const gain=Number(await page.locator('#treasury-reward-preview').getAttribute('data-gain'));
+ const loyalty=Number(await page.locator('#treasury-reward-preview').getAttribute('data-loyalty'));
+ expect(gain).toBeGreaterThan(0);expect(loyalty).toBeLessThanOrEqual(100);
+ await page.locator('#treasury-reward').click();await waitIdle(page);
+ await expect(page.locator('[data-treasury-dialog]')).toBeVisible();
+ await expect(page.locator('#treasury-reward')).toBeDisabled();
+ await expect(page.locator('#dialog [data-city-treasure]')).toHaveText('5');
+ const rewarded=await save();
+ expect(rewarded.state.officers[target].loyalty).toBe(loyalty);
+ expect(rewarded.state.officers[target].loyalty).toBe(initial.state.officers[target].loyalty+gain);
+ expect(rewarded.state.officers[target].health).toBe(initial.state.officers[target].health);
+ expect(rewarded.state.cities[home].gold).toBe(initial.state.cities[home].gold);
+ expect(rewarded.state.cities[home].action_used).toBe(true);
+ expect(rewarded.state.extension.officer_actions[target]).toBe(rewarded.state.turn);
+ expect(rewarded.state.rng).toEqual(initial.state.rng,'A reward uses no RNG draw');
+ await expect(page.locator('#treasury-policy-budget')).toHaveValue('201');
+ await page.locator('#treasury-save-policy').click();await waitIdle(page);
+ const policy=await save();
+ expect(policy.state.extension.treasury.factions.shu).toMatchObject({enabled:true,target_loyalty:90,gold_budget:201,prefer:'treasure'});
+ await historyScreenshot(page,testInfo,'treasury-self-governor-reward-ja');
+ await events('reward');
+ const beforeSale=await save(),saleRows=await currentTreasury();
+ const saleCity=Object.keys(saleRows.cities).find(id=>id!==home&&beforeSale.state.cities[id].owner==='shu'&&saleRows.cities[id].can_sell);
+ expect(saleCity).toBeTruthy();await open(saleCity);
+ const maximum=await page.locator('#treasury-sell-amount').getAttribute('max');
+ await page.locator('#treasury-sell-amount').fill('999999');
+ await expect(page.locator('#treasury-sell-amount')).toHaveValue(maximum);
+ await page.locator('#treasury-sell-max').click();
+ await expect(page.locator('#treasury-sell-amount')).toHaveValue(maximum);
+ await page.locator('#treasury-sell').click();await waitIdle(page);
+ const sold=await save(),amount=Number(maximum);
+ expect(sold.state.extension.treasury.cities[saleCity].treasure).toBe(beforeSale.state.extension.treasury.cities[saleCity].treasure-amount);
+ expect(sold.state.cities[saleCity].gold).toBe(beforeSale.state.cities[saleCity].gold+amount*100);
+ expect(sold.state.rng).toEqual(beforeSale.state.rng);
+ await expect(page.locator('#treasury-sell')).toBeDisabled();await events('sale');
+ const beforeSearch=await save(),searchRows=await currentTreasury();
+ const searchCity=Object.keys(searchRows.cities).find(id=>beforeSearch.state.cities[id].owner==='shu'&&searchRows.cities[id].can_search);
+ expect(searchCity).toBeTruthy();await open(searchCity);
+ await expect(page.locator('#treasury-search-preview')).toContainText(/成功率/);
+ await page.locator('#treasury-search').click();await waitIdle(page);
+ const searched=await save(),found=searched.state.extension.treasury.cities[searchCity].treasure-beforeSearch.state.extension.treasury.cities[searchCity].treasure;
+ expect([0,1]).toContain(found);
+ expect(searched.state.cities[searchCity].gold).toBe(beforeSearch.state.cities[searchCity].gold-20);
+ expect(searched.state.rng.draws).toBe(beforeSearch.state.rng.draws+1);
+ await expect(page.locator('#treasury-search')).toBeDisabled();await events('search');
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('manual treasure transport preserves cargo, rations and saved travel while automatic support is disabled',async({page},testInfo)=>{
+ await opening(page);await page.locator('#scenario').selectOption('mainland217-07');
+ await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();
+ await expect(page.locator('#city-logistics')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);
+ const state=()=>page.evaluate(async()=>{const r=await fetch('/api/save');if(!r.ok)throw new Error('Read-only convoy save failed');return r.json();});
+ const source='shujun',target='bajun';await page.locator('#city-jump').selectOption(source);
+ const before=await state();expect(before.state.extension.treasury.cities[source].treasure).toBe(6);expect(before.state.extension.treasury.cities[target].treasure).toBe(4);
+ expect(before.state.extension.logistics.cities[source].policy.enabled).toBe(false);
+ await page.locator('#city-logistics').click();await expect(page.locator('[data-treasure-transport]')).toBeVisible();
+ await expect(page.locator('#logistics-enabled')).not.toBeChecked();
+ await page.locator('#treasure-transport-target').selectOption(target);
+ await page.locator('#treasure-transport-amount').fill('999999');await expect(page.locator('#treasure-transport-amount')).toHaveValue('6');
+ await page.locator('#treasure-transport-max').click();await expect(page.locator('#treasure-transport-amount')).toHaveValue('6');
+ await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#treasure-transport-amount')).toHaveValue('6');
+ expect(await state()).toEqual(before,'A manual shipment preview and language change cannot move treasure or consume RNG');
+ await expect(page.locator('#dispatch-treasure')).toBeEnabled();await page.locator('#dispatch-treasure').click();await waitIdle(page);
+ const departing=await state(),convoy=departing.state.extension.logistics.convoys.find(row=>row.source===source&&row.target===target);
+ expect(convoy).toMatchObject({owner:'shu',status:'outbound',officers:[595],cargo:{gold:0,grain:0,reserves:0,treasure:6},delivery_done:false});
+ expect(convoy.journeys[0].quote.days).toBe(45);
+ expect(convoy.journeys[0].supply).toMatchObject({loaded:4,consumed:0,remaining:4});
+ expect(departing.state.cities[source].grain).toBe(before.state.cities[source].grain-4);
+ expect(departing.state.extension.treasury.cities[source].treasure).toBe(0);
+ expect(departing.state.extension.treasury.cities[target].treasure).toBe(4,'Cargo is not delivered instantly');
+ expect(departing.state.rng).toEqual(before.state.rng,'This safe land dispatch has no weather RNG draw');
+ expect(departing.state.extension.logistics.cities[source].policy.enabled).toBe(false);
+ await historyScreenshot(page,testInfo,'treasure-convoy-departure-ja');
+ await closeDialog(page);
+ const event=page.locator('#event-dialog');await expect(event).toBeVisible();await expect(event.locator('.event-art svg')).toBeVisible();
+ await expect(event.locator('#event-description')).toContainText(/宝6|寶6/,{useInnerText:true});
+ const skip=event.locator('[data-event-skip]');await (await skip.count()?skip:event.locator('[data-event-next]')).click();await expect(event).not.toBeVisible();
+ const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
+ await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();
+ await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
+ await page.locator('#city-jump').selectOption(source);await page.locator('#city-logistics').click();
+ await expect(page.locator('#dialog')).toContainText(/宝\s*6|寶\s*6/,{useInnerText:true});
+ await historyScreenshot(page,testInfo,'treasure-convoy-restored-ja');await closeDialog(page);
  expect(errors.get(page)).toEqual([]);
 });

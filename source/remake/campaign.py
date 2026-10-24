@@ -13,7 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff, domestic, logistics, presentation
+from . import civil_staff, domestic, logistics, presentation, treasures
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .city_economy import income_at
@@ -262,6 +262,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         state.extension['civil_staff'] = civil_staff.empty(self, state)
         state.extension['domestic'] = domestic.empty(self,state)
         state.extension['logistics'] = logistics.empty(self,state)
+        state.extension['treasury'] = treasures.empty(self,state)
+        # These are AI choices, not cheaper or stronger reward rules.
+        for owner, policy in state.extension['treasury']['factions'].items():
+            policy['enabled'] = owner != faction
         self._note(state, f'开始{d["title"]}，选择{self.catalog.factions[faction]["name"]}。')
         return state
 
@@ -277,6 +281,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         with self.lock:
             state = self.state
             available = sum(year_state(p, state.year) == YearState.AVAILABLE for p in self.catalog.definitions.values()) if state else None
+            travel = self._travel_view(state)
             return {'revision': self.revision, 'game': self.to_dict(),
                     'catalog': {'title': self.catalog.data['title'], 'factions': list(self.catalog.factions.values()),
                                 'cities': list(self.catalog.map_cities.values()),
@@ -288,10 +293,11 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'difficulties': catalog_choices(),
                                 'notes': self.catalog.data['design_notes'], 'library_count': len(self.catalog.definitions),
                                 'year_available': available,
-                                **self._expanded_catalog_view(state), **self._travel_view(state),
+                                **self._expanded_catalog_view(state), **travel,
                                 'civil_staff': self._civil_staff_view(state),
                                 'domestic':domestic.view(self,state),
-                                'logistics':logistics.view(self,state),
+                                'logistics':logistics.view(self,state,travel_quotes=travel.get('travel_quotes',{})),
+                                'treasury':treasures.view(self,state),
                                 'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
@@ -323,7 +329,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                'hire_staff': self._hire_staff, 'reject_staff': self._reject_staff,
                                'staff_recruit': self._staff_recruit, 'choose_successor': self._choose_successor,
                                'set_domestic':self._set_domestic,'set_logistics':self._set_logistics,
-                               'dispatch_transport':self._dispatch_transport}
+                               'dispatch_transport':self._dispatch_transport,
+                               **{action: self._treasury_command(action) for action in
+                                  ('search_treasure','reward_officer','sell_treasure','set_governor','set_treasury_policy')}}
                     if kind not in methods:
                         raise GameError('未提供这项操作。')
                     methods[kind](candidate, payload)
@@ -331,6 +339,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 civil_staff.synchronize(self, candidate, opening=kind == 'new', monthly=candidate.day == 1)
                 logistics.synchronize(self,candidate)
                 domestic.synchronize(self,candidate)
+                treasures.synchronize(self,candidate)
                 self.validate(candidate)
                 self.state = candidate
                 self.revision += 1
@@ -350,6 +359,12 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         if action and city.action_used:
             raise GameError('这座城本回合已行动。')
         return city
+
+    def _treasury_command(self, kind):
+        service = {'search_treasure':treasures.search, 'reward_officer':treasures.reward,
+                   'sell_treasure':treasures.sell, 'set_governor':treasures.set_governor,
+                   'set_treasury_policy':treasures.set_policy}[kind]
+        return lambda state, payload: service(self,state,payload,state.player)
 
     def _allocate(self, state, payload):
         city = self._owned_city(state, payload.get('city'))
@@ -435,6 +450,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 resources[field] = getattr(parent,field) // rule['resource_divisor']
                 setattr(parent,field,getattr(parent,field)-resources[field])
             state.cities[key] = City(key,parent.owner,CityRoster(key,rules=self.catalog.rules),**resources)
+            treasures.synchronize(self,state)
+            treasures.inherit_city(state,key,parent.id)
             if key == 'xinxing' and 'month' not in rule:
                 # Keep the released year-only event text and replay output.
                 self._note(state,f'{self.catalog.map_cities[key]["name"]}建郡，承接晋阳当时归属与部分资源；未新增兵员或强制转属。')
@@ -507,6 +524,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         self._prune_marches(state)
         logistics.synchronize(self,state)
         domestic.synchronize(self,state)
+        treasures.synchronize(self,state)
         if logistics.due(state) or any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
             state.phase = 'arrivals'
         if not any(c.owner == state.player for c in state.cities.values()) or not any(o.alive and o.faction_id == state.player for o in state.officers.values()):
@@ -577,6 +595,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         civil_staff.validate(self, state)
         domestic.validate(self,state)
         logistics.validate(self,state)
+        treasures.validate(self,state)
         validate_events(self, state)
         self._validate_expansion(state)
         if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}:

@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import civil_staff, domestic, logistics
+from remake import civil_staff, domestic, logistics, treasures
 from remake.officers import YearState, year_state
 from campaign_fixtures import controlled_catalog
 
@@ -218,6 +218,7 @@ class FactionDomesticTests(unittest.TestCase):
         for _ in range(3):
             game._complete_turn(state)
         civil_staff.synchronize(game, state, monthly=True)
+        treasures.synchronize(game, state)
         employee = state.extension['civil_staff']['people'][ident]
         self.assertFalse(employee['working'])
         self.assertEqual(employee['unpaid_months'], 1)
@@ -231,6 +232,7 @@ class FactionDomesticTests(unittest.TestCase):
         for _ in range(3):
             game._complete_turn(state)
         civil_staff.synchronize(game, state, monthly=True)
+        treasures.synchronize(game, state)
         self.assertTrue(employee['working'])
         self.assertTrue(domestic.view(game, state)['factions']['shu']['civil_active'])
         game.validate(state)

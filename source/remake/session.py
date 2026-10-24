@@ -173,11 +173,13 @@ class CampaignSession:
                                                          faction_id=d['initial_owners'][city],is_ruler=row.get('ruler',False)),
                                      is_ruler=bool(row.get('ruler'))))
             owner=d['initial_owners'][city]
+            from .city_economy import tier_at
+            treasure = {'normal':2,'large':4,'giant':6}[tier_at(d,city,d['start_year'],d['start_month'])] if owner!='neutral' else 0
             history=d.get('city_history',{}).get(city,{})
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')
             return dict(scenario=scenario,title=d['title'],year=d['start_year'],month=d['start_month'],
                 capacity=c.rules.city_officer_capacity,
-                city=dict(id=city,owner=owner,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
+                city=dict(id=city,owner=owner,treasure=treasure,owner_name=c.factions[owner]['name'] if owner!='neutral' else neutral_name,
                     terrain=c.map_cities[city].get('terrain'),officers=officers,
                     profile=d.get('city_profiles',{}).get(city),income=d.get('city_income',{}).get(city),history=d.get('city_history',{}).get(city),
                     **d.get('initial_city_resources',{}).get(city,d['initial_resources'])))

@@ -9,7 +9,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT/'source'),str(ROOT/'tests')]
 from remake.campaign import Campaign,Catalog,digest
-from remake import logistics,march_supply
+from remake import logistics,march_supply,treasures
 from remake.errors import GameError
 from remake.march_core import using_backend
 from test_remake_domestic import domestic_catalog
@@ -138,6 +138,7 @@ class ConvoyRescueTests(unittest.TestCase):
         self.assertEqual(row['target_march'],army['id'])
         self.assertEqual(row['cargo']['gold'],0);self.assertEqual(row['cargo']['reserves'],0)
         self.assertGreater(row['cargo']['grain'],0)
+        treasures.synchronize(game,game.state)
         game.validate(game.state)
 
     def test_cargo_delivery_and_manifest_forgery_reject_without_side_effects(self):
@@ -245,6 +246,7 @@ class ConvoyRescueTests(unittest.TestCase):
         game.state.cities['nanjun'].owner='wei'
         civil_staff.synchronize(game,game.state,checks=False)
         logistics.synchronize(game,game.state);domestic.synchronize(game,game.state)
+        treasures.synchronize(game,game.state)
         game.validate(game.state)
         for _ in range(6):
             game._complete_turn(game.state)

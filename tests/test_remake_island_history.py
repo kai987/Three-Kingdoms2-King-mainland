@@ -133,6 +133,9 @@ class IslandHistoryTests(unittest.TestCase):
             with self.subTest(start=start):
                 game = Campaign(island_catalog(start))
                 game.command('new', dict(faction='wei', seed=2026), 0)
+                # Isolate historical note transitions from optional treasury jobs.
+                for policy in game.state.extension['treasury']['factions'].values():
+                    policy.update(enabled=False,gold_floor=0)
                 before = game.to_dict()
                 for _ in range(3):
                     turn = game.state.turn
@@ -180,6 +183,9 @@ class IslandHistoryTests(unittest.TestCase):
             with self.subTest(start=start, city=city):
                 game = Campaign(island_catalog(start, occupied=city))
                 game.command('new', dict(faction='wei', seed=2026), 0)
+                # Isolate historical note transitions from optional treasury jobs.
+                for policy in game.state.extension['treasury']['factions'].values():
+                    policy.update(enabled=False,gold_floor=0)
                 before = game.to_dict()
                 for _ in range(3):
                     turn = game.state.turn
