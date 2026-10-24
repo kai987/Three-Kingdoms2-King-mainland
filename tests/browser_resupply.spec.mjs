@@ -36,6 +36,11 @@ async function arrivals(page){
   await page.locator('#process-arrivals').click();await idle(page);await dismissEvents(page);
  }
 }
+async function openLogistics(page){
+ await page.locator('#city-command-tab-warehouse').click();
+ await expect(page.locator('#city-command-panel-warehouse')).toBeVisible();
+ await page.locator('#city-logistics').click();
+}
 async function depart(page){
  await page.locator('#city-jump').selectOption('nanyang');const initial=await saved(page);
  await page.locator('#transfer').click();await page.locator('#transfer-city').selectOption('bajun');
@@ -55,7 +60,7 @@ test('a real courier feeds a waiting column at a city and its escorts return hom
  let snapshot=await saved(page),army=snapshot.state.extension.travel.marches.find(row=>row.id===column.id);
  expect(army.supply.route_days).toBe(10);expect(army.supply.remaining).toBe(0);
  await page.locator('#city-jump').selectOption('jiangxia');
- await page.locator('#city-logistics').click();await expect(page.locator('#rescue-target')).toBeVisible();
+ await openLogistics(page);await expect(page.locator('#rescue-target')).toBeVisible();
  await page.locator('#rescue-target').selectOption(String(column.id));
  const input=page.locator('#rescue-grain'),maximum=Number(await input.getAttribute('max'));
  expect(maximum).toBeGreaterThanOrEqual(20);
@@ -91,7 +96,7 @@ test('a real courier feeds a waiting column at a city and its escorts return hom
   expect(snapshot.state.cities.jiangxia.roster.officer_ids.map(String)).toContain(escort);
   expect(snapshot.state.cities.nanjun.roster.officer_ids.map(String)).not.toContain(escort);
  }
- await page.locator('#city-jump').selectOption('jiangxia');await page.locator('#city-logistics').click();
+ await page.locator('#city-jump').selectOption('jiangxia');await openLogistics(page);
  const convoyInfo=page.locator(`[data-convoy="${convoy.id}"]`);
  await expect(convoyInfo).toContainText('押運返程中');
  await convoyInfo.scrollIntoViewIfNeeded();await expect(convoyInfo).toBeInViewport();
