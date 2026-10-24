@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Import verified original virtue only; preserve SAN14 abilities and new people.
+"""Archived virtue-only importer; current campaigns reject this write policy.
+
+Use import_campaign_stats.py for the current charisma/initial-health policy.
 
 Names are joined through the existing reviewed ROM name-glyph identity map,
 never by matching portraits, ability values, runtime IDs or roster ordinals.
@@ -29,6 +31,9 @@ def import_stats(rom):
     identities = json.loads(identity_path.read_text())
     people_path = ROOT / 'game/config/campaigns/people.json'
     pool = json.loads(people_path.read_text())
+    if any('pre_campaign_stat_policy_v1' in person for person in pool['people'].values()):
+        raise ValueError('The old virtue-only importer is archived. Use import_campaign_stats.py --check; '
+                         'the retained ROM reference must not overwrite the current charisma policy.')
     records, differences = [], []
     for binding in identities['records']:
         ident, pid = binding['original_id'], binding['person_id']

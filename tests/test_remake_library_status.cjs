@@ -3,8 +3,9 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),{spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'game/app.js'),'utf8');
 const options=[],choices=[],listeners=[];
-const context={GameI18n:{locale:'zh-Hant'},escapeHtml:String,document:{addEventListener:(...row)=>listeners.push(row),querySelectorAll:selector=>selector.includes('data-library-choice')?choices:options}};
+const context={GameI18n:{locale:'zh-Hant',t:value=>value},document:{addEventListener:(...row)=>listeners.push(row),querySelectorAll:selector=>selector.includes('data-library-choice')?choices:options}};
 vm.createContext(context);
+vm.runInContext(source.match(/^const escapeHtml=.*$/m)[0]+'\nglobalThis.escapeHtml=escapeHtml;',context);
 vm.runInContext(source.slice(source.indexOf('// Classify actual runtime entry'),source.indexOf('function personStatus(p)')),context);
 const status=p=>context.libraryEntryStatus({missing:[],alive:null,year_state:'available',...p});
 assert.equal(status({alive:true,faction:'wei',year_state:'dead',era_assignment:{status:'pending_history'}}),'serving');
@@ -32,8 +33,23 @@ assert.equal(options[0].textContent,'所属未確定');assert.equal(choices[0].t
 context.GameI18n.locale='zh-Hant';context.refreshLibraryEntryLabels();assert.equal(options[0].textContent,'歸屬待考');assert.equal(choices[0].textContent,'我方勢力武將');
 context.sourceEvidence=(tc,ja)=>tc+ja;
 vm.runInContext(source.slice(source.indexOf('function virtueDescription('),source.indexOf('function showPerson(')),context);
-const original=context.virtueDescription({virtue:86,virtue_design:{status:'verified_original',original_id:40,design_rationale:'ROM source verified'}});
-assert(original.includes('德86 · 原版武将数值'));assert(original.includes('徳86は原作の武将データ'));assert(!original.includes('德60'));
+const charisma=context.virtueDescription({virtue:94,virtue_design:{status:'san14_charisma'}});
+assert(charisma.includes('德94 · 《三国志14》魅力转换'));assert(charisma.includes('徳94は『三国志14』の魅力'));assert(!charisma.includes('ROM'));
+const fallback=context.virtueDescription({virtue:60,virtue_design:{status:'configured_default'}});
+assert(fallback.includes('没有可对应的《三国志14》魅力资料'));assert(fallback.includes('対応する『三国志14』の魅力資料がない'));assert(!fallback.includes('四维'));
+assert(context.virtueDescription({virtue:86,virtue_design:{status:'verified_original'}}).includes('来源资料尚未载入'),'A retained old ROM record must not silently claim current virtue provenance');
+context.GameOfficerChoices=require('../game/officer-choice.js');context.isRuler=id=>id===7;
+const person={id:7,person_id:'source-person',health_max:80,affinity:0,initialization:{health:66,default_loyalty:80,source_loyalty:{value:98,display:'98',source_faction_label:'袁紹',faction_ids:['yuan_shao']}}};
+const before=JSON.stringify(person),initial=context.initialStatDescription(person,{health:52,loyalty:100});
+assert.equal(JSON.stringify(person),before,'Rendering source metadata must not reset current or initial stats');
+for(const value of ['data-locale-only="zh-Hant"','data-locale-only="ja"','data-initial-health="66"','data-health-maximum="80"','data-current-health>52<','data-current-loyalty>--<','data-source-loyalty>98<','袁紹'])assert(initial.includes(value),value);
+assert(initial.includes('不代表原版最大體力'));assert(initial.includes('原作の最大体力を表す値ではありません'));
+assert(initial.includes('同勢力移動及讀檔不會重置'));assert(initial.includes('同勢力内の移動とロードでは体力・忠誠を初期化しません'));
+assert(context.initialStatDescription({...person,id:8},{health:52,loyalty:100}).includes('data-current-loyalty>100<'),'Ordinary loyalty100 must stay numeric');
+const defaultInitial=context.initialStatDescription({...person,initialization:{health:80,default_loyalty:80,source_loyalty:null}},null);
+assert(defaultInitial.includes('採本作初始值80'));assert(defaultInitial.includes('本作の初期値80'));assert(!defaultInitial.includes('data-current-health'));assert(!defaultInitial.includes('data-source-loyalty'));
+const escaped=context.initialStatDescription({...person,person_id:'"><img src=x>',initialization:{...person.initialization,source_loyalty:{...person.initialization.source_loyalty,display:'<script>bad</script>',source_faction_label:'"><img src=x>'}}},null);
+assert(!escaped.includes('<script>'));assert(!escaped.includes('<img'));assert(escaped.includes('&lt;script&gt;'));assert(escaped.includes('&quot;&gt;&lt;img'));
 const python=spawnSync(process.env.PYTHON||'python3',['-B','-c',`
 import json,sys
 from pathlib import Path

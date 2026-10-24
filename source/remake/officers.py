@@ -180,8 +180,8 @@ def convert_profile(*, san14_stats=None, legacy=None, health_max=None,
     """Explicit SAN14 strength/intellect override a verified legacy fallback.
 
     Legacy values remain available when SAN14 abilities are not yet sourced.
-    Verified original virtue takes precedence over a later design/default.
-    A sourced design or an authorized default supplies new people's virtue.
+    SAN14 charisma supplies virtue under the current campaign policy. Legacy
+    virtue remains a fallback for isolated, older caller inputs without charisma.
     """
     raw = dict(san14_stats or {})
     old = dict(legacy or {})
@@ -200,8 +200,10 @@ def convert_profile(*, san14_stats=None, legacy=None, health_max=None,
     intellect = choose('intellect', 'intellect')
     health = health_max if health_max is not None else old.get('health')
     affinity = terrain_affinity if terrain_affinity is not None else old.get('terrain_affinity_code')
-    virtue = old.get('virtue')
-    if virtue is not None:
+    virtue = compatible_stat(raw['charisma']) if raw.get('charisma') is not None else old.get('virtue')
+    if raw.get('charisma') is not None:
+        basis['virtue'] = 'SAN14.charisma; max99 compatibility scale'
+    elif virtue is not None:
         basis['virtue'] = 'verified_legacy_record'
     elif virtue_design is not None and virtue_design.get('status') == 'configured_design':
         if not virtue_design.get('sources'):
@@ -240,10 +242,43 @@ class RuntimeOfficer:
     alive: bool = True
 
 
+def appearance_values(profile, initialization=None, *, faction_id=None, is_ruler=False):
+    """Read a first-appearance baseline; never use this to refresh a living unit.
+
+    A table's initial health is not evidence of its original healing limit.
+    The separate profile cap is this remake's retained compatibility policy.
+    Original loyalty has a faction context; a ruler marker is not a subordinate
+    loyalty value and unaligned/free appearances have no faction loyalty.
+    """
+    if initialization is None:
+        return dict(health=profile.health_max,
+                    loyalty=0 if faction_id is None else 100 if is_ruler else 80)
+    if (not isinstance(initialization, dict)
+            or initialization.get('schema') != 'tk2-officer-initialization-v1'):
+        raise ValueError('Invalid officer initialization policy')
+    health = integer(initialization.get('health'), 1, profile.health_max, 'initial health')
+    default = integer(initialization.get('default_loyalty'), 0, 99, 'default loyalty')
+    source = initialization.get('source_loyalty')
+    if source is None:
+        source = {}
+    if not isinstance(source, dict):
+        raise ValueError('Invalid original loyalty source')
+    value, contexts = source.get('value'), source.get('faction_ids', [])
+    if value is not None:
+        integer(value, 0, 99, 'original subordinate loyalty')
+    if (not isinstance(contexts, list)
+            or any(not isinstance(key, str) or not key for key in contexts)
+            or len(set(contexts)) != len(contexts)):
+        raise ValueError('Invalid original loyalty context')
+    loyalty = (0 if faction_id is None else 100 if is_ruler else
+               value if value is not None and faction_id in contexts else default)
+    return dict(health=health, loyalty=loyalty)
+
+
 def initialize_officer(person: PersonDefinition, runtime_id: int, profile: OfficerProfile,
                        *, year: int, faction_id=None, is_ruler=False, loyalty=None,
                        troops=0, weapon_id=0, armor_id=0, experience=0,
-                       resolve_death_year=False, rules=GameRules()) -> RuntimeOfficer:
+                       resolve_death_year=False, rules=GameRules(), health=None) -> RuntimeOfficer:
     rules.officer_id(runtime_id)
     state = year_state(person, year)
     if state != YearState.AVAILABLE and not (state == YearState.DEATH_YEAR_REVIEW and resolve_death_year):
@@ -266,7 +301,8 @@ def initialize_officer(person: PersonDefinition, runtime_id: int, profile: Offic
     integer(weapon_id, 0, 23, 'weapon')
     integer(armor_id, 0, 7, 'armor')
     tier = experience_tier(experience)
-    return RuntimeOfficer(runtime_id, person.person_id, profile, profile.health_max,
+    health = profile.health_max if health is None else integer(health, 1, profile.health_max, 'initial health')
+    return RuntimeOfficer(runtime_id, person.person_id, profile, health,
                           loyalty, troops, weapon_id, armor_id, experience, tier, faction_id)
 
 

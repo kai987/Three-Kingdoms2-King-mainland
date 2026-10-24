@@ -11,6 +11,8 @@ sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, SeedRng, digest
 from remake.errors import GameError
 from remake import presentation
+from remake.officers import OfficerProfile
+import test_remake_tactical_ai as tactical_fixture
 from test_remake_tactical_ai import battle, actors, successful_rng
 
 
@@ -162,7 +164,22 @@ class DesperateDuelTests(unittest.TestCase):
         self.assertEqual(len(baseline['vectors']), 32)
         for row in baseline['vectors']:
             with self.subTest(seed=row['seed'], move=row['move']):
-                game = active_duel(row['seed'])
+                # This artifact predates the charisma/health/loyalty dataset.
+                # Replay its retained inputs, rather than replacing its frozen
+                # output hashes when an unrelated source-stat policy changes.
+                current_catalog = tactical_fixture.controlled_catalog
+
+                def original_stat_catalog():
+                    catalog = current_catalog()
+                    for ident, person in catalog.by_id.items():
+                        previous = person['pre_campaign_stat_policy_v1']
+                        person['profile'] = deepcopy(previous['profile'])
+                        person.pop('initialization', None)
+                        catalog.profiles[ident] = OfficerProfile(**person['profile'])
+                    return catalog
+
+                with patch.object(tactical_fixture, 'controlled_catalog', side_effect=original_stat_catalog):
+                    game = active_duel(row['seed'])
                 scene = self.perform(game, row['move'])
                 state = game.to_dict()
                 self.assertEqual(state['extension']['logistics']['schema'], 'tk2-logistics-v2')

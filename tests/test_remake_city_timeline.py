@@ -76,6 +76,15 @@ def dated_events(game, kind):
     return [row for row in game.state.extension['events']['items'] if row['kind'] == kind]
 
 
+def after_monthly_healing(officers):
+    """Only the established +8 capped recovery may change these officers."""
+    expected = deepcopy(officers)
+    for officer in expected.values():
+        if officer['alive']:
+            officer['health'] = min(officer['profile']['health_max'], officer['health'] + 8)
+    return expected
+
+
 class CityTimelineTests(unittest.TestCase):
     def new_game(self, start):
         game = Campaign(timeline_catalog(start))
@@ -121,7 +130,7 @@ class CityTimelineTests(unittest.TestCase):
         self.assertEqual(dated_events(game, 'city_upgraded'), [])
         self.assertEqual((game.state.cities['qiao'].gold, game.state.cities['qiao'].grain), (136, 295))
         self.assertEqual(game.state.cities['qiao'].owner, initial['cities']['qiao']['owner'])
-        self.assertEqual(game.to_dict()['officers'], initial['officers'])
+        self.assertEqual(game.to_dict()['officers'], after_monthly_healing(initial['officers']))
         self.assertEqual(game.to_dict()['soldiers'], initial['soldiers'])
         self.assertEqual(game.to_dict()['rng'], initial['rng'])
         saved = game.export_save()
@@ -144,7 +153,7 @@ class CityTimelineTests(unittest.TestCase):
         self.assertEqual(event['details'], dict(from_tier='normal', to_tier='large',
                                               income=dict(gold=70, grain=180, reserves=0)))
         self.assertEqual(dated_events(game, 'city_renamed'), [])
-        self.assertEqual(game.to_dict()['officers'], initial['officers'])
+        self.assertEqual(game.to_dict()['officers'], after_monthly_healing(initial['officers']))
         self.assertEqual(game.to_dict()['soldiers'], initial['soldiers'])
         self.assertEqual(game.to_dict()['rng'], initial['rng'])
         for _ in range(3):

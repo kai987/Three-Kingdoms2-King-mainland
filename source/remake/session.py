@@ -3,6 +3,7 @@ from threading import RLock
 from .campaign import Campaign, Catalog, GameError
 from .map_presentation import city_names,presentation,faction_colors
 from .city_economy import profiles_at,incomes_at
+from .officers import appearance_values
 
 
 def faction_resources(catalog, state=None):
@@ -167,8 +168,10 @@ class CampaignSession:
                 ident=c.ids[row['person_id']];profile=c.profiles[ident]
                 officers.append(dict(id=ident,person_id=row['person_id'],name=c.name(ident),martial_strength=profile.martial_strength,
                                      intellect=profile.intellect,virtue=profile.virtue,troops=row['troops'],
-                                     experience=0,tier=0,loyalty=100 if row.get('ruler') else 80,
-                                     is_ruler=bool(row.get('ruler')),health=profile.health_max))
+                                     experience=0,tier=0,
+                                     **appearance_values(profile,c.by_id[ident].get('initialization'),
+                                                         faction_id=d['initial_owners'][city],is_ruler=row.get('ruler',False)),
+                                     is_ruler=bool(row.get('ruler'))))
             owner=d['initial_owners'][city]
             history=d.get('city_history',{}).get(city,{})
             neutral_name=history.get('neutral_label') or ('地方汉郡（中立）' if history.get('opening',{}).get('basis')=='unmapped_local_han_administration' else '无主')

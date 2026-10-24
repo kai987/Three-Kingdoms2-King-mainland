@@ -139,7 +139,9 @@ jobs:
           cache-dependency-path: tools/cloud-sdk/package-lock.json
       - name: Current campaign and source builds
         run: |
+          python tools/officer-placement/import_campaign_stats.py --check
           python game/build_campaigns.py --check
+          python tools/officer-placement/audit_campaign_stats.py --check
           python game/build_map_anchors.py
           python game/build_map_presentation.py
           python game/build_message_locales.py

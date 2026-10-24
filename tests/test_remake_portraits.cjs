@@ -119,6 +119,7 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  vm.createContext(context);
  vm.runInContext(source.slice(source.indexOf('const portraitHtml='),source.indexOf('\nconst faction=')),context);
  vm.runInContext(source.slice(source.indexOf('function officerAttributes('),source.indexOf('function renderCity(')),context);
+ vm.runInContext(source.slice(source.indexOf('function initialStatDescription('),source.indexOf('function showPerson(')),context);
  vm.runInContext(source.slice(source.indexOf('function showPerson('),source.indexOf('function tactics(')),context);
  vm.runInContext(source.slice(source.indexOf('function renderDuel('),source.indexOf('function render(){')),context);
  context.view.game.extension={leaders:{shu:0}};context.isRuler=id=>context.GameOfficerChoices.isRuler(id,context.view.game.extension.leaders);

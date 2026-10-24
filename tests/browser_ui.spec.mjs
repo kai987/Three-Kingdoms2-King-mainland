@@ -4,6 +4,7 @@
 import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/index.mjs';
 import {readFile,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
+import assert from 'node:assert/strict';
 
 const errors=new WeakMap();
 test.beforeEach(async({page})=>{
@@ -231,6 +232,8 @@ test('daily marching grain loads once and consumes actual days through visible t
  const column=departing.state.extension.travel.marches.find(row=>row.source===source&&row.target===target);
  expect(column).toBeTruthy();
  expect(column.officers.map(String)).toEqual([officerText]);
+ expect(departing.state.officers[officerText].health).toBe(initial.state.officers[officerText].health);
+ expect(departing.state.officers[officerText].loyalty).toBe(initial.state.officers[officerText].loyalty);
  expect(column.quote.routes.every(leg=>leg.mode==='land'&&!leg.hazard)).toBe(true);
  const units=initial.state.officers[officerText].troops+100;
  let firstStage=0;
@@ -258,6 +261,8 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(marched).toBeTruthy();
  const elapsed=Math.min(10,column.quote.days),consumed=Math.ceil(units*elapsed/1000),received=marched.supply.received;
  expect(marched.supply).toMatchObject({loaded,consumed,remaining:loaded+received-consumed,elapsed_days:elapsed,route_days:elapsed,shortage_days:0,lost:0});
+ expect(next.state.officers[officerText].health).toBe(initial.state.officers[officerText].health);
+ expect(next.state.officers[officerText].loyalty).toBe(initial.state.officers[officerText].loyalty);
  expect(received).toBe(marched.supply.refills.reduce((sum,row)=>sum+row.grain,0));
  // No delegate was appointed and no monthly income is due: all food spent
  // this turn comes out of the travelling bag, never the origin store again.
@@ -766,5 +771,181 @@ test('a stale local API menu warns without restarting or changing its campaign',
  expect(api.filter(row=>row.method!=='GET')).toEqual([]);
  expect(api.some(row=>['/api/command','/api/load'].includes(row.path))).toBe(false);
  await expect(page.locator('#begin')).toBeEnabled();
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('all 29 real Worker openings keep preview and live initial health and faction-scoped loyalty aligned',async({page},testInfo)=>{
+ test.setTimeout(600_000);
+ const people=JSON.parse(await readFile(new URL('../game/config/campaigns/people.json',import.meta.url),'utf8')).people;
+ const known=[['san14-candidate-0952',78,99],['san14-candidate-0521',82,96],
+  ['san14-candidate-0656',99,44],['san14-candidate-0147',97,94]];
+ for(const[pid,health,virtue]of known){
+  expect(people[pid].initialization.health).toBe(health);
+  expect(people[pid].profile.virtue).toBe(virtue);
+ }
+ const loyalty=(person,owner,ruler)=>ruler?100:!owner?0:
+  Number.isInteger(person.initialization.source_loyalty?.value)&&person.initialization.source_loyalty.faction_ids.includes(owner)?person.initialization.source_loyalty.value:80;
+ await opening(page);
+ const scenarios=await page.locator('#scenario option').evaluateAll(rows=>rows.map(row=>row.value));
+ expect(scenarios).toHaveLength(29);
+ let checkedServing=0,checkedFree=0;
+ for(const scenario of scenarios){
+  await page.locator('#scenario').selectOption(scenario);
+  const cities=await page.locator('#city-jump option').evaluateAll(rows=>rows.map(row=>row.value));
+  // Read-only previews are served by the shipped Worker. They neither create a
+  // campaign nor consume RNG; new campaigns below use only visible controls.
+  const previews=await page.evaluate(async({scenario,cities})=>{
+   const values=[];
+   for(const city of cities){
+    const response=await fetch('/api/city-preview?'+new URLSearchParams({scenario,city}));
+    if(!response.ok)throw new Error(`Opening preview failed: ${scenario}/${city}`);
+    values.push((await response.json()).city);
+   }
+   return values;
+  },{scenario,cities});
+  for(const city of previews)for(const officer of city.officers){
+   const person=people[officer.person_id];
+   assert.equal(officer.health,person.initialization.health,`${scenario}/${officer.person_id} preview health`);
+   assert.equal(officer.loyalty,loyalty(person,city.owner,officer.is_ruler),`${scenario}/${officer.person_id} preview loyalty`);
+   assert.equal(officer.virtue,person.profile.virtue,`${scenario}/${officer.person_id} preview virtue`);
+  }
+  const representative=previews.find(city=>city.officers.length);
+  expect(representative).toBeTruthy();
+  await page.locator('#city-jump').selectOption(representative.id);
+  const info=page.locator(`.city-information[data-inspected-city="${representative.id}"]`);
+  await expect(info).toHaveAttribute('data-information-mode','preview');
+  const first=representative.officers[0],row=info.locator('.roster-table tbody tr').first();
+  await expect(row.locator('td').nth(5)).toHaveText(first.is_ruler?'--':String(first.loyalty));
+  await expect(row.locator('td').nth(7)).toHaveText(String(first.health));
+  await closeDialog(page);
+  await page.locator('#begin').click();
+  await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+  await waitIdle(page);await dismissHistoryOpening(page);
+  const download=page.waitForEvent('download');await page.locator('#save').click();
+  const saved=JSON.parse(await readFile(await(await download).path(),'utf8'));
+  expect(saved.scenario).toBe(scenario);
+  const leaders=new Set(Object.values(saved.state.extension.leaders).map(String));
+  for(const[ident,officer]of Object.entries(saved.state.officers)){
+   const person=people[officer.person_id];
+   assert.ok(person,`${scenario}/${officer.person_id} historical identity`);
+   assert.equal(officer.health,person.initialization.health,`${scenario}/${officer.person_id} live health`);
+   assert.ok(officer.profile.health_max>=officer.health,`${scenario}/${officer.person_id} live health cap`);
+   assert.equal(officer.loyalty,loyalty(person,officer.faction_id,leaders.has(ident)),`${scenario}/${officer.person_id} live loyalty`);
+   assert.equal(officer.profile.virtue,person.profile.virtue,`${scenario}/${officer.person_id} live virtue`);
+   if(officer.faction_id)checkedServing++;else checkedFree++;
+  }
+  for(const city of previews)for(const officer of city.officers){
+   const live=saved.state.officers[officer.id];
+   assert.equal(live.health,officer.health,`${scenario}/${officer.person_id} preview-live health`);
+   assert.equal(live.loyalty,officer.loyalty,`${scenario}/${officer.person_id} preview-live loyalty`);
+  }
+  await page.locator('#main-menu').click();
+  await expect(page.locator('#begin')).toBeEnabled();
+ }
+ // This stat-only update must retain all existing opening memberships.
+ expect(checkedServing).toBe(8854);expect(checkedFree).toBe(2320);
+ await historyScreenshot(page,testInfo,'all-29-initial-stat-openings');
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('officer encyclopedia distinguishes initial body, remake cap and contextual loyalty in both languages',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland217-07');
+ await page.locator('input[name=faction][value=shu]').check();
+ await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await page.locator('#utility-menu summary').click();await page.locator('#library').click();
+ await expect(page.locator('#dialog')).toContainText('魅力',{useInnerText:true});
+ for(const[pid,health,sourceLoyalty,virtue]of[
+  ['san14-candidate-0952',78,'--',99],['san14-candidate-0521',82,'--',96],
+  ['san14-candidate-0656',99,'98',44],['san14-candidate-0147',97,'99',94]]){
+  await page.locator('#library-search').fill(pid);
+  await expect(page.locator('.person-detail')).toHaveCount(1);
+  await page.locator('.person-detail').click();
+  const summary=page.locator(`.person-initial-stats[data-initial-stat-source="${pid}"]:visible`);
+  await expect(summary.locator('[data-initial-health]')).toHaveText(String(health));
+  await expect(summary.locator('[data-source-loyalty]')).toHaveText(sourceLoyalty);
+  await expect(page.locator('.person-profile-summary')).toContainText(new RegExp(`德\\s*${virtue}`),{useInnerText:true});
+  await expect(summary).toContainText('不代表原版最大體力',{useInnerText:true});
+  await expect(summary).toContainText('同勢力移動及讀檔不會重置',{useInnerText:true});
+  if(pid==='san14-candidate-0952')await expect(summary.locator('[data-current-loyalty]')).toHaveText('--');
+  await page.locator('#dialog-language').selectOption('ja');
+  await expect(summary.locator('[data-initial-health]')).toHaveText(String(health));
+  await expect(summary.locator('[data-source-loyalty]')).toHaveText(sourceLoyalty);
+  await expect(summary).toContainText('原作の最大体力を表す値ではありません',{useInnerText:true});
+  await expect(summary).toContainText('同勢力内の移動とロード',{useInnerText:true});
+  if(pid==='san14-candidate-0952'){
+   await expect(summary.locator('[data-current-loyalty]')).toHaveText('--');
+   await historyScreenshot(page,testInfo,'liubei-original-body-loyalty-ja');
+  }
+  await page.locator('#dialog-language').selectOption('zh-Hant');
+  await page.locator('#back-library').click();
+ }
+ await closeDialog(page);
+ if(!await page.locator('#rules').isVisible())await page.locator('#utility-menu summary').click();
+ await page.locator('#rules').click();
+ const rules=page.locator('.rules-body');
+ await expect(rules).toContainText('德採SAN14魅力',{useInnerText:true});
+ await expect(rules).not.toContainText('德行記錄',{useInnerText:true});
+ await historyScreenshot(page,testInfo,'rules-current-stat-policy-tc');
+ await page.locator('#dialog-language').selectOption('ja');
+ await expect(rules).toContainText('徳はSAN14の魅力に対応',{useInnerText:true});
+ await expect(rules).not.toContainText(/德行記錄|徳行の記録/,{useInnerText:true});
+ await historyScreenshot(page,testInfo,'rules-current-stat-policy-ja');
+ await closeDialog(page);
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('successful recruitment preserves source initial body and applies dynamic personnel loyalty',async({page},testInfo)=>{
+ await opening(page);
+ await page.locator('#scenario').selectOption('mainland184-02');
+ await page.locator('input[name=faction][value=han]').check();
+ await page.locator('.setup-options > summary').click();
+ await page.locator('.seed-settings > summary').click();
+ await page.locator('#seed').fill('2026');await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ const exportSave=async()=>{
+  const download=page.waitForEvent('download');await page.locator('#save').click();
+  return JSON.parse(await readFile(await(await download).path(),'utf8'));
+ };
+ const original=await exportSave(),target='463';
+ expect(original.state.officers[target]).toMatchObject({person_id:'san14-candidate-0464',health:66,loyalty:0,faction_id:null});
+ expect(original.state.officers[target].profile.health_max).toBe(80);
+ await page.locator('#city-jump').selectOption('wei');
+ await page.locator('#recruit-officer').click();
+ if(!await page.locator('#recruit-person').isVisible()){
+  await page.locator('#world-map .city-hit[data-city=wei]').focus();await page.keyboard.press('Enter');
+ }
+ await expect(page.locator('#recruit-person')).toBeVisible();
+ await page.locator('#recruit-actor').selectOption('931');
+ await page.locator('#recruit-person').selectOption(target);
+ await expect(page.locator('#recruit-person-summary')).toContainText('66',{useInnerText:true});
+ await page.locator('#confirm-officer').click();await waitIdle(page);
+ const events=page.locator('#event-dialog');
+ if(await events.isVisible()){
+  const skip=events.locator('[data-event-skip]');
+  await (await skip.count()?skip:events.locator('[data-event-next]')).click();
+  await expect(events).not.toBeVisible();
+ }
+ const recruited=await exportSave();
+ expect(recruited.state.officers[target]).toMatchObject({health:66,loyalty:77,faction_id:'han'});
+ expect(recruited.state.cities.wei.roster.officer_ids.map(String)).toContain(target);
+ expect(recruited.state.officers[target].profile.health_max).toBe(80);
+ await page.locator('#utility-menu summary').click();await page.locator('#library').click();
+ await page.locator('#library-search').fill('san14-candidate-0464');
+ await page.locator('.person-detail').click();
+ const info=page.locator('.person-initial-stats:visible');
+ await expect(info.locator('[data-initial-health]')).toHaveText('66');
+ await expect(info.locator('[data-health-maximum]')).toHaveText('80');
+ await expect(info.locator('[data-current-health]')).toHaveText('66');
+ await expect(info.locator('[data-current-loyalty]')).toHaveText('77');
+ await historyScreenshot(page,testInfo,'shenpei-recruited-body66-cap80-tc');
+ await page.locator('#dialog-language').selectOption('ja');
+ await expect(info.locator('[data-current-health]')).toHaveText('66');
+ await expect(info.locator('[data-current-loyalty]')).toHaveText('77');
+ await historyScreenshot(page,testInfo,'shenpei-recruited-body66-cap80-ja');
+ await closeDialog(page);
  expect(errors.get(page)).toEqual([]);
 });

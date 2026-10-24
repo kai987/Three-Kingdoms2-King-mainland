@@ -17,10 +17,12 @@ from hashlib import sha256
 # Support both the CLI and callers loading this builder by absolute file path.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'source'))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools/officer-placement'))
 from remake.city_economy import apply_opening_sizes
 from route_timing import apply_route_timing
 from route_render_source import validate_geometry_sources
-from officer_stat_sources import validate_original_virtue
+from officer_stat_sources import validate_original_virtue, validate_campaign_stats
+from import_campaign_stats import validate_reference as validate_public_reference
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'game/config/campaigns'
@@ -120,6 +122,8 @@ def load_sources(*, timing=True):
     people = json.loads((SOURCE / 'people.json').read_text(encoding='utf-8'))
     shared = json.loads((SOURCE / 'shared.json').read_text(encoding='utf-8'))
     original_stats = read('game/config/references/original-officer-stats.json')
+    public_stats = read('game/config/references/cnblogs-officer-stats.json')
+    san14_abilities = read('game/config/references/san14-abilities.json')
     city_scale_rules = read('game/config/city-scale-rules.json')
     original_identities = read('game/config/portrait-identity-map.json')
     if sha256((ROOT/'game/config/portrait-identity-map.json').read_bytes()).hexdigest() != original_stats['identity_source_sha256']:
@@ -127,6 +131,7 @@ def load_sources(*, timing=True):
     if index.get('schema') != 'tk2-campaign-sources-v1' or people.get('schema') != 'tk2-campaign-people-v1' or shared.get('schema') != 'tk2-campaign-shared-v1':
         raise ValueError('Unknown canonical campaign source schema')
     order, persons = people['order'], people['people']
+    validate_public_reference(public_stats, persons)
     if len(order) != 1023 or len(set(order)) != len(order) or set(order) != set(persons):
         raise ValueError('The canonical pool must contain 1023 unique identities')
     if any(persons[pid]['person_id'] != pid for pid in order):
@@ -149,6 +154,19 @@ def load_sources(*, timing=True):
         if set(current_people) != set(order):
             raise ValueError('A campaign may not add or remove canonical person identities')
         validate_original_virtue(current_people, original_stats, original_identities)
+        stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities)
+        data['coverage'].update(
+            virtue='SAN14 charisma for1000 people; explicit default60 for23 missing sources',
+            original_virtue_profiles=0, retained_original_reference_profiles=220,
+            san14_charisma_profiles=stat_counts['charisma'],
+            default_virtue_profiles=stat_counts['default'], history_designs_total=0,
+            original_initial_health_profiles=stat_counts['original_health'],
+            initialization_policy='tk2-officer-initialization-v1')
+        old_note = '追加人物的武、知、體力與適性為本作設計值；未具充分德行記錄者沿用用戶指定德60。'
+        stat_note = '德採SAN14魅力，缺魅力資料者設60；原表初始體力與勢力語境忠誠分開配置，恢復上限與適性為本作設定。'
+        data['design_notes'] = [stat_note if note == old_note else note for note in data['design_notes']]
+        if data.get('main_scenario', {}).get('virtue_default_policy'):
+            data['main_scenario']['virtue_default_policy'] = 'campaign-officer-stats-v1'
         data['people'] = [current_people[pid] for pid in order]
         apply_navigation_sources(data, navigation)
         if timing:

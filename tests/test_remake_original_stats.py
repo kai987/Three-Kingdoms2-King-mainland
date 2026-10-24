@@ -1,4 +1,4 @@
-"""Pinned original virtue beats defaults without replacing SAN14 abilities."""
+"""Retain original byte evidence while the campaign uses its new stat policy."""
 from copy import deepcopy
 from hashlib import sha256
 import json
@@ -17,7 +17,7 @@ def read(name):
     return json.loads((ROOT / name).read_text())
 
 
-class OriginalVirtueTests(unittest.TestCase):
+class OriginalStatEvidenceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.people = read('game/config/campaigns/people.json')['people']
@@ -36,17 +36,16 @@ class OriginalVirtueTests(unittest.TestCase):
         self.assertEqual(sum(row['person_id'] is None for row in self.reference['records']), 17)
         for pid, person in self.people.items():
             if pid in bound:
-                self.assertIn('previous_virtue_design', person)
-                # The SAN14 martial/intellect policy was a separate deliberate
-                # choice. Original virtue must not silently revert those too.
+                self.assertEqual(person['pre_campaign_stat_policy_v1']['virtue_design']['status'],
+                                 'verified_original')
+                # Martial, intellect and charisma share the current 99 scale.
                 stats = person['profile']['source_stats']
-                for field in ('martial_strength', 'intellect'):
+                for field in ('martial_strength', 'intellect', 'charisma'):
                     if stats.get(field) is not None:
-                        self.assertEqual(person['profile'][field], min(99, stats[field]))
-            else:
-                self.assertNotEqual((person.get('virtue_design') or {}).get('status'), 'verified_original')
+                        self.assertEqual(person['profile']['virtue' if field == 'charisma' else field],
+                                         min(99, stats[field]))
 
-    def test_yan_yan_and_liu_bei_values_come_from_byte4_not_charisma(self):
+    def test_yan_yan_and_liu_bei_original_values_are_evidence_not_active_virtue_priority(self):
         rows = {r['original_id']: r for r in self.reference['records']}
         for ident, name, value in ((63, '严颜', 86), (222, '刘备', 99)):
             row = rows[ident]
@@ -54,11 +53,16 @@ class OriginalVirtueTests(unittest.TestCase):
             person = self.people[row['person_id']]
             self.assertEqual(person['name'], name)
             self.assertEqual(raw[4], value)
-            self.assertEqual(person['profile']['virtue'], value)
-            self.assertEqual(person['virtue_design']['rom_offset'], 0x22010 + ident*12 + 4)
+            archived = person['pre_campaign_stat_policy_v1']['virtue_design']
+            self.assertEqual(archived['rom_offset'], 0x22010 + ident*12 + 4)
+            self.assertEqual(archived['virtue'], value)
+            self.assertEqual(person['profile']['virtue'],
+                             min(99, person['profile']['source_stats']['charisma']))
             self.assertFalse(person['virtue_design']['is_historical_fact'])
+        self.assertEqual(self.people['san14-candidate-0231']['profile']['virtue'], 77)
+        self.assertEqual(self.people['san14-candidate-0952']['profile']['virtue'], 99)
 
-    def test_original_virtue_cannot_be_overwritten_by_design_default_or_wrong_join(self):
+    def test_retained_byte_reference_rejects_tampering_but_does_not_override_new_policy(self):
         for field, value in (('virtue', 60), ('person_id', 'wrong-person'), ('record_hex', '00'*12)):
             reference = deepcopy(self.reference)
             next(row for row in reference['records'] if row['original_id'] == 63)[field] = value
@@ -66,8 +70,8 @@ class OriginalVirtueTests(unittest.TestCase):
                 validate_original_virtue(self.people, reference, self.identities)
         people = deepcopy(self.people)
         people['san14-candidate-0231']['profile']['virtue'] = 60
-        with self.assertRaisesRegex(ValueError, 'Original virtue was overwritten'):
-            validate_original_virtue(people, self.reference, self.identities)
+        self.assertEqual(len(validate_original_virtue(people, self.reference, self.identities)), 220,
+                         'Byte provenance is checked separately from current campaign stat policy')
         design = dict(status='configured_design', sources=[dict(work='Historical assessment')],
                       dimensions=dict(care=90, fairness=90, integrity=90, trust=90))
         for lower in (design, dict(status='configured_default', virtue=60)):
@@ -75,23 +79,26 @@ class OriginalVirtueTests(unittest.TestCase):
                                      san14_stats=dict(martial_strength=82, intellect=69))
             self.assertEqual((result.virtue, result.martial_strength, result.intellect), (86, 82, 69))
             self.assertEqual(result.basis['virtue'], 'verified_legacy_record')
+            result = convert_profile(legacy=dict(virtue=86), virtue_design=lower,
+                                     san14_stats=dict(martial_strength=82, intellect=69, charisma=77))
+            self.assertEqual(result.virtue, 77)
 
-    def test_every_scenario_source_retains_the_220_original_virtue_values(self):
+    def test_all29_scenario_sources_retain_original_evidence_and_use_current_virtue_policy(self):
         from build_campaigns import load_sources
         _, catalogs = load_sources(timing=False)
         self.assertEqual(len(catalogs), 29)
         for catalog in catalogs:
             people = {p['person_id']: p for p in catalog['people']}
             self.assertEqual(len(validate_original_virtue(people, self.reference, self.identities)), 220)
-            counts = {'original_virtue_profiles': 'verified_original',
-                      'history_designs_total': 'configured_design',
-                      'default_virtue_profiles': 'configured_default'}
-            for key, status in counts.items():
-                self.assertEqual(catalog['coverage'][key], sum(
-                    (person.get('virtue_design') or {}).get('status') == status
-                    for person in people.values()))
+            charisma = [p for p in people.values() if type(p['profile']['source_stats'].get('charisma')) is int]
+            fallback = [p for p in people.values() if type(p['profile']['source_stats'].get('charisma')) is not int]
+            self.assertEqual((len(charisma), len(fallback)), (1000, 23))
+            for person in charisma:
+                self.assertEqual(person['profile']['virtue'], min(99, person['profile']['source_stats']['charisma']))
+                self.assertEqual(person['virtue_design']['status'], 'san14_charisma')
+            self.assertTrue(all(p['profile']['virtue'] == 60 for p in fallback))
             self.assertEqual(people['san14-candidate-0952']['profile']['virtue'], 99)
-            self.assertEqual(people['san14-candidate-0231']['profile']['virtue'], 86)
+            self.assertEqual(people['san14-candidate-0231']['profile']['virtue'], 77)
 
 
 if __name__ == '__main__':

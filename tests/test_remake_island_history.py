@@ -22,6 +22,15 @@ def read(path):
     return json.loads((ROOT / path).read_text())
 
 
+def after_monthly_healing(officers):
+    """Account for ordinary +8 recovery without ignoring any other field."""
+    expected = deepcopy(officers)
+    for officer in expected.values():
+        if officer['alive']:
+            officer['health'] = min(officer['profile']['health_max'], officer['health'] + 8)
+    return expected
+
+
 def island_catalog(start, occupied=None):
     """Four controlled nodes; all six real identities survive the tested dates."""
     data = controlled_catalog().data
@@ -133,7 +142,7 @@ class IslandHistoryTests(unittest.TestCase):
                 for city in ISLANDS:
                     self.assertEqual(game.state.cities[city].owner, 'neutral')
                     self.assertEqual(game.to_dict()['cities'][city], before['cities'][city])
-                self.assertEqual(game.to_dict()['officers'], before['officers'])
+                self.assertEqual(game.to_dict()['officers'], after_monthly_healing(before['officers']))
                 self.assertEqual(game.to_dict()['rng'], before['rng'])
                 self.assertEqual(game.to_dict()['soldiers'], before['soldiers'])
                 self.assertFalse(any(row['kind'] in ('city_founded', 'city_captured') and
@@ -178,7 +187,7 @@ class IslandHistoryTests(unittest.TestCase):
                     game.command('ai', {'turn': turn}, game.revision)
                 self.assertEqual(game.state.cities[city].owner, 'wei')
                 self.assertEqual(game.to_dict()['cities'][city], before['cities'][city])
-                self.assertEqual(game.to_dict()['officers'], before['officers'])
+                self.assertEqual(game.to_dict()['officers'], after_monthly_healing(before['officers']))
                 self.assertEqual(game.to_dict()['soldiers'], before['soldiers'])
 
 

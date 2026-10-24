@@ -8,6 +8,7 @@ const person={id:1001,person_id:'historical-person-001',name:'張三',missing:[]
 const context={GameOfficerChoices:require('../game/officer-choice.js'),URL,escapeHtml,cityName:id=>({jianan:'建安',henan:'洛陽'})[id]||id,GameI18n:{locale:'zh-Hant',t:(value,language)=>language==='ja'?String(value).replace('入蜀爭奪戰','入蜀争奪戦'):String(value)},view:{catalog:{library:[person]},game:null},portraitHtml:()=>'<i>肖像</i>',sourceEvidence:()=>'',virtueDescription:()=>'<p>德60</p>',faction:String,showLibrary(){},$:element,openDialog(title,body){context.dialogContent={title,body};}};
 vm.createContext(context);
 vm.runInContext(source.slice(source.indexOf('function sourceReference('),source.indexOf('function virtueDescription(')),context);
+vm.runInContext(source.slice(source.indexOf('function initialStatDescription('),source.indexOf('function showPerson(')),context);
 vm.runInContext(source.slice(source.indexOf('function showPerson('),source.indexOf('function tactics(')),context);
 for(const invalid of ['javascript:alert(1)','http://example.com','//example.com','data:text/html,<script>','https://user:password@example.com/x',' https://example.com','https://'])assert.equal(context.sourceReference(invalid),null,invalid);
 assert.equal(context.sourceReference('https://example.com/source#section'),'https://example.com/source#section');

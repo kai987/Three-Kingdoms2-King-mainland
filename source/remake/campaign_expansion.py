@@ -7,7 +7,7 @@ from .errors import GameError
 from . import presentation
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
-                       parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref)
+                       parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
 
 TACTICS = (
     ('火計',6,'fire','单体兵损，水地形不可用'), ('陥穽',5,'trap','单体体力损伤，平地或山地'),
@@ -35,6 +35,7 @@ class ExpandedCampaign:
                 raise ValueError('duplicate or unlocated initial free officer')
             state.officers[ident] = initialize_officer(
                 self.catalog.definitions[pid], ident, self.catalog.profiles[ident],
+                **appearance_values(self.catalog.profiles[ident], self.catalog.by_id[ident].get('initialization')),
                 year=state.year, rules=self.catalog.rules,
                 resolve_death_year=row.get('resolve_death_year', False))
             state.extension['free_locations'][str(ident)] = row['city']
@@ -61,6 +62,7 @@ class ExpandedCampaign:
                     and resolve_death_year)) or city not in state.cities:
                 continue
             state.officers[ident] = initialize_officer(person, ident, self.catalog.profiles[ident],
+                **appearance_values(self.catalog.profiles[ident], row.get('initialization')),
                 year=state.year, rules=self.catalog.rules, resolve_death_year=resolve_death_year)
             state.extension['free_locations'][str(ident)] = city
             self._note(state, f'{person.name}已到登场年代，在{self.catalog.map_cities[city]["name"]}待访。')
@@ -579,7 +581,7 @@ class ExpandedCampaign:
                             'configuration':row.get('configuration',{}),
                             'ability_source':row.get('ability_source',{}),'chronology_basis':row.get('chronology_basis'),
                             'chronology_design':row.get('chronology_design'),
-                            'virtue_design':row.get('virtue_design'),
+                            'virtue_design':row.get('virtue_design'), 'initialization':row.get('initialization'),
                             'era_assignment':self.catalog.data.get('era_assignments',{}).get(person.person_id)})
         return {'coverage':self.catalog.data['coverage'],'library':library,
                 'tactics':[{'id':i,'name':t[0],'cost':t[1],'effect':t[2],'description':t[3]} for i,t in enumerate(TACTICS)],

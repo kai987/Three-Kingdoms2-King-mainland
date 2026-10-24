@@ -175,7 +175,7 @@ class InitializationTests(unittest.TestCase):
         p = convert_profile(san14_stats={'martial_strength': 100, 'intellect': 85, 'charisma': 99})
         self.assertEqual((p.martial_strength, p.intellect), (99, 85))
         self.assertEqual(p.source_stats['martial_strength'], 100)
-        self.assertIsNone(p.virtue)
+        self.assertEqual(p.virtue, 99)
         self.assertIsNone(p.health_max)
         with self.assertRaises(ValueError):
             compatible_stat(0)
@@ -205,15 +205,19 @@ class InitializationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             OfficerProfile(75, 80, 90, 70, 3)
 
-    def test_virtue_is_sourced_design_independent_of_charisma(self):
-        people = json.loads((ROOT / 'game/config/campaigns/people.json').read_text())['people']
-        designs = [(p, p['virtue_design']) for p in people.values() if isinstance((p.get('virtue_design') or {}).get('dimensions'), dict)]
-        for person, d in designs:
-            self.assertIs(person['configuration']['is_historical_measurement'], False)
-            self.assertFalse(d.get('is_historical_fact', False))
-            self.assertEqual(virtue_score(d['dimensions']), d['virtue'])
-            p = convert_profile(san14_stats={'charisma': 1}, virtue_design=d)
-            self.assertEqual(p.virtue, d['virtue'])
+    def test_charisma_precedes_legacy_and_design_without_removing_generic_fallback(self):
+        design = dict(status='configured_design', sources=[dict(work='Historical assessment')],
+                      dimensions=dict(care=90, fairness=90, integrity=90, trust=90))
+        profile = convert_profile(san14_stats={'charisma': 100}, legacy=dict(virtue=86),
+                                  virtue_design=design)
+        self.assertEqual(profile.virtue, 99)
+        self.assertEqual(profile.source_stats['charisma'], 100)
+        self.assertEqual(profile.basis['virtue'], 'SAN14.charisma; max99 compatibility scale')
+        self.assertEqual(convert_profile(san14_stats={'charisma': 1},
+                                        virtue_design=design).virtue, 1)
+        self.assertEqual(convert_profile(legacy=dict(virtue=86),
+                                        virtue_design=design).virtue, 86)
+        self.assertEqual(convert_profile(virtue_design=design).virtue, 90)
         with self.assertRaises(ValueError):
             virtue_score({'care': 90})
 

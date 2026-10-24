@@ -22,7 +22,7 @@ from .events import empty as empty_events, emit as emit_event, transition as rec
 from .officers import (CityRoster, GameRules, OfficerProfile, PersonDefinition,
                        RuntimeOfficer, YearState, advance_year, experience_tier,
                        initialize_officer, integer, year_state, is_generated_ref,
-                       parse_officer_ref, deserialize_officer_ref, ref_sort_key)
+                       parse_officer_ref, deserialize_officer_ref, ref_sort_key, appearance_values)
 
 
 def canonical(value):
@@ -104,6 +104,7 @@ class Catalog:
             self.by_id[ident] = row
             self.definitions[person.person_id] = person
             self.profiles[ident] = OfficerProfile(**row['profile'])
+            appearance_values(self.profiles[ident], row.get('initialization'))
         self.ids = {row['person_id']: ident for ident, row in self.by_id.items()}
         self.factions = {f['id']: f for f in self.data['factions']}
         self.map_cities = {c['id']: c for c in self.data['cities']}
@@ -247,7 +248,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
             city = state.cities[row['city']]
             officer = initialize_officer(self.catalog.definitions[row['person_id']], ident,
                          self.catalog.profiles[ident], year=state.year, faction_id=city.owner,
-                         is_ruler=row.get('ruler', False), loyalty=100 if row.get('ruler') else 80,
+                         is_ruler=row.get('ruler', False),
+                         **appearance_values(self.catalog.profiles[ident], self.catalog.by_id[ident].get('initialization'),
+                                             faction_id=city.owner, is_ruler=row.get('ruler', False)),
                          troops=row['troops'], rules=self.catalog.rules,
                          resolve_death_year=row.get('resolve_death_year', False))
             state.officers[ident] = officer
@@ -475,9 +478,10 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 city.gold += income['gold']
                 city.grain += income['grain']
                 domestic.add_reserves(self,state,city,income['reserves'],recruited=True)
+        existing = set(state.officers)
         self._spawn_eligible(state)
-        for officer in state.officers.values():
-            if officer.alive:
+        for ident, officer in state.officers.items():
+            if ident in existing and officer.alive:
                 officer.health = min(officer.profile.health_max, officer.health + r['monthly_heal'])
         domestic.month_rollover(self,state)
 
