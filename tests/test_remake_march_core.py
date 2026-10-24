@@ -40,6 +40,7 @@ def campaign_fixture(case):
     data=json.loads((ROOT/'game/data/campaigns/217-07.json').read_text())
     data['facility_rules']['disasters_enabled']=False
     data['facility_ai_default']=False
+    data['equipment_rules']['combat_enabled']=False
     with tempfile.TemporaryDirectory() as tmp:
         path=Path(tmp)/'march-fixture.json'
         path.write_text(json.dumps(data,ensure_ascii=False))

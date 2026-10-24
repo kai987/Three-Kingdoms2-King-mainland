@@ -28,6 +28,24 @@ WEAPONS = _rows([
     ('戰斧','戦斧',10,8,200), ('雙鉤槍','双鉤槍',11,7,250), ('方天畫戟','方天画戟',16,8,300),
     ('狼牙槍','狼牙槍',18,6,350), ('蛇矛','蛇矛',20,10,400),
 ], weapon=True)
+# Requested novel signature equipment is an explicit remake layer. Original
+# IDs 0..23 remain stable; these additions are never ordinary shop merchandise.
+WEAPONS += tuple(dict(id=24+i,name_tc=tc,name_ja=ja,power=power,weight=weight,
+    price=None,family=family,appearance=appearance,source_kind='requested_novel_remake')
+    for i,(tc,ja,power,weight,family,appearance) in enumerate([
+        ('雙股劍','双股剣',13,6,'sword','dual-swords'),
+        ('雙鐵戟','双鉄戟',12,7,'spear','dual-ji'),
+        ('古錠刀','古錠刀',12,6,'blade','guding-dao'),
+        ('九環刀','九環刀',14,9,'blade','ring-dao'),
+        ('二石鐵胎弓','二石の鉄胎弓',12,5,'spear','bow'),
+    ]))
+WEAPON_MAX = len(WEAPONS)-1
+ARMOR_MAX = 7
+WEAPONS = tuple(dict(row,name_tc='關王刀（青龍偃月刀）',name_ja='関王刀（青龍偃月刀）')
+    if row['id']==15 else row for row in WEAPONS)
+WEAPONS = tuple(dict(row,appearance=row.get('appearance',
+    {17:'dual-ji',19:'axe',21:'halberd',23:'serpent-spear'}.get(row['id'],
+        {'sword':'sword','blade':'guandao','spear':'spear'}[row['family']]))) for row in WEAPONS)
 ARMORS = _rows([
     ('綸巾','綸巾',2,1,50), ('籠手','籠手',3,2,80), ('兜','兜',5,4,100),
     ('硬皮','硬皮',7,6,150), ('鶴氅','鶴氅',8,5,200), ('甲冑','甲冑',10,10,250),

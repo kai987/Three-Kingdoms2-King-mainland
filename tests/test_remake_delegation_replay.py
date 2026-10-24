@@ -4,7 +4,8 @@ No fixture rewrites ownership, dates, profiles, RNG or starting resources. Every
 phase is saved as JSON, restored and continued; the small 184 faction is also
 replayed command-for-command through both marching engines.
 
-Automatic facility visits are disabled in the copied catalog to preserve the
+Automatic facility visits and weighted duel combat are disabled in the copied
+catalog to preserve the
 office-only persuasion/reappointment regression. Actual facility AI, its action
 competition and seasonal disasters are covered by the facility campaign tests
 and the unmodified cross-year campaign soak.
@@ -241,6 +242,7 @@ class DelegationReplayTests(unittest.TestCase):
         self.reappointed_military = []
         data = json.loads((ROOT / 'game/data/campaigns' / filename).read_text())
         data['facility_ai_default'] = False
+        data['equipment_rules']['combat_enabled'] = False
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / filename
             path.write_text(json.dumps(data, ensure_ascii=False))

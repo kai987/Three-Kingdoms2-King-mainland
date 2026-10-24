@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import domestic, treasures
+from remake import domestic, equipment, treasures
 from remake.officers import YearState, initialize_officer, year_state
 from campaign_fixtures import controlled_catalog
 
@@ -113,6 +113,8 @@ class CivilStaffCampaignTests(unittest.TestCase):
             target.roster.officer_ids.append(ident)
         self.assertEqual(sum(type(i) is int for i in target.roster.officer_ids), historical_count)
         treasures.synchronize(game,game.state)
+        if 'equipment' in game.state.extension:
+            equipment.synchronize(game, game.state)
         game.validate(game.state)
 
     def test_all_current_actual_openings_keep_historical_ids_and_offer_only_owned_empty_cities(self):
@@ -278,6 +280,8 @@ class CivilStaffCampaignTests(unittest.TestCase):
         game.state.officers[target] = initialize_officer(game.catalog.definitions[FREE_PERSON], target,
             game.catalog.profiles[target], year=game.state.year, rules=game.catalog.rules)
         game.state.extension['free_locations'][str(target)] = 'nanjun'
+        if 'equipment' in game.state.extension:
+            equipment.synchronize(game, game.state)
         game.validate(game.state)
         gold = game.state.cities['nanjun'].gold
         self.step(game)

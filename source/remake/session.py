@@ -167,6 +167,8 @@ class CampaignSession:
             if not isinstance(city,str) or city not in d['active_cities']:
                 raise GameError('请选择本剧本开放的城池。')
             officers=[]
+            from .equipment import initial_view
+            preview_game=self.game if c is self.game.catalog else Campaign(c)
             for row in d['initial_officers']:
                 if row['city']!=city:continue
                 ident=c.ids[row['person_id']];profile=c.profiles[ident]
@@ -175,7 +177,7 @@ class CampaignSession:
                                      experience=0,tier=0,
                                      **appearance_values(profile,c.by_id[ident].get('initialization'),
                                                          faction_id=d['initial_owners'][city],is_ruler=row.get('ruler',False)),
-                                     is_ruler=bool(row.get('ruler'))))
+                                     is_ruler=bool(row.get('ruler')),equipment=initial_view(preview_game,row['person_id'])))
             owner=d['initial_owners'][city]
             from .city_economy import tier_at
             treasure = {'normal':2,'large':4,'giant':6}[tier_at(d,city,d['start_year'],d['start_month'])] if owner!='neutral' else 0

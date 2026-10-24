@@ -16,6 +16,7 @@
   march_returned:['部隊折返','部隊の帰還'],new_year:['新年更始','新年の到来'],
   campaign_victory:['天下歸一','天下統一'],campaign_defeat:['戰役結束','戦役の終了'],
   ai_campaign:['敵軍動向','敵軍の動向'],
+  equipment_acquired:['武具取得','武具の獲得'],
   town_developed:['城町發展','町の発展'],officer_treated:['醫館療傷','医館での治療'],officer_studied:['學問進修','学問所での学習'],grain_traded:['市場交易','市場での取引'],equipment_bought:['武具購置','武具の購入'],prevention_improved:['防災整備','防災整備'],city_disaster:['城池災情','都市の災害'],
   treasure_found:['尋得寶物','宝の発見'],treasure_search_failed:['尋寶未果','宝の探索結果'],treasure_sold:['寶物出售','宝の売却'],officer_rewarded:['賞賜武將','武将への褒美'],governor_assigned:['太守任命','太守の任命'],
   staff_candidate:['地方文吏推薦','在地文官の推薦'],staff_hired:['文吏受聘','文官の雇用'],
@@ -26,6 +27,7 @@
  const STAFF=new Set(['staff_candidate','staff_hired','staff_declined','staff_expired','staff_salary','staff_allegiance']);
  const OPERATIONS=new Set(['domestic_report','transport_departed','transport_arrived','transport_returned','transport_weather']);
  const FACILITIES=new Set(['town_developed','officer_treated','officer_studied','grain_traded','equipment_bought','prevention_improved','city_disaster']);
+ const EQUIPMENT=new Set(['equipment_acquired']);
  const TREASURY=new Set(['treasure_found','treasure_search_failed','treasure_sold','officer_rewarded','governor_assigned']);
  const SUPPLY=new Set(['march_resupplied','march_starvation','march_retreat']);
  const SUPPLY_REASONS=new Set(['city','convoy','cargo','shortage','route_blocked','no_friendly_city','origin_changed','target_changed','completed']);
@@ -37,7 +39,7 @@
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
  }
  function validFacilityEvent(row){
   const d=row.details,k=row.kind,fields={town_developed:['actor','from_town','to_town','gold'],officer_treated:['actor','target','gold','before','after'],officer_studied:['actor','target','gold','before','after','bonus'],grain_traded:['actor','direction','batches','grain','gold','rate'],equipment_bought:['actor','target','slot','item','previous','gold'],prevention_improved:['actor','gold','gain','repair','preparedness_before','preparedness_after','damage_before','damage_after'],city_disaster:['disaster','gold','grain','reserves','rate','preparedness_before','preparedness_after','damage_before','damage_after']}[k];
@@ -46,10 +48,17 @@
   if(k==='town_developed')return num('from_town',1,2)&&d.to_town===d.from_town+1&&d.gold>0;
   if(k==='officer_treated'||k==='officer_studied')return num('before',k==='officer_treated'?0:1,k==='officer_treated'?99:79)&&num('after',1,k==='officer_treated'?99:89)&&d.after>d.before&&d.gold>0&&(k==='officer_treated'||num('bonus',1,88)&&d.after-d.before>=5&&d.after-d.before<=12);
   if(k==='grain_traded')return ['buy','sell'].includes(d.direction)&&num('batches',1,1000)&&num('rate',1,100)&&d.grain===d.batches*100&&d.gold===d.batches*d.rate;
-  if(k==='equipment_bought')return ['weapon','armor'].includes(d.slot)&&num('item',0,d.slot==='weapon'?23:7)&&num('previous',0,d.slot==='weapon'?23:7)&&d.item!==d.previous&&d.gold>0;
+  if(k==='equipment_bought')return ['weapon','armor'].includes(d.slot)&&num('item',0,d.slot==='weapon'?28:7)&&num('previous',0,d.slot==='weapon'?28:7)&&d.item!==d.previous&&d.gold>0;
   if(!['preparedness_before','preparedness_after'].every(key=>num(key,0,99))||!['damage_before','damage_after'].every(key=>num(key,0,50)))return false;
   if(k==='prevention_improved')return num('gain',0,99)&&num('repair',0,50)&&num('gold',1,100)&&d.preparedness_after-d.preparedness_before===d.gain&&d.damage_before-d.damage_after===d.repair;
   return ['flood','drought'].includes(d.disaster)&&num('rate',0,100)&&num('grain',0,100000000)&&num('reserves',0,100000000)&&d.preparedness_after<=d.preparedness_before&&d.damage_after>=d.damage_before&&(d.disaster==='drought'?d.gold===0:d.reserves===0)&&(d.preparedness_before!==99||!['gold','grain','reserves','rate'].some(key=>d[key]));
+ }
+ function validEquipmentEvent(row){
+  const d=row.details,num=(key,min,max)=>Number.isSafeInteger(d[key])&&d[key]>=min&&d[key]<=max;
+  if(row.audience!=='player'||row.city_ids.length!==1||row.factions.length!==1||Object.keys(d).sort().join(',')!=='actor,battle_id,chance,from_person,item,method,previous,roll,slot,target'||!['weapon','armor'].includes(d.slot)||JSON.stringify(row.person_ids)!==JSON.stringify([...new Set([d.actor,d.target,d.from_person])]))return false;
+  if(!num('item',0,d.slot==='weapon'?28:7)||!num('previous',0,d.slot==='weapon'?28:7)||d.item===d.previous||!Number.isSafeInteger(d.chance)||!Number.isSafeInteger(d.roll))return false;
+  if(d.method==='owned')return d.from_person===d.target&&d.battle_id===null&&d.chance===0&&d.roll===-1;
+  return d.method==='duel'&&d.actor===d.target&&d.from_person!==d.target&&typeof d.battle_id==='string'&&/^battle-[1-9][0-9]{0,9}$/.test(d.battle_id)&&[30,50,100].includes(d.chance)&&(d.chance===100?d.roll===-1:d.roll>=0&&d.roll<d.chance);
  }
  function validTreasuryEvent(row){
   const d=row.details,k=row.kind,keys={treasure_found:['actor','amount','chance','gold'],treasure_search_failed:['actor','amount','chance','gold'],treasure_sold:['actor','amount','gold'],officer_rewarded:['actor','target','kind','amount','gain','loyalty_before','loyalty_after'],governor_assigned:['governor','mode']}[k];
@@ -106,11 +115,11 @@
  }
  function campaignKey(view){return view?.game?JSON.stringify([view.catalog?.scenario_id||view.catalog?.title||'',view.game.seed,view.game.player]):null;}
  function eventRows(view){const rows=view?.game?.extension?.events?.items;return Array.isArray(rows)?rows.filter(validEvent).sort((a,b)=>a.id-b.id):[];}
- function automatic(row,player){return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
+ function automatic(row,player){return STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||EQUIPMENT.has(row.kind)?row.factions.includes(player):row.audience==='player'||WORLD.has(row.kind)||row.factions.includes(player);}
  function groupRows(rows){
   const groups=[],staffGroups=new Map();
   for(const row of rows){
-   if(STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
+   if(STAFF.has(row.kind)||OPERATIONS.has(row.kind)||SUPPLY.has(row.kind)||TREASURY.has(row.kind)||FACILITIES.has(row.kind)||EQUIPMENT.has(row.kind)){const key=row.turn+':'+row.kind;if(staffGroups.has(key))staffGroups.get(key).push(row);else{const group=[row];groups.push(group);staffGroups.set(key,group);}continue;}
    const last=groups.at(-1);if(last&&BATCH.has(row.kind)&&last[0].kind===row.kind&&last[0].turn===row.turn)last.push(row);else groups.push([row]);
   }
   return groups;
@@ -139,6 +148,10 @@
     case 'equipment_bought':{
      const item=view?.catalog?.facilities?.equipment_catalog?.[d.slot]?.find(row=>row.id===d.item),gear=item?(locale()==='ja'?item.name_ja:item.name_tc):text(`${d.slot==='weapon'?'武器':'防具'}${d.item+1}號`,`${d.slot==='weapon'?'武器':'防具'}${d.item+1}`),who=names({...row,person_ids:[d.target]}).people[0];
      return text(`${c}為${who}購置${gear}，花費${d.gold}金並替換原裝備，單挑效果已生效。`,`${c}で${who}のために${gear}を購入しました。資金${d.gold}を支払い、以前の装備と交換して一騎討ちに反映しました。`);
+    }
+    case 'equipment_acquired':{
+     const item=view?.catalog?.equipment?.items?.[d.slot]?.find(item=>item.id===d.item),gear=item?(locale()==='ja'?item.name_ja:item.name_tc):text('特殊武具','特殊武具'),who=names({...row,person_ids:[d.target]}).people[0];
+     return d.method==='owned'?text(`${who}重新裝備保管中的${gear}，已更新單挑攻防與重量效果。`,`${who}が保管中の${gear}を再装備し、一騎討ちの攻防と重量に反映しました。`):text(`${who}單挑擊敗${names({...row,person_ids:[d.from_person]}).people[0]}，取得${gear}。本次條件機率${d.chance}%；已記錄唯一持有權，不會重複發放。`,`${who}が${names({...row,person_ids:[d.from_person]}).people[0]}を一騎討ちで破り、${gear}を獲得しました。今回の条件確率は${d.chance}%です。唯一の所持権を記録し、重複発行しません。`);
     }
     case 'prevention_improved':return text(`${p}完成${c}防災整備，花費${d.gold}金；防災${d.preparedness_before} → ${d.preparedness_after}，災損${d.damage_before} → ${d.damage_after}。`,`${p}が${c}の防災整備を行いました。支出は資金${d.gold}、防災${d.preparedness_before} → ${d.preparedness_after}、被災度${d.damage_before} → ${d.damage_after}です。`);
     case 'city_disaster':return text(`${c}發生${d.disaster==='flood'?'洪水':'旱災'}。本次實損：金${d.gold}、糧${d.grain}、預備兵${d.reserves}；防災${d.preparedness_before} → ${d.preparedness_after}，災損${d.damage_before} → ${d.damage_after}。在途貨物與武將帶兵不受這項城內結算影響。`,`${c}で${d.disaster==='flood'?'洪水':'干ばつ'}が発生しました。実損は資金${d.gold}・兵糧${d.grain}・予備兵${d.reserves}。防災${d.preparedness_before} → ${d.preparedness_after}、被災度${d.damage_before} → ${d.damage_after}です。輸送中の貨物や武将の配下兵は、この都市精算では減少しません。`);

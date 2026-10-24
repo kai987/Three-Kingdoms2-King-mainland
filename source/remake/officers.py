@@ -298,8 +298,9 @@ def initialize_officer(person: PersonDefinition, runtime_id: int, profile: Offic
     else:
         integer(loyalty, 0, 99, 'scenario loyalty')
     integer(troops, 0, 999, 'initial troops')
-    integer(weapon_id, 0, 23, 'weapon')
-    integer(armor_id, 0, 7, 'armor')
+    from .facility_equipment import WEAPONS, ARMORS
+    integer(weapon_id, 0, len(WEAPONS)-1, 'weapon')
+    integer(armor_id, 0, len(ARMORS)-1, 'armor')
     tier = experience_tier(experience)
     health = profile.health_max if health is None else integer(health, 1, profile.health_max, 'initial health')
     return RuntimeOfficer(runtime_id, person.person_id, profile, health,

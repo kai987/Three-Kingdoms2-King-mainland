@@ -8,7 +8,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
-from remake import facilities, civil_staff, facility_equipment
+from remake import facilities, civil_staff, facility_equipment, equipment
 from remake.campaign import SeedRng
 from remake.errors import GameError
 from remake.officers import GameRules, OfficerProfile, RuntimeOfficer
@@ -53,6 +53,12 @@ def fixture(seed=2026):
             civil_staff=dict(people={clerk['id']:clerk}),officer_actions={},leaders=dict(one=1,two=6),
             ended_factions=[],pending_succession={},travel=dict(marches=[])))
     state.extension['facilities']=facilities.empty(game,state)
+    # Keep these facility transactions focused on their original baseline.
+    # Source-based equipment and signature acquisition have a separate suite.
+    game.catalog.data['equipment_initial']={o.person_id:dict(weapon_id=0,armor_id=0,
+        basis='controlled_facility_baseline') for o in state.officers.values()}
+    state.extension['equipment']=equipment.empty(game,state)
+    equipment.synchronize(game,state)
     facilities.validate(game,state)
     return game,state
 
@@ -192,17 +198,32 @@ class FacilityTests(unittest.TestCase):
 
     def test_armory_real_items_slots_affordability_and_special_unsold_items(self):
         game,state=fixture();before=deepcopy(state.rng);city=state.cities['capital']
-        receipt=facilities.buy(game,state,dict(city='capital',actor=1,officer=2,slot='weapon',item=23),'one')
+        target=state.officers[2];old_pid=target.person_id
+        target.person_id='san14-candidate-0656'
+        state.extension['equipment']['initialized'].remove(old_pid)
+        game.catalog.data['equipment_initial'][target.person_id]=dict(weapon_id=0,armor_id=0,basis='controlled')
+        equipment.synchronize(game,state)
+        def relocate(name):
+            old=city.id
+            state.cities.pop(old);city.id=name;state.cities[name]=city
+            state.extension['facilities']['cities'][name]=state.extension['facilities']['cities'].pop(old)
+            game.catalog.map_cities[name]=game.catalog.map_cities.pop(old)
+        relocate('fuling')
+        receipt=facilities.buy(game,state,dict(city=city.id,actor=1,officer=2,slot='weapon',item=23),'one')
         self.assertEqual(state.officers[2].weapon_id,23)
         self.assertEqual(city.gold,1000-facility_equipment.item('weapon',23)['price'])
         self.assertEqual(receipt['previous'],0);self.assertEqual(state.rng,before)
         self.reset(state)
         for item in (23,5,7,99,True):
-            self.fails(game,state,facilities.buy,dict(city='capital',actor=1,officer=2,slot='weapon',item=item))
-        facilities.buy(game,state,dict(city='capital',actor=1,officer=2,slot='armor',item=6),'one')
+            self.fails(game,state,facilities.buy,dict(city=city.id,actor=1,officer=2,slot='weapon',item=item))
+        relocate('yongchang')
+        state.officers[2].profile=replace(state.officers[2].profile,virtue=90)
+        facilities.buy(game,state,dict(city=city.id,actor=1,officer=2,slot='armor',item=6),'one')
         self.assertEqual(state.officers[2].armor_id,6)
-        self.reset(state);state.extension['facilities']['cities']['capital']['town']=2
-        self.fails(game,state,facilities.buy,dict(city='capital',actor=1,officer=3,slot='weapon',item=23))
+        self.assertEqual(city.gold,1000-400-350)
+        self.reset(state);state.extension['facilities']['cities'][city.id]['town']=2
+        self.fails(game,state,facilities.buy,dict(city=city.id,actor=1,officer=3,slot='weapon',item=23))
+        equipment.validate(game,state)
 
     def test_prevention_exact_two_rolls_quote_range_zero_gain_and_max_guard(self):
         game,state=fixture();city=state.cities['capital'];row=state.extension['facilities']['cities']['capital']

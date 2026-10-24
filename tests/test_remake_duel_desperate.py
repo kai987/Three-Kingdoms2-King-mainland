@@ -188,6 +188,7 @@ class DesperateDuelTests(unittest.TestCase):
                 # project the unrelated empty cargo schema and initial treasury.
                 state['extension'].pop('treasury')
                 state['extension'].pop('facilities')
+                state['extension'].pop('equipment')
                 state['extension']['logistics']['schema'] = 'tk2-logistics-v1'
                 self.assertEqual(digest(state), row['state_sha256'])
                 self.assertEqual(vars(game.state.rng), row['rng'])

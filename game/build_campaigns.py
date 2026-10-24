@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools/officer-plac
 from remake.city_economy import apply_opening_sizes
 from remake.treasures import RULES as TREASURY_RULES
 from remake.facilities import RULES as FACILITY_RULES
+from remake.equipment import RULES as EQUIPMENT_RULES, build_initials
 from route_timing import apply_route_timing
 from route_render_source import validate_geometry_sources
 from officer_stat_sources import validate_original_virtue, validate_campaign_stats
@@ -174,6 +175,11 @@ def load_sources(*, timing=True):
         if data.get('main_scenario', {}).get('virtue_default_policy'):
             data['main_scenario']['virtue_default_policy'] = 'campaign-officer-stats-v1'
         data['people'] = [current_people[pid] for pid in order]
+        equipment_reference=read('game/config/references/original-equipment-v1.json')
+        equipment_appearances=read('game/config/duel-appearances.json')
+        data['equipment_rules']=deepcopy(EQUIPMENT_RULES)
+        data['equipment_initial']=build_initials(data['people'],equipment_reference['records'],equipment_appearances['profiles'])
+        data['design_notes'].append('初始裝備按223名原版對照及名將專屬覆蓋配置；隱藏武具按條件唯一取得，重量會影響單挑命中、回避、先手與退卻。未證的精確倍率為本作規則。')
         apply_navigation_sources(data, navigation)
         if timing:
             apply_route_timing(data, geometry, geometry_sha256)

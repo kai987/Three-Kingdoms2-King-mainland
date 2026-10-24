@@ -25,6 +25,8 @@ const dialog={open:false,scrollTop:27,querySelector(selector){if(selector==='[da
 const i18n={locale:'zh-Hant',t:value=>value,apply(){}};
 const doc={addEventListener:(type,handler)=>listeners.set(type,handler),removeEventListener:(type,handler)=>{if(listeners.get(type)===handler)listeners.delete(type);}};
 let submitted;
+const equipmentCalls=[];
+globalThis.GameEquipment={summary(current,id,options){equipmentCalls.push({current,id,options});return `<div data-staff-equipment="${id}">引擎裝備摘要</div>`;}};
 const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id==='home'?'成都':'江州',isBusy:()=>busy,isPreview:()=>preview,openDialog(title,body,actions){
  currentDialog={title,body,actions};dialog.open=true;elements.clear();
  const html=body+actions;
@@ -37,6 +39,7 @@ const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id
 
 (async()=>{
  assert(ui.open('home'));assert.equal(currentDialog.title,'地方文吏 · 成都');assert(!elements.get('#hire-civil-staff').disabled,'A zero-officer city may hire without an actor');
+ assert.equal(equipmentCalls.length,0,'An un-hired candidate has no actual held equipment to render');
  assert(currentDialog.body.includes('武20 · 知56 · 德60'));assert(currentDialog.body.includes('190年4月'));assert(currentDialog.body.includes('讀檔不重抽'));
  await elements.get('#hire-civil-staff').onclick();assert.deepEqual(submitted,{kind:'hire_staff',payload:{city:'home',candidate:'clerk-000001'}});assert(dialog.open);assert(currentDialog.body.includes('role="alert"'),'A rejected command stays in its dialog with feedback');
  assert.equal(JSON.stringify(view),original,'Viewing and an unsuccessful transaction never mutate the save or combat RNG');
@@ -50,6 +53,8 @@ const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id
   row.searchable_staff=[employee,{...employee,id:'clerk-000002',name:'王質',profile:{...employee.profile,intellect:65}}];row.search_targets=[{id:7,name:'歷史候選',martial_strength:52,intellect:60,virtue:85,troops:0,experience:100}];row.can_search=true;row.search_blocked_reason='';return true;
  };
  listeners.get('game-language-change')();await elements.get('#hire-civil-staff').onclick();assert(!currentDialog.actions.includes('id="hire-civil-staff"'));assert(currentDialog.body.includes('履職中'));assert(currentDialog.body.includes('經2'));
+ assert(currentDialog.body.includes('data-staff-equipment="clerk-000001"'));assert.equal(equipmentCalls.at(-1).current,view);assert.deepEqual(equipmentCalls.at(-1).options,{locale:'zh-Hant',bilingual:false,compact:true});
+ const nextCandidate={...person,id:'clerk-000003'};row.candidate=nextCandidate;equipmentCalls.length=0;const beforeCard=JSON.stringify(view);ui.open('home');assert.deepEqual(equipmentCalls.map(call=>call.id),['clerk-000001'],'Only hired employees receive the shared equipment card, even alongside a new candidate');assert.equal(JSON.stringify(view),beforeCard,'Equipment card inspection never changes employee/candidate state or RNG');row.candidate=null;
  assert.equal(elements.get('#staff-search-actor').value,'clerk-000002','Purpose sorting prefers intellect when civil virtue ties');
  elements.get('#staff-search-actor').value='clerk-000001';elements.get('#staff-search-actor').onchange();
  i18n.locale='ja';listeners.get('game-language-change')();assert.equal(elements.get('#staff-search-actor').value,'clerk-000001');assert(currentDialog.title.includes('成都'));assert(currentDialog.body.includes('架空の文吏'));assert(currentDialog.body.includes('原作')===false);assert(currentDialog.body.includes('既存の成功判定'));assert.equal(dialog.scrollTop,27);
@@ -60,7 +65,7 @@ const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id
  }
  row.can_search=true;row.search_blocked_reason='';listeners.get('game-language-change')();
  nextResult=true;await elements.get('#staff-search-confirm').onclick();assert.deepEqual(submitted,{kind:'staff_recruit',payload:{city:'home',actor:'clerk-000001',officer:7}},'The civil actor stays a string; only the historical target uses its original number');
- ui.openRegistry();assert(currentDialog.body.includes('歴史人物1023人とは別'));const input=elements.get('#staff-search');input.value='陳';input.selectionStart=1;input.oninput();i18n.locale='zh-Hant';listeners.get('game-language-change')();assert.equal(elements.get('#staff-search').value,'陳');assert(currentDialog.body.includes('陳文'));assert(currentDialog.body.includes('與1,023名歷史人物分開登記'));
+ equipmentCalls.length=0;const beforeRegistry=JSON.stringify(view);ui.openRegistry();assert(currentDialog.body.includes('歴史人物1023人とは別'));assert(currentDialog.body.includes('data-staff-equipment="clerk-000001"'));assert.deepEqual(equipmentCalls.map(call=>call.id),['clerk-000001']);assert.equal(equipmentCalls[0].options.locale,'ja');assert.equal(JSON.stringify(view),beforeRegistry);const input=elements.get('#staff-search');input.value='陳';input.selectionStart=1;input.oninput();i18n.locale='zh-Hant';listeners.get('game-language-change')();assert.equal(elements.get('#staff-search').value,'陳');assert(currentDialog.body.includes('陳文'));assert(currentDialog.body.includes('與1,023名歷史人物分開登記'));
  // A generated successor is masked by the live ruler map, in cards, registry
  // and searchable officer labels; being100 loyal alone is not enough.
  const employee=row.employees[0];employee.loyalty=100;employee.is_ruler=true;
@@ -71,6 +76,7 @@ const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id
   const stored=JSON.stringify(view);listeners.get('game-language-change')();assert.equal(JSON.stringify(view),stored,'Ruler display never mutates generated officer membership, loyalty or RNG');
  }
  view.game.extension.leaders.shu='clerk-000002';ui.openRegistry();assert(!currentDialog.body.includes('忠--'));assert(currentDialog.body.includes('忠100'),'Former generated rulers display their actual loyalty despite a stale is_ruler field');
+ const equipmentWidget=globalThis.GameEquipment;delete globalThis.GameEquipment;ui.open('home');assert(!currentDialog.body.includes('data-staff-equipment='),'Older isolated fixtures without the optional equipment renderer keep working');globalThis.GameEquipment=equipmentWidget;
  delete view.game.extension;delete employee.loyalty;delete employee.is_ruler;
  dialog.open=false;const closedCount=callCount;i18n.locale='ja';listeners.get('game-language-change')();assert.equal(callCount,closedCount,'Locale changes never reopen a closed panel');
  ui.dispose();assert(!listeners.has('game-language-change'));assert.equal(ui.open('home'),false);

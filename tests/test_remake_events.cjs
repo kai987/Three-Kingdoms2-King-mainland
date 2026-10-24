@@ -33,7 +33,12 @@ function fixture(items=[]){
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,51);
+ assert.equal(Object.keys(KINDS).length,52);
+ const acquired=row(1,'equipment_acquired',{person_ids:['person-a','person-b'],details:{actor:'person-a',target:'person-a',from_person:'person-b',slot:'weapon',item:6,previous:0,method:'duel',battle_id:'battle-1',chance:30,roll:29}});
+ assert(validEvent(acquired));
+ for(const change of [{roll:30},{chance:101},{item:29},{previous:6},{method:'owned'},{battle_id:'battle-0'}])assert(!validEvent({...acquired,details:{...acquired.details,...change}}));
+ const reserved=row(2,'equipment_acquired',{details:{actor:'person-a',target:'person-a',from_person:'person-a',slot:'weapon',item:15,previous:0,method:'owned',battle_id:null,chance:0,roll:-1}});assert(validEvent(reserved));
+ assert(!validEvent({...reserved,person_ids:['person-b']}));
  assert(validEvent(row(1)));for(const bad of [{id:0},{kind:'<script>'},{month:13},{day:31},{audience:'other'},{person_ids:[3]},{details:[]},{turn:0}])assert(!validEvent({...row(1),...bad}));
  assert.deepEqual(eventRows({game:{extension:{events:{items:{}}}}}),[]);
  assert.notEqual(campaignKey(view([])),campaignKey(view([],2027)));
@@ -184,5 +189,5 @@ function fixture(items=[]){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,localAutosave:null,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
- console.log('events: 51 bilingual scenes, strict supply and city-name snapshots, dated city upgrades with historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 52 bilingual scenes, strict supply and city-name snapshots, dated city upgrades with historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

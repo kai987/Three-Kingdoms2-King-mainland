@@ -325,8 +325,8 @@ def trade(game, state, payload, owner):
 
 
 def _equipment():
-    from . import facility_equipment
-    return facility_equipment
+    from . import equipment
+    return equipment
 
 
 def buy(game, state, payload, owner):
@@ -335,18 +335,15 @@ def buy(game, state, payload, owner):
     actor = _actor(game, state, city, payload['actor'])
     target = _target(game, state, city, payload['officer'])
     slot, ident = payload['slot'], payload['item']
-    if slot not in ('weapon', 'armor') or not _int(ident, 0, 23 if slot == 'weapon' else 7):
+    if slot not in ('weapon', 'armor') or not _int(ident, 0, len(_equipment().WEAPONS)-1 if slot == 'weapon' else len(_equipment().ARMORS)-1):
         raise GameError('請選擇有效的武器或防具。')
-    merchandise = next((row for row in _equipment().stock(_pool(state)['cities'][city.id]['town'], slot)
-        if row['id'] == ident), None)
-    if merchandise is None or not _int(merchandise['price'], 0, LIMIT):
-        raise GameError('本城武器屋沒有出售這件裝備。')
+    merchandise = _equipment().purchase_quote(game,state,city,target,slot,ident)
     officer, field = state.officers[target], slot + '_id'
     previous = getattr(officer, field)
     if previous == ident:
         raise GameError('這名武將已持有這件裝備。')
     _charge(state, city, actor, merchandise['price'], target)
-    setattr(officer, field, ident)
+    _equipment().claim_purchase(game,state,city,target,slot,ident)
     details = dict(actor=state.officers[actor].person_id, target=officer.person_id,
         slot=slot, item=ident, previous=previous, gold=merchandise['price'])
     _emit(game, state, 'equipment_bought', city, [actor, target], details)
@@ -538,9 +535,15 @@ def auto_turn(game, state, owner):
                             item['id'] if slot == 'weapon' else officer.weapon_id,
                             item['id'] if slot == 'armor' else officer.armor_id,
                             officer.profile.martial_strength)[field]
-                    offers = [item for item in _equipment().stock(row['town'],slot)
+                    owned=[item for item in _equipment().owned_for(game,state,target)
+                        if item['slot']==slot and effect(item)>old_effect]
+                    if owned:
+                        item=min(owned,key=lambda item:(-effect(item),item['id']))
+                        choice=(_equipment().equip_owned,dict(city=key,actor=actor,officer=target,slot=slot,item=item['id']))
+                        break
+                    offers = [item for item in _equipment().shop_stock(game,state,city,slot)
                         if 0 <= item['price'] <= available and item['id'] != current['id']
-                        and effect(item) > old_effect]
+                        and target in item['eligible_targets'] and effect(item) > old_effect]
                     if offers:
                         item = min(offers,key=lambda item: (-effect(item),item['price'],item['id']))
                         choice = (buy, dict(city=key, actor=actor, officer=target, slot=slot, item=item['id']))
@@ -591,10 +594,10 @@ def view(game, state):
                 if quote is not None:
                     students.append(dict(quote,can_study=ready and city.gold>=quote['gold']))
         stock = {slot:[] for slot in ('weapon','armor')}
-        if row['town']>=2:
+        if row['town']>=2 and city.owner==state.player:
             for slot in stock:
-                for item in _equipment().stock(row['town'],slot):
-                    targets=[i for i in residents if getattr(state.officers[i],slot+'_id')!=item['id']]
+                for item in _equipment().shop_stock(game,state,city,slot):
+                    targets=item['eligible_targets']
                     stock[slot].append(dict(item,eligible_targets=targets,
                         can_buy=ready and bool(targets) and city.gold>=item['price']))
         development_gold=_rule(game,'development_per_level_gold')*(row['town']+1) if row['town']<3 else 0

@@ -3,8 +3,9 @@
 Names/capacities reference the research; effects and balance below are explicit
 remake designs. No original engine, ROM tables or control IR are loaded.
 """
+from dataclasses import replace
 from .errors import GameError
-from . import presentation
+from . import presentation, equipment
 from .officers import (YearState, experience_tier, initialize_officer, integer,
                        recruitment_loyalty, select_deployment, year_state,
                        parse_officer_ref, deserialize_officer_ref, ref_sort_key, is_generated_ref, appearance_values)
@@ -400,6 +401,8 @@ class ExpandedCampaign:
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id'] or not b['extended']['duel']:raise GameError('当前没有单挑。')
         move=payload.get('move')
         if move not in {'strike','guard','feint','withdraw','desperate'}:raise GameError('单挑动作无效。')
+        if self.catalog.data.get('equipment_rules',{}).get('combat_enabled',True):
+            return self._equipment_duel_action(state,move)
         x=b['extended'];d=x['duel'];own,foe=self._player_sides(state)
         actor=next(u for u in b[own] if u['id']==d['actor']);target=next(u for u in b[foe] if u['id']==d['target'])
         a=x['support'][str(actor['id'])];t=x['support'][str(target['id'])]
@@ -452,6 +455,71 @@ class ExpandedCampaign:
             target=target['id'],own=own,move=move,reply=reply,success=success)
         if result:self._finish_action(state,actor,own,foe,respond=False)
 
+    def _equipment_duel_action(self,state,move):
+        """One authoritative weighted exchange for both human and AI riders."""
+        b=state.battle;x=b['extended'];d=x['duel'];own,foe=self._player_sides(state)
+        actor=next(u for u in b[own] if u['id']==d['actor'])
+        target=next(u for u in b[foe] if u['id']==d['target'])
+        support=x['support'];a=support[str(actor['id'])];t=support[str(target['id'])]
+        before=presentation.snapshot(self,state);reply=None;success=True;result=None
+        def current(unit):
+            return replace(state.officers[unit['id']],health=support[str(unit['id'])]['health'])
+        if move=='withdraw':
+            loss=equipment.retreat_cost(current(actor),state.rng.next()%100)
+            previous_health=a['health']
+            a['health']=max(1,a['health']-loss)
+            d['log'].append(f'退出单挑，装备负重使体力减少{previous_health-a["health"]}。')
+            result='退出单挑'
+        else:
+            reply=('strike','guard','feint')[state.rng.next()%3]
+            if t['health']<=30 and reply=='strike':reply='desperate'
+            order=[(equipment.duel_initiative(current(actor),state.rng.next()%11),0,actor,target,move,reply),
+                   (equipment.duel_initiative(current(target),state.rng.next()%11),1,target,actor,reply,move)]
+            order.sort(key=lambda row:(-row[0],row[1]))
+            d['log'].append(f'{self.person_name(state,order[0][2]["id"])}先手。')
+            for _,side,first,second,attack,defense in order:
+                first_hp=support[str(first['id'])];second_hp=support[str(second['id'])]
+                if first_hp['health']<=1 or second_hp['health']<=1:continue
+                if attack=='desperate' and state.rng.next()%100>=30:
+                    while True:
+                        loss=state.rng.next()&31
+                        if loss<21:break
+                    loss+=10;first_hp['health']=max(1,first_hp['health']-loss)
+                    d['log'].append(f'{self.person_name(state,first["id"])}舍命一击失手，自损体力{loss}。')
+                    if side==0:success=False
+                    continue
+                attacking,defending=current(first),current(second)
+                chance=equipment.duel_hit_chance(attacking,defending)
+                if state.rng.next()%100>=chance:
+                    d['log'].append(f'{self.person_name(state,first["id"])}未命中（命中率{chance}%）。')
+                    if side==0:success=False
+                    continue
+                first_stats=equipment.combat_stats(attacking);second_stats=equipment.combat_stats(defending)
+                damage=max(2,10+(attacking.profile.martial_strength-defending.profile.martial_strength)//6+
+                    state.rng.next()%7+first_stats['attack_bonus']-second_stats['defense_bonus'])
+                if attack=='desperate':damage*=2
+                if attack=='guard':damage=max(1,damage//3)
+                if defense=='guard':damage=max(1,damage//3) if attack!='feint' else damage+4
+                if attack=='feint' and defense=='strike':damage=max(1,damage//2)
+                second_hp['health']=max(1,second_hp['health']-damage)
+                d['log'].append(f'{self.person_name(state,first["id"])}命中，造成体力损伤{damage}。')
+            d['round']+=1
+            if a['health']==1:actor['troops']=0
+            if t['health']==1:target['troops']=0
+            result=('双方负伤退场' if a['health']==1 and t['health']==1 else
+                '本方单挑胜出' if t['health']==1 else '本方负伤败退' if a['health']==1 else
+                '二十合未分胜负' if d['round']>20 else None)
+            if result=='本方单挑胜出':equipment.duel_loot(self,state,b,actor['id'],target['id'])
+            elif result=='本方负伤败退':equipment.duel_loot(self,state,b,target['id'],actor['id'])
+        d['log'][:]=d['log'][-10:]
+        if result:
+            x['duel_history'].append(dict(actor=actor['id'],target=target['id'],result=result))
+            x['duel_history'][:]=x['duel_history'][-20:]
+            b['log'].append(result);x['duel']=None
+        presentation.record(self,state,before,kind='duel_action',actor=actor['id'],target=target['id'],
+            own=own,move=move,reply=reply,success=success)
+        if result:self._finish_action(state,actor,own,foe,respond=False)
+
     def _expanded_retreat(self,state,payload):
         b=state.battle
         if state.phase!='battle' or not b or payload.get('battle_id')!=b['id']:raise GameError('当前不能退却。')
@@ -465,6 +533,17 @@ class ExpandedCampaign:
         b=state.battle
         if state.phase!='result' or not b or payload.get('battle_id')!=b['id']:raise GameError('没有待接收的战果。')
         source,target=state.cities[b['source']],state.cities[b['target']];x=b['extended']
+        if self.catalog.data.get('equipment_rules',{}).get('combat_enabled',True):
+            routed=['defenders'] if b['outcome']=='victory' else ['attackers'] if b['outcome']=='defeat' else [x['withdrawn']] if x['withdrawn'] else ['attackers','defenders']
+            for side in routed:
+                for unit in b[side]:
+                    hp=x['support'][str(unit['id'])]
+                    if hp['health']<=1:continue
+                    loss=equipment.retreat_cost(replace(state.officers[unit['id']],health=hp['health']),state.rng.next()%100)
+                    previous_health=hp['health']
+                    hp['health']=max(1,hp['health']-loss)
+                    if previous_health>hp['health'] and state.player in (b['attacker'],b['defender']):
+                        self._note(state,f'{self.person_name(state,unit["id"])}退却，装备负重消耗体力{previous_health-hp["health"]}。')
         lost=sum(u['start']-u['troops'] for u in b['attackers']+b['defenders'])-sum(x['surrenders'].values())
         if lost<0:raise GameError('战果兵员账本异常。')
         for u in b['attackers']+b['defenders']:
@@ -551,6 +630,9 @@ class ExpandedCampaign:
         if 'facilities' in x:
             from . import facilities
             facilities.synchronize(self,state)
+        if 'equipment' in x:
+            from . import equipment
+            equipment.synchronize(self,state)
 
     def _choose_successor(self,state,payload):
         pending=state.extension['pending_succession'].get(state.player)
@@ -592,6 +674,7 @@ class ExpandedCampaign:
                             'base_intellect':profile.intellect,
                             'study_gain':officer.profile.intellect-profile.intellect if officer else 0,
                             'health_max':profile.health_max,'affinity':profile.terrain_affinity,
+                            'equipment':equipment.initial_view(self,person.person_id),
                             'aliases':sorted(set(row.get('aliases',[])+self.catalog.data.get(
                                 'additional_person_aliases',{}).get(person.person_id,[]))),
                             'configuration':row.get('configuration',{}),
@@ -606,7 +689,7 @@ class ExpandedCampaign:
 
     def _validate_expansion(self,state):
         x=state.extension
-        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities'}
+        fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment'}
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')

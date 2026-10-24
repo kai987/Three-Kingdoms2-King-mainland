@@ -546,6 +546,7 @@ def main():
               '/domestic.js': ('domestic.js', 'text/javascript; charset=utf-8'),
               '/treasury.js': ('treasury.js', 'text/javascript; charset=utf-8'),
               '/facilities.js': ('facilities.js', 'text/javascript; charset=utf-8'),
+              '/equipment.js': ('equipment.js', 'text/javascript; charset=utf-8'),
               '/battle-scene.js': ('battle-scene.js', 'text/javascript; charset=utf-8'),
               '/battle-scene.css': ('battle-scene.css', 'text/css; charset=utf-8'),
               '/duel-appearance.js': ('duel-appearance.js', 'text/javascript; charset=utf-8'),

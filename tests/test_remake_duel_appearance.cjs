@@ -33,3 +33,24 @@ const clone=x=>JSON.parse(JSON.stringify(x)),freeze=x=>{if(x&&typeof x==='object
  vm.runInNewContext(fs.readFileSync(path.join(ROOT,'game/duel-appearance.js'),'utf8'),sandbox);await sandbox.GameDuelAppearance.load();assert.equal(sandbox.GameDuelAppearance.profile(catalog,runtime).horse,'dilu');for(let i=0;i<1100;i++)sandbox.GameDuelAppearance.profile({},i);
  console.log('duel appearance:27 stable-ID profiles,12 weapon/13 horse keys, per-person cosmetic variants, bilingual labels, generic determinism, no RNG/state writes, strict registry and bounded missing-asset fallback passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});
+
+// Actual held weapons override old visual selections; the independent horse
+// registry still controls a rider's documented mount and optional horse variant.
+(async()=>{
+ const lookup=api.create({fetch:async()=>({ok:true,json:async()=>registry})});assert.equal(await lookup.load(),true);
+ const library=Object.entries(registry.profiles).map(([person_id,profile],id)=>({id,person_id,name:profile.name}));
+ const lu=library.find(person=>person.name==='呂布'),cao=library.find(person=>person.name==='曹操'),liu=library.find(person=>person.name==='劉備');assert(lu&&cao&&liu);
+ const halberd={id:21,name_tc:'方天畫戟',name_ja:'方天画戟',family:'spear',appearance:'halberd'};
+ const sword={id:2,name_tc:'長劍',name_ja:'長剣',family:'sword',appearance:'sword'};
+ const catalog=freeze({library,equipment:{officers:{[lu.id]:{weapon:halberd},[cao.id]:{weapon:sword},[liu.id]:{weapon:{id:24,name_tc:'雙股劍',name_ja:'双股剣',family:'sword',appearance:'dual-swords'}}}}});
+ const before=JSON.stringify(catalog),physical=lookup.profile(catalog,lu.id);
+ assert.equal(physical.weapon,'halberd');assert.equal(physical.weapon_label['zh-Hant'],'方天畫戟');assert.equal(physical.weapon_label.ja,'方天画戟');assert.equal(physical.physical_equipment,true);assert.equal(physical.horse,'red-hare');assert.equal(physical.weapon_variants.length,1);
+ assert.equal(lookup.profile(catalog,lu.id,{weapon:'sword'}).weapon,'halberd','An old visual weapon choice cannot replace the actual held halberd');
+ assert.equal(lookup.profile(catalog,lu.id,{weapon:'bow'}).weapon,'halberd','An unrelated legacy selection cannot create an unowned weapon');
+ const purchased=clone(catalog);purchased.equipment.officers[lu.id].weapon=clone(sword);freeze(purchased);const purchasedBefore=JSON.stringify(purchased);
+ const replacement=lookup.profile(purchased,lu.id,{weapon:'halberd'});assert.equal(replacement.weapon,'sword');assert.equal(replacement.weapon_label['zh-Hant'],'長劍');assert.equal(replacement.horse,'red-hare','Buying a normal sword changes only the actual weapon, keeping Lü Bu’s independent mount');
+ assert.equal(lookup.profile(catalog,liu.id).weapon,'dual-swords');assert.equal(lookup.profile(catalog,liu.id).horse,'dilu');
+ for(const horse of ['jueying','zhuahuang-feidian']){const variant=lookup.profile(catalog,cao.id,{weapon:'bow',horse});assert.equal(variant.weapon,'sword');assert.equal(variant.horse,horse,'Documented horse choices remain independent of actual equipment');}
+ assert.equal(JSON.stringify(catalog),before);assert.equal(JSON.stringify(purchased),purchasedBefore);assert(Object.isFrozen(replacement));assert(Object.isFrozen(replacement.weapon_variants));
+ console.log('actual duel equipment: Lü Bu’s real halberd, purchased sword replacement, independent famous horses, inert legacy weapon choices and immutable projection passed');
+})().catch(error=>{console.error(error);process.exitCode=1;});

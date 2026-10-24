@@ -22,6 +22,12 @@ def controlled_catalog():
     # disasters and autonomous town visits have their own real-campaign tests.
     data['facility_rules']['disasters_enabled'] = False
     data['facility_ai_default'] = False
+    # Keep the established isolated battle/march oracles independent of the
+    # weighted equipment exchanges. Real catalogs and the equipment suite use
+    # actual source/signature loadouts with weighted combat enabled.
+    data['equipment_rules']['combat_enabled'] = False
+    data['equipment_initial'] = {person['person_id']:dict(weapon_id=0,armor_id=0,
+        basis='controlled_transaction_starter') for person in data['people']}
     data['factions'] = [dict(id=key, name=key, captain=name, city=city, color='#ff0000')
         for key, name, city in [('wei', '夏侯惇', 'nanyang'), ('shu', '刘备', 'xiangyang'), ('wu', '甘宁', 'jiangxia')]]
     rows = [('san14-candidate-0124', 'nanyang', 480, True),

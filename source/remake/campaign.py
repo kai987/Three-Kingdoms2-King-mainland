@@ -13,7 +13,7 @@ from threading import RLock
 from types import SimpleNamespace
 
 from .errors import GameError
-from . import civil_staff, domestic, logistics, presentation, treasures, facilities
+from . import civil_staff, domestic, logistics, presentation, treasures, facilities, equipment
 from .campaign_expansion import ExpandedCampaign
 from .travel import TravelCampaign
 from .city_economy import income_at
@@ -268,6 +268,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         for owner, policy in state.extension['treasury']['factions'].items():
             policy['enabled'] = owner != faction
         state.extension['facilities'] = facilities.empty(self,state)
+        state.extension['equipment'] = equipment.empty(self,state)
+        equipment.synchronize(self,state)
         for owner, policy in state.extension['facilities']['factions'].items():
             if owner != faction and d.get('facility_ai_default',True):
                 policy.update(enabled=True,auto_develop=True,auto_study=True,auto_trade=True,auto_equip=True)
@@ -304,6 +306,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                 'logistics':logistics.view(self,state,travel_quotes=travel.get('travel_quotes',{})),
                                 'treasury':treasures.view(self,state),
                                 'facilities':facilities.view(self,state),
+                                'equipment':equipment.view(self,state),
                                 'names': {str(i): self.person_name(state, i) for i in state.officers} if state else {}}}
 
     def command(self, kind, payload, revision):
@@ -340,7 +343,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                                   ('search_treasure','reward_officer','sell_treasure','set_governor','set_treasury_policy')},
                                **{action:self._facility_command(action) for action in
                                   ('develop_town','treat_officer','study_officer','trade_grain',
-                                   'buy_equipment','improve_prevention','set_facility_policy')}}
+                                   'buy_equipment','improve_prevention','set_facility_policy')},
+                               'equip_owned':lambda state,payload:equipment.equip_owned(self,state,payload,state.player)}
                     if kind not in methods:
                         raise GameError('未提供这项操作。')
                     methods[kind](candidate, payload)
@@ -350,6 +354,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 domestic.synchronize(self,candidate)
                 treasures.synchronize(self,candidate)
                 facilities.synchronize(self,candidate)
+                equipment.synchronize(self,candidate)
                 self.validate(candidate)
                 self.state = candidate
                 self.revision += 1
@@ -546,6 +551,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         domestic.synchronize(self,state)
         treasures.synchronize(self,state)
         facilities.synchronize(self,state)
+        equipment.synchronize(self,state)
         if logistics.due(state) or any(r['arrival_turn'] <= state.turn for r in state.extension['travel']['marches']):
             state.phase = 'arrivals'
         if not any(c.owner == state.player for c in state.cities.values()) or not any(o.alive and o.faction_id == state.player for o in state.officers.values()):
@@ -618,6 +624,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         logistics.validate(self,state)
         treasures.validate(self,state)
         facilities.validate(self,state)
+        equipment.validate(self,state)
         validate_events(self, state)
         self._validate_expansion(state)
         if state.player not in self.catalog.factions or state.phase not in {'city', 'battle', 'result', 'ai', 'finished', 'arrivals'}:
@@ -659,7 +666,7 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 raise ValueError('officer identity/profile')
             people.add(officer.person_id)
             for value, low, high in ((officer.health, 0, officer.profile.health_max), (officer.loyalty, 0, 100),
-                                     (officer.troops, 0, 999), (officer.weapon_id, 0, 23), (officer.armor_id, 0, 7),
+                                     (officer.troops, 0, 999), (officer.weapon_id, 0, len(equipment.WEAPONS)-1), (officer.armor_id, 0, len(equipment.ARMORS)-1),
                                      (officer.experience, 0, 49999), (officer.tier, 0, 7)):
                 integer(value, low, high, 'officer state')
             if officer.tier != experience_tier(officer.experience) or type(officer.alive) is not bool:

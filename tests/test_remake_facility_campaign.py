@@ -165,7 +165,7 @@ class FacilityCampaignTests(unittest.TestCase):
                 self.advance(game)
                 self.cmd(game,'improve_prevention',city='xiangyang',actor=439)
                 self.advance(game)
-                self.cmd(game,'buy_equipment',city='xiangyang',actor=439,officer=146,slot='weapon',item=23)
+                self.cmd(game,'buy_equipment',city='xiangyang',actor=439,officer=146,slot='weapon',item=21)
                 saved.append(game.export_save())
         self.assertEqual(saved[0],saved[1])
 
@@ -245,7 +245,7 @@ class FacilityCampaignTests(unittest.TestCase):
 
     def test_bought_weapon_changes_real_duel_damage_without_extra_rng(self):
         bare=self.new();armed=self.restore(bare)
-        self.cmd(armed,'buy_equipment',city='xiangyang',actor=439,officer=146,slot='weapon',item=23)
+        self.cmd(armed,'buy_equipment',city='xiangyang',actor=439,officer=146,slot='weapon',item=21)
         losses=[];rng=[]
         for game in (bare,armed):
             self.advance(game)
@@ -267,7 +267,7 @@ class FacilityCampaignTests(unittest.TestCase):
         game=self.new()
         for kind,payload in [('treat_officer',dict(city='nanyang',actor=123,officer=123)),
                 ('study_officer',dict(city='xiangyang',actor=123,officer=146)),
-                ('buy_equipment',dict(city='xiangyang',actor=439,officer=123,slot='weapon',item=23)),
+                ('buy_equipment',dict(city='xiangyang',actor=439,officer=123,slot='weapon',item=21)),
                 ('improve_prevention',dict(city='xiangyang',actor=True)),
                 ('set_facility_policy',dict(faction='wei',policy=dict(enabled=True)))]:
             self.fails(game,kind,**payload)

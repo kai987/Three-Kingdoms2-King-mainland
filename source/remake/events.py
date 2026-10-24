@@ -31,6 +31,7 @@ FACILITY_DETAILS = {
     'city_disaster': {'disaster','gold','grain','reserves','rate','preparedness_before',
         'preparedness_after','damage_before','damage_after'},
 }
+EQUIPMENT_DETAILS = {'actor','target','from_person','slot','item','previous','method','battle_id','chance','roll'}
 SUPPLY_KINDS = {'march_resupplied', 'march_starvation', 'march_retreat'}
 SUPPLY_DETAILS = {'unit_kind', 'unit_id', 'grain', 'lost', 'shortage_days', 'reason'}
 SUPPLY_REASONS = {'city', 'convoy', 'cargo', 'shortage', 'route_blocked',
@@ -59,8 +60,29 @@ DETAILS = {
     **{kind: set(SUPPLY_DETAILS) for kind in SUPPLY_KINDS},
     **TREASURY_DETAILS,
     **FACILITY_DETAILS,
+    'equipment_acquired':EQUIPMENT_DETAILS,
     'domestic_report': {'gold','grain','reserves','morale','cities','reason'},
 }
+
+
+def _validate_equipment_event(row):
+    from .facility_equipment import WEAPONS, ARMORS
+    d=row['details']
+    if (set(d)!=EQUIPMENT_DETAILS or row['audience']!='player' or len(row['city_ids'])!=1
+            or len(row['factions'])!=1 or d['slot'] not in ('weapon','armor')
+            or row['person_ids']!=list(dict.fromkeys([d['actor'],d['target'],d['from_person']]))):
+        raise ValueError('Equipment acquisition fields')
+    maximum=len(WEAPONS if d['slot']=='weapon' else ARMORS)-1
+    if (any(type(d[key]) is not int or not 0<=d[key]<=maximum for key in ('item','previous'))
+            or d['item']==d['previous'] or type(d['chance']) is not int or type(d['roll']) is not int):
+        raise ValueError('Equipment acquisition item')
+    if d['method']=='owned':
+        valid=d['from_person']==d['target'] and d['battle_id'] is None and d['chance']==0 and d['roll']==-1
+    else:
+        valid=(d['method']=='duel' and d['actor']==d['target'] and d['from_person']!=d['target']
+            and isinstance(d['battle_id'],str) and re.fullmatch(r'battle-[1-9][0-9]{0,9}',d['battle_id'])
+            and d['chance'] in (30,50,100) and (d['roll']==-1 if d['chance']==100 else 0<=d['roll']<d['chance']))
+    if not valid:raise ValueError('Equipment acquisition receipt')
 
 
 def _validate_facility_event(row):
@@ -85,8 +107,10 @@ def _validate_facility_event(row):
         valid=(d['direction'] in ('buy','sell') and number('batches',1,1000)
             and number('rate',1,100) and d['grain']==d['batches']*100 and d['gold']==d['batches']*d['rate'])
     elif kind=='equipment_bought':
-        valid=(d['slot'] in ('weapon','armor') and number('item',0,23 if d['slot']=='weapon' else 7)
-            and number('previous',0,23 if d['slot']=='weapon' else 7) and d['item']!=d['previous'] and d['gold']>0)
+        from .facility_equipment import WEAPONS, ARMORS
+        maximum=len(WEAPONS if d['slot']=='weapon' else ARMORS)-1
+        valid=(d['slot'] in ('weapon','armor') and number('item',0,maximum)
+            and number('previous',0,maximum) and d['item']!=d['previous'] and d['gold']>0)
     else:
         valid=all(number(key,0,99) for key in ('preparedness_before','preparedness_after'))
         valid=valid and all(number(key,0,50) for key in ('damage_before','damage_after'))
@@ -353,7 +377,7 @@ def validate(campaign, state):
             if value is None or type(value) is bool:
                 return True
             if type(value) is int:
-                return 0 <= value <= 2**53-1
+                return (-1 if row['kind']=='equipment_acquired' else 0) <= value <= 2**53-1
             if isinstance(value, str):
                 return len(value) <= 500
             if isinstance(value, list):
@@ -371,6 +395,8 @@ def validate(campaign, state):
             _validate_treasury_event(row)
         if row['kind'] in FACILITY_DETAILS:
             _validate_facility_event(row)
+        if row['kind']=='equipment_acquired':
+            _validate_equipment_event(row)
         if row['kind'] in TRANSPORT_KINDS:
             if (set(row['details']) != TRANSPORT_DETAILS
                     or type(row['details']['treasure']) is not int

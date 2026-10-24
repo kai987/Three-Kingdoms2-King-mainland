@@ -400,7 +400,7 @@
    if(!ids.length){box.innerHTML='';loadoutSignature='';return;}
    const signature=JSON.stringify([ids,locale(),disabled,ids.map(id=>{const p=duelProfile(id);return p?[p.weapon,p.horse]:null;})]);if(signature===loadoutSignature)return;
    loadoutSignature=signature;const open=box.querySelector?.('details')?.open===true;
-   box.innerHTML=`<details ${open?'open':''}><summary>${text('單挑外觀（不影響能力）','一騎討ちの外見（能力への影響なし）')}</summary><div class="duel-loadout-grid">${ids.map(id=>{
+   box.innerHTML=`<details ${open?'open':''}><summary>${text('單挑裝備與坐騎（兵器依實際裝備）','一騎討ちの装備と騎馬（武器は実装備に対応）')}</summary><div class="duel-loadout-grid">${ids.map(id=>{
     const p=duelProfile(id);if(!p)return '';
     return `<fieldset><legend>${esc(person(id))}</legend>${['weapon','horse'].map(field=>{
      const rows=p[field+'_variants']||[{key:p[field],label:p[field+'_label']}];

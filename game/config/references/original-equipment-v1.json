@@ -1,0 +1,2277 @@
+{
+  "schema": "tk2-original-equipment-v1",
+  "source_file": "game/config/references/cnblogs-officer-stats.json",
+  "source_file_sha256": "e1917f03558182172154e3a9b2a5cc5da13ba6e9c0d83668af4feade51a4c310",
+  "source": {
+    "page_url": "https://www.cnblogs.com/strick/p/10171248.html",
+    "archive_url": "https://files-cdn.cnblogs.com/files/strick/霸王的大陆武将.zip",
+    "archive_sha256": "6dff28ec4bb74776de6cb6e232388e7210982e8e1761adff45a73adccc2933b0",
+    "member_sha256": "231c554b6de801ecf9d2387e42b549ce49a3e12ae94dd237a8e6153f1bb18187",
+    "provenance": "Third-party original-FC game-stat transcription, not an official export or an independently re-extracted ROM equipment table."
+  },
+  "identity_policy": "Reuse the 223 previously reviewed person_id bindings in the source file; no fuzzy, statistical, portrait or ordinal join.",
+  "field_policy": "Original equipment labels are retained exactly and mapped through explicit spelling aliases to existing zero-based weapon/armor IDs. No iconic novel overrides, new item stats or unrelated source fields are introduced.",
+  "weapon_aliases": {
+    "短剣": 0,
+    "飞剣": 1,
+    "长剣": 2,
+    "破斩剣": 3,
+    "大剣": 4,
+    "薤刀": 8,
+    "眉尖刀": 9,
+    "三尖刀": 10,
+    "钩镰刀": 11,
+    "偃月刀": 12,
+    "鳯嘴刀": 13,
+    "矛": 16,
+    "双戟": 17,
+    "単钩鎗": 18,
+    "戦斧": 19,
+    "双钩鎗": 20,
+    "方天画戟": 21
+  },
+  "armor_aliases": {
+    "纶巾": 0,
+    "笼手": 1,
+    "兜": 2,
+    "硬皮": 3,
+    "鹤氅": 4,
+    "甲胄": 5
+  },
+  "source_records": 237,
+  "bound_people": 223,
+  "unbound_source_records": 14,
+  "factual_records_sha256": "838143a3bb653f6375c8eb7830823251c6ccca760b206ae271632ec20c9530c9",
+  "records": [
+    {
+      "person_id": "san14-candidate-0952",
+      "source_row_id": "cnblogs-line-0003",
+      "source_name": "刘备",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0656",
+      "source_row_id": "cnblogs-line-0004",
+      "source_name": "张飞",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0147",
+      "source_row_id": "cnblogs-line-0005",
+      "source_name": "关羽",
+      "weapon_label": "偃月刀",
+      "weapon_id": 12,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0521",
+      "source_row_id": "cnblogs-line-0007",
+      "source_name": "曹操",
+      "weapon_label": "破斩剣",
+      "weapon_id": 3,
+      "armor_label": "甲胄",
+      "armor_id": 5,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0518",
+      "source_row_id": "cnblogs-line-0008",
+      "source_name": "曹仁",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0511",
+      "source_row_id": "cnblogs-line-0009",
+      "source_name": "曹洪",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0102",
+      "source_row_id": "cnblogs-line-0010",
+      "source_name": "乐进",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0016",
+      "source_row_id": "cnblogs-line-0011",
+      "source_name": "于禁",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0124",
+      "source_row_id": "cnblogs-line-0012",
+      "source_name": "夏候敦",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0114",
+      "source_row_id": "cnblogs-line-0013",
+      "source_name": "夏侯渊",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0035",
+      "source_row_id": "cnblogs-line-0015",
+      "source_name": "袁绍",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0812",
+      "source_row_id": "cnblogs-line-0016",
+      "source_name": "文丑",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0186",
+      "source_row_id": "cnblogs-line-0017",
+      "source_name": "颜良",
+      "weapon_label": "钩镰刀",
+      "weapon_id": 11,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0281",
+      "source_row_id": "cnblogs-line-0018",
+      "source_name": "高览",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0464",
+      "source_row_id": "cnblogs-line-0019",
+      "source_name": "审配",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0037",
+      "source_row_id": "cnblogs-line-0020",
+      "source_name": "袁谭",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0822",
+      "source_row_id": "cnblogs-line-0021",
+      "source_name": "逢纪",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0029",
+      "source_row_id": "cnblogs-line-0022",
+      "source_name": "袁熙",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0535",
+      "source_row_id": "cnblogs-line-0023",
+      "source_name": "沮授",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0713",
+      "source_row_id": "cnblogs-line-0024",
+      "source_name": "田丰",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0105",
+      "source_row_id": "cnblogs-line-0025",
+      "source_name": "郭图",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0557",
+      "source_row_id": "cnblogs-line-0027",
+      "source_name": "孙策",
+      "weapon_label": "大剣",
+      "weapon_id": 4,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0176",
+      "source_row_id": "cnblogs-line-0028",
+      "source_name": "韩当",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0686",
+      "source_row_id": "cnblogs-line-0029",
+      "source_name": "陈武",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0390",
+      "source_row_id": "cnblogs-line-0030",
+      "source_name": "朱治",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0703",
+      "source_row_id": "cnblogs-line-0031",
+      "source_name": "程普",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0370",
+      "source_row_id": "cnblogs-line-0032",
+      "source_name": "周善",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0247",
+      "source_row_id": "cnblogs-line-0033",
+      "source_name": "黄盖",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0586",
+      "source_row_id": "cnblogs-line-0034",
+      "source_name": "太史慈",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0736",
+      "source_row_id": "cnblogs-line-0036",
+      "source_name": "董卓",
+      "weapon_label": "大剣",
+      "weapon_id": 4,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0144",
+      "source_row_id": "cnblogs-line-0037",
+      "source_name": "华雄",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0987",
+      "source_row_id": "cnblogs-line-0038",
+      "source_name": "吕布",
+      "weapon_label": "方天画戟",
+      "weapon_id": 21,
+      "armor_label": "甲胄",
+      "armor_id": 5,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0782",
+      "source_row_id": "cnblogs-line-0039",
+      "source_name": "樊稠",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0097",
+      "source_row_id": "cnblogs-line-0040",
+      "source_name": "郭汜",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0638",
+      "source_row_id": "cnblogs-line-0041",
+      "source_name": "张济",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0428",
+      "source_row_id": "cnblogs-line-0042",
+      "source_name": "徐荣",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0092",
+      "source_row_id": "cnblogs-line-0043",
+      "source_name": "贾诩",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0907",
+      "source_row_id": "cnblogs-line-0044",
+      "source_name": "李儒",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0893",
+      "source_row_id": "cnblogs-line-0045",
+      "source_name": "李傕",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0938",
+      "source_row_id": "cnblogs-line-0047",
+      "source_name": "刘璋",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0849",
+      "source_row_id": "cnblogs-line-0048",
+      "source_name": "孟达",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0241",
+      "source_row_id": "cnblogs-line-0049",
+      "source_name": "吴懿",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0315",
+      "source_row_id": "cnblogs-line-0050",
+      "source_name": "吴兰",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0250",
+      "source_row_id": "cnblogs-line-0051",
+      "source_name": "黄权",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0073",
+      "source_row_id": "cnblogs-line-0052",
+      "source_name": "王甫",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0827",
+      "source_row_id": "cnblogs-line-0053",
+      "source_name": "法正",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0632",
+      "source_row_id": "cnblogs-line-0054",
+      "source_name": "张松",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0231",
+      "source_row_id": "cnblogs-line-0055",
+      "source_name": "严颜",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0637",
+      "source_row_id": "cnblogs-line-0056",
+      "source_name": "张任",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0886",
+      "source_row_id": "cnblogs-line-0057",
+      "source_name": "雷铜",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0771",
+      "source_row_id": "cnblogs-line-0059",
+      "source_name": "马腾",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0693",
+      "source_row_id": "cnblogs-line-0060",
+      "source_name": "程银",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0603",
+      "source_row_id": "cnblogs-line-0061",
+      "source_name": "张横",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0166",
+      "source_row_id": "cnblogs-line-0063",
+      "source_name": "韩遂",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0259",
+      "source_row_id": "cnblogs-line-0064",
+      "source_name": "侯选",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0474",
+      "source_row_id": "cnblogs-line-0065",
+      "source_name": "成宜",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0879",
+      "source_row_id": "cnblogs-line-0071",
+      "source_name": "杨阜",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0681",
+      "source_row_id": "cnblogs-line-0072",
+      "source_name": "陈震",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0507",
+      "source_row_id": "cnblogs-line-0074",
+      "source_name": "宋宪",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0687",
+      "source_row_id": "cnblogs-line-0075",
+      "source_name": "陈兰",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0258",
+      "source_row_id": "cnblogs-line-0076",
+      "source_name": "侯成",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0248",
+      "source_row_id": "cnblogs-line-0077",
+      "source_name": "高干",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0651",
+      "source_row_id": "cnblogs-line-0078",
+      "source_name": "张南",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0718",
+      "source_row_id": "cnblogs-line-0079",
+      "source_name": "董允",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0038",
+      "source_row_id": "cnblogs-line-0080",
+      "source_name": "阎圃",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0977",
+      "source_row_id": "cnblogs-line-0081",
+      "source_name": "吕凯",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0983",
+      "source_row_id": "cnblogs-line-0082",
+      "source_name": "吕旷",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0005",
+      "source_row_id": "cnblogs-line-0083",
+      "source_name": "伊籍",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0913",
+      "source_row_id": "cnblogs-line-0084",
+      "source_name": "李典",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0393",
+      "source_row_id": "cnblogs-line-0085",
+      "source_name": "荀彧",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0552",
+      "source_row_id": "cnblogs-line-0086",
+      "source_name": "孙乾",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0218",
+      "source_row_id": "cnblogs-line-0087",
+      "source_name": "妫览",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0949",
+      "source_row_id": "cnblogs-line-0088",
+      "source_name": "刘度",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0158",
+      "source_row_id": "cnblogs-line-0089",
+      "source_name": "韩玄",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0986",
+      "source_row_id": "cnblogs-line-0090",
+      "source_name": "吕范",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0086",
+      "source_row_id": "cnblogs-line-0091",
+      "source_name": "贾华",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0225",
+      "source_row_id": "cnblogs-line-0092",
+      "source_name": "虞翻",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0235",
+      "source_row_id": "cnblogs-line-0093",
+      "source_name": "严峻",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0712",
+      "source_row_id": "cnblogs-line-0095",
+      "source_name": "田畴",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0185",
+      "source_row_id": "cnblogs-line-0096",
+      "source_name": "简雍",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0596",
+      "source_row_id": "cnblogs-line-0097",
+      "source_name": "赵云",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0264",
+      "source_row_id": "cnblogs-line-0098",
+      "source_name": "公孙康",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0100",
+      "source_row_id": "cnblogs-line-0099",
+      "source_name": "郝昭",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0333",
+      "source_row_id": "cnblogs-line-0100",
+      "source_name": "史涣",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0084",
+      "source_row_id": "cnblogs-line-0101",
+      "source_name": "蒯越",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0296",
+      "source_row_id": "cnblogs-line-0102",
+      "source_name": "胡车儿",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0217",
+      "source_row_id": "cnblogs-line-0103",
+      "source_name": "许攸",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0798",
+      "source_row_id": "cnblogs-line-0104",
+      "source_name": "武安国",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0078",
+      "source_row_id": "cnblogs-line-0105",
+      "source_name": "王累",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0597",
+      "source_row_id": "cnblogs-line-0106",
+      "source_name": "张卫",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0272",
+      "source_row_id": "cnblogs-line-0108",
+      "source_name": "高定",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0814",
+      "source_row_id": "cnblogs-line-0110",
+      "source_name": "文聘",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0371",
+      "source_row_id": "cnblogs-line-0111",
+      "source_name": "周仓",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0709",
+      "source_row_id": "cnblogs-line-0112",
+      "source_name": "典韦",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0689",
+      "source_row_id": "cnblogs-line-0113",
+      "source_name": "程昱",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0442",
+      "source_row_id": "cnblogs-line-0114",
+      "source_name": "徐晃",
+      "weapon_label": "戦斧",
+      "weapon_id": 19,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0793",
+      "source_row_id": "cnblogs-line-0115",
+      "source_name": "糜竺",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0591",
+      "source_row_id": "cnblogs-line-0117",
+      "source_name": "谭雄",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0179",
+      "source_row_id": "cnblogs-line-0118",
+      "source_name": "甘宁",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0389",
+      "source_row_id": "cnblogs-line-0119",
+      "source_name": "朱然",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0091",
+      "source_row_id": "cnblogs-line-0120",
+      "source_name": "华歆",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0901",
+      "source_row_id": "cnblogs-line-0121",
+      "source_name": "陆绩",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0085",
+      "source_row_id": "cnblogs-line-0128",
+      "source_name": "蒯良",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0887",
+      "source_row_id": "cnblogs-line-0129",
+      "source_name": "雷薄",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0618",
+      "source_row_id": "cnblogs-line-0130",
+      "source_name": "张郃",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0395",
+      "source_row_id": "cnblogs-line-0131",
+      "source_name": "淳于琼",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0215",
+      "source_row_id": "cnblogs-line-0132",
+      "source_name": "许褚",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0863",
+      "source_row_id": "cnblogs-line-0133",
+      "source_name": "杨洪",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0463",
+      "source_row_id": "cnblogs-line-0134",
+      "source_name": "申耽",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0855",
+      "source_row_id": "cnblogs-line-0135",
+      "source_name": "雍圃",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0795",
+      "source_row_id": "cnblogs-line-0137",
+      "source_name": "糜芳",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0378",
+      "source_row_id": "cnblogs-line-0138",
+      "source_name": "周鲂",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0373",
+      "source_row_id": "cnblogs-line-0139",
+      "source_name": "周泰",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0484",
+      "source_row_id": "cnblogs-line-0140",
+      "source_name": "薛综",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0705",
+      "source_row_id": "cnblogs-line-0141",
+      "source_name": "程乘",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0914",
+      "source_row_id": "cnblogs-line-0143",
+      "source_name": "李孚",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0317",
+      "source_row_id": "cnblogs-line-0145",
+      "source_name": "崔琰",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0184",
+      "source_row_id": "cnblogs-line-0146",
+      "source_name": "韩猛",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0980",
+      "source_row_id": "cnblogs-line-0148",
+      "source_name": "吕虔",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0460",
+      "source_row_id": "cnblogs-line-0149",
+      "source_name": "任峻",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0465",
+      "source_row_id": "cnblogs-line-0150",
+      "source_name": "辛昆",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0758",
+      "source_row_id": "cnblogs-line-0151",
+      "source_name": "马延",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0096",
+      "source_row_id": "cnblogs-line-0152",
+      "source_name": "鄂焕",
+      "weapon_label": "方天画戟",
+      "weapon_id": 21,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0446",
+      "source_row_id": "cnblogs-line-0153",
+      "source_name": "徐庶",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0197",
+      "source_row_id": "cnblogs-line-0154",
+      "source_name": "牛金",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0095",
+      "source_row_id": "cnblogs-line-0155",
+      "source_name": "郭嘉",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0189",
+      "source_row_id": "cnblogs-line-0156",
+      "source_name": "魏延",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0537",
+      "source_row_id": "cnblogs-line-0157",
+      "source_name": "苏飞",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0957",
+      "source_row_id": "cnblogs-line-0158",
+      "source_name": "留平",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0379",
+      "source_row_id": "cnblogs-line-0159",
+      "source_name": "周瑜",
+      "weapon_label": "破斩剣",
+      "weapon_id": 3,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0381",
+      "source_row_id": "cnblogs-line-0160",
+      "source_name": "朱恒",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0781",
+      "source_row_id": "cnblogs-line-0161",
+      "source_name": "藩璋",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0759",
+      "source_row_id": "cnblogs-line-0162",
+      "source_name": "马玩",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0233",
+      "source_row_id": "cnblogs-line-0163",
+      "source_name": "严纲",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0769",
+      "source_row_id": "cnblogs-line-0168",
+      "source_name": "马超",
+      "weapon_label": "戦斧",
+      "weapon_id": 19,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0830",
+      "source_row_id": "cnblogs-line-0169",
+      "source_name": "庞德",
+      "weapon_label": "鳯嘴刀",
+      "weapon_id": 13,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0178",
+      "source_row_id": "cnblogs-line-0170",
+      "source_name": "韩德",
+      "weapon_label": "戦斧",
+      "weapon_id": 19,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0219",
+      "source_row_id": "cnblogs-line-0171",
+      "source_name": "纪灵",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0466",
+      "source_row_id": "cnblogs-line-0172",
+      "source_name": "辛评",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0006",
+      "source_row_id": "cnblogs-line-0173",
+      "source_name": "尹楷",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0904",
+      "source_row_id": "cnblogs-line-0174",
+      "source_name": "李严",
+      "weapon_label": "钩镰刀",
+      "weapon_id": 11,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0010",
+      "source_row_id": "cnblogs-line-0175",
+      "source_name": "尹赏",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0613",
+      "source_row_id": "cnblogs-line-0176",
+      "source_name": "张嶷",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0053",
+      "source_row_id": "cnblogs-line-0177",
+      "source_name": "王粲",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0663",
+      "source_row_id": "cnblogs-line-0178",
+      "source_name": "张辽",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0407",
+      "source_row_id": "cnblogs-line-0179",
+      "source_name": "蒋干",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0392",
+      "source_row_id": "cnblogs-line-0180",
+      "source_name": "朱灵",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0271",
+      "source_row_id": "cnblogs-line-0181",
+      "source_name": "黄忠",
+      "weapon_label": "钩镰刀",
+      "weapon_id": 11,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0449",
+      "source_row_id": "cnblogs-line-0182",
+      "source_name": "徐盛",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0997",
+      "source_row_id": "cnblogs-line-0183",
+      "source_name": "鲁肃",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0775",
+      "source_row_id": "cnblogs-line-0184",
+      "source_name": "万彧",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0072",
+      "source_row_id": "cnblogs-line-0185",
+      "source_name": "王平",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0662",
+      "source_row_id": "cnblogs-line-0186",
+      "source_name": "张翼",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0003",
+      "source_row_id": "cnblogs-line-0187",
+      "source_name": "韦康",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0968",
+      "source_row_id": "cnblogs-line-0188",
+      "source_name": "廖化",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0766",
+      "source_row_id": "cnblogs-line-0192",
+      "source_name": "马岱",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0440",
+      "source_row_id": "cnblogs-line-0193",
+      "source_name": "诸葛亮",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "鹤氅",
+      "armor_id": 4,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0344",
+      "source_row_id": "cnblogs-line-0194",
+      "source_name": "司马懿",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0731",
+      "source_row_id": "cnblogs-line-0195",
+      "source_name": "董袭",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0432",
+      "source_row_id": "cnblogs-line-0196",
+      "source_name": "诸葛瑾",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0399",
+      "source_row_id": "cnblogs-line-0198",
+      "source_name": "荀谌",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0984",
+      "source_row_id": "cnblogs-line-0199",
+      "source_name": "吕翔",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0111",
+      "source_row_id": "cnblogs-line-0200",
+      "source_name": "郭淮",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0496",
+      "source_row_id": "cnblogs-line-0201",
+      "source_name": "全琮",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0845",
+      "source_row_id": "cnblogs-line-0202",
+      "source_name": "孟获",
+      "weapon_label": "钩镰刀",
+      "weapon_id": 11,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0802",
+      "source_row_id": "cnblogs-line-0203",
+      "source_name": "傅婴",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0969",
+      "source_row_id": "cnblogs-line-0204",
+      "source_name": "梁兴",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0023",
+      "source_row_id": "cnblogs-line-0210",
+      "source_name": "越吉",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0770",
+      "source_row_id": "cnblogs-line-0211",
+      "source_name": "马铁",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0410",
+      "source_row_id": "cnblogs-line-0212",
+      "source_name": "蒋义渠",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0067",
+      "source_row_id": "cnblogs-line-0213",
+      "source_name": "王忠",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0764",
+      "source_row_id": "cnblogs-line-0214",
+      "source_name": "马遵",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0787",
+      "source_row_id": "cnblogs-line-0215",
+      "source_name": "费帏",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0729",
+      "source_row_id": "cnblogs-line-0216",
+      "source_name": "邓芝",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0891",
+      "source_row_id": "cnblogs-line-0217",
+      "source_name": "李异",
+      "weapon_label": "戦斧",
+      "weapon_id": 19,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0126",
+      "source_row_id": "cnblogs-line-0219",
+      "source_name": "夏侯楙",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0866",
+      "source_row_id": "cnblogs-line-0220",
+      "source_name": "杨修",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0828",
+      "source_row_id": "cnblogs-line-0221",
+      "source_name": "庞统",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0774",
+      "source_row_id": "cnblogs-line-0222",
+      "source_name": "马良",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0765",
+      "source_row_id": "cnblogs-line-0223",
+      "source_name": "马谡",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0850",
+      "source_row_id": "cnblogs-line-0224",
+      "source_name": "孟优",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0856",
+      "source_row_id": "cnblogs-line-0225",
+      "source_name": "杨仪",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0255",
+      "source_row_id": "cnblogs-line-0226",
+      "source_name": "高翔",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0391",
+      "source_row_id": "cnblogs-line-0227",
+      "source_name": "朱褒",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0688",
+      "source_row_id": "cnblogs-line-0228",
+      "source_name": "陈琳",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0553",
+      "source_row_id": "cnblogs-line-0231",
+      "source_name": "孙权",
+      "weapon_label": "破斩剣",
+      "weapon_id": 3,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0760",
+      "source_row_id": "cnblogs-line-0232",
+      "source_name": "马休",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0314",
+      "source_row_id": "cnblogs-line-0233",
+      "source_name": "顾雍",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0001",
+      "source_row_id": "cnblogs-line-0235",
+      "source_name": "阿会喃",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0183",
+      "source_row_id": "cnblogs-line-0236",
+      "source_name": "关平",
+      "weapon_label": "薤刀",
+      "weapon_id": 8,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0974",
+      "source_row_id": "cnblogs-line-0237",
+      "source_name": "凌统",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0962",
+      "source_row_id": "cnblogs-line-0238",
+      "source_name": "刘晔",
+      "weapon_label": "飞剣",
+      "weapon_id": 1,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0405",
+      "source_row_id": "cnblogs-line-0239",
+      "source_name": "蒋琬",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0307",
+      "source_row_id": "cnblogs-line-0240",
+      "source_name": "兀突骨",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0262",
+      "source_row_id": "cnblogs-line-0241",
+      "source_name": "公孙渊",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0576",
+      "source_row_id": "cnblogs-line-0243",
+      "source_name": "孙诩",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0959",
+      "source_row_id": "cnblogs-line-0244",
+      "source_name": "刘封",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0140",
+      "source_row_id": "cnblogs-line-0245",
+      "source_name": "贾范",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0988",
+      "source_row_id": "cnblogs-line-0246",
+      "source_name": "吕蒙",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0517",
+      "source_row_id": "cnblogs-line-0251",
+      "source_name": "曹真",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0138",
+      "source_row_id": "cnblogs-line-0252",
+      "source_name": "雅丹",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0579",
+      "source_row_id": "cnblogs-line-0253",
+      "source_name": "孙礼",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0902",
+      "source_row_id": "cnblogs-line-0254",
+      "source_name": "陆逊",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0066",
+      "source_row_id": "cnblogs-line-0255",
+      "source_name": "王双",
+      "weapon_label": "钩镰刀",
+      "weapon_id": 11,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0838",
+      "source_row_id": "cnblogs-line-0256",
+      "source_name": "步隙",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0505",
+      "source_row_id": "cnblogs-line-0258",
+      "source_name": "曹休",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0526",
+      "source_row_id": "cnblogs-line-0260",
+      "source_name": "曹丕",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0658",
+      "source_row_id": "cnblogs-line-0262",
+      "source_name": "张苞",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0515",
+      "source_row_id": "cnblogs-line-0263",
+      "source_name": "曹彰",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0127",
+      "source_row_id": "cnblogs-line-0264",
+      "source_name": "夏侯兰",
+      "weapon_label": "矛",
+      "weapon_id": 16,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0161",
+      "source_row_id": "cnblogs-line-0266",
+      "source_name": "关兴",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0516",
+      "source_row_id": "cnblogs-line-0267",
+      "source_name": "曹植",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0162",
+      "source_row_id": "cnblogs-line-0269",
+      "source_name": "关索",
+      "weapon_label": "三尖刀",
+      "weapon_id": 10,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0531",
+      "source_row_id": "cnblogs-line-0270",
+      "source_name": "曹熊",
+      "weapon_label": "短剣",
+      "weapon_id": 0,
+      "armor_label": "纶巾",
+      "armor_id": 0,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0346",
+      "source_row_id": "cnblogs-line-0272",
+      "source_name": "司马师",
+      "weapon_label": "双戟",
+      "weapon_id": 17,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0125",
+      "source_row_id": "cnblogs-line-0273",
+      "source_name": "夏侯霸",
+      "weapon_label": "眉尖刀",
+      "weapon_id": 9,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0720",
+      "source_row_id": "cnblogs-line-0274",
+      "source_name": "邓艾",
+      "weapon_label": "钩镰刀",
+      "weapon_id": 11,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0348",
+      "source_row_id": "cnblogs-line-0276",
+      "source_name": "司马昭",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0406",
+      "source_row_id": "cnblogs-line-0277",
+      "source_name": "钟会",
+      "weapon_label": "钩镰刀",
+      "weapon_id": 11,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0203",
+      "source_row_id": "cnblogs-line-0278",
+      "source_name": "姜维",
+      "weapon_label": "双钩鎗",
+      "weapon_id": 20,
+      "armor_label": "甲胄",
+      "armor_id": 5,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0501",
+      "source_row_id": "cnblogs-line-0280",
+      "source_name": "曹叡",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "硬皮",
+      "armor_id": 3,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0437",
+      "source_row_id": "cnblogs-line-0281",
+      "source_name": "诸葛瞻",
+      "weapon_label": "长剣",
+      "weapon_id": 2,
+      "armor_label": "兜",
+      "armor_id": 2,
+      "basis": "cnblogs_original_equipment_transcription"
+    },
+    {
+      "person_id": "san14-candidate-0430",
+      "source_row_id": "cnblogs-line-0282",
+      "source_name": "诸葛恪",
+      "weapon_label": "単钩鎗",
+      "weapon_id": 18,
+      "armor_label": "笼手",
+      "armor_id": 1,
+      "basis": "cnblogs_original_equipment_transcription"
+    }
+  ]
+}

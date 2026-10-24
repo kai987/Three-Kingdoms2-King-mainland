@@ -1,5 +1,5 @@
-/* Novel-based presentation only. This registry never grants equipment, changes
- * battle statistics, writes a save, or consumes the campaign random stream. */
+/* Horse art follows the novel registry; weapons follow authoritative equipment.
+ * Rendering never grants items, changes a save or consumes campaign RNG. */
 'use strict';
 (function(root){
  const INDEX='/config/duel-appearances.json';
@@ -53,10 +53,16 @@
    return map.get(String(id))||null;
   }
   function profile(catalog,id,selection){
-   const person=personId(catalog,id),known=person&&profiles[person];if(known)return select(known,selection);
+   const person=personId(catalog,id),known=person&&profiles[person];
    const hash=identityHash(person||'runtime:'+String(id)),weapon=['spear','sword','axe','dual-axes'][hash%4],horse=['chestnut','white','black'][(hash>>>4)%3];
    const weaponLabel=labels(null,weapon),horseLabel=labels(null,horse);
-   return select(Object.freeze({person_id:person,name:'',weapon,horse,weapon_label:weaponLabel,horse_label:horseLabel,weapon_variants:variants(undefined,weapon,weaponLabel,WEAPONS),horse_variants:variants(undefined,horse,horseLabel,HORSES),documented:false}),selection);
+   const base=known||Object.freeze({person_id:person,name:'',weapon,horse,weapon_label:weaponLabel,horse_label:horseLabel,weapon_variants:variants(undefined,weapon,weaponLabel,WEAPONS),horse_variants:variants(undefined,horse,horseLabel,HORSES),documented:false});
+   const actual=catalog?.equipment?.officers?.[String(id)]?.weapon;
+   if(!actual)return select(base,selection);
+   const kind=WEAPONS.includes(actual.appearance)?actual.appearance:actual.family==='sword'?'sword':actual.family==='blade'?'guandao':'spear';
+   const actualLabel=Object.freeze({'zh-Hant':actual.name_tc,ja:actual.name_ja});
+   const chosen=select(base,selection?{horse:selection.horse??base.horse}:undefined);
+   return Object.freeze({...chosen,weapon:kind,weapon_label:actualLabel,weapon_variants:Object.freeze([Object.freeze({key:kind,label:actualLabel})]),physical_equipment:true});
   }
   async function load(){
    if(pending)return pending;status='loading';

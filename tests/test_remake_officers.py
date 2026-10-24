@@ -196,7 +196,7 @@ class InitializationTests(unittest.TestCase):
     def test_equipment_troops_and_xp_boundaries(self):
         p = person()
         profile = OfficerProfile(75, 80, 90, 70, 2)
-        for options in ({'troops': 1000}, {'weapon_id': 24}, {'armor_id': 8}, {'experience': 50000}):
+        for options in ({'troops': 1000}, {'weapon_id': 29}, {'armor_id': 8}, {'experience': 50000}):
             with self.assertRaises(ValueError):
                 initialize_officer(p, 0, profile, year=200, **options)
         self.assertEqual(experience_tier(999), 0)

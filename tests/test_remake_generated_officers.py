@@ -180,7 +180,7 @@ class GeneratedOfficerTests(unittest.TestCase):
             person = invalid['state']['officers'][ident]
             if field == 'profile': person['profile']['martial_strength'] += 1
             elif field == 'runtime_id': person['runtime_id'] = 1023
-            else: person['weapon_id'] = 24
+            else: person['weapon_id'] = 29
             invalid['checksum'] = digest({k: v for k, v in invalid.items() if k != 'checksum'})
             with self.subTest(field=field), self.assertRaises(GameError):
                 game.load_save(invalid, game.revision)

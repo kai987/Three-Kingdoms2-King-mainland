@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / 'source'), str(ROOT / 'tests')]
 from remake.campaign import Campaign, Catalog, digest
 from remake.errors import GameError
-from remake import civil_staff, domestic, logistics, treasures
+from remake import civil_staff, domestic, equipment, logistics, treasures
 from remake.officers import YearState, initialize_officer, year_state
 from test_remake_domestic import domestic_catalog
 
@@ -54,6 +54,8 @@ class LogisticsTests(unittest.TestCase):
         logistics.synchronize(game, game.state)
         domestic.synchronize(game, game.state)
         treasures.synchronize(game, game.state)
+        if 'equipment' in game.state.extension:
+            equipment.synchronize(game, game.state)
 
     def fill(self, game, city_id, count):
         city = game.state.cities[city_id]
