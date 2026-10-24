@@ -4,7 +4,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'game/app.js'),'utf8');
 const elements=new Map(),element=selector=>{
  if(selector==='#transfer-estimate'||selector==='#route-mode')return null;
- if(!elements.has(selector))elements.set(selector,{innerHTML:'',value:'',disabled:false,classList:{add(){},remove(){}},setAttribute(){},focus(){}});
+ if(!elements.has(selector))elements.set(selector,{innerHTML:'',value:'',disabled:false,attributes:{},classList:{add(){},remove(){}},setAttribute(key,value){this.attributes[key]=String(value);},focus(){this.focused=true;}});
  return elements.get(selector);
 };
 let picked=[],lastDialog=null,lastNotice=null,lastCommand=null;
@@ -80,7 +80,38 @@ async function weightedTransferChecks(){
  context.renderCity();
  assert(element('#inspector').innerHTML.includes('id="recruit-officer" disabled'),'A full city cannot start another recruitment');
  assert(element('#inspector').innerHTML.includes('驻城 99/99；每方出战上限10人。'));
- assert.equal((element('#inspector').innerHTML.match(/<tr title=/g)||[]).length,99,'Every city member remains visible in the scrollable roster');
+ assert.equal((element('#inspector').innerHTML.match(/data-city-roster-officer=/g)||[]).length,99,'Every city member remains reachable in the concise roster');
+ assert(element('#inspector').innerHTML.includes('id="city-information"'),'The complete roster and attributes remain reachable through city information');
+ assert(!element('#inspector').innerHTML.includes('class="roster-table"'),'The narrow sidebar does not repeat the full attribute table');
+ assert.equal((element('#inspector').innerHTML.match(/role="tab" /g)||[]).length,4);
+ assert(element('#inspector').innerHTML.includes('id="city-command-tab-army" data-city-command-group="army" role="tab" aria-controls="city-command-panel-army" aria-selected="true" tabindex="0"'),'Army is the default active, keyboard reachable group');
+ for(const key of ['city','warehouse','town'])assert(new RegExp(`id="city-command-panel-${key}"[^>]* hidden`).test(element('#inspector').innerHTML),'Inactive command panels stay present and hidden');
+ const originalCatalog={...context.view.catalog},iconCalls=[],visits=[];
+ Object.assign(context.view.catalog,{scenario_id:'test-campaign',facilities:{},treasury:{},domestic:{},civil_staff:{}});
+ context.view.game.seed=2026;
+ context.GameOriginalUI={icon(id,options){iconCalls.push([id,options.decorative]);return `<i data-command-icon="${id}" aria-hidden="true"></i>`;}};
+ context.facilitiesInterface=()=>({open(...args){visits.push(args);}});
+ context.renderCity();
+ assert.deepEqual(iconCalls,[['command-city',true],['command-army',true],['command-warehouse',true],['command-town',true]],'Each group uses the corresponding verified original category icon');
+ for(const id of ['allocate','depart','transfer','recruit','recruit-officer','civil-staff','city-domestic','city-civic','city-treasury','city-logistics','city-facilities','end-turn'])assert(element('#inspector').innerHTML.includes(`id="${id}"`),'Existing guarded action remains reachable: '+id);
+ context.selectCityCommandGroup(home,'town');
+ assert.equal(element('#city-command-panel-town').hidden,false);assert.equal(element('#city-command-panel-army').hidden,true);
+ assert.equal(element('#city-command-tab-town').attributes['aria-selected'],'true');assert.equal(element('#city-command-tab-town').tabIndex,0);assert.equal(element('#city-command-tab-army').tabIndex,-1);
+ context.renderCity();assert.equal(context.cityCommandGroup(home),'town','Selection survives a view refresh');
+ assert.equal(context.cityCommandGroup(away),'army','A new city starts at Army');context.selectCityCommandGroup(away,'city');assert.equal(context.cityCommandGroup(home),'town','City selections are independent');
+ let prevented=false;element('#city-command-tab-town').onkeydown({key:'Home',preventDefault(){prevented=true;}});assert(prevented);assert.equal(context.cityCommandGroup(home),'city');assert(element('#city-command-tab-city').focused,'Arrow/Home/End navigation transfers focus to the selected tab');
+ element('#city-command-tab-city').onkeydown({key:'ArrowDown',preventDefault(){}});assert.equal(context.cityCommandGroup(home),'army','Down advances one position in the horizontal command row');
+ element('#city-command-tab-army').onkeydown({key:'ArrowRight',preventDefault(){}});assert.equal(context.cityCommandGroup(home),'warehouse');
+ element('#city-command-tab-warehouse').onkeydown({key:'ArrowUp',preventDefault(){}});assert.equal(context.cityCommandGroup(home),'army','Up moves one position back in the horizontal command row');
+ element('#city-command-tab-army').onkeydown({key:'ArrowLeft',preventDefault(){}});assert.equal(context.cityCommandGroup(home),'city');
+ element('#city-command-tab-city').onkeydown({key:'ArrowLeft',preventDefault(){}});assert.equal(context.cityCommandGroup(home),'town','The ends wrap within the same row');
+ element('#city-command-tab-town').onkeydown({key:'End',preventDefault(){}});assert.equal(context.cityCommandGroup(home),'town');
+ context.view.game.seed=2027;assert.equal(context.cityCommandGroup(home),'army','Another campaign has its own selection');context.view.game.seed=2026;assert.equal(context.cityCommandGroup(home),'town');
+ element('#city-facilities').onclick();element('#city-civic').onclick();
+ assert.equal(visits[0][0],'home');assert.equal(visits[0].length,1,'Town uses the normal facility entry');assert.equal(visits[1][0],'home');assert.equal(visits[1][1].section,'civic','City opens development and prevention directly');
+ const navigationState=JSON.parse(JSON.stringify(context.view.game));delete navigationState.seed;
+ assert.equal(JSON.stringify(navigationState),before,'Tab navigation and facility entry do not issue game commands or change runtime state');
+ delete context.view.game.seed;context.view.catalog=originalCatalog;delete context.GameOriginalUI;
  context.recruitOfficer(home);assert(lastDialog.body.includes('最多99人。'));
  context.transferCity(home);assert(lastDialog.body.includes('目的城仍最多99人。'));assert(lastDialog.body.includes('0/99人'));
  // Transferring an entire roster is independent of the battle deployment limit.
@@ -157,5 +188,5 @@ except CapacityError:pass
 else:raise AssertionError('configured smaller capacity ignored')
 `],{cwd:root,encoding:'utf8',env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});
  assert.equal(python.status,0,python.stderr||python.stdout);
- console.log('capacity UI: 99-member roster, 10-member deployment, weighted daily ration selection, route/destination limits, exploration guards and atomic overflow passed');
+ console.log('capacity UI: original four-group commands, keyboard focus and city/campaign selection, unchanged action guards, concise 99-member roster, 10-member deployment, weighted daily ration selection, route/destination limits, exploration guards and atomic overflow passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

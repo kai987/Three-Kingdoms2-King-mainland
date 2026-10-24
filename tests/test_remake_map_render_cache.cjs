@@ -116,6 +116,25 @@ assert(GameMapRenderCache.matches(first,key));assert(!GameMapRenderCache.matches
 env.stage.innerHTML='<section id="battle"></section>';env.render();assert(elements.get('world-map'));
 context.mapNavigation=null;const prior=elements.get('world-map');env.render();assert.notEqual(elements.get('world-map'),prior);
 const legacy=environment();delete legacy.context.GameMapRenderCache;legacy.render();legacy.render();assert.equal(legacy.counts.writes,2,'A previously cached HTML shell without the optional module retains legacy map rendering');
+// Every city footprint is cleared and repainted from the same canonical road
+// geometry before sprites. Unopened cities keep their center junctions.
+const roadBedEnv=environment(),roadView=roadBedEnv.context.view;
+roadView.catalog.map_presentation.city_road_bed={schema:'tk2-city-road-bed-v1',ground:'/assets/map-city-ground.png',path:'M100 100L200 200'};
+roadView.catalog.map_presentation.inactive_castle_ids=['b'];roadView.catalog.map_presentation.inactive_castle_ground='/assets/map-city-ground.png';
+roadView.catalog.active_cities=['a'];const roadState=JSON.stringify(roadView.game);roadBedEnv.render();const bedMarkup=roadBedEnv.markup();
+assert(bedMarkup.includes('data-city-road-bed'));assert(bedMarkup.includes('x="200" y="200" width="4" height="4"'),'The absent city remains a masked road junction');
+assert(bedMarkup.includes('data-inactive-city="b"'));assert(!bedMarkup.includes('class="city-hit unowned'));
+assert(bedMarkup.includes('d="M100 100L200 200"'));assert(bedMarkup.indexOf('data-city-road-bed')<bedMarkup.indexOf('class="city-hit'));
+assert.equal(JSON.stringify(roadView.game),roadState);
+// Shared reaches are independent of which endpoint lists them first. Keep
+// truly different curves, even if they use the same two harbour endpoints.
+const riverEnv=environment(),riverPoints=[[100,100],[150,130],[200,200]];
+riverEnv.context.view.catalog.river_routes=[
+ {id:'ab',from:'a',to:'b',draw:[{mode:'river',reach_id:'shared',points:riverPoints}]},
+ {id:'ba',from:'b',to:'a',draw:[{mode:'river',reach_id:'shared',points:[...riverPoints].reverse()}]},
+ {id:'other',from:'a',to:'b',draw:[{mode:'river',reach_id:'other',points:[[100,100],[170,120],[200,200]]}]}
+];riverEnv.render();assert.equal((riverEnv.markup().match(/class="river-lane"/g)||[]).length,2);
+assert.equal((riverEnv.markup().match(/data-river-reach="shared"/g)||[]).length,1);
 // Scale filters are exact catalog tiers; selecting an ordinary or newly added
 // city must not leak its label into the giant/large modes. Cycling is UI only.
 const filtered=environment(),filteredView=filtered.context.view;

@@ -1,0 +1,362 @@
+[
+  {
+    "id": 0,
+    "name_tc": "綸巾",
+    "name_ja": "綸巾",
+    "subject": "A single ancient Chinese strategist's tied silk headwrap (guan jin): folded angular cloth cap, a front knot and two short cloth tails, with a distinctive low soft crown. Empty headwear only, no head or face.",
+    "prompt": "Use case: stylized-concept.\nAsset type: one transparent PNG inventory icon for a retro Three Kingdoms strategy game, intended to remain readable at 28–40px display size.\nStyle/medium: original 16-bit Japanese strategy-game item artwork, confident chunky black pixel-like outlines, flat cel-shaded large color shapes, a few blocky highlight accents, clean low-detail silhouette, no photorealism and no smooth 3D rendering.\nColor palette: only near-black #17100f outlines/shadows, warm orange #de8255, light peach-pink #f4b8a5, warm ivory-white #fff1da. Large internal opaque surfaces; genuine transparent exterior.\nComposition/framing: one isolated item centered in a square frame, fully visible, fills about 80 percent of the frame, balanced 10 percent transparent padding on every side. No square frame, scenery, ground plane, shadow under the item, labels, text, watermark, tiny decorations, glow, or human body parts.\nScene/backdrop: genuinely transparent background with clean alpha.\nPrimary request: A single ancient Chinese strategist's tied silk headwrap (guan jin): folded angular cloth cap, a front knot and two short cloth tails, with a distinctive low soft crown. Empty headwear only, no head or face.",
+    "generator": "built-in-imagegen",
+    "transparent_background": true,
+    "generated_source": "/Users/paulasmith/.codex/generated_images/01a16e0f-97ed-7d41-8d95-bbb8419de5ee/exec-364510e7-0f40-4b57-92eb-a097f0b8fa84.png",
+    "source_file": "art/equipment-icons-v1/armor-0-source.png",
+    "runtime_file": "game/assets/equipment-icons/armor-0.png",
+    "requested_runtime_size": [
+      128,
+      128
+    ],
+    "created_at": "2026-10-24",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "runtime_size": [
+      128,
+      128
+    ],
+    "source_sha256": "c739952c9dc0a8bd6c3d6eba54e9b3e2ded819566c8c2ee538c57d38741e9577",
+    "runtime_sha256": "2256edb1f4493696bca68e02cea0010ec0ae9558348be00ce290773c21077cd9",
+    "palette": [
+      "#000000",
+      "#f89800",
+      "#f8c0a8",
+      "#ffffff",
+      "#b0b0b0",
+      "#c02020"
+    ],
+    "processing": "Nearest-neighbor resize to128x128, nearest-squared-EuclideanRGB mapping to shared originalUI six-color palette, alpha>=128 becomes255 else transparentblack; sourcePNG byte-identical to generated original",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "transparent_pixel_fraction": 0.5476,
+    "runtime_alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "id": 1,
+    "name_tc": "籠手",
+    "name_ja": "籠手",
+    "subject": "One matched pair of ancient Chinese forearm bracers, arranged diagonally side by side: curved segmented wrist and forearm guards, three strong horizontal armor bands and visible cloth tie straps. Empty armor only, no hands or arms.",
+    "prompt": "Use case: stylized-concept.\nAsset type: one transparent PNG inventory icon for a retro Three Kingdoms strategy game, intended to remain readable at 28–40px display size.\nStyle/medium: original 16-bit Japanese strategy-game item artwork, confident chunky black pixel-like outlines, flat cel-shaded large color shapes, a few blocky highlight accents, clean low-detail silhouette, no photorealism and no smooth 3D rendering.\nColor palette: only near-black #17100f outlines/shadows, warm orange #de8255, light peach-pink #f4b8a5, warm ivory-white #fff1da. Large internal opaque surfaces; genuine transparent exterior.\nComposition/framing: one isolated item centered in a square frame, fully visible, fills about 80 percent of the frame, balanced 10 percent transparent padding on every side. No square frame, scenery, ground plane, shadow under the item, labels, text, watermark, tiny decorations, glow, or human body parts.\nScene/backdrop: genuinely transparent background with clean alpha.\nPrimary request: One matched pair of ancient Chinese forearm bracers, arranged diagonally side by side: curved segmented wrist and forearm guards, three strong horizontal armor bands and visible cloth tie straps. Empty armor only, no hands or arms.",
+    "generator": "built-in-imagegen",
+    "transparent_background": true,
+    "generated_source": "/Users/paulasmith/.codex/generated_images/01a16e0f-97ed-7d41-8d95-bbb8419de5ee/exec-dbcbd572-8d6c-4255-8a7b-b210d59979ad.png",
+    "source_file": "art/equipment-icons-v1/armor-1-source.png",
+    "runtime_file": "game/assets/equipment-icons/armor-1.png",
+    "requested_runtime_size": [
+      128,
+      128
+    ],
+    "created_at": "2026-10-24",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "runtime_size": [
+      128,
+      128
+    ],
+    "source_sha256": "848e16ed14d54f707202cc1562912bcafc34d394954b396c2131bf2260e5bfbc",
+    "runtime_sha256": "6aedfaacada91e9f516aa29e3a2610b1b0c179f2ebd6ea0c828afddc7c67a037",
+    "palette": [
+      "#000000",
+      "#f89800",
+      "#f8c0a8",
+      "#ffffff",
+      "#b0b0b0",
+      "#c02020"
+    ],
+    "processing": "Nearest-neighbor resize to128x128, nearest-squared-EuclideanRGB mapping to shared originalUI six-color palette, alpha>=128 becomes255 else transparentblack; sourcePNG byte-identical to generated original",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "transparent_pixel_fraction": 0.5057,
+    "runtime_alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "id": 2,
+    "name_tc": "兜",
+    "name_ja": "兜",
+    "subject": "A single ancient Chinese iron war helmet, front three-quarter view: rounded tall dome, tiny central ridge, brow band, pronounced cheek and neck guards. Broad unmistakable helmet silhouette. Empty helmet only, no head or face, no fantasy horns.",
+    "prompt": "Use case: stylized-concept.\nAsset type: one transparent PNG inventory icon for a retro Three Kingdoms strategy game, intended to remain readable at 28–40px display size.\nStyle/medium: original 16-bit Japanese strategy-game item artwork, confident chunky black pixel-like outlines, flat cel-shaded large color shapes, a few blocky highlight accents, clean low-detail silhouette, no photorealism and no smooth 3D rendering.\nColor palette: only near-black #17100f outlines/shadows, warm orange #de8255, light peach-pink #f4b8a5, warm ivory-white #fff1da. Large internal opaque surfaces; genuine transparent exterior.\nComposition/framing: one isolated item centered in a square frame, fully visible, fills about 80 percent of the frame, balanced 10 percent transparent padding on every side. No square frame, scenery, ground plane, shadow under the item, labels, text, watermark, tiny decorations, glow, or human body parts.\nScene/backdrop: genuinely transparent background with clean alpha.\nPrimary request: A single ancient Chinese iron war helmet, front three-quarter view: rounded tall dome, tiny central ridge, brow band, pronounced cheek and neck guards. Broad unmistakable helmet silhouette. Empty helmet only, no head or face, no fantasy horns.",
+    "generator": "built-in-imagegen",
+    "transparent_background": true,
+    "generated_source": "/Users/paulasmith/.codex/generated_images/01a16e0f-97ed-7d41-8d95-bbb8419de5ee/exec-0d9fd0b7-ca68-46b3-8653-f47ab10bb120.png",
+    "source_file": "art/equipment-icons-v1/armor-2-source.png",
+    "runtime_file": "game/assets/equipment-icons/armor-2.png",
+    "requested_runtime_size": [
+      128,
+      128
+    ],
+    "created_at": "2026-10-24",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "runtime_size": [
+      128,
+      128
+    ],
+    "source_sha256": "b945a889b43ea9d2f9c08403befe4f051219636a9ac0d94ed727c88edd501122",
+    "runtime_sha256": "5f115208756bd5dce641cc17539149cb3f7a15b752167242e6628f0c90866b0a",
+    "palette": [
+      "#000000",
+      "#f89800",
+      "#f8c0a8",
+      "#ffffff",
+      "#b0b0b0",
+      "#c02020"
+    ],
+    "processing": "Nearest-neighbor resize to128x128, nearest-squared-EuclideanRGB mapping to shared originalUI six-color palette, alpha>=128 becomes255 else transparentblack; sourcePNG byte-identical to generated original",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "transparent_pixel_fraction": 0.507,
+    "runtime_alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "id": 3,
+    "name_tc": "硬皮",
+    "name_ja": "硬皮",
+    "subject": "A single hardened-leather sleeveless cuirass, front three-quarter view: simple broad smooth leather torso, tied side laces, small shoulder straps and a deep arm opening, short waist. Large plain leather panels distinguish it from metal lamellar armor. Empty armor only, no person.",
+    "prompt": "Use case: stylized-concept.\nAsset type: one transparent PNG inventory icon for a retro Three Kingdoms strategy game, intended to remain readable at 28–40px display size.\nStyle/medium: original 16-bit Japanese strategy-game item artwork, confident chunky black pixel-like outlines, flat cel-shaded large color shapes, a few blocky highlight accents, clean low-detail silhouette, no photorealism and no smooth 3D rendering.\nColor palette: only near-black #17100f outlines/shadows, warm orange #de8255, light peach-pink #f4b8a5, warm ivory-white #fff1da. Large internal opaque surfaces; genuine transparent exterior.\nComposition/framing: one isolated item centered in a square frame, fully visible, fills about 80 percent of the frame, balanced 10 percent transparent padding on every side. No square frame, scenery, ground plane, shadow under the item, labels, text, watermark, tiny decorations, glow, or human body parts.\nScene/backdrop: genuinely transparent background with clean alpha.\nPrimary request: A single hardened-leather sleeveless cuirass, front three-quarter view: simple broad smooth leather torso, tied side laces, small shoulder straps and a deep arm opening, short waist. Large plain leather panels distinguish it from metal lamellar armor. Empty armor only, no person.",
+    "generator": "built-in-imagegen",
+    "transparent_background": true,
+    "generated_source": "/Users/paulasmith/.codex/generated_images/01a16e0f-97ed-7d41-8d95-bbb8419de5ee/exec-4a7d399a-e853-4b0f-8579-a24592133c9b.png",
+    "source_file": "art/equipment-icons-v1/armor-3-source.png",
+    "runtime_file": "game/assets/equipment-icons/armor-3.png",
+    "requested_runtime_size": [
+      128,
+      128
+    ],
+    "created_at": "2026-10-24",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "runtime_size": [
+      128,
+      128
+    ],
+    "source_sha256": "a6f93748785cfd038ed4d3c8bb45310bc38c3b12222b0bb200bb5652baa7598f",
+    "runtime_sha256": "db1ef381ad5e811a2983209a7c13fbbd0bb90161f716289b1449521e503533bf",
+    "palette": [
+      "#000000",
+      "#f89800",
+      "#f8c0a8",
+      "#ffffff",
+      "#b0b0b0",
+      "#c02020"
+    ],
+    "processing": "Nearest-neighbor resize to128x128, nearest-squared-EuclideanRGB mapping to shared originalUI six-color palette, alpha>=128 becomes255 else transparentblack; sourcePNG byte-identical to generated original",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "transparent_pixel_fraction": 0.4709,
+    "runtime_alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "id": 4,
+    "name_tc": "鶴氅",
+    "name_ja": "鶴氅",
+    "subject": "A single ancient Chinese scholar's crane-feather cloak, front view: cape silhouette with soft wide shoulders, a high folded collar, long flowing open edges trimmed with bold white feather shapes and a short tied neck cord. Ivory white is the dominant surface. Empty cloak only, no head, person, staff, or accessories.",
+    "prompt": "Use case: stylized-concept.\nAsset type: one transparent PNG inventory icon for a retro Three Kingdoms strategy game, intended to remain readable at 28–40px display size.\nStyle/medium: original 16-bit Japanese strategy-game item artwork, confident chunky black pixel-like outlines, flat cel-shaded large color shapes, a few blocky highlight accents, clean low-detail silhouette, no photorealism and no smooth 3D rendering.\nColor palette: only near-black #17100f outlines/shadows, warm orange #de8255, light peach-pink #f4b8a5, warm ivory-white #fff1da. Large internal opaque surfaces; genuine transparent exterior.\nComposition/framing: one isolated item centered in a square frame, fully visible, fills about 80 percent of the frame, balanced 10 percent transparent padding on every side. No square frame, scenery, ground plane, shadow under the item, labels, text, watermark, tiny decorations, glow, or human body parts.\nScene/backdrop: genuinely transparent background with clean alpha.\nPrimary request: A single ancient Chinese scholar's crane-feather cloak, front view: cape silhouette with soft wide shoulders, a high folded collar, long flowing open edges trimmed with bold white feather shapes and a short tied neck cord. Ivory white is the dominant surface. Empty cloak only, no head, person, staff, or accessories.",
+    "generator": "built-in-imagegen",
+    "transparent_background": true,
+    "generated_source": "/Users/paulasmith/.codex/generated_images/01a16e0f-97ed-7d41-8d95-bbb8419de5ee/exec-8896ed8c-6086-40f5-9280-fc55631e2279.png",
+    "source_file": "art/equipment-icons-v1/armor-4-source.png",
+    "runtime_file": "game/assets/equipment-icons/armor-4.png",
+    "requested_runtime_size": [
+      128,
+      128
+    ],
+    "created_at": "2026-10-24",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "runtime_size": [
+      128,
+      128
+    ],
+    "source_sha256": "4b4bc13cc0566b30a998bc45d270c7170b4d638f2d82a1b60ae5c30b0d4724e3",
+    "runtime_sha256": "0281eab47b0ce9c09cba6cc4946ee536e5f77f7151ad8a3f75a71083a5ef9d72",
+    "palette": [
+      "#000000",
+      "#f89800",
+      "#f8c0a8",
+      "#ffffff",
+      "#b0b0b0",
+      "#c02020"
+    ],
+    "processing": "Nearest-neighbor resize to128x128, nearest-squared-EuclideanRGB mapping to shared originalUI six-color palette, alpha>=128 becomes255 else transparentblack; sourcePNG byte-identical to generated original",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "transparent_pixel_fraction": 0.4667,
+    "runtime_alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "id": 5,
+    "name_tc": "甲冑",
+    "name_ja": "甲冑",
+    "subject": "A single ancient Chinese heavy lamellar suit of armor, front three-quarter view: rigid broad torso made of clear rectangular horizontal lamellar plate rows, substantial layered shoulder guards, strong belt and short armored waist apron. Rectangular plates and wide shoulders are its defining silhouette. Empty armor only, no person or helmet.",
+    "prompt": "Use case: stylized-concept.\nAsset type: one transparent PNG inventory icon for a retro Three Kingdoms strategy game, intended to remain readable at 28–40px display size.\nStyle/medium: original 16-bit Japanese strategy-game item artwork, confident chunky black pixel-like outlines, flat cel-shaded large color shapes, a few blocky highlight accents, clean low-detail silhouette, no photorealism and no smooth 3D rendering.\nColor palette: only near-black #17100f outlines/shadows, warm orange #de8255, light peach-pink #f4b8a5, warm ivory-white #fff1da. Large internal opaque surfaces; genuine transparent exterior.\nComposition/framing: one isolated item centered in a square frame, fully visible, fills about 80 percent of the frame, balanced 10 percent transparent padding on every side. No square frame, scenery, ground plane, shadow under the item, labels, text, watermark, tiny decorations, glow, or human body parts.\nScene/backdrop: genuinely transparent background with clean alpha.\nPrimary request: A single ancient Chinese heavy lamellar suit of armor, front three-quarter view: rigid broad torso made of clear rectangular horizontal lamellar plate rows, substantial layered shoulder guards, strong belt and short armored waist apron. Rectangular plates and wide shoulders are its defining silhouette. Empty armor only, no person or helmet.",
+    "generator": "built-in-imagegen",
+    "transparent_background": true,
+    "generated_source": "/Users/paulasmith/.codex/generated_images/01a16e0f-97ed-7d41-8d95-bbb8419de5ee/exec-9aa6f321-c003-4035-9162-279d456f7929.png",
+    "source_file": "art/equipment-icons-v1/armor-5-source.png",
+    "runtime_file": "game/assets/equipment-icons/armor-5.png",
+    "requested_runtime_size": [
+      128,
+      128
+    ],
+    "created_at": "2026-10-24",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "runtime_size": [
+      128,
+      128
+    ],
+    "source_sha256": "d27d25d969bd8b774bc6df8f8fa2692d63b1ca1d8b058a9d82db5b8271fb86cb",
+    "runtime_sha256": "7c655c50b42030db376286a6b080c6bb2dd4cff568892d7c638c99e1ddddbeb2",
+    "palette": [
+      "#000000",
+      "#f89800",
+      "#f8c0a8",
+      "#ffffff",
+      "#b0b0b0",
+      "#c02020"
+    ],
+    "processing": "Nearest-neighbor resize to128x128, nearest-squared-EuclideanRGB mapping to shared originalUI six-color palette, alpha>=128 becomes255 else transparentblack; sourcePNG byte-identical to generated original",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "transparent_pixel_fraction": 0.4273,
+    "runtime_alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "id": 6,
+    "name_tc": "聖者之衣",
+    "name_ja": "聖者の衣",
+    "subject": "A single sage's ceremonial long robe, front view: delicate ivory-white and pale-pink fabric, long wide open sleeves, overlapping V collar, one bold orange waist sash and flowing long skirt with two simple folds. This is soft cloth, with no metal armor, cape, wings or halo. Empty robe only, no person or head.",
+    "prompt": "Use case: stylized-concept.\nAsset type: one transparent PNG inventory icon for a retro Three Kingdoms strategy game, intended to remain readable at 28–40px display size.\nStyle/medium: original 16-bit Japanese strategy-game item artwork, confident chunky black pixel-like outlines, flat cel-shaded large color shapes, a few blocky highlight accents, clean low-detail silhouette, no photorealism and no smooth 3D rendering.\nColor palette: only near-black #17100f outlines/shadows, warm orange #de8255, light peach-pink #f4b8a5, warm ivory-white #fff1da. Large internal opaque surfaces; genuine transparent exterior.\nComposition/framing: one isolated item centered in a square frame, fully visible, fills about 80 percent of the frame, balanced 10 percent transparent padding on every side. No square frame, scenery, ground plane, shadow under the item, labels, text, watermark, tiny decorations, glow, or human body parts.\nScene/backdrop: genuinely transparent background with clean alpha.\nPrimary request: A single sage's ceremonial long robe, front view: delicate ivory-white and pale-pink fabric, long wide open sleeves, overlapping V collar, one bold orange waist sash and flowing long skirt with two simple folds. This is soft cloth, with no metal armor, cape, wings or halo. Empty robe only, no person or head.",
+    "generator": "built-in-imagegen",
+    "transparent_background": true,
+    "generated_source": "/Users/paulasmith/.codex/generated_images/01a16e0f-97ed-7d41-8d95-bbb8419de5ee/exec-50d1a0bc-b8a2-4ad5-91b7-d5089d1601d2.png",
+    "source_file": "art/equipment-icons-v1/armor-6-source.png",
+    "runtime_file": "game/assets/equipment-icons/armor-6.png",
+    "requested_runtime_size": [
+      128,
+      128
+    ],
+    "created_at": "2026-10-24",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "runtime_size": [
+      128,
+      128
+    ],
+    "source_sha256": "522d025b0540836217a91de36fd1c6d33289b443d9d93055e79a87fa5af81ba3",
+    "runtime_sha256": "41cbe12aace4d223bf551794db47d9f8b31d385dd8bcddfbb9c5628f47fa8053",
+    "palette": [
+      "#000000",
+      "#f89800",
+      "#f8c0a8",
+      "#ffffff",
+      "#b0b0b0",
+      "#c02020"
+    ],
+    "processing": "Nearest-neighbor resize to128x128, nearest-squared-EuclideanRGB mapping to shared originalUI six-color palette, alpha>=128 becomes255 else transparentblack; sourcePNG byte-identical to generated original",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "transparent_pixel_fraction": 0.46,
+    "runtime_alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "id": 7,
+    "name_tc": "龍鱗之鎧",
+    "name_ja": "竜鱗の鎧",
+    "subject": "A single elite dragon-scale cuirass, front three-quarter view: compact broad chest with a bold small dragon-head relief at the center, clear overlapping pointed fish-scale plates, pointed high collar and strong curved shoulder pauldrons. Repeated pointed scales distinguish it from rectangular lamellar armor. Empty armor only, no person, full dragon, weapon, or helmet.",
+    "prompt": "Use case: stylized-concept.\nAsset type: one transparent PNG inventory icon for a retro Three Kingdoms strategy game, intended to remain readable at 28–40px display size.\nStyle/medium: original 16-bit Japanese strategy-game item artwork, confident chunky black pixel-like outlines, flat cel-shaded large color shapes, a few blocky highlight accents, clean low-detail silhouette, no photorealism and no smooth 3D rendering.\nColor palette: only near-black #17100f outlines/shadows, warm orange #de8255, light peach-pink #f4b8a5, warm ivory-white #fff1da. Large internal opaque surfaces; genuine transparent exterior.\nComposition/framing: one isolated item centered in a square frame, fully visible, fills about 80 percent of the frame, balanced 10 percent transparent padding on every side. No square frame, scenery, ground plane, shadow under the item, labels, text, watermark, tiny decorations, glow, or human body parts.\nScene/backdrop: genuinely transparent background with clean alpha.\nPrimary request: A single elite dragon-scale cuirass, front three-quarter view: compact broad chest with a bold small dragon-head relief at the center, clear overlapping pointed fish-scale plates, pointed high collar and strong curved shoulder pauldrons. Repeated pointed scales distinguish it from rectangular lamellar armor. Empty armor only, no person, full dragon, weapon, or helmet.",
+    "generator": "built-in-imagegen",
+    "transparent_background": true,
+    "generated_source": "/Users/paulasmith/.codex/generated_images/01a16e0f-97ed-7d41-8d95-bbb8419de5ee/exec-c8e3dc63-ada5-4603-8ab5-c897aac2ea1f.png",
+    "source_file": "art/equipment-icons-v1/armor-7-source.png",
+    "runtime_file": "game/assets/equipment-icons/armor-7.png",
+    "requested_runtime_size": [
+      128,
+      128
+    ],
+    "created_at": "2026-10-24",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "runtime_size": [
+      128,
+      128
+    ],
+    "source_sha256": "3b858b48502f4162207d333a67746c5e99bc4875e2e94611b7ffedbbae44a3e7",
+    "runtime_sha256": "115badbe95dd843a0c2b44513282c5ac48725c2375ecba42a6caa77c1244ab1b",
+    "palette": [
+      "#000000",
+      "#f89800",
+      "#f8c0a8",
+      "#ffffff",
+      "#b0b0b0",
+      "#c02020"
+    ],
+    "processing": "Nearest-neighbor resize to128x128, nearest-squared-EuclideanRGB mapping to shared originalUI six-color palette, alpha>=128 becomes255 else transparentblack; sourcePNG byte-identical to generated original",
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "transparent_pixel_fraction": 0.4328,
+    "runtime_alpha_values": [
+      0,
+      255
+    ]
+  }
+]

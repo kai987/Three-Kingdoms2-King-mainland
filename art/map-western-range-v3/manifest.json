@@ -362,7 +362,7 @@
   },
   "protection_inputs": [
     {
-      "path": "game/assets/map-road-centers.png",
+      "path": "art/map-western-range-v3/source/road-centers-before-junctions.png",
       "sha256": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7"
     },
     {

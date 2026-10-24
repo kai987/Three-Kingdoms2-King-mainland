@@ -306,9 +306,10 @@ class FullCatalogRouteTimingTests(unittest.TestCase):
                         for i, segment in enumerate(segments):
                             distance = round(geographic_distance(ports[i], ports[i+1])*ratios[i+1], 1)
                             self.assertEqual(segment['distance_km'], distance)
-                            self.assertEqual(segment['downstream_from'], 'changsha')
-                            speed = {'yangtze': 20, 'xiang': 22.5}[segment['speed_key']]
-                            self.assertEqual(rules['river_speeds'][segment['speed_key']]['upstream'], speed)
+                            self.assertIn(segment['downstream_from'], (route['from'], route['to']))
+                            flow = 'downstream' if segment['downstream_from'] == route['from'] else 'upstream'
+                            speed = rules['river_speeds'][segment['speed_key']][flow]
+                            self.assertGreater(speed, 0)
                             expected_water.append(distance)
                             water_time += distance/speed
                         self.assertEqual((route['land_km'], route['river_km'], route['sea_km']),

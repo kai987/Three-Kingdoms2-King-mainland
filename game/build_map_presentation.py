@@ -84,6 +84,16 @@ def build():
     if result['background_sha256'] != source['approved_asset_sha256']['map-basin.png'] or result['campaign_background_sha256'] != source['approved_asset_sha256']['map-campaign.png']:
         raise ValueError('Presentation refers to different map pixels')
     result['road_center_corrections'] = road_center_corrections(ROOT, source['approved_asset_sha256'])
+    # Castle pixels in the historical raster are only a display layer. Supply
+    # the complete canonical road bed so the browser can clean those pixels
+    # and repaint the roads beneath every sprite, including unopened cities.
+    road_source = json.loads((ROOT / 'game/config/road-centers.json').read_text())
+    shared = json.loads((ROOT / 'game/config/campaigns/shared.json').read_text())
+    road_geometry = build_road_centers(road_source,
+        {city['id']: city['position'] for city in shared['catalog']['cities']})
+    result['city_road_bed'] = dict(schema='tk2-city-road-bed-v1',
+        ground='/assets/map-city-ground.png', path=road_geometry['paint_d'],
+        repair_path=road_geometry['mask_d'])
     # Existing terrain repairs remove baked castles for unopened/abolished
     # nodes. The raster itself is kept intact and shared with water rendering.
     ground = json.loads((ROOT / 'game/map-source/water-render.json').read_bytes())['output']

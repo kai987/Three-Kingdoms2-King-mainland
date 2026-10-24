@@ -3,7 +3,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..');
 class Element{
- constructor(tag,attrs={}){this.nodeType=1;this.tagName=tag.toUpperCase();this.attrs={...attrs};this.dataset={};this.children=[];this.parentElement=null;this.hidden=false;}
+ constructor(tag,attrs={}){this.nodeType=1;this.tagName=tag.toUpperCase();this.attrs={...attrs};this.dataset={};for(const[key,value]of Object.entries(attrs))if(key.startsWith('data-'))this.dataset[key.slice(5).replace(/-([a-z])/g,(_,letter)=>letter.toUpperCase())]=value;this.children=[];this.parentElement=null;this.hidden=false;}
  append(node){node.parentElement=this;this.children.push(node);return node;}
  getAttribute(key){return this.attrs[key]??null;}
  setAttribute(key,value){this.attrs[key]=String(value);}
@@ -16,6 +16,11 @@ const heading=body.append(new Element('button')).append(new Text('保存进度')
 const language=body.append(new Element('select',{id:'language','aria-label':'切换语言'}));language.value='zh-Hant';
 language.append(new Element('option')).append(new Text('繁體中文'));language.append(new Element('option')).append(new Text('日本語'));
 const input=body.append(new Element('input',{'aria-label':'随机种子'}));input.value='13579';input.checked=true;
+const nativeTC=body.append(new Element('section',{'data-l10n-native':'zh-Hant','data-locale-only':'zh-Hant','aria-label':'金錢、糧食、預備兵'}));
+const nativeTCText=nativeTC.append(new Text('金城 · 金旋 · 劉金 · 花費金50、糧20，預備兵300；黃金甲。'));
+const nativeJA=body.append(new Element('section',{'data-l10n-native':'ja','data-locale-only':'ja','title':'金銭・兵粮・予備兵'}));
+const nativeJAText=nativeJA.append(new Text('金城の金旋へ金50、糧20。予備兵300と黄金甲を確認します。'));
+const rawLink=body.append(new Element('a',{id:'city-金钱',href:'https://example.invalid/金钱/粮食?gold=100','data-city-id':'金城'}));rawLink.append(new Text('金錢'));
 const all=node=>[node,...(node.children||[]).flatMap(all)];
 const events=[],document={documentElement:html,querySelector:s=>all(html).find(n=>n.nodeType===1&&n.matches(s))||null,querySelectorAll:s=>all(html).filter(n=>n.nodeType===1&&n.matches(s)),createTreeWalker(node){const nodes=all(node).slice(1);let index=0;return{currentNode:node,nextNode(){if(index===nodes.length)return false;this.currentNode=nodes[index++];return true;}};},addEventListener(){},dispatchEvent(e){events.push(e);return true;}};
 Object.defineProperty(document,'title',{get:()=>title.data});
@@ -25,6 +30,10 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
 (async()=>{
  const i18n=context.window.GameI18n;await i18n.ready;
  assert.equal(i18n.locale,'zh-Hant');assert.equal(document.title,'三國·大陸戰役');assert.equal(heading.data,'保存進度');
+ assert.equal(nativeTCText.data,'金城 · 金旋 · 劉金 · 花費資金50、兵糧20，預備兵300；黃金甲。');
+ assert.equal(nativeTC.getAttribute('aria-label'),'資金、兵糧、預備兵');
+ assert.equal(nativeJAText.data,'金城の金旋へ資金50、兵糧20。予備兵300と黄金甲を確認します。');
+ assert.equal(nativeJA.getAttribute('title'),'資金・兵糧・予備兵');
  const index=JSON.parse(fs.readFileSync(path.join(root,'game/data/campaigns/index.json')));
  assert.equal(index.schema,'tk2-campaign-index-v1');assert.equal(index.catalogs.length,29);
  const rows=index.catalogs.map(file=>{const data=JSON.parse(fs.readFileSync(path.join(root,'game/data',file)));return{title:data.title,year:data.start_year,month:data.start_month,main_scenario:data.main_scenario};});
@@ -74,10 +83,30 @@ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'game/i
  for(const[source,expected]of cases){const translated=i18n.t(source,'ja');assert.equal(translated,expected,source);assert.equal(i18n.t(translated,'ja'),expected,'Japanese translation must be idempotent: '+source);}
  for(const row of rows){const once=i18n.t(row.title,'ja');assert.equal(i18n.t(once,'ja'),once,row.title);assert(!once.includes('の戦いの戦い'),row.title);}
  assert.equal(i18n.t('关羽','zh-Hant'),'關羽');
+ const resourceCases=[
+  ['金錢・糧食・預備兵','資金・兵糧・預備兵','資金・兵糧・予備兵'],
+  ['金钱 · 粮食 · 预备兵','資金 · 兵糧 · 預備兵','資金 · 兵糧 · 予備兵'],
+  ['资金 123 · 兵粮 456 · 预备兵 789','資金 123 · 兵糧 456 · 預備兵 789','資金 123 · 兵糧 456 · 予備兵 789'],
+  ['金 123 · 錢456 · 糧 789','資金 123 · 資金456 · 兵糧 789','資金 123 · 資金456 · 兵糧 789'],
+  ['花費金50、糧20','花費資金50、兵糧20','花費資金50、兵糧20'],
+  ['花費50金、20糧','花費資金50、兵糧20','花費資金50、兵糧20'],
+  ['最高費用金14–17；收入50金。','最高費用資金14–17；收入資金50。','最高費用資金14–17；收入資金50。'],
+  ['金：100 · 糧：200 · 預備兵：300','資金：100 · 兵糧：200 · 預備兵：300','資金：100 · 兵糧：200 · 予備兵：300'],
+  ['金— · 糧—','資金— · 兵糧—','資金— · 兵糧—'],
+  ['金城50 · 金旋20 · 劉金10 · 黃金甲 · 金盔 · 金鎧','金城50 · 金旋20 · 劉金10 · 黃金甲 · 金盔 · 金鎧','金城50 · 金旋20 · 劉金10 · 黃金甲 · 金盔 · 金鎧'],
+  ['city_金钱50 grain_粮食20 city-資金100 https://example.invalid/金钱/粮食?gold=100','city_金钱50 grain_粮食20 city-資金100 https://example.invalid/金钱/粮食?gold=100','city_金钱50 grain_粮食20 city-資金100 https://example.invalid/金钱/粮食?gold=100'],
+ ];
+ for(const[source,tc,ja]of resourceCases)for(const[language,expected]of [['zh-Hant',tc],['ja',ja]]){const result=i18n.resourceText(source,language);assert.equal(result,expected,language+': '+source);assert.equal(i18n.resourceText(result,language),expected,'Resource normalization is idempotent');assert.deepEqual(result.match(/\d+/g),source.match(/\d+/g),'Resource labels preserve every integer');}
+ for(const source of ['city_金钱50 grain_粮食20 city-資金100 https://example.invalid/金钱/粮食?gold=100','https://example.invalid/金城/金旋?name=劉金'])for(const language of ['zh-Hant','ja'])assert.equal(i18n.t(source,language),source,'Translation preserves technical tokens');
+ assert.equal(i18n.t('金钱50 · 粮食20 · 预备兵300','zh-Hant'),'資金50 · 兵糧20 · 預備兵300');
+ assert.equal(i18n.t('金钱50 · 粮食20 · 预备兵300','ja'),'資金50 · 兵糧20 · 予備兵300');
+ assert.equal(i18n.t('金城 · 金旋 · 劉金','zh-Hant'),'金城 · 金旋 · 劉金');
  assert.equal(i18n.t('内河水路：顺流、逆流；长江与湘水（含洞庭出口）。','zh-Hant'),'內河水路：順流、逆流；長江與湘水（含洞庭出口）。');
  for(let n=0;n<2;n++){assert(i18n.setLocale('ja'));assert.equal(heading.data,'セーブ');assert.equal(document.title,'三国志・大陸戦役');assert(i18n.setLocale('zh-Hant'));assert.equal(heading.data,'保存進度');assert.equal(document.title,'三國·大陸戰役');}
+ assert.equal(nativeTCText.data,'金城 · 金旋 · 劉金 · 花費資金50、兵糧20，預備兵300；黃金甲。');assert.equal(nativeJAText.data,'金城の金旋へ資金50、兵糧20。予備兵300と黄金甲を確認します。');
+ assert.equal(rawLink.getAttribute('href'),'https://example.invalid/金钱/粮食?gold=100');assert.equal(rawLink.getAttribute('id'),'city-金钱');assert.equal(rawLink.getAttribute('data-city-id'),'金城');
  const storageBefore=[...storage];assert.equal(i18n.setLocale('zh-CN'),false);assert.equal(i18n.locale,'zh-Hant');assert.deepEqual([...storage],storageBefore);
  assert.equal(input.value,'13579');assert.equal(input.checked,true);assert.equal(language.children[0].children[0].data,'繁體中文');assert.equal(language.children[1].children[0].data,'日本語');
  assert.equal(storage.get('three-kingdoms-save'),'unchanged-game-save');assert.equal(JSON.stringify(rows),before);assert.equal(requests.length,3);assert(requests.every(url=>url.startsWith('/locales/')));
- console.log(`i18n runtime: ${cases.length} exact/idempotence cases, ${rows.length} scenario titles, both-language DOM restoration, immutable form/save and invalid-locale checks passed`);
+ console.log(`i18n runtime: ${cases.length} translation cases, ${resourceCases.length} bilingual resource cases, ${rows.length} scenario titles, native DOM restoration, immutable names/IDs/URLs/form/save and invalid-locale checks passed`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -41,6 +41,7 @@ const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id
  assert(ui.open('home'));assert.equal(currentDialog.title,'地方文吏 · 成都');assert(!elements.get('#hire-civil-staff').disabled,'A zero-officer city may hire without an actor');
  assert.equal(equipmentCalls.length,0,'An un-hired candidate has no actual held equipment to render');
  assert(currentDialog.body.includes('武20 · 知56 · 德60'));assert(currentDialog.body.includes('190年4月'));assert(currentDialog.body.includes('讀檔不重抽'));
+ assert(currentDialog.body.includes('雇用費資金60；每人每月薪俸資金5。'),'Hiring and ongoing salary use explicit canonical resource labels');assert(!currentDialog.body.includes('金薪俸'));
  await elements.get('#hire-civil-staff').onclick();assert.deepEqual(submitted,{kind:'hire_staff',payload:{city:'home',candidate:'clerk-000001'}});assert(dialog.open);assert(currentDialog.body.includes('role="alert"'),'A rejected command stays in its dialog with feedback');
  assert.equal(JSON.stringify(view),original,'Viewing and an unsuccessful transaction never mutate the save or combat RNG');
  const beforeRequests=JSON.stringify(submitted);busy=true;await elements.get('#hire-civil-staff').onclick();busy=false;assert.equal(JSON.stringify(submitted),beforeRequests);
@@ -57,7 +58,7 @@ const ui=staff.create({document:doc,dialog,i18n,getView:()=>view,cityName:id=>id
  const nextCandidate={...person,id:'clerk-000003'};row.candidate=nextCandidate;equipmentCalls.length=0;const beforeCard=JSON.stringify(view);ui.open('home');assert.deepEqual(equipmentCalls.map(call=>call.id),['clerk-000001'],'Only hired employees receive the shared equipment card, even alongside a new candidate');assert.equal(JSON.stringify(view),beforeCard,'Equipment card inspection never changes employee/candidate state or RNG');row.candidate=null;
  assert.equal(elements.get('#staff-search-actor').value,'clerk-000002','Purpose sorting prefers intellect when civil virtue ties');
  elements.get('#staff-search-actor').value='clerk-000001';elements.get('#staff-search-actor').onchange();
- i18n.locale='ja';listeners.get('game-language-change')();assert.equal(elements.get('#staff-search-actor').value,'clerk-000001');assert(currentDialog.title.includes('成都'));assert(currentDialog.body.includes('架空の文吏'));assert(currentDialog.body.includes('原作')===false);assert(currentDialog.body.includes('既存の成功判定'));assert.equal(dialog.scrollTop,27);
+ i18n.locale='ja';listeners.get('game-language-change')();assert(currentDialog.body.includes('雇用費は資金60、一人の月額俸給は資金5。'));assert.equal(elements.get('#staff-search-actor').value,'clerk-000001');assert(currentDialog.title.includes('成都'));assert(currentDialog.body.includes('架空の文吏'));assert(currentDialog.body.includes('原作')===false);assert(currentDialog.body.includes('既存の成功判定'));assert.equal(dialog.scrollTop,27);
  for(const [reason,tc,ja]of [['no_available_staff','本城沒有可行動且正常履職的文吏。','この都市に行動可能で勤務中の文吏がいません。'],['no_historical_candidate','本城與可訪問的鄰城目前沒有可登用的歷史武將。','現在、この都市と訪問可能な隣接都市には登用できる歴史武将がいません。']]){
   row.can_search=false;row.search_blocked_reason=reason;
   i18n.locale='zh-Hant';listeners.get('game-language-change')();assert(currentDialog.body.includes(tc));assert(elements.get('#staff-search-confirm').disabled);

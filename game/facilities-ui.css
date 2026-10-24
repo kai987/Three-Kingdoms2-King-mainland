@@ -1,0 +1,78 @@
+/* Town services use the original pink panels, pixel art and a fixed command bar. */
+dialog:has([data-facilities-dialog]){
+ width:min(960px,calc(100% - 32px));
+ height:min(820px,calc(100dvh - 32px));
+ max-height:calc(100dvh - 32px);
+ padding:18px;
+ overflow:hidden;
+ grid-template-rows:auto minmax(0,1fr) auto;
+ gap:12px;
+}
+dialog[open]:has([data-facilities-dialog]){display:grid}
+dialog:has([data-facilities-dialog]) .dialog-heading{margin:0;align-items:center}
+dialog:has([data-facilities-dialog]) .dialog-heading h2{font-size:24px;line-height:1.3}
+dialog:has([data-facilities-dialog]) .dialog-actions{margin:0;padding-top:12px;border-top:3px double var(--ink);display:block}
+.facilities-panel{overflow:auto;min-height:0;align-content:start;padding-right:8px;scrollbar-gutter:stable;gap:12px}
+.facility-heading-summary{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px}
+.facility-service-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.facility-service-tabs>button{min-width:0;min-height:78px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:8px 4px;line-height:1.3}
+.facility-service-tabs>button[aria-selected=true]{outline:3px solid var(--ink);outline-offset:-6px;background:var(--paper);font-weight:bold}
+.facility-service-tabs>button:disabled{opacity:1;color:#62545a;border-style:dashed}
+.facility-service-tabs>button small{flex-basis:100%;font-size:12px;line-height:1.3}
+.facility-service-icon{width:40px;height:40px;object-fit:contain;image-rendering:pixelated;flex-shrink:0}
+.facility-section-switch{display:flex;justify-content:flex-end}
+.facility-section-switch>button{min-height:44px;padding:6px 10px;font-size:14px}
+.facility-section-switch>button[aria-pressed=true],.facility-civic-tabs>button[aria-pressed=true]{font-weight:bold;box-shadow:inset 0 0 0 2px var(--ink)}
+.facility-actor{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr);gap:8px 16px;align-items:center;border-top:1px solid var(--ink);padding-top:12px}
+.facility-service-layout{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.2fr);gap:16px;align-items:start}
+.facility-visual{min-width:0;border:3px double var(--ink);background:#daaaa8;display:grid;align-content:start}
+.facility-scene-image{width:100%;height:auto;max-height:300px;object-fit:contain;image-rendering:pixelated;display:block}
+.facility-symbol{min-height:128px;display:grid;place-items:center;border-bottom:2px solid var(--ink)}
+.facility-symbol .facility-service-icon{width:80px;height:80px}
+.facility-visitor{padding:12px;display:flex;align-items:center;gap:12px;min-width:0}
+.facility-visitor>div{min-width:0;overflow-wrap:anywhere}
+.facility-visitor .portrait-frame{width:64px;height:80px}
+.facility-visitor .officer-portrait{flex-shrink:0}
+.facility-service-form{min-width:0;display:grid;gap:12px}
+.facility-service-form fieldset{border:0;padding:0;gap:12px}
+.facility-service-form legend{font-weight:bold;padding:0 0 12px}
+.facilities-panel select,.facilities-panel input[type=number]{min-height:44px;font-size:16px;width:100%;min-width:0}
+.facility-amount>button{min-height:44px;flex-shrink:0}
+.facility-civic-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.facility-civic-tabs>button{min-height:44px;flex:1}
+.facility-action-notes{border-top:1px solid var(--ink);padding-top:8px}
+.facility-action-notes>summary,.facility-policy>summary{cursor:pointer;min-height:44px;display:list-item;align-content:center}
+.facility-action-notes[open]>summary{margin-bottom:8px}
+.facility-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%}
+.facility-footer-summary{display:grid;gap:4px;min-width:0;flex:1}
+.facility-footer-summary p{margin:0}
+#facility-disabled-reason:empty,#facility-boundary:empty{display:none}
+#facility-disabled-reason:not(:empty){font-weight:bold}
+.facility-footer-buttons{display:flex;gap:8px;align-self:end;flex-wrap:wrap}
+.facility-footer-buttons>button{min-height:44px;padding:8px 12px}
+.facility-footer-buttons>button.primary{min-width:128px}
+@media(max-width:700px){
+ dialog:has([data-facilities-dialog]){width:calc(100% - 16px);height:calc(100dvh - 16px);max-height:calc(100dvh - 16px);padding:12px;gap:10px}
+ dialog:has([data-facilities-dialog]) .dialog-heading h2{font-size:20px}
+ .facilities-panel{padding-right:4px;gap:10px}
+ .facility-service-tabs{gap:4px}
+ .facility-service-tabs>button{min-height:76px;flex-direction:column;gap:4px;font-size:14px;padding:7px 3px}
+ .facility-service-tabs>button small{flex-basis:auto;font-size:11px}
+ .facility-service-icon{width:32px;height:32px}
+ .facility-section-switch>button{width:100%;font-size:13px}
+ .facility-service-layout{grid-template-columns:minmax(0,1fr);gap:12px}
+ .facility-actor{grid-template-columns:minmax(0,1fr)}
+ .facility-visual{grid-template-columns:minmax(100px,.8fr) minmax(0,1fr);align-items:center}
+ .facility-scene-image{max-height:150px}
+ .facility-symbol{min-height:108px;border-bottom:0;border-right:2px solid var(--ink)}
+ .facility-symbol .facility-service-icon{width:56px;height:56px}
+ .facility-visitor{gap:8px;padding:8px;align-items:start}
+ .facility-visitor .portrait-frame{width:40px;height:50px}
+ .facility-visitor .small{font-size:12px}
+ .facility-footer{align-items:stretch;gap:8px;flex-direction:column}
+ .facility-footer-summary{gap:2px}
+ .facility-footer-summary .small{font-size:12px}
+ .facility-footer-buttons{align-self:stretch;display:grid;grid-template-columns:1fr 1fr}
+ .facility-footer-buttons>button{padding:8px 4px;font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){.facilities-panel{scroll-behavior:auto}}

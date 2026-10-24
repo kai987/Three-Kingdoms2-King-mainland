@@ -6,6 +6,12 @@ window.GameI18n=(()=>{
  try{const saved=localStorage.getItem(storageKey);if(supported.includes(saved))locale=saved;}catch{}
  const originals=new WeakMap(),attributeOriginals=new WeakMap(),missing=new Set(),cache=new Map(),scenarioResources=[];let scenarioSignature='';
  const escapePattern=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+ const protectedDisplayTokens=/(?:[a-z][a-z0-9+.-]*:\/\/|www\.)[^\s<>"'`]+|[A-Za-z_][A-Za-z0-9_.:-]*(?:[_/-][\p{L}\d_.:/?&=%#-]+)+/giu;
+ function displaySegments(text,transform){
+  let cursor=0,result='';
+  for(const match of text.matchAll(protectedDisplayTokens)){result+=transform(text.slice(cursor,match.index))+match[0];cursor=match.index+match[0].length;}
+  return result+transform(text.slice(cursor));
+ }
  function trie(entries){const root=new Map();for(const[source,target]of Object.entries(entries||{})){let node=root;for(const ch of source){if(!node.has(ch))node.set(ch,new Map());node=node.get(ch);}node.value=target;}return root;}
  function traditional(text){
   let result=String(text);
@@ -13,6 +19,24 @@ window.GameI18n=(()=>{
    for(let j=i;j<result.length;){const ch=String.fromCodePoint(result.codePointAt(j));if(!node.has(ch))break;node=node.get(ch);j+=ch.length;if(node.value!==undefined){last=node.value;end=j;}}
    if(last!==null){out+=last;i=end;}else{const ch=String.fromCodePoint(result.codePointAt(i));out+=stage.characters[ch]??ch;i+=ch.length;}
   }result=out;}return result;
+ }
+ // Resource vocabulary belongs to the display layer. Match whole labels or
+ // quantities, never a bare character inside a person, place or item name.
+ // URLs and identifier-like tokens are kept byte-for-byte, including Chinese.
+ function resourceText(value,language=locale){
+  const labels={gold:'資金',grain:'兵糧',reserves:language==='ja'?'予備兵':'預備兵'};
+  const label=source=>/^(?:金|錢|钱)$/.test(source)?labels.gold:labels.grain;
+  const boundary='[\\s·・、，。；：:;／/|（）()「」『』【】\\[\\]{}=<>!?！？]';
+  const amount='[+−-]?\\d[\\d,]*(?:\\.\\d+)?(?:\\s*[–—～~]\\s*\\d[\\d,]*(?:\\.\\d+)?)?';
+  const context='花[費费]|[費费]用|[費费]|需要|需保留|需|支出|支付|收入|取得|[現现]有|[攜携][帶带]|[總总][計计]|[總总][費费]用|每月|月[俸薪]|[實实]付|[應应]付|[雇僱]用|[雇僱]用[費费]|保留|[餘余]額|[餘余]|[耗扣]';
+  const aliases=/金錢|金钱|金銭|資金|资金|糧食|粮食|兵糧|兵粮|預備兵|预备兵|予備兵/gu;
+  const normalize=text=>{
+   let result=text.replace(aliases,source=>/^(?:金|資|资)/.test(source)?labels.gold:/^(?:糧|粮|兵)/.test(source)?labels.grain:labels.reserves);
+   result=result.replace(new RegExp('(^|'+boundary+'|'+context+'|[はがをにとのでへもらり])([金錢钱糧粮])(?=\\s*(?:'+amount+'|[—–](?=$|'+boundary+')))','gu'),(_,before,unit)=>before+label(unit));
+   result=result.replace(new RegExp('('+amount+')\\s*([金錢钱糧粮])(?=$|'+boundary+'|[をがはのにとで並并])','gu'),(_,number,unit)=>label(unit)+number);
+   return result.replace(new RegExp('(^|'+boundary+')([金錢钱糧粮])(?=$|'+boundary+')','gu'),(_,before,unit)=>before+label(unit));
+  };
+  return displaySegments(String(value??''),normalize);
  }
  function rebuild(){
   exact=new Map();words=new Map();patterns=[];
@@ -33,7 +57,9 @@ window.GameI18n=(()=>{
  function t(value,language=locale){
   const text=String(value??''),key=language+'\0'+text;
   if(cache.has(key))return cache.get(key);
-  if(language==='zh-Hant'){const result=traditional(text);cache.set(key,result);return result;}
+  if(!text.trim())return text;
+  if(text.search(protectedDisplayTokens)!==-1){const result=displaySegments(text,part=>part?t(part,language):part);cache.set(key,result);return result;}
+  if(language==='zh-Hant'){const result=resourceText(traditional(text),language);cache.set(key,result);return result;}
   const content=text.trim();let result,matched=false;
   if(exact.has(content)){result=exact.get(content);matched=true;}
   else if(words.has(content)){result=words.get(content);matched=true;}
@@ -47,6 +73,7 @@ window.GameI18n=(()=>{
   // Quotes and unidentified proper nouns remain readable in the source script;
   // Japanese UI prose is supplied explicitly, never invented by character swaps.
   if(!matched&&!/[\u3040-\u30ff]/u.test(content))result=traditional(result);
+  result=resourceText(result,language);
   if(cache.size>12000)cache.clear();cache.set(key,result);return result;
  }
  function originalLanguage(element){
@@ -55,17 +82,21 @@ window.GameI18n=(()=>{
   return locale;
  }
  function eligible(element){return element&&!element.closest('script,style,[contenteditable=true]');}
+ function renderedText(source,element){
+  const language=originalLanguage(element);
+  return element.closest('[data-l10n-native]')&&!element.closest('[data-l10n-original]')?resourceText(source,language):t(source,language);
+ }
  function textNode(node){
   const parent=node.parentElement;if(!eligible(parent)||parent.closest('textarea,input,#language,[data-language-picker]')||!node.data.trim())return;
   const old=originals.get(node),source=old&&node.data===old.rendered?old.source:node.data;
-  const rendered=parent.closest('[data-l10n-native]')&&!parent.closest('[data-l10n-original]')?source:t(source,originalLanguage(parent));originals.set(node,{source,rendered});if(node.data!==rendered)node.data=rendered;
+  const rendered=renderedText(source,parent);originals.set(node,{source,rendered});if(node.data!==rendered)node.data=rendered;
  }
  const attributes=['aria-label','title','placeholder','alt','label'];
  function element(node){
   if(!eligible(node))return;
   if(node.dataset.localeOnly)node.hidden=node.dataset.localeOnly!==locale;
   let record=attributeOriginals.get(node);if(!record){record={};attributeOriginals.set(node,record);}
-  for(const key of attributes){const actual=node.getAttribute(key);if(actual===null)continue;const old=record[key],source=old&&actual===old.rendered?old.source:actual,rendered=t(source,originalLanguage(node));record[key]={source,rendered};if(actual!==rendered)node.setAttribute(key,rendered);}
+  for(const key of attributes){const actual=node.getAttribute(key);if(actual===null)continue;const old=record[key],source=old&&actual===old.rendered?old.source:actual,rendered=renderedText(source,node);record[key]={source,rendered};if(actual!==rendered)node.setAttribute(key,rendered);}
  }
  function localize(root=document.documentElement){
   if(root.nodeType===Node.TEXT_NODE){textNode(root);return;}
@@ -106,5 +137,5 @@ window.GameI18n=(()=>{
   stages=(conversion.stages||[]).map(stage=>({phrases:trie(stage.phrases),characters:stage.characters||{}}));resources=translations;rebuild();active=true;
   document.addEventListener('change',event=>{if(event.target.matches('#language,[data-language-picker]'))setLocale(event.target.value);});apply();
  });
- return {ready,t,traditional,setLocale,registerScenarios,apply,missing,get locale(){return locale;}};
+ return {ready,t,traditional,resourceText,setLocale,registerScenarios,apply,missing,get locale(){return locale;}};
 })();

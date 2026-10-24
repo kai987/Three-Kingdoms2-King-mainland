@@ -23,6 +23,7 @@ from remake.treasures import RULES as TREASURY_RULES
 from remake.facilities import RULES as FACILITY_RULES
 from remake.equipment import RULES as EQUIPMENT_RULES, build_initials
 from route_timing import apply_route_timing
+from river_network import build as build_river_network
 from route_render_source import validate_geometry_sources
 from officer_stat_sources import validate_original_virtue, validate_campaign_stats
 from import_campaign_stats import validate_reference as validate_public_reference
@@ -121,6 +122,10 @@ def load_sources(*, timing=True):
                             + (ROOT/'game/route_timing.py').read_bytes()).hexdigest() if timing else None
     if timing:
         validate_geometry_sources(ROOT, geometry['sources'])
+    river_network = build_river_network()
+    if (navigation.get('river_network', {}).get('source_sha256') != river_network['source_sha256']
+            or navigation.get('river_routes') != river_network['routes']):
+        raise ValueError('Shared river network navigation is stale; rebuild navigation geometry')
     index = json.loads((SOURCE / 'index.json').read_text(encoding='utf-8'))
     people = json.loads((SOURCE / 'people.json').read_text(encoding='utf-8'))
     shared = json.loads((SOURCE / 'shared.json').read_text(encoding='utf-8'))

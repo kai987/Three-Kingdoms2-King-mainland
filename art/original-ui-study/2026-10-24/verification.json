@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-24",
+  "scope": "Local screenshot audit and UI replacement proposal only",
+  "captures_verified": 38,
+  "capture_sha256_verified": true,
+  "reference_crops": 14,
+  "full_png_decode": true,
+  "all_html_image_alt_present": true,
+  "unique_html_ids": true,
+  "local_html_image_and_link_paths_checked": true,
+  "missing_paths": [],
+  "gallery_browser_render": "Not verified: in-app browser blocks local file protocol; no bypass attempted. Overview PNG inspected directly and HTML paths checked locally.",
+  "original_autosave_files": [
+    {
+      "file": "オートセーブステート.oesavestate/Info.plist",
+      "sha256": "6526834af4738ed87a2fbef3e0c44a3e5ed72ae92d1f5ebfd3aa7e7b11d89550",
+      "matches": true
+    },
+    {
+      "file": "オートセーブステート.oesavestate/ScreenShot",
+      "sha256": "3e635f99736d8458cee06ca599d0d9b35d644fcefc32784cbe5ca1468a0bb41e",
+      "matches": true
+    },
+    {
+      "file": "オートセーブステート.oesavestate/State",
+      "sha256": "42453c057c0f47fc7282be1191dae2e29b340362bed032cb04cb73f37109a500",
+      "matches": true
+    }
+  ],
+  "emulator": {
+    "background_pause_restored": true,
+    "background_pause_evidence": "CUA checkbox Value 1, same audit run",
+    "debug": false,
+    "default_core_manager": "OpenEmuKit.OEXPCGameCoreManager",
+    "active_test_session": "Background Thread instance retained; default is XPC for newly opened sessions",
+    "independent_quick_state_reloaded": true,
+    "restoration_capture": 38
+  },
+  "tracked_game_files_changed": [],
+  "game_tests": "Not run: runtime code unchanged",
+  "commit_push_deploy": "Not performed",
+  "evidence_limits": [
+    "No hospital treatment interior captured: no injured officers in the inspected state",
+    "No independent school interior captured; portrait acknowledgement and text result verified",
+    "No random disaster illustration triggered",
+    "Per-item original weapon/armor illustrations not observed",
+    "Original native image dimensions not measured",
+    "No full accessibility or mobile audit performed"
+  ]
+}

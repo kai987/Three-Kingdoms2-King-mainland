@@ -22,6 +22,11 @@ from urllib.parse import parse_qs, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / 'game'
 ORIGINAL_EFFECT_CUES = ('5a', '5d', '5e', '60', '61', '62', '65', '68', '69', '88', '8d', '91', '95')
+ORIGINAL_UI_IDS = ('facility-armory', 'facility-hospital', 'facility-market', 'facility-school',
+                   'command-city', 'command-army', 'command-warehouse', 'command-town',
+                   'equipment-weapon-category', 'equipment-armor-category',
+                   'event-armory-interior', 'event-market-interior', 'event-sortie',
+                   'event-decorative-frame')
 MAX_BODY_BYTES = 2 * 1024 * 1024
 AUDIT_LIMITS = {'file_opens': 5000, 'imports': 1024, 'requests': 4096, 'denied_access': 1024}
 
@@ -97,6 +102,28 @@ def audio_effect_static_assets():
     return {f'/assets/audio/original/effects/seq-{cue}.wav':
             (f'assets/audio/original/effects/seq-{cue}.wav', 'audio/wav')
             for cue in ORIGINAL_EFFECT_CUES}
+
+
+def original_ui_static_assets():
+    """Publish the small reviewed UI set, never source windows or emulator states."""
+    result = {'/assets/original-ui/index.json':
+              ('assets/original-ui/index.json', 'application/json; charset=utf-8')}
+    for identity in ORIGINAL_UI_IDS:
+        for name in (f'{identity}-4x.png', f'pixel-base/{identity}.png', f'source/{identity}.png'):
+            path = 'assets/original-ui/' + name
+            result['/' + path] = (path, 'image/png')
+    return result
+
+
+def equipment_icon_static_assets():
+    """Only the fixed per-item remake icons are public; generation sources stay local."""
+    result = {'/assets/equipment-icons/index.json':
+              ('assets/equipment-icons/index.json', 'application/json; charset=utf-8')}
+    for slot, count in (('weapon', 29), ('armor', 8)):
+        for identity in range(count):
+            path = f'assets/equipment-icons/{slot}-{identity}.png'
+            result['/' + path] = (path, 'image/png')
+    return result
 
 
 def battle_static_assets(here=None):
@@ -301,7 +328,7 @@ def static_file_bytes(here, name):
         target.resolve().relative_to(root)
     except ValueError:
         raise FileNotFoundError(name) from None
-    for directory in ('assets/portraits', 'assets/battle-original', 'assets/battle-enhanced', 'assets/civil-staff'):
+    for directory in ('assets/portraits', 'assets/battle-original', 'assets/battle-enhanced', 'assets/civil-staff', 'assets/original-ui', 'assets/equipment-icons'):
         if name.startswith(directory + '/') and (target.is_symlink() or target.parent.is_symlink() or
                                                   (root / directory).is_symlink() or
                                                   (root / 'assets').is_symlink()):
@@ -540,6 +567,11 @@ def main():
               '/audio.js': ('audio.js', 'text/javascript; charset=utf-8'),
               '/events.js': ('events.js', 'text/javascript; charset=utf-8'),
               '/events.css': ('events.css', 'text/css; charset=utf-8'),
+              '/original-ui.js': ('original-ui.js', 'text/javascript; charset=utf-8'),
+              '/original-ui.css': ('original-ui.css', 'text/css; charset=utf-8'),
+              '/command-menu.css': ('command-menu.css', 'text/css; charset=utf-8'),
+              '/equipment-ui.css': ('equipment-ui.css', 'text/css; charset=utf-8'),
+              '/facilities-ui.css': ('facilities-ui.css', 'text/css; charset=utf-8'),
               '/officer-choice.js': ('officer-choice.js', 'text/javascript; charset=utf-8'),
               '/officer-selection.js': ('officer-selection.js', 'text/javascript; charset=utf-8'),
               '/civil-staff.js': ('civil-staff.js', 'text/javascript; charset=utf-8'),
@@ -588,6 +620,8 @@ def main():
     static.update(portrait_static_assets())
     static.update(civil_portrait_static_assets())
     static.update(audio_effect_static_assets())
+    static.update(original_ui_static_assets())
+    static.update(equipment_icon_static_assets())
     static.update(battle_static_assets())
     static.update(enhanced_battle_static_assets())
 

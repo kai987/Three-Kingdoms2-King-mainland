@@ -1,0 +1,14 @@
+/* Capture-derived pixel artwork retains its aspect ratio; callers choose its scale. */
+.original-ui-image{display:block;flex:none;max-width:100%;height:auto;object-fit:contain;image-rendering:pixelated;image-rendering:crisp-edges}
+:where(.original-ui-icon){width:32px}
+:where(.original-ui-scene){width:auto}
+.original-ui-frame{border:4px double var(--ink,#000);background:var(--paper,#ffd4c8)}
+/* Slices stop at the observed inner photograph boundary; its center is not drawn. */
+.event-art-original:not(.event-art-icon){border:0;background:transparent}
+.event-art-original:not(.event-art-icon) .event-original-stage{
+ display:block;width:fit-content;max-width:100%;justify-self:center;
+ border-style:double;border-color:var(--ink,#000);border-width:15px 18px 16px;
+ border-image-source:url('/assets/original-ui/event-decorative-frame-4x.png');
+ border-image-slice:60 72 64 72;border-image-repeat:stretch;
+}
+.original-ui-missing{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px;border:1px dashed var(--ink,#000);font-size:14px;line-height:1.4;text-align:center;overflow-wrap:anywhere}

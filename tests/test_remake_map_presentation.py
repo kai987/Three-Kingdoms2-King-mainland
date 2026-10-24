@@ -77,7 +77,7 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta['inactive_castle_ground_sha256'],ground_sha)
         self.assertEqual(meta['inactive_castle_ids'],['yiyang','yidu'])
         self.assertEqual(meta['inactive_castle_ground'],'/assets/map-city-ground.png')
-        base=deepcopy(meta);base.pop('road_center_corrections');base.pop('road_bridges');base.pop('inactive_castle_ground_sha256')
+        base=deepcopy(meta);base.pop('road_center_corrections');base.pop('road_bridges');base.pop('inactive_castle_ground_sha256');base.pop('city_road_bed')
         self.assertEqual(source['presentation'],base)
         self.assertEqual(set(source['approved_asset_sha256']),
                          {'map.png','map-basin.png','map-campaign.png','map-clean.png','map-navigation.png','map-road-centers.png'})
@@ -102,16 +102,21 @@ class MapPresentationTests(unittest.TestCase):
         self.assertEqual(meta,actual)
         self.assertEqual(meta['schema'],'tk2-road-center-corrections-v1')
         self.assertEqual(meta['backgrounds'],{'/assets/map-navigation.png':'/assets/map-road-centers.png'})
-        self.assertEqual(len(meta['hubs']),33)
-        self.assertEqual(meta['summary'],dict(reviewed_hubs=33,visible_hubs=12,changed_segments=122,
-                                             deleted_spokes=40,protected_hubs=25))
+        self.assertEqual(len(meta['hubs']),58)
+        self.assertEqual(meta['summary'],dict(reviewed_hubs=58,visible_hubs=12,changed_segments=334,
+                                             deleted_spokes=165,protected_hubs=0))
         for field in ('ground','provenance','protected_hubs','changes','removed_obsolete_paths','mask_d','paint_d','corridor_repairs'):
-            self.assertNotIn(field,meta,'Runtime uses a native PNG, not a large SVG repaint')
+            self.assertNotIn(field,meta,'The compact center audit does not duplicate full source metadata')
         for hub in meta['hubs']:
             self.assertEqual(set(hub),{'city','center','old_hub'})
         shared=json.loads((ROOT/'game/config/campaigns/shared.json').read_text())
         positions={city['id']:city['position'] for city in shared['catalog']['cities']}
         full=build_road_centers(json.loads((ROOT/'game/config/road-centers.json').read_text()),positions)
+        bed=presentation()['city_road_bed']
+        self.assertEqual(bed['schema'],'tk2-city-road-bed-v1')
+        self.assertEqual(bed['ground'],'/assets/map-city-ground.png')
+        self.assertEqual(bed['path'],full['paint_d'])
+        self.assertEqual(bed['repair_path'],full['mask_d'])
         self.assertEqual(len(full['hubs']),meta['summary']['reviewed_hubs'])
         self.assertEqual(len(full['protected_hubs']),meta['summary']['protected_hubs'])
         self.assertEqual(len(full['changes']),meta['summary']['changed_segments'])

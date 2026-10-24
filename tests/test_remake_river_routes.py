@@ -82,7 +82,8 @@ class RiverRouteTests(unittest.TestCase):
             if {row['from'], row['to']} == {'jiangxia', 'changsha'}]
         self.assertEqual(sorted(row['mode'] for row in direct), ['land', 'river'])
         raw = next(row for row in direct if row['mode'] == 'river')
-        self.assertEqual([r['speed_key'] for r in raw['river_segments']], ['yangtze', 'xiang'])
+        self.assertEqual(raw['river_segments'][0]['speed_key'], 'yangtze')
+        self.assertTrue(all(r['speed_key']=='xiang' for r in raw['river_segments'][1:]))
         self.assertTrue(all(r['downstream_from'] == 'changsha' for r in raw['river_segments']))
         self.assertAlmostEqual(sum(r['distance_km'] for r in raw['river_segments']), raw['river_km'], places=1)
         for source, target, flow in (('jiangxia', 'changsha', 'upstream'),

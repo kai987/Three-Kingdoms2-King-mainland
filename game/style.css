@@ -150,7 +150,7 @@ margin-top:8px
 width:100%;
 height:100%;
 display:grid;
-grid-template-columns:minmax(0,1.4fr) minmax(380px,1fr);
+grid-template-columns:minmax(0,1.4fr) minmax(336px,1fr);
 grid-template-rows:minmax(0,1fr) 104px;
 grid-template-areas:"stage inspector" "journal inspector";
 gap:8px
@@ -158,8 +158,8 @@ gap:8px
 /* Fit the whole native map without side letterboxing; give the remaining width to controls. */
 @supports(width:1cqh){
 main:has(#world-map) .game-layout{
---map-panel-height:min(calc(100cqh - 112px),calc((100cqw - 396px)/1.3203125 + 8px));
-grid-template-columns:minmax(0,calc((var(--map-panel-height) - 8px)*1.3203125 + 8px)) minmax(380px,1fr);
+--map-panel-height:min(calc(100cqh - 112px),calc((100cqw - 352px)/1.3203125 + 8px));
+grid-template-columns:minmax(0,calc((var(--map-panel-height) - 8px)*1.3203125 + 8px)) minmax(336px,1fr);
 grid-template-rows:minmax(0,var(--map-panel-height)) minmax(104px,1fr)
 }
 }
@@ -277,15 +277,24 @@ border:2px solid #000
 }
 .resources{
 margin:0;
-display:grid;
-grid-template-columns:minmax(0,1fr) auto;
+display:flex;
+flex-wrap:wrap;
+align-items:baseline;
 gap:6px 12px;
 padding:10px 12px;
 border:2px solid #000;
 font-size:16px
 }
+.resources .resource-pair{
+display:inline-flex;
+align-items:baseline;
+justify-content:space-between;
+flex:1 0 auto;
+gap:8px;
+white-space:nowrap
+}
 .resources dt{
-letter-spacing:3px
+letter-spacing:0
 }
 .resources dd{
 margin:0;
@@ -437,16 +446,17 @@ padding:0 6px;
 font-size:14px
 }
 .wide-map-layout .game-layout{
-grid-template-columns:minmax(0,1fr) minmax(320px,.42fr);
+grid-template-columns:minmax(0,1fr) minmax(336px,.42fr);
 grid-template-rows:minmax(0,1fr);
 grid-template-areas:"stage inspector"
 }
 .wide-map-layout #inspector{padding:12px;gap:10px}
 .wide-map-layout .setup-fields{grid-template-columns:1fr}
+.mobile-inspector-bar{display:none}
 @supports(width:1cqh){
 body.wide-map-layout main:has(#world-map) .game-layout{
---map-panel-height:min(100cqh,calc((100cqw - 336px)/1.3203125 + 8px));
-grid-template-columns:minmax(0,calc((var(--map-panel-height) - 8px)*1.3203125 + 8px)) minmax(320px,1fr);
+--map-panel-height:min(100cqh,calc((100cqw - 352px)/1.3203125 + 8px));
+grid-template-columns:minmax(0,calc((var(--map-panel-height) - 8px)*1.3203125 + 8px)) minmax(336px,1fr);
 grid-template-rows:minmax(0,1fr)
 }
 }
@@ -468,6 +478,11 @@ scrollbar-gutter:stable
 .setup-options{font-size:14px}
 .setup-options>summary{min-height:32px;cursor:pointer;padding:4px 0}
 .setup-options>details{margin-top:8px}
+#setup-summary{display:flex;align-items:center;gap:10px}
+.setup-ruler-portrait{flex:0 0 32px}
+.setup-ruler-portrait .officer-portrait{display:block}
+#setup-summary .setup-ruler-portrait .portrait-frame{width:32px;height:40px;border:0;outline:1px solid var(--ink)}
+.setup-summary-copy{flex:1;min-width:0}
 .city-background{border-top:2px solid #000;padding-top:10px;font-size:14px}
 .city-background>summary{min-height:32px;cursor:pointer}
 .city-background>p{margin-top:10px}
@@ -886,8 +901,23 @@ aspect-ratio:1352/1024
 #stage.battle-stage{aspect-ratio:auto;min-height:360px}
 #inspector{
 overflow:visible;
-min-height:380px
+min-height:0
 }
+.mobile-inspector-bar:not([hidden]){
+display:flex;
+position:sticky;
+top:0;
+z-index:4;
+gap:6px;
+padding:6px;
+border:4px double var(--ink);
+background:var(--paper)
+}
+.mobile-inspector-bar>button{min-height:44px;min-width:0;padding:6px 8px;overflow-wrap:anywhere}
+#inspector-toggle{flex:1;text-align:left}
+#inspector-compact-information{flex:0 0 auto}
+body.mobile-inspector-collapsed #inspector:not(.setup-menu){display:none}
+body.mobile-inspector-collapsed .mobile-inspector-bar{margin-bottom:0}
 #inspector.setup-menu{display:flex;overflow:visible}
 .setup-content{overflow:visible;padding-right:0}
 #inspector.setup-menu>.actions{display:grid;width:100%}

@@ -1,0 +1,35 @@
+/* Item artwork and names stay visible; engine values live in the shared popover. */
+.equipment-summary { min-width: 0; }
+.equipment-summary h3 { margin: 0 0 8px; }
+.equipment-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.equipment-item { display: flex; align-items: center; gap: 8px; width: 100%; min-width: 0; min-height: 44px; padding: 6px; border: 1px solid currentColor; font: inherit; color: inherit; background: transparent; text-align: start; line-height: 1.4; cursor: pointer; }
+.equipment-item[aria-expanded="true"] { outline: 2px solid currentColor; outline-offset: -2px; }
+.equipment-item:focus-visible { outline: 3px solid var(--focus,#0070ec); outline-offset: 2px; }
+.equipment-item-icon, .equipment-category-fallback { flex: 0 0 auto; width: 40px; height: 40px; object-fit: contain; image-rendering: pixelated; }
+.equipment-category-fallback { display: inline-grid; place-items: center; border: 2px double currentColor; font-weight: bold; }
+.equipment-item-name { overflow-wrap: anywhere; }
+.equipment-tooltip { position: fixed; inset: auto; z-index: 10000; box-sizing: border-box; width: max-content; max-width: min(320px,calc(100vw - 16px)); margin: 0; padding: 10px 12px; border: 3px double var(--ink,#000); background: var(--paper,#ffd4c8); color: var(--ink,#000); font: 15px/1.5 var(--ui,system-ui,sans-serif); overflow: auto; overflow-wrap: anywhere; overscroll-behavior: contain; }
+.equipment-tooltip[hidden] { display: none !important; }
+.equipment-tooltip > strong, .equipment-tooltip > span, .equipment-tooltip-effects > span { display: block; }
+.equipment-tooltip-name { margin-bottom: 4px; }
+.equipment-tooltip-effects { margin-top: 6px; padding-top: 6px; border-top: 1px solid currentColor; font-variant-numeric: tabular-nums; }
+.equipment-tooltip-effects:empty { display: none; }
+.equipment-core-stats { display: flex; flex-wrap: wrap; gap: 4px 14px; font-variant-numeric: tabular-nums; }
+.equipment-core-stats > span { white-space: nowrap; }
+.equipment-details { margin-top: 8px; border-top: 1px solid currentColor; }
+.equipment-details > summary, .equipment-guide > summary { display: list-item; min-height: 44px; padding: 10px 4px; box-sizing: border-box; cursor: pointer; }
+.equipment-details > summary:focus-visible, .equipment-guide > summary:focus-visible { outline: 3px solid currentColor; outline-offset: -3px; }
+.equipment-details[open] > summary { margin-bottom: 4px; }
+.equipment-comparison-core { grid-template-columns: repeat(2, minmax(0, 1fr)); font-weight: bold; font-variant-numeric: tabular-nums; }
+.equipment-comparison-values > span { overflow-wrap: anywhere; }
+.equipment-comparison [data-equipment-ineligible] { padding: 6px; border: 1px solid currentColor; }
+.equipment-special-heading { display: flex; align-items: center; gap: 8px; }
+.equipment-guide li + li { border-top: 1px solid currentColor; padding-top: 10px; }
+.equipment-summary-compact .equipment-pair { gap: 4px; }
+.equipment-summary-compact .equipment-item { gap: 5px; padding: 2px; border: 0; }
+.equipment-summary-compact .equipment-item-icon,
+.equipment-summary-compact .equipment-category-fallback { width: 28px; height: 28px; }
+@media (max-width: 600px) {
+ .equipment-pair { grid-template-columns: minmax(0, 1fr); }
+ .equipment-comparison-core { grid-template-columns: minmax(0, 1fr); }
+}

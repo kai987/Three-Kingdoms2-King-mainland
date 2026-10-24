@@ -1,0 +1,233 @@
+#!/usr/bin/env python3
+"""Build a local evidence gallery; never modifies game assets or source captures."""
+from __future__ import annotations
+
+import hashlib
+import html
+import json
+from datetime import datetime
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+
+ROOT = Path(__file__).resolve().parent
+SHOTS = ROOT / 'screenshots'
+CROPS = ROOT / 'reference-crops'
+CROPS.mkdir(exist_ok=True)
+
+# Names corrected after visual inspection. Existing full-frame bytes are retained.
+RENAMES = {
+    '07-weapon-trade-in-result.png': '07-return-after-purchase.png',
+    '12-hospital-officer-selection.png': '12-hospital-no-patients.png',
+    '14-domestic-command-icons.png': '14-domestic-command-list.png',
+    '15-town-development-officers.png': '15-development-at-cap.png',
+    '21-treasure-market-options.png': '21-treasure-sale-quote.png',
+    '27-empty-city-occupation-event.png': '27-sortie-illustration.png',
+    '33-school-illustration.png': '33-school-result.png',
+}
+for old, new in RENAMES.items():
+    old_path, new_path = SHOTS / old, SHOTS / new
+    if old_path.exists():
+        if new_path.exists():
+            raise RuntimeError(f'Refusing to overwrite {new_path}')
+        old_path.rename(new_path)
+
+# Number, group, title, observed finding, evidence limit.
+ROWS = [
+    (1, '設施', '町：武器屋、醫館、市場', '三個入口使用交叉兵器、醫、商圖示；顯示金、米、寶與剩餘命令。', '並州的這個狀態只有三個設施，不代表所有城池相同。'),
+    (2, '裝備', '購武具：選擇武將', '列表對齊體、武、知、忠、德、經；劉備的忠是 --。', '是本機超级版的四人測試名冊。'),
+    (3, '裝備', '剣／刀／矛／防具分類', '以四分類文字縮短物品清單。', '分類畫面沒有每件物品的圖片。'),
+    (4, '裝備', '剣類商品', '短剣、飛剣、長剣、破斬剣及價格；保留地圖背景。', '本頁是名稱與價格清單，未見獨立商品圖。'),
+    (5, '裝備', '購買命令書確認', '執行前先確認消耗一張命令書。', '僅為這次購買流程的確認畫面。'),
+    (6, '事件 裝備', '武器購置：店內插圖', '店主、客人及右上三件壁上兵器；結果說明換入新武具、舊物交店。', '是購置結果圖，不是所有設施共用的內景。'),
+    (7, '裝備', '購買後返回地圖', '交易完成後返回下一個都市選擇。', '不是第二張「舊武器交易」插圖。'),
+    (8, '裝備', '刀類商品', '薙刀、眉尖刀、三尖刀、鉤鎌刀及價格。', '未見獨立商品圖。'),
+    (9, '裝備', '矛類商品', '矛、雙戟、單鉤鎗、戰斧及價格。', '未見獨立商品圖。'),
+    (10, '裝備', '防具商品', '綸巾、籠手、兜、硬皮及價格。', '未見逐件防具圖片。'),
+    (11, '事件 裝備', '防具購置：共用武具店插圖', '選防具購買後出現與武器購置相同的店內構圖。', '沒有證據顯示是獨立防具店內景。'),
+    (12, '設施', '醫館：沒有傷員', '明確提示城內沒有受傷武將，不需治療。', '條件受限：未取得診療中或診療結果插圖。'),
+    (13, '設施', '都市四類命令圖示', '城、軍隊、倉、町四張圖示與都市君主、太守、統治度。', '圖示含視窗縮放影響，須另採乾淨原生素材。'),
+    (14, '設施', '城政命令文字列表', '町づくり、情報あつめ、策略、武将の移動、防災、記録する。', '這一頁是文字命令列表，不是六張圖示。'),
+    (15, '設施', '開發已達上限', '當城池已足夠繁榮時，提示繼續花費沒有意義。', '未在這個狀態觸發實際開發內景。'),
+    (16, '交易', '市場：米／寶', '商店先區分米與タカラ。', '本次只觀察到後續米交易與寶出售流程。'),
+    (17, '交易', '米：買入／賣出', '買賣方向與數量分步選擇。', '非本作即時交易公式的驗證。'),
+    (18, '交易', '賣米報價與輸入', '顯示米100對金75的報價，等待數量輸入。', '畫面報價不能單獨證明輸入欄每單位的意義。'),
+    (19, '交易', '米交易數量1', '輸入數量1後進行確認。', '後續取整結果需一起看20，不能當作100單位批次。'),
+    (20, '事件 交易', '市場交易：商人插圖', '店主與客人；沒有壁上兵器。這次小額米交易顯示所得金0。', '不能由單次取整結果推導全部交易規則。'),
+    (21, '交易', '寶出售報價', '顯示每件寶換金100，輸入出售數量。', '不是一個已確認的寶物買入介面。'),
+    (22, '交易', '寶出售確認', '再次確認命令書消耗。', '確認畫面本身未展示新插圖。'),
+    (23, '事件 交易', '寶出售：共用商人插圖', '出售後取得金100；沿用20的商人場景。', '與20不是兩張不同場景素材。'),
+    (24, '來源', '本機版本：超级版標題', '標題明示超级版；作為本次來源版本識別。', '不能當作所有市售版本相同的證明。'),
+    (25, '裝備', '人物信息中的武器與防具圖示', '劉備顯示交叉兵器圖示：長剣，甲冑圖示：兜。', '是兩個裝備分類圖，並非長劍和兜的逐件商品繪圖。'),
+    (26, '事件', '軍隊命令', '出陣、偵察、徴兵、編成四項文字。', '為臨時曹操測試戰局，最後已讀回原測試狀態。'),
+    (27, '事件', '出陣：騎將、戰馬與旗幟', '夏侯惇出陣時顯示騎將插圖與出征發言。', '不是一張另外確認的「佔領空城」插圖。'),
+    (28, '事件', '佔領後的命令畫面', '青州成為本方顏色，返回都市命令。', '沒有獨立佔領場景可從這張圖提取。'),
+    (29, '設施', '學問所書本入口', '青州有書本、醫、商；與01互補採齊四種設施圖示。', '入口本身不是學習內景。'),
+    (30, '設施', '學問所：選夏侯惇', '武將資料體94、武89、知60、忠92、德68、經20。', '這是本機超级版單一人物的觀察值。'),
+    (31, '設施', '學問所費用', '本次學習畫面顯示金20。', '不據此改寫本作費用規則。'),
+    (32, '事件 設施', '學習前人物發言', '夏侯惇肖像與「しっかり勉強いたします」。', '人物發言畫面，不是教師或學堂內景。'),
+    (33, '事件 設施', '學習結果', '顯示知增加8，金9979、命令剩1。', '未捕獲獨立教學內景；不能說原遊戲沒有。'),
+    (34, '目前Web', '本作：開局圖文事件', '主圖是地圖裁片與人物肖像，配通用說明。', '尚未接入本次原版插圖。'),
+    (35, '目前Web', '本作：右欄命令與信息', '1280×720下右欄約474px寬，長文字按鈕和武將裝備摘要堆疊。', '只在這個桌面尺寸觀察，手機尚未實測。'),
+    (36, '目前Web', '本作：設施彈窗', '開發、執行武將、服務選擇等縱向排列，缺設施主圖。', '僅查看介面，未執行交易或治療。'),
+    (37, '目前Web', '本作：武具比較', '武器、防具、重量、先手、命中、迴避、退卻等說明均以文字展開。', '未購入物品；引擎數值未因本次查看而更改。'),
+    (38, '恢復', '讀回原測試起點', '金9999、米9999、寶99、命令3，町內武器屋選中；臨時交易和曹操測試已放棄。', '獨立快存起點，不是用本次流程覆寫原有自動存檔。'),
+]
+
+records = []
+for number, group, title, finding, limit in ROWS:
+    matches = list(SHOTS.glob(f'{number:02d}-*.png'))
+    if len(matches) != 1:
+        raise RuntimeError(f'Expected one image for {number}: {matches}')
+    source = matches[0]
+    with Image.open(source) as im:
+        width, height = im.size
+        im.verify()
+    records.append({
+        'number': number, 'groups': group.split(), 'title': title,
+        'file': str(source.relative_to(ROOT)), 'observed': finding,
+        'limit': limit, 'accepted': True,
+        'source': 'current-remake-browser' if 34 <= number <= 37 else 'OpenEmu-local-super-edition',
+        'width': width, 'height': height,
+        'native_asset_dimensions': None,
+        'captured_at': datetime.fromtimestamp(source.stat().st_mtime).astimezone().isoformat(),
+        'sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+    })
+
+manifest = {
+    'date': '2026-10-24', 'code_revision': 'd8bde3c',
+    'capture_tools': ['CUA OpenEmu window screenshot', 'CUA in-app browser screenshot'],
+    'original_game': '三国志2超级版 (local modified edition)',
+    'emulator': 'OpenEmu 1.4.0 / Nestopia',
+    'note': 'Full window captures retained. Window dimensions are not native asset dimensions. No production assets exported.',
+    'counts': {'original_flow': 33, 'remake': 4, 'restoration': 1, 'total': len(records)},
+    'captures': records,
+}
+(ROOT / 'capture-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
+
+by_number = {row['number']: row for row in records}
+# Bounds are in exact source-window pixels, not original PPU coordinates.
+CROP_ROWS = [
+    ('facility-armory', '武器屋', 1, [600, 1264, 768, 1408], '町：武器屋入口'),
+    ('facility-hospital', '醫館', 1, [930, 1264, 1098, 1408], '町：醫館入口'),
+    ('facility-market', '市場', 1, [1260, 1264, 1428, 1408], '町：市場入口'),
+    ('facility-school', '學問所', 29, [600, 1264, 768, 1408], '町：學問所入口'),
+    ('command-city', '城', 13, [438, 1215, 658, 1408], '右欄：城政組'),
+    ('command-army', '軍', 13, [711, 1215, 931, 1408], '右欄：軍務組'),
+    ('command-warehouse', '倉', 13, [985, 1215, 1205, 1408], '右欄：倉庫組'),
+    ('command-town', '町', 13, [1258, 1215, 1480, 1408], '右欄：設施組'),
+    ('equipment-weapon-category', '武器類', 25, [438, 1320, 552, 1408], '裝備：分類小圖；不是專武圖'),
+    ('equipment-armor-category', '防具類', 25, [1090, 1320, 1208, 1408], '裝備：分類小圖；不是逐件商品圖'),
+    ('event-armory-interior', '武具店', 6, [218, 351, 768, 836], 'equipment_bought'),
+    ('event-market-interior', '商人交易', 20, [218, 351, 768, 836], 'grain_traded / treasure_sold'),
+    ('event-sortie', '騎將出陣', 27, [218, 351, 768, 836], '出陣；運輸沿用需標作本作改編'),
+    ('event-decorative-frame', '共用裝飾框', 6, [110, 261, 878, 930], '事件框邊角參考，尚未分離為透明角塊'),
+]
+candidates = []
+for identifier, title, number, rect, target in CROP_ROWS:
+    source = ROOT / by_number[number]['file']
+    dest = CROPS / f'{identifier}.png'
+    with Image.open(source) as im:
+        assert 0 <= rect[0] < rect[2] <= im.width and 0 <= rect[1] < rect[3] <= im.height
+        im.crop(rect).save(dest)
+    candidates.append({
+        'id': identifier, 'title': title, 'source_capture': number,
+        'source_sha256': by_number[number]['sha256'],
+        'source_file': by_number[number]['file'], 'rect_xyxy_window_pixels': rect,
+        'preview_file': str(dest.relative_to(ROOT)),
+        'preview_sha256': hashlib.sha256(dest.read_bytes()).hexdigest(),
+        'status': 'original-reference', 'native_dimensions_confirmed': False,
+        'production_ready': False, 'proposed_target': target,
+    })
+(ROOT / 'asset-candidates.json').write_text(json.dumps({
+    'note': 'Window-pixel reference crops only. Preserve full screenshots. Re-capture native images before runtime integration.',
+    'candidates': candidates,
+    'missing': ['hospital treatment interior', 'independent school interior, if present', 'flood/drought illustrations', 'recruitment/reward/death/succession/special-equipment event art', 'per-item equipment art, if present'],
+}, ensure_ascii=False, indent=2) + '\n')
+
+font_file = Path('/System/Library/Fonts/STHeiti Medium.ttc')
+def font(size):
+    return ImageFont.truetype(str(font_file), size) if font_file.exists() else ImageFont.load_default()
+
+sheet = Image.new('RGB', (1440, 1350), '#fff4ed')
+draw = ImageDraw.Draw(sheet)
+draw.text((32, 20), '原遊戲 UI 採集｜可沿用的圖像與目前 Web 版', font=font(34), fill='#241b17')
+draw.text((32, 68), '2026-10-24 · 本機「超级版」實拍裁片 · 參考圖，尚未完成原生素材匯出', font=font(21), fill='#5c4c42')
+for i, item in enumerate(candidates[10:13]):
+    x, y = 32 + i * 472, 114
+    with Image.open(ROOT / item['preview_file']) as im:
+        thumb = ImageOps.contain(im.convert('RGB'), (430, 380), Image.Resampling.NEAREST)
+    sheet.paste(thumb, (x + (440-thumb.width)//2, y))
+    draw.text((x, 508), f"{item['source_capture']:02d}  {item['title']}", font=font(26), fill='#241b17')
+draw.text((32, 562), '4 類設施圖示＋4 組命令圖示＋2 個裝備分類圖示', font=font(25), fill='#241b17')
+for i, item in enumerate(candidates[:10]):
+    x = 32 + i * 141
+    with Image.open(ROOT / item['preview_file']) as im:
+        thumb = ImageOps.contain(im.convert('RGB'), (120, 100), Image.Resampling.NEAREST)
+    sheet.paste(thumb, (x + (120-thumb.width)//2, 612))
+    draw.text((x, 727), item['title'], font=font(19), fill='#241b17')
+draw.text((32, 794), '目前本作：側欄與設施、裝備資訊以長文字為主', font=font(25), fill='#241b17')
+for i, number in enumerate([35, 37]):
+    x, y = 32 + i * 710, 840
+    with Image.open(ROOT / by_number[number]['file']) as im:
+        thumb = ImageOps.contain(im.convert('RGB'), (676, 385), Image.Resampling.LANCZOS)
+    sheet.paste(thumb, (x, y))
+    draw.text((x, 1238), f'{number:02d}  ' + by_number[number]['title'], font=font(22), fill='#241b17')
+draw.text((32, 1294), '建議：圖示分組命令／設施頁籤／裝備比較收合／依事件種類配原版插圖', font=font(23), fill='#241b17')
+sheet.save(ROOT / 'overview.png')
+
+esc = html.escape
+asset_cards = ''.join(
+    f'<figure><a href="{esc(c["source_file"])}"><img src="{esc(c["preview_file"])}" alt="{esc(c["title"])}的本機原畫面參考裁片"></a>'
+    f'<figcaption><strong>{esc(c["title"])}</strong><span>來源 {c["source_capture"]:02d} · 待原生匯出</span></figcaption></figure>'
+    for c in candidates[:13]
+)
+capture_cards = ''.join(
+    f'<article class="capture" data-groups="{esc(" ".join(row["groups"]))}" id="capture-{row["number"]}">'
+    f'<a href="{esc(row["file"])}"><img loading="lazy" width="{row["width"]}" height="{row["height"]}" src="{esc(row["file"])}" alt="截圖{row["number"]:02d}：{esc(row["title"])}"></a>'
+    f'<div class="capture-note"><p class="eyebrow">{row["number"]:02d} · {esc(" / ".join(row["groups"]))}</p><h3>{esc(row["title"])}</h3><p>{esc(row["observed"])}</p>'
+    f'<p class="limit">證據範圍：{esc(row["limit"])}</p><a href="{esc(row["file"])}">查看完整 PNG ↗</a></div></article>'
+    for row in records
+)
+filters = ''.join(f'<button type="button" data-filter="{esc(group)}" aria-pressed="{str(group=="全部").lower()}">{esc(group)}</button>' for group in ['全部','設施','裝備','交易','事件','目前Web','來源','恢復'])
+
+page = '''<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>原遊戲UI圖冊與替換方案｜三國志Ⅱ・大陸戰役</title>
+<style>
+:root{color-scheme:light;--paper:#fff6ef;--ink:#211b17;--line:#c3aca0;--rose:#ffd0c4;--green:#205c48}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Sans","PingFang TC",sans-serif;line-height:1.65}main{max-width:1360px;margin:auto;padding:28px 30px 70px}a{color:#215b48;text-underline-offset:4px}a:focus-visible,button:focus-visible{outline:3px solid #005bc4;outline-offset:4px}header{border-bottom:2px solid var(--ink);padding:8px 0 22px}.eyebrow{font-size:13px;letter-spacing:.06em;margin:0 0 8px;color:#6a5043}h1{font-size:clamp(27px,4vw,45px);line-height:1.25;margin:8px 0 16px}h2{font-size:27px;margin:0 0 18px;line-height:1.35}h3{font-size:20px;line-height:1.4;margin:0 0 10px}p{margin:8px 0 14px}.lead{max-width:920px;font-size:19px}nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin-top:20px}section{padding:35px 0;border-bottom:1px solid var(--line)}.stats{display:flex;flex-wrap:wrap;gap:10px 26px;padding:16px 0 0}.stats strong{font-size:25px}.overview{width:100%;height:auto;display:block;border:1px solid var(--line)}.notice{border-left:4px solid var(--green);padding:8px 18px;background:#edf1e8;margin:20px 0}.plan{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.plan>article{border-top:3px solid var(--ink);padding:16px 0 0}.plan ul{padding-left:22px;margin-bottom:0}.stage{padding:14px 0;border-top:1px solid var(--line)}.stage strong{display:block;font-size:19px}.assets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}figure{margin:0}figure img{width:100%;height:125px;object-fit:contain;image-rendering:pixelated;background:var(--rose);display:block;border:1px solid var(--line)}figure:nth-child(n+11){grid-column:span 1}figure:nth-child(n+11) img{height:190px}figcaption{font-size:14px;margin-top:6px}figcaption strong,figcaption span{display:block}figcaption span{color:#705b4f;font-size:12px}.filters{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}button{font:inherit;min-height:44px;padding:8px 16px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}button[aria-pressed=true]{background:var(--ink);color:var(--paper)}.captures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}.capture{border:1px solid var(--line);background:#fffdfa;min-width:0}.capture[hidden]{display:none}.capture>a{display:block;background:#201c19}.capture img{display:block;width:100%;height:320px;object-fit:contain}.capture-note{padding:19px}.capture-note p{font-size:15px}.limit{color:#715b4e;border-left:2px solid var(--line);padding-left:10px}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f6e0d4}.table-scroll{overflow-x:auto}.link-list{display:flex;flex-wrap:wrap;gap:10px 24px}footer{padding-top:28px;color:#6b5548;font-size:14px}code{font-size:.92em;overflow-wrap:anywhere}#count{font-size:14px;color:#6b5548}@media(max-width:700px){main{padding:18px 16px 45px}.plan,.captures{grid-template-columns:1fr}.assets{grid-template-columns:repeat(2,minmax(0,1fr))}.assets figure:last-child{grid-column:span 2}.capture img{height:280px}.stats{gap:8px 18px}section{padding:26px 0}th,td{min-width:110px;padding:10px 7px}.lead{font-size:17px}h2{font-size:24px}nav{gap:10px 20px}}
+</style></head><body><main>
+<header><p class="eyebrow">2026.10.24 / OPENEMU・NESTOPIA / LOCAL SUPER EDITION</p>
+<h1>原遊戲 UI 圖冊<br>與本作素材替換方案</h1>
+<p class="lead">保留原版粉色面板、黑框與像素畫，以圖示整理命令，用真實場景取代通用事件示意。以下先呈現實際取得的證據，再列出實施順序。</p>
+<div class="stats"><span><strong>33</strong> 張原遊戲流程</span><span><strong>4</strong> 張 Web 對照</span><span><strong>1</strong> 張恢復憑證</span><span><strong>3</strong> 類不同大幅插圖</span></div>
+<nav aria-label="圖冊導覽"><a href="#plan">布局方案</a><a href="#assets">素材候選</a><a href="#steps">調查步驟</a><a href="#gallery">38張截圖</a><a href="ui-replacement-plan.zh-Hant.md">完整實施文件</a></nav></header>
+<section aria-labelledby="overview-title"><h2 id="overview-title">已採集的圖像</h2><a href="overview.png"><img class="overview" src="overview.png" width="1440" height="1350" alt="武具店、商人、騎將原圖，以及十個圖示與目前Web介面對照"></a>
+<p class="notice">這些是本機「三国志2超级版」本次實拍的參考圖。視窗截圖和裁片保留原檔；尚未完成乾淨原生素材匯出。醫館診療、災害及其他未觸發事件列入待補採集，沒有用猜測圖片充數。</p></section>
+<section id="plan"><h2>布局與替換方案</h2><div class="plan">
+<article><h3>01　右欄用「城／軍／倉／町」分組</h3><p>四張原版命令圖示加繁中／日文短標籤，2×2排列。選一組才展開相關命令；結束旬固定在底部。</p><ul><li>摘要保留金、糧、預備兵、訓練度與武將數／99。</li><li>詳細名冊與裝備移至都市情報，避免窄欄重複長文。</li><li>桌面側欄以320–360px為驗收起點；手機使用可收合命令板。</li></ul><p><a href="#capture-13">原作13</a> → <a href="#capture-35">目前本作35</a></p></article>
+<article><h3>02　町內用四種設施頁籤</h3><p>武器屋、醫館、學問所、市場使用已確認的圖示。左側插圖／肖像，右側目標、效果、數量與費用；確認、取消固定可見。</p><ul><li>開發、防災和自動政策由城政入口進入，不全部混排。</li><li>沒有傷員、設施或費用不足時直接說明原因。</li><li>醫館和學堂內景待補採，現階段先用已確認的入口圖示。</li></ul><p><a href="#capture-1">原作01</a>、<a href="#capture-29">29</a> → <a href="#capture-36">目前本作36</a></p></article>
+<article><h3>03　裝備先顯示圖示、名稱、攻防與重</h3><p>本次只確認分類小圖，沒有逐件原版商品圖。先沿用兵器／甲冑圖示；新增物品獨立補畫時明確標記本作素材。</p><ul><li>圖片綁定實際 <code>slot:itemID</code>，武將以personID讀目前裝備。</li><li>重量造成的先手、命中與退卻影響收進詳細區。</li><li>基礎武知德不因展示裝備而被寫回；比較值來自既有引擎。</li></ul><p><a href="#capture-25">原作25</a> → <a href="#capture-37">目前本作37</a></p></article>
+<article><h3>04　事件按種類配原版場景</h3><p>購武器／防具用武具店；米糧交易與寶出售共用商人；出陣用騎將。日期、人物和實際結果由HTML呈現，保留原版裝飾框。</p><ul><li>地圖可作位置提示，不再充當每個事件的主插圖。</li><li>未知場景保留回退，先補採、再決定是否補畫。</li><li>重播與確認維持只讀，不再次扣費或消耗亂數。</li></ul><p><a href="#capture-6">原作06</a>、<a href="#capture-20">20</a>、<a href="#capture-27">27</a> → <a href="#capture-34">目前本作34</a></p></article>
+</div><h3 style="margin-top:30px">分階段實施</h3><div class="stage"><strong>第一階段：素材清單與事件配圖</strong>採乾淨原生圖，保留原圖及寬高各4倍衍生圖；先替換武具店、市場、賣寶已有對應的場景。</div><div class="stage"><strong>第二階段：右欄與設施布局</strong>四組命令、四服務頁籤、停用原因、固定費用確認區；保持既有命令和玩家／AI共用規則。</div><div class="stage"><strong>第三階段：逐件裝備與剩餘事件</strong>完善ID綁定、圖像與實際裝備一致；補採醫館、學堂和災害，確認無原圖後才補畫。</div><p>驗收涵蓋繁中／日文、桌面／手機、鍵盤返回焦點、44px觸控區、數值上限、取消不扣費、重播不改狀態和既有存讀檔。這些是實作後的驗收項，本次未宣稱全部通過。</p></section>
+<section id="assets"><h2>素材候選與來源</h2><p>點圖片可看完整來源。每張裁片的來源檔、像素矩形與SHA-256記錄於 <a href="asset-candidates.json">素材候選表</a>。下列圖片均為查看用參考裁片，不能直接當作原生完成品。</p><div class="assets">ASSET_CARDS</div><p>共用事件裝飾框另外保存在 <a href="reference-crops/event-decorative-frame.png">框線參考</a>。目前沒有確認的逐件武器／防具商品圖片。</p></section>
+<section id="steps"><h2>調查步驟與狀態</h2><div class="table-scroll"><table><thead><tr><th>步驟</th><th>內容</th><th>狀態</th><th>證據</th></tr></thead><tbody>
+<tr><td>1</td><td>都市命令、町入口</td><td>已確認；開發到頂</td><td>01、13–15、29</td></tr>
+<tr><td>2</td><td>武器、防具與購置</td><td>已確認</td><td>02–11、25</td></tr>
+<tr><td>3</td><td>米交易與寶出售</td><td>已確認</td><td>16–23</td></tr>
+<tr><td>4</td><td>學問所</td><td>發言、結果已確認；內景待補</td><td>29–33</td></tr>
+<tr><td>5</td><td>醫館</td><td>無傷員；診療內景未觸發</td><td>12</td></tr>
+<tr><td>6</td><td>出陣與空城</td><td>出陣插圖已確認</td><td>26–28</td></tr>
+<tr><td>7</td><td>目前Web介面對照</td><td>實際開局查看；未購物</td><td>34–37</td></tr>
+<tr><td>8</td><td>測試狀態、設定與原存檔</td><td>已恢復／雜湊一致</td><td>38、verification.json</td></tr>
+</tbody></table></div><p>截圖能指出布局和可見資訊問題，不能證明完整可及性。手機、螢幕閱讀器、全部劇本和所有交易結果需在實作後另測。</p></section>
+<section id="gallery"><h2>完整流程截圖</h2><p>每張附實際觀察與證據限制。可依類型篩選；完整PNG保留模擬器視窗或瀏覽器畫面。</p><div class="filters" aria-label="截圖篩選">FILTERS</div><p id="count" aria-live="polite">顯示38／38張</p><div class="captures">CAPTURE_CARDS</div></section>
+<footer><p>本次僅增加本機調查文件與截圖，遊戲執行程式未修改，未提交／推送／部署。既有自動存檔三檔與備份SHA-256一致；背景暫停、預設XPC與debug=false已恢復。測試視窗仍是背景執行緒實例，下一次重開採預設模式。</p><div class="link-list"><a href="README.md">日本語README</a><a href="ui-replacement-plan.zh-Hant.md">完整方案</a><a href="capture-manifest.json">截圖記錄</a><a href="asset-candidates.json">素材候選</a><a href="verification.json">檢查結果</a></div></footer>
+</main><script>
+const buttons=[...document.querySelectorAll('[data-filter]')],cards=[...document.querySelectorAll('.capture')];
+for(const button of buttons)button.addEventListener('click',()=>{const selected=button.dataset.filter;for(const b of buttons)b.setAttribute('aria-pressed',String(b===button));let shown=0;for(const card of cards){card.hidden=selected!=='全部'&&!card.dataset.groups.split(' ').includes(selected);if(!card.hidden)shown++;}document.querySelector('#count').textContent=`顯示${shown}／${cards.length}張`;});
+for(const link of document.querySelectorAll('a[href^="#capture-"]'))link.addEventListener('click',()=>buttons[0].click());
+</script></body></html>'''
+page = page.replace('ASSET_CARDS', asset_cards).replace('CAPTURE_CARDS', capture_cards).replace('FILTERS', filters)
+(ROOT / 'index.html').write_text(page)
+print(json.dumps({'captures': len(records), 'reference_crops': len(candidates), 'gallery': str(ROOT / 'index.html')}, ensure_ascii=False))

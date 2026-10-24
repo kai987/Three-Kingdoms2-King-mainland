@@ -1,6 +1,6 @@
 {
   "schema": "tk2-road-center-source-v1",
-  "policy": "Presentation geometry only. Recenter only explicitly city-owned shared hubs; preserve unrelated bypasses, ports, terrain, logical links, travel rules and saves. Canonical current inputs no longer depend on archived tools.",
+  "policy": "Every reviewed native city approach and former shared hub meets the exact city-icon center. Native center-to-anchor spokes collapse once, decorative city loops are removed, shared intercity road trunks remain single strokes. Geometry continues below hidden city icons; logical city links are unchanged.",
   "ground": {
     "asset": "/map-source/road-ground.png",
     "sha256": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
@@ -17,7 +17,7 @@
     "baseline_navigation_sha256": "3cf81b31f08fe73ff5f9acd7627e009de9e4250664088c2d7cfc54f31bd2f683",
     "ground_generation": "Extract approved road-free terrain and rivers after the existing five mountain relocations. Full original scene reproduction was pixel-identical to current map-navigation.png before hiding the road and castle layers.",
     "map_pixels_changed": true,
-    "change_scope": "Only reviewed road corridors are erased and repainted at native resolution; approved terrain, city coordinates and logical routes are unchanged."
+    "change_scope": "Reviewed exact city hubs/native anchors and local road corridors are erased and repainted; approved terrain, city coordinates and logical route IDs remain unchanged."
   },
   "original_paths": [
     "M26 686L74 682",
@@ -8728,9 +8728,1997 @@
         }
       ],
       "evidence": "Every logical relation using this hub or its short center branch is incident to this city; no unrelated city pair uses those source nodes."
+    },
+    {
+      "city": "nanyang",
+      "center": [
+        709,
+        400
+      ],
+      "old_hub": [
+        722,
+        414
+      ],
+      "nodes_to_collapse": [
+        [
+          710,
+          402
+        ],
+        [
+          722,
+          414
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "nanyang",
+          "to": "xiangyang"
+        },
+        {
+          "from": "nanyang",
+          "to": "yiyang"
+        }
+      ],
+      "source_segment_indices": [
+        87,
+        134,
+        137,
+        138
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "hongnong",
+      "center": [
+        620,
+        346
+      ],
+      "old_hub": [
+        634,
+        358
+      ],
+      "nodes_to_collapse": [
+        [
+          622,
+          346
+        ],
+        [
+          634,
+          358
+        ],
+        [
+          610,
+          346
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "hongnong",
+          "to": "hedong"
+        },
+        {
+          "from": "hongnong",
+          "to": "henan"
+        }
+      ],
+      "source_segment_indices": [
+        86,
+        90,
+        91
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "yinping",
+      "center": [
+        250,
+        402
+      ],
+      "old_hub": [
+        258,
+        418
+      ],
+      "nodes_to_collapse": [
+        [
+          250,
+          402
+        ],
+        [
+          260,
+          408
+        ],
+        [
+          258,
+          418
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "yinping",
+          "to": "guanghan"
+        },
+        {
+          "from": "yinping",
+          "to": "wenshan"
+        }
+      ],
+      "source_segment_indices": [
+        10,
+        25,
+        28
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "dongping",
+      "center": [
+        920,
+        265
+      ],
+      "old_hub": [
+        934.0,
+        254.0
+      ],
+      "nodes_to_collapse": [
+        [
+          922,
+          266
+        ],
+        [
+          934.0,
+          254.0
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "dongping",
+          "to": "jinan"
+        },
+        {
+          "from": "dongping",
+          "to": "pingyuan"
+        }
+      ],
+      "source_segment_indices": [
+        230,
+        231,
+        237,
+        238
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "henan",
+      "center": [
+        695,
+        346
+      ],
+      "old_hub": [
+        682,
+        358
+      ],
+      "nodes_to_collapse": [
+        [
+          694,
+          346
+        ],
+        [
+          682,
+          358
+        ],
+        [
+          706,
+          346
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "henan",
+          "to": "hedong"
+        },
+        {
+          "from": "henan",
+          "to": "hongnong"
+        },
+        {
+          "from": "henan",
+          "to": "nanyang"
+        }
+      ],
+      "source_segment_indices": [
+        111,
+        119,
+        122,
+        123
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center. The eastbound trunk at [706,346] is retained after decorative loop removal and must reach the same city center."
+    },
+    {
+      "city": "shanyang",
+      "center": [
+        917,
+        306
+      ],
+      "old_hub": [
+        931.0,
+        296.5
+      ],
+      "nodes_to_collapse": [
+        [
+          917,
+          305
+        ],
+        [
+          932,
+          300
+        ],
+        [
+          931.0,
+          296.5
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "shanyang",
+          "to": "donghai"
+        },
+        {
+          "from": "shanyang",
+          "to": "dongping"
+        },
+        {
+          "from": "shanyang",
+          "to": "jiyin"
+        },
+        {
+          "from": "shanyang",
+          "to": "qi"
+        }
+      ],
+      "source_segment_indices": [
+        213,
+        223,
+        224,
+        229
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "yan",
+      "center": [
+        918,
+        98
+      ],
+      "old_hub": [
+        905.0,
+        108.5
+      ],
+      "nodes_to_collapse": [
+        [
+          917,
+          97
+        ],
+        [
+          913.0,
+          101.0
+        ],
+        [
+          905.0,
+          108.5
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "yan",
+          "to": "dai"
+        },
+        {
+          "from": "yan",
+          "to": "fanyang"
+        },
+        {
+          "from": "yan",
+          "to": "shanggu"
+        }
+      ],
+      "source_segment_indices": [
+        204,
+        214,
+        215
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "lujiang",
+      "center": [
+        925,
+        454
+      ],
+      "old_hub": [
+        912.0,
+        464.0
+      ],
+      "nodes_to_collapse": [
+        [
+          926,
+          454
+        ],
+        [
+          922,
+          454
+        ],
+        [
+          912.0,
+          464.0
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "lujiang",
+          "to": "jiangxia"
+        },
+        {
+          "from": "lujiang",
+          "to": "poyang"
+        },
+        {
+          "from": "lujiang",
+          "to": "qichun"
+        },
+        {
+          "from": "lujiang",
+          "to": "runan"
+        }
+      ],
+      "source_segment_indices": [
+        187,
+        203,
+        208,
+        217,
+        218
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "jiujiang",
+      "center": [
+        945,
+        406
+      ],
+      "old_hub": [
+        946.0,
+        422.0
+      ],
+      "nodes_to_collapse": [
+        [
+          946,
+          406
+        ],
+        [
+          946.0,
+          410.0
+        ],
+        [
+          946.0,
+          422.0
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "jiujiang",
+          "to": "danyang"
+        },
+        {
+          "from": "jiujiang",
+          "to": "lujiang"
+        }
+      ],
+      "source_segment_indices": [
+        235,
+        241,
+        242
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "wudu",
+      "center": [
+        304,
+        364
+      ],
+      "old_hub": [
+        310,
+        378
+      ],
+      "nodes_to_collapse": [
+        [
+          306,
+          366
+        ],
+        [
+          306,
+          374
+        ],
+        [
+          310,
+          378
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "wudu",
+          "to": "hanzhong"
+        },
+        {
+          "from": "wudu",
+          "to": "yinping"
+        }
+      ],
+      "source_segment_indices": [
+        24,
+        37,
+        39
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "xiangyang",
+      "center": [
+        764,
+        403
+      ],
+      "old_hub": [
+        766,
+        418
+      ],
+      "nodes_to_collapse": [
+        [
+          766,
+          402
+        ],
+        [
+          756,
+          404
+        ],
+        [
+          760,
+          412
+        ],
+        [
+          766,
+          418
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "xiangyang",
+          "to": "nanjun"
+        },
+        {
+          "from": "xiangyang",
+          "to": "yiyang"
+        }
+      ],
+      "source_segment_indices": [
+        150,
+        158,
+        159
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "runan",
+      "center": [
+        835,
+        410
+      ],
+      "old_hub": [
+        850,
+        410
+      ],
+      "nodes_to_collapse": [
+        [
+          834,
+          410
+        ],
+        [
+          838,
+          410
+        ],
+        [
+          842,
+          414
+        ],
+        [
+          846,
+          410
+        ],
+        [
+          850,
+          410
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "runan",
+          "to": "jiujiang"
+        },
+        {
+          "from": "runan",
+          "to": "lujiang"
+        },
+        {
+          "from": "runan",
+          "to": "qiao"
+        },
+        {
+          "from": "runan",
+          "to": "yingchuan"
+        }
+      ],
+      "source_segment_indices": [
+        172,
+        185,
+        186,
+        189
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "yingchuan",
+      "center": [
+        776,
+        351
+      ],
+      "old_hub": [
+        790,
+        346
+      ],
+      "nodes_to_collapse": [
+        [
+          778,
+          350
+        ],
+        [
+          782,
+          346
+        ],
+        [
+          790,
+          346
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "yingchuan",
+          "to": "chenliu"
+        },
+        {
+          "from": "yingchuan",
+          "to": "runan"
+        }
+      ],
+      "source_segment_indices": [
+        156,
+        160,
+        161
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "yiyang",
+      "center": [
+        736,
+        449
+      ],
+      "old_hub": [
+        750,
+        454
+      ],
+      "nodes_to_collapse": [
+        [
+          738,
+          450
+        ],
+        [
+          746,
+          450
+        ],
+        [
+          750,
+          454
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "yiyang",
+          "to": "jiangxia"
+        },
+        {
+          "from": "yiyang",
+          "to": "nanjun"
+        }
+      ],
+      "source_segment_indices": [
+        147,
+        149,
+        151
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "shujun",
+      "center": [
+        214,
+        502
+      ],
+      "old_hub": [
+        202,
+        510
+      ],
+      "nodes_to_collapse": [
+        [
+          214,
+          502
+        ],
+        [
+          210,
+          502
+        ],
+        [
+          202,
+          510
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "shujun",
+          "to": "hanjia"
+        },
+        {
+          "from": "shujun",
+          "to": "qianwei"
+        },
+        {
+          "from": "shujun",
+          "to": "wenshan"
+        },
+        {
+          "from": "shujun",
+          "to": "yuexi"
+        }
+      ],
+      "source_segment_indices": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "chenliu",
+      "center": [
+        827,
+        340
+      ],
+      "old_hub": [
+        814.0,
+        346.0
+      ],
+      "nodes_to_collapse": [
+        [
+          826,
+          342
+        ],
+        [
+          822.0,
+          346.0
+        ],
+        [
+          814.0,
+          346.0
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "chenliu",
+          "to": "henei"
+        },
+        {
+          "from": "chenliu",
+          "to": "yingchuan"
+        }
+      ],
+      "source_segment_indices": [
+        161,
+        171,
+        172
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "hedong",
+      "center": [
+        657,
+        385
+      ],
+      "old_hub": [
+        666,
+        374
+      ],
+      "nodes_to_collapse": [
+        [
+          658,
+          386
+        ],
+        [
+          658,
+          382
+        ],
+        [
+          666,
+          374
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "hedong",
+          "to": "henan"
+        },
+        {
+          "from": "hedong",
+          "to": "henei"
+        },
+        {
+          "from": "hedong",
+          "to": "shangdang"
+        },
+        {
+          "from": "hedong",
+          "to": "xihe"
+        }
+      ],
+      "source_segment_indices": [
+        97,
+        103,
+        111
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "fufeng",
+      "center": [
+        420,
+        341
+      ],
+      "old_hub": [
+        406,
+        342
+      ],
+      "nodes_to_collapse": [
+        [
+          422,
+          342
+        ],
+        [
+          418,
+          342
+        ],
+        [
+          406,
+          342
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "fufeng",
+          "to": "anding"
+        },
+        {
+          "from": "fufeng",
+          "to": "tianshui"
+        }
+      ],
+      "source_segment_indices": [
+        42,
+        55,
+        56
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "shangdang",
+      "center": [
+        733,
+        266
+      ],
+      "old_hub": [
+        722.0,
+        274.0
+      ],
+      "nodes_to_collapse": [
+        [
+          734,
+          266
+        ],
+        [
+          726.0,
+          274.0
+        ],
+        [
+          722.0,
+          274.0
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "shangdang",
+          "to": "hedong"
+        },
+        {
+          "from": "shangdang",
+          "to": "henei"
+        },
+        {
+          "from": "shangdang",
+          "to": "xihe"
+        }
+      ],
+      "source_segment_indices": [
+        121,
+        130,
+        136
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "hedong",
+      "center": [
+        657,
+        385
+      ],
+      "old_hub": [
+        650,
+        374
+      ],
+      "nodes_to_collapse": [
+        [
+          658,
+          386
+        ],
+        [
+          658,
+          382
+        ],
+        [
+          650,
+          374
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "hedong",
+          "to": "fengyi"
+        },
+        {
+          "from": "hedong",
+          "to": "hongnong"
+        }
+      ],
+      "source_segment_indices": [
+        91,
+        96,
+        97
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "runan",
+      "center": [
+        835,
+        410
+      ],
+      "old_hub": [
+        846,
+        414
+      ],
+      "nodes_to_collapse": [
+        [
+          834,
+          410
+        ],
+        [
+          838,
+          410
+        ],
+        [
+          842,
+          414
+        ],
+        [
+          846,
+          410
+        ],
+        [
+          850,
+          410
+        ],
+        [
+          846,
+          414
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "runan",
+          "to": "jiujiang"
+        },
+        {
+          "from": "runan",
+          "to": "lujiang"
+        }
+      ],
+      "source_segment_indices": [
+        186,
+        187,
+        188
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "changshan",
+      "center": [
+        798,
+        184
+      ],
+      "old_hub": [
+        809.0,
+        184.0
+      ],
+      "nodes_to_collapse": [
+        [
+          797,
+          184
+        ],
+        [
+          809.0,
+          184.0
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "changshan",
+          "to": "anping"
+        },
+        {
+          "from": "changshan",
+          "to": "zhongshan"
+        }
+      ],
+      "source_segment_indices": [
+        165,
+        166,
+        167
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "hongnong",
+      "center": [
+        620,
+        346
+      ],
+      "old_hub": [
+        610,
+        342
+      ],
+      "nodes_to_collapse": [
+        [
+          622,
+          346
+        ],
+        [
+          624,
+          344
+        ],
+        [
+          624,
+          340
+        ],
+        [
+          616,
+          336
+        ],
+        [
+          610,
+          342
+        ],
+        [
+          610,
+          346
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "hongnong",
+          "to": "fengyi"
+        },
+        {
+          "from": "hongnong",
+          "to": "jingzhao"
+        }
+      ],
+      "source_segment_indices": [
+        79,
+        84,
+        85
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "cangwu",
+      "center": [
+        635,
+        776
+      ],
+      "old_hub": [
+        634,
+        766
+      ],
+      "nodes_to_collapse": [
+        [
+          634,
+          778
+        ],
+        [
+          634,
+          766
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "cangwu",
+          "to": "gaoliang"
+        },
+        {
+          "from": "cangwu",
+          "to": "linhe"
+        },
+        {
+          "from": "cangwu",
+          "to": "nanhai"
+        }
+      ],
+      "source_segment_indices": [
+        88,
+        92,
+        93,
+        94
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
+    },
+    {
+      "city": "yingchuan",
+      "center": [
+        776,
+        351
+      ],
+      "old_hub": [
+        766,
+        350
+      ],
+      "nodes_to_collapse": [
+        [
+          778,
+          350
+        ],
+        [
+          766,
+          350
+        ]
+      ],
+      "center_branch_segment_indices": [],
+      "logical_relations": [
+        {
+          "from": "yingchuan",
+          "to": "henan"
+        },
+        {
+          "from": "yingchuan",
+          "to": "henei"
+        }
+      ],
+      "source_segment_indices": [
+        133,
+        156,
+        157
+      ],
+      "evidence": "Explicit native city approach and former shared hub collapsed to the icon center, per requested all-city road junction policy. Existing logical route connectivity is retained; passing roads may share the city center."
     }
   ],
-  "protected_hubs": [
+  "protected_hubs": [],
+  "crossings": [
+    {
+      "d": "M198.98831008086748 682.0468317049636L206.62457006574138 677.2836884735025",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M198.98831008086748 682.0468317049636L206.62457006574138 677.2836884735025",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M157.45507997273896 608.4717081678274L164.9202267493084 603.4446231671262",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M157.45507997273896 608.4717081678274L164.9202267493084 603.4446231671262",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M208.3739593919404 451.05366062354796L217.34107923331618 450.28505035143013",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M208.3739593919404 451.05366062354796L217.34107923331618 450.28505035143013",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M234.3901911631011 540.658553257404L243.05707390881284 543.0844847222406",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M234.3901911631011 540.658553257404L243.05707390881284 543.0844847222406",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M227.3033008588991 484.69669914110085L233.66726188957807 478.332738110422",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M227.3033008588991 484.69669914110085L233.66726188957807 478.332738110422",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M251.99254306748796 576.0074569325119L258.35650409816697 569.643495901833",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M251.99254306748796 576.0074569325119L258.35650409816697 569.643495901833",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M284.2488144291765 282.78063326789936L286.2938809696343 291.54520415557545",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M284.2488144291765 282.78063326789936L286.2938809696343 291.54520415557545",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M321.1423371985801 250.43324681308644L330.0683379982863 249.2815047744147",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M321.1423371985801 250.43324681308644L330.0683379982863 249.2815047744147",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M368.9587725169753 562.6614187230073L377.58336236393404 560.0891726283005",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M368.9587725169753 562.6614187230073L377.58336236393404 560.0891726283005",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M352.2247421476132 401.87217149044227L359.64032765518056 406.9720824288761",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M352.2247421476132 401.87217149044227L359.64032765518056 406.9720824288761",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M344.34231042089385 446.0512141440694L353.2321771088555 444.6475509828123",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M344.34231042089385 446.0512141440694L353.2321771088555 444.6475509828123",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M379.0807839228419 893.3810457856584L384.8566159348255 886.4788892698045",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M379.0807839228419 893.3810457856584L384.8566159348255 886.4788892698045",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M371.2100335242752 496.75226953506365L364.8838810842027 503.15381585645844",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M371.2100335242752 496.75226953506365L364.8838810842027 503.15381585645844",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M373.68212979595853 513.6821297959584L380.0460908266374 520.0460908266375",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M373.68212979595853 513.6821297959584L380.0460908266374 520.0460908266375",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M406 327.5L406 318.5",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M406 327.5L406 318.5",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M451.4091345577189 319.26525843731423L458.2142063612868 325.1551648668158",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M451.4091345577189 319.26525843731423L458.2142063612868 325.1551648668158",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M635.1764050931697 232.26726776322715L644.1712589192016 232.57157788188675",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M635.1764050931697 232.26726776322715L644.1712589192016 232.57157788188675",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M501.0906381162564 564.0123990256499L509.08459690466 568.1472052955138",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M501.0906381162564 564.0123990256499L509.08459690466 568.1472052955138",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M566.7040924090835 601.2959075909165L573.0680534397624 594.9319465602376",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M566.7040924090835 601.2959075909165L573.0680534397624 594.9319465602376",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M613.6276634607171 582.1987054597896L622.614967412335 581.7208271476277",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M613.6276634607171 582.1987054597896L622.614967412335 581.7208271476277",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M623.7373062935227 581.4899756904553L631.5525526255368 577.0265773472707",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M623.7373062935227 581.4899756904553L631.5525526255368 577.0265773472707",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M570 456.73890660805705L570 447.73890660805705",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M570 456.73890660805705L570 447.73890660805705",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M591.828402907153 777.3969353619912L600.7106474325761 775.9458212415336",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M591.828402907153 777.3969353619912L600.7106474325761 775.9458212415336",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M599.587572106361 788.412427893639L605.9515331370399 782.0484668629601",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M599.587572106361 788.412427893639L605.9515331370399 782.0484668629601",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M702.1959511690009 429.36434656711054L710.513489251445 425.9265332727197",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M702.1959511690009 429.36434656711054L710.513489251445 425.9265332727197",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M653.2358211411869 507.8840307249584L658.281354006168 515.3367213872893",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M653.2358211411869 507.8840307249584L658.281354006168 515.3367213872893",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M658 563.5L658 572.5",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M658 563.5L658 572.5",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M678.465941447854 318.4659414478541L684.8299024785331 324.829902478533",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M678.465941447854 318.4659414478541L684.8299024785331 324.829902478533",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M669.3541019662497 535.2917960675005L673.3790243257494 527.2419513485014",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M669.3541019662497 535.2917960675005L673.3790243257494 527.2419513485014",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M687.2568331880974 550.9182817980409L694.6659125290186 556.0276402039403",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M687.2568331880974 550.9182817980409L694.6659125290186 556.0276402039403",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M698.7440761034889 558.9208532724423L706.1171633881604 564.082014371712",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M698.7440761034889 558.9208532724423L706.1171633881604 564.082014371712",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M683.5032120040281 645.837533276705L692.4963544359761 646.1888012637148",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M683.5032120040281 645.837533276705L692.4963544359761 646.1888012637148",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M694 780.1547352864892L694 789.1547352864892",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M694 780.1547352864892L694 789.1547352864892",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M709.6672618895781 794.3327381104219L716.0312229202569 787.9687770797431",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M709.6672618895781 794.3327381104219L716.0312229202569 787.9687770797431",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M733.8324874232213 424.0121047427257L740.7029639915432 429.82558491592124",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M733.8324874232213 424.0121047427257L740.7029639915432 429.82558491592124",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M751.1819805153395 432.8180194846606L757.5459415460184 426.45405845398153",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M751.1819805153395 432.8180194846606L757.5459415460184 426.45405845398153",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M800.7357281635524 426L809.7357281635524 426",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M800.7357281635524 426L809.7357281635524 426",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M820.3642777092361 268.6454443572097L825.9246716766233 275.72230940661143",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M820.3642777092361 268.6454443572097L825.9246716766233 275.72230940661143",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M843.5 498L852.5 498",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M843.5 498L852.5 498",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M855.2051258731898 431.20512587318996L861.5690869038689 437.5690869038688",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M855.2051258731898 431.20512587318996L861.5690869038689 437.5690869038688",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M870.2537625946986 417.4648232278141L879.1633080376491 418.7376154339498",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M870.2537625946986 417.4648232278141L879.1633080376491 418.7376154339498",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M887.2474798854391 544.2454637937903L891.6182662660469 552.1128792788843",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M887.2474798854391 544.2454637937903L891.6182662660469 552.1128792788843",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M926.5 570L935.5 570",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M926.5 570L935.5 570",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M939.5 570L948.5 570",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M939.5 570L948.5 570",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M943.6909988398834 217.41440857734486L937.6995885365916 210.69853167424358",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M943.6909988398834 217.41440857734486L937.6995885365916 210.69853167424358",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M947.7622677123586 205.0310562518313L953.847582405926 211.66196456670426",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M947.7622677123586 205.0310562518313L953.847582405926 211.66196456670426",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M1013.1664929627459 434L1022.1664929627459 434",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M1013.1664929627459 434L1022.1664929627459 434",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M949.5 385L949.5 376",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M949.5 385L949.5 376",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M959.53585584743 383.8846997044142L967.3900039019404 379.49011686439053",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M959.53585584743 383.8846997044142L967.3900039019404 379.49011686439053",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    },
+    {
+      "d": "M1108.3446211042944 491.6553788957056L1114.7085821349735 485.29141786502663",
+      "stroke": "#51371e",
+      "width": 5.4
+    },
+    {
+      "d": "M1108.3446211042944 491.6553788957056L1114.7085821349735 485.29141786502663",
+      "stroke": "#e9bf7a",
+      "width": 2.8
+    }
+  ],
+  "corridor_repairs": [
+    {
+      "id": "dongping-changyi",
+      "cities": [
+        "dongping",
+        "shanyang"
+      ],
+      "reason": "One north-south trunk and shared west junction replace parallel spokes and the eastern return loop. The Donghai approach leaves Changyi from its center.",
+      "strokes": [
+        {
+          "index": 201,
+          "points": [
+            [
+              881,
+              308
+            ],
+            [
+              887,
+              299
+            ],
+            [
+              895,
+              293
+            ],
+            [
+              904.5,
+              289
+            ]
+          ],
+          "radius": 6
+        },
+        {
+          "index": 212,
+          "points": [
+            [
+              904.5,
+              289
+            ],
+            [
+              917,
+              290
+            ]
+          ],
+          "radius": 6
+        },
+        {
+          "index": 213,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 221,
+          "points": [
+            [
+              917,
+              306
+            ],
+            [
+              921,
+              316
+            ],
+            [
+              944,
+              322
+            ],
+            [
+              958.5,
+              323
+            ]
+          ],
+          "radius": 7
+        },
+        {
+          "index": 222,
+          "points": [
+            [
+              920,
+              265
+            ],
+            [
+              917,
+              280
+            ],
+            [
+              917,
+              290
+            ]
+          ],
+          "radius": 7
+        },
+        {
+          "index": 223,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 224,
+          "points": [
+            [
+              917,
+              290
+            ],
+            [
+              917,
+              306
+            ]
+          ],
+          "radius": 0
+        },
+        {
+          "index": 229,
+          "points": [],
+          "radius": 0
+        }
+      ]
+    },
+    {
+      "id": "jinan-linzi",
+      "cities": [
+        "jinan",
+        "qi"
+      ],
+      "reason": "Jinan and the southwestern approach share one final entry into Linzi. Each shared section is painted once; the old Jinan scribble and parallel northern entry are removed.",
+      "strokes": [
+        {
+          "index": 237,
+          "points": [
+            [
+              934,
+              254
+            ],
+            [
+              954,
+              244
+            ],
+            [
+              968,
+              230
+            ],
+            [
+              980.5,
+              222.5
+            ],
+            [
+              992,
+              215
+            ],
+            [
+              1014,
+              213
+            ]
+          ],
+          "radius": 7
+        },
+        {
+          "index": 238,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 247,
+          "points": [
+            [
+              970,
+              214
+            ],
+            [
+              975,
+              219
+            ],
+            [
+              980.5,
+              222.5
+            ]
+          ],
+          "radius": 5
+        }
+      ]
+    },
+    {
+      "id": "shanggu-ji",
+      "cities": [
+        "shanggu",
+        "yan"
+      ],
+      "reason": "Remove the western hairpin and parallel southbound branch, retaining one valley route and one shared southern bypass to Yuyang.",
+      "strokes": [
+        {
+          "index": 183,
+          "points": [
+            [
+              840.5,
+              73
+            ],
+            [
+              850,
+              69
+            ],
+            [
+              862,
+              68
+            ]
+          ],
+          "radius": 6
+        },
+        {
+          "index": 184,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 193,
+          "points": [
+            [
+              862,
+              68
+            ],
+            [
+              868,
+              82
+            ],
+            [
+              880,
+              90
+            ],
+            [
+              888,
+              100
+            ]
+          ],
+          "radius": 7
+        },
+        {
+          "index": 202,
+          "points": [
+            [
+              874,
+              112
+            ],
+            [
+              888,
+              100
+            ]
+          ],
+          "radius": 0
+        },
+        {
+          "index": 215,
+          "points": [
+            [
+              905,
+              108.5
+            ],
+            [
+              918,
+              110
+            ],
+            [
+              929,
+              105
+            ]
+          ],
+          "radius": 6
+        },
+        {
+          "index": 220,
+          "points": [],
+          "radius": 0
+        }
+      ]
+    },
+    {
+      "id": "hongnong-luoyang",
+      "cities": [
+        "hongnong",
+        "henan",
+        "hedong"
+      ],
+      "reason": "Center-bound shared roads replace decorative return loops around Hongnong and Luoyang. North, west, east and southwest approaches remain connected; paths are independent of castle visibility.",
+      "strokes": [
+        {
+          "index": 84,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 85,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 86,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 90,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 120,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 122,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 126,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 127,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 128,
+          "points": [],
+          "radius": 0
+        },
+        {
+          "index": 119,
+          "points": [
+            [
+              682,
+              322
+            ],
+            [
+              688,
+              334
+            ],
+            [
+              695,
+              346
+            ]
+          ],
+          "radius": 6
+        }
+      ]
+    }
+  ],
+  "erased_access_paths": [
+    {
+      "id": "jiaozhi-obsolete-port-approach",
+      "city": "jiaozhi",
+      "d": "M387 853L438 858Q438 858 438 858L448 858Q448 858 448 858L452 862Q452 862 452 862L452 874",
+      "reason": "Remove the historical baked direct harbour spur; the current approach shares the JiaoZhi–Yulin northern trunk before branching toward the same port."
+    }
+  ],
+  "former_protected_hubs": [
     {
       "city": "nanyang",
       "name": "南阳",
@@ -11291,786 +13279,1322 @@
       "recommendation": "Keep this through-road junction. Recenter only the named city approach/spoke; a global hub move would make an unrelated direct route appear to traverse this city."
     }
   ],
-  "crossings": [
-    {
-      "d": "M198.98831008086748 682.0468317049636L206.62457006574138 677.2836884735025",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M198.98831008086748 682.0468317049636L206.62457006574138 677.2836884735025",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M157.45507997273896 608.4717081678274L164.9202267493084 603.4446231671262",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M157.45507997273896 608.4717081678274L164.9202267493084 603.4446231671262",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M208.3739593919404 451.05366062354796L217.34107923331618 450.28505035143013",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M208.3739593919404 451.05366062354796L217.34107923331618 450.28505035143013",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M234.3901911631011 540.658553257404L243.05707390881284 543.0844847222406",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M234.3901911631011 540.658553257404L243.05707390881284 543.0844847222406",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M227.3033008588991 484.69669914110085L233.66726188957807 478.332738110422",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M227.3033008588991 484.69669914110085L233.66726188957807 478.332738110422",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M251.99254306748796 576.0074569325119L258.35650409816697 569.643495901833",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M251.99254306748796 576.0074569325119L258.35650409816697 569.643495901833",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M284.2488144291765 282.78063326789936L286.2938809696343 291.54520415557545",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M284.2488144291765 282.78063326789936L286.2938809696343 291.54520415557545",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M321.1423371985801 250.43324681308644L330.0683379982863 249.2815047744147",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M321.1423371985801 250.43324681308644L330.0683379982863 249.2815047744147",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M368.9587725169753 562.6614187230073L377.58336236393404 560.0891726283005",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M368.9587725169753 562.6614187230073L377.58336236393404 560.0891726283005",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M352.2247421476132 401.87217149044227L359.64032765518056 406.9720824288761",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M352.2247421476132 401.87217149044227L359.64032765518056 406.9720824288761",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M344.34231042089385 446.0512141440694L353.2321771088555 444.6475509828123",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M344.34231042089385 446.0512141440694L353.2321771088555 444.6475509828123",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M379.0807839228419 893.3810457856584L384.8566159348255 886.4788892698045",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M379.0807839228419 893.3810457856584L384.8566159348255 886.4788892698045",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M371.2100335242752 496.75226953506365L364.8838810842027 503.15381585645844",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M371.2100335242752 496.75226953506365L364.8838810842027 503.15381585645844",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M373.68212979595853 513.6821297959584L380.0460908266374 520.0460908266375",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M373.68212979595853 513.6821297959584L380.0460908266374 520.0460908266375",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M406 327.5L406 318.5",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M406 327.5L406 318.5",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M451.4091345577189 319.26525843731423L458.2142063612868 325.1551648668158",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M451.4091345577189 319.26525843731423L458.2142063612868 325.1551648668158",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M635.1764050931697 232.26726776322715L644.1712589192016 232.57157788188675",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M635.1764050931697 232.26726776322715L644.1712589192016 232.57157788188675",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M501.0906381162564 564.0123990256499L509.08459690466 568.1472052955138",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M501.0906381162564 564.0123990256499L509.08459690466 568.1472052955138",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M566.7040924090835 601.2959075909165L573.0680534397624 594.9319465602376",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M566.7040924090835 601.2959075909165L573.0680534397624 594.9319465602376",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M613.6276634607171 582.1987054597896L622.614967412335 581.7208271476277",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M613.6276634607171 582.1987054597896L622.614967412335 581.7208271476277",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M623.7373062935227 581.4899756904553L631.5525526255368 577.0265773472707",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M623.7373062935227 581.4899756904553L631.5525526255368 577.0265773472707",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M570 456.73890660805705L570 447.73890660805705",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M570 456.73890660805705L570 447.73890660805705",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M591.828402907153 777.3969353619912L600.7106474325761 775.9458212415336",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M591.828402907153 777.3969353619912L600.7106474325761 775.9458212415336",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M599.587572106361 788.412427893639L605.9515331370399 782.0484668629601",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M599.587572106361 788.412427893639L605.9515331370399 782.0484668629601",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M702.1959511690009 429.36434656711054L710.513489251445 425.9265332727197",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M702.1959511690009 429.36434656711054L710.513489251445 425.9265332727197",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M653.2358211411869 507.8840307249584L658.281354006168 515.3367213872893",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M653.2358211411869 507.8840307249584L658.281354006168 515.3367213872893",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M658 563.5L658 572.5",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M658 563.5L658 572.5",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M678.465941447854 318.4659414478541L684.8299024785331 324.829902478533",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M678.465941447854 318.4659414478541L684.8299024785331 324.829902478533",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M669.3541019662497 535.2917960675005L673.3790243257494 527.2419513485014",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M669.3541019662497 535.2917960675005L673.3790243257494 527.2419513485014",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M687.2568331880974 550.9182817980409L694.6659125290186 556.0276402039403",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M687.2568331880974 550.9182817980409L694.6659125290186 556.0276402039403",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M698.7440761034889 558.9208532724423L706.1171633881604 564.082014371712",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M698.7440761034889 558.9208532724423L706.1171633881604 564.082014371712",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M683.5032120040281 645.837533276705L692.4963544359761 646.1888012637148",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M683.5032120040281 645.837533276705L692.4963544359761 646.1888012637148",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M694 780.1547352864892L694 789.1547352864892",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M694 780.1547352864892L694 789.1547352864892",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M709.6672618895781 794.3327381104219L716.0312229202569 787.9687770797431",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M709.6672618895781 794.3327381104219L716.0312229202569 787.9687770797431",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M733.8324874232213 424.0121047427257L740.7029639915432 429.82558491592124",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M733.8324874232213 424.0121047427257L740.7029639915432 429.82558491592124",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M751.1819805153395 432.8180194846606L757.5459415460184 426.45405845398153",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M751.1819805153395 432.8180194846606L757.5459415460184 426.45405845398153",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M800.7357281635524 426L809.7357281635524 426",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M800.7357281635524 426L809.7357281635524 426",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M820.3642777092361 268.6454443572097L825.9246716766233 275.72230940661143",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M820.3642777092361 268.6454443572097L825.9246716766233 275.72230940661143",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M843.5 498L852.5 498",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M843.5 498L852.5 498",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M855.2051258731898 431.20512587318996L861.5690869038689 437.5690869038688",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M855.2051258731898 431.20512587318996L861.5690869038689 437.5690869038688",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M870.2537625946986 417.4648232278141L879.1633080376491 418.7376154339498",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M870.2537625946986 417.4648232278141L879.1633080376491 418.7376154339498",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M887.2474798854391 544.2454637937903L891.6182662660469 552.1128792788843",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M887.2474798854391 544.2454637937903L891.6182662660469 552.1128792788843",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M926.5 570L935.5 570",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M926.5 570L935.5 570",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M939.5 570L948.5 570",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M939.5 570L948.5 570",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M943.6909988398834 217.41440857734486L937.6995885365916 210.69853167424358",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M943.6909988398834 217.41440857734486L937.6995885365916 210.69853167424358",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M947.7622677123586 205.0310562518313L953.847582405926 211.66196456670426",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M947.7622677123586 205.0310562518313L953.847582405926 211.66196456670426",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M1013.1664929627459 434L1022.1664929627459 434",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M1013.1664929627459 434L1022.1664929627459 434",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M949.5 385L949.5 376",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M949.5 385L949.5 376",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M959.53585584743 383.8846997044142L967.3900039019404 379.49011686439053",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M959.53585584743 383.8846997044142L967.3900039019404 379.49011686439053",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    },
-    {
-      "d": "M1108.3446211042944 491.6553788957056L1114.7085821349735 485.29141786502663",
-      "stroke": "#51371e",
-      "width": 5.4
-    },
-    {
-      "d": "M1108.3446211042944 491.6553788957056L1114.7085821349735 485.29141786502663",
-      "stroke": "#e9bf7a",
-      "width": 2.8
-    }
-  ],
-  "corridor_repairs": [
-    {
-      "id": "dongping-changyi",
-      "cities": [
-        "dongping",
-        "shanyang"
-      ],
-      "reason": "One north-south trunk and shared west junction replace parallel spokes and the eastern return loop. The Donghai approach leaves Changyi from its center.",
-      "strokes": [
-        {
-          "index": 201,
-          "points": [
-            [
-              881,
-              308
-            ],
-            [
-              887,
-              299
-            ],
-            [
-              895,
-              293
-            ],
-            [
-              904.5,
-              289
-            ]
-          ],
-          "radius": 6
-        },
-        {
-          "index": 212,
-          "points": [
-            [
-              904.5,
-              289
-            ],
-            [
-              917,
-              290
-            ]
-          ],
-          "radius": 6
-        },
-        {
-          "index": 213,
-          "points": [],
-          "radius": 0
-        },
-        {
-          "index": 221,
-          "points": [
-            [
-              917,
-              306
-            ],
-            [
-              921,
-              316
-            ],
-            [
-              944,
-              322
-            ],
-            [
-              958.5,
-              323
-            ]
-          ],
-          "radius": 7
-        },
-        {
-          "index": 222,
-          "points": [
-            [
-              920,
-              265
-            ],
-            [
-              917,
-              280
-            ],
-            [
-              917,
-              290
-            ]
-          ],
-          "radius": 7
-        },
-        {
-          "index": 223,
-          "points": [],
-          "radius": 0
-        },
-        {
-          "index": 224,
-          "points": [
-            [
-              917,
-              290
-            ],
-            [
-              917,
-              306
-            ]
-          ],
-          "radius": 0
-        },
-        {
-          "index": 229,
-          "points": [],
-          "radius": 0
-        }
+  "native_city_connectors": [
+    {
+      "index": 268,
+      "city": "anding",
+      "points": [
+        [
+          434.0,
+          270.0
+        ],
+        [
+          434.0,
+          270.0
+        ]
       ]
     },
     {
-      "id": "jinan-linzi",
-      "cities": [
-        "jinan",
-        "qi"
-      ],
-      "reason": "Jinan and the southwestern approach share one final entry into Linzi. Each shared section is painted once; the old Jinan scribble and parallel northern entry are removed.",
-      "strokes": [
-        {
-          "index": 237,
-          "points": [
-            [
-              934,
-              254
-            ],
-            [
-              954,
-              244
-            ],
-            [
-              968,
-              230
-            ],
-            [
-              980.5,
-              222.5
-            ],
-            [
-              992,
-              215
-            ],
-            [
-              1014,
-              213
-            ]
-          ],
-          "radius": 7
-        },
-        {
-          "index": 238,
-          "points": [],
-          "radius": 0
-        },
-        {
-          "index": 247,
-          "points": [
-            [
-              970,
-              214
-            ],
-            [
-              975,
-              219
-            ],
-            [
-              980.5,
-              222.5
-            ]
-          ],
-          "radius": 5
-        }
+      "index": 269,
+      "city": "anping",
+      "points": [
+        [
+          860.0,
+          181.0
+        ],
+        [
+          859.0,
+          180.0
+        ]
       ]
     },
     {
-      "id": "shanggu-ji",
-      "cities": [
-        "shanggu",
-        "yan"
-      ],
-      "reason": "Remove the western hairpin and parallel southbound branch, retaining one valley route and one shared southern bypass to Yuyang.",
-      "strokes": [
-        {
-          "index": 183,
-          "points": [
-            [
-              840.5,
-              73
-            ],
-            [
-              850,
-              69
-            ],
-            [
-              862,
-              68
-            ]
-          ],
-          "radius": 6
-        },
-        {
-          "index": 184,
-          "points": [],
-          "radius": 0
-        },
-        {
-          "index": 193,
-          "points": [
-            [
-              862,
-              68
-            ],
-            [
-              868,
-              82
-            ],
-            [
-              880,
-              90
-            ],
-            [
-              888,
-              100
-            ]
-          ],
-          "radius": 7
-        },
-        {
-          "index": 202,
-          "points": [
-            [
-              874,
-              112
-            ],
-            [
-              888,
-              100
-            ]
-          ],
-          "radius": 0
-        },
-        {
-          "index": 215,
-          "points": [
-            [
-              905,
-              108.5
-            ],
-            [
-              918,
-              110
-            ],
-            [
-              929,
-              105
-            ]
-          ],
-          "radius": 6
-        },
-        {
-          "index": 220,
-          "points": [],
-          "radius": 0
-        }
+      "index": 270,
+      "city": "badong",
+      "points": [
+        [
+          555.0,
+          476.0
+        ],
+        [
+          554.0,
+          478.0
+        ]
       ]
-    }
-  ],
-  "erased_access_paths": [
+    },
     {
-      "id": "jiaozhi-obsolete-port-approach",
+      "index": 271,
+      "city": "bajun",
+      "points": [
+        [
+          398.0,
+          553.0
+        ],
+        [
+          398.0,
+          554.0
+        ]
+      ]
+    },
+    {
+      "index": 272,
+      "city": "baxi",
+      "points": [
+        [
+          382.0,
+          450.0
+        ],
+        [
+          382.0,
+          450.0
+        ]
+      ]
+    },
+    {
+      "index": 273,
+      "city": "beihai",
+      "points": [
+        [
+          1054.0,
+          219.0
+        ],
+        [
+          1053.0,
+          221.0
+        ]
+      ]
+    },
+    {
+      "index": 274,
+      "city": "bohai",
+      "points": [
+        [
+          924.0,
+          157.0
+        ],
+        [
+          925.0,
+          156.0
+        ]
+      ]
+    },
+    {
+      "index": 275,
+      "city": "cangwu",
+      "points": [
+        [
+          635.0,
+          776.0
+        ],
+        [
+          634.0,
+          778.0
+        ]
+      ]
+    },
+    {
+      "index": 276,
+      "city": "changsha",
+      "points": [
+        [
+          727.0,
+          577.0
+        ],
+        [
+          726.0,
+          578.0
+        ]
+      ]
+    },
+    {
+      "index": 277,
+      "city": "changshan",
+      "points": [
+        [
+          798.0,
+          184.0
+        ],
+        [
+          797.0,
+          184.0
+        ]
+      ]
+    },
+    {
+      "index": 278,
+      "city": "chenliu",
+      "points": [
+        [
+          827.0,
+          340.0
+        ],
+        [
+          826.0,
+          342.0
+        ]
+      ]
+    },
+    {
+      "index": 279,
+      "city": "dai",
+      "points": [
+        [
+          808.0,
+          100.0
+        ],
+        [
+          810.0,
+          99.0
+        ]
+      ]
+    },
+    {
+      "index": 280,
+      "city": "daifang",
+      "points": [
+        [
+          1292.0,
+          226.0
+        ],
+        [
+          1294.0,
+          226.0
+        ]
+      ]
+    },
+    {
+      "index": 281,
+      "city": "danyang",
+      "points": [
+        [
+          1050.0,
+          427.0
+        ],
+        [
+          1050.0,
+          426.0
+        ]
+      ]
+    },
+    {
+      "index": 282,
+      "city": "donghai",
+      "points": [
+        [
+          1036.0,
+          326.0
+        ],
+        [
+          1038.0,
+          326.0
+        ]
+      ]
+    },
+    {
+      "index": 283,
+      "city": "dongjun",
+      "points": [
+        [
+          833.0,
+          284.0
+        ],
+        [
+          834.0,
+          286.0
+        ]
+      ]
+    },
+    {
+      "index": 284,
+      "city": "dongping",
+      "points": [
+        [
+          920.0,
+          265.0
+        ],
+        [
+          922.0,
+          266.0
+        ]
+      ]
+    },
+    {
+      "index": 285,
+      "city": "fanyang",
+      "points": [
+        [
+          874.0,
+          112.0
+        ],
+        [
+          876.0,
+          111.0
+        ]
+      ]
+    },
+    {
+      "index": 286,
+      "city": "fengyi",
+      "points": [
+        [
+          567.0,
+          327.0
+        ],
+        [
+          566.0,
+          326.0
+        ]
+      ]
+    },
+    {
+      "index": 287,
+      "city": "fufeng",
+      "points": [
+        [
+          420.0,
+          341.0
+        ],
+        [
+          422.0,
+          342.0
+        ]
+      ]
+    },
+    {
+      "index": 288,
+      "city": "fuling",
+      "points": [
+        [
+          474.0,
+          549.0
+        ],
+        [
+          474.0,
+          550.0
+        ]
+      ]
+    },
+    {
+      "index": 289,
+      "city": "gaoliang",
+      "points": [
+        [
+          696.0,
+          812.0
+        ],
+        [
+          698.0,
+          814.0
+        ]
+      ]
+    },
+    {
+      "index": 290,
+      "city": "guanghan",
+      "points": [
+        [
+          255.0,
+          470.0
+        ],
+        [
+          254.0,
+          470.0
+        ]
+      ]
+    },
+    {
+      "index": 291,
+      "city": "guiyang",
+      "points": [
+        [
+          730.0,
+          671.0
+        ],
+        [
+          730.0,
+          670.0
+        ]
+      ]
+    },
+    {
+      "index": 292,
+      "city": "hanjia",
+      "points": [
+        [
+          140.0,
+          515.0
+        ],
+        [
+          142.0,
+          514.0
+        ]
+      ]
+    },
+    {
+      "index": 293,
+      "city": "hanzhong",
+      "points": [
+        [
+          421.0,
+          411.0
+        ],
+        [
+          422.0,
+          410.0
+        ]
+      ]
+    },
+    {
+      "index": 294,
+      "city": "hedong",
+      "points": [
+        [
+          657.0,
+          385.0
+        ],
+        [
+          658.0,
+          386.0
+        ]
+      ]
+    },
+    {
+      "index": 295,
+      "city": "henan",
+      "points": [
+        [
+          695.0,
+          346.0
+        ],
+        [
+          694.0,
+          346.0
+        ]
+      ]
+    },
+    {
+      "index": 296,
+      "city": "henei",
+      "points": [
+        [
+          666.0,
+          301.0
+        ],
+        [
+          666.0,
+          302.0
+        ]
+      ]
+    },
+    {
+      "index": 297,
+      "city": "hepu",
+      "points": [
+        [
+          552.0,
+          829.0
+        ],
+        [
+          554.0,
+          830.0
+        ]
+      ]
+    },
+    {
+      "index": 298,
+      "city": "hongnong",
+      "points": [
+        [
+          620.0,
+          346.0
+        ],
+        [
+          622.0,
+          346.0
+        ]
+      ]
+    },
+    {
+      "index": 299,
+      "city": "jiangxia",
+      "points": [
+        [
+          817.0,
+          496.0
+        ],
+        [
+          818.0,
+          498.0
+        ]
+      ]
+    },
+    {
+      "index": 300,
+      "city": "jiangyang",
+      "points": [
+        [
+          281.0,
+          563.0
+        ],
+        [
+          282.0,
+          562.0
+        ]
+      ]
+    },
+    {
+      "index": 301,
+      "city": "jianning",
+      "points": [
+        [
+          231.0,
+          711.0
+        ],
+        [
+          230.0,
+          710.0
+        ]
+      ]
+    },
+    {
+      "index": 302,
       "city": "jiaozhi",
-      "d": "M387 853L438 858Q438 858 438 858L448 858Q448 858 448 858L452 862Q452 862 452 862L452 874",
-      "reason": "Remove the historical baked direct harbour spur; the current approach shares the JiaoZhi–Yulin northern trunk before branching toward the same port."
+      "points": [
+        [
+          387.0,
+          853.0
+        ],
+        [
+          386.0,
+          854.0
+        ]
+      ]
+    },
+    {
+      "index": 303,
+      "city": "jinan",
+      "points": [
+        [
+          970.0,
+          214.0
+        ],
+        [
+          969.0,
+          216.0
+        ]
+      ]
+    },
+    {
+      "index": 304,
+      "city": "jincheng",
+      "points": [
+        [
+          278.0,
+          256.0
+        ],
+        [
+          278.0,
+          256.0
+        ]
+      ]
+    },
+    {
+      "index": 305,
+      "city": "jingzhao",
+      "points": [
+        [
+          497.0,
+          354.0
+        ],
+        [
+          498.0,
+          354.0
+        ]
+      ]
+    },
+    {
+      "index": 306,
+      "city": "jiujiang",
+      "points": [
+        [
+          945.0,
+          406.0
+        ],
+        [
+          946.0,
+          406.0
+        ]
+      ]
+    },
+    {
+      "index": 307,
+      "city": "jiuzhen",
+      "points": [
+        [
+          370.0,
+          902.0
+        ],
+        [
+          370.0,
+          902.0
+        ]
+      ]
+    },
+    {
+      "index": 308,
+      "city": "jiyin",
+      "points": [
+        [
+          881.0,
+          308.0
+        ],
+        [
+          882.0,
+          309.0
+        ]
+      ]
+    },
+    {
+      "index": 309,
+      "city": "kuaiji",
+      "points": [
+        [
+          1142.0,
+          512.0
+        ],
+        [
+          1142.0,
+          514.0
+        ]
+      ]
+    },
+    {
+      "index": 310,
+      "city": "lelang",
+      "points": [
+        [
+          1290.0,
+          182.0
+        ],
+        [
+          1290.0,
+          182.0
+        ]
+      ]
+    },
+    {
+      "index": 311,
+      "city": "liaodong",
+      "points": [
+        [
+          1194.0,
+          78.0
+        ],
+        [
+          1194.0,
+          78.0
+        ]
+      ]
+    },
+    {
+      "index": 312,
+      "city": "liaoxi",
+      "points": [
+        [
+          1061.0,
+          121.0
+        ],
+        [
+          1062.0,
+          122.0
+        ]
+      ]
+    },
+    {
+      "index": 313,
+      "city": "lingling",
+      "points": [
+        [
+          656.0,
+          655.0
+        ],
+        [
+          658.0,
+          654.0
+        ]
+      ]
+    },
+    {
+      "index": 314,
+      "city": "linhe",
+      "points": [
+        [
+          658.0,
+          728.0
+        ],
+        [
+          658.0,
+          730.0
+        ]
+      ]
+    },
+    {
+      "index": 315,
+      "city": "longxi",
+      "points": [
+        [
+          306.0,
+          330.0
+        ],
+        [
+          306.0,
+          330.0
+        ]
+      ]
+    },
+    {
+      "index": 316,
+      "city": "lujiang",
+      "points": [
+        [
+          925.0,
+          454.0
+        ],
+        [
+          926.0,
+          454.0
+        ]
+      ]
+    },
+    {
+      "index": 317,
+      "city": "luling",
+      "points": [
+        [
+          828.0,
+          630.0
+        ],
+        [
+          830.0,
+          630.0
+        ]
+      ]
+    },
+    {
+      "index": 318,
+      "city": "nanhai",
+      "points": [
+        [
+          741.0,
+          775.0
+        ],
+        [
+          742.0,
+          774.0
+        ]
+      ]
+    },
+    {
+      "index": 319,
+      "city": "nanjun",
+      "points": [
+        [
+          691.0,
+          503.0
+        ],
+        [
+          690.0,
+          502.0
+        ]
+      ]
+    },
+    {
+      "index": 320,
+      "city": "nanyang",
+      "points": [
+        [
+          709.0,
+          400.0
+        ],
+        [
+          710.0,
+          402.0
+        ]
+      ]
+    },
+    {
+      "index": 321,
+      "city": "pingyuan",
+      "points": [
+        [
+          918.0,
+          202.0
+        ],
+        [
+          919.0,
+          203.0
+        ]
+      ]
+    },
+    {
+      "index": 322,
+      "city": "poyang",
+      "points": [
+        [
+          969.0,
+          568.0
+        ],
+        [
+          970.0,
+          570.0
+        ]
+      ]
+    },
+    {
+      "index": 323,
+      "city": "qi",
+      "points": [
+        [
+          1014.0,
+          213.0
+        ],
+        [
+          1015.0,
+          214.0
+        ]
+      ]
+    },
+    {
+      "index": 324,
+      "city": "qianwei",
+      "points": [
+        [
+          213.0,
+          554.0
+        ],
+        [
+          214.0,
+          554.0
+        ]
+      ]
+    },
+    {
+      "index": 325,
+      "city": "qichun",
+      "points": [
+        [
+          874.0,
+          512.0
+        ],
+        [
+          874.0,
+          514.0
+        ]
+      ]
+    },
+    {
+      "index": 326,
+      "city": "rinan",
+      "points": [
+        [
+          422.0,
+          1009.0
+        ],
+        [
+          422.0,
+          1010.0
+        ]
+      ]
+    },
+    {
+      "index": 327,
+      "city": "runan",
+      "points": [
+        [
+          835.0,
+          410.0
+        ],
+        [
+          834.0,
+          410.0
+        ]
+      ]
+    },
+    {
+      "index": 328,
+      "city": "shangdang",
+      "points": [
+        [
+          733.0,
+          266.0
+        ],
+        [
+          734.0,
+          266.0
+        ]
+      ]
+    },
+    {
+      "index": 329,
+      "city": "shanggu",
+      "points": [
+        [
+          862.0,
+          68.0
+        ],
+        [
+          864.0,
+          70.0
+        ]
+      ]
+    },
+    {
+      "index": 330,
+      "city": "shanyang",
+      "points": [
+        [
+          917.0,
+          306.0
+        ],
+        [
+          917.0,
+          305.0
+        ]
+      ]
+    },
+    {
+      "index": 331,
+      "city": "shujun",
+      "points": [
+        [
+          214.0,
+          502.0
+        ],
+        [
+          214.0,
+          502.0
+        ]
+      ]
+    },
+    {
+      "index": 332,
+      "city": "taiyuan",
+      "points": [
+        [
+          731.0,
+          181.0
+        ],
+        [
+          730.0,
+          182.0
+        ]
+      ]
+    },
+    {
+      "index": 333,
+      "city": "tianshui",
+      "points": [
+        [
+          370.0,
+          362.0
+        ],
+        [
+          370.0,
+          362.0
+        ]
+      ]
+    },
+    {
+      "index": 334,
+      "city": "wei",
+      "points": [
+        [
+          796.0,
+          254.0
+        ],
+        [
+          796.0,
+          254.0
+        ]
+      ]
+    },
+    {
+      "index": 335,
+      "city": "wenshan",
+      "points": [
+        [
+          173.0,
+          454.0
+        ],
+        [
+          174.0,
+          454.0
+        ]
+      ]
+    },
+    {
+      "index": 336,
+      "city": "wudu",
+      "points": [
+        [
+          304.0,
+          364.0
+        ],
+        [
+          306.0,
+          366.0
+        ]
+      ]
+    },
+    {
+      "index": 337,
+      "city": "wujun",
+      "points": [
+        [
+          1142.0,
+          456.0
+        ],
+        [
+          1142.0,
+          458.0
+        ]
+      ]
+    },
+    {
+      "index": 338,
+      "city": "wuling",
+      "points": [
+        [
+          660.0,
+          545.0
+        ],
+        [
+          662.0,
+          546.0
+        ]
+      ]
+    },
+    {
+      "index": 340,
+      "city": "xiangyang",
+      "points": [
+        [
+          764.0,
+          403.0
+        ],
+        [
+          766.0,
+          402.0
+        ]
+      ]
+    },
+    {
+      "index": 341,
+      "city": "xiapi",
+      "points": [
+        [
+          996.0,
+          351.0
+        ],
+        [
+          996.0,
+          350.0
+        ]
+      ]
+    },
+    {
+      "index": 342,
+      "city": "xihe",
+      "points": [
+        [
+          670.0,
+          234.0
+        ],
+        [
+          670.0,
+          234.0
+        ]
+      ]
+    },
+    {
+      "index": 343,
+      "city": "xincheng",
+      "points": [
+        [
+          610.0,
+          427.0
+        ],
+        [
+          610.0,
+          426.0
+        ]
+      ]
+    },
+    {
+      "index": 344,
+      "city": "xindu",
+      "points": [
+        [
+          1058.0,
+          522.0
+        ],
+        [
+          1058.0,
+          522.0
+        ]
+      ]
+    },
+    {
+      "index": 345,
+      "city": "xinggu",
+      "points": [
+        [
+          298.0,
+          751.0
+        ],
+        [
+          298.0,
+          750.0
+        ]
+      ]
+    },
+    {
+      "index": 346,
+      "city": "yan",
+      "points": [
+        [
+          918.0,
+          98.0
+        ],
+        [
+          917.0,
+          97.0
+        ]
+      ]
+    },
+    {
+      "index": 347,
+      "city": "yidu",
+      "points": [
+        [
+          647.0,
+          472.0
+        ],
+        [
+          646.0,
+          474.0
+        ]
+      ]
+    },
+    {
+      "index": 348,
+      "city": "yingchuan",
+      "points": [
+        [
+          776.0,
+          351.0
+        ],
+        [
+          778.0,
+          350.0
+        ]
+      ]
+    },
+    {
+      "index": 349,
+      "city": "yinping",
+      "points": [
+        [
+          250.0,
+          402.0
+        ],
+        [
+          250.0,
+          402.0
+        ]
+      ]
+    },
+    {
+      "index": 350,
+      "city": "yiyang",
+      "points": [
+        [
+          736.0,
+          449.0
+        ],
+        [
+          738.0,
+          450.0
+        ]
+      ]
+    },
+    {
+      "index": 351,
+      "city": "yongchang",
+      "points": [
+        [
+          27.0,
+          684.0
+        ],
+        [
+          26.0,
+          686.0
+        ]
+      ]
+    },
+    {
+      "index": 352,
+      "city": "yuexi",
+      "points": [
+        [
+          130.0,
+          619.0
+        ],
+        [
+          130.0,
+          618.0
+        ]
+      ]
+    },
+    {
+      "index": 353,
+      "city": "yulin",
+      "points": [
+        [
+          550.0,
+          771.0
+        ],
+        [
+          550.0,
+          770.0
+        ]
+      ]
+    },
+    {
+      "index": 354,
+      "city": "yunnan",
+      "points": [
+        [
+          82.0,
+          681.0
+        ],
+        [
+          82.0,
+          682.0
+        ]
+      ]
+    },
+    {
+      "index": 355,
+      "city": "yuyang",
+      "points": [
+        [
+          965.0,
+          66.0
+        ],
+        [
+          966.0,
+          65.0
+        ]
+      ]
+    },
+    {
+      "index": 356,
+      "city": "yuzhang",
+      "points": [
+        [
+          904.0,
+          579.0
+        ],
+        [
+          906.0,
+          578.0
+        ]
+      ]
+    },
+    {
+      "index": 357,
+      "city": "zangke",
+      "points": [
+        [
+          432.0,
+          655.0
+        ],
+        [
+          434.0,
+          654.0
+        ]
+      ]
+    },
+    {
+      "index": 358,
+      "city": "zhongshan",
+      "points": [
+        [
+          826.0,
+          149.0
+        ],
+        [
+          826.0,
+          148.0
+        ]
+      ]
+    },
+    {
+      "index": 359,
+      "city": "zhuti",
+      "points": [
+        [
+          230.0,
+          651.0
+        ],
+        [
+          230.0,
+          650.0
+        ]
+      ]
+    },
+    {
+      "index": 360,
+      "city": "zitong",
+      "points": [
+        [
+          315.0,
+          433.0
+        ],
+        [
+          314.0,
+          434.0
+        ]
+      ]
+    },
+    {
+      "index": 361,
+      "city": "qiao",
+      "points": [
+        [
+          892.0,
+          356.0
+        ],
+        [
+          892.0,
+          356.0
+        ]
+      ]
+    }
+  ],
+  "shared_junctions": [
+    {
+      "id": "yinping-secret-branch",
+      "point": [
+        244,
+        448
+      ],
+      "source_segment_indices": [
+        10
+      ],
+      "reason": "The existing Yinping-Wenshan road meets the Yinping-Chengdu secret branch at this exact saved vertex. Both drawing and timing must end a subpath here instead of rounding past the junction.",
+      "dynamic_source": "game/config/map-source.json:presentation.added_land_roads[0].new_branch[0]"
     }
   ]
 }

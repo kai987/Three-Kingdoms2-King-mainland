@@ -1,0 +1,671 @@
+{
+  "date": "2026-10-24",
+  "code_revision": "d8bde3c",
+  "capture_tools": [
+    "CUA OpenEmu window screenshot",
+    "CUA in-app browser screenshot"
+  ],
+  "original_game": "三国志2超级版 (local modified edition)",
+  "emulator": "OpenEmu 1.4.0 / Nestopia",
+  "note": "Full window captures retained. Window dimensions are not native asset dimensions. No production assets exported.",
+  "counts": {
+    "original_flow": 33,
+    "remake": 4,
+    "restoration": 1,
+    "total": 38
+  },
+  "captures": [
+    {
+      "number": 1,
+      "groups": [
+        "設施"
+      ],
+      "title": "町：武器屋、醫館、市場",
+      "file": "screenshots/01-town-facilities.png",
+      "observed": "三個入口使用交叉兵器、醫、商圖示；顯示金、米、寶與剩餘命令。",
+      "limit": "並州的這個狀態只有三個設施，不代表所有城池相同。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:43:34.467268+09:00",
+      "sha256": "171d9bd7a34fd98a1f32759e23b1129c67f634c037e660836b90cdd5173ff05f"
+    },
+    {
+      "number": 2,
+      "groups": [
+        "裝備"
+      ],
+      "title": "購武具：選擇武將",
+      "file": "screenshots/02-weapon-officer-selection.png",
+      "observed": "列表對齊體、武、知、忠、德、經；劉備的忠是 --。",
+      "limit": "是本機超级版的四人測試名冊。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:43:59.312688+09:00",
+      "sha256": "c4137dd5ff7ffca6f7a4626bf51ad2ad17ee83ee327b951f88f82bb1437b954c"
+    },
+    {
+      "number": 3,
+      "groups": [
+        "裝備"
+      ],
+      "title": "剣／刀／矛／防具分類",
+      "file": "screenshots/03-weapon-categories.png",
+      "observed": "以四分類文字縮短物品清單。",
+      "limit": "分類畫面沒有每件物品的圖片。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:44:04.632437+09:00",
+      "sha256": "0d23874ffedbf08eb2a2a96002af4b610180c6365eaf15c12d1485fbf38012a6"
+    },
+    {
+      "number": 4,
+      "groups": [
+        "裝備"
+      ],
+      "title": "剣類商品",
+      "file": "screenshots/04-sword-shop.png",
+      "observed": "短剣、飛剣、長剣、破斬剣及價格；保留地圖背景。",
+      "limit": "本頁是名稱與價格清單，未見獨立商品圖。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:44:18.181896+09:00",
+      "sha256": "f9dc18952612c78aba6aaf334b6e2da57d574bcfab41b420cb9d91a3ab6fdeb0"
+    },
+    {
+      "number": 5,
+      "groups": [
+        "裝備"
+      ],
+      "title": "購買命令書確認",
+      "file": "screenshots/05-sword-confirmation.png",
+      "observed": "執行前先確認消耗一張命令書。",
+      "limit": "僅為這次購買流程的確認畫面。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:44:39.482781+09:00",
+      "sha256": "e95245ad7a27b6040c6ce6a94d276f28e0bc3e957cb6a13328be20452bfe0b78"
+    },
+    {
+      "number": 6,
+      "groups": [
+        "事件",
+        "裝備"
+      ],
+      "title": "武器購置：店內插圖",
+      "file": "screenshots/06-weapon-purchase-result.png",
+      "observed": "店主、客人及右上三件壁上兵器；結果說明換入新武具、舊物交店。",
+      "limit": "是購置結果圖，不是所有設施共用的內景。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:44:57.384544+09:00",
+      "sha256": "280f3f251746979f7e6427bd5a386e34ca58af32ad7cb587e29da4bee89c7df1"
+    },
+    {
+      "number": 7,
+      "groups": [
+        "裝備"
+      ],
+      "title": "購買後返回地圖",
+      "file": "screenshots/07-return-after-purchase.png",
+      "observed": "交易完成後返回下一個都市選擇。",
+      "limit": "不是第二張「舊武器交易」插圖。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:45:25.991414+09:00",
+      "sha256": "27d2702c1327a8ce80c69825e61e6e7096a982fd51390f54579a1f5c3dc4096c"
+    },
+    {
+      "number": 8,
+      "groups": [
+        "裝備"
+      ],
+      "title": "刀類商品",
+      "file": "screenshots/08-blade-shop.png",
+      "observed": "薙刀、眉尖刀、三尖刀、鉤鎌刀及價格。",
+      "limit": "未見獨立商品圖。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:47:16.444821+09:00",
+      "sha256": "c483a96bf3f6f50ce5b873dec2b84e9dc10dc4d6d121e503e390168ff8537af4"
+    },
+    {
+      "number": 9,
+      "groups": [
+        "裝備"
+      ],
+      "title": "矛類商品",
+      "file": "screenshots/09-polearm-shop.png",
+      "observed": "矛、雙戟、單鉤鎗、戰斧及價格。",
+      "limit": "未見獨立商品圖。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:47:57.763819+09:00",
+      "sha256": "a6276ff66047801734879418d8bfa579763fed026a565c76449a74030b8467ec"
+    },
+    {
+      "number": 10,
+      "groups": [
+        "裝備"
+      ],
+      "title": "防具商品",
+      "file": "screenshots/10-armor-shop.png",
+      "observed": "綸巾、籠手、兜、硬皮及價格。",
+      "limit": "未見逐件防具圖片。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:48:33.400091+09:00",
+      "sha256": "02bf5e1cf49e1caf9d946614a6c9d8d98ed09eda1fd285d6872bf5c0fc007efd"
+    },
+    {
+      "number": 11,
+      "groups": [
+        "事件",
+        "裝備"
+      ],
+      "title": "防具購置：共用武具店插圖",
+      "file": "screenshots/11-armor-purchase-result.png",
+      "observed": "選防具購買後出現與武器購置相同的店內構圖。",
+      "limit": "沒有證據顯示是獨立防具店內景。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:31:52.078816+09:00",
+      "sha256": "57fb47125b9b9a4b0fd2f2b5289f63b18a2ea2eff0cc5e1a120834eea663fe52"
+    },
+    {
+      "number": 12,
+      "groups": [
+        "設施"
+      ],
+      "title": "醫館：沒有傷員",
+      "file": "screenshots/12-hospital-no-patients.png",
+      "observed": "明確提示城內沒有受傷武將，不需治療。",
+      "limit": "條件受限：未取得診療中或診療結果插圖。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:51:31.097195+09:00",
+      "sha256": "178e6b5ed2d697d534368448491cb7995e35983979569718fe0f0023e19ab082"
+    },
+    {
+      "number": 13,
+      "groups": [
+        "設施"
+      ],
+      "title": "都市四類命令圖示",
+      "file": "screenshots/13-city-command-menu.png",
+      "observed": "城、軍隊、倉、町四張圖示與都市君主、太守、統治度。",
+      "limit": "圖示含視窗縮放影響，須另採乾淨原生素材。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:52:21.195528+09:00",
+      "sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf"
+    },
+    {
+      "number": 14,
+      "groups": [
+        "設施"
+      ],
+      "title": "城政命令文字列表",
+      "file": "screenshots/14-domestic-command-list.png",
+      "observed": "町づくり、情報あつめ、策略、武将の移動、防災、記録する。",
+      "limit": "這一頁是文字命令列表，不是六張圖示。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:52:41.680399+09:00",
+      "sha256": "c6e8c7a3ae60c194125d7782e3fff24e9cbf32660cd7c9d0dfd75034aa9e241e"
+    },
+    {
+      "number": 15,
+      "groups": [
+        "設施"
+      ],
+      "title": "開發已達上限",
+      "file": "screenshots/15-development-at-cap.png",
+      "observed": "當城池已足夠繁榮時，提示繼續花費沒有意義。",
+      "limit": "未在這個狀態觸發實際開發內景。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:54:17.649441+09:00",
+      "sha256": "0f457ec5cac708d150b4d9b59d5f4d96b3693090829e3d6802f70216dde1cf5f"
+    },
+    {
+      "number": 16,
+      "groups": [
+        "交易"
+      ],
+      "title": "市場：米／寶",
+      "file": "screenshots/16-market-options.png",
+      "observed": "商店先區分米與タカラ。",
+      "limit": "本次只觀察到後續米交易與寶出售流程。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:56:37.965343+09:00",
+      "sha256": "ed3b6335b055273a818951e4996b90faacdab77dbde36723c550a55c1d8554b4"
+    },
+    {
+      "number": 17,
+      "groups": [
+        "交易"
+      ],
+      "title": "米：買入／賣出",
+      "file": "screenshots/17-market-rice-menu.png",
+      "observed": "買賣方向與數量分步選擇。",
+      "limit": "非本作即時交易公式的驗證。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:57:17.780589+09:00",
+      "sha256": "59009cbeb9d0edd8f1a244b88e7315c95ed09736462bc7c0acd170a71345bc35"
+    },
+    {
+      "number": 18,
+      "groups": [
+        "交易"
+      ],
+      "title": "賣米報價與輸入",
+      "file": "screenshots/18-market-sell-quote.png",
+      "observed": "顯示米100對金75的報價，等待數量輸入。",
+      "limit": "畫面報價不能單獨證明輸入欄每單位的意義。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:57:42.245547+09:00",
+      "sha256": "f85f690ff0fe55c761579427b930488c3db8c92d7b1776a032dabe472f85b2a7"
+    },
+    {
+      "number": 19,
+      "groups": [
+        "交易"
+      ],
+      "title": "米交易數量1",
+      "file": "screenshots/19-market-amount.png",
+      "observed": "輸入數量1後進行確認。",
+      "limit": "後續取整結果需一起看20，不能當作100單位批次。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:58:00.733612+09:00",
+      "sha256": "3be9a4eff9c36bd4a3c8af156b8337c8597a3ada9f99e7aeff75f3f91b30a36b"
+    },
+    {
+      "number": 20,
+      "groups": [
+        "事件",
+        "交易"
+      ],
+      "title": "市場交易：商人插圖",
+      "file": "screenshots/20-market-trade-event.png",
+      "observed": "店主與客人；沒有壁上兵器。這次小額米交易顯示所得金0。",
+      "limit": "不能由單次取整結果推導全部交易規則。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T19:58:43.968081+09:00",
+      "sha256": "fba2d113a94675cf532ae33c4f5a4d8f1224010ba998cde9809091bf3317df08"
+    },
+    {
+      "number": 21,
+      "groups": [
+        "交易"
+      ],
+      "title": "寶出售報價",
+      "file": "screenshots/21-treasure-sale-quote.png",
+      "observed": "顯示每件寶換金100，輸入出售數量。",
+      "limit": "不是一個已確認的寶物買入介面。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:00:46.460255+09:00",
+      "sha256": "5933df6c951c81d8c94c915ee666ea54cc17e11b2d70969154b5e9d2d6262c64"
+    },
+    {
+      "number": 22,
+      "groups": [
+        "交易"
+      ],
+      "title": "寶出售確認",
+      "file": "screenshots/22-treasure-sale-confirmation.png",
+      "observed": "再次確認命令書消耗。",
+      "limit": "確認畫面本身未展示新插圖。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:01:16.663751+09:00",
+      "sha256": "1302d4f62286ced86bef6b6e11e9cbb69b9538d377e80849c84b18ab02437a62"
+    },
+    {
+      "number": 23,
+      "groups": [
+        "事件",
+        "交易"
+      ],
+      "title": "寶出售：共用商人插圖",
+      "file": "screenshots/23-treasure-sale-event.png",
+      "observed": "出售後取得金100；沿用20的商人場景。",
+      "limit": "與20不是兩張不同場景素材。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:01:36.326482+09:00",
+      "sha256": "431fb4fd9a71a9202e2fc5e8905dd88401e1ac9c28e40bf4f37433487f89d6ba"
+    },
+    {
+      "number": 24,
+      "groups": [
+        "來源"
+      ],
+      "title": "本機版本：超级版標題",
+      "file": "screenshots/24-local-super-edition-title.png",
+      "observed": "標題明示超级版；作為本次來源版本識別。",
+      "limit": "不能當作所有市售版本相同的證明。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:03:30.271206+09:00",
+      "sha256": "09cd701e0234612e83f2bd14706003bc9e8b2956b16e43100cef8942a40e19cd"
+    },
+    {
+      "number": 25,
+      "groups": [
+        "裝備"
+      ],
+      "title": "人物信息中的武器與防具圖示",
+      "file": "screenshots/25-officer-equipment-original.png",
+      "observed": "劉備顯示交叉兵器圖示：長剣，甲冑圖示：兜。",
+      "limit": "是兩個裝備分類圖，並非長劍和兜的逐件商品繪圖。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:05:00.969997+09:00",
+      "sha256": "e2e287e8c11d275505576a75fe58cba910a8566a026e871df604d653a4bba5fa"
+    },
+    {
+      "number": 26,
+      "groups": [
+        "事件"
+      ],
+      "title": "軍隊命令",
+      "file": "screenshots/26-army-menu.png",
+      "observed": "出陣、偵察、徴兵、編成四項文字。",
+      "limit": "為臨時曹操測試戰局，最後已讀回原測試狀態。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:08:35.235670+09:00",
+      "sha256": "7d54151b29af3f4b434b397b6077f315aa45448d02b4085307b48f3e8e650a91"
+    },
+    {
+      "number": 27,
+      "groups": [
+        "事件"
+      ],
+      "title": "出陣：騎將、戰馬與旗幟",
+      "file": "screenshots/27-sortie-illustration.png",
+      "observed": "夏侯惇出陣時顯示騎將插圖與出征發言。",
+      "limit": "不是一張另外確認的「佔領空城」插圖。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:14:05.965298+09:00",
+      "sha256": "6639427e83b22d2b1708f0481bb14f6390303a80db5738cdb0d610a754430afa"
+    },
+    {
+      "number": 28,
+      "groups": [
+        "事件"
+      ],
+      "title": "佔領後的命令畫面",
+      "file": "screenshots/28-occupation-result.png",
+      "observed": "青州成為本方顏色，返回都市命令。",
+      "limit": "沒有獨立佔領場景可從這張圖提取。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:14:30.472111+09:00",
+      "sha256": "baa3937af07617bbfe40a38b9638cb72a65809f92a8413138acd542900ab91a6"
+    },
+    {
+      "number": 29,
+      "groups": [
+        "設施"
+      ],
+      "title": "學問所書本入口",
+      "file": "screenshots/29-school-facility-icon.png",
+      "observed": "青州有書本、醫、商；與01互補採齊四種設施圖示。",
+      "limit": "入口本身不是學習內景。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:16:00.793029+09:00",
+      "sha256": "892b8cc5c878c635d16ee77e345146505c9e507728ad2ad14ef39ef12e575160"
+    },
+    {
+      "number": 30,
+      "groups": [
+        "設施"
+      ],
+      "title": "學問所：選夏侯惇",
+      "file": "screenshots/30-school-officer-selection.png",
+      "observed": "武將資料體94、武89、知60、忠92、德68、經20。",
+      "limit": "這是本機超级版單一人物的觀察值。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:16:26.606685+09:00",
+      "sha256": "5b57cff7e432ab6998600c08f9dfef941508d1ec3ee5ed6ce951f4a1a2592262"
+    },
+    {
+      "number": 31,
+      "groups": [
+        "設施"
+      ],
+      "title": "學問所費用",
+      "file": "screenshots/31-school-cost.png",
+      "observed": "本次學習畫面顯示金20。",
+      "limit": "不據此改寫本作費用規則。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:16:52.293475+09:00",
+      "sha256": "00e6262f8f9d7f6b495575391077067fee74d5211674ce1252629628310f3d40"
+    },
+    {
+      "number": 32,
+      "groups": [
+        "事件",
+        "設施"
+      ],
+      "title": "學習前人物發言",
+      "file": "screenshots/32-school-event.png",
+      "observed": "夏侯惇肖像與「しっかり勉強いたします」。",
+      "limit": "人物發言畫面，不是教師或學堂內景。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:17:22.684557+09:00",
+      "sha256": "9dda011b313991e5522f38bf19d7ad649c8f3a7724b6dabd0d0d53d5923e1734"
+    },
+    {
+      "number": 33,
+      "groups": [
+        "事件",
+        "設施"
+      ],
+      "title": "學習結果",
+      "file": "screenshots/33-school-result.png",
+      "observed": "顯示知增加8，金9979、命令剩1。",
+      "limit": "未捕獲獨立教學內景；不能說原遊戲沒有。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:17:46.810416+09:00",
+      "sha256": "10adadbf2e4e621c53c6350b8fd37e95e07252cf62e306c5a143d4a20dd73b0e"
+    },
+    {
+      "number": 34,
+      "groups": [
+        "目前Web"
+      ],
+      "title": "本作：開局圖文事件",
+      "file": "screenshots/34-remake-current-event.png",
+      "observed": "主圖是地圖裁片與人物肖像，配通用說明。",
+      "limit": "尚未接入本次原版插圖。",
+      "accepted": true,
+      "source": "current-remake-browser",
+      "width": 1280,
+      "height": 720,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:23:00.085135+09:00",
+      "sha256": "2efd3ed3dfa2b23120a50b2d4a264daff8398225c5df0f88b4ba9abd6e175019"
+    },
+    {
+      "number": 35,
+      "groups": [
+        "目前Web"
+      ],
+      "title": "本作：右欄命令與信息",
+      "file": "screenshots/35-remake-current-sidebar.png",
+      "observed": "1280×720下右欄約474px寬，長文字按鈕和武將裝備摘要堆疊。",
+      "limit": "只在這個桌面尺寸觀察，手機尚未實測。",
+      "accepted": true,
+      "source": "current-remake-browser",
+      "width": 1280,
+      "height": 720,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:23:30.381167+09:00",
+      "sha256": "8e9d41cc18280a1337d190e2dd4297aaab5d29f6bad45fbb5eba9e49e4fdfc1e"
+    },
+    {
+      "number": 36,
+      "groups": [
+        "目前Web"
+      ],
+      "title": "本作：設施彈窗",
+      "file": "screenshots/36-remake-current-facilities.png",
+      "observed": "開發、執行武將、服務選擇等縱向排列，缺設施主圖。",
+      "limit": "僅查看介面，未執行交易或治療。",
+      "accepted": true,
+      "source": "current-remake-browser",
+      "width": 1280,
+      "height": 720,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:24:01.894470+09:00",
+      "sha256": "0fd0d38d8badb459494e4e23d0829cbae6d83626a6e061fddc36abc70fb79fa2"
+    },
+    {
+      "number": 37,
+      "groups": [
+        "目前Web"
+      ],
+      "title": "本作：武具比較",
+      "file": "screenshots/37-remake-current-equipment.png",
+      "observed": "武器、防具、重量、先手、命中、迴避、退卻等說明均以文字展開。",
+      "limit": "未購入物品；引擎數值未因本次查看而更改。",
+      "accepted": true,
+      "source": "current-remake-browser",
+      "width": 1280,
+      "height": 720,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:24:43.085613+09:00",
+      "sha256": "f8ed2180e52b53377cf7705d84098657e821e0aa2909eb942d088931a01e02e4"
+    },
+    {
+      "number": 38,
+      "groups": [
+        "恢復"
+      ],
+      "title": "讀回原測試起點",
+      "file": "screenshots/38-restored-test-start.png",
+      "observed": "金9999、米9999、寶99、命令3，町內武器屋選中；臨時交易和曹操測試已放棄。",
+      "limit": "獨立快存起點，不是用本次流程覆寫原有自動存檔。",
+      "accepted": true,
+      "source": "OpenEmu-local-super-edition",
+      "width": 1752,
+      "height": 1504,
+      "native_asset_dimensions": null,
+      "captured_at": "2026-10-24T20:32:49.860779+09:00",
+      "sha256": "f7318ec7ef41a75868bec3b348ec29f4274c85572cc5c5e656a61860940fc949"
+    }
+  ]
+}

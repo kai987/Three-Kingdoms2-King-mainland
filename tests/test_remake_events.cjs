@@ -23,12 +23,12 @@ class Modal extends Target{
  showModal(){this.open=true;this.shows++;}
  close(){this.open=false;this.closes++;this.emit('close');}
 }
-function fixture(items=[]){
+function fixture(items=[],{originalUI}={}){
  const modal=new Modal(),parent=new Target(),doc=new Target(),tasks=[],header={textContent:'',setAttribute(k,v){this[k]=v}},i18n={locale:'zh-Hant',t:value=>value};
  doc.querySelector=selector=>selector==='#event-history'?header:null;parent.open=false;
  let current=view(items),busy=false,preview=false;
  const portraitRequests=[],portraits={entry:id=>id==='person-a'?{path:'/assets/portraits/original/001.png'}:null,html(id,name){portraitRequests.push([id,name]);return `<span data-portrait-person="${id}"><img src="/assets/portraits/original/001.png"></span>`;}};
- const events=create({document:doc,modal,parentDialog:parent,i18n,portraits,getView:()=>current,isBusy:()=>busy,isPreview:()=>preview,schedule:fn=>tasks.push(fn)});
+ const events=create({document:doc,modal,parentDialog:parent,i18n,portraits,originalUI,getView:()=>current,isBusy:()=>busy,isPreview:()=>preview,schedule:fn=>tasks.push(fn)});
  const drain=()=>{let guard=0;while(tasks.length){assert(guard++<20,'No polling loop while modal/busy');tasks.shift()();}};
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
@@ -83,6 +83,46 @@ function fixture(items=[]){
  assert(gifts.modal.innerHTML.includes('宝の発見'));assert.equal(JSON.stringify(giftView),giftBytes);gifts.events.dispose();
  const salary=staffRow(2,'staff_salary',{details:{amount:5,paid:0,bonus:{gold:0,grain:0,reserves:0},counts:{staff:1,total_unpaid:1,cities:1}}});
  const transport=row(8,'transport_departed',{person_ids:['clerk-000001'],city_ids:['home','enemy'],details:{convoy_id:1,gold:100,grain:300,reserves:50,treasure:2,lost:0,reason:'outbound'}}),work=row(9,'domestic_report',{person_ids:[],details:{gold:20,grain:30,reserves:180,morale:150,cities:30,reason:'turn'}});
+ // Verified art is selected by event kind for both the player's automatic
+ // queue and AI history. Playback still consumes only copied event snapshots.
+ const artCalls=[],originalUI={
+  scene(id,{locale,className}){artCalls.push(['scene',id,locale,className]);return `<img class="${className}" data-original-scene="${id}" src="/assets/original-ui/${id}.png" alt="${locale==='ja'?'原版の挿絵':'原版插圖'}">`;},
+  icon(id,{locale,className}){artCalls.push(['icon',id,locale,className]);return `<img class="${className}" data-original-icon="${id}" src="/assets/original-ui/${id}.png" alt="${locale==='ja'?'原版の入口アイコン':'原版入口圖示'}">`;}
+ };
+ const sale=row(10,'treasure_sold',{details:{actor:'person-a',amount:2,gold:200}}),artExamples=[
+  [facilityRows[4],'scene','armory'],[facilityRows[3],'scene','market'],[sale,'scene','market'],
+  [transport,'scene','sortie'],[facilityRows[1],'icon','facility-hospital'],[facilityRows[2],'icon','facility-school']
+ ];
+ for(const [event,type,id]of artExamples){
+  const state=view([event]),bytes=JSON.stringify(state),visual=fixture([event],{originalUI});
+  visual.events.observe(state,{newGame:true});visual.drain();
+  assert(visual.modal.innerHTML.includes(`data-original-${type}="${id}"`),event.kind+' selects the corresponding verified art');
+  assert(visual.modal.innerHTML.includes('event-art-original original-ui-frame'));
+  assert(!visual.modal.innerHTML.includes('event-map'));assert(!visual.modal.innerHTML.includes('event-facility'));assert(!visual.modal.innerHTML.includes('event-treasure'));
+  assert(visual.modal.innerHTML.includes('event-location'));assert(visual.modal.innerHTML.includes('成都'));
+  if(event.person_ids.includes('person-a'))assert(visual.modal.innerHTML.indexOf('event-original-stage')<visual.modal.innerHTML.indexOf('event-people'),'Portraits follow the scene rather than obscuring it');
+  if(event.kind==='transport_departed')assert(visual.modal.innerHTML.includes('data-event-art-use="remake-adaptation"'));
+  if(type==='icon')assert(visual.modal.innerHTML.includes(event.kind==='officer_treated'?'醫館 · 武將療傷':'學問所 · 武將進修'));
+  const cursor=visual.events.snapshot();visual.i18n.locale='ja';visual.doc.emit('game-language-change');
+  assert(visual.modal.innerHTML.includes(type==='scene'?'原版の挿絵':'原版の入口アイコン'));assert.deepEqual(visual.events.snapshot(),cursor);
+  assert(!visual.modal.innerHTML.includes('尚待核實'));assert(!visual.modal.innerHTML.includes('本作での転用'));
+  visual.modal.querySelector('[data-event-next]').onclick();visual.events.observe(state);visual.drain();assert(!visual.modal.open,'Acknowledged art does not repeat');
+  assert(visual.events.history());visual.drain();assert(visual.modal.innerHTML.includes(`data-original-${type}="${id}"`));
+  visual.modal.querySelector('[data-event-next]').onclick();assert.equal(JSON.stringify(state),bytes,'Display, locale, acknowledgement and replay preserve resources and RNG');visual.events.dispose();
+ }
+ assert(artCalls.every(([type,id,locale,className])=>['zh-Hant','ja'].includes(locale)&&className===(type==='scene'?'event-original-scene':'event-original-icon')));
+ const aiArt={...facilityRows[4],id:9,factions:['wei']},batchedArt=view([facilityRows[3],{...facilityRows[3],id:8},aiArt]),batchedVisual=fixture([],{originalUI});
+ const batchBytes=JSON.stringify(batchedArt);batchedVisual.setView(batchedArt);batchedVisual.events.observe(batchedArt,{newGame:true});batchedVisual.drain();
+ assert.deepEqual(batchedVisual.events.snapshot().active,[4,8]);assert.deepEqual(batchedVisual.events.snapshot().pending,[]);assert(batchedVisual.modal.innerHTML.includes('共2項'));
+ assert.equal((batchedVisual.modal.innerHTML.match(/data-original-scene=/g)||[]).length,1,'Same-kind batches retain a single scene');
+ batchedVisual.modal.querySelector('[data-event-next]').onclick();assert(batchedVisual.events.history());batchedVisual.drain();batchedVisual.modal.querySelector('[data-event-next]').onclick();assert(batchedVisual.modal.innerHTML.includes('data-original-scene="armory"'),'AI history uses the same scene mapping');
+ assert.equal(JSON.stringify(batchedArt),batchBytes);batchedVisual.events.dispose();
+ for(const missing of [undefined,{}, {scene:()=>'',icon:()=>''}]){
+  const fallback=fixture([facilityRows[4]],{originalUI:missing});fallback.events.observe(view([facilityRows[4]]),{newGame:true});fallback.drain();assert(fallback.modal.innerHTML.includes('event-map'));assert(fallback.modal.innerHTML.includes('event-facility'));fallback.events.dispose();
+ }
+ for(const event of [acquired,row(11,'battle_started'),facilityRows[6],found]){
+  const fallback=fixture([event],{originalUI});fallback.events.observe(view([event]),{newGame:true});fallback.drain();assert(fallback.modal.innerHTML.includes('event-map'));assert(!fallback.modal.innerHTML.includes('event-art-original'),'Unverified event scenes retain their existing fallback');fallback.events.dispose();
+ }
  assert(validEvent(transport));assert(validEvent(work));for(const bad of [{convoy_id:0},{gold:-1},{lost:1.5},{reason:'<script>'},{unknown:1}])assert(!validEvent({...transport,details:{...transport.details,...bad}}));
  const training=fixture([work]),trainingBefore=JSON.stringify(work);for(const locale of ['zh-Hant','ja']){training.i18n.locale=locale;const message=training.events.description(work);assert(message.includes(locale==='ja'?'練度の成果は150':'訓練度成果150'));assert(!message.includes('士氣'));assert(!message.includes('士気'));}assert.equal(JSON.stringify(work),trainingBefore,'Renaming historical training reports preserves their saved numerical details');
  assert(!validEvent({...work,details:{...work.details,cities:116}}));assert(!validEvent({...work,details:{...work.details,reason:'unknown'}}));

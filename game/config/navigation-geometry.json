@@ -312,6 +312,2136 @@
   ],
   "river_routes": [
     {
+      "id": "jiangyang:bajun:river",
+      "from": "jiangyang",
+      "to": "bajun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          105.44,
+          28.87
+        ],
+        [
+          106.58,
+          29.55
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:jiangyang:bajun",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jiangyang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "jiangyang",
+          "points": [
+            [
+              281,
+              563
+            ],
+            [
+              335,
+              602
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:jiangyang:bajun",
+          "river_id": "yangtze",
+          "points": [
+            [
+              335,
+              602
+            ],
+            [
+              338,
+              601
+            ],
+            [
+              341,
+              601
+            ],
+            [
+              344,
+              599
+            ],
+            [
+              347,
+              599
+            ],
+            [
+              350,
+              598
+            ],
+            [
+              353,
+              595
+            ],
+            [
+              356,
+              594
+            ],
+            [
+              359,
+              593
+            ],
+            [
+              362,
+              591
+            ],
+            [
+              365,
+              589
+            ],
+            [
+              368,
+              588
+            ],
+            [
+              371,
+              586
+            ],
+            [
+              374,
+              584
+            ],
+            [
+              377,
+              583
+            ],
+            [
+              380,
+              583
+            ],
+            [
+              383,
+              583
+            ],
+            [
+              386,
+              583
+            ],
+            [
+              389,
+              583
+            ],
+            [
+              392,
+              581
+            ],
+            [
+              395,
+              581
+            ],
+            [
+              398,
+              579
+            ],
+            [
+              401,
+              579
+            ],
+            [
+              404,
+              578
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "bajun",
+          "points": [
+            [
+              404,
+              578
+            ],
+            [
+              398,
+              553
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "bajun:fuling:river",
+      "from": "bajun",
+      "to": "fuling",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          106.58,
+          29.55
+        ],
+        [
+          107.4,
+          29.7
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:bajun:fuling",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "bajun"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "bajun",
+          "points": [
+            [
+              398,
+              553
+            ],
+            [
+              404,
+              578
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:bajun:fuling",
+          "river_id": "yangtze",
+          "points": [
+            [
+              404,
+              578
+            ],
+            [
+              407,
+              578
+            ],
+            [
+              410,
+              578
+            ],
+            [
+              413,
+              578
+            ],
+            [
+              416,
+              578
+            ],
+            [
+              419,
+              580
+            ],
+            [
+              422,
+              580
+            ],
+            [
+              425,
+              580
+            ],
+            [
+              428,
+              580
+            ],
+            [
+              431,
+              582
+            ],
+            [
+              434,
+              582
+            ],
+            [
+              437,
+              582
+            ],
+            [
+              440,
+              582
+            ],
+            [
+              443,
+              582
+            ],
+            [
+              446,
+              582
+            ],
+            [
+              449,
+              582
+            ],
+            [
+              452,
+              582
+            ],
+            [
+              455,
+              582
+            ],
+            [
+              458,
+              583
+            ],
+            [
+              461,
+              583
+            ],
+            [
+              464,
+              583
+            ],
+            [
+              467,
+              583
+            ],
+            [
+              470,
+              583
+            ],
+            [
+              473,
+              583
+            ],
+            [
+              476,
+              583
+            ],
+            [
+              479,
+              583
+            ],
+            [
+              482,
+              583
+            ],
+            [
+              485,
+              583
+            ],
+            [
+              488,
+              580
+            ],
+            [
+              491,
+              578
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "fuling",
+          "points": [
+            [
+              491,
+              578
+            ],
+            [
+              474,
+              549
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "fuling:badong:river",
+      "from": "fuling",
+      "to": "badong",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          107.4,
+          29.7
+        ],
+        [
+          109.57,
+          31.03
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:fuling:badong",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "fuling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "fuling",
+          "points": [
+            [
+              474,
+              549
+            ],
+            [
+              491,
+              578
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:fuling:badong",
+          "river_id": "yangtze",
+          "points": [
+            [
+              491,
+              578
+            ],
+            [
+              493,
+              575
+            ],
+            [
+              496,
+              572
+            ],
+            [
+              499,
+              569
+            ],
+            [
+              502,
+              567
+            ],
+            [
+              505,
+              565
+            ],
+            [
+              508,
+              562
+            ],
+            [
+              511,
+              559
+            ],
+            [
+              514,
+              556
+            ],
+            [
+              517,
+              553
+            ],
+            [
+              520,
+              550
+            ],
+            [
+              522,
+              547
+            ],
+            [
+              525,
+              544
+            ],
+            [
+              528,
+              541
+            ],
+            [
+              530,
+              538
+            ],
+            [
+              533,
+              535
+            ],
+            [
+              535,
+              532
+            ],
+            [
+              538,
+              529
+            ],
+            [
+              541,
+              527
+            ],
+            [
+              544,
+              525
+            ],
+            [
+              547,
+              523
+            ],
+            [
+              550,
+              520
+            ],
+            [
+              553,
+              518
+            ],
+            [
+              556,
+              515
+            ],
+            [
+              559,
+              512
+            ],
+            [
+              562,
+              511
+            ],
+            [
+              565,
+              509
+            ],
+            [
+              568,
+              507
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "badong",
+          "points": [
+            [
+              568,
+              507
+            ],
+            [
+              555,
+              476
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "badong:yidu:river",
+      "from": "badong",
+      "to": "yidu",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          109.57,
+          31.03
+        ],
+        [
+          111.45,
+          30.39
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:badong:yidu",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "badong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "badong",
+          "points": [
+            [
+              555,
+              476
+            ],
+            [
+              568,
+              507
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:badong:yidu",
+          "river_id": "yangtze",
+          "points": [
+            [
+              568,
+              507
+            ],
+            [
+              571,
+              506
+            ],
+            [
+              574,
+              505
+            ],
+            [
+              577,
+              505
+            ],
+            [
+              580,
+              505
+            ],
+            [
+              583,
+              503
+            ],
+            [
+              586,
+              503
+            ],
+            [
+              589,
+              503
+            ],
+            [
+              592,
+              503
+            ],
+            [
+              595,
+              503
+            ],
+            [
+              598,
+              503
+            ],
+            [
+              601,
+              503
+            ],
+            [
+              604,
+              502
+            ],
+            [
+              607,
+              501
+            ],
+            [
+              610,
+              501
+            ],
+            [
+              613,
+              501
+            ],
+            [
+              616,
+              500
+            ],
+            [
+              619,
+              500
+            ],
+            [
+              622,
+              500
+            ],
+            [
+              625,
+              500
+            ],
+            [
+              628,
+              500
+            ],
+            [
+              631,
+              500
+            ],
+            [
+              634,
+              500
+            ],
+            [
+              637,
+              500
+            ],
+            [
+              640,
+              500
+            ],
+            [
+              643,
+              501
+            ],
+            [
+              646,
+              501
+            ],
+            [
+              648,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "yidu",
+          "points": [
+            [
+              648,
+              502
+            ],
+            [
+              647,
+              472
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "yidu:nanjun:river",
+      "from": "yidu",
+      "to": "nanjun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.45,
+          30.39
+        ],
+        [
+          112.25,
+          30.3
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:yidu:nanjun",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "yidu"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "yidu",
+          "points": [
+            [
+              647,
+              472
+            ],
+            [
+              648,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:yidu:nanjun",
+          "river_id": "yangtze",
+          "points": [
+            [
+              648,
+              502
+            ],
+            [
+              651,
+              502
+            ],
+            [
+              654,
+              505
+            ],
+            [
+              656,
+              508
+            ],
+            [
+              657,
+              511
+            ],
+            [
+              660,
+              514
+            ],
+            [
+              663,
+              517
+            ],
+            [
+              665,
+              520
+            ],
+            [
+              666,
+              523
+            ],
+            [
+              668,
+              526
+            ],
+            [
+              671,
+              529
+            ],
+            [
+              674,
+              530
+            ],
+            [
+              677,
+              530
+            ],
+            [
+              680,
+              530
+            ],
+            [
+              683,
+              530
+            ],
+            [
+              686,
+              530
+            ],
+            [
+              689,
+              530
+            ],
+            [
+              691,
+              532
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "nanjun",
+          "points": [
+            [
+              691,
+              532
+            ],
+            [
+              691,
+              503
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "nanjun:jiangxia:river",
+      "from": "nanjun",
+      "to": "jiangxia",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          112.25,
+          30.3
+        ],
+        [
+          113.13,
+          29.43
+        ],
+        [
+          114.3,
+          30.27
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:nanjun:dongting",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "nanjun"
+        },
+        {
+          "reach_id": "yangtze:dongting:jiangxia",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "nanjun"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "nanjun",
+          "points": [
+            [
+              691,
+              503
+            ],
+            [
+              691,
+              532
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:nanjun:dongting",
+          "river_id": "yangtze",
+          "points": [
+            [
+              691,
+              532
+            ],
+            [
+              694,
+              531
+            ],
+            [
+              697,
+              531
+            ],
+            [
+              700,
+              531
+            ],
+            [
+              703,
+              531
+            ],
+            [
+              706,
+              531
+            ],
+            [
+              709,
+              531
+            ],
+            [
+              712,
+              530
+            ],
+            [
+              715,
+              529
+            ],
+            [
+              718,
+              527
+            ],
+            [
+              721,
+              527
+            ],
+            [
+              724,
+              526
+            ],
+            [
+              727,
+              525
+            ],
+            [
+              730,
+              524
+            ],
+            [
+              733,
+              523
+            ],
+            [
+              736,
+              524
+            ],
+            [
+              737,
+              525
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:dongting:jiangxia",
+          "river_id": "yangtze",
+          "points": [
+            [
+              737,
+              525
+            ],
+            [
+              737,
+              524
+            ],
+            [
+              742,
+              523
+            ],
+            [
+              747,
+              527
+            ],
+            [
+              752,
+              529
+            ],
+            [
+              757,
+              530
+            ],
+            [
+              762,
+              530
+            ],
+            [
+              767,
+              530
+            ],
+            [
+              772,
+              530
+            ],
+            [
+              777,
+              528
+            ],
+            [
+              782,
+              528
+            ],
+            [
+              787,
+              528
+            ],
+            [
+              792,
+              528
+            ],
+            [
+              797,
+              528
+            ],
+            [
+              802,
+              527
+            ],
+            [
+              807,
+              527
+            ],
+            [
+              812,
+              527
+            ],
+            [
+              817,
+              527
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jiangxia",
+          "points": [
+            [
+              817,
+              527
+            ],
+            [
+              817,
+              496
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "jiangxia:wuchang:river",
+      "from": "jiangxia",
+      "to": "wuchang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          114.3,
+          30.27
+        ],
+        [
+          114.28,
+          30.56
+        ],
+        [
+          114.88,
+          30.38
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:jiangxia:hankou",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jiangxia"
+        },
+        {
+          "reach_id": "yangtze:hankou:wuchang",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jiangxia"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "jiangxia",
+          "points": [
+            [
+              817,
+              496
+            ],
+            [
+              817,
+              527
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:jiangxia:hankou",
+          "river_id": "yangtze",
+          "points": [
+            [
+              817,
+              527
+            ],
+            [
+              820,
+              526
+            ],
+            [
+              823,
+              526
+            ],
+            [
+              826,
+              525
+            ],
+            [
+              829,
+              525
+            ],
+            [
+              832,
+              525
+            ],
+            [
+              835,
+              525
+            ],
+            [
+              838,
+              525
+            ],
+            [
+              841,
+              525
+            ],
+            [
+              844,
+              525
+            ],
+            [
+              845,
+              525
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:hankou:wuchang",
+          "river_id": "yangtze",
+          "points": [
+            [
+              845,
+              525
+            ],
+            [
+              846,
+              528
+            ],
+            [
+              848,
+              531
+            ],
+            [
+              851,
+              534
+            ],
+            [
+              854,
+              537
+            ],
+            [
+              857,
+              539
+            ],
+            [
+              860,
+              539
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "wuchang",
+          "points": [
+            [
+              860,
+              539
+            ],
+            [
+              859,
+              538
+            ],
+            [
+              859,
+              536
+            ],
+            [
+              858,
+              535
+            ],
+            [
+              858,
+              534
+            ],
+            [
+              857,
+              533
+            ],
+            [
+              857,
+              474
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "wuchang:qichun:river",
+      "from": "wuchang",
+      "to": "qichun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          114.88,
+          30.38
+        ],
+        [
+          115.32,
+          30.1
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:wuchang:qichun",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "wuchang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "wuchang",
+          "points": [
+            [
+              857,
+              474
+            ],
+            [
+              857,
+              533
+            ],
+            [
+              858,
+              534
+            ],
+            [
+              858,
+              535
+            ],
+            [
+              859,
+              536
+            ],
+            [
+              859,
+              538
+            ],
+            [
+              860,
+              539
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:wuchang:qichun",
+          "river_id": "yangtze",
+          "points": [
+            [
+              860,
+              539
+            ],
+            [
+              860,
+              542
+            ],
+            [
+              862,
+              545
+            ],
+            [
+              864,
+              548
+            ],
+            [
+              867,
+              550
+            ],
+            [
+              870,
+              550
+            ],
+            [
+              873,
+              549
+            ],
+            [
+              876,
+              549
+            ],
+            [
+              879,
+              547
+            ],
+            [
+              880,
+              547
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "qichun",
+          "points": [
+            [
+              880,
+              547
+            ],
+            [
+              874,
+              512
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "qichun:lujiang:river",
+      "from": "qichun",
+      "to": "lujiang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.32,
+          30.1
+        ],
+        [
+          116.22,
+          29.76
+        ],
+        [
+          117.1,
+          30.8
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:qichun:pengli",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qichun"
+        },
+        {
+          "reach_id": "yangtze:pengli:lujiang",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qichun"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "qichun",
+          "points": [
+            [
+              874,
+              512
+            ],
+            [
+              880,
+              547
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:qichun:pengli",
+          "river_id": "yangtze",
+          "points": [
+            [
+              880,
+              547
+            ],
+            [
+              883,
+              547
+            ],
+            [
+              886,
+              547
+            ],
+            [
+              889,
+              547
+            ],
+            [
+              892,
+              547
+            ],
+            [
+              895,
+              547
+            ],
+            [
+              898,
+              547
+            ],
+            [
+              901,
+              545
+            ],
+            [
+              904,
+              545
+            ],
+            [
+              907,
+              543
+            ],
+            [
+              910,
+              543
+            ],
+            [
+              913,
+              542
+            ],
+            [
+              916,
+              541
+            ],
+            [
+              919,
+              541
+            ],
+            [
+              922,
+              541
+            ],
+            [
+              925,
+              541
+            ],
+            [
+              927,
+              543
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:pengli:lujiang",
+          "river_id": "yangtze",
+          "points": [
+            [
+              927,
+              543
+            ],
+            [
+              928,
+              540
+            ],
+            [
+              931,
+              537
+            ],
+            [
+              934,
+              535
+            ],
+            [
+              937,
+              535
+            ],
+            [
+              940,
+              533
+            ],
+            [
+              943,
+              533
+            ],
+            [
+              946,
+              530
+            ],
+            [
+              949,
+              527
+            ],
+            [
+              952,
+              526
+            ],
+            [
+              955,
+              523
+            ],
+            [
+              958,
+              522
+            ],
+            [
+              961,
+              519
+            ],
+            [
+              964,
+              516
+            ],
+            [
+              965,
+              513
+            ],
+            [
+              966,
+              510
+            ],
+            [
+              968,
+              507
+            ],
+            [
+              968,
+              504
+            ],
+            [
+              968,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "lujiang",
+          "points": [
+            [
+              968,
+              502
+            ],
+            [
+              925,
+              454
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "lujiang:danyang:river",
+      "from": "lujiang",
+      "to": "danyang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          117.1,
+          30.8
+        ],
+        [
+          118.78,
+          32.05
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:lujiang:danyang",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "lujiang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "lujiang",
+          "points": [
+            [
+              925,
+              454
+            ],
+            [
+              968,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:lujiang:danyang",
+          "river_id": "yangtze",
+          "points": [
+            [
+              968,
+              502
+            ],
+            [
+              971,
+              503
+            ],
+            [
+              974,
+              503
+            ],
+            [
+              977,
+              501
+            ],
+            [
+              980,
+              498
+            ],
+            [
+              983,
+              495
+            ],
+            [
+              986,
+              492
+            ],
+            [
+              988,
+              489
+            ],
+            [
+              990,
+              486
+            ],
+            [
+              991,
+              483
+            ],
+            [
+              992,
+              480
+            ],
+            [
+              994,
+              477
+            ],
+            [
+              996,
+              474
+            ],
+            [
+              999,
+              471
+            ],
+            [
+              1000,
+              468
+            ],
+            [
+              1003,
+              465
+            ],
+            [
+              1004,
+              462
+            ],
+            [
+              1006,
+              459
+            ],
+            [
+              1008,
+              456
+            ],
+            [
+              1009,
+              453
+            ],
+            [
+              1011,
+              450
+            ],
+            [
+              1012,
+              447
+            ],
+            [
+              1014,
+              444
+            ],
+            [
+              1014,
+              441
+            ],
+            [
+              1016,
+              438
+            ],
+            [
+              1016,
+              435
+            ],
+            [
+              1018,
+              432
+            ],
+            [
+              1018,
+              429
+            ],
+            [
+              1019,
+              426
+            ],
+            [
+              1019,
+              423
+            ],
+            [
+              1019,
+              420
+            ],
+            [
+              1019,
+              417
+            ],
+            [
+              1019,
+              414
+            ],
+            [
+              1021,
+              411
+            ],
+            [
+              1024,
+              409
+            ],
+            [
+              1027,
+              407
+            ],
+            [
+              1030,
+              405
+            ],
+            [
+              1033,
+              404
+            ],
+            [
+              1036,
+              403
+            ],
+            [
+              1039,
+              401
+            ],
+            [
+              1042,
+              401
+            ],
+            [
+              1045,
+              401
+            ],
+            [
+              1048,
+              401
+            ],
+            [
+              1050,
+              401
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "danyang",
+          "points": [
+            [
+              1050,
+              401
+            ],
+            [
+              1050,
+              427
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "danyang:wujun:river",
+      "from": "danyang",
+      "to": "wujun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          118.78,
+          32.05
+        ],
+        [
+          120.66,
+          31.95
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:danyang:wujun",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "danyang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "danyang",
+          "points": [
+            [
+              1050,
+              427
+            ],
+            [
+              1050,
+              401
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:danyang:wujun",
+          "river_id": "yangtze",
+          "points": [
+            [
+              1050,
+              401
+            ],
+            [
+              1053,
+              401
+            ],
+            [
+              1056,
+              401
+            ],
+            [
+              1059,
+              401
+            ],
+            [
+              1062,
+              401
+            ],
+            [
+              1065,
+              402
+            ],
+            [
+              1068,
+              402
+            ],
+            [
+              1071,
+              402
+            ],
+            [
+              1074,
+              402
+            ],
+            [
+              1077,
+              403
+            ],
+            [
+              1080,
+              404
+            ],
+            [
+              1083,
+              404
+            ],
+            [
+              1086,
+              406
+            ],
+            [
+              1089,
+              406
+            ],
+            [
+              1092,
+              406
+            ],
+            [
+              1095,
+              407
+            ],
+            [
+              1098,
+              408
+            ],
+            [
+              1101,
+              410
+            ],
+            [
+              1104,
+              410
+            ],
+            [
+              1107,
+              412
+            ],
+            [
+              1110,
+              412
+            ],
+            [
+              1113,
+              412
+            ],
+            [
+              1116,
+              413
+            ],
+            [
+              1119,
+              414
+            ],
+            [
+              1122,
+              416
+            ],
+            [
+              1125,
+              418
+            ],
+            [
+              1128,
+              420
+            ],
+            [
+              1131,
+              420
+            ],
+            [
+              1134,
+              422
+            ],
+            [
+              1137,
+              424
+            ],
+            [
+              1140,
+              424
+            ],
+            [
+              1143,
+              425
+            ],
+            [
+              1145,
+              427
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "wujun",
+          "points": [
+            [
+              1145,
+              427
+            ],
+            [
+              1142,
+              456
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
       "id": "jiangxia:changsha:river",
       "from": "jiangxia",
       "to": "changsha",
@@ -327,17 +2457,38 @@
           29.43
         ],
         [
+          112.8,
+          29.2
+        ],
+        [
           112.97,
           28.24
         ]
       ],
       "river_segments": [
         {
+          "reach_id": "yangtze:dongting:jiangxia",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
           "speed_key": "yangtze",
           "distance_km": 1,
           "downstream_from": "changsha"
         },
         {
+          "reach_id": "xiang:yuan:dongting",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "changsha"
+        },
+        {
+          "reach_id": "xiang:changsha:yuan",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
           "speed_key": "xiang",
           "distance_km": 1,
           "downstream_from": "changsha"
@@ -346,6 +2497,7 @@
       "draw": [
         {
           "mode": "land",
+          "access_id": "jiangxia",
           "points": [
             [
               817,
@@ -359,6 +2511,8 @@
         },
         {
           "mode": "river",
+          "reach_id": "yangtze:dongting:jiangxia",
+          "river_id": "yangtze",
           "points": [
             [
               817,
@@ -436,6 +2590,8 @@
         },
         {
           "mode": "river",
+          "reach_id": "xiang:yuan:dongting",
+          "river_id": "xiang",
           "points": [
             [
               737,
@@ -461,6 +2617,17 @@
               721,
               546
             ],
+            [
+              716,
+              549
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:changsha:yuan",
+          "river_id": "xiang",
+          "points": [
             [
               716,
               549
@@ -497,6 +2664,7 @@
         },
         {
           "mode": "land",
+          "access_id": "changsha",
           "points": [
             [
               701,
@@ -515,11 +2683,6554 @@
       ],
       "history": {
         "classification": "historical_water_system_authorial_game_calibration",
-        "basis": "江夏—長江—巴丘洞庭口—湘水—長沙（臨湘）。江夏往長沙為逆流，返程順流；洞庭出口併入湘水水系概化。速度跨期參照《唐六典》卷三載重船行程定額，里公里換算與地圖校準為本作設定，不是三國實測。",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
         "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
           "https://zh.wikisource.org/zh-hant/水經注/35",
+          "https://zh.wikisource.org/wiki/水經注/38"
+        ]
+      }
+    },
+    {
+      "id": "hanzhong:xincheng:river",
+      "from": "hanzhong",
+      "to": "xincheng",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          107,
+          33
+        ],
+        [
+          110.75,
+          32.03
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "han:hanzhong:xincheng",
+          "river_id": "han",
+          "name_tc": "漢水",
+          "name_ja": "漢水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "hanzhong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "hanzhong",
+          "points": [
+            [
+              421,
+              411
+            ],
+            [
+              421,
+              429
+            ],
+            [
+              423,
+              431
+            ],
+            [
+              423,
+              432
+            ],
+            [
+              424,
+              433
+            ],
+            [
+              423,
+              434
+            ],
+            [
+              423,
+              435
+            ],
+            [
+              422,
+              436
+            ],
+            [
+              422,
+              438
+            ],
+            [
+              421,
+              439
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "han:hanzhong:xincheng",
+          "river_id": "han",
+          "points": [
+            [
+              421,
+              439
+            ],
+            [
+              424,
+              439
+            ],
+            [
+              427,
+              439
+            ],
+            [
+              430,
+              439
+            ],
+            [
+              433,
+              439
+            ],
+            [
+              436,
+              438
+            ],
+            [
+              439,
+              438
+            ],
+            [
+              442,
+              438
+            ],
+            [
+              445,
+              438
+            ],
+            [
+              448,
+              439
+            ],
+            [
+              451,
+              439
+            ],
+            [
+              454,
+              439
+            ],
+            [
+              457,
+              439
+            ],
+            [
+              460,
+              440
+            ],
+            [
+              463,
+              441
+            ],
+            [
+              466,
+              441
+            ],
+            [
+              469,
+              442
+            ],
+            [
+              472,
+              443
+            ],
+            [
+              475,
+              444
+            ],
+            [
+              478,
+              445
+            ],
+            [
+              481,
+              445
+            ],
+            [
+              484,
+              446
+            ],
+            [
+              487,
+              447
+            ],
+            [
+              490,
+              447
+            ],
+            [
+              493,
+              448
+            ],
+            [
+              496,
+              449
+            ],
+            [
+              499,
+              449
+            ],
+            [
+              502,
+              449
+            ],
+            [
+              505,
+              449
+            ],
+            [
+              508,
+              449
+            ],
+            [
+              511,
+              451
+            ],
+            [
+              514,
+              451
+            ],
+            [
+              517,
+              451
+            ],
+            [
+              520,
+              451
+            ],
+            [
+              523,
+              451
+            ],
+            [
+              526,
+              451
+            ],
+            [
+              529,
+              450
+            ],
+            [
+              532,
+              450
+            ],
+            [
+              535,
+              450
+            ],
+            [
+              538,
+              450
+            ],
+            [
+              541,
+              450
+            ],
+            [
+              544,
+              451
+            ],
+            [
+              547,
+              451
+            ],
+            [
+              550,
+              452
+            ],
+            [
+              553,
+              453
+            ],
+            [
+              556,
+              453
+            ],
+            [
+              559,
+              453
+            ],
+            [
+              562,
+              452
+            ],
+            [
+              565,
+              452
+            ],
+            [
+              568,
+              452
+            ],
+            [
+              571,
+              452
+            ],
+            [
+              574,
+              453
+            ],
+            [
+              577,
+              453
+            ],
+            [
+              580,
+              453
+            ],
+            [
+              583,
+              453
+            ],
+            [
+              586,
+              453
+            ],
+            [
+              589,
+              454
+            ],
+            [
+              592,
+              454
+            ],
+            [
+              595,
+              454
+            ],
+            [
+              598,
+              454
+            ],
+            [
+              601,
+              454
+            ],
+            [
+              604,
+              454
+            ],
+            [
+              605,
+              455
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "xincheng",
+          "points": [
+            [
+              605,
+              455
+            ],
+            [
+              610,
+              427
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27"
+        ]
+      }
+    },
+    {
+      "id": "xincheng:xiangyang:river",
+      "from": "xincheng",
+      "to": "xiangyang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          110.75,
+          32.03
+        ],
+        [
+          112.15,
+          32.02
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "han:xincheng:xiangyang",
+          "river_id": "han",
+          "name_tc": "漢水",
+          "name_ja": "漢水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "xincheng"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "xincheng",
+          "points": [
+            [
+              610,
+              427
+            ],
+            [
+              605,
+              455
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "han:xincheng:xiangyang",
+          "river_id": "han",
+          "points": [
+            [
+              605,
+              455
+            ],
+            [
+              608,
+              455
+            ],
+            [
+              611,
+              455
+            ],
+            [
+              614,
+              457
+            ],
+            [
+              617,
+              457
+            ],
+            [
+              620,
+              457
+            ],
+            [
+              623,
+              457
+            ],
+            [
+              626,
+              457
+            ],
+            [
+              629,
+              457
+            ],
+            [
+              632,
+              456
+            ],
+            [
+              635,
+              456
+            ],
+            [
+              638,
+              455
+            ],
+            [
+              641,
+              454
+            ],
+            [
+              644,
+              454
+            ],
+            [
+              647,
+              453
+            ],
+            [
+              650,
+              452
+            ],
+            [
+              653,
+              452
+            ],
+            [
+              656,
+              452
+            ],
+            [
+              659,
+              450
+            ],
+            [
+              662,
+              448
+            ],
+            [
+              665,
+              448
+            ],
+            [
+              668,
+              446
+            ],
+            [
+              671,
+              445
+            ],
+            [
+              674,
+              444
+            ],
+            [
+              677,
+              444
+            ],
+            [
+              680,
+              442
+            ],
+            [
+              683,
+              440
+            ],
+            [
+              686,
+              438
+            ],
+            [
+              689,
+              436
+            ],
+            [
+              692,
+              434
+            ],
+            [
+              695,
+              434
+            ],
+            [
+              698,
+              432
+            ],
+            [
+              701,
+              431
+            ],
+            [
+              704,
+              430
+            ],
+            [
+              707,
+              428
+            ],
+            [
+              710,
+              428
+            ],
+            [
+              713,
+              428
+            ],
+            [
+              716,
+              428
+            ],
+            [
+              719,
+              426
+            ],
+            [
+              722,
+              426
+            ],
+            [
+              725,
+              426
+            ],
+            [
+              728,
+              426
+            ],
+            [
+              731,
+              426
+            ],
+            [
+              734,
+              426
+            ],
+            [
+              737,
+              426
+            ],
+            [
+              740,
+              427
+            ],
+            [
+              743,
+              427
+            ],
+            [
+              746,
+              428
+            ],
+            [
+              749,
+              429
+            ],
+            [
+              752,
+              429
+            ],
+            [
+              755,
+              429
+            ],
+            [
+              758,
+              429
+            ],
+            [
+              761,
+              430
+            ],
+            [
+              763,
+              432
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "xiangyang",
+          "points": [
+            [
+              763,
+              432
+            ],
+            [
+              764,
+              403
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27"
+        ]
+      }
+    },
+    {
+      "id": "xiangyang:jiangxia:river",
+      "from": "xiangyang",
+      "to": "jiangxia",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          112.15,
+          32.02
+        ],
+        [
+          114.28,
+          30.56
+        ],
+        [
+          114.3,
+          30.27
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "han:xiangyang:hankou",
+          "river_id": "han",
+          "name_tc": "漢水",
+          "name_ja": "漢水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "xiangyang"
+        },
+        {
+          "reach_id": "yangtze:jiangxia:hankou",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jiangxia"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "xiangyang",
+          "points": [
+            [
+              764,
+              403
+            ],
+            [
+              763,
+              432
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "han:xiangyang:hankou",
+          "river_id": "han",
+          "points": [
+            [
+              763,
+              432
+            ],
+            [
+              766,
+              432
+            ],
+            [
+              769,
+              435
+            ],
+            [
+              772,
+              437
+            ],
+            [
+              775,
+              439
+            ],
+            [
+              778,
+              440
+            ],
+            [
+              781,
+              442
+            ],
+            [
+              784,
+              443
+            ],
+            [
+              787,
+              444
+            ],
+            [
+              790,
+              445
+            ],
+            [
+              793,
+              447
+            ],
+            [
+              796,
+              447
+            ],
+            [
+              799,
+              447
+            ],
+            [
+              802,
+              449
+            ],
+            [
+              805,
+              449
+            ],
+            [
+              808,
+              449
+            ],
+            [
+              811,
+              451
+            ],
+            [
+              814,
+              452
+            ],
+            [
+              817,
+              453
+            ],
+            [
+              820,
+              455
+            ],
+            [
+              823,
+              457
+            ],
+            [
+              826,
+              460
+            ],
+            [
+              829,
+              463
+            ],
+            [
+              832,
+              466
+            ],
+            [
+              835,
+              468
+            ],
+            [
+              838,
+              471
+            ],
+            [
+              841,
+              473
+            ],
+            [
+              843,
+              476
+            ],
+            [
+              843,
+              479
+            ],
+            [
+              843,
+              482
+            ],
+            [
+              843,
+              485
+            ],
+            [
+              843,
+              488
+            ],
+            [
+              844,
+              491
+            ],
+            [
+              845,
+              494
+            ],
+            [
+              846,
+              497
+            ],
+            [
+              847,
+              500
+            ],
+            [
+              847,
+              503
+            ],
+            [
+              847,
+              506
+            ],
+            [
+              847,
+              509
+            ],
+            [
+              847,
+              512
+            ],
+            [
+              846,
+              515
+            ],
+            [
+              846,
+              518
+            ],
+            [
+              844,
+              521
+            ],
+            [
+              844,
+              524
+            ],
+            [
+              845,
+              525
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:jiangxia:hankou",
+          "river_id": "yangtze",
+          "points": [
+            [
+              845,
+              525
+            ],
+            [
+              844,
+              525
+            ],
+            [
+              841,
+              525
+            ],
+            [
+              838,
+              525
+            ],
+            [
+              835,
+              525
+            ],
+            [
+              832,
+              525
+            ],
+            [
+              829,
+              525
+            ],
+            [
+              826,
+              525
+            ],
+            [
+              823,
+              526
+            ],
+            [
+              820,
+              526
+            ],
+            [
+              817,
+              527
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jiangxia",
+          "points": [
+            [
+              817,
+              527
+            ],
+            [
+              817,
+              496
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/三國志/卷40",
+          "https://zh.wikisource.org/wiki/水經注/27",
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "fufeng:jingzhao:river",
+      "from": "fufeng",
+      "to": "jingzhao",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          108.5,
+          34.28
+        ],
+        [
+          108.94,
+          34.36
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "wei:fufeng:jingzhao",
+          "river_id": "wei",
+          "name_tc": "渭水",
+          "name_ja": "渭水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "fufeng"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "fufeng",
+          "points": [
+            [
+              420,
+              341
+            ],
+            [
+              420,
+              325
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "wei:fufeng:jingzhao",
+          "river_id": "wei",
+          "points": [
+            [
+              420,
+              325
+            ],
+            [
+              423,
+              324
+            ],
+            [
+              426,
+              322
+            ],
+            [
+              429,
+              322
+            ],
+            [
+              432,
+              322
+            ],
+            [
+              435,
+              322
+            ],
+            [
+              438,
+              322
+            ],
+            [
+              441,
+              322
+            ],
+            [
+              444,
+              322
+            ],
+            [
+              447,
+              322
+            ],
+            [
+              450,
+              322
+            ],
+            [
+              453,
+              322
+            ],
+            [
+              456,
+              322
+            ],
+            [
+              459,
+              322
+            ],
+            [
+              462,
+              322
+            ],
+            [
+              465,
+              322
+            ],
+            [
+              468,
+              322
+            ],
+            [
+              471,
+              322
+            ],
+            [
+              474,
+              322
+            ],
+            [
+              477,
+              322
+            ],
+            [
+              480,
+              322
+            ],
+            [
+              483,
+              322
+            ],
+            [
+              486,
+              322
+            ],
+            [
+              489,
+              322
+            ],
+            [
+              492,
+              322
+            ],
+            [
+              495,
+              323
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jingzhao",
+          "points": [
+            [
+              495,
+              323
+            ],
+            [
+              497,
+              354
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/17"
+        ]
+      }
+    },
+    {
+      "id": "jingzhao:fengyi:river",
+      "from": "jingzhao",
+      "to": "fengyi",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          108.94,
+          34.36
+        ],
+        [
+          109.94,
+          34.78
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "wei:jingzhao:fengyi",
+          "river_id": "wei",
+          "name_tc": "渭水",
+          "name_ja": "渭水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jingzhao"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "jingzhao",
+          "points": [
+            [
+              497,
+              354
+            ],
+            [
+              495,
+              323
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "wei:jingzhao:fengyi",
+          "river_id": "wei",
+          "points": [
+            [
+              495,
+              323
+            ],
+            [
+              496,
+              320
+            ],
+            [
+              499,
+              320
+            ],
+            [
+              502,
+              320
+            ],
+            [
+              505,
+              320
+            ],
+            [
+              508,
+              320
+            ],
+            [
+              511,
+              320
+            ],
+            [
+              514,
+              320
+            ],
+            [
+              517,
+              318
+            ],
+            [
+              520,
+              318
+            ],
+            [
+              523,
+              318
+            ],
+            [
+              526,
+              318
+            ],
+            [
+              529,
+              318
+            ],
+            [
+              532,
+              318
+            ],
+            [
+              535,
+              318
+            ],
+            [
+              538,
+              319
+            ],
+            [
+              541,
+              319
+            ],
+            [
+              544,
+              319
+            ],
+            [
+              547,
+              319
+            ],
+            [
+              550,
+              320
+            ],
+            [
+              553,
+              320
+            ],
+            [
+              556,
+              320
+            ],
+            [
+              559,
+              321
+            ],
+            [
+              562,
+              321
+            ],
+            [
+              565,
+              321
+            ],
+            [
+              567,
+              321
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "fengyi",
+          "points": [
+            [
+              567,
+              321
+            ],
+            [
+              567,
+              327
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/17"
+        ]
+      }
+    },
+    {
+      "id": "fengyi:hongnong:river",
+      "from": "fengyi",
+      "to": "hongnong",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          109.94,
+          34.78
+        ],
+        [
+          110.25,
+          34.61
+        ],
+        [
+          110.93,
+          34.7
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "wei:fengyi:tongguan",
+          "river_id": "wei",
+          "name_tc": "渭水",
+          "name_ja": "渭水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "fengyi"
+        },
+        {
+          "reach_id": "yellow:tongguan:hongnong",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "fengyi"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "fengyi",
+          "points": [
+            [
+              567,
+              327
+            ],
+            [
+              567,
+              321
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "wei:fengyi:tongguan",
+          "river_id": "wei",
+          "points": [
+            [
+              567,
+              321
+            ],
+            [
+              570,
+              322
+            ],
+            [
+              573,
+              322
+            ],
+            [
+              576,
+              322
+            ],
+            [
+              579,
+              322
+            ],
+            [
+              582,
+              322
+            ],
+            [
+              585,
+              323
+            ],
+            [
+              588,
+              323
+            ],
+            [
+              591,
+              323
+            ],
+            [
+              594,
+              323
+            ],
+            [
+              597,
+              323
+            ],
+            [
+              600,
+              324
+            ],
+            [
+              603,
+              324
+            ],
+            [
+              606,
+              324
+            ],
+            [
+              609,
+              324
+            ],
+            [
+              612,
+              325
+            ],
+            [
+              615,
+              325
+            ],
+            [
+              618,
+              325
+            ],
+            [
+              621,
+              326
+            ],
+            [
+              624,
+              326
+            ],
+            [
+              627,
+              326
+            ],
+            [
+              630,
+              326
+            ],
+            [
+              633,
+              326
+            ],
+            [
+              636,
+              326
+            ],
+            [
+              639,
+              326
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:tongguan:hongnong",
+          "river_id": "yellow",
+          "points": [
+            [
+              639,
+              326
+            ],
+            [
+              641,
+              326
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "hongnong",
+          "points": [
+            [
+              641,
+              326
+            ],
+            [
+              620,
+              346
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/17",
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "hongnong:hedong:river",
+      "from": "hongnong",
+      "to": "hedong",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          110.93,
+          34.7
+        ],
+        [
+          111.16,
+          34.87
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:hongnong:hedong",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "hongnong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "hongnong",
+          "points": [
+            [
+              620,
+              346
+            ],
+            [
+              641,
+              326
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:hongnong:hedong",
+          "river_id": "yellow",
+          "points": [
+            [
+              641,
+              326
+            ],
+            [
+              644,
+              325
+            ],
+            [
+              647,
+              324
+            ],
+            [
+              650,
+              324
+            ],
+            [
+              653,
+              324
+            ],
+            [
+              656,
+              324
+            ],
+            [
+              657,
+              325
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "hedong",
+          "points": [
+            [
+              657,
+              325
+            ],
+            [
+              656,
+              326
+            ],
+            [
+              656,
+              328
+            ],
+            [
+              655,
+              329
+            ],
+            [
+              655,
+              330
+            ],
+            [
+              654,
+              331
+            ],
+            [
+              654,
+              332
+            ],
+            [
+              653,
+              333
+            ],
+            [
+              653,
+              334
+            ],
+            [
+              652,
+              335
+            ],
+            [
+              652,
+              337
+            ],
+            [
+              651,
+              338
+            ],
+            [
+              651,
+              339
+            ],
+            [
+              650,
+              340
+            ],
+            [
+              650,
+              342
+            ],
+            [
+              649,
+              343
+            ],
+            [
+              649,
+              357
+            ],
+            [
+              654,
+              362
+            ],
+            [
+              654,
+              369
+            ],
+            [
+              655,
+              370
+            ],
+            [
+              655,
+              377
+            ],
+            [
+              657,
+              379
+            ],
+            [
+              657,
+              385
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "hedong:henan:river",
+      "from": "hedong",
+      "to": "henan",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.16,
+          34.87
+        ],
+        [
+          112.6,
+          34.88
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:hedong:henan",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "hedong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "hedong",
+          "points": [
+            [
+              657,
+              385
+            ],
+            [
+              657,
+              379
+            ],
+            [
+              655,
+              377
+            ],
+            [
+              655,
+              370
+            ],
+            [
+              654,
+              369
+            ],
+            [
+              654,
+              362
+            ],
+            [
+              649,
+              357
+            ],
+            [
+              649,
+              343
+            ],
+            [
+              650,
+              342
+            ],
+            [
+              650,
+              340
+            ],
+            [
+              651,
+              339
+            ],
+            [
+              651,
+              338
+            ],
+            [
+              652,
+              337
+            ],
+            [
+              652,
+              335
+            ],
+            [
+              653,
+              334
+            ],
+            [
+              653,
+              333
+            ],
+            [
+              654,
+              332
+            ],
+            [
+              654,
+              331
+            ],
+            [
+              655,
+              330
+            ],
+            [
+              655,
+              329
+            ],
+            [
+              656,
+              328
+            ],
+            [
+              656,
+              326
+            ],
+            [
+              657,
+              325
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:hedong:henan",
+          "river_id": "yellow",
+          "points": [
+            [
+              657,
+              325
+            ],
+            [
+              660,
+              325
+            ],
+            [
+              663,
+              325
+            ],
+            [
+              666,
+              325
+            ],
+            [
+              669,
+              325
+            ],
+            [
+              672,
+              325
+            ],
+            [
+              675,
+              324
+            ],
+            [
+              678,
+              323
+            ],
+            [
+              681,
+              323
+            ],
+            [
+              684,
+              322
+            ],
+            [
+              687,
+              322
+            ],
+            [
+              690,
+              321
+            ],
+            [
+              691,
+              320
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "henan",
+          "points": [
+            [
+              691,
+              320
+            ],
+            [
+              695,
+              346
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "henan:henei:river",
+      "from": "henan",
+      "to": "henei",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          112.6,
+          34.88
+        ],
+        [
+          113.26,
+          34.93
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:henan:henei",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "henan"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "henan",
+          "points": [
+            [
+              695,
+              346
+            ],
+            [
+              691,
+              320
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:henan:henei",
+          "river_id": "yellow",
+          "points": [
+            [
+              691,
+              320
+            ],
+            [
+              694,
+              319
+            ],
+            [
+              697,
+              318
+            ],
+            [
+              700,
+              318
+            ],
+            [
+              703,
+              318
+            ],
+            [
+              706,
+              318
+            ],
+            [
+              709,
+              317
+            ],
+            [
+              710,
+              316
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "henei",
+          "points": [
+            [
+              710,
+              316
+            ],
+            [
+              666,
+              301
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "henei:wei:river",
+      "from": "henei",
+      "to": "wei",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          113.26,
+          34.93
+        ],
+        [
+          114.4,
+          35.75
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:henei:wei",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "henei"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "henei",
+          "points": [
+            [
+              666,
+              301
+            ],
+            [
+              710,
+              316
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:henei:wei",
+          "river_id": "yellow",
+          "points": [
+            [
+              710,
+              316
+            ],
+            [
+              712,
+              319
+            ],
+            [
+              715,
+              319
+            ],
+            [
+              718,
+              319
+            ],
+            [
+              721,
+              320
+            ],
+            [
+              724,
+              320
+            ],
+            [
+              727,
+              320
+            ],
+            [
+              730,
+              320
+            ],
+            [
+              733,
+              320
+            ],
+            [
+              736,
+              320
+            ],
+            [
+              739,
+              319
+            ],
+            [
+              742,
+              318
+            ],
+            [
+              745,
+              318
+            ],
+            [
+              748,
+              318
+            ],
+            [
+              751,
+              319
+            ],
+            [
+              754,
+              319
+            ],
+            [
+              757,
+              319
+            ],
+            [
+              760,
+              319
+            ],
+            [
+              763,
+              319
+            ],
+            [
+              766,
+              319
+            ],
+            [
+              769,
+              317
+            ],
+            [
+              772,
+              314
+            ],
+            [
+              775,
+              312
+            ],
+            [
+              778,
+              309
+            ],
+            [
+              781,
+              306
+            ],
+            [
+              784,
+              303
+            ],
+            [
+              787,
+              300
+            ],
+            [
+              790,
+              298
+            ],
+            [
+              793,
+              295
+            ],
+            [
+              796,
+              292
+            ],
+            [
+              799,
+              289
+            ],
+            [
+              802,
+              287
+            ],
+            [
+              805,
+              284
+            ],
+            [
+              808,
+              281
+            ],
+            [
+              811,
+              278
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "wei",
+          "points": [
+            [
+              811,
+              278
+            ],
+            [
+              796,
+              254
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "wei:dongjun:river",
+      "from": "wei",
+      "to": "dongjun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          114.4,
+          35.75
+        ],
+        [
+          115.02,
+          35.75
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:wei:dongjun",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "wei"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "wei",
+          "points": [
+            [
+              796,
+              254
+            ],
+            [
+              811,
+              278
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:wei:dongjun",
+          "river_id": "yellow",
+          "points": [
+            [
+              811,
+              278
+            ],
+            [
+              814,
+              277
+            ],
+            [
+              817,
+              275
+            ],
+            [
+              820,
+              273
+            ],
+            [
+              823,
+              272
+            ],
+            [
+              825,
+              273
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "dongjun",
+          "points": [
+            [
+              825,
+              273
+            ],
+            [
+              833,
+              284
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "dongjun:qinghe:river",
+      "from": "dongjun",
+      "to": "qinghe",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.02,
+          35.75
+        ],
+        [
+          115.87,
+          36.92
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:dongjun:qinghe",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "dongjun"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "dongjun",
+          "points": [
+            [
+              833,
+              284
+            ],
+            [
+              825,
+              273
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:dongjun:qinghe",
+          "river_id": "yellow",
+          "points": [
+            [
+              825,
+              273
+            ],
+            [
+              825,
+              270
+            ],
+            [
+              828,
+              267
+            ],
+            [
+              831,
+              266
+            ],
+            [
+              834,
+              263
+            ],
+            [
+              837,
+              262
+            ],
+            [
+              840,
+              259
+            ],
+            [
+              843,
+              258
+            ],
+            [
+              846,
+              257
+            ],
+            [
+              849,
+              254
+            ],
+            [
+              852,
+              253
+            ],
+            [
+              855,
+              252
+            ],
+            [
+              858,
+              251
+            ],
+            [
+              861,
+              250
+            ],
+            [
+              864,
+              248
+            ],
+            [
+              867,
+              247
+            ],
+            [
+              870,
+              246
+            ],
+            [
+              873,
+              245
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "qinghe",
+          "points": [
+            [
+              873,
+              245
+            ],
+            [
+              873,
+              245
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "qinghe:pingyuan:river",
+      "from": "qinghe",
+      "to": "pingyuan",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.87,
+          36.92
+        ],
+        [
+          116.44,
+          37.02
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:qinghe:pingyuan",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qinghe"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "qinghe",
+          "points": [
+            [
+              873,
+              245
+            ],
+            [
+              873,
+              245
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:qinghe:pingyuan",
+          "river_id": "yellow",
+          "points": [
+            [
+              873,
+              245
+            ],
+            [
+              876,
+              244
+            ],
+            [
+              879,
+              242
+            ],
+            [
+              882,
+              241
+            ],
+            [
+              885,
+              240
+            ],
+            [
+              888,
+              239
+            ],
+            [
+              891,
+              238
+            ],
+            [
+              894,
+              237
+            ],
+            [
+              897,
+              236
+            ],
+            [
+              900,
+              235
+            ],
+            [
+              903,
+              234
+            ],
+            [
+              906,
+              233
+            ],
+            [
+              909,
+              232
+            ],
+            [
+              912,
+              231
+            ],
+            [
+              915,
+              230
+            ],
+            [
+              918,
+              229
+            ],
+            [
+              921,
+              228
+            ],
+            [
+              924,
+              227
+            ],
+            [
+              927,
+              225
+            ],
+            [
+              930,
+              223
+            ],
+            [
+              932,
+              220
+            ],
+            [
+              932,
+              218
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "pingyuan",
+          "points": [
+            [
+              932,
+              218
+            ],
+            [
+              918,
+              202
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "pingyuan:jinan:river",
+      "from": "pingyuan",
+      "to": "jinan",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          116.44,
+          37.02
+        ],
+        [
+          117.42,
+          36.85
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yellow:pingyuan:jinan",
+          "river_id": "yellow",
+          "name_tc": "黃河",
+          "name_ja": "黄河",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "pingyuan"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "pingyuan",
+          "points": [
+            [
+              918,
+              202
+            ],
+            [
+              932,
+              218
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yellow:pingyuan:jinan",
+          "river_id": "yellow",
+          "points": [
+            [
+              932,
+              218
+            ],
+            [
+              935,
+              218
+            ],
+            [
+              938,
+              217
+            ],
+            [
+              941,
+              214
+            ],
+            [
+              944,
+              211
+            ],
+            [
+              947,
+              209
+            ],
+            [
+              950,
+              207
+            ],
+            [
+              953,
+              205
+            ],
+            [
+              956,
+              203
+            ],
+            [
+              959,
+              201
+            ],
+            [
+              962,
+              199
+            ],
+            [
+              964,
+              199
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jinan",
+          "points": [
+            [
+              964,
+              199
+            ],
+            [
+              970,
+              214
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/05",
+          "https://zh.wikisource.org/zh-hant/三國志/卷16"
+        ]
+      }
+    },
+    {
+      "id": "wenshan:shujun:river",
+      "from": "wenshan",
+      "to": "shujun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          103.6,
+          31.45
+        ],
+        [
+          104.08,
+          30.63
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "min:wenshan:shujun",
+          "river_id": "min",
+          "name_tc": "岷水",
+          "name_ja": "岷水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "wenshan"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "wenshan",
+          "points": [
+            [
+              173,
+              454
+            ],
+            [
+              212,
+              454
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "min:wenshan:shujun",
+          "river_id": "min",
+          "points": [
+            [
+              212,
+              454
+            ],
+            [
+              212,
+              457
+            ],
+            [
+              212,
+              460
+            ],
+            [
+              212,
+              463
+            ],
+            [
+              215,
+              466
+            ],
+            [
+              218,
+              469
+            ],
+            [
+              221,
+              471
+            ],
+            [
+              224,
+              474
+            ],
+            [
+              225,
+              477
+            ],
+            [
+              228,
+              480
+            ],
+            [
+              230,
+              483
+            ],
+            [
+              231,
+              486
+            ],
+            [
+              233,
+              489
+            ],
+            [
+              233,
+              491
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "shujun",
+          "points": [
+            [
+              233,
+              491
+            ],
+            [
+              214,
+              502
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/wiki/水經注/33"
+        ]
+      }
+    },
+    {
+      "id": "shujun:qianwei:river",
+      "from": "shujun",
+      "to": "qianwei",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          104.08,
+          30.63
+        ],
+        [
+          103.86,
+          30.05
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "min:shujun:qianwei",
+          "river_id": "min",
+          "name_tc": "岷水",
+          "name_ja": "岷水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "shujun"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "shujun",
+          "points": [
+            [
+              214,
+              502
+            ],
+            [
+              233,
+              491
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "min:shujun:qianwei",
+          "river_id": "min",
+          "points": [
+            [
+              233,
+              491
+            ],
+            [
+              235,
+              493
+            ],
+            [
+              237,
+              496
+            ],
+            [
+              237,
+              499
+            ],
+            [
+              238,
+              502
+            ],
+            [
+              239,
+              505
+            ],
+            [
+              239,
+              508
+            ],
+            [
+              239,
+              511
+            ],
+            [
+              238,
+              514
+            ],
+            [
+              238,
+              517
+            ],
+            [
+              238,
+              520
+            ],
+            [
+              238,
+              523
+            ],
+            [
+              239,
+              526
+            ],
+            [
+              239,
+              529
+            ],
+            [
+              238,
+              532
+            ],
+            [
+              238,
+              535
+            ],
+            [
+              238,
+              538
+            ],
+            [
+              237,
+              541
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "qianwei",
+          "points": [
+            [
+              237,
+              541
+            ],
+            [
+              213,
+              554
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/wiki/水經注/33"
+        ]
+      }
+    },
+    {
+      "id": "qianwei:nanguang:river",
+      "from": "qianwei",
+      "to": "nanguang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          103.86,
+          30.05
+        ],
+        [
+          104.6,
+          28.77
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "min:qianwei:nanguang",
+          "river_id": "min",
+          "name_tc": "岷水",
+          "name_ja": "岷水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "qianwei"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "qianwei",
+          "points": [
+            [
+              213,
+              554
+            ],
+            [
+              237,
+              541
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "min:qianwei:nanguang",
+          "river_id": "min",
+          "points": [
+            [
+              237,
+              541
+            ],
+            [
+              239,
+              543
+            ],
+            [
+              241,
+              546
+            ],
+            [
+              243,
+              549
+            ],
+            [
+              244,
+              552
+            ],
+            [
+              245,
+              555
+            ],
+            [
+              247,
+              558
+            ],
+            [
+              247,
+              561
+            ],
+            [
+              249,
+              564
+            ],
+            [
+              250,
+              567
+            ],
+            [
+              253,
+              570
+            ],
+            [
+              255,
+              573
+            ],
+            [
+              258,
+              576
+            ],
+            [
+              261,
+              578
+            ],
+            [
+              264,
+              581
+            ],
+            [
+              267,
+              583
+            ],
+            [
+              270,
+              586
+            ],
+            [
+              273,
+              589
+            ],
+            [
+              276,
+              591
+            ],
+            [
+              279,
+              593
+            ],
+            [
+              282,
+              593
+            ],
+            [
+              285,
+              593
+            ],
+            [
+              288,
+              595
+            ],
+            [
+              288,
+              597
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "nanguang",
+          "points": [
+            [
+              288,
+              597
+            ],
+            [
+              281,
+              615
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/wiki/水經注/33"
+        ]
+      }
+    },
+    {
+      "id": "nanguang:jiangyang:river",
+      "from": "nanguang",
+      "to": "jiangyang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          104.6,
+          28.77
+        ],
+        [
+          105.44,
+          28.87
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "min:nanguang:jiangyang",
+          "river_id": "min",
+          "name_tc": "岷水",
+          "name_ja": "岷水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "nanguang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "nanguang",
+          "points": [
+            [
+              281,
+              615
+            ],
+            [
+              288,
+              597
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "min:nanguang:jiangyang",
+          "river_id": "min",
+          "points": [
+            [
+              288,
+              597
+            ],
+            [
+              291,
+              596
+            ],
+            [
+              294,
+              596
+            ],
+            [
+              297,
+              596
+            ],
+            [
+              300,
+              596
+            ],
+            [
+              303,
+              596
+            ],
+            [
+              306,
+              596
+            ],
+            [
+              309,
+              596
+            ],
+            [
+              312,
+              597
+            ],
+            [
+              315,
+              597
+            ],
+            [
+              318,
+              597
+            ],
+            [
+              321,
+              597
+            ],
+            [
+              324,
+              599
+            ],
+            [
+              327,
+              599
+            ],
+            [
+              330,
+              601
+            ],
+            [
+              333,
+              602
+            ],
+            [
+              335,
+              602
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jiangyang",
+          "points": [
+            [
+              335,
+              602
+            ],
+            [
+              281,
+              563
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/wiki/水經注/33"
+        ]
+      }
+    },
+    {
+      "id": "jiameng:baxi:river",
+      "from": "jiameng",
+      "to": "baxi",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          105.72,
+          32.3
+        ],
+        [
+          105.96,
+          31.56
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "jialing:jiameng:baxi",
+          "river_id": "jialing",
+          "name_tc": "嘉陵水",
+          "name_ja": "嘉陵水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jiameng"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "jiameng",
+          "points": [
+            [
+              360,
+              414
+            ],
+            [
+              353,
+              413
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "jialing:jiameng:baxi",
+          "river_id": "jialing",
+          "points": [
+            [
+              353,
+              413
+            ],
+            [
+              350,
+              414
+            ],
+            [
+              350,
+              417
+            ],
+            [
+              349,
+              420
+            ],
+            [
+              349,
+              423
+            ],
+            [
+              348,
+              426
+            ],
+            [
+              348,
+              429
+            ],
+            [
+              348,
+              432
+            ],
+            [
+              348,
+              435
+            ],
+            [
+              348,
+              438
+            ],
+            [
+              348,
+              441
+            ],
+            [
+              348,
+              444
+            ],
+            [
+              348,
+              447
+            ],
+            [
+              349,
+              449
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "baxi",
+          "points": [
+            [
+              349,
+              449
+            ],
+            [
+              382,
+              450
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/wiki/水經注/33"
+        ]
+      }
+    },
+    {
+      "id": "baxi:bajun:river",
+      "from": "baxi",
+      "to": "bajun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          105.96,
+          31.56
+        ],
+        [
+          106.58,
+          29.55
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "jialing:baxi:bajun",
+          "river_id": "jialing",
+          "name_tc": "嘉陵水",
+          "name_ja": "嘉陵水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "baxi"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "baxi",
+          "points": [
+            [
+              382,
+              450
+            ],
+            [
+              349,
+              449
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "jialing:baxi:bajun",
+          "river_id": "jialing",
+          "points": [
+            [
+              349,
+              449
+            ],
+            [
+              346,
+              450
+            ],
+            [
+              346,
+              453
+            ],
+            [
+              345,
+              456
+            ],
+            [
+              345,
+              459
+            ],
+            [
+              344,
+              462
+            ],
+            [
+              344,
+              465
+            ],
+            [
+              345,
+              468
+            ],
+            [
+              347,
+              471
+            ],
+            [
+              349,
+              474
+            ],
+            [
+              351,
+              477
+            ],
+            [
+              353,
+              480
+            ],
+            [
+              355,
+              483
+            ],
+            [
+              358,
+              486
+            ],
+            [
+              359,
+              489
+            ],
+            [
+              362,
+              492
+            ],
+            [
+              364,
+              495
+            ],
+            [
+              366,
+              498
+            ],
+            [
+              369,
+              500
+            ],
+            [
+              372,
+              502
+            ],
+            [
+              375,
+              503
+            ],
+            [
+              378,
+              506
+            ],
+            [
+              379,
+              509
+            ],
+            [
+              378,
+              512
+            ],
+            [
+              378,
+              515
+            ],
+            [
+              376,
+              518
+            ],
+            [
+              376,
+              521
+            ],
+            [
+              375,
+              524
+            ],
+            [
+              373,
+              527
+            ],
+            [
+              372,
+              530
+            ],
+            [
+              371,
+              533
+            ],
+            [
+              370,
+              536
+            ],
+            [
+              370,
+              539
+            ],
+            [
+              370,
+              542
+            ],
+            [
+              371,
+              545
+            ],
+            [
+              371,
+              548
+            ],
+            [
+              371,
+              551
+            ],
+            [
+              371,
+              554
+            ],
+            [
+              371,
+              557
+            ],
+            [
+              372,
+              560
+            ],
+            [
+              375,
+              563
+            ],
+            [
+              377,
+              566
+            ],
+            [
+              379,
+              569
+            ],
+            [
+              381,
+              572
+            ],
+            [
+              384,
+              575
+            ],
+            [
+              387,
+              575
+            ],
+            [
+              390,
+              575
+            ],
+            [
+              393,
+              575
+            ],
+            [
+              396,
+              576
+            ],
+            [
+              399,
+              577
+            ],
+            [
+              402,
+              577
+            ],
+            [
+              404,
+              578
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "bajun",
+          "points": [
+            [
+              404,
+              578
+            ],
+            [
+              398,
+              553
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/wiki/水經注/33"
+        ]
+      }
+    },
+    {
+      "id": "lingling:changsha:river",
+      "from": "lingling",
+      "to": "changsha",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.61,
+          26.21
+        ],
+        [
+          112.97,
+          28.24
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "xiang:lingling:changsha",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "lingling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "lingling",
+          "points": [
+            [
+              656,
+              655
+            ],
+            [
+              687,
+              658
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:lingling:changsha",
+          "river_id": "xiang",
+          "points": [
+            [
+              687,
+              658
+            ],
+            [
+              687,
+              655
+            ],
+            [
+              687,
+              652
+            ],
+            [
+              687,
+              649
+            ],
+            [
+              687,
+              646
+            ],
+            [
+              687,
+              643
+            ],
+            [
+              687,
+              640
+            ],
+            [
+              687,
+              637
+            ],
+            [
+              687,
+              634
+            ],
+            [
+              688,
+              631
+            ],
+            [
+              689,
+              628
+            ],
+            [
+              689,
+              625
+            ],
+            [
+              689,
+              622
+            ],
+            [
+              690,
+              619
+            ],
+            [
+              691,
+              616
+            ],
+            [
+              691,
+              613
+            ],
+            [
+              692,
+              610
+            ],
+            [
+              693,
+              607
+            ],
+            [
+              693,
+              604
+            ],
+            [
+              695,
+              601
+            ],
+            [
+              695,
+              598
+            ],
+            [
+              696,
+              595
+            ],
+            [
+              697,
+              592
+            ],
+            [
+              697,
+              589
+            ],
+            [
+              699,
+              586
+            ],
+            [
+              699,
+              583
+            ],
+            [
+              701,
+              580
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "changsha",
+          "points": [
+            [
+              701,
+              580
+            ],
+            [
+              716,
+              580
+            ],
+            [
+              727,
+              577
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/38"
+        ]
+      }
+    },
+    {
+      "id": "wuling:changsha:river",
+      "from": "wuling",
+      "to": "changsha",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.69,
+          29.03
+        ],
+        [
+          112.8,
+          29.2
+        ],
+        [
+          112.97,
+          28.24
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yuan:wuling:dongting",
+          "river_id": "yuan",
+          "name_tc": "沅水",
+          "name_ja": "沅水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "wuling"
+        },
+        {
+          "reach_id": "xiang:changsha:yuan",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "changsha"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "wuling",
+          "points": [
+            [
+              660,
+              545
+            ],
+            [
+              664,
+              566
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yuan:wuling:dongting",
+          "river_id": "yuan",
+          "points": [
+            [
+              664,
+              566
+            ],
+            [
+              667,
+              565
+            ],
+            [
+              670,
+              564
+            ],
+            [
+              673,
+              563
+            ],
+            [
+              676,
+              562
+            ],
+            [
+              679,
+              560
+            ],
+            [
+              682,
+              558
+            ],
+            [
+              685,
+              557
+            ],
+            [
+              688,
+              555
+            ],
+            [
+              691,
+              553
+            ],
+            [
+              694,
+              552
+            ],
+            [
+              697,
+              551
+            ],
+            [
+              700,
+              550
+            ],
+            [
+              703,
+              550
+            ],
+            [
+              706,
+              550
+            ],
+            [
+              709,
+              549
+            ],
+            [
+              712,
+              549
+            ],
+            [
+              715,
+              549
+            ],
+            [
+              716,
+              549
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:changsha:yuan",
+          "river_id": "xiang",
+          "points": [
+            [
+              716,
+              549
+            ],
+            [
+              711,
+              552
+            ],
+            [
+              706,
+              555
+            ],
+            [
+              703,
+              560
+            ],
+            [
+              701,
+              565
+            ],
+            [
+              701,
+              570
+            ],
+            [
+              701,
+              575
+            ],
+            [
+              701,
+              580
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "changsha",
+          "points": [
+            [
+              701,
+              580
+            ],
+            [
+              716,
+              580
+            ],
+            [
+              727,
+              577
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/37",
+          "https://zh.wikisource.org/wiki/水經注/38"
+        ]
+      }
+    },
+    {
+      "id": "wuling:jiangxia:river",
+      "from": "wuling",
+      "to": "jiangxia",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.69,
+          29.03
+        ],
+        [
+          112.8,
+          29.2
+        ],
+        [
+          113.13,
+          29.43
+        ],
+        [
+          114.3,
+          30.27
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yuan:wuling:dongting",
+          "river_id": "yuan",
+          "name_tc": "沅水",
+          "name_ja": "沅水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "wuling"
+        },
+        {
+          "reach_id": "xiang:yuan:dongting",
+          "river_id": "xiang",
+          "name_tc": "湘水（含洞庭出口）",
+          "name_ja": "湘水（洞庭出口を含む）",
+          "speed_key": "xiang",
+          "distance_km": 1,
+          "downstream_from": "wuling"
+        },
+        {
+          "reach_id": "yangtze:dongting:jiangxia",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "wuling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "wuling",
+          "points": [
+            [
+              660,
+              545
+            ],
+            [
+              664,
+              566
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yuan:wuling:dongting",
+          "river_id": "yuan",
+          "points": [
+            [
+              664,
+              566
+            ],
+            [
+              667,
+              565
+            ],
+            [
+              670,
+              564
+            ],
+            [
+              673,
+              563
+            ],
+            [
+              676,
+              562
+            ],
+            [
+              679,
+              560
+            ],
+            [
+              682,
+              558
+            ],
+            [
+              685,
+              557
+            ],
+            [
+              688,
+              555
+            ],
+            [
+              691,
+              553
+            ],
+            [
+              694,
+              552
+            ],
+            [
+              697,
+              551
+            ],
+            [
+              700,
+              550
+            ],
+            [
+              703,
+              550
+            ],
+            [
+              706,
+              550
+            ],
+            [
+              709,
+              549
+            ],
+            [
+              712,
+              549
+            ],
+            [
+              715,
+              549
+            ],
+            [
+              716,
+              549
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "xiang:yuan:dongting",
+          "river_id": "xiang",
+          "points": [
+            [
+              716,
+              549
+            ],
+            [
+              721,
+              546
+            ],
+            [
+              726,
+              544
+            ],
+            [
+              731,
+              540
+            ],
+            [
+              733,
+              535
+            ],
+            [
+              735,
+              530
+            ],
+            [
+              737,
+              525
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:dongting:jiangxia",
+          "river_id": "yangtze",
+          "points": [
+            [
+              737,
+              525
+            ],
+            [
+              737,
+              524
+            ],
+            [
+              742,
+              523
+            ],
+            [
+              747,
+              527
+            ],
+            [
+              752,
+              529
+            ],
+            [
+              757,
+              530
+            ],
+            [
+              762,
+              530
+            ],
+            [
+              767,
+              530
+            ],
+            [
+              772,
+              530
+            ],
+            [
+              777,
+              528
+            ],
+            [
+              782,
+              528
+            ],
+            [
+              787,
+              528
+            ],
+            [
+              792,
+              528
+            ],
+            [
+              797,
+              528
+            ],
+            [
+              802,
+              527
+            ],
+            [
+              807,
+              527
+            ],
+            [
+              812,
+              527
+            ],
+            [
+              817,
+              527
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jiangxia",
+          "points": [
+            [
+              817,
+              527
+            ],
+            [
+              817,
+              496
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/37",
           "https://zh.wikisource.org/wiki/水經注/38",
-          "https://www.shidianguji.com/zh/book/SK1116/chapter/1jzwtzmscgcnv"
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "luling:linchuan:river",
+      "from": "luling",
+      "to": "linchuan",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          114.93,
+          26.98
+        ],
+        [
+          115.9,
+          27.9
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "gan:luling:linchuan",
+          "river_id": "gan",
+          "name_tc": "贛水",
+          "name_ja": "贛水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "luling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "luling",
+          "points": [
+            [
+              828,
+              630
+            ],
+            [
+              878,
+              650
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "gan:luling:linchuan",
+          "river_id": "gan",
+          "points": [
+            [
+              878,
+              650
+            ],
+            [
+              881,
+              648
+            ],
+            [
+              884,
+              645
+            ],
+            [
+              887,
+              642
+            ],
+            [
+              889,
+              639
+            ],
+            [
+              892,
+              636
+            ],
+            [
+              894,
+              633
+            ],
+            [
+              896,
+              630
+            ],
+            [
+              899,
+              627
+            ],
+            [
+              901,
+              624
+            ],
+            [
+              904,
+              621
+            ],
+            [
+              907,
+              620
+            ],
+            [
+              910,
+              617
+            ],
+            [
+              913,
+              615
+            ],
+            [
+              916,
+              612
+            ],
+            [
+              919,
+              611
+            ],
+            [
+              922,
+              610
+            ],
+            [
+              923,
+              611
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "linchuan",
+          "points": [
+            [
+              923,
+              611
+            ],
+            [
+              935,
+              619
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://ctext.org/text.pl?if=gb&node=570600"
+        ]
+      }
+    },
+    {
+      "id": "linchuan:yuzhang:river",
+      "from": "linchuan",
+      "to": "yuzhang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.9,
+          27.9
+        ],
+        [
+          115.88,
+          28.68
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "gan:linchuan:yuzhang",
+          "river_id": "gan",
+          "name_tc": "贛水",
+          "name_ja": "贛水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "linchuan"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "linchuan",
+          "points": [
+            [
+              935,
+              619
+            ],
+            [
+              923,
+              611
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "gan:linchuan:yuzhang",
+          "river_id": "gan",
+          "points": [
+            [
+              923,
+              611
+            ],
+            [
+              923,
+              608
+            ],
+            [
+              926,
+              605
+            ],
+            [
+              929,
+              602
+            ],
+            [
+              931,
+              599
+            ],
+            [
+              931,
+              596
+            ],
+            [
+              931,
+              593
+            ],
+            [
+              931,
+              590
+            ],
+            [
+              931,
+              587
+            ],
+            [
+              931,
+              584
+            ],
+            [
+              931,
+              581
+            ],
+            [
+              933,
+              579
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "yuzhang",
+          "points": [
+            [
+              933,
+              579
+            ],
+            [
+              904,
+              579
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://ctext.org/text.pl?if=gb&node=570600"
+        ]
+      }
+    },
+    {
+      "id": "yuzhang:poyang:river",
+      "from": "yuzhang",
+      "to": "poyang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          115.88,
+          28.68
+        ],
+        [
+          116.2,
+          29
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "gan:yuzhang:poyang",
+          "river_id": "gan",
+          "name_tc": "贛水",
+          "name_ja": "贛水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "yuzhang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "yuzhang",
+          "points": [
+            [
+              904,
+              579
+            ],
+            [
+              933,
+              579
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "gan:yuzhang:poyang",
+          "river_id": "gan",
+          "points": [
+            [
+              933,
+              579
+            ],
+            [
+              932,
+              576
+            ],
+            [
+              933,
+              573
+            ],
+            [
+              933,
+              570
+            ],
+            [
+              933,
+              567
+            ],
+            [
+              934,
+              564
+            ],
+            [
+              934,
+              563
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "poyang",
+          "points": [
+            [
+              934,
+              563
+            ],
+            [
+              969,
+              568
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://ctext.org/text.pl?if=gb&node=570600"
+        ]
+      }
+    },
+    {
+      "id": "poyang:lujiang:river",
+      "from": "poyang",
+      "to": "lujiang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          116.2,
+          29
+        ],
+        [
+          116.22,
+          29.76
+        ],
+        [
+          117.1,
+          30.8
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "pengli:poyang:yangtze",
+          "river_id": "pengli_out",
+          "name_tc": "彭蠡出口",
+          "name_ja": "彭蠡の出口",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "poyang"
+        },
+        {
+          "reach_id": "yangtze:pengli:lujiang",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "poyang"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "poyang",
+          "points": [
+            [
+              969,
+              568
+            ],
+            [
+              934,
+              563
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "pengli:poyang:yangtze",
+          "river_id": "pengli_out",
+          "points": [
+            [
+              934,
+              563
+            ],
+            [
+              934,
+              560
+            ],
+            [
+              932,
+              557
+            ],
+            [
+              930,
+              554
+            ],
+            [
+              930,
+              551
+            ],
+            [
+              928,
+              548
+            ],
+            [
+              926,
+              545
+            ],
+            [
+              927,
+              543
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:pengli:lujiang",
+          "river_id": "yangtze",
+          "points": [
+            [
+              927,
+              543
+            ],
+            [
+              928,
+              540
+            ],
+            [
+              931,
+              537
+            ],
+            [
+              934,
+              535
+            ],
+            [
+              937,
+              535
+            ],
+            [
+              940,
+              533
+            ],
+            [
+              943,
+              533
+            ],
+            [
+              946,
+              530
+            ],
+            [
+              949,
+              527
+            ],
+            [
+              952,
+              526
+            ],
+            [
+              955,
+              523
+            ],
+            [
+              958,
+              522
+            ],
+            [
+              961,
+              519
+            ],
+            [
+              964,
+              516
+            ],
+            [
+              965,
+              513
+            ],
+            [
+              966,
+              510
+            ],
+            [
+              968,
+              507
+            ],
+            [
+              968,
+              504
+            ],
+            [
+              968,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "lujiang",
+          "points": [
+            [
+              968,
+              502
+            ],
+            [
+              925,
+              454
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://ctext.org/text.pl?if=gb&node=570600",
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "runan:jiujiang:river",
+      "from": "runan",
+      "to": "jiujiang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          114.98,
+          32.6
+        ],
+        [
+          116.78,
+          32.6
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "huai:runan:jiujiang",
+          "river_id": "huai",
+          "name_tc": "淮水",
+          "name_ja": "淮水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "runan"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "runan",
+          "points": [
+            [
+              835,
+              410
+            ],
+            [
+              816,
+              432
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "huai:runan:jiujiang",
+          "river_id": "huai",
+          "points": [
+            [
+              816,
+              432
+            ],
+            [
+              819,
+              435
+            ],
+            [
+              822,
+              437
+            ],
+            [
+              825,
+              437
+            ],
+            [
+              828,
+              439
+            ],
+            [
+              831,
+              440
+            ],
+            [
+              834,
+              441
+            ],
+            [
+              837,
+              441
+            ],
+            [
+              840,
+              442
+            ],
+            [
+              843,
+              443
+            ],
+            [
+              846,
+              443
+            ],
+            [
+              849,
+              442
+            ],
+            [
+              852,
+              440
+            ],
+            [
+              855,
+              437
+            ],
+            [
+              857,
+              434
+            ],
+            [
+              859,
+              431
+            ],
+            [
+              862,
+              428
+            ],
+            [
+              865,
+              425
+            ],
+            [
+              868,
+              424
+            ],
+            [
+              871,
+              421
+            ],
+            [
+              873,
+              418
+            ],
+            [
+              874,
+              415
+            ],
+            [
+              876,
+              412
+            ],
+            [
+              878,
+              409
+            ],
+            [
+              881,
+              406
+            ],
+            [
+              883,
+              403
+            ],
+            [
+              885,
+              400
+            ],
+            [
+              887,
+              397
+            ],
+            [
+              889,
+              394
+            ],
+            [
+              892,
+              391
+            ],
+            [
+              895,
+              389
+            ],
+            [
+              898,
+              388
+            ],
+            [
+              901,
+              388
+            ],
+            [
+              904,
+              386
+            ],
+            [
+              907,
+              386
+            ],
+            [
+              910,
+              385
+            ],
+            [
+              913,
+              384
+            ],
+            [
+              916,
+              384
+            ],
+            [
+              919,
+              382
+            ],
+            [
+              922,
+              382
+            ],
+            [
+              925,
+              380
+            ],
+            [
+              928,
+              380
+            ],
+            [
+              931,
+              380
+            ],
+            [
+              934,
+              381
+            ],
+            [
+              937,
+              381
+            ],
+            [
+              940,
+              381
+            ],
+            [
+              943,
+              381
+            ],
+            [
+              945,
+              381
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "jiujiang",
+          "points": [
+            [
+              945,
+              381
+            ],
+            [
+              945,
+              406
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/30"
+        ]
+      }
+    },
+    {
+      "id": "yulin:cangwu:river",
+      "from": "yulin",
+      "to": "cangwu",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          109.61,
+          23.1
+        ],
+        [
+          111.31,
+          23.49
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "pearl:yulin:cangwu",
+          "river_id": "pearl",
+          "name_tc": "鬱水・珠江水系",
+          "name_ja": "鬱水・珠江水系",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "yulin"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "yulin",
+          "points": [
+            [
+              550,
+              771
+            ],
+            [
+              560,
+              755
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "pearl:yulin:cangwu",
+          "river_id": "pearl",
+          "points": [
+            [
+              560,
+              755
+            ],
+            [
+              563,
+              754
+            ],
+            [
+              566,
+              755
+            ],
+            [
+              569,
+              755
+            ],
+            [
+              572,
+              755
+            ],
+            [
+              575,
+              755
+            ],
+            [
+              578,
+              755
+            ],
+            [
+              581,
+              757
+            ],
+            [
+              584,
+              759
+            ],
+            [
+              587,
+              761
+            ],
+            [
+              590,
+              764
+            ],
+            [
+              591,
+              767
+            ],
+            [
+              593,
+              770
+            ],
+            [
+              593,
+              773
+            ],
+            [
+              595,
+              776
+            ],
+            [
+              598,
+              779
+            ],
+            [
+              600,
+              782
+            ],
+            [
+              603,
+              785
+            ],
+            [
+              604,
+              788
+            ],
+            [
+              607,
+              791
+            ],
+            [
+              610,
+              793
+            ],
+            [
+              611,
+              793
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "cangwu",
+          "points": [
+            [
+              611,
+              793
+            ],
+            [
+              635,
+              776
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/37"
+        ]
+      }
+    },
+    {
+      "id": "cangwu:nanhai:river",
+      "from": "cangwu",
+      "to": "nanhai",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          111.31,
+          23.49
+        ],
+        [
+          113.256,
+          23.13
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "pearl:cangwu:nanhai",
+          "river_id": "pearl",
+          "name_tc": "鬱水・珠江水系",
+          "name_ja": "鬱水・珠江水系",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "cangwu"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "cangwu",
+          "points": [
+            [
+              635,
+              776
+            ],
+            [
+              611,
+              793
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "pearl:cangwu:nanhai",
+          "river_id": "pearl",
+          "points": [
+            [
+              611,
+              793
+            ],
+            [
+              611,
+              796
+            ],
+            [
+              613,
+              799
+            ],
+            [
+              615,
+              802
+            ],
+            [
+              617,
+              805
+            ],
+            [
+              619,
+              808
+            ],
+            [
+              622,
+              809
+            ],
+            [
+              625,
+              809
+            ],
+            [
+              628,
+              808
+            ],
+            [
+              631,
+              808
+            ],
+            [
+              634,
+              808
+            ],
+            [
+              637,
+              808
+            ],
+            [
+              640,
+              808
+            ],
+            [
+              643,
+              808
+            ],
+            [
+              646,
+              807
+            ],
+            [
+              649,
+              807
+            ],
+            [
+              652,
+              806
+            ],
+            [
+              655,
+              805
+            ],
+            [
+              658,
+              804
+            ],
+            [
+              661,
+              802
+            ],
+            [
+              664,
+              800
+            ],
+            [
+              667,
+              798
+            ],
+            [
+              670,
+              795
+            ],
+            [
+              673,
+              793
+            ],
+            [
+              676,
+              790
+            ],
+            [
+              679,
+              789
+            ],
+            [
+              682,
+              788
+            ],
+            [
+              685,
+              786
+            ],
+            [
+              688,
+              784
+            ],
+            [
+              691,
+              784
+            ],
+            [
+              694,
+              784
+            ],
+            [
+              697,
+              784
+            ],
+            [
+              700,
+              784
+            ],
+            [
+              703,
+              784
+            ],
+            [
+              706,
+              786
+            ],
+            [
+              709,
+              789
+            ],
+            [
+              712,
+              791
+            ],
+            [
+              715,
+              792
+            ],
+            [
+              718,
+              794
+            ],
+            [
+              721,
+              795
+            ],
+            [
+              724,
+              795
+            ],
+            [
+              727,
+              795
+            ],
+            [
+              730,
+              795
+            ],
+            [
+              733,
+              795
+            ],
+            [
+              736,
+              795
+            ],
+            [
+              737,
+              796
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "nanhai",
+          "points": [
+            [
+              737,
+              796
+            ],
+            [
+              741,
+              775
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/37"
+        ]
+      }
+    },
+    {
+      "id": "tianshui:fufeng:river",
+      "from": "tianshui",
+      "to": "fufeng",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          105.39,
+          34.74
+        ],
+        [
+          108.5,
+          34.28
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "wei:tianshui:fufeng",
+          "river_id": "wei",
+          "name_tc": "渭水",
+          "name_ja": "渭水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "tianshui"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "tianshui",
+          "points": [
+            [
+              370,
+              362
+            ],
+            [
+              369,
+              339
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "wei:tianshui:fufeng",
+          "river_id": "wei",
+          "points": [
+            [
+              369,
+              339
+            ],
+            [
+              370,
+              336
+            ],
+            [
+              373,
+              336
+            ],
+            [
+              376,
+              334
+            ],
+            [
+              379,
+              334
+            ],
+            [
+              382,
+              332
+            ],
+            [
+              385,
+              332
+            ],
+            [
+              388,
+              330
+            ],
+            [
+              391,
+              330
+            ],
+            [
+              394,
+              328
+            ],
+            [
+              397,
+              328
+            ],
+            [
+              400,
+              326
+            ],
+            [
+              403,
+              326
+            ],
+            [
+              406,
+              324
+            ],
+            [
+              409,
+              324
+            ],
+            [
+              412,
+              324
+            ],
+            [
+              415,
+              324
+            ],
+            [
+              418,
+              324
+            ],
+            [
+              420,
+              325
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "fufeng",
+          "points": [
+            [
+              420,
+              325
+            ],
+            [
+              420,
+              341
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/wiki/水經注/17"
+        ]
+      }
+    },
+    {
+      "id": "badong:nanjun:river",
+      "from": "badong",
+      "to": "nanjun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          109.57,
+          31.03
+        ],
+        [
+          111.45,
+          30.39
+        ],
+        [
+          112.25,
+          30.3
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:badong:yidu",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "badong"
+        },
+        {
+          "reach_id": "yangtze:yidu:nanjun",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "badong"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "badong",
+          "points": [
+            [
+              555,
+              476
+            ],
+            [
+              568,
+              507
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:badong:yidu",
+          "river_id": "yangtze",
+          "points": [
+            [
+              568,
+              507
+            ],
+            [
+              571,
+              506
+            ],
+            [
+              574,
+              505
+            ],
+            [
+              577,
+              505
+            ],
+            [
+              580,
+              505
+            ],
+            [
+              583,
+              503
+            ],
+            [
+              586,
+              503
+            ],
+            [
+              589,
+              503
+            ],
+            [
+              592,
+              503
+            ],
+            [
+              595,
+              503
+            ],
+            [
+              598,
+              503
+            ],
+            [
+              601,
+              503
+            ],
+            [
+              604,
+              502
+            ],
+            [
+              607,
+              501
+            ],
+            [
+              610,
+              501
+            ],
+            [
+              613,
+              501
+            ],
+            [
+              616,
+              500
+            ],
+            [
+              619,
+              500
+            ],
+            [
+              622,
+              500
+            ],
+            [
+              625,
+              500
+            ],
+            [
+              628,
+              500
+            ],
+            [
+              631,
+              500
+            ],
+            [
+              634,
+              500
+            ],
+            [
+              637,
+              500
+            ],
+            [
+              640,
+              500
+            ],
+            [
+              643,
+              501
+            ],
+            [
+              646,
+              501
+            ],
+            [
+              648,
+              502
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:yidu:nanjun",
+          "river_id": "yangtze",
+          "points": [
+            [
+              648,
+              502
+            ],
+            [
+              651,
+              502
+            ],
+            [
+              654,
+              505
+            ],
+            [
+              656,
+              508
+            ],
+            [
+              657,
+              511
+            ],
+            [
+              660,
+              514
+            ],
+            [
+              663,
+              517
+            ],
+            [
+              665,
+              520
+            ],
+            [
+              666,
+              523
+            ],
+            [
+              668,
+              526
+            ],
+            [
+              671,
+              529
+            ],
+            [
+              674,
+              530
+            ],
+            [
+              677,
+              530
+            ],
+            [
+              680,
+              530
+            ],
+            [
+              683,
+              530
+            ],
+            [
+              686,
+              530
+            ],
+            [
+              689,
+              530
+            ],
+            [
+              691,
+              532
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "nanjun",
+          "points": [
+            [
+              691,
+              532
+            ],
+            [
+              691,
+              503
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "jiangxia:qichun:river",
+      "from": "jiangxia",
+      "to": "qichun",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          114.3,
+          30.27
+        ],
+        [
+          114.28,
+          30.56
+        ],
+        [
+          114.88,
+          30.38
+        ],
+        [
+          115.32,
+          30.1
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "yangtze:jiangxia:hankou",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jiangxia"
+        },
+        {
+          "reach_id": "yangtze:hankou:wuchang",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jiangxia"
+        },
+        {
+          "reach_id": "yangtze:wuchang:qichun",
+          "river_id": "yangtze",
+          "name_tc": "長江",
+          "name_ja": "長江",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "jiangxia"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "jiangxia",
+          "points": [
+            [
+              817,
+              496
+            ],
+            [
+              817,
+              527
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:jiangxia:hankou",
+          "river_id": "yangtze",
+          "points": [
+            [
+              817,
+              527
+            ],
+            [
+              820,
+              526
+            ],
+            [
+              823,
+              526
+            ],
+            [
+              826,
+              525
+            ],
+            [
+              829,
+              525
+            ],
+            [
+              832,
+              525
+            ],
+            [
+              835,
+              525
+            ],
+            [
+              838,
+              525
+            ],
+            [
+              841,
+              525
+            ],
+            [
+              844,
+              525
+            ],
+            [
+              845,
+              525
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:hankou:wuchang",
+          "river_id": "yangtze",
+          "points": [
+            [
+              845,
+              525
+            ],
+            [
+              846,
+              528
+            ],
+            [
+              848,
+              531
+            ],
+            [
+              851,
+              534
+            ],
+            [
+              854,
+              537
+            ],
+            [
+              857,
+              539
+            ],
+            [
+              860,
+              539
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "yangtze:wuchang:qichun",
+          "river_id": "yangtze",
+          "points": [
+            [
+              860,
+              539
+            ],
+            [
+              860,
+              542
+            ],
+            [
+              862,
+              545
+            ],
+            [
+              864,
+              548
+            ],
+            [
+              867,
+              550
+            ],
+            [
+              870,
+              550
+            ],
+            [
+              873,
+              549
+            ],
+            [
+              876,
+              549
+            ],
+            [
+              879,
+              547
+            ],
+            [
+              880,
+              547
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "qichun",
+          "points": [
+            [
+              880,
+              547
+            ],
+            [
+              874,
+              512
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷36",
+          "https://zh.wikisource.org/zh-hant/三國志/卷54",
+          "https://zh.wikisource.org/zh-hant/水經注/35"
+        ]
+      }
+    },
+    {
+      "id": "luling:yuzhang:river",
+      "from": "luling",
+      "to": "yuzhang",
+      "mode": "river",
+      "terrain": "river",
+      "geo": [
+        [
+          114.93,
+          26.98
+        ],
+        [
+          115.9,
+          27.9
+        ],
+        [
+          115.88,
+          28.68
+        ]
+      ],
+      "river_segments": [
+        {
+          "reach_id": "gan:luling:linchuan",
+          "river_id": "gan",
+          "name_tc": "贛水",
+          "name_ja": "贛水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "luling"
+        },
+        {
+          "reach_id": "gan:linchuan:yuzhang",
+          "river_id": "gan",
+          "name_tc": "贛水",
+          "name_ja": "贛水",
+          "speed_key": "yangtze",
+          "distance_km": 1,
+          "downstream_from": "luling"
+        }
+      ],
+      "draw": [
+        {
+          "mode": "land",
+          "access_id": "luling",
+          "points": [
+            [
+              828,
+              630
+            ],
+            [
+              878,
+              650
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "gan:luling:linchuan",
+          "river_id": "gan",
+          "points": [
+            [
+              878,
+              650
+            ],
+            [
+              881,
+              648
+            ],
+            [
+              884,
+              645
+            ],
+            [
+              887,
+              642
+            ],
+            [
+              889,
+              639
+            ],
+            [
+              892,
+              636
+            ],
+            [
+              894,
+              633
+            ],
+            [
+              896,
+              630
+            ],
+            [
+              899,
+              627
+            ],
+            [
+              901,
+              624
+            ],
+            [
+              904,
+              621
+            ],
+            [
+              907,
+              620
+            ],
+            [
+              910,
+              617
+            ],
+            [
+              913,
+              615
+            ],
+            [
+              916,
+              612
+            ],
+            [
+              919,
+              611
+            ],
+            [
+              922,
+              610
+            ],
+            [
+              923,
+              611
+            ]
+          ]
+        },
+        {
+          "mode": "river",
+          "reach_id": "gan:linchuan:yuzhang",
+          "river_id": "gan",
+          "points": [
+            [
+              923,
+              611
+            ],
+            [
+              923,
+              608
+            ],
+            [
+              926,
+              605
+            ],
+            [
+              929,
+              602
+            ],
+            [
+              931,
+              599
+            ],
+            [
+              931,
+              596
+            ],
+            [
+              931,
+              593
+            ],
+            [
+              931,
+              590
+            ],
+            [
+              931,
+              587
+            ],
+            [
+              931,
+              584
+            ],
+            [
+              931,
+              581
+            ],
+            [
+              933,
+              579
+            ]
+          ]
+        },
+        {
+          "mode": "land",
+          "access_id": "yuzhang",
+          "points": [
+            [
+              933,
+              579
+            ],
+            [
+              904,
+              579
+            ]
+          ]
+        }
+      ],
+      "history": {
+        "classification": "historical_water_system_authorial_game_calibration",
+        "basis": "共用河段與城池接岸道路的遊戲概化；河道沿現有像素河流，港點與地理校準不是考證復原的古港。新河段沿用既有方向航速，內河不適用海路季風與海上風暴減員。",
+        "sources": [
+          "https://ctext.org/text.pl?if=gb&node=570600"
         ]
       }
     }
@@ -29062,5 +37773,10 @@
       ]
     }
   ],
-  "method": "4px ocean-connected sea mask and A-star; smooth display follows sea cells. Approximate game ports, not identified historical harbours. Distances use separate geographic marine waypoints, never art pixels."
+  "method": "4px ocean-connected sea mask and A-star; smooth display follows sea cells. Approximate game ports, not identified historical harbours. Distances use separate geographic marine waypoints, never art pixels.",
+  "river_network": {
+    "schema": "tk2-river-network-compiled-v1",
+    "source_sha256": "192ae35b8e2146bdf7355f00696de3df49855a79eb61f8db2ac48dc97697d632",
+    "reach_count": 47
+  }
 }

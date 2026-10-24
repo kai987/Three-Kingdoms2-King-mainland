@@ -47,14 +47,16 @@ if(fs.existsSync(file)){
  assert.throws(()=>validateSource(appSource,Buffer.from(app.toString().replace('return d+`L','return d +`L')),pin,compiled.sources,attestation),'even whitespace changes inside path functions require rebuilding geometry');
  assert.throws(()=>validateSource(appSource,Buffer.concat([Buffer.from('// Display-only metadata.\n'),app]),pin,compiled.sources,{...attestation,original_source_sha256:'0'.repeat(64)}),'an attestation cannot substitute a different baseline');
  assert.throws(()=>validateSource(compilerSource,Buffer.from('// compiler changed'),compiled.sources[compilerSource],compiled.sources,attestation),'compiler changes retain full-file validation');
- assert.equal(compiled.schema,'tk2-route-geometry-v1');assert.equal(compiled.audit.input_routes,364);assert.equal(compiled.audit.compiled_routes,364);assert.deepEqual(compiled.audit.unmatched,[]);
+ const catalog=JSON.parse(fs.readFileSync(path.join(root,'game/data/campaigns/217-07.json'))),declared=[...catalog.travel_routes,...catalog.exploration_routes],byId=new Map(declared.map(route=>[route.id,route]));
+ assert.equal(compiled.schema,'tk2-route-geometry-v1');assert.equal(compiled.audit.input_routes,declared.length);assert.equal(compiled.audit.compiled_routes,declared.length);assert.deepEqual(compiled.audit.unmatched,[]);
+ assert.deepEqual(Object.keys(compiled.routes).sort(),[...byId.keys()].sort(),'Every declared road and water leg is compiled once');
  for(const [id,r]of Object.entries(compiled.routes)){
-  assert.equal(r.parts.length,r.mode==='sea'?3:r.mode==='river'?4:1,id);
-  assert(r.parts.every(p=>p.length_px>0&&p.chord_px>0&&p.length_px+1e-4>=p.chord_px),id);
+  assert.equal(r.parts.length,r.mode==='sea'?3:r.mode==='river'?byId.get(id).river_segments.length+2:1,id);
+  assert(r.parts.every(p=>p.length_px>=0&&p.chord_px>=0&&p.length_px+1e-4>=p.chord_px&&(p.length_px>0&&p.chord_px>0||p.mode==='land'&&p.length_px===0&&p.chord_px===0)),id+': only an approach already at its port can have zero length');
   assert(r.parts.every(p=>p.d.startsWith('M'+p.start.join(' '))),id+': ordered SVG starts at the named part origin');
   for(let n=1;n<r.parts.length;n++)assert.deepEqual(r.parts[n].start,r.parts[n-1].end,id+': complete harbour connections');
  }
- assert.deepEqual(compiled.audit.shared_city_pass_through.map(r=>r.id),['dai:fanyang:land','dai:yan:land','qi:shanyang:land']);
+ for(const reviewed of compiled.audit.shared_city_pass_through){assert(byId.has(reviewed.id));assert(reviewed.via.length);assert(reviewed.via.every(id=>catalog.cities.some(c=>c.id===id)));assert.match(reviewed.policy,/no intermediate stop/);}
  const jiao=compiled.routes['hepu:jiaozhi:sea'];assert(jiao,'Known sea leg and its merged land approaches remain represented');
 }
-console.log('route geometry: painted-network search, blocked-city failure, reversible SVG direction, complete 364-leg geometry and explicit shared-city review passed');
+console.log('route geometry: painted-network search, blocked-city failure, reversible SVG direction, complete declared leg geometry and explicit shared-city review passed');

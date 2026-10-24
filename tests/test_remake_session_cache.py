@@ -52,6 +52,22 @@ class SessionPreviewCacheTests(unittest.TestCase):
         self.assertEqual({key:digest(c.data) for key,c in session.catalogs.items()},catalog_hashes)
         self.assertEqual(session.revision,0);self.assertIsNone(session.to_dict())
 
+    def test_all_opening_ruler_portraits_use_dated_person_identity_and_fresh_rows(self):
+        paths=sorted(path for path in (ROOT/'game/data/campaigns').glob('*.json')
+                     if path.name!='index.json')
+        session=CampaignSession(paths)
+        previews=session._scenario_previews()
+        self.assertEqual(len(previews),29)
+        for row in previews:
+            catalog=session.catalogs[row['id']]
+            for faction in row['factions']:
+                expected=catalog.by_id[catalog.data['faction_rulers'][faction['id']]]
+                self.assertEqual(faction['ruler_person_id'],expected['person_id'])
+                self.assertEqual(faction['captain'],expected['name'])
+        expected=deepcopy(previews)
+        previews[0]['factions'][0]['ruler_person_id']='corrupt'
+        self.assertEqual(session._scenario_previews(),expected)
+
     def test_preview_city_tiers_use_each_catalog_without_copying_economy_metadata(self):
         session=CampaignSession(self.paths)
         for row in session.view()['catalog']['scenarios']:

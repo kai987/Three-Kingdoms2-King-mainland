@@ -3,6 +3,7 @@ from copy import deepcopy
 import importlib.util
 import json
 from pathlib import Path
+import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -186,7 +187,12 @@ class RoadCenterBuilderTests(unittest.TestCase):
         result = builder.build(source, positions)
         rows = {row['index']: row for row in result['changes']}
         repairs = {repair['id']: repair for repair in result['corridor_repairs']}
-        self.assertEqual(set(repairs), {'dongping-changyi', 'jinan-linzi', 'shanggu-ji'})
+        self.assertEqual(set(repairs), {'dongping-changyi', 'jinan-linzi', 'shanggu-ji',
+                                        'hongnong-luoyang'})
+        centered = {tuple(node): positions[hub['city']] for hub in source['hubs']
+                    for node in hub['nodes_to_collapse']}
+        centered.update({tuple(point): positions[row['city']]
+                         for row in source['native_city_connectors'] for point in row['points']})
         for identity, repair in repairs.items():
             parents, edges = {}, set()
 
@@ -198,7 +204,8 @@ class RoadCenterBuilderTests(unittest.TestCase):
 
             for stroke in repair['strokes']:
                 row = rows[stroke['index']]
-                self.assertEqual(row['new_points'], stroke['points'])
+                expected_points = [centered.get(tuple(point), point) for point in stroke['points']]
+                self.assertEqual(row['new_points'], expected_points)
                 self.assertEqual(row['deleted'], not bool(stroke['points']))
                 points = [tuple(point) for point in row['new_points']]
                 self.assertEqual(len(points), len(set(points)), identity)
@@ -232,7 +239,9 @@ class RoadCenterBuilderTests(unittest.TestCase):
         self.assertEqual(linzi_strokes, [237])
         self.assertEqual(rows[183]['new_points'][-1], positions['shanggu'])
         self.assertEqual(rows[193]['new_points'][0], positions['shanggu'])
-        self.assertEqual(rows[214]['new_points'][-1], positions['yan'])
+        self.assertTrue(rows[214]['deleted'])
+        self.assertEqual(rows[204]['new_points'][-1], positions['yan'])
+        self.assertEqual(rows[215]['new_points'][0], positions['yan'])
         self.assertEqual(source, before)
 
     def test_current_reviewed_source_reaches_anding_and_preserves_catalogs(self):
@@ -253,10 +262,105 @@ class RoadCenterBuilderTests(unittest.TestCase):
         self.assertIn('L434 270', rows[55]['new_d'])
         self.assertEqual(next(r for r in result['hubs'] if r['city']=='anding')['center'], [434,270])
         self.assertEqual([r['index'] for r in result['removed_obsolete_paths']], [4,339])
-        for index, path in enumerate(source['original_paths'][268:], start=268):
-            if index != 339:
-                self.assertIn(path, result['paint_d'])
+        # Native spokes now collapse into incident roads at the exact icon
+        # center; no short branch back to a former anchor remains underneath.
+        for connector in source['native_city_connectors']:
+            self.assertTrue(rows[connector['index']]['deleted'])
+            self.assertEqual(rows[connector['index']]['new_points'], [])
         self.assertEqual(before, {p: p.read_bytes() for p in catalog_paths})
+
+    def test_exact_native_anchors_join_every_incident_road_and_remove_the_spoke(self):
+        source = dict(schema='tk2-road-center-source-v1', ground={}, provenance={},
+            original_paths=['M12 0L20 0', 'M12 0L12 10', 'M10 0L12 0'],
+            segments=[dict(index=0, points=[[12,0],[20,0]], radius=0),
+                      dict(index=1, points=[[12,0],[12,10]], radius=0)],
+            hubs=[], protected_hubs=[], crossings=[],
+            native_city_connectors=[dict(index=2, city='a', points=[[10,0],[12,0]])])
+        before = deepcopy(source)
+        result = builder.build(source, {'a':[10,0], 'b':[20,0], 'c':[12,10]})
+        self.assertEqual(result['paint_d'], 'M10 0L20 0M10 0L12 10')
+        self.assertEqual([row['index'] for row in result['changes'] if row['deleted']], [2])
+        self.assertEqual(result['native_city_connectors'][0]['center'], [10,0])
+        result['native_city_connectors'][0]['points'][0][0] = 999
+        self.assertEqual(source, before)
+        for mutation in (dict(index=0), dict(city='missing'),
+                         dict(points=[[10,0],[13,0]]), dict(points=[[10,0],[float('inf'),0]])):
+            broken = deepcopy(source)
+            broken['native_city_connectors'][0].update(mutation)
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                builder.build(broken, {'a':[10,0], 'b':[20,0], 'c':[12,10]})
+
+    def test_former_city_return_loops_are_removed_after_exact_centering(self):
+        source = fixture()
+        source['corridor_repairs'] = [dict(id='return-loop', cities=['a'], strokes=[
+            dict(index=1, points=[[15,0],[20,5],[10,0]], radius=3)])]
+        result = builder.build(source, {'a':[9,1]})
+        row = next(row for row in result['changes'] if row['index']==1)
+        self.assertTrue(row['deleted'])
+        self.assertEqual(row['new_d'], '')
+
+    def test_reviewed_dynamic_branch_splits_an_otherwise_unchanged_native_curve(self):
+        source = fixture()
+        source['hubs'] = []
+        source['shared_junctions'] = [dict(id='dynamic', point=[25,0],
+                                          source_segment_indices=[1])]
+        result = builder.build(source, {'a':[10,0], 'b':[30,10], 'c':[30,20]})
+        row = next(row for row in result['changes'] if row['index']==1)
+        self.assertEqual(row['new_points'],source['segments'][1]['points'])
+        self.assertEqual(row['new_d'],'M15 0L25 0M25 0L30 10')
+        self.assertNotIn('Q25 0',row['new_d'])
+        result['shared_junctions'][0]['point'][0] = 999
+        self.assertEqual(source['shared_junctions'][0]['point'],[25,0])
+        for mutation in (dict(point=[24,0]),dict(source_segment_indices=[999]),
+                         dict(source_segment_indices=[True])):
+            broken = deepcopy(source)
+            broken['shared_junctions'][0].update(mutation)
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                builder.build(broken,{'a':[10,0]})
+
+    def test_all_native_city_centers_form_one_network_even_without_castle_pixels(self):
+        source = json.loads((ROOT/'game/config/road-centers.json').read_text())
+        catalog = json.loads((ROOT/'game/config/campaigns/shared.json').read_text())['catalog']
+        positions = {city['id']:city['position'] for city in catalog['cities']}
+        result = builder.build(source, positions)
+        graph = {}
+        for path in result['paint_d'].split('M')[1:]:
+            numbers = [float(value) for value in re.findall(
+                r'[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?', path)]
+            a, b = tuple(numbers[:2]), tuple(numbers[-2:])
+            graph.setdefault(a,set()).add(b)
+            graph.setdefault(b,set()).add(a)
+        self.assertEqual(len(source['native_city_connectors']), 93)
+        native = {tuple(positions[row['city']]) for row in source['native_city_connectors']}
+        self.assertEqual(len(native),93)
+        self.assertTrue(native <= graph.keys())
+        connected, pending = set(), [next(iter(native))]
+        while pending:
+            here = pending.pop()
+            if here not in connected:
+                connected.add(here)
+                pending.extend(graph[here]-connected)
+        self.assertTrue(native <= connected, 'Hiding any native castle cannot disconnect its road bed')
+        # A graph can remain globally connected through a long alternative
+        # while a local trunk becomes a dangling fork. Native road ends must
+        # terminate at cities, including the east approach out of Luoyang.
+        city_centers = {tuple(point) for point in positions.values()}
+        self.assertEqual([point for point,neighbors in graph.items()
+                          if len(neighbors)==1 and point not in city_centers], [])
+        self.assertIn(tuple(positions['yingchuan']),graph[tuple(positions['henan'])])
+        rows = {row['index']:row for row in result['changes']}
+        self.assertEqual(rows[133]['new_points'][0],positions['henan'])
+        self.assertEqual(rows[133]['new_points'][-1],positions['yingchuan'])
+        for city,degree in [('yidu',3),('henan',4),('hongnong',3)]:
+            self.assertEqual(len(graph[tuple(positions[city])]),degree,city)
+        self.assertEqual(source['protected_hubs'],[])
+        for index in (84,85,86,90,120,122,126,127,128):
+            self.assertTrue(rows[index]['deleted'],index)
+        self.assertEqual(rows[119]['new_points'], [[682,322],[688,334],positions['henan']])
+        secret_branch = json.loads((ROOT/'game/config/map-source.json').read_text())['presentation']['added_land_roads'][0]
+        self.assertEqual(secret_branch['new_branch'][0],[244,448])
+        self.assertIn('L244 448M244 448',rows[10]['new_d'])
+        self.assertNotIn('Q244 448',rows[10]['new_d'])
 
 
 if __name__ == '__main__':

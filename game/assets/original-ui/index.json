@@ -1,0 +1,1218 @@
+{
+  "schema": "tk2-original-ui-v1",
+  "provenance": "original-capture-derived",
+  "native_dimensions_confirmed": false,
+  "note": "Extracted from accepted OpenEmu window screenshots. Pixel-base sizes approximate the measured 6x display grid; they are not direct PPU or native exports. No AI redraw or palette quantization.",
+  "candidate_manifest": "art/original-ui-study/2026-10-24/asset-candidates.json",
+  "candidate_manifest_sha256": "b688ec3a982abbd608c56f2fb17399913be8ccb1dd56446d208533228f297405",
+  "generator": "art/original-ui-study/2026-10-24/export_runtime_assets.py",
+  "generator_sha256": "195b5f900e11804d069d981ab9d4519611f756f0188008acfd8c0d8b3e0c2712",
+  "assets": [
+    {
+      "id": "facility-armory",
+      "title": "武器屋",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 1,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/01-town-facilities.png",
+      "source_sha256": "171d9bd7a34fd98a1f32759e23b1129c67f634c037e660836b90cdd5173ff05f",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        600,
+        1264,
+        768,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/facility-armory.png",
+      "reference_crop_sha256": "8b634d5e27ce67a577958a59900dc0e23da3192e1fcb224d4d2c1912ff8255a9",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/facility-armory.png",
+        "sha256": "8b634d5e27ce67a577958a59900dc0e23da3192e1fcb224d4d2c1912ff8255a9",
+        "bytes": 21087,
+        "width": 168,
+        "height": 144
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/facility-armory.png",
+        "sha256": "758f64cd8e7da0bcf671bc5a8f4fe5f87decbe703f7b8fbd3ccf14eaf70a1d6e",
+        "bytes": 1301,
+        "width": 28,
+        "height": 24
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/facility-armory-4x.png",
+        "sha256": "347bdf79d9c09c70104e2b441e233ca44e88ab90530ea3b680d6e206f18bb69d",
+        "bytes": 2034,
+        "width": 112,
+        "height": 96
+      },
+      "path": "/assets/original-ui/facility-armory-4x.png",
+      "sha256": "347bdf79d9c09c70104e2b441e233ca44e88ab90530ea3b680d6e206f18bb69d",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "id": "facility-hospital",
+      "title": "醫館",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 1,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/01-town-facilities.png",
+      "source_sha256": "171d9bd7a34fd98a1f32759e23b1129c67f634c037e660836b90cdd5173ff05f",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        930,
+        1264,
+        1098,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/facility-hospital.png",
+      "reference_crop_sha256": "14195a2541838aaeb48a7b37e4f1be100632264a994b46e2d2e475f905b2966e",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/facility-hospital.png",
+        "sha256": "14195a2541838aaeb48a7b37e4f1be100632264a994b46e2d2e475f905b2966e",
+        "bytes": 17000,
+        "width": 168,
+        "height": 144
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/facility-hospital.png",
+        "sha256": "470ad2e49dce3a448a55c815121e63c93c10e8d0365ffc76602132c44ea69bda",
+        "bytes": 1291,
+        "width": 28,
+        "height": 24
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/facility-hospital-4x.png",
+        "sha256": "1d850076d7f1ffa6a58bcf24d0f227bf108756cd3649ec2612276f1982600982",
+        "bytes": 1815,
+        "width": 112,
+        "height": 96
+      },
+      "path": "/assets/original-ui/facility-hospital-4x.png",
+      "sha256": "1d850076d7f1ffa6a58bcf24d0f227bf108756cd3649ec2612276f1982600982",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "id": "facility-market",
+      "title": "市場",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 1,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/01-town-facilities.png",
+      "source_sha256": "171d9bd7a34fd98a1f32759e23b1129c67f634c037e660836b90cdd5173ff05f",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        1260,
+        1264,
+        1428,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/facility-market.png",
+      "reference_crop_sha256": "2219e2f47b51784eb0632f437cb07686dd47641a1ba33c4824e3c4a459e43260",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/facility-market.png",
+        "sha256": "2219e2f47b51784eb0632f437cb07686dd47641a1ba33c4824e3c4a459e43260",
+        "bytes": 18965,
+        "width": 168,
+        "height": 144
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/facility-market.png",
+        "sha256": "cf7988c7847200b2c93b07b30ef214bddcf4a6cda93a9be8809e1534c32dabb1",
+        "bytes": 1366,
+        "width": 28,
+        "height": 24
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/facility-market-4x.png",
+        "sha256": "bd6ff434fc60e613ea3bda85dd9cd40fcde39a3b049604c1c79818d5dd4f3ec1",
+        "bytes": 1956,
+        "width": 112,
+        "height": 96
+      },
+      "path": "/assets/original-ui/facility-market-4x.png",
+      "sha256": "bd6ff434fc60e613ea3bda85dd9cd40fcde39a3b049604c1c79818d5dd4f3ec1",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "id": "facility-school",
+      "title": "學問所",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 29,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/29-school-facility-icon.png",
+      "source_sha256": "892b8cc5c878c635d16ee77e345146505c9e507728ad2ad14ef39ef12e575160",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        600,
+        1264,
+        768,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/facility-school.png",
+      "reference_crop_sha256": "deb032040a00406887af74cad003070d453568e9627ec2c9947c61e413889035",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/facility-school.png",
+        "sha256": "deb032040a00406887af74cad003070d453568e9627ec2c9947c61e413889035",
+        "bytes": 13043,
+        "width": 168,
+        "height": 144
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/facility-school.png",
+        "sha256": "d17c2fea7be95a3b8078589d249376f339800da4747da906e51779c6c77e2ca2",
+        "bytes": 1111,
+        "width": 28,
+        "height": 24
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/facility-school-4x.png",
+        "sha256": "06f58728523e79840b5e9b12d400dff24feade8a6159ad30975fb5cd070fabde",
+        "bytes": 1588,
+        "width": 112,
+        "height": 96
+      },
+      "path": "/assets/original-ui/facility-school-4x.png",
+      "sha256": "06f58728523e79840b5e9b12d400dff24feade8a6159ad30975fb5cd070fabde",
+      "width": 112,
+      "height": 96
+    },
+    {
+      "id": "command-city",
+      "title": "城",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 13,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/13-city-command-menu.png",
+      "source_sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        438,
+        1215,
+        658,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/command-city.png",
+      "reference_crop_sha256": "d3d63c167dd83b60e3e0515c1e9fd29ddc08186054aa796dd148220b266cc6fc",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/command-city.png",
+        "sha256": "d3d63c167dd83b60e3e0515c1e9fd29ddc08186054aa796dd148220b266cc6fc",
+        "bytes": 38106,
+        "width": 220,
+        "height": 193
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/command-city.png",
+        "sha256": "732d2bb9257bb66cafbfcebc357df7fc2551acc8b4f20e83e16daf1b90b43e9c",
+        "bytes": 2167,
+        "width": 37,
+        "height": 32
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/command-city-4x.png",
+        "sha256": "b478167b80db997ce966ae1b0d8d20a700d2bcb585c38de3ba785cce9752e372",
+        "bytes": 3312,
+        "width": 148,
+        "height": 128
+      },
+      "path": "/assets/original-ui/command-city-4x.png",
+      "sha256": "b478167b80db997ce966ae1b0d8d20a700d2bcb585c38de3ba785cce9752e372",
+      "width": 148,
+      "height": 128
+    },
+    {
+      "id": "command-army",
+      "title": "軍",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 13,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/13-city-command-menu.png",
+      "source_sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        711,
+        1215,
+        931,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/command-army.png",
+      "reference_crop_sha256": "13c4d4590951d7ed68fde8fe81b7eb9c43fa0c17343033fb9fe4a12d6d95e3d5",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/command-army.png",
+        "sha256": "13c4d4590951d7ed68fde8fe81b7eb9c43fa0c17343033fb9fe4a12d6d95e3d5",
+        "bytes": 32405,
+        "width": 220,
+        "height": 193
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/command-army.png",
+        "sha256": "fdda705bb28d177593f9f654bd5d33dec704ff94474bfa2f0dc10d78bdb1de3b",
+        "bytes": 1948,
+        "width": 37,
+        "height": 32
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/command-army-4x.png",
+        "sha256": "9af04aa46919d8eaa6f9fdbc6cb55f5bb87b1da8062fb6661cb99741cb33b148",
+        "bytes": 3075,
+        "width": 148,
+        "height": 128
+      },
+      "path": "/assets/original-ui/command-army-4x.png",
+      "sha256": "9af04aa46919d8eaa6f9fdbc6cb55f5bb87b1da8062fb6661cb99741cb33b148",
+      "width": 148,
+      "height": 128
+    },
+    {
+      "id": "command-warehouse",
+      "title": "倉",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 13,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/13-city-command-menu.png",
+      "source_sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        985,
+        1215,
+        1205,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/command-warehouse.png",
+      "reference_crop_sha256": "448a46c7db70b4985931b8dba87cc84f80d84abf522e7501a7dfb74456b11c3e",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/command-warehouse.png",
+        "sha256": "448a46c7db70b4985931b8dba87cc84f80d84abf522e7501a7dfb74456b11c3e",
+        "bytes": 48294,
+        "width": 220,
+        "height": 193
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/command-warehouse.png",
+        "sha256": "17f52d7cf54753e9e134b6fd7b76ba6383a60ee80369d4a0a6c221a7acd8403c",
+        "bytes": 2749,
+        "width": 37,
+        "height": 32
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/command-warehouse-4x.png",
+        "sha256": "717a40d9ab5ea01e09b7aa86526f88bb12416b6882e34c9bd710cd3483d04df2",
+        "bytes": 4052,
+        "width": 148,
+        "height": 128
+      },
+      "path": "/assets/original-ui/command-warehouse-4x.png",
+      "sha256": "717a40d9ab5ea01e09b7aa86526f88bb12416b6882e34c9bd710cd3483d04df2",
+      "width": 148,
+      "height": 128
+    },
+    {
+      "id": "command-town",
+      "title": "町",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 13,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/13-city-command-menu.png",
+      "source_sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        1258,
+        1215,
+        1480,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/command-town.png",
+      "reference_crop_sha256": "5200aacfa8119488f1b32402c95b16da370643709c992da9b3929da7519a8e40",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/command-town.png",
+        "sha256": "5200aacfa8119488f1b32402c95b16da370643709c992da9b3929da7519a8e40",
+        "bytes": 46819,
+        "width": 222,
+        "height": 193
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/command-town.png",
+        "sha256": "3beff633b389dda1b22355a5b1f9e4666497e177b56022adaae131fc0369e86d",
+        "bytes": 2622,
+        "width": 37,
+        "height": 32
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/command-town-4x.png",
+        "sha256": "67dfea9a1d996d79f57291c92dd524f1ef20f79920acdd490489121597c79a24",
+        "bytes": 3957,
+        "width": 148,
+        "height": 128
+      },
+      "path": "/assets/original-ui/command-town-4x.png",
+      "sha256": "67dfea9a1d996d79f57291c92dd524f1ef20f79920acdd490489121597c79a24",
+      "width": 148,
+      "height": 128
+    },
+    {
+      "id": "equipment-weapon-category",
+      "title": "武器類",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 25,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/25-officer-equipment-original.png",
+      "source_sha256": "e2e287e8c11d275505576a75fe58cba910a8566a026e871df604d653a4bba5fa",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        438,
+        1320,
+        552,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/equipment-weapon-category.png",
+      "reference_crop_sha256": "07bf23fdc408f379501d5367f505396adc0acdd5e890b8806d9ef53b9e2e9d9e",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/equipment-weapon-category.png",
+        "sha256": "07bf23fdc408f379501d5367f505396adc0acdd5e890b8806d9ef53b9e2e9d9e",
+        "bytes": 13270,
+        "width": 114,
+        "height": 88
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/equipment-weapon-category.png",
+        "sha256": "a3a8f11e377856e3945436a7596755bef41013427bac4bbe585b341c6d891afc",
+        "bytes": 1058,
+        "width": 19,
+        "height": 15
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/equipment-weapon-category-4x.png",
+        "sha256": "70c25c052c00f2fe945424e523a00ac0c666569b7fda24cdc77714532d25703d",
+        "bytes": 1442,
+        "width": 76,
+        "height": 60
+      },
+      "path": "/assets/original-ui/equipment-weapon-category-4x.png",
+      "sha256": "70c25c052c00f2fe945424e523a00ac0c666569b7fda24cdc77714532d25703d",
+      "width": 76,
+      "height": 60
+    },
+    {
+      "id": "equipment-armor-category",
+      "title": "防具類",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 25,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/25-officer-equipment-original.png",
+      "source_sha256": "e2e287e8c11d275505576a75fe58cba910a8566a026e871df604d653a4bba5fa",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        1090,
+        1320,
+        1208,
+        1408
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/equipment-armor-category.png",
+      "reference_crop_sha256": "14d5028ee7992cee6f126fbca5df4a6a8c8ab15d941d0fbded844e22ef74379f",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/equipment-armor-category.png",
+        "sha256": "14d5028ee7992cee6f126fbca5df4a6a8c8ab15d941d0fbded844e22ef74379f",
+        "bytes": 11519,
+        "width": 118,
+        "height": 88
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/equipment-armor-category.png",
+        "sha256": "0dfc4ce16f9cf4a03015946ed0943f15088334424e4b51eb138730e96379665f",
+        "bytes": 985,
+        "width": 20,
+        "height": 15
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/equipment-armor-category-4x.png",
+        "sha256": "65444290a1319635e277743cfd50230e711680533752e1cf7da78cc006bb0bab",
+        "bytes": 1341,
+        "width": 80,
+        "height": 60
+      },
+      "path": "/assets/original-ui/equipment-armor-category-4x.png",
+      "sha256": "65444290a1319635e277743cfd50230e711680533752e1cf7da78cc006bb0bab",
+      "width": 80,
+      "height": 60
+    },
+    {
+      "id": "event-armory-interior",
+      "title": "武具店",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 6,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/06-weapon-purchase-result.png",
+      "source_sha256": "280f3f251746979f7e6427bd5a386e34ca58af32ad7cb587e29da4bee89c7df1",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        218,
+        351,
+        768,
+        836
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/event-armory-interior.png",
+      "reference_crop_sha256": "af4498daea870b27279f1fc7128f997e30db4f51e4362730e183dbe3382bef8d",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/event-armory-interior.png",
+        "sha256": "af4498daea870b27279f1fc7128f997e30db4f51e4362730e183dbe3382bef8d",
+        "bytes": 204382,
+        "width": 550,
+        "height": 485
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/event-armory-interior.png",
+        "sha256": "e391aac9bd4e685940538cfc7f1b551df1d33a6fb389c468b5d5639fa8e18bc0",
+        "bytes": 10299,
+        "width": 92,
+        "height": 81
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/event-armory-interior-4x.png",
+        "sha256": "43ecd4b01139b2169848e11ad55816f8392ce425b1d92082d08eeef3fd700186",
+        "bytes": 15907,
+        "width": 368,
+        "height": 324
+      },
+      "path": "/assets/original-ui/event-armory-interior-4x.png",
+      "sha256": "43ecd4b01139b2169848e11ad55816f8392ce425b1d92082d08eeef3fd700186",
+      "width": 368,
+      "height": 324
+    },
+    {
+      "id": "event-market-interior",
+      "title": "商人交易",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 20,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/20-market-trade-event.png",
+      "source_sha256": "fba2d113a94675cf532ae33c4f5a4d8f1224010ba998cde9809091bf3317df08",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        218,
+        351,
+        768,
+        836
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/event-market-interior.png",
+      "reference_crop_sha256": "50252fa37a36a9133b81a311c5d058cafe067af0963b45bfffb63783b7cddd16",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/event-market-interior.png",
+        "sha256": "50252fa37a36a9133b81a311c5d058cafe067af0963b45bfffb63783b7cddd16",
+        "bytes": 153821,
+        "width": 550,
+        "height": 485
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/event-market-interior.png",
+        "sha256": "aafac3e8205dd0dbfd53917c34d06b2542698b08705470def5cccab6291424c8",
+        "bytes": 7797,
+        "width": 92,
+        "height": 81
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/event-market-interior-4x.png",
+        "sha256": "b44c1b1b64ff5e8baea3601f933d1abd3cc966ca1fa1b9006617ec86aa289ae1",
+        "bytes": 12373,
+        "width": 368,
+        "height": 324
+      },
+      "path": "/assets/original-ui/event-market-interior-4x.png",
+      "sha256": "b44c1b1b64ff5e8baea3601f933d1abd3cc966ca1fa1b9006617ec86aa289ae1",
+      "width": 368,
+      "height": 324
+    },
+    {
+      "id": "event-sortie",
+      "title": "騎將出陣",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 27,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/27-sortie-illustration.png",
+      "source_sha256": "6639427e83b22d2b1708f0481bb14f6390303a80db5738cdb0d610a754430afa",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        218,
+        351,
+        768,
+        836
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/event-sortie.png",
+      "reference_crop_sha256": "27c72e72251a051de3843b8b7fcbd6a9b745a520a0b61c18d54063aa91e6061d",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/event-sortie.png",
+        "sha256": "27c72e72251a051de3843b8b7fcbd6a9b745a520a0b61c18d54063aa91e6061d",
+        "bytes": 194937,
+        "width": 550,
+        "height": 485
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/event-sortie.png",
+        "sha256": "3200b4144ab7bdc38c1e4ec77593b9541efd6e9b8eb6fc438fcb24521ae6c061",
+        "bytes": 10166,
+        "width": 92,
+        "height": 81
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/event-sortie-4x.png",
+        "sha256": "25d1216ddfd27984df96b4df23c499076f5ad9f174bc34706fa65803f01ff9d3",
+        "bytes": 15753,
+        "width": 368,
+        "height": 324
+      },
+      "path": "/assets/original-ui/event-sortie-4x.png",
+      "sha256": "25d1216ddfd27984df96b4df23c499076f5ad9f174bc34706fa65803f01ff9d3",
+      "width": 368,
+      "height": 324
+    },
+    {
+      "id": "event-decorative-frame",
+      "title": "共用裝飾框",
+      "provenance": "original-capture-derived",
+      "native_dimensions_confirmed": false,
+      "source_capture": 6,
+      "source_file": "art/original-ui-study/2026-10-24/screenshots/06-weapon-purchase-result.png",
+      "source_sha256": "280f3f251746979f7e6427bd5a386e34ca58af32ad7cb587e29da4bee89c7df1",
+      "source_dimensions": [
+        1752,
+        1504
+      ],
+      "rect_xyxy_window_pixels": [
+        110,
+        261,
+        878,
+        930
+      ],
+      "reference_crop_file": "art/original-ui-study/2026-10-24/reference-crops/event-decorative-frame.png",
+      "reference_crop_sha256": "65200ddad34378b5809157fd1ad5cebd031d52449b5e6ce0df43107420712993",
+      "processing": {
+        "window_pixel_step": 6,
+        "pixel_base_dimensions_rule": "round(crop dimension / 6)",
+        "sampling": "Pillow NEAREST, center-of-output-pixel sampling",
+        "pixel_base_is_approximation": true,
+        "palette_quantization": "none; sampled capture colors preserved",
+        "source_filtering_preserved": true,
+        "display_scale": 4,
+        "display_resampling": "Pillow NEAREST"
+      },
+      "source_crop": {
+        "path": "/assets/original-ui/source/event-decorative-frame.png",
+        "sha256": "65200ddad34378b5809157fd1ad5cebd031d52449b5e6ce0df43107420712993",
+        "bytes": 317374,
+        "width": 768,
+        "height": 669
+      },
+      "pixel_base": {
+        "path": "/assets/original-ui/pixel-base/event-decorative-frame.png",
+        "sha256": "cd7557ea7bfb82aad5f6f948d6d6f01d3fe78e5d9151f960c2d2e4ace21e9e18",
+        "bytes": 16174,
+        "width": 128,
+        "height": 112
+      },
+      "display_4x": {
+        "path": "/assets/original-ui/event-decorative-frame-4x.png",
+        "sha256": "609e19afaa8b55dfcce2c45ec4cb7df4f13388b93b321b1e6eac85047467d902",
+        "bytes": 25485,
+        "width": 512,
+        "height": 448
+      },
+      "path": "/assets/original-ui/event-decorative-frame-4x.png",
+      "sha256": "609e19afaa8b55dfcce2c45ec4cb7df4f13388b93b321b1e6eac85047467d902",
+      "width": 512,
+      "height": 448
+    }
+  ],
+  "files": [
+    {
+      "path": "/assets/original-ui/source/facility-armory.png",
+      "sha256": "8b634d5e27ce67a577958a59900dc0e23da3192e1fcb224d4d2c1912ff8255a9",
+      "bytes": 21087,
+      "width": 168,
+      "height": 144,
+      "id": "facility-armory",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/facility-armory.png",
+      "sha256": "758f64cd8e7da0bcf671bc5a8f4fe5f87decbe703f7b8fbd3ccf14eaf70a1d6e",
+      "bytes": 1301,
+      "width": 28,
+      "height": 24,
+      "id": "facility-armory",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/facility-armory-4x.png",
+      "sha256": "347bdf79d9c09c70104e2b441e233ca44e88ab90530ea3b680d6e206f18bb69d",
+      "bytes": 2034,
+      "width": 112,
+      "height": 96,
+      "id": "facility-armory",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/facility-hospital.png",
+      "sha256": "14195a2541838aaeb48a7b37e4f1be100632264a994b46e2d2e475f905b2966e",
+      "bytes": 17000,
+      "width": 168,
+      "height": 144,
+      "id": "facility-hospital",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/facility-hospital.png",
+      "sha256": "470ad2e49dce3a448a55c815121e63c93c10e8d0365ffc76602132c44ea69bda",
+      "bytes": 1291,
+      "width": 28,
+      "height": 24,
+      "id": "facility-hospital",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/facility-hospital-4x.png",
+      "sha256": "1d850076d7f1ffa6a58bcf24d0f227bf108756cd3649ec2612276f1982600982",
+      "bytes": 1815,
+      "width": 112,
+      "height": 96,
+      "id": "facility-hospital",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/facility-market.png",
+      "sha256": "2219e2f47b51784eb0632f437cb07686dd47641a1ba33c4824e3c4a459e43260",
+      "bytes": 18965,
+      "width": 168,
+      "height": 144,
+      "id": "facility-market",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/facility-market.png",
+      "sha256": "cf7988c7847200b2c93b07b30ef214bddcf4a6cda93a9be8809e1534c32dabb1",
+      "bytes": 1366,
+      "width": 28,
+      "height": 24,
+      "id": "facility-market",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/facility-market-4x.png",
+      "sha256": "bd6ff434fc60e613ea3bda85dd9cd40fcde39a3b049604c1c79818d5dd4f3ec1",
+      "bytes": 1956,
+      "width": 112,
+      "height": 96,
+      "id": "facility-market",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/facility-school.png",
+      "sha256": "deb032040a00406887af74cad003070d453568e9627ec2c9947c61e413889035",
+      "bytes": 13043,
+      "width": 168,
+      "height": 144,
+      "id": "facility-school",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/facility-school.png",
+      "sha256": "d17c2fea7be95a3b8078589d249376f339800da4747da906e51779c6c77e2ca2",
+      "bytes": 1111,
+      "width": 28,
+      "height": 24,
+      "id": "facility-school",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/facility-school-4x.png",
+      "sha256": "06f58728523e79840b5e9b12d400dff24feade8a6159ad30975fb5cd070fabde",
+      "bytes": 1588,
+      "width": 112,
+      "height": 96,
+      "id": "facility-school",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/command-city.png",
+      "sha256": "d3d63c167dd83b60e3e0515c1e9fd29ddc08186054aa796dd148220b266cc6fc",
+      "bytes": 38106,
+      "width": 220,
+      "height": 193,
+      "id": "command-city",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/command-city.png",
+      "sha256": "732d2bb9257bb66cafbfcebc357df7fc2551acc8b4f20e83e16daf1b90b43e9c",
+      "bytes": 2167,
+      "width": 37,
+      "height": 32,
+      "id": "command-city",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/command-city-4x.png",
+      "sha256": "b478167b80db997ce966ae1b0d8d20a700d2bcb585c38de3ba785cce9752e372",
+      "bytes": 3312,
+      "width": 148,
+      "height": 128,
+      "id": "command-city",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/command-army.png",
+      "sha256": "13c4d4590951d7ed68fde8fe81b7eb9c43fa0c17343033fb9fe4a12d6d95e3d5",
+      "bytes": 32405,
+      "width": 220,
+      "height": 193,
+      "id": "command-army",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/command-army.png",
+      "sha256": "fdda705bb28d177593f9f654bd5d33dec704ff94474bfa2f0dc10d78bdb1de3b",
+      "bytes": 1948,
+      "width": 37,
+      "height": 32,
+      "id": "command-army",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/command-army-4x.png",
+      "sha256": "9af04aa46919d8eaa6f9fdbc6cb55f5bb87b1da8062fb6661cb99741cb33b148",
+      "bytes": 3075,
+      "width": 148,
+      "height": 128,
+      "id": "command-army",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/command-warehouse.png",
+      "sha256": "448a46c7db70b4985931b8dba87cc84f80d84abf522e7501a7dfb74456b11c3e",
+      "bytes": 48294,
+      "width": 220,
+      "height": 193,
+      "id": "command-warehouse",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/command-warehouse.png",
+      "sha256": "17f52d7cf54753e9e134b6fd7b76ba6383a60ee80369d4a0a6c221a7acd8403c",
+      "bytes": 2749,
+      "width": 37,
+      "height": 32,
+      "id": "command-warehouse",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/command-warehouse-4x.png",
+      "sha256": "717a40d9ab5ea01e09b7aa86526f88bb12416b6882e34c9bd710cd3483d04df2",
+      "bytes": 4052,
+      "width": 148,
+      "height": 128,
+      "id": "command-warehouse",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/command-town.png",
+      "sha256": "5200aacfa8119488f1b32402c95b16da370643709c992da9b3929da7519a8e40",
+      "bytes": 46819,
+      "width": 222,
+      "height": 193,
+      "id": "command-town",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/command-town.png",
+      "sha256": "3beff633b389dda1b22355a5b1f9e4666497e177b56022adaae131fc0369e86d",
+      "bytes": 2622,
+      "width": 37,
+      "height": 32,
+      "id": "command-town",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/command-town-4x.png",
+      "sha256": "67dfea9a1d996d79f57291c92dd524f1ef20f79920acdd490489121597c79a24",
+      "bytes": 3957,
+      "width": 148,
+      "height": 128,
+      "id": "command-town",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/equipment-weapon-category.png",
+      "sha256": "07bf23fdc408f379501d5367f505396adc0acdd5e890b8806d9ef53b9e2e9d9e",
+      "bytes": 13270,
+      "width": 114,
+      "height": 88,
+      "id": "equipment-weapon-category",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/equipment-weapon-category.png",
+      "sha256": "a3a8f11e377856e3945436a7596755bef41013427bac4bbe585b341c6d891afc",
+      "bytes": 1058,
+      "width": 19,
+      "height": 15,
+      "id": "equipment-weapon-category",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/equipment-weapon-category-4x.png",
+      "sha256": "70c25c052c00f2fe945424e523a00ac0c666569b7fda24cdc77714532d25703d",
+      "bytes": 1442,
+      "width": 76,
+      "height": 60,
+      "id": "equipment-weapon-category",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/equipment-armor-category.png",
+      "sha256": "14d5028ee7992cee6f126fbca5df4a6a8c8ab15d941d0fbded844e22ef74379f",
+      "bytes": 11519,
+      "width": 118,
+      "height": 88,
+      "id": "equipment-armor-category",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/equipment-armor-category.png",
+      "sha256": "0dfc4ce16f9cf4a03015946ed0943f15088334424e4b51eb138730e96379665f",
+      "bytes": 985,
+      "width": 20,
+      "height": 15,
+      "id": "equipment-armor-category",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/equipment-armor-category-4x.png",
+      "sha256": "65444290a1319635e277743cfd50230e711680533752e1cf7da78cc006bb0bab",
+      "bytes": 1341,
+      "width": 80,
+      "height": 60,
+      "id": "equipment-armor-category",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/event-armory-interior.png",
+      "sha256": "af4498daea870b27279f1fc7128f997e30db4f51e4362730e183dbe3382bef8d",
+      "bytes": 204382,
+      "width": 550,
+      "height": 485,
+      "id": "event-armory-interior",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/event-armory-interior.png",
+      "sha256": "e391aac9bd4e685940538cfc7f1b551df1d33a6fb389c468b5d5639fa8e18bc0",
+      "bytes": 10299,
+      "width": 92,
+      "height": 81,
+      "id": "event-armory-interior",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/event-armory-interior-4x.png",
+      "sha256": "43ecd4b01139b2169848e11ad55816f8392ce425b1d92082d08eeef3fd700186",
+      "bytes": 15907,
+      "width": 368,
+      "height": 324,
+      "id": "event-armory-interior",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/event-market-interior.png",
+      "sha256": "50252fa37a36a9133b81a311c5d058cafe067af0963b45bfffb63783b7cddd16",
+      "bytes": 153821,
+      "width": 550,
+      "height": 485,
+      "id": "event-market-interior",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/event-market-interior.png",
+      "sha256": "aafac3e8205dd0dbfd53917c34d06b2542698b08705470def5cccab6291424c8",
+      "bytes": 7797,
+      "width": 92,
+      "height": 81,
+      "id": "event-market-interior",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/event-market-interior-4x.png",
+      "sha256": "b44c1b1b64ff5e8baea3601f933d1abd3cc966ca1fa1b9006617ec86aa289ae1",
+      "bytes": 12373,
+      "width": 368,
+      "height": 324,
+      "id": "event-market-interior",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/event-sortie.png",
+      "sha256": "27c72e72251a051de3843b8b7fcbd6a9b745a520a0b61c18d54063aa91e6061d",
+      "bytes": 194937,
+      "width": 550,
+      "height": 485,
+      "id": "event-sortie",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/event-sortie.png",
+      "sha256": "3200b4144ab7bdc38c1e4ec77593b9541efd6e9b8eb6fc438fcb24521ae6c061",
+      "bytes": 10166,
+      "width": 92,
+      "height": 81,
+      "id": "event-sortie",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/event-sortie-4x.png",
+      "sha256": "25d1216ddfd27984df96b4df23c499076f5ad9f174bc34706fa65803f01ff9d3",
+      "bytes": 15753,
+      "width": 368,
+      "height": 324,
+      "id": "event-sortie",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/source/event-decorative-frame.png",
+      "sha256": "65200ddad34378b5809157fd1ad5cebd031d52449b5e6ce0df43107420712993",
+      "bytes": 317374,
+      "width": 768,
+      "height": 669,
+      "id": "event-decorative-frame",
+      "variant": "source_crop",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/pixel-base/event-decorative-frame.png",
+      "sha256": "cd7557ea7bfb82aad5f6f948d6d6f01d3fe78e5d9151f960c2d2e4ace21e9e18",
+      "bytes": 16174,
+      "width": 128,
+      "height": 112,
+      "id": "event-decorative-frame",
+      "variant": "pixel_base",
+      "provenance": "original-capture-derived"
+    },
+    {
+      "path": "/assets/original-ui/event-decorative-frame-4x.png",
+      "sha256": "609e19afaa8b55dfcce2c45ec4cb7df4f13388b93b321b1e6eac85047467d902",
+      "bytes": 25485,
+      "width": 512,
+      "height": 448,
+      "id": "event-decorative-frame",
+      "variant": "display_4x",
+      "provenance": "original-capture-derived"
+    }
+  ]
+}

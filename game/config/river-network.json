@@ -1,0 +1,6269 @@
+{
+  "schema": "tk2-river-network-v1",
+  "policy": "Each upstream-to-downstream reach is authored once. City connections reference shared reaches; no all-pairs duplicate rivers. Land approaches join the city-icon center and one shared game port.",
+  "survey": {
+    "water_source": "game/map-source/historic-water.svg",
+    "wei_correction": "game/config/water-corrections.json",
+    "method": "Reviewed river centerline samples traced within the existing named blue-water masks, with the accepted corrected Wei confluence. No terrain or river pixels are changed. Pixel and geographic port coordinates are authorial game calibrations, not identified ancient harbours."
+  },
+  "rivers": {
+    "yangtze": {
+      "name_tc": "長江",
+      "name_ja": "長江",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷36",
+        "https://zh.wikisource.org/zh-hant/三國志/卷54",
+        "https://zh.wikisource.org/zh-hant/水經注/35"
+      ]
+    },
+    "xiang": {
+      "name_tc": "湘水（含洞庭出口）",
+      "name_ja": "湘水（洞庭出口を含む）",
+      "speed_key": "xiang",
+      "sources": [
+        "https://zh.wikisource.org/wiki/水經注/38"
+      ]
+    },
+    "han": {
+      "name_tc": "漢水",
+      "name_ja": "漢水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/wiki/三國志/卷40",
+        "https://zh.wikisource.org/wiki/水經注/27"
+      ]
+    },
+    "wei": {
+      "name_tc": "渭水",
+      "name_ja": "渭水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/wiki/水經注/17"
+      ]
+    },
+    "yellow": {
+      "name_tc": "黃河",
+      "name_ja": "黄河",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/wiki/水經注/05",
+        "https://zh.wikisource.org/zh-hant/三國志/卷16"
+      ]
+    },
+    "min": {
+      "name_tc": "岷水",
+      "name_ja": "岷水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷36",
+        "https://zh.wikisource.org/wiki/水經注/33"
+      ]
+    },
+    "jialing": {
+      "name_tc": "嘉陵水",
+      "name_ja": "嘉陵水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/zh-hant/三國志/卷36",
+        "https://zh.wikisource.org/wiki/水經注/33"
+      ]
+    },
+    "yuan": {
+      "name_tc": "沅水",
+      "name_ja": "沅水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/wiki/水經注/37"
+      ]
+    },
+    "gan": {
+      "name_tc": "贛水",
+      "name_ja": "贛水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://ctext.org/text.pl?if=gb&node=570600"
+      ]
+    },
+    "pengli_out": {
+      "name_tc": "彭蠡出口",
+      "name_ja": "彭蠡の出口",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://ctext.org/text.pl?if=gb&node=570600"
+      ]
+    },
+    "huai": {
+      "name_tc": "淮水",
+      "name_ja": "淮水",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/wiki/水經注/30"
+      ]
+    },
+    "pearl": {
+      "name_tc": "鬱水・珠江水系",
+      "name_ja": "鬱水・珠江水系",
+      "speed_key": "yangtze",
+      "sources": [
+        "https://zh.wikisource.org/wiki/水經注/37"
+      ]
+    }
+  },
+  "nodes": {
+    "yangtze:jiangyang": {
+      "position": [
+        335,
+        602
+      ],
+      "geo": [
+        105.44,
+        28.87
+      ]
+    },
+    "yangtze:bajun": {
+      "position": [
+        404,
+        578
+      ],
+      "geo": [
+        106.58,
+        29.55
+      ]
+    },
+    "yangtze:fuling": {
+      "position": [
+        491,
+        578
+      ],
+      "geo": [
+        107.4,
+        29.7
+      ]
+    },
+    "yangtze:badong": {
+      "position": [
+        568,
+        507
+      ],
+      "geo": [
+        109.57,
+        31.03
+      ]
+    },
+    "yangtze:yidu": {
+      "position": [
+        648,
+        502
+      ],
+      "geo": [
+        111.45,
+        30.39
+      ]
+    },
+    "yangtze:nanjun": {
+      "position": [
+        691,
+        532
+      ],
+      "geo": [
+        112.25,
+        30.3
+      ]
+    },
+    "yangtze:dongting": {
+      "position": [
+        737,
+        525
+      ],
+      "geo": [
+        113.13,
+        29.43
+      ]
+    },
+    "yangtze:jiangxia": {
+      "position": [
+        817,
+        527
+      ],
+      "geo": [
+        114.3,
+        30.27
+      ]
+    },
+    "yangtze:hankou": {
+      "position": [
+        845,
+        525
+      ],
+      "geo": [
+        114.28,
+        30.56
+      ]
+    },
+    "yangtze:wuchang": {
+      "position": [
+        860,
+        539
+      ],
+      "geo": [
+        114.88,
+        30.38
+      ]
+    },
+    "yangtze:qichun": {
+      "position": [
+        880,
+        547
+      ],
+      "geo": [
+        115.32,
+        30.1
+      ]
+    },
+    "yangtze:lujiang": {
+      "position": [
+        968,
+        502
+      ],
+      "geo": [
+        117.1,
+        30.8
+      ]
+    },
+    "yangtze:danyang": {
+      "position": [
+        1050,
+        401
+      ],
+      "geo": [
+        118.78,
+        32.05
+      ]
+    },
+    "yangtze:wujun": {
+      "position": [
+        1145,
+        427
+      ],
+      "geo": [
+        120.66,
+        31.95
+      ]
+    },
+    "xiang:changsha": {
+      "position": [
+        701,
+        580
+      ],
+      "geo": [
+        112.97,
+        28.24
+      ]
+    },
+    "han:hanzhong": {
+      "position": [
+        421,
+        439
+      ],
+      "geo": [
+        107.0,
+        33.0
+      ]
+    },
+    "han:xincheng": {
+      "position": [
+        605,
+        455
+      ],
+      "geo": [
+        110.75,
+        32.03
+      ]
+    },
+    "han:xiangyang": {
+      "position": [
+        763,
+        432
+      ],
+      "geo": [
+        112.15,
+        32.02
+      ]
+    },
+    "wei:fufeng": {
+      "position": [
+        420,
+        325
+      ],
+      "geo": [
+        108.5,
+        34.28
+      ]
+    },
+    "wei:jingzhao": {
+      "position": [
+        495,
+        323
+      ],
+      "geo": [
+        108.94,
+        34.36
+      ]
+    },
+    "wei:fengyi": {
+      "position": [
+        567,
+        321
+      ],
+      "geo": [
+        109.94,
+        34.78
+      ]
+    },
+    "wei:tongguan": {
+      "position": [
+        639,
+        326
+      ],
+      "geo": [
+        110.25,
+        34.61
+      ]
+    },
+    "yellow:hongnong": {
+      "position": [
+        641,
+        326
+      ],
+      "geo": [
+        110.93,
+        34.7
+      ]
+    },
+    "yellow:hedong": {
+      "position": [
+        657,
+        325
+      ],
+      "geo": [
+        111.16,
+        34.87
+      ]
+    },
+    "yellow:henan": {
+      "position": [
+        691,
+        320
+      ],
+      "geo": [
+        112.6,
+        34.88
+      ]
+    },
+    "yellow:henei": {
+      "position": [
+        710,
+        316
+      ],
+      "geo": [
+        113.26,
+        34.93
+      ]
+    },
+    "yellow:wei": {
+      "position": [
+        811,
+        278
+      ],
+      "geo": [
+        114.4,
+        35.75
+      ]
+    },
+    "yellow:dongjun": {
+      "position": [
+        825,
+        273
+      ],
+      "geo": [
+        115.02,
+        35.75
+      ]
+    },
+    "yellow:qinghe": {
+      "position": [
+        873,
+        245
+      ],
+      "geo": [
+        115.87,
+        36.92
+      ]
+    },
+    "yellow:pingyuan": {
+      "position": [
+        932,
+        218
+      ],
+      "geo": [
+        116.44,
+        37.02
+      ]
+    },
+    "yellow:jinan": {
+      "position": [
+        964,
+        199
+      ],
+      "geo": [
+        117.42,
+        36.85
+      ]
+    },
+    "min:wenshan": {
+      "position": [
+        212,
+        454
+      ],
+      "geo": [
+        103.6,
+        31.45
+      ]
+    },
+    "min:shujun": {
+      "position": [
+        233,
+        491
+      ],
+      "geo": [
+        104.08,
+        30.63
+      ]
+    },
+    "min:qianwei": {
+      "position": [
+        237,
+        541
+      ],
+      "geo": [
+        103.86,
+        30.05
+      ]
+    },
+    "min:nanguang": {
+      "position": [
+        288,
+        597
+      ],
+      "geo": [
+        104.6,
+        28.77
+      ]
+    },
+    "jialing:jiameng": {
+      "position": [
+        353,
+        413
+      ],
+      "geo": [
+        105.72,
+        32.3
+      ]
+    },
+    "jialing:baxi": {
+      "position": [
+        349,
+        449
+      ],
+      "geo": [
+        105.96,
+        31.56
+      ]
+    },
+    "xiang:lingling": {
+      "position": [
+        687,
+        658
+      ],
+      "geo": [
+        111.61,
+        26.21
+      ]
+    },
+    "xiang:yuan": {
+      "position": [
+        716,
+        549
+      ],
+      "geo": [
+        112.8,
+        29.2
+      ]
+    },
+    "yuan:wuling": {
+      "position": [
+        664,
+        566
+      ],
+      "geo": [
+        111.69,
+        29.03
+      ]
+    },
+    "yangtze:pengli": {
+      "position": [
+        927,
+        543
+      ],
+      "geo": [
+        116.22,
+        29.76
+      ]
+    },
+    "gan:luling": {
+      "position": [
+        878,
+        650
+      ],
+      "geo": [
+        114.93,
+        26.98
+      ]
+    },
+    "gan:linchuan": {
+      "position": [
+        923,
+        611
+      ],
+      "geo": [
+        115.9,
+        27.9
+      ]
+    },
+    "gan:yuzhang": {
+      "position": [
+        933,
+        579
+      ],
+      "geo": [
+        115.88,
+        28.68
+      ]
+    },
+    "gan:poyang": {
+      "position": [
+        934,
+        563
+      ],
+      "geo": [
+        116.2,
+        29.0
+      ]
+    },
+    "huai:runan": {
+      "position": [
+        816,
+        432
+      ],
+      "geo": [
+        114.98,
+        32.6
+      ]
+    },
+    "huai:jiujiang": {
+      "position": [
+        945,
+        381
+      ],
+      "geo": [
+        116.78,
+        32.6
+      ]
+    },
+    "pearl:yulin": {
+      "position": [
+        560,
+        755
+      ],
+      "geo": [
+        109.61,
+        23.1
+      ]
+    },
+    "pearl:cangwu": {
+      "position": [
+        611,
+        793
+      ],
+      "geo": [
+        111.31,
+        23.49
+      ]
+    },
+    "pearl:nanhai": {
+      "position": [
+        737,
+        796
+      ],
+      "geo": [
+        113.256,
+        23.13
+      ]
+    },
+    "wei:tianshui": {
+      "position": [
+        369,
+        339
+      ],
+      "geo": [
+        105.39,
+        34.74
+      ]
+    }
+  },
+  "ports": {
+    "jiangyang": {
+      "node": "yangtze:jiangyang",
+      "access": [
+        [
+          281,
+          563
+        ],
+        [
+          335,
+          602
+        ]
+      ]
+    },
+    "bajun": {
+      "node": "yangtze:bajun",
+      "access": [
+        [
+          398,
+          553
+        ],
+        [
+          404,
+          578
+        ]
+      ]
+    },
+    "fuling": {
+      "node": "yangtze:fuling",
+      "access": [
+        [
+          474,
+          549
+        ],
+        [
+          491,
+          578
+        ]
+      ]
+    },
+    "badong": {
+      "node": "yangtze:badong",
+      "access": [
+        [
+          555,
+          476
+        ],
+        [
+          568,
+          507
+        ]
+      ]
+    },
+    "yidu": {
+      "node": "yangtze:yidu",
+      "access": [
+        [
+          647,
+          472
+        ],
+        [
+          648,
+          502
+        ]
+      ]
+    },
+    "nanjun": {
+      "node": "yangtze:nanjun",
+      "access": [
+        [
+          691,
+          503
+        ],
+        [
+          691,
+          532
+        ]
+      ]
+    },
+    "jiangxia": {
+      "node": "yangtze:jiangxia",
+      "access": [
+        [
+          817,
+          496
+        ],
+        [
+          817,
+          527
+        ]
+      ]
+    },
+    "wuchang": {
+      "node": "yangtze:wuchang",
+      "access": [
+        [
+          857,
+          474
+        ],
+        [
+          857,
+          533
+        ],
+        [
+          858,
+          534
+        ],
+        [
+          858,
+          535
+        ],
+        [
+          859,
+          536
+        ],
+        [
+          859,
+          538
+        ],
+        [
+          860,
+          539
+        ]
+      ]
+    },
+    "qichun": {
+      "node": "yangtze:qichun",
+      "access": [
+        [
+          874,
+          512
+        ],
+        [
+          880,
+          547
+        ]
+      ]
+    },
+    "lujiang": {
+      "node": "yangtze:lujiang",
+      "access": [
+        [
+          925,
+          454
+        ],
+        [
+          968,
+          502
+        ]
+      ]
+    },
+    "danyang": {
+      "node": "yangtze:danyang",
+      "access": [
+        [
+          1050,
+          427
+        ],
+        [
+          1050,
+          401
+        ]
+      ]
+    },
+    "wujun": {
+      "node": "yangtze:wujun",
+      "access": [
+        [
+          1142,
+          456
+        ],
+        [
+          1145,
+          427
+        ]
+      ]
+    },
+    "changsha": {
+      "node": "xiang:changsha",
+      "access": [
+        [
+          727,
+          577
+        ],
+        [
+          716,
+          580
+        ],
+        [
+          701,
+          580
+        ]
+      ]
+    },
+    "hanzhong": {
+      "node": "han:hanzhong",
+      "access": [
+        [
+          421,
+          411
+        ],
+        [
+          421,
+          429
+        ],
+        [
+          423,
+          431
+        ],
+        [
+          423,
+          432
+        ],
+        [
+          424,
+          433
+        ],
+        [
+          423,
+          434
+        ],
+        [
+          423,
+          435
+        ],
+        [
+          422,
+          436
+        ],
+        [
+          422,
+          438
+        ],
+        [
+          421,
+          439
+        ]
+      ]
+    },
+    "xincheng": {
+      "node": "han:xincheng",
+      "access": [
+        [
+          610,
+          427
+        ],
+        [
+          605,
+          455
+        ]
+      ]
+    },
+    "xiangyang": {
+      "node": "han:xiangyang",
+      "access": [
+        [
+          764,
+          403
+        ],
+        [
+          763,
+          432
+        ]
+      ]
+    },
+    "fufeng": {
+      "node": "wei:fufeng",
+      "access": [
+        [
+          420,
+          341
+        ],
+        [
+          420,
+          325
+        ]
+      ]
+    },
+    "jingzhao": {
+      "node": "wei:jingzhao",
+      "access": [
+        [
+          497,
+          354
+        ],
+        [
+          495,
+          323
+        ]
+      ]
+    },
+    "fengyi": {
+      "node": "wei:fengyi",
+      "access": [
+        [
+          567,
+          327
+        ],
+        [
+          567,
+          321
+        ]
+      ]
+    },
+    "hongnong": {
+      "node": "yellow:hongnong",
+      "access": [
+        [
+          620,
+          346
+        ],
+        [
+          641,
+          326
+        ]
+      ]
+    },
+    "hedong": {
+      "node": "yellow:hedong",
+      "access": [
+        [
+          657,
+          385
+        ],
+        [
+          657,
+          379
+        ],
+        [
+          655,
+          377
+        ],
+        [
+          655,
+          370
+        ],
+        [
+          654,
+          369
+        ],
+        [
+          654,
+          362
+        ],
+        [
+          649,
+          357
+        ],
+        [
+          649,
+          343
+        ],
+        [
+          650,
+          342
+        ],
+        [
+          650,
+          340
+        ],
+        [
+          651,
+          339
+        ],
+        [
+          651,
+          338
+        ],
+        [
+          652,
+          337
+        ],
+        [
+          652,
+          335
+        ],
+        [
+          653,
+          334
+        ],
+        [
+          653,
+          333
+        ],
+        [
+          654,
+          332
+        ],
+        [
+          654,
+          331
+        ],
+        [
+          655,
+          330
+        ],
+        [
+          655,
+          329
+        ],
+        [
+          656,
+          328
+        ],
+        [
+          656,
+          326
+        ],
+        [
+          657,
+          325
+        ]
+      ]
+    },
+    "henan": {
+      "node": "yellow:henan",
+      "access": [
+        [
+          695,
+          346
+        ],
+        [
+          691,
+          320
+        ]
+      ]
+    },
+    "henei": {
+      "node": "yellow:henei",
+      "access": [
+        [
+          666,
+          301
+        ],
+        [
+          710,
+          316
+        ]
+      ]
+    },
+    "wei": {
+      "node": "yellow:wei",
+      "access": [
+        [
+          796,
+          254
+        ],
+        [
+          811,
+          278
+        ]
+      ]
+    },
+    "dongjun": {
+      "node": "yellow:dongjun",
+      "access": [
+        [
+          833,
+          284
+        ],
+        [
+          825,
+          273
+        ]
+      ]
+    },
+    "qinghe": {
+      "node": "yellow:qinghe",
+      "access": [
+        [
+          873,
+          245
+        ],
+        [
+          873,
+          245
+        ]
+      ]
+    },
+    "pingyuan": {
+      "node": "yellow:pingyuan",
+      "access": [
+        [
+          918,
+          202
+        ],
+        [
+          932,
+          218
+        ]
+      ]
+    },
+    "jinan": {
+      "node": "yellow:jinan",
+      "access": [
+        [
+          970,
+          214
+        ],
+        [
+          964,
+          199
+        ]
+      ]
+    },
+    "wenshan": {
+      "node": "min:wenshan",
+      "access": [
+        [
+          173,
+          454
+        ],
+        [
+          212,
+          454
+        ]
+      ]
+    },
+    "shujun": {
+      "node": "min:shujun",
+      "access": [
+        [
+          214,
+          502
+        ],
+        [
+          233,
+          491
+        ]
+      ]
+    },
+    "qianwei": {
+      "node": "min:qianwei",
+      "access": [
+        [
+          213,
+          554
+        ],
+        [
+          237,
+          541
+        ]
+      ]
+    },
+    "nanguang": {
+      "node": "min:nanguang",
+      "access": [
+        [
+          281,
+          615
+        ],
+        [
+          288,
+          597
+        ]
+      ]
+    },
+    "jiameng": {
+      "node": "jialing:jiameng",
+      "access": [
+        [
+          360,
+          414
+        ],
+        [
+          353,
+          413
+        ]
+      ]
+    },
+    "baxi": {
+      "node": "jialing:baxi",
+      "access": [
+        [
+          382,
+          450
+        ],
+        [
+          349,
+          449
+        ]
+      ]
+    },
+    "lingling": {
+      "node": "xiang:lingling",
+      "access": [
+        [
+          656,
+          655
+        ],
+        [
+          687,
+          658
+        ]
+      ]
+    },
+    "wuling": {
+      "node": "yuan:wuling",
+      "access": [
+        [
+          660,
+          545
+        ],
+        [
+          664,
+          566
+        ]
+      ]
+    },
+    "luling": {
+      "node": "gan:luling",
+      "access": [
+        [
+          828,
+          630
+        ],
+        [
+          878,
+          650
+        ]
+      ]
+    },
+    "linchuan": {
+      "node": "gan:linchuan",
+      "access": [
+        [
+          935,
+          619
+        ],
+        [
+          923,
+          611
+        ]
+      ]
+    },
+    "yuzhang": {
+      "node": "gan:yuzhang",
+      "access": [
+        [
+          904,
+          579
+        ],
+        [
+          933,
+          579
+        ]
+      ]
+    },
+    "poyang": {
+      "node": "gan:poyang",
+      "access": [
+        [
+          969,
+          568
+        ],
+        [
+          934,
+          563
+        ]
+      ]
+    },
+    "runan": {
+      "node": "huai:runan",
+      "access": [
+        [
+          835,
+          410
+        ],
+        [
+          816,
+          432
+        ]
+      ]
+    },
+    "jiujiang": {
+      "node": "huai:jiujiang",
+      "access": [
+        [
+          945,
+          406
+        ],
+        [
+          945,
+          381
+        ]
+      ]
+    },
+    "yulin": {
+      "node": "pearl:yulin",
+      "access": [
+        [
+          550,
+          771
+        ],
+        [
+          560,
+          755
+        ]
+      ]
+    },
+    "cangwu": {
+      "node": "pearl:cangwu",
+      "access": [
+        [
+          635,
+          776
+        ],
+        [
+          611,
+          793
+        ]
+      ]
+    },
+    "nanhai": {
+      "node": "pearl:nanhai",
+      "access": [
+        [
+          741,
+          775
+        ],
+        [
+          737,
+          796
+        ]
+      ]
+    },
+    "tianshui": {
+      "node": "wei:tianshui",
+      "access": [
+        [
+          370,
+          362
+        ],
+        [
+          369,
+          339
+        ]
+      ]
+    }
+  },
+  "reaches": [
+    {
+      "id": "yangtze:jiangyang:bajun",
+      "river": "yangtze",
+      "from": "yangtze:jiangyang",
+      "to": "yangtze:bajun",
+      "points": [
+        [
+          335,
+          602
+        ],
+        [
+          338,
+          601
+        ],
+        [
+          341,
+          601
+        ],
+        [
+          344,
+          599
+        ],
+        [
+          347,
+          599
+        ],
+        [
+          350,
+          598
+        ],
+        [
+          353,
+          595
+        ],
+        [
+          356,
+          594
+        ],
+        [
+          359,
+          593
+        ],
+        [
+          362,
+          591
+        ],
+        [
+          365,
+          589
+        ],
+        [
+          368,
+          588
+        ],
+        [
+          371,
+          586
+        ],
+        [
+          374,
+          584
+        ],
+        [
+          377,
+          583
+        ],
+        [
+          380,
+          583
+        ],
+        [
+          383,
+          583
+        ],
+        [
+          386,
+          583
+        ],
+        [
+          389,
+          583
+        ],
+        [
+          392,
+          581
+        ],
+        [
+          395,
+          581
+        ],
+        [
+          398,
+          579
+        ],
+        [
+          401,
+          579
+        ],
+        [
+          404,
+          578
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:bajun:fuling",
+      "river": "yangtze",
+      "from": "yangtze:bajun",
+      "to": "yangtze:fuling",
+      "points": [
+        [
+          404,
+          578
+        ],
+        [
+          407,
+          578
+        ],
+        [
+          410,
+          578
+        ],
+        [
+          413,
+          578
+        ],
+        [
+          416,
+          578
+        ],
+        [
+          419,
+          580
+        ],
+        [
+          422,
+          580
+        ],
+        [
+          425,
+          580
+        ],
+        [
+          428,
+          580
+        ],
+        [
+          431,
+          582
+        ],
+        [
+          434,
+          582
+        ],
+        [
+          437,
+          582
+        ],
+        [
+          440,
+          582
+        ],
+        [
+          443,
+          582
+        ],
+        [
+          446,
+          582
+        ],
+        [
+          449,
+          582
+        ],
+        [
+          452,
+          582
+        ],
+        [
+          455,
+          582
+        ],
+        [
+          458,
+          583
+        ],
+        [
+          461,
+          583
+        ],
+        [
+          464,
+          583
+        ],
+        [
+          467,
+          583
+        ],
+        [
+          470,
+          583
+        ],
+        [
+          473,
+          583
+        ],
+        [
+          476,
+          583
+        ],
+        [
+          479,
+          583
+        ],
+        [
+          482,
+          583
+        ],
+        [
+          485,
+          583
+        ],
+        [
+          488,
+          580
+        ],
+        [
+          491,
+          578
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:fuling:badong",
+      "river": "yangtze",
+      "from": "yangtze:fuling",
+      "to": "yangtze:badong",
+      "points": [
+        [
+          491,
+          578
+        ],
+        [
+          493,
+          575
+        ],
+        [
+          496,
+          572
+        ],
+        [
+          499,
+          569
+        ],
+        [
+          502,
+          567
+        ],
+        [
+          505,
+          565
+        ],
+        [
+          508,
+          562
+        ],
+        [
+          511,
+          559
+        ],
+        [
+          514,
+          556
+        ],
+        [
+          517,
+          553
+        ],
+        [
+          520,
+          550
+        ],
+        [
+          522,
+          547
+        ],
+        [
+          525,
+          544
+        ],
+        [
+          528,
+          541
+        ],
+        [
+          530,
+          538
+        ],
+        [
+          533,
+          535
+        ],
+        [
+          535,
+          532
+        ],
+        [
+          538,
+          529
+        ],
+        [
+          541,
+          527
+        ],
+        [
+          544,
+          525
+        ],
+        [
+          547,
+          523
+        ],
+        [
+          550,
+          520
+        ],
+        [
+          553,
+          518
+        ],
+        [
+          556,
+          515
+        ],
+        [
+          559,
+          512
+        ],
+        [
+          562,
+          511
+        ],
+        [
+          565,
+          509
+        ],
+        [
+          568,
+          507
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:badong:yidu",
+      "river": "yangtze",
+      "from": "yangtze:badong",
+      "to": "yangtze:yidu",
+      "points": [
+        [
+          568,
+          507
+        ],
+        [
+          571,
+          506
+        ],
+        [
+          574,
+          505
+        ],
+        [
+          577,
+          505
+        ],
+        [
+          580,
+          505
+        ],
+        [
+          583,
+          503
+        ],
+        [
+          586,
+          503
+        ],
+        [
+          589,
+          503
+        ],
+        [
+          592,
+          503
+        ],
+        [
+          595,
+          503
+        ],
+        [
+          598,
+          503
+        ],
+        [
+          601,
+          503
+        ],
+        [
+          604,
+          502
+        ],
+        [
+          607,
+          501
+        ],
+        [
+          610,
+          501
+        ],
+        [
+          613,
+          501
+        ],
+        [
+          616,
+          500
+        ],
+        [
+          619,
+          500
+        ],
+        [
+          622,
+          500
+        ],
+        [
+          625,
+          500
+        ],
+        [
+          628,
+          500
+        ],
+        [
+          631,
+          500
+        ],
+        [
+          634,
+          500
+        ],
+        [
+          637,
+          500
+        ],
+        [
+          640,
+          500
+        ],
+        [
+          643,
+          501
+        ],
+        [
+          646,
+          501
+        ],
+        [
+          648,
+          502
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:yidu:nanjun",
+      "river": "yangtze",
+      "from": "yangtze:yidu",
+      "to": "yangtze:nanjun",
+      "points": [
+        [
+          648,
+          502
+        ],
+        [
+          651,
+          502
+        ],
+        [
+          654,
+          505
+        ],
+        [
+          656,
+          508
+        ],
+        [
+          657,
+          511
+        ],
+        [
+          660,
+          514
+        ],
+        [
+          663,
+          517
+        ],
+        [
+          665,
+          520
+        ],
+        [
+          666,
+          523
+        ],
+        [
+          668,
+          526
+        ],
+        [
+          671,
+          529
+        ],
+        [
+          674,
+          530
+        ],
+        [
+          677,
+          530
+        ],
+        [
+          680,
+          530
+        ],
+        [
+          683,
+          530
+        ],
+        [
+          686,
+          530
+        ],
+        [
+          689,
+          530
+        ],
+        [
+          691,
+          532
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:nanjun:dongting",
+      "river": "yangtze",
+      "from": "yangtze:nanjun",
+      "to": "yangtze:dongting",
+      "points": [
+        [
+          691,
+          532
+        ],
+        [
+          694,
+          531
+        ],
+        [
+          697,
+          531
+        ],
+        [
+          700,
+          531
+        ],
+        [
+          703,
+          531
+        ],
+        [
+          706,
+          531
+        ],
+        [
+          709,
+          531
+        ],
+        [
+          712,
+          530
+        ],
+        [
+          715,
+          529
+        ],
+        [
+          718,
+          527
+        ],
+        [
+          721,
+          527
+        ],
+        [
+          724,
+          526
+        ],
+        [
+          727,
+          525
+        ],
+        [
+          730,
+          524
+        ],
+        [
+          733,
+          523
+        ],
+        [
+          736,
+          524
+        ],
+        [
+          737,
+          525
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:dongting:jiangxia",
+      "river": "yangtze",
+      "from": "yangtze:dongting",
+      "to": "yangtze:jiangxia",
+      "points": [
+        [
+          737,
+          525
+        ],
+        [
+          737,
+          524
+        ],
+        [
+          742,
+          523
+        ],
+        [
+          747,
+          527
+        ],
+        [
+          752,
+          529
+        ],
+        [
+          757,
+          530
+        ],
+        [
+          762,
+          530
+        ],
+        [
+          767,
+          530
+        ],
+        [
+          772,
+          530
+        ],
+        [
+          777,
+          528
+        ],
+        [
+          782,
+          528
+        ],
+        [
+          787,
+          528
+        ],
+        [
+          792,
+          528
+        ],
+        [
+          797,
+          528
+        ],
+        [
+          802,
+          527
+        ],
+        [
+          807,
+          527
+        ],
+        [
+          812,
+          527
+        ],
+        [
+          817,
+          527
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:jiangxia:hankou",
+      "river": "yangtze",
+      "from": "yangtze:jiangxia",
+      "to": "yangtze:hankou",
+      "points": [
+        [
+          817,
+          527
+        ],
+        [
+          820,
+          526
+        ],
+        [
+          823,
+          526
+        ],
+        [
+          826,
+          525
+        ],
+        [
+          829,
+          525
+        ],
+        [
+          832,
+          525
+        ],
+        [
+          835,
+          525
+        ],
+        [
+          838,
+          525
+        ],
+        [
+          841,
+          525
+        ],
+        [
+          844,
+          525
+        ],
+        [
+          845,
+          525
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:hankou:wuchang",
+      "river": "yangtze",
+      "from": "yangtze:hankou",
+      "to": "yangtze:wuchang",
+      "points": [
+        [
+          845,
+          525
+        ],
+        [
+          846,
+          528
+        ],
+        [
+          848,
+          531
+        ],
+        [
+          851,
+          534
+        ],
+        [
+          854,
+          537
+        ],
+        [
+          857,
+          539
+        ],
+        [
+          860,
+          539
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:wuchang:qichun",
+      "river": "yangtze",
+      "from": "yangtze:wuchang",
+      "to": "yangtze:qichun",
+      "points": [
+        [
+          860,
+          539
+        ],
+        [
+          860,
+          542
+        ],
+        [
+          862,
+          545
+        ],
+        [
+          864,
+          548
+        ],
+        [
+          867,
+          550
+        ],
+        [
+          870,
+          550
+        ],
+        [
+          873,
+          549
+        ],
+        [
+          876,
+          549
+        ],
+        [
+          879,
+          547
+        ],
+        [
+          880,
+          547
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:lujiang:danyang",
+      "river": "yangtze",
+      "from": "yangtze:lujiang",
+      "to": "yangtze:danyang",
+      "points": [
+        [
+          968,
+          502
+        ],
+        [
+          971,
+          503
+        ],
+        [
+          974,
+          503
+        ],
+        [
+          977,
+          501
+        ],
+        [
+          980,
+          498
+        ],
+        [
+          983,
+          495
+        ],
+        [
+          986,
+          492
+        ],
+        [
+          988,
+          489
+        ],
+        [
+          990,
+          486
+        ],
+        [
+          991,
+          483
+        ],
+        [
+          992,
+          480
+        ],
+        [
+          994,
+          477
+        ],
+        [
+          996,
+          474
+        ],
+        [
+          999,
+          471
+        ],
+        [
+          1000,
+          468
+        ],
+        [
+          1003,
+          465
+        ],
+        [
+          1004,
+          462
+        ],
+        [
+          1006,
+          459
+        ],
+        [
+          1008,
+          456
+        ],
+        [
+          1009,
+          453
+        ],
+        [
+          1011,
+          450
+        ],
+        [
+          1012,
+          447
+        ],
+        [
+          1014,
+          444
+        ],
+        [
+          1014,
+          441
+        ],
+        [
+          1016,
+          438
+        ],
+        [
+          1016,
+          435
+        ],
+        [
+          1018,
+          432
+        ],
+        [
+          1018,
+          429
+        ],
+        [
+          1019,
+          426
+        ],
+        [
+          1019,
+          423
+        ],
+        [
+          1019,
+          420
+        ],
+        [
+          1019,
+          417
+        ],
+        [
+          1019,
+          414
+        ],
+        [
+          1021,
+          411
+        ],
+        [
+          1024,
+          409
+        ],
+        [
+          1027,
+          407
+        ],
+        [
+          1030,
+          405
+        ],
+        [
+          1033,
+          404
+        ],
+        [
+          1036,
+          403
+        ],
+        [
+          1039,
+          401
+        ],
+        [
+          1042,
+          401
+        ],
+        [
+          1045,
+          401
+        ],
+        [
+          1048,
+          401
+        ],
+        [
+          1050,
+          401
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:danyang:wujun",
+      "river": "yangtze",
+      "from": "yangtze:danyang",
+      "to": "yangtze:wujun",
+      "points": [
+        [
+          1050,
+          401
+        ],
+        [
+          1053,
+          401
+        ],
+        [
+          1056,
+          401
+        ],
+        [
+          1059,
+          401
+        ],
+        [
+          1062,
+          401
+        ],
+        [
+          1065,
+          402
+        ],
+        [
+          1068,
+          402
+        ],
+        [
+          1071,
+          402
+        ],
+        [
+          1074,
+          402
+        ],
+        [
+          1077,
+          403
+        ],
+        [
+          1080,
+          404
+        ],
+        [
+          1083,
+          404
+        ],
+        [
+          1086,
+          406
+        ],
+        [
+          1089,
+          406
+        ],
+        [
+          1092,
+          406
+        ],
+        [
+          1095,
+          407
+        ],
+        [
+          1098,
+          408
+        ],
+        [
+          1101,
+          410
+        ],
+        [
+          1104,
+          410
+        ],
+        [
+          1107,
+          412
+        ],
+        [
+          1110,
+          412
+        ],
+        [
+          1113,
+          412
+        ],
+        [
+          1116,
+          413
+        ],
+        [
+          1119,
+          414
+        ],
+        [
+          1122,
+          416
+        ],
+        [
+          1125,
+          418
+        ],
+        [
+          1128,
+          420
+        ],
+        [
+          1131,
+          420
+        ],
+        [
+          1134,
+          422
+        ],
+        [
+          1137,
+          424
+        ],
+        [
+          1140,
+          424
+        ],
+        [
+          1143,
+          425
+        ],
+        [
+          1145,
+          427
+        ]
+      ]
+    },
+    {
+      "id": "han:hanzhong:xincheng",
+      "river": "han",
+      "from": "han:hanzhong",
+      "to": "han:xincheng",
+      "points": [
+        [
+          421,
+          439
+        ],
+        [
+          424,
+          439
+        ],
+        [
+          427,
+          439
+        ],
+        [
+          430,
+          439
+        ],
+        [
+          433,
+          439
+        ],
+        [
+          436,
+          438
+        ],
+        [
+          439,
+          438
+        ],
+        [
+          442,
+          438
+        ],
+        [
+          445,
+          438
+        ],
+        [
+          448,
+          439
+        ],
+        [
+          451,
+          439
+        ],
+        [
+          454,
+          439
+        ],
+        [
+          457,
+          439
+        ],
+        [
+          460,
+          440
+        ],
+        [
+          463,
+          441
+        ],
+        [
+          466,
+          441
+        ],
+        [
+          469,
+          442
+        ],
+        [
+          472,
+          443
+        ],
+        [
+          475,
+          444
+        ],
+        [
+          478,
+          445
+        ],
+        [
+          481,
+          445
+        ],
+        [
+          484,
+          446
+        ],
+        [
+          487,
+          447
+        ],
+        [
+          490,
+          447
+        ],
+        [
+          493,
+          448
+        ],
+        [
+          496,
+          449
+        ],
+        [
+          499,
+          449
+        ],
+        [
+          502,
+          449
+        ],
+        [
+          505,
+          449
+        ],
+        [
+          508,
+          449
+        ],
+        [
+          511,
+          451
+        ],
+        [
+          514,
+          451
+        ],
+        [
+          517,
+          451
+        ],
+        [
+          520,
+          451
+        ],
+        [
+          523,
+          451
+        ],
+        [
+          526,
+          451
+        ],
+        [
+          529,
+          450
+        ],
+        [
+          532,
+          450
+        ],
+        [
+          535,
+          450
+        ],
+        [
+          538,
+          450
+        ],
+        [
+          541,
+          450
+        ],
+        [
+          544,
+          451
+        ],
+        [
+          547,
+          451
+        ],
+        [
+          550,
+          452
+        ],
+        [
+          553,
+          453
+        ],
+        [
+          556,
+          453
+        ],
+        [
+          559,
+          453
+        ],
+        [
+          562,
+          452
+        ],
+        [
+          565,
+          452
+        ],
+        [
+          568,
+          452
+        ],
+        [
+          571,
+          452
+        ],
+        [
+          574,
+          453
+        ],
+        [
+          577,
+          453
+        ],
+        [
+          580,
+          453
+        ],
+        [
+          583,
+          453
+        ],
+        [
+          586,
+          453
+        ],
+        [
+          589,
+          454
+        ],
+        [
+          592,
+          454
+        ],
+        [
+          595,
+          454
+        ],
+        [
+          598,
+          454
+        ],
+        [
+          601,
+          454
+        ],
+        [
+          604,
+          454
+        ],
+        [
+          605,
+          455
+        ]
+      ]
+    },
+    {
+      "id": "han:xincheng:xiangyang",
+      "river": "han",
+      "from": "han:xincheng",
+      "to": "han:xiangyang",
+      "points": [
+        [
+          605,
+          455
+        ],
+        [
+          608,
+          455
+        ],
+        [
+          611,
+          455
+        ],
+        [
+          614,
+          457
+        ],
+        [
+          617,
+          457
+        ],
+        [
+          620,
+          457
+        ],
+        [
+          623,
+          457
+        ],
+        [
+          626,
+          457
+        ],
+        [
+          629,
+          457
+        ],
+        [
+          632,
+          456
+        ],
+        [
+          635,
+          456
+        ],
+        [
+          638,
+          455
+        ],
+        [
+          641,
+          454
+        ],
+        [
+          644,
+          454
+        ],
+        [
+          647,
+          453
+        ],
+        [
+          650,
+          452
+        ],
+        [
+          653,
+          452
+        ],
+        [
+          656,
+          452
+        ],
+        [
+          659,
+          450
+        ],
+        [
+          662,
+          448
+        ],
+        [
+          665,
+          448
+        ],
+        [
+          668,
+          446
+        ],
+        [
+          671,
+          445
+        ],
+        [
+          674,
+          444
+        ],
+        [
+          677,
+          444
+        ],
+        [
+          680,
+          442
+        ],
+        [
+          683,
+          440
+        ],
+        [
+          686,
+          438
+        ],
+        [
+          689,
+          436
+        ],
+        [
+          692,
+          434
+        ],
+        [
+          695,
+          434
+        ],
+        [
+          698,
+          432
+        ],
+        [
+          701,
+          431
+        ],
+        [
+          704,
+          430
+        ],
+        [
+          707,
+          428
+        ],
+        [
+          710,
+          428
+        ],
+        [
+          713,
+          428
+        ],
+        [
+          716,
+          428
+        ],
+        [
+          719,
+          426
+        ],
+        [
+          722,
+          426
+        ],
+        [
+          725,
+          426
+        ],
+        [
+          728,
+          426
+        ],
+        [
+          731,
+          426
+        ],
+        [
+          734,
+          426
+        ],
+        [
+          737,
+          426
+        ],
+        [
+          740,
+          427
+        ],
+        [
+          743,
+          427
+        ],
+        [
+          746,
+          428
+        ],
+        [
+          749,
+          429
+        ],
+        [
+          752,
+          429
+        ],
+        [
+          755,
+          429
+        ],
+        [
+          758,
+          429
+        ],
+        [
+          761,
+          430
+        ],
+        [
+          763,
+          432
+        ]
+      ]
+    },
+    {
+      "id": "han:xiangyang:hankou",
+      "river": "han",
+      "from": "han:xiangyang",
+      "to": "yangtze:hankou",
+      "points": [
+        [
+          763,
+          432
+        ],
+        [
+          766,
+          432
+        ],
+        [
+          769,
+          435
+        ],
+        [
+          772,
+          437
+        ],
+        [
+          775,
+          439
+        ],
+        [
+          778,
+          440
+        ],
+        [
+          781,
+          442
+        ],
+        [
+          784,
+          443
+        ],
+        [
+          787,
+          444
+        ],
+        [
+          790,
+          445
+        ],
+        [
+          793,
+          447
+        ],
+        [
+          796,
+          447
+        ],
+        [
+          799,
+          447
+        ],
+        [
+          802,
+          449
+        ],
+        [
+          805,
+          449
+        ],
+        [
+          808,
+          449
+        ],
+        [
+          811,
+          451
+        ],
+        [
+          814,
+          452
+        ],
+        [
+          817,
+          453
+        ],
+        [
+          820,
+          455
+        ],
+        [
+          823,
+          457
+        ],
+        [
+          826,
+          460
+        ],
+        [
+          829,
+          463
+        ],
+        [
+          832,
+          466
+        ],
+        [
+          835,
+          468
+        ],
+        [
+          838,
+          471
+        ],
+        [
+          841,
+          473
+        ],
+        [
+          843,
+          476
+        ],
+        [
+          843,
+          479
+        ],
+        [
+          843,
+          482
+        ],
+        [
+          843,
+          485
+        ],
+        [
+          843,
+          488
+        ],
+        [
+          844,
+          491
+        ],
+        [
+          845,
+          494
+        ],
+        [
+          846,
+          497
+        ],
+        [
+          847,
+          500
+        ],
+        [
+          847,
+          503
+        ],
+        [
+          847,
+          506
+        ],
+        [
+          847,
+          509
+        ],
+        [
+          847,
+          512
+        ],
+        [
+          846,
+          515
+        ],
+        [
+          846,
+          518
+        ],
+        [
+          844,
+          521
+        ],
+        [
+          844,
+          524
+        ],
+        [
+          845,
+          525
+        ]
+      ]
+    },
+    {
+      "id": "wei:fufeng:jingzhao",
+      "river": "wei",
+      "from": "wei:fufeng",
+      "to": "wei:jingzhao",
+      "points": [
+        [
+          420,
+          325
+        ],
+        [
+          423,
+          324
+        ],
+        [
+          426,
+          322
+        ],
+        [
+          429,
+          322
+        ],
+        [
+          432,
+          322
+        ],
+        [
+          435,
+          322
+        ],
+        [
+          438,
+          322
+        ],
+        [
+          441,
+          322
+        ],
+        [
+          444,
+          322
+        ],
+        [
+          447,
+          322
+        ],
+        [
+          450,
+          322
+        ],
+        [
+          453,
+          322
+        ],
+        [
+          456,
+          322
+        ],
+        [
+          459,
+          322
+        ],
+        [
+          462,
+          322
+        ],
+        [
+          465,
+          322
+        ],
+        [
+          468,
+          322
+        ],
+        [
+          471,
+          322
+        ],
+        [
+          474,
+          322
+        ],
+        [
+          477,
+          322
+        ],
+        [
+          480,
+          322
+        ],
+        [
+          483,
+          322
+        ],
+        [
+          486,
+          322
+        ],
+        [
+          489,
+          322
+        ],
+        [
+          492,
+          322
+        ],
+        [
+          495,
+          323
+        ]
+      ]
+    },
+    {
+      "id": "wei:jingzhao:fengyi",
+      "river": "wei",
+      "from": "wei:jingzhao",
+      "to": "wei:fengyi",
+      "points": [
+        [
+          495,
+          323
+        ],
+        [
+          496,
+          320
+        ],
+        [
+          499,
+          320
+        ],
+        [
+          502,
+          320
+        ],
+        [
+          505,
+          320
+        ],
+        [
+          508,
+          320
+        ],
+        [
+          511,
+          320
+        ],
+        [
+          514,
+          320
+        ],
+        [
+          517,
+          318
+        ],
+        [
+          520,
+          318
+        ],
+        [
+          523,
+          318
+        ],
+        [
+          526,
+          318
+        ],
+        [
+          529,
+          318
+        ],
+        [
+          532,
+          318
+        ],
+        [
+          535,
+          318
+        ],
+        [
+          538,
+          319
+        ],
+        [
+          541,
+          319
+        ],
+        [
+          544,
+          319
+        ],
+        [
+          547,
+          319
+        ],
+        [
+          550,
+          320
+        ],
+        [
+          553,
+          320
+        ],
+        [
+          556,
+          320
+        ],
+        [
+          559,
+          321
+        ],
+        [
+          562,
+          321
+        ],
+        [
+          565,
+          321
+        ],
+        [
+          567,
+          321
+        ]
+      ]
+    },
+    {
+      "id": "wei:fengyi:tongguan",
+      "river": "wei",
+      "from": "wei:fengyi",
+      "to": "wei:tongguan",
+      "points": [
+        [
+          567,
+          321
+        ],
+        [
+          570,
+          322
+        ],
+        [
+          573,
+          322
+        ],
+        [
+          576,
+          322
+        ],
+        [
+          579,
+          322
+        ],
+        [
+          582,
+          322
+        ],
+        [
+          585,
+          323
+        ],
+        [
+          588,
+          323
+        ],
+        [
+          591,
+          323
+        ],
+        [
+          594,
+          323
+        ],
+        [
+          597,
+          323
+        ],
+        [
+          600,
+          324
+        ],
+        [
+          603,
+          324
+        ],
+        [
+          606,
+          324
+        ],
+        [
+          609,
+          324
+        ],
+        [
+          612,
+          325
+        ],
+        [
+          615,
+          325
+        ],
+        [
+          618,
+          325
+        ],
+        [
+          621,
+          326
+        ],
+        [
+          624,
+          326
+        ],
+        [
+          627,
+          326
+        ],
+        [
+          630,
+          326
+        ],
+        [
+          633,
+          326
+        ],
+        [
+          636,
+          326
+        ],
+        [
+          639,
+          326
+        ]
+      ]
+    },
+    {
+      "id": "yellow:tongguan:hongnong",
+      "river": "yellow",
+      "from": "wei:tongguan",
+      "to": "yellow:hongnong",
+      "points": [
+        [
+          639,
+          326
+        ],
+        [
+          641,
+          326
+        ]
+      ]
+    },
+    {
+      "id": "yellow:hongnong:hedong",
+      "river": "yellow",
+      "from": "yellow:hongnong",
+      "to": "yellow:hedong",
+      "points": [
+        [
+          641,
+          326
+        ],
+        [
+          644,
+          325
+        ],
+        [
+          647,
+          324
+        ],
+        [
+          650,
+          324
+        ],
+        [
+          653,
+          324
+        ],
+        [
+          656,
+          324
+        ],
+        [
+          657,
+          325
+        ]
+      ]
+    },
+    {
+      "id": "yellow:hedong:henan",
+      "river": "yellow",
+      "from": "yellow:hedong",
+      "to": "yellow:henan",
+      "points": [
+        [
+          657,
+          325
+        ],
+        [
+          660,
+          325
+        ],
+        [
+          663,
+          325
+        ],
+        [
+          666,
+          325
+        ],
+        [
+          669,
+          325
+        ],
+        [
+          672,
+          325
+        ],
+        [
+          675,
+          324
+        ],
+        [
+          678,
+          323
+        ],
+        [
+          681,
+          323
+        ],
+        [
+          684,
+          322
+        ],
+        [
+          687,
+          322
+        ],
+        [
+          690,
+          321
+        ],
+        [
+          691,
+          320
+        ]
+      ]
+    },
+    {
+      "id": "yellow:henan:henei",
+      "river": "yellow",
+      "from": "yellow:henan",
+      "to": "yellow:henei",
+      "points": [
+        [
+          691,
+          320
+        ],
+        [
+          694,
+          319
+        ],
+        [
+          697,
+          318
+        ],
+        [
+          700,
+          318
+        ],
+        [
+          703,
+          318
+        ],
+        [
+          706,
+          318
+        ],
+        [
+          709,
+          317
+        ],
+        [
+          710,
+          316
+        ]
+      ]
+    },
+    {
+      "id": "yellow:henei:wei",
+      "river": "yellow",
+      "from": "yellow:henei",
+      "to": "yellow:wei",
+      "points": [
+        [
+          710,
+          316
+        ],
+        [
+          712,
+          319
+        ],
+        [
+          715,
+          319
+        ],
+        [
+          718,
+          319
+        ],
+        [
+          721,
+          320
+        ],
+        [
+          724,
+          320
+        ],
+        [
+          727,
+          320
+        ],
+        [
+          730,
+          320
+        ],
+        [
+          733,
+          320
+        ],
+        [
+          736,
+          320
+        ],
+        [
+          739,
+          319
+        ],
+        [
+          742,
+          318
+        ],
+        [
+          745,
+          318
+        ],
+        [
+          748,
+          318
+        ],
+        [
+          751,
+          319
+        ],
+        [
+          754,
+          319
+        ],
+        [
+          757,
+          319
+        ],
+        [
+          760,
+          319
+        ],
+        [
+          763,
+          319
+        ],
+        [
+          766,
+          319
+        ],
+        [
+          769,
+          317
+        ],
+        [
+          772,
+          314
+        ],
+        [
+          775,
+          312
+        ],
+        [
+          778,
+          309
+        ],
+        [
+          781,
+          306
+        ],
+        [
+          784,
+          303
+        ],
+        [
+          787,
+          300
+        ],
+        [
+          790,
+          298
+        ],
+        [
+          793,
+          295
+        ],
+        [
+          796,
+          292
+        ],
+        [
+          799,
+          289
+        ],
+        [
+          802,
+          287
+        ],
+        [
+          805,
+          284
+        ],
+        [
+          808,
+          281
+        ],
+        [
+          811,
+          278
+        ]
+      ]
+    },
+    {
+      "id": "yellow:wei:dongjun",
+      "river": "yellow",
+      "from": "yellow:wei",
+      "to": "yellow:dongjun",
+      "points": [
+        [
+          811,
+          278
+        ],
+        [
+          814,
+          277
+        ],
+        [
+          817,
+          275
+        ],
+        [
+          820,
+          273
+        ],
+        [
+          823,
+          272
+        ],
+        [
+          825,
+          273
+        ]
+      ]
+    },
+    {
+      "id": "yellow:dongjun:qinghe",
+      "river": "yellow",
+      "from": "yellow:dongjun",
+      "to": "yellow:qinghe",
+      "points": [
+        [
+          825,
+          273
+        ],
+        [
+          825,
+          270
+        ],
+        [
+          828,
+          267
+        ],
+        [
+          831,
+          266
+        ],
+        [
+          834,
+          263
+        ],
+        [
+          837,
+          262
+        ],
+        [
+          840,
+          259
+        ],
+        [
+          843,
+          258
+        ],
+        [
+          846,
+          257
+        ],
+        [
+          849,
+          254
+        ],
+        [
+          852,
+          253
+        ],
+        [
+          855,
+          252
+        ],
+        [
+          858,
+          251
+        ],
+        [
+          861,
+          250
+        ],
+        [
+          864,
+          248
+        ],
+        [
+          867,
+          247
+        ],
+        [
+          870,
+          246
+        ],
+        [
+          873,
+          245
+        ]
+      ]
+    },
+    {
+      "id": "yellow:qinghe:pingyuan",
+      "river": "yellow",
+      "from": "yellow:qinghe",
+      "to": "yellow:pingyuan",
+      "points": [
+        [
+          873,
+          245
+        ],
+        [
+          876,
+          244
+        ],
+        [
+          879,
+          242
+        ],
+        [
+          882,
+          241
+        ],
+        [
+          885,
+          240
+        ],
+        [
+          888,
+          239
+        ],
+        [
+          891,
+          238
+        ],
+        [
+          894,
+          237
+        ],
+        [
+          897,
+          236
+        ],
+        [
+          900,
+          235
+        ],
+        [
+          903,
+          234
+        ],
+        [
+          906,
+          233
+        ],
+        [
+          909,
+          232
+        ],
+        [
+          912,
+          231
+        ],
+        [
+          915,
+          230
+        ],
+        [
+          918,
+          229
+        ],
+        [
+          921,
+          228
+        ],
+        [
+          924,
+          227
+        ],
+        [
+          927,
+          225
+        ],
+        [
+          930,
+          223
+        ],
+        [
+          932,
+          220
+        ],
+        [
+          932,
+          218
+        ]
+      ]
+    },
+    {
+      "id": "yellow:pingyuan:jinan",
+      "river": "yellow",
+      "from": "yellow:pingyuan",
+      "to": "yellow:jinan",
+      "points": [
+        [
+          932,
+          218
+        ],
+        [
+          935,
+          218
+        ],
+        [
+          938,
+          217
+        ],
+        [
+          941,
+          214
+        ],
+        [
+          944,
+          211
+        ],
+        [
+          947,
+          209
+        ],
+        [
+          950,
+          207
+        ],
+        [
+          953,
+          205
+        ],
+        [
+          956,
+          203
+        ],
+        [
+          959,
+          201
+        ],
+        [
+          962,
+          199
+        ],
+        [
+          964,
+          199
+        ]
+      ]
+    },
+    {
+      "id": "min:wenshan:shujun",
+      "river": "min",
+      "from": "min:wenshan",
+      "to": "min:shujun",
+      "points": [
+        [
+          212,
+          454
+        ],
+        [
+          212,
+          457
+        ],
+        [
+          212,
+          460
+        ],
+        [
+          212,
+          463
+        ],
+        [
+          215,
+          466
+        ],
+        [
+          218,
+          469
+        ],
+        [
+          221,
+          471
+        ],
+        [
+          224,
+          474
+        ],
+        [
+          225,
+          477
+        ],
+        [
+          228,
+          480
+        ],
+        [
+          230,
+          483
+        ],
+        [
+          231,
+          486
+        ],
+        [
+          233,
+          489
+        ],
+        [
+          233,
+          491
+        ]
+      ]
+    },
+    {
+      "id": "min:shujun:qianwei",
+      "river": "min",
+      "from": "min:shujun",
+      "to": "min:qianwei",
+      "points": [
+        [
+          233,
+          491
+        ],
+        [
+          235,
+          493
+        ],
+        [
+          237,
+          496
+        ],
+        [
+          237,
+          499
+        ],
+        [
+          238,
+          502
+        ],
+        [
+          239,
+          505
+        ],
+        [
+          239,
+          508
+        ],
+        [
+          239,
+          511
+        ],
+        [
+          238,
+          514
+        ],
+        [
+          238,
+          517
+        ],
+        [
+          238,
+          520
+        ],
+        [
+          238,
+          523
+        ],
+        [
+          239,
+          526
+        ],
+        [
+          239,
+          529
+        ],
+        [
+          238,
+          532
+        ],
+        [
+          238,
+          535
+        ],
+        [
+          238,
+          538
+        ],
+        [
+          237,
+          541
+        ]
+      ]
+    },
+    {
+      "id": "min:qianwei:nanguang",
+      "river": "min",
+      "from": "min:qianwei",
+      "to": "min:nanguang",
+      "points": [
+        [
+          237,
+          541
+        ],
+        [
+          239,
+          543
+        ],
+        [
+          241,
+          546
+        ],
+        [
+          243,
+          549
+        ],
+        [
+          244,
+          552
+        ],
+        [
+          245,
+          555
+        ],
+        [
+          247,
+          558
+        ],
+        [
+          247,
+          561
+        ],
+        [
+          249,
+          564
+        ],
+        [
+          250,
+          567
+        ],
+        [
+          253,
+          570
+        ],
+        [
+          255,
+          573
+        ],
+        [
+          258,
+          576
+        ],
+        [
+          261,
+          578
+        ],
+        [
+          264,
+          581
+        ],
+        [
+          267,
+          583
+        ],
+        [
+          270,
+          586
+        ],
+        [
+          273,
+          589
+        ],
+        [
+          276,
+          591
+        ],
+        [
+          279,
+          593
+        ],
+        [
+          282,
+          593
+        ],
+        [
+          285,
+          593
+        ],
+        [
+          288,
+          595
+        ],
+        [
+          288,
+          597
+        ]
+      ]
+    },
+    {
+      "id": "min:nanguang:jiangyang",
+      "river": "min",
+      "from": "min:nanguang",
+      "to": "yangtze:jiangyang",
+      "points": [
+        [
+          288,
+          597
+        ],
+        [
+          291,
+          596
+        ],
+        [
+          294,
+          596
+        ],
+        [
+          297,
+          596
+        ],
+        [
+          300,
+          596
+        ],
+        [
+          303,
+          596
+        ],
+        [
+          306,
+          596
+        ],
+        [
+          309,
+          596
+        ],
+        [
+          312,
+          597
+        ],
+        [
+          315,
+          597
+        ],
+        [
+          318,
+          597
+        ],
+        [
+          321,
+          597
+        ],
+        [
+          324,
+          599
+        ],
+        [
+          327,
+          599
+        ],
+        [
+          330,
+          601
+        ],
+        [
+          333,
+          602
+        ],
+        [
+          335,
+          602
+        ]
+      ]
+    },
+    {
+      "id": "jialing:jiameng:baxi",
+      "river": "jialing",
+      "from": "jialing:jiameng",
+      "to": "jialing:baxi",
+      "points": [
+        [
+          353,
+          413
+        ],
+        [
+          350,
+          414
+        ],
+        [
+          350,
+          417
+        ],
+        [
+          349,
+          420
+        ],
+        [
+          349,
+          423
+        ],
+        [
+          348,
+          426
+        ],
+        [
+          348,
+          429
+        ],
+        [
+          348,
+          432
+        ],
+        [
+          348,
+          435
+        ],
+        [
+          348,
+          438
+        ],
+        [
+          348,
+          441
+        ],
+        [
+          348,
+          444
+        ],
+        [
+          348,
+          447
+        ],
+        [
+          349,
+          449
+        ]
+      ]
+    },
+    {
+      "id": "jialing:baxi:bajun",
+      "river": "jialing",
+      "from": "jialing:baxi",
+      "to": "yangtze:bajun",
+      "points": [
+        [
+          349,
+          449
+        ],
+        [
+          346,
+          450
+        ],
+        [
+          346,
+          453
+        ],
+        [
+          345,
+          456
+        ],
+        [
+          345,
+          459
+        ],
+        [
+          344,
+          462
+        ],
+        [
+          344,
+          465
+        ],
+        [
+          345,
+          468
+        ],
+        [
+          347,
+          471
+        ],
+        [
+          349,
+          474
+        ],
+        [
+          351,
+          477
+        ],
+        [
+          353,
+          480
+        ],
+        [
+          355,
+          483
+        ],
+        [
+          358,
+          486
+        ],
+        [
+          359,
+          489
+        ],
+        [
+          362,
+          492
+        ],
+        [
+          364,
+          495
+        ],
+        [
+          366,
+          498
+        ],
+        [
+          369,
+          500
+        ],
+        [
+          372,
+          502
+        ],
+        [
+          375,
+          503
+        ],
+        [
+          378,
+          506
+        ],
+        [
+          379,
+          509
+        ],
+        [
+          378,
+          512
+        ],
+        [
+          378,
+          515
+        ],
+        [
+          376,
+          518
+        ],
+        [
+          376,
+          521
+        ],
+        [
+          375,
+          524
+        ],
+        [
+          373,
+          527
+        ],
+        [
+          372,
+          530
+        ],
+        [
+          371,
+          533
+        ],
+        [
+          370,
+          536
+        ],
+        [
+          370,
+          539
+        ],
+        [
+          370,
+          542
+        ],
+        [
+          371,
+          545
+        ],
+        [
+          371,
+          548
+        ],
+        [
+          371,
+          551
+        ],
+        [
+          371,
+          554
+        ],
+        [
+          371,
+          557
+        ],
+        [
+          372,
+          560
+        ],
+        [
+          375,
+          563
+        ],
+        [
+          377,
+          566
+        ],
+        [
+          379,
+          569
+        ],
+        [
+          381,
+          572
+        ],
+        [
+          384,
+          575
+        ],
+        [
+          387,
+          575
+        ],
+        [
+          390,
+          575
+        ],
+        [
+          393,
+          575
+        ],
+        [
+          396,
+          576
+        ],
+        [
+          399,
+          577
+        ],
+        [
+          402,
+          577
+        ],
+        [
+          404,
+          578
+        ]
+      ]
+    },
+    {
+      "id": "xiang:lingling:changsha",
+      "river": "xiang",
+      "from": "xiang:lingling",
+      "to": "xiang:changsha",
+      "points": [
+        [
+          687,
+          658
+        ],
+        [
+          687,
+          655
+        ],
+        [
+          687,
+          652
+        ],
+        [
+          687,
+          649
+        ],
+        [
+          687,
+          646
+        ],
+        [
+          687,
+          643
+        ],
+        [
+          687,
+          640
+        ],
+        [
+          687,
+          637
+        ],
+        [
+          687,
+          634
+        ],
+        [
+          688,
+          631
+        ],
+        [
+          689,
+          628
+        ],
+        [
+          689,
+          625
+        ],
+        [
+          689,
+          622
+        ],
+        [
+          690,
+          619
+        ],
+        [
+          691,
+          616
+        ],
+        [
+          691,
+          613
+        ],
+        [
+          692,
+          610
+        ],
+        [
+          693,
+          607
+        ],
+        [
+          693,
+          604
+        ],
+        [
+          695,
+          601
+        ],
+        [
+          695,
+          598
+        ],
+        [
+          696,
+          595
+        ],
+        [
+          697,
+          592
+        ],
+        [
+          697,
+          589
+        ],
+        [
+          699,
+          586
+        ],
+        [
+          699,
+          583
+        ],
+        [
+          701,
+          580
+        ]
+      ]
+    },
+    {
+      "id": "xiang:changsha:yuan",
+      "river": "xiang",
+      "from": "xiang:changsha",
+      "to": "xiang:yuan",
+      "points": [
+        [
+          701,
+          580
+        ],
+        [
+          701,
+          575
+        ],
+        [
+          701,
+          570
+        ],
+        [
+          701,
+          565
+        ],
+        [
+          703,
+          560
+        ],
+        [
+          706,
+          555
+        ],
+        [
+          711,
+          552
+        ],
+        [
+          716,
+          549
+        ]
+      ]
+    },
+    {
+      "id": "xiang:yuan:dongting",
+      "river": "xiang",
+      "from": "xiang:yuan",
+      "to": "yangtze:dongting",
+      "points": [
+        [
+          716,
+          549
+        ],
+        [
+          721,
+          546
+        ],
+        [
+          726,
+          544
+        ],
+        [
+          731,
+          540
+        ],
+        [
+          733,
+          535
+        ],
+        [
+          735,
+          530
+        ],
+        [
+          737,
+          525
+        ]
+      ]
+    },
+    {
+      "id": "yuan:wuling:dongting",
+      "river": "yuan",
+      "from": "yuan:wuling",
+      "to": "xiang:yuan",
+      "points": [
+        [
+          664,
+          566
+        ],
+        [
+          667,
+          565
+        ],
+        [
+          670,
+          564
+        ],
+        [
+          673,
+          563
+        ],
+        [
+          676,
+          562
+        ],
+        [
+          679,
+          560
+        ],
+        [
+          682,
+          558
+        ],
+        [
+          685,
+          557
+        ],
+        [
+          688,
+          555
+        ],
+        [
+          691,
+          553
+        ],
+        [
+          694,
+          552
+        ],
+        [
+          697,
+          551
+        ],
+        [
+          700,
+          550
+        ],
+        [
+          703,
+          550
+        ],
+        [
+          706,
+          550
+        ],
+        [
+          709,
+          549
+        ],
+        [
+          712,
+          549
+        ],
+        [
+          715,
+          549
+        ],
+        [
+          716,
+          549
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:qichun:pengli",
+      "river": "yangtze",
+      "from": "yangtze:qichun",
+      "to": "yangtze:pengli",
+      "points": [
+        [
+          880,
+          547
+        ],
+        [
+          883,
+          547
+        ],
+        [
+          886,
+          547
+        ],
+        [
+          889,
+          547
+        ],
+        [
+          892,
+          547
+        ],
+        [
+          895,
+          547
+        ],
+        [
+          898,
+          547
+        ],
+        [
+          901,
+          545
+        ],
+        [
+          904,
+          545
+        ],
+        [
+          907,
+          543
+        ],
+        [
+          910,
+          543
+        ],
+        [
+          913,
+          542
+        ],
+        [
+          916,
+          541
+        ],
+        [
+          919,
+          541
+        ],
+        [
+          922,
+          541
+        ],
+        [
+          925,
+          541
+        ],
+        [
+          927,
+          543
+        ]
+      ]
+    },
+    {
+      "id": "yangtze:pengli:lujiang",
+      "river": "yangtze",
+      "from": "yangtze:pengli",
+      "to": "yangtze:lujiang",
+      "points": [
+        [
+          927,
+          543
+        ],
+        [
+          928,
+          540
+        ],
+        [
+          931,
+          537
+        ],
+        [
+          934,
+          535
+        ],
+        [
+          937,
+          535
+        ],
+        [
+          940,
+          533
+        ],
+        [
+          943,
+          533
+        ],
+        [
+          946,
+          530
+        ],
+        [
+          949,
+          527
+        ],
+        [
+          952,
+          526
+        ],
+        [
+          955,
+          523
+        ],
+        [
+          958,
+          522
+        ],
+        [
+          961,
+          519
+        ],
+        [
+          964,
+          516
+        ],
+        [
+          965,
+          513
+        ],
+        [
+          966,
+          510
+        ],
+        [
+          968,
+          507
+        ],
+        [
+          968,
+          504
+        ],
+        [
+          968,
+          502
+        ]
+      ]
+    },
+    {
+      "id": "gan:luling:linchuan",
+      "river": "gan",
+      "from": "gan:luling",
+      "to": "gan:linchuan",
+      "points": [
+        [
+          878,
+          650
+        ],
+        [
+          881,
+          648
+        ],
+        [
+          884,
+          645
+        ],
+        [
+          887,
+          642
+        ],
+        [
+          889,
+          639
+        ],
+        [
+          892,
+          636
+        ],
+        [
+          894,
+          633
+        ],
+        [
+          896,
+          630
+        ],
+        [
+          899,
+          627
+        ],
+        [
+          901,
+          624
+        ],
+        [
+          904,
+          621
+        ],
+        [
+          907,
+          620
+        ],
+        [
+          910,
+          617
+        ],
+        [
+          913,
+          615
+        ],
+        [
+          916,
+          612
+        ],
+        [
+          919,
+          611
+        ],
+        [
+          922,
+          610
+        ],
+        [
+          923,
+          611
+        ]
+      ]
+    },
+    {
+      "id": "gan:linchuan:yuzhang",
+      "river": "gan",
+      "from": "gan:linchuan",
+      "to": "gan:yuzhang",
+      "points": [
+        [
+          923,
+          611
+        ],
+        [
+          923,
+          608
+        ],
+        [
+          926,
+          605
+        ],
+        [
+          929,
+          602
+        ],
+        [
+          931,
+          599
+        ],
+        [
+          931,
+          596
+        ],
+        [
+          931,
+          593
+        ],
+        [
+          931,
+          590
+        ],
+        [
+          931,
+          587
+        ],
+        [
+          931,
+          584
+        ],
+        [
+          931,
+          581
+        ],
+        [
+          933,
+          579
+        ]
+      ]
+    },
+    {
+      "id": "gan:yuzhang:poyang",
+      "river": "gan",
+      "from": "gan:yuzhang",
+      "to": "gan:poyang",
+      "points": [
+        [
+          933,
+          579
+        ],
+        [
+          932,
+          576
+        ],
+        [
+          933,
+          573
+        ],
+        [
+          933,
+          570
+        ],
+        [
+          933,
+          567
+        ],
+        [
+          934,
+          564
+        ],
+        [
+          934,
+          563
+        ]
+      ]
+    },
+    {
+      "id": "pengli:poyang:yangtze",
+      "river": "pengli_out",
+      "from": "gan:poyang",
+      "to": "yangtze:pengli",
+      "points": [
+        [
+          934,
+          563
+        ],
+        [
+          934,
+          560
+        ],
+        [
+          932,
+          557
+        ],
+        [
+          930,
+          554
+        ],
+        [
+          930,
+          551
+        ],
+        [
+          928,
+          548
+        ],
+        [
+          926,
+          545
+        ],
+        [
+          927,
+          543
+        ]
+      ]
+    },
+    {
+      "id": "huai:runan:jiujiang",
+      "river": "huai",
+      "from": "huai:runan",
+      "to": "huai:jiujiang",
+      "points": [
+        [
+          816,
+          432
+        ],
+        [
+          819,
+          435
+        ],
+        [
+          822,
+          437
+        ],
+        [
+          825,
+          437
+        ],
+        [
+          828,
+          439
+        ],
+        [
+          831,
+          440
+        ],
+        [
+          834,
+          441
+        ],
+        [
+          837,
+          441
+        ],
+        [
+          840,
+          442
+        ],
+        [
+          843,
+          443
+        ],
+        [
+          846,
+          443
+        ],
+        [
+          849,
+          442
+        ],
+        [
+          852,
+          440
+        ],
+        [
+          855,
+          437
+        ],
+        [
+          857,
+          434
+        ],
+        [
+          859,
+          431
+        ],
+        [
+          862,
+          428
+        ],
+        [
+          865,
+          425
+        ],
+        [
+          868,
+          424
+        ],
+        [
+          871,
+          421
+        ],
+        [
+          873,
+          418
+        ],
+        [
+          874,
+          415
+        ],
+        [
+          876,
+          412
+        ],
+        [
+          878,
+          409
+        ],
+        [
+          881,
+          406
+        ],
+        [
+          883,
+          403
+        ],
+        [
+          885,
+          400
+        ],
+        [
+          887,
+          397
+        ],
+        [
+          889,
+          394
+        ],
+        [
+          892,
+          391
+        ],
+        [
+          895,
+          389
+        ],
+        [
+          898,
+          388
+        ],
+        [
+          901,
+          388
+        ],
+        [
+          904,
+          386
+        ],
+        [
+          907,
+          386
+        ],
+        [
+          910,
+          385
+        ],
+        [
+          913,
+          384
+        ],
+        [
+          916,
+          384
+        ],
+        [
+          919,
+          382
+        ],
+        [
+          922,
+          382
+        ],
+        [
+          925,
+          380
+        ],
+        [
+          928,
+          380
+        ],
+        [
+          931,
+          380
+        ],
+        [
+          934,
+          381
+        ],
+        [
+          937,
+          381
+        ],
+        [
+          940,
+          381
+        ],
+        [
+          943,
+          381
+        ],
+        [
+          945,
+          381
+        ]
+      ]
+    },
+    {
+      "id": "pearl:yulin:cangwu",
+      "river": "pearl",
+      "from": "pearl:yulin",
+      "to": "pearl:cangwu",
+      "points": [
+        [
+          560,
+          755
+        ],
+        [
+          563,
+          754
+        ],
+        [
+          566,
+          755
+        ],
+        [
+          569,
+          755
+        ],
+        [
+          572,
+          755
+        ],
+        [
+          575,
+          755
+        ],
+        [
+          578,
+          755
+        ],
+        [
+          581,
+          757
+        ],
+        [
+          584,
+          759
+        ],
+        [
+          587,
+          761
+        ],
+        [
+          590,
+          764
+        ],
+        [
+          591,
+          767
+        ],
+        [
+          593,
+          770
+        ],
+        [
+          593,
+          773
+        ],
+        [
+          595,
+          776
+        ],
+        [
+          598,
+          779
+        ],
+        [
+          600,
+          782
+        ],
+        [
+          603,
+          785
+        ],
+        [
+          604,
+          788
+        ],
+        [
+          607,
+          791
+        ],
+        [
+          610,
+          793
+        ],
+        [
+          611,
+          793
+        ]
+      ]
+    },
+    {
+      "id": "pearl:cangwu:nanhai",
+      "river": "pearl",
+      "from": "pearl:cangwu",
+      "to": "pearl:nanhai",
+      "points": [
+        [
+          611,
+          793
+        ],
+        [
+          611,
+          796
+        ],
+        [
+          613,
+          799
+        ],
+        [
+          615,
+          802
+        ],
+        [
+          617,
+          805
+        ],
+        [
+          619,
+          808
+        ],
+        [
+          622,
+          809
+        ],
+        [
+          625,
+          809
+        ],
+        [
+          628,
+          808
+        ],
+        [
+          631,
+          808
+        ],
+        [
+          634,
+          808
+        ],
+        [
+          637,
+          808
+        ],
+        [
+          640,
+          808
+        ],
+        [
+          643,
+          808
+        ],
+        [
+          646,
+          807
+        ],
+        [
+          649,
+          807
+        ],
+        [
+          652,
+          806
+        ],
+        [
+          655,
+          805
+        ],
+        [
+          658,
+          804
+        ],
+        [
+          661,
+          802
+        ],
+        [
+          664,
+          800
+        ],
+        [
+          667,
+          798
+        ],
+        [
+          670,
+          795
+        ],
+        [
+          673,
+          793
+        ],
+        [
+          676,
+          790
+        ],
+        [
+          679,
+          789
+        ],
+        [
+          682,
+          788
+        ],
+        [
+          685,
+          786
+        ],
+        [
+          688,
+          784
+        ],
+        [
+          691,
+          784
+        ],
+        [
+          694,
+          784
+        ],
+        [
+          697,
+          784
+        ],
+        [
+          700,
+          784
+        ],
+        [
+          703,
+          784
+        ],
+        [
+          706,
+          786
+        ],
+        [
+          709,
+          789
+        ],
+        [
+          712,
+          791
+        ],
+        [
+          715,
+          792
+        ],
+        [
+          718,
+          794
+        ],
+        [
+          721,
+          795
+        ],
+        [
+          724,
+          795
+        ],
+        [
+          727,
+          795
+        ],
+        [
+          730,
+          795
+        ],
+        [
+          733,
+          795
+        ],
+        [
+          736,
+          795
+        ],
+        [
+          737,
+          796
+        ]
+      ]
+    },
+    {
+      "id": "wei:tianshui:fufeng",
+      "river": "wei",
+      "from": "wei:tianshui",
+      "to": "wei:fufeng",
+      "points": [
+        [
+          369,
+          339
+        ],
+        [
+          370,
+          336
+        ],
+        [
+          373,
+          336
+        ],
+        [
+          376,
+          334
+        ],
+        [
+          379,
+          334
+        ],
+        [
+          382,
+          332
+        ],
+        [
+          385,
+          332
+        ],
+        [
+          388,
+          330
+        ],
+        [
+          391,
+          330
+        ],
+        [
+          394,
+          328
+        ],
+        [
+          397,
+          328
+        ],
+        [
+          400,
+          326
+        ],
+        [
+          403,
+          326
+        ],
+        [
+          406,
+          324
+        ],
+        [
+          409,
+          324
+        ],
+        [
+          412,
+          324
+        ],
+        [
+          415,
+          324
+        ],
+        [
+          418,
+          324
+        ],
+        [
+          420,
+          325
+        ]
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "jiangyang",
+      "to": "bajun",
+      "reaches": [
+        "yangtze:jiangyang:bajun"
+      ]
+    },
+    {
+      "from": "bajun",
+      "to": "fuling",
+      "reaches": [
+        "yangtze:bajun:fuling"
+      ]
+    },
+    {
+      "from": "fuling",
+      "to": "badong",
+      "reaches": [
+        "yangtze:fuling:badong"
+      ]
+    },
+    {
+      "from": "badong",
+      "to": "yidu",
+      "reaches": [
+        "yangtze:badong:yidu"
+      ]
+    },
+    {
+      "from": "yidu",
+      "to": "nanjun",
+      "reaches": [
+        "yangtze:yidu:nanjun"
+      ]
+    },
+    {
+      "from": "nanjun",
+      "to": "jiangxia",
+      "reaches": [
+        "yangtze:nanjun:dongting",
+        "yangtze:dongting:jiangxia"
+      ]
+    },
+    {
+      "from": "jiangxia",
+      "to": "wuchang",
+      "reaches": [
+        "yangtze:jiangxia:hankou",
+        "yangtze:hankou:wuchang"
+      ]
+    },
+    {
+      "from": "wuchang",
+      "to": "qichun",
+      "reaches": [
+        "yangtze:wuchang:qichun"
+      ]
+    },
+    {
+      "from": "qichun",
+      "to": "lujiang",
+      "reaches": [
+        "yangtze:qichun:pengli",
+        "yangtze:pengli:lujiang"
+      ]
+    },
+    {
+      "from": "lujiang",
+      "to": "danyang",
+      "reaches": [
+        "yangtze:lujiang:danyang"
+      ]
+    },
+    {
+      "from": "danyang",
+      "to": "wujun",
+      "reaches": [
+        "yangtze:danyang:wujun"
+      ]
+    },
+    {
+      "from": "jiangxia",
+      "to": "changsha",
+      "reaches": [
+        "-yangtze:dongting:jiangxia",
+        "-xiang:yuan:dongting",
+        "-xiang:changsha:yuan"
+      ]
+    },
+    {
+      "from": "hanzhong",
+      "to": "xincheng",
+      "reaches": [
+        "han:hanzhong:xincheng"
+      ]
+    },
+    {
+      "from": "xincheng",
+      "to": "xiangyang",
+      "reaches": [
+        "han:xincheng:xiangyang"
+      ]
+    },
+    {
+      "from": "xiangyang",
+      "to": "jiangxia",
+      "reaches": [
+        "han:xiangyang:hankou",
+        "-yangtze:jiangxia:hankou"
+      ]
+    },
+    {
+      "from": "fufeng",
+      "to": "jingzhao",
+      "reaches": [
+        "wei:fufeng:jingzhao"
+      ]
+    },
+    {
+      "from": "jingzhao",
+      "to": "fengyi",
+      "reaches": [
+        "wei:jingzhao:fengyi"
+      ]
+    },
+    {
+      "from": "fengyi",
+      "to": "hongnong",
+      "reaches": [
+        "wei:fengyi:tongguan",
+        "yellow:tongguan:hongnong"
+      ]
+    },
+    {
+      "from": "hongnong",
+      "to": "hedong",
+      "reaches": [
+        "yellow:hongnong:hedong"
+      ]
+    },
+    {
+      "from": "hedong",
+      "to": "henan",
+      "reaches": [
+        "yellow:hedong:henan"
+      ]
+    },
+    {
+      "from": "henan",
+      "to": "henei",
+      "reaches": [
+        "yellow:henan:henei"
+      ]
+    },
+    {
+      "from": "henei",
+      "to": "wei",
+      "reaches": [
+        "yellow:henei:wei"
+      ]
+    },
+    {
+      "from": "wei",
+      "to": "dongjun",
+      "reaches": [
+        "yellow:wei:dongjun"
+      ]
+    },
+    {
+      "from": "dongjun",
+      "to": "qinghe",
+      "reaches": [
+        "yellow:dongjun:qinghe"
+      ]
+    },
+    {
+      "from": "qinghe",
+      "to": "pingyuan",
+      "reaches": [
+        "yellow:qinghe:pingyuan"
+      ]
+    },
+    {
+      "from": "pingyuan",
+      "to": "jinan",
+      "reaches": [
+        "yellow:pingyuan:jinan"
+      ]
+    },
+    {
+      "from": "wenshan",
+      "to": "shujun",
+      "reaches": [
+        "min:wenshan:shujun"
+      ]
+    },
+    {
+      "from": "shujun",
+      "to": "qianwei",
+      "reaches": [
+        "min:shujun:qianwei"
+      ]
+    },
+    {
+      "from": "qianwei",
+      "to": "nanguang",
+      "reaches": [
+        "min:qianwei:nanguang"
+      ]
+    },
+    {
+      "from": "nanguang",
+      "to": "jiangyang",
+      "reaches": [
+        "min:nanguang:jiangyang"
+      ]
+    },
+    {
+      "from": "jiameng",
+      "to": "baxi",
+      "reaches": [
+        "jialing:jiameng:baxi"
+      ]
+    },
+    {
+      "from": "baxi",
+      "to": "bajun",
+      "reaches": [
+        "jialing:baxi:bajun"
+      ]
+    },
+    {
+      "from": "lingling",
+      "to": "changsha",
+      "reaches": [
+        "xiang:lingling:changsha"
+      ]
+    },
+    {
+      "from": "wuling",
+      "to": "changsha",
+      "reaches": [
+        "yuan:wuling:dongting",
+        "-xiang:changsha:yuan"
+      ]
+    },
+    {
+      "from": "wuling",
+      "to": "jiangxia",
+      "reaches": [
+        "yuan:wuling:dongting",
+        "xiang:yuan:dongting",
+        "yangtze:dongting:jiangxia"
+      ]
+    },
+    {
+      "from": "luling",
+      "to": "linchuan",
+      "reaches": [
+        "gan:luling:linchuan"
+      ]
+    },
+    {
+      "from": "linchuan",
+      "to": "yuzhang",
+      "reaches": [
+        "gan:linchuan:yuzhang"
+      ]
+    },
+    {
+      "from": "yuzhang",
+      "to": "poyang",
+      "reaches": [
+        "gan:yuzhang:poyang"
+      ]
+    },
+    {
+      "from": "poyang",
+      "to": "lujiang",
+      "reaches": [
+        "pengli:poyang:yangtze",
+        "yangtze:pengli:lujiang"
+      ]
+    },
+    {
+      "from": "runan",
+      "to": "jiujiang",
+      "reaches": [
+        "huai:runan:jiujiang"
+      ]
+    },
+    {
+      "from": "yulin",
+      "to": "cangwu",
+      "reaches": [
+        "pearl:yulin:cangwu"
+      ]
+    },
+    {
+      "from": "cangwu",
+      "to": "nanhai",
+      "reaches": [
+        "pearl:cangwu:nanhai"
+      ]
+    },
+    {
+      "from": "tianshui",
+      "to": "fufeng",
+      "reaches": [
+        "wei:tianshui:fufeng"
+      ]
+    },
+    {
+      "from": "badong",
+      "to": "nanjun",
+      "reaches": [
+        "yangtze:badong:yidu",
+        "yangtze:yidu:nanjun"
+      ],
+      "optional_port_bypass": "yidu"
+    },
+    {
+      "from": "jiangxia",
+      "to": "qichun",
+      "reaches": [
+        "yangtze:jiangxia:hankou",
+        "yangtze:hankou:wuchang",
+        "yangtze:wuchang:qichun"
+      ],
+      "optional_port_bypass": "wuchang"
+    },
+    {
+      "from": "luling",
+      "to": "yuzhang",
+      "reaches": [
+        "gan:luling:linchuan",
+        "gan:linchuan:yuzhang"
+      ],
+      "optional_port_bypass": "linchuan"
+    }
+  ]
+}

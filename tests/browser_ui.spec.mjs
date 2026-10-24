@@ -19,7 +19,37 @@ async function opening(page){
  await expect(page.locator('#world-map .city-hit')).not.toHaveCount(0);
 }
 async function closeDialog(page){await page.keyboard.press('Escape');await expect(page.locator('#dialog')).not.toBeVisible();}
-async function openAllocation(page){await page.locator('#allocate').click();await expect(page.locator('#allocation-troops')).toBeVisible();}
+async function assertOriginalEventArt(page,modal,kind){
+ const mapped={equipment_bought:['scene','armory','event-armory-interior'],grain_traded:['scene','market','event-market-interior'],treasure_sold:['scene','market','event-market-interior'],transport_departed:['scene','sortie','event-sortie'],officer_treated:['icon','facility-hospital','facility-hospital'],officer_studied:['icon','facility-school','facility-school']};
+ const [type,name,asset]=mapped[kind],image=modal.locator(`img.event-original-${type}[data-original-ui="${asset}"]`);
+ await expect(modal.locator('[data-event-art]')).toHaveAttribute('data-event-art',`${type}-${name}`);await expect(image).toBeVisible();
+ await expect.poll(()=>image.evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
+ const source=new URL(await image.getAttribute('src'),page.url()),expected=new URL(`assets/original-ui/${asset}-4x.png`,page.url());
+ expect(source.origin).toBe(new URL(page.url()).origin);expect(source.pathname).toBe(expected.pathname);expect(source.pathname).toContain('/Three-Kingdoms2-King-mainland/assets/original-ui/');
+ await expect(image).toHaveAttribute('data-original-ui-provenance','original-capture-derived');await expect(image).toHaveAttribute('alt',/原版/);
+ const ja=await page.locator('html').getAttribute('lang')==='ja',captions={
+  equipment_bought:ja?/武具店.*購入/:/武具店.*購置/,grain_traded:ja?/市場.*兵糧.*取引/:/市場.*米糧交易/,
+  treasure_sold:ja?/市場.*宝.*売却/:/市場.*寶物出售/,transport_departed:ja?/輸送隊.*出発/:/運輸隊出發/,
+  officer_treated:ja?/医館.*治療/:/醫館.*療傷/,officer_studied:ja?/学問所.*学習/:/學問所.*進修/
+ };
+ await expect(modal.locator('.event-art-caption')).toContainText(captions[kind]);await expect(modal.locator('.event-map')).toHaveCount(0);await expect(modal.locator('.event-facility')).toHaveCount(0);
+}
+async function assertFacilityFooter(page,action){
+ const footer=page.locator('.facility-footer'),confirm=page.locator('#'+action),cancel=footer.locator('[data-cancel]');
+ for(const scroll of ['bottom','top']){
+  await page.locator('[data-facilities-dialog]').evaluate((node,edge)=>{node.scrollTop=edge==='bottom'?node.scrollHeight:0;},scroll);
+  for(const control of [footer,confirm,cancel]){
+   await expect(control).toBeInViewport();const r=await control.evaluate(node=>{const box=node.getBoundingClientRect();return {top:box.top,bottom:box.bottom,viewport:innerHeight};});
+   expect(r.top).toBeGreaterThanOrEqual(0);expect(r.bottom).toBeLessThanOrEqual(r.viewport+1);
+  }
+ }
+}
+async function clickCityCommand(page,id){
+ const group={allocate:'army',depart:'army',transfer:'army',recruit:'army','recruit-officer':'city','civil-staff':'city','city-domestic':'city','city-civic':'city','city-treasury':'warehouse','city-logistics':'warehouse','city-facilities':'town'}[id];
+ if(group){const tab=page.locator('#city-command-tab-'+group);if(await tab.getAttribute('aria-selected')!=='true')await tab.click();await expect(page.locator('#city-command-panel-'+group)).toBeVisible();}
+ await page.locator('#'+id).click();
+}
+async function openAllocation(page){await clickCityCommand(page,'allocate');await expect(page.locator('#allocation-troops')).toBeVisible();}
 async function waitIdle(page){await expect(page.locator('body')).not.toHaveClass(/\bbusy\b/);}
 async function setTroops(page,value){
  await page.locator('#allocation-troops').fill(String(value));
@@ -29,11 +59,35 @@ async function setTroops(page,value){
  await expect(page.locator('#dialog')).toBeVisible();
 }
 
+test('city road beds survive hidden castles, shared inland reaches draw once and ruler portraits stay centered',async({page},testInfo)=>{
+ await opening(page);await page.locator('#scenario').selectOption('mainland207-09');await page.locator('input[name=faction][value=shu]').check();
+ const portrait=page.locator('#setup-summary .portrait-frame');await portrait.scrollIntoViewIfNeeded();
+ const aligned=await page.locator('#setup-summary').evaluate(node=>{const a=node.querySelector('.portrait-frame').getBoundingClientRect(),b=node.querySelector('.setup-summary-copy').getBoundingClientRect();return {portrait:(a.top+a.bottom)/2,copy:(b.top+b.bottom)/2,height:a.height};});
+ expect(aligned.height).toBe(40);expect(Math.abs(aligned.portrait-aligned.copy)).toBeLessThan(.6);
+ await historyScreenshot(page,testInfo,'ruler-portrait-centered',{fullPage:false});
+ const map=page.locator('#world-map');await expect(map.locator('[data-city-road-bed]')).toHaveCount(1);await expect(map.locator('.city-hit[data-city=yidu]')).toHaveCount(0);await expect(map.locator('[data-inactive-city=yidu]')).toHaveCount(1);
+ await expect(map.locator('#city-road-bed-mask rect[x="647"][y="472"]')).toHaveCount(1);
+ const paths=await map.locator('[data-city-road-bed] > g > path').last().getAttribute('d');expect(paths).toMatch(/(?:M|L)647 472/);expect(paths).toMatch(/(?:M|L)695 346/);expect(paths).toMatch(/(?:M|L)620 346/);
+ const reachKeys=await map.locator('path.river-lane').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('data-river-reach')));expect(reachKeys.length).toBeGreaterThan(15);expect(reachKeys.every(Boolean)).toBe(true);expect(new Set(reachKeys).size).toBe(reachKeys.length);
+ const layers=await map.evaluate(svg=>{const nodes=[...svg.children];return {bed:nodes.findIndex(n=>n.hasAttribute('data-city-road-bed')),firstCastle:nodes.findIndex(n=>n.classList.contains('city-hit'))};});expect(layers.bed).toBeLessThan(layers.firstCastle);
+ // Diagnostic camera changes affect only SVG presentation in this isolated
+ // browser. They never inject campaign state, move cities or execute orders.
+ const originalBox=await map.getAttribute('viewBox');await map.scrollIntoViewIfNeeded();
+ for(const[name,box]of [['luoyang-hongnong-roads','550 300 220 120'],['linjiang-absent-road-junction','590 420 180 150']]){
+  await map.evaluate((svg,viewBox)=>svg.setAttribute('viewBox',viewBox),box);const path=join(testInfo.outputDir,name+'.png');await map.screenshot({path});await testInfo.attach(name,{path,contentType:'image/png'});
+ }
+ const hidden=await page.addStyleTag({content:'#world-map .city-hit,#world-map .map-city-name{visibility:hidden}'});const emptyPath=join(testInfo.outputDir,'road-junction-without-city-icons.png');await map.screenshot({path:emptyPath});await testInfo.attach('road-junction-without-city-icons',{path:emptyPath,contentType:'image/png'});await hidden.evaluate(node=>node.remove());await map.evaluate((svg,viewBox)=>svg.setAttribute('viewBox',viewBox),originalBox);
+ await page.locator('#begin').click();await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);await expect(page.locator('#map-date')).toHaveAttribute('datetime','0207-09-01');await expect(page.locator('#world-map [data-city-road-bed]')).toHaveCount(1);
+ expect(errors.get(page)).toEqual([]);
+});
+
 test('dialogs, language, limits, save/load and automatic recovery use the real campaign',async({page},testInfo)=>{
  await opening(page);
  await page.locator('#scenario').selectOption('mainland217-07');
  const shu=page.locator('input[name=faction][value=shu]');
  await expect(shu).toHaveCount(1);await shu.check();
+ const selectedPortrait=page.locator('#setup-summary .setup-ruler-portrait [data-portrait-person]');await expect(selectedPortrait).toHaveAttribute('data-portrait-person','san14-candidate-0952');await selectedPortrait.scrollIntoViewIfNeeded();await expect.poll(()=>selectedPortrait.locator('img').evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
+ await historyScreenshot(page,testInfo,'selected-faction-ruler',{fullPage:false});
  await page.locator('#begin').click();
  await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
  await waitIdle(page);
@@ -46,6 +100,30 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  const dismissBatch=openingEvent.locator('[data-event-skip]');
  await (await dismissBatch.count()?dismissBatch:openingEvent.locator('[data-event-next]')).click();
  await expect(openingEvent).not.toBeVisible();
+ await expect(page.locator('.city-command-tabs [role=tab]')).toHaveCount(4);
+ const boxes=await page.locator('.city-command-tabs [role=tab]').evaluateAll(nodes=>nodes.map(node=>{const r=node.getBoundingClientRect();return {top:r.top,width:r.width,height:r.height};}));expect(Math.max(...boxes.map(r=>r.top))-Math.min(...boxes.map(r=>r.top))).toBeLessThanOrEqual(1);for(const box of boxes){expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);}
+ expect(await page.locator('#inspector .resources dt').allTextContents()).toEqual(['資金','兵糧','預備兵']);
+ const pairs=await page.locator('#inspector .resources .resource-pair').evaluateAll(nodes=>nodes.map(node=>{const a=node.querySelector('dt').getBoundingClientRect(),b=node.querySelector('dd').getBoundingClientRect();return{a:a.top,b:b.top};}));expect(pairs).toHaveLength(3);for(const pair of pairs)expect(Math.abs(pair.a-pair.b)).toBeLessThanOrEqual(3);
+ for(const icon of await page.locator('.city-command-tabs img[data-original-ui]').all()){
+  await expect(icon).toBeVisible();await expect.poll(()=>icon.evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
+ }
+ await page.locator('#city-command-tab-army').focus();await page.keyboard.press('End');
+ await expect(page.locator('#city-command-tab-town')).toBeFocused();await expect(page.locator('#city-command-panel-town')).toBeVisible();
+ await page.keyboard.press('Home');await expect(page.locator('#city-command-tab-city')).toBeFocused();
+ await page.keyboard.press('ArrowRight');await expect(page.locator('#city-command-tab-army')).toBeFocused();
+ if(testInfo.project.name==='touch-chromium'){
+  const toggle=page.locator('#inspector-toggle');await expect(toggle).toBeVisible();await expect(toggle).toHaveAttribute('aria-expanded','true');
+  await toggle.click();await expect(page.locator('#inspector')).toBeHidden();await expect(toggle).toHaveAttribute('aria-expanded','false');
+  await page.locator('#inspector-compact-information').click();await expect(page.locator('.city-information')).toBeVisible();await closeDialog(page);
+  await expect(page.locator('#inspector')).toBeHidden();await toggle.click();await expect(page.locator('#inspector')).toBeVisible();
+ }
+ if(testInfo.project.name==='desktop-chromium'){
+  const originalViewport=page.viewportSize();await page.setViewportSize({width:1280,height:720});
+  await expect(page.locator('#recruit')).toBeInViewport();
+  const boundary=await page.locator('#recruit').evaluate(node=>({bottom:node.getBoundingClientRect().bottom,footer:document.querySelector('#city-command-footer').getBoundingClientRect().top}));
+  expect(boundary.bottom).toBeLessThanOrEqual(boundary.footer);
+  await historyScreenshot(page,testInfo,'original-city-commands',{fullPage:false});await page.setViewportSize(originalViewport);
+ }else await historyScreenshot(page,testInfo,'original-city-commands',{fullPage:false});
  const city=await page.locator('#city-jump').inputValue();
  await page.locator('#load').click();
  await expect(page.locator('[data-autosave-recover]').first()).toBeVisible();
@@ -63,6 +141,7 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  await page.locator('#dialog-language').selectOption('ja');
  await expect(page.locator('html')).toHaveAttribute('lang','ja');
  await expect(page.locator('#dialog-title')).toContainText('兵の編制',{useInnerText:true});
+ expect(await page.locator('#inspector .resources dt').allTextContents()).toEqual(['資金','兵糧','予備兵']);
  await expect(page.locator('#allocation-officer')).toHaveValue(officer);
  await page.locator('#dialog-language').selectOption('zh-Hant');
  await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');
@@ -210,7 +289,7 @@ test('daily marching grain loads once and consumes actual days through visible t
  expect(initial.state.extension.domestic.factions.shu.military).toBeNull();
  expect(initial.state.day).toBe(1);
  const startingGrain=initial.state.cities[source].grain;
- await page.locator('#transfer').click();
+ await clickCityCommand(page,'transfer');
  await expect(page.locator('#transfer-city')).toBeVisible();
  await page.locator('#transfer-city').selectOption(target);
  const leader=String(initial.state.extension.leaders.shu);
@@ -402,7 +481,7 @@ test('Jingzhou historical openings show Zhangling and playable Jingnan prefects'
  await waitIdle(page);await dismissHistoryOpening(page);
  await expect(page.locator('#city-jump')).toHaveValue('changsha');
  await expect(page.locator('#inspector .owner')).toContainText('韓玄');
- await expect(page.locator('#inspector .roster-table tbody tr')).toHaveCount(2);
+ await expect(page.locator('#inspector [data-city-roster-officer]')).toHaveCount(2);
  // Keyboard activation exercises the map's accessible city button on both
  // viewports, without forced clicks through the compact map toolbar.
  await marker('changsha').focus();await page.keyboard.press('Enter');
@@ -610,7 +689,7 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
   return readFile(await(await download).path(),'utf8');
  };
  const initial=JSON.parse(await exportSave());
- await page.locator('#transfer').click();
+ await clickCityCommand(page,'transfer');
  await expect(page.locator('#transfer-city')).toBeVisible();
  await page.locator('#transfer-city').selectOption('changsha');
  const select=page.locator('#route-mode'),river=select.locator('option[data-route-kind=river]');
@@ -914,7 +993,7 @@ test('successful recruitment preserves source initial body and applies dynamic p
  expect(original.state.officers[target]).toMatchObject({person_id:'san14-candidate-0464',health:66,loyalty:0,faction_id:null});
  expect(original.state.officers[target].profile.health_max).toBe(80);
  await page.locator('#city-jump').selectOption('wei');
- await page.locator('#recruit-officer').click();
+ await clickCityCommand(page,'recruit-officer');
  if(!await page.locator('#recruit-person').isVisible()){
   await page.locator('#world-map .city-hit[data-city=wei]').focus();await page.keyboard.press('Enter');
  }
@@ -964,13 +1043,13 @@ test('treasury drafts, governor rewards, treasure sale and search use real saved
   const response=await fetch('/api/state'),value=await response.json();return (value.view||value).catalog.treasury;
  });
  const open=async city=>{
-  await page.locator('#city-jump').selectOption(city);await page.locator('#city-treasury').click();
+  await page.locator('#city-jump').selectOption(city);await clickCityCommand(page,'city-treasury');
   await expect(page.locator(`[data-treasury-dialog][data-treasury-city="${city}"]`)).toBeVisible();
  };
  const events=async name=>{
   await closeDialog(page);
   const event=page.locator('#event-dialog');await expect(event).toBeVisible();
-  await expect(event.locator('.event-treasure')).toBeVisible();
+  if(name==='sale')await assertOriginalEventArt(page,event,'treasure_sold');else await expect(event.locator('.event-treasure')).toBeVisible();
   await expect(event.locator('#event-title')).not.toBeEmpty();
   if(name==='reward'){
    for(let step=0;step<10&&!/賞賜武將|武将への褒美/.test(await event.locator('#event-title').innerText());step++){
@@ -990,7 +1069,7 @@ test('treasury drafts, governor rewards, treasure sale and search use real saved
  const home='shujun';await page.locator('#city-jump').selectOption(home);
  const initial=await save();
  expect(initial.state.extension.treasury.cities[home].treasure).toBe(6);
- await page.locator('#city-treasury').click();
+ await clickCityCommand(page,'city-treasury');
  await expect(page.locator('#dialog [data-city-treasure]')).toHaveText('6');
  await expect(page.locator('#dialog-title')).toBeInViewport();
  const dimensions=await page.locator('#dialog').evaluate(node=>({scrollTop:node.scrollTop,scrollHeight:node.scrollHeight,clientHeight:node.clientHeight,scrollWidth:node.scrollWidth,clientWidth:node.clientWidth,top:node.getBoundingClientRect().top,bottom:node.getBoundingClientRect().bottom,viewport:window.innerHeight}));
@@ -1086,7 +1165,7 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  const source='shujun',target='bajun';await page.locator('#city-jump').selectOption(source);
  const before=await state();expect(before.state.extension.treasury.cities[source].treasure).toBe(6);expect(before.state.extension.treasury.cities[target].treasure).toBe(4);
  expect(before.state.extension.logistics.cities[source].policy.enabled).toBe(false);
- await page.locator('#city-logistics').click();await expect(page.locator('[data-treasure-transport]')).toBeVisible();
+ await clickCityCommand(page,'city-logistics');await expect(page.locator('[data-treasure-transport]')).toBeVisible();
  await expect(page.locator('#logistics-enabled')).not.toBeChecked();
  await page.locator('#treasure-transport-target').selectOption(target);
  await page.locator('#treasure-transport-amount').fill('999999');await expect(page.locator('#treasure-transport-amount')).toHaveValue('6');
@@ -1105,14 +1184,14 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  expect(departing.state.extension.logistics.cities[source].policy.enabled).toBe(false);
  await historyScreenshot(page,testInfo,'treasure-convoy-departure-ja');
  await closeDialog(page);
- const event=page.locator('#event-dialog');await expect(event).toBeVisible();await expect(event.locator('.event-art svg')).toBeVisible();
+ const event=page.locator('#event-dialog');await expect(event).toBeVisible();await assertOriginalEventArt(page,event,'transport_departed');
  await expect(event.locator('#event-description')).toContainText(/宝6|寶6/,{useInnerText:true});
  const skip=event.locator('[data-event-skip]');await (await skip.count()?skip:event.locator('[data-event-next]')).click();await expect(event).not.toBeVisible();
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
  await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();
  await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
- await page.locator('#city-jump').selectOption(source);await page.locator('#city-logistics').click();
+ await page.locator('#city-jump').selectOption(source);await clickCityCommand(page,'city-logistics');
  await expect(page.locator('#dialog')).toContainText(/宝\s*6|寶\s*6/,{useInnerText:true});
  await historyScreenshot(page,testInfo,'treasure-convoy-restored-ja');await closeDialog(page);
  expect(errors.get(page)).toEqual([]);
@@ -1122,67 +1201,88 @@ test('facility visits, trade, study, equipment, prevention and town development 
  await opening(page);await page.locator('#scenario').selectOption('mainland217-07');
  await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();
  await expect(page.locator('#city-facilities')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);
+ await page.locator('#city-command-tab-town').scrollIntoViewIfNeeded();
+ await page.locator('#city-command-tab-town').click();
+ await historyScreenshot(page,testInfo,'original-command-groups',{fullPage:false});
  const read=()=>page.evaluate(async()=>{
   const saved=await fetch('/api/save'),shown=await fetch('/api/state');
   if(!saved.ok||!shown.ok)throw new Error('Read-only facility view failed');
   const value=await shown.json();return {save:await saved.json(),facilities:(value.view||value).catalog.facilities};
  });
  const chooseCity=(snapshot,predicate)=>Object.entries(snapshot.facilities.cities).find(([id,row])=>row.owner==='shu'&&row.can_act&&predicate(row,snapshot.save.state.cities[id]));
- const open=async id=>{await page.locator('#city-jump').selectOption(id);await page.locator('#city-facilities').click();await expect(page.locator(`[data-facilities-dialog][data-facilities-city="${id}"]`)).toBeVisible();};
+ const open=async id=>{await page.locator('#city-jump').selectOption(id);await clickCityCommand(page,'city-facilities');await expect(page.locator(`[data-facilities-dialog][data-facilities-city="${id}"]`)).toBeVisible();};
  const events=async(label,kind)=>{
   await closeDialog(page);const modal=page.locator('#event-dialog');await expect(modal).toBeVisible();
-  await expect(modal.locator('#event-title')).not.toBeEmpty();await expect(modal.locator('.event-map')).toBeVisible();await expect(modal.locator('.event-facility')).toBeVisible();
+  await expect(modal.locator('#event-title')).not.toBeEmpty();
+  if(['officer_treated','officer_studied','grain_traded','equipment_bought'].includes(kind))await assertOriginalEventArt(page,modal,kind);else{await expect(modal.locator('.event-map')).toBeVisible();await expect(modal.locator('.event-facility')).toBeVisible();}
   const latest=await read();expect(latest.save.state.extension.events.items.some(row=>row.kind===kind)).toBe(true);
   await historyScreenshot(page,testInfo,`facility-${label}-event`,{fullPage:false});
   const skip=modal.locator('[data-event-skip]');await (await skip.count()?skip:modal.locator('[data-event-next]')).click();await expect(modal).not.toBeVisible();
  };
  let before=await read();const clinic=chooseCity(before,row=>row.town===1&&row.patients.some(p=>p.can_treat))||chooseCity(before,row=>row.patients.some(p=>p.can_treat));
- expect(clinic).toBeTruthy();await open(clinic[0]);
+ expect(clinic).toBeTruthy();const basic=chooseCity(before,row=>row.town===1);expect(basic).toBeTruthy();await open(basic[0]);
+ for(const service of ['school','armory']){
+  const tab=page.locator('#facility-tab-'+service);await expect(tab).toBeDisabled();await expect(tab).toHaveAttribute('aria-describedby','facility-unavailable-'+service);await expect(page.locator('#facility-unavailable-'+service)).toContainText(/本城尚未設置|この都市には未設置/);
+ }
+ await assertFacilityFooter(page,'facility-treat');await page.locator('.facility-footer [data-cancel]').focus();await page.keyboard.press('Enter');await expect(page.locator('#dialog')).not.toBeVisible();await expect(page.locator('#city-facilities')).toBeFocused();
+ expect((await read()).save).toEqual(before.save,'Disabled tabs and cancelling cannot spend resources or draw RNG');await open(clinic[0]);
  await expect(page.locator('#dialog-title')).toBeInViewport();
  const dimensions=await page.locator('#dialog').evaluate(node=>({top:node.getBoundingClientRect().top,bottom:node.getBoundingClientRect().bottom,viewport:innerHeight,scrollTop:node.scrollTop,scrollWidth:node.scrollWidth,clientWidth:node.clientWidth}));
  expect(dimensions.top).toBeGreaterThanOrEqual(0);expect(dimensions.bottom).toBeLessThanOrEqual(dimensions.viewport+1);expect(dimensions.scrollTop).toBe(0);expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth+1);
+ await expect(page.locator('.facility-service-tabs [role=tab]')).toHaveCount(4);await expect(page.locator('#facility-develop')).toHaveCount(0);await expect(page.locator('#facility-prevent')).toHaveCount(0);
+ await assertFacilityFooter(page,'facility-treat');await page.locator('.facility-footer [data-cancel]').focus();await page.keyboard.press('Tab');await expect(page.locator('#facility-treat')).toBeFocused();await page.keyboard.press('Shift+Tab');await expect(page.locator('.facility-footer [data-cancel]')).toBeFocused();
  await historyScreenshot(page,testInfo,'facilities-opening-viewport',{fullPage:false});
  const patient=await page.locator('#facility-patient').inputValue(),actor=await page.locator('#facility-actor').inputValue(),clinicQuote=clinic[1].patients.find(row=>String(row.id)===patient);
  expect(clinicQuote.can_treat).toBe(true);await expect(page.locator('#facility-patient option:checked')).toContainText(/兵.*武.*知.*德.*忠.*體/);
- await page.locator('.facility-policy > summary').click();await page.locator('#facility-policy-gold_budget').fill('321');
+ await page.locator('#facility-civic-entry').click();await page.locator('#facility-civic-policy').click();await page.locator('.facility-policy > summary').click();await page.locator('#facility-policy-gold_budget').fill('321');
  await page.locator('#facility-policy-grain_floor').fill('5000');await page.locator('#facility-policy-grain_target').fill('1');
  await expect(page.locator('#facility-policy-grain_target')).toHaveValue('5000');
- await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#dialog-title')).toContainText('施設と防災');
+ await page.locator('#dialog-language').selectOption('ja');await expect(page.locator('#dialog-title')).toContainText('町と都市');
  await expect(page.locator('#facility-policy-gold_budget')).toHaveValue('321');await expect(page.locator('.facility-policy')).toHaveAttribute('open','');
  expect((await read()).save).toEqual(before.save,'Facility inspection, policy drafts and language must not spend or draw RNG');
- await page.locator('#facility-treat').click();await waitIdle(page);let after=await read();
+ await page.locator('#facility-tab-hospital').click();await assertFacilityFooter(page,'facility-treat');await page.locator('#facility-treat').focus();await page.keyboard.press('Enter');await waitIdle(page);let after=await read();
  expect(after.save.state.cities[clinic[0]].gold).toBe(before.save.state.cities[clinic[0]].gold-clinicQuote.gold);
  expect(after.save.state.officers[patient].health).toBeGreaterThanOrEqual(clinicQuote.after_min);expect(after.save.state.officers[patient].health).toBeLessThanOrEqual(clinicQuote.after_max);
  expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+1);
  expect(after.save.state.cities[clinic[0]].action_used).toBe(true);expect(after.save.state.extension.officer_actions[actor]).toBe(after.save.state.turn);
- await expect(page.locator('#facility-treat')).toBeDisabled();await expect(page.locator('#facility-prevent')).toBeDisabled();await expect(page.locator('#facility-policy-gold_budget')).toHaveValue('321');
+ await expect(page.locator('#facility-treat')).toBeDisabled();await page.locator('#facility-civic-entry').click();await page.locator('#facility-civic-prevention').click();await expect(page.locator('#facility-prevent')).toBeDisabled();await page.locator('#facility-civic-policy').click();await expect(page.locator('#facility-policy-gold_budget')).toHaveValue('321');
  await page.locator('#facility-save-policy').click();await waitIdle(page);const configured=await read();
  expect(configured.save.state.extension.facilities.factions.shu).toMatchObject({enabled:false,gold_budget:321,grain_floor:5000,grain_target:5000});
  expect(configured.save.state.rng).toEqual(after.save.state.rng);await events('clinic-ja','officer_treated');
- before=await read();const market=chooseCity(before,row=>row.town===1&&row.trade.buy.max_batches>1)||chooseCity(before,row=>row.trade.buy.max_batches>1);expect(market).toBeTruthy();await open(market[0]);
- await page.locator('#facility-service').selectOption('market');await page.locator('#facility-trade-batches').fill('999999999');
+ before=await read();const market=chooseCity(before,row=>row.town===1&&row.trade.buy.max_batches>1&&row.eligible_actors.length>1)||chooseCity(before,row=>row.trade.buy.max_batches>1&&row.eligible_actors.length>1);expect(market).toBeTruthy();await open(market[0]);
+ await page.locator('#facility-tab-market').click();await page.locator('#facility-trade-batches').fill('999999999');
  await expect(page.locator('#facility-trade-batches')).toHaveValue(String(market[1].trade.buy.max_batches));await page.locator('#facility-trade-max').click();
- const batches=Math.min(2,market[1].trade.buy.max_batches);await page.locator('#facility-trade-batches').fill(String(batches));await page.locator('#dialog-language').selectOption('zh-Hant');
+ const batches=Math.min(2,market[1].trade.buy.max_batches);await page.locator('#facility-trade-batches').fill(String(batches));
+ const marketActor=await page.locator('#facility-actor').inputValue(),visitorChoice=await page.locator('#facility-actor option').evaluateAll((options,current)=>options.map(option=>({value:option.value,name:option.textContent.split(' · ')[0]})).find(option=>option.value!==current),marketActor);
+ expect(visitorChoice).toBeTruthy();const visitorPerson=before.save.state.officers[visitorChoice.value].person_id;
+ await page.locator('#facility-actor').selectOption(visitorChoice.value);await expect(page.locator('#facility-actor')).toBeFocused();await expect(page.locator('.facility-visitor strong')).toHaveText(visitorChoice.name);await expect(page.locator('.facility-visitor [data-portrait-person]')).toHaveAttribute('data-portrait-person',visitorPerson);await expect(page.locator('#facility-trade-batches')).toHaveValue(String(batches));expect((await read()).save).toEqual(before.save,'Changing the market actor refreshes the visitor without spending or altering RNG');
+ await page.locator('#dialog-language').selectOption('zh-Hant');
  await expect(page.locator('#facility-trade-batches')).toHaveValue(String(batches));expect((await read()).save).toEqual(before.save);
- await page.locator('#facility-trade').click();await waitIdle(page);after=await read();
+ await assertFacilityFooter(page,'facility-trade');await page.locator('#facility-trade').click();await waitIdle(page);after=await read();
  expect(after.save.state.cities[market[0]].gold).toBe(before.save.state.cities[market[0]].gold-batches*market[1].trade.buy.rate);
  expect(after.save.state.cities[market[0]].grain).toBe(before.save.state.cities[market[0]].grain+batches*market[1].trade.buy.batch_grain);expect(after.save.state.rng).toEqual(before.save.state.rng);
  await expect(page.locator('#facility-trade')).toBeDisabled();await events('market-tc','grain_traded');
- before=await read();const school=chooseCity(before,row=>row.services.includes('school')&&row.students.some(s=>s.can_study));expect(school).toBeTruthy();await open(school[0]);await page.locator('#facility-service').selectOption('school');
+ before=await read();const school=chooseCity(before,row=>row.services.includes('school')&&row.students.some(s=>s.can_study));expect(school).toBeTruthy();await open(school[0]);await page.locator('#facility-tab-school').click();
  const student=await page.locator('#facility-student').inputValue(),studyQuote=school[1].students.find(row=>String(row.id)===student);expect(studyQuote.can_study).toBe(true);
- await expect(page.locator('#facility-study-preview')).toContainText(String(studyQuote.gold));await page.locator('#facility-study').click();await waitIdle(page);after=await read();
+ await expect(page.locator('#facility-study-preview')).toContainText(String(studyQuote.gold));await assertFacilityFooter(page,'facility-study');await page.locator('#facility-study').click();await waitIdle(page);after=await read();
  const learned=after.save.state.officers[student].profile.intellect;
  expect(learned).toBeGreaterThanOrEqual(studyQuote.after_min);expect(learned).toBeLessThanOrEqual(studyQuote.after_max);
  expect(after.save.state.cities[school[0]].gold).toBe(before.save.state.cities[school[0]].gold-studyQuote.gold);expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+1);
  expect(after.save.state.extension.facilities.study[student]).toBe((before.save.state.extension.facilities.study[student]||0)+learned-studyQuote.before);
  await expect(page.locator('#facility-study')).toBeDisabled();await events('school-tc','officer_studied');
- before=await read();const armory=chooseCity(before,row=>row.services.includes('armory')&&row.stock.weapon.some(item=>item.can_buy&&item.eligible_targets.length));expect(armory).toBeTruthy();await open(armory[0]);await page.locator('#facility-service').selectOption('armory');
+ before=await read();const armory=chooseCity(before,row=>row.services.includes('armory')&&row.stock.weapon.some(item=>item.can_buy&&item.eligible_targets.length));expect(armory).toBeTruthy();await open(armory[0]);await page.locator('#facility-tab-armory').click();
+ await page.locator('#facility-tab-armory').focus();
+ for(const [service,action]of [['hospital','facility-treat'],['school','facility-study'],['market','facility-trade'],['armory','facility-equipment-buy']]){
+  await page.keyboard.press('ArrowRight');await expect(page.locator('#facility-tab-'+service)).toBeFocused();await expect(page.locator('#facility-tab-'+service)).toHaveAttribute('aria-selected','true');await assertFacilityFooter(page,action);
+ }
+ await page.keyboard.press('End');await expect(page.locator('#facility-tab-market')).toBeFocused();await page.keyboard.press('Home');await expect(page.locator('#facility-tab-armory')).toBeFocused();
+ expect((await read()).save).toEqual(before.save,'Four-tab keyboard navigation only updates the selected service');
  const item=armory[1].stock.weapon.find(item=>item.can_buy&&item.eligible_targets.length),recipient=String(item.eligible_targets[0]);
  await page.locator('#facility-equipment-officer').selectOption(recipient);await page.locator('#facility-equipment-item').selectOption(String(item.id));
- await expect(page.locator('#facility-equipment-buy')).toBeEnabled();await page.locator('#facility-equipment-buy').click();await waitIdle(page);after=await read();
+ await expect(page.locator('#facility-equipment-buy')).toBeEnabled();await assertFacilityFooter(page,'facility-equipment-buy');await page.locator('#facility-equipment-buy').click();await waitIdle(page);after=await read();
  expect(after.save.state.officers[recipient].weapon_id).toBe(item.id);expect(after.save.state.cities[armory[0]].gold).toBe(before.save.state.cities[armory[0]].gold-item.price);expect(after.save.state.rng).toEqual(before.save.state.rng);
  await expect(page.locator('#facility-equipment-buy')).toBeDisabled();await events('equipment-tc','equipment_bought');
- before=await read();const prevention=chooseCity(before,row=>Object.values(row.prevention_quotes).some(q=>q.can_prevent));expect(prevention).toBeTruthy();await open(prevention[0]);
+ before=await read();const prevention=chooseCity(before,row=>Object.values(row.prevention_quotes).some(q=>q.can_prevent));expect(prevention).toBeTruthy();await open(prevention[0]);await page.locator('#facility-civic-entry').click();await page.locator('#facility-civic-prevention').click();
  const engineer=await page.locator('#facility-actor').inputValue(),preventionQuote=prevention[1].prevention_quotes[engineer];expect(preventionQuote.can_prevent).toBe(true);
  await expect(page.locator('#facility-prevention-preview')).toContainText(String(preventionQuote.gold_min));await page.locator('#dialog-language').selectOption('ja');expect((await read()).save).toEqual(before.save);
  await page.locator('#facility-prevent').click();await waitIdle(page);after=await read();
@@ -1191,10 +1291,10 @@ test('facility visits, trade, study, equipment, prevention and town development 
  expect(protectedCity.preparedness).toBeGreaterThanOrEqual(preventionQuote.preparedness_min);expect(protectedCity.preparedness).toBeLessThanOrEqual(preventionQuote.preparedness_max);
  expect(protectedCity.damage).toBeGreaterThanOrEqual(preventionQuote.damage_min);expect(protectedCity.damage).toBeLessThanOrEqual(preventionQuote.damage_max);expect(after.save.state.rng.draws).toBe(before.save.state.rng.draws+2);
  await expect(page.locator('#facility-prevent')).toBeDisabled();await events('prevention-ja','prevention_improved');
- before=await read();const town=chooseCity(before,row=>row.develop.can_develop);expect(town).toBeTruthy();await open(town[0]);
+ before=await read();const town=chooseCity(before,row=>row.develop.can_develop);expect(town).toBeTruthy();await open(town[0]);await page.locator('#facility-civic-entry').click();
  await page.locator('#facility-develop').click();await waitIdle(page);after=await read();
  expect(after.save.state.extension.facilities.cities[town[0]].town).toBe(town[1].develop.to_town);expect(after.save.state.cities[town[0]].gold).toBe(before.save.state.cities[town[0]].gold-town[1].develop.gold);expect(after.save.state.rng).toEqual(before.save.state.rng);
- await expect(page.locator('#facility-develop')).toBeDisabled();await expect(page.locator('#facility-service option[value=school]')).toHaveCount(1);await expect(page.locator('#facility-service option[value=armory]')).toHaveCount(1);await events('development-ja','town_developed');
+ await expect(page.locator('#facility-develop')).toBeDisabled();await expect(page.locator('#facility-tab-school')).toBeEnabled();await expect(page.locator('#facility-tab-armory')).toBeEnabled();await events('development-ja','town_developed');
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
  await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
@@ -1268,26 +1368,27 @@ test('actual equipment appears in city intelligence and person details with serv
  const current=initial.view.catalog.equipment.officers[String(liu.id)];expect(current.scope).toBe('current');expect(current.weapon.name_tc).toContain('雙股劍');expect(initial.save.state.officers[liu.id].weapon_id).toBe(current.weapon.id);
  const home=Object.values(initial.save.state.cities).find(city=>city.roster.officer_ids.includes(liu.id));expect(home).toBeTruthy();
  const inspect=async city=>{const marker=page.locator(`#world-map .city-hit[data-city="${city}"]`);await marker.focus();await page.keyboard.press('Enter');const info=page.locator(`.city-information[data-inspected-city="${city}"]`);await expect(info).toBeVisible();return info;};
- const info=await inspect(home.id),cityGear=info.locator(`[data-officer-equipment="${liu.id}"]:visible`);await expect(cityGear).toHaveAttribute('data-equipment-scope','current');await expect(cityGear).toContainText(current.weapon.name_tc);await expect(cityGear).toContainText(`單挑攻擊${signed(current.attack_bonus)}`);await expect(cityGear).toContainText(`防禦${signed(current.defense_bonus)}`);await closeDialog(page);
+ const info=await inspect(home.id),cityGear=info.locator(`[data-officer-equipment="${liu.id}"]:visible`);await expect(cityGear).toHaveAttribute('data-equipment-scope','current');await expect(cityGear).toContainText(current.weapon.name_tc);await expect(cityGear.locator('[data-equipment-effects]')).toHaveCount(0);const weaponTip=cityGear.locator('button[data-equipment-slot=weapon]');expect(await weaponTip.innerText()).toBe(current.weapon.name_tc);if(testInfo.project.name==='touch-chromium')await weaponTip.tap();else await weaponTip.hover();const tip=page.locator('#game-equipment-tooltip');await expect(tip).toBeVisible();await expect(tip).toHaveJSProperty('popover','manual');await expect(tip.locator('[data-equipment-stat=attack_bonus]')).toContainText(`單挑攻擊${signed(current.attack_bonus)}`);await expect(tip.locator('[data-equipment-stat=defense_bonus]')).toContainText(`防禦${signed(current.defense_bonus)}`);const bounds=await tip.evaluate(node=>{const r=node.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:innerWidth,height:innerHeight,open:node.matches(':popover-open')};});expect(bounds.open).toBe(true);expect(bounds.left).toBeGreaterThanOrEqual(0);expect(bounds.right).toBeLessThanOrEqual(bounds.width);expect(bounds.top).toBeGreaterThanOrEqual(0);expect(bounds.bottom).toBeLessThanOrEqual(bounds.height);await historyScreenshot(page,testInfo,'equipment-tooltip-city',{fullPage:false});await page.keyboard.press('Escape');await expect(tip).toBeHidden();await expect(page.locator('#dialog')).toBeVisible();await closeDialog(page);
  const person=async id=>{if(!await page.locator('#library').isVisible())await page.locator('#utility-menu summary').click();await page.locator('#library').click();await page.locator('#library-search').fill(id);await expect(page.locator('.person-detail')).toHaveCount(1);await page.locator('.person-detail').click();};
- await person('san14-candidate-0952');const detailed=page.locator(`#dialog [data-officer-equipment="${liu.id}"]:visible`);await expect(detailed).toContainText(current.weapon.name_tc);await expect(detailed).toContainText(current.armor.name_tc);await expect(detailed.locator('[data-equipment-weight]')).toContainText(String(current.total_weight));await expect(detailed.locator('[data-equipment-retreat]')).toContainText(String(current.retreat_health_max));await expect(detailed.locator('[data-equipment-retreat]')).toContainText(`${current.retreat_chance}%`);
- await expect(detailed).toContainText('不改寫基礎武、知、德');await page.locator('#dialog-language').selectOption('ja');await expect(detailed).toContainText(current.weapon.name_ja);await expect(detailed).toContainText('現在の装備');await expect(detailed).toContainText('命中補正');await historyScreenshot(page,testInfo,'actual-equipment-detail-ja',{fullPage:false});await page.locator('#dialog-language').selectOption('zh-Hant');await closeDialog(page);
+ await person('san14-candidate-0952');const detailed=page.locator(`#dialog [data-officer-equipment="${liu.id}"]:visible`);await expect(detailed).toContainText(current.weapon.name_tc);await expect(detailed).toContainText(current.armor.name_tc);await expect(detailed.locator('[data-equipment-details]')).not.toHaveAttribute('open','');await expect(detailed.locator('[data-equipment-weight]')).toBeHidden();await detailed.locator('[data-equipment-details] > summary').click();await expect(detailed.locator('[data-equipment-details]')).toHaveAttribute('open','');await expect(detailed.locator('[data-equipment-weight]')).toContainText(String(current.total_weight));await expect(detailed.locator('[data-equipment-retreat]')).toContainText(String(current.retreat_health_max));await expect(detailed.locator('[data-equipment-retreat]')).toContainText(`${current.retreat_chance}%`);
+ await expect(detailed).toContainText('不改寫基礎武、知、德');await page.locator('#dialog-language').selectOption('ja');await expect(detailed).toContainText(current.weapon.name_ja);await expect(detailed).toContainText('現在の装備');if(await detailed.locator('[data-equipment-details]').getAttribute('open')===null)await detailed.locator('[data-equipment-details] > summary').click();await expect(detailed.locator('[data-equipment-weight]')).toBeVisible();await expect(detailed).toContainText('命中補正');await historyScreenshot(page,testInfo,'actual-equipment-detail-ja',{fullPage:false});await page.locator('#dialog-language').selectOption('zh-Hant');await closeDialog(page);
  expect((await read()).save).toEqual(initial.save,'Equipment inspection and translation never alter base stats, holdings or RNG');
  const candidates=[];
  for(const[city,row]of Object.entries(initial.view.catalog.facilities.cities))if(row.owner==='shu'&&row.can_act&&row.services.includes('armory')){
-  for(const item of row.stock.weapon||[])if(item.can_buy)for(const ident of item.eligible_targets||[]){const quote=item.preview_by_officer?.[String(ident)];if(quote?.eligible===true)candidates.push({city,item,ident,quote,preferred:String(ident)===String(liu.id)});}
+  for(const item of row.stock.weapon||[])if(item.can_buy)for(const ident of item.eligible_targets||[]){const quote=item.preview_by_officer?.[String(ident)];if(quote?.eligible===true&&initial.view.catalog.equipment.officers[String(ident)]?.weapon.id!==item.id)candidates.push({city,item,ident,quote,preferred:String(ident)===String(liu.id)});}
  }
  candidates.sort((a,b)=>Number(b.preferred)-Number(a.preferred)||a.item.price-b.item.price);const selection=candidates[0];expect(selection).toBeTruthy();
- await page.locator('#city-jump').selectOption(selection.city);await page.locator('#city-facilities').click();await page.locator('#facility-service').selectOption('armory');await page.locator('#facility-equipment-officer').selectOption(String(selection.ident));await page.locator('#facility-equipment-item').selectOption(String(selection.item.id));
- const comparison=page.locator(`[data-equipment-comparison="${selection.ident}"]`);await expect(comparison).toBeVisible();await expect(comparison).toHaveAttribute('data-equipment-eligible','true');await expect(comparison.locator('[data-equipment-compare=attack_bonus]')).toContainText(`${signed(selection.quote.before.attack_bonus)} → ${signed(selection.quote.after.attack_bonus)}`);
+ await page.locator('#city-jump').selectOption(selection.city);await clickCityCommand(page,'city-facilities');await page.locator('#facility-tab-armory').click();await page.locator('#facility-equipment-officer').selectOption(String(selection.ident));await page.locator('#facility-equipment-item').selectOption(String(selection.item.id));
+ expect((await page.locator('#facility-equipment-item option').allTextContents()).join(' ')).not.toMatch(/強度|重量|強さ|重さ/);await expect(page.locator('#facility-equipment-preview')).toContainText('資金');const oldIcon=page.locator(`#dialog [data-officer-equipment="${selection.ident}"] img[data-equipment-slot=weapon]`),oldSource=await oldIcon.getAttribute('src');const offerIcon=page.locator('[data-facility-selected-equipment] img');await expect(offerIcon).toHaveAttribute('data-equipment-key',`weapon:${selection.item.id}`);await expect.poll(()=>offerIcon.evaluate(node=>node.complete&&node.naturalWidth===128&&node.naturalHeight===128)).toBe(true);const comparison=page.locator(`[data-equipment-comparison="${selection.ident}"]`);await expect(comparison).toBeVisible();await expect(comparison).toHaveAttribute('data-equipment-eligible','true');await expect(comparison.locator('[data-equipment-compare=attack_bonus]')).toContainText(`${signed(selection.quote.before.attack_bonus)} → ${signed(selection.quote.after.attack_bonus)}`);
+ await expect(comparison.locator('[data-equipment-comparison-details]')).not.toHaveAttribute('open','');await expect(comparison.locator('[data-equipment-compare=initiative_base]')).toBeHidden();await comparison.locator('[data-equipment-comparison-details] > summary').click();await expect(comparison.locator('[data-equipment-comparison-details]')).toHaveAttribute('open','');await expect(comparison.locator('[data-equipment-compare=initiative_base]')).toBeVisible();
  await expect(comparison.locator('[data-equipment-compare=total_weight]')).toContainText(`${selection.quote.before.total_weight} → ${selection.quote.after.total_weight}`);await expect(comparison.locator('[data-equipment-compare=initiative_base]')).toContainText(`${selection.quote.before.initiative_base} → ${selection.quote.after.initiative_base}`);await expect(comparison.locator('[data-equipment-compare=retreat_chance]')).toContainText(`${selection.quote.before.retreat_chance} → ${selection.quote.after.retreat_chance}%`);
  await page.locator('[data-equipment-guide] > summary').click();const guide=page.locator('[data-equipment-guide]');await expect(guide.locator('[data-special-equipment]')).toHaveCount(initial.view.catalog.equipment.special.length);await expect(guide).toContainText('取得條件');
  await page.locator('#dialog-language').selectOption('ja');await expect(guide).toHaveAttribute('open','');await expect(guide).toContainText('入手条件');await expect(page.locator('#facility-equipment-officer')).toHaveValue(String(selection.ident));await expect(page.locator('#facility-equipment-item')).toHaveValue(String(selection.item.id));await expect(page.locator('[data-equipment-comparison]')).toContainText('一騎討ちの攻撃');await historyScreenshot(page,testInfo,'equipment-shop-weight-comparison-ja',{fullPage:false});
  expect((await read()).save).toEqual(initial.save,'Shop quotes, unlock conditions and language remain read-only');await page.locator('#facility-equipment-buy').click();await waitIdle(page);let after=await read();
  expect(after.save.state.officers[selection.ident].weapon_id).toBe(selection.item.id);expect(after.save.state.officers[selection.ident].profile).toEqual(initial.save.state.officers[selection.ident].profile);expect(after.save.state.cities[selection.city].gold).toBe(initial.save.state.cities[selection.city].gold-selection.item.price);expect(after.save.state.rng).toEqual(initial.save.state.rng);
  expect(after.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);await expect(page.locator('#facility-equipment-buy')).toBeDisabled();await closeDialog(page);
- const events=page.locator('#event-dialog');await expect(events).toBeVisible();const skip=events.locator('[data-event-skip]');await(await skip.count()?skip:events.locator('[data-event-next]')).click();await expect(events).not.toBeVisible();
- const updated=await inspect(selection.city);await page.locator('#dialog-language').selectOption('zh-Hant');const changed=updated.locator(`[data-officer-equipment="${selection.ident}"]:visible`);await expect(changed).toContainText(selection.item.name_tc);await expect(changed).toContainText(`單挑攻擊${signed(selection.quote.after.attack_bonus)}`);await closeDialog(page);
+ const events=page.locator('#event-dialog');await expect(events).toBeVisible();await assertOriginalEventArt(page,events,'equipment_bought');const skip=events.locator('[data-event-skip]');await(await skip.count()?skip:events.locator('[data-event-next]')).click();await expect(events).not.toBeVisible();
+ const updated=await inspect(selection.city);await page.locator('#dialog-language').selectOption('zh-Hant');const changed=updated.locator(`[data-officer-equipment="${selection.ident}"]:visible`);await expect(changed).toContainText(selection.item.name_tc);const newIcon=changed.locator('img[data-equipment-slot=weapon]');await expect(newIcon).toHaveAttribute('data-equipment-key',`weapon:${selection.item.id}`);await expect(newIcon).toHaveAttribute('data-original-ui-provenance','remake-equipment-icon');expect(await newIcon.getAttribute('src')).not.toBe(oldSource);await expect.poll(()=>newIcon.evaluate(node=>node.complete&&node.naturalWidth===128)).toBe(true);await changed.locator('button[data-equipment-slot=weapon]').click();await expect(page.locator('#game-equipment-tooltip')).toContainText(`單挑攻擊${signed(selection.quote.after.attack_bonus)}`);await page.keyboard.press('Escape');await historyScreenshot(page,testInfo,'equipment-after-purchase',{fullPage:false});await closeDialog(page);
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);const restored=await read();expect(restored.save).toEqual(JSON.parse(raw));expect(restored.view.catalog.equipment.officers[String(selection.ident)].weapon.id).toBe(selection.item.id);
  expect(restored.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);expect(errors.get(page)).toEqual([]);
 });

@@ -1,9 +1,9 @@
 {
   "schema": "tk2-road-center-render-v1",
-  "source_sha256": "0de6ed1949d8e00b074515a574c76a166af23be929e5c32234011c9520b98d50",
+  "source_sha256": "f12a2e883533cfd5bb532fd0c12b68c174480e3fe892c142dde2f6b32db496ab",
   "positions_sha256": "91a45ddd1005028f4f20779946104df3bab590aab30a0c63c1d17f24a810d38d",
   "baseline_sha256": "3cf81b31f08fe73ff5f9acd7627e009de9e4250664088c2d7cfc54f31bd2f683",
   "ground_sha256": "ea8cf8ecbb573205b9b3e9ea43c1c15ec61ff5bef3e3d1e699bea75b0d7c08c0",
-  "output_sha256": "a5de4d6f09d860a5d0f93479321e4365d5a13c048de38c97c7bbef45ef0336e7",
+  "output_sha256": "7424da54761ecf923236d023df193bcc8af392383932d767d33a9e7534a76309",
   "water_render_sha256": "29d9cddd133fcd6b0d4597c02a5088ede425a4a8520b7331cf1b7ba7c1c1357a"
 }

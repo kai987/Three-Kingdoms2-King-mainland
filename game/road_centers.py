@@ -59,6 +59,7 @@ def _path(points, radius, centers):
 
 
 _START = re.compile(r'^\s*M\s*([-+]?\d+(?:\.\d+)?)\s*[, ]\s*([-+]?\d+(?:\.\d+)?)')
+_CONNECTOR = re.compile(r'^\s*M\s*([-+]?\d+(?:\.\d+)?)\s*[, ]\s*([-+]?\d+(?:\.\d+)?)\s*L\s*([-+]?\d+(?:\.\d+)?)\s*[, ]\s*([-+]?\d+(?:\.\d+)?)\s*$')
 
 
 def _old_wuwei(path):
@@ -91,6 +92,28 @@ def build(source, positions):
             raise ValueError('Invalid source road geometry')
         segments[index] = (points, radius)
     mapping, node_cities, deleted = {}, {}, set()
+    # These are reviewed exact native center-to-anchor strokes, not points
+    # selected by distance. Collapse the anchor in every incident source
+    # segment and remove its now-zero-length spoke. Keeping the old spoke
+    # after centering would expose a tiny return branch when an icon is hidden.
+    native = deepcopy(source.get('native_city_connectors', []))
+    for row in native:
+        index, city = row['index'], row['city']
+        points = [_point(point) for point in row['points']]
+        if (type(index) is not int or not 0 <= index < len(original)
+                or index in segments or city not in centers or len(points) != 2):
+            raise ValueError('Invalid reviewed native city connector')
+        match = _CONNECTOR.fullmatch(original[index])
+        if match is None or points != [tuple(map(float, match.groups()[:2])),
+                                       tuple(map(float, match.groups()[2:]))]:
+            raise ValueError('Native connector differs from its exact source stroke')
+        segments[index] = (points, 0)
+        deleted.add(index)
+        row['center'] = list(centers[city])
+        for node in points:
+            if node in mapping and (mapping[node] != centers[city] or node_cities[node] != city):
+                raise ValueError('A reviewed native anchor belongs to two cities')
+            mapping[node], node_cities[node] = centers[city], city
     hubs = deepcopy(source['hubs'])
     for hub in hubs:
         city = hub['city']
@@ -140,16 +163,37 @@ def build(source, positions):
                 # A joining branch must reach the trunk, rather than its
                 # rounded-off control point. Shared sections are drawn once.
                 junctions.update((points[0], points[-1]))
+    # Dynamic branches can meet an interior point of a native stroke. The
+    # exact reviewed vertex must be a true subpath end in the timing graph,
+    # even when no city anchor or corridor edit otherwise changes that stroke.
+    shared = deepcopy(source.get('shared_junctions', []))
+    shared_ids, shared_points = set(), set()
+    for row in shared:
+        identity, point = row['id'], _point(row['point'])
+        indices = row['source_segment_indices']
+        if (not identity or identity in shared_ids or not isinstance(indices, list)
+                or not indices or any(type(index) is not int or index not in segments
+                                      or point not in segments[index][0] for index in indices)):
+            raise ValueError('Invalid reviewed shared road junction')
+        shared_ids.add(identity)
+        shared_points.add(mapping.get(point, point))
+    junctions.update(shared_points)
     changes, replacements = [], {}
     for index, (points, radius) in sorted(segments.items()):
         updated = [mapping.get(point, point) for point in points]
         affected = {node_cities[p] for p in points if p in node_cities}
         if index in overrides:
             updated, radius, cities = overrides[index]
+            updated = [mapping.get(point, point) for point in updated]
             affected.update(cities)
-        if index not in deleted and index not in overrides and updated == points:
+        shared_interior = any(point in shared_points for point in updated[1:-1])
+        if index not in deleted and index not in overrides and updated == points and not shared_interior:
             continue
-        new_d = '' if index in deleted else _path(updated, radius, junctions)
+        # A former fork can collapse both ends of a decorative return stroke
+        # onto one city. Such a loop contributes no arrival or through route.
+        closed_city_loop = bool(updated and updated[0] == updated[-1]
+                                and updated[0] in registered)
+        new_d = '' if index in deleted or closed_city_loop else _path(updated, radius, junctions)
         remove = not new_d
         if remove:
             updated = []
@@ -158,9 +202,8 @@ def build(source, positions):
             affected_cities=sorted(affected),
             deleted=remove))
         replacements[index] = new_d
-    # Preserve the current city connectors verbatim. The two M124 120 paths
-    # (a long segment and a zero-length old connector) were both removed when
-    # the approved navigation PNG relocated Wuwei; neither may be repainted.
+    # The two M124 120 paths (a long segment and an old zero-length connector)
+    # were removed when navigation relocated Wuwei; neither may be repainted.
     paint, obsolete = [], []
     for index, path in enumerate(original):
         if _old_wuwei(path):
@@ -181,6 +224,8 @@ def build(source, positions):
         erased_ids.add(row['id'])
     return dict(schema='tk2-road-center-presentation-v1', ground=deepcopy(source['ground']),
         provenance=deepcopy(source['provenance']), hubs=hubs,
+        native_city_connectors=native,
+        shared_junctions=shared,
         corridor_repairs=repairs,
         protected_hubs=deepcopy(source['protected_hubs']), changes=changes,
         mask_d=''.join(row['old_d'] + row['new_d'] for row in changes) + ''.join(row['d'] for row in erased),

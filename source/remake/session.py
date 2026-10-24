@@ -130,7 +130,8 @@ class CampaignSession:
                                            'faction_colors':faction_colors(c),
                                            'travel_hazards':c.data.get('travel_hazards'),
                                            'sea_routes':c.data.get('sea_routes',[]),
-                                           'factions':list(c.factions.values())} for c in self.catalogs.values()]
+                                           'factions':[dict(f, ruler_person_id=c.by_id[c.data['faction_rulers'][f['id']]]['person_id'])
+                                                       for f in c.factions.values()]} for c in self.catalogs.values()]
         return [dict(row,
             initial_owners=dict(row['initial_owners']),
             active_cities=list(row['active_cities']),
@@ -140,7 +141,7 @@ class CampaignSession:
             faction_resources={key:dict(values) for key,values in row['faction_resources'].items()},
             faction_officers=dict(row['faction_officers']),
             faction_colors=dict(row['faction_colors']),
-            factions=list(row['factions'])) for row in self._opening_previews]
+            factions=[dict(faction) for faction in row['factions']]) for row in self._opening_previews]
 
     def command(self, kind, payload, revision):
         with self.lock:

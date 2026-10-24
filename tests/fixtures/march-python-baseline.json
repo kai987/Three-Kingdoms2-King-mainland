@@ -1,7 +1,7 @@
 {
   "plain": {
     "before": {
-      "save": "64d401be6ec465b244b6bf1d3bc775c2e849b1331654eba4f954d2915bd26700",
+      "save": "66fa241ecf9d364f98f5759d46729bb9ff7afa8d5f7590b83193b5b139f2c6ad",
       "state": "2a6ac8fc02c898a6416816168f41ffc31e76ab92f56e30fde5f131003dff42cf",
       "rng": {
         "state": 2026,
@@ -15,7 +15,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "64d401be6ec465b244b6bf1d3bc775c2e849b1331654eba4f954d2915bd26700",
+      "save": "66fa241ecf9d364f98f5759d46729bb9ff7afa8d5f7590b83193b5b139f2c6ad",
       "state": "2a6ac8fc02c898a6416816168f41ffc31e76ab92f56e30fde5f131003dff42cf",
       "rng": {
         "state": 2026,
@@ -29,8 +29,8 @@
       "turn": 1
     },
     "queued": {
-      "save": "4cdb84cb7d5297f1ae94fe1428f3a37bc0a7db66fed9a1d243468799665ee061",
-      "state": "0c519a1e22dd8cd6f7e78fbf6783eefb6888d0f12f41111d1a9c79488dd5652c",
+      "save": "80cb06a10a83118e55ba982ee78161a3961ac80b00e72fe9f00e685622258523",
+      "state": "b1c86380da1dcae43398f5d441629b1cde6b1f235d4e3b22d8da2906eaaa207c",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -55,8 +55,8 @@
           "to": "zitong",
           "mode": "land",
           "terrain": "mountain",
-          "distance_km": 134.2,
-          "land_km": 134.2,
+          "distance_km": 134.3,
+          "land_km": 134.3,
           "sea_km": 0,
           "days": 9,
           "timing_geometry": {
@@ -64,9 +64,9 @@
             "parts": [
               {
                 "mode": "land",
-                "length_px": 49.020206,
+                "length_px": 49.051533,
                 "chord_px": 48.846699,
-                "shape_ratio": 1.003552072
+                "shape_ratio": 1.004193405
               }
             ]
           },
@@ -88,9 +88,9 @@
             "parts": [
               {
                 "mode": "land",
-                "length_px": 35.989582,
+                "length_px": 36.015099,
                 "chord_px": 35.805028,
-                "shape_ratio": 1.005154416
+                "shape_ratio": 1.005867081
               }
             ]
           },
@@ -101,15 +101,15 @@
       "days": 14,
       "months": 1,
       "turns": 2,
-      "distance_km": 197.9,
+      "distance_km": 198,
       "grain_per_officer": 10,
       "modes": [
         "land"
       ]
     },
     "arrived": {
-      "save": "1aa6c81a8e659cbf43415d3334b21e5dcff9329a4a5d47f69cf6b8f2daf33225",
-      "state": "79b641df9bb6c0e3eed211d84b3b91c514077e67494b3b509d306f110c522e69",
+      "save": "97a3cabf0e8f35270bb0b9897bba742bda4477fe67c3b02be27154d570fef3f4",
+      "state": "4c5c32bb5e28e5d594a90c36544849e5db08e33e8e33818b0363ef14699c5ec6",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -129,7 +129,7 @@
   },
   "yinping": {
     "before": {
-      "save": "3b8c1f3fb0df8c534524c8f96d66800157d90ad612a7a98586ca5e98fc279d35",
+      "save": "9662f8db78b2e0ddb2c9c478a64fa567c50282be3d7b958ffbf87b53c9ef7c37",
       "state": "6938340a618e21d918145dfc326e606a3555826c8ca630ba801fb53faf5589ff",
       "rng": {
         "state": 2026,
@@ -143,7 +143,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "3b8c1f3fb0df8c534524c8f96d66800157d90ad612a7a98586ca5e98fc279d35",
+      "save": "9662f8db78b2e0ddb2c9c478a64fa567c50282be3d7b958ffbf87b53c9ef7c37",
       "state": "6938340a618e21d918145dfc326e606a3555826c8ca630ba801fb53faf5589ff",
       "rng": {
         "state": 2026,
@@ -157,8 +157,8 @@
       "turn": 1
     },
     "queued": {
-      "save": "bd3d95c74bb013ceb7fa8074376aed12fa7d99971d80d2f6232fe86cb8f62773",
-      "state": "73f08c04360fa475e83533aa18bedaa57dcad46bc31e5263ab03872028dc4b43",
+      "save": "a51397659d09db0e49f3526f48d753a8110b948eed33388b8e2574ed189e9ded",
+      "state": "f3a527be85e81e35753c550a3ea9d6f37fb9fffa375f090c7c7ec4f882bdba34",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -182,23 +182,23 @@
           "to": "shujun",
           "mode": "land",
           "terrain": "mountain",
-          "distance_km": 890.4,
-          "land_km": 890.4,
+          "distance_km": 459.9,
+          "land_km": 459.9,
           "sea_km": 0,
-          "days": 60,
+          "days": 32,
           "special": "yinping",
           "timing_geometry": {
             "schema": "tk2-route-timing-v1",
             "parts": [
               {
                 "mode": "land",
-                "length_px": 250.181127,
+                "length_px": 129.20602,
                 "chord_px": 106.282642,
-                "shape_ratio": 2.353922732
+                "shape_ratio": 1.215683178
               }
             ]
           },
-          "base_days": 30,
+          "base_days": 16,
           "hazard": {
             "kind": "yinping",
             "label": "阴平险道：全军最终余三分之一",
@@ -213,28 +213,28 @@
           }
         }
       ],
-      "days": 60,
+      "days": 32,
       "months": 2,
-      "turns": 6,
-      "distance_km": 890.4,
+      "turns": 4,
+      "distance_km": 459.9,
       "grain_per_officer": 5,
       "modes": [
         "land"
       ]
     },
     "arrived": {
-      "save": "f56891b69f32c029144283567fa4067f5b62d83435f6ec82f6606e40cb86066b",
-      "state": "313d722b6f83ba6c270c5158163b8975577a84a57b5b9be0303644c51b50a39b",
+      "save": "0cf55456689d74a37ecc1f5a687b0d6aa77ba8c3b75aa814a883d65977b2b99f",
+      "state": "d32c264aa84c4027f4af738ff37292fe458eeff086a8a32a22cec799b960e97e",
       "rng": {
         "state": 2026,
         "draws": 0
       },
       "soldiers": {
         "initial": 283620,
-        "recruited": 8508,
+        "recruited": 4254,
         "lost": 600
       },
-      "turn": 7
+      "turn": 5
     },
     "troops": [
       100,
@@ -244,7 +244,7 @@
   },
   "ziwu-rain": {
     "before": {
-      "save": "b6bf2a2a75d526d872fd0563857345047306cec2a7a0cb062cf5dd74c1d01cfc",
+      "save": "79f38cd704e9be80702a6cffb6cf78f1004d78ee1439627a53168c871c78dd5c",
       "state": "98447df6c996cbe9a7aae518b47d5095a050b3aa347ac0dc5ead340bf8f86949",
       "rng": {
         "state": 2026,
@@ -258,7 +258,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "b6bf2a2a75d526d872fd0563857345047306cec2a7a0cb062cf5dd74c1d01cfc",
+      "save": "79f38cd704e9be80702a6cffb6cf78f1004d78ee1439627a53168c871c78dd5c",
       "state": "98447df6c996cbe9a7aae518b47d5095a050b3aa347ac0dc5ead340bf8f86949",
       "rng": {
         "state": 2026,
@@ -272,8 +272,8 @@
       "turn": 1
     },
     "queued": {
-      "save": "a3462a089b93b4713bcd4b0d7a91fe8a60d95059adb68e076ecf165fe7ac86aa",
-      "state": "c18a0b4f96bc5cac309dfab99ab493f5a1a2bef46cd73b25197cdf10006a8fb7",
+      "save": "9cfebb2a35e731652ae6d43d69d9fe56f0a5260ca51df91c49ef7ec8386c6116",
+      "state": "f998a2da536d109db39a546ccfeca2544d26d3d04745c394a5eff29be747cc67",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -298,22 +298,22 @@
           "mode": "land",
           "terrain": "mountain",
           "special": "ziwu",
-          "distance_km": 329.7,
-          "land_km": 329.7,
+          "distance_km": 330.8,
+          "land_km": 330.8,
           "sea_km": 0,
-          "days": 44,
+          "days": 48,
           "timing_geometry": {
             "schema": "tk2-route-timing-v1",
             "parts": [
               {
                 "mode": "land",
-                "length_px": 96.726875,
+                "length_px": 97.033562,
                 "chord_px": 95,
-                "shape_ratio": 1.018177632
+                "shape_ratio": 1.021405916
               }
             ]
           },
-          "base_days": 11,
+          "base_days": 12,
           "hazard": {
             "kind": "ziwu_rain",
             "label": "子午谷暴雨：减员50%",
@@ -328,18 +328,18 @@
           }
         }
       ],
-      "days": 44,
+      "days": 48,
       "months": 2,
       "turns": 5,
-      "distance_km": 329.7,
+      "distance_km": 330.8,
       "grain_per_officer": 5,
       "modes": [
         "land"
       ]
     },
     "arrived": {
-      "save": "9f991667417822c4475b0b24dd5bca1dd6461339a5b0f334d46098580a7e8ae4",
-      "state": "5577eb4b4b9c78404a88781b0ce463973669f025f4268b1e9382b3d247785173",
+      "save": "1bb32522455c1d545751cd14a09411e6aadf6bacf2a1d8fdffa66def31f1a16f",
+      "state": "82e44eef7f732631ebfb5fd044fe2e51b722f211969ad70a3dfc3f6ed3a34b17",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -359,7 +359,7 @@
   },
   "ziwu-dry": {
     "before": {
-      "save": "1e805938289c90e4f8041c51929d3cccbaeed60a6580f75430d273a4679c957d",
+      "save": "d23690253010fc562c4d6f7d1ee41d6cb9c33493539e1f07764c6ddb6800be8a",
       "state": "c2eb39911b8771c4cf47a5b4d23f555ea652bb3549ac8cb563c0b95b090d3352",
       "rng": {
         "state": 2026,
@@ -373,7 +373,7 @@
       "turn": 28
     },
     "preview": {
-      "save": "1e805938289c90e4f8041c51929d3cccbaeed60a6580f75430d273a4679c957d",
+      "save": "d23690253010fc562c4d6f7d1ee41d6cb9c33493539e1f07764c6ddb6800be8a",
       "state": "c2eb39911b8771c4cf47a5b4d23f555ea652bb3549ac8cb563c0b95b090d3352",
       "rng": {
         "state": 2026,
@@ -387,8 +387,8 @@
       "turn": 28
     },
     "queued": {
-      "save": "9f4de4be25467f34d26a684a36814d95978ea6d0a8af3a116b262962ace681b7",
-      "state": "faa8bc6afe43f5ced128abbec9f1e3ef008fea5bca472f2108ce5b2fb9fd09da",
+      "save": "b30f3326e5ea046a5550a825071b0dac2696f95912827aface600338f29c6dfc",
+      "state": "1a53ad59201485f7b72981d89883ec3b56ccb989c0d8e68a8e7231045a5fcf2a",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -413,22 +413,22 @@
           "mode": "land",
           "terrain": "mountain",
           "special": "ziwu",
-          "distance_km": 329.7,
-          "land_km": 329.7,
+          "distance_km": 330.8,
+          "land_km": 330.8,
           "sea_km": 0,
-          "days": 22,
+          "days": 24,
           "timing_geometry": {
             "schema": "tk2-route-timing-v1",
             "parts": [
               {
                 "mode": "land",
-                "length_px": 96.726875,
+                "length_px": 97.033562,
                 "chord_px": 95,
-                "shape_ratio": 1.018177632
+                "shape_ratio": 1.021405916
               }
             ]
           },
-          "base_days": 11,
+          "base_days": 12,
           "hazard": {
             "kind": "ziwu_dry",
             "label": "子午谷险道：减员20%",
@@ -443,18 +443,18 @@
           }
         }
       ],
-      "days": 22,
+      "days": 24,
       "months": 1,
       "turns": 3,
-      "distance_km": 329.7,
+      "distance_km": 330.8,
       "grain_per_officer": 5,
       "modes": [
         "land"
       ]
     },
     "arrived": {
-      "save": "205d90c2500b481cde220981519f6d354d6ab3c2c5c6b9b0c28782f37b8e92ae",
-      "state": "633bfa398c024e5b985198fca30e79da09a81ef99c9894512f14db5c5786a9d0",
+      "save": "f9dfd1dbd7591b35d044aa00055ac7236de06bba9d874b9ec6d13de1157a0e79",
+      "state": "272d57b62f07cf6000800a6545a26d73875e46d8e40698cc13db0c70e0c683ab",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -474,7 +474,7 @@
   },
   "sea-tail": {
     "before": {
-      "save": "d6b149555ec00e538a0cc28be5f67824aa424b926453d0adad1e8f60e460b1f0",
+      "save": "c78247260c4d48dd41c68f78c0d1695edec673b5fba3fba9d3cb6fe99081d5b6",
       "state": "42915e64055f6810952e75243ae8e1575b55baeee5db2857ea79335839880229",
       "rng": {
         "state": 2026,
@@ -488,7 +488,7 @@
       "turn": 19
     },
     "preview": {
-      "save": "d6b149555ec00e538a0cc28be5f67824aa424b926453d0adad1e8f60e460b1f0",
+      "save": "c78247260c4d48dd41c68f78c0d1695edec673b5fba3fba9d3cb6fe99081d5b6",
       "state": "42915e64055f6810952e75243ae8e1575b55baeee5db2857ea79335839880229",
       "rng": {
         "state": 2026,
@@ -502,8 +502,8 @@
       "turn": 19
     },
     "queued": {
-      "save": "ecab09d72492a5998aea6107d87bfb33775e089bbac53370d342b0c318c1f8e7",
-      "state": "e5b12a51325f1be7fd6f0baff923c1c55c6d6e5a6774d8eae91ab281a5bd4a99",
+      "save": "3bf8cfab65dce9abc26a3aea53dc6b91d567f2749f5f28479580ddda7bdf1bb1",
+      "state": "4bb614896f38ce07fd365e59df54fa57f7dd235249fc9308e8a2714bad2d9e6d",
       "rng": {
         "state": 525710612,
         "draws": 1
@@ -527,9 +527,9 @@
           "to": "zhuya",
           "mode": "sea",
           "terrain": "sea",
-          "distance_km": 294.4,
+          "distance_km": 296,
           "land_km": 107.9,
-          "sea_km": 186.5,
+          "sea_km": 188.1,
           "days": 8,
           "draw": [
             {
@@ -622,9 +622,9 @@
               },
               {
                 "mode": "sea",
-                "length_px": 31.613461,
+                "length_px": 31.880451,
                 "chord_px": 31.240999,
-                "shape_ratio": 1.011922218
+                "shape_ratio": 1.02046836
               },
               {
                 "mode": "land",
@@ -653,15 +653,15 @@
       "days": 8,
       "months": 1,
       "turns": 1,
-      "distance_km": 294.4,
+      "distance_km": 296,
       "grain_per_officer": 5,
       "modes": [
         "sea"
       ]
     },
     "arrived": {
-      "save": "648cc9e9a09efc79777edb454fca9f78521e17da0845ecadae0c60027fb0fc2d",
-      "state": "8e6f7c7be5b77450524304147075a497a6dcb32d851ca52bc0f796edb33d827d",
+      "save": "d493d3641fb98d060bb404420887e00461a23fb701c6c1c4399a72a2a1ff753e",
+      "state": "b7e99dfa8c56d6079bbac766817bf5441fa86026bc7c4e08d1adf88c45cb3f52",
       "rng": {
         "state": 525710612,
         "draws": 1
@@ -681,7 +681,7 @@
   },
   "sea-head": {
     "before": {
-      "save": "6c613db485cac9378b26f035d5f3c6381476ba0c18b144bee752c888ff13f31a",
+      "save": "1823a677c92b00ed45b5386164f79d86289f689ed42f38e2c892861049caeda9",
       "state": "3b2b795230d1efac109647544b515953f82d8d48028fb6ffd55224da501a85fc",
       "rng": {
         "state": 2026,
@@ -695,7 +695,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "6c613db485cac9378b26f035d5f3c6381476ba0c18b144bee752c888ff13f31a",
+      "save": "1823a677c92b00ed45b5386164f79d86289f689ed42f38e2c892861049caeda9",
       "state": "3b2b795230d1efac109647544b515953f82d8d48028fb6ffd55224da501a85fc",
       "rng": {
         "state": 2026,
@@ -709,8 +709,8 @@
       "turn": 1
     },
     "queued": {
-      "save": "80229042886a846ea24925743d69e8bc3e8d39ccd63a0ec75e0088d473de1a6b",
-      "state": "d8c44f9b3b117f40d90e4917430a6088fcf7dd7bc9c12de04fad35e0ecf28e58",
+      "save": "bf6d0a63127af2ef61c89b7d4d90a1a983f977270d4973137923c8f8b6799130",
+      "state": "34b9de276ae14d2773b3ab581fec2f9bc5d895a3102d3b012532262a468d8875",
       "rng": {
         "state": 525710612,
         "draws": 1
@@ -734,10 +734,10 @@
           "to": "zhuya",
           "mode": "sea",
           "terrain": "sea",
-          "distance_km": 294.4,
+          "distance_km": 296,
           "land_km": 107.9,
-          "sea_km": 186.5,
-          "days": 31,
+          "sea_km": 188.1,
+          "days": 32,
           "draw": [
             {
               "mode": "land",
@@ -829,9 +829,9 @@
               },
               {
                 "mode": "sea",
-                "length_px": 31.613461,
+                "length_px": 31.880451,
                 "chord_px": 31.240999,
-                "shape_ratio": 1.011922218
+                "shape_ratio": 1.02046836
               },
               {
                 "mode": "land",
@@ -857,18 +857,18 @@
           }
         }
       ],
-      "days": 31,
+      "days": 32,
       "months": 2,
       "turns": 4,
-      "distance_km": 294.4,
+      "distance_km": 296,
       "grain_per_officer": 5,
       "modes": [
         "sea"
       ]
     },
     "arrived": {
-      "save": "868e84d9f4ae98b2dfa6d8620e2bd631233f0e1c449b49658349fb51db54491e",
-      "state": "b2ec23e07eb7cb08f527e3ac91a794caf0e2e9a24cc6088719cc9aec95d4d39e",
+      "save": "017a5baea96d144268a9c028d37db2a24201399e0231ecd6f8bc59eb02597c46",
+      "state": "17404d869c05bac09e0feb76fe7198d904b9f34a057fe0062401bde09989442b",
       "rng": {
         "state": 525710612,
         "draws": 1
@@ -888,7 +888,7 @@
   },
   "sea-calm": {
     "before": {
-      "save": "8bdb94a6e1570dd3efd5eb49814f5d28789b909e62fd124f95956dff6e4f84c3",
+      "save": "c8ff4a3ecee3cb22c0763610a4c040527248908dcd65df585eb0c97c40cb4ee1",
       "state": "28518e18a293afdfd4f0b04663414a1df62bb646d82075e80a365e85ec009235",
       "rng": {
         "state": 2026,
@@ -902,7 +902,7 @@
       "turn": 28
     },
     "preview": {
-      "save": "8bdb94a6e1570dd3efd5eb49814f5d28789b909e62fd124f95956dff6e4f84c3",
+      "save": "c8ff4a3ecee3cb22c0763610a4c040527248908dcd65df585eb0c97c40cb4ee1",
       "state": "28518e18a293afdfd4f0b04663414a1df62bb646d82075e80a365e85ec009235",
       "rng": {
         "state": 2026,
@@ -916,8 +916,8 @@
       "turn": 28
     },
     "queued": {
-      "save": "a943dd4b20232824aae04a3eebfd5e91f59627758d68a5993c7233df7339b690",
-      "state": "75d20417db408633ab91633bb5d8f04383a08fec4f183c0b5a4251e73825b04a",
+      "save": "6d4cf3ee6cc0dfcedf4cd33d774ce4ccfcc1bd11b1dbe7498cb81770671748c7",
+      "state": "8c35b2321ea80f5fb0c477c3c080a85fac42f129aecc09290b4b00f781056e88",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -941,9 +941,9 @@
           "to": "zhuya",
           "mode": "sea",
           "terrain": "sea",
-          "distance_km": 294.4,
+          "distance_km": 296,
           "land_km": 107.9,
-          "sea_km": 186.5,
+          "sea_km": 188.1,
           "days": 9,
           "draw": [
             {
@@ -1036,9 +1036,9 @@
               },
               {
                 "mode": "sea",
-                "length_px": 31.613461,
+                "length_px": 31.880451,
                 "chord_px": 31.240999,
-                "shape_ratio": 1.011922218
+                "shape_ratio": 1.02046836
               },
               {
                 "mode": "land",
@@ -1055,15 +1055,15 @@
       "days": 9,
       "months": 1,
       "turns": 1,
-      "distance_km": 294.4,
+      "distance_km": 296,
       "grain_per_officer": 5,
       "modes": [
         "sea"
       ]
     },
     "arrived": {
-      "save": "96b7f9659ac5f22e3e6149748a407fcfcba89432d59052205653e09b30e70cfc",
-      "state": "edecdd22aa2a93dfe78a134a2b500f3f5ba1308756d76f1d697ebf9405938d3a",
+      "save": "a8b07238b7cc06c47ab4e127e3f42050fd13aeb7eb2fec10fb42f7b929e9888d",
+      "state": "cdcc5e2df7db3ef25d5d69bb888d66e507c3511ee50c67293b88267920f58453",
       "rng": {
         "state": 2026,
         "draws": 0
@@ -1083,7 +1083,7 @@
   },
   "explore": {
     "before": {
-      "save": "011fe683fb0e6053b40c23f40b41e4fdcb2d04cc7d14b15dedcc1226d006ab29",
+      "save": "e72e6e13a376c9e4ce598ac7851829a39af45110eaf1422ee37daa2feb6dd8e7",
       "state": "f2ce00c1b4e8400dbd89299437da6f46c651cb9a80390f86d16d18896ad25a26",
       "rng": {
         "state": 2026,
@@ -1097,7 +1097,7 @@
       "turn": 1
     },
     "preview": {
-      "save": "011fe683fb0e6053b40c23f40b41e4fdcb2d04cc7d14b15dedcc1226d006ab29",
+      "save": "e72e6e13a376c9e4ce598ac7851829a39af45110eaf1422ee37daa2feb6dd8e7",
       "state": "f2ce00c1b4e8400dbd89299437da6f46c651cb9a80390f86d16d18896ad25a26",
       "rng": {
         "state": 2026,
@@ -1111,8 +1111,8 @@
       "turn": 1
     },
     "queued": {
-      "save": "ba1f4d2a9df35f214c9c4b2cd7b38466c07cc2727476da96a75e84119a538712",
-      "state": "151cff0b6c9bd475343ca61b25ff369e60724484801be2a49583ccd168bc06c6",
+      "save": "0d52be8e13fdc431537597f40ec6beeb299e2f9c862603de442534dd17ac58c2",
+      "state": "208cc6b1d9994501ae2defd79905a1cf937e387c0ff83b6f006a0a386cb24e9e",
       "rng": {
         "state": 525710612,
         "draws": 1
@@ -1136,9 +1136,9 @@
           "to": "yizhou",
           "mode": "sea",
           "terrain": "sea",
-          "distance_km": 1457.2,
+          "distance_km": 1457.7,
           "land_km": 150,
-          "sea_km": 1307.2,
+          "sea_km": 1307.7,
           "days": 18,
           "draw": [
             {
@@ -1375,9 +1375,9 @@
               },
               {
                 "mode": "sea",
-                "length_px": 668.231934,
+                "length_px": 668.439148,
                 "chord_px": 608.342009,
-                "shape_ratio": 1.098447788
+                "shape_ratio": 1.098788409
               },
               {
                 "mode": "land",
@@ -1406,15 +1406,15 @@
       "days": 18,
       "months": 1,
       "turns": 2,
-      "distance_km": 1457.2,
+      "distance_km": 1457.7,
       "grain_per_officer": 5,
       "modes": [
         "sea"
       ]
     },
     "arrived": {
-      "save": "1c0c1be1cbb9fd89f082435c7f4dd8d80f69d142cb7dec8ad73fc898ecc205c3",
-      "state": "68fd055f48e92bf70b9c999940041a87d3e184f39be459155b44ef4ab9a216a0",
+      "save": "77f7b75d88bb84cff334009a7e19a4dd37b7406388f74a9cf4323abe229cf46f",
+      "state": "6f5222124f680a798f0b3d68f5cac5734f1db8fd9292b0b0cfc2956cd80245c6",
       "rng": {
         "state": 525710612,
         "draws": 1

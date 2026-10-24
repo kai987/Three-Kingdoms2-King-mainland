@@ -1,0 +1,278 @@
+{
+  "note": "Window-pixel reference crops only. Preserve full screenshots. Re-capture native images before runtime integration.",
+  "candidates": [
+    {
+      "id": "facility-armory",
+      "title": "武器屋",
+      "source_capture": 1,
+      "source_sha256": "171d9bd7a34fd98a1f32759e23b1129c67f634c037e660836b90cdd5173ff05f",
+      "source_file": "screenshots/01-town-facilities.png",
+      "rect_xyxy_window_pixels": [
+        600,
+        1264,
+        768,
+        1408
+      ],
+      "preview_file": "reference-crops/facility-armory.png",
+      "preview_sha256": "8b634d5e27ce67a577958a59900dc0e23da3192e1fcb224d4d2c1912ff8255a9",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "町：武器屋入口"
+    },
+    {
+      "id": "facility-hospital",
+      "title": "醫館",
+      "source_capture": 1,
+      "source_sha256": "171d9bd7a34fd98a1f32759e23b1129c67f634c037e660836b90cdd5173ff05f",
+      "source_file": "screenshots/01-town-facilities.png",
+      "rect_xyxy_window_pixels": [
+        930,
+        1264,
+        1098,
+        1408
+      ],
+      "preview_file": "reference-crops/facility-hospital.png",
+      "preview_sha256": "14195a2541838aaeb48a7b37e4f1be100632264a994b46e2d2e475f905b2966e",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "町：醫館入口"
+    },
+    {
+      "id": "facility-market",
+      "title": "市場",
+      "source_capture": 1,
+      "source_sha256": "171d9bd7a34fd98a1f32759e23b1129c67f634c037e660836b90cdd5173ff05f",
+      "source_file": "screenshots/01-town-facilities.png",
+      "rect_xyxy_window_pixels": [
+        1260,
+        1264,
+        1428,
+        1408
+      ],
+      "preview_file": "reference-crops/facility-market.png",
+      "preview_sha256": "2219e2f47b51784eb0632f437cb07686dd47641a1ba33c4824e3c4a459e43260",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "町：市場入口"
+    },
+    {
+      "id": "facility-school",
+      "title": "學問所",
+      "source_capture": 29,
+      "source_sha256": "892b8cc5c878c635d16ee77e345146505c9e507728ad2ad14ef39ef12e575160",
+      "source_file": "screenshots/29-school-facility-icon.png",
+      "rect_xyxy_window_pixels": [
+        600,
+        1264,
+        768,
+        1408
+      ],
+      "preview_file": "reference-crops/facility-school.png",
+      "preview_sha256": "deb032040a00406887af74cad003070d453568e9627ec2c9947c61e413889035",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "町：學問所入口"
+    },
+    {
+      "id": "command-city",
+      "title": "城",
+      "source_capture": 13,
+      "source_sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf",
+      "source_file": "screenshots/13-city-command-menu.png",
+      "rect_xyxy_window_pixels": [
+        438,
+        1215,
+        658,
+        1408
+      ],
+      "preview_file": "reference-crops/command-city.png",
+      "preview_sha256": "d3d63c167dd83b60e3e0515c1e9fd29ddc08186054aa796dd148220b266cc6fc",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "右欄：城政組"
+    },
+    {
+      "id": "command-army",
+      "title": "軍",
+      "source_capture": 13,
+      "source_sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf",
+      "source_file": "screenshots/13-city-command-menu.png",
+      "rect_xyxy_window_pixels": [
+        711,
+        1215,
+        931,
+        1408
+      ],
+      "preview_file": "reference-crops/command-army.png",
+      "preview_sha256": "13c4d4590951d7ed68fde8fe81b7eb9c43fa0c17343033fb9fe4a12d6d95e3d5",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "右欄：軍務組"
+    },
+    {
+      "id": "command-warehouse",
+      "title": "倉",
+      "source_capture": 13,
+      "source_sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf",
+      "source_file": "screenshots/13-city-command-menu.png",
+      "rect_xyxy_window_pixels": [
+        985,
+        1215,
+        1205,
+        1408
+      ],
+      "preview_file": "reference-crops/command-warehouse.png",
+      "preview_sha256": "448a46c7db70b4985931b8dba87cc84f80d84abf522e7501a7dfb74456b11c3e",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "右欄：倉庫組"
+    },
+    {
+      "id": "command-town",
+      "title": "町",
+      "source_capture": 13,
+      "source_sha256": "a8ca50e5e6e1a55b4604ef99b55ba16d9f9a7e4264ab9ea220eda4ef0a6597bf",
+      "source_file": "screenshots/13-city-command-menu.png",
+      "rect_xyxy_window_pixels": [
+        1258,
+        1215,
+        1480,
+        1408
+      ],
+      "preview_file": "reference-crops/command-town.png",
+      "preview_sha256": "5200aacfa8119488f1b32402c95b16da370643709c992da9b3929da7519a8e40",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "右欄：設施組"
+    },
+    {
+      "id": "equipment-weapon-category",
+      "title": "武器類",
+      "source_capture": 25,
+      "source_sha256": "e2e287e8c11d275505576a75fe58cba910a8566a026e871df604d653a4bba5fa",
+      "source_file": "screenshots/25-officer-equipment-original.png",
+      "rect_xyxy_window_pixels": [
+        438,
+        1320,
+        552,
+        1408
+      ],
+      "preview_file": "reference-crops/equipment-weapon-category.png",
+      "preview_sha256": "07bf23fdc408f379501d5367f505396adc0acdd5e890b8806d9ef53b9e2e9d9e",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "裝備：分類小圖；不是專武圖"
+    },
+    {
+      "id": "equipment-armor-category",
+      "title": "防具類",
+      "source_capture": 25,
+      "source_sha256": "e2e287e8c11d275505576a75fe58cba910a8566a026e871df604d653a4bba5fa",
+      "source_file": "screenshots/25-officer-equipment-original.png",
+      "rect_xyxy_window_pixels": [
+        1090,
+        1320,
+        1208,
+        1408
+      ],
+      "preview_file": "reference-crops/equipment-armor-category.png",
+      "preview_sha256": "14d5028ee7992cee6f126fbca5df4a6a8c8ab15d941d0fbded844e22ef74379f",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "裝備：分類小圖；不是逐件商品圖"
+    },
+    {
+      "id": "event-armory-interior",
+      "title": "武具店",
+      "source_capture": 6,
+      "source_sha256": "280f3f251746979f7e6427bd5a386e34ca58af32ad7cb587e29da4bee89c7df1",
+      "source_file": "screenshots/06-weapon-purchase-result.png",
+      "rect_xyxy_window_pixels": [
+        218,
+        351,
+        768,
+        836
+      ],
+      "preview_file": "reference-crops/event-armory-interior.png",
+      "preview_sha256": "af4498daea870b27279f1fc7128f997e30db4f51e4362730e183dbe3382bef8d",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "equipment_bought"
+    },
+    {
+      "id": "event-market-interior",
+      "title": "商人交易",
+      "source_capture": 20,
+      "source_sha256": "fba2d113a94675cf532ae33c4f5a4d8f1224010ba998cde9809091bf3317df08",
+      "source_file": "screenshots/20-market-trade-event.png",
+      "rect_xyxy_window_pixels": [
+        218,
+        351,
+        768,
+        836
+      ],
+      "preview_file": "reference-crops/event-market-interior.png",
+      "preview_sha256": "50252fa37a36a9133b81a311c5d058cafe067af0963b45bfffb63783b7cddd16",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "grain_traded / treasure_sold"
+    },
+    {
+      "id": "event-sortie",
+      "title": "騎將出陣",
+      "source_capture": 27,
+      "source_sha256": "6639427e83b22d2b1708f0481bb14f6390303a80db5738cdb0d610a754430afa",
+      "source_file": "screenshots/27-sortie-illustration.png",
+      "rect_xyxy_window_pixels": [
+        218,
+        351,
+        768,
+        836
+      ],
+      "preview_file": "reference-crops/event-sortie.png",
+      "preview_sha256": "27c72e72251a051de3843b8b7fcbd6a9b745a520a0b61c18d54063aa91e6061d",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "出陣；運輸沿用需標作本作改編"
+    },
+    {
+      "id": "event-decorative-frame",
+      "title": "共用裝飾框",
+      "source_capture": 6,
+      "source_sha256": "280f3f251746979f7e6427bd5a386e34ca58af32ad7cb587e29da4bee89c7df1",
+      "source_file": "screenshots/06-weapon-purchase-result.png",
+      "rect_xyxy_window_pixels": [
+        110,
+        261,
+        878,
+        930
+      ],
+      "preview_file": "reference-crops/event-decorative-frame.png",
+      "preview_sha256": "65200ddad34378b5809157fd1ad5cebd031d52449b5e6ce0df43107420712993",
+      "status": "original-reference",
+      "native_dimensions_confirmed": false,
+      "production_ready": false,
+      "proposed_target": "事件框邊角參考，尚未分離為透明角塊"
+    }
+  ],
+  "missing": [
+    "hospital treatment interior",
+    "independent school interior, if present",
+    "flood/drought illustrations",
+    "recruitment/reward/death/succession/special-equipment event art",
+    "per-item equipment art, if present"
+  ]
+}
