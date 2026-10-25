@@ -1,4 +1,4 @@
-"""Four dated DLC openings and distinct playable campaigns in the same month."""
+"""Four dated DLC openings and separately dated Tongguan/entry-into-Shu campaigns."""
 from copy import deepcopy
 from html.parser import HTMLParser
 import json
@@ -59,30 +59,40 @@ class DlcCampaignTests(unittest.TestCase):
                 self.assertEqual(data['rules']['city_officer_capacity'], 99)
                 self.assertEqual(data['rules']['battle_officers_per_side'], 10)
 
-    def test_same_month_previews_new_and_json_save_restore_keep_the_selected_campaign(self):
+    def test_tongguan_and_entry_into_shu_keep_their_dates_through_new_and_save_restore(self):
         session = CampaignSession(self.paths)
         previews = {row['id']: row for row in session.view()['catalog']['scenarios']}
-        old, new = 'mainland211-07', 'mainland211-07-tongguan'
-        self.assertIn('入蜀', previews[old]['title'])
-        self.assertIn('潼關', previews[new]['title'])
-        for key in (old, new):
-            self.assertEqual((previews[key]['year'], previews[key]['month']), (211, 7))
-        self.assertNotEqual(self.catalogs[old].sha256, self.catalogs[new].sha256)
-        session.command('new', dict(scenario=new, faction='ma_teng', seed=2026), session.revision)
-        saved = json.loads(json.dumps(session.export_save(), ensure_ascii=False))
-        session.command('new', dict(scenario=old, faction='shu', seed=2026), session.revision)
-        self.assertEqual(session.game.catalog.data['id'], old)
-        session.load_save(saved, session.revision)
-        self.assertEqual(session.game.catalog.data['id'], new)
-        self.assertEqual(session.export_save(), saved)
+        entry, tongguan = 'mainland212-12', 'mainland211-07-tongguan'
+        self.assertNotIn('mainland211-07', previews)
+        self.assertIn('入蜀', previews[entry]['title'])
+        self.assertIn('潼關', previews[tongguan]['title'])
+        for key, date in ((entry, (212, 12)), (tongguan, (211, 7))):
+            self.assertEqual((previews[key]['year'], previews[key]['month']), date)
+        self.assertNotEqual(self.catalogs[entry].sha256, self.catalogs[tongguan].sha256)
+        for selected, other, faction, date in ((entry, tongguan, 'shu', (212, 12)),
+                                               (tongguan, entry, 'ma_teng', (211, 7))):
+            with self.subTest(scenario=selected):
+                session.command('new', dict(scenario=selected, faction=faction, seed=2026), session.revision)
+                self.assertEqual((session.game.state.year, session.game.state.month), date)
+                saved = json.loads(json.dumps(session.export_save(), ensure_ascii=False))
+                session.command('new', dict(scenario=other, faction='shu', seed=2026), session.revision)
+                self.assertEqual(session.game.catalog.data['id'], other)
+                session.load_save(saved, session.revision)
+                self.assertEqual(session.game.catalog.data['id'], selected)
+                self.assertEqual((session.game.state.year, session.game.state.month), date)
+                self.assertEqual(session.export_save(), saved)
 
-    def test_canonical_build_keeps_both_same_month_files_without_overwriting(self):
+    def test_canonical_build_retimes_entry_into_shu_without_removing_tongguan(self):
         with tempfile.TemporaryDirectory() as folder:
             index = builder.build(output=Path(folder))
             self.assertEqual(len(index['catalogs']), 29)
-            for stem, title in [('211-07', '入蜀'), ('211-07-tongguan', '潼關')]:
+            self.assertNotIn('campaigns/211-07.json', index['catalogs'])
+            self.assertFalse((Path(folder) / '211-07.json').exists())
+            for stem, title, date in [('212-12', '入蜀', (212, 12)),
+                                      ('211-07-tongguan', '潼關', (211, 7))]:
                 data = json.loads((Path(folder) / f'{stem}.json').read_text())
                 self.assertEqual(data['id'], 'mainland' + stem)
+                self.assertEqual((data['start_year'], data['start_month']), date)
                 self.assertIn(title, data['title'])
                 self.assertIn(f'campaigns/{stem}.json', index['catalogs'])
 
@@ -113,7 +123,7 @@ class DlcCampaignTests(unittest.TestCase):
                         builder.load_sources(timing=False)
                 index_path.write_text(json.dumps(index))
                 for field, value in [('scenario_variant', 'other'), ('start_month', 8),
-                                     ('id', 'mainland211-07')]:
+                                     ('id', 'mainland212-12')]:
                     broken = deepcopy(valid)
                     broken['overrides']['set'][field] = value
                     target.write_text(json.dumps(broken))

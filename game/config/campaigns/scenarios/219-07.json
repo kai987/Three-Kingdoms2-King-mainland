@@ -35340,7 +35340,14 @@
           "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
           "summary": "汉中已归刘备；关羽仍掌荆州，樊城围攻与孙吴袭击尚待发生。",
           "membership_basis": "reviewed_overrides_and_labelled_bracketing_inference; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
-          "reviewed_source_city_records": 8
+          "reviewed_source_city_records": 8,
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [],
+            "all_city_months_independently_attested": false
+          }
         }
       },
       "city_profiles": {

@@ -59,7 +59,7 @@
         {
           "id": "han_sui",
           "captain": "韩遂",
-          "city": "wuwei",
+          "city": "jincheng",
           "color": "#ff8a00",
           "name": "韩遂勢力",
           "initial_officers": 5
@@ -299,7 +299,7 @@
         },
         {
           "person_id": "san14-candidate-0166",
-          "city": "wuwei",
+          "city": "jincheng",
           "troops": 300,
           "ruler": true,
           "resolve_death_year": false
@@ -2222,144 +2222,168 @@
             "person_id": "san14-candidate-0030",
             "name": "阎行",
             "faction": "han_sui",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0031",
             "name": "阎柔",
-            "faction": "liu_yu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "faction": null,
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "chronology_excluded"
           },
           {
             "person_id": "san14-candidate-0065",
             "name": "区星",
             "faction": "ou_xing",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0103",
             "name": "郭石",
-            "faction": "ou_xing",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "faction": null,
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "chronology_excluded"
           },
           {
             "person_id": "san14-candidate-0132",
             "name": "何进",
             "faction": "han",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0166",
             "name": "韩遂",
             "faction": "han_sui",
-            "basis": "explicit_chapter_ruler"
+            "basis": "primary_text_affiliation",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0176",
             "name": "韩当",
             "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0247",
             "name": "黄盖",
             "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0341",
             "name": "士燮",
             "faction": "shi_xie",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0375",
             "name": "周朝",
-            "faction": "ou_xing",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "faction": null,
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "chronology_excluded"
           },
           {
             "person_id": "san14-candidate-0390",
             "name": "朱治",
             "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0475",
             "name": "成公英",
-            "faction": "han_sui",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "faction": null,
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "chronology_excluded"
           },
           {
             "person_id": "san14-candidate-0490",
             "name": "鲜于辅",
-            "faction": "liu_yu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "faction": null,
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "chronology_excluded"
           },
           {
             "person_id": "san14-candidate-0551",
             "name": "孙坚",
             "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0572",
             "name": "孙贲",
             "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0612",
             "name": "张举",
             "faction": "zhang_chun",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0628",
             "name": "张纯",
             "faction": "zhang_chun",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0694",
             "name": "丁原",
             "faction": "ding_yuan",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0703",
             "name": "程普",
             "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0736",
             "name": "董卓",
             "faction": "dong_zhuo",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0771",
             "name": "马腾",
             "faction": "han_sui",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0925",
             "name": "刘焉",
             "faction": "liu_yan",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0932",
             "name": "刘虞",
             "faction": "liu_yu",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           }
         ],
         "excluded_people": [],
         "pending_capacity": [],
-        "career_references": []
+        "career_references": [],
+        "history_review_revision": "2026-10-25"
       }
     },
     "update": {
@@ -2874,7 +2898,7 @@
           "san14-candidate-0160": "yan",
           "san14-candidate-0163": "qiao",
           "san14-candidate-0165": "beihai",
-          "san14-candidate-0166": "wuwei",
+          "san14-candidate-0166": "jincheng",
           "san14-candidate-0167": "xiangyang",
           "san14-candidate-0168": "yan",
           "san14-candidate-0169": "taiyuan",
@@ -8394,29 +8418,57 @@
               "source_ruler": "韩遂",
               "year_state": "available",
               "faction": "han_sui",
-              "city": "wuwei",
-              "placement_basis": "retained_faction_ruler_seat",
+              "city": "jincheng",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0166",
                 "faction": "han_sui",
-                "origin": "wuwei",
-                "city": "wuwei",
-                "basis": "retained_faction_ruler_seat",
-                "source_city": null
+                "city": "jincheng",
+                "basis": "primary_referenced_career_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "historical_certainty": "primary_text_affiliation"
               },
-              "scenario_membership_basis": "explicit_chapter_ruler",
-              "source_snapshot": "mainland184-02-v11"
+              "scenario_membership_basis": "primary_text_affiliation",
+              "source_snapshot": "mainland184-02-v11",
+              "membership_revision": {
+                "basis": "primary_text_affiliation",
+                "note": "韓遂金城部曲，保留188遊戲聯軍故事映射。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ]
+              },
+              "historical_posting_reference": {
+                "person_id": "san14-candidate-0166",
+                "faction": "han_sui",
+                "city": "jincheng",
+                "basis": "primary_referenced_career_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "historical_certainty": "primary_text_affiliation"
+              }
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_scenario_ruler",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                    "https://zh.wikisource.org/wiki/三國志/卷15",
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
                   ],
-                  "note": "保留本篇明列君主及根據地，不以外部快照覆寫劇本君主。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "韓遂金城部曲，保留188遊戲聯軍故事映射。",
+                  "historical_certainty": "primary_text_affiliation",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06"
                 }
               },
               "appearance_plan": {
@@ -8429,9 +8481,9 @@
                     215,
                     12
                   ],
-                  "city": "wuwei",
+                  "city": "jincheng",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "primary_text_affiliation"
                 }
               }
             },
@@ -35245,6 +35297,13 @@
           "story_note_i18n": {
             "zh-Hant": "本作依官網年代與故事改編；領土、駐將、數值及未實作的事件均不是官方原始資料匯入。",
             "ja": "公式の年月と物語を基にした本作独自の改編です。領土・配属・数値や未実装のイベントは公式データの移植ではありません。"
+          },
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [],
+            "all_city_months_independently_attested": false
           }
         },
         "delete": [
@@ -51994,8 +52053,9 @@
               "retained_person_specific_free_location": 209,
               "authorial_region_placement": 16,
               "retained_reviewed_opening_membership": 105,
-              "retained_explicit_scenario_ruler": 9,
-              "retained_chronology_or_explicit_exclusion": 13
+              "retained_explicit_scenario_ruler": 8,
+              "retained_chronology_or_explicit_exclusion": 13,
+              "historical_review_20261025": 1
             },
             "delete": [
               "same_date_SAN14_recorded_death",

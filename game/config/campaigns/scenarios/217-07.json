@@ -1,6 +1,20 @@
 {
   "schema": "tk2-campaign-override-v1",
   "id": "mainland217-07",
-  "overrides": {},
+  "overrides": {
+    "update": {
+      "main_scenario": {
+        "set": {
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [],
+            "all_city_months_independently_attested": false
+          }
+        }
+      }
+    }
+  },
   "people_overrides": {}
 }

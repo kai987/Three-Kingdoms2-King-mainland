@@ -15197,7 +15197,14 @@
           "official_source": null,
           "summary": "合并旧版独有年代，使用统一地图、千人属性库、30人容量与行军规则。",
           "membership_basis": "reviewed_overrides_and_labelled_bracketing_inference; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
-          "reviewed_source_city_records": 0
+          "reviewed_source_city_records": 0,
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [],
+            "all_city_months_independently_attested": false
+          }
         },
         "delete": [
           "scope",

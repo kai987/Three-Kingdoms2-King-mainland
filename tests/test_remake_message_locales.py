@@ -87,7 +87,7 @@ class MessageLocaleTests(unittest.TestCase):
         for text in data['design_notes']:
             self.assertIn(text, self.data['exact'])
             self.assertRegex(translate(text, self.data), '[ぁ-ゖァ-ヶ]')
-        custom = json.loads((ROOT / 'game/data/campaigns/211-07.json').read_text())
+        custom = json.loads((ROOT / 'game/data/campaigns/212-12.json').read_text())
         note = custom['main_scenario']['scope_note']
         self.assertIn(note, self.data['exact'])
 

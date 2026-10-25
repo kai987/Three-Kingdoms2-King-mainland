@@ -32258,7 +32258,14 @@
         "set": {
           "title": "黄巾之乱",
           "summary": "参考《三国志14》九势力17城开局，其余扩展节点留空；这属于游戏开局设定。",
-          "reviewed_source_city_records": 3
+          "reviewed_source_city_records": 3,
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [],
+            "all_city_months_independently_attested": false
+          }
         }
       },
       "city_profiles": {

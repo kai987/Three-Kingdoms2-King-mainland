@@ -1,12 +1,12 @@
 {
   "schema": "tk2-route-render-source-v1",
   "source": "game/app.js",
-  "original_source_sha256": "d14d48871278a3aa13a2dbe602c768158972617a37f3d7628c0672e45be15e21",
+  "original_source_sha256": "6ebb58656e8241c1ac492fcf02a36c2f1cfc7d2de179e874232087e46ea9ebc1",
   "compiler": "game/build_route_geometry.cjs",
   "compiler_sha256": "643c709223fdc91aae610d6c640830d49fd50022ccb28cc9da9f179d702f8603",
   "start": "function smoothMapPath(",
   "end": "function mapBackgroundHref(",
   "projection_sha256": "54d3ce279ff2650c1da9e768f9c91cd7601b2611bcca94ae2f372bc29dd9ea40",
   "projection_bytes": 1455,
-  "baseline_commit": "d8bde3cf1f840249078ab30eb99b4bcc1367772c"
+  "baseline_commit": "e8258df67ec5b19ffe0fabb2f0633b04f046f033"
 }

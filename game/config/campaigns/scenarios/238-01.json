@@ -42252,7 +42252,14 @@
           "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
           "summary": "曹叡在位，司马懿将讨公孙渊；蜀汉已由蒋琬等支撑，姜维归蜀。",
           "membership_basis": "reviewed_overrides_and_labelled_bracketing_inference; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
-          "reviewed_source_city_records": 1
+          "reviewed_source_city_records": 1,
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [],
+            "all_city_months_independently_attested": false
+          }
         }
       },
       "city_profiles": {

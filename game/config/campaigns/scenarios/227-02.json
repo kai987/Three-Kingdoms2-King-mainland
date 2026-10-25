@@ -18922,7 +18922,14 @@
         "set": {
           "title": "出师表",
           "summary": "出师表：使用已发布的本作年代配置，采用30人城池容量。",
-          "reviewed_source_city_records": 5
+          "reviewed_source_city_records": 5,
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [],
+            "all_city_months_independently_attested": false
+          }
         }
       },
       "city_profiles": {

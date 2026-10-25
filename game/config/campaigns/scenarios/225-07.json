@@ -585,7 +585,7 @@
         },
         {
           "person_id": "san14-candidate-0221",
-          "city": "zangke",
+          "city": "xinggu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": true
@@ -921,7 +921,7 @@
         },
         {
           "person_id": "san14-candidate-0383",
-          "city": "zangke",
+          "city": "xinggu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1747,7 +1747,7 @@
         },
         {
           "person_id": "san14-candidate-0739",
-          "city": "zangke",
+          "city": "xinggu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": true
@@ -1999,7 +1999,7 @@
         },
         {
           "person_id": "san14-candidate-0850",
-          "city": "zangke",
+          "city": "xinggu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2776,192 +2776,224 @@
             "person_id": "san14-candidate-0001",
             "name": "阿会喃",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0072",
             "name": "王平",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0221",
             "name": "金环三结",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "authorial_garrison_relocation",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0263",
             "name": "公孙恭",
             "faction": "gongsun",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0272",
             "name": "高定",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0307",
             "name": "兀突骨",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0341",
             "name": "士燮",
             "faction": "shi_xie",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0383",
             "name": "祝融",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "authorial_garrison_relocation",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0405",
             "name": "蒋琬",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0440",
             "name": "诸葛亮",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0526",
             "name": "曹丕",
             "faction": "wei",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0553",
             "name": "孙权",
             "faction": "wu",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0587",
             "name": "带来洞主",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0590",
             "name": "朵思大王",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0596",
             "name": "赵云",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0613",
             "name": "张嶷",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0662",
             "name": "张翼",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0729",
             "name": "邓芝",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0739",
             "name": "董荼那",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "authorial_garrison_relocation",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0765",
             "name": "马谡",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0766",
             "name": "马岱",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0768",
             "name": "马忠",
             "faction": "shu",
-            "basis": "explicit_stable_identity_homonym_disambiguation"
+            "basis": "explicit_stable_identity_homonym_disambiguation",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0787",
             "name": "费祎",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0821",
             "name": "忙牙长",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0837",
             "name": "木鹿大王",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0845",
             "name": "孟获",
             "faction": "nanman",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0850",
             "name": "孟优",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "authorial_garrison_relocation",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0881",
             "name": "杨锋",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0892",
             "name": "李恢",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0945",
             "name": "刘禅",
             "faction": "shu",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0977",
             "name": "吕凯",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           }
         ],
         "excluded_people": [],
         "pending_capacity": [],
-        "career_references": []
+        "career_references": [],
+        "history_review_revision": "2026-10-25"
       }
     },
     "update": {
@@ -2972,7 +3004,7 @@
           "hanzhong": "shu",
           "yunnan": "nanman",
           "wuling": "wu",
-          "zangke": "nanman",
+          "zangke": "shu",
           "jianning": "nanman",
           "xinggu": "nanman",
           "yidu": "wu",
@@ -3034,7 +3066,7 @@
           "san14-candidate-0204": "yongchang",
           "san14-candidate-0213": "yuexi",
           "san14-candidate-0215": "jiujiang",
-          "san14-candidate-0221": "zangke",
+          "san14-candidate-0221": "xinggu",
           "san14-candidate-0225": "wujun",
           "san14-candidate-0235": "wuling",
           "san14-candidate-0241": "zhuti",
@@ -3071,7 +3103,7 @@
           "san14-candidate-0378": "wuling",
           "san14-candidate-0381": "yidu",
           "san14-candidate-0382": "yulin",
-          "san14-candidate-0383": "zangke",
+          "san14-candidate-0383": "xinggu",
           "san14-candidate-0385": "xiangyang",
           "san14-candidate-0386": "xincheng",
           "san14-candidate-0388": "yuzhang",
@@ -3188,7 +3220,7 @@
           "san14-candidate-0725": "liaoxi",
           "san14-candidate-0729": "zhuti",
           "san14-candidate-0735": "runan",
-          "san14-candidate-0739": "zangke",
+          "san14-candidate-0739": "xinggu",
           "san14-candidate-0749": "badong",
           "san14-candidate-0751": "wudu",
           "san14-candidate-0756": "xiangyang",
@@ -3222,7 +3254,7 @@
           "san14-candidate-0846": "xincheng",
           "san14-candidate-0847": "fuling",
           "san14-candidate-0849": "xincheng",
-          "san14-candidate-0850": "zangke",
+          "san14-candidate-0850": "xinggu",
           "san14-candidate-0851": "yinping",
           "san14-candidate-0856": "hanzhong",
           "san14-candidate-0857": "shujun",
@@ -9312,30 +9344,49 @@
               "source_status": "serving",
               "source_ruler": "孟获",
               "source_city": null,
-              "year_state": "death_year_review",
+              "year_state": "available",
               "faction": "nanman",
-              "city": "zangke",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xinggu",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "death_year_resolved": true,
               "posting_reference": {
                 "person_id": "san14-candidate-0221",
                 "faction": "nanman",
-                "origin": "jianning",
-                "city": "zangke",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "xinggu",
+                "basis": "reviewed_regional_or_novel_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
               },
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland221-07-v11"
+              "scenario_membership_basis": "authorial_garrison_relocation",
+              "source_snapshot": "mainland221-07-v11",
+              "membership_revision": {
+                "basis": "authorial_garrison_relocation",
+                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ]
+              }
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "basis": "historical_review_20261025",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                    "https://zh.wikisource.org/wiki/三國志/卷43"
+                  ],
+                  "reference_date": [
+                    225,
+                    7
+                  ],
+                  "reference_scenario": "mainland225-07"
                 }
               },
               "appearance_plan": {
@@ -9344,8 +9395,9 @@
                     225,
                     7
                   ],
-                  "city": "zangke",
-                  "status": "serving"
+                  "city": "xinggu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
                 }
               }
             }
@@ -13495,28 +13547,52 @@
             "set": {
               "source_ruler": "孟获",
               "faction": "nanman",
-              "city": "zangke",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland221-07-v11"
+              "city": "xinggu",
+              "scenario_membership_basis": "authorial_garrison_relocation",
+              "source_snapshot": "mainland221-07-v11",
+              "placement_basis": "historical_review_20261025",
+              "membership_revision": {
+                "basis": "authorial_garrison_relocation",
+                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ]
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
                   "faction": "nanman",
-                  "origin": "jianning",
-                  "city": "zangke"
-                }
+                  "city": "xinggu",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                    "https://zh.wikisource.org/wiki/三國志/卷43"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                    "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                    "https://zh.wikisource.org/wiki/三國志/卷43"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "reference_date": null,
-                  "reference_scenario": null,
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    225,
+                    7
+                  ],
+                  "reference_scenario": "mainland225-07",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               },
               "appearance_plan": {
@@ -13525,7 +13601,8 @@
                     225,
                     7
                   ],
-                  "city": "zangke"
+                  "city": "xinggu",
+                  "basis": "authorial_garrison_relocation"
                 }
               }
             }
@@ -22570,30 +22647,49 @@
               "source_status": "serving",
               "source_ruler": "孟获",
               "source_city": null,
-              "year_state": "death_year_review",
+              "year_state": "available",
               "faction": "nanman",
-              "city": "zangke",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xinggu",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "death_year_resolved": true,
               "posting_reference": {
                 "person_id": "san14-candidate-0739",
                 "faction": "nanman",
-                "origin": "jianning",
-                "city": "zangke",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "xinggu",
+                "basis": "reviewed_regional_or_novel_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
               },
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland221-07-v11"
+              "scenario_membership_basis": "authorial_garrison_relocation",
+              "source_snapshot": "mainland221-07-v11",
+              "membership_revision": {
+                "basis": "authorial_garrison_relocation",
+                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ]
+              }
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "basis": "historical_review_20261025",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                    "https://zh.wikisource.org/wiki/三國志/卷43"
+                  ],
+                  "reference_date": [
+                    225,
+                    7
+                  ],
+                  "reference_scenario": "mainland225-07"
                 }
               },
               "appearance_plan": {
@@ -22602,8 +22698,9 @@
                     225,
                     7
                   ],
-                  "city": "zangke",
-                  "status": "serving"
+                  "city": "xinggu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
                 }
               }
             }
@@ -25522,28 +25619,52 @@
             "set": {
               "source_ruler": "孟获",
               "faction": "nanman",
-              "city": "zangke",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland221-07-v11"
+              "city": "xinggu",
+              "scenario_membership_basis": "authorial_garrison_relocation",
+              "source_snapshot": "mainland221-07-v11",
+              "placement_basis": "historical_review_20261025",
+              "membership_revision": {
+                "basis": "authorial_garrison_relocation",
+                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ]
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
                   "faction": "nanman",
-                  "origin": "jianning",
-                  "city": "zangke"
-                }
+                  "city": "xinggu",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                    "https://zh.wikisource.org/wiki/三國志/卷43"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ma-line/"
+                    "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                    "https://zh.wikisource.org/wiki/三國志/卷43"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "reference_date": null,
-                  "reference_scenario": null,
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    225,
+                    7
+                  ],
+                  "reference_scenario": "mainland225-07",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               },
               "appearance_plan": {
@@ -25552,7 +25673,8 @@
                     225,
                     7
                   ],
-                  "city": "zangke"
+                  "city": "xinggu",
+                  "basis": "authorial_garrison_relocation"
                 }
               }
             }
@@ -29717,6 +29839,15 @@
           "story_note_i18n": {
             "zh-Hant": "本作依官網年代與故事改編；領土、駐將、數值及未實作的事件均不是官方原始資料匯入。",
             "ja": "公式の年月と物語を基にした本作独自の改編です。領土・配属・数値や未実装のイベントは公式データの移植ではありません。"
+          },
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [
+              "zangke"
+            ],
+            "all_city_months_independently_attested": false
           }
         },
         "delete": [
@@ -32508,6 +32639,22 @@
               }
             }
           }
+        },
+        "set": {
+          "zangke": {
+            "control_review": {
+              "date": [
+                225,
+                7
+              ],
+              "note": "華陽國志記馬忠破牂牁在五月渡瀘前，225年7月不仍歸孟獲。",
+              "certainty": "regional_primary_mapping",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                "https://zh.wikisource.org/wiki/三國志/卷43"
+              ]
+            }
+          }
         }
       },
       "appearance_windows": {
@@ -32602,7 +32749,10 @@
       },
       "placement_completion": {
         "set": {
-          "future_plans": 163
+          "future_plans": 163,
+          "city_owner_corrections": [
+            "zangke"
+          ]
         },
         "update": {
           "reference_classes": {
@@ -32617,11 +32767,12 @@
               "same_date_SAN14_guide_affiliation": 3,
               "same_date_SAN14_recorded_death": 7,
               "person_specific_future_free_appearance": 163,
-              "retained_reviewed_opening_membership": 294,
+              "retained_reviewed_opening_membership": 290,
               "retained_chronology_or_explicit_exclusion": 463,
               "retained_person_specific_free_location": 77,
               "bounded_career_inference": 8,
-              "retained_explicit_scenario_ruler": 6
+              "retained_explicit_scenario_ruler": 6,
+              "historical_review_20261025": 4
             },
             "delete": [
               "authored_bounded_source_snapshot_continuity",

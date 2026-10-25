@@ -465,16 +465,23 @@ test('Jingzhou historical openings show Zhangling and playable Jingnan prefects'
  }
 
  await page.locator('#scenario').selectOption('mainland208-10');
- const prefects=[['changsha','han_xuan','韓玄'],['wuling','jin_xuan','金旋'],
-  ['guiyang','zhao_fan','趙範'],['lingling','liu_du','劉度']];
+ const prefects=[['changsha','han_xuan','韓玄',3,['黃忠','魏延']],['wuling','jin_xuan','金旋',2,['鞏志']],
+  ['guiyang','zhao_fan','趙範',3,['陳應','鮑隆']],['lingling','liu_du','劉度',3,['劉賢','邢道榮']]];
  const fills=[];
- for(const[city,side,name]of prefects){
+ for(const[city,side,name,count,officers]of prefects){
   await expect(page.locator(`input[name=faction][value=${side}]`)).toHaveCount(1);
   await expect(page.locator(`input[name=faction][value=${side}]`).locator('..')).toContainText(name);
   await expect(marker(city)).toHaveAttribute('data-owner',side);
   await expect(marker(city)).toHaveAttribute('aria-label',new RegExp(name));
   const fill=await marker(city).locator('.castle-fill').getAttribute('fill');
   expect(fill).not.toBe('#ffffff');fills.push(fill);
+  await page.locator('#city-jump').selectOption(city);
+  const detail=page.locator(`.city-information[data-inspected-city="${city}"]`);
+  await expect(detail).toHaveAttribute('data-information-mode','preview');
+  await expect(detail.locator('.roster-table tbody tr')).toHaveCount(count);
+  await expect(detail.locator('.city-information-owner')).toContainText(name);
+  for(const officer of officers)await expect(detail.locator('.roster-table tbody tr').filter({hasText:officer})).toHaveCount(1);
+  await closeDialog(page);
  }
  expect(new Set(fills).size).toBe(4);
  await expect(marker('yidu')).toHaveAttribute('data-owner','wei');
@@ -488,7 +495,7 @@ test('Jingzhou historical openings show Zhangling and playable Jingnan prefects'
  await waitIdle(page);await dismissHistoryOpening(page);
  await expect(page.locator('#city-jump')).toHaveValue('changsha');
  await expect(page.locator('#inspector .owner')).toContainText('韓玄');
- await expect(page.locator('#inspector [data-city-roster-officer]')).toHaveCount(2);
+ await expect(page.locator('#inspector [data-city-roster-officer]')).toHaveCount(3);
  // Keyboard activation exercises the map's accessible city button on both
  // viewports, without forced clicks through the compact map toolbar.
  await marker('changsha').focus();await page.keyboard.press('Enter');
@@ -498,6 +505,7 @@ test('Jingzhou historical openings show Zhangling and playable Jingnan prefects'
  const ruler=information.locator('.roster-table tbody tr').filter({hasText:'韓玄'});
  await expect(ruler).toHaveCount(1);await expect(ruler.locator('td').nth(5)).toHaveText('--');
  await expect(information.locator('.roster-table tbody tr').filter({hasText:'黃忠'})).toHaveCount(1);
+ await expect(information.locator('.roster-table tbody tr').filter({hasText:'魏延'})).toHaveCount(1);
  await page.locator('#dialog-language').selectOption('ja');
  await expect(page.locator('html')).toHaveAttribute('lang','ja');
  await expect(ruler.locator('td').nth(5)).toHaveText('--');
@@ -512,7 +520,7 @@ test('Jingzhou historical openings show Zhangling and playable Jingnan prefects'
 
 test('Jingzhou dated names and withdrawn cities match previews and live campaigns',async({page},testInfo)=>{
  await opening(page);
- await page.locator('#scenario').selectOption('mainland211-07');
+ await page.locator('#scenario').selectOption('mainland212-12');
  await expect(page.locator('#city-jump option[value=yidu]')).toContainText('宜都');
  await expect(page.locator('#world-map .city-hit[data-city=yidu]')).toHaveAttribute('aria-label',/宜都/);
  await expect(page.locator('#city-jump option[value=yiyang]')).toContainText('章陵');
@@ -543,19 +551,19 @@ test('Jingzhou dated names and withdrawn cities match previews and live campaign
  expect(errors.get(page)).toEqual([]);
 });
 
-test('four DLC openings share two translated categories and preserve distinct same-month campaigns',async({page},testInfo)=>{
+test('four DLC openings share two translated categories and preserve the separately dated Shu campaign',async({page},testInfo)=>{
  await opening(page);
  const scenarios=page.locator('#scenario'),groups=scenarios.locator('optgroup');
  await expect(groups).toHaveCount(2);
  expect(await groups.evaluateAll(nodes=>nodes.map(node=>node.label))).toEqual(['史實','假想']);
  const marker=id=>page.locator(`#world-map .city-hit[data-city="${id}"]`);
- // Both July 211 campaigns must remain individually selectable; a shared
- // date is not a scenario ID and must never replace the existing opening.
- await expect(scenarios.locator('option[value="mainland211-07"]')).toContainText('入蜀爭奪戰');
+ // Retiming the custom Shu campaign must preserve the independently selected
+ // July 211 Tongguan opening and its separate lazy catalog identity.
+ await expect(scenarios.locator('option[value="mainland212-12"]')).toContainText('入蜀爭奪戰');
  await expect(scenarios.locator('option[value="mainland211-07-tongguan"]')).toContainText('潼關之戰');
- await scenarios.selectOption('mainland211-07');
+ await scenarios.selectOption('mainland212-12');
  await expect(scenarios.locator('option:checked')).toContainText('入蜀爭奪戰');
- await expect(page.locator('#map-date')).toHaveAttribute('datetime','0211-07-01');
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0212-12-01');
  await expect(marker('fengyi')).toHaveAttribute('data-owner','wei');
  await expect(scenarios.locator('optgroup[label="假想"] option[value="mainland209-06"]')).toHaveCount(1);
  for(const[id,title,date,city,owner]of[
@@ -649,6 +657,69 @@ test('four DLC openings share two translated categories and preserve distinct sa
  expect(variant.state.player).toBe('ma_teng');
  expect(variant.state.year).toBe(211);expect(variant.state.month).toBe(7);expect(variant.state.day).toBe(1);
  expect(variant.state.cities.fengyi.owner).toBe('ma_teng');
+ expect(errors.get(page)).toEqual([]);
+});
+
+test('Han Sui and the December 212 Shu opening remain playable with reviewed frontier ownership',async({page},testInfo)=>{
+ // Browser plugin not available: use the repository's pinned Playwright client.
+ // Scenario menu -> faction/color preview -> real Worker campaign -> exported
+ // opening state; all campaign changes below use visible controls only.
+ await opening(page);await expect(page).toHaveTitle('三國·大陸戰役');
+ const scenarios=page.locator('#scenario'),marker=id=>page.locator(`#world-map .city-hit[data-city="${id}"]`);
+ const exportSave=async()=>{
+  const download=page.waitForEvent('download');await page.locator('#save').click();
+  return JSON.parse(await readFile(await(await download).path(),'utf8'));
+ };
+ await scenarios.selectOption('mainland211-07-tongguan');
+ const han=page.locator('input[name=faction][value=han_sui]');
+ await expect(han).toHaveCount(1);await han.check();
+ await expect(han.locator('..')).toContainText('韓遂');
+ await expect(marker('jincheng')).toHaveAttribute('data-owner','han_sui');
+ const hanFill=await marker('jincheng').locator('.castle-fill').getAttribute('fill');
+ expect(hanFill).toBe(await han.locator('..').locator('.faction-swatch rect').getAttribute('fill'));
+ expect(hanFill).not.toBe('#ffffff');
+ expect(hanFill).not.toBe(await marker('tianshui').locator('.castle-fill').getAttribute('fill'));
+ expect(hanFill).not.toBe(await marker('jingzhao').locator('.castle-fill').getAttribute('fill'));
+ for(const city of ['wudu','yinping']){
+  await expect(marker(city)).toHaveAttribute('data-owner','neutral');
+  await expect(marker(city).locator('.castle-fill')).toHaveAttribute('fill','#ffffff');
+ }
+ await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('ja');
+ await expect(page.locator('html')).toHaveAttribute('lang','ja');
+ await expect(scenarios.locator('option:checked')).toContainText('潼関の戦い');
+ await expect(han).toBeChecked();await expect(han.locator('..')).toContainText('韓遂');
+ await page.locator('#utility-menu summary').click();
+ await historyScreenshot(page,testInfo,'tongguan-han-sui-frontier-preview-ja');
+ await page.locator('#begin').click();await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0211-07-01');
+ await expect(page.locator('#inspector .owner')).toContainText('韓遂');
+ await expect(page.locator('#inspector [data-city-roster-officer]').filter({hasText:'韓遂'})).toHaveCount(1);
+ const tongguan=await exportSave();
+ expect(tongguan.scenario).toBe('mainland211-07-tongguan');expect(tongguan.state.player).toBe('han_sui');
+ expect(tongguan.state.cities.jincheng.owner).toBe('han_sui');
+ for(const city of ['wudu','yinping'])expect(tongguan.state.cities[city].owner).toBe('neutral');
+ await page.locator('#main-menu').click();await expect(page.locator('#begin')).toBeEnabled();
+ await expect(scenarios.locator('option[value="mainland211-07"]')).toHaveCount(0);
+ await scenarios.selectOption('mainland212-12');await page.locator('input[name=faction][value=shu]').check();
+ await expect(scenarios.locator('option:checked')).toContainText('入蜀争奪戦');
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0212-12-01');
+ for(const city of ['jiameng','fuxian'])await expect(marker(city)).toHaveAttribute('data-owner','shu');
+ await expect(marker('danyang')).toHaveAttribute('data-owner','wu');
+ await expect(marker('danyang')).toHaveAttribute('aria-label',/建業/);
+ await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('zh-Hant');
+ await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');
+ await expect(scenarios.locator('option:checked')).toContainText('入蜀爭奪戰');
+ await expect(page.locator('input[name=faction][value=shu]')).toBeChecked();
+ await page.locator('#utility-menu summary').click();
+ await page.locator('#begin').click();await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0212-12-01');
+ await historyScreenshot(page,testInfo,'shu-december-212-live-tc');
+ const shu=await exportSave();expect(shu.scenario).toBe('mainland212-12');expect(shu.state.player).toBe('shu');
+ expect([shu.state.year,shu.state.month,shu.state.day]).toEqual([212,12,1]);
+ for(const city of ['jiameng','fuxian'])expect(shu.state.cities[city].owner).toBe('shu');
+ expect(shu.state.cities.danyang.owner).toBe('wu');
  expect(errors.get(page)).toEqual([]);
 });
 
@@ -877,8 +948,12 @@ test('all 29 real Worker openings keep preview and live initial health and facti
  await opening(page);
  const scenarios=await page.locator('#scenario option').evaluateAll(rows=>rows.map(row=>row.value));
  expect(scenarios).toHaveLength(29);
- let checkedServing=0,checkedFree=0;
+ let checkedServing=0,checkedFree=0,expectedServing=0,expectedFree=0;
  for(const scenario of scenarios){
+  const catalog=JSON.parse(await readFile(new URL(`../game/data/campaigns/${scenario.slice('mainland'.length)}.json`,import.meta.url),'utf8'));
+  expect(catalog.id).toBe(scenario);
+  const servingPeople=catalog.initial_officers.map(row=>row.person_id).sort(),freePeople=catalog.initial_free_officers.map(row=>row.person_id).sort();
+  expectedServing+=servingPeople.length;expectedFree+=freePeople.length;
   await page.locator('#scenario').selectOption(scenario);
   const cities=await page.locator('#city-jump option').evaluateAll(rows=>rows.map(row=>row.value));
   // Read-only previews are served by the shipped Worker. They neither create a
@@ -913,6 +988,9 @@ test('all 29 real Worker openings keep preview and live initial health and facti
   const download=page.waitForEvent('download');await page.locator('#save').click();
   const saved=JSON.parse(await readFile(await(await download).path(),'utf8'));
   expect(saved.scenario).toBe(scenario);
+  const liveOfficers=Object.values(saved.state.officers);
+  expect(liveOfficers.filter(officer=>officer.faction_id).map(officer=>officer.person_id).sort()).toEqual(servingPeople);
+  expect(liveOfficers.filter(officer=>!officer.faction_id).map(officer=>officer.person_id).sort()).toEqual(freePeople);
   const leaders=new Set(Object.values(saved.state.extension.leaders).map(String));
   for(const[ident,officer]of Object.entries(saved.state.officers)){
    const person=people[officer.person_id];
@@ -931,8 +1009,9 @@ test('all 29 real Worker openings keep preview and live initial health and facti
   await page.locator('#main-menu').click();
   await expect(page.locator('#begin')).toBeEnabled();
  }
- // This stat-only update must retain all existing opening memberships.
- expect(checkedServing).toBe(8854);expect(checkedFree).toBe(2320);
+ // Historical affiliation reviews legitimately change memberships; each live
+ // Worker opening must retain the complete authored roster without omissions.
+ expect(checkedServing).toBe(expectedServing);expect(checkedFree).toBe(expectedFree);
  await historyScreenshot(page,testInfo,'all-29-initial-stat-openings');
  expect(errors.get(page)).toEqual([]);
 });

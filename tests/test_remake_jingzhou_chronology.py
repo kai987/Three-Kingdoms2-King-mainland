@@ -122,9 +122,9 @@ class JingzhouChronologyTests(unittest.TestCase):
                 self.assertEqual(city_names(game.catalog, game.state.year,
                                             game.state.month)['yidu'], '临江')
                 game.validate(game.state)
-        game = start('211-07', 'shu')
+        game = start('212-12', 'shu')
         self.assertEqual(game.state.cities['yidu'].owner, 'shu')
-        self.assertEqual(city_names(game.catalog, 211, 7)['yidu'], '宜都')
+        self.assertEqual(city_names(game.catalog, 212, 12)['yidu'], '宜都')
         game.validate(game.state)
 
     def test_abolition_removes_yiyang_only_from_later_new_openings(self):

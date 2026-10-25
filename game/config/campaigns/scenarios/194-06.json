@@ -70,7 +70,7 @@
           "city": "wuwei",
           "name": "马腾势力",
           "color": "#8a8054",
-          "initial_officers": 16
+          "initial_officers": 13
         },
         {
           "id": "gongsun_zan",
@@ -118,7 +118,7 @@
           "city": "kuaiji",
           "name": "王朗势力",
           "color": "#527d77",
-          "initial_officers": 6
+          "initial_officers": 5
         },
         {
           "id": "shu",
@@ -151,6 +151,22 @@
           "name": "孔融势力",
           "color": "#527d77",
           "initial_officers": 2
+        },
+        {
+          "id": "han_sui",
+          "name": "韩遂勢力",
+          "captain": "韩遂",
+          "city": "jincheng",
+          "color": "#8753a1",
+          "initial_officers": 3
+        },
+        {
+          "id": "xu_gong",
+          "name": "许贡勢力",
+          "captain": "许贡",
+          "city": "wujun",
+          "color": "#8753a1",
+          "initial_officers": 1
         }
       ],
       "active_cities": [
@@ -322,7 +338,7 @@
         },
         {
           "person_id": "san14-candidate-0030",
-          "city": "anding",
+          "city": "jincheng",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -595,9 +611,9 @@
         },
         {
           "person_id": "san14-candidate-0166",
-          "city": "longxi",
+          "city": "jincheng",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
@@ -686,9 +702,9 @@
         },
         {
           "person_id": "san14-candidate-0211",
-          "city": "kuaiji",
+          "city": "wujun",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
@@ -791,7 +807,7 @@
         },
         {
           "person_id": "san14-candidate-0250",
-          "city": "wudu",
+          "city": "bajun",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1309,7 +1325,7 @@
         },
         {
           "person_id": "san14-candidate-0475",
-          "city": "longxi",
+          "city": "jincheng",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1617,7 +1633,7 @@
         },
         {
           "person_id": "san14-candidate-0632",
-          "city": "wudu",
+          "city": "dangqu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2023,7 +2039,7 @@
         },
         {
           "person_id": "san14-candidate-0854",
-          "city": "wudu",
+          "city": "fuxian",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2916,7 +2932,7 @@
           "wuwei": "ma_teng",
           "anding": "ma_teng",
           "jingzhao": "li_jue",
-          "jincheng": "ma_teng",
+          "jincheng": "han_sui",
           "donghai": "tao_qian",
           "shanyang": "lubu",
           "henan": "li_jue",
@@ -2946,9 +2962,9 @@
           "runan": "neutral",
           "qiao": "shu",
           "xiapi": "tao_qian",
-          "wudu": "liu_zhang",
+          "wudu": "neutral",
           "badong": "liu_zhang",
-          "wujun": "neutral",
+          "wujun": "xu_gong",
           "wuling": "liu_biao",
           "kuaiji": "wang_lang",
           "zitong": "liu_zhang",
@@ -2963,7 +2979,7 @@
           "zangke": "liu_zhang",
           "jianning": "liu_zhang",
           "xinggu": "liu_zhang",
-          "yinping": "liu_zhang",
+          "yinping": "neutral",
           "fuling": "liu_zhang",
           "xindu": "liu_you",
           "poyang": "neutral",
@@ -3022,7 +3038,7 @@
           "san14-candidate-0016": "yingchuan",
           "san14-candidate-0022": "chenliu",
           "san14-candidate-0028": "jiujiang",
-          "san14-candidate-0030": "anding",
+          "san14-candidate-0030": "jincheng",
           "san14-candidate-0031": "yan",
           "san14-candidate-0044": "dongjun",
           "san14-candidate-0051": "shujun",
@@ -3099,7 +3115,7 @@
           "san14-candidate-0246": "nanyang",
           "san14-candidate-0247": "lujiang",
           "san14-candidate-0249": "nanyang",
-          "san14-candidate-0250": "wudu",
+          "san14-candidate-0250": "bajun",
           "san14-candidate-0253": "taiyuan",
           "san14-candidate-0259": "tianshui",
           "san14-candidate-0271": "wuling",
@@ -3165,7 +3181,7 @@
           "san14-candidate-0465": "yanmen",
           "san14-candidate-0467": "shujun",
           "san14-candidate-0468": "wei",
-          "san14-candidate-0475": "longxi",
+          "san14-candidate-0475": "jincheng",
           "san14-candidate-0479": "xiangyang",
           "san14-candidate-0484": "jiaozhi",
           "san14-candidate-0485": "yingchuan",
@@ -3400,7 +3416,7 @@
           "san14-candidate-0160": "yan",
           "san14-candidate-0163": "qiao",
           "san14-candidate-0165": "beihai",
-          "san14-candidate-0166": "longxi",
+          "san14-candidate-0166": "jincheng",
           "san14-candidate-0167": "nanjun",
           "san14-candidate-0168": "fanyang",
           "san14-candidate-0169": "henan",
@@ -3413,7 +3429,7 @@
           "san14-candidate-0193": "dongping",
           "san14-candidate-0206": "lujiang",
           "san14-candidate-0208": "runan",
-          "san14-candidate-0211": "kuaiji",
+          "san14-candidate-0211": "wujun",
           "san14-candidate-0212": "jiyin",
           "san14-candidate-0217": "jinan",
           "san14-candidate-0218": "danyang",
@@ -3534,7 +3550,7 @@
           "san14-candidate-0617": "lujiang",
           "san14-candidate-0625": "hedong",
           "san14-candidate-0627": "jiameng",
-          "san14-candidate-0632": "wudu",
+          "san14-candidate-0632": "dangqu",
           "san14-candidate-0635": "jiujiang",
           "san14-candidate-0637": "zangke",
           "san14-candidate-0638": "henan",
@@ -3591,7 +3607,7 @@
           "san14-candidate-0831": "guiyang",
           "san14-candidate-0844": "chenliu",
           "san14-candidate-0852": "danyang",
-          "san14-candidate-0854": "wudu",
+          "san14-candidate-0854": "fuxian",
           "san14-candidate-0861": "lujiang",
           "san14-candidate-0862": "hanzhong",
           "san14-candidate-0864": "anding",
@@ -3657,7 +3673,9 @@
           "zhang_lu": 665,
           "wang_lang": 79,
           "zhang_yang": 660,
-          "kong_rong": 279
+          "kong_rong": 279,
+          "han_sui": 165,
+          "xu_gong": 210
         },
         "delete": [
           "wu"
@@ -4450,16 +4468,48 @@
           "san14-candidate-0030": {
             "set": {
               "source_ruler": "馬騰",
-              "faction": "ma_teng",
-              "city": "anding"
+              "faction": "han_sui",
+              "city": "jincheng",
+              "placement_basis": "historical_review_20261025",
+              "membership_revision": {
+                "basis": "primary_text_affiliation",
+                "note": "韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ]
+              },
+              "scenario_membership_basis": "primary_text_affiliation",
+              "historical_posting_reference": {
+                "person_id": "san14-candidate-0030",
+                "faction": "han_sui",
+                "city": "jincheng",
+                "basis": "primary_referenced_career_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "historical_certainty": "primary_text_affiliation"
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "ma_teng",
-                  "origin": "wuwei",
-                  "city": "anding"
-                }
+                  "faction": "han_sui",
+                  "city": "jincheng",
+                  "basis": "primary_referenced_career_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷15",
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "historical_certainty": "primary_text_affiliation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -4467,7 +4517,24 @@
                     194,
                     6
                   ],
-                  "city": "anding"
+                  "city": "jincheng",
+                  "basis": "primary_text_affiliation"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_review_20261025",
+                  "historical_certainty": "primary_text_affiliation",
+                  "note": "韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷15",
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "reference_date": [
+                    194,
+                    6
+                  ],
+                  "reference_scenario": "mainland194-06"
                 }
               }
             }
@@ -8051,30 +8118,46 @@
               "source_status": "serving",
               "source_ruler": "馬騰",
               "year_state": "available",
-              "faction": "ma_teng",
-              "city": "longxi",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "faction": "han_sui",
+              "city": "jincheng",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0166",
-                "faction": "ma_teng",
-                "origin": "wuwei",
-                "city": "longxi",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
+                "faction": "han_sui",
+                "city": "jincheng",
+                "basis": "reviewed_regional_or_novel_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "historical_certainty": "regional_primary_mapping"
+              },
+              "membership_revision": {
+                "basis": "regional_primary_mapping",
+                "note": "韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ]
+              },
+              "scenario_membership_basis": "regional_primary_mapping"
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                    "https://zh.wikisource.org/wiki/三國志/卷15",
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    194,
+                    6
+                  ],
+                  "reference_scenario": "mainland194-06"
                 }
               },
               "appearance_plan": {
@@ -8087,9 +8170,9 @@
                     215,
                     12
                   ],
-                  "city": "longxi",
+                  "city": "jincheng",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "regional_primary_mapping"
                 }
               }
             },
@@ -9110,30 +9193,52 @@
               "source_status": "serving",
               "source_ruler": "王朗",
               "year_state": "available",
-              "faction": "wang_lang",
-              "city": "kuaiji",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "faction": "xu_gong",
+              "city": "wujun",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0211",
-                "faction": "wang_lang",
-                "origin": "kuaiji",
-                "city": "kuaiji",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
+                "faction": "xu_gong",
+                "city": "wujun",
+                "basis": "reviewed_regional_or_novel_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13",
+                  "https://zh.wikisource.org/wiki/三國志/卷46",
+                  "https://zh.wikisource.org/wiki/三國志/卷49",
+                  "https://zh.wikisource.org/wiki/三國志/卷56"
+                ],
+                "historical_certainty": "bounded_career_inference"
+              },
+              "membership_revision": {
+                "basis": "bounded_career_inference",
+                "note": "許貢為吳郡太守，未被朱治逐走前不屬王朗部下。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13",
+                  "https://zh.wikisource.org/wiki/三國志/卷46",
+                  "https://zh.wikisource.org/wiki/三國志/卷49",
+                  "https://zh.wikisource.org/wiki/三國志/卷56"
+                ]
+              },
+              "scenario_membership_basis": "bounded_career_inference"
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                    "https://zh.wikisource.org/wiki/三國志/卷13",
+                    "https://zh.wikisource.org/wiki/三國志/卷46",
+                    "https://zh.wikisource.org/wiki/三國志/卷49",
+                    "https://zh.wikisource.org/wiki/三國志/卷56"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "許貢為吳郡太守，未被朱治逐走前不屬王朗部下。",
+                  "historical_certainty": "bounded_career_inference",
+                  "reference_date": [
+                    194,
+                    6
+                  ],
+                  "reference_scenario": "mainland194-06"
                 }
               },
               "appearance_plan": {
@@ -9146,9 +9251,9 @@
                     200,
                     12
                   ],
-                  "city": "kuaiji",
+                  "city": "wujun",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "bounded_career_inference"
                 }
               }
             },
@@ -10281,14 +10386,38 @@
             "set": {
               "source_ruler": "劉璋",
               "faction": "liu_zhang",
-              "city": "wudu"
+              "city": "bajun",
+              "placement_basis": "historical_review_20261025",
+              "membership_revision": {
+                "basis": "authorial_garrison_relocation",
+                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷16",
+                  "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                ]
+              },
+              "scenario_membership_basis": "authorial_garrison_relocation"
             },
             "update": {
               "posting_reference": {
                 "set": {
                   "faction": "liu_zhang",
-                  "city": "wudu"
-                }
+                  "city": "bajun",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷16",
+                    "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -10296,7 +10425,25 @@
                     194,
                     6
                   ],
-                  "city": "wudu"
+                  "city": "bajun",
+                  "basis": "authorial_garrison_relocation"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_review_20261025",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷16",
+                    "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                  ],
+                  "reference_date": [
+                    194,
+                    6
+                  ],
+                  "reference_scenario": "mainland194-06"
                 }
               }
             }
@@ -16349,16 +16496,48 @@
           "san14-candidate-0475": {
             "set": {
               "source_ruler": "馬騰",
-              "faction": "ma_teng",
-              "city": "longxi"
+              "faction": "han_sui",
+              "city": "jincheng",
+              "placement_basis": "historical_review_20261025",
+              "membership_revision": {
+                "basis": "primary_text_affiliation",
+                "note": "韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ]
+              },
+              "scenario_membership_basis": "primary_text_affiliation",
+              "historical_posting_reference": {
+                "person_id": "san14-candidate-0475",
+                "faction": "han_sui",
+                "city": "jincheng",
+                "basis": "primary_referenced_career_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷15",
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "historical_certainty": "primary_text_affiliation"
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "ma_teng",
-                  "origin": "wuwei",
-                  "city": "longxi"
-                }
+                  "faction": "han_sui",
+                  "city": "jincheng",
+                  "basis": "primary_referenced_career_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷15",
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "historical_certainty": "primary_text_affiliation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -16366,7 +16545,24 @@
                     194,
                     6
                   ],
-                  "city": "longxi"
+                  "city": "jincheng",
+                  "basis": "primary_text_affiliation"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_review_20261025",
+                  "historical_certainty": "primary_text_affiliation",
+                  "note": "韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷15",
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "reference_date": [
+                    194,
+                    6
+                  ],
+                  "reference_scenario": "mainland194-06"
                 }
               }
             }
@@ -20721,29 +20917,48 @@
               "source_ruler": "劉璋",
               "year_state": "available",
               "faction": "liu_zhang",
-              "city": "wudu",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "dangqu",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0632",
                 "faction": "liu_zhang",
-                "origin": "shujun",
-                "city": "wudu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
+                "city": "dangqu",
+                "basis": "reviewed_regional_or_novel_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷16",
+                  "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "membership_revision": {
+                "basis": "authorial_garrison_relocation",
+                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷16",
+                  "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                ]
+              },
+              "scenario_membership_basis": "authorial_garrison_relocation"
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷16",
+                    "https://zh.wikisource.org/wiki/華陽國志/卷二"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    194,
+                    6
+                  ],
+                  "reference_scenario": "mainland194-06"
                 }
               },
               "appearance_plan": {
@@ -20756,9 +20971,9 @@
                     212,
                     12
                   ],
-                  "city": "wudu",
+                  "city": "dangqu",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "authorial_garrison_relocation"
                 }
               }
             },
@@ -26562,29 +26777,48 @@
               "source_ruler": "劉璋",
               "year_state": "available",
               "faction": "liu_zhang",
-              "city": "wudu",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "fuxian",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0854",
                 "faction": "liu_zhang",
-                "origin": "shujun",
-                "city": "wudu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
+                "city": "fuxian",
+                "basis": "reviewed_regional_or_novel_posting",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷16",
+                  "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "membership_revision": {
+                "basis": "authorial_garrison_relocation",
+                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷16",
+                  "https://zh.wikisource.org/wiki/華陽國志/卷二"
+                ]
+              },
+              "scenario_membership_basis": "authorial_garrison_relocation"
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ya-line/"
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷16",
+                    "https://zh.wikisource.org/wiki/華陽國志/卷二"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    194,
+                    6
+                  ],
+                  "reference_scenario": "mainland194-06"
                 }
               },
               "appearance_plan": {
@@ -26597,9 +26831,9 @@
                     212,
                     12
                   ],
-                  "city": "wudu",
+                  "city": "fuxian",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "authorial_garrison_relocation"
                 }
               }
             },
@@ -30881,7 +31115,22 @@
       "main_scenario": {
         "set": {
           "title": "群雄割据",
-          "summary": "群雄割据：使用已发布的本作年代配置，采用30人城池容量。"
+          "summary": "群雄割据：使用已发布的本作年代配置，采用30人城池容量。",
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [
+              "han_sui",
+              "xu_gong"
+            ],
+            "city_owner_corrections": [
+              "jincheng",
+              "wudu",
+              "yinping",
+              "wujun"
+            ],
+            "all_city_months_independently_attested": false
+          }
         }
       },
       "city_profiles": {
@@ -33787,6 +34036,70 @@
                   "basis": "not_yet_established"
                 }
               }
+            }
+          }
+        },
+        "set": {
+          "jincheng": {
+            "control_review": {
+              "date": [
+                194,
+                6
+              ],
+              "note": "韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。",
+              "certainty": "regional_primary_mapping",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷15",
+                "https://zh.wikisource.org/wiki/三國志/卷36"
+              ]
+            }
+          },
+          "wudu": {
+            "control_review": {
+              "date": [
+                194,
+                6
+              ],
+              "note": "215年曹操進軍前，地方氐部與漢官並存；本開局實際控制待考，不斷言全屬曹操或張魯。",
+              "certainty": "contested_local_control",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷01",
+                "https://zh.wikisource.org/wiki/三國志/卷16",
+                "https://zh.wikisource.org/wiki/華陽國志/卷二"
+              ]
+            },
+            "neutral_label": "地方氐部（控制待考）"
+          },
+          "yinping": {
+            "control_review": {
+              "date": [
+                194,
+                6
+              ],
+              "note": "215年曹操進軍前，地方氐部與漢官並存；本開局實際控制待考，不斷言全屬曹操或張魯。",
+              "certainty": "contested_local_control",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷01",
+                "https://zh.wikisource.org/wiki/三國志/卷16",
+                "https://zh.wikisource.org/wiki/華陽國志/卷二"
+              ]
+            },
+            "neutral_label": "地方氐部（控制待考）"
+          },
+          "wujun": {
+            "control_review": {
+              "date": [
+                194,
+                6
+              ],
+              "note": "許貢為吳郡太守，未被朱治逐走前不屬王朗部下。",
+              "certainty": "bounded_career_inference",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷13",
+                "https://zh.wikisource.org/wiki/三國志/卷46",
+                "https://zh.wikisource.org/wiki/三國志/卷49",
+                "https://zh.wikisource.org/wiki/三國志/卷56"
+              ]
             }
           }
         }
@@ -37804,7 +38117,11 @@
           "future_plans": 535,
           "city_owner_corrections": [
             "yiyang",
-            "yidu"
+            "yidu",
+            "jincheng",
+            "wudu",
+            "wujun",
+            "yinping"
           ]
         },
         "update": {
@@ -37821,12 +38138,13 @@
             "set": {
               "person_specific_future_free_appearance": 535,
               "same_date_SAN14_guide_affiliation": 3,
-              "retained_reviewed_opening_membership": 263,
+              "retained_reviewed_opening_membership": 256,
               "same_date_SAN14_recorded_death": 77,
               "retained_person_specific_free_location": 114,
               "retained_explicit_scenario_ruler": 18,
               "historical_city_owner_relocation_authorial_garrison": 7,
-              "authorial_region_placement": 4
+              "authorial_region_placement": 4,
+              "historical_review_20261025": 7
             },
             "delete": [
               "authored_bounded_source_snapshot_continuity",

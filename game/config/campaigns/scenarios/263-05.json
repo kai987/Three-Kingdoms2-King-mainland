@@ -1456,361 +1456,421 @@
             "person_id": "san14-candidate-0020",
             "name": "卫瓘",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0026",
             "name": "阎宇",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0046",
             "name": "王颀",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0060",
             "name": "王濬",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0061",
             "name": "王祥",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0068",
             "name": "王昶",
-            "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "faction": null,
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "chronology_excluded"
           },
           {
             "person_id": "san14-candidate-0110",
             "name": "霍弋",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0130",
             "name": "贾充",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0203",
             "name": "姜维",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0210",
             "name": "许仪",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0224",
             "name": "虞汜",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0230",
             "name": "郤正",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0232",
             "name": "牵弘",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0251",
             "name": "黄皓",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0316",
             "name": "胡烈",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0339",
             "name": "师纂",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0345",
             "name": "司马炎",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0348",
             "name": "司马昭",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0388",
             "name": "朱绩",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0396",
             "name": "荀𫖮",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0397",
             "name": "荀勗",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0406",
             "name": "钟会",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0414",
             "name": "谯周",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0415",
             "name": "蒋舒",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0420",
             "name": "邵悌",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0425",
             "name": "钟离牧",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0434",
             "name": "诸葛绪",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0435",
             "name": "诸葛尚",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0436",
             "name": "诸葛靓",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0437",
             "name": "诸葛瞻",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0480",
             "name": "石苞",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0503",
             "name": "曹奂",
             "faction": "wei",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0548",
             "name": "孙休",
             "faction": "wu",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0554",
             "name": "孙皓",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0605",
             "name": "张华",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0657",
             "name": "张布",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0662",
             "name": "张翼",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0675",
             "name": "陈骞",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0706",
             "name": "丁奉",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0707",
             "name": "丁封",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0711",
             "name": "田续",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0720",
             "name": "邓艾",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0723",
             "name": "董厥",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0726",
             "name": "陶璜",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0737",
             "name": "邓忠",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0752",
             "name": "杜预",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0755",
             "name": "裴秀",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0777",
             "name": "樊建",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0806",
             "name": "傅佥",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0836",
             "name": "濮阳兴",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0847",
             "name": "孟光",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0859",
             "name": "杨欣",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0860",
             "name": "羊祜",
             "faction": "wei",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0890",
             "name": "罗宪",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0899",
             "name": "陆凯",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0900",
             "name": "陆抗",
             "faction": "wu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0921",
             "name": "李密",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0941",
             "name": "刘谌",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0945",
             "name": "刘禅",
             "faction": "shu",
-            "basis": "explicit_chapter_ruler"
+            "basis": "explicit_chapter_ruler",
+            "status": "serving"
           },
           {
             "person_id": "san14-candidate-0968",
             "name": "廖化",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "status": "serving"
           }
         ],
         "excluded_people": [],
@@ -1847,14 +1907,15 @@
             "url": "https://zh.wikisource.org/wiki/三國志/卷48",
             "basis": "永安年間吳主，未提前改為孫皓"
           }
-        ]
+        ],
+        "history_review_revision": "2026-10-25"
       }
     },
     "update": {
       "initial_owners": {
         "set": {
           "liaodong": "wei",
-          "jiaozhi": "wu",
+          "jiaozhi": "neutral",
           "nanjun": "wu",
           "lingling": "wu",
           "hanzhong": "shu",
@@ -1864,8 +1925,8 @@
           "daifang": "wei",
           "yinping": "shu",
           "yidu": "wu",
-          "jiuzhen": "wu",
-          "rinan": "wu",
+          "jiuzhen": "neutral",
+          "rinan": "neutral",
           "wuchang": "wu",
           "linhai": "wu",
           "linchuan": "wu",
@@ -36162,6 +36223,17 @@
           "story_note_i18n": {
             "zh-Hant": "本作依官網年代與故事改編；領土、駐將、數值及未實作的事件均不是官方原始資料匯入。",
             "ja": "公式の年月と物語を基にした本作独自の改編です。領土・配属・数値や未実装のイベントは公式データの移植ではありません。"
+          },
+          "historical_review": {
+            "revision": "2026-10-25",
+            "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
+            "faction_additions": [],
+            "city_owner_corrections": [
+              "jiaozhi",
+              "jiuzhen",
+              "rinan"
+            ],
+            "all_city_months_independently_attested": false
           }
         },
         "delete": [
@@ -38837,6 +38909,51 @@
                 "https://zh.wikisource.org/zh-hant/三國志/卷08"
               ]
             }
+          },
+          "jiaozhi": {
+            "control_review": {
+              "date": [
+                263,
+                5
+              ],
+              "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+              "certainty": "dated_revolt_region_mapping",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷48",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+              ]
+            },
+            "neutral_label": "呂興地方叛軍"
+          },
+          "jiuzhen": {
+            "control_review": {
+              "date": [
+                263,
+                5
+              ],
+              "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+              "certainty": "dated_revolt_region_mapping",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷48",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+              ]
+            },
+            "neutral_label": "呂興地方叛軍"
+          },
+          "rinan": {
+            "control_review": {
+              "date": [
+                263,
+                5
+              ],
+              "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+              "certainty": "dated_revolt_region_mapping",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷48",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+              ]
+            },
+            "neutral_label": "呂興地方叛軍"
           }
         },
         "update": {
@@ -39334,7 +39451,10 @@
             "liaodong",
             "lelang",
             "daifang",
-            "yiyang"
+            "yiyang",
+            "jiaozhi",
+            "jiuzhen",
+            "rinan"
           ]
         },
         "update": {
