@@ -17,6 +17,15 @@ spec.loader.exec_module(runner)
 
 
 class CampaignCiShardTests(unittest.TestCase):
+    def test_explicit_scope_registry_covers_every_current_module(self):
+        registry, checksum = runner.load_registry()
+        self.assertEqual(set(registry['modules']),
+                         {path.relative_to(ROOT).as_posix() for path in runner.discover_files()})
+        self.assertEqual(len(checksum), 64)
+        self.assertEqual(registry['modules']['tests/test_remake_march_save_compat.py']['tier'],
+                         'compatibility')
+        self.assertEqual(registry['modules']['tests/test_remake_march_core.py']['tier'], 'related')
+
     def test_three_shards_cover_every_file_exactly_once(self):
         complete = runner.discover_files()
         self.assertTrue(complete)

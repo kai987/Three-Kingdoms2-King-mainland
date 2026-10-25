@@ -1,0 +1,315 @@
+{
+  "schema": "tk2-browser-cases-v1",
+  "cases": [
+    {
+      "id": "title-cover",
+      "title": "pixel loading cover animates, plays the original title and waits for Start before the 184 chooser",
+      "groups": [
+        "boot",
+        "audio"
+      ],
+      "scenario_ids": [],
+      "scenario_scope": "unbound"
+    },
+    {
+      "id": "recovery-title",
+      "title": "recovery callback waits for title Start",
+      "groups": [
+        "boot",
+        "audio",
+        "cloud"
+      ],
+      "scenario_ids": [],
+      "scenario_scope": "unbound"
+    },
+    {
+      "id": "road-beds",
+      "title": "city road beds survive hidden castles, shared inland reaches draw once and ruler portraits stay centered",
+      "groups": [
+        "map",
+        "scenarios"
+      ],
+      "scenario_ids": [
+        "mainland207-09"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "dialogs-save",
+      "title": "dialogs, language, limits, save/load and automatic recovery use the real campaign",
+      "groups": [
+        "boot",
+        "audio",
+        "people",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "unbound"
+    },
+    {
+      "id": "map-navigation",
+      "title": "map mouse/touch pan and zoom stay bounded without accidental city inspection",
+      "groups": [
+        "map"
+      ],
+      "scenario_ids": [],
+      "scenario_scope": "unbound"
+    },
+    {
+      "id": "boot-retry",
+      "title": "failed manifest has an explicit retry starting a fresh real Worker",
+      "groups": [
+        "boot",
+        "audio"
+      ],
+      "scenario_ids": [],
+      "scenario_scope": "unbound"
+    },
+    {
+      "id": "march-grain",
+      "title": "daily marching grain loads once and consumes actual days through visible transfer controls",
+      "groups": [
+        "logistics",
+        "economy",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "city-size-layout",
+      "title": "city size labels and the report adapt to available space while retaining map controls",
+      "groups": [
+        "map",
+        "economy",
+        "scenarios"
+      ],
+      "scenario_ids": [
+        "mainland217-07",
+        "mainland225-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "jingzhou-openings",
+      "title": "Jingzhou historical openings show Zhangling and playable Jingnan prefects",
+      "groups": [
+        "scenarios",
+        "map",
+        "people"
+      ],
+      "scenario_ids": [
+        "mainland191-10",
+        "mainland200-01",
+        "mainland208-10"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "jingzhou-dates",
+      "title": "Jingzhou dated names and withdrawn cities match previews and live campaigns",
+      "groups": [
+        "scenarios",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland212-12",
+        "mainland249-01",
+        "mainland263-05"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "dlc-openings",
+      "title": "four DLC openings share two translated categories and preserve the separately dated Shu campaign",
+      "groups": [
+        "scenarios",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland198-03",
+        "mainland202-06",
+        "mainland211-07-tongguan",
+        "mainland212-12",
+        "mainland215-08",
+        "mainland209-06"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "han-sui-shu",
+      "title": "Han Sui and the December 212 Shu opening remain playable with reviewed frontier ownership",
+      "groups": [
+        "scenarios",
+        "map",
+        "people"
+      ],
+      "scenario_ids": [
+        "mainland188-06",
+        "mainland194-06",
+        "mainland211-07-tongguan",
+        "mainland212-12"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "xiaopei-dates",
+      "title": "dated Xiaopei Qiao names and city scales appear in real scenario information",
+      "groups": [
+        "scenarios",
+        "map",
+        "economy"
+      ],
+      "scenario_ids": [
+        "mainland217-07",
+        "mainland219-07",
+        "mainland221-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "inland-water",
+      "title": "Jiangxia Changsha offers distinct inland water and land routes through real WASM and saved commands",
+      "groups": [
+        "logistics",
+        "map",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "scenario-labels",
+      "title": "scenario totals and DLC labels stay bilingual while island history remains neutral",
+      "groups": [
+        "scenarios",
+        "map"
+      ],
+      "scenario_ids": [
+        "mainland198-03",
+        "mainland202-06",
+        "mainland211-07-tongguan",
+        "mainland215-08",
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "stale-api",
+      "title": "a stale local API menu warns without restarting or changing its campaign",
+      "groups": [
+        "scenarios"
+      ],
+      "scenario_ids": [],
+      "scenario_scope": "catalog"
+    },
+    {
+      "id": "opening-catalog",
+      "title": "all 29 real Worker openings keep preview and live initial health and faction-scoped loyalty aligned",
+      "groups": [
+        "scenarios",
+        "people",
+        "economy",
+        "save"
+      ],
+      "scenario_ids": [],
+      "scenario_scope": "selected"
+    },
+    {
+      "id": "person-encyclopedia",
+      "title": "officer encyclopedia distinguishes initial body, remake cap and contextual loyalty in both languages",
+      "groups": [
+        "people"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "recruitment",
+      "title": "successful recruitment preserves source initial body and applies dynamic personnel loyalty",
+      "groups": [
+        "people"
+      ],
+      "scenario_ids": [
+        "mainland184-02"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "treasury",
+      "title": "treasury drafts, governor rewards, treasure sale and search use real saved state and illustrated events",
+      "groups": [
+        "economy",
+        "people",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "treasure-transport",
+      "title": "manual treasure transport preserves cargo, rations and saved travel while automatic support is disabled",
+      "groups": [
+        "economy",
+        "logistics",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "facilities",
+      "title": "facility visits, trade, study, equipment, prevention and town development share bounded real actions and saves",
+      "groups": [
+        "economy",
+        "people",
+        "battle",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "drought",
+      "title": "a natural August drought shows bilingual illustrated losses and preserves the actual soldier ledger",
+      "groups": [
+        "economy",
+        "battle",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    },
+    {
+      "id": "equipment",
+      "title": "actual equipment appears in city intelligence and person details with server weight previews, exclusive initial gear and saved replacements",
+      "groups": [
+        "people",
+        "battle",
+        "economy",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland217-07"
+      ],
+      "scenario_scope": "fixed"
+    }
+  ]
+}

@@ -1,10 +1,13 @@
 import {defineConfig, devices} from '@playwright/test';
 import {fileURLToPath} from 'node:url';
+import browserScopes from './scope.cjs';
 
 const root=fileURLToPath(new URL('../../',import.meta.url));
+const selection=browserScopes.loadBrowserScope();
 export default defineConfig({
  testDir:fileURLToPath(new URL('../../tests/',import.meta.url)),
  testMatch:'browser_ui.spec.mjs',
+ grep:selection.grep,
  outputDir:root+'build/browser-results',
  timeout:240_000,
  expect:{timeout:30_000},

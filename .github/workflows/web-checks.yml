@@ -1,13 +1,85 @@
 name: Shared Web campaign verification
 on:
   workflow_call:
+    inputs:
+      force_full:
+        type: boolean
+        default: false
+      publish:
+        type: boolean
+        default: false
 permissions:
   contents: read
+  actions: read
+  deployments: read
 env:
   PYTHONDONTWRITEBYTECODE: '1'
   RUSTUP_TOOLCHAIN: '1.93.0'
 jobs:
+  scope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      mode: ${{ steps.plan.outputs.mode }}
+      full: ${{ steps.plan.outputs.full }}
+      docs_only: ${{ steps.plan.outputs.docs_only }}
+      web: ${{ steps.plan.outputs.web }}
+      native: ${{ steps.plan.outputs.native }}
+      rules: ${{ steps.plan.outputs.rules }}
+      soak: ${{ steps.plan.outputs.soak }}
+      resupply: ${{ steps.plan.outputs.resupply }}
+      publish: ${{ steps.plan.outputs.publish }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Select required checks from cumulative source changes
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE_FULL: ${{ inputs.force_full }}
+          PUBLISH_REQUESTED: ${{ inputs.publish }}
+        run: |
+          mkdir -p build/ci
+          args=()
+          if [ "$FORCE_FULL" = true ]; then args+=(--force-full); fi
+          if [ "$PUBLISH_REQUESTED" = true ]; then args+=(--publish); fi
+          python -B tools/ci/plan.py --head "$GITHUB_SHA" --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --repository "$GITHUB_REPOSITORY" "${args[@]}" > build/ci/test-plan.json
+          python -B tools/ci/gate.py outputs --plan build/ci/test-plan.json --head "$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci/test-plan.json
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 7
+  docs-check:
+    needs: scope
+    if: needs.scope.outputs.docs_only == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - name: Documentation whitespace and repository links
+        run: python -B tools/ci/gate.py docs --plan build/ci/test-plan.json --head "$GITHUB_SHA"
   native-rules:
+    needs: scope
+    if: needs.scope.outputs.native == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -47,7 +119,8 @@ jobs:
           overwrite: true
           retention-days: 3
   campaign-rules:
-    needs: native-rules
+    needs: [scope, native-rules]
+    if: needs.scope.outputs.rules == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
@@ -84,7 +157,8 @@ jobs:
           TEST_SHARD: ${{ matrix.shard }}
         run: python -B tools/ci/run_campaign_tests.py --shard "$TEST_SHARD" --shards 3
   campaign-soak:
-    needs: native-rules
+    needs: [scope, native-rules]
+    if: needs.scope.outputs.soak == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
@@ -119,6 +193,8 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
   source-and-browser:
+    needs: scope
+    if: needs.scope.outputs.web == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -168,11 +244,58 @@ jobs:
         run: |
           python -m unittest discover -s tools/officer-placement -p 'test_*.py' -v
           git diff --check
-  web-release:
+  scoped-tests:
+    needs: [scope, native-rules]
+    if: >-
+      always() && !cancelled() && needs.scope.result == 'success' &&
+      needs.scope.outputs.mode == 'scoped' &&
+      (needs.scope.outputs.native != 'true' || needs.native-rules.result == 'success')
     runs-on: ubuntu-latest
-    # Desktop and touch acceptance run sequentially against the same artifact.
-    # The complete suite takes about 25 minutes on the hosted runner.
-    timeout-minutes: 35
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - name: Install pinned runtime for the selected release-boundary tests
+        run: npm ci --prefix tools/web-runtime --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: needs.scope.outputs.native == 'true'
+        with:
+          name: native-reference-${{ github.sha }}
+          path: build
+      - name: Restore the same native reference
+        if: needs.scope.outputs.native == 'true'
+        run: tar -xf build/native-reference.tar -C build
+      - name: Global contracts and affected domains or scenarios
+        # Real catalog replays and save compatibility compare both backends
+        # internally; the unrelated global metadata suite only needs one pass.
+        run: python -B tools/ci/run_scoped_tests.py --plan build/ci/test-plan.json --backend python --report build/ci/scoped-report.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: scoped-report-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/ci/scoped-report.json
+          if-no-files-found: ignore
+          retention-days: 7
+  web-build:
+    needs: scope
+    if: needs.scope.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      content_sha256: ${{ steps.identity.outputs.content_sha256 }}
     env:
       MARCH_CORE_BACKEND: python
     steps:
@@ -186,43 +309,132 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-          cache-dependency-path: |
-            tools/web-runtime/package-lock.json
-            tools/browser-tests/package-lock.json
-      - name: Install integrity-pinned runtime and browser test client
+          cache-dependency-path: tools/web-runtime/package-lock.json
+      - run: npm ci --prefix tools/web-runtime --ignore-scripts
+      - name: Build the candidate once and retain its identity
+        id: identity
         run: |
-          npm ci --prefix tools/web-runtime --ignore-scripts
-          npm ci --prefix tools/browser-tests --ignore-scripts
-      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-chromium-${{ hashFiles('tools/browser-tests/package-lock.json') }}
-      - name: Install pinned full Chromium and check actual system dependencies
-        run: node tools/browser-tests/install.mjs
-      - name: Build current immutable catalogs and approved public assets once
-        run: python -B game/build_web.py --output build/web
-      - name: Real WebAssembly campaign and CPU replay parity
+          python -B game/build_web.py --output build/web
+          content=$(python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA")
+          printf 'content_sha256=%s\n' "$content" >> "$GITHUB_OUTPUT"
+      - name: Actual WASM campaign and CPU replay parity
         run: node tests/browser_engine_smoke.mjs build/web
-      - name: Actual desktop and touch browser interaction acceptance
-        run: node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/playwright.config.mjs
-      - name: Segmented supply, convoy rendezvous and physical return in the UI
-        run: node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/resupply.config.mjs
-      - name: Retain browser screenshots and failure traces
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: browser-acceptance-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          name: candidate-web-${{ github.sha }}
+          path: build/web
+          overwrite: true
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+  browser-ui:
+    needs: [scope, web-build]
+    if: needs.scope.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [desktop-chromium, touch-chromium]
+    env:
+      TK2_TEST_PLAN: build/ci/test-plan.json
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: candidate-web-${{ github.sha }}
+          path: build/web
+      - name: Require the exact immutable candidate
+        env:
+          CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+      - name: Show the selected scope and execute actual browser controls
+        env:
+          BROWSER_PROJECT: ${{ matrix.project }}
+        run: |
+          node tools/browser-tests/scope.cjs --plan "$TK2_TEST_PLAN"
+          node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/playwright.config.mjs --project "$BROWSER_PROJECT"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: browser-${{ matrix.project }}-${{ github.sha }}-attempt-${{ github.run_attempt }}
           path: |
             build/browser-results
             build/browser-report
-            build/resupply-browser-results
           if-no-files-found: ignore
           retention-days: 7
-      - name: Upload the exact tested static release
+  resupply-ui:
+    needs: scope
+    if: needs.scope.outputs.resupply == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: ./.github/actions/browser-tools
+      - name: Segmented supply, courier rendezvous and physical return
+        run: node tools/browser-tests/node_modules/@playwright/test/cli.js test --config tools/browser-tests/resupply.config.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: resupply-${{ github.sha }}-attempt-${{ github.run_attempt }}
+          path: build/resupply-browser-results
+          if-no-files-found: ignore
+          retention-days: 7
+  gate:
+    needs: [scope, docs-check, native-rules, source-and-browser, scoped-tests, campaign-rules, campaign-soak, web-build, browser-ui, resupply-ui]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: '3.13'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: test-plan-${{ github.sha }}
+          path: build/ci
+      - name: Fail if any required group failed, was cancelled or was skipped
+        env:
+          JOB_RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python -c 'import os,pathlib;pathlib.Path("build/ci/needs.json").write_text(os.environ["JOB_RESULTS"])'
+          python -B tools/ci/gate.py verify --plan build/ci/test-plan.json --needs build/ci/needs.json --head "$GITHUB_SHA"
+          python -B tools/ci/gate.py summary --plan build/ci/test-plan.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: needs.scope.outputs.web == 'true'
+        with:
+          name: candidate-web-${{ github.sha }}
+          path: build/web
+      - name: Verify the original candidate after every required check passed
+        if: needs.scope.outputs.web == 'true'
+        env:
+          CONTENT_SHA: ${{ needs.web-build.outputs.content_sha256 }}
+        run: python -B tools/ci/gate.py artifact --root build/web --head "$GITHUB_SHA" --content-sha256 "$CONTENT_SHA"
+      - name: Retain the exact tested release
+        if: needs.scope.outputs.web == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: verified-web-${{ github.sha }}
           path: build/web
           overwrite: true
           include-hidden-files: true
+          if-no-files-found: error
           retention-days: 7

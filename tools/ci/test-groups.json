@@ -1,0 +1,552 @@
+{
+  "schema": "tk2-ci-python-groups-v1",
+  "policy": {
+    "global": "Closed CI helper tests, shipped static media/publication routes, and a separate raw-catalog identity/reference pass; no AI replay",
+    "related": "explicit domain modules; optional scenario_ids narrow dated regressions",
+    "compatibility": "always retained when native or selected catalogs can affect save checksums",
+    "full": "complete historical/soak/publication matrices; full mode delegates every file without filters"
+  },
+  "modules": {
+    "tests/test_remake_194_frontier_review.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios"
+      ],
+      "scenario_ids": [
+        "mainland194-06"
+      ]
+    },
+    "tests/test_remake_audio_assets.py": {
+      "tier": "global",
+      "groups": [
+        "audio"
+      ]
+    },
+    "tests/test_remake_auto_allocation.py": {
+      "tier": "related",
+      "groups": [
+        "economy"
+      ]
+    },
+    "tests/test_remake_battle_assets.py": {
+      "tier": "global",
+      "groups": [
+        "battle"
+      ]
+    },
+    "tests/test_remake_battle_enhanced_static.py": {
+      "tier": "related",
+      "groups": [
+        "battle"
+      ]
+    },
+    "tests/test_remake_battle_presentation.py": {
+      "tier": "related",
+      "groups": [
+        "battle"
+      ]
+    },
+    "tests/test_remake_browser_runtime.py": {
+      "tier": "related",
+      "groups": [
+        "save",
+        "cloud"
+      ]
+    },
+    "tests/test_remake_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save"
+      ]
+    },
+    "tests/test_remake_campaign_soak.py": {
+      "tier": "full",
+      "groups": [
+        "battle",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_ci_gate.py": {
+      "tier": "global",
+      "groups": []
+    },
+    "tests/test_remake_ci_scope.py": {
+      "tier": "global",
+      "groups": []
+    },
+    "tests/test_remake_ci_scoped_runner.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios"
+      ],
+      "scenario_ids": [
+        "mainland194-06"
+      ]
+    },
+    "tests/test_remake_ci_shards.py": {
+      "tier": "global",
+      "groups": []
+    },
+    "tests/test_remake_city_lifecycles.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_city_preview.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_city_progression.py": {
+      "tier": "related",
+      "groups": [
+        "economy"
+      ]
+    },
+    "tests/test_remake_city_timeline.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_civil_portrait_static.py": {
+      "tier": "global",
+      "groups": [
+        "people"
+      ]
+    },
+    "tests/test_remake_civil_staff.py": {
+      "tier": "related",
+      "groups": [
+        "people",
+        "economy"
+      ]
+    },
+    "tests/test_remake_civil_staff_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "people",
+        "economy"
+      ]
+    },
+    "tests/test_remake_cloud_config.py": {
+      "tier": "related",
+      "groups": [
+        "cloud"
+      ]
+    },
+    "tests/test_remake_convoy_rescue.py": {
+      "tier": "related",
+      "groups": [
+        "logistics"
+      ]
+    },
+    "tests/test_remake_default_scenario.py": {
+      "tier": "related",
+      "groups": [
+        "save",
+        "cloud"
+      ]
+    },
+    "tests/test_remake_delegation_replay.py": {
+      "tier": "related",
+      "groups": [
+        "economy"
+      ]
+    },
+    "tests/test_remake_dlc_campaigns.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_domestic.py": {
+      "tier": "related",
+      "groups": [
+        "economy"
+      ]
+    },
+    "tests/test_remake_duel_desperate.py": {
+      "tier": "related",
+      "groups": [
+        "battle"
+      ]
+    },
+    "tests/test_remake_effect_assets.py": {
+      "tier": "global",
+      "groups": [
+        "audio"
+      ]
+    },
+    "tests/test_remake_equipment.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "battle"
+      ]
+    },
+    "tests/test_remake_equipment_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "battle"
+      ]
+    },
+    "tests/test_remake_equipment_icons.py": {
+      "tier": "global",
+      "groups": [
+        "economy",
+        "battle"
+      ]
+    },
+    "tests/test_remake_event_transitions.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save",
+        "economy"
+      ]
+    },
+    "tests/test_remake_events.py": {
+      "tier": "related",
+      "groups": [
+        "battle",
+        "save",
+        "economy"
+      ]
+    },
+    "tests/test_remake_facilities.py": {
+      "tier": "related",
+      "groups": [
+        "economy"
+      ]
+    },
+    "tests/test_remake_facility_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "economy"
+      ]
+    },
+    "tests/test_remake_faction_counts.py": {
+      "tier": "related",
+      "groups": [
+        "people",
+        "save"
+      ]
+    },
+    "tests/test_remake_faction_domestic.py": {
+      "tier": "related",
+      "groups": [
+        "economy"
+      ]
+    },
+    "tests/test_remake_faction_palette.py": {
+      "tier": "related",
+      "groups": [
+        "map"
+      ]
+    },
+    "tests/test_remake_garrison_postings.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_generated_officers.py": {
+      "tier": "related",
+      "groups": [
+        "people"
+      ]
+    },
+    "tests/test_remake_hazard_json.py": {
+      "tier": "related",
+      "groups": [
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_hazard_marches.py": {
+      "tier": "related",
+      "groups": [
+        "logistics",
+        "save"
+      ]
+    },
+    "tests/test_remake_historical_scenarios.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_http_server.py": {
+      "tier": "related",
+      "groups": [
+        "save",
+        "cloud"
+      ]
+    },
+    "tests/test_remake_island_history.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_jingnan_prefects.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_jingzhou_chronology.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_json_boundary.py": {
+      "tier": "related",
+      "groups": [
+        "save",
+        "cloud"
+      ]
+    },
+    "tests/test_remake_locales.py": {
+      "tier": "related",
+      "groups": [
+        "boot"
+      ]
+    },
+    "tests/test_remake_logistics.py": {
+      "tier": "related",
+      "groups": [
+        "logistics"
+      ]
+    },
+    "tests/test_remake_map_presentation.py": {
+      "tier": "related",
+      "groups": [
+        "map"
+      ]
+    },
+    "tests/test_remake_march_core.py": {
+      "tier": "related",
+      "groups": [
+        "logistics"
+      ]
+    },
+    "tests/test_remake_march_save_compat.py": {
+      "tier": "compatibility",
+      "groups": [
+        "save",
+        "logistics",
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_march_supply.py": {
+      "tier": "related",
+      "groups": [
+        "logistics"
+      ]
+    },
+    "tests/test_remake_message_locales.py": {
+      "tier": "related",
+      "groups": [
+        "boot"
+      ]
+    },
+    "tests/test_remake_neutral_transfers.py": {
+      "tier": "related",
+      "groups": [
+        "logistics"
+      ]
+    },
+    "tests/test_remake_officers.py": {
+      "tier": "related",
+      "groups": [
+        "people"
+      ]
+    },
+    "tests/test_remake_original_stats.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_original_ui_assets.py": {
+      "tier": "global",
+      "groups": [
+        "boot"
+      ]
+    },
+    "tests/test_remake_placement_completion.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_portrait_static.py": {
+      "tier": "global",
+      "groups": [
+        "people"
+      ]
+    },
+    "tests/test_remake_portraits.py": {
+      "tier": "related",
+      "groups": [
+        "people"
+      ]
+    },
+    "tests/test_remake_river_network.py": {
+      "tier": "related",
+      "groups": [
+        "map"
+      ]
+    },
+    "tests/test_remake_river_routes.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_road_centers.py": {
+      "tier": "related",
+      "groups": [
+        "map"
+      ]
+    },
+    "tests/test_remake_route_corridors.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_route_hazards.py": {
+      "tier": "related",
+      "groups": [
+        "logistics"
+      ]
+    },
+    "tests/test_remake_route_render_source.py": {
+      "tier": "related",
+      "groups": [
+        "map"
+      ]
+    },
+    "tests/test_remake_route_timing.py": {
+      "tier": "related",
+      "groups": [
+        "map",
+        "logistics"
+      ]
+    },
+    "tests/test_remake_save_transfer.py": {
+      "tier": "related",
+      "groups": [
+        "save",
+        "cloud"
+      ]
+    },
+    "tests/test_remake_scenario_economy.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_segment_supply.py": {
+      "tier": "related",
+      "groups": [
+        "logistics"
+      ]
+    },
+    "tests/test_remake_segment_supply_security.py": {
+      "tier": "related",
+      "groups": [
+        "logistics"
+      ]
+    },
+    "tests/test_remake_session_cache.py": {
+      "tier": "related",
+      "groups": [
+        "save",
+        "cloud"
+      ]
+    },
+    "tests/test_remake_site_icon.py": {
+      "tier": "global",
+      "groups": [
+        "boot"
+      ]
+    },
+    "tests/test_remake_stat_policy.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
+    "tests/test_remake_strategic_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle"
+      ]
+    },
+    "tests/test_remake_tactical_ai.py": {
+      "tier": "related",
+      "groups": [
+        "battle"
+      ]
+    },
+    "tests/test_remake_ten_day_calendar.py": {
+      "tier": "related",
+      "groups": [
+        "save",
+        "economy"
+      ]
+    },
+    "tests/test_remake_training.py": {
+      "tier": "related",
+      "groups": [
+        "economy"
+      ]
+    },
+    "tests/test_remake_treasure_transport.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "battle"
+      ]
+    },
+    "tests/test_remake_treasures.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "battle"
+      ]
+    },
+    "tests/test_remake_treasury_campaign.py": {
+      "tier": "related",
+      "groups": [
+        "economy",
+        "battle"
+      ]
+    },
+    "tests/test_remake_view_transport.py": {
+      "tier": "related",
+      "groups": [
+        "save",
+        "cloud"
+      ]
+    },
+    "tests/test_remake_web_build.py": {
+      "tier": "full",
+      "groups": [
+        "boot",
+        "save"
+      ]
+    }
+  }
+}

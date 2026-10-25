@@ -1,0 +1,20 @@
+name: Install pinned Chromium test tools
+description: Restore the fixed Playwright browser and verify its actual OS dependencies.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+      with:
+        node-version: '24'
+        cache: npm
+        cache-dependency-path: tools/browser-tests/package-lock.json
+    - name: Install the integrity-pinned browser client
+      shell: bash
+      run: npm ci --prefix tools/browser-tests --ignore-scripts
+    - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-chromium-${{ hashFiles('tools/browser-tests/package-lock.json') }}
+    - name: Install Chromium and check system dependencies
+      shell: bash
+      run: node tools/browser-tests/install.mjs

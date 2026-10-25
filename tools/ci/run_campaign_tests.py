@@ -6,6 +6,7 @@ can omit tests; every selected module is loaded by the standard unittest loader.
 --list-only reads filenames without importing campaign modules or running tests.
 """
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -15,12 +16,52 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 TESTS = ROOT / 'tests'
 SOURCE = ROOT / 'source'
+REGISTRY = ROOT / 'tools/ci/test-groups.json'
+GROUPS = frozenset(('boot', 'audio', 'map', 'scenarios', 'people', 'economy', 'logistics', 'battle', 'cloud', 'save'))
+TIERS = frozenset(('global', 'related', 'compatibility', 'full'))
 
 
 def discover_files(directory=TESTS):
     directory = Path(directory)
     return sorted(directory.rglob('test_remake_*.py'),
                   key=lambda path: path.relative_to(directory).as_posix())
+
+
+def load_registry(path=REGISTRY, tests=TESTS, root=ROOT):
+    """Closed explicit inventory: new/stale files fail before any test import."""
+    raw = Path(path).read_bytes()
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('Duplicate Python test registry key: ' + key)
+            result[key] = value
+        return result
+    document = json.loads(raw, object_pairs_hook=unique)
+    if not isinstance(document, dict) or document.get('schema') != 'tk2-ci-python-groups-v1' or not isinstance(document.get('modules'), dict):
+        raise ValueError('Invalid Python test registry')
+    modules = document['modules']
+    for name, row in modules.items():
+        relative = Path(name)
+        if (not isinstance(name, str) or relative.is_absolute() or '..' in relative.parts
+                or not name.startswith('tests/') or not relative.name.startswith('test_remake_')
+                or relative.suffix != '.py' or not isinstance(row, dict)
+                or row.get('tier') not in TIERS):
+            raise ValueError(f'Invalid registered Python module: {name}')
+        groups = row.get('groups', [])
+        if (not isinstance(groups, list) or any(not isinstance(group, str) for group in groups)
+                or len(groups) != len(set(groups))
+                or not set(groups) <= GROUPS or row['tier'] == 'related' and not groups):
+            raise ValueError(f'Invalid Python groups: {name}')
+        identities = row.get('scenario_ids', [])
+        if not isinstance(identities, list) or any(not isinstance(value, str) for value in identities):
+            raise ValueError(f'Invalid Python scenario selection: {name}')
+    actual = {path.relative_to(root).as_posix() for path in discover_files(tests)}
+    if actual != set(modules):
+        unregistered = sorted(actual - set(modules))
+        missing = sorted(set(modules) - actual)
+        raise ValueError(f'Python test inventory differs: unregistered={unregistered}; missing={missing}')
+    return document, hashlib.sha256(raw).hexdigest()
 
 
 def select_shard(files, shard, shards):
@@ -53,9 +94,11 @@ def main(argv=None):
     parser.add_argument('--shard', required=True, type=int)
     parser.add_argument('--shards', required=True, type=int)
     parser.add_argument('--list-only', action='store_true')
+    parser.add_argument('--registry', type=Path, default=REGISTRY)
     args = parser.parse_args(argv)
     files = discover_files()
     try:
+        _, registry_sha256 = load_registry(args.registry)
         selected = select_shard(files, args.shard, args.shards)
     except ValueError as error:
         parser.error(str(error))
@@ -63,7 +106,7 @@ def main(argv=None):
         parser.error('This shard has no campaign test files; refusing an empty test run')
     summary = dict(backend=os.environ.get('MARCH_CORE_BACKEND', 'auto'),
                    shard=args.shard, shards=args.shards,
-                   file_count=len(selected), all_file_count=len(files),
+                   file_count=len(selected), all_file_count=len(files), registry_sha256=registry_sha256,
                    files=[path.relative_to(ROOT).as_posix() for path in selected])
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True), flush=True)
     if args.list_only:

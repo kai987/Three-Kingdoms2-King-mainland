@@ -5,6 +5,9 @@ import {test,expect} from '../tools/browser-tests/node_modules/@playwright/test/
 import {readFile,mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
 import assert from 'node:assert/strict';
+import browserScopes from '../tools/browser-tests/scope.cjs';
+
+const browserScope=browserScopes.loadBrowserScope();
 
 const errors=new WeakMap();
 test.beforeEach(async({page})=>{
@@ -1141,8 +1144,10 @@ test('all 29 real Worker openings keep preview and live initial health and facti
  const loyalty=(person,owner,ruler)=>ruler?100:!owner?0:
   Number.isInteger(person.initialization.source_loyalty?.value)&&person.initialization.source_loyalty.faction_ids.includes(owner)?person.initialization.source_loyalty.value:80;
  await opening(page);
- const scenarios=await page.locator('#scenario option').evaluateAll(rows=>rows.map(row=>row.value));
- expect(scenarios).toHaveLength(29);
+ const availableScenarios=await page.locator('#scenario option').evaluateAll(rows=>rows.map(row=>row.value));
+ expect(availableScenarios).toHaveLength(29);
+ const scenarios=browserScopes.selectScenarioIds(availableScenarios,browserScope);
+ await testInfo.attach('opening-scenario-scope',{body:Buffer.from(JSON.stringify({full:browserScope.full,scenario_ids:scenarios},null,2)),contentType:'application/json'});
  let checkedServing=0,checkedFree=0,expectedServing=0,expectedFree=0;
  for(const scenario of scenarios){
   const catalog=JSON.parse(await readFile(new URL(`../game/data/campaigns/${scenario.slice('mainland'.length)}.json`,import.meta.url),'utf8'));
@@ -1183,6 +1188,17 @@ test('all 29 real Worker openings keep preview and live initial health and facti
   const download=page.waitForEvent('download');await page.locator('#save').click();
   const saved=JSON.parse(await readFile(await(await download).path(),'utf8'));
   expect(saved.scenario).toBe(scenario);
+  expect([saved.state.year,saved.state.month,saved.state.day]).toEqual([catalog.start_year,catalog.start_month,1]);
+  await expect(page.locator('#map-date')).toHaveAttribute('datetime',`${String(catalog.start_year).padStart(4,'0')}-${String(catalog.start_month).padStart(2,'0')}-01`);
+  expect(Object.keys(saved.state.cities).sort()).toEqual([...catalog.active_cities].sort());
+  const mapOwners=await page.locator('#world-map .city-hit').evaluateAll(nodes=>Object.fromEntries(nodes.map(node=>[node.dataset.city,node.dataset.owner])));
+  for(const city of previews){
+   const live=saved.state.cities[city.id],resources=catalog.initial_city_resources?.[city.id]||catalog.initial_resources;
+   expect(live.owner).toBe(catalog.initial_owners[city.id]);
+   for(const key of ['gold','grain','reserves'])expect(live[key],`${scenario}/${city.id} initial ${key}`).toBe(resources[key]);
+   expect(live.roster.officer_ids.map(id=>saved.state.officers[id].person_id).sort()).toEqual(catalog.initial_officers.filter(officer=>officer.city===city.id).map(officer=>officer.person_id).sort());
+   expect(mapOwners[city.id],`${scenario}/${city.id} visible map ownership`).toBe(live.owner);
+  }
   const liveOfficers=Object.values(saved.state.officers);
   expect(liveOfficers.filter(officer=>officer.faction_id).map(officer=>officer.person_id).sort()).toEqual(servingPeople);
   expect(liveOfficers.filter(officer=>!officer.faction_id).map(officer=>officer.person_id).sort()).toEqual(freePeople);
