@@ -10,6 +10,9 @@ test.beforeEach(async({page})=>{
  await page.goto('./');await page.waitForSelector('#begin, #end-turn, #run-ai, #process-arrivals');
  if(!await page.locator('#begin').count())await page.locator('#main-menu').click();
  await expect(page.locator('#begin')).toBeEnabled();
+ await expect(page.locator('#game-loading-start')).toBeEnabled();
+ await page.locator('#game-loading-start').click();
+ await expect(page.locator('#game-loading-cover')).not.toBeVisible();
  await page.locator('input[name=faction][value=shu]').check();await page.locator('#begin').click();
  await expect(page.locator('#end-turn')).toBeEnabled();await expect(page.locator('#event-dialog')).toBeVisible();await dismissEvents(page);
 });

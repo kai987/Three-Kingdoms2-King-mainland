@@ -9,7 +9,7 @@ const localAutosave=typeof GameAutosave==='undefined'?null:GameAutosave.create({
 document.addEventListener('game-language-change',()=>{localAutosave?.refresh();if(setupPreview)setPreviewFaction(setupPreview.faction,setupPreview.focus);});
 const difficultyName=id=>({easy:'简单',normal:'普通',hard:'困难'}[id]||'普通');
 const $=s=>document.querySelector(s), dialog=$('#dialog'),survivorPreviews=new WeakMap();
-const gameAudio=GameAudio.create();
+const gameAudio=GameAudio.page();
 const battleScene=typeof GameBattleScene==='undefined'?null:GameBattleScene.create({i18n:GameI18n,portraits:GamePortraits,name:id=>name(id),onSelect:(side,id)=>{if(busy)return;if(side==='actor')actor=id;else target=id;gameAudio.play('click');renderBattle();},onSound:scene=>{
  gameAudio.setScene(scene.kind.startsWith('duel')?'duel':'battle');
  const families=['88','95','8d','8d','88','88','88','8d','91','95','8d','8d','88','88','88','95'];
@@ -1043,7 +1043,7 @@ async function initializeApp(){
   const cloudRecovery=CloudRecovery.create(cloudConfig);
   cloudSaveUI=CloudSaveUI.create({cloud:cloudSave,recovery:cloudRecovery,getView:()=>view,getRawSave:()=>request('/api/save',undefined,{text:true}),loadRawSave:loadSave,openDialog,notice,isBusy:()=>busy});
   cloudSave.init().catch(()=>cloudSaveUI.refreshButton());
-  cloudRecovery.init().then(state=>{if(state.hasCallback)cloudSaveUI.open();}).catch(()=>cloudSaveUI.refreshButton());
+  cloudRecovery.init().then(async state=>{if(state.hasCallback){await window.GameLoadingCover?.whenEntered?.();cloudSaveUI.open();}}).catch(()=>cloudSaveUI.refreshButton());
   void GamePortraits.load();void battleScene?.load();appInitialized=true;
  }catch(error){if(typeof GameBrowserEngine!=='undefined'&&GameBrowserEngine.failed)notice();else notice(GameI18n.locale==='ja'?'ゲームを読み込めません。ページを再読み込みしてください。':'遊戲無法載入，請重新整理頁面後重試。',true);}
  finally{appInitializing=false;}

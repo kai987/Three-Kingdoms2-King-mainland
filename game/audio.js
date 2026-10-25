@@ -59,13 +59,13 @@
    if(saved&&typeof saved==='object')settings={muted:saved.muted===true,bgmVolume:volume(saved.bgmVolume,DEFAULTS.bgmVolume),sfxVolume:volume(saved.sfxVolume,DEFAULTS.sfxVolume)};
   }catch{/* Storage is optional, including private browsing. */}
   let context=null,musicBus=null,effectsBus=null,compressor=null,timer=null;
-  let scene='menu',step=0,nextTime=0,unlocked=false,disposed=false,hidden=!!doc?.hidden,suspension=null;
+  let scene='menu',requestedScene='menu',coverActive=false,step=0,nextTime=0,unlocked=false,disposed=false,hidden=!!doc?.hidden,suspension=null;
   let manifestPromise=null,originalVoice=null,originalResume=null;
   let effectsManifestPromise=null,effectsManifest=null,effectsUnavailable=false,effectsPreloaded=false,effectSequence=0,effectRequestSequence=0,lastEffect=null;
   const effectBuffers=new Map(),effectLoads=new Map(),effectAssets=new Map(),pendingEffects=new Set(),effectCounts={original:0,synthesized:0};
   const originalBuffers=new Map(),originalLoads=new Map();
   const voices=new Set();
-  const status=()=>({supported:typeof AudioCtor==='function',unlocked,scene,playing:timer!==null||originalVoice!==null,musicSource:originalVoice?'original':timer!==null?'synthesized':null,originalTracks:originalBuffers.size,originalEffects:effectBuffers.size,pendingEffects:pendingEffects.size,effectRequestSequence,lastEffect:lastEffect?{...lastEffect}:null,effectCounts:{...effectCounts},hidden,activeVoices:voices.size,disposed});
+  const status=()=>({supported:typeof AudioCtor==='function',unlocked,scene,requestedScene,coverActive,playing:timer!==null||originalVoice!==null,musicSource:originalVoice?'original':timer!==null?'synthesized':null,originalTracks:originalBuffers.size,originalEffects:effectBuffers.size,pendingEffects:pendingEffects.size,effectRequestSequence,lastEffect:lastEffect?{...lastEffect}:null,effectCounts:{...effectCounts},hidden,activeVoices:voices.size,disposed});
   function gains(){
    if(!context)return;
    musicBus.gain.setValueAtTime(settings.muted?0:settings.bgmVolume*.12,context.currentTime);
@@ -242,10 +242,21 @@
     unlocked=context.state==='running';prepareEffects();startMusic();return unlocked;
    }catch{return false;}
   }
-  function setScene(value){
-   if(disposed||!Object.hasOwn(TRACKS,value)||scene===value)return;
+  function applyScene(value){
+   if(scene===value)return;
    scene=value;step=0;originalResume=null;
    restartMusic();
+  }
+  function setScene(value){
+   if(disposed||!Object.hasOwn(TRACKS,value))return;
+   requestedScene=value;
+   applyScene(coverActive?'menu':value);
+  }
+  function setCoverActive(value){
+   if(disposed||coverActive===!!value)return;
+   coverActive=!!value;
+   // The cover owns the title cue; background rendering still records its scene.
+   applyScene(coverActive?'menu':requestedScene);
   }
   function configure(value={}){
    if(disposed)return{...settings};
@@ -290,8 +301,12 @@
     Promise.resolve(context.close()).catch(()=>{});
    }
   }
-  return{unlock,setScene,play,configure,getSettings:()=>({...settings}),getStatus:status,dispose};
+  return{unlock,setScene,setCoverActive,play,configure,getSettings:()=>({...settings}),getStatus:status,dispose};
  }
- const api={create,STORAGE_KEY};
+ // Cover and game UI share one page lifetime instance, with one mixer/context.
+ // Explicit create(options) instances remain independent for isolated consumers.
+ let pageInstance=null;
+ function page(){if(!pageInstance)pageInstance=create();return pageInstance;}
+ const api={create,page,STORAGE_KEY};
  if(typeof module==='object'&&module.exports)module.exports=api;else root.GameAudio=api;
 })(typeof window==='object'?window:globalThis);

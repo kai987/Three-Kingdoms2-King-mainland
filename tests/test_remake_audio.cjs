@@ -1,6 +1,6 @@
 /* Web Audio lifecycle, original scores, bounded voices and optional storage. */
 'use strict';
-const assert=require('node:assert/strict');
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const{create,STORAGE_KEY}=require('../game/audio.js');
 class Param{
  constructor(){this.events=[];}
@@ -146,5 +146,46 @@ const settle=()=>new Promise(resolve=>setImmediate(resolve));
  let finishWave;const pending=fixture(null,{AudioContext:BufferContext,fetch:async url=>url==='/assets/audio/effects.json'?{ok:true,json:async()=>({schema:effects.schema,effects:{confirm:effects.effects.confirm}})}:url==='/assets/audio/index.json'?{ok:false}:{ok:true,arrayBuffer:()=>new Promise(resolve=>{finishWave=resolve;})}});
  await pending.audio.unlock();await settle();pending.audio.play('confirm');pending.audio.configure({sfxVolume:0});assert.equal(pending.audio.getStatus().pendingEffects,0);
  finishWave(new ArrayBuffer(8));await settle();assert.equal(pending.audio.getStatus().lastEffect,null);pending.audio.dispose();
- console.log('audio: original music and one-shots, bounded first-cue loading without doubles, alias caching, authored fallback, mute/disposal and read-only diagnostics passed');
+ // A cover holds the title cue while rendering continues to request later scenes.
+ const held=fixture(null,{fetch:null});held.audio.setScene('strategy');held.audio.setCoverActive(true);
+ assert.equal(held.audio.getStatus().scene,'menu');assert.equal(held.audio.getStatus().requestedScene,'strategy');
+ assert.equal(held.audio.getStatus().coverActive,true);assert.equal(held.audio.getStatus().unlocked,false);
+ await held.audio.unlock();const heldContext=Context.instances.at(-1),voiceCount=heldContext.oscillators.length;
+ assert.equal(heldContext.oscillators[0].frequency.events[0][1],440*Math.pow(2,(67-69)/12),'The cover plays the menu score, not the underlying strategy score');
+ held.audio.setScene('battle');held.audio.setScene('duel');held.audio.setScene('__proto__');held.audio.setCoverActive(true);
+ assert.equal(held.audio.getStatus().scene,'menu');assert.equal(held.audio.getStatus().requestedScene,'duel');
+ assert.equal(heldContext.oscillators.length,voiceCount,'Repeated cover activation and background renders must not restart the title');assert.equal(held.timers.size,1);
+ held.audio.setCoverActive(false);assert.equal(held.audio.getStatus().scene,'duel');assert.equal(held.audio.getStatus().coverActive,false);assert.equal(held.timers.size,1);
+ held.audio.setCoverActive(true);held.audio.configure({muted:true});held.audio.setScene('battle');held.audio.setCoverActive(false);
+ assert.equal(held.audio.getStatus().scene,'battle');assert.equal(held.audio.getStatus().playing,false,'Releasing the cover must preserve the user mute setting');
+ held.audio.configure({muted:false});assert.equal(held.audio.getStatus().playing,true);assert.equal(held.audio.getStatus().scene,'battle');
+ held.audio.dispose();held.audio.setCoverActive(true);assert.equal(held.audio.getStatus().coverActive,false);
+ // Available original title recordings retain priority while cover requests are held.
+ const coverRequests=[],coverManifest={...manifest,tracks:{menu:track('title'),strategy:track('strategy'),battle:track('battle'),duel:track('duel')}};
+ const recordedCover=fixture(null,{AudioContext:BufferContext,fetch:async path=>{
+  coverRequests.push(path);return path==='/assets/audio/effects.json'?{ok:true,json:async()=>({schema:effects.schema,effects:{}})}:path.endsWith('.json')?{ok:true,json:async()=>coverManifest}:{ok:true,arrayBuffer:async()=>new ArrayBuffer(8)};
+ }});
+ recordedCover.audio.setCoverActive(true);recordedCover.audio.setScene('strategy');await recordedCover.audio.unlock();await settle();
+ assert.equal(recordedCover.audio.getStatus().scene,'menu');assert.equal(recordedCover.audio.getStatus().musicSource,'original');
+ assert(coverRequests.includes('/assets/audio/original/title.mp3'));assert(!coverRequests.includes('/assets/audio/original/strategy.mp3'));
+ recordedCover.audio.setScene('duel');recordedCover.audio.setScene('battle');
+ assert.equal(recordedCover.audio.getStatus().scene,'menu');assert.equal(recordedCover.audio.getStatus().requestedScene,'battle');
+ recordedCover.audio.setCoverActive(false);await settle();assert.equal(recordedCover.audio.getStatus().scene,'battle');
+ assert.equal(recordedCover.audio.getStatus().musicSource,'original');assert(coverRequests.includes('/assets/audio/original/battle.mp3'));
+ assert(!coverRequests.includes('/assets/audio/original/duel.mp3'),'An overwritten scene request must not start a second background track');recordedCover.audio.dispose();
+ // Evaluate the browser branch: the cover and app obtain the exact same object,
+ // while callers explicitly using create(options) keep an independent lifecycle.
+ const listeners=new Set(),pageTimers=new Map();let pageTimer=0;
+ const browser={AudioContext:Context,fetch:null,document:{hidden:false,addEventListener:(event,fn)=>listeners.add(fn),removeEventListener:(event,fn)=>listeners.delete(fn)},
+  localStorage:{getItem:()=>null,setItem(){}},setInterval:fn=>{pageTimers.set(++pageTimer,fn);return pageTimer;},clearInterval:key=>pageTimers.delete(key),setTimeout,clearTimeout};
+ const sandbox={window:browser};vm.createContext(sandbox);vm.runInContext(fs.readFileSync(require.resolve('../game/audio.js'),'utf8'),sandbox);
+ const browserApi=browser.GameAudio,contextsBefore=Context.instances.length,coverAudio=browserApi.page(),appAudio=browserApi.page();
+ assert.strictEqual(coverAudio,appAudio);assert.equal(listeners.size,1);assert.equal(Context.instances.length,contextsBefore,'Getting the shared page instance must not bypass autoplay policy');
+ coverAudio.setCoverActive(true);appAudio.setScene('strategy');assert.equal(appAudio.getStatus().scene,'menu');
+ const separate=browserApi.create();assert.notStrictEqual(separate,appAudio);separate.setScene('duel');assert.equal(appAudio.getStatus().requestedScene,'strategy');
+ await coverAudio.unlock();await appAudio.unlock();assert.equal(Context.instances.length,contextsBefore+1);assert.equal(pageTimers.size,1,'The two UI owners share one context and scheduler');
+ coverAudio.setCoverActive(false);assert.equal(appAudio.getStatus().scene,'strategy');assert.strictEqual(browserApi.page(),appAudio);
+ coverAudio.dispose();separate.dispose();assert.equal(listeners.size,0);assert.equal(pageTimers.size,0);
+ assert.match(fs.readFileSync(require.resolve('../game/app.js'),'utf8'),/const gameAudio=GameAudio\.page\(\);/);
+ console.log('audio: shared page mixer and cover/title scene hold, original music and one-shots, bounded loading, alias caching, fallback, mute/disposal and diagnostics passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

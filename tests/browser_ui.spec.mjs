@@ -14,9 +14,15 @@ test.beforeEach(async({page})=>{
 });
 async function opening(page){
  await page.goto('./');
- await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+ await enterScenarioMenu(page);
  await expect(page.locator('#game-engine-status')).toBeHidden();
  await expect(page.locator('#world-map .city-hit')).not.toHaveCount(0);
+}
+async function enterScenarioMenu(page){
+ await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+ const start=page.locator('#game-loading-start');await expect(start).toBeVisible();await expect(start).toBeEnabled();
+ await start.click();await expect(page.locator('#game-loading-cover')).toBeHidden();
+ await expect.poll(()=>page.locator('#inspector').evaluate(node=>!!node.closest('[inert]'))).toBe(false);
 }
 async function closeDialog(page){
  // Escape dismisses the topmost equipment tooltip before its parent dialog.
@@ -64,13 +70,14 @@ async function setTroops(page,value){
  await expect(page.locator('#dialog')).toBeVisible();
 }
 
-test('pixel loading cover animates, respects reduced motion and waits for the rendered 184 opening',async({page,context},testInfo)=>{
+test('pixel loading cover animates, plays the original title and waits for Start before the 184 chooser',async({page,context},testInfo)=>{
  // Browser plugin not available: exercise the shipped static shell and real
  // Worker with network checkpoints, without injecting campaign state.
  let releaseManifest,releasePositions,positionsRequested;
  const manifestGate=new Promise(resolve=>{releaseManifest=resolve;});
  const positionsGate=new Promise(resolve=>{releasePositions=resolve;});
  const positionsSeen=new Promise(resolve=>{positionsRequested=resolve;});
+ const titleRequests=[];page.on('request',request=>{if(new URL(request.url()).pathname.endsWith('/assets/audio/original/title.mp3'))titleRequests.push(request.url());});
  await context.route('**/runtime/engine-manifest.json*',async route=>{await manifestGate;await route.continue();});
  await context.route('**/assets/city-positions.json*',async route=>{positionsRequested();await positionsGate;await route.continue();});
  await page.emulateMedia({reducedMotion:'no-preference'});
@@ -142,15 +149,73 @@ test('pixel loading cover animates, respects reduced motion and waits for the re
   await expect(cover).toBeVisible();await expect(cover).toHaveAttribute('data-phase','initializing');
   await expect(page.locator('#begin')).toHaveCount(0);
   await expect(cover.locator('.loading-cover-message')).toContainText('準備戰役畫面');
-  releasePositions();await expect(page.locator('#begin')).toBeEnabled({timeout:90_000});await expect(cover).toBeHidden();
+  releasePositions();await expect(page.locator('#begin')).toBeEnabled({timeout:90_000});
+  await expect(cover).toBeVisible();await expect(cover).toHaveAttribute('data-phase','ready');
+  const start=page.locator('#game-loading-start'),sound=page.locator('#game-loading-sound');
+  await expect(start).toBeVisible();await expect(start).toBeEnabled();await expect(start).toHaveText('開始遊戲');
+  await expect(sound).toBeVisible();await expect(sound).toBeEnabled();await expect(page.locator('#game-loading-audio-note')).toBeVisible();
+  await expect.poll(()=>page.locator('#inspector').evaluate(node=>!!node.closest('[inert]'))).toBe(true);
+  expect(await page.evaluate(()=>gameAudio.getStatus().unlocked)).toBe(false);
+  await sound.click();
+  await expect.poll(()=>page.evaluate(()=>({scene:gameAudio.getStatus().scene,source:gameAudio.getStatus().musicSource,playing:gameAudio.getStatus().playing,unlocked:gameAudio.getStatus().unlocked,coverActive:gameAudio.getStatus().coverActive}))).toEqual({scene:'menu',source:'original',playing:true,unlocked:true,coverActive:true});
+  expect(titleRequests.length).toBeGreaterThan(0);
+  await expect(sound).toHaveAttribute('aria-pressed','true');
+  await expect(sound).toHaveCSS('background-color','rgb(248, 216, 120)');
+  await expect(sound).toHaveCSS('color','rgb(24, 16, 0)');
+  await page.screenshot({path:testInfo.outputPath('loading-cover-ready-title-music.png'),fullPage:false});
+  await start.click();await expect(cover).toBeHidden();
+  await expect.poll(()=>page.locator('#inspector').evaluate(node=>!!node.closest('[inert]'))).toBe(false);
+  await expect.poll(()=>page.evaluate(()=>gameAudio.getStatus().coverActive)).toBe(false);
   await expect(page.locator('#game-engine-status')).toBeHidden();
   await expect(page.locator('#scenario')).toHaveValue('mainland184-02');
   await expect(page.locator('#map-date')).toHaveAttribute('datetime','0184-02-01');
   await expect(page.locator('#world-map .city-hit')).not.toHaveCount(0);
   await expect(page.locator('#allocate')).toHaveCount(0);
+  expect(await page.evaluate(async()=>{const response=await fetch('/api/state');const value=await response.json();return(value.view||value).game;})).toBeNull();
   await page.screenshot({path:testInfo.outputPath('loading-cover-dismissed-184.png'),fullPage:false});
+  // A language preference chosen in the real menu also applies to the next
+  // title screen. Enter activates its native button without starting a war.
+  await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('ja');
+  await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+  await expect(cover).toBeVisible();await expect(cover).toHaveAttribute('data-phase','ready');
+  await expect(start).toHaveText('ゲーム開始');await expect(start).toBeEnabled();
+  await page.screenshot({path:testInfo.outputPath('loading-cover-ready-ja.png'),fullPage:false});
+  await start.focus();await page.keyboard.press('Enter');await expect(cover).toBeHidden();
+  await expect(page.locator('#scenario')).toHaveValue('mainland184-02');await expect(page.locator('#allocate')).toHaveCount(0);
+  expect(await page.evaluate(async()=>{const response=await fetch('/api/state');const value=await response.json();return(value.view||value).game;})).toBeNull();
   expect(errors.get(page)).toEqual([]);
  }finally{releaseManifest();releasePositions();}
+});
+
+test('recovery callback waits for title Start',async({page},testInfo)=>{
+ // A three-character callback is invalid in the real local parser (<8).
+ // It fails before creating a recovery SDK client; no provider is mocked,
+ // no valid authorization code is supplied, and no account write is attempted.
+ const requests=[];page.on('request',request=>requests.push({url:request.url(),method:request.method()}));
+ await page.goto('./?code=bad');await expect(page).toHaveTitle('三國·大陸戰役');
+ await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+ await expect.poll(()=>page.evaluate(()=>typeof appInitialized!=='undefined'&&appInitialized)).toBe(true);
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ expect(new URL(page.url()).searchParams.has('code')).toBe(false);
+ const cover=page.locator('#game-loading-cover'),dialog=page.locator('#dialog');
+ await expect(cover).toBeVisible();await expect(cover).toHaveAttribute('data-phase','ready');
+ await expect(dialog).not.toBeVisible();expect(await dialog.evaluate(node=>node.open)).toBe(false);
+ const readOpening=()=>page.evaluate(async()=>{const response=await fetch('/api/state');const value=await response.json(),state=value.view||value;return{game:state.game,revision:state.revision};});
+ const before=await readOpening();expect(before.game).toBeNull();
+ await page.screenshot({path:testInfo.outputPath('recovery-callback-waits-on-title.png'),fullPage:false});
+ const start=page.locator('#game-loading-start');await expect(start).toBeEnabled();await start.click();
+ await expect(cover).toBeHidden();await expect(dialog).toBeVisible();await expect(dialog.locator('[data-cloud-panel]')).toBeVisible();
+ await expect(dialog.locator('#cloud-status')).toContainText('重設連結已失效或不屬於此瀏覽器');
+ expect(await dialog.evaluate(node=>!!node.closest('[inert]'))).toBe(false);
+ await page.screenshot({path:testInfo.outputPath('recovery-expired-after-title-start.png'),fullPage:false});
+ await dialog.locator('.dialog-actions [data-cancel]').click();await expect(dialog).not.toBeVisible();
+ await expect(page.locator('#scenario')).toHaveValue('mainland184-02');await expect(page.locator('#begin')).toBeEnabled();
+ await expect(page.locator('#allocate')).toHaveCount(0);expect(await readOpening()).toEqual(before);
+ const origin=new URL(page.url()).origin;
+ expect(requests.filter(request=>{const url=new URL(request.url);return url.hostname.endsWith('.supabase.co')&&url.pathname.startsWith('/auth/v1/');})).toEqual([]);
+ expect(requests.filter(request=>new URL(request.url).origin!==origin)).toEqual([]);
+ expect(requests.filter(request=>!['GET','HEAD'].includes(request.method))).toEqual([]);
+ expect(errors.get(page)).toEqual([]);
 });
 
 test('city road beds survive hidden castles, shared inland reaches draw once and ruler portraits stay centered',async({page},testInfo)=>{
@@ -281,7 +346,7 @@ test('dialogs, language, limits, save/load and automatic recovery use the real c
  const rejectedDownload=page.waitForEvent('download');await page.locator('#save').click();
  expect(await readFile(await(await rejectedDownload).path(),'utf8')).toBe(baseline);
  // A new Worker after reload must recover from browser storage, not old memory.
- await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+ await page.reload();await enterScenarioMenu(page);
  await page.locator('#load').click();await page.locator('[data-autosave-recover]').first().click();
  await page.locator('#recover-confirm').click();await waitIdle(page);
  await expect(page.locator('#dialog')).not.toBeVisible();
@@ -350,7 +415,7 @@ test('failed manifest has an explicit retry starting a fresh real Worker',async(
  await page.goto('./');
  const retry=page.locator('#game-engine-status button');
  await expect(retry).toBeVisible();await expect(page.locator('#begin')).toHaveCount(0);
- await retry.click();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+ await retry.click();await enterScenarioMenu(page);
  await expect(page.locator('#game-engine-status')).toBeHidden();expect(manifestRequests).toBe(2);
  await page.screenshot({path:testInfo.outputPath('boot-retried.png'),fullPage:true});
  expect(errors.get(page).filter(message=>!message.includes('404'))).toEqual([]);
@@ -930,7 +995,7 @@ test('Jiangxia Changsha offers distinct inland water and land routes through rea
  expect(new Set(riverSegments.map(row=>row.reach_id)).size).toBe(riverSegments.length);
  expect(saved.state.rng).toEqual(initial.state.rng);
  expect(saved.state.officers[ident].troops).toBe(initial.state.officers[ident].troops);
- await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});
+ await page.reload();await enterScenarioMenu(page);
  await page.locator('#load').click();await page.locator('#load-local').click();
  await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  expect(await exportSave()).toBe(departing);
@@ -1413,7 +1478,7 @@ test('manual treasure transport preserves cargo, rations and saved travel while 
  await expect(event.locator('#event-description')).toContainText(/宝6|寶6/,{useInnerText:true});
  const skip=event.locator('[data-event-skip]');await (await skip.count()?skip:event.locator('[data-event-next]')).click();await expect(event).not.toBeVisible();
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
- await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();
+ await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();
  await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
  await page.locator('#city-jump').selectOption(source);await clickCityCommand(page,'city-logistics');
@@ -1521,7 +1586,7 @@ test('facility visits, trade, study, equipment, prevention and town development 
  expect(after.save.state.extension.facilities.cities[town[0]].town).toBe(town[1].develop.to_town);expect(after.save.state.cities[town[0]].gold).toBe(before.save.state.cities[town[0]].gold-town[1].develop.gold);expect(after.save.state.rng).toEqual(before.save.state.rng);
  await expect(page.locator('#facility-develop')).toBeDisabled();await expect(page.locator('#facility-tab-school')).toBeEnabled();await expect(page.locator('#facility-tab-armory')).toBeEnabled();await events('development-ja','town_developed');
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
- await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
  const loaded=await read();expect(loaded.save.state.officers[student].profile.intellect).toBe(learned);expect(loaded.save.state.officers[recipient].weapon_id).toBe(item.id);
  expect(errors.get(page)).toEqual([]);
@@ -1574,7 +1639,7 @@ test('a natural August drought shows bilingual illustrated losses and preserves 
  await historyScreenshot(page,testInfo,'natural-drought-ja',{fullPage:false});
  const skip=modal.locator('[data-event-skip]');await (await skip.count()?skip:modal.locator('[data-event-next]')).click();await expect(modal).not.toBeVisible();
  const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');
- await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
+ await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);await expect(page.locator('#dialog')).not.toBeVisible();
  const restored=page.waitForEvent('download');await page.locator('#save').click();expect(await readFile(await(await restored).path(),'utf8')).toBe(raw);
  expect((await read()).save).toEqual(current.save,'Loading an August save cannot settle the same monthly drought twice');
  expect(errors.get(page)).toEqual([]);
@@ -1614,6 +1679,6 @@ test('actual equipment appears in city intelligence and person details with serv
  expect(after.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);await expect(page.locator('#facility-equipment-buy')).toBeDisabled();await closeDialog(page);
  const events=page.locator('#event-dialog');await expect(events).toBeVisible();await assertOriginalEventArt(page,events,'equipment_bought');const skip=events.locator('[data-event-skip]');await(await skip.count()?skip:events.locator('[data-event-next]')).click();await expect(events).not.toBeVisible();
  const updated=await inspect(selection.city);await page.locator('#dialog-language').selectOption('zh-Hant');const changed=updated.locator(`[data-officer-equipment="${selection.ident}"]:visible`);await expect(changed).toContainText(selection.item.name_tc);const newIcon=changed.locator('img[data-equipment-slot=weapon]');await expect(newIcon).toHaveAttribute('data-equipment-key',`weapon:${selection.item.id}`);await expect(newIcon).toHaveAttribute('data-original-ui-provenance','remake-equipment-icon');expect(await newIcon.getAttribute('src')).not.toBe(oldSource);await expect.poll(()=>newIcon.evaluate(node=>node.complete&&node.naturalWidth===128)).toBe(true);await changed.locator('button[data-equipment-slot=weapon]').click();await expect(page.locator('#game-equipment-tooltip')).toContainText(`單挑攻擊${signed(selection.quote.after.attack_bonus)}`);await page.keyboard.press('Escape');await historyScreenshot(page,testInfo,'equipment-after-purchase',{fullPage:false});await closeDialog(page);
- const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');await page.reload();await expect(page.locator('#begin')).toBeEnabled({timeout:180_000});await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);const restored=await read();expect(restored.save).toEqual(JSON.parse(raw));expect(restored.view.catalog.equipment.officers[String(selection.ident)].weapon.id).toBe(selection.item.id);
+ const download=page.waitForEvent('download');await page.locator('#save').click();const raw=await readFile(await(await download).path(),'utf8');await page.reload();await enterScenarioMenu(page);await page.locator('#load').click();await page.locator('#load-local').click();await waitIdle(page);const restored=await read();expect(restored.save).toEqual(JSON.parse(raw));expect(restored.view.catalog.equipment.officers[String(selection.ident)].weapon.id).toBe(selection.item.id);
  expect(restored.view.catalog.equipment.officers[String(selection.ident)].attack_bonus).toBe(selection.quote.after.attack_bonus);expect(errors.get(page)).toEqual([]);
 });
