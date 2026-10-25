@@ -10,6 +10,7 @@ import argparse
 import ast
 import gzip
 import hashlib
+from html import escape, unescape
 import importlib.util
 import json
 import os
@@ -19,6 +20,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -88,14 +90,44 @@ def static_allowlist():
             for url, (name, unused_mime) in assets.items()}
 
 
-def rewrite_html(raw):
+def rewrite_html(raw, assets=None):
     html = raw.decode('utf-8')
     html = re.sub(r'\b(src|href)=([\"\'])/(?!/)', r'\1=\2', html)
     first_script = html.find('  <script ')
     if first_script < 0:
         raise ValueError('Missing game script entry')
+    worker = (assets or {}).get('browser-engine-worker.js')
+    if worker is None:
+        worker = safe_read(HERE, 'browser-engine-worker.js')
     html = (html[:first_script] + '  <script src="paths.js" defer></script>\n'
-            + '  <script src="browser-engine.js" defer></script>\n' + html[first_script:])
+            + '  <script src="browser-engine.js" data-worker-sha256="' + sha256(worker)
+            + '" defer></script>\n' + html[first_script:])
+
+    def version_tag(match):
+        tag = match[0]
+        attribute = 'src' if match[1].lower() == 'script' else 'href'
+
+        def version_url(found):
+            value = urlsplit(unescape(found[2]))
+            if value.scheme or value.netloc or not value.path:
+                return found[0]
+            relative = PurePosixPath(value.path)
+            if relative.is_absolute() or '..' in relative.parts:
+                raise ValueError('Invalid HTML asset path: ' + value.path)
+            name = relative.as_posix()
+            content = assets.get(name) if assets is not None else safe_read(HERE, name)
+            if content is None:
+                return found[0]
+            query = [(key, item) for key, item in parse_qsl(value.query, keep_blank_values=True)
+                     if key != 'v']
+            query.append(('v', sha256(content)))
+            address = urlunsplit(('', '', value.path, urlencode(query), value.fragment))
+            return attribute + '=' + found[1] + escape(address, quote=True) + found[1]
+
+        return re.sub(r'\b' + attribute + r'\s*=\s*([\"\'])([^\"\']*)\1',
+                      version_url, tag, flags=re.IGNORECASE)
+
+    html = re.sub(r'<(script|link)\b[^>]*>', version_tag, html, flags=re.IGNORECASE)
     return html.encode('utf-8')
 
 
@@ -211,26 +243,32 @@ def build(output):
     output.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix='tk2-web-', dir=output.parent))
     try:
+        assets = {}
         for name, source in static_allowlist().items():
             raw = safe_read(HERE, source)
-            if name == 'index.html':
-                raw = rewrite_html(raw)
-            elif name.endswith('.css'):
+            if name.endswith('.css'):
                 raw = rewrite_css(raw, name)
+            assets[name] = raw
+        assets['index.html'] = rewrite_html(assets['index.html'], assets)
+        for name, raw in assets.items():
             put(staging, name, raw)
+        commit = os.environ.get('GITHUB_SHA') or subprocess.check_output(
+            ['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         copy_pyodide(staging)
         write_cloud_config(staging)
         catalogs, previews = runtime_catalogs(staging)
+        initial_scenario = 'mainland184-02'
+        if not any(row['id'] == initial_scenario for row in catalogs):
+            raise ValueError('The default Yellow Turban campaign is required')
         manifest = {'schema': 'tk2-browser-engine-v1', 'pyodide_version': PYODIDE_VERSION,
+                    'build_commit': commit,
                     'python_bundle': python_bundle(staging), 'previews': previews,
-                    'catalogs': catalogs, 'initial_scenario': catalogs[-1]['id']}
+                    'catalogs': catalogs, 'initial_scenario': initial_scenario}
         put(staging, 'runtime/engine-manifest.json', json_bytes(manifest))
         put(staging, '.nojekyll', b'')
         files = {path.relative_to(staging).as_posix(): {'sha256': sha256(path.read_bytes()),
                                                      'bytes': path.stat().st_size}
                  for path in sorted(staging.rglob('*')) if path.is_file()}
-        commit = os.environ.get('GITHUB_SHA') or subprocess.check_output(
-            ['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         identity = {'schema': BUILD_SCHEMA, 'commit': commit, 'pyodide_version': PYODIDE_VERSION,
                     'files': files, 'content_sha256': sha256(json_bytes(files))}
         put(staging, 'runtime/build.json', json_bytes(identity))

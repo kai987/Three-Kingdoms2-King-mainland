@@ -15,7 +15,7 @@ from urllib.parse import parse_qs, urlsplit
 from .campaign import Catalog, GameError
 from .json_boundary import DepthLimitError, loads
 from .march_core import config_for, using_backend
-from .session import CampaignSession
+from .session import CampaignSession, DEFAULT_SCENARIO
 
 
 MAX_BODY_BYTES = 2 * 1024 * 1024
@@ -55,7 +55,7 @@ def _strict_json(body):
 class BrowserRuntime:
     """One isolated, lazy two-catalog session behind a fixed JSON API."""
     def __init__(self, catalog_paths: dict, opening_previews: list,
-                 initial_scenario: str):
+                 initial_scenario: str = DEFAULT_SCENARIO):
         if (not isinstance(catalog_paths, dict) or not catalog_paths
                 or len(catalog_paths) > 256
                 or any(not isinstance(key, str) or not IDENTIFIER.fullmatch(key)
@@ -86,7 +86,8 @@ class BrowserRuntime:
         self._view_transport = ViewTransport()
         self.catalog_paths = paths
         with using_backend('python'):
-            self.session = CampaignSession([paths[initial_scenario]])
+            self.session = CampaignSession([paths[initial_scenario]],
+                                           initial_scenario=initial_scenario)
         if self.session.game.catalog.data['id'] != initial_scenario:
             raise ValueError('Initial catalog identity does not match its index')
         self.session.catalogs = OrderedDict(self.session.catalogs)

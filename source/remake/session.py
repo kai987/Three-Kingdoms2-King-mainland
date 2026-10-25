@@ -6,6 +6,9 @@ from .city_economy import profiles_at,incomes_at
 from .officers import appearance_values
 
 
+DEFAULT_SCENARIO = 'mainland184-02'
+
+
 def faction_resources(catalog, state=None):
     totals={key:dict(gold=0,grain=0,reserves=0,cities=0) for key in catalog.factions}
     if state:
@@ -45,14 +48,22 @@ def faction_officer_counts(catalog, state=None):
 
 
 class CampaignSession:
-    def __init__(self, paths):
+    def __init__(self, paths, *, initial_scenario=None):
         catalogs=[Catalog(path) for path in paths]
         if not catalogs:
             raise ValueError('Current campaign catalogs are required')
         self.catalogs={c.data['id']:c for c in catalogs}
         if len(self.catalogs)!=len(catalogs):
             raise ValueError('Duplicate current campaign id')
-        self.game=Campaign(catalogs[-1])
+        if initial_scenario is None:
+            # The full game always opens Yellow Turban. Partial catalog sets
+            # used by tools/tests fall back by chronology, never caller order.
+            initial_scenario = DEFAULT_SCENARIO if DEFAULT_SCENARIO in self.catalogs else min(
+                self.catalogs, key=lambda key: (self.catalogs[key].data['start_year'],
+                                               self.catalogs[key].data['start_month'], key))
+        if not isinstance(initial_scenario, str) or initial_scenario not in self.catalogs:
+            raise ValueError('Unknown initial scenario')
+        self.game=Campaign(self.catalogs[initial_scenario])
         self.lock=RLock()
         self._opening_previews=None
 

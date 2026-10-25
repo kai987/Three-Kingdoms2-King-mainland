@@ -26,7 +26,8 @@ class MapPresentationTests(unittest.TestCase):
         cls.paths=[ROOT/'game/data'/p for p in index['catalogs']]
 
     def test_state_seat_city_labels_and212_name_change_are_presentation_only(self):
-        s=CampaignSession(self.paths)
+        # This assertion covers late-era names; the public menu now starts184.
+        s=CampaignSession(self.paths, initial_scenario='mainland217-07')
         expected={'shujun':'成都','jingzhao':'长安','henan':'洛阳','danyang':'建业','wei':'邺',
                   'shanyang':'昌邑','taiyuan':'晋阳','qi':'临淄','wuwei':'姑臧','jiujiang':'寿春',
                   'nanjun':'江陵','nanhai':'番禺','yan':'蓟','anping':'信都'}

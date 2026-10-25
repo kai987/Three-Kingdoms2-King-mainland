@@ -7,12 +7,12 @@ import path from 'node:path';
 
 const root=await realpath(path.resolve(process.argv[2]||'build/web'));
 const prefix='/Three-Kingdoms2-King-mainland/';
-const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.css':'text/css; charset=utf-8','.wasm':'application/wasm','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2','.ogg':'audio/ogg','.mp3':'audio/mpeg','.gz':'application/octet-stream','.zip':'application/zip'};
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.css':'text/css; charset=utf-8','.wasm':'application/wasm','.svg':'image/svg+xml','.ico':'image/x-icon','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2','.ogg':'audio/ogg','.mp3':'audio/mpeg','.gz':'application/octet-stream','.zip':'application/zip'};
 const server=http.createServer(async(req,res)=>{
  try{
   if(!['GET','HEAD'].includes(req.method)){res.writeHead(405).end();return;}
   const pathname=decodeURIComponent(new URL(req.url,'http://127.0.0.1:18917').pathname);
-  if(pathname==='/favicon.ico'||pathname===prefix+'favicon.ico'){res.writeHead(204).end();return;}
+  if(pathname==='/favicon.ico'){res.writeHead(204).end();return;}
   if(!pathname.startsWith(prefix)||pathname.includes('\0')){res.writeHead(404).end();return;}
   const relative=pathname.slice(prefix.length)||'index.html',target=path.resolve(root,relative);
   if(!target.startsWith(root+path.sep)){res.writeHead(404).end();return;}

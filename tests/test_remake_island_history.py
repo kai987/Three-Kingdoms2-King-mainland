@@ -156,7 +156,7 @@ class IslandHistoryTests(unittest.TestCase):
         index = read('game/data/campaigns/index.json')
         paths = [ROOT / 'game/data' / name for name in index['catalogs']]
         session = CampaignSession(paths)
-        session.command('new', dict(faction='wei', seed=2026), 0)
+        session.command('new', dict(scenario='mainland217-07', faction='wei', seed=2026), 0)
         before = session.export_save()
         full = session.view()
         self.assertEqual(len(full['catalog']['scenarios']), 29)

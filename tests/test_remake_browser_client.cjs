@@ -1,13 +1,13 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const scripts=['paths.js','browser-engine.js'].map(name=>fs.readFileSync(require('node:path').join(__dirname,'../game',name),'utf8'));
-function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true}={}){
+function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true,workerHash}={}){
  const requests=[],workers=[],timers=[],nodes=new Map(),events=[],listeners=new Map();
  function element(tag='p'){
   const node={tagName:tag.toUpperCase(),textContent:'',hidden:false,disabled:false,attributes:{},style:{},children:[],classList:{toggle(){}},setAttribute(name,value){this.attributes[name]=value;},append(...children){this.children.push(...children);},insertAdjacentElement(where,value){nodes.set(value.id,value);}};return node;
  }
  const node=element();nodes.set('notice',node);
- const document={currentScript:{src:'https://game.example'+prefix+'paths.js'},readyState:'complete',querySelector:selector=>nodes.get(selector.slice(1)),createElement:element,addEventListener(type,fn){if(!listeners.has(type))listeners.set(type,[]);listeners.get(type).push(fn);},dispatchEvent(event){events.push(event.type);for(const fn of listeners.get(event.type)||[])fn(event);}};
+ const document={currentScript:{src:'https://game.example'+prefix+'paths.js',dataset:{workerSha256:workerHash}},readyState:'complete',querySelector:selector=>nodes.get(selector.slice(1)),createElement:element,addEventListener(type,fn){if(!listeners.has(type))listeners.set(type,[]);listeners.get(type).push(fn);},dispatchEvent(event){events.push(event.type);for(const fn of listeners.get(event.type)||[])fn(event);}};
  class Worker{
   constructor(url,options){this.url=String(url);this.options=options;this.messages=[];workers.push(this);}
   postMessage(message){this.messages.push(message);}
@@ -20,6 +20,13 @@ function fixture(prefix='/Three-Kingdoms2-King-mainland/',{paths=true}={}){
  return{window,requests,worker:workers[0],workers,timers,node,nodes,events,document};
 }
 (async()=>{
+ const versioned=fixture('/nested-game/',{workerHash:'a'.repeat(64)});
+ assert.equal(new URL(versioned.worker.url).searchParams.get('v'),'a'.repeat(64),'the actual worker source version separates cached entry points');
+ versioned.worker.respond({type:'ready',build_commit:'b'.repeat(40)});
+ assert.equal(versioned.window.GameBrowserEngine.version,'b'.repeat(40),'display version comes from the loaded Worker manifest');
+ assert.equal(versioned.requests.length,0,'no later build.json request can relabel an already running campaign');
+ const invalidVersion=fixture('/');invalidVersion.worker.respond({type:'ready',build_commit:'<script>'});
+ assert.equal(invalidVersion.window.GameBrowserEngine.version,'');
  for(const prefix of ['/nested-game/','/']){
   const fallback=fixture(prefix,{paths:false});
   await fallback.window.fetch('/locales/zh-hant.json');

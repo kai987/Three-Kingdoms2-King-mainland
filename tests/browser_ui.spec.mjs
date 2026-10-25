@@ -64,6 +64,65 @@ async function setTroops(page,value){
  await expect(page.locator('#dialog')).toBeVisible();
 }
 
+test('pixel loading cover animates, respects reduced motion and waits for the rendered 184 opening',async({page,context},testInfo)=>{
+ // Browser plugin not available: exercise the shipped static shell and real
+ // Worker with network checkpoints, without injecting campaign state.
+ let releaseManifest,releasePositions,positionsRequested;
+ const manifestGate=new Promise(resolve=>{releaseManifest=resolve;});
+ const positionsGate=new Promise(resolve=>{releasePositions=resolve;});
+ const positionsSeen=new Promise(resolve=>{positionsRequested=resolve;});
+ await context.route('**/runtime/engine-manifest.json*',async route=>{await manifestGate;await route.continue();});
+ await context.route('**/assets/city-positions.json*',async route=>{positionsRequested();await positionsGate;await route.continue();});
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ try{
+  await page.goto('./');await expect(page).toHaveTitle('三國·大陸戰役');
+  const cover=page.locator('#game-loading-cover'),rider=cover.locator('.loading-cover-rider');
+  await expect(cover).toBeVisible();await expect(cover).toHaveAttribute('data-phase','manifest');
+  await expect(cover.locator('#game-loading-title')).toHaveText('三國志Ⅱ');
+  await expect(cover.locator('.loading-cover-scenario')).toContainText('184年');
+  for(const [selector,kind] of [['link[rel="icon"][href*="favicon.ico"]','ico'],['link[rel="icon"][type="image/svg+xml"]','svg'],['link[rel="apple-touch-icon"]','touch']]){
+   const address=new URL(await page.locator(selector).getAttribute('href'),page.url());
+   expect(address.pathname).toContain('/Three-Kingdoms2-King-mainland/');expect(address.searchParams.get('v')).toMatch(/^[a-f0-9]{64}$/);
+   const icon=await page.request.get(address.href);expect(icon.status()).toBe(200);const bytes=await icon.body();
+   if(kind==='ico'){expect(bytes.readUInt16LE(2)).toBe(1);expect(bytes.readUInt16LE(4)).toBe(4);}
+   else if(kind==='svg')expect(bytes.toString()).toContain('shape-rendering="crispEdges"');
+   else{expect(bytes.readUInt32BE(16)).toBe(180);expect(bytes.readUInt32BE(20)).toBe(180);}
+  }
+  await expect(page.locator('#begin')).toHaveCount(0);
+  await expect.poll(()=>cover.locator('.loading-cover-art').evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
+  await expect.poll(()=>rider.locator('img').evaluateAll(nodes=>nodes.every(node=>node.complete&&node.naturalWidth===384))).toBe(true);
+  const firstOpacity=await rider.locator('img').first().evaluate(node=>getComputedStyle(node).opacity);
+  const riderBounds=await rider.boundingBox();expect(riderBounds).not.toBeNull();
+  const firstFrame=await page.screenshot({path:testInfo.outputPath('loading-rider-frame-a.png'),clip:riderBounds,animations:'allow'});
+  await expect.poll(()=>rider.locator('img').first().evaluate(node=>getComputedStyle(node).opacity)).not.toBe(firstOpacity);
+  const secondFrame=await page.screenshot({path:testInfo.outputPath('loading-rider-frame-b.png'),clip:riderBounds,animations:'allow'});
+  expect(secondFrame.equals(firstFrame)).toBe(false);
+  await page.screenshot({path:testInfo.outputPath('loading-cover-animated.png'),fullPage:false,animations:'allow'});
+  const bounds=await cover.evaluate(node=>({width:node.scrollWidth,viewport:innerWidth,title:node.querySelector('h1').getBoundingClientRect().width}));
+  expect(bounds.width).toBeLessThanOrEqual(bounds.viewport);expect(bounds.title).toBeLessThanOrEqual(bounds.viewport);
+  await page.emulateMedia({reducedMotion:'reduce'});await expect(cover).toHaveAttribute('data-motion','still');
+  const motion=await cover.locator('.loading-cover-march,.loading-cover-frame').evaluateAll(nodes=>nodes.map(node=>getComputedStyle(node).animationName));
+  expect(motion.every(name=>name==='none')).toBe(true);
+  await page.screenshot({path:testInfo.outputPath('loading-cover-reduced-motion.png'),fullPage:false});
+  releaseManifest();
+  await expect.poll(()=>page.evaluate(()=>window.GameBrowserEngine?.ready),{timeout:180_000}).toBe(true);
+  await positionsSeen;
+  // The Worker is ready while the first render still waits on its real map
+  // request. Engine readiness must not expose an empty, unusable app shell.
+  await expect(cover).toBeVisible();await expect(cover).toHaveAttribute('data-phase','initializing');
+  await expect(page.locator('#begin')).toHaveCount(0);
+  await expect(cover.locator('.loading-cover-message')).toContainText('準備戰役畫面');
+  releasePositions();await expect(page.locator('#begin')).toBeEnabled({timeout:90_000});await expect(cover).toBeHidden();
+  await expect(page.locator('#game-engine-status')).toBeHidden();
+  await expect(page.locator('#scenario')).toHaveValue('mainland184-02');
+  await expect(page.locator('#map-date')).toHaveAttribute('datetime','0184-02-01');
+  await expect(page.locator('#world-map .city-hit')).not.toHaveCount(0);
+  await expect(page.locator('#allocate')).toHaveCount(0);
+  await page.screenshot({path:testInfo.outputPath('loading-cover-dismissed-184.png'),fullPage:false});
+  expect(errors.get(page)).toEqual([]);
+ }finally{releaseManifest();releasePositions();}
+});
+
 test('city road beds survive hidden castles, shared inland reaches draw once and ruler portraits stay centered',async({page},testInfo)=>{
  await opening(page);await page.locator('#scenario').selectOption('mainland207-09');await page.locator('input[name=faction][value=shu]').check();
  const portrait=page.locator('#setup-summary .portrait-frame');await portrait.scrollIntoViewIfNeeded();
@@ -254,7 +313,7 @@ test('map mouse/touch pan and zoom stay bounded without accidental city inspecti
 
 test('failed manifest has an explicit retry starting a fresh real Worker',async({page,context},testInfo)=>{
  let manifestRequests=0;
- await context.route('**/runtime/engine-manifest.json',async route=>{
+ await context.route('**/runtime/engine-manifest.json*',async route=>{
   if(++manifestRequests===1)await route.fulfill({status:404,body:'controlled browser acceptance failure'});
   else await route.continue();
  });

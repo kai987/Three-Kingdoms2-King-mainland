@@ -1,0 +1,16 @@
+{
+  "schema": "tk2-loading-cover-v1",
+  "art_provenance": "imagegen-style-reference",
+  "generation_mode": "built_in",
+  "reference": "art/original-ui-study/2026-10-24/screenshots/24-local-super-edition-title.png",
+  "reference_sha256": "09cd701e0234612e83f2bd14706003bc9e8b2956b16e43100cef8942a40e19cd",
+  "prompt": "art/loading-cover-v1/prompt.txt",
+  "source": "art/loading-cover-v1/cover-source.png",
+  "source_sha256": "eb20d529ee532dec4d23077e05b52bcb8b7ea081399c84882c234f6734be6f11",
+  "runtime": "game/assets/loading/cover.png",
+  "runtime_sha256": "eb20d529ee532dec4d23077e05b52bcb8b7ea081399c84882c234f6734be6f11",
+  "runtime_bytes": 1293477,
+  "runtime_processing": "Exact copy of generated PNG; typography and motion are rendered by loading-cover.js/.css.",
+  "animation": "Existing original-derived native-duelist/infantry two-frame cutouts; presentation-only CSS steps, no gameplay RNG.",
+  "original_assets_retained": true
+}

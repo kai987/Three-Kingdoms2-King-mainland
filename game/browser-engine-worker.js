@@ -3,9 +3,11 @@ import {loadPyodide} from './vendor/pyodide/pyodide.mjs';
 const base=new URL('.',self.location.href),decoder=new TextDecoder('utf-8',{fatal:true});
 let py,bridge,manifest,booting=true,stage='manifest',receivedBytes=0,runtimeReady=false;const loaded=new Set();
 function progress(extra={}){if(booting)self.postMessage({type:'progress',phase:stage,receivedBytes,runtimeReady,...extra});}
-function assetUrl(value){
+function assetUrl(value,expected=null){
  if(typeof value!=='string'||!/^runtime\/[A-Za-z0-9_./-]+$/.test(value))throw Error('Invalid runtime asset');
- const url=new URL(value,base);if(url.origin!==base.origin||!url.pathname.startsWith(base.pathname+'runtime/'))throw Error('Invalid runtime asset');return url;
+ if(value.split('/').some(part=>!part||part==='.'||part==='..'))throw Error('Invalid runtime asset');
+ const url=new URL(value,base);if(url.origin!==base.origin||!url.pathname.startsWith(base.pathname+'runtime/'))throw Error('Invalid runtime asset');
+ if(expected!==null){if(!/^[a-f0-9]{64}$/.test(expected))throw Error('Invalid runtime integrity');url.searchParams.set('v',expected);}return url;
 }
 async function boundedBytes(response,limit,count=false){
  const size=Number(response.headers?.get('content-length'));if(size>limit)throw Error('Runtime asset too large');
@@ -15,12 +17,15 @@ async function boundedBytes(response,limit,count=false){
  finally{reader.releaseLock();}
  const raw=new Uint8Array(length);let offset=0;for(const chunk of chunks){raw.set(chunk,offset);offset+=chunk.byteLength;}if(count)progress();return raw;
 }
-async function bytes(url,limit){
- const address=assetUrl(url);
+async function bytes(url,limit,expected=null,fresh=false){
+ const address=assetUrl(url,expected);
+ // Only the public manifest bypasses CDN/browser freshness. Verified bundles
+ // remain reusable under URLs keyed by their expected content identity.
+ if(fresh)address.searchParams.set('t',String(Date.now()));
  for(let attempt=0;attempt<3;attempt++){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);
   try{
-   const response=await fetch(address,{signal:controller.signal});
+   const response=await fetch(address,{signal:controller.signal,...(fresh?{cache:'no-store'}:{})});
    if(!response.ok){const error=Error('Runtime asset unavailable');error.retryable=response.status===408||response.status===429||response.status>=500;throw error;}
    return await boundedBytes(response,limit,true);
   }catch(error){
@@ -36,7 +41,7 @@ async function verified(data,expected){
 }
 function filePath(value){return typeof value==='string'&&/^\/tk2\/game\/data\/campaigns\/[A-Za-z0-9_-]+\.json$/.test(value);}
 async function catalogData(row){
- const zipped=await bytes(row.url,4*1024*1024);
+ const zipped=await bytes(row.url,4*1024*1024,row.sha256);
  const stream=new Blob([zipped]).stream().pipeThrough(new DecompressionStream('gzip'));
  const raw=await boundedBytes(new Response(stream),16*1024*1024);
  if(raw.length!==row.bytes)throw Error('Catalog size mismatch');await verified(raw,row.sha256);return raw;
@@ -63,21 +68,22 @@ function requestedScenario(path,body){
  return null;
 }
 const boot=(async()=>{
- progress();manifest=JSON.parse(decoder.decode(await bytes('runtime/engine-manifest.json',1024*1024)));
+ progress();manifest=JSON.parse(decoder.decode(await bytes('runtime/engine-manifest.json',1024*1024,null,true)));
  if(manifest.schema!=='tk2-browser-engine-v1'||manifest.pyodide_version!=='314.0.7'||!Array.isArray(manifest.catalogs)||!manifest.catalogs.length||manifest.catalogs.length>64)throw Error('Invalid runtime manifest');
+ if(manifest.build_commit!==undefined&&!/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(manifest.build_commit))throw Error('Invalid runtime version');
  const identities=new Set();for(const row of manifest.catalogs){
   if(!row||typeof row.id!=='string'||!/^[A-Za-z0-9_-]+$/.test(row.id)||identities.has(row.id)||!filePath(row.path)||!Number.isSafeInteger(row.bytes)||row.bytes<1||row.bytes>16*1024*1024||!/^[a-f0-9]{64}$/.test(row.sha256||''))throw Error('Invalid catalog manifest');
-  identities.add(row.id);assetUrl(row.url);
+  identities.add(row.id);assetUrl(row.url,row.sha256);
  }
  const initial=manifest.catalogs.find(row=>row.id===manifest.initial_scenario);if(!initial)throw Error('Invalid initial scenario');
- assetUrl(manifest.python_bundle?.url);assetUrl(manifest.previews?.url);
+ assetUrl(manifest.python_bundle?.url,manifest.python_bundle?.sha256);assetUrl(manifest.previews?.url,manifest.previews?.sha256);
  stage='loading';progress();
  // Only verified game assets run in parallel with Pyodide. No campaign or RNG
  // exists until every asset has passed its size and SHA checks.
  const [runtime,bundle,previews,initialData]=await Promise.all([
   loadPyodide({indexURL:new URL('vendor/pyodide/',base).href}).then(value=>{runtimeReady=true;progress();return value;}),
-  bytes(manifest.python_bundle.url,4*1024*1024).then(data=>verified(data,manifest.python_bundle.sha256)),
-  bytes(manifest.previews.url,8*1024*1024).then(data=>verified(data,manifest.previews.sha256)),
+  bytes(manifest.python_bundle.url,4*1024*1024,manifest.python_bundle.sha256).then(data=>verified(data,manifest.python_bundle.sha256)),
+  bytes(manifest.previews.url,8*1024*1024,manifest.previews.sha256).then(data=>verified(data,manifest.previews.sha256)),
   catalogData(initial)
  ]);
  py=runtime;stage='initializing';progress();py.unpackArchive(bundle,'zip',{extractDir:'/tk2'});installCatalog(initial,initialData);
@@ -88,7 +94,7 @@ sys.path.insert(0, '/tk2/source')
 os.environ['MARCH_CORE_BACKEND'] = 'python'
 from remake.browser_runtime import BrowserRuntime
 BrowserRuntime(json.loads(_tk2_paths), json.loads(_tk2_previews), _tk2_initial)`);
- booting=false;self.postMessage({type:'ready'});
+ booting=false;self.postMessage({type:'ready',build_commit:manifest.build_commit||null});
 })();
 boot.catch(()=>{booting=false;self.postMessage({type:'fatal'});});
 let queue=Promise.resolve();

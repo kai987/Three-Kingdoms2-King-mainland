@@ -1,0 +1,38 @@
+/* Native pixel artwork remains on its integer grid; the cover changes no rules. */
+#game-loading-cover{position:fixed;inset:0;z-index:1000;overflow:auto;background:#000;color:#f8d878;font:18px/1.5 var(--ui,Unifont,monospace);isolation:isolate}
+#game-loading-cover[hidden]{display:none}
+.loading-cover-shell{width:min(100%,1040px);min-height:100svh;margin:0 auto;display:grid;grid-template-rows:auto minmax(160px,1fr) auto;align-items:center;padding:clamp(18px,4vh,40px) clamp(16px,4vw,48px) 20px}
+.loading-cover-heading{text-align:center;position:relative;z-index:1;padding:0 12px 16px;border-top:4px double #807020}
+.loading-cover-heading::before,.loading-cover-heading::after{content:"";position:absolute;top:-7px;width:12px;height:12px;background:#40a040;box-shadow:0 0 0 3px #000,0 0 0 5px #c8a840}
+.loading-cover-heading::before{left:8px}.loading-cover-heading::after{right:8px}
+.loading-cover-title{display:flex;align-items:center;justify-content:center;gap:clamp(4px,2vw,18px);margin:12px 0 0;font:clamp(56px,11vw,108px)/1.1 var(--display,Unifont,monospace);letter-spacing:.06em;white-space:nowrap}
+.loading-cover-name{color:#f8d878;text-shadow:3px 3px #985800,6px 6px #402000}
+.loading-cover-number{color:#e84028;font-size:1.18em;text-shadow:3px 3px #802000;letter-spacing:0}
+.loading-cover-subtitle{font-size:clamp(22px,4vw,34px);letter-spacing:.28em;color:#e8e0b0;margin:6px 0 12px;padding-left:.28em}
+.loading-cover-scenario{font-size:18px;color:#98c878;letter-spacing:.12em}
+.loading-cover-description{font-size:14px;color:#c8b880;margin:6px 0 0}
+.loading-cover-stage{position:relative;align-self:stretch;min-height:180px;overflow:hidden;background:#000}
+.loading-cover-art{position:absolute;width:100%;height:100%;inset:0;object-fit:cover;object-position:center bottom;image-rendering:pixelated;image-rendering:crisp-edges;pointer-events:none}
+.loading-cover-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(#000,transparent 12%,transparent 78%,#000)}
+.loading-cover-ground{position:absolute;bottom:18px;left:12%;right:12%;height:3px;background:#708028;box-shadow:0 4px #203810}
+.loading-cover-march{position:absolute;bottom:20px;left:10%;right:10%;height:180px;display:flex;align-items:end;justify-content:center;gap:8px;animation:loading-cover-march 8s linear infinite}
+.loading-cover-figure{position:relative;display:inline-block;flex:none;image-rendering:pixelated;image-rendering:crisp-edges}
+.loading-cover-rider{width:192px;height:192px;margin-right:8px}
+.loading-cover-soldier{width:48px;height:48px;margin-bottom:2px}
+.loading-cover-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;image-rendering:crisp-edges;animation:loading-cover-frame .64s steps(1,end) infinite}
+.loading-cover-frame:nth-child(2){animation-delay:-.32s}
+.loading-cover-footer{position:relative;z-index:1;min-width:0;min-height:104px;margin-top:8px;padding-top:16px;border-top:4px double #807020;text-align:center}
+.loading-cover-message{white-space:pre-line;font-size:16px;color:#e8e0b0;overflow-wrap:anywhere}
+#game-loading-cover #game-engine-status{display:flex;justify-content:center;gap:12px!important;border:0!important;padding:0!important;background:transparent!important;color:#e8e0b0;font-size:16px;white-space:normal;text-align:center}
+#game-loading-cover #game-engine-status[hidden]{display:none!important}
+#game-loading-cover #game-engine-status.error{color:#ffc090}
+#game-loading-cover #game-engine-status button{min-height:44px;border:2px solid #b8a050;background:#181808;color:#f8d878;padding:6px 18px}
+#game-loading-cover #game-engine-status button:hover:not(:disabled){background:#383818}
+#game-loading-cover #game-engine-status button:focus-visible{outline:3px solid #fff;outline-offset:4px}
+@keyframes loading-cover-frame{0%,49.99%{opacity:1}50%,100%{opacity:0}}
+@keyframes loading-cover-march{from{transform:translateX(-24px)}to{transform:translateX(24px)}}
+#game-loading-cover[data-motion=still] .loading-cover-march,#game-loading-cover[data-motion=still] .loading-cover-frame{animation:none}
+#game-loading-cover[data-motion=still] .loading-cover-frame:nth-child(2){display:none}
+@media(prefers-reduced-motion:reduce){.loading-cover-march,.loading-cover-frame{animation:none}.loading-cover-frame:nth-child(2){display:none}}
+@media(max-width:480px){.loading-cover-shell{padding:22px 16px 16px;grid-template-rows:auto minmax(180px,1fr) auto}.loading-cover-title{font-size:clamp(48px,16vw,64px);gap:4px}.loading-cover-subtitle{font-size:24px}.loading-cover-description{font-size:13px}.loading-cover-rider{width:144px;height:144px;margin-right:0}.loading-cover-soldier{width:32px;height:32px}.loading-cover-march{left:0;right:0;gap:4px;height:144px}.loading-cover-footer{min-height:132px}.loading-cover-message,#game-loading-cover #game-engine-status{font-size:14px}}
+@media(max-height:540px) and (min-width:481px){.loading-cover-shell{padding-top:14px;grid-template-rows:auto minmax(100px,1fr) auto}.loading-cover-title{font-size:56px;margin-top:6px}.loading-cover-heading{padding-bottom:8px}.loading-cover-subtitle{font-size:22px;margin:2px 0}.loading-cover-description{display:none}.loading-cover-stage{min-height:100px}.loading-cover-rider{width:112px;height:112px}.loading-cover-soldier{width:32px;height:32px}.loading-cover-march{height:112px;bottom:8px}.loading-cover-ground{bottom:6px}.loading-cover-footer{min-height:76px;padding-top:8px}}

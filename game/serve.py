@@ -450,8 +450,6 @@ def make_handler(game, cloud_config, cloud_csp, static, audit=None, here=HERE):
                     if set(query) != {'scenario', 'city'} or any(len(v) != 1 for v in query.values()):
                         raise GameError('城池查询参数无效。')
                     return self.send(200, game.preview_city(query['scenario'][0], query['city'][0]))
-                if self.path == '/favicon.ico':
-                    return self.send(204, b'', 'image/x-icon')
                 static_path = '/' if document_entry_path(self.path) else self.path
                 if static_path in static:
                     name, mime = static[static_path]
@@ -551,6 +549,13 @@ def main():
     current_index = json.loads((HERE / 'data/campaigns/index.json').read_text())
     game = CampaignSession([HERE / 'data' / name for name in current_index['catalogs']])
     static = {'/': ('index.html', 'text/html; charset=utf-8'),
+              '/favicon.ico': ('favicon.ico', 'image/x-icon'),
+              '/favicon.svg': ('favicon.svg', 'image/svg+xml'),
+              '/assets/site-icon-32.png': ('assets/site-icon-32.png', 'image/png'),
+              '/assets/site-icon-180.png': ('assets/site-icon-180.png', 'image/png'),
+              '/loading-cover.js': ('loading-cover.js', 'text/javascript; charset=utf-8'),
+              '/loading-cover.css': ('loading-cover.css', 'text/css; charset=utf-8'),
+              '/assets/loading/cover.png': ('assets/loading/cover.png', 'image/png'),
               '/save-transfer.js': ('save-transfer.js', 'text/javascript; charset=utf-8'),
               '/cloud-save.js': ('cloud-save.js', 'text/javascript; charset=utf-8'),
               '/cloud-recovery.js': ('cloud-recovery.js', 'text/javascript; charset=utf-8'),

@@ -1,6 +1,7 @@
 """Static releases preserve catalog identity and expose only approved inputs."""
 from pathlib import Path
 import gzip
+from html.parser import HTMLParser
 import importlib.util
 import json
 import tempfile
@@ -16,13 +17,32 @@ SPEC.loader.exec_module(WEB)
 class WebBuildBoundaries(unittest.TestCase):
     def test_project_paths_are_relative_without_changing_external_urls(self):
         html = WEB.rewrite_html(b'<link href="/style.css">\n  <script src="/app.js" defer></script><a href="https://example.com/">link</a>')
-        self.assertIn(b'href="style.css"', html)
-        self.assertIn(b'src="app.js"', html)
+        self.assertIn(b'href="style.css?v=', html)
+        self.assertIn(b'src="app.js?v=', html)
         self.assertIn(b'https://example.com/', html)
         self.assertLess(html.index(b'paths.js'), html.index(b'browser-engine.js'))
         self.assertLess(html.index(b'browser-engine.js'), html.index(b'app.js'))
         self.assertEqual(WEB.rewrite_css(b"src:url('/assets/font.woff');x:url(https://x/)", 'style.css'),
                          b"src:url('assets/font.woff');x:url(https://x/)")
+
+    def test_local_script_and_stylesheet_versions_hash_the_published_contents(self):
+        assets = {'style.css': b'published-relative-css', 'app.js': b'current-app',
+                  'paths.js': b'current-paths', 'browser-engine.js': b'current-engine',
+                  'browser-engine-worker.js': b'current-worker'}
+        raw = (b'<link href="/style.css?theme=pixel&amp;v=old#font">\n'
+               b'<link href="https://external.example/theme.css">\n'
+               b'  <script src="/app.js?v=old" defer></script>')
+        rewritten = WEB.rewrite_html(raw, assets)
+        self.assertIn(('href="style.css?theme=pixel&amp;v=' + WEB.sha256(assets['style.css'])
+                       + '#font"').encode(), rewritten)
+        for name in ('app.js', 'paths.js', 'browser-engine.js'):
+            self.assertIn(('src="' + name + '?v=' + WEB.sha256(assets[name]) + '"').encode(), rewritten)
+        self.assertIn(('data-worker-sha256="' + WEB.sha256(assets['browser-engine-worker.js'])
+                       + '"').encode(), rewritten)
+        self.assertIn(b'href="https://external.example/theme.css"', rewritten)
+        self.assertNotIn(b'v=old', rewritten)
+        with self.assertRaisesRegex(ValueError, 'Invalid HTML asset path'):
+            WEB.rewrite_html(b'  <script src="/../private.js"></script>', assets)
 
     def test_safe_read_rejects_symlinks_and_traversal(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -71,7 +91,7 @@ class WebReleaseArtifact(unittest.TestCase):
     def test_catalog_original_bytes_and_save_identity_remain_exact(self):
         rows = self.manifest['catalogs']
         self.assertEqual(len(rows), len(self.before) - 1)
-        self.assertEqual(self.manifest['initial_scenario'], rows[-1]['id'])
+        self.assertEqual(self.manifest['initial_scenario'], 'mainland184-02')
         for row in rows:
             original = ROOT / row['path'].removeprefix('/tk2/')
             raw = original.read_bytes()
@@ -93,6 +113,7 @@ class WebReleaseArtifact(unittest.TestCase):
 
     def test_publication_hashes_and_cloud_callback_boundaries(self):
         identity = json.loads((self.output / 'runtime/build.json').read_text())
+        self.assertEqual(self.manifest['build_commit'], identity['commit'])
         for name, row in identity['files'].items():
             raw = (self.output / name).read_bytes()
             self.assertEqual(row, {'sha256': WEB.sha256(raw), 'bytes': len(raw)}, name)
@@ -111,6 +132,26 @@ class WebReleaseArtifact(unittest.TestCase):
         for name, expected in WEB.PYODIDE_HASHES.items():
             self.assertEqual(WEB.sha256((self.output / 'vendor/pyodide' / name).read_bytes()), expected)
         self.assertTrue((self.output / '.nojekyll').exists())
+
+    def test_html_asset_versions_match_the_exact_release_files(self):
+        tags = []
+
+        class Entries(HTMLParser):
+            def handle_starttag(self, tag, attrs):
+                if tag in ('script', 'link'):
+                    tags.append((tag, dict(attrs)))
+
+        Entries().feed((self.output / 'index.html').read_text())
+        for tag, attrs in tags:
+            address = WEB.urlsplit(attrs['src' if tag == 'script' else 'href'])
+            if address.scheme or address.netloc:
+                continue
+            self.assertFalse(address.path.startswith('/'))
+            self.assertEqual(dict(WEB.parse_qsl(address.query))['v'],
+                             WEB.sha256((self.output / address.path).read_bytes()))
+            if address.path == 'browser-engine.js':
+                self.assertEqual(attrs['data-worker-sha256'],
+                                 WEB.sha256((self.output / 'browser-engine-worker.js').read_bytes()))
 
 
 if __name__ == '__main__':

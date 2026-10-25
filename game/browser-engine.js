@@ -1,7 +1,8 @@
 /* Static-host adapter: every tab owns its own campaign Worker, never a public API. */
 'use strict';
 (function(root){
- const base=new URL('.',document.currentScript.src),network=root.fetch.bind(root);
+ const entry=document.currentScript,base=new URL('.',entry.src),network=root.fetch.bind(root);
+ const workerVersion=entry.dataset?.workerSha256;
  // A cached HTML shell or interrupted optional helper must not prevent the
  // language fetches from starting. Keep the same public-asset-only boundary
  // as paths.js; Auth, private configuration and other project URLs pass through.
@@ -10,7 +11,7 @@
   root.GamePaths=Object.freeze({asset,base:base.href});
  }
 
- const pending=new Map();let worker,sequence=0,generation=0,failed=false,ready=false,everReady=false,bootTimer,phase='manifest',progress={},panel,label,retryButton;
+ const pending=new Map();let worker,sequence=0,generation=0,failed=false,ready=false,everReady=false,bootTimer,phase='manifest',progress={},panel,label,retryButton,version='',versionLabel;
  let readyPromise,resolveReady,rejectReady;
  const copy={
   'zh-Hant':{manifest:'讀取遊戲版本清單……',loading:'下載遊戲資料並準備執行環境……',initializing:'初始化戰役規則……',failed:'遊戲載入失敗。請檢查連線，再重試載入。',stopped:'遊戲執行已中斷。請重新整理頁面，並讀取已儲存的進度。',retry:'重試載入',runtime:'執行環境',working:'準備中',done:'已就緒',bytes:'遊戲資料已讀取',excludes:'不含執行環境',retrying:'正在重試下載'},
@@ -34,6 +35,14 @@
    if(Number.isSafeInteger(progress.receivedBytes)&&progress.receivedBytes>0)label.textContent+=` · ${words.bytes} ${(progress.receivedBytes/1024).toFixed(1)} KiB（${words.excludes}）`;
    if(progress.retrying)label.textContent+=` · ${words.retrying}`;
   }
+  root.GameLoadingCover?.attachStatus?.(panel);
+  root.GameLoadingCover?.update?.({phase,ready,failed,canRetry:failed&&!everReady,...progress,version});
+  if(version){
+   const host=document.querySelector('#utility-menu .utility-panel');
+   if(host&&!versionLabel){versionLabel=document.createElement('small');versionLabel.id='game-build-version';host.append(versionLabel);}
+   if(versionLabel){versionLabel.textContent=(locale==='ja'?'バージョン ':'版本 ')+version.slice(0,7);versionLabel.setAttribute('data-l10n-native',locale);}
+   document.documentElement?.setAttribute('data-game-build',version);
+  }
  }
  const unavailable=()=>new Error('遊戲尚未就緒，請重試載入。／ゲームを読み込めません。再試行してください。');
  function emit(type){document.dispatchEvent(new CustomEvent(type));}
@@ -42,10 +51,10 @@
   for(const row of pending.values())row.reject(unavailable());pending.clear();emit('game-engine-error');
  }
  function start(){
-  const token=++generation;failed=false;ready=false;phase='manifest';progress={};
+  const token=++generation;failed=false;ready=false;phase='manifest';progress={};version='';
   readyPromise=new Promise((resolve,reject)=>{resolveReady=resolve;rejectReady=reject;});readyPromise.catch(()=>{});
   status();bootTimer=setTimeout(()=>fail(token),180000);
-  try{worker=new Worker(new URL('browser-engine-worker.js',base),{type:'module'});}catch{fail(token);return;}
+  try{const address=new URL('browser-engine-worker.js',base);if(/^[a-f0-9]{64}$/.test(workerVersion||''))address.searchParams.set('v',workerVersion);worker=new Worker(address,{type:'module'});}catch{fail(token);return;}
   worker.onerror=()=>fail(token);
   worker.onmessage=event=>{
    if(token!==generation||failed)return;
@@ -53,7 +62,7 @@
    if(message.type==='progress'&&!ready){
     if(['manifest','loading','initializing'].includes(message.phase)){phase=message.phase;progress=message;status();}return;
    }
-   if(message.type==='ready'){ready=true;everReady=true;phase='ready';clearTimeout(bootTimer);status();resolveReady();emit('game-engine-ready');return;}
+   if(message.type==='ready'){ready=true;everReady=true;phase='ready';version=/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(message.build_commit||'')?message.build_commit:'';clearTimeout(bootTimer);status();resolveReady();emit('game-engine-ready');return;}
    if(message.type==='fatal'){fail(token);return;}
    if(message.type!=='response'||!pending.has(message.id))return;
    const request=pending.get(message.id);pending.delete(message.id);
@@ -84,6 +93,6 @@
   }
   return network(typeof input==='string'?root.GamePaths.asset(input):input,settings);
  };
- root.GameBrowserEngine=Object.freeze({get ready(){return ready;},get failed(){return failed;},get phase(){return phase;},get canRetry(){return failed&&!everReady;},retry,whenReady:()=>failed?Promise.reject(unavailable()):readyPromise});
+ root.GameBrowserEngine=Object.freeze({get ready(){return ready;},get failed(){return failed;},get phase(){return phase;},get version(){return version;},get canRetry(){return failed&&!everReady;},retry,whenReady:()=>failed?Promise.reject(unavailable()):readyPromise});
  start();
 })(window);
