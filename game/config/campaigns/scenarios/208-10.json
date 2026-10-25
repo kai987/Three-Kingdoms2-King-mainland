@@ -3730,7 +3730,13 @@
           "source_scenario": "adapted-208-10",
           "planned_serving": 387,
           "planned_max_city_roster": 52,
-          "future_plans": 348
+          "future_plans": 348,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -46113,36 +46119,38 @@
           ],
           "primary_text_reviewed_opening_people": 5,
           "reference_classes": {
-            "authorial_garrison_relocation": 50,
             "authorial_region_placement": 795,
-            "bounded_career_inference": 150,
-            "bounded_regional_inference": 1,
             "game_reference": 8,
-            "novel_compatible_affiliation": 6,
             "primary_text_affiliation": 4,
+            "authorial_garrison_relocation": 50,
+            "bounded_career_inference": 150,
             "primary_text_attested": 5,
-            "regional_primary_mapping": 4
+            "regional_primary_mapping": 4,
+            "novel_compatible_affiliation": 6,
+            "bounded_regional_inference": 1,
+            "explicit_scenario_scope": 4
+          },
+          "people": 1027,
+          "bases": {
+            "person_specific_future_free_appearance": 348,
+            "same_date_SAN14_guide_free_location": 2,
+            "same_date_SAN14_guide_affiliation": 4,
+            "same_date_SAN14_recorded_death": 2,
+            "retained_reviewed_opening_membership": 157,
+            "retained_chronology_or_explicit_exclusion": 237,
+            "authorial_region_placement": 27,
+            "historical_review_20261025": 65,
+            "retained_person_specific_free_location": 19,
+            "bounded_career_inference": 7,
+            "authored_bounded_source_snapshot_continuity": 142,
+            "primary_text_jingnan_prefect_before_submission": 4,
+            "retained_explicit_scenario_ruler": 7,
+            "primary_text_huang_zhong_under_han_xuan": 1,
+            "authored_bounded_snapshot_continuity": 1,
+            "explicit_scenario_scope": 4
           }
         },
-        "update": {
-          "bases": {
-            "set": {
-              "person_specific_future_free_appearance": 348,
-              "same_date_SAN14_recorded_death": 2,
-              "retained_reviewed_opening_membership": 157,
-              "retained_chronology_or_explicit_exclusion": 237,
-              "authorial_region_placement": 27,
-              "authored_bounded_source_snapshot_continuity": 142,
-              "retained_person_specific_free_location": 19,
-              "bounded_career_inference": 7,
-              "primary_text_jingnan_prefect_before_submission": 4,
-              "retained_explicit_scenario_ruler": 7,
-              "primary_text_huang_zhong_under_han_xuan": 1,
-              "authored_bounded_snapshot_continuity": 1,
-              "historical_review_20261025": 65
-            }
-          }
-        }
+        "update": {}
       }
     }
   },

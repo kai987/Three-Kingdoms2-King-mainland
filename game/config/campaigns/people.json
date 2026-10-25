@@ -1023,7 +1023,11 @@
     "historical-expansion-0021",
     "historical-expansion-0022",
     "historical-expansion-0023",
-    "historical-expansion-0024"
+    "historical-expansion-0024",
+    "historical-song-jian",
+    "historical-lu-xing",
+    "historical-tang-pu",
+    "historical-li-tong-jiaozhi"
   ],
   "people": {
     "san14-candidate-0001": {
@@ -133030,6 +133034,453 @@
           "is_historical_fact": false,
           "confidence": "unreviewed_default",
           "dimensions": null,
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-song-jian": {
+      "person_id": "historical-song-jian",
+      "name": "宋建",
+      "runtime_id": 1024,
+      "birth_year": 155,
+      "service_year": 184,
+      "death_year": 214,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 宋建據枹罕，214年十月為夏侯淵所斬。起事確月不詳；184年二月可玩屬本作提前配置，不能視為同月已有政權的史證。155年出生為本作估計，184年出仕為遊戲窗口。",
+      "chronology_design": {
+        "birth_year": 155,
+        "service_year": 184,
+        "death_year": 214,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_opening_window_not_first_historical_service_year",
+          "death_year": "attested_year_month_not_used_by_annual_lifecycle"
+        },
+        "basis": "宋建據枹罕，214年十月為夏侯淵所斬。起事確月不詳；184年二月可玩屬本作提前配置，不能視為同月已有政權的史證。155年出生為本作估計，184年出仕為遊戲窗口。",
+        "last_attested_year": 214
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 68,
+        "intellect": 62,
+        "virtue": 60,
+        "terrain_affinity": 0,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "宋建"
+      ],
+      "virtue_design": {
+        "person_id": "historical-song-jian",
+        "name": "宋建",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷01",
+          "https://zh.wikisource.org/zh-hant/三國志/卷09",
+          "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+        ],
+        "notes": "宋建據枹罕，214年十月為夏侯淵所斬。起事確月不詳；184年二月可玩屬本作提前配置，不能視為同月已有政權的史證。155年出生為本作估計，184年出仕為遊戲窗口。 武、知、適性均為本作平衡值；體力80、德60、忠誠預設80，不是SAN14或原版武將數值。",
+        "source_name": "宋建"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 68,
+          "intellect": 62,
+          "virtue": 60,
+          "terrain_affinity": 0,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default80_no_original_source",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60_missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-lu-xing": {
+      "person_id": "historical-lu-xing",
+      "name": "吕兴",
+      "runtime_id": 1025,
+      "birth_year": 220,
+      "service_year": 263,
+      "death_year": 264,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 呂興於263年五月率交阯郡吏兵起事；264年魏廷策命未至便被下人殺害，確月不詳。220年出生為本作估計；263年出仕只表示本作自該年啟用，非初任年份。",
+      "chronology_design": {
+        "birth_year": 220,
+        "service_year": 263,
+        "death_year": 264,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_opening_window_not_first_historical_service_year",
+          "death_year": "attested_year_month_not_used_by_annual_lifecycle"
+        },
+        "basis": "呂興於263年五月率交阯郡吏兵起事；264年魏廷策命未至便被下人殺害，確月不詳。220年出生為本作估計；263年出仕只表示本作自該年啟用，非初任年份。",
+        "last_attested_year": 264
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 54,
+        "intellect": 65,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "吕兴",
+        "呂興"
+      ],
+      "virtue_design": {
+        "person_id": "historical-lu-xing",
+        "name": "吕兴",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷48",
+          "https://zh.wikisource.org/zh-hant/三國志/卷04"
+        ],
+        "notes": "呂興於263年五月率交阯郡吏兵起事；264年魏廷策命未至便被下人殺害，確月不詳。220年出生為本作估計；263年出仕只表示本作自該年啟用，非初任年份。 武、知、適性均為本作平衡值；體力80、德60、忠誠預設80，不是SAN14或原版武將數值。",
+        "source_name": "呂興"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 54,
+          "intellect": 65,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default80_no_original_source",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60_missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-lu-xing",
+          "name": "吕兴",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-tang-pu": {
+      "person_id": "historical-tang-pu",
+      "name": "唐谱",
+      "runtime_id": 1026,
+      "birth_year": 225,
+      "service_year": 263,
+      "death_year": 299,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 264年九月詔書記呂興遣都尉唐譜；生卒與初仕年均不詳。225年出生、263年開局隸屬呂興和299年退場均為本作估計；263年任職並無同月史證，退場不代表史實卒年。",
+      "chronology_design": {
+        "birth_year": 225,
+        "service_year": 263,
+        "death_year": null,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_opening_window_not_first_historical_service_year",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "264年九月詔書記呂興遣都尉唐譜；生卒與初仕年均不詳。225年出生、263年開局隸屬呂興和299年退場均為本作估計；263年任職並無同月史證，退場不代表史實卒年。",
+        "last_attested_year": 264,
+        "retirement_year": 299
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 64,
+        "intellect": 48,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "唐谱",
+        "唐譜"
+      ],
+      "virtue_design": {
+        "person_id": "historical-tang-pu",
+        "name": "唐谱",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/三國志/卷04"
+        ],
+        "notes": "264年九月詔書記呂興遣都尉唐譜；生卒與初仕年均不詳。225年出生、263年開局隸屬呂興和299年退場均為本作估計；263年任職並無同月史證，退場不代表史實卒年。 武、知、適性均為本作平衡值；體力80、德60、忠誠預設80，不是SAN14或原版武將數值。",
+        "source_name": "唐譜"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 64,
+          "intellect": 48,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default80_no_original_source",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60_missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-tang-pu",
+          "name": "唐谱",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-li-tong-jiaozhi": {
+      "person_id": "historical-li-tong-jiaozhi",
+      "name": "李统",
+      "runtime_id": 1027,
+      "birth_year": 235,
+      "service_year": 263,
+      "death_year": 305,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 《晉書·陶璜傳》記功曹李統殺呂興，與魏將李通不是同一人；該篇起事年號有錯置，僅以《三國志》約束264年前後的事件窗口。235年出生、263年開局隸屬呂興和305年退場為本作估計，均非確證生卒或任職日期。",
+      "chronology_design": {
+        "birth_year": 235,
+        "service_year": 263,
+        "death_year": null,
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_opening_window_not_first_historical_service_year",
+          "death_year": "unknown_not_last_attestation",
+          "retirement_year": "authorial_game_retirement_boundary_not_historical_death"
+        },
+        "basis": "《晉書·陶璜傳》記功曹李統殺呂興，與魏將李通不是同一人；該篇起事年號有錯置，僅以《三國志》約束264年前後的事件窗口。235年出生、263年開局隸屬呂興和305年退場為本作估計，均非確證生卒或任職日期。",
+        "last_attested_year": 264,
+        "retirement_year": 305
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 40,
+        "intellect": 70,
+        "virtue": 60,
+        "terrain_affinity": 2,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "李统",
+        "李統"
+      ],
+      "virtue_design": {
+        "person_id": "historical-li-tong-jiaozhi",
+        "name": "李统",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/晉書/卷057",
+          "https://zh.wikisource.org/zh-hant/三國志/卷04"
+        ],
+        "notes": "《晉書·陶璜傳》記功曹李統殺呂興，與魏將李通不是同一人；該篇起事年號有錯置，僅以《三國志》約束264年前後的事件窗口。235年出生、263年開局隸屬呂興和305年退場為本作估計，均非確證生卒或任職日期。 武、知、適性均為本作平衡值；體力80、德60、忠誠預設80，不是SAN14或原版武將數值。",
+        "source_name": "李統"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 40,
+          "intellect": 70,
+          "virtue": 60,
+          "terrain_affinity": 2,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default80_no_original_source",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60_missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-li-tong-jiaozhi",
+          "name": "李统",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
           "sources": []
         },
         "initialization": null

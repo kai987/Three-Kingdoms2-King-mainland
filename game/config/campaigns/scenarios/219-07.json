@@ -3331,7 +3331,13 @@
           "source_scenario": "adapted-219-07",
           "planned_serving": 386,
           "planned_max_city_roster": 19,
-          "future_plans": 224
+          "future_plans": 224,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -36728,32 +36734,31 @@
       },
       "placement_completion": {
         "set": {
-          "future_plans": 224
-        },
-        "update": {
+          "future_plans": 224,
+          "people": 1027,
           "reference_classes": {
-            "set": {
-              "authorial_region_placement": 919,
-              "game_reference": 9,
-              "bounded_career_inference": 95
-            }
+            "authorial_region_placement": 919,
+            "game_reference": 9,
+            "bounded_career_inference": 95,
+            "explicit_scenario_scope": 4
           },
           "bases": {
-            "set": {
-              "unrepresented_source_faction_local_free_design": 1,
-              "same_date_SAN14_recorded_death": 5,
-              "person_specific_future_free_appearance": 224,
-              "same_date_SAN14_guide_affiliation": 3,
-              "same_date_SAN14_guide_free_location": 1,
-              "retained_reviewed_opening_membership": 283,
-              "retained_chronology_or_explicit_exclusion": 368,
-              "retained_person_specific_free_location": 32,
-              "authored_bounded_source_snapshot_continuity": 88,
-              "bounded_career_inference": 7,
-              "authorial_region_placement": 6
-            }
+            "unrepresented_source_faction_local_free_design": 1,
+            "same_date_SAN14_recorded_death": 5,
+            "person_specific_future_free_appearance": 224,
+            "same_date_SAN14_guide_affiliation": 3,
+            "same_date_SAN14_guide_free_location": 1,
+            "retained_reviewed_opening_membership": 283,
+            "retained_chronology_or_explicit_exclusion": 368,
+            "retained_person_specific_free_location": 32,
+            "authored_bounded_source_snapshot_continuity": 88,
+            "bounded_career_inference": 7,
+            "authorial_region_placement": 6,
+            "retained_explicit_scenario_ruler": 5,
+            "explicit_scenario_scope": 4
           }
-        }
+        },
+        "update": {}
       }
     }
   },

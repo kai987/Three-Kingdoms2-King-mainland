@@ -1,6 +1,6 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-const {shortest,reversePath}=require('../game/build_route_geometry.cjs');
+const {shortest,reversePath,renderSourceHash}=require('../game/build_route_geometry.cjs');
 const graph=new Map([
  ['a',[{to:'b',length:1,tag:'ab'},{to:'x',length:2,tag:'ax'}]],
  ['b',[{to:'c',length:1,tag:'bc'}]],['x',[{to:'c',length:2,tag:'xc'}]],['c',[]]
@@ -43,6 +43,11 @@ if(fs.existsSync(file)){
  const attestation=JSON.parse(fs.readFileSync(path.join(root,'game/config/route-render-source.json')));
  for(const [name,hash]of Object.entries(compiled.sources))validateSource(name,fs.readFileSync(path.join(root,name)),hash,compiled.sources,attestation);
  const app=fs.readFileSync(path.join(root,appSource)),pin=compiled.sources[appSource];
+ const compiler=fs.readFileSync(path.join(root,compilerSource));
+ assert.equal(renderSourceHash(Buffer.concat([Buffer.from('// Display-only metadata.\n'),app]),compiler,attestation),pin,'A scenario rebuild retains the attested unchanged renderer');
+ assert.equal(renderSourceHash(app,Buffer.concat([compiler,Buffer.from('// compiler changed')]),attestation),sha(app),'Compiler drift requires a new full source pin');
+ const changedRenderer=Buffer.from(app.toString().replace('return d+`L','return d +`L'));
+ assert.equal(renderSourceHash(changedRenderer,compiler,attestation),sha(changedRenderer),'Renderer drift never reuses the previous projection');
  assert.doesNotThrow(()=>validateSource(appSource,Buffer.concat([Buffer.from('// Display-only metadata.\n'),app]),pin,compiled.sources,attestation),'unrelated UI changes do not rewrite campaign hashes');
  assert.throws(()=>validateSource(appSource,Buffer.from(app.toString().replace('return d+`L','return d +`L')),pin,compiled.sources,attestation),'even whitespace changes inside path functions require rebuilding geometry');
  assert.throws(()=>validateSource(appSource,Buffer.concat([Buffer.from('// Display-only metadata.\n'),app]),pin,compiled.sources,{...attestation,original_source_sha256:'0'.repeat(64)}),'an attestation cannot substitute a different baseline');

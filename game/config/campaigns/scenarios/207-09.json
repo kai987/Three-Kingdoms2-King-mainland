@@ -3616,7 +3616,13 @@
           "source_scenario": "san14-207-09",
           "planned_serving": 347,
           "planned_max_city_roster": 18,
-          "future_plans": 359
+          "future_plans": 359,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -27710,32 +27716,32 @@
             "yulin"
           ],
           "reference_classes": {
-            "authorial_garrison_relocation": 47,
             "authorial_region_placement": 722,
-            "bounded_career_inference": 1,
             "game_reference": 237,
-            "novel_compatible_regional_mapping": 10,
             "primary_text_affiliation": 5,
-            "regional_primary_mapping": 1
+            "authorial_garrison_relocation": 47,
+            "novel_compatible_regional_mapping": 10,
+            "regional_primary_mapping": 1,
+            "bounded_career_inference": 1,
+            "explicit_scenario_scope": 4
+          },
+          "people": 1027,
+          "bases": {
+            "person_specific_future_free_appearance": 359,
+            "same_date_SAN14_guide_free_location": 2,
+            "same_date_SAN14_guide_affiliation": 4,
+            "same_date_SAN14_recorded_death": 231,
+            "retained_reviewed_opening_membership": 266,
+            "retained_person_specific_free_location": 82,
+            "historical_review_20261025": 63,
+            "historical_city_owner_relocation_authorial_garrison": 4,
+            "retained_explicit_scenario_ruler": 9,
+            "bounded_career_inference": 1,
+            "authorial_region_placement": 2,
+            "explicit_scenario_scope": 4
           }
         },
-        "update": {
-          "bases": {
-            "set": {
-              "person_specific_future_free_appearance": 359,
-              "same_date_SAN14_recorded_death": 231,
-              "retained_reviewed_opening_membership": 266,
-              "retained_person_specific_free_location": 82,
-              "historical_city_owner_relocation_authorial_garrison": 4,
-              "retained_explicit_scenario_ruler": 9,
-              "bounded_career_inference": 1,
-              "historical_review_20261025": 63
-            },
-            "delete": [
-              "authored_bounded_source_snapshot_continuity"
-            ]
-          }
-        }
+        "update": {}
       }
     }
   },

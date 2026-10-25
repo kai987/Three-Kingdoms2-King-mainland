@@ -50,7 +50,7 @@ class GeneratedOfficerTests(unittest.TestCase):
         self.assertEqual(person.runtime_id, ident)
         self.assertEqual(person.person_id, ident)
         self.assertNotIn(ident, game.catalog.by_id)
-        self.assertEqual(len(game.catalog.definitions), 1023)
+        self.assertEqual(len(game.catalog.definitions), 1027)
         self.assertEqual((person.loyalty, person.troops, person.experience), (80, 0, 0))
         self.assertEqual(game.state.cities['nanjun'].roster.officer_ids, [ident])
         self.assertEqual(game._city_occupancy(game.state, game.state.cities['nanjun']), 1)

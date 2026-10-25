@@ -140,8 +140,15 @@ def load_sources(*, timing=True):
         raise ValueError('Unknown canonical campaign source schema')
     order, persons = people['order'], people['people']
     validate_public_reference(public_stats, persons)
-    if len(order) != 1023 or len(set(order)) != len(order) or set(order) != set(persons):
-        raise ValueError('The canonical pool must contain 1023 unique identities')
+    if len(order) < 1023 or len(set(order)) != len(order) or set(order) != set(persons):
+        raise ValueError('The canonical pool must retain the released identities and unique additions')
+    # The released pool has an intentional runtime hole at1005. New people are
+    # appended after1023 rather than renumbering a save-bound historical ID.
+    released = [[pid, persons[pid]['runtime_id']] for pid in order[:1023]]
+    if sha256(json.dumps(released, separators=(',', ':')).encode()).hexdigest() != '0fb983fdb518092176cd672f32a4c079b6143741b5d6eaee804336b364fdf21d':
+        raise ValueError('Released person/runtime identities were renumbered')
+    if [persons[pid]['runtime_id'] for pid in order[1023:]] != list(range(1024, len(order) + 1)):
+        raise ValueError('New runtime identities must append after the released maximum')
     if any(persons[pid]['person_id'] != pid for pid in order):
         raise ValueError('Person pool identity mismatch')
     if not isinstance(index['scenarios'], list) or not index['scenarios']:
@@ -164,7 +171,7 @@ def load_sources(*, timing=True):
         validate_original_virtue(current_people, original_stats, original_identities)
         stat_counts = validate_campaign_stats(current_people, public_stats, san14_abilities)
         data['coverage'].update(
-            virtue='SAN14 charisma for1000 people; explicit default60 for23 missing sources',
+            virtue=f"SAN14 charisma for{stat_counts['charisma']} people; explicit default60 for{stat_counts['default']} missing sources",
             original_virtue_profiles=0, retained_original_reference_profiles=220,
             san14_charisma_profiles=stat_counts['charisma'],
             default_virtue_profiles=stat_counts['default'], history_designs_total=0,
@@ -247,5 +254,5 @@ if __name__ == '__main__':
         help='Output folder; alternate folders support isolated verification')
     args = parser.parse_args()
     result = build(args.check, args.output)
-    print(json.dumps(dict(catalogs=len(result['catalogs']), people_per_catalog=1023,
+    print(json.dumps(dict(catalogs=len(result['catalogs']), people_per_catalog=result['summary'][0]['library'],
         capacity=99, check=args.check), ensure_ascii=False))

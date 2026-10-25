@@ -234,7 +234,7 @@ class DelegationReplayTests(unittest.TestCase):
                 self.fail(f'Unhandled natural phase: {state.phase}')
         self.fail('Natural phase flow exceeded the bounded command budget')
 
-    def replay(self, filename, faction, turns, *, backends=('rust',), staff=False):
+    def replay(self, filename, faction, turns, *, backends=('rust',), staff=False, seed=2026):
         self.backends, self.games = backends, []
         self.phases, self.commands = Counter(), Counter()
         self.player_reports, self.ai_reports, self.ai_work, self.convoy_reports = set(), set(), set(), set()
@@ -251,7 +251,7 @@ class DelegationReplayTests(unittest.TestCase):
         for backend in backends:
             game = Campaign(catalog)
             with using_backend(backend):
-                game.command('new', dict(faction=faction, seed=2026), 0)
+                game.command('new', dict(faction=faction, seed=seed), 0)
             self.games.append(game)
         self.checkpoint()
         self.configure()
@@ -299,7 +299,7 @@ class DelegationReplayTests(unittest.TestCase):
             self.assertTrue(self.staff_battles, 'A generated officer must enter and act in a real arrival battle')
             self.assertGreater(final.officers[self.generated].experience, 0)
             self.assertNotIn(self.generated, catalog.by_id)
-            self.assertEqual(len(catalog.definitions), 1023)
+            self.assertEqual(len(catalog.definitions), 1027)
         if filename == '184-02.json':
             self.assertTrue(self.reappointed_military,
                 'Real persuasion must be followed by a legal replacement military appointment')
@@ -309,7 +309,10 @@ class DelegationReplayTests(unittest.TestCase):
         self.assertEqual(digest(catalog.data), original_catalog, 'Replay mutated the real catalog')
 
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
-        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'))
+        # Song Jian's added184 faction changes real AI turn/RNG consumption.
+        # Seed2027 naturally loses the military appointee to rival persuasion,
+        # preserving the reappointment/allocation path previously hit by2026.
+        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=2027)
 
     def test_217_wei_six_turns_staff_arrival_combat_and_real_convoys(self):
         self.replay('217-07.json', 'wei', 6, staff=True)

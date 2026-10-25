@@ -49,7 +49,7 @@ class PortraitIdentityTests(unittest.TestCase):
                     bound.append(row['person_id'])
         self.assertEqual(len(bound), len(set(bound)))
         self.assertEqual(len(bound), 220)
-        self.assertEqual(len(self.people) - len(bound), 803)
+        self.assertEqual(len(self.people) - len(bound), 807)
 
     def test_independently_reviewed_names_do_not_bind_similar_people(self):
         self.assertEqual(self.records[108]['transcribed_name'], '諸葛瞻')
@@ -95,14 +95,14 @@ class PortraitReleaseTests(unittest.TestCase):
     def setUpClass(cls):
         cls.index = builder.build()
 
-    def test_all_1023_people_have_real_assets_and_explicit_provenance(self):
+    def test_all_canonical_people_have_real_assets_and_explicit_provenance(self):
         index = self.index
         self.assertEqual(index['counts'], {
-            'people': 1023, 'nes_original': 220, 'generated': 803, 'original_archive': 237,
+            'people': 1027, 'nes_original': 220, 'generated': 807, 'original_archive': 237,
             'original_unique_pixels': 183, 'bound_original_unique_pixels': 179,
-            'generated_unique_pixels': 803, 'original_identity_pending': 17})
+            'generated_unique_pixels': 807, 'original_identity_pending': 17})
         self.assertEqual(set(index['people']), set(builder.identities()))
-        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1024)} - {'1005'})
+        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1028)} - {'1005'})
         self.assertEqual((index['width'], index['height']), (32, 40))
         for person_id, row in index['people'].items():
             with self.subTest(person_id=person_id):
@@ -115,6 +115,46 @@ class PortraitReleaseTests(unittest.TestCase):
                 else:
                     self.assertEqual(row['source'], 'pinned_ROM_static_frame0')
                     self.assertIn(row['original_id'], range(237))
+
+    def test_historical_additions_have_new_identities_and_exact_fourfold_portraits(self):
+        canonical = read('game/config/campaigns/people.json')
+        expected = ['historical-song-jian', 'historical-lu-xing',
+                    'historical-tang-pu', 'historical-li-tong-jiaozhi']
+        self.assertEqual(canonical['order'][1023:], expected)
+        released = [[pid, canonical['people'][pid]['runtime_id']] for pid in canonical['order'][:1023]]
+        self.assertEqual(builder.sha(json.dumps(released, separators=(',', ':')).encode()),
+                         '0fb983fdb518092176cd672f32a4c079b6143741b5d6eaee804336b364fdf21d')
+        generated = read('game/config/portrait-generated.json')['by_person_id']
+        hd = read('game/config/portrait-enhanced.json')['people']
+        old_hashes = {row['rgba_sha256'] for pid, row in generated.items() if pid not in expected}
+        new_hashes = set()
+        for number, pid in enumerate(expected, 1024):
+            with self.subTest(person_id=pid):
+                person, native_row, enhanced_row = canonical['people'][pid], generated[pid], hd[pid]
+                self.assertEqual(person['runtime_id'], number)
+                self.assertEqual(person['profile']['source_stats'], {})
+                self.assertEqual(person['profile']['virtue'], 60)
+                self.assertEqual(person['initialization']['health'], 80)
+                self.assertEqual(person['pre_campaign_stat_policy_v1']['checkpoint_kind'],
+                                 'new_person_initial_authorial_profile')
+                self.assertEqual(person['ability_source']['kind'], 'historical_authorial_game_design')
+                self.assertNotIn(native_row['rgba_sha256'], old_hashes | new_hashes)
+                new_hashes.add(native_row['rgba_sha256'])
+                native = builder.png_pixels((ROOT / 'game' / native_row['path'].lstrip('/')).read_bytes(), (32, 40))[1]
+                enlarged = builder.png_pixels((ROOT / 'game' / enhanced_row['path'].lstrip('/')).read_bytes(), (128, 160))[1]
+                self.assertEqual(enhanced_row['source_path'], native_row['path'])
+                self.assertEqual(enhanced_row['source_sha256'], native_row['png_sha256'])
+                self.assertTrue(enhanced_row['provenance']['qa']['nearest4xExact'])
+                self.assertEqual(self.index['people'][pid]['enhanced']['rendering'], 'nearest4x')
+                self.assertEqual(enhanced_row['provenance']['cell_index'], number - 1024)
+                self.assertEqual({tuple(native[i:i+4]) for i in range(0, len(native), 4)},
+                                 {(0, 0, 0, 0), (255, 255, 255, 255),
+                                  (247, 162, 71, 255), (158, 65, 0, 255)})
+                for y in range(160):
+                    for x in range(128):
+                        at = (y * 128 + x) * 4
+                        source_at = ((y // 4) * 32 + x // 4) * 4
+                        self.assertEqual(enlarged[at:at+4], native[source_at:source_at+4])
 
     def test_rebuilding_is_deterministic_and_does_not_mutate_campaign_catalogs(self):
         index_path = ROOT / 'game/assets/portraits/index.json'
@@ -268,6 +308,15 @@ class EnhancedPortraitTests(unittest.TestCase):
         self.bad(lambda d: d['approved_reference'].update(sha256='0' * 64), 'reference hash mismatch')
         (self.root / builder.ENHANCED_REFERENCE).unlink()
         with self.assertRaisesRegex(ValueError, 'reference hash mismatch'):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_nearest_rendering_is_explicit_and_rejects_unknown_values(self):
+        for value in (None, True, 4, 'unknown'):
+            with self.subTest(rendering=value):
+                self.bad(lambda d: d['people'][self.person].update(rendering=value), 'rendering')
+        self.bad(lambda d: d['people'][self.person].update(rendering='nearest4x'), 'source method')
+        self.record.update(rendering='nearest4x', provenance={'base_method': 'native32x40_exact_nearest4x'})
+        with self.assertRaisesRegex(ValueError, 'pixels do not preserve'):
             builder.enhanced_records(self.data, self.primary)
 
     def test_approved_reference_is_a_real_128_by_160_image(self):

@@ -95,7 +95,7 @@ class Frontier194ReviewTests(unittest.TestCase):
         self.assertEqual(faction_officer_counts(self.catalog)['wei'], 33)
         self.assertEqual(faction_officer_counts(self.catalog)['lubu'], 21)
         self.assertEqual(len(self.data['initial_officers']), 291)
-        self.assertEqual(len(self.catalog.ids), 1023)
+        self.assertEqual(len(self.catalog.ids), 1027)
 
     def test_primary_postings_and_authorial_garrisons_keep_separate_evidence(self):
         for pid in ('san14-candidate-0393', 'san14-candidate-0124',

@@ -2808,7 +2808,13 @@
           "source_scenario": "adapted-238-01",
           "planned_serving": 285,
           "planned_max_city_roster": 16,
-          "future_plans": 99
+          "future_plans": 99,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -45113,31 +45119,31 @@
       },
       "placement_completion": {
         "set": {
-          "future_plans": 99
-        },
-        "update": {
+          "future_plans": 99,
+          "people": 1027,
           "reference_classes": {
-            "set": {
-              "game_reference": 14,
-              "authorial_region_placement": 902,
-              "bounded_career_inference": 107
-            }
+            "game_reference": 14,
+            "authorial_region_placement": 902,
+            "bounded_career_inference": 107,
+            "explicit_scenario_scope": 4
           },
           "bases": {
-            "set": {
-              "same_date_SAN14_recorded_death": 10,
-              "same_date_SAN14_guide_affiliation": 3,
-              "retained_reviewed_opening_membership": 171,
-              "retained_chronology_or_explicit_exclusion": 614,
-              "authored_bounded_source_snapshot_continuity": 98,
-              "person_specific_future_free_appearance": 99,
-              "authored_bounded_snapshot_continuity": 3,
-              "same_date_SAN14_guide_free_location": 1,
-              "retained_person_specific_free_location": 12,
-              "retained_explicit_scenario_ruler": 4
-            }
+            "same_date_SAN14_recorded_death": 10,
+            "same_date_SAN14_guide_affiliation": 3,
+            "retained_reviewed_opening_membership": 171,
+            "retained_chronology_or_explicit_exclusion": 614,
+            "authored_bounded_source_snapshot_continuity": 98,
+            "person_specific_future_free_appearance": 99,
+            "authored_bounded_snapshot_continuity": 3,
+            "same_date_SAN14_guide_free_location": 1,
+            "retained_person_specific_free_location": 12,
+            "bounded_career_inference": 6,
+            "retained_explicit_scenario_ruler": 4,
+            "authorial_region_placement": 2,
+            "explicit_scenario_scope": 4
           }
-        }
+        },
+        "update": {}
       }
     }
   },

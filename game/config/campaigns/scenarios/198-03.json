@@ -2302,7 +2302,7 @@
         "本作按城池特色、劇本年月及戰亂／恢復階段設定錢糧與預備兵；數值為遊戲平衡設計，非史實人口或《三國志14》開局匯出。",
         "各劇本的月收入依開局年代配置；遊玩後依實際內政、招兵、行軍與戰鬥增減，不按歷史事件強制重設資源。",
         "本次保留武將每人300兵的初始化規則；城市駐軍總數取決於當篇實際駐將，預備兵另按年代配置。",
-        "每城最多99人；每方出戰最多10人。人物總庫1023人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
+        "每城最多99人；每方出戰最多10人。人物總庫1027人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
         "全部人物均完成在籍、在野、未來登場或明列排除計畫；來源不詳的駐城與連續任職屬本作配置，不是逐月史實已證。",
         "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
         "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。"
@@ -4225,7 +4225,13 @@
           "source_scenario": "mainland198-03",
           "planned_serving": 289,
           "planned_max_city_roster": 16,
-          "future_plans": 467
+          "future_plans": 467,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -79128,34 +79134,26 @@
           ],
           "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons.",
           "reference_classes": {
-            "authorial_garrison_relocation": 4,
             "authorial_region_placement": 995,
-            "bounded_career_inference": 20,
-            "bounded_regional_inference": 1,
             "primary_text_affiliation": 2,
-            "regional_primary_mapping": 1
+            "bounded_career_inference": 20,
+            "regional_primary_mapping": 1,
+            "bounded_regional_inference": 1,
+            "authorial_garrison_relocation": 4,
+            "explicit_scenario_scope": 4
+          },
+          "people": 1027,
+          "bases": {
+            "authored_nearby_historical_snapshot_continuity": 966,
+            "historical_review_20261025": 8,
+            "explicit_primary_or_reviewed_DLC_membership": 19,
+            "bounded_career_inference": 1,
+            "authored_nearby_historical_roster_inference": 27,
+            "authorial_region_placement": 2,
+            "explicit_scenario_scope": 4
           }
         },
         "update": {
-          "bases": {
-            "set": {
-              "authored_nearby_historical_snapshot_continuity": 966,
-              "explicit_primary_or_reviewed_DLC_membership": 19,
-              "bounded_career_inference": 1,
-              "authored_nearby_historical_roster_inference": 27,
-              "historical_review_20261025": 8
-            },
-            "delete": [
-              "same_date_SAN14_guide_free_location",
-              "same_date_SAN14_recorded_death",
-              "person_specific_future_free_appearance",
-              "same_date_SAN14_guide_affiliation",
-              "retained_reviewed_opening_membership",
-              "retained_person_specific_free_location",
-              "retained_explicit_scenario_ruler",
-              "authored_bounded_source_snapshot_continuity"
-            ]
-          },
           "source_coverage": {
             "set": {
               "dated_snapshot_people": 431,

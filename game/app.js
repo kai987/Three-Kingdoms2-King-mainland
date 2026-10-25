@@ -40,7 +40,7 @@ const escapeHtml=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 const name=id=>view.catalog.names[String(id)]||'武将';
 const isRuler=id=>GameOfficerChoices.isRuler(id,view?.game?.extension?.leaders);
 const portraitHtml=(id,size='roster',source=false,personId=null,displayName=null)=>GamePortraits.html(personId||GamePortraits.personId(view.catalog,id),displayName??name(id),{size,source});
-const faction=id=>id==='neutral'?'无主':view.catalog.factions.find(f=>f.id===id)?.name||'守备军';
+const faction=id=>id==='neutral'?'无主':factionDisplayName(view.catalog.factions.find(f=>f.id===id))||'守备军';
 const capacity=()=>view.catalog.rules.city_officer_capacity;
 const marching=()=>new Set([...(view.game?.extension?.travel?.marches||[]).flatMap(r=>r.officers),...(view.catalog.logistics?.marching_officers||[])]);
 const routeModes=()=>['fastest','land',...(view.catalog.river_routes?.length?['river']:[]),...(view.catalog.travel_hazards?['special','sea','explore']:[])];
@@ -85,7 +85,7 @@ function resourceSummary(id,preview=setupPreview){
  return r?`钱 ${r.gold} · 粮 ${r.grain} · 预备兵 ${r.reserves} · 武将 ${r.officers}人${view.catalog.civil_staff?` · 文吏 ${preview?0:view.catalog.civil_staff.faction_counts?.[id]??0}人`:''}`:'资源资料待载入';
 }
 function factionLedger(){
- return `<details class="faction-ledger"><summary>各势力资源</summary><p class="small">按当前所属城池合计，不含在途物资及武将带兵。</p><p class="small">武将按当前在籍人数计，含在途；不含在野和已退场人物。</p><div class="faction-ledger-scroll"><table><thead><tr><th>势力</th><th>武将数</th>${view.catalog.civil_staff?'<th>文吏</th>':''}<th>钱</th><th>粮</th><th>预备兵</th></tr></thead><tbody>${view.catalog.factions.map(f=>{const r=factionResources(f.id,null);return `<tr data-faction-resources="${f.id}"><th><svg class="faction-swatch ledger-swatch" width="12" height="12" aria-hidden="true"><rect width="12" height="12" fill="${mapColor(f.id)}"/></svg>${escapeHtml(f.name)}</th><td data-faction-officers="${f.id}">${r.officers}</td>${view.catalog.civil_staff?`<td data-faction-staff="${f.id}">${view.catalog.civil_staff.faction_counts?.[f.id]??0}</td>`:''}<td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;}).join('')}</tbody></table></div></details>`;
+ return `<details class="faction-ledger"><summary>各势力资源</summary><p class="small">按当前所属城池合计，不含在途物资及武将带兵。</p><p class="small">武将按当前在籍人数计，含在途；不含在野和已退场人物。</p><div class="faction-ledger-scroll"><table><thead><tr><th>势力</th><th>武将数</th>${view.catalog.civil_staff?'<th>文吏</th>':''}<th>钱</th><th>粮</th><th>预备兵</th></tr></thead><tbody>${view.catalog.factions.map(f=>{const r=factionResources(f.id,null);return `<tr data-faction-resources="${f.id}"><th><svg class="faction-swatch ledger-swatch" width="12" height="12" aria-hidden="true"><rect width="12" height="12" fill="${mapColor(f.id)}"/></svg>${escapeHtml(factionDisplayName(f))}</th><td data-faction-officers="${f.id}">${r.officers}</td>${view.catalog.civil_staff?`<td data-faction-staff="${f.id}">${view.catalog.civil_staff.faction_counts?.[f.id]??0}</td>`:''}<td>${r.gold}</td><td>${r.grain}</td><td>${r.reserves}</td></tr>`;}).join('')}</tbody></table></div></details>`;
 }
 function routeRisk(quote){
  const lines=(quote.routes||[]).filter(r=>r.hazard).map(r=>{
@@ -260,7 +260,7 @@ function selectFaction(){
   const scenarioKind=`<p class="small scenario-kind" data-scenario-kind>剧本类型：${escapeHtml(category)}${meta.fictional?' · 假想剧本（IF）':''}</p>`;
   const scenarioExtra=`${meta.story_note_i18n?.['zh-Hant']?`<p>${escapeHtml(meta.story_note_i18n['zh-Hant'])}</p>`:''}${meta.official_same_date_title?`<p>同年月官方剧本：${escapeHtml(meta.official_same_date_title['zh-Hant'])}。</p>`:''}${meta.scope_note?`<p>${escapeHtml(meta.scope_note)}</p>`:''}${chronology?`<details class="chronology-exceptions"><summary>人物年代例外</summary><p>以下个别年代修订仅适用于本剧本。游戏设定不等同史实。</p><ul>${chronology}</ul></details>`:''}`;
   const content=`<div class="setup-content"><div class="setup-fields"><label class="field" for="scenario">选择剧本<select id="scenario">${options}</select></label><label class="field" for="difficulty">游戏难度<select id="difficulty">${['easy','normal','hard'].map(id=>`<option value="${id}" ${campaignDifficulty===id?'selected':''}>${difficultyName(id)}</option>`).join('')}</select></label></div>${catalogSummary}${catalogWarning}<p class="intro">${option.year}年${option.month}月 · ${option.cities}城 · 每城${option.capacity}人<br>开局在籍${option.serving}人，在野${option.free}人。</p>
-  <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg><span class="faction-choice-body"><span class="faction-choice-heading"><span>${escapeHtml(f.name)}</span><span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></span><span class="faction-choice-resources" data-faction-resources="${f.id}">${resourceSummary(f.id,option)}</span></span></label>`).join('')}</div>
+  <div class="choice-list">${option.factions.map(f=>`<label class="faction-choice"><input type="radio" name="faction" value="${f.id}" ${f.id===preferred?'checked':''}><svg class="faction-swatch" width="16" height="16" aria-hidden="true"><rect width="16" height="16" fill="${mapColor(f.id)}"/></svg><span class="faction-choice-body"><span class="faction-choice-heading"><span>${escapeHtml(factionDisplayName(f))}</span><span>${escapeHtml(f.captain)} · ${escapeHtml(cityName(f.city))}</span></span><span class="faction-choice-resources" data-faction-resources="${f.id}">${resourceSummary(f.id,option)}</span></span></label>`).join('')}</div>
   <p id="setup-summary" class="small" aria-live="polite"></p><details class="setup-options"><summary><span data-locale-only="zh-Hant" data-l10n-native="zh-Hant">進階設定與劇本資料</span><span data-locale-only="ja" data-l10n-native="ja">詳細設定・シナリオ資料</span></summary><details class="difficulty-notes"><summary>游戏难度</summary><p class="small" id="difficulty-help">简单：较少进攻，使用普通攻击；普通：长期目标、双路协同；困难：更积极进攻、三路协同与完整计略评估。各档沿用相同的资源与战斗规则。</p></details>
   ${option.main_scenario?`<details class="scenario-notes"><summary>剧本资料与配置范围</summary>${scenarioKind}<p>${escapeHtml(option.main_scenario.summary)}</p>${scenarioExtra}<p>本作${option.cities}城改编，现有${option.configured}份完整属性。${option.main_scenario.virtue_default_policy?'部分德值按用户指定暂设60，人物库可查评分来源。':''}新年代的部分归属为前后快照推定，未确认者不自动入场。</p>${option.main_scenario.city_chronology_note?`<p class="small">${escapeHtml(option.main_scenario.city_chronology_note)}</p>`:''}${scenarioSource}</details>`:scenarioKind}
   <details class="seed-settings"><summary>随机种子</summary><label class="seed-label" for="seed">随机种子<input id="seed" type="number" min="1" max="4294967295" step="1" value="2026" aria-describedby="seed-help"></label><p id="seed-help" class="small">控制招募、战斗等随机判定；相同种子与操作可重现战局。</p></details></details></div>`;
@@ -297,6 +297,11 @@ function previewRulerPortrait(preview,chosen){
  const personId=chosen.ruler_person_id??(rulerId!==undefined?GamePortraits.personId(view.catalog,rulerId):null);
  return personId?`<span class="setup-ruler-portrait">${GamePortraits.html(personId,chosen.captain||'',{size:'roster'})}</span>`:'';
 }
+function factionDisplayName(row){
+ // Generic faction labels use the dated ruler already shown in this row.
+ // Portraits retain their explicit person ID rather than guessing by name.
+ return row&&/[势勢]力/.test(row.name||'')?row.captain||row.name:row?.name||'';
+}
 function setPreviewFaction(id,focus=null,reveal=false){
  const preview=setupPreview,chosen=preview?.factions.find(f=>f.id===id);
  if(!chosen)return false;
@@ -304,7 +309,7 @@ function setPreviewFaction(id,focus=null,reveal=false){
  let selected;
  document.querySelectorAll('input[name=faction]').forEach(input=>{input.checked=input.value===chosen.id;if(input.checked)selected=input;});
  const count=Object.values(preview.initial_owners).filter(owner=>owner===chosen.id).length;
- const description=`${chosen.name} · ${count}座城池 · 根据地${cityName(chosen.city)}。${resourceSummary(chosen.id,preview)}。地图已预览本剧本归属，开始后才建立新战役。`;
+ const description=`${factionDisplayName(chosen)} · ${count}座城池 · 根据地${cityName(chosen.city)}。${resourceSummary(chosen.id,preview)}。地图已预览本剧本归属，开始后才建立新战役。`;
  $('#setup-summary').innerHTML=`${previewRulerPortrait(preview,chosen)}<span class="setup-summary-copy">${escapeHtml(description)}</span>`;
  if(reveal&&selected){
   const row=selected.closest('.faction-choice'),list=row?.closest('.choice-list');
@@ -316,7 +321,7 @@ function renderMap(){
  const game=view.game,preview=setupPreview,owners=preview?.initial_owners||Object.fromEntries(Object.values(game?.cities||{}).map(c=>[c.id,c.owner]));
  const board=preview?.map_cities||view.catalog.cities;
  const active=board.filter(c=>(preview?.active_cities||view.catalog.active_cities).includes(c.id));
- const factions=preview?.factions||view.catalog.factions,ownerName=(id,city)=>{const history=(preview?.city_history||view.catalog.city_history)?.[city];return id==='neutral'?(history?.neutral_label||(history?.opening?.basis==='unmapped_local_han_administration'?'地方汉郡（中立）':'无主')):factions.find(f=>f.id===id)?.name||'守备军';};
+ const factions=preview?.factions||view.catalog.factions,ownerName=(id,city)=>{const history=(preview?.city_history||view.catalog.city_history)?.[city];return id==='neutral'?(history?.neutral_label||(history?.opening?.basis==='unmapped_local_han_administration'?'地方汉郡（中立）':'无主')):factionDisplayName(factions.find(f=>f.id===id))||'守备军';};
  const added=preview?.added_city_ids||view.catalog.added_city_ids||[],activeIds=new Set(active.map(c=>c.id));
  const cityProfiles=preview?.city_profiles||view.catalog.city_profiles||{};
  const focused=preview?.focus||selectedCity,selected=board.find(c=>c.id===focused),center=selected?mapPosition(selected):[760,440];
@@ -456,7 +461,10 @@ async function showCityInformation(id){
  if(generation===undefined)return;
  try{
   let data;
-  if(preview)data=await request('/api/city-preview?'+new URLSearchParams({scenario:preview.id,city:id}));
+  if(preview){
+   data=await request('/api/city-preview?'+new URLSearchParams({scenario:preview.id,city:id}));
+   if(data.city.owner!=='neutral')data.city.owner_name=factionDisplayName(preview.factions.find(f=>f.id===data.city.owner))||data.city.owner_name;
+  }
   else{
    const c=view.game.cities[id],def=view.catalog.cities.find(c=>c.id===id);
    data={title:view.catalog.title,year:view.game.year,month:view.game.month,day:view.game.day,capacity:capacity(),city:{...c,

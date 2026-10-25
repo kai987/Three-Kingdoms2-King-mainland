@@ -79,6 +79,14 @@
           "name": "士燮",
           "color": "#8e2d3e",
           "initial_officers": 6
+        },
+        {
+          "id": "song_jian",
+          "name": "宋建",
+          "captain": "宋建",
+          "city": "longxi",
+          "color": "#007f89",
+          "initial_officers": 1
         }
       ],
       "active_cities": [
@@ -1150,6 +1158,13 @@
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "troops": 300,
+          "ruler": true,
+          "resolve_death_year": false
         }
       ],
       "initial_free_officers": [
@@ -1903,6 +1918,34 @@
           "city": "nanyang",
           "resolve_death_year": false
         }
+      ],
+      "officer_count": 1027,
+      "design_notes": [
+        "统一13个不同年代开局：官方本篇7篇、加强版追加4篇，以及旧版独有221年与249年。重复版本只保留存档兼容，不再列为新开局。",
+        "公开攻略逐将驻城仅作为注明来源的游戏配置参考；并非官方存档导出。无对应驻城者均匀补到与其他非中立势力接壤的城市，无此类前线或已满员时再均分到己方其他城市。",
+        "184年以九勢力17城遊戲配置為基線，另加宋建枹罕區域據點，合計10勢力18城；擴展節點不自動繼承漢廷領土。宋建於本篇提前登場及孫堅等獨立集團均屬遊戲配置，不等於嚴格逐月史實。",
+        "官渡开局上党改属袁绍。其余既有疆界仍为扩展地图玩法配置，尚未声称全部复刻《三国志14》。",
+        "蜀地新增葭萌／汉寿、涪县、宕渠、南广；武昌221年4月开放。临海、临川257年起、建安260年起、吴兴266年起在长期战役按配置开放；日期精度见城池说明。",
+        "新增蜀地节点为汉代已有县城或军镇，不把宕渠、南广同名郡的短期设废当作城市出现与消失。葭萌采用刘备据蜀后汉寿名称的年代约定，非确定改名年月。",
+        "武昌按221年四月改名置郡开放（同年八月筑城）；临海、临川按257年二月。建安、吴兴的开城月为明确标注的玩法时间点，不冒充史料确月。",
+        "江夏旅行坐标采用夏口方向军事区域代理，与鄂州武昌分开；不是声称夏口城在184年已经筑成或江夏历年郡治固定于此。",
+        "阴平赴成都为单程险道，按平地基准2倍耗时，完成时全军余三分之一；反向不能走这条边，可另寻其他道路。",
+        "新增汉中—长安子午谷；7–9月暴雨为平地4倍耗时、减员50%，其他月份为平地2倍、减员20%。可主动选择险道，也可选择其他最快路线。",
+        "海路以出发月和方向判断季风：5–9月西南风，10–3月东北风，4月过渡。顺风120公里/日、逆风7.5公里/日；季风航行全程只结算一次80–90%暴风雨兵损。此为用户指定玩法，不是史实天气或伤亡测量。",
+        "仅沿海港区节点可探索未知海路；实际到岸且仍有带兵者才显路，探索全损或途中取消不显路。发现与攻下敌城分开判定；发现路线会保存。",
+        "人物庫保留原有1000人，追加有原典身分依據的人物；同人異名不重複計數。",
+        "追加人物的武、知、體力與適性為本作設計值；未具充分德行記錄者沿用用戶指定德60。",
+        "新增年表含明列的遊戲估計；退場年不冒充史實卒年，原典記載與估計分開保存。",
+        "逐篇補入有來源的任職窗口；連續任職及IF延續屬本作推定，駐城仍按容量及邊境防務分配。",
+        "新增人物僅在本篇已啟用勢力的生涯窗口內登場；未來以在野待訪，不強制歷史轉屬。",
+        "本作按城池特色、劇本年月及戰亂／恢復階段設定錢糧與預備兵；數值為遊戲平衡設計，非史實人口或《三國志14》開局匯出。",
+        "各劇本的月收入依開局年代配置；遊玩後依實際內政、招兵、行軍與戰鬥增減，不按歷史事件強制重設資源。",
+        "本次保留武將每人300兵的初始化規則；城市駐軍總數取決於當篇實際駐將，預備兵另按年代配置。",
+        "每城最多99人；每方出戰最多10人。人物總庫1027人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
+        "全部人物均完成在籍、在野、未來登場或明列排除計畫；來源不詳的駐城與連續任職屬本作配置，不是逐月史實已證。",
+        "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
+        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。",
+        "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。"
       ]
     },
     "update": {
@@ -1995,7 +2038,7 @@
           "hongnong": "neutral",
           "fengyi": "neutral",
           "fufeng": "neutral",
-          "longxi": "neutral",
+          "longxi": "song_jian",
           "shangdang": "neutral",
           "xiangyang": "neutral",
           "xiping": "neutral",
@@ -2720,7 +2763,8 @@
           "san14-candidate-0994": "nanyang",
           "san14-candidate-0996": "yuyang",
           "san14-candidate-0997": "lujiang",
-          "san14-candidate-1000": "chenliu"
+          "san14-candidate-1000": "chenliu",
+          "historical-song-jian": "longxi"
         }
       },
       "faction_rulers": {
@@ -2732,7 +2776,8 @@
           "gongsun_zan": 265,
           "ma_teng": 770,
           "liu_yan": 924,
-          "ding_yuan": 693
+          "ding_yuan": 693,
+          "song_jian": 1024
         },
         "delete": [
           "wei",
@@ -2742,12 +2787,31 @@
       },
       "coverage": {
         "set": {
-          "initial_serving": 137,
+          "initial_serving": 138,
           "initial_free": 150,
           "source_scenario": "san14-184-01",
-          "planned_serving": 137,
+          "planned_serving": 138,
           "planned_max_city_roster": 17,
-          "future_plans": 736
+          "future_plans": 736,
+          "placement_plans": 1027,
+          "pending_history": 0,
+          "default_virtue_profiles": 635,
+          "virtue": "verified original ROM virtue for220 exact-name identities; otherwise individual authorial ratings or explicit user default60",
+          "library": 1027,
+          "source_years": "third-party SAN14 settings; historical verification separate",
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "pending_capacity": 0,
+          "new_history_profiles": 11,
+          "history_designs_total": 168,
+          "configured_profiles": 1027,
+          "san14_abilities": 1000,
+          "new_historical_people": 27,
+          "pending_factions": [],
+          "pending_faction": 0,
+          "reused_profiles": 269,
+          "original_virtue_profiles": 220,
+          "pending_profiles": 0
         }
       },
       "era_assignments": {
@@ -32252,19 +32316,207 @@
               "city": "nanjun"
             }
           }
+        },
+        "set": {
+          "historical-song-jian": {
+            "source_status": "serving",
+            "source_ruler": "宋建",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "song_jian",
+            "city": "longxi",
+            "placement_basis": "authorial_song_jian_184_early_opening",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "historical-song-jian",
+              "faction": "song_jian",
+              "origin": "longxi",
+              "city": "longxi",
+              "basis": "authorial_song_jian_184_early_opening",
+              "source_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_song_jian_184_early_opening",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
+              "reference_date": null,
+              "historical_certainty": "authorial_early_appearance_region_proxy",
+              "opening_date": [
+                184,
+                2
+              ],
+              "attestation_period": "184年冬；未載確月",
+              "opening_is_month_attestation": false
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                214,
+                12
+              ],
+              "city": "longxi",
+              "status": "serving",
+              "basis": "authorial_song_jian_184_early_opening"
+            }
+          },
+          "historical-lu-xing": {
+            "source_status": "not_appeared",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "not_appeared",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This new historical identity is only enabled in its explicitly reviewed campaign.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷48",
+                "https://zh.wikisource.org/zh-hant/三國志/卷04",
+                "https://zh.wikisource.org/zh-hant/晉書/卷057"
+              ],
+              "note": "新增人物只在本次明列劇本啟用；其餘年代明確排除，不因年度推進自動生成。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "historical_certainty": "explicit_scenario_scope"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          },
+          "historical-tang-pu": {
+            "source_status": "not_appeared",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "not_appeared",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This new historical identity is only enabled in its explicitly reviewed campaign.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷48",
+                "https://zh.wikisource.org/zh-hant/三國志/卷04",
+                "https://zh.wikisource.org/zh-hant/晉書/卷057"
+              ],
+              "note": "新增人物只在本次明列劇本啟用；其餘年代明確排除，不因年度推進自動生成。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "historical_certainty": "explicit_scenario_scope"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          },
+          "historical-li-tong-jiaozhi": {
+            "source_status": "not_appeared",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "not_appeared",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This new historical identity is only enabled in its explicitly reviewed campaign.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷48",
+                "https://zh.wikisource.org/zh-hant/三國志/卷04",
+                "https://zh.wikisource.org/zh-hant/晉書/卷057"
+              ],
+              "note": "新增人物只在本次明列劇本啟用；其餘年代明確排除，不因年度推進自動生成。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "historical_certainty": "explicit_scenario_scope"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          }
         }
       },
       "main_scenario": {
         "set": {
           "title": "黄巾之乱",
-          "summary": "参考《三国志14》九势力17城开局，其余扩展节点留空；这属于游戏开局设定。",
+          "summary": "黃巾之亂沿用九勢力17城遊戲基線，另加入宋建的枹罕據點；其184年2月登場早於原典所記當年冬涼州亂，屬明列的本作提前配置。",
           "reviewed_source_city_records": 3,
           "historical_review": {
             "revision": "2026-10-25",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
-            "faction_additions": [],
-            "city_owner_corrections": [],
-            "all_city_months_independently_attested": false
+            "faction_additions": [
+              "song_jian"
+            ],
+            "city_owner_corrections": [
+              "longxi"
+            ],
+            "all_city_months_independently_attested": false,
+            "local_map_proxies": {
+              "longxi": {
+                "display_name": "枹罕",
+                "represents": [
+                  "枹罕"
+                ],
+                "whole_commandery_control_claimed": false,
+                "early_opening": true,
+                "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。"
+              }
+            },
+            "source_backed_additions_note": [
+              "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。"
+            ]
+          },
+          "setup_basis": "reviewed_SAN14_9_faction_baseline_plus_authorial_early_song_jian",
+          "summary_i18n": {
+            "zh-Hant": "黃巾之亂沿用九勢力17城遊戲基線，另加入宋建的枹罕據點；其184年2月登場早於原典所記當年冬涼州亂，屬明列的本作提前配置。",
+            "ja": "黄巾の乱の9勢力17都市を基礎に、宋建の枹罕拠点を追加します。184年2月の登場は、原典が同年冬に記す涼州の反乱より早い本作の明示的な設定です。"
           }
         }
       },
@@ -47765,7 +48017,24 @@
           },
           "longxi": {
             "detail": "",
-            "names": [],
+            "names": [
+              {
+                "from_date": [
+                  184,
+                  2
+                ],
+                "to_date": [
+                  9999,
+                  12
+                ],
+                "name": "枹罕",
+                "basis": "scenario_only_fuhan_county_proxy_not_longxi_commandery",
+                "source_urls": [
+                  "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                  "https://zh.wikisource.org/zh-hant/三國志/卷09"
+                ]
+              }
+            ],
             "sources": [
               {
                 "url": "https://wikiwiki.jp/sangokushi14/184年2月　黄巾の乱",
@@ -47833,74 +48102,36 @@
               }
             ],
             "opening": {
-              "owner": "neutral",
-              "basis": "reviewed_SAN14_opening_adapted_to_expanded_board",
-              "note": "参考公开SAN14攻略的184年2月游戏配置，并非官方原始剧本导出，也不等同严格史实。何进4城、黄巾6城及七个一城势力映射到本作17个节点，其余88个当年开放节点设中立；中立表示本作未设独立势力驻军，不表示汉代没有地方行政。小沛映射qiao、北平映射yuyang是既有棋盘代理，不是原地同址复制；本作额外郡城不机械推定归属。",
+              "owner": "song_jian",
+              "basis": "explicit_user_requested_early_song_jian_adaptation",
+              "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
               "sources": [
                 {
-                  "url": "https://wikiwiki.jp/sangokushi14/184年2月　黄巾の乱",
-                  "note": "势力表9势力：何进4城、张角6城，其余7势力各1城；合计17座SAN14主城。"
+                  "url": "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                  "note": "原典身分與年代；184年2月在場和節點代理為本作設定。"
                 },
                 {
-                  "url": "https://pepedash.biz/sangokushi14-scenario1/",
-                  "note": "开局攻略明确何进洛阳、长安、邺与陈留；许昌属黄巾，安定和汉中为空白；南方大量空白。"
+                  "url": "https://zh.wikisource.org/zh-hant/三國志/卷09",
+                  "note": "原典身分與年代；184年2月在場和節點代理為本作設定。"
                 },
                 {
-                  "url": "https://wikiwiki.jp/sangokushi14/何進",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張角",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/孫堅",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/董卓",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/公孫サン",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/馬騰",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/劉焉",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/丁原",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/士燮",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張宝",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張梁",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/程遠志",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張曼成",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/管亥",
-                  "note": "184剧本表：小沛太守、张角势力；小沛在本作仅以谯郡节点代理。"
+                  "url": "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                  "note": "原典身分與年代；184年2月在場和節點代理為本作設定。"
                 }
+              ]
+            },
+            "control_review": {
+              "date": [
+                184,
+                2
+              ],
+              "owner": "song_jian",
+              "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
+              "certainty": "authorial_early_appearance_region_proxy",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
               ]
             }
           },
@@ -56218,43 +56449,66 @@
               "city": "yan",
               "resolve_death_year": true
             }
-          ]
+          ],
+          "historical-song-jian": [
+            {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                214,
+                12
+              ],
+              "city": "longxi",
+              "basis": "authorial_song_jian_184_early_opening"
+            }
+          ],
+          "historical-lu-xing": [],
+          "historical-tang-pu": [],
+          "historical-li-tong-jiaozhi": []
         }
       },
       "placement_completion": {
         "set": {
           "future_plans": 736,
           "city_owner_corrections": [
-            "yidu"
-          ]
-        },
-        "update": {
+            "yidu",
+            "longxi"
+          ],
+          "source_snapshot_complete": false,
+          "pending": 0,
           "reference_classes": {
-            "set": {
-              "authorial_region_placement": 1022,
-              "game_reference": 1
-            },
-            "delete": [
-              "bounded_career_inference"
-            ]
+            "authorial_region_placement": 1022,
+            "game_reference": 1,
+            "authorial_early_appearance_region_proxy": 1,
+            "explicit_scenario_scope": 3
+          },
+          "schema": "tk2-placement-completion-v1",
+          "people": 1027,
+          "source_hashes": {
+            "game/config/references/history-postings.json": "d13fd180dd16b5bf63e7c911bdecb73fdec82fc97baf5fc87478c7e941a0fe1b",
+            "game/config/references/san14-postings.json": "85d3ff30528af7c8596a46ca46a14901b19db500df606f5d6b7bec625eef3ba9",
+            "game/config/references/san14-era-states.json": "e0f200eeb853565f15513002d996e72971e541aac8aedcf350118463cdf17915"
+          },
+          "complete": true,
+          "source_boundary": "Configuration complete; exact historical postings are not all established. Authorial continuity/regions are labelled per person.",
+          "capacity": 99,
+          "source_coverage": {
+            "dated_snapshot_people": 1023,
+            "newly_checked_guide_people": 15
           },
           "bases": {
-            "set": {
-              "person_specific_future_free_appearance": 736,
-              "same_date_SAN14_guide_free_location": 1,
-              "retained_person_specific_free_location": 149,
-              "retained_reviewed_opening_membership": 128,
-              "retained_explicit_scenario_ruler": 9
-            },
-            "delete": [
-              "same_date_SAN14_recorded_death",
-              "same_date_SAN14_guide_affiliation",
-              "authored_bounded_source_snapshot_continuity",
-              "bounded_career_inference",
-              "authorial_region_placement"
-            ]
+            "person_specific_future_free_appearance": 736,
+            "same_date_SAN14_guide_free_location": 1,
+            "retained_person_specific_free_location": 149,
+            "retained_reviewed_opening_membership": 128,
+            "retained_explicit_scenario_ruler": 9,
+            "authorial_song_jian_184_early_opening": 1,
+            "explicit_scenario_scope": 3
           }
-        }
+        },
+        "update": {}
       }
     }
   },

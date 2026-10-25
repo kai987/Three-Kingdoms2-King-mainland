@@ -1,0 +1,8 @@
+Create a production Famicom/NES strategy game portrait sprite sheet with exactly four different Chinese men in a strict2×2grid. Use art/portraits/reference-originals.png only for the original game's sparse pixel style, never copy its identities. All four are authorial game art, not historical likenesses.
+
+Top left: Song Jian, mature northwest local ruler, broad square face, heavy eyebrows, moustache and medium squared beard, tall flat-topped dark official headdress with white side cloth and brown collar.
+Top right: Lu Xing, middle-aged Jiaozhi rebel administrator, angular long face, high cheekbones, thin moustache, short pointed beard, low flat black scholar cap with white edge and crossed white collar.
+Bottom left: Tang Pu, military commandant, sturdy oval face, thick downward moustache, rounded orange helmet with white top ridge and brown cheek guards, white shoulder armor.
+Bottom right: Li Tong (李統, not the Wei officer李通), younger civil official, smooth long clean-shaven face, small eyebrows, folded black scholar cap with broad white side band and modest white/brown robe.
+
+Each cell: front-facing head and shoulders at logical32×40pixels, nearest-neighbor square blocks, full hats and shoulders, wide pure-black margins/gutters. Restrict to black#000000, white#FFFFFF, orange#F7A247 and brown#9E4100. No text, grid lines, gradients, antialiasing, texture, realistic shading or modern detailed pixel art. All four must differ in face geometry, eyes, chin, hats and facial hair. Sheet aspect4:5.

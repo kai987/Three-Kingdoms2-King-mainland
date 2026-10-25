@@ -3699,7 +3699,13 @@
           "source_scenario": "adapted-191-10",
           "planned_serving": 300,
           "planned_max_city_roster": 37,
-          "future_plans": 591
+          "future_plans": 591,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -54369,37 +54375,33 @@
             "yinping"
           ],
           "reference_classes": {
-            "authorial_garrison_relocation": 43,
             "authorial_region_placement": 843,
-            "bounded_career_inference": 128,
-            "explicit_regional_proxy": 1,
             "game_reference": 4,
+            "bounded_career_inference": 128,
+            "authorial_garrison_relocation": 43,
             "primary_text_affiliation": 3,
-            "regional_primary_mapping": 1
+            "regional_primary_mapping": 1,
+            "explicit_regional_proxy": 1,
+            "explicit_scenario_scope": 4
+          },
+          "people": 1027,
+          "bases": {
+            "person_specific_future_free_appearance": 591,
+            "same_date_SAN14_guide_free_location": 3,
+            "same_date_SAN14_guide_affiliation": 1,
+            "authored_bounded_source_snapshot_continuity": 122,
+            "historical_review_20261025": 50,
+            "authorial_region_placement": 37,
+            "retained_chronology_or_explicit_exclusion": 36,
+            "historical_city_owner_relocation_authorial_garrison": 19,
+            "retained_reviewed_opening_membership": 88,
+            "retained_person_specific_free_location": 56,
+            "retained_explicit_scenario_ruler": 16,
+            "authored_bounded_snapshot_continuity": 4,
+            "explicit_scenario_scope": 4
           }
         },
-        "update": {
-          "bases": {
-            "set": {
-              "person_specific_future_free_appearance": 591,
-              "same_date_SAN14_guide_free_location": 3,
-              "same_date_SAN14_guide_affiliation": 1,
-              "authored_bounded_source_snapshot_continuity": 122,
-              "authorial_region_placement": 37,
-              "retained_chronology_or_explicit_exclusion": 36,
-              "historical_city_owner_relocation_authorial_garrison": 19,
-              "retained_reviewed_opening_membership": 88,
-              "retained_person_specific_free_location": 56,
-              "retained_explicit_scenario_ruler": 16,
-              "authored_bounded_snapshot_continuity": 4,
-              "historical_review_20261025": 50
-            },
-            "delete": [
-              "same_date_SAN14_recorded_death",
-              "bounded_career_inference"
-            ]
-          }
-        }
+        "update": {}
       }
     }
   },

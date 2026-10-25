@@ -230,8 +230,8 @@ def compile_report():
             actual = opening.get(pid)
             require(actual and actual['faction'] == fid and actual['city'] == city and actual['ruler'],
                     ident + ': new faction ruler is not actually stationed in its capital: ' + pid)
-            require(data['faction_rulers'].get(fid) == next(i for i, p in enumerate(data['people'])
-                    if p['person_id'] == pid), ident + ': faction ruler runtime identity mismatch ' + fid)
+            require(data['faction_rulers'].get(fid) == people[pid]['runtime_id'],
+                    ident + ': faction ruler runtime identity mismatch ' + fid)
         for row in changes['officer_changes']:
             pid, faction, city = row['person_id'], row.get('faction'), row.get('city')
             require(pid in people, ident + ': reviewed person missing from pool ' + pid)
@@ -250,11 +250,12 @@ def compile_report():
             city_changes.append(dict(change, before=before, owner=data['initial_owners'][change['city']]))
         changes['city_changes'] = city_changes
         faction_rows = []
+        by_runtime = {person['runtime_id']: person for person in data['people']}
         for fid, faction in factions.items():
-            ruler_index = data['faction_rulers'][fid]
-            require(isinstance(ruler_index, int) and 0 <= ruler_index < len(data['people']),
-                    ident + ': invalid faction ruler index')
-            ruler = data['people'][ruler_index]
+            ruler_id = data['faction_rulers'][fid]
+            require(type(ruler_id) is int and ruler_id in by_runtime,
+                    ident + ': invalid faction ruler identity')
+            ruler = by_runtime[ruler_id]
             faction_rows.append(dict(id=fid, ruler=ruler['name'], person_id=ruler['person_id'],
                 city=faction['city'], city_name=names[faction['city']],
                 city_count=sum(data['initial_owners'][city] == fid for city in active),
@@ -417,14 +418,16 @@ def markdown(report):
         '[先主伝](https://zh.wikisource.org/wiki/三國志/卷32)、[黄忠伝](https://zh.wikisource.org/wiki/三國志/卷36)、'
         '[『三國演義』第53回](https://zh.wikisource.org/wiki/三國演義/第053回)', '',
         '## 独立勢力にしていない地方勢力と未確定範囲', '',
-        '- 張燕、烏丸、厳白虎、宋建や地方氐部は、各時期に現在の節点を一つ丸ごと与える証拠や人物・都市の対応が不足する場合、'
+        '- 張燕、烏丸、厳白虎や地方氐部は、各時期に現在の節点を一つ丸ごと与える証拠や人物・都市の対応が不足する場合、'
         '独立した都市勢力にしていません。不存在や、すべて曹操の直轄だったという意味ではありません。',
         '- 武都・陰平は215年以前の地方実控を中立で表す箇所があります。張魯・劉璋・曹操のどれかへ一律に塗り替える証明ではありません。',
         '- 221年の南中は名義上の蜀属と実効支配を分けます。張裔が223年まで数年呉にいた記録と、劉備死後に反乱をまとめる記録には、'
         '雍闓の初動年月を確定しにくい点があります。黄元の222年12月〜223年3月の反乱は、現在の開幕時点の間にあります。',
-        '- 225年7月は孟獲を中心とする南中の戦局です。雍闓・高定・朱褒をこの月まで生存する君主として追加せず、牂牁と永昌の蜀方支配を分けます。',
+        '- 184年2月の宋建は利用者指定による前倒し登場です。隴西の節点を枹罕地域の代理とし、184年冬の記録を2月の確証とはしません。',
+        '- 225年7月は利用者指定で牂牁を孟獲に与え、雍闓・高定・朱褒をその配下にまとめます。史料上の討平時期と異なる開幕設定として明記し、史実の修正とは呼びません。',
         '- 士徽の反乱は226年で、225年7月の士燮や227年2月の呉属とは別です。263年5月は呂興に応じた交趾・九真・日南を地方叛軍として表し、'
-        '264年の正式な魏の任命を先取りしません。呂興の独立した歴史人物IDと可操作勢力は未追加です。', '',
+        '264年の正式な魏の任命を先取りしません。呂興は独立した人物IDの可操作勢力で、唐譜・李統の263年配置は後年の記録からの開幕推定です。'
+        '詳しくは[追加人物と史料の境界](song-jian-lu-xing.md)を参照してください。', '',
         '以下は決定表に保存した追加の制限です。', '']
     lines.extend('- ' + value for value in report['limits'])
     lines += ['', '## 再生成と照合', '', '```sh', 'python3 -B game/build_campaigns.py --check',

@@ -90,13 +90,20 @@ async function finalize(plan,page){
    people[id]={path:asset,width:128,height:160,source_path:source.source_path,source_sha256:source.source_sha256,sha256:sha(bytes),pixel_sha256:sha(Buffer.from(decoded.rgba)),method:'identity_preserving_pixel_enhancement',provenance:{approved_reference:plan.approved_reference.path,group_id:group.id,qa:{userApproved:true,exactApprovedFile:true}}};
   }
  }
- assert.equal(Object.keys(people).length,1023);assert.deepEqual(Object.keys(people).sort(),Object.keys(plan.people).sort());
+ assert.deepEqual(Object.keys(people).sort(),Object.keys(plan.people).sort());
+ // The approved v1 studies remain immutable. Later identities have their own
+ // retained art plan and derivative records instead of entering those studies.
+ const supplemental=read(path.join(ROOT,'art/portraits/historical-additions-v1/enhanced-records.json'));
+ assert.equal(supplemental.schema,'tk2-portrait-supplement-enhanced-v1');
+ for(const[id,row]of Object.entries(supplemental.people))if(!people[id])people[id]=row;
+ const canonical=read(path.join(ROOT,'game/config/campaigns/people.json'));
+ assert.deepEqual(Object.keys(people).sort(),canonical.order.slice().sort());
  for(const[id,row]of Object.entries(people)){
   assert.equal(sha(fs.readFileSync(path.join(ROOT,'game',row.source_path))),row.source_sha256,'Original changed: '+id);
   assert.equal(sha(fs.readFileSync(path.join(ROOT,'game',row.path))),row.sha256,'Enhanced changed: '+id);
  }
- const result={schema:'tk2-enhanced-portraits-v1',width:128,height:160,approved_reference:plan.approved_reference,counts:{people:1023,source_unique:plan.groups.length,atlas_count:plan.atlases.length},processing:{mode:'imagegen_atlas_color_studies_with_original_material_masks',background:'#000000',originalsRetained:true,newArtHistoricalLikenessClaim:false},people};
- const output=path.join(ROOT,'game/config/portrait-enhanced.json');fs.writeFileSync(output+'.tmp',JSON.stringify(result,null,2)+'\n');fs.renameSync(output+'.tmp',output);console.log(JSON.stringify({finalized:1023,output}));
+ const result={schema:'tk2-enhanced-portraits-v1',width:128,height:160,approved_reference:plan.approved_reference,counts:{people:Object.keys(people).length,source_unique:new Set(Object.values(people).map(row=>row.pixel_sha256)).size,atlas_count:plan.atlases.length+1},processing:{mode:'imagegen_atlas_color_studies_with_original_material_masks',background:'#000000',originalsRetained:true,newArtHistoricalLikenessClaim:false,supplement_mode:'authorial_pixel_art_native_nearest4x_preserving_identity'},people};
+ const output=path.join(ROOT,'game/config/portrait-enhanced.json');fs.writeFileSync(output+'.tmp',JSON.stringify(result,null,2)+'\n');fs.renameSync(output+'.tmp',output);console.log(JSON.stringify({finalized:Object.keys(people).length,output}));
 }
 (async()=>{const plan=read(path.join(WORK,'plan.json'));const browser=await chromium.launch({channel:'chrome',headless:true});try{const page=await browser.newPage();await page.setContent('<!doctype html><body></body>');
  if(process.argv.includes('--finalize'))await finalize(plan,page);

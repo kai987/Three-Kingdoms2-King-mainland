@@ -50,17 +50,20 @@ class MessageLocaleTests(unittest.TestCase):
         self.assertTrue({'存档无效，当前进度未改变。','请选择有效的战役。',
                          '请选择本城健康的武将。','当前不是待处理的电脑回合。'}<=checked)
 
-    def test_all1023_officer_identities_keep_the_name_crosswalk(self):
-        self.assertEqual(len(self.catalog['people']), 1023)
+    def test_all1027_officer_identities_keep_the_name_crosswalk(self):
+        self.assertEqual(len(self.catalog['people']), 1027)
         ids = set()
         for person in self.catalog['people']:
             ids.add(person['person_id'])
             japanese = person['ability_source']['source_name']
             self.assertEqual(translate(person['name'], self.data), japanese)
             self.assertEqual(translate(japanese, self.data), japanese)
-        self.assertEqual(len(ids), 1023)
+        self.assertEqual(len(ids), 1027)
         self.assertEqual(translate('乐𬘭', self.data), '楽綝')
         self.assertEqual(translate('马云𫘧', self.data), '馬雲騄')
+        for source, target in {'宋建':'宋建', '吕兴':'呂興', '唐谱':'唐譜', '李统':'李統'}.items():
+            self.assertEqual(translate(source, self.data), target)
+            self.assertEqual(translate(target, self.data), target)
         self.assertEqual(translate('吴郡', self.data), '呉郡')
         self.assertEqual(translate('长安', self.data), '長安')
 

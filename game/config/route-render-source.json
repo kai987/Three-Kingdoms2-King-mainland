@@ -3,7 +3,7 @@
   "source": "game/app.js",
   "original_source_sha256": "6ebb58656e8241c1ac492fcf02a36c2f1cfc7d2de179e874232087e46ea9ebc1",
   "compiler": "game/build_route_geometry.cjs",
-  "compiler_sha256": "643c709223fdc91aae610d6c640830d49fd50022ccb28cc9da9f179d702f8603",
+  "compiler_sha256": "81403cb8295878a950962b4bcb1d08629adb0ba35886d7565baf717492cf77af",
   "start": "function smoothMapPath(",
   "end": "function mapBackgroundHref(",
   "projection_sha256": "54d3ce279ff2650c1da9e768f9c91cd7601b2611bcca94ae2f372bc29dd9ea40",

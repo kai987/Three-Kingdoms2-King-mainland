@@ -482,6 +482,16 @@
         "boot"
       ]
     },
+    "tests/test_remake_songjian_luxing.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios"
+      ],
+      "scenario_ids": [
+        "mainland184-02",
+        "mainland263-05"
+      ]
+    },
     "tests/test_remake_stat_policy.py": {
       "tier": "full",
       "groups": [

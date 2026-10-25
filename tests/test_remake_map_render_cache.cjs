@@ -43,7 +43,9 @@ function environment(){
     focus(x,y,zoom){camera={x,y,zoom};notify();},reset(){camera={x:150,y:150,zoom:1};notify();},zoomBy(factor){camera.zoom*=factor;notify();}};
   }}
  };
- vm.createContext(context);vm.runInContext(source.slice(source.indexOf('function renderMap(){'),source.indexOf('\nasync function showCityInformation(')),context);
+ vm.createContext(context);
+ vm.runInContext(source.slice(source.indexOf('function factionDisplayName('),source.indexOf('function setPreviewFaction(')),context);
+ vm.runInContext(source.slice(source.indexOf('function renderMap(){'),source.indexOf('\nasync function showCityInformation(')),context);
  return {context,counts,elements,stage,cities:()=>cityElements,render:()=>context.renderMap(),markup:()=>markup};
 }
 const env=environment(),{context,counts,elements}=env;

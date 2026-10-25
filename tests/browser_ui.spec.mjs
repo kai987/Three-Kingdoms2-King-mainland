@@ -1173,7 +1173,17 @@ test('all 29 real Worker openings keep preview and live initial health and facti
    assert.equal(officer.loyalty,loyalty(person,city.owner,officer.is_ruler),`${scenario}/${officer.person_id} preview loyalty`);
    assert.equal(officer.virtue,person.profile.virtue,`${scenario}/${officer.person_id} preview virtue`);
   }
-  const representative=previews.find(city=>city.officers.length);
+  const addedRuler={
+   'mainland184-02':['song_jian','historical-song-jian','longxi'],
+   'mainland225-07':['nanman','san14-candidate-0845','jianning'],
+   'mainland263-05':['lu_xing','historical-lu-xing','jiaozhi']
+  }[scenario];
+  for(const faction of catalog.factions.filter(row=>/[势勢]力/.test(row.name))){
+   const label=page.locator(`.faction-choice:has(input[value="${faction.id}"]) .faction-choice-heading>span`).first();
+   const captain=await page.evaluate(name=>GameI18n.t(name),faction.captain);
+   await expect(label).toHaveText(captain);
+  }
+  const representative=previews.find(city=>city.id===addedRuler?.[2])||previews.find(city=>city.officers.length);
   expect(representative).toBeTruthy();
   await page.locator('#city-jump').selectOption(representative.id);
   const info=page.locator(`.city-information[data-inspected-city="${representative.id}"]`);
@@ -1182,12 +1192,30 @@ test('all 29 real Worker openings keep preview and live initial health and facti
   await expect(row.locator('td').nth(5)).toHaveText(first.is_ruler?'--':String(first.loyalty));
   await expect(row.locator('td').nth(7)).toHaveText(String(first.health));
   await closeDialog(page);
+  if(addedRuler){
+   const[side,personId]=addedRuler;
+   await page.locator(`input[name=faction][value="${side}"]`).check();
+   const portrait=page.locator('#setup-summary [data-portrait-person]');
+   await expect(portrait).toHaveAttribute('data-portrait-person',personId);
+   await expect(portrait).toHaveAttribute('data-portrait-name',catalog.factions.find(row=>row.id===side).captain);
+   await expect.poll(()=>portrait.locator('img').evaluate(image=>image.complete&&image.naturalWidth===128&&image.naturalHeight===160)).toBe(true);
+   await page.locator('#utility-menu summary').click();await page.locator('#language').selectOption('ja');
+   await expect(portrait).toHaveAttribute('data-portrait-person',personId);
+   const rulerName={song_jian:'宋建',nanman:'孟獲',lu_xing:'呂興'}[side];
+   await expect(page.locator('#setup-summary .setup-summary-copy')).toContainText(rulerName);
+   await page.locator('#utility-menu summary').click();
+   await page.locator('#setup-summary').scrollIntoViewIfNeeded();
+   await historyScreenshot(page,testInfo,`${scenario}-ruler-and-faction`);
+   await page.locator('#utility-menu summary').click();
+   await page.locator('#language').selectOption('zh-Hant');await page.locator('#utility-menu summary').click();
+  }
   await page.locator('#begin').click();
   await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
   await waitIdle(page);await dismissHistoryOpening(page);
   const download=page.waitForEvent('download');await page.locator('#save').click();
   const saved=JSON.parse(await readFile(await(await download).path(),'utf8'));
   expect(saved.scenario).toBe(scenario);
+  if(addedRuler)expect(saved.state.player).toBe(addedRuler[0]);
   expect([saved.state.year,saved.state.month,saved.state.day]).toEqual([catalog.start_year,catalog.start_month,1]);
   await expect(page.locator('#map-date')).toHaveAttribute('datetime',`${String(catalog.start_year).padStart(4,'0')}-${String(catalog.start_month).padStart(2,'0')}-01`);
   expect(Object.keys(saved.state.cities).sort()).toEqual([...catalog.active_cities].sort());

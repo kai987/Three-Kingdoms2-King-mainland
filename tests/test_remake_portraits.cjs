@@ -41,6 +41,7 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
   {path:enhancedPath('san14-person-a'),width:32,height:40},
   {path:enhancedPath('san14-person-a'),width:128,height:159},
   {path:enhancedPath('san14-person-a'),width:'128',height:160},
+  ...[null,'unknown',true,4].map(rendering=>({path:enhancedPath('san14-person-a'),width:128,height:160,rendering})),
   {path:[enhancedPath('san14-person-a')],width:128,height:160},
   ...['https://evil.example/a.png','/assets/portraits/enhanced/../a.png','/assets/portraits/enhanced/a.svg','/assets/portraits/enhanced/a.png?x=1','/assets/portraits/generated/a.png','/assets/portraits/enhanced/.png',`/assets/portraits/enhanced/${'a'.repeat(129)}.png`].map(path=>({path,width:128,height:160})),
  ])assert.throws(()=>validIndex({...manifest,people:{a:{...manifest.people['san14-person-a'],enhanced:variant}}}));
@@ -128,5 +129,25 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  const battle={id:1,attacker:'shu',source:'home',target:'enemy',round:1,used:[],attackers:[{id:255,troops:300}],defenders:[{id:999,troops:300}],log:[]};context.view.game.battle=battle;const beforeBattle=JSON.stringify(context.view.game);context.renderBattle();assert(elements.get('#stage').innerHTML.includes('portrait-battle'));assert(elements.get('#stage').innerHTML.includes('historical-extra'));assert.equal(JSON.stringify(context.view.game),beforeBattle);
  battle.extended={duel:{actor:255,target:999,round:1,log:[]},support:{255:{health:80,energy:10},999:{health:70,energy:10}}};const beforeDuel=JSON.stringify(context.view.game);context.renderDuel(battle);assert.equal((elements.get('#stage').innerHTML.match(/portrait-duel/g)||[]).length,2);assert(elements.get('#stage').innerHTML.includes('san14-person-b'));assert(elements.get('#stage').innerHTML.includes('historical-extra'));assert.equal(JSON.stringify(context.view.game),beforeDuel);
  delete context.view.game.battle;assert.equal(JSON.stringify(context.view.game),stateBefore);
+ // Use the shipped index and canonical identities for the appended rulers and
+ // retainers, so runtime1024+ cannot silently fall back to an old portrait.
+ const shipped=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../game/assets/portraits/index.json'),'utf8'));
+ const peoplePool=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../game/config/campaigns/people.json'),'utf8'));
+ const additions=['historical-song-jian','historical-lu-xing','historical-tang-pu','historical-li-tong-jiaozhi'];
+ i18n.locale='zh-Hant';
+ const released=create({i18n,fetch:async()=>({ok:true,json:async()=>shipped})});assert(await released.load());
+ const appendedCatalog={library:additions.map(pid=>({id:peoplePool.people[pid].runtime_id,person_id:pid,name:peoplePool.people[pid].name}))};
+ for(const[at,pid]of additions.entries()){
+  const runtime=1024+at;assert.equal(peoplePool.people[pid].runtime_id,runtime);
+  assert.equal(shipped.by_runtime_id[String(runtime)],pid);assert.equal(released.personId(appendedCatalog,runtime),pid);
+  assert.equal(released.asset(pid).path,`/assets/portraits/enhanced/${pid}.png`);
+  const visible=released.html(pid,peoplePool.people[pid].name,{source:true});
+  assert(visible.includes(`data-portrait-person="${pid}"`));
+  assert(visible.includes('新增繪製像素肖像・4倍放大・非史實容貌'));assert(!visible.includes('明暗強化'));
+  assert.equal(shipped.people[pid].enhanced.rendering,'nearest4x');
+  assert.equal(shipped.people[pid].kind,'generated');assert.equal(shipped.people[pid].original_id,null);
+ }
+ i18n.locale='ja';
+ assert(released.html(additions[0],'宋建',{source:true}).includes('新規制作のドット肖像・4倍拡大・史実の容貌ではありません'));
  console.log('portraits: stable IDs, original/generated provenance, enhanced variants and native error fallback, strict paths/dimensions, single index load, locale-only refresh, missing assets and read-only roster/profile/battle/duel views passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

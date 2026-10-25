@@ -13,6 +13,43 @@
             "all_city_months_independently_attested": false
           }
         }
+      },
+      "coverage": {
+        "set": {
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27,
+          "initial_serving": 365,
+          "initial_free": 52,
+          "planned_serving": 365
+        }
+      },
+      "placement_completion": {
+        "set": {
+          "people": 1027,
+          "reference_classes": {
+            "game_reference": 363,
+            "authorial_region_placement": 650,
+            "bounded_career_inference": 10,
+            "explicit_scenario_scope": 4
+          },
+          "bases": {
+            "same_date_SAN14_guide_free_location": 2,
+            "same_date_SAN14_recorded_death": 357,
+            "person_specific_future_free_appearance": 249,
+            "same_date_SAN14_guide_affiliation": 4,
+            "retained_reviewed_opening_membership": 346,
+            "retained_person_specific_free_location": 48,
+            "retained_explicit_scenario_ruler": 5,
+            "authored_bounded_source_snapshot_continuity": 4,
+            "bounded_career_inference": 6,
+            "authorial_region_placement": 2,
+            "explicit_scenario_scope": 4
+          }
+        }
       }
     }
   },

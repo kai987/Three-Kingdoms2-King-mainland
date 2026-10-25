@@ -2640,7 +2640,13 @@
           "source_scenario": "san14-249-01",
           "planned_serving": 242,
           "planned_max_city_roster": 13,
-          "future_plans": 44
+          "future_plans": 44,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -27845,35 +27851,28 @@
             "lelang",
             "daifang",
             "yiyang"
-          ]
-        },
-        "update": {
+          ],
+          "people": 1027,
           "reference_classes": {
-            "set": {
-              "game_reference": 706,
-              "authorial_region_placement": 315,
-              "bounded_career_inference": 2
-            }
+            "game_reference": 706,
+            "authorial_region_placement": 315,
+            "bounded_career_inference": 2,
+            "explicit_scenario_scope": 4
           },
           "bases": {
-            "set": {
-              "same_date_SAN14_recorded_death": 701,
-              "same_date_SAN14_guide_affiliation": 5,
-              "retained_reviewed_opening_membership": 221,
-              "historical_city_owner_relocation_authorial_garrison": 11,
-              "person_specific_future_free_appearance": 44,
-              "retained_person_specific_free_location": 34,
-              "bounded_career_inference": 2,
-              "retained_explicit_scenario_ruler": 3,
-              "retained_chronology_or_explicit_exclusion": 2
-            },
-            "delete": [
-              "same_date_SAN14_guide_free_location",
-              "authored_bounded_source_snapshot_continuity",
-              "authorial_region_placement"
-            ]
+            "same_date_SAN14_recorded_death": 701,
+            "same_date_SAN14_guide_affiliation": 5,
+            "retained_reviewed_opening_membership": 221,
+            "historical_city_owner_relocation_authorial_garrison": 11,
+            "person_specific_future_free_appearance": 44,
+            "retained_person_specific_free_location": 34,
+            "bounded_career_inference": 2,
+            "retained_explicit_scenario_ruler": 3,
+            "retained_chronology_or_explicit_exclusion": 2,
+            "explicit_scenario_scope": 4
           }
-        }
+        },
+        "update": {}
       }
     }
   },

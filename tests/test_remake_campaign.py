@@ -39,7 +39,7 @@ class CampaignTests(unittest.TestCase):
     def test_real_high_ids_and_current_roster_rules(self):
         self.assertEqual(self.game.catalog.name(255), '阿会喃')
         self.assertEqual(self.game.catalog.name(999), '伊籍')
-        self.assertEqual(len(self.game.catalog.definitions), 1023)
+        self.assertEqual(len(self.game.catalog.definitions), 1027)
         self.assertEqual(len(self.game.state.officers), 7)
         self.assertEqual(self.game.catalog.rules.city_officer_capacity, 99)
         self.game.validate(self.game.state)

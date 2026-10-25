@@ -28,6 +28,7 @@ PLAN = ROOT / 'art/portraits/plan.json'
 SOURCE = ROOT / 'art/portraits/source-atlases'
 DESTINATION = ROOT / 'game/assets/portraits/generated'
 MANIFEST = ROOT / 'game/config/portrait-generated.json'
+SUPPLEMENT = ROOT / 'art/portraits/historical-additions-v1/plan.json'
 SIZE, GRID, CELL = (32, 40), (8, 8), (128, 192)
 RGB = ((0, 0, 0), (255, 255, 255), (247, 162, 71), (158, 65, 0))
 RGBA = ((0, 0, 0, 0), (255, 255, 255, 255), (247, 162, 71, 255), (158, 65, 0, 255))
@@ -56,16 +57,16 @@ def palette_pixel(red, green, blue):
     return min(range(4), key=lambda n: sum((a - b) ** 2 for a, b in zip((red, green, blue), RGB[n])))
 
 
-def png(rgba):
+def png(rgba, size=SIZE):
     def chunk(kind, data):
         return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data) & 0xFFFFFFFF)
-    width, height = SIZE
+    width, height = size
     rows = b''.join(b'\0' + rgba[y * width * 4:(y + 1) * width * 4] for y in range(height))
     return (b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', width, height, 8, 6, 0, 0, 0))
             + chunk(b'IDAT', zlib.compress(rows, 9)) + chunk(b'IEND', b''))
 
 
-def prepare_atlas(atlas):
+def prepare_atlas(atlas, grid=GRID):
     """Recover the authored grid without cutting hats at nominal 192px rows.
 
     Imagegen preserves black inter-person gaps but does not promise exact cell
@@ -82,7 +83,7 @@ def prepare_atlas(atlas):
             columns[offset % width] += 1
             rows[offset // width] += 1
 
-    def partition(counts, minimum, axis):
+    def partition(counts, minimum, axis, cells):
         bands, start = [], None
         for position, value in enumerate(counts + [1]):
             if not value and start is None:
@@ -91,25 +92,25 @@ def prepare_atlas(atlas):
                 if position - start >= minimum:
                     bands.append([start, position])
                 start = None
-        if len(bands) != 9 or bands[0][0] != 0 or bands[-1][1] != len(counts):
-            raise ValueError(f'Cannot identify eight complete portrait {axis} from black separator bands: {bands}')
+        if len(bands) != cells + 1 or bands[0][0] != 0 or bands[-1][1] != len(counts):
+            raise ValueError(f'Cannot identify {cells} complete portrait {axis} from black separator bands: {bands}')
         return [0] + [(start + end) // 2 for start, end in bands[1:-1]] + [len(counts)], bands
 
-    x_bounds, x_bands = partition(columns, 3, 'columns')
-    y_bounds, y_bands = partition(rows, 8, 'rows')
+    x_bounds, x_bands = partition(columns, 3, 'columns', grid[0])
+    y_bounds, y_bands = partition(rows, 8, 'rows', grid[1])
     return Image.frombytes('L', atlas.size, indices), dict(
         x_bounds=x_bounds, y_bounds=y_bounds,
         vertical_black_bands=x_bands, horizontal_black_bands=y_bands)
 
 
-def bake_cell(atlas, index, partition):
+def bake_cell(atlas, index, partition, grid=GRID, cell=CELL):
     """Keep the complete visible head/shoulders from one assigned source cell."""
-    if not 0 <= index < GRID[0] * GRID[1]:
-        raise ValueError('Atlas cell outside declared 8x8 grid')
-    column, row = index % GRID[0], index // GRID[0]
+    if not 0 <= index < grid[0] * grid[1]:
+        raise ValueError('Atlas cell outside declared grid')
+    column, row = index % grid[0], index // grid[0]
     cx, cy = partition['x_bounds'][column], partition['y_bounds'][row]
     box = (cx, cy, partition['x_bounds'][column + 1], partition['y_bounds'][row + 1])
-    nominal = (column * CELL[0], row * CELL[1], (column + 1) * CELL[0], (row + 1) * CELL[1])
+    nominal = (column * cell[0], row * cell[1], (column + 1) * cell[0], (row + 1) * cell[1])
     indexed = atlas.crop(box)
     visible = indexed.point(lambda value: 255 if value else 0)
     bbox = visible.getbbox()
@@ -164,6 +165,82 @@ def read_plan():
     if len(identities) != plan['new_count']:
         raise ValueError('Portrait art plan count does not match unique identities')
     return plan, groups, sha(raw)
+
+
+def append_supplement(entries, outputs, atlases, used_hashes):
+    """Append separately authored art without rebuilding the approved old HD art."""
+    raw = SUPPLEMENT.read_bytes()
+    plan = json.loads(raw)
+    if (plan.get('schema') != 'tk2-portrait-supplement-v1'
+            or plan.get('native_size') != list(SIZE) or plan.get('grid') != [2, 2]
+            or len(plan.get('people', [])) != 4):
+        raise ValueError('Unknown supplemental portrait plan')
+    source = ROOT / plan['source_atlas']
+    if not source.resolve().is_relative_to(SUPPLEMENT.parent.resolve()):
+        raise ValueError('Supplemental art source leaves its retained source directory')
+    source_bytes = source.read_bytes()
+    if sha(source_bytes) != plan['source_sha256']:
+        raise ValueError('Supplemental imagegen source changed')
+    image = Image.open(source).convert('RGBA')
+    if list(image.size) != plan['source_size']:
+        raise ValueError('Supplemental source geometry changed')
+    indexed, partition = prepare_atlas(image, (2, 2))
+    atlases.append(dict(id='historical-additions-v1', path=plan['source_atlas'],
+                        sha256=plan['source_sha256'], size=list(image.size),
+                        art_gender_design='male', grid=[2, 2], actual_grid_partition=partition))
+    canonical = json.loads((ROOT / 'game/config/campaigns/people.json').read_bytes())['people']
+    enhanced = {}
+    seen = set()
+    for person in plan['people']:
+        pid, index = person['person_id'], person['cell_index']
+        if (pid in entries or pid not in canonical or person['name'] != canonical[pid]['name']
+                or type(index) is not int or index in seen):
+            raise ValueError('Supplemental portrait identity/cell binding differs')
+        seen.add(index)
+        value = bake_cell(indexed, index, partition, (2, 2), (image.width // 2, image.height // 2))
+        if value['rgba_sha256'] in used_hashes:
+            raise ValueError('New historical portrait duplicates an existing identity')
+        used_hashes.add(value['rgba_sha256'])
+        path = f'/assets/portraits/generated/{pid}.png'
+        entries[pid] = dict(path=path, png_sha256=value['png_sha256'],
+                            rgba_sha256=value['rgba_sha256'], width=32, height=40,
+                            png_bytes=value['png_bytes'], source_atlas=plan['source_atlas'],
+                            source_atlas_sha256=plan['source_sha256'], cell_index=index,
+                            source='imagegen_new_pixel_art',
+                            art_direction_basis='authorial_game_art_not_historical_likeness',
+                            gender_design=person['art_gender_design'], name=person['name'],
+                            **{k: value[k] for k in ('opaque_pixels', 'source_cell_box',
+                               'declared_grid_cell_box', 'source_visible_box', 'native_fitted_box')})
+        outputs[DESTINATION / (pid + '.png')] = value['png']
+        enlarged = Image.frombytes('RGBA', SIZE, value['rgba']).resize((128, 160), Image.Resampling.NEAREST)
+        pixels = enlarged.tobytes()
+        encoded = png(pixels, (128, 160))
+        hd_path = f'/assets/portraits/enhanced/{pid}.png'
+        outputs[ROOT / 'game' / hd_path.lstrip('/')] = encoded
+        enhanced[pid] = dict(path=hd_path, width=128, height=160, source_path=path,
+                             source_sha256=value['png_sha256'], sha256=sha(encoded),
+                             pixel_sha256=sha(pixels), method='identity_preserving_pixel_enhancement',
+                             rendering='nearest4x',
+                             provenance=dict(supplement_plan=str(SUPPLEMENT.relative_to(ROOT)),
+                                             supplement_plan_sha256=sha(raw),
+                                             atlas=plan['source_atlas'], source_atlas_sha256=plan['source_sha256'],
+                                             cell_index=index, base_method='native32x40_exact_nearest4x',
+                                             prompt=plan['prompt'],
+                                             art_direction_basis='authorial_game_art_not_historical_likeness',
+                                             qa=dict(size=[128, 160], paletteSize=len(set(enlarged.getdata())),
+                                                     alphaChanges=0, nearest4xExact=True)))
+    records = SUPPLEMENT.parent / 'enhanced-records.json'
+    outputs[records] = (json.dumps(dict(schema='tk2-portrait-supplement-enhanced-v1',
+                                       people=enhanced), ensure_ascii=False, indent=2) + '\n').encode()
+    hd_file = ROOT / 'game/config/portrait-enhanced.json'
+    hd = json.loads(hd_file.read_bytes())
+    hd['people'].update(enhanced)
+    hd['counts'].update(people=len(hd['people']),
+                        source_unique=len({row['pixel_sha256'] for row in hd['people'].values()}),
+                        atlas_count=len(json.loads((ROOT / 'art/portraits/enhancement-v1/plan.json').read_bytes())['atlases']) + 1)
+    hd['processing']['supplement_mode'] = 'authorial_pixel_art_native_nearest4x_preserving_identity'
+    outputs[hd_file] = (json.dumps(hd, ensure_ascii=False, indent=2) + '\n').encode()
+    return dict(path=str(SUPPLEMENT.relative_to(ROOT)), sha256=sha(raw), count=len(enhanced))
 
 
 def build(check=False):
@@ -225,10 +302,12 @@ def build(check=False):
             outputs[DESTINATION / (identity + '.png')] = value['png']
     if len(entries) != plan['new_count'] or len(used_hashes) != plan['new_count']:
         raise ValueError('New portrait identity/pixel count mismatch')
+    supplement = append_supplement(entries, outputs, atlases, used_hashes)
     manifest = dict(schema='tk2-generated-portraits-v1', count=len(entries), unique_pixel_images=len(used_hashes),
                     native_size=list(SIZE), source='imagegen_new_pixel_art',
                     art_direction_basis='authorial_game_art_not_historical_likeness',
                     plan='art/portraits/plan.json', plan_sha256=plan_sha,
+                    supplement_plans=[supplement],
                     processing=POLICY, source_atlases=atlases,
                     assigned_by_gender=dict(Counter(entry['gender_design'] for entry in entries.values())),
                     duplicate_fallback_count=sum('duplicate_fallback' in entry for entry in entries.values()),
@@ -245,6 +324,7 @@ def build(check=False):
     else:
         DESTINATION.mkdir(parents=True, exist_ok=True)
         for path, data in outputs.items():
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(data)
     return manifest
 

@@ -4774,7 +4774,7 @@
       "本作按城池特色、劇本年月及戰亂／恢復階段設定錢糧與預備兵；數值為遊戲平衡設計，非史實人口或《三國志14》開局匯出。",
       "各劇本的月收入依開局年代配置；遊玩後依實際內政、招兵、行軍與戰鬥增減，不按歷史事件強制重設資源。",
       "本次保留武將每人300兵的初始化規則；城市駐軍總數取決於當篇實際駐將，預備兵另按年代配置。",
-      "每城最多99人；每方出戰最多10人。人物總庫1023人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
+      "每城最多99人；每方出戰最多10人。人物總庫1027人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
       "全部人物均完成在籍、在野、未來登場或明列排除計畫；來源不詳的駐城與連續任職屬本作配置，不是逐月史實已證。",
       "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
       "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。"
@@ -5485,15 +5485,15 @@
       "gongsun": 262
     },
     "coverage": {
-      "library": 1023,
+      "library": 1027,
       "san14_abilities": 1000,
-      "configured_profiles": 1023,
+      "configured_profiles": 1027,
       "pending_profiles": 0,
       "initial_serving": 365,
       "source_years": "third-party SAN14 settings; historical verification separate",
-      "virtue": "verified original ROM virtue for220 exact-name identities; otherwise individual authorial ratings or explicit user default60",
-      "health_configured": 1023,
-      "affinity_configured": 1023,
+      "virtue": "SAN14 charisma for1000 people; explicit default60 for27 missing sources",
+      "health_configured": 1027,
+      "affinity_configured": 1027,
       "new_history_profiles": 11,
       "initial_free": 52,
       "source_scenario": "san14-217-07",
@@ -5505,9 +5505,9 @@
       "pending_history": 0,
       "default_virtue_profiles": 635,
       "reused_profiles": 269,
-      "new_historical_people": 23,
+      "new_historical_people": 27,
       "pending_faction": 0,
-      "placement_plans": 1023,
+      "placement_plans": 1027,
       "future_plans": 249,
       "original_virtue_profiles": 220
     },
@@ -46390,6 +46390,140 @@
           "city": "wuchang",
           "status": "future_free",
           "basis": "retained_person_specific_released_location"
+        }
+      },
+      "historical-song-jian": {
+        "source_status": "not_appeared",
+        "source_ruler": null,
+        "source_city": null,
+        "year_state": "not_appeared",
+        "faction": null,
+        "city": null,
+        "placement_basis": "explicit_scenario_scope",
+        "status": "scenario_excluded",
+        "reason": "This new historical identity is only enabled in its explicitly reviewed campaign.",
+        "exclusion_kind": "explicit_scenario_scope",
+        "death_year_resolved": false,
+        "posting_reference": null,
+        "membership_revision": null,
+        "planning_complete": true,
+        "placement_review": {
+          "basis": "explicit_scenario_scope",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ],
+          "note": "新增人物只在本次明列劇本啟用；其餘年代明確排除，不因年度推進自動生成。",
+          "reference_date": null,
+          "historical_certainty": "explicit_scenario_scope"
+        },
+        "appearance_plan": {
+          "start": null,
+          "end": null,
+          "city": null,
+          "status": "excluded",
+          "basis": "explicit_scenario_scope"
+        }
+      },
+      "historical-lu-xing": {
+        "source_status": "not_appeared",
+        "source_ruler": null,
+        "source_city": null,
+        "year_state": "not_appeared",
+        "faction": null,
+        "city": null,
+        "placement_basis": "explicit_scenario_scope",
+        "status": "scenario_excluded",
+        "reason": "This new historical identity is only enabled in its explicitly reviewed campaign.",
+        "exclusion_kind": "explicit_scenario_scope",
+        "death_year_resolved": false,
+        "posting_reference": null,
+        "membership_revision": null,
+        "planning_complete": true,
+        "placement_review": {
+          "basis": "explicit_scenario_scope",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/三國志/卷04",
+            "https://zh.wikisource.org/zh-hant/晉書/卷057"
+          ],
+          "note": "新增人物只在本次明列劇本啟用；其餘年代明確排除，不因年度推進自動生成。",
+          "reference_date": null,
+          "historical_certainty": "explicit_scenario_scope"
+        },
+        "appearance_plan": {
+          "start": null,
+          "end": null,
+          "city": null,
+          "status": "excluded",
+          "basis": "explicit_scenario_scope"
+        }
+      },
+      "historical-tang-pu": {
+        "source_status": "not_appeared",
+        "source_ruler": null,
+        "source_city": null,
+        "year_state": "not_appeared",
+        "faction": null,
+        "city": null,
+        "placement_basis": "explicit_scenario_scope",
+        "status": "scenario_excluded",
+        "reason": "This new historical identity is only enabled in its explicitly reviewed campaign.",
+        "exclusion_kind": "explicit_scenario_scope",
+        "death_year_resolved": false,
+        "posting_reference": null,
+        "membership_revision": null,
+        "planning_complete": true,
+        "placement_review": {
+          "basis": "explicit_scenario_scope",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/三國志/卷04",
+            "https://zh.wikisource.org/zh-hant/晉書/卷057"
+          ],
+          "note": "新增人物只在本次明列劇本啟用；其餘年代明確排除，不因年度推進自動生成。",
+          "reference_date": null,
+          "historical_certainty": "explicit_scenario_scope"
+        },
+        "appearance_plan": {
+          "start": null,
+          "end": null,
+          "city": null,
+          "status": "excluded",
+          "basis": "explicit_scenario_scope"
+        }
+      },
+      "historical-li-tong-jiaozhi": {
+        "source_status": "not_appeared",
+        "source_ruler": null,
+        "source_city": null,
+        "year_state": "not_appeared",
+        "faction": null,
+        "city": null,
+        "placement_basis": "explicit_scenario_scope",
+        "status": "scenario_excluded",
+        "reason": "This new historical identity is only enabled in its explicitly reviewed campaign.",
+        "exclusion_kind": "explicit_scenario_scope",
+        "death_year_resolved": false,
+        "posting_reference": null,
+        "membership_revision": null,
+        "planning_complete": true,
+        "placement_review": {
+          "basis": "explicit_scenario_scope",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/三國志/卷04",
+            "https://zh.wikisource.org/zh-hant/晉書/卷057"
+          ],
+          "note": "新增人物只在本次明列劇本啟用；其餘年代明確排除，不因年度推進自動生成。",
+          "reference_date": null,
+          "historical_certainty": "explicit_scenario_scope"
+        },
+        "appearance_plan": {
+          "start": null,
+          "end": null,
+          "city": null,
+          "status": "excluded",
+          "basis": "explicit_scenario_scope"
         }
       }
     },
@@ -94552,7 +94686,7 @@
         "discovery_candidate": true
       }
     ],
-    "officer_count": 1023,
+    "officer_count": 1027,
     "additional_person_aliases": {
       "san14-candidate-0388": [
         "施績"
@@ -98821,19 +98955,24 @@
           "city": "wuchang",
           "resolve_death_year": true
         }
-      ]
+      ],
+      "historical-song-jian": [],
+      "historical-lu-xing": [],
+      "historical-tang-pu": [],
+      "historical-li-tong-jiaozhi": []
     },
     "placement_completion": {
       "schema": "tk2-placement-completion-v1",
       "complete": true,
       "pending": 0,
-      "people": 1023,
+      "people": 1027,
       "capacity": 99,
       "future_plans": 249,
       "reference_classes": {
         "game_reference": 363,
         "authorial_region_placement": 650,
-        "bounded_career_inference": 10
+        "bounded_career_inference": 10,
+        "explicit_scenario_scope": 4
       },
       "bases": {
         "same_date_SAN14_guide_free_location": 2,
@@ -98845,7 +98984,8 @@
         "retained_explicit_scenario_ruler": 5,
         "authored_bounded_source_snapshot_continuity": 4,
         "bounded_career_inference": 6,
-        "authorial_region_placement": 2
+        "authorial_region_placement": 2,
+        "explicit_scenario_scope": 4
       },
       "city_owner_corrections": [],
       "source_snapshot_complete": false,

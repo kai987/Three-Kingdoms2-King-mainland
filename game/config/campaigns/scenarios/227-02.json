@@ -3087,7 +3087,13 @@
           "source_scenario": "san14-227-02",
           "planned_serving": 324,
           "planned_max_city_roster": 15,
-          "future_plans": 151
+          "future_plans": 151,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -21593,34 +21599,27 @@
       },
       "placement_completion": {
         "set": {
-          "future_plans": 151
-        },
-        "update": {
+          "future_plans": 151,
+          "people": 1027,
           "reference_classes": {
-            "set": {
-              "game_reference": 511,
-              "authorial_region_placement": 503,
-              "bounded_career_inference": 9
-            }
+            "game_reference": 511,
+            "authorial_region_placement": 503,
+            "bounded_career_inference": 9,
+            "explicit_scenario_scope": 4
           },
           "bases": {
-            "set": {
-              "same_date_SAN14_recorded_death": 508,
-              "same_date_SAN14_guide_affiliation": 3,
-              "person_specific_future_free_appearance": 151,
-              "retained_reviewed_opening_membership": 308,
-              "retained_person_specific_free_location": 38,
-              "bounded_career_inference": 9,
-              "retained_explicit_scenario_ruler": 4,
-              "retained_chronology_or_explicit_exclusion": 2
-            },
-            "delete": [
-              "same_date_SAN14_guide_free_location",
-              "authored_bounded_source_snapshot_continuity",
-              "authorial_region_placement"
-            ]
+            "same_date_SAN14_recorded_death": 508,
+            "same_date_SAN14_guide_affiliation": 3,
+            "person_specific_future_free_appearance": 151,
+            "retained_reviewed_opening_membership": 308,
+            "retained_person_specific_free_location": 38,
+            "bounded_career_inference": 9,
+            "retained_explicit_scenario_ruler": 4,
+            "retained_chronology_or_explicit_exclusion": 2,
+            "explicit_scenario_scope": 4
           }
-        }
+        },
+        "update": {}
       }
     }
   },

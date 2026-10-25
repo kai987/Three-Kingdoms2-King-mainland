@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bind extracted/new portraits to stable identities without changing any save catalog.
 
-All 1023 bindings must have genuine, checked PNG assets. Missing images are an
+All canonical bindings must have genuine, checked PNG assets. Missing images are an
 error: this builder never manufactures a generic head or silently reuses art.
 Only the standard library is needed to verify native PNG pixels and provenance.
 """
@@ -157,6 +157,11 @@ def enhanced_records(data, primary):
             raise ValueError('Enhanced portrait source/person binding mismatch: ' + person_id)
         if row.get('method') != 'identity_preserving_pixel_enhancement' or not isinstance(row.get('provenance'), dict):
             raise ValueError('Enhanced portrait must state its enhancement provenance')
+        if 'rendering' in row and row['rendering'] != 'nearest4x':
+            raise ValueError('Unknown enhanced portrait rendering')
+        if (row.get('rendering') == 'nearest4x'
+                and row['provenance'].get('base_method') != 'native32x40_exact_nearest4x'):
+            raise ValueError('Nearest4x portrait rendering lacks its source method')
         asset = ROOT / 'game' / path.lstrip('/')
         asset_root = ROOT / 'game/assets/portraits/enhanced'
         if not asset.resolve().is_relative_to(asset_root.resolve()) or not asset.is_file():
@@ -169,11 +174,25 @@ def enhanced_records(data, primary):
             raise ValueError('Enhanced portrait pixel hash mismatch: ' + path)
         if any(pixels[i] not in (0, 255) for i in range(3, len(pixels), 4)):
             raise ValueError('Enhanced portrait contains partial transparency')
+        if row.get('rendering') == 'nearest4x':
+            native_file = ROOT / 'game' / source['path'].lstrip('/')
+            native = png_pixels(native_file.read_bytes(), NATIVE)[1]
+            expected = b''.join(native[((y // 4) * 32 + x // 4) * 4:((y // 4) * 32 + x // 4) * 4 + 4]
+                                for y in range(160) for x in range(128))
+            if pixels != expected:
+                raise ValueError('Nearest4x portrait pixels do not preserve the native source')
         enhanced[person_id] = dict(path=path, width=size[0], height=size[1])
+        if 'rendering' in row:
+            enhanced[person_id]['rendering'] = row['rendering']
     return enhanced
 
 
 def identities():
+    canonical = read('game/config/campaigns/people.json')
+    expected = {pid: (row['name'], row['runtime_id']) for pid, row in canonical['people'].items()}
+    if (set(canonical['order']) != set(expected)
+            or len(canonical['order']) != len(expected)):
+        raise ValueError('Canonical portrait identity order differs')
     index = read('game/data/campaigns/index.json')
     people, stable = None, None
     for path in index['catalogs']:
@@ -184,8 +203,8 @@ def identities():
         if stable is not None and current != stable:
             raise ValueError('Scenario portrait identities diverge')
         people, stable = rows, current
-    if people is None or len(people) != 1023:
-        raise ValueError('Expected the released1023-person pool')
+    if people is None or stable != expected:
+        raise ValueError('Campaign portrait identities differ from the canonical pool')
     return {p['person_id']: p for p in people}
 
 

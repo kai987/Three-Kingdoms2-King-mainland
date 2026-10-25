@@ -403,7 +403,9 @@ def import_stats(source_zip=None):
         reference = make_reference(records, pool['people'])
     updated = apply_policy(pool, reference)
     report = make_report(updated, reference)
-    if len(updated['people']) != 1023 or report['summary']['san14_charisma'] != 1000:
+    if (set(updated['people']) != set(pool['people'])
+            or updated['order'] != pool['order']
+            or report['summary']['san14_charisma'] != 1000):
         raise ValueError('Campaign-person or SAN14 coverage changed')
     return updated, reference, report
 

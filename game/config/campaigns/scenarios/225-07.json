@@ -21,7 +21,7 @@
           "captain": "刘禅",
           "city": "shujun",
           "color": "#4c7650",
-          "initial_officers": 83
+          "initial_officers": 81
         },
         {
           "id": "wu",
@@ -53,7 +53,7 @@
           "city": "jianning",
           "color": "#e0a020",
           "name": "南中勢力",
-          "initial_officers": 13
+          "initial_officers": 15
         }
       ],
       "active_cities": [
@@ -956,7 +956,7 @@
         },
         {
           "person_id": "san14-candidate-0391",
-          "city": "wenshan",
+          "city": "zangke",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": true
@@ -2013,7 +2013,7 @@
         },
         {
           "person_id": "san14-candidate-0855",
-          "city": "guanghan",
+          "city": "jianning",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": true
@@ -2362,10 +2362,11 @@
         "本作按城池特色、劇本年月及戰亂／恢復階段設定錢糧與預備兵；數值為遊戲平衡設計，非史實人口或《三國志14》開局匯出。",
         "各劇本的月收入依開局年代配置；遊玩後依實際內政、招兵、行軍與戰鬥增減，不按歷史事件強制重設資源。",
         "本次保留武將每人300兵的初始化規則；城市駐軍總數取決於當篇實際駐將，預備兵另按年代配置。",
-        "每城最多99人；每方出戰最多10人。人物總庫1023人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
+        "每城最多99人；每方出戰最多10人。人物總庫1027人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
         "全部人物均完成在籍、在野、未來登場或明列排除計畫；來源不詳的駐城與連續任職屬本作配置，不是逐月史實已證。",
         "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
-        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。"
+        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。",
+        "225年7月依用戶指定，牂牁及雍闓、高定、朱褒合併至孟獲勢力；雍闓與高定已死等史實差異明列為本作開局設定，不改共享生卒年或宣稱為SAN14原始駐將資料。"
       ],
       "initial_free_officers": [
         {
@@ -2804,7 +2805,7 @@
             "person_id": "san14-candidate-0272",
             "name": "高定",
             "faction": "nanman",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "basis": "user_requested_225_nanzhong_merge",
             "status": "serving"
           },
           {
@@ -2988,12 +2989,39 @@
             "faction": "shu",
             "basis": "explicit_story_or_career_assignment_not_SAN14_export",
             "status": "serving"
+          },
+          {
+            "person_id": "san14-candidate-0855",
+            "name": "雍闿",
+            "faction": "nanman",
+            "basis": "user_requested_225_nanzhong_merge",
+            "status": "serving"
+          },
+          {
+            "person_id": "san14-candidate-0391",
+            "name": "朱褒",
+            "faction": "nanman",
+            "basis": "user_requested_225_nanzhong_merge",
+            "status": "serving"
           }
         ],
         "excluded_people": [],
         "pending_capacity": [],
         "career_references": [],
-        "history_review_revision": "2026-10-25"
+        "history_review_revision": "2026-10-25",
+        "user_setup_overrides": [
+          {
+            "basis": "user_requested_225_nanzhong_merge",
+            "city": "zangke",
+            "faction": "nanman",
+            "people": [
+              "san14-candidate-0855",
+              "san14-candidate-0272",
+              "san14-candidate-0391"
+            ],
+            "not_SAN14_export": true
+          }
+        ]
       }
     },
     "update": {
@@ -3004,7 +3032,7 @@
           "hanzhong": "shu",
           "yunnan": "nanman",
           "wuling": "wu",
-          "zangke": "shu",
+          "zangke": "nanman",
           "jianning": "nanman",
           "xinggu": "nanman",
           "yidu": "wu",
@@ -3108,7 +3136,7 @@
           "san14-candidate-0386": "xincheng",
           "san14-candidate-0388": "yuzhang",
           "san14-candidate-0389": "danyang",
-          "san14-candidate-0391": "wenshan",
+          "san14-candidate-0391": "zangke",
           "san14-candidate-0392": "yinping",
           "san14-candidate-0394": "yiyang",
           "san14-candidate-0405": "yongchang",
@@ -3295,7 +3323,9 @@
           "san14-candidate-0986": "kuaiji",
           "san14-candidate-0991": "jingzhao",
           "historical-expansion-0010": "fufeng",
-          "historical-expansion-0019": "badong"
+          "historical-expansion-0019": "badong",
+          "san14-candidate-0855": "jianning",
+          "san14-candidate-0272": "jianning"
         },
         "delete": [
           "san14-candidate-0007",
@@ -3427,7 +3457,13 @@
           "source_scenario": "san14-221-07",
           "planned_serving": 311,
           "planned_max_city_roster": 13,
-          "future_plans": 163
+          "future_plans": 163,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -10714,45 +10750,6 @@
               }
             }
           },
-          "san14-candidate-0272": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "孟获",
-              "source_city": null,
-              "faction": "nanman",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0272",
-                "faction": "nanman",
-                "origin": "jianning",
-                "city": "jianning",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              },
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland221-07-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    225,
-                    7
-                  ],
-                  "status": "serving"
-                }
-              }
-            }
-          },
           "san14-candidate-0273": {
             "set": {
               "source_ruler": "曹丕",
@@ -13812,49 +13809,6 @@
                   "city": null,
                   "status": "excluded",
                   "basis": "retained_chronology_or_explicit_exclusion"
-                }
-              }
-            }
-          },
-          "san14-candidate-0391": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "刘禅",
-              "source_city": null,
-              "year_state": "death_year_review",
-              "faction": "shu",
-              "city": "wenshan",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "death_year_resolved": true,
-              "posting_reference": {
-                "person_id": "san14-candidate-0391",
-                "faction": "shu",
-                "origin": "shujun",
-                "city": "wenshan",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland221-07-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    225,
-                    7
-                  ],
-                  "city": "wenshan",
-                  "status": "serving"
                 }
               }
             }
@@ -25791,25 +25745,6 @@
               "exclusion_kind"
             ]
           },
-          "san14-candidate-0855": {
-            "set": {
-              "source_ruler": "刘禅",
-              "year_state": "death_year_review",
-              "death_year_resolved": true,
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland221-07-v11"
-            },
-            "update": {
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    225,
-                    7
-                  ]
-                }
-              }
-            }
-          },
           "san14-candidate-0856": {
             "set": {
               "source_ruler": "刘禅",
@@ -29809,6 +29744,167 @@
               "year_state": "not_appeared"
             }
           }
+        },
+        "set": {
+          "san14-candidate-0855": {
+            "source_status": "serving",
+            "source_ruler": "孟获",
+            "source_city": null,
+            "year_state": "death_year_review",
+            "faction": "nanman",
+            "city": "jianning",
+            "placement_basis": "user_requested_225_nanzhong_merge",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": true,
+            "posting_reference": {
+              "person_id": "san14-candidate-0855",
+              "faction": "nanman",
+              "origin": "jianning",
+              "city": "jianning",
+              "basis": "user_requested_225_nanzhong_merge",
+              "source_city": null,
+              "source_disposition": "user_requested_scenario_setup",
+              "source_board_city": null
+            },
+            "membership_revision": "user_requested_225_nanzhong_merge",
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "user_requested_225_nanzhong_merge",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷43",
+                "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
+              ],
+              "note": "依用戶指定將雍闓納入孟獲勢力，駐建寧。史料記雍闓在諸葛亮南征途中已為高定部曲所殺；225年7月仍可出場為本作開局合併設定，保留原資料死亡年225及當年出場確認，非逐月史實或SAN14原始配置。",
+              "reference_date": [
+                225,
+                7
+              ],
+              "reference_scenario": "mainland225-07",
+              "historical_certainty": "authorial_region_placement"
+            },
+            "appearance_plan": {
+              "start": [
+                225,
+                7
+              ],
+              "end": [
+                225,
+                12
+              ],
+              "city": "jianning",
+              "status": "serving",
+              "basis": "user_requested_225_nanzhong_merge"
+            },
+            "scenario_membership_basis": "user_requested_225_nanzhong_merge",
+            "source_snapshot": "mainland221-07-v11"
+          },
+          "san14-candidate-0272": {
+            "source_status": "serving",
+            "source_ruler": "孟获",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "nanman",
+            "city": "jianning",
+            "placement_basis": "user_requested_225_nanzhong_merge",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0272",
+              "faction": "nanman",
+              "origin": "jianning",
+              "city": "jianning",
+              "basis": "user_requested_225_nanzhong_merge",
+              "source_city": null,
+              "source_disposition": "user_requested_scenario_setup",
+              "source_board_city": null
+            },
+            "membership_revision": "user_requested_225_nanzhong_merge",
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "user_requested_225_nanzhong_merge",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷43",
+                "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
+              ],
+              "note": "依用戶指定將高定納入孟獲勢力，沿用建寧駐地。史料所記活動地為越巂，且於225年南征時被斬；本庫死亡年251是第三方遊戲設定轉錄，本次不改共享生卒年，不將此開局歸屬與駐地宣稱為逐月史實。",
+              "reference_date": [
+                225,
+                7
+              ],
+              "reference_scenario": "mainland225-07",
+              "historical_certainty": "authorial_region_placement"
+            },
+            "appearance_plan": {
+              "start": [
+                225,
+                7
+              ],
+              "end": [
+                251,
+                12
+              ],
+              "city": "jianning",
+              "status": "serving",
+              "basis": "user_requested_225_nanzhong_merge"
+            },
+            "scenario_membership_basis": "user_requested_225_nanzhong_merge",
+            "source_snapshot": "mainland221-07-v11"
+          },
+          "san14-candidate-0391": {
+            "source_status": "serving",
+            "source_ruler": "孟获",
+            "source_city": null,
+            "year_state": "death_year_review",
+            "faction": "nanman",
+            "city": "zangke",
+            "placement_basis": "user_requested_225_nanzhong_merge",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": true,
+            "posting_reference": {
+              "person_id": "san14-candidate-0391",
+              "faction": "nanman",
+              "origin": "jianning",
+              "city": "zangke",
+              "basis": "user_requested_225_nanzhong_merge",
+              "source_city": null,
+              "source_disposition": "user_requested_scenario_setup",
+              "source_board_city": null
+            },
+            "membership_revision": "user_requested_225_nanzhong_merge",
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "user_requested_225_nanzhong_merge",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷43",
+                "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
+              ],
+              "note": "依用戶指定將朱褒納入孟獲勢力並駐牂牁；史料記朱褒曾反叛於牂牁，不能據此證明225年7月仍為孟獲部下。保留原資料死亡年225及當年出場確認，此為本作開局合併設定，非SAN14原始配置。",
+              "reference_date": [
+                225,
+                7
+              ],
+              "reference_scenario": "mainland225-07",
+              "historical_certainty": "authorial_region_placement"
+            },
+            "appearance_plan": {
+              "start": [
+                225,
+                7
+              ],
+              "end": [
+                225,
+                12
+              ],
+              "city": "zangke",
+              "status": "serving",
+              "basis": "user_requested_225_nanzhong_merge"
+            },
+            "scenario_membership_basis": "user_requested_225_nanzhong_merge",
+            "source_snapshot": "mainland221-07-v11"
+          }
         }
       },
       "main_scenario": {
@@ -29816,17 +29912,17 @@
           "group": "dlc",
           "title": "征伐南蠻",
           "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-          "summary": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
-          "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
-          "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
+          "summary": "劉禪繼位，諸葛亮南征；依本作開局設定，孟獲統合雍闓、高定、朱褒，領有建寧、雲南、興古及牂牁。",
+          "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot_and_user_225_nanzhong_merge",
+          "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design; user_requested_225_nanzhong_merge_not_month_exact_history",
           "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
           "title_i18n": {
             "zh-Hant": "征伐南蠻",
             "ja": "南蛮征伐"
           },
           "summary_i18n": {
-            "zh-Hant": "劉禪繼位，諸葛亮南征；孟獲等南中勢力據建寧、雲南及周邊。",
-            "ja": "劉禅の即位後、諸葛亮が南征する。孟獲ら南中勢力は建寧・雲南と周辺に拠る。"
+            "zh-Hant": "劉禪繼位，諸葛亮南征；依本作開局設定，孟獲統合雍闓、高定、朱褒，領有建寧、雲南、興古及牂牁。",
+            "ja": "劉禅の即位後、諸葛亮が南征する。本作の開始設定では孟獲の配下に雍闓・高定・朱褒をまとめ、建寧・雲南・興古・牂牁を領有する。"
           },
           "fictional": false,
           "source_urls": [
@@ -29835,20 +29931,61 @@
           ],
           "category": "historical_DLC",
           "chronology_overrides": [],
-          "chronology_policy": "All births/service/deaths stay in force. Only per-catalog explicit story/official-game exceptions listed below apply; future IF death boundaries are authorial and not claimed official.",
+          "chronology_policy": "Shared births/service/deaths are unchanged. Existing explicit death-year opening resolutions retain Yong Kai and Zhu Bao in225. The user-requested July225 Nanzhong merger is an authorial opening arrangement, not a claim of month-exact historical survival or allegiance.",
           "story_note_i18n": {
-            "zh-Hant": "本作依官網年代與故事改編；領土、駐將、數值及未實作的事件均不是官方原始資料匯入。",
-            "ja": "公式の年月と物語を基にした本作独自の改編です。領土・配属・数値や未実装のイベントは公式データの移植ではありません。"
+            "zh-Hant": "本作依官網年代與故事改編；領土、駐將及數值不是官方原始資料匯入。本劇本另依用戶指定，把牂牁及雍闓、高定、朱褒合併至孟獲勢力，並非225年7月逐月史實。",
+            "ja": "公式の年月と物語を基にした本作独自の改編で、領土・配属・数値は公式データの移植ではありません。本章では指定により牂牁と雍闓・高定・朱褒を孟獲勢力に統合します。225年7月の史実を月単位で再現した配置ではありません。"
           },
           "historical_review": {
             "revision": "2026-10-25",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
             "faction_additions": [],
-            "city_owner_corrections": [
-              "zangke"
-            ],
-            "all_city_months_independently_attested": false
-          }
+            "city_owner_corrections": [],
+            "all_city_months_independently_attested": false,
+            "overridden_by_user_setup": [
+              {
+                "city": "zangke",
+                "historically_reviewed_owner": "shu",
+                "opening_owner": "nanman",
+                "basis": "user_requested_225_nanzhong_merge"
+              }
+            ]
+          },
+          "user_setup_overrides": [
+            {
+              "basis": "user_requested_225_nanzhong_merge",
+              "requested_date": [
+                225,
+                7
+              ],
+              "city_owners": {
+                "zangke": "nanman"
+              },
+              "members": [
+                {
+                  "person_id": "san14-candidate-0855",
+                  "faction": "nanman",
+                  "city": "jianning"
+                },
+                {
+                  "person_id": "san14-candidate-0272",
+                  "faction": "nanman",
+                  "city": "jianning"
+                },
+                {
+                  "person_id": "san14-candidate-0391",
+                  "faction": "nanman",
+                  "city": "zangke"
+                }
+              ],
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷43",
+                "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
+              ],
+              "shared_chronology_changed": false,
+              "historical_boundary": "Yong Kai was killed before Zhuge Liang arrived; Huayang Guozhi places Gao Dings death before the fifth-month river crossing. These three simultaneous July225 subordinates and the combined territory are user-requested game setup, not attested month-exact history or an official SAN14 roster."
+            }
+          ]
         },
         "delete": [
           "travel",
@@ -32750,35 +32887,34 @@
       "placement_completion": {
         "set": {
           "future_plans": 163,
-          "city_owner_corrections": [
-            "zangke"
-          ],
+          "city_owner_corrections": [],
           "reference_classes": {
-            "authorial_garrison_relocation": 4,
+            "game_reference": 12,
             "authorial_region_placement": 999,
             "bounded_career_inference": 8,
-            "game_reference": 12
+            "authorial_garrison_relocation": 4,
+            "explicit_scenario_scope": 4
+          },
+          "user_setup_city_overrides": [
+            "zangke"
+          ],
+          "people": 1027,
+          "bases": {
+            "same_date_SAN14_guide_affiliation": 3,
+            "same_date_SAN14_recorded_death": 7,
+            "same_date_SAN14_guide_free_location": 2,
+            "person_specific_future_free_appearance": 163,
+            "retained_reviewed_opening_membership": 287,
+            "retained_chronology_or_explicit_exclusion": 463,
+            "retained_person_specific_free_location": 77,
+            "bounded_career_inference": 8,
+            "historical_review_20261025": 4,
+            "retained_explicit_scenario_ruler": 6,
+            "user_requested_225_nanzhong_merge": 3,
+            "explicit_scenario_scope": 4
           }
         },
-        "update": {
-          "bases": {
-            "set": {
-              "same_date_SAN14_guide_affiliation": 3,
-              "same_date_SAN14_recorded_death": 7,
-              "person_specific_future_free_appearance": 163,
-              "retained_reviewed_opening_membership": 290,
-              "retained_chronology_or_explicit_exclusion": 463,
-              "retained_person_specific_free_location": 77,
-              "bounded_career_inference": 8,
-              "retained_explicit_scenario_ruler": 6,
-              "historical_review_20261025": 4
-            },
-            "delete": [
-              "authored_bounded_source_snapshot_continuity",
-              "authorial_region_placement"
-            ]
-          }
-        }
+        "update": {}
       }
     }
   },

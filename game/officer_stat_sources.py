@@ -133,6 +133,6 @@ def validate_campaign_stats(people, reference, abilities=None):
             raise ValueError('Original loyalty source differs: ' + pid)
         typed = OfficerProfile(**profile)
         appearance_values(typed, initial)
-    if (sourced, defaults) != (1000, 23):
+    if (sourced, defaults) != (1000, len(people) - 1000):
         raise ValueError('Current charisma/default policy coverage differs')
     return dict(charisma=sourced, default=defaults, original_health=len(matched))

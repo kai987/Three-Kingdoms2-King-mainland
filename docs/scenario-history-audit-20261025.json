@@ -2,7 +2,7 @@
   "schema": "tk2-scenario-history-audit-v1",
   "review_revision": "2026-10-25",
   "review_file": "game/config/references/scenario-history-review.json",
-  "review_sha256": "44381f243497afdc972c1a414d131a8ee571df8b76fb79915cc613efb6ec62c9",
+  "review_sha256": "7fef388385841f5eaa5d725366b0c469493cd3dea818e54624b012cb4580a4c4",
   "presentation_sha256": "e4cf452127f738161f23a772b262d1fceda5bc023a7e64c525594592a92fdecc",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
@@ -17,14 +17,14 @@
   ],
   "summary": {
     "cities": 2515,
-    "factions": 234,
-    "boundary_links": 1259,
-    "opening_officers": 8717,
-    "new_factions": 24,
-    "city_changes": 86,
-    "officer_changes": 437,
-    "city_change_records": 87,
-    "officer_change_records": 437
+    "factions": 236,
+    "boundary_links": 1262,
+    "opening_officers": 8721,
+    "new_factions": 26,
+    "city_changes": 87,
+    "officer_changes": 444,
+    "city_change_records": 88,
+    "officer_change_records": 444
   },
   "sources": {
     "han_sui": [
@@ -76,7 +76,9 @@
     ],
     "lvxing": [
       "https://zh.wikisource.org/wiki/三國志/卷48",
-      "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+      "https://zh.wikisource.org/wiki/資治通鑑/卷078",
+      "https://zh.wikisource.org/zh-hant/三國志/卷04",
+      "https://zh.wikisource.org/zh-hant/晉書/卷057"
     ],
     "sun_jian188": [
       "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
@@ -90,15 +92,21 @@
       "https://zh.wikisource.org/zh-hant/三國志/卷10",
       "https://zh.wikisource.org/zh-hant/資治通鑑/卷061",
       "https://zh.wikisource.org/zh-hant/後漢書/卷111"
+    ],
+    "song_jian": [
+      "https://zh.wikisource.org/zh-hant/三國志/卷01",
+      "https://zh.wikisource.org/zh-hant/三國志/卷09",
+      "https://zh.wikisource.org/zh-hant/後漢書/卷72"
     ]
   },
   "limits": [
     "Regional review, not a complete transcription of SAN14 or an attested prefect list for each exact month.",
-    "Zhang Yan, Wuhuan, Yan Baihu, Song Jian, Di rulers and Lu Xing lack separate matching city/person configurations; omission is recorded instead of inventing administrative city control.",
+    "Zhang Yan, Wuhuan, Yan Baihu and Di rulers lack separate matching city/person configurations; omission is recorded instead of inventing administrative city control.",
     "184 early military groups retain playable command proxies: Sun Jian at Xiapi is grounded in his county-deputy posting, but not represented as a historically independent commandery governor.",
     "207 Zhangling for Liu Bei,208 August Zhangling cutoff,209 IF Linjiang owner and other earlier explicit user settings are retained.",
     "Lujiang/Wan transition before213/214 and some Jiangxia cross-river splits lack a proven exact opening-month boundary; no unsupported backdating from214 conquest.",
-    "Four Jingnan prefect groups are playable local administrations; the subordinate roster distinguishes primary history from Romance-game compatibility."
+    "Four Jingnan prefect groups are playable local administrations; the subordinate roster distinguishes primary history from Romance-game compatibility.",
+    "Song Jian184-02 is an explicit early-opening Fuhan proxy; Lu Xing263-05 is a dated revolt mapping with Tang Pu and Li Tong retinue-window estimates;225 Nanzhong consolidation follows explicit user game setup over the retained primary historical interpretation."
   ],
   "scenarios": [
     {
@@ -110,7 +118,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "7bd308717cba8942e38e031727a5aeea940faeddd63f02300f9302ac0f399d01",
+      "catalog_sha256": "eabc10becd669770a2ca8267958885cdbe9cf004ff7a0798d8267f1103a54685",
       "factions": [
         {
           "id": "ding_yuan",
@@ -174,6 +182,15 @@
           "city_name": "交趾",
           "city_count": 1,
           "officer_count": 6
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "city_name": "枹罕",
+          "city_count": 1,
+          "officer_count": 1
         },
         {
           "id": "wu",
@@ -522,8 +539,8 @@
         },
         {
           "city": "longxi",
-          "name": "陇西",
-          "owner": "neutral",
+          "name": "枹罕",
+          "owner": "song_jian",
           "neutral_label": null
         },
         {
@@ -1536,6 +1553,23 @@
         {
           "cities": [
             "jincheng",
+            "longxi"
+          ],
+          "owners": [
+            "neutral",
+            "song_jian"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
             "wuwei"
           ],
           "owners": [
@@ -1607,8 +1641,25 @@
             "tianshui"
           ],
           "owners": [
-            "neutral",
+            "song_jian",
             "dong_zhuo"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "longxi",
+            "wudu"
+          ],
+          "owners": [
+            "song_jian",
+            "neutral"
           ],
           "modes": [
             "land"
@@ -1910,6 +1961,16 @@
         }
       ],
       "opening_officers": [
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "status": "serving",
+          "faction": "song_jian",
+          "city": "longxi",
+          "ruler": true,
+          "appearance_basis": "explicit_serving",
+          "city_name": "枹罕"
+        },
         {
           "person_id": "san14-candidate-0008",
           "name": "阴夔",
@@ -4781,14 +4842,63 @@
           "city_name": "陈留"
         }
       ],
-      "new_factions": [],
+      "new_factions": [
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_early_appearance_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        }
+      ],
       "removed_factions": [],
-      "city_changes": [],
-      "officer_changes": [],
-      "owner_expectations": {},
+      "city_changes": [
+        {
+          "city": "longxi",
+          "before": "neutral",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_early_appearance_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        }
+      ],
+      "officer_changes": [
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_previous_pool"
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_early_appearance_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        }
+      ],
+      "owner_expectations": {
+        "longxi": "song_jian"
+      },
       "notable_exclusions": [],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is enabled early at the user-requested184-02 opening. The Fuhan polity and214 fall are primary-backed, but the reviewed184 revolt text occurs in winter; the existing Longxi node is a county-area proxy, not a whole-commandery control claim. No named chancellor or retainer is invented."
       ]
     },
     {
@@ -4800,7 +4910,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "6b8807e611e06e4c5c6c3bd80e2ade665c1461d85e06e0a588d3b0135f0652b3",
+      "catalog_sha256": "ad439890df4151e54e8ff7e71a1558e4e10ce0e0a741c4adcca49f75be2dba25",
       "factions": [
         {
           "id": "ding_yuan",
@@ -10068,7 +10178,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "a780ce0e1032bcf39c64ff690284398c8b0d09669ea47e1075468867783c49bf",
+      "catalog_sha256": "bf8b760c838eccc5f9021d4aa3798db3155566334734fe771e59e0b04d813b45",
       "factions": [
         {
           "id": "bao_xin",
@@ -17155,7 +17265,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "d6037b528eff6722a98f1e5abe885d6c65dd5dcb333bf53b0306675df8a1b838",
+      "catalog_sha256": "aa9afc3a60332aafe0dfc32acd2e42a9ec9427a86ab467634a363e930edd15c9",
       "factions": [
         {
           "id": "bao_xin",
@@ -24537,7 +24647,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "f331ba60eb65506e40ad6d201e6a729e234c8a9e56c320ea9ddfda6871b291fc",
+      "catalog_sha256": "9330720bcda16b96ea2e67f7b0c036fc21b46a6623a972d4fa22bddadd88a3fd",
       "factions": [
         {
           "id": "gongsun",
@@ -31906,7 +32016,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "6455716c9d6b77f947d7e819ba3ecc6ed3e26b24b91685b7f1b1633eb0e69160",
+      "catalog_sha256": "fb1dbcf86b79b9610596a7be46ff114c3dab1fe8eb817fc5a4b3407b84ea3b39",
       "factions": [
         {
           "id": "gongsun",
@@ -39175,7 +39285,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "6e6faf5a0e3e86cbd129ce71f0682efff63a481f0fdf8905c90e993e38afbe23",
+      "catalog_sha256": "db091b04da1bcdd95cbfac9a8bd197c7f44821794cb0ebb23be498e53e6d6921",
       "factions": [
         {
           "id": "gongsun",
@@ -46142,7 +46252,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "4928c850c992e6d985703b719df8af2b3113ff09fde11993227a831d7c4422f1",
+      "catalog_sha256": "ba74b79e240bf4fbe6d5c25efcabde9e6ed92f7158aca423f567c2c0a5bb439c",
       "factions": [
         {
           "id": "gongsun",
@@ -52953,7 +53063,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "8404736921f46cf718c276ef82ada0b9ddffbba5f16b2eae8b9b01e9856db149",
+      "catalog_sha256": "00c50483939c973ea44b503f653cb519c8bef024a0ad35c999138b574da1e94c",
       "factions": [
         {
           "id": "gao_gan",
@@ -59936,7 +60046,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "dbf51169accfb732bc3e24ec30fba39f199e6c758793ee060f08fecce6ec4d33",
+      "catalog_sha256": "9a2e7adc1accbb0b73cbf9e85bf8192afba511a4775737f1be4d941c7f05b958",
       "factions": [
         {
           "id": "gongsun",
@@ -67382,7 +67492,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "e79759cc08da4043af00f8296bad4753bbb223813c2d069b03b8ebd89a25ccb8",
+      "catalog_sha256": "3a6c3277b4891b46e3593706e6211dd06a128588a5ca154a28e4310c66c78d9a",
       "factions": [
         {
           "id": "gongsun",
@@ -75031,7 +75141,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "c94d6213aeb1a41a13ee3355fd33414cb4c9ccaf53a154901b2bf8a371c1c740",
+      "catalog_sha256": "ef458643e43bfc511f33a1945426eef37b767ee5f0e05adf41fcfcde3052dedc",
       "factions": [
         {
           "id": "gongsun",
@@ -81565,7 +81675,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "b6153b8d5ee66d703049c8da127481c8af93f787e7da517f2ecaf679bfc6cc07",
+      "catalog_sha256": "ffd49d443ce25c50623f0e5c4b062844ef3499d67d6448c5617797ecbaae40f7",
       "factions": [
         {
           "id": "gongsun",
@@ -89133,7 +89243,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "9ef9242de9b8e9e564687e59bb3bea750509f56b8104d221c0cd9e1a8c4e9186",
+      "catalog_sha256": "fb45b290195249313160485e137781b213ac3863a98980f133acefb490255e78",
       "factions": [
         {
           "id": "gongsun",
@@ -94538,7 +94648,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "28bf0d12da8e8e2a40f9bd3773fc8ce7cfead39408c67cc41e4cfa0d8dd8ef89",
+      "catalog_sha256": "0d952f6809c28fcccbde2ba4c0d921b9e2fc5d418b020ede100de0213ca4c32d",
       "factions": [
         {
           "id": "gongsun",
@@ -99993,7 +100103,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "36fd66b8a2c60f1f31a6f043c91dea80872bf9549e5791a66e103684a93a42d3",
+      "catalog_sha256": "e98da7770d6eb6c48ee5be7034047196c9a077dc0fd09b30154b32fd89a60243",
       "factions": [
         {
           "id": "gongsun",
@@ -105539,7 +105649,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "92bb5d24b85f588d4c770510311627f97333191cf4116d3dd98c7635f00f79a1",
+      "catalog_sha256": "e9f65bc3591d8f857b013ce7048f684202e5c43235957f73386e033a9f3dad8b",
       "factions": [
         {
           "id": "gongsun",
@@ -110859,7 +110969,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "d3bbc9a6b465fb9af787c664af74d571978be67c839008be8cdc5b9013e786e7",
+      "catalog_sha256": "57621af7c9fd7597db8c1fd75204d44c8e7f6b394b8dfcac297d9cd8e30d43ce",
       "factions": [
         {
           "id": "gongsun",
@@ -110876,8 +110986,8 @@
           "person_id": "san14-candidate-0845",
           "city": "jianning",
           "city_name": "建宁",
-          "city_count": 3,
-          "officer_count": 13
+          "city_count": 4,
+          "officer_count": 15
         },
         {
           "id": "shi_xie",
@@ -110894,8 +111004,8 @@
           "person_id": "san14-candidate-0945",
           "city": "shujun",
           "city_name": "成都",
-          "city_count": 20,
-          "officer_count": 83
+          "city_count": 19,
+          "officer_count": 81
         },
         {
           "id": "wei",
@@ -111545,7 +111655,7 @@
         {
           "city": "zangke",
           "name": "牂牁",
-          "owner": "shu",
+          "owner": "nanman",
           "neutral_label": null
         },
         {
@@ -111631,6 +111741,23 @@
           "modes": [
             "land",
             "river"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "bajun",
+            "zangke"
+          ],
+          "owners": [
+            "shu",
+            "nanman"
+          ],
+          "modes": [
+            "land"
           ],
           "link_sources": [
             "links",
@@ -111732,6 +111859,23 @@
           "owners": [
             "shu",
             "wu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "fuling",
+            "zangke"
+          ],
+          "owners": [
+            "shu",
+            "nanman"
           ],
           "modes": [
             "land"
@@ -112041,7 +112185,7 @@
           ],
           "owners": [
             "wu",
-            "shu"
+            "nanman"
           ],
           "modes": [
             "land"
@@ -112143,24 +112287,7 @@
           ],
           "owners": [
             "wu",
-            "shu"
-          ],
-          "modes": [
-            "land"
-          ],
-          "link_sources": [
-            "links",
-            "travel_routes"
-          ]
-        },
-        {
-          "cities": [
-            "xinggu",
-            "zangke"
-          ],
-          "owners": [
-            "nanman",
-            "shu"
+            "nanman"
           ],
           "modes": [
             "land"
@@ -113710,11 +113837,11 @@
           "person_id": "san14-candidate-0391",
           "name": "朱褒",
           "status": "serving",
-          "faction": "shu",
-          "city": "wenshan",
+          "faction": "nanman",
+          "city": "zangke",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "汶山"
+          "city_name": "牂牁"
         },
         {
           "person_id": "san14-candidate-0392",
@@ -115500,11 +115627,11 @@
           "person_id": "san14-candidate-0855",
           "name": "雍闿",
           "status": "serving",
-          "faction": "shu",
-          "city": "guanghan",
+          "faction": "nanman",
+          "city": "jianning",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "雒城"
+          "city_name": "建宁"
         },
         {
           "person_id": "san14-candidate-0856",
@@ -116112,14 +116239,25 @@
       "city_changes": [
         {
           "city": "zangke",
-          "before": "nanman",
-          "owner": "shu",
-          "certainty": "regional_primary_mapping",
-          "note": "華陽國志記馬忠破牂牁在五月渡瀘前，225年7月不仍歸孟獲。",
+          "before": "shu",
+          "owner": "nanman",
+          "certainty": "authorial_user_requested_historical_override",
+          "note": "依使用者指定，225年7月牂牁歸孟獲並合併雍闓、高定、朱褒。原典所支持的馬忠已平牂牁判斷仍保留於overridden_historical_review；本次開局優先採用遊戲設定，並非推翻原史料或聲稱孟獲當月實際控制牂牁。",
           "source_urls": [
             "https://zh.wikisource.org/wiki/華陽國志/卷四",
             "https://zh.wikisource.org/wiki/三國志/卷43"
-          ]
+          ],
+          "overridden_historical_review": {
+            "city": "zangke",
+            "before": "nanman",
+            "owner": "shu",
+            "certainty": "regional_primary_mapping",
+            "note": "華陽國志記馬忠破牂牁在五月渡瀘前，225年7月不仍歸孟獲。",
+            "source_urls": [
+              "https://zh.wikisource.org/wiki/華陽國志/卷四",
+              "https://zh.wikisource.org/wiki/三國志/卷43"
+            ]
+          }
         }
       ],
       "officer_changes": [
@@ -116141,6 +116279,23 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "before": {
+            "faction": "nanman",
+            "city": "jianning",
+            "status": "serving"
+          },
+          "faction": "nanman",
+          "city": "jianning",
+          "certainty": "authorial_user_requested_historical_override",
+          "note": "依用戶指定將高定納入孟獲勢力，沿用建寧駐地。史料所記活動地為越巂，且於225年南征時被斬；本庫死亡年251是第三方遊戲設定轉錄，本次不改共享生卒年，不將此開局歸屬與駐地宣稱為逐月史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷43",
+            "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0383",
           "name": "祝融",
           "before": {
@@ -116155,6 +116310,23 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/華陽國志/卷四",
             "https://zh.wikisource.org/wiki/三國志/卷43"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0391",
+          "name": "朱褒",
+          "before": {
+            "faction": "shu",
+            "city": "wenshan",
+            "status": "serving"
+          },
+          "faction": "nanman",
+          "city": "zangke",
+          "certainty": "authorial_user_requested_historical_override",
+          "note": "依用戶指定將朱褒納入孟獲勢力並駐牂牁；史料記朱褒曾反叛於牂牁，不能據此證明225年7月仍為孟獲部下。保留原資料死亡年225及當年出場確認，此為本作開局合併設定，非SAN14原始配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷43",
+            "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
           ]
         },
         {
@@ -116190,14 +116362,32 @@
             "https://zh.wikisource.org/wiki/華陽國志/卷四",
             "https://zh.wikisource.org/wiki/三國志/卷43"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0855",
+          "name": "雍闿",
+          "before": {
+            "faction": "shu",
+            "city": "guanghan",
+            "status": "serving"
+          },
+          "faction": "nanman",
+          "city": "jianning",
+          "certainty": "authorial_user_requested_historical_override",
+          "note": "依用戶指定將雍闓納入孟獲勢力，駐建寧。史料記雍闓在諸葛亮南征途中已為高定部曲所殺；225年7月仍可出場為本作開局合併設定，保留原資料死亡年225及當年出場確認，非逐月史實或SAN14原始配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷43",
+            "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
+          ]
         }
       ],
       "owner_expectations": {
-        "zangke": "shu"
+        "zangke": "nanman"
       },
       "notable_exclusions": [],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "User-requested225 Nanzhong opening explicitly overrides the earlier historically inferred Zangke=Shu setup. Yong Kai and Zhu Bao death-year openings and Gao Ding location/lifespan remain disclosed game settings; do not relabel the merge as an attested July225 retinue. Original primary evidence remains attached to the superseded review."
       ]
     },
     {
@@ -116209,7 +116399,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "4e02a9202ab491a26643fa48a448aca437ce6bc4b3cf2ef40c0a4774ce761c30",
+      "catalog_sha256": "963475e739914752dd37c3f5dc2731572e3bb18a506e278368909e540c05aa92",
       "factions": [
         {
           "id": "gongsun",
@@ -121058,7 +121248,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "61950f687e990899885102d3b57f071ad1ecb04a90629524a0b79c5e2c77a561",
+      "catalog_sha256": "1208a25cc43ca07e6dcbe16cced176fcbc1db729640ea0b9483bfce036073b58",
       "factions": [
         {
           "id": "gongsun",
@@ -125379,7 +125569,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "e6e4a5e22d63ea9b12e2e4020e438daf825d0e1b14b6ef446b2f2a23630d02df",
+      "catalog_sha256": "72443ba035aba3576254e2514c775812e3b9d4e2c4b3871dcb96293dd93db111",
       "factions": [
         {
           "id": "gongsun",
@@ -129540,7 +129730,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "087278b75c48c211587b79e3d3f181615bbfcdb9ae33e1d5fced4169d741860f",
+      "catalog_sha256": "093a8800ff3bd069f3c68bced0c4551460a81a483da306fb9d577fc2deaff4b1",
       "factions": [
         {
           "id": "shu",
@@ -133359,8 +133549,17 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "2af77b043a7fe269513c6802286ef09c6cfed905524796c6f1661183e55062f2",
+      "catalog_sha256": "0d08b7e3fe5352228bca1a8200b1369a710a2af0b0a941c308d401bc47dbcd32",
       "factions": [
+        {
+          "id": "lu_xing",
+          "ruler": "吕兴",
+          "person_id": "historical-lu-xing",
+          "city": "jiaozhi",
+          "city_name": "交趾",
+          "city_count": 3,
+          "officer_count": 3
+        },
         {
           "id": "shu",
           "ruler": "刘禅",
@@ -133634,8 +133833,8 @@
         {
           "city": "jiaozhi",
           "name": "交趾",
-          "owner": "neutral",
-          "neutral_label": "呂興地方叛軍"
+          "owner": "lu_xing",
+          "neutral_label": null
         },
         {
           "city": "jinan",
@@ -133670,8 +133869,8 @@
         {
           "city": "jiuzhen",
           "name": "九真",
-          "owner": "neutral",
-          "neutral_label": "呂興地方叛軍"
+          "owner": "lu_xing",
+          "neutral_label": null
         },
         {
           "city": "jiyin",
@@ -133820,8 +134019,8 @@
         {
           "city": "rinan",
           "name": "日南",
-          "owner": "neutral",
-          "neutral_label": "呂興地方叛軍"
+          "owner": "lu_xing",
+          "neutral_label": null
         },
         {
           "city": "runan",
@@ -134215,7 +134414,7 @@
           ],
           "owners": [
             "wu",
-            "neutral"
+            "lu_xing"
           ],
           "modes": [
             "sea"
@@ -134266,7 +134465,7 @@
             "kuaiji"
           ],
           "owners": [
-            "neutral",
+            "lu_xing",
             "wu"
           ],
           "modes": [
@@ -134283,7 +134482,7 @@
             "yulin"
           ],
           "owners": [
-            "neutral",
+            "lu_xing",
             "wu"
           ],
           "modes": [
@@ -134647,6 +134846,36 @@
           "ruler": false,
           "appearance_basis": "explicit_serving",
           "city_name": "庐江"
+        },
+        {
+          "person_id": "historical-li-tong-jiaozhi",
+          "name": "李统",
+          "status": "serving",
+          "faction": "lu_xing",
+          "city": "jiuzhen",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "九真"
+        },
+        {
+          "person_id": "historical-lu-xing",
+          "name": "吕兴",
+          "status": "serving",
+          "faction": "lu_xing",
+          "city": "jiaozhi",
+          "ruler": true,
+          "appearance_basis": "explicit_serving",
+          "city_name": "交趾"
+        },
+        {
+          "person_id": "historical-tang-pu",
+          "name": "唐谱",
+          "status": "serving",
+          "faction": "lu_xing",
+          "city": "jiaozhi",
+          "ruler": false,
+          "appearance_basis": "explicit_serving",
+          "city_name": "交趾"
         },
         {
           "person_id": "san14-candidate-0004",
@@ -136359,52 +136588,151 @@
           "city_name": "庐江"
         }
       ],
-      "new_factions": [],
+      "new_factions": [
+        {
+          "id": "lu_xing",
+          "ruler": "吕兴",
+          "person_id": "historical-lu-xing",
+          "city": "jiaozhi",
+          "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
+          "certainty": "primary_text_month_regional_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
+          ]
+        }
+      ],
       "removed_factions": [],
       "city_changes": [
         {
           "city": "jiaozhi",
-          "before": "wu",
-          "owner": "neutral",
+          "before": "neutral",
+          "owner": "lu_xing",
+          "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
           "certainty": "dated_revolt_region_mapping",
-          "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷48",
-            "https://zh.wikisource.org/wiki/資治通鑑/卷078"
-          ]
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
+          ],
+          "superseded_review": {
+            "city": "jiaozhi",
+            "before": "wu",
+            "owner": "neutral",
+            "certainty": "dated_revolt_region_mapping",
+            "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+            "source_urls": [
+              "https://zh.wikisource.org/wiki/三國志/卷48",
+              "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+            ]
+          }
         },
         {
           "city": "jiuzhen",
-          "before": "wu",
-          "owner": "neutral",
+          "before": "neutral",
+          "owner": "lu_xing",
+          "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
           "certainty": "dated_revolt_region_mapping",
-          "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷48",
-            "https://zh.wikisource.org/wiki/資治通鑑/卷078"
-          ]
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
+          ],
+          "superseded_review": {
+            "city": "jiuzhen",
+            "before": "wu",
+            "owner": "neutral",
+            "certainty": "dated_revolt_region_mapping",
+            "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+            "source_urls": [
+              "https://zh.wikisource.org/wiki/三國志/卷48",
+              "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+            ]
+          }
         },
         {
           "city": "rinan",
-          "before": "wu",
-          "owner": "neutral",
+          "before": "neutral",
+          "owner": "lu_xing",
+          "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
           "certainty": "dated_revolt_region_mapping",
-          "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
           "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷48",
-            "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
+          ],
+          "superseded_review": {
+            "city": "rinan",
+            "before": "wu",
+            "owner": "neutral",
+            "certainty": "dated_revolt_region_mapping",
+            "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+            "source_urls": [
+              "https://zh.wikisource.org/wiki/三國志/卷48",
+              "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+            ]
+          }
+        }
+      ],
+      "officer_changes": [
+        {
+          "person_id": "historical-li-tong-jiaozhi",
+          "name": "李统",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_previous_pool"
+          },
+          "faction": "lu_xing",
+          "city": "jiuzhen",
+          "certainty": "authorial_retinue_window",
+          "note": "《晉書》卷057陶璜傳記呂興被其功曹李統所殺，可證李統曾屬呂興，未載263年五月任職地。本篇依使用者要求以本陣營任職窗口推定配置九真，不聲稱該地曾任功曹；此李統與魏將李通為不同人物。該傳把事件繫於孫皓、晉武帝時，年代與《三國志》卷48不同，本作採後者的263年起事年月，生卒邊界另標估計。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/晉書/卷057",
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/三國志/卷04"
+          ]
+        },
+        {
+          "person_id": "historical-lu-xing",
+          "name": "吕兴",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_previous_pool"
+          },
+          "faction": "lu_xing",
+          "city": "jiaozhi",
+          "certainty": "primary_text_month_regional_mapping",
+          "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷48",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
+          ]
+        },
+        {
+          "person_id": "historical-tang-pu",
+          "name": "唐谱",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_previous_pool"
+          },
+          "faction": "lu_xing",
+          "city": "jiaozhi",
+          "certainty": "authorial_retinue_window",
+          "note": "《三國志》卷04於264年九月詔書記呂興遣都尉唐譜經霍弋上表；可證唐譜為呂興部下，不能證明263年五月已任都尉。本篇依使用者要求以本陣營任職窗口推定，提前配置交趾；駐城、出仕年及生卒邊界為本作估計，非263年逐將史證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷04"
           ]
         }
       ],
-      "officer_changes": [],
       "owner_expectations": {
-        "jiaozhi": "neutral",
-        "jiuzhen": "neutral",
-        "rinan": "neutral"
+        "jiaozhi": "lu_xing",
+        "jiuzhen": "lu_xing",
+        "rinan": "lu_xing"
       },
       "notable_exclusions": [],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "The263-05 revolt is dated in SGZ48; the upper-ten-day opening and all-three-region control are explicit month-boundary mappings. Tang Pu is named under Lu Xing in the264 decree; Li Tong is named as his meritorious officer in Jin57. Their263 in-person presence and garrisons are authorial retinue-window inferences, not attested263 postings. Wei/Jin reinforcements are not added."
       ]
     }
   ]

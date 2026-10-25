@@ -10,15 +10,16 @@
     "rgba_sha256": "914d8a6b6744eb8cc2e5470d789044bed6b311c9e673a4c93b7660c8370f9d51"
   },
   "counts": {
-    "people": 1023,
-    "source_unique": 982,
-    "atlas_count": 16
+    "people": 1027,
+    "source_unique": 986,
+    "atlas_count": 17
   },
   "processing": {
     "mode": "imagegen_atlas_color_studies_with_original_material_masks",
     "background": "#000000",
     "originalsRetained": true,
-    "newArtHistoricalLikenessClaim": false
+    "newArtHistoricalLikenessClaim": false,
+    "supplement_mode": "authorial_pixel_art_native_nearest4x_preserving_identity"
   },
   "people": {
     "san14-candidate-0256": {
@@ -37850,6 +37851,126 @@
         "qa": {
           "userApproved": true,
           "exactApprovedFile": true
+        }
+      }
+    },
+    "historical-song-jian": {
+      "path": "/assets/portraits/enhanced/historical-song-jian.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-song-jian.png",
+      "source_sha256": "551df6216dc27d8557c3bd03e94b51cb9ac71abd7693a08a3fbd545ae17805c5",
+      "sha256": "3f7bd17919765b255f3eec9a083f15d34ff11299bdda610330889f100ae3b5eb",
+      "pixel_sha256": "40e311de26ee6790775896b7fff7e1e2efdb9739ee417adc3324469122fb6522",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "nearest4x",
+      "provenance": {
+        "supplement_plan": "art/portraits/historical-additions-v1/plan.json",
+        "supplement_plan_sha256": "e91452cc899b242928cfdf48844753e4c109113630e5a79466da94c4ed093aed",
+        "atlas": "art/portraits/historical-additions-v1/source.png",
+        "source_atlas_sha256": "8e91e2c7bc656164bafe0d133109ae8dd49385426cdce32dcf25950c6f4b8980",
+        "cell_index": 0,
+        "base_method": "native32x40_exact_nearest4x",
+        "prompt": "art/portraits/historical-additions-v1/prompt.txt",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 4,
+          "alphaChanges": 0,
+          "nearest4xExact": true
+        }
+      }
+    },
+    "historical-lu-xing": {
+      "path": "/assets/portraits/enhanced/historical-lu-xing.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-lu-xing.png",
+      "source_sha256": "456717666ed668c0a9950f00f979b36b43d59d27c55738883871cd2d1137fc62",
+      "sha256": "69ef1227d95189c8c941fe3985605ececd14214d334529c64be4510db9953605",
+      "pixel_sha256": "b4af1d3ad1fcf083d7d0b600df51b2aa49b882737d68cca27e65998ef9fced6a",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "nearest4x",
+      "provenance": {
+        "supplement_plan": "art/portraits/historical-additions-v1/plan.json",
+        "supplement_plan_sha256": "e91452cc899b242928cfdf48844753e4c109113630e5a79466da94c4ed093aed",
+        "atlas": "art/portraits/historical-additions-v1/source.png",
+        "source_atlas_sha256": "8e91e2c7bc656164bafe0d133109ae8dd49385426cdce32dcf25950c6f4b8980",
+        "cell_index": 1,
+        "base_method": "native32x40_exact_nearest4x",
+        "prompt": "art/portraits/historical-additions-v1/prompt.txt",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 4,
+          "alphaChanges": 0,
+          "nearest4xExact": true
+        }
+      }
+    },
+    "historical-tang-pu": {
+      "path": "/assets/portraits/enhanced/historical-tang-pu.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-tang-pu.png",
+      "source_sha256": "129c7dc10a47abb19898ea1775abcfb6940fdc5cc07da3f819ab06775b4b2379",
+      "sha256": "4823db283e39662198a3288ba3476519ab12f72836a6cf80062dbe997bde4833",
+      "pixel_sha256": "4abb19eab7fec2a3f28c1b9223453b2a16858faeead87a9df18b7785070c168b",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "nearest4x",
+      "provenance": {
+        "supplement_plan": "art/portraits/historical-additions-v1/plan.json",
+        "supplement_plan_sha256": "e91452cc899b242928cfdf48844753e4c109113630e5a79466da94c4ed093aed",
+        "atlas": "art/portraits/historical-additions-v1/source.png",
+        "source_atlas_sha256": "8e91e2c7bc656164bafe0d133109ae8dd49385426cdce32dcf25950c6f4b8980",
+        "cell_index": 2,
+        "base_method": "native32x40_exact_nearest4x",
+        "prompt": "art/portraits/historical-additions-v1/prompt.txt",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 4,
+          "alphaChanges": 0,
+          "nearest4xExact": true
+        }
+      }
+    },
+    "historical-li-tong-jiaozhi": {
+      "path": "/assets/portraits/enhanced/historical-li-tong-jiaozhi.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-li-tong-jiaozhi.png",
+      "source_sha256": "24efbe71d5f9e9449fa6c55b2a69219e0517f890ecdb36d68dc64b58d2578ae7",
+      "sha256": "fe31870974f1b632f9135164467922e4bd56f8e7bb778a477ed8ccad36954d05",
+      "pixel_sha256": "1dc5b6bbc417ad05d7c2a7172397d6fc3ecbf4f3e355ee7935db161c3cc22d27",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "nearest4x",
+      "provenance": {
+        "supplement_plan": "art/portraits/historical-additions-v1/plan.json",
+        "supplement_plan_sha256": "e91452cc899b242928cfdf48844753e4c109113630e5a79466da94c4ed093aed",
+        "atlas": "art/portraits/historical-additions-v1/source.png",
+        "source_atlas_sha256": "8e91e2c7bc656164bafe0d133109ae8dd49385426cdce32dcf25950c6f4b8980",
+        "cell_index": 3,
+        "base_method": "native32x40_exact_nearest4x",
+        "prompt": "art/portraits/historical-additions-v1/prompt.txt",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 4,
+          "alphaChanges": 0,
+          "nearest4xExact": true
         }
       }
     }

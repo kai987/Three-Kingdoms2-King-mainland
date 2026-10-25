@@ -16,8 +16,9 @@
    const entry={path:row.path,kind:row.kind,original_id:row.kind==='nes_original'?row.original_id:null};
    if(Object.prototype.hasOwnProperty.call(row,'enhanced')){
     const variant=row.enhanced;
-    if(!variant||typeof variant!=='object'||Array.isArray(variant)||typeof variant.path!=='string'||!enhancedPathPattern.test(variant.path)||variant.width!==128||variant.height!==160)throw new Error('Invalid enhanced portrait entry');
-    entry.enhanced=Object.freeze({path:variant.path,width:variant.width,height:variant.height});
+    if(!variant||typeof variant!=='object'||Array.isArray(variant)||typeof variant.path!=='string'||!enhancedPathPattern.test(variant.path)||variant.width!==128||variant.height!==160||
+     (Object.prototype.hasOwnProperty.call(variant,'rendering')&&variant.rendering!=='nearest4x'))throw new Error('Invalid enhanced portrait entry');
+    entry.enhanced=Object.freeze({path:variant.path,width:variant.width,height:variant.height,...(variant.rendering?{rendering:variant.rendering}:{})});
    }
    people[id]=Object.freeze(entry);
   }
@@ -63,6 +64,7 @@
   }
   function description(row,enhanced=false){
    if(!row)return text(status==='idle'||status==='loading'?'肖像準備中':'肖像待補',status==='idle'||status==='loading'?'肖像を準備中':'肖像は未設定です');
+   if(enhanced&&row.enhanced?.rendering==='nearest4x')return text('新增繪製像素肖像・4倍放大・非史實容貌','新規制作のドット肖像・4倍拡大・史実の容貌ではありません');
    if(row.fictional)return enhanced?text('架空武將・共用像素肖像・明暗強化','架空の武将・共通ドット肖像・陰影強化'):text('架空武將・共用原版像素肖像','架空の武将・共通の原作ドット肖像');
    if(enhanced)return row.kind==='nes_original'?text('原版像素肖像・明暗強化','原作のドット肖像・陰影強化'):text('新增繪製肖像・明暗強化・非史實容貌','新規制作の肖像・陰影強化・史実の容貌ではありません');
    return row.kind==='nes_original'?text('原版像素肖像','原作のドット肖像'):text('新增繪製肖像・非史實容貌','新規制作の肖像・史実の容貌ではありません');

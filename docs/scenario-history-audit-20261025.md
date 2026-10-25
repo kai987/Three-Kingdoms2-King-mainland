@@ -4,7 +4,7 @@
 
 生成元は [レビュー決定表](../game/config/references/scenario-history-review.json)、照合結果は [全都市・境界経路・人物のJSON](scenario-history-audit-20261025.json)です。同じ人物を一度の修正で複数回動かした場合は最後の記録を採用し、都市は最終的な `owner_expectations` と照合します。
 
-今回の記録は追加勢力24件（シナリオごとの組合せ）、都市延べ87件（最終の都市・シナリオ単位86件）、人物延べ437件（同一シナリオ内の重複整理後437件）です。全都市一覧は変更対象以外も含みますが、変更のない都市を新たに逐月確証した件数とは数えません。
+今回の記録は追加勢力26件（シナリオごとの組合せ）、都市延べ88件（最終の都市・シナリオ単位87件）、人物延べ444件（同一シナリオ内の重複整理後444件）です。全都市一覧は変更対象以外も含みますが、変更のない都市を新たに逐月確証した件数とは数えません。
 
 ## 対象と判定の意味
 
@@ -21,7 +21,7 @@
 
 | 開始年月 | シナリオ | 勢力の君主（本拠） | 都市／境界接続 | 今回の修正件数 |
 | --- | --- | --- | --- | --- |
-| 184年2月 | 184年2月 · 黄巾之乱 | 丁原（晉陽）、董卓（天水）、公孫瓚（漁陽）、何進（洛陽）、劉焉（薊）、馬騰（姑臧）、士燮（交趾）、孫堅（下邳）、張角（平原） | 108／62 | 勢力0・都市0・人物0 |
+| 184年2月 | 184年2月 · 黄巾之乱 | 丁原（晉陽）、董卓（天水）、公孫瓚（漁陽）、何進（洛陽）、劉焉（薊）、馬騰（姑臧）、士燮（交趾）、宋建（枹罕）、孫堅（下邳）、張角（平原） | 108／64 | 勢力1・都市1・人物1 |
 | 188年6月 | 揺らぐ漢朝 | 丁原（晉陽）、董卓（天水）、何進（洛陽）、韓遂（金城）、劉焉（成都）、劉虞（薊）、士燮（交趾）、孫堅（長沙）、張純（遼西） | 108／56 | 勢力1・都市1・人物7 |
 | 190年1月 | 190年1月 · 反董卓联盟 | 鮑信（東平）、董卓（洛陽）、公孫度（襄平）、公孫瓚（漁陽）、韓馥（鄴）、韓遂（金城）、孔融（北海）、孔伷（許縣）、劉表（襄陽）、劉岱（濟陰）、劉焉（成都）、劉虞（薊）、馬騰（姑臧）、橋瑁（濮陽）、士燮（交趾）、劉備（平原）、孫堅（長沙）、陶謙（下邳）、王匡（河內）、曹操（陳留）、袁紹（南皮）、袁術（宛城）、袁遺（昌邑）、張超（東海）、張楊（上黨） | 108／93 | 勢力6・都市9・人物30 |
 | 191年10月 | 191年10月 · 二袁的意图 | 鮑信（東平）、董卓（長安）、公孫度（襄平）、公孫瓚（漁陽）、韓遂（金城）、孔融（北海）、劉表（襄陽）、劉岱（濟陰）、劉焉（成都）、劉虞（薊）、馬騰（姑臧）、士燮（交趾）、劉備（平原）、孫堅（長沙）、陶謙（下邳）、曹操（濮陽）、袁紹（鄴）、袁術（宛城）、袁遺（昌邑）、張超（東海）、張邈（陳留）、張楊（河內） | 108／88 | 勢力4・都市7・人物50 |
@@ -38,12 +38,12 @@
 | 217年7月 | 217年7月 · 汉中争夺战 | 公孫恭（襄平）、士燮（交趾）、劉備（成都）、曹操（鄴）、孫權（建業） | 110／32 | 勢力0・都市0・人物0 |
 | 219年7月 | 219年7月 · 关羽包围网 | 公孫恭（襄平）、士燮（交趾）、劉備（成都）、曹操（鄴）、孫權（建業） | 110／32 | 勢力0・都市0・人物0 |
 | 221年7月 | 221年7月 · 夷陵前夕 | 公孫恭（襄平）、士燮（交趾）、劉備（成都）、曹丕（洛陽）、孫權（武昌） | 111／32 | 勢力0・都市0・人物0 |
-| 225年7月 | 南蛮征伐 | 公孫恭（襄平）、孟獲（建寧）、士燮（交趾）、劉禪（成都）、曹丕（洛陽）、孫權（武昌） | 111／36 | 勢力0・都市1・人物4 |
+| 225年7月 | 南蛮征伐 | 公孫恭（襄平）、孟獲（建寧）、士燮（交趾）、劉禪（成都）、曹丕（洛陽）、孫權（武昌） | 111／37 | 勢力0・都市1・人物7 |
 | 227年2月 | 227年2月 · 出师表 | 公孫恭（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（武昌） | 111／29 | 勢力0・都市0・人物0 |
 | 234年2月 | 秋風五丈原 | 公孫淵（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（建業） | 111／25 | 勢力0・都市0・人物0 |
 | 238年1月 | 238年1月 · 征讨辽东 | 公孫淵（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（建業） | 111／25 | 勢力0・都市0・人物0 |
 | 249年1月 | 249年1月 · 正始之变 | 劉禪（成都）、曹芳（洛陽）、孫權（建業） | 110／20 | 勢力0・都市0・人物0 |
-| 263年5月 | 蜀漢の滅亡 | 劉禪（成都）、曹奐（洛陽）、孫休（建業） | 113／23 | 勢力0・都市3・人物0 |
+| 263年5月 | 蜀漢の滅亡 | 呂興（交趾）、劉禪（成都）、曹奐（洛陽）、孫休（建業） | 113／23 | 勢力1・都市3・人物3 |
 
 件数は本作データの変更記録です。同じ勢力を複数の年代に追加した場合は各開幕で1件と数えます。JSONは全開放都市の所有者、各勢力の全開幕武将、異なる所有者を結ぶ接続を収録します。境界接続は陸路・内河・海路の都市間隣接であり、行政区の境界線を復元したものではありません。
 
@@ -167,6 +167,11 @@
 - 人物 劉賢 `san14-candidate-0934`：liu_du／零陵。依《三國演義》52/53回補齊既有人物隸屬；屬演義兼容設定，不冒稱正史任所。 [史料1](https://zh.wikisource.org/wiki/三國演義/第052回)、[史料2](https://zh.wikisource.org/wiki/三國演義/第053回)
 
 ## 地域代理・本作の配置
+
+### 184年2月・184年2月 · 黄巾之乱
+
+- 都市 枹罕 `longxi`：neutral → song_jian。《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)、[史料3](https://zh.wikisource.org/zh-hant/後漢書/卷72)
+- 人物 宋建 `historical-song-jian`：song_jian／枹罕。《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)、[史料3](https://zh.wikisource.org/zh-hant/後漢書/卷72)
 
 ### 188年6月・揺らぐ漢朝
 
@@ -620,17 +625,23 @@
 
 ### 225年7月・南蛮征伐
 
-- 都市 牂牁 `zangke`：nanman → shu。華陽國志記馬忠破牂牁在五月渡瀘前，225年7月不仍歸孟獲。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 都市 牂牁 `zangke`：shu → nanman。依使用者指定，225年7月牂牁歸孟獲並合併雍闓、高定、朱褒。原典所支持的馬忠已平牂牁判斷仍保留於overridden_historical_review；本次開局優先採用遊戲設定，並非推翻原史料或聲稱孟獲當月實際控制牂牁。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
 - 人物 金環三結 `san14-candidate-0221`：nanman／興古。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 人物 高定 `san14-candidate-0272`：nanman／建寧。依用戶指定將高定納入孟獲勢力，沿用建寧駐地。史料所記活動地為越巂，且於225年南征時被斬；本庫死亡年251是第三方遊戲設定轉錄，本次不改共享生卒年，不將此開局歸屬與駐地宣稱為逐月史實。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷43)、[史料2](https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04)
 - 人物 祝融 `san14-candidate-0383`：nanman／興古。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 人物 朱褒 `san14-candidate-0391`：nanman／牂牁。依用戶指定將朱褒納入孟獲勢力並駐牂牁；史料記朱褒曾反叛於牂牁，不能據此證明225年7月仍為孟獲部下。保留原資料死亡年225及當年出場確認，此為本作開局合併設定，非SAN14原始配置。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷43)、[史料2](https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04)
 - 人物 董荼那 `san14-candidate-0739`：nanman／興古。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
 - 人物 孟優 `san14-candidate-0850`：nanman／興古。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 人物 雍闓 `san14-candidate-0855`：nanman／建寧。依用戶指定將雍闓納入孟獲勢力，駐建寧。史料記雍闓在諸葛亮南征途中已為高定部曲所殺；225年7月仍可出場為本作開局合併設定，保留原資料死亡年225及當年出場確認，非逐月史實或SAN14原始配置。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷43)、[史料2](https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04)
 
 ### 263年5月・蜀漢の滅亡
 
-- 都市 交趾 `jiaozhi`：wu → neutral。永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。 [史料1](https://zh.wikisource.org/wiki/三國志/卷48)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷078)
-- 都市 九真 `jiuzhen`：wu → neutral。永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。 [史料1](https://zh.wikisource.org/wiki/三國志/卷48)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷078)
-- 都市 日南 `rinan`：wu → neutral。永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。 [史料1](https://zh.wikisource.org/wiki/三國志/卷48)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷078)
+- 都市 交趾 `jiaozhi`：neutral → lu_xing。《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷48)、[史料2](https://zh.wikisource.org/zh-hant/資治通鑑/卷078)
+- 都市 九真 `jiuzhen`：neutral → lu_xing。《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷48)、[史料2](https://zh.wikisource.org/zh-hant/資治通鑑/卷078)
+- 都市 日南 `rinan`：neutral → lu_xing。《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷48)、[史料2](https://zh.wikisource.org/zh-hant/資治通鑑/卷078)
+- 人物 李統 `historical-li-tong-jiaozhi`：lu_xing／九真。《晉書》卷057陶璜傳記呂興被其功曹李統所殺，可證李統曾屬呂興，未載263年五月任職地。本篇依使用者要求以本陣營任職窗口推定配置九真，不聲稱該地曾任功曹；此李統與魏將李通為不同人物。該傳把事件繫於孫皓、晉武帝時，年代與《三國志》卷48不同，本作採後者的263年起事年月，生卒邊界另標估計。 [史料1](https://zh.wikisource.org/zh-hant/晉書/卷057)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷48)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷04)
+- 人物 呂興 `historical-lu-xing`：lu_xing／交趾。《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷48)、[史料2](https://zh.wikisource.org/zh-hant/資治通鑑/卷078)
+- 人物 唐譜 `historical-tang-pu`：lu_xing／交趾。《三國志》卷04於264年九月詔書記呂興遣都尉唐譜經霍弋上表；可證唐譜為呂興部下，不能證明263年五月已任都尉。本篇依使用者要求以本陣營任職窗口推定，提前配置交趾；駐城、出仕年及生卒邊界為本作估計，非263年逐將史證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷04)
 
 ## 実効支配・月界の未確定事項
 
@@ -812,20 +823,22 @@
 
 ## 独立勢力にしていない地方勢力と未確定範囲
 
-- 張燕、烏丸、厳白虎、宋建や地方氐部は、各時期に現在の節点を一つ丸ごと与える証拠や人物・都市の対応が不足する場合、独立した都市勢力にしていません。不存在や、すべて曹操の直轄だったという意味ではありません。
+- 張燕、烏丸、厳白虎や地方氐部は、各時期に現在の節点を一つ丸ごと与える証拠や人物・都市の対応が不足する場合、独立した都市勢力にしていません。不存在や、すべて曹操の直轄だったという意味ではありません。
 - 武都・陰平は215年以前の地方実控を中立で表す箇所があります。張魯・劉璋・曹操のどれかへ一律に塗り替える証明ではありません。
 - 221年の南中は名義上の蜀属と実効支配を分けます。張裔が223年まで数年呉にいた記録と、劉備死後に反乱をまとめる記録には、雍闓の初動年月を確定しにくい点があります。黄元の222年12月〜223年3月の反乱は、現在の開幕時点の間にあります。
-- 225年7月は孟獲を中心とする南中の戦局です。雍闓・高定・朱褒をこの月まで生存する君主として追加せず、牂牁と永昌の蜀方支配を分けます。
-- 士徽の反乱は226年で、225年7月の士燮や227年2月の呉属とは別です。263年5月は呂興に応じた交趾・九真・日南を地方叛軍として表し、264年の正式な魏の任命を先取りしません。呂興の独立した歴史人物IDと可操作勢力は未追加です。
+- 184年2月の宋建は利用者指定による前倒し登場です。隴西の節点を枹罕地域の代理とし、184年冬の記録を2月の確証とはしません。
+- 225年7月は利用者指定で牂牁を孟獲に与え、雍闓・高定・朱褒をその配下にまとめます。史料上の討平時期と異なる開幕設定として明記し、史実の修正とは呼びません。
+- 士徽の反乱は226年で、225年7月の士燮や227年2月の呉属とは別です。263年5月は呂興に応じた交趾・九真・日南を地方叛軍として表し、264年の正式な魏の任命を先取りしません。呂興は独立した人物IDの可操作勢力で、唐譜・李統の263年配置は後年の記録からの開幕推定です。詳しくは[追加人物と史料の境界](song-jian-lu-xing.md)を参照してください。
 
 以下は決定表に保存した追加の制限です。
 
 - Regional review, not a complete transcription of SAN14 or an attested prefect list for each exact month.
-- Zhang Yan, Wuhuan, Yan Baihu, Song Jian, Di rulers and Lu Xing lack separate matching city/person configurations; omission is recorded instead of inventing administrative city control.
+- Zhang Yan, Wuhuan, Yan Baihu and Di rulers lack separate matching city/person configurations; omission is recorded instead of inventing administrative city control.
 - 184 early military groups retain playable command proxies: Sun Jian at Xiapi is grounded in his county-deputy posting, but not represented as a historically independent commandery governor.
 - 207 Zhangling for Liu Bei,208 August Zhangling cutoff,209 IF Linjiang owner and other earlier explicit user settings are retained.
 - Lujiang/Wan transition before213/214 and some Jiangxia cross-river splits lack a proven exact opening-month boundary; no unsupported backdating from214 conquest.
 - Four Jingnan prefect groups are playable local administrations; the subordinate roster distinguishes primary history from Romance-game compatibility.
+- Song Jian184-02 is an explicit early-opening Fuhan proxy; Lu Xing263-05 is a dated revolt mapping with Tang Pu and Li Tong retinue-window estimates;225 Nanzhong consolidation follows explicit user game setup over the retained primary historical interpretation.
 
 ## 再生成と照合
 

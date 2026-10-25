@@ -55,7 +55,7 @@ class DlcCampaignTests(unittest.TestCase):
                 meta = data['main_scenario']
                 sources = [meta.get('official_source', ''), *meta.get('source_urls', [])]
                 self.assertIn('https://www.gamecity.com.tw/sangokushi14/scenario.html', sources)
-                self.assertEqual(len(data['people']), 1023)
+                self.assertEqual(len(data['people']), 1027)
                 self.assertEqual(data['rules']['city_officer_capacity'], 99)
                 self.assertEqual(data['rules']['battle_officers_per_side'], 10)
 

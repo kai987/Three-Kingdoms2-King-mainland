@@ -3688,7 +3688,13 @@
           "initial_free": 120,
           "source_scenario": "san14-194-06",
           "planned_serving": 291,
-          "future_plans": 535
+          "future_plans": 535,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -38456,25 +38462,28 @@
             "yiyang"
           ],
           "reference_classes": {
-            "authorial_garrison_relocation": 22,
             "authorial_region_placement": 910,
-            "bounded_career_inference": 1,
             "game_reference": 81,
             "primary_text_affiliation": 7,
-            "regional_primary_mapping": 2
+            "authorial_garrison_relocation": 22,
+            "regional_primary_mapping": 2,
+            "bounded_career_inference": 1,
+            "explicit_scenario_scope": 4
           },
           "bases": {
-            "authorial_region_placement": 4,
-            "historical_city_owner_relocation_authorial_garrison": 26,
-            "historical_review_20261025": 13,
             "person_specific_future_free_appearance": 535,
-            "retained_explicit_scenario_ruler": 17,
-            "retained_person_specific_free_location": 114,
-            "retained_reviewed_opening_membership": 233,
-            "same_date_SAN14_guide_affiliation": 2,
             "same_date_SAN14_guide_free_location": 2,
-            "same_date_SAN14_recorded_death": 77
-          }
+            "same_date_SAN14_guide_affiliation": 2,
+            "retained_reviewed_opening_membership": 233,
+            "same_date_SAN14_recorded_death": 77,
+            "historical_review_20261025": 13,
+            "retained_person_specific_free_location": 114,
+            "retained_explicit_scenario_ruler": 17,
+            "historical_city_owner_relocation_authorial_garrison": 26,
+            "authorial_region_placement": 4,
+            "explicit_scenario_scope": 4
+          },
+          "people": 1027
         },
         "update": {}
       }

@@ -3526,7 +3526,15 @@
           "initial_free": 47,
           "source_scenario": "mainland215-08",
           "planned_max_city_roster": 21,
-          "future_plans": 279
+          "future_plans": 279,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27,
+          "initial_serving": 365,
+          "planned_serving": 365
         }
       },
       "era_assignments": {
@@ -67246,38 +67254,25 @@
               "source": "https://zh.wikisource.org/wiki/三國志/卷01"
             }
           ],
-          "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons."
-        },
-        "update": {
+          "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons.",
+          "people": 1027,
           "reference_classes": {
-            "set": {
-              "authorial_region_placement": 1004,
-              "bounded_career_inference": 19
-            },
-            "delete": [
-              "game_reference"
-            ]
+            "authorial_region_placement": 1004,
+            "bounded_career_inference": 19,
+            "explicit_scenario_scope": 4
           },
           "bases": {
-            "set": {
-              "authored_nearby_historical_snapshot_continuity": 978,
-              "primary_career_unsubmitted_Bazhong_region_proxy": 6,
-              "bounded_career_inference": 7,
-              "explicit_primary_or_reviewed_DLC_membership": 10,
-              "primary_death_before_scenario_opening": 2,
-              "authored_nearby_historical_roster_inference": 18
-            },
-            "delete": [
-              "same_date_SAN14_guide_free_location",
-              "same_date_SAN14_recorded_death",
-              "person_specific_future_free_appearance",
-              "same_date_SAN14_guide_affiliation",
-              "retained_reviewed_opening_membership",
-              "retained_person_specific_free_location",
-              "retained_explicit_scenario_ruler",
-              "authored_bounded_source_snapshot_continuity"
-            ]
-          },
+            "authored_nearby_historical_snapshot_continuity": 978,
+            "primary_career_unsubmitted_Bazhong_region_proxy": 6,
+            "bounded_career_inference": 7,
+            "explicit_primary_or_reviewed_DLC_membership": 10,
+            "primary_death_before_scenario_opening": 2,
+            "authored_nearby_historical_roster_inference": 18,
+            "authorial_region_placement": 2,
+            "explicit_scenario_scope": 4
+          }
+        },
+        "update": {
           "source_coverage": {
             "set": {
               "dated_snapshot_people": 417,

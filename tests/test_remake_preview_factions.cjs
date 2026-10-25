@@ -92,6 +92,19 @@ assert(!summary.innerHTML.includes('setup-ruler-portrait'),'An unknown ruler ID 
 delete later.faction_rulers;context.setPreviewFaction('wei');
 assert(!summary.innerHTML.includes('setup-ruler-portrait'),'A display name alone cannot select a portrait');
 assert.equal(JSON.stringify({view:context.view,game,seed:2026}),snapshot,'Portrait and language updates do not mutate campaign state');
+// Generic group names are replaced by the dated ruler's name, without
+// rewriting actual polity names or selecting portraits from display text.
+for(const name of ['南中勢力','南中势力','士燮势力']){
+ const ruler={id:'wu',name,captain:'孟获',city:'occupied',ruler_person_id:'san14-candidate-0845'};
+ context.setupPreview={...later,factions:[ruler]};
+ context.setPreviewFaction('wu');
+ assert.equal(context.factionDisplayName(ruler),'孟获');
+ assert(summary.innerHTML.includes('<span class="setup-summary-copy">孟获 · '));assert(!summary.textContent.includes(name));
+ assert(summary.innerHTML.includes('data-portrait-person="san14-candidate-0845"'));
+ assert(summary.innerHTML.includes('data-portrait-name="孟获"'));
+}
+assert.equal(context.factionDisplayName({name:'曹魏',captain:'曹奂'}),'曹魏');
+assert.equal(context.factionDisplayName(null),'');
 // Exercise the shipped succession snapshots rather than a fixed faction-name
 // portrait table: Wei changes Cao Cao -> Cao Fang -> Cao Huan, and late Wu is
 // Sun Xiu. Each portrait uses that catalog's source person identity.

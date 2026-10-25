@@ -132,7 +132,7 @@ class EquipmentCampaignTests(unittest.TestCase):
         self.assertEqual((officer.weapon_id,officer.armor_id),(initial['weapon_id'],initial['armor_id']))
         self.assertIn(ident,game.state.extension['equipment']['initialized'])
         self.assertNotIn(ident,game.catalog.by_id)
-        self.assertEqual(len(game.catalog.definitions),1023)
+        self.assertEqual(len(game.catalog.definitions),1027)
         self.restore(game)
 
     def test_actual_ai_equipment_turn_uses_same_price_eligibility_and_reserve_service(self):

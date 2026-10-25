@@ -31,6 +31,14 @@
           "city": "danyang",
           "color": "#9b4b3d",
           "initial_officers": 40
+        },
+        {
+          "id": "lu_xing",
+          "name": "呂興",
+          "captain": "吕兴",
+          "city": "jiaozhi",
+          "color": "#6945a5",
+          "initial_officers": 3
         }
       ],
       "active_cities": [
@@ -1233,6 +1241,27 @@
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-lu-xing",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": true,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-tang-pu",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-li-tong-jiaozhi",
+          "city": "jiuzhen",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
         }
       ],
       "design_notes": [
@@ -1249,10 +1278,14 @@
         "本作按城池特色、劇本年月及戰亂／恢復階段設定錢糧與預備兵；數值為遊戲平衡設計，非史實人口或《三國志14》開局匯出。",
         "各劇本的月收入依開局年代配置；遊玩後依實際內政、招兵、行軍與戰鬥增減，不按歷史事件強制重設資源。",
         "本次保留武將每人300兵的初始化規則；城市駐軍總數取決於當篇實際駐將，預備兵另按年代配置。",
-        "每城最多99人；每方出戰最多10人。人物總庫1023人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
+        "每城最多99人；每方出戰最多10人。人物總庫1027人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
         "全部人物均完成在籍、在野、未來登場或明列排除計畫；來源不詳的駐城與連續任職屬本作配置，不是逐月史實已證。",
         "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
-        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。"
+        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。",
+        "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
+        "《三國志》卷04於264年九月詔書記呂興遣都尉唐譜經霍弋上表；可證唐譜為呂興部下，不能證明263年五月已任都尉。本篇依使用者要求以本陣營任職窗口推定，提前配置交趾；駐城、出仕年及生卒邊界為本作估計，非263年逐將史證。",
+        "《晉書》卷057陶璜傳記呂興被其功曹李統所殺，可證李統曾屬呂興，未載263年五月任職地。本篇依使用者要求以本陣營任職窗口推定配置九真，不聲稱該地曾任功曹；此李統與魏將李通為不同人物。該傳把事件繫於孫皓、晉武帝時，年代與《三國志》卷48不同，本作採後者的263年起事年月，生卒邊界另標估計。",
+        "呂興勢力不包含霍弋、爨谷、馬融及其後魏晉派遣的援軍；未強制史實殺主事件，李統在遊戲中的忠誠、後續行動與其他普通武將共用規則。"
       ],
       "initial_free_officers": [
         {
@@ -1909,13 +1942,14 @@
           }
         ],
         "history_review_revision": "2026-10-25"
-      }
+      },
+      "officer_count": 1027
     },
     "update": {
       "initial_owners": {
         "set": {
           "liaodong": "wei",
-          "jiaozhi": "neutral",
+          "jiaozhi": "lu_xing",
           "nanjun": "wu",
           "lingling": "wu",
           "hanzhong": "shu",
@@ -1925,8 +1959,8 @@
           "daifang": "wei",
           "yinping": "shu",
           "yidu": "wu",
-          "jiuzhen": "neutral",
-          "rinan": "neutral",
+          "jiuzhen": "lu_xing",
+          "rinan": "lu_xing",
           "wuchang": "wu",
           "linhai": "wu",
           "linchuan": "wu",
@@ -2082,7 +2116,10 @@
           "historical-expansion-0019": "fuling",
           "historical-expansion-0020": "jiangxia",
           "historical-expansion-0023": "lingling",
-          "historical-expansion-0024": "lujiang"
+          "historical-expansion-0024": "lujiang",
+          "historical-lu-xing": "jiaozhi",
+          "historical-tang-pu": "jiaozhi",
+          "historical-li-tong-jiaozhi": "jiuzhen"
         },
         "delete": [
           "san14-candidate-0001",
@@ -2568,7 +2605,8 @@
         "set": {
           "wei": 502,
           "shu": 944,
-          "wu": 547
+          "wu": 547,
+          "lu_xing": 1025
         },
         "delete": [
           "shi_xie",
@@ -2577,12 +2615,31 @@
       },
       "coverage": {
         "set": {
-          "initial_serving": 155,
+          "initial_serving": 158,
           "initial_free": 34,
           "source_scenario": "san14-249-01",
-          "planned_serving": 155,
+          "planned_serving": 158,
           "planned_max_city_roster": 8,
-          "future_plans": 0
+          "future_plans": 0,
+          "placement_plans": 1027,
+          "pending_history": 0,
+          "default_virtue_profiles": 635,
+          "virtue": "verified original ROM virtue for220 exact-name identities; otherwise individual authorial ratings or explicit user default60",
+          "library": 1027,
+          "source_years": "third-party SAN14 settings; historical verification separate",
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "pending_capacity": 0,
+          "new_history_profiles": 11,
+          "history_designs_total": 168,
+          "configured_profiles": 1027,
+          "san14_abilities": 1000,
+          "new_historical_people": 27,
+          "pending_factions": [],
+          "pending_faction": 0,
+          "reused_profiles": 269,
+          "original_virtue_profiles": 220,
+          "pending_profiles": 0
         }
       },
       "era_assignments": {
@@ -36193,6 +36250,198 @@
               }
             }
           }
+        },
+        "set": {
+          "historical-song-jian": {
+            "source_status": "not_appeared",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "not_appeared",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This new historical identity is only enabled in its explicitly reviewed campaign.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ],
+              "note": "新增人物只在本次明列劇本啟用；其餘年代明確排除，不因年度推進自動生成。",
+              "reference_date": [
+                263,
+                5
+              ],
+              "historical_certainty": "explicit_scenario_scope"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          },
+          "historical-lu-xing": {
+            "source_status": "serving",
+            "source_ruler": "吕兴",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lu_xing",
+            "city": "jiaozhi",
+            "placement_basis": "primary_lu_xing_revolt_month",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "historical-lu-xing",
+              "faction": "lu_xing",
+              "origin": "jiaozhi",
+              "city": "jiaozhi",
+              "basis": "primary_lu_xing_revolt_month",
+              "source_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "primary_lu_xing_revolt_month",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷48",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
+              ],
+              "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
+              "reference_date": [
+                263,
+                5
+              ],
+              "historical_certainty": "primary_text_month_regional_mapping",
+              "opening_date": [
+                263,
+                5
+              ]
+            },
+            "appearance_plan": {
+              "start": [
+                263,
+                5
+              ],
+              "end": [
+                264,
+                12
+              ],
+              "city": "jiaozhi",
+              "status": "serving",
+              "basis": "primary_lu_xing_revolt_month"
+            }
+          },
+          "historical-tang-pu": {
+            "source_status": "serving",
+            "source_ruler": "吕兴",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lu_xing",
+            "city": "jiaozhi",
+            "placement_basis": "authorial_lu_xing_retinue_window",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "historical-tang-pu",
+              "faction": "lu_xing",
+              "origin": "jiaozhi",
+              "city": "jiaozhi",
+              "basis": "authorial_lu_xing_retinue_window",
+              "source_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_lu_xing_retinue_window",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷04"
+              ],
+              "note": "《三國志》卷04於264年九月詔書記呂興遣都尉唐譜經霍弋上表；可證唐譜為呂興部下，不能證明263年五月已任都尉。本篇依使用者要求以本陣營任職窗口推定，提前配置交趾；駐城、出仕年及生卒邊界為本作估計，非263年逐將史證。",
+              "reference_date": [
+                264,
+                9
+              ],
+              "historical_certainty": "authorial_retinue_window",
+              "opening_date": [
+                263,
+                5
+              ]
+            },
+            "appearance_plan": {
+              "start": [
+                263,
+                5
+              ],
+              "end": [
+                299,
+                12
+              ],
+              "city": "jiaozhi",
+              "status": "serving",
+              "basis": "authorial_lu_xing_retinue_window"
+            }
+          },
+          "historical-li-tong-jiaozhi": {
+            "source_status": "serving",
+            "source_ruler": "吕兴",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lu_xing",
+            "city": "jiuzhen",
+            "placement_basis": "authorial_lu_xing_retinue_window",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "historical-li-tong-jiaozhi",
+              "faction": "lu_xing",
+              "origin": "jiuzhen",
+              "city": "jiuzhen",
+              "basis": "authorial_lu_xing_retinue_window",
+              "source_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_lu_xing_retinue_window",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/晉書/卷057",
+                "https://zh.wikisource.org/zh-hant/三國志/卷48",
+                "https://zh.wikisource.org/zh-hant/三國志/卷04"
+              ],
+              "note": "《晉書》卷057陶璜傳記呂興被其功曹李統所殺，可證李統曾屬呂興，未載263年五月任職地。本篇依使用者要求以本陣營任職窗口推定配置九真，不聲稱該地曾任功曹；此李統與魏將李通為不同人物。該傳把事件繫於孫皓、晉武帝時，年代與《三國志》卷48不同，本作採後者的263年起事年月，生卒邊界另標估計。",
+              "reference_date": null,
+              "historical_certainty": "authorial_retinue_window",
+              "opening_date": [
+                263,
+                5
+              ],
+              "attestation_period": "呂興遇害前；任職確月不詳",
+              "opening_is_month_attestation": false
+            },
+            "appearance_plan": {
+              "start": [
+                263,
+                5
+              ],
+              "end": [
+                305,
+                12
+              ],
+              "city": "jiuzhen",
+              "status": "serving",
+              "basis": "authorial_lu_xing_retinue_window"
+            }
+          }
         }
       },
       "main_scenario": {
@@ -36200,7 +36449,7 @@
           "group": "bonus",
           "title": "蜀漢滅亡",
           "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-          "summary": "司馬昭主導伐蜀，鍾會、鄧艾出兵；蜀由劉禪、姜維等守禦，吳主為孫休。",
+          "summary": "司馬昭主導伐蜀，鍾會、鄧艾出兵；蜀由劉禪、姜維等守禦，吳主為孫休。五月呂興在交趾起事，九真、日南響應；唐譜、李統的開局在場與駐城採明列的本作推定。",
           "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
           "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
           "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
@@ -36209,8 +36458,8 @@
             "ja": "蜀漢の滅亡"
           },
           "summary_i18n": {
-            "zh-Hant": "司馬昭主導伐蜀，鍾會、鄧艾出兵；蜀由劉禪、姜維等守禦，吳主為孫休。",
-            "ja": "司馬昭の主導で鍾会と鄧艾が蜀へ進む。劉禅・姜維らが守り、呉では孫休が治める。"
+            "zh-Hant": "司馬昭主導伐蜀，鍾會、鄧艾出兵；蜀由劉禪、姜維等守禦，吳主為孫休。五月呂興在交趾起事，九真、日南響應；唐譜、李統的開局在場與駐城採明列的本作推定。",
+            "ja": "司馬昭の主導で鍾会と鄧艾が蜀へ進み、劉禅・姜維らが守ります。呉主は孫休。5月に交趾で呂興が反乱し、九真・日南も呼応します。唐譜・李統の開幕時の在籍と配属先は、明示した本作の推定です。"
           },
           "fictional": false,
           "source_urls": [
@@ -36227,13 +36476,21 @@
           "historical_review": {
             "revision": "2026-10-25",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
-            "faction_additions": [],
+            "faction_additions": [
+              "lu_xing"
+            ],
             "city_owner_corrections": [
               "jiaozhi",
               "jiuzhen",
               "rinan"
             ],
-            "all_city_months_independently_attested": false
+            "all_city_months_independently_attested": false,
+            "source_backed_additions_note": [
+              "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
+              "《三國志》卷04於264年九月詔書記呂興遣都尉唐譜經霍弋上表；可證唐譜為呂興部下，不能證明263年五月已任都尉。本篇依使用者要求以本陣營任職窗口推定，提前配置交趾；駐城、出仕年及生卒邊界為本作估計，非263年逐將史證。",
+              "《晉書》卷057陶璜傳記呂興被其功曹李統所殺，可證李統曾屬呂興，未載263年五月任職地。本篇依使用者要求以本陣營任職窗口推定配置九真，不聲稱該地曾任功曹；此李統與魏將李通為不同人物。該傳把事件繫於孫皓、晉武帝時，年代與《三國志》卷48不同，本作採後者的263年起事年月，生卒邊界另標估計。",
+              "呂興勢力不包含霍弋、爨谷、馬融及其後魏晉派遣的援軍；未強制史實殺主事件，李統在遊戲中的忠誠、後續行動與其他普通武將共用規則。"
+            ]
           }
         },
         "delete": [
@@ -38916,14 +39173,14 @@
                 263,
                 5
               ],
-              "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+              "owner": "lu_xing",
+              "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
               "certainty": "dated_revolt_region_mapping",
               "source_urls": [
-                "https://zh.wikisource.org/wiki/三國志/卷48",
-                "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+                "https://zh.wikisource.org/zh-hant/三國志/卷48",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
               ]
-            },
-            "neutral_label": "呂興地方叛軍"
+            }
           },
           "jiuzhen": {
             "control_review": {
@@ -38931,14 +39188,14 @@
                 263,
                 5
               ],
-              "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+              "owner": "lu_xing",
+              "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
               "certainty": "dated_revolt_region_mapping",
               "source_urls": [
-                "https://zh.wikisource.org/wiki/三國志/卷48",
-                "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+                "https://zh.wikisource.org/zh-hant/三國志/卷48",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
               ]
-            },
-            "neutral_label": "呂興地方叛軍"
+            }
           },
           "rinan": {
             "control_review": {
@@ -38946,14 +39203,14 @@
                 263,
                 5
               ],
-              "note": "永安六年五月呂興反交趾，九真日南響應；此時未直接納入魏，後續遣太守在蜀亡後。",
+              "owner": "lu_xing",
+              "note": "《三國志》卷48記263年五月交趾郡吏呂興等反、殺孫諝；《資治通鑑》卷078記九真、日南響應。本篇於五月上旬開局即呈現叛軍控制，是月界配置；沒有確切日次，亦不提前視為魏國正式郡守。",
               "certainty": "dated_revolt_region_mapping",
               "source_urls": [
-                "https://zh.wikisource.org/wiki/三國志/卷48",
-                "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+                "https://zh.wikisource.org/zh-hant/三國志/卷48",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷078"
               ]
-            },
-            "neutral_label": "呂興地方叛軍"
+            }
           }
         },
         "update": {
@@ -39441,7 +39698,50 @@
           "historical-expansion-0021": [],
           "historical-expansion-0022": [],
           "historical-expansion-0023": [],
-          "historical-expansion-0024": []
+          "historical-expansion-0024": [],
+          "historical-song-jian": [],
+          "historical-lu-xing": [
+            {
+              "start": [
+                263,
+                5
+              ],
+              "end": [
+                264,
+                12
+              ],
+              "city": "jiaozhi",
+              "basis": "primary_lu_xing_revolt_month"
+            }
+          ],
+          "historical-tang-pu": [
+            {
+              "start": [
+                263,
+                5
+              ],
+              "end": [
+                299,
+                12
+              ],
+              "city": "jiaozhi",
+              "basis": "authorial_lu_xing_retinue_window"
+            }
+          ],
+          "historical-li-tong-jiaozhi": [
+            {
+              "start": [
+                263,
+                5
+              ],
+              "end": [
+                305,
+                12
+              ],
+              "city": "jiuzhen",
+              "basis": "authorial_lu_xing_retinue_window"
+            }
+          ]
         }
       },
       "placement_completion": {
@@ -39455,37 +39755,43 @@
             "jiaozhi",
             "jiuzhen",
             "rinan"
-          ]
-        },
-        "update": {
+          ],
+          "source_snapshot_complete": false,
+          "pending": 0,
           "reference_classes": {
-            "set": {
-              "authorial_region_placement": 1022,
-              "bounded_career_inference": 1
-            },
-            "delete": [
-              "game_reference"
-            ]
+            "authorial_region_placement": 1022,
+            "bounded_career_inference": 1,
+            "explicit_scenario_scope": 1,
+            "primary_text_month_regional_mapping": 1,
+            "authorial_retinue_window": 2
+          },
+          "schema": "tk2-placement-completion-v1",
+          "people": 1027,
+          "source_hashes": {
+            "game/config/references/history-postings.json": "d13fd180dd16b5bf63e7c911bdecb73fdec82fc97baf5fc87478c7e941a0fe1b",
+            "game/config/references/san14-postings.json": "85d3ff30528af7c8596a46ca46a14901b19db500df606f5d6b7bec625eef3ba9",
+            "game/config/references/san14-era-states.json": "e0f200eeb853565f15513002d996e72971e541aac8aedcf350118463cdf17915"
+          },
+          "complete": true,
+          "source_boundary": "Configuration complete; exact historical postings are not all established. Authorial continuity/regions are labelled per person.",
+          "capacity": 99,
+          "source_coverage": {
+            "dated_snapshot_people": 1023,
+            "newly_checked_guide_people": 15
           },
           "bases": {
-            "set": {
-              "retained_chronology_or_explicit_exclusion": 834,
-              "retained_reviewed_opening_membership": 144,
-              "historical_city_owner_relocation_authorial_garrison": 7,
-              "retained_person_specific_free_location": 34,
-              "bounded_career_inference": 1,
-              "retained_explicit_scenario_ruler": 3
-            },
-            "delete": [
-              "same_date_SAN14_guide_free_location",
-              "same_date_SAN14_recorded_death",
-              "person_specific_future_free_appearance",
-              "same_date_SAN14_guide_affiliation",
-              "authored_bounded_source_snapshot_continuity",
-              "authorial_region_placement"
-            ]
+            "retained_chronology_or_explicit_exclusion": 834,
+            "retained_reviewed_opening_membership": 144,
+            "historical_city_owner_relocation_authorial_garrison": 7,
+            "retained_person_specific_free_location": 34,
+            "bounded_career_inference": 1,
+            "retained_explicit_scenario_ruler": 3,
+            "explicit_scenario_scope": 1,
+            "primary_lu_xing_revolt_month": 1,
+            "authorial_lu_xing_retinue_window": 2
           }
-        }
+        },
+        "update": {}
       }
     }
   },

@@ -127,7 +127,7 @@ class JingnanPrefectTests(unittest.TestCase):
         self.assertEqual(len(serving), len(self.data['initial_officers']))
         self.assertEqual(self.data['coverage']['initial_serving'], len(serving))
         self.assertEqual(self.data['coverage']['initial_free'], len(free))
-        self.assertEqual(len(self.data['people']), 1023)
+        self.assertEqual(len(self.data['people']), 1027)
         self.assertEqual(set(self.catalog.ids), set(self.canonical_people))
         portraits = json.loads((ROOT / 'game/assets/portraits/index.json').read_text())['people']
         for person in self.data['people']:
@@ -160,7 +160,7 @@ class JingnanPrefectTests(unittest.TestCase):
                          {'han_xuan': 3, 'jin_xuan': 2, 'zhao_fan': 3, 'liu_du': 3})
 
         portraits = json.loads((ROOT / 'game/assets/portraits/index.json').read_text())['people']
-        self.assertEqual(len(self.canonical_people), 1023)
+        self.assertEqual(len(self.canonical_people), 1027)
         self.assertEqual(set(self.catalog.ids), set(self.canonical_people))
         self.assertEqual(set(portraits), set(self.canonical_people))
         game = Campaign(self.catalog)

@@ -1,0 +1,50 @@
+{
+  "schema": "tk2-portrait-supplement-v1",
+  "source": "imagegen_new_pixel_art",
+  "art_direction_basis": "authorial_game_art_not_historical_likeness",
+  "native_size": [
+    32,
+    40
+  ],
+  "source_atlas": "art/portraits/historical-additions-v1/source.png",
+  "source_sha256": "8e91e2c7bc656164bafe0d133109ae8dd49385426cdce32dcf25950c6f4b8980",
+  "source_size": [
+    1122,
+    1402
+  ],
+  "grid": [
+    2,
+    2
+  ],
+  "prompt": "art/portraits/historical-additions-v1/prompt.txt",
+  "prompt_note": "Retained concise production prompt; full tool prompt is archived in generation.json.",
+  "style_reference": "art/portraits/reference-originals.png",
+  "style_reference_sha256": "7f6cdbb906e67962e58ba8bb62af78e199fa0dd6fd5585aed7fb41b6523d85e9",
+  "people": [
+    {
+      "person_id": "historical-song-jian",
+      "name": "宋建",
+      "cell_index": 0,
+      "art_gender_design": "male"
+    },
+    {
+      "person_id": "historical-lu-xing",
+      "name": "吕兴",
+      "cell_index": 1,
+      "art_gender_design": "male"
+    },
+    {
+      "person_id": "historical-tang-pu",
+      "name": "唐谱",
+      "cell_index": 2,
+      "art_gender_design": "male"
+    },
+    {
+      "person_id": "historical-li-tong-jiaozhi",
+      "name": "李统",
+      "cell_index": 3,
+      "art_gender_design": "male"
+    }
+  ],
+  "processing": "Fixed four-color quantization, complete-cell nearest fit to32x40; derivative exact nearest4x128x160. No generated face is reused."
+}

@@ -98,7 +98,8 @@ def audit():
     sources = {row['person_id']: row for row in reference['records'] if row['person_id']}
     abilities = {row['person_id']: row['stats'] for row in read(abilities_path)['abilities']}
     check(len(index['catalogs']) == 29, 'Expected 29 current scenarios')
-    check(len(people) == 1023 and len(abilities) == 1000 and len(sources) == 223,
+    check(len(abilities) == 1000 and len(sources) == 223
+          and set(abilities) <= set(people) and set(sources) <= set(people),
           'Unexpected factual reference coverage')
     session = CampaignSession([ROOT / 'game/data' / name for name in index['catalogs']])
     source_index = read(ROOT / 'game/config/campaigns/index.json')
@@ -156,7 +157,7 @@ def audit():
             else:
                 check(person['initialization']['source_loyalty'] is None,
                       scenario_id + ': unbound source incorrectly applied: ' + pid)
-        check((charisma_count, fallback_count) == (1000, 23), scenario_id + ': virtue coverage changed')
+        check((charisma_count, fallback_count) == (1000, len(people) - 1000), scenario_id + ': virtue coverage changed')
         player = next(iter(catalog.factions))
         session.command('new', dict(scenario=scenario_id, faction=player, seed=SEED), session.revision)
         game, state = session.game, session.game.state

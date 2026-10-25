@@ -30,6 +30,18 @@ function shortest(graph,start,end,blocked=new Set()){
  }
  return null;
 }
+function renderSourceHash(app,compiler,attestation){
+ const text=app.toString('utf8'),start='function smoothMapPath(',end='function mapBackgroundHref(';
+ const projection=Buffer.from(text.slice(text.indexOf(start),text.indexOf(end)));
+ // Rebuilding for scenario data must retain the verified renderer pin when
+ // unrelated UI code changed. The entire compiler and extracted slice agree.
+ return attestation?.schema==='tk2-route-render-source-v1'&&attestation.source==='game/app.js'&&
+  attestation.compiler==='game/build_route_geometry.cjs'&&attestation.compiler_sha256===sha(compiler)&&
+  text.split(start).length===2&&text.split(end).length===2&&text.indexOf(start)<text.indexOf(end)&&
+  attestation.start===start&&attestation.end===end&&projection.length===attestation.projection_bytes&&
+  sha(projection)===attestation.projection_sha256&&/^[a-f0-9]{40}$/.test(attestation.baseline_commit)&&
+  /^[a-f0-9]{64}$/.test(attestation.original_source_sha256)?attestation.original_source_sha256:sha(app);
+}
 async function build({output='game/config/route-geometry.json'}={}){
  const {chromium}=require('playwright');
  const source=json('game/config/road-centers.json'),presentation=json('game/config/map-source.json').presentation;
@@ -90,9 +102,11 @@ async function build({output='game/config/route-geometry.json'}={}){
  const ratios={land:[],sea:[],river:[]};for(const[id,r]of Object.entries(compiled))for(const p of r.parts)if(p.chord_px)ratios[p.mode].push({id,ratio:p.length_px/p.chord_px});
  const extrema=Object.fromEntries(Object.entries(ratios).map(([mode,rows])=>[mode,{min:rows.sort((a,b)=>a.ratio-b.ratio)[0],max:rows.at(-1)}]));
  const sourceIndex=json('game/config/campaigns/index.json');
- const inputs=['game/build_route_geometry.cjs','game/build_campaigns.py','game/config/road-centers.json','game/road_centers.py','game/config/navigation-geometry.json','game/config/route-corridors.json','game/build_navigation_geometry.cjs','game/config/river-network.json','game/river_network.py','game/config/map-source.json','game/app.js','game/config/campaigns/shared.json','game/config/campaigns/index.json',...sourceIndex.scenarios.map(s=>'game/config/campaigns/'+s.file)];
- const result={schema:'tk2-route-geometry-v1',policy:'Existing logical legs only. Actual rendered SVG curves; no straight-line fallback. Reviewed shared-city passages do not insert logical links or intermediate stops. Geographic conversion belongs to the campaign compiler.',sources:Object.fromEntries(inputs.map(p=>[p,sha(read(p))])),input_geometry_sha256:sha(Buffer.from(JSON.stringify(current))),routes:compiled,audit:{catalogs:canonical.catalogs,input_routes:routes.length,compiled_routes:Object.keys(compiled).length,graph_nodes:graph.size,graph_strokes:strokes.length,unmatched,shared_city_pass_through:thirdCityExceptions,curvature:extrema}};
+ const inputs=['game/build_route_geometry.cjs','game/build_campaigns.py','game/config/road-centers.json','game/road_centers.py','game/config/navigation-geometry.json','game/config/route-corridors.json','game/build_navigation_geometry.cjs','game/config/river-network.json','game/river_network.py','game/config/map-source.json','game/app.js','game/config/route-render-source.json','game/config/campaigns/shared.json','game/config/campaigns/index.json',...sourceIndex.scenarios.map(s=>'game/config/campaigns/'+s.file)];
+ const sources=Object.fromEntries(inputs.map(p=>[p,sha(read(p))]));
+ sources['game/app.js']=renderSourceHash(read('game/app.js'),read('game/build_route_geometry.cjs'),json('game/config/route-render-source.json'));
+ const result={schema:'tk2-route-geometry-v1',policy:'Existing logical legs only. Actual rendered SVG curves; no straight-line fallback. Reviewed shared-city passages do not insert logical links or intermediate stops. Geographic conversion belongs to the campaign compiler.',sources,input_geometry_sha256:sha(Buffer.from(JSON.stringify(current))),routes:compiled,audit:{catalogs:canonical.catalogs,input_routes:routes.length,compiled_routes:Object.keys(compiled).length,graph_nodes:graph.size,graph_strokes:strokes.length,unmatched,shared_city_pass_through:thirdCityExceptions,curvature:extrema}};
  if(output)fs.writeFileSync(path.resolve(ROOT,output),JSON.stringify(result,null,2)+'\n');return result;
 }
-module.exports={shortest,reversePath,build};
+module.exports={shortest,reversePath,renderSourceHash,build};
 if(require.main===module){const args=process.argv.slice(2),out=args.includes('--output')?args[args.indexOf('--output')+1]:'game/config/route-geometry.json';build({output:out}).then(r=>{console.log(JSON.stringify(r.audit,null,2));if(r.audit.unmatched.length)process.exitCode=1;}).catch(e=>{console.error(e);process.exitCode=1;});}

@@ -3762,7 +3762,13 @@
           "source_scenario": "mainland202-06",
           "planned_serving": 309,
           "planned_max_city_roster": 17,
-          "future_plans": 418
+          "future_plans": 418,
+          "library": 1027,
+          "configured_profiles": 1027,
+          "health_configured": 1027,
+          "affinity_configured": 1027,
+          "placement_plans": 1027,
+          "new_historical_people": 27
         }
       },
       "era_assignments": {
@@ -75244,33 +75250,25 @@
           ],
           "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons.",
           "reference_classes": {
-            "authorial_garrison_relocation": 23,
             "authorial_region_placement": 965,
             "bounded_career_inference": 32,
             "primary_text_affiliation": 2,
-            "regional_primary_mapping": 1
+            "authorial_garrison_relocation": 23,
+            "regional_primary_mapping": 1,
+            "explicit_scenario_scope": 4
+          },
+          "people": 1027,
+          "bases": {
+            "authored_nearby_historical_snapshot_continuity": 940,
+            "explicit_primary_or_reviewed_DLC_membership": 30,
+            "historical_review_20261025": 26,
+            "bounded_career_inference": 2,
+            "authored_nearby_historical_roster_inference": 23,
+            "authorial_region_placement": 2,
+            "explicit_scenario_scope": 4
           }
         },
         "update": {
-          "bases": {
-            "set": {
-              "authored_nearby_historical_snapshot_continuity": 940,
-              "explicit_primary_or_reviewed_DLC_membership": 30,
-              "authored_nearby_historical_roster_inference": 23,
-              "bounded_career_inference": 2,
-              "historical_review_20261025": 26
-            },
-            "delete": [
-              "same_date_SAN14_guide_free_location",
-              "same_date_SAN14_recorded_death",
-              "person_specific_future_free_appearance",
-              "same_date_SAN14_guide_affiliation",
-              "retained_reviewed_opening_membership",
-              "retained_person_specific_free_location",
-              "retained_explicit_scenario_ruler",
-              "authored_bounded_source_snapshot_continuity"
-            ]
-          },
           "source_coverage": {
             "set": {
               "dated_snapshot_people": 420,
