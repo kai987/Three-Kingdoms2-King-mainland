@@ -7,8 +7,14 @@ const ROOT=path.resolve(__dirname,'../..'),WORK=path.join(ROOT,'art/portraits/en
 const read=p=>JSON.parse(fs.readFileSync(path.join(ROOT,p),'utf8'));
 const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
 const plan=read('art/portraits/enhancement-v1/plan.json'),hd=read('game/config/portrait-enhanced.json');
-const supplement=read('art/portraits/historical-additions-v1/enhanced-records.json');
-assert.equal(supplement.schema,'tk2-portrait-supplement-enhanced-v1');
+const supplement={people:{}};
+for(const name of ['historical-additions-v1','northwest-rising-v1','bian-zhang-v1']){
+ const source=read(`art/portraits/${name}/enhanced-records.json`);
+ assert.equal(source.schema,'tk2-portrait-supplement-enhanced-v1');
+ for(const[id,row]of Object.entries(source.people)){
+  assert(!supplement.people[id],'Supplemental identity is repeated');supplement.people[id]=row;
+ }
+}
 const canonical=read('game/config/campaigns/people.json'),allIds=[...new Set([...Object.keys(plan.people),...Object.keys(supplement.people)])];
 assert.deepEqual(Object.keys(hd.people).sort(),canonical.order.slice().sort());
 assert.deepEqual(Object.keys(hd.people).sort(),allIds.sort());

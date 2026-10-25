@@ -133,9 +133,14 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
  // retainers, so runtime1024+ cannot silently fall back to an old portrait.
  const shipped=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../game/assets/portraits/index.json'),'utf8'));
  const peoplePool=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../game/config/campaigns/people.json'),'utf8'));
- const additions=['historical-song-jian','historical-lu-xing','historical-tang-pu','historical-li-tong-jiaozhi'];
+ const additions=['historical-song-jian','historical-lu-xing','historical-tang-pu','historical-li-tong-jiaozhi','historical-beigong-boyu','historical-li-wenhou','historical-bian-zhang'];
  i18n.locale='zh-Hant';
  const released=create({i18n,fetch:async()=>({ok:true,json:async()=>shipped})});assert(await released.load());
+ const allGenerated=Object.entries(shipped.people).filter(([,row])=>row.kind==='generated');assert.equal(allGenerated.length,810);
+ for(const[pid,row]of allGenerated){
+  const display=released.asset(pid);assert.equal(display.enhanced,true,pid);
+  assert.equal(display.path,row.enhanced.path,pid);assert.equal(display.width,128,pid);assert.equal(display.height,160,pid);
+ }
  const appendedCatalog={library:additions.map(pid=>({id:peoplePool.people[pid].runtime_id,person_id:pid,name:peoplePool.people[pid].name}))};
  for(const[at,pid]of additions.entries()){
   const runtime=1024+at;assert.equal(peoplePool.people[pid].runtime_id,runtime);

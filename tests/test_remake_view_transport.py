@@ -76,6 +76,16 @@ class ViewTransportTests(unittest.TestCase):
         self.assertEqual(hydrate(self.transport.pack(value, 'a')), value)
         self.assertEqual(self.transport.pack({'error': 'no'}, 'a'), {'error': 'no'})
 
+    def test_newly_founded_factions_are_dynamic_even_with_the_same_catalog_token(self):
+        before = self.session.view()
+        packet = self.transport.pack(before, self.sha)
+        self.assertNotIn('factions', packet['static_catalog'])
+        after = deepcopy(before)
+        after['catalog']['factions'].append(dict(id='newly-founded', name='新勢力', city='xiangyang'))
+        wire = self.transport.pack(after, self.sha, packet['catalog_token'])
+        self.assertNotIn('static_catalog', wire)
+        self.assertEqual(hydrate(wire, packet['static_catalog']), after)
+
     def test_quote_cache_ignores_only_fields_that_do_not_change_routes(self):
         self.session.command('new', dict(faction='shu', seed=2026), 0)
         baseline = self.session.view()

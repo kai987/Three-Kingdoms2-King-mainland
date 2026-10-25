@@ -1027,7 +1027,10 @@
     "historical-song-jian",
     "historical-lu-xing",
     "historical-tang-pu",
-    "historical-li-tong-jiaozhi"
+    "historical-li-tong-jiaozhi",
+    "historical-beigong-boyu",
+    "historical-li-wenhou",
+    "historical-bian-zhang"
   ],
   "people": {
     "san14-candidate-0001": {
@@ -133474,6 +133477,378 @@
         "virtue_design": {
           "person_id": "historical-li-tong-jiaozhi",
           "name": "李统",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-beigong-boyu": {
+      "person_id": "historical-beigong-boyu",
+      "name": "北宫伯玉",
+      "runtime_id": 1028,
+      "birth_year": 155,
+      "service_year": 184,
+      "death_year": 187,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 《後漢書·靈帝紀》記184年十一月起兵；184年二月以地方人物出場屬本作提前配置，不能稱當時已起兵。遇害年代《後漢書·董卓傳》作186年冬，《資治通鑑》編入187年而未給確月；本作以187作退場界點，不宣稱187年四月遇害。155年出生為遊戲估計，並非史實出生年。《三國志·武帝紀》裴注另作北宮玉，作同人別名；不是西漢的北宮伯子。",
+      "chronology_design": {
+        "birth_year": 155,
+        "service_year": 184,
+        "death_year": null,
+        "retirement_year": 187,
+        "attested_death_year_candidates": [
+          186,
+          187
+        ],
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_local_person_window_not_rebellion_month",
+          "death_year": "disputed_186_winter_HouHanshu_or187_ZizhiTongjian_no_exact_month",
+          "retirement_year": "authorial_game_boundary187_not_exact_historical_death"
+        },
+        "basis": "《後漢書·靈帝紀》記184年十一月起兵；184年二月以地方人物出場屬本作提前配置，不能稱當時已起兵。遇害年代《後漢書·董卓傳》作186年冬，《資治通鑑》編入187年而未給確月；本作以187作退場界點，不宣稱187年四月遇害。155年出生為遊戲估計，並非史實出生年。《三國志·武帝紀》裴注另作北宮玉，作同人別名；不是西漢的北宮伯子。",
+        "last_attested_year": 184,
+        "rebellion_date": {
+          "year": 184,
+          "month": 11,
+          "precision": "attested_month_HouHanshu_EmperorLing"
+        }
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 75,
+        "intellect": 52,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "北宫伯玉",
+        "北宮伯玉",
+        "北宫玉",
+        "北宮玉"
+      ],
+      "virtue_design": {
+        "person_id": "historical-beigong-boyu",
+        "name": "北宫伯玉",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+          "https://zh.wikisource.org/wiki/後漢書/卷72",
+          "https://zh.wikisource.org/wiki/資治通鑑/卷058",
+          "https://zh.wikisource.org/wiki/三國志/卷01"
+        ],
+        "notes": "《後漢書·靈帝紀》記184年十一月起兵；184年二月以地方人物出場屬本作提前配置，不能稱當時已起兵。遇害年代《後漢書·董卓傳》作186年冬，《資治通鑑》編入187年而未給確月；本作以187作退場界點，不宣稱187年四月遇害。155年出生為遊戲估計，並非史實出生年。《三國志·武帝紀》裴注另作北宮玉，作同人別名；不是西漢的北宮伯子。 武、知、適性均為本作平衡值；體力80、德60、忠誠預設80，不是SAN14或原版武將數值。",
+        "source_name": "北宮伯玉"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 75,
+          "intellect": 52,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default80_no_original_source",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60_missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-beigong-boyu",
+          "name": "北宫伯玉",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-li-wenhou": {
+      "person_id": "historical-li-wenhou",
+      "name": "李文侯",
+      "runtime_id": 1029,
+      "birth_year": 160,
+      "service_year": 184,
+      "death_year": 187,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 《後漢書·靈帝紀》記184年十一月起兵；184年二月以地方人物出場屬本作提前配置，不能稱當時已起兵。遇害年代《後漢書·董卓傳》作186年冬，《資治通鑑》編入187年而未給確月；本作以187作退場界點，不宣稱187年四月遇害。160年出生為遊戲估計，並非史實出生年。",
+      "chronology_design": {
+        "birth_year": 160,
+        "service_year": 184,
+        "death_year": null,
+        "retirement_year": 187,
+        "attested_death_year_candidates": [
+          186,
+          187
+        ],
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_local_person_window_not_rebellion_month",
+          "death_year": "disputed_186_winter_HouHanshu_or187_ZizhiTongjian_no_exact_month",
+          "retirement_year": "authorial_game_boundary187_not_exact_historical_death"
+        },
+        "basis": "《後漢書·靈帝紀》記184年十一月起兵；184年二月以地方人物出場屬本作提前配置，不能稱當時已起兵。遇害年代《後漢書·董卓傳》作186年冬，《資治通鑑》編入187年而未給確月；本作以187作退場界點，不宣稱187年四月遇害。160年出生為遊戲估計，並非史實出生年。",
+        "last_attested_year": 184,
+        "rebellion_date": {
+          "year": 184,
+          "month": 11,
+          "precision": "attested_month_HouHanshu_EmperorLing"
+        }
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 70,
+        "intellect": 56,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "李文侯"
+      ],
+      "virtue_design": {
+        "person_id": "historical-li-wenhou",
+        "name": "李文侯",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+          "https://zh.wikisource.org/wiki/後漢書/卷72",
+          "https://zh.wikisource.org/wiki/資治通鑑/卷058",
+          "https://zh.wikisource.org/wiki/三國志/卷01"
+        ],
+        "notes": "《後漢書·靈帝紀》記184年十一月起兵；184年二月以地方人物出場屬本作提前配置，不能稱當時已起兵。遇害年代《後漢書·董卓傳》作186年冬，《資治通鑑》編入187年而未給確月；本作以187作退場界點，不宣稱187年四月遇害。160年出生為遊戲估計，並非史實出生年。 武、知、適性均為本作平衡值；體力80、德60、忠誠預設80，不是SAN14或原版武將數值。",
+        "source_name": "李文侯"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 70,
+          "intellect": 56,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_default80_no_original_source",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60_missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-li-wenhou",
+          "name": "李文侯",
+          "policy_id": "campaign-officer-stats-v1",
+          "status": "configured_default",
+          "virtue": 60,
+          "source_charisma": null,
+          "is_historical_fact": false,
+          "dimensions": null,
+          "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+          "sources": []
+        },
+        "initialization": null
+      },
+      "initialization": {
+        "schema": "tk2-officer-initialization-v1",
+        "health": 80,
+        "default_loyalty": 80,
+        "source_loyalty": null
+      }
+    },
+    "historical-bian-zhang": {
+      "person_id": "historical-bian-zhang",
+      "name": "边章",
+      "runtime_id": 1030,
+      "birth_year": 155,
+      "service_year": 184,
+      "death_year": 186,
+      "chronology_basis": "historical_career_with_explicit_game_estimates; 邊章原名邊允，生年不詳；155年出生與184年地方人物啟用是本作估計。《後漢書·董卓傳》中平三年冬段記其遇害，《資治通鑑》編入187年，存在186／187編年分歧。本作依使用者指定，以186年十二月為事件與退場界點，不聲稱原典確證186年十二月某旬遇害。",
+      "chronology_design": {
+        "birth_year": 155,
+        "service_year": 184,
+        "death_year": null,
+        "retirement_year": 186,
+        "attested_death_year_candidates": [
+          186,
+          187
+        ],
+        "precision": {
+          "birth_year": "authorial_estimated_game_birth_year",
+          "service_year": "authorial_local_person_window_not_first_historical_service",
+          "death_year": "disputed_186_winter_HouHanshu_or187_ZizhiTongjian_no_exact_month",
+          "retirement_year": "user_requested186_12_game_event_boundary_not_exact_historical_death"
+        },
+        "basis": "邊章原名邊允，生年不詳；155年出生與184年地方人物啟用是本作估計。《後漢書·董卓傳》中平三年冬段記其遇害，《資治通鑑》編入187年，存在186／187編年分歧。本作依使用者指定，以186年十二月為事件與退場界點，不聲稱原典確證186年十二月某旬遇害。",
+        "game_event_boundary": [
+          186,
+          12
+        ],
+        "last_attested_year": 185
+      },
+      "profile": {
+        "health_max": 80,
+        "martial_strength": 70,
+        "intellect": 75,
+        "virtue": 60,
+        "terrain_affinity": 1,
+        "source_stats": {},
+        "basis": {
+          "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+          "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+          "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+          "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+          "virtue": "explicit_user_default60; missing_SAN14_charisma"
+        }
+      },
+      "aliases": [
+        "边章",
+        "邊章",
+        "边允",
+        "邊允"
+      ],
+      "virtue_design": {
+        "person_id": "historical-bian-zhang",
+        "name": "边章",
+        "policy_id": "campaign-officer-stats-v1",
+        "status": "configured_default",
+        "virtue": 60,
+        "source_charisma": null,
+        "is_historical_fact": false,
+        "dimensions": null,
+        "design_rationale": "沒有SAN14魅力來源，按使用者明確指示設為60；不推測或冒稱SAN14數值。",
+        "sources": []
+      },
+      "configuration": {
+        "health": "remake_default_initial80_with_retained_cap",
+        "affinity": "explicit_role_region_game_design",
+        "virtue": "explicit_user_default60_missing_SAN14_charisma",
+        "is_historical_measurement": false
+      },
+      "ability_source": {
+        "kind": "historical_authorial_game_design",
+        "source_urls": [
+          "https://zh.wikisource.org/wiki/後漢書/卷72",
+          "https://zh.wikisource.org/wiki/資治通鑑/卷058"
+        ],
+        "source_name": "邊章",
+        "notes": "邊章原名邊允，生年不詳；155年出生與184年地方人物啟用是本作估計。《後漢書·董卓傳》中平三年冬段記其遇害，《資治通鑑》編入187年，存在186／187編年分歧。本作依使用者指定，以186年十二月為事件與退場界點，不聲稱原典確證186年十二月某旬遇害。 武70、知75、適性為本作平衡值，德60、體力80、忠誠預設80，不是SAN14或原版武將數值。"
+      },
+      "pre_campaign_stat_policy_v1": {
+        "checkpoint_kind": "new_person_initial_authorial_profile",
+        "basis": "本次新建人物的初始本作設定快照；並非先前版本、原版或SAN14來源。",
+        "profile": {
+          "health_max": 80,
+          "martial_strength": 70,
+          "intellect": 75,
+          "virtue": 60,
+          "terrain_affinity": 1,
+          "source_stats": {},
+          "basis": {
+            "health_max": "remake_compatibility_cap=max(pre_policy_cap,initial_health); not_original_health_max",
+            "martial_strength": "independent_authorial_role_based_game_rating_not_SAN14",
+            "intellect": "independent_authorial_role_based_game_rating_not_SAN14",
+            "terrain_affinity": "remake_role_region_default_not_historical_measurement",
+            "virtue": "explicit_user_default60; missing_SAN14_charisma"
+          }
+        },
+        "configuration": {
+          "health": "remake_default_initial80_with_retained_cap",
+          "affinity": "explicit_role_region_game_design",
+          "virtue": "explicit_user_default60_missing_SAN14_charisma",
+          "is_historical_measurement": false
+        },
+        "virtue_design": {
+          "person_id": "historical-bian-zhang",
+          "name": "边章",
           "policy_id": "campaign-officer-stats-v1",
           "status": "configured_default",
           "virtue": 60,

@@ -132,7 +132,7 @@ class CivilStaffCampaignTests(unittest.TestCase):
                 self.assertEqual(actual, expected)
                 self.assertEqual(game.state.officers, skeleton.officers)
                 self.assertEqual(game.state.rng, skeleton.rng)
-                self.assertEqual(len(game.catalog.definitions), 1027)
+                self.assertEqual(len(game.catalog.definitions), 1030)
                 self.assertTrue(all(type(ident) is int for ident in game.state.officers))
                 self.assertEqual(game.state.extension['events']['items'][0]['kind'], 'campaign_start')
                 game.validate(game.state)

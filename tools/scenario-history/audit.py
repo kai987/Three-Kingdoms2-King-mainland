@@ -3,7 +3,8 @@
 
 This checks that authored review decisions reached the current catalogs. It
 does not certify every mapped city/month as an attested historical posting.
---check is read-only; no game, save, network or generated source is executed.
+--check is read-only. Static visibility/validation helpers are shared with the
+runtime; no campaign command, player save or network operation is executed.
 """
 import argparse
 from collections import Counter
@@ -11,10 +12,14 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'source'))
+from remake.dated_events import validate_source as validate_dated_source, visible_factions
+
 REFERENCE = ROOT / 'game/config/references/scenario-history-review.json'
 REPORT_JSON = ROOT / 'docs/scenario-history-audit-20261025.json'
 REPORT_MD = ROOT / 'docs/scenario-history-audit-20261025.md'
@@ -149,6 +154,111 @@ def border_links(catalog, active):
             for _, row in sorted(edges.items())]
 
 
+def review_foundings(catalog, decision, people, opening, defined, visible):
+    """A future definition is neither an initial polity nor a present ruler.
+
+    Reuse the runtime's static source validator/visibility rule, then compare
+    the reviewed triggers and unaligned opening people without running events.
+    """
+    ident = catalog['id']
+    reference = decision.get('scheduled_faction_foundings', [])
+    source = catalog.get('faction_foundings', [])
+    require(isinstance(reference, list), ident + ': scheduled founding review must be a list')
+    require(len({row['id'] for row in reference}) == len(reference),
+            ident + ': duplicate scheduled founding review')
+    require({row['id'] for row in reference} == {row['id'] for row in source},
+            ident + ': scheduled founding review differs from source')
+    by_id = {row['id']: row for row in reference}
+    opening_date = [catalog['start_year'], catalog['start_month']]
+    declared_future = set()
+    for fid, faction in defined.items():
+        if 'available_from' not in faction:
+            continue
+        date = faction['available_from']
+        require(isinstance(date, list) and len(date) == 2 and all(type(part) is int for part in date)
+                and 1 <= date[0] <= 400 and 1 <= date[1] <= 12,
+                ident + ': invalid future faction date')
+        if date > opening_date:
+            declared_future.add(fid)
+    require(declared_future == {row['faction'] for row in source},
+            ident + ': future faction definition has no matching scheduled rule')
+    result = []
+    for rule in source:
+        row = by_id[rule['id']]
+        fid, city, pid = rule['faction'], rule['city'], rule['ruler']
+        cities = rule['cities']
+        urls(row.get('source_urls'), ident + ' scheduled founding ' + rule['id'])
+        require(isinstance(row.get('certainty'), str) and row['certainty'],
+                ident + ': scheduled founding certainty required')
+        require(fid in defined and fid not in visible,
+                ident + ': scheduled faction is already visible at opening')
+        require(all(row.get(key) == rule[key] for key in
+                    ('faction', 'date', 'city', 'cities', 'ruler', 'members', 'required_owner')),
+                ident + ': scheduled founding dates/identities differ from source')
+        require(row.get('require_ruler_alive_and_unaligned') is True
+                and row.get('already_recruited_member_not_reassigned') is True
+                and rule['require_unaligned'] is True,
+                ident + ': scheduled founding must preserve prior recruitment')
+        require(row.get('opening_owner') == catalog['initial_owners'][city] == 'neutral',
+                ident + ': future faction city is already owned at opening')
+        require(row.get('whole_event_requires_all_cities_neutral') is True
+                and row.get('opening_owners') == {target: 'neutral' for target in cities}
+                and all(catalog['initial_owners'][target] == 'neutral' for target in cities),
+                ident + ': multi-city founding would take an occupied city')
+        require(defined[fid]['city'] == city and defined[fid].get('available_from') == rule['date'],
+                ident + ': future faction capital/date mismatch')
+        require(set(rule['source_urls']) <= set(row['source_urls']),
+                ident + ': scheduled review omits source evidence')
+        for member in rule['members']:
+            actual = opening.get(member)
+            require(member in people and actual is not None and actual['status'] == 'free'
+                    and actual['faction'] is None and actual['city'] == city and not actual['ruler'],
+                    ident + ': future faction member is not locally free at opening: ' + member)
+            plan = catalog['era_assignments'].get(member, {})
+            require((plan.get('status'), plan.get('faction'), plan.get('city')) == ('free', None, city)
+                    and plan.get('appearance_plan', {}).get('status') == 'free',
+                    ident + ': future member placement plan is not locally free: ' + member)
+        require(catalog['faction_rulers'][fid] == people[pid]['runtime_id'],
+                ident + ': future ruler identity mismatch')
+        result.append(dict(row))
+    require(set(defined) - set(visible) == {row['faction'] for row in source},
+            ident + ': a dormant faction has no reviewed founding rule')
+    return sorted(result, key=lambda row: (row['date'], row['id']))
+
+
+def review_coups(catalog, decision, people, defined):
+    """Verify an alternative dated story as conditional, never forced deaths."""
+    ident = catalog['id']
+    source = catalog.get('faction_coups', [])
+    reviewed = decision.get('scheduled_faction_coups', [])
+    require(isinstance(reviewed, list) and len({row['id'] for row in reviewed}) == len(reviewed)
+            and {row['id'] for row in reviewed} == {row['id'] for row in source},
+            ident + ': conditional coup review differs from source')
+    by_id = {row['id']: row for row in reviewed}
+    result = []
+    for rule in source:
+        row = by_id[rule['id']]
+        urls(row.get('source_urls'), ident + ' conditional coup ' + rule['id'])
+        require(all(row.get(key) == rule[key] for key in
+                    ('faction', 'date', 'ruler', 'successor', 'victims', 'basis')),
+                ident + ': coup dates/identities differ from source')
+        require(row.get('requires_alive_same_faction_and_ruler') is True
+                and row.get('skip_if_marching') is True
+                and row.get('conditional_not_unconditional_death') is True
+                and row.get('preserves_other_members_and_city_resources') is True,
+                ident + ': coup review must preserve its conditional scope')
+        require(rule['faction'] in defined and all(pid in people for pid in
+                    [rule['ruler'], rule['successor'], *rule['victims']]),
+                ident + ': coup refers to unknown faction/person')
+        require(all(pid not in catalog.get('historical_exit_dates', {}) for pid in rule['victims']),
+                ident + ': conditional coup victims also have unconditional monthly exits')
+        require(set(rule['source_urls']) <= set(row['source_urls'])
+                and isinstance(row.get('certainty'), str) and row['certainty'],
+                ident + ': coup evidence and alternative chronology required')
+        result.append(dict(row))
+    return sorted(result, key=lambda row: (row['date'], row['id']))
+
+
 def compile_report():
     review = read(REFERENCE)
     require(review.get('schema') == 'tk2-scenario-history-review-v1', 'Unknown historical review schema')
@@ -184,27 +294,56 @@ def compile_report():
     require(len(decisions) == 23 and len({row['id'] for row in decisions}) == 23
             and {row['id'] for row in decisions} == set(catalogs) - fictional,
             'Historical review must cover all 23 historical scenarios exactly once')
-    by_id = {row['id']: row for row in decisions}
+    adaptations = review.get('fictional_adaptations', [])
+    require(isinstance(adaptations, list), 'IF adaptation reviews must be a list')
+    expected_if_adaptations = {ident for ident in fictional
+        if catalogs[ident].get('era_assignments', {}).get('historical-song-jian', {}).get('status') == 'serving'}
+    require(len({row['id'] for row in adaptations}) == len(adaptations)
+            and {row['id'] for row in adaptations} == expected_if_adaptations,
+            'The separately reviewed IF adaptations must cover every enabled Song Jian IF opening exactly once')
+    require(all(row.get('fictional') is True and row.get('scope') for row in adaptations),
+            'IF adaptation scope must be explicit and separate from historical certification')
+    by_id = {row['id']: row for row in [*decisions, *adaptations]}
     reports = []
+    fictional_reports = []
     counts = Counter()
+    fictional_counts = Counter()
     for entry in entries:
         ident = entry['id']
-        if ident in fictional:
+        if ident not in by_id:
             continue
         data, decision = catalogs[ident], by_id[ident]
+        is_fictional = ident in fictional
         require(decision['date'] == [data['start_year'], data['start_month']], ident + ': review date mismatch')
         active = set(data['active_cities'])
         require(len(active) == len(data['active_cities']), ident + ': duplicate active city')
         city_rows = {row['id']: row for row in data['cities']}
-        factions = {row['id']: row for row in data['factions']}
-        require(len(factions) == len(data['factions']) and active <= set(city_rows), ident + ': invalid city/faction identities')
+        defined = {row['id']: row for row in data['factions']}
+        require(len(defined) == len(data['factions']) and active <= set(city_rows), ident + ': invalid city/faction identities')
+        static = SimpleNamespace(data=data, factions=defined, map_cities=city_rows,
+            ids={row['person_id']: row['runtime_id'] for row in data['people']})
+        validate_dated_source(static)
+        factions = {row['id']: row for row in visible_factions(static)}
         removed_factions = decision.get('removed_factions', [])
-        require(all(fid not in factions for fid in removed_factions),
+        require(all(fid not in defined for fid in removed_factions),
                 ident + ': a reviewed retired faction remains selectable')
         for city in active:
             require(data['initial_owners'].get(city) in {*factions, 'neutral'}, ident + ': unknown city owner ' + city)
         names = display_names(data, presentation)
         people, opening = opening_people(data, active, factions)
+        scheduled = review_foundings(data, decision, people, opening, defined, factions)
+        coups = review_coups(data, decision, people, defined)
+        for adjustment in decision.get('resource_adjustments', []):
+            city, field, pid = adjustment['city'], adjustment['field'], adjustment['returned_person_id']
+            require(city in active and field == 'reserves'
+                    and data['initial_city_resources'][city][field] == adjustment['after']
+                    and adjustment['after'] - adjustment['before'] == adjustment['returned_initial_troops']
+                    and opening.get(pid, {}).get('status') == 'free',
+                    ident + ': returned opening troops differ from the reserve adjustment')
+        soldier_total = sum(row['troops'] for row in data['initial_officers']) + sum(
+            data['initial_city_resources'].get(city, data['initial_resources'])['reserves'] for city in active)
+        require('initial_soldier_total' not in decision or decision['initial_soldier_total'] == soldier_total,
+                ident + ': opening soldier conservation summary differs')
         evidence_counts = Counter(row['placement_review']['historical_certainty']
                                   for row in data['era_assignments'].values())
         require(data['placement_completion']['reference_classes'] == dict(evidence_counts),
@@ -261,6 +400,17 @@ def compile_report():
                 city_count=sum(data['initial_owners'][city] == fid for city in active),
                 officer_count=sum(person['faction'] == fid for person in opening.values())))
         faction_rows.sort(key=lambda row: row['id'])
+        future_rows = []
+        for fid in sorted(set(defined) - set(factions)):
+            faction = defined[fid]
+            ruler_id = data['faction_rulers'][fid]
+            require(type(ruler_id) is int and ruler_id in by_runtime,
+                    ident + ': invalid future ruler identity')
+            ruler = by_runtime[ruler_id]
+            future_rows.append(dict(id=fid, ruler=ruler['name'], person_id=ruler['person_id'],
+                city=faction['city'], city_name=names[faction['city']],
+                available_from=faction['available_from'], opening_status=opening[ruler['person_id']]['status'],
+                city_count=0, officer_count=0))
         borders = border_links(data, active)
         roster = [{**opening[pid], 'city_name': names[opening[pid]['city']]}
                   for pid in sorted(opening)]
@@ -277,7 +427,12 @@ def compile_report():
             title_ja=data.get('main_scenario', {}).get('title_i18n', {}).get('ja', decision['title']),
             catalog_file=paths[ident].relative_to(ROOT).as_posix(),
             catalog_sha256=sha256(paths[ident].read_bytes()).hexdigest(),
-            factions=faction_rows, city_count=len(active),
+            factions=faction_rows, future_factions=future_rows,
+            scheduled_faction_foundings=scheduled,
+            scheduled_faction_coups=coups,
+            resource_adjustments=decision.get('resource_adjustments', []), initial_soldier_total=soldier_total,
+            historical_exit_dates=data.get('historical_exit_dates', {}),
+            fictional=is_fictional, adaptation_scope=decision.get('scope'), city_count=len(active),
             city_owners=[dict(city=city, name=names[city], owner=data['initial_owners'][city],
                 neutral_label=data.get('city_history', {}).get(city, {}).get('neutral_label'))
                 for city in sorted(active)],
@@ -286,8 +441,11 @@ def compile_report():
             city_changes=changes['city_changes'],
             officer_changes=changes['officer_changes'], owner_expectations=expected_owners,
             notable_exclusions=spotlight, notes=decision.get('notes', []))
-        reports.append(row)
-        counts.update(cities=len(active), factions=len(factions), boundary_links=len(borders),
+        (fictional_reports if is_fictional else reports).append(row)
+        current_counts = fictional_counts if is_fictional else counts
+        current_counts.update(cities=len(active), factions=len(factions), future_factions=len(future_rows),
+                      scheduled_faction_foundings=len(scheduled), scheduled_faction_coups=len(coups),
+                      boundary_links=len(borders),
                       opening_officers=len(opening), new_factions=len(changes['new_factions']),
                       city_changes=len(changes['city_changes']), officer_changes=len(changes['officer_changes']),
                       city_change_records=len(decision.get('city_changes', [])),
@@ -298,7 +456,9 @@ def compile_report():
         scope='Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.',
         boundary_definition='Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.',
         historical_count=23, fictional_excluded=sorted(fictional),
-        summary=dict(counts), sources=review['sources'], limits=review['limits'], scenarios=reports)
+        summary=dict(counts), fictional_adaptation_summary=dict(fictional_counts),
+        sources=review['sources'], limits=review['limits'], scenarios=reports,
+        fictional_adaptations=fictional_reports)
 
 
 def cell(value):
@@ -326,7 +486,8 @@ def markdown(report):
 
     lines = [
         '# 史実シナリオの勢力・境界都市レビュー（2026年10月25日）', '',
-        '現在の史実23本を対象に、地方勢力、都市の初期所属と武将配置を確認する資料です。仮想6本は領土修正の対象から外します。'
+        '現在の史実23本を対象に、地方勢力、都市の初期所属と武将配置を確認する資料です。仮想6本は史実判定から外し、'
+        '利用者指定による宋建の仮想5本への追加は、別枠の配置照合として記録します。'
         '地域単位の史料を現在の地図へ対応させたレビューであり、**すべての都市・すべての月の太守名簿が確定したという意味ではありません**。', '',
         '生成元は [レビュー決定表](../game/config/references/scenario-history-review.json)、'
         '照合結果は [全都市・境界経路・人物のJSON](scenario-history-audit-20261025.json)です。'
@@ -355,6 +516,61 @@ def markdown(report):
     lines += ['', '件数は本作データの変更記録です。同じ勢力を複数の年代に追加した場合は各開幕で1件と数えます。'
               'JSONは全開放都市の所有者、各勢力の全開幕武将、異なる所有者を結ぶ接続を収録します。'
               '境界接続は陸路・内河・海路の都市間隣接であり、行政区の境界線を復元したものではありません。', '']
+    lines += ['## 184年2月の在野人物と後日の条件付き起兵', '',
+        '2月の開幕勢力は9つです。宋建は隴西、邊章・韓遂・北宮伯玉・李文侯は金城で在野となり、宋建と邊章の勢力定義が'
+        'カタログに存在していても、開始時から独立しているとは数えません。'
+        '11月は宋建・北宮伯玉らが共に呼応し、邊章を首領、韓遂を物語上の軍師とする流れで、邊章の金城・天水成軍、'
+        '宋建の隴西独立を順に判定します。軍師は本作の叙述で、正式な官職の証明や自動内政委任ではありません。'
+        '君主が地元で生存・在野、対象都市がすべて中立という条件を満たした場合のみ成立します。'
+        '既に登用された人物や占領済みの都市を強制的に取り戻しません。董卓軍14人と本拠は安定へ移し、'
+        '韓遂の元の300兵は姑臧の予備兵へ返し、兵員を増減させません。', '',
+        '| 条件判定の年月 | 勢力・代表者 | 対象都市 | 開幕時は在野の人物 |', '| --- | --- | --- | --- |']
+    for row in report['scenarios']:
+        people = {person['person_id']: person for person in row['opening_officers']}
+        for future in row['scheduled_faction_foundings']:
+            leader = people[future['ruler']]
+            names = {city['city']: city['name'] for city in row['city_owners']}
+            members = '、'.join(human(people[pid]['name']) for pid in future['members'])
+            lines.append('| ' + ' | '.join(map(cell, (
+                f"{future['date'][0]}年{future['date'][1]}月", human(leader['name']),
+                '・'.join(human(names[city]) for city in future['cities']), members))) + ' |')
+    lines += ['', '北宮伯玉らの反乱は『後漢書』霊帝紀の11月段に見えます。宋建について確認できるのは184年冬の文脈で、'
+        '11月の最初の旬を用いる点は本作の境界です。隴西という地図名は変えません。'
+        '宋建の214年10月退出は史料の月を採り、生存中の宋建を9月以前の年次処理で退出させず、'
+        '10月上旬に通常の継承へ進めます。'
+        '[霊帝紀](https://zh.wikisource.org/zh-hant/後漢書/卷8)、'
+        '[董卓伝](https://zh.wikisource.org/zh-hant/後漢書/卷72)、'
+        '[武帝紀](https://zh.wikisource.org/zh-hant/三國志/卷01)', '',
+        '## 186年12月・韓遂の条件付き政変', '',
+        '邊章がなお主君で、邊章・北宮伯玉・李文侯・韓遂の4人が全員生存して同じ勢力にあり、'
+        '誰も行軍中ではない場合のみ判定します。成立時は三人が退出し、韓遂が主君になります。'
+        '他勢力へ移籍した人物を殺したり、現在の領土・他の配下を別政権の初期値に戻したりしません。条件が違えば未発生とします。', '',
+        '| 判定月 | 旧主君 | 新主君 | 条件成立時に退出する人物 |', '| --- | --- | --- | --- |']
+    for row in report['scenarios']:
+        people = {person['person_id']: person for person in row['opening_officers']}
+        for coup in row['scheduled_faction_coups']:
+            lines.append('| ' + ' | '.join(map(cell, (
+                f"{coup['date'][0]}年{coup['date'][1]}月", human(people[coup['ruler']]['name']),
+                human(people[coup['successor']]['name']), '、'.join(human(people[pid]['name']) for pid in coup['victims'])))) + ' |')
+    lines += ['', '『後漢書』は186年冬に続く文脈、『資治通鑑』は187年に殺害を記し、12月は利用者指定のゲーム境界です。'
+        '『三國志』裴注の『典略』には邊章の病死という異文もあります。史料が同じ死因・月に一致するとせず、'
+        '称王・称帝などの根拠のない称号も加えません。'
+        '[董卓伝](https://zh.wikisource.org/zh-hant/後漢書/卷72)、'
+        '[通鑑巻58](https://zh.wikisource.org/zh-hant/資治通鑑/卷058)、'
+        '[武帝紀の裴注](https://zh.wikisource.org/zh-hant/三國志/卷01)', '',
+        '## 仮想5本の宋建追加（史実23本とは別枠）', '',
+        '原作の仮想世界を史実として認定する表ではありません。利用者指定で宋建の隴西1都市を追加し、'
+        '元の駐将は所属を変えず隣接する本方の天水へ移します。中心となる物語・他勢力の首都は維持します。', '',
+        '| 開始年月 | 仮想シナリオ | 宋建の都市 | 所属を保った移駐人数 |', '| --- | --- | --- | --- |']
+    for row in report['fictional_adaptations']:
+        names = {city['city']: city['name'] for city in row['city_owners']}
+        moved = sum(change.get('before', {}).get('city') == 'longxi'
+                    and change['person_id'] != 'historical-song-jian'
+                    and change.get('city') == 'tianshui' for change in row['officer_changes'])
+        lines.append('| ' + ' | '.join(map(cell, (
+            f"{row['date'][0]}年{row['date'][1]}月", row['title_ja'], human(names['longxi']), moved))) + ' |')
+    lines += ['', 'この別枠の都市所属・人物配置も現在のカタログと照合し、JSONの `fictional_adaptations` に収録します。'
+        '史実23本の件数へ足さず、仮想6本の除外一覧も保持します。', '']
     for section in CATEGORIES:
         lines += ['## ' + section, '']
         any_rows = False
@@ -423,7 +639,8 @@ def markdown(report):
         '- 武都・陰平は215年以前の地方実控を中立で表す箇所があります。張魯・劉璋・曹操のどれかへ一律に塗り替える証明ではありません。',
         '- 221年の南中は名義上の蜀属と実効支配を分けます。張裔が223年まで数年呉にいた記録と、劉備死後に反乱をまとめる記録には、'
         '雍闓の初動年月を確定しにくい点があります。黄元の222年12月〜223年3月の反乱は、現在の開幕時点の間にあります。',
-        '- 184年2月の宋建は利用者指定による前倒し登場です。隴西の節点を枹罕地域の代理とし、184年冬の記録を2月の確証とはしません。',
+        '- 宋建は対象18本に登場し、184年2月だけ在野・後日起兵とします。他の17本は利用者指定の隴西1都市の独立勢力で、'
+        'うち仮想5本は別枠で記録します。地域代理は隴西郡全体の支配を証明するものではありません。',
         '- 225年7月は利用者指定で牂牁を孟獲に与え、雍闓・高定・朱褒をその配下にまとめます。史料上の討平時期と異なる開幕設定として明記し、史実の修正とは呼びません。',
         '- 士徽の反乱は226年で、225年7月の士燮や227年2月の呉属とは別です。263年5月は呂興に応じた交趾・九真・日南を地方叛軍として表し、'
         '264年の正式な魏の任命を先取りしません。呂興は独立した人物IDの可操作勢力で、唐譜・李統の263年配置は後年の記録からの開幕推定です。'
@@ -433,8 +650,10 @@ def markdown(report):
     lines += ['', '## 再生成と照合', '', '```sh', 'python3 -B game/build_campaigns.py --check',
         'python3 -B tools/scenario-history/audit.py --write',
         'python3 -B tools/scenario-history/audit.py --check', '```', '',
-        '`--check` はファイルを書き換えず、23本の漏れ・重複、仮想6本の除外、最終都市所属、追加勢力の君主と本拠、'
-        '人物の最終所属・駐点、生成済みレポートの一致を検査します。乱数、プレイヤーのセーブ、ネットワークやゲーム命令は使いません。'
+        '`--check` はファイルを書き換えず、23本の漏れ・重複、仮想6本の史実判定からの除外、仮想5本の別枠配置、'
+        '最終都市所属、追加勢力の君主と本拠、複数都市の後日起兵と開幕在野人物、条件付き政変、兵員の戻し入れ、'
+        '人物の最終所属・駐点、生成済みレポートの一致を検査します。'
+        '乱数、プレイヤーのセーブ、ネットワークやゲーム命令は使いません。'
         '史料解釈自体の正しさを自動証明する検査ではありません。', '',
         '[2026年10月24日の19都市×19本レビュー](city-ownership-audit-20261024.md)は当時の基準として保存し、'
         '今回の23本の結果で過去の件数・年月を書き換えません。', '']
@@ -460,7 +679,8 @@ def main(argv=None):
     except (ValueError, KeyError, TypeError, OSError, StopIteration) as error:
         print('Historical scenario audit failed: ' + str(error), file=sys.stderr)
         return 1
-    print(json.dumps(dict(check=args.check, historical=23, fictional_excluded=6, **report['summary']), ensure_ascii=False))
+    print(json.dumps(dict(check=args.check, historical=23, fictional_excluded=6,
+        fictional_adaptations=len(report['fictional_adaptations']), **report['summary']), ensure_ascii=False))
     return 0
 
 

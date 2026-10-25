@@ -41,6 +41,8 @@ class ExpandedCampaign:
                 resolve_death_year=row.get('resolve_death_year', False))
             state.extension['free_locations'][str(ident)] = row['city']
         self._spawn_eligible(state)
+        from . import dated_events
+        dated_events.initialize(self.catalog, state)
 
     def _spawn_eligible(self, state):
         """Annual eligibility never fills missing stats or revives existing IDs."""
@@ -589,8 +591,11 @@ class ExpandedCampaign:
         self._reconcile_factions(state)
 
     def _reconcile_factions(self,state):
+        from . import dated_events
         x=state.extension
         for faction in sorted(self.catalog.factions):
+            if dated_events.dormant(self.catalog,state,faction):
+                continue
             alive=[i for i,o in state.officers.items() if o.alive and o.faction_id==faction]
             cities=[c for c in state.cities.values() if c.owner==faction]
             if not alive or not cities:
@@ -690,7 +695,10 @@ class ExpandedCampaign:
     def _validate_expansion(self,state):
         x=state.extension
         fields={'free_locations','officer_actions','leaders','ended_factions','ai_queue','ai_cursor','ai_attacks','ai_reports','outcome','travel','difficulty','ai_strategy','events','civil_staff','pending_succession','domestic','logistics','treasury','facilities','equipment'}
+        from . import dated_events
+        if dated_events.enabled(self.catalog):fields.add('dated_events')
         if not isinstance(x,dict) or set(x)!=fields:raise ValueError('expanded state fields')
+        dated_events.validate_state(self,state)
         self._validate_travel(state)
         if not isinstance(x['free_locations'],dict) or not isinstance(x['officer_actions'],dict):raise ValueError('personnel state')
         for key,city in x['free_locations'].items():
@@ -705,7 +713,12 @@ class ExpandedCampaign:
         if not isinstance(x['leaders'],dict) or set(x['leaders'])!=set(self.catalog.factions):raise ValueError('leader identities')
         if not isinstance(x['ended_factions'],list) or len(set(x['ended_factions']))!=len(x['ended_factions']) or not set(x['ended_factions'])<=set(self.catalog.factions):raise ValueError('ended factions')
         for faction,ident in x['leaders'].items():
-            if faction in x['ended_factions']:
+            if dated_events.dormant(self.catalog,state,faction):
+                if (ident is not None or faction in x['ended_factions']
+                        or any(c.owner==faction for c in state.cities.values())
+                        or any(o.faction_id==faction for o in state.officers.values())):
+                    raise ValueError('Dormant faction already holds people or cities')
+            elif faction in x['ended_factions']:
                 if ident is not None or any(c.owner==faction for c in state.cities.values()):raise ValueError('ended faction retains holdings')
             else:
                 self.catalog.rules.officer_id(ident)

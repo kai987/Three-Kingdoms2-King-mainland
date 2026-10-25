@@ -50,15 +50,15 @@ class MessageLocaleTests(unittest.TestCase):
         self.assertTrue({'存档无效，当前进度未改变。','请选择有效的战役。',
                          '请选择本城健康的武将。','当前不是待处理的电脑回合。'}<=checked)
 
-    def test_all1027_officer_identities_keep_the_name_crosswalk(self):
-        self.assertEqual(len(self.catalog['people']), 1027)
+    def test_all1030_officer_identities_keep_the_name_crosswalk(self):
+        self.assertEqual(len(self.catalog['people']), 1030)
         ids = set()
         for person in self.catalog['people']:
             ids.add(person['person_id'])
             japanese = person['ability_source']['source_name']
             self.assertEqual(translate(person['name'], self.data), japanese)
             self.assertEqual(translate(japanese, self.data), japanese)
-        self.assertEqual(len(ids), 1027)
+        self.assertEqual(len(ids), 1030)
         self.assertEqual(translate('乐𬘭', self.data), '楽綝')
         self.assertEqual(translate('马云𫘧', self.data), '馬雲騄')
         for source, target in {'宋建':'宋建', '吕兴':'呂興', '唐谱':'唐譜', '李统':'李統'}.items():
@@ -117,6 +117,14 @@ class MessageLocaleTests(unittest.TestCase):
             '行军补给队只能运送兵粮。': '行軍部隊への補給隊は兵糧だけを輸送できます。',
             '部队已移动，请重新选择实际会合城池。': '部隊が移動したため、実際に合流できる都市を選び直してください。',
             '本城已满99人，招募未执行。': 'この都市は定員99人に達しているため、登用は行いませんでした。',
+            '214年10月上旬　宋建于本月到达史料记载的寿命边界，释放兵员300归原城。':
+                '214年10月上旬　宋建が今月、史料に記された寿命の境界に達しました。兵300を元の都市に返しました。',
+            '184年11月上旬　北宫伯玉起兵事件已结算：势力已成立。':
+                '184年11月上旬　北宮伯玉の挙兵判定：勢力が成立しました。',
+            '宋建起兵事件已结算：城池已被占领。':
+                '宋建の挙兵判定：都市は既に占領されています。',
+            '北宫伯玉起兵事件已结算：领袖已被登用、离世或不在当地待访。':
+                '北宮伯玉の挙兵判定：指導者は登用済み・死去・現地不在のいずれかです。',
         }
         for source, expected in cases.items():
             with self.subTest(source=source):

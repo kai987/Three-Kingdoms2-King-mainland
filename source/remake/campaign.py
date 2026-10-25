@@ -109,6 +109,8 @@ class Catalog:
         self.factions = {f['id']: f for f in self.data['factions']}
         self.map_cities = {c['id']: c for c in self.data['cities']}
         self.links = {frozenset(e) for e in self.data['links']}
+        from . import dated_events
+        dated_events.validate_source(self)
         expected = self.data['city_count']
         assert type(expected) is int and expected > 0
         expected_people = self.data['officer_count']
@@ -233,7 +235,8 @@ class Campaign(TravelCampaign, ExpandedCampaign):
         return result
 
     def _new(self, faction, seed, difficulty='normal'):
-        if faction not in self.catalog.factions:
+        from . import dated_events
+        if faction not in {f['id'] for f in dated_events.visible_factions(self.catalog)}:
             raise GameError('请选择一个势力。')
         integer(seed, 1, 0xffffffff, 'seed')
         if not isinstance(difficulty, str) or difficulty not in DIFFICULTIES:
@@ -286,11 +289,13 @@ class Campaign(TravelCampaign, ExpandedCampaign):
 
     def view(self):
         with self.lock:
+            from . import dated_events
             state = self.state
             available = sum(year_state(p, state.year) == YearState.AVAILABLE for p in self.catalog.definitions.values()) if state else None
             travel = self._travel_view(state)
             return {'revision': self.revision, 'game': self.to_dict(),
-                    'catalog': {'title': self.catalog.data['title'], 'factions': list(self.catalog.factions.values()),
+                    'catalog': {'title': self.catalog.data['title'], 'factions': dated_events.visible_factions(self.catalog,state),
+                                'scheduled_factions':[self.catalog.factions[r['faction']] for r in dated_events.foundings(self.catalog)],
                                 'cities': list(self.catalog.map_cities.values()),
                                 'active_cities': self.catalog.active_city_ids(
                                     state.year if state else self.catalog.data['start_year'],
@@ -541,6 +546,9 @@ class Campaign(TravelCampaign, ExpandedCampaign):
                 state.year += 1
             self._monthly_calendar(state)
         state.turn += 1
+        if month_changed:
+            from . import dated_events
+            dated_events.process(self,state)
         self._resolve_supply_retreats(state)
         logistics.resolve_supply_retreats(self,state)
         for city in state.cities.values():

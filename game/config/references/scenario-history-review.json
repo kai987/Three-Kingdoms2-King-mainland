@@ -81,6 +81,13 @@
       "https://zh.wikisource.org/zh-hant/三國志/卷01",
       "https://zh.wikisource.org/zh-hant/三國志/卷09",
       "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+    ],
+    "liangzhou_revolt": [
+      "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+      "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+      "https://zh.wikisource.org/zh-hant/後漢書/卷71",
+      "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+      "https://zh.wikisource.org/zh-hant/三國志/卷01"
     ]
   },
   "scenarios": [
@@ -91,31 +98,50 @@
         2
       ],
       "title": "184年2月 · 黄巾之乱",
-      "new_factions": [
+      "new_factions": [],
+      "city_changes": [
         {
-          "id": "song_jian",
-          "ruler": "宋建",
-          "person_id": "historical-song-jian",
           "city": "longxi",
-          "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
-          "certainty": "authorial_early_appearance_region_proxy",
+          "before": "song_jian",
+          "owner": "neutral",
+          "certainty": "authorial_pre_revolt_region_proxy",
+          "note": "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09",
             "https://zh.wikisource.org/zh-hant/後漢書/卷72"
           ]
-        }
-      ],
-      "city_changes": [
+        },
         {
-          "city": "longxi",
+          "city": "jincheng",
           "before": "neutral",
-          "owner": "song_jian",
-          "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
-          "certainty": "authorial_early_appearance_region_proxy",
+          "owner": "neutral",
+          "certainty": "authorial_pre_revolt_region_proxy",
+          "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/三國志/卷01",
-            "https://zh.wikisource.org/zh-hant/三國志/卷09",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "city": "tianshui",
+          "before": "dong_zhuo",
+          "owner": "neutral",
+          "certainty": "authorial_pre_revolt_region_proxy",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。 184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "city": "anding",
+          "before": "neutral",
+          "owner": "dong_zhuo",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
             "https://zh.wikisource.org/zh-hant/後漢書/卷72"
           ]
         }
@@ -129,24 +155,465 @@
             "city": null,
             "status": "not_in_previous_pool"
           },
-          "faction": "song_jian",
+          "faction": null,
           "city": "longxi",
-          "certainty": "authorial_early_appearance_region_proxy",
-          "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
+          "status": "free",
+          "certainty": "authorial_pre_revolt_region_proxy",
+          "note": "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
             "https://zh.wikisource.org/zh-hant/三國志/卷09",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ]
+        },
+        {
+          "person_id": "historical-bian-zhang",
+          "name": "边章",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_previous_pool"
+          },
+          "faction": null,
+          "city": "jincheng",
+          "status": "free",
+          "certainty": "authorial_pre_revolt_region_proxy",
+          "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ]
+        },
+        {
+          "person_id": "historical-beigong-boyu",
+          "name": "北宫伯玉",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_previous_pool"
+          },
+          "faction": null,
+          "city": "jincheng",
+          "status": "free",
+          "certainty": "authorial_pre_revolt_region_proxy",
+          "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ]
+        },
+        {
+          "person_id": "historical-li-wenhou",
+          "name": "李文侯",
+          "before": {
+            "faction": null,
+            "city": null,
+            "status": "not_in_previous_pool"
+          },
+          "faction": null,
+          "city": "jincheng",
+          "status": "free",
+          "certainty": "authorial_pre_revolt_region_proxy",
+          "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0166",
+          "name": "韩遂",
+          "before": {
+            "faction": "ma_teng",
+            "city": "wuwei",
+            "status": "serving"
+          },
+          "faction": null,
+          "city": "jincheng",
+          "status": "free",
+          "certainty": "authorial_pre_revolt_region_proxy",
+          "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 依使用者指定，韓遂184年2月改為金城在野，並非馬騰的既定部下；原姑臧帶兵300人歸還姑臧預備兵，不增兵。十一月若仍在野，可隨邊章起兵；已被登用不強制轉屬。186年12月政變須符合四人同勢力等條件，月份為本作指定。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0074",
+          "name": "王方",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0097",
+          "name": "郭汜",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0199",
+          "name": "牛辅",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0471",
+          "name": "邹氏",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0592",
+          "name": "段煨",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0625",
+          "name": "张绣",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0638",
+          "name": "张济",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0736",
+          "name": "董卓",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0743",
+          "name": "董旻",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0874",
+          "name": "杨定",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0893",
+          "name": "李傕",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0907",
+          "name": "李儒",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0922",
+          "name": "李蒙",
+          "before": {
+            "status": "serving",
+            "faction": "dong_zhuo",
+            "city": "tianshui"
+          },
+          "faction": "dong_zhuo",
+          "city": "anding",
+          "status": "serving",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+          "source_urls": [
             "https://zh.wikisource.org/zh-hant/後漢書/卷72"
           ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
-        "Song Jian is enabled early at the user-requested184-02 opening. The Fuhan polity and214 fall are primary-backed, but the reviewed184 revolt text occurs in winter; the existing Longxi node is a county-area proxy, not a whole-commandery control claim. No named chancellor or retainer is invented."
+        "Regional review, not an individually attested city/month prefect list. ExistingLongxi/Jincheng/Tianshui/Anding map nodes retain their locations and roads.",
+        "Five local unaligned people appear inFebruary184: Song Jian atLongxi andBian Zhang/Han Sui/Bei Gong Boyu/Li Wenhou atJincheng. The November joint-rising narrative first testsBian Zhang-ledJincheng+Tianshui formation, thenSong Jian independence atLongxi. Han Sui asmilitary adviser is a narrative role, not an attested formal office or an automatic domestic appointment.",
+        "Any claimed city already occupied prevents the entire corresponding formation; recruited members stay with their actual employer. Dong Zhuos14 opening garrisons andcapital move toAnding, andHan Suis300 troops return toWuwei reserves, preserving the initial soldier total.",
+        "The conditionalDecember186 coup retains factionIDbian_zhang but changes its living leader toHan Sui only if allfour are alive and aligned, Bian Zhang remains leader, andnone are marching. HHS72 places the killing afterwinter186; ZZTJ58 places it in187; SGZ1Pei/Dianlue instead saysBian Zhang died ill. December andthe chosen killing variant are explicit user game boundaries, not unanimous primary chronology.",
+        "Song Jian remains independent in the other17 lifetime openings. His214-10 monthly exit does not automatically transfer conquered cities toCao Cao."
       ],
       "owner_expectations": {
-        "longxi": "song_jian"
-      }
+        "longxi": "neutral",
+        "jincheng": "neutral",
+        "xiping": "neutral",
+        "tianshui": "neutral",
+        "anding": "dong_zhuo"
+      },
+      "scheduled_faction_foundings": [
+        {
+          "id": "liangzhou-revolt-184-11",
+          "faction": "bian_zhang",
+          "date": [
+            184,
+            11
+          ],
+          "city": "jincheng",
+          "cities": [
+            "jincheng",
+            "tianshui"
+          ],
+          "ruler": "historical-bian-zhang",
+          "members": [
+            "historical-bian-zhang",
+            "historical-beigong-boyu",
+            "historical-li-wenhou",
+            "san14-candidate-0166"
+          ],
+          "opening_owner": "neutral",
+          "opening_owners": {
+            "jincheng": "neutral",
+            "tianshui": "neutral"
+          },
+          "required_owner": "neutral",
+          "require_ruler_alive_and_unaligned": true,
+          "already_recruited_member_not_reassigned": true,
+          "whole_event_requires_all_cities_neutral": true,
+          "day_precision": "user_requested_first_ten_day_turn",
+          "certainty": "winter_attestation_with_authorial_month_multi_city_and_conditional_event",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷71",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ],
+          "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。"
+        },
+        {
+          "id": "song-jian-rise-184-11",
+          "faction": "song_jian",
+          "date": [
+            184,
+            11
+          ],
+          "city": "longxi",
+          "cities": [
+            "longxi"
+          ],
+          "ruler": "historical-song-jian",
+          "members": [
+            "historical-song-jian"
+          ],
+          "opening_owner": "neutral",
+          "opening_owners": {
+            "longxi": "neutral"
+          },
+          "required_owner": "neutral",
+          "require_ruler_alive_and_unaligned": true,
+          "already_recruited_member_not_reassigned": true,
+          "whole_event_requires_all_cities_neutral": true,
+          "day_precision": "user_requested_first_ten_day_turn",
+          "certainty": "winter_attestation_with_authorial_month_multi_city_and_conditional_event",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ],
+          "note": "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。"
+        }
+      ],
+      "scheduled_faction_coups": [
+        {
+          "id": "han-sui-coup-186-12",
+          "faction": "bian_zhang",
+          "date": [
+            186,
+            12
+          ],
+          "ruler": "historical-bian-zhang",
+          "successor": "san14-candidate-0166",
+          "victims": [
+            "historical-bian-zhang",
+            "historical-beigong-boyu",
+            "historical-li-wenhou"
+          ],
+          "basis": "HHS72_186_winter_user_december",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058"
+          ],
+          "requires_alive_same_faction_and_ruler": true,
+          "skip_if_marching": true,
+          "conditional_not_unconditional_death": true,
+          "preserves_other_members_and_city_resources": true,
+          "certainty": "primary_alternatives_with_authorial_conditional_month",
+          "note": "本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。"
+        }
+      ],
+      "resource_adjustments": [
+        {
+          "city": "wuwei",
+          "field": "reserves",
+          "before": 1260,
+          "after": 1560,
+          "returned_person_id": "san14-candidate-0166",
+          "returned_initial_troops": 300,
+          "note": "韓遂原帶兵300歸原城預備兵；轉金城在野時不新增或刪除兵員。"
+        }
+      ],
+      "initial_soldier_total": 194760,
+      "source_initial_soldier_total": 193730,
+      "soldier_total_basis": "193730 rawcanonical;194760 afterthe existingdate-awarecitysizetransformation; the300 troop-to-reservechangeispreservedinbothdomains."
     },
     {
       "id": "mainland188-06",
@@ -167,6 +634,18 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷46"
           ],
           "ruler": "孙坚"
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "city_changes": [
@@ -179,6 +658,17 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
             "https://zh.wikisource.org/zh-hant/三國志/卷46"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "neutral",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -297,14 +787,33 @@
             "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
             "https://zh.wikisource.org/zh-hant/三國志/卷46"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
-        "187年冬區星叛亂已被平定；188年6月長沙由太守孫堅掌理，區星不再列為開局勢力，史料未明言其本人被殺。"
+        "187年冬區星叛亂已被平定；188年6月長沙由太守孫堅掌理，區星不再列為開局勢力，史料未明言其本人被殺。",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
-        "changsha": "sun_jian"
+        "changsha": "sun_jian",
+        "longxi": "song_jian"
       },
       "removed_factions": [
         "ou_xing"
@@ -393,6 +902,18 @@
             "https://zh.wikisource.org/wiki/三國志/卷01",
             "https://zh.wikisource.org/wiki/三國志/卷08",
             "https://zh.wikisource.org/wiki/三國志/卷12"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -502,6 +1023,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷01",
             "https://zh.wikisource.org/wiki/三國志/卷08",
             "https://zh.wikisource.org/wiki/三國志/卷12"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -1042,11 +1574,63 @@
             "https://zh.wikisource.org/wiki/三國志/卷08",
             "https://zh.wikisource.org/wiki/三國志/卷12"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "name": "程银",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
         "Zhang Miao is attested Chenliu governor; Cao Cao also raised troops at Jiwu in Chenliu. One-node constraint retains Cao Cao there; Zhang Miao is recorded as not independently modeled.",
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -1057,7 +1641,8 @@
         "dongjun": "qiao_mao",
         "henei": "wang_kuang",
         "shanyang": "yuan_yi",
-        "dongping": "bao_xin"
+        "dongping": "bao_xin",
+        "longxi": "song_jian"
       }
     },
     {
@@ -1117,6 +1702,18 @@
             "https://zh.wikisource.org/wiki/三國志/卷01",
             "https://zh.wikisource.org/wiki/三國志/卷08",
             "https://zh.wikisource.org/wiki/三國志/卷12"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -1202,6 +1799,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷01",
             "https://zh.wikisource.org/wiki/三國志/卷08",
             "https://zh.wikisource.org/wiki/三國志/卷12"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -2102,10 +2710,79 @@
             "https://zh.wikisource.org/wiki/三國志/卷08",
             "https://zh.wikisource.org/wiki/三國志/卷12"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "name": "程银",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0969",
+          "name": "梁兴",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -2114,7 +2791,8 @@
         "dongjun": "wei",
         "chenliu": "zhang_miao",
         "shanyang": "yuan_yi",
-        "dongping": "bao_xin"
+        "dongping": "bao_xin",
+        "longxi": "song_jian"
       }
     },
     {
@@ -2149,6 +2827,18 @@
             "https://zh.wikisource.org/wiki/三國志/卷46",
             "https://zh.wikisource.org/wiki/三國志/卷49",
             "https://zh.wikisource.org/wiki/三國志/卷56"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -2226,6 +2916,17 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷10",
             "https://zh.wikisource.org/zh-hant/資治通鑑/卷061",
             "https://zh.wikisource.org/zh-hant/後漢書/卷111"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -2829,6 +3530,74 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷10",
             "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0760",
+          "name": "马休",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
@@ -2844,7 +3613,8 @@
         "陳留太守張邈194年夏與陳宮迎呂布；沿用既有呂布聯盟身份，配置於陳留，不改為曹操或新造勢力。",
         "194年6月的鄄城、范、東阿以同一既有濟陰節點表示；不是整個濟陰郡控制色。",
         "颍川不属兖州，不能由兖州仅三城一句直接推断其归属；本轮不扩大结论。",
-        "兗州之變後，曹操據鄄城、范、東阿；陳留由張邈與呂布聯盟控制。本劇本以原濟陰節點代理鄄城三縣防區。"
+        "兗州之變後，曹操據鄄城、范、東阿；陳留由張邈與呂布聯盟控制。本劇本以原濟陰節點代理鄄城三縣防區。",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -2852,7 +3622,8 @@
         "yinping": "neutral",
         "wujun": "xu_gong",
         "chenliu": "lubu",
-        "jiyin": "wei"
+        "jiyin": "wei",
+        "longxi": "song_jian"
       }
     },
     {
@@ -2887,6 +3658,18 @@
             "https://zh.wikisource.org/wiki/三國志/卷46",
             "https://zh.wikisource.org/wiki/三國志/卷49",
             "https://zh.wikisource.org/wiki/三國志/卷56"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -2963,6 +3746,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷46",
             "https://zh.wikisource.org/wiki/三國志/卷49",
             "https://zh.wikisource.org/wiki/三國志/卷56"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -3261,10 +4055,79 @@
             "https://zh.wikisource.org/wiki/三國志/卷49",
             "https://zh.wikisource.org/wiki/三國志/卷56"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0760",
+          "name": "马休",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -3272,7 +4135,8 @@
         "yinping": "neutral",
         "lujiang": "yuan_shu",
         "poyang": "liu_you",
-        "yuzhang": "hua_xin"
+        "yuzhang": "hua_xin",
+        "longxi": "song_jian"
       }
     },
     {
@@ -3293,6 +4157,18 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -3330,6 +4206,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷01",
             "https://zh.wikisource.org/wiki/三國志/卷16",
             "https://zh.wikisource.org/wiki/華陽國志/卷二"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -3475,15 +4362,102 @@
             "https://zh.wikisource.org/wiki/三國志/卷49",
             "https://zh.wikisource.org/wiki/三國志/卷56"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0757",
+          "name": "马云𫘧",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0766",
+          "name": "马岱",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
         "wudu": "neutral",
-        "yinping": "neutral"
+        "yinping": "neutral",
+        "longxi": "song_jian"
       }
     },
     {
@@ -3504,6 +4478,18 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -3619,6 +4605,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷52",
             "https://zh.wikisource.org/wiki/宋書/卷37",
             "https://zh.wikisource.org/wiki/宋書/卷38"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -4138,10 +5135,96 @@
             "https://zh.wikisource.org/wiki/宋書/卷37",
             "https://zh.wikisource.org/wiki/宋書/卷38"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0757",
+          "name": "马云𫘧",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0766",
+          "name": "马岱",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -4152,7 +5235,8 @@
         "yulin": "neutral",
         "cangwu": "neutral",
         "gaoliang": "shi_xie",
-        "linhe": "neutral"
+        "linhe": "neutral",
+        "longxi": "song_jian"
       }
     },
     {
@@ -4173,6 +5257,18 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -4288,6 +5384,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷52",
             "https://zh.wikisource.org/wiki/宋書/卷37",
             "https://zh.wikisource.org/wiki/宋書/卷38"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -4771,10 +5878,96 @@
             "https://zh.wikisource.org/wiki/宋書/卷37",
             "https://zh.wikisource.org/wiki/宋書/卷38"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0757",
+          "name": "马云𫘧",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0766",
+          "name": "马岱",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -4785,7 +5978,8 @@
         "yulin": "neutral",
         "cangwu": "neutral",
         "gaoliang": "shi_xie",
-        "linhe": "neutral"
+        "linhe": "neutral",
+        "longxi": "song_jian"
       }
     },
     {
@@ -4820,6 +6014,18 @@
             "https://zh.wikisource.org/wiki/三國志/卷52",
             "https://zh.wikisource.org/wiki/宋書/卷37",
             "https://zh.wikisource.org/wiki/宋書/卷38"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -4935,6 +6141,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷52",
             "https://zh.wikisource.org/wiki/宋書/卷37",
             "https://zh.wikisource.org/wiki/宋書/卷38"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -6079,10 +7296,96 @@
             "https://zh.wikisource.org/wiki/三國演義/第052回",
             "https://zh.wikisource.org/wiki/三國演義/第053回"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0757",
+          "name": "马云𫘧",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0766",
+          "name": "马岱",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -6093,7 +7396,8 @@
         "yulin": "neutral",
         "cangwu": "wu_ju",
         "gaoliang": "shi_xie",
-        "linhe": "wu_ju"
+        "linhe": "wu_ju",
+        "longxi": "song_jian"
       }
     },
     {
@@ -6128,6 +7432,18 @@
             "https://zh.wikisource.org/wiki/三國志/卷52",
             "https://zh.wikisource.org/wiki/宋書/卷37",
             "https://zh.wikisource.org/wiki/宋書/卷38"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -6243,6 +7559,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷52",
             "https://zh.wikisource.org/wiki/宋書/卷37",
             "https://zh.wikisource.org/wiki/宋書/卷38"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -7423,10 +8750,96 @@
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0757",
+          "name": "马云𫘧",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0766",
+          "name": "马岱",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -7437,7 +8850,8 @@
         "yulin": "neutral",
         "cangwu": "wu_ju",
         "gaoliang": "shi_xie",
-        "linhe": "wu_ju"
+        "linhe": "wu_ju",
+        "longxi": "song_jian"
       }
     },
     {
@@ -7458,6 +8872,18 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -7512,22 +8938,6 @@
         },
         {
           "city": "tianshui",
-          "before": "ma_teng",
-          "owner": "wei",
-          "certainty": "bounded_regional_inference",
-          "note": "潼關後區域重核；安定楊秋已降曹，天水依通鑑213年攻冀口徑仍韋康。武威實控未確證。",
-          "source_urls": [
-            "https://zh.wikisource.org/wiki/資治通鑑/卷066",
-            "https://zh.wikisource.org/wiki/三國志/卷32",
-            "https://zh.wikisource.org/wiki/三國志/卷40",
-            "https://zh.wikisource.org/wiki/三國志/卷41",
-            "https://zh.wikisource.org/wiki/三國志/卷43",
-            "https://zh.wikisource.org/wiki/三國志/卷45",
-            "https://zh.wikisource.org/wiki/三國志/卷47"
-          ]
-        },
-        {
-          "city": "longxi",
           "before": "ma_teng",
           "owner": "wei",
           "certainty": "bounded_regional_inference",
@@ -7619,6 +9029,33 @@
             "https://zh.wikisource.org/wiki/三國志/卷16",
             "https://zh.wikisource.org/wiki/華陽國志/卷二"
           ]
+        },
+        {
+          "city": "longxi",
+          "before": "wei",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ],
+          "overridden_historical_review": {
+            "city": "longxi",
+            "before": "ma_teng",
+            "owner": "wei",
+            "certainty": "bounded_regional_inference",
+            "note": "潼關後區域重核；安定楊秋已降曹，天水依通鑑213年攻冀口徑仍韋康。武威實控未確證。",
+            "source_urls": [
+              "https://zh.wikisource.org/wiki/資治通鑑/卷066",
+              "https://zh.wikisource.org/wiki/三國志/卷32",
+              "https://zh.wikisource.org/wiki/三國志/卷40",
+              "https://zh.wikisource.org/wiki/三國志/卷41",
+              "https://zh.wikisource.org/wiki/三國志/卷43",
+              "https://zh.wikisource.org/wiki/三國志/卷45",
+              "https://zh.wikisource.org/wiki/三國志/卷47"
+            ]
+          }
         }
       ],
       "officer_changes": [
@@ -9086,24 +10523,6 @@
           ]
         },
         {
-          "person_id": "san14-candidate-0429",
-          "name": "徐奕",
-          "before": {
-            "faction": "wei",
-            "city": "yinping",
-            "status": "serving"
-          },
-          "faction": "wei",
-          "city": "longxi",
-          "certainty": "authorial_garrison_relocation",
-          "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
-          "source_urls": [
-            "https://zh.wikisource.org/wiki/三國志/卷01",
-            "https://zh.wikisource.org/wiki/三國志/卷16",
-            "https://zh.wikisource.org/wiki/華陽國志/卷二"
-          ]
-        },
-        {
           "person_id": "san14-candidate-0479",
           "name": "石韬",
           "before": {
@@ -9228,18 +10647,71 @@
             "https://zh.wikisource.org/wiki/三國志/卷16",
             "https://zh.wikisource.org/wiki/華陽國志/卷二"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0429",
+          "name": "徐奕",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "wei"
+          },
+          "faction": "wei",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ],
+          "superseded_placement_review": {
+            "person_id": "san14-candidate-0429",
+            "name": "徐奕",
+            "before": {
+              "faction": "wei",
+              "city": "yinping",
+              "status": "serving"
+            },
+            "faction": "wei",
+            "city": "longxi",
+            "certainty": "authorial_garrison_relocation",
+            "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+            "source_urls": [
+              "https://zh.wikisource.org/wiki/三國志/卷01",
+              "https://zh.wikisource.org/wiki/三國志/卷16",
+              "https://zh.wikisource.org/wiki/華陽國志/卷二"
+            ]
+          }
         }
       ],
       "notes": [
         "Ma Chao and surviving followers remain free; fixed-city faction omitted rather than inventing territorial control. Wei Kang adopts ZZTJ213 with SGZ25 dating conflict disclosed.",
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "wuwei": "neutral",
         "anding": "wei",
         "jincheng": "han_sui",
         "tianshui": "wei",
-        "longxi": "wei",
+        "longxi": "song_jian",
         "jiameng": "shu",
         "fuxian": "shu",
         "xiping": "han_sui",
@@ -9265,6 +10737,18 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -9313,6 +10797,17 @@
             "https://zh.wikisource.org/wiki/三國志/卷01",
             "https://zh.wikisource.org/wiki/三國志/卷16",
             "https://zh.wikisource.org/wiki/華陽國志/卷二"
+          ]
+        },
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "certainty": "authorial_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
         }
       ],
@@ -9835,16 +11330,86 @@
             "https://zh.wikisource.org/wiki/三國志/卷16",
             "https://zh.wikisource.org/wiki/華陽國志/卷二"
           ]
+        },
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0474",
+          "name": "成宜",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0757",
+          "name": "马云𫘧",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0864",
+          "name": "杨氏",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
         }
       ],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
         "xiping": "han_sui",
         "wudu": "neutral",
-        "yinping": "neutral"
+        "yinping": "neutral",
+        "longxi": "song_jian"
       }
     },
     {
@@ -10288,6 +11853,692 @@
     "207 Zhangling for Liu Bei,208 August Zhangling cutoff,209 IF Linjiang owner and other earlier explicit user settings are retained.",
     "Lujiang/Wan transition before213/214 and some Jiangxia cross-river splits lack a proven exact opening-month boundary; no unsupported backdating from214 conquest.",
     "Four Jingnan prefect groups are playable local administrations; the subordinate roster distinguishes primary history from Romance-game compatibility.",
-    "Song Jian184-02 is an explicit early-opening Fuhan proxy; Lu Xing263-05 is a dated revolt mapping with Tang Pu and Li Tong retinue-window estimates;225 Nanzhong consolidation follows explicit user game setup over the retained primary historical interpretation."
+    "Song Jian184-02 is an unaligned local person with conditionalNovember founding at the disclosedLongxi/Fuhan proxy; Lu Xing263-05 is a dated revolt mapping with Tang Pu and Li Tong retinue-window estimates;225 Nanzhong consolidation follows explicit user game setup over the retained primary historical interpretation."
+  ],
+  "fictional_adaptations": [
+    {
+      "id": "mainland197-07",
+      "date": [
+        197,
+        7
+      ],
+      "title": "197年7月 · 皇帝呂布",
+      "fictional": true,
+      "scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "new_factions": [
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "city_changes": [
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "officer_changes": [
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0166",
+          "name": "韩遂",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "name": "成公英",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0760",
+          "name": "马休",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "owner_expectations": {
+        "longxi": "song_jian"
+      },
+      "notes": [
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+      ]
+    },
+    {
+      "id": "mainland201-05",
+      "date": [
+        201,
+        5
+      ],
+      "title": "201年5月 · 華北霸者・袁紹",
+      "fictional": true,
+      "scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "new_factions": [
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "city_changes": [
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "officer_changes": [
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0474",
+          "name": "成宜",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0760",
+          "name": "马休",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0864",
+          "name": "杨氏",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "owner_expectations": {
+        "longxi": "song_jian"
+      },
+      "notes": [
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+      ]
+    },
+    {
+      "id": "mainland209-06",
+      "date": [
+        209,
+        6
+      ],
+      "title": "209年6月 · 志在千里",
+      "fictional": true,
+      "scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "new_factions": [
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "city_changes": [
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "officer_changes": [
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0166",
+          "name": "韩遂",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "name": "成公英",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0757",
+          "name": "马云𫘧",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0766",
+          "name": "马岱",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "name": "傅干",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "name": "杨秋",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "owner_expectations": {
+        "longxi": "song_jian"
+      },
+      "notes": [
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+      ]
+    },
+    {
+      "id": "mainland210-11",
+      "date": [
+        210,
+        11
+      ],
+      "title": "210年11月 · 二分天下之計",
+      "fictional": true,
+      "scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "new_factions": [
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "city_changes": [
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "officer_changes": [
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0030",
+          "name": "阎行",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0474",
+          "name": "成宜",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0693",
+          "name": "程银",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0760",
+          "name": "马休",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0770",
+          "name": "马铁",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0864",
+          "name": "杨氏",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0969",
+          "name": "梁兴",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "owner_expectations": {
+        "longxi": "song_jian"
+      },
+      "notes": [
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+      ]
+    },
+    {
+      "id": "mainland212-06",
+      "date": [
+        212,
+        6
+      ],
+      "title": "212年6月 · 錦馬超展翅高飛",
+      "fictional": true,
+      "scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "new_factions": [
+        {
+          "id": "song_jian",
+          "ruler": "宋建",
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "city_changes": [
+        {
+          "city": "longxi",
+          "before": "ma_teng",
+          "owner": "song_jian",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "officer_changes": [
+        {
+          "person_id": "historical-song-jian",
+          "name": "宋建",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null
+          },
+          "faction": "song_jian",
+          "city": "longxi",
+          "certainty": "authorial_if_lifetime_region_proxy",
+          "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 本篇為假想劇本，依使用者指定在宋建的生存年代另加隴西據點；保留既有核心故事、首都與人物勢力，不宣稱這是假想官方劇本的原始配置。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "name": "成公英",
+          "before": {
+            "status": "serving",
+            "city": "longxi",
+            "faction": "ma_teng"
+          },
+          "faction": "ma_teng",
+          "city": "tianshui",
+          "certainty": "authorial_garrison_relocation",
+          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        }
+      ],
+      "owner_expectations": {
+        "longxi": "song_jian"
+      },
+      "notes": [
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+      ]
+    }
   ]
 }

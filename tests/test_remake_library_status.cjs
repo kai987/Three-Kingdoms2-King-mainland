@@ -67,17 +67,17 @@ if(python.status!==0)throw new Error(python.stderr||'Runtime fixture generation 
 const rows=JSON.parse(python.stdout);
 for(const row of rows){
  const before=JSON.stringify(row.library),counts=JSON.parse(JSON.stringify(context.libraryEntryCounts(row.library)));
- assert.equal(Object.values(counts).reduce((a,b)=>a+b,0),1027,'Every identity must be counted exactly once');
+ assert.equal(Object.values(counts).reduce((a,b)=>a+b,0),1030,'Every identity must be counted exactly once');
  assert.equal(JSON.stringify(row.library),before,'Classification must not mutate the library');
  const serving=row.library.filter(p=>p.alive===true&&p.faction!==null).length,free=row.library.filter(p=>p.alive===true&&p.faction===null).length;
  assert.equal(counts.serving,serving);assert.equal(counts.free,free);
  const [year,month]=row.date.split('-').map(Number),summary=context.libraryEntrySummary(row.library,{year,month});
- assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1027`));
+ assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1030`));
  assert.equal(counts.pending_history,0);assert.equal(counts.pending_capacity,0);assert.equal(counts.pending_faction,0);
  if(row.date==='217-07'){assert.equal(counts.serving,365);assert.equal(counts.free,52);}
- if(row.date==='191-10'){assert.equal(counts.serving,300);assert.equal(counts.free,96);}
+ if(row.date==='191-10'){assert.equal(counts.serving,301);assert.equal(counts.free,96);}
  if(row.date==='201-05'){
-  assert.equal(counts.serving,289);assert.equal(counts.free,127);
+  assert.equal(counts.serving,290);assert.equal(counts.free,127);
   assert.equal(row.library.filter(p=>context.libraryPlacementFilter(p,'entry:pending_capacity')).length,0);
  }
 }

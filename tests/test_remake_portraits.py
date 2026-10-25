@@ -49,7 +49,7 @@ class PortraitIdentityTests(unittest.TestCase):
                     bound.append(row['person_id'])
         self.assertEqual(len(bound), len(set(bound)))
         self.assertEqual(len(bound), 220)
-        self.assertEqual(len(self.people) - len(bound), 807)
+        self.assertEqual(len(self.people) - len(bound), 810)
 
     def test_independently_reviewed_names_do_not_bind_similar_people(self):
         self.assertEqual(self.records[108]['transcribed_name'], '諸葛瞻')
@@ -98,11 +98,11 @@ class PortraitReleaseTests(unittest.TestCase):
     def test_all_canonical_people_have_real_assets_and_explicit_provenance(self):
         index = self.index
         self.assertEqual(index['counts'], {
-            'people': 1027, 'nes_original': 220, 'generated': 807, 'original_archive': 237,
+            'people': 1030, 'nes_original': 220, 'generated': 810, 'original_archive': 237,
             'original_unique_pixels': 183, 'bound_original_unique_pixels': 179,
-            'generated_unique_pixels': 807, 'original_identity_pending': 17})
+            'generated_unique_pixels': 810, 'original_identity_pending': 17})
         self.assertEqual(set(index['people']), set(builder.identities()))
-        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1028)} - {'1005'})
+        self.assertEqual(set(index['by_runtime_id']), {str(i) for i in range(1031)} - {'1005'})
         self.assertEqual((index['width'], index['height']), (32, 40))
         for person_id, row in index['people'].items():
             with self.subTest(person_id=person_id):
@@ -112,6 +112,15 @@ class PortraitReleaseTests(unittest.TestCase):
                     self.assertIsNone(row['original_id'])
                     self.assertEqual(row['source'], 'imagegen_new_pixel_art')
                     self.assertEqual(row['art_direction_basis'], 'authorial_game_art_not_historical_likeness')
+                    # All810 additions, including the earlier803 identities,
+                    # require the real4x display asset; optional HD support in
+                    # the generic parser must not hide a missing released one.
+                    enhanced = row['enhanced']
+                    expected_size = (index['width'] * 4, index['height'] * 4)
+                    self.assertEqual((enhanced['width'], enhanced['height']), expected_size)
+                    image_size, _ = builder.png_pixels(
+                        (ROOT / 'game' / enhanced['path'].lstrip('/')).read_bytes(), expected_size)
+                    self.assertEqual(image_size, (128, 160))
                 else:
                     self.assertEqual(row['source'], 'pinned_ROM_static_frame0')
                     self.assertIn(row['original_id'], range(237))
@@ -119,11 +128,18 @@ class PortraitReleaseTests(unittest.TestCase):
     def test_historical_additions_have_new_identities_and_exact_fourfold_portraits(self):
         canonical = read('game/config/campaigns/people.json')
         expected = ['historical-song-jian', 'historical-lu-xing',
-                    'historical-tang-pu', 'historical-li-tong-jiaozhi']
+                    'historical-tang-pu', 'historical-li-tong-jiaozhi',
+                    'historical-beigong-boyu', 'historical-li-wenhou', 'historical-bian-zhang']
         self.assertEqual(canonical['order'][1023:], expected)
         released = [[pid, canonical['people'][pid]['runtime_id']] for pid in canonical['order'][:1023]]
         self.assertEqual(builder.sha(json.dumps(released, separators=(',', ':')).encode()),
                          '0fb983fdb518092176cd672f32a4c079b6143741b5d6eaee804336b364fdf21d')
+        published1027 = [[pid, canonical['people'][pid]['runtime_id']] for pid in canonical['order'][:1027]]
+        self.assertEqual(builder.sha(json.dumps(published1027, separators=(',', ':')).encode()),
+                         'b54bda62e7fd0ec52a6dc92fec213978827a14067569265d55117c69b22b8c7d')
+        published1029 = [[pid, canonical['people'][pid]['runtime_id']] for pid in canonical['order'][:1029]]
+        self.assertEqual(builder.sha(json.dumps(published1029, separators=(',', ':')).encode()),
+                         'd3300e904f938234f25ca56c2e82e67c97c5f68d99b55533f1671966a7bf385b')
         generated = read('game/config/portrait-generated.json')['by_person_id']
         hd = read('game/config/portrait-enhanced.json')['people']
         old_hashes = {row['rgba_sha256'] for pid, row in generated.items() if pid not in expected}
@@ -146,7 +162,7 @@ class PortraitReleaseTests(unittest.TestCase):
                 self.assertEqual(enhanced_row['source_sha256'], native_row['png_sha256'])
                 self.assertTrue(enhanced_row['provenance']['qa']['nearest4xExact'])
                 self.assertEqual(self.index['people'][pid]['enhanced']['rendering'], 'nearest4x')
-                self.assertEqual(enhanced_row['provenance']['cell_index'], number - 1024)
+                self.assertEqual(enhanced_row['provenance']['cell_index'], [0, 1, 2, 3, 0, 1, 0][number - 1024])
                 self.assertEqual({tuple(native[i:i+4]) for i in range(0, len(native), 4)},
                                  {(0, 0, 0, 0), (255, 255, 255, 255),
                                   (247, 162, 71, 255), (158, 65, 0, 255)})

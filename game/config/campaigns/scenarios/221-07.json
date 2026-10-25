@@ -3278,12 +3278,20 @@
           "planned_serving": 349,
           "planned_max_city_roster": 14,
           "future_plans": 200,
-          "library": 1027,
-          "configured_profiles": 1027,
-          "health_configured": 1027,
-          "affinity_configured": 1027,
-          "placement_plans": 1027,
-          "new_historical_people": 27
+          "library": 1030,
+          "configured_profiles": 1030,
+          "health_configured": 1030,
+          "affinity_configured": 1030,
+          "placement_plans": 1030,
+          "new_historical_people": 30,
+          "default_virtue_profiles": 30,
+          "virtue": "SAN14 charisma for1000 people; explicit default60 for30 missing sources",
+          "history_designs_total": 0,
+          "original_virtue_profiles": 0,
+          "retained_original_reference_profiles": 220,
+          "san14_charisma_profiles": 1000,
+          "original_initial_health_profiles": 223,
+          "initialization_policy": "tk2-officer-initialization-v1"
         }
       },
       "era_assignments": {
@@ -15194,6 +15202,123 @@
               "year_state": "not_appeared"
             }
           }
+        },
+        "set": {
+          "historical-beigong-boyu": {
+            "source_status": "dead",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "dead",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This identity is enabled only in the184local-person opening; the game exit boundary187 excludes later openings.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/wiki/後漢書/卷72",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷058",
+                "https://zh.wikisource.org/wiki/三國志/卷01"
+              ],
+              "note": "北宮伯玉、李文侯只在184年2月作在野地方人物；其後劇本明確排除，不因年度推進自動生成。本作以187年作退場界點；史料遇害年有186／187分歧，未給確月，不把遊戲界點稱為已確證卒月。",
+              "reference_date": [
+                221,
+                7
+              ],
+              "historical_certainty": "explicit_scenario_scope",
+              "reference_scenario": "mainland221-07"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          },
+          "historical-li-wenhou": {
+            "source_status": "dead",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "dead",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This identity is enabled only in the184local-person opening; the game exit boundary187 excludes later openings.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/wiki/後漢書/卷72",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷058",
+                "https://zh.wikisource.org/wiki/三國志/卷01"
+              ],
+              "note": "北宮伯玉、李文侯只在184年2月作在野地方人物；其後劇本明確排除，不因年度推進自動生成。本作以187年作退場界點；史料遇害年有186／187分歧，未給確月，不把遊戲界點稱為已確證卒月。",
+              "reference_date": [
+                221,
+                7
+              ],
+              "historical_certainty": "explicit_scenario_scope",
+              "reference_scenario": "mainland221-07"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          },
+          "historical-bian-zhang": {
+            "source_status": "dead",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "dead",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This identity is enabled only in the184local-person opening; the game exit boundary186 excludes later openings.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/後漢書/卷72",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷058"
+              ],
+              "note": "邊章只在184年2月作在野地方人物；其後劇本明確排除，不因年度推進自動生成。186年十二月是使用者指定的遊戲事件界點；原典有186年冬與187年編年分歧，不聲稱已考證出確切遇害月。",
+              "reference_date": [
+                221,
+                7
+              ],
+              "historical_certainty": "explicit_scenario_scope",
+              "reference_scenario": "mainland221-07"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          }
         }
       },
       "main_scenario": {
@@ -17848,18 +17973,21 @@
           "san14-candidate-0909": [],
           "san14-candidate-0916": [],
           "san14-candidate-0945": [],
-          "san14-candidate-0991": []
+          "san14-candidate-0991": [],
+          "historical-beigong-boyu": [],
+          "historical-li-wenhou": [],
+          "historical-bian-zhang": []
         }
       },
       "placement_completion": {
         "set": {
           "future_plans": 200,
-          "people": 1027,
+          "people": 1030,
           "reference_classes": {
             "authorial_region_placement": 589,
             "game_reference": 422,
             "bounded_career_inference": 12,
-            "explicit_scenario_scope": 4
+            "explicit_scenario_scope": 7
           },
           "bases": {
             "unrepresented_source_faction_local_free_design": 1,
@@ -17874,7 +18002,7 @@
             "retained_explicit_scenario_ruler": 5,
             "authored_bounded_source_snapshot_continuity": 4,
             "retained_chronology_or_explicit_exclusion": 2,
-            "explicit_scenario_scope": 4
+            "explicit_scenario_scope": 7
           }
         },
         "update": {}

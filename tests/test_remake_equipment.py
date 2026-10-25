@@ -50,7 +50,7 @@ class EquipmentTests(unittest.TestCase):
         source=json.loads((ROOT/'game/config/references/original-equipment-v1.json').read_text())['records']
         before=deepcopy(data['people'])
         initials=equipment.build_initials(data['people'],source,{})
-        self.assertEqual(len(initials),1027)
+        self.assertEqual(len(initials),1030)
         self.assertEqual(sum('source' in row for row in initials.values()),223)
         for pid,ident in equipment.SIGNATURES.items():
             self.assertEqual(initials[pid]['weapon_id'],ident)

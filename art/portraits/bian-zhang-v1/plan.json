@@ -1,0 +1,32 @@
+{
+  "schema": "tk2-portrait-supplement-v1",
+  "source": "imagegen_new_pixel_art",
+  "art_direction_basis": "authorial_game_art_not_historical_likeness",
+  "native_size": [
+    32,
+    40
+  ],
+  "source_atlas": "art/portraits/bian-zhang-v1/source.png",
+  "source_sha256": "ef9ee5d2dda8bc2c3ab6766686b6cd68aa48e8dc80415fd3adea206b5c17f9c4",
+  "source_size": [
+    1122,
+    1402
+  ],
+  "grid": [
+    1,
+    1
+  ],
+  "prompt": "art/portraits/bian-zhang-v1/prompt.txt",
+  "generation_record": "art/portraits/bian-zhang-v1/generation.json",
+  "style_reference": "art/portraits/reference-originals.png",
+  "style_reference_sha256": "7f6cdbb906e67962e58ba8bb62af78e199fa0dd6fd5585aed7fb41b6523d85e9",
+  "people": [
+    {
+      "person_id": "historical-bian-zhang",
+      "name": "边章",
+      "cell_index": 0,
+      "art_gender_design": "male"
+    }
+  ],
+  "processing": "Fixed four-color quantization, complete-cell nearest fit to32x40; derivative exact nearest4x128x160. One new source identity, no borrowed portrait."
+}

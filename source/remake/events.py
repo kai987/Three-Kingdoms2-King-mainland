@@ -45,6 +45,10 @@ DETAILS = {
     'city_upgraded': {'from_tier','to_tier','income'},
     'city_renamed': {'from_name', 'to_name'},
     'city_captured': {'previous_owner'},
+    'faction_founded': {'founding_id','reason','reserves'},
+    'faction_founding_skipped': {'founding_id','reason','reserves'},
+    'faction_coup': {'coup_id','reason','released_troops'},
+    'faction_coup_skipped': {'coup_id','reason','released_troops'},
     'battle_started': {'battle_id', 'attacker', 'defender'},
     'battle_result': {'battle_id', 'outcome', 'lost', 'surrendered'},
     'duel_started': set(), 'duel_result': {'result'},
@@ -397,6 +401,30 @@ def validate(campaign, state):
             _validate_facility_event(row)
         if row['kind']=='equipment_acquired':
             _validate_equipment_event(row)
+        if row['kind'] in {'faction_founded','faction_founding_skipped'}:
+            rules={r['id']:r for r in campaign.catalog.data.get('faction_foundings',[])}
+            d=row['details']; rule=rules.get(d.get('founding_id'))
+            if (set(d)!=DETAILS[row['kind']] or rule is None or row['audience']!='world'
+                    or row['day']!=1 or [row['year'],row['month']]!=rule['date']
+                    or row['city_ids']!=rule['cities'] or row['factions']!=[rule['faction']]
+                    or not row['person_ids'] or not set(row['person_ids'])<=set(rule['members'])
+                    or type(d['reserves']) is not int or not 0<=d['reserves']<=999*len(row['person_ids'])
+                    or (row['kind']=='faction_founded' and
+                        (d['reason']!='formed' or rule['ruler'] not in row['person_ids']))
+                    or (row['kind']=='faction_founding_skipped' and
+                        (d['reason'] not in ('city_occupied','leader_unavailable') or d['reserves']))):
+                raise ValueError('Dated faction founding event')
+        if row['kind'] in {'faction_coup','faction_coup_skipped'}:
+            rules={r['id']:r for r in campaign.catalog.data.get('faction_coups',[])}
+            d=row['details'];rule=rules.get(d.get('coup_id'))
+            if (set(d)!=DETAILS[row['kind']] or rule is None or row['audience']!='world'
+                    or row['day']!=1 or [row['year'],row['month']]!=rule['date']
+                    or row['factions']!=[rule['faction']] or row['person_ids']!=[*rule['victims'],rule['successor']]
+                    or type(d['released_troops']) is not int or not 0<=d['released_troops']<=999*len(rule['victims'])
+                    or (row['kind']=='faction_coup' and (d['reason']!='executed' or not row['city_ids']))
+                    or (row['kind']=='faction_coup_skipped' and
+                        (d['reason']!='conditions_changed' or d['released_troops']))):
+                raise ValueError('Dated faction coup event')
         if row['kind'] in TRANSPORT_KINDS:
             if (set(row['details']) != TRANSPORT_DETAILS
                     or type(row['details']['treasure']) is not int

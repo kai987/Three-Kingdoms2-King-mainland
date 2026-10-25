@@ -14,20 +14,20 @@
   },
   "summary": {
     "cities": 3169,
-    "serving": 8829,
-    "rulers": 290,
-    "ordinary_serving": 8539,
-    "free": 2333,
-    "total_instantiated": 11162,
+    "serving": 8844,
+    "rulers": 306,
+    "ordinary_serving": 8538,
+    "free": 2338,
+    "total_instantiated": 11182,
     "initial_health_changed": 2919,
     "health_cap_increased": 1237,
-    "ordinary_loyalty_changed": 1512,
-    "source_context_applied": 1566,
+    "ordinary_loyalty_changed": 1511,
+    "source_context_applied": 1565,
     "source_context_mismatch_defaults": 1002,
     "source_ruler_marker_nonruler_defaults": 20,
     "no_source_loyalty_defaults": 5951,
     "preview_cities_checked": 3169,
-    "preview_officers_checked": 8829
+    "preview_officers_checked": 8844
   },
   "scenarios": [
     {
@@ -38,26 +38,26 @@
       "player": "han",
       "seed": 2026,
       "cities": 108,
-      "serving": 138,
-      "rulers": 10,
-      "ordinary_serving": 128,
-      "free": 150,
-      "total_instantiated": 288,
+      "serving": 136,
+      "rulers": 9,
+      "ordinary_serving": 127,
+      "free": 155,
+      "total_instantiated": 291,
       "initial_health_changed": 61,
       "health_cap_increased": 25,
-      "ordinary_loyalty_changed": 12,
-      "source_context_applied": 12,
+      "ordinary_loyalty_changed": 11,
+      "source_context_applied": 11,
       "source_context_mismatch_defaults": 12,
       "source_ruler_marker_nonruler_defaults": 4,
       "no_source_loyalty_defaults": 100,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 138,
+      "preview_officers_checked": 136,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -70,7 +70,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "0d18368a7973cfe0c2bdc2bc2d48bba8042679f7666626ec7f59f2f376ed8520",
+      "opening_save_sha256": "e9740c5c52b69f7b12119fbd2561afd3eb83355cd2340115e6d0f90e6b08bda4",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -173,7 +173,7 @@
           "runtime_id": 96,
           "name": "郭汜",
           "role": "serving",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "dong_zhuo",
           "source_row_id": "cnblogs-line-0040",
           "previous_initial_health": 80,
@@ -252,17 +252,17 @@
           "person_id": "san14-candidate-0166",
           "runtime_id": 165,
           "name": "韩遂",
-          "role": "serving",
-          "city": "wuwei",
-          "faction": "ma_teng",
+          "role": "free",
+          "city": "jincheng",
+          "faction": null,
           "source_row_id": "cnblogs-line-0063",
           "previous_initial_health": 80,
           "initial_health": 68,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 76,
-          "loyalty_reason": "source_context_applied"
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         },
         {
           "person_id": "san14-candidate-0176",
@@ -685,7 +685,7 @@
           "runtime_id": 637,
           "name": "张济",
           "role": "serving",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "dong_zhuo",
           "source_row_id": "cnblogs-line-0041",
           "previous_initial_health": 80,
@@ -813,7 +813,7 @@
           "runtime_id": 735,
           "name": "董卓",
           "role": "ruler",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "dong_zhuo",
           "source_row_id": "cnblogs-line-0036",
           "previous_initial_health": 80,
@@ -829,7 +829,7 @@
           "runtime_id": 781,
           "name": "樊稠",
           "role": "serving",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "dong_zhuo",
           "source_row_id": "cnblogs-line-0039",
           "previous_initial_health": 80,
@@ -941,7 +941,7 @@
           "runtime_id": 892,
           "name": "李傕",
           "role": "serving",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "dong_zhuo",
           "source_row_id": "cnblogs-line-0045",
           "previous_initial_health": 80,
@@ -957,7 +957,7 @@
           "runtime_id": 906,
           "name": "李儒",
           "role": "serving",
-          "city": "tianshui",
+          "city": "anding",
           "faction": "dong_zhuo",
           "source_row_id": "cnblogs-line-0044",
           "previous_initial_health": 80,
@@ -1074,11 +1074,11 @@
       "player": "han",
       "seed": 2026,
       "cities": 108,
-      "serving": 113,
-      "rulers": 9,
+      "serving": 114,
+      "rulers": 10,
       "ordinary_serving": 104,
       "free": 227,
-      "total_instantiated": 340,
+      "total_instantiated": 341,
       "initial_health_changed": 86,
       "health_cap_increased": 36,
       "ordinary_loyalty_changed": 9,
@@ -1088,12 +1088,12 @@
       "no_source_loyalty_defaults": 78,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 113,
+      "preview_officers_checked": 114,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -1106,7 +1106,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "45484934580f415d30577baacf7d484414de9838f2213bf156ea24ef507a0cc6",
+      "opening_save_sha256": "f2a651cb864fafca44e9520a2a68e47cdd155aca6bde149f160a0cc9423c480a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -2510,11 +2510,11 @@
       "player": "dong_zhuo",
       "seed": 2026,
       "cities": 108,
-      "serving": 251,
-      "rulers": 25,
+      "serving": 252,
+      "rulers": 26,
       "ordinary_serving": 226,
       "free": 135,
-      "total_instantiated": 386,
+      "total_instantiated": 387,
       "initial_health_changed": 103,
       "health_cap_increased": 42,
       "ordinary_loyalty_changed": 46,
@@ -2524,12 +2524,12 @@
       "no_source_loyalty_defaults": 151,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 251,
+      "preview_officers_checked": 252,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -2542,7 +2542,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "90bcf36bb18bd23d5c2499550350d05ba1524a1e134d266eb4adc47020f2ceff",
+      "opening_save_sha256": "9fb459ba2b7ee7c73611a25594cbe66e896c431db15658c2c28fec6c43d9a056",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -3813,7 +3813,7 @@
           "runtime_id": 692,
           "name": "程银",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0060",
           "previous_initial_health": 80,
@@ -4298,11 +4298,11 @@
       "player": "dong_zhuo",
       "seed": 2026,
       "cities": 108,
-      "serving": 300,
-      "rulers": 22,
+      "serving": 301,
+      "rulers": 23,
       "ordinary_serving": 278,
       "free": 96,
-      "total_instantiated": 396,
+      "total_instantiated": 397,
       "initial_health_changed": 105,
       "health_cap_increased": 41,
       "ordinary_loyalty_changed": 57,
@@ -4312,12 +4312,12 @@
       "no_source_loyalty_defaults": 187,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 300,
+      "preview_officers_checked": 301,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -4330,7 +4330,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e0b02e88f29a2fdc5b3a22d271a031a4d8be9629affab7a70ea51098199f5985",
+      "opening_save_sha256": "ccb73e54f02c6b8a7a047b8ac5b3e1ad6bb000106e805f74e5bbc13b13897641",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -5601,7 +5601,7 @@
           "runtime_id": 692,
           "name": "程银",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0060",
           "previous_initial_health": 80,
@@ -6033,7 +6033,7 @@
           "runtime_id": 968,
           "name": "梁兴",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0204",
           "previous_initial_health": 80,
@@ -6134,11 +6134,11 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 291,
-      "rulers": 20,
+      "serving": 292,
+      "rulers": 21,
       "ordinary_serving": 271,
       "free": 120,
-      "total_instantiated": 411,
+      "total_instantiated": 412,
       "initial_health_changed": 112,
       "health_cap_increased": 43,
       "ordinary_loyalty_changed": 55,
@@ -6148,12 +6148,12 @@
       "no_source_loyalty_defaults": 177,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 291,
+      "preview_officers_checked": 292,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -6166,7 +6166,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "687b96b468b248defc3e404e89f60f45ff5d73efd13162ad96399a1998bb69e6",
+      "opening_save_sha256": "faf36e9012fd1e7fe341c721f444b9e7a4f99681b6ec0e4266837c367165c1cd",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -7645,7 +7645,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -8066,11 +8066,11 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 280,
-      "rulers": 20,
+      "serving": 281,
+      "rulers": 21,
       "ordinary_serving": 260,
       "free": 151,
-      "total_instantiated": 431,
+      "total_instantiated": 432,
       "initial_health_changed": 125,
       "health_cap_increased": 50,
       "ordinary_loyalty_changed": 66,
@@ -8080,12 +8080,12 @@
       "no_source_loyalty_defaults": 162,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 280,
+      "preview_officers_checked": 281,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -8113,7 +8113,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "811cfb026b680a6bf43d03077f6571853799ad16446ca98d4efa0a6cebd6daea",
+      "opening_save_sha256": "4449be0b68d6d7380bd89a2b4fc2d715782fa0a549fc134d5733d32293089f00",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -9752,7 +9752,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -10237,11 +10237,11 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 270,
-      "rulers": 17,
+      "serving": 271,
+      "rulers": 18,
       "ordinary_serving": 253,
       "free": 168,
-      "total_instantiated": 438,
+      "total_instantiated": 439,
       "initial_health_changed": 129,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 66,
@@ -10251,12 +10251,12 @@
       "no_source_loyalty_defaults": 155,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 270,
+      "preview_officers_checked": 271,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -10284,7 +10284,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "89167eea69d7aba6b99606ee00f990d85c904599d906c2e082986478ea8f06a2",
+      "opening_save_sha256": "a0b610caf26091b6b14101f7b40eb674c72983559ae37e96939ba0e50859917f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -10675,7 +10675,7 @@
           "runtime_id": 165,
           "name": "韩遂",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0063",
           "previous_initial_health": 80,
@@ -11939,7 +11939,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -12472,11 +12472,11 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 289,
-      "rulers": 18,
+      "serving": 290,
+      "rulers": 19,
       "ordinary_serving": 271,
       "free": 143,
-      "total_instantiated": 432,
+      "total_instantiated": 433,
       "initial_health_changed": 129,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 71,
@@ -12486,12 +12486,12 @@
       "no_source_loyalty_defaults": 169,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 289,
+      "preview_officers_checked": 290,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -12519,7 +12519,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "efe0be764e717661bf63691ede115cb4bc239a55a2ad61cdd06e6d0ec8da1b4f",
+      "opening_save_sha256": "c4dc1c3833c5ea891c9d78ebc0c6251fb233b4c00434f96c2ac71c4bca826745",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -14190,7 +14190,7 @@
           "runtime_id": 765,
           "name": "马岱",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0192",
           "previous_initial_health": 80,
@@ -14707,11 +14707,11 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 302,
-      "rulers": 11,
+      "serving": 303,
+      "rulers": 12,
       "ordinary_serving": 291,
       "free": 118,
-      "total_instantiated": 420,
+      "total_instantiated": 421,
       "initial_health_changed": 130,
       "health_cap_increased": 54,
       "ordinary_loyalty_changed": 83,
@@ -14721,12 +14721,12 @@
       "no_source_loyalty_defaults": 177,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 302,
+      "preview_officers_checked": 303,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -14739,7 +14739,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "5d51f55774262bc5f8ca355274a0bc8d4f02dc4a162ab71a67a2da0f0e6abbb8",
+      "opening_save_sha256": "6a135e7612bfcc4ecb7b3b807cf5adc880af73933d40c94cbc962a7abbaf95a8",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -16442,7 +16442,7 @@
           "runtime_id": 765,
           "name": "马岱",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0192",
           "previous_initial_health": 80,
@@ -16975,11 +16975,11 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 289,
-      "rulers": 10,
+      "serving": 290,
+      "rulers": 11,
       "ordinary_serving": 279,
       "free": 127,
-      "total_instantiated": 416,
+      "total_instantiated": 417,
       "initial_health_changed": 126,
       "health_cap_increased": 51,
       "ordinary_loyalty_changed": 79,
@@ -16989,12 +16989,12 @@
       "no_source_loyalty_defaults": 170,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 289,
+      "preview_officers_checked": 290,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -17007,7 +17007,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1db241a618db852f57546860c1031b23885211fafaddedbdf00fb98b020c9383",
+      "opening_save_sha256": "ac6c48cef12ecd075a46e119685be7bd71aa169964832f172a02ac9e1a8e7430",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -18102,7 +18102,7 @@
           "runtime_id": 473,
           "name": "成宜",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0065",
           "previous_initial_health": 80,
@@ -18646,7 +18646,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -19179,11 +19179,11 @@
       "player": "wei",
       "seed": 2026,
       "cities": 108,
-      "serving": 309,
-      "rulers": 14,
+      "serving": 310,
+      "rulers": 15,
       "ordinary_serving": 295,
       "free": 112,
-      "total_instantiated": 421,
+      "total_instantiated": 422,
       "initial_health_changed": 126,
       "health_cap_increased": 51,
       "ordinary_loyalty_changed": 62,
@@ -19193,12 +19193,12 @@
       "no_source_loyalty_defaults": 188,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 309,
+      "preview_officers_checked": 310,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -19211,7 +19211,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "55736bbff20b6ea53ca1caf46621ab03f4692cdc849fd9de97fd9c033c80e560",
+      "opening_save_sha256": "8557e5c3e23fe12757b8e190687394807d12529f8aa7a7259392b3abca1b0101",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -20834,7 +20834,7 @@
           "runtime_id": 765,
           "name": "马岱",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0192",
           "previous_initial_health": 80,
@@ -21367,11 +21367,11 @@
       "player": "wei",
       "seed": 2026,
       "cities": 108,
-      "serving": 347,
-      "rulers": 11,
+      "serving": 348,
+      "rulers": 12,
       "ordinary_serving": 336,
       "free": 86,
-      "total_instantiated": 433,
+      "total_instantiated": 434,
       "initial_health_changed": 128,
       "health_cap_increased": 54,
       "ordinary_loyalty_changed": 82,
@@ -21381,12 +21381,12 @@
       "no_source_loyalty_defaults": 217,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 347,
+      "preview_officers_checked": 348,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -21399,7 +21399,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d319d5ca6bde6635c9c558001bc1d0e8afba573b342215cdb4e2aff201011268",
+      "opening_save_sha256": "1b46acf3dcd1b14b13380fd803c7c120449c4d303c3209701a9dc7ffb0932921",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -23006,7 +23006,7 @@
           "runtime_id": 765,
           "name": "马岱",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0192",
           "previous_initial_health": 80,
@@ -23587,11 +23587,11 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 387,
-      "rulers": 14,
+      "serving": 388,
+      "rulers": 15,
       "ordinary_serving": 373,
       "free": 49,
-      "total_instantiated": 436,
+      "total_instantiated": 437,
       "initial_health_changed": 126,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 82,
@@ -23601,12 +23601,12 @@
       "no_source_loyalty_defaults": 247,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 387,
+      "preview_officers_checked": 388,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -23676,7 +23676,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "7a3697bf07aa0cc830ae866799711ca9d65ebb51714dbffc484f87ee73341088",
+      "opening_save_sha256": "ec79cf705442ae12ac50a6b536ea2c5e55efbf67882e4c3ab781001ff3e7d00a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -25283,7 +25283,7 @@
           "runtime_id": 765,
           "name": "马岱",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0192",
           "previous_initial_health": 80,
@@ -25848,11 +25848,11 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 388,
-      "rulers": 8,
+      "serving": 389,
+      "rulers": 9,
       "ordinary_serving": 380,
       "free": 39,
-      "total_instantiated": 427,
+      "total_instantiated": 428,
       "initial_health_changed": 127,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 86,
@@ -25862,12 +25862,12 @@
       "no_source_loyalty_defaults": 252,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 388,
+      "preview_officers_checked": 389,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -25880,7 +25880,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "59b9f8a81b91c34912e66bb8f500f82bf182fc163773d03b9293e585552d259a",
+      "opening_save_sha256": "926cbb505d0ed55c8cd9e0d8eb8d3353cb9d4e9eb2eda36b0e2adfba7975802b",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -26175,7 +26175,7 @@
           "runtime_id": 165,
           "name": "韩遂",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0063",
           "previous_initial_health": 80,
@@ -27487,7 +27487,7 @@
           "runtime_id": 765,
           "name": "马岱",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0192",
           "previous_initial_health": 80,
@@ -28068,11 +28068,11 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 377,
-      "rulers": 6,
+      "serving": 378,
+      "rulers": 7,
       "ordinary_serving": 371,
       "free": 55,
-      "total_instantiated": 432,
+      "total_instantiated": 433,
       "initial_health_changed": 129,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 74,
@@ -28082,12 +28082,12 @@
       "no_source_loyalty_defaults": 244,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 377,
+      "preview_officers_checked": 378,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -28115,7 +28115,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "552b3d97410d725585295c023cd8aeffebc7e67992677c6583736289d016efa4",
+      "opening_save_sha256": "f5ecc2711325733b16695a4412b25e2420c9ecf5117505c5da5e1a83acc5bb03",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -29098,7 +29098,7 @@
           "runtime_id": 473,
           "name": "成宜",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0065",
           "previous_initial_health": 80,
@@ -29594,7 +29594,7 @@
           "runtime_id": 692,
           "name": "程银",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0060",
           "previous_initial_health": 80,
@@ -29706,7 +29706,7 @@
           "runtime_id": 759,
           "name": "马休",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0232",
           "previous_initial_health": 80,
@@ -29770,7 +29770,7 @@
           "runtime_id": 769,
           "name": "马铁",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0211",
           "previous_initial_health": 80,
@@ -30218,7 +30218,7 @@
           "runtime_id": 968,
           "name": "梁兴",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0204",
           "previous_initial_health": 80,
@@ -30303,11 +30303,11 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 388,
-      "rulers": 9,
+      "serving": 389,
+      "rulers": 10,
       "ordinary_serving": 379,
       "free": 36,
-      "total_instantiated": 424,
+      "total_instantiated": 425,
       "initial_health_changed": 127,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 81,
@@ -30317,12 +30317,12 @@
       "no_source_loyalty_defaults": 253,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 388,
+      "preview_officers_checked": 389,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -30392,7 +30392,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f7006fcbb25792811a229b04dc8cadb63dceb376428d711ec01580b6633186b5",
+      "opening_save_sha256": "7cdee72ffb7a2b26fefac16ad0f3ad50400471a20f14d928a63f188f6402fe06",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -31375,7 +31375,7 @@
           "runtime_id": 473,
           "name": "成宜",
           "role": "serving",
-          "city": "longxi",
+          "city": "tianshui",
           "faction": "ma_teng",
           "source_row_id": "cnblogs-line-0065",
           "previous_initial_health": 80,
@@ -32580,11 +32580,11 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 376,
-      "rulers": 9,
+      "serving": 377,
+      "rulers": 10,
       "ordinary_serving": 367,
       "free": 39,
-      "total_instantiated": 415,
+      "total_instantiated": 416,
       "initial_health_changed": 121,
       "health_cap_increased": 50,
       "ordinary_loyalty_changed": 72,
@@ -32594,12 +32594,12 @@
       "no_source_loyalty_defaults": 250,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 376,
+      "preview_officers_checked": 377,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -32612,7 +32612,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ca0b2c7d4171ae193040de9f7365e74173d5678e2baad345a10d832a6419e995",
+      "opening_save_sha256": "9fb94c7072e35d94ef7068cc32cfc807880e8d4d0a7190ea3d20d11d233b99ac",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -34672,11 +34672,11 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 356,
-      "rulers": 8,
+      "serving": 357,
+      "rulers": 9,
       "ordinary_serving": 348,
       "free": 53,
-      "total_instantiated": 409,
+      "total_instantiated": 410,
       "initial_health_changed": 120,
       "health_cap_increased": 50,
       "ordinary_loyalty_changed": 67,
@@ -34686,12 +34686,12 @@
       "no_source_loyalty_defaults": 239,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 356,
+      "preview_officers_checked": 357,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -34775,7 +34775,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f191bc56adbbc973ed9a89488bb911ab3b05e2e19bb29dd3a8d54310332a3b6c",
+      "opening_save_sha256": "87c864d6433cc4d4963f87c44580069f952236602e5319bbf813f6cba39eca7c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -36833,7 +36833,7 @@
       "no_source_loyalty_defaults": 244,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -36866,7 +36866,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "fe8d97f33f9bf292b17c593c5d70fafc80b16b548736957cbfa0a58cbb12227a",
+      "opening_save_sha256": "8a798f7d8b94654c4d797ddf5c634a5935e9e3d2792978425a9af479cba5a5ca",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -38908,7 +38908,7 @@
       "no_source_loyalty_defaults": 249,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -38926,7 +38926,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "37895b35b727cf3a113fcdcda519c0f01aa93f694dc130af43088f398dff3d3b",
+      "opening_save_sha256": "328b7079a172acc3cbccdd028f7252ae6f4c3247fc5b0d15f9c97306608d45fe",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -40872,7 +40872,7 @@
       "no_source_loyalty_defaults": 264,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -40890,7 +40890,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "8f488c0c21d25b20cfc13bac3815125a16b498aa6325391dda9a4ed0cfcb360c",
+      "opening_save_sha256": "4f4a8a9786dd26c538b24e47a29d06c93c4691b2234da6904dba30350dce9340",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -42836,7 +42836,7 @@
       "no_source_loyalty_defaults": 247,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -42854,7 +42854,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "c6448b988953131991b7b754b8a16fb70debf430bc5f2f02ae33da4fe361a4de",
+      "opening_save_sha256": "8f6c1fb5fddeea7c1ecbea0cc2eb47ca2ce25b8fd2abe2e576844463d68a757c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -44496,7 +44496,7 @@
       "no_source_loyalty_defaults": 221,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -44514,7 +44514,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "46b42759c94e491135cba89c3167cc9fdee199a3fcedee85ce24984ea5563828",
+      "opening_save_sha256": "9f47cda5677ad0fbbce9a348082492d7b2f93361f930ec6fc01f1eca85bcb7f2",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -45948,7 +45948,7 @@
       "no_source_loyalty_defaults": 242,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -45966,7 +45966,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1405c42f128d0a9952ad407cdaa0936689e9644dd77ead7e02f037b6a78d281b",
+      "opening_save_sha256": "93db3bf6d16c27610df8be2cd9e53cbaab7d574b87e341405bad29336a01057c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -47240,7 +47240,7 @@
       "no_source_loyalty_defaults": 237,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -47258,7 +47258,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "64df79867f4f8fc2f96462789bce34fb8194bc04b474d7b5d6f6a50e09a54975",
+      "opening_save_sha256": "dc8f7458fb0735190ceba91c262430529b3313ddab60824e37daea0008a1fa32",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -48196,7 +48196,7 @@
       "no_source_loyalty_defaults": 236,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -48243,7 +48243,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d5f910f3760970c2f95f4ef35ce3a17e9e670b176041a3b91a4ee7004d3d10ab",
+      "opening_save_sha256": "61c45ea6dd5b5814074e2b5787b6c1c14d8ba02107344c09cbe5026f36bce7b6",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49149,7 +49149,7 @@
       "no_source_loyalty_defaults": 236,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -49167,7 +49167,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "27beac06847886378f5d2206944cc4b4794e01fe64e5cbed1594edcf345221ef",
+      "opening_save_sha256": "80c9bd8ef65a22ee9b6d83c9b171a846550a0c94acede58010d7d63155802802",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49929,7 +49929,7 @@
       "no_source_loyalty_defaults": 213,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -49947,7 +49947,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "7267547aefabb8e5e062a20fbbd87a6a2cb441cc3725eb69432176909b3caf55",
+      "opening_save_sha256": "f4eb6b52bf7413831c7f1e83ba99a14ab68e3f2373fe0c81f1f81b78cba25578",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -50405,7 +50405,7 @@
       "no_source_loyalty_defaults": 146,
       "virtue_coverage": {
         "san14_charisma": 1000,
-        "missing_charisma_default60": 27
+        "missing_charisma_default60": 30
       },
       "city_capacity": 99,
       "battle_capacity": 10,
@@ -50423,7 +50423,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "8cc7a6935cfb32a29133ec6299df99dd514eb99a44bac587fb7dac6050eb1117",
+      "opening_save_sha256": "e880038a41c737a23ab85c8a562a938969e1d54d751f1fd97dd4b48b78e9d91f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0348",

@@ -4,6 +4,7 @@ from .campaign import Campaign, Catalog, GameError
 from .map_presentation import city_names,presentation,faction_colors
 from .city_economy import profiles_at,incomes_at
 from .officers import appearance_values
+from .dated_events import visible_factions
 
 
 DEFAULT_SCENARIO = 'mainland184-02'
@@ -142,7 +143,7 @@ class CampaignSession:
                                            'travel_hazards':c.data.get('travel_hazards'),
                                            'sea_routes':c.data.get('sea_routes',[]),
                                            'factions':[dict(f, ruler_person_id=c.by_id[c.data['faction_rulers'][f['id']]]['person_id'])
-                                                       for f in c.factions.values()]} for c in self.catalogs.values()]
+                                                       for f in visible_factions(c)]} for c in self.catalogs.values()]
         return [dict(row,
             initial_owners=dict(row['initial_owners']),
             active_cities=list(row['active_cities']),

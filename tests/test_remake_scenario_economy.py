@@ -9,6 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 from remake.campaign import Campaign, Catalog, canonical
+from remake.dated_events import visible_factions
 from remake import civil_staff, domestic, facilities, logistics, treasures
 from remake.city_economy import (apply_opening_sizes, income_at, incomes_at,
                                  profile_at, profiles_at, tier_at)
@@ -120,10 +121,11 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 self.assertEqual(tuple(getattr(city, field) for field in FIELDS),
                                  tuple(catalog.data['initial_city_resources'][key][field] for field in FIELDS))
 
-    def test_every_faction_can_start_and_soldier_initial_ledger_matches_new_reserves(self):
+    def test_every_selectable_faction_can_start_and_soldier_initial_ledger_matches_new_reserves(self):
         starts = 0
         for date, catalog in self.catalogs.items():
-            for side in catalog.factions:
+            for faction in visible_factions(catalog):
+                side=faction['id']
                 with self.subTest(date=date, side=side):
                     game = Campaign(catalog)
                     game.state = game._new(side, 2026)

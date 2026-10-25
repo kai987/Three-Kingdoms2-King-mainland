@@ -1,0 +1,13 @@
+{
+  "schema": "tk2-imagegen-generation-v1",
+  "tool": "image_gen.imagegen",
+  "generated_on": "2026-10-25",
+  "prompt": "Make ONE production Famicom/NES strategy-game portrait sprite sheet containing EXACTLY TWO DISTINCT MEN, side by side in two equal columns and ONE row. Use supplied original game portraits for STYLE ONLY, never reuse any face. New authorial game art; no claim of authentic historical likeness. LEFT = Beigong Boyu (北宮伯玉): a mature northwestern frontier military leader, broad rectangular face, heavy horizontal brows, a broad drooping moustache and thick short squared beard, low rounded orange-brown battle helmet with white cloth cheek coverings and a flat black top; robust white shoulder armor. RIGHT = Li Wenhou (李文侯): a slightly younger northwestern leader, slim angular face, long narrow nose, slender arched eyebrows, thin moustache without beard, black hair and a plain white wrapped cloth headband under a small flat folded black cap, crossed brown collar and white robe shoulders. Make the two identities entirely different in eye shape, nose, chin, hat, hair and facial hair, and different from the reference identities. Both front-facing, head and shoulders, same scale and visual density as original NES portraits. Each portrait is logically exactly32×40pixels shown as enlarged hard square pixel blocks with nearest-neighbor edges, no subpixel detail. Sparse expressive original NES/Famicom face drawing with only BLACK #000000, WHITE #FFFFFF, ORANGE #F7A247, BROWN #9E4100. No extra colors, gray, gradients, antialiasing, texture, lighting effects, modern rich pixelart, letters, captions, logos, decorative borders or grid lines. Keep full hats, faces and shoulders completely inside their cells, with generous pure-black outside margins and a wide pure-black central gutter. Original game's white face/hat backing is fine inside each portrait. Sheet overall landscape aspect8:5, two equal portrait cells. Maintain a flat simple 1980s game appearance.",
+  "referenced_image_paths": [
+    "art/portraits/reference-originals.png"
+  ],
+  "transparent_background": false,
+  "original_output": "/Users/paulasmith/.codex/generated_images/01a171ac-26c9-7552-9176-bb12a3f18dcc/exec-62a4b66e-3f1f-4863-9f21-032bc00c0d61.png",
+  "retained_source": "art/portraits/northwest-rising-v1/source.png",
+  "identity_basis": "Two independently authored faces for Beigong Boyu and Li Wenhou; not historical likenesses; no inherited officer portrait."
+}

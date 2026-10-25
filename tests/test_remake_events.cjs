@@ -23,17 +23,94 @@ class Modal extends Target{
  showModal(){this.open=true;this.shows++;}
  close(){this.open=false;this.closes++;this.emit('close');}
 }
-function fixture(items=[],{originalUI}={}){
+function fixture(items=[],{originalUI,portraits:providedPortraits}={}){
  const modal=new Modal(),parent=new Target(),doc=new Target(),tasks=[],header={textContent:'',setAttribute(k,v){this[k]=v}},i18n={locale:'zh-Hant',t:value=>value};
  doc.querySelector=selector=>selector==='#event-history'?header:null;parent.open=false;
  let current=view(items),busy=false,preview=false;
  const portraitRequests=[],portraits={entry:id=>id==='person-a'?{path:'/assets/portraits/original/001.png'}:null,html(id,name){portraitRequests.push([id,name]);return `<span data-portrait-person="${id}"><img src="/assets/portraits/original/001.png"></span>`;}};
- const events=create({document:doc,modal,parentDialog:parent,i18n,portraits,originalUI,getView:()=>current,isBusy:()=>busy,isPreview:()=>preview,schedule:fn=>tasks.push(fn)});
+ const events=create({document:doc,modal,parentDialog:parent,i18n,portraits:providedPortraits||portraits,originalUI,getView:()=>current,isBusy:()=>busy,isPreview:()=>preview,schedule:fn=>tasks.push(fn)});
  const drain=()=>{let guard=0;while(tasks.length){assert(guard++<20,'No polling loop while modal/busy');tasks.shift()();}};
  return{events,modal,parent,doc,i18n,header,portraitRequests,drain,setView:v=>{current=v;},setBusy:v=>{busy=v;},setPreview:v=>{preview=v;}};
 }
 (async()=>{
- assert.equal(Object.keys(KINDS).length,52);
+ assert.equal(Object.keys(KINDS).length,56);
+ const founding=(id,kind='faction_founded',extra={})=>row(id,kind,{year:184,month:11,day:1,turn:28,audience:'world',
+  person_ids:['historical-beigong-boyu','historical-li-wenhou'],city_ids:['jincheng'],factions:['beigong_boyu'],
+  details:{founding_id:'liangzhou-revolt-184-11',reason:kind==='faction_founded'?'formed':'leader_unavailable',reserves:kind==='faction_founded'?1200:0},...extra});
+ const formed=founding(1),skipped=founding(2,'faction_founding_skipped');
+ assert(validEvent(formed));assert(validEvent(skipped));
+ assert(validEvent({...formed,city_ids:['jincheng','tianshui']}),'A joint founding may concern two cities');
+ assert(validEvent({...formed,details:{...formed.details,reserves:0}}),'An empty existing reserve still permits a zero-troop founding');
+ assert(validEvent({...formed,details:{...formed.details,reserves:1998}}));
+ for(const event of [formed,skipped]){
+  for(const change of [{day:11},{audience:'player'},{city_ids:[]},{city_ids:['jincheng','longxi','home']},{city_ids:['jincheng','jincheng']},{city_ids:['']},
+   {factions:[]},{factions:['beigong_boyu','song_jian']},{factions:['']},{person_ids:[]},
+   {person_ids:['historical-beigong-boyu','historical-beigong-boyu']},{person_ids:['']},
+   {person_ids:Array.from({length:100},(_,i)=>'historical-'+i)}])assert(!validEvent({...event,...change}));
+  for(const change of [{founding_id:''},{founding_id:'x'.repeat(81)},{founding_id:'<script>'},{founding_id:1},
+   {reason:'unknown'},{reserves:-1},{reserves:1.5},{reserves:true},{extra:1}])assert(!validEvent({...event,details:{...event.details,...change}}));
+  for(const key of ['founding_id','reason','reserves']){const details={...event.details};delete details[key];assert(!validEvent({...event,details}));}
+ }
+ assert(!validEvent({...formed,details:{...formed.details,reserves:1999}}));
+ assert(!validEvent({...formed,details:{...formed.details,reason:'city_occupied'}}));
+ assert(!validEvent({...skipped,details:{...skipped.details,reason:'formed'}}));
+ assert(!validEvent({...skipped,details:{...skipped.details,reserves:1}}));
+ const song=founding(3,'faction_founded',{person_ids:['historical-song-jian'],city_ids:['longxi'],factions:['song_jian'],details:{founding_id:'song-jian-rise-184-11',reason:'formed',reserves:999}});
+ assert(validEvent(song));assert(!validEvent({...song,details:{...song.details,reserves:1000}}));
+ const occupied={...song,id:4,kind:'faction_founding_skipped',details:{...song.details,reason:'city_occupied',reserves:0}};
+ const recruits=[{person_id:'historical-beigong-boyu',name:'北宮伯玉'},{person_id:'historical-li-wenhou',name:'李文侯'},{person_id:'historical-song-jian',name:'宋建'}],portraitCalls=[];
+ const revoltCatalog={...catalog,scenario_id:'mainland184-02',library:[...catalog.library,...recruits],
+  cities:[...catalog.cities,{id:'jincheng',name:'金城',position:[240,160]},{id:'longxi',name:'隴西',position:[320,240]}],
+  // A skipped future faction is absent from the selectable/active roster.
+  scheduled_factions:[{id:'beigong_boyu',name:'北宮伯玉勢力',city:'jincheng'},{id:'song_jian',name:'宋建勢力',city:'longxi'}]};
+ const revoltView={...view([formed,skipped,song,occupied]),catalog:revoltCatalog},revoltBefore=JSON.stringify(revoltView),revolt=fixture([],{portraits:{
+  entry:id=>recruits.some(p=>p.person_id===id)?{path:'/assets/portraits/generated/'+id+'.png'}:null,
+  html(id,name){portraitCalls.push([id,name]);return `<img data-portrait-person="${id}" src="/assets/portraits/generated/${id}.png" alt="${name}">`;}
+ }});
+ revolt.setView(revoltView);revolt.events.observe(revoltView,{newGame:true});revolt.drain();
+ assert.deepEqual(revolt.events.snapshot().active,[1]);assert.deepEqual(revolt.events.snapshot().pending,[[2],[3],[4]],'World founding results interrupt all players once, including skipped future factions');
+ assert(revolt.modal.innerHTML.includes('地方勢力起兵'));assert(revolt.modal.innerHTML.includes('原有預備兵編入1200兵'));assert(revolt.modal.innerHTML.includes('每人至多999兵'));
+ assert(revolt.modal.innerHTML.includes('event-map'));assert(revolt.modal.innerHTML.includes('<rect '),'Revolt illustrations reuse current pixel castle geometry');
+ assert(revolt.modal.innerHTML.includes('data-portrait-person="historical-beigong-boyu"'));assert(revolt.modal.innerHTML.includes('data-portrait-person="historical-li-wenhou"'));
+ assert(revolt.modal.innerHTML.includes('data-event-history="liangzhou-184"'));assert(revolt.modal.innerHTML.includes('後漢書/卷8'));assert(revolt.modal.innerHTML.includes('上旬不是史料確切起事日'));
+ assert(revolt.modal.innerHTML.includes('rel="noopener noreferrer"'));const revoltSnapshot=revolt.events.snapshot();
+ revolt.i18n.locale='ja';revolt.doc.emit('game-language-change');assert(revolt.modal.innerHTML.includes('地方勢力の挙兵'));assert(revolt.modal.innerHTML.includes('予備兵から1200'));assert(revolt.modal.innerHTML.includes('史実の背景'));assert(revolt.modal.innerHTML.includes('共に将軍'));
+ assert.deepEqual(revolt.events.snapshot(),revoltSnapshot);assert.equal(JSON.stringify(revoltView),revoltBefore);
+ revolt.modal.querySelector('[data-event-next]').onclick();assert(revolt.modal.innerHTML.includes('挙兵の不成立'));assert(revolt.modal.innerHTML.includes('北宮伯玉は金城'));assert(revolt.modal.innerHTML.includes('登用済み'));assert(!revolt.modal.innerHTML.includes('beigong_boyu'));
+ revolt.modal.querySelector('[data-event-next]').onclick();assert(revolt.modal.innerHTML.includes('data-event-history="song-jian-184"'));assert(revolt.modal.innerHTML.includes('建国した正確な月は不明'));assert(revolt.modal.innerHTML.includes('別の勢力として処理'));assert(revolt.modal.innerHTML.includes('三國志/卷09'));assert(revolt.modal.innerHTML.includes('data-portrait-person="historical-song-jian"'));
+ revolt.i18n.locale='zh-Hant';revolt.doc.emit('game-language-change');assert(revolt.modal.innerHTML.includes('十一月不是已證的建國月'));
+ revolt.modal.querySelector('[data-event-next]').onclick();assert(revolt.modal.innerHTML.includes('宋建原定於隴西起兵'));assert(revolt.modal.innerHTML.includes('城池已易主'));assert(!revolt.modal.innerHTML.includes('song_jian'));
+ revolt.modal.querySelector('[data-event-next]').onclick();revolt.events.observe(revoltView);revolt.drain();assert(!revolt.modal.open,'Acknowledged or skipped founding results do not repeat on ordinary render');
+ assert.equal(JSON.stringify(revoltView),revoltBefore,'Revolt display, language changes and acknowledgement never edit troops, ownership, event receipts or RNG');
+ assert(revolt.events.history());revolt.drain();assert(revolt.modal.innerHTML.includes('地方勢力起兵'));assert.equal(JSON.stringify(revoltView),revoltBefore);revolt.events.dispose();
+ const coupPeople=['historical-bian-zhang','historical-beigong-boyu','historical-li-wenhou','san14-candidate-0166'],
+  coup=row(5,'faction_coup',{year:186,month:12,day:1,turn:103,audience:'world',person_ids:coupPeople,city_ids:['jincheng','tianshui'],factions:['bian_zhang'],details:{coup_id:'han-sui-coup-186-12',reason:'executed',released_troops:1200}}),
+  coupSkip={...coup,id:6,kind:'faction_coup_skipped',city_ids:[],details:{...coup.details,reason:'conditions_changed',released_troops:0}};
+ assert(validEvent(coup));assert(validEvent(coupSkip));assert(validEvent({...coup,details:{...coup.details,released_troops:0}}));assert(validEvent({...coup,details:{...coup.details,released_troops:2997}}));
+ for(const event of[coup,coupSkip]){
+  for(const change of[{day:11},{audience:'player'},{person_ids:coupPeople.slice(0,3)},{person_ids:[...coupPeople,'person-a']},
+   {person_ids:[...coupPeople.slice(0,3),coupPeople[0]]},{city_ids:['jincheng','jincheng']},{city_ids:['']},{city_ids:Array.from({length:100},(_,i)=>'city-'+i)},{factions:[]},{factions:['bian_zhang','shu']},{factions:['']}])assert(!validEvent({...event,...change}));
+  for(const change of[{coup_id:''},{coup_id:'x'.repeat(81)},{coup_id:'<script>'},{coup_id:3},{reason:'unknown'},
+   {released_troops:-1},{released_troops:true},{released_troops:1.5},{extra:1}])assert(!validEvent({...event,details:{...event.details,...change}}));
+  for(const key of['coup_id','reason','released_troops']){const details={...event.details};delete details[key];assert(!validEvent({...event,details}));}
+ }
+ assert(!validEvent({...coup,city_ids:[]}));assert(!validEvent({...coup,details:{...coup.details,released_troops:2998}}));assert(!validEvent({...coup,details:{...coup.details,reason:'conditions_changed'}}));
+ assert(!validEvent({...coupSkip,details:{...coupSkip.details,reason:'executed'}}));assert(!validEvent({...coupSkip,details:{...coupSkip.details,released_troops:1}}));
+ const coupNames=['邊章','北宮伯玉','李文侯','韓遂'],coupCatalog={...revoltCatalog,
+  library:[...revoltCatalog.library,...coupPeople.filter(id=>!revoltCatalog.library.some(p=>p.person_id===id)).map(id=>({person_id:id,name:coupNames[coupPeople.indexOf(id)]}))],
+  cities:[...revoltCatalog.cities,{id:'tianshui',name:'天水',position:[400,220]}],
+  factions:[...catalog.factions,{id:'bian_zhang',name:'韓遂勢力',captain:'韓遂',city:'jincheng'}],scheduled_factions:[{id:'bian_zhang',name:'邊章勢力',captain:'邊章',city:'jincheng'}]},
+  coupView={...view([coup,coupSkip]),catalog:coupCatalog},coupBefore=JSON.stringify(coupView),coupPlayback=fixture([],{portraits:{
+   entry:id=>coupPeople.includes(id)?{path:'/assets/portraits/generated/'+id+'.png'}:null,
+   html(id,name){return `<span data-portrait-person="${id}">${name}</span>`;}
+  }});
+ coupPlayback.setView(coupView);coupPlayback.events.observe(coupView,{newGame:true});coupPlayback.drain();
+ assert(coupPlayback.modal.innerHTML.includes('勢力內部奪權'));assert(coupPlayback.modal.innerHTML.includes('韓遂奪取原勢力主導權並自立'));assert(coupPlayback.modal.innerHTML.includes('釋放兵員1200'));assert(coupPlayback.modal.innerHTML.includes('data-event-history="han-sui-186"'));
+ for(const id of coupPeople)assert(coupPlayback.modal.innerHTML.includes(`data-portrait-person="${id}"`));
+ assert(coupPlayback.modal.innerHTML.includes('另記邊章病卒'));assert(coupPlayback.modal.innerHTML.includes('不是三書一致記載'));assert(coupPlayback.modal.innerHTML.includes('也不主張韓遂史實稱王'));assert(coupPlayback.modal.innerHTML.includes('資治通鑑/卷058'));
+ const coupSnapshot=coupPlayback.events.snapshot();coupPlayback.i18n.locale='ja';coupPlayback.doc.emit('game-language-change');assert(coupPlayback.modal.innerHTML.includes('勢力内の政変'));assert(coupPlayback.modal.innerHTML.includes('韓遂が元の勢力の主導権を奪って自立'));assert(coupPlayback.modal.innerHTML.includes('配下兵1200'));assert(coupPlayback.modal.innerHTML.includes('辺章の病死'));assert.deepEqual(coupPlayback.events.snapshot(),coupSnapshot);
+ coupPlayback.modal.querySelector('[data-event-next]').onclick();assert(coupPlayback.modal.innerHTML.includes('政変の不成立'));assert(coupPlayback.modal.innerHTML.includes('殺害や強制的な所属変更を行いません'));assert(!coupPlayback.modal.innerHTML.includes('conditions_changed'));
+ coupPlayback.modal.querySelector('[data-event-next]').onclick();coupPlayback.events.observe(coupView);coupPlayback.drain();assert(!coupPlayback.modal.open);assert.equal(JSON.stringify(coupView),coupBefore,'A coup popup and acknowledgement never kill, transfer or release troops themselves');coupPlayback.events.dispose();
  const acquired=row(1,'equipment_acquired',{person_ids:['person-a','person-b'],details:{actor:'person-a',target:'person-a',from_person:'person-b',slot:'weapon',item:6,previous:0,method:'duel',battle_id:'battle-1',chance:30,roll:29}});
  assert(validEvent(acquired));
  for(const change of [{roll:30},{chance:101},{item:29},{previous:6},{method:'owned'},{battle_id:'battle-0'}])assert(!validEvent({...acquired,details:{...acquired.details,...change}}));
@@ -229,5 +306,5 @@ function fixture(items=[],{originalUI}={}){
  const observations=[],ctx={busy:false,view:view([]),audioOutcome:null,localAutosave:null,gameEvents:{observe:(v,o)=>observations.push([v,o])},notice(){},setBusy(v){ctx.busy=v;},render(){},setTimeout:fn=>{fn();return 1},gameAudio:{play(){}},request:async()=>view([row(1)])};vm.createContext(ctx);vm.runInContext(commandBody,ctx);assert(await ctx.command('new'));assert.equal(observations.length,1);assert.equal(observations[0][1].newGame,true);ctx.request=async()=>{throw Error('rejected')};assert.equal(await ctx.command('recruit_officer'),false);assert.equal(observations.length,1);
  assert(app.includes('gameEvents?.observe(view,{baseline:true})'));assert(app.includes('getView:()=>view,isBusy:()=>busy,isPreview:()=>!!setupPreview'));
  const html=fs.readFileSync(require('node:path').join(__dirname,'../game/index.html'),'utf8');assert(html.indexOf('/events.js')<html.indexOf('/app.js'));assert(html.includes('id="event-dialog" aria-labelledby="event-title" aria-describedby="event-description"'));
- console.log('events: 52 bilingual scenes, strict supply and city-name snapshots, dated city upgrades with historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
+ console.log('events: 56 bilingual scenes, strict coup/founding/supply/city-name snapshots, dated historical context, local batching, read-only playback, locale continuity and immutable RNG/state passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

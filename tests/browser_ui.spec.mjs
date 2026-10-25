@@ -1174,11 +1174,11 @@ test('all 29 real Worker openings keep preview and live initial health and facti
    assert.equal(officer.virtue,person.profile.virtue,`${scenario}/${officer.person_id} preview virtue`);
   }
   const addedRuler={
-   'mainland184-02':['song_jian','historical-song-jian','longxi'],
+   'mainland188-06':['song_jian','historical-song-jian','longxi'],
    'mainland225-07':['nanman','san14-candidate-0845','jianning'],
    'mainland263-05':['lu_xing','historical-lu-xing','jiaozhi']
   }[scenario];
-  for(const faction of catalog.factions.filter(row=>/[势勢]力/.test(row.name))){
+  for(const faction of catalog.factions.filter(row=>!row.available_from&&/[势勢]力/.test(row.name))){
    const label=page.locator(`.faction-choice:has(input[value="${faction.id}"]) .faction-choice-heading>span`).first();
    const captain=await page.evaluate(name=>GameI18n.t(name),faction.captain);
    await expect(label).toHaveText(captain);

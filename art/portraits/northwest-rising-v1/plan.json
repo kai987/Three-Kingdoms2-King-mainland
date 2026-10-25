@@ -1,0 +1,38 @@
+{
+  "schema": "tk2-portrait-supplement-v1",
+  "source": "imagegen_new_pixel_art",
+  "art_direction_basis": "authorial_game_art_not_historical_likeness",
+  "native_size": [
+    32,
+    40
+  ],
+  "source_atlas": "art/portraits/northwest-rising-v1/source.png",
+  "source_sha256": "5296abce5e18cfcc785faf848a9a7734ac806938ab7c68b876fd2a4bd44e62dc",
+  "source_size": [
+    1586,
+    992
+  ],
+  "grid": [
+    2,
+    1
+  ],
+  "prompt": "art/portraits/northwest-rising-v1/prompt.txt",
+  "generation_record": "art/portraits/northwest-rising-v1/generation.json",
+  "style_reference": "art/portraits/reference-originals.png",
+  "style_reference_sha256": "7f6cdbb906e67962e58ba8bb62af78e199fa0dd6fd5585aed7fb41b6523d85e9",
+  "people": [
+    {
+      "person_id": "historical-beigong-boyu",
+      "name": "北宫伯玉",
+      "cell_index": 0,
+      "art_gender_design": "male"
+    },
+    {
+      "person_id": "historical-li-wenhou",
+      "name": "李文侯",
+      "cell_index": 1,
+      "art_gender_design": "male"
+    }
+  ],
+  "processing": "Fixed four-color quantization, complete-cell nearest fit to32x40; derivative exact nearest4x128x160. Every generated source cell belongs to one person."
+}

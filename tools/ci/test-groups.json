@@ -144,6 +144,18 @@
         "logistics"
       ]
     },
+    "tests/test_remake_dated_events.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios",
+        "people",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland184-02",
+        "mainland188-06"
+      ]
+    },
     "tests/test_remake_default_scenario.py": {
       "tier": "related",
       "groups": [
@@ -489,6 +501,23 @@
       ],
       "scenario_ids": [
         "mainland184-02",
+        "mainland188-06",
+        "mainland190-01",
+        "mainland191-10",
+        "mainland194-06",
+        "mainland196-06",
+        "mainland197-07",
+        "mainland198-03",
+        "mainland200-01",
+        "mainland201-05",
+        "mainland202-06",
+        "mainland207-09",
+        "mainland208-10",
+        "mainland209-06",
+        "mainland210-11",
+        "mainland211-07-tongguan",
+        "mainland212-06",
+        "mainland212-12",
         "mainland263-05"
       ]
     },

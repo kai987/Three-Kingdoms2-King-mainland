@@ -28,7 +28,7 @@ class FactionPaletteTests(unittest.TestCase):
 
     def test_all_current_scenarios_have_separated_visible_fills(self):
         self.assertEqual(len(self.catalogs),29)
-        self.assertEqual(len(self.catalogs['mainland190-01'].factions),25)
+        self.assertEqual(len(self.catalogs['mainland190-01'].factions),26)
         for identity,catalog in self.catalogs.items():
             palette=faction_colors(catalog)
             self.assertEqual(set(palette),{'neutral',*catalog.factions},identity)
@@ -46,7 +46,11 @@ class FactionPaletteTests(unittest.TestCase):
                     self.assertGreaterEqual(color_distance(color,other),29,identity)
 
     def test_native_colors_remain_unchanged_when_their_spacing_is_sufficient(self):
-        self.assertEqual(faction_colors(self.catalogs['mainland198-03']),{
+        # Isolate the original native set; the real expanded198 palette is
+        # separately checked above for every faction, including Song Jian.
+        original=SimpleNamespace(factions={key:row for key,row in
+            self.catalogs['mainland198-03'].factions.items() if key!='song_jian'})
+        self.assertEqual(faction_colors(original),{
             'neutral':'#ffffff', 'gongsun':'#009438', 'gongsun_zan':'#f83800',
             'han_sui':'#b8f818', 'hua_xin':'#008088', 'li_jue':'#d800cc',
             'liu_biao':'#6844fc', 'liu_zhang':'#00e8d8', 'lubu':'#b8b8f8',

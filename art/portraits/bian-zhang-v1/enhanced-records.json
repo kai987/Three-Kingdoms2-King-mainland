@@ -1,0 +1,35 @@
+{
+  "schema": "tk2-portrait-supplement-enhanced-v1",
+  "people": {
+    "historical-bian-zhang": {
+      "path": "/assets/portraits/enhanced/historical-bian-zhang.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-bian-zhang.png",
+      "source_sha256": "0b9a6d8063f42c312e99a7b8fce9ef881dd43330fb149fe807528ffd6871bffb",
+      "sha256": "22093b52512656966729bfc47379e644367931752248b43379b5e1c582dc9196",
+      "pixel_sha256": "360fda5e6dc108dead7354258a54ca381a81965d4945603161a019233e21ff19",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "nearest4x",
+      "provenance": {
+        "supplement_plan": "art/portraits/bian-zhang-v1/plan.json",
+        "supplement_plan_sha256": "d1f8e7868f562c80b963d307a8d40b3de6a7da2a445a0bf105fdc56302dd0840",
+        "atlas": "art/portraits/bian-zhang-v1/source.png",
+        "source_atlas_sha256": "ef9ee5d2dda8bc2c3ab6766686b6cd68aa48e8dc80415fd3adea206b5c17f9c4",
+        "cell_index": 0,
+        "base_method": "native32x40_exact_nearest4x",
+        "prompt": "art/portraits/bian-zhang-v1/prompt.txt",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 4,
+          "alphaChanges": 0,
+          "nearest4xExact": true
+        }
+      }
+    }
+  }
+}

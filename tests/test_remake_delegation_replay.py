@@ -299,7 +299,7 @@ class DelegationReplayTests(unittest.TestCase):
             self.assertTrue(self.staff_battles, 'A generated officer must enter and act in a real arrival battle')
             self.assertGreater(final.officers[self.generated].experience, 0)
             self.assertNotIn(self.generated, catalog.by_id)
-            self.assertEqual(len(catalog.definitions), 1027)
+            self.assertEqual(len(catalog.definitions), 1030)
         if filename == '184-02.json':
             self.assertTrue(self.reappointed_military,
                 'Real persuasion must be followed by a legal replacement military appointment')
@@ -309,10 +309,10 @@ class DelegationReplayTests(unittest.TestCase):
         self.assertEqual(digest(catalog.data), original_catalog, 'Replay mutated the real catalog')
 
     def test_184_liu_yan_six_turns_are_identical_in_python_and_rust(self):
-        # Song Jian's added184 faction changes real AI turn/RNG consumption.
-        # Seed2027 naturally loses the military appointee to rival persuasion,
-        # preserving the reappointment/allocation path previously hit by2026.
-        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=2027)
+        # The revised184 postings and local Han Sui change real AI choices.
+        # Seed2032 naturally exercises rival persuasion, a legal replacement
+        # appointment and resumed allocation without rewriting state or RNG.
+        self.replay('184-02.json', 'liu_yan', 6, backends=('python', 'rust'), seed=2032)
 
     def test_217_wei_six_turns_staff_arrival_combat_and_real_convoys(self):
         self.replay('217-07.json', 'wei', 6, staff=True)

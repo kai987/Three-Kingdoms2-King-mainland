@@ -1,0 +1,65 @@
+{
+  "schema": "tk2-portrait-supplement-enhanced-v1",
+  "people": {
+    "historical-beigong-boyu": {
+      "path": "/assets/portraits/enhanced/historical-beigong-boyu.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-beigong-boyu.png",
+      "source_sha256": "5cff560882146e9793ea2579915d71454cf7c7e47011fa8f165473cb8cc1450e",
+      "sha256": "db6bbae0ad8b44bb9045e4a9a7f653c07772200812f470199c115ce9f4e9a0d0",
+      "pixel_sha256": "66ef8c774573515f334ceb04349bb82173cc2b86691a11cb102cbaaa2a3932df",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "nearest4x",
+      "provenance": {
+        "supplement_plan": "art/portraits/northwest-rising-v1/plan.json",
+        "supplement_plan_sha256": "eebea02f2aac0ffd7c57978dcc6a0f8a7df84e761276133590c5e33c3fa62663",
+        "atlas": "art/portraits/northwest-rising-v1/source.png",
+        "source_atlas_sha256": "5296abce5e18cfcc785faf848a9a7734ac806938ab7c68b876fd2a4bd44e62dc",
+        "cell_index": 0,
+        "base_method": "native32x40_exact_nearest4x",
+        "prompt": "art/portraits/northwest-rising-v1/prompt.txt",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 4,
+          "alphaChanges": 0,
+          "nearest4xExact": true
+        }
+      }
+    },
+    "historical-li-wenhou": {
+      "path": "/assets/portraits/enhanced/historical-li-wenhou.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-li-wenhou.png",
+      "source_sha256": "e24b0fa71ad0cb35434703249b29ef707320a9def5a365b1eee65b29bc26493e",
+      "sha256": "139bf998d01e6628c15915eaf27498c6d60e1f29d97f7a35083d0d7e3d8ede19",
+      "pixel_sha256": "da7e62874428c688f755012b05ac28849960116febb5ba07fb040760bc771299",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "nearest4x",
+      "provenance": {
+        "supplement_plan": "art/portraits/northwest-rising-v1/plan.json",
+        "supplement_plan_sha256": "eebea02f2aac0ffd7c57978dcc6a0f8a7df84e761276133590c5e33c3fa62663",
+        "atlas": "art/portraits/northwest-rising-v1/source.png",
+        "source_atlas_sha256": "5296abce5e18cfcc785faf848a9a7734ac806938ab7c68b876fd2a4bd44e62dc",
+        "cell_index": 1,
+        "base_method": "native32x40_exact_nearest4x",
+        "prompt": "art/portraits/northwest-rising-v1/prompt.txt",
+        "art_direction_basis": "authorial_game_art_not_historical_likeness",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 4,
+          "alphaChanges": 0,
+          "nearest4xExact": true
+        }
+      }
+    }
+  }
+}

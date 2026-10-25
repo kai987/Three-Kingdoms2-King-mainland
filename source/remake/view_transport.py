@@ -4,7 +4,7 @@ import hashlib
 import json
 
 SCHEMA = 'tk2-view-v1'
-STATIC_FIELDS = frozenset(('title', 'factions', 'links', 'rules', 'calendar_rules',
+STATIC_FIELDS = frozenset(('title', 'links', 'rules', 'calendar_rules',
     'difficulties', 'notes', 'library_count', 'coverage', 'tactics',
     'map_presentation', 'road_additions', 'world',
     'scenario_id', 'faction_colors', 'sea_routes', 'travel_hazards',

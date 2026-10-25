@@ -1,8 +1,8 @@
 # 128×160武將畫像
 
-初期1,023名畫像依已確認的諸葛亮版本製作，對應982張不同的源圖；此次追加宋建、呂興、唐譜、李統後，全庫為1,027名、986種不同畫像。原版共用肖像的關係保留。原版237張、初期新增803張32×40畫像及13張來源圖集均保留，沒有覆蓋或刪除。
+初期1,023名畫像依已確認的諸葛亮版本製作，對應982張不同的源圖；先追加宋建、呂興、唐譜、李統，再追加北宮伯玉、李文侯及邊章後，全庫為1,030名、989種不同畫像。原版共用肖像的關係保留。原版237張、初期新增803張32×40畫像及13張來源圖集均保留，沒有覆蓋或刪除。
 
-追加4人使用獨立imagegen來源圖，保留原版三色及透明黑線，再由32×40精確最近鄰放大4倍至128×160，與初期的有限明暗強化流程分開記錄。新圖不重畫舊人物、不套用別人的頭像。完整來源、提示詞、2×2分區、人物ID及衍生記錄見[`historical-additions-v1/plan.json`](../art/portraits/historical-additions-v1/plan.json)，[4人預覽](../art/portraits/historical-additions-v1/preview.png)按宋建、呂興、唐譜、李統由左至右排列。
+追加7人使用三份獨立imagegen來源圖，保留原版三色及透明黑線，再由32×40精確最近鄰放大4倍至128×160，與初期的有限明暗強化流程分開記錄。新圖不重畫舊人物、不套用別人的頭像。首批4人的完整來源、提示詞、2×2分區、人物ID及衍生記錄見[`historical-additions-v1/plan.json`](../art/portraits/historical-additions-v1/plan.json)，[4人預覽](../art/portraits/historical-additions-v1/preview.png)按宋建、呂興、唐譜、李統由左至右排列。北宮伯玉、李文侯的2×1來源與衍生圖另見[`northwest-rising-v1/plan.json`](../art/portraits/northwest-rising-v1/plan.json)及[2人預覽](../art/portraits/northwest-rising-v1/preview.png)。邊章的單人來源另見[`bian-zhang-v1/plan.json`](../art/portraits/bian-zhang-v1/plan.json)與[預覽](../art/portraits/bian-zhang-v1/preview.png)。
 
 ## 地方文吏的128×160共用肖像
 
@@ -46,6 +46,6 @@ node tools/portraits/build_enhanced_gallery.cjs
 python3 game/build_portrait_manifest.py --check
 ```
 
-`art/portraits/enhancement-v1/source-index.json`保留初期1023人的來源索引快照。準備工具逐一比對這些既有綁定、執行期ID及實際檔案；後加4人由獨立來源計畫重建，合併新版索引時再檢查全庫精確覆蓋，避免更新時遺失追加人物或改動舊來源。
+`art/portraits/enhancement-v1/source-index.json`保留初期1023人的來源索引快照。準備工具逐一比對這些既有綁定、執行期ID及實際檔案；後加7人由三份獨立來源計畫重建，合併新版索引時再檢查全庫精確覆蓋，避免更新時遺失追加人物或改動舊來源。
 
-初期1023人對照頁位於`art/portraits/enhancement-v1/index.html`，追加4人另見上述預覽。自動驗證範圍涵蓋全部1027人、原圖與來源圖集雜湊、尺寸、色數、黑線／透明度及綁定；新4圖另外逐像素驗證精確4倍放大；自然度等美術判斷另以圖集與遊戲畫面檢查，不將自動檢查稱為逐人手工審美驗收。
+初期1023人對照頁位於`art/portraits/enhancement-v1/index.html`，追加7人另見各批預覽。自動驗證範圍涵蓋全部1030人、原圖與來源圖集雜湊、尺寸、色數、黑線／透明度及綁定；新7圖另外逐像素驗證精確4倍放大；自然度等美術判斷另以圖集與遊戲畫面檢查，不將自動檢查稱為逐人手工審美驗收。

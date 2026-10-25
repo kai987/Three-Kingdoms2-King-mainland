@@ -167,6 +167,14 @@
           "city": "yuzhang",
           "color": "#8753a1",
           "initial_officers": 1
+        },
+        {
+          "id": "song_jian",
+          "name": "宋建",
+          "captain": "宋建",
+          "city": "longxi",
+          "color": "#007f89",
+          "initial_officers": 1
         }
       ],
       "active_cities": [
@@ -1850,7 +1858,7 @@
         },
         {
           "person_id": "san14-candidate-0760",
-          "city": "longxi",
+          "city": "tianshui",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1899,7 +1907,7 @@
         },
         {
           "person_id": "san14-candidate-0804",
-          "city": "longxi",
+          "city": "tianshui",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2004,7 +2012,7 @@
         },
         {
           "person_id": "san14-candidate-0867",
-          "city": "longxi",
+          "city": "tianshui",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2239,6 +2247,13 @@
           "troops": 300,
           "ruler": true,
           "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "troops": 300,
+          "ruler": true,
+          "resolve_death_year": false
         }
       ],
       "design_notes": [
@@ -2255,10 +2270,12 @@
         "本作按城池特色、劇本年月及戰亂／恢復階段設定錢糧與預備兵；數值為遊戲平衡設計，非史實人口或《三國志14》開局匯出。",
         "各劇本的月收入依開局年代配置；遊玩後依實際內政、招兵、行軍與戰鬥增減，不按歷史事件強制重設資源。",
         "本次保留武將每人300兵的初始化規則；城市駐軍總數取決於當篇實際駐將，預備兵另按年代配置。",
-        "每城最多99人；每方出戰最多10人。人物總庫1027人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
+        "每城最多99人；每方出戰最多10人。人物總庫1030人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
         "全部人物均完成在籍、在野、未來登場或明列排除計畫；來源不詳的駐城與連續任職屬本作配置，不是逐月史實已證。",
         "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
-        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。"
+        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。",
+        "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+        "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。"
       ],
       "initial_free_officers": [
         {
@@ -3476,7 +3493,7 @@
           "hongnong": "li_jue",
           "fengyi": "li_jue",
           "fufeng": "li_jue",
-          "longxi": "ma_teng",
+          "longxi": "song_jian",
           "shangdang": "neutral",
           "xiangyang": "liu_biao",
           "xiping": "neutral",
@@ -3564,6 +3581,7 @@
           "san14-candidate-0164": "dongjun",
           "san14-candidate-0171": "kuaiji",
           "san14-candidate-0172": "jiangxia",
+          "san14-candidate-0176": "wujun",
           "san14-candidate-0179": "nanyang",
           "san14-candidate-0183": "henan",
           "san14-candidate-0185": "donghai",
@@ -3772,7 +3790,7 @@
           "san14-candidate-0799": "runan",
           "san14-candidate-0801": "nanjun",
           "san14-candidate-0802": "danyang",
-          "san14-candidate-0804": "longxi",
+          "san14-candidate-0804": "tianshui",
           "san14-candidate-0805": "yan",
           "san14-candidate-0807": "jingzhao",
           "san14-candidate-0808": "nanyang",
@@ -3799,7 +3817,7 @@
           "san14-candidate-0857": "shujun",
           "san14-candidate-0863": "zitong",
           "san14-candidate-0866": "henan",
-          "san14-candidate-0867": "longxi",
+          "san14-candidate-0867": "tianshui",
           "san14-candidate-0872": "bajun",
           "san14-candidate-0877": "jingzhao",
           "san14-candidate-0879": "tianshui",
@@ -3840,7 +3858,6 @@
           "san14-candidate-0980": "yingchuan",
           "san14-candidate-0981": "taiyuan",
           "san14-candidate-0985": "danyang",
-          "san14-candidate-0986": "danyang",
           "san14-candidate-0988": "runan",
           "san14-candidate-0993": "yan",
           "san14-candidate-0999": "chenliu",
@@ -4041,7 +4058,7 @@
           "san14-candidate-0754": "runan",
           "san14-candidate-0758": "taiyuan",
           "san14-candidate-0759": "anding",
-          "san14-candidate-0760": "longxi",
+          "san14-candidate-0760": "tianshui",
           "san14-candidate-0770": "anding",
           "san14-candidate-0771": "wuwei",
           "san14-candidate-0778": "wei",
@@ -4104,7 +4121,7 @@
           "san14-candidate-0994": "nanyang",
           "san14-candidate-0996": "yuyang",
           "san14-candidate-0997": "lujiang",
-          "san14-candidate-0176": "wujun"
+          "historical-song-jian": "longxi"
         }
       },
       "faction_rulers": {
@@ -4125,23 +4142,32 @@
           "zhang_yang": 660,
           "kong_rong": 279,
           "han_sui": 165,
-          "hua_xin": 90
+          "hua_xin": 90,
+          "song_jian": 1024
         }
       },
       "coverage": {
         "set": {
-          "initial_serving": 280,
+          "initial_serving": 281,
           "initial_free": 151,
           "source_scenario": "san14-194-06",
-          "planned_serving": 280,
+          "planned_serving": 281,
           "planned_max_city_roster": 24,
           "future_plans": 495,
-          "library": 1027,
-          "configured_profiles": 1027,
-          "health_configured": 1027,
-          "affinity_configured": 1027,
-          "placement_plans": 1027,
-          "new_historical_people": 27
+          "library": 1030,
+          "configured_profiles": 1030,
+          "health_configured": 1030,
+          "affinity_configured": 1030,
+          "placement_plans": 1030,
+          "new_historical_people": 30,
+          "default_virtue_profiles": 30,
+          "virtue": "SAN14 charisma for1000 people; explicit default60 for30 missing sources",
+          "history_designs_total": 0,
+          "original_virtue_profiles": 0,
+          "retained_original_reference_profiles": 220,
+          "san14_charisma_profiles": 1000,
+          "original_initial_health_profiles": 223,
+          "initialization_policy": "tk2-officer-initialization-v1"
         }
       },
       "era_assignments": {
@@ -28199,59 +28225,6 @@
               "exclusion_kind"
             ]
           },
-          "san14-candidate-0760": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "马腾",
-              "year_state": "available",
-              "faction": "ma_teng",
-              "city": "longxi",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0760",
-                "faction": "ma_teng",
-                "origin": "wuwei",
-                "city": "longxi",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    196,
-                    6
-                  ],
-                  "end": [
-                    211,
-                    12
-                  ],
-                  "city": "longxi",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0761": {
             "set": {
               "source_city": null,
@@ -29537,33 +29510,6 @@
               "reason": "Birth, service or death year excludes opening.",
               "scenario_membership_basis": null,
               "source_snapshot": "mainland194-06-v11"
-            }
-          },
-          "san14-candidate-0804": {
-            "set": {
-              "source_ruler": "马腾",
-              "faction": "ma_teng",
-              "city": "longxi",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "faction": "ma_teng",
-                  "origin": "wuwei",
-                  "city": "longxi"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    196,
-                    6
-                  ],
-                  "city": "longxi"
-                }
-              }
             }
           },
           "san14-candidate-0805": {
@@ -31488,33 +31434,6 @@
                   ],
                   "city": "henan",
                   "status": "free"
-                }
-              }
-            }
-          },
-          "san14-candidate-0867": {
-            "set": {
-              "source_ruler": "马腾",
-              "faction": "ma_teng",
-              "city": "longxi",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "faction": "ma_teng",
-                  "origin": "wuwei",
-                  "city": "longxi"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    196,
-                    6
-                  ],
-                  "city": "longxi"
                 }
               }
             }
@@ -36003,6 +35922,396 @@
               "city": "nanjun"
             }
           }
+        },
+        "set": {
+          "historical-song-jian": {
+            "source_status": "serving",
+            "source_ruler": "宋建",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "song_jian",
+            "city": "longxi",
+            "placement_basis": "user_requested_song_jian_lifetime_longxi_opening",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "historical-song-jian",
+              "faction": "song_jian",
+              "origin": "longxi",
+              "city": "longxi",
+              "basis": "user_requested_song_jian_lifetime_longxi_opening",
+              "source_city": null
+            },
+            "membership_revision": "user_requested_song_jian_lifetime_longxi_opening",
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "user_requested_song_jian_lifetime_longxi_opening",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ],
+              "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+              "reference_date": null,
+              "reference_scenario": "mainland196-06",
+              "opening_date": [
+                196,
+                6
+              ],
+              "historical_certainty": "authorial_lifetime_region_proxy",
+              "historical_death_date": [
+                214,
+                10
+              ],
+              "historical_death_date_is_for_scenario_selection": true,
+              "attestation_period": "184年冬至214年十月前；起事確月不詳",
+              "opening_is_month_attestation": false
+            },
+            "appearance_plan": {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                214,
+                9
+              ],
+              "city": "longxi",
+              "status": "serving",
+              "basis": "user_requested_song_jian_lifetime_longxi_opening"
+            }
+          },
+          "san14-candidate-0760": {
+            "source_status": "serving",
+            "source_ruler": "马腾",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "ma_teng",
+            "city": "tianshui",
+            "placement_basis": "authorial_garrison_relocation_for_song_jian_longxi",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0760",
+              "faction": "ma_teng",
+              "origin": "tianshui",
+              "city": "tianshui",
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ],
+              "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "reference_scenario": "mainland196-06",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                211,
+                12
+              ],
+              "city": "tianshui",
+              "status": "serving",
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi"
+            },
+            "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+            "source_snapshot": "mainland194-06-v11",
+            "relocation_review": {
+              "from_city": "longxi",
+              "to_city": "tianshui",
+              "faction_preserved": "ma_teng",
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              },
+              "opening_date": [
+                196,
+                6
+              ]
+            }
+          },
+          "san14-candidate-0804": {
+            "source_status": "serving",
+            "source_ruler": "马腾",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "ma_teng",
+            "city": "tianshui",
+            "placement_basis": "authorial_garrison_relocation_for_song_jian_longxi",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0804",
+              "faction": "ma_teng",
+              "origin": "tianshui",
+              "city": "tianshui",
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ],
+              "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "reference_scenario": "mainland196-06",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                220,
+                12
+              ],
+              "city": "tianshui",
+              "status": "serving",
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi"
+            },
+            "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+            "source_snapshot": "mainland194-06-v11",
+            "relocation_review": {
+              "from_city": "longxi",
+              "to_city": "tianshui",
+              "faction_preserved": "ma_teng",
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              },
+              "opening_date": [
+                196,
+                6
+              ]
+            }
+          },
+          "san14-candidate-0867": {
+            "source_status": "serving",
+            "source_ruler": "马腾",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "ma_teng",
+            "city": "tianshui",
+            "placement_basis": "authorial_garrison_relocation_for_song_jian_longxi",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0867",
+              "faction": "ma_teng",
+              "origin": "tianshui",
+              "city": "tianshui",
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ],
+              "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "reference_scenario": "mainland196-06",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                238,
+                12
+              ],
+              "city": "tianshui",
+              "status": "serving",
+              "basis": "authorial_garrison_relocation_for_song_jian_longxi"
+            },
+            "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+            "source_snapshot": "mainland194-06-v11",
+            "relocation_review": {
+              "from_city": "longxi",
+              "to_city": "tianshui",
+              "faction_preserved": "ma_teng",
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ya-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              },
+              "opening_date": [
+                196,
+                6
+              ]
+            }
+          },
+          "historical-beigong-boyu": {
+            "source_status": "dead",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "dead",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This identity is enabled only in the184local-person opening; the game exit boundary187 excludes later openings.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/wiki/後漢書/卷72",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷058",
+                "https://zh.wikisource.org/wiki/三國志/卷01"
+              ],
+              "note": "北宮伯玉、李文侯只在184年2月作在野地方人物；其後劇本明確排除，不因年度推進自動生成。本作以187年作退場界點；史料遇害年有186／187分歧，未給確月，不把遊戲界點稱為已確證卒月。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "historical_certainty": "explicit_scenario_scope",
+              "reference_scenario": "mainland196-06"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          },
+          "historical-li-wenhou": {
+            "source_status": "dead",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "dead",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This identity is enabled only in the184local-person opening; the game exit boundary187 excludes later openings.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/wiki/後漢書/卷72",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷058",
+                "https://zh.wikisource.org/wiki/三國志/卷01"
+              ],
+              "note": "北宮伯玉、李文侯只在184年2月作在野地方人物；其後劇本明確排除，不因年度推進自動生成。本作以187年作退場界點；史料遇害年有186／187分歧，未給確月，不把遊戲界點稱為已確證卒月。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "historical_certainty": "explicit_scenario_scope",
+              "reference_scenario": "mainland196-06"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          },
+          "historical-bian-zhang": {
+            "source_status": "dead",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "dead",
+            "faction": null,
+            "city": null,
+            "placement_basis": "explicit_scenario_scope",
+            "status": "scenario_excluded",
+            "reason": "This identity is enabled only in the184local-person opening; the game exit boundary186 excludes later openings.",
+            "exclusion_kind": "explicit_scenario_scope",
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "explicit_scenario_scope",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/後漢書/卷72",
+                "https://zh.wikisource.org/wiki/資治通鑑/卷058"
+              ],
+              "note": "邊章只在184年2月作在野地方人物；其後劇本明確排除，不因年度推進自動生成。186年十二月是使用者指定的遊戲事件界點；原典有186年冬與187年編年分歧，不聲稱已考證出確切遇害月。",
+              "reference_date": [
+                196,
+                6
+              ],
+              "historical_certainty": "explicit_scenario_scope",
+              "reference_scenario": "mainland196-06"
+            },
+            "appearance_plan": {
+              "start": null,
+              "end": null,
+              "city": null,
+              "status": "excluded",
+              "basis": "explicit_scenario_scope"
+            }
+          }
         }
       },
       "main_scenario": {
@@ -36059,7 +36368,8 @@
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
             "faction_additions": [
               "han_sui",
-              "hua_xin"
+              "hua_xin",
+              "song_jian"
             ],
             "city_owner_corrections": [
               "jincheng",
@@ -36067,9 +36377,41 @@
               "yinping",
               "lujiang",
               "poyang",
-              "yuzhang"
+              "yuzhang",
+              "longxi"
             ],
-            "all_city_months_independently_attested": false
+            "all_city_months_independently_attested": false,
+            "local_map_proxies": {
+              "longxi": {
+                "display_name": "隴西",
+                "represents": [
+                  "宋建原典所記枹罕據點的區域代理"
+                ],
+                "original_node": "longxi",
+                "whole_commandery_control_claimed": false,
+                "early_opening": false,
+                "fictional_adaptation": false,
+                "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。"
+              }
+            },
+            "song_jian_lifetime_setup": {
+              "from_date": [
+                184,
+                2
+              ],
+              "before_date": [
+                214,
+                10
+              ],
+              "inclusive_start": true,
+              "exclusive_end": true,
+              "user_requested_in_historical_and_if": true,
+              "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ]
+            }
           }
         },
         "delete": [
@@ -39171,6 +39513,37 @@
                 "https://zh.wikisource.org/wiki/三國志/卷46",
                 "https://zh.wikisource.org/wiki/三國志/卷49",
                 "https://zh.wikisource.org/wiki/三國志/卷56"
+              ]
+            }
+          },
+          "longxi": {
+            "names": [],
+            "control_review": {
+              "date": [
+                196,
+                6
+              ],
+              "owner": "song_jian",
+              "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+              "certainty": "authorial_lifetime_region_proxy",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ]
+            },
+            "opening": {
+              "owner": "song_jian",
+              "basis": "user_requested_song_jian_lifetime_longxi_opening",
+              "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。",
+              "sources": [
+                {
+                  "url": "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                  "note": "宋建身分與214年十月死亡；隴西節點及本篇在場是使用者指定的本作配置。"
+                },
+                {
+                  "url": "https://zh.wikisource.org/zh-hant/三國志/卷09",
+                  "note": "宋建身分與214年十月死亡；隴西節點及本篇在場是使用者指定的本作配置。"
+                }
               ]
             }
           }
@@ -42621,7 +42994,27 @@
               "city": "yuyang",
               "resolve_death_year": true
             }
-          ]
+          ],
+          "historical-song-jian": [
+            {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                214,
+                9
+              ],
+              "city": "longxi",
+              "basis": "user_requested_song_jian_lifetime_longxi_opening"
+            }
+          ],
+          "san14-candidate-0760": [],
+          "san14-candidate-0804": [],
+          "san14-candidate-0867": [],
+          "historical-beigong-boyu": [],
+          "historical-li-wenhou": [],
+          "historical-bian-zhang": []
         }
       },
       "placement_completion": {
@@ -42635,31 +43028,35 @@
             "poyang",
             "wudu",
             "yinping",
-            "yuzhang"
+            "yuzhang",
+            "longxi"
           ],
           "reference_classes": {
-            "authorial_region_placement": 999,
+            "authorial_region_placement": 996,
             "game_reference": 8,
             "primary_text_affiliation": 3,
             "bounded_career_inference": 1,
             "regional_primary_mapping": 1,
-            "authorial_garrison_relocation": 10,
+            "authorial_garrison_relocation": 13,
             "bounded_regional_inference": 1,
-            "explicit_scenario_scope": 4
+            "authorial_lifetime_region_proxy": 1,
+            "explicit_scenario_scope": 6
           },
-          "people": 1027,
+          "people": 1030,
           "bases": {
             "person_specific_future_free_appearance": 495,
             "same_date_SAN14_guide_free_location": 4,
             "same_date_SAN14_guide_affiliation": 4,
-            "retained_reviewed_opening_membership": 237,
+            "retained_reviewed_opening_membership": 234,
             "retained_chronology_or_explicit_exclusion": 97,
             "retained_person_specific_free_location": 142,
             "historical_review_20261025": 16,
             "retained_explicit_scenario_ruler": 17,
             "historical_city_owner_relocation_authorial_garrison": 7,
             "authorial_region_placement": 4,
-            "explicit_scenario_scope": 4
+            "authorial_garrison_relocation_for_song_jian_longxi": 3,
+            "user_requested_song_jian_lifetime_longxi_opening": 1,
+            "explicit_scenario_scope": 6
           }
         },
         "update": {}

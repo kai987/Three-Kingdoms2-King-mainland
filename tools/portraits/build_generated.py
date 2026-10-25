@@ -28,7 +28,9 @@ PLAN = ROOT / 'art/portraits/plan.json'
 SOURCE = ROOT / 'art/portraits/source-atlases'
 DESTINATION = ROOT / 'game/assets/portraits/generated'
 MANIFEST = ROOT / 'game/config/portrait-generated.json'
-SUPPLEMENT = ROOT / 'art/portraits/historical-additions-v1/plan.json'
+SUPPLEMENTS = (ROOT / 'art/portraits/historical-additions-v1/plan.json',
+               ROOT / 'art/portraits/northwest-rising-v1/plan.json',
+               ROOT / 'art/portraits/bian-zhang-v1/plan.json')
 SIZE, GRID, CELL = (32, 40), (8, 8), (128, 192)
 RGB = ((0, 0, 0), (255, 255, 255), (247, 162, 71), (158, 65, 0))
 RGBA = ((0, 0, 0, 0), (255, 255, 255, 255), (247, 162, 71, 255), (158, 65, 0, 255))
@@ -167,16 +169,19 @@ def read_plan():
     return plan, groups, sha(raw)
 
 
-def append_supplement(entries, outputs, atlases, used_hashes):
+def append_supplement(entries, outputs, atlases, used_hashes, supplement):
     """Append separately authored art without rebuilding the approved old HD art."""
-    raw = SUPPLEMENT.read_bytes()
+    raw = supplement.read_bytes()
     plan = json.loads(raw)
+    grid = plan.get('grid')
     if (plan.get('schema') != 'tk2-portrait-supplement-v1'
-            or plan.get('native_size') != list(SIZE) or plan.get('grid') != [2, 2]
-            or len(plan.get('people', [])) != 4):
+            or plan.get('native_size') != list(SIZE) or not isinstance(grid, list)
+            or len(grid) != 2 or any(type(v) is not int or not 1 <= v <= 8 for v in grid)
+            or not isinstance(plan.get('people'), list) or not plan['people']
+            or len(plan['people']) != grid[0] * grid[1]):
         raise ValueError('Unknown supplemental portrait plan')
     source = ROOT / plan['source_atlas']
-    if not source.resolve().is_relative_to(SUPPLEMENT.parent.resolve()):
+    if not source.resolve().is_relative_to(supplement.parent.resolve()):
         raise ValueError('Supplemental art source leaves its retained source directory')
     source_bytes = source.read_bytes()
     if sha(source_bytes) != plan['source_sha256']:
@@ -184,10 +189,10 @@ def append_supplement(entries, outputs, atlases, used_hashes):
     image = Image.open(source).convert('RGBA')
     if list(image.size) != plan['source_size']:
         raise ValueError('Supplemental source geometry changed')
-    indexed, partition = prepare_atlas(image, (2, 2))
-    atlases.append(dict(id='historical-additions-v1', path=plan['source_atlas'],
+    indexed, partition = prepare_atlas(image, grid)
+    atlases.append(dict(id=supplement.parent.name, path=plan['source_atlas'],
                         sha256=plan['source_sha256'], size=list(image.size),
-                        art_gender_design='male', grid=[2, 2], actual_grid_partition=partition))
+                        art_gender_design='male', grid=grid, actual_grid_partition=partition))
     canonical = json.loads((ROOT / 'game/config/campaigns/people.json').read_bytes())['people']
     enhanced = {}
     seen = set()
@@ -197,7 +202,7 @@ def append_supplement(entries, outputs, atlases, used_hashes):
                 or type(index) is not int or index in seen):
             raise ValueError('Supplemental portrait identity/cell binding differs')
         seen.add(index)
-        value = bake_cell(indexed, index, partition, (2, 2), (image.width // 2, image.height // 2))
+        value = bake_cell(indexed, index, partition, grid, (image.width // grid[0], image.height // grid[1]))
         if value['rgba_sha256'] in used_hashes:
             raise ValueError('New historical portrait duplicates an existing identity')
         used_hashes.add(value['rgba_sha256'])
@@ -221,7 +226,7 @@ def append_supplement(entries, outputs, atlases, used_hashes):
                              source_sha256=value['png_sha256'], sha256=sha(encoded),
                              pixel_sha256=sha(pixels), method='identity_preserving_pixel_enhancement',
                              rendering='nearest4x',
-                             provenance=dict(supplement_plan=str(SUPPLEMENT.relative_to(ROOT)),
+                             provenance=dict(supplement_plan=str(supplement.relative_to(ROOT)),
                                              supplement_plan_sha256=sha(raw),
                                              atlas=plan['source_atlas'], source_atlas_sha256=plan['source_sha256'],
                                              cell_index=index, base_method='native32x40_exact_nearest4x',
@@ -229,7 +234,7 @@ def append_supplement(entries, outputs, atlases, used_hashes):
                                              art_direction_basis='authorial_game_art_not_historical_likeness',
                                              qa=dict(size=[128, 160], paletteSize=len(set(enlarged.getdata())),
                                                      alphaChanges=0, nearest4xExact=True)))
-    records = SUPPLEMENT.parent / 'enhanced-records.json'
+    records = supplement.parent / 'enhanced-records.json'
     outputs[records] = (json.dumps(dict(schema='tk2-portrait-supplement-enhanced-v1',
                                        people=enhanced), ensure_ascii=False, indent=2) + '\n').encode()
     hd_file = ROOT / 'game/config/portrait-enhanced.json'
@@ -237,10 +242,10 @@ def append_supplement(entries, outputs, atlases, used_hashes):
     hd['people'].update(enhanced)
     hd['counts'].update(people=len(hd['people']),
                         source_unique=len({row['pixel_sha256'] for row in hd['people'].values()}),
-                        atlas_count=len(json.loads((ROOT / 'art/portraits/enhancement-v1/plan.json').read_bytes())['atlases']) + 1)
+                        atlas_count=len(json.loads((ROOT / 'art/portraits/enhancement-v1/plan.json').read_bytes())['atlases']) + len(SUPPLEMENTS))
     hd['processing']['supplement_mode'] = 'authorial_pixel_art_native_nearest4x_preserving_identity'
     outputs[hd_file] = (json.dumps(hd, ensure_ascii=False, indent=2) + '\n').encode()
-    return dict(path=str(SUPPLEMENT.relative_to(ROOT)), sha256=sha(raw), count=len(enhanced))
+    return dict(path=str(supplement.relative_to(ROOT)), sha256=sha(raw), count=len(enhanced))
 
 
 def build(check=False):
@@ -302,12 +307,12 @@ def build(check=False):
             outputs[DESTINATION / (identity + '.png')] = value['png']
     if len(entries) != plan['new_count'] or len(used_hashes) != plan['new_count']:
         raise ValueError('New portrait identity/pixel count mismatch')
-    supplement = append_supplement(entries, outputs, atlases, used_hashes)
+    supplements = [append_supplement(entries, outputs, atlases, used_hashes, path) for path in SUPPLEMENTS]
     manifest = dict(schema='tk2-generated-portraits-v1', count=len(entries), unique_pixel_images=len(used_hashes),
                     native_size=list(SIZE), source='imagegen_new_pixel_art',
                     art_direction_basis='authorial_game_art_not_historical_likeness',
                     plan='art/portraits/plan.json', plan_sha256=plan_sha,
-                    supplement_plans=[supplement],
+                    supplement_plans=supplements,
                     processing=POLICY, source_atlases=atlases,
                     assigned_by_gender=dict(Counter(entry['gender_design'] for entry in entries.values())),
                     duplicate_fallback_count=sum('duplicate_fallback' in entry for entry in entries.values()),

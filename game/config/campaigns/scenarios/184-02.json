@@ -35,7 +35,7 @@
         {
           "id": "dong_zhuo",
           "captain": "董卓",
-          "city": "tianshui",
+          "city": "anding",
           "name": "董卓",
           "color": "#424242",
           "initial_officers": 14
@@ -54,7 +54,7 @@
           "city": "wuwei",
           "name": "马腾",
           "color": "#5c421d",
-          "initial_officers": 5
+          "initial_officers": 4
         },
         {
           "id": "liu_yan",
@@ -86,7 +86,23 @@
           "captain": "宋建",
           "city": "longxi",
           "color": "#007f89",
-          "initial_officers": 1
+          "initial_officers": 0,
+          "available_from": [
+            184,
+            11
+          ]
+        },
+        {
+          "id": "bian_zhang",
+          "name": "边章",
+          "captain": "边章",
+          "city": "jincheng",
+          "color": "#276bde",
+          "available_from": [
+            184,
+            11
+          ],
+          "initial_officers": 0
         }
       ],
       "active_cities": [
@@ -265,7 +281,7 @@
         },
         {
           "person_id": "san14-candidate-0074",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -279,7 +295,7 @@
         },
         {
           "person_id": "san14-candidate-0097",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -322,13 +338,6 @@
         {
           "person_id": "san14-candidate-0165",
           "city": "yingchuan",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0166",
-          "city": "wuwei",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -384,7 +393,7 @@
         },
         {
           "person_id": "san14-candidate-0199",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -643,7 +652,7 @@
         },
         {
           "person_id": "san14-candidate-0471",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -748,7 +757,7 @@
         },
         {
           "person_id": "san14-candidate-0592",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -797,7 +806,7 @@
         },
         {
           "person_id": "san14-candidate-0625",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -818,7 +827,7 @@
         },
         {
           "person_id": "san14-candidate-0638",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -930,14 +939,14 @@
         },
         {
           "person_id": "san14-candidate-0736",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": true,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0743",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -986,7 +995,7 @@
         },
         {
           "person_id": "san14-candidate-0782",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1028,7 +1037,7 @@
         },
         {
           "person_id": "san14-candidate-0874",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1042,7 +1051,7 @@
         },
         {
           "person_id": "san14-candidate-0893",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1056,14 +1065,14 @@
         },
         {
           "person_id": "san14-candidate-0907",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0922",
-          "city": "tianshui",
+          "city": "anding",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1157,13 +1166,6 @@
           "city": "chenliu",
           "troops": 300,
           "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "historical-song-jian",
-          "city": "longxi",
-          "troops": 300,
-          "ruler": true,
           "resolve_death_year": false
         }
       ],
@@ -1917,13 +1919,38 @@
           "person_id": "san14-candidate-0994",
           "city": "nanyang",
           "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-beigong-boyu",
+          "city": "jincheng",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-li-wenhou",
+          "city": "jincheng",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-song-jian",
+          "city": "longxi",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-bian-zhang",
+          "city": "jincheng",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "resolve_death_year": false
         }
       ],
-      "officer_count": 1027,
+      "officer_count": 1030,
       "design_notes": [
         "统一13个不同年代开局：官方本篇7篇、加强版追加4篇，以及旧版独有221年与249年。重复版本只保留存档兼容，不再列为新开局。",
         "公开攻略逐将驻城仅作为注明来源的游戏配置参考；并非官方存档导出。无对应驻城者均匀补到与其他非中立势力接壤的城市，无此类前线或已满员时再均分到己方其他城市。",
-        "184年以九勢力17城遊戲配置為基線，另加宋建枹罕區域據點，合計10勢力18城；擴展節點不自動繼承漢廷領土。宋建於本篇提前登場及孫堅等獨立集團均屬遊戲配置，不等於嚴格逐月史實。",
+        "184年2月沿用九勢力17城遊戲配置；宋建、北宮伯玉、李文侯僅作在野地方人物，宋建及北宮伯玉兩勢力於十一月分別依人物與城池現況判定成立。擴展節點不自動繼承漢廷領土；孫堅等既有獨立集團仍為遊戲配置，不等於嚴格逐月史實。",
         "官渡开局上党改属袁绍。其余既有疆界仍为扩展地图玩法配置，尚未声称全部复刻《三国志14》。",
         "蜀地新增葭萌／汉寿、涪县、宕渠、南广；武昌221年4月开放。临海、临川257年起、建安260年起、吴兴266年起在长期战役按配置开放；日期精度见城池说明。",
         "新增蜀地节点为汉代已有县城或军镇，不把宕渠、南广同名郡的短期设废当作城市出现与消失。葭萌采用刘备据蜀后汉寿名称的年代约定，非确定改名年月。",
@@ -1941,12 +1968,115 @@
         "本作按城池特色、劇本年月及戰亂／恢復階段設定錢糧與預備兵；數值為遊戲平衡設計，非史實人口或《三國志14》開局匯出。",
         "各劇本的月收入依開局年代配置；遊玩後依實際內政、招兵、行軍與戰鬥增減，不按歷史事件強制重設資源。",
         "本次保留武將每人300兵的初始化規則；城市駐軍總數取決於當篇實際駐將，預備兵另按年代配置。",
-        "每城最多99人；每方出戰最多10人。人物總庫1027人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
+        "每城最多99人；每方出戰最多10人。人物總庫1030人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
         "全部人物均完成在籍、在野、未來登場或明列排除計畫；來源不詳的駐城與連續任職屬本作配置，不是逐月史實已證。",
         "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
         "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。",
-        "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。"
-      ]
+        "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
+        "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。",
+        "本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+        "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+        "依使用者指定，韓遂184年2月改為金城在野，並非馬騰的既定部下；原姑臧帶兵300人歸還姑臧預備兵，不增兵。十一月若仍在野，可隨邊章起兵；已被登用不強制轉屬。186年12月政變須符合四人同勢力等條件，月份為本作指定。"
+      ],
+      "faction_foundings": [
+        {
+          "id": "liangzhou-revolt-184-11",
+          "faction": "bian_zhang",
+          "date": [
+            184,
+            11
+          ],
+          "city": "jincheng",
+          "ruler": "historical-bian-zhang",
+          "members": [
+            "historical-bian-zhang",
+            "historical-beigong-boyu",
+            "historical-li-wenhou",
+            "san14-candidate-0166"
+          ],
+          "required_owner": "neutral",
+          "require_unaligned": true,
+          "scope": "scenario_only",
+          "basis": "HHS08_184_11_with_user_bian_zhang_leadership_and_two_city_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷71",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ],
+          "cities": [
+            "jincheng",
+            "tianshui"
+          ]
+        },
+        {
+          "id": "song-jian-rise-184-11",
+          "faction": "song_jian",
+          "date": [
+            184,
+            11
+          ],
+          "city": "longxi",
+          "ruler": "historical-song-jian",
+          "members": [
+            "historical-song-jian"
+          ],
+          "required_owner": "neutral",
+          "require_unaligned": true,
+          "scope": "scenario_only",
+          "basis": "user_requested_184_11",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/三國志/卷09",
+            "https://zh.wikisource.org/zh-hant/三國志/卷01"
+          ],
+          "cities": [
+            "longxi"
+          ]
+        }
+      ],
+      "faction_rulers": {
+        "wu": 550,
+        "shi_xie": 340,
+        "han": 131,
+        "yellow_turban": 606,
+        "dong_zhuo": 735,
+        "gongsun_zan": 265,
+        "ma_teng": 770,
+        "liu_yan": 924,
+        "ding_yuan": 693,
+        "song_jian": 1024,
+        "bian_zhang": 1030
+      },
+      "faction_coups": [
+        {
+          "id": "han-sui-coup-186-12",
+          "faction": "bian_zhang",
+          "date": [
+            186,
+            12
+          ],
+          "ruler": "historical-bian-zhang",
+          "successor": "san14-candidate-0166",
+          "victims": [
+            "historical-bian-zhang",
+            "historical-beigong-boyu",
+            "historical-li-wenhou"
+          ],
+          "basis": "HHS72_186_winter_user_december",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058"
+          ]
+        }
+      ],
+      "historical_exit_dates": {
+        "historical-song-jian": [
+          214,
+          10
+        ]
+      }
     },
     "update": {
       "initial_owners": {
@@ -1958,7 +2088,7 @@
           "wei": "han",
           "xihe": "neutral",
           "wuwei": "ma_teng",
-          "anding": "neutral",
+          "anding": "dong_zhuo",
           "jingzhao": "han",
           "jincheng": "neutral",
           "donghai": "neutral",
@@ -1983,7 +2113,7 @@
           "xincheng": "neutral",
           "nanyang": "yellow_turban",
           "bohai": "yellow_turban",
-          "tianshui": "dong_zhuo",
+          "tianshui": "neutral",
           "lujiang": "neutral",
           "guiyang": "neutral",
           "beihai": "neutral",
@@ -2038,7 +2168,7 @@
           "hongnong": "neutral",
           "fengyi": "neutral",
           "fufeng": "neutral",
-          "longxi": "song_jian",
+          "longxi": "neutral",
           "shangdang": "neutral",
           "xiangyang": "neutral",
           "xiping": "neutral",
@@ -2407,6 +2537,9 @@
           "san14-candidate-0988": "runan",
           "san14-candidate-0993": "yan",
           "san14-candidate-0999": "chenliu",
+          "historical-beigong-boyu": "jincheng",
+          "historical-li-wenhou": "jincheng",
+          "historical-bian-zhang": "jincheng",
           "san14-candidate-0002": "hanzhong",
           "san14-candidate-0003": "jingzhao",
           "san14-candidate-0006": "pingyuan",
@@ -2435,7 +2568,7 @@
           "san14-candidate-0063": "shujun",
           "san14-candidate-0065": "changsha",
           "san14-candidate-0067": "jingzhao",
-          "san14-candidate-0074": "tianshui",
+          "san14-candidate-0074": "anding",
           "san14-candidate-0076": "liaodong",
           "san14-candidate-0078": "shujun",
           "san14-candidate-0081": "taiyuan",
@@ -2444,7 +2577,7 @@
           "san14-candidate-0090": "nanyang",
           "san14-candidate-0094": "bohai",
           "san14-candidate-0095": "yingchuan",
-          "san14-candidate-0097": "tianshui",
+          "san14-candidate-0097": "anding",
           "san14-candidate-0098": "nanyang",
           "san14-candidate-0103": "guiyang",
           "san14-candidate-0105": "yingchuan",
@@ -2461,7 +2594,7 @@
           "san14-candidate-0160": "yan",
           "san14-candidate-0163": "qiao",
           "san14-candidate-0165": "yingchuan",
-          "san14-candidate-0166": "wuwei",
+          "san14-candidate-0166": "jincheng",
           "san14-candidate-0167": "xiangyang",
           "san14-candidate-0168": "yuyang",
           "san14-candidate-0169": "dongjun",
@@ -2477,7 +2610,7 @@
           "san14-candidate-0192": "yingchuan",
           "san14-candidate-0193": "taiyuan",
           "san14-candidate-0196": "yuyang",
-          "san14-candidate-0199": "tianshui",
+          "san14-candidate-0199": "anding",
           "san14-candidate-0201": "yuyang",
           "san14-candidate-0202": "bohai",
           "san14-candidate-0206": "nanyang",
@@ -2574,7 +2707,7 @@
           "san14-candidate-0466": "yingchuan",
           "san14-candidate-0469": "bohai",
           "san14-candidate-0470": "qiao",
-          "san14-candidate-0471": "tianshui",
+          "san14-candidate-0471": "anding",
           "san14-candidate-0472": "yan",
           "san14-candidate-0473": "yuyang",
           "san14-candidate-0474": "wuwei",
@@ -2609,7 +2742,7 @@
           "san14-candidate-0583": "danyang",
           "san14-candidate-0584": "lujiang",
           "san14-candidate-0586": "beihai",
-          "san14-candidate-0592": "tianshui",
+          "san14-candidate-0592": "anding",
           "san14-candidate-0594": "henan",
           "san14-candidate-0595": "xiangyang",
           "san14-candidate-0597": "hanzhong",
@@ -2625,13 +2758,13 @@
           "san14-candidate-0614": "nanyang",
           "san14-candidate-0617": "donghai",
           "san14-candidate-0620": "qiao",
-          "san14-candidate-0625": "tianshui",
+          "san14-candidate-0625": "anding",
           "san14-candidate-0627": "shujun",
           "san14-candidate-0628": "chenliu",
           "san14-candidate-0632": "shujun",
           "san14-candidate-0635": "henan",
           "san14-candidate-0637": "shujun",
-          "san14-candidate-0638": "tianshui",
+          "san14-candidate-0638": "anding",
           "san14-candidate-0640": "henan",
           "san14-candidate-0641": "nanyang",
           "san14-candidate-0642": "nanyang",
@@ -2669,10 +2802,10 @@
           "san14-candidate-0727": "tianshui",
           "san14-candidate-0731": "kuaiji",
           "san14-candidate-0734": "henan",
-          "san14-candidate-0736": "tianshui",
+          "san14-candidate-0736": "anding",
           "san14-candidate-0740": "yuyang",
           "san14-candidate-0741": "tianshui",
-          "san14-candidate-0743": "tianshui",
+          "san14-candidate-0743": "anding",
           "san14-candidate-0744": "wei",
           "san14-candidate-0746": "yingchuan",
           "san14-candidate-0747": "nanyang",
@@ -2685,7 +2818,7 @@
           "san14-candidate-0770": "wuwei",
           "san14-candidate-0771": "wuwei",
           "san14-candidate-0778": "wei",
-          "san14-candidate-0782": "tianshui",
+          "san14-candidate-0782": "anding",
           "san14-candidate-0783": "kuaiji",
           "san14-candidate-0784": "yuyang",
           "san14-candidate-0785": "wei",
@@ -2715,24 +2848,24 @@
           "san14-candidate-0865": "taiyuan",
           "san14-candidate-0868": "hanzhong",
           "san14-candidate-0869": "hanzhong",
-          "san14-candidate-0874": "tianshui",
+          "san14-candidate-0874": "anding",
           "san14-candidate-0876": "hanzhong",
           "san14-candidate-0880": "henan",
           "san14-candidate-0882": "tianshui",
           "san14-candidate-0884": "lujiang",
           "san14-candidate-0885": "nanyang",
           "san14-candidate-0887": "runan",
-          "san14-candidate-0893": "tianshui",
+          "san14-candidate-0893": "anding",
           "san14-candidate-0894": "yingchuan",
           "san14-candidate-0895": "wuwei",
-          "san14-candidate-0907": "tianshui",
+          "san14-candidate-0907": "anding",
           "san14-candidate-0908": "taiyuan",
           "san14-candidate-0911": "runan",
           "san14-candidate-0913": "dongjun",
           "san14-candidate-0914": "bohai",
           "san14-candidate-0919": "dongjun",
           "san14-candidate-0920": "dongjun",
-          "san14-candidate-0922": "tianshui",
+          "san14-candidate-0922": "anding",
           "san14-candidate-0925": "yan",
           "san14-candidate-0927": "henan",
           "san14-candidate-0928": "shujun",
@@ -2767,51 +2900,37 @@
           "historical-song-jian": "longxi"
         }
       },
-      "faction_rulers": {
-        "set": {
-          "wu": 550,
-          "han": 131,
-          "yellow_turban": 606,
-          "dong_zhuo": 735,
-          "gongsun_zan": 265,
-          "ma_teng": 770,
-          "liu_yan": 924,
-          "ding_yuan": 693,
-          "song_jian": 1024
-        },
-        "delete": [
-          "wei",
-          "shu",
-          "gongsun"
-        ]
-      },
       "coverage": {
         "set": {
-          "initial_serving": 138,
-          "initial_free": 150,
+          "initial_serving": 136,
+          "initial_free": 155,
           "source_scenario": "san14-184-01",
-          "planned_serving": 138,
+          "planned_serving": 136,
           "planned_max_city_roster": 17,
           "future_plans": 736,
-          "placement_plans": 1027,
+          "placement_plans": 1030,
           "pending_history": 0,
-          "default_virtue_profiles": 635,
-          "virtue": "verified original ROM virtue for220 exact-name identities; otherwise individual authorial ratings or explicit user default60",
-          "library": 1027,
+          "default_virtue_profiles": 30,
+          "virtue": "SAN14 charisma for1000 people; explicit default60 for30 missing sources",
+          "library": 1030,
           "source_years": "third-party SAN14 settings; historical verification separate",
-          "health_configured": 1027,
-          "affinity_configured": 1027,
+          "health_configured": 1030,
+          "affinity_configured": 1030,
           "pending_capacity": 0,
           "new_history_profiles": 11,
-          "history_designs_total": 168,
-          "configured_profiles": 1027,
+          "history_designs_total": 0,
+          "configured_profiles": 1030,
           "san14_abilities": 1000,
-          "new_historical_people": 27,
+          "new_historical_people": 30,
           "pending_factions": [],
           "pending_faction": 0,
           "reused_profiles": 269,
-          "original_virtue_profiles": 220,
-          "pending_profiles": 0
+          "original_virtue_profiles": 0,
+          "pending_profiles": 0,
+          "retained_original_reference_profiles": 220,
+          "san14_charisma_profiles": 1000,
+          "original_initial_health_profiles": 223,
+          "initialization_policy": "tk2-officer-initialization-v1"
         }
       },
       "era_assignments": {
@@ -4919,57 +5038,6 @@
               }
             }
           },
-          "san14-candidate-0074": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0074",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-a-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    192,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0075": {
             "set": {
               "source_status": "not_appeared",
@@ -5665,57 +5733,6 @@
             "set": {
               "year_state": "not_born"
             }
-          },
-          "san14-candidate-0097": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0097",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    197,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0098": {
             "set": {
@@ -7607,57 +7624,6 @@
               "exclusion_kind"
             ]
           },
-          "san14-candidate-0166": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "馬騰",
-              "year_state": "available",
-              "faction": "ma_teng",
-              "city": "wuwei",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0166",
-                "faction": "ma_teng",
-                "origin": "wuwei",
-                "city": "wuwei",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    215,
-                    12
-                  ],
-                  "city": "wuwei",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0167": {
             "set": {
               "source_status": "free",
@@ -8690,57 +8656,6 @@
                 }
               }
             }
-          },
-          "san14-candidate-0199": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0199",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    192,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0201": {
             "set": {
@@ -16396,57 +16311,6 @@
               "exclusion_kind"
             ]
           },
-          "san14-candidate-0471": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0471",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    197,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0472": {
             "set": {
               "source_status": "serving",
@@ -19702,57 +19566,6 @@
               }
             }
           },
-          "san14-candidate-0592": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0592",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    209,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0593": {
             "set": {
               "source_status": "not_appeared",
@@ -20786,57 +20599,6 @@
               }
             }
           },
-          "san14-candidate-0625": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0625",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    207,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0626": {
             "set": {
               "source_status": "not_appeared",
@@ -21251,57 +21013,6 @@
                   "city": "shujun",
                   "status": "future_free",
                   "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
-          "san14-candidate-0638": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0638",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    196,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
                 }
               }
             },
@@ -24290,55 +24001,6 @@
               }
             }
           },
-          "san14-candidate-0736": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "retained_faction_ruler_seat",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0736",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "retained_faction_ruler_seat",
-                "source_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_explicit_scenario_ruler",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
-                  ],
-                  "note": "保留本篇明列君主及根據地，不以外部快照覆寫劇本君主。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    192,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0737": {
             "set": {
               "source_city": "新野"
@@ -24441,57 +24103,6 @@
                   "city": "tianshui",
                   "status": "future_free",
                   "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
-          "san14-candidate-0743": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0743",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    192,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
                 }
               }
             },
@@ -25613,57 +25224,6 @@
                 }
               }
             }
-          },
-          "san14-candidate-0782": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0782",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    192,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0783": {
             "set": {
@@ -28298,57 +27858,6 @@
               }
             }
           },
-          "san14-candidate-0874": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0874",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ya-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    198,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0875": {
             "set": {
               "year_state": "not_born"
@@ -28893,57 +28402,6 @@
               }
             }
           },
-          "san14-candidate-0893": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0893",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    198,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0894": {
             "set": {
               "source_status": "serving",
@@ -29218,57 +28676,6 @@
               "source_city": "襄陽",
               "year_state": "not_born"
             }
-          },
-          "san14-candidate-0907": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0907",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    192,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0908": {
             "set": {
@@ -29643,57 +29050,6 @@
                   "city": "dongjun",
                   "status": "future_free",
                   "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
-          "san14-candidate-0922": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "董卓",
-              "year_state": "available",
-              "faction": "dong_zhuo",
-              "city": "tianshui",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0922",
-                "faction": "dong_zhuo",
-                "origin": "tianshui",
-                "city": "tianshui",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    184,
-                    2
-                  ],
-                  "end": [
-                    192,
-                    12
-                  ],
-                  "city": "tianshui",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
                 }
               }
             },
@@ -32319,41 +31675,40 @@
         },
         "set": {
           "historical-song-jian": {
-            "source_status": "serving",
-            "source_ruler": "宋建",
+            "source_status": "free",
+            "source_ruler": null,
             "source_city": null,
             "year_state": "available",
-            "faction": "song_jian",
+            "faction": null,
             "city": "longxi",
-            "placement_basis": "authorial_song_jian_184_early_opening",
-            "status": "serving",
+            "placement_basis": "user_requested_local_song_jian_before_184_11",
+            "status": "free",
             "reason": null,
             "death_year_resolved": false,
-            "posting_reference": {
-              "person_id": "historical-song-jian",
-              "faction": "song_jian",
-              "origin": "longxi",
-              "city": "longxi",
-              "basis": "authorial_song_jian_184_early_opening",
-              "source_city": null
-            },
-            "membership_revision": null,
+            "posting_reference": null,
+            "membership_revision": "user_requested_local_song_jian_before_184_11",
             "planning_complete": true,
             "placement_review": {
-              "basis": "authorial_song_jian_184_early_opening",
+              "basis": "user_requested_local_song_jian_before_184_11",
               "source_urls": [
-                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72",
                 "https://zh.wikisource.org/zh-hant/三國志/卷09",
-                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+                "https://zh.wikisource.org/zh-hant/三國志/卷01"
               ],
-              "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
+              "note": "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
               "reference_date": null,
-              "historical_certainty": "authorial_early_appearance_region_proxy",
+              "reference_scenario": "mainland184-02",
               "opening_date": [
                 184,
                 2
               ],
-              "attestation_period": "184年冬；未載確月",
+              "historical_certainty": "authorial_pre_revolt_region_proxy",
+              "historical_death_date": [
+                214,
+                10
+              ],
+              "historical_death_date_is_for_scenario_selection": true,
+              "attestation_period": "184年冬至214年十月前；起事確月不詳",
               "opening_is_month_attestation": false
             },
             "appearance_plan": {
@@ -32363,12 +31718,13 @@
               ],
               "end": [
                 214,
-                12
+                9
               ],
               "city": "longxi",
-              "status": "serving",
-              "basis": "authorial_song_jian_184_early_opening"
-            }
+              "status": "free",
+              "basis": "user_requested_local_song_jian_before_184_11"
+            },
+            "scenario_membership_basis": "user_requested_local_song_jian_before_184_11"
           },
           "historical-lu-xing": {
             "source_status": "not_appeared",
@@ -32480,44 +31836,1355 @@
               "status": "excluded",
               "basis": "explicit_scenario_scope"
             }
+          },
+          "historical-beigong-boyu": {
+            "source_status": "free",
+            "source_ruler": null,
+            "source_city": "湟中",
+            "year_state": "available",
+            "faction": null,
+            "city": "jincheng",
+            "placement_basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "status": "free",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "planning_complete": true,
+            "scenario_membership_basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "source_snapshot": null,
+            "placement_review": {
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+                "https://zh.wikisource.org/zh-hant/三國志/卷01"
+              ],
+              "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+              "reference_date": [
+                184,
+                11
+              ],
+              "reference_scenario": "mainland184-02",
+              "opening_date": [
+                184,
+                2
+              ],
+              "historical_certainty": "authorial_pre_revolt_region_proxy",
+              "attestation_period": "184年冬起事；186年冬與187年政變記載分歧，12月為本作指定"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                187,
+                12
+              ],
+              "city": "jincheng",
+              "status": "free",
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+            }
+          },
+          "historical-li-wenhou": {
+            "source_status": "free",
+            "source_ruler": null,
+            "source_city": "湟中",
+            "year_state": "available",
+            "faction": null,
+            "city": "jincheng",
+            "placement_basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "status": "free",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "planning_complete": true,
+            "scenario_membership_basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "source_snapshot": null,
+            "placement_review": {
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+                "https://zh.wikisource.org/zh-hant/三國志/卷01"
+              ],
+              "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+              "reference_date": [
+                184,
+                11
+              ],
+              "reference_scenario": "mainland184-02",
+              "opening_date": [
+                184,
+                2
+              ],
+              "historical_certainty": "authorial_pre_revolt_region_proxy",
+              "attestation_period": "184年冬起事；186年冬與187年政變記載分歧，12月為本作指定"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                187,
+                12
+              ],
+              "city": "jincheng",
+              "status": "free",
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+            }
+          },
+          "historical-bian-zhang": {
+            "source_status": "free",
+            "source_ruler": null,
+            "source_city": "金城",
+            "year_state": "available",
+            "faction": null,
+            "city": "jincheng",
+            "placement_basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "status": "free",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "planning_complete": true,
+            "scenario_membership_basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "placement_review": {
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+                "https://zh.wikisource.org/zh-hant/三國志/卷01"
+              ],
+              "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+              "reference_date": [
+                184,
+                11
+              ],
+              "reference_scenario": "mainland184-02",
+              "opening_date": [
+                184,
+                2
+              ],
+              "historical_certainty": "authorial_pre_revolt_region_proxy",
+              "attestation_period": "184年冬起事；186年冬與187年政變記載分歧，12月為本作指定"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                186,
+                12
+              ],
+              "city": "jincheng",
+              "status": "free",
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+            }
+          },
+          "san14-candidate-0166": {
+            "source_status": "free",
+            "source_ruler": null,
+            "source_city": null,
+            "year_state": "available",
+            "faction": null,
+            "city": "jincheng",
+            "placement_basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "status": "free",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": null,
+            "membership_revision": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+                "https://zh.wikisource.org/zh-hant/三國志/卷01"
+              ],
+              "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 依使用者指定，韓遂184年2月改為金城在野，並非馬騰的既定部下；原姑臧帶兵300人歸還姑臧預備兵，不增兵。十一月若仍在野，可隨邊章起兵；已被登用不強制轉屬。186年12月政變須符合四人同勢力等條件，月份為本作指定。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+              "reference_date": [
+                184,
+                11
+              ],
+              "reference_scenario": "mainland184-02",
+              "opening_date": [
+                184,
+                2
+              ],
+              "historical_certainty": "authorial_pre_revolt_region_proxy",
+              "attestation_period": "184年冬起事；186年冬與187年政變記載分歧，12月為本作指定"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                215,
+                12
+              ],
+              "city": "jincheng",
+              "status": "free",
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+            },
+            "scenario_membership_basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+          },
+          "san14-candidate-0074": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0074",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                192,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-a-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0097": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0097",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                197,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0199": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0199",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                192,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0471": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0471",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                197,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0592": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0592",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                209,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0625": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0625",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                207,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0638": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0638",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                196,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0736": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0736",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                192,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_explicit_scenario_ruler",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                ],
+                "note": "保留本篇明列君主及根據地，不以外部快照覆寫劇本君主。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0743": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0743",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                192,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0782": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0782",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                192,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0874": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0874",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                198,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ya-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0893": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0893",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                198,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0907": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0907",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                192,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
+          },
+          "san14-candidate-0922": {
+            "source_status": "serving",
+            "source_ruler": "董卓",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "dong_zhuo",
+            "city": "anding",
+            "placement_basis": "authorial_dong_zhuo_184_andi_relocation",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0922",
+              "faction": "dong_zhuo",
+              "origin": "anding",
+              "city": "anding",
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "authorial_dong_zhuo_184_andi_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
+              ],
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "reference_date": [
+                184,
+                2
+              ],
+              "reference_scenario": "mainland184-02",
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                192,
+                12
+              ],
+              "city": "anding",
+              "status": "serving",
+              "basis": "authorial_dong_zhuo_184_andi_relocation"
+            },
+            "relocation_review": {
+              "from_city": "tianshui",
+              "to_city": "anding",
+              "faction_preserved": "dong_zhuo",
+              "opening_date": [
+                184,
+                2
+              ],
+              "previous_placement_review": {
+                "basis": "retained_reviewed_opening_membership",
+                "source_urls": [
+                  "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
+                ],
+                "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                "reference_date": null,
+                "reference_scenario": null,
+                "historical_certainty": "authorial_region_placement"
+              }
+            }
           }
         }
       },
       "main_scenario": {
         "set": {
           "title": "黄巾之乱",
-          "summary": "黃巾之亂沿用九勢力17城遊戲基線，另加入宋建的枹罕據點；其184年2月登場早於原典所記當年冬涼州亂，屬明列的本作提前配置。",
+          "summary": "184年2月沿用九勢力17城基線，董卓軍遷至安定、天水中立。十一月以宋建、北宮伯玉、李文侯等聯合響應、推邊章為首、韓遂為敘事軍師的脈絡，先判定金城與天水成軍，再判定宋建隴西獨立。軍師與186年12月政變為明列的本作設定，不覆寫登用或占領成果。",
           "reviewed_source_city_records": 3,
           "historical_review": {
             "revision": "2026-10-25",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
-            "faction_additions": [
-              "song_jian"
-            ],
+            "faction_additions": [],
             "city_owner_corrections": [
-              "longxi"
+              "anding",
+              "tianshui"
             ],
             "all_city_months_independently_attested": false,
             "local_map_proxies": {
               "longxi": {
-                "display_name": "枹罕",
+                "display_name": "隴西",
                 "represents": [
-                  "枹罕"
+                  "宋建原典所記枹罕據點的區域代理"
+                ],
+                "original_node": "longxi",
+                "whole_commandery_control_claimed": false,
+                "early_opening": false,
+                "fictional_adaptation": false,
+                "note": "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
+                "available_from": [
+                  184,
+                  11
+                ],
+                "conditional_revolt": true
+              },
+              "jincheng": {
+                "display_name": "金城",
+                "represents": [
+                  "湟中及金城活動區域"
                 ],
                 "whole_commandery_control_claimed": false,
-                "early_opening": true,
-                "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。"
+                "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。"
               }
             },
             "source_backed_additions_note": [
-              "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。"
+              "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
+              "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。",
+              "本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。",
+              "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "依使用者指定，韓遂184年2月改為金城在野，並非馬騰的既定部下；原姑臧帶兵300人歸還姑臧預備兵，不增兵。十一月若仍在野，可隨邊章起兵；已被登用不強制轉屬。186年12月政變須符合四人同勢力等條件，月份為本作指定。"
+            ],
+            "song_jian_lifetime_setup": {
+              "from_date": [
+                184,
+                11
+              ],
+              "before_date": [
+                214,
+                10
+              ],
+              "inclusive_start": true,
+              "exclusive_end": true,
+              "user_requested_in_historical_and_if": true,
+              "note": "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ],
+              "opening_person_available_from": [
+                184,
+                2
+              ],
+              "conditional_184_founding": true
+            },
+            "scheduled_faction_additions": [
+              "song_jian",
+              "bian_zhang"
+            ],
+            "pre_revolt_region_proxy_people": [
+              "historical-song-jian",
+              "historical-bian-zhang",
+              "historical-beigong-boyu",
+              "historical-li-wenhou",
+              "san14-candidate-0166"
+            ],
+            "liangzhou_bian_zhang_setup": {
+              "formation": [
+                184,
+                11
+              ],
+              "cities": [
+                "jincheng",
+                "tianshui"
+              ],
+              "ruler": "historical-bian-zhang",
+              "members": [
+                "historical-bian-zhang",
+                "historical-beigong-boyu",
+                "historical-li-wenhou",
+                "san14-candidate-0166"
+              ],
+              "coup": [
+                186,
+                12
+              ],
+              "successor": "san14-candidate-0166",
+              "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。 本作依使用者指定，186年12月邊章仍為主君、邊章與北宮伯玉、李文侯、韓遂皆存活且同屬該勢力、無人在行軍時，才觸發韓遂殺三人自立；保留同一勢力識別與城池、物資及其他部將，不新增兵員。條件不符則提示未發生，不改他方人物或玩家戰果。《後漢書》卷72將殺三人接於186年冬，《資治通鑑》卷058編於187年而未載確月；12月為使用者指定的遊戲界點。《三國志》卷01裴注《典略》另記邊章尋病卒，死因存在異文，不宣稱諸書一致；事件也不加稱王、稱帝等無據稱號。"
+            }
+          },
+          "setup_basis": "reviewed_SAN14_9_faction_baseline_with_conditional_184_11_local_revolts",
+          "summary_i18n": {
+            "zh-Hant": "184年2月沿用九勢力17城基線，董卓軍遷至安定、天水中立。十一月以宋建、北宮伯玉、李文侯等聯合響應、推邊章為首、韓遂為敘事軍師的脈絡，先判定金城與天水成軍，再判定宋建隴西獨立。軍師與186年12月政變為明列的本作設定，不覆寫登用或占領成果。",
+            "ja": "184年2月は9勢力17都市を基礎とし、董卓軍を安定へ移して天水を中立にします。11月は宋建・北宮伯玉・李文侯らが共に呼応し、邊章を首領、韓遂を物語上の軍師に推す流れで、金城・天水での成軍、宋建の隴西独立を順に判定します。軍師と186年12月の政変は明示した本作の設定で、登用・占領の成果を上書きしません。"
+          },
+          "story_note_i18n": {
+            "zh-Hant": "本作以184年2月地方人物及十一月條件起兵表現涼州變局；宋建與北宮伯玉分屬兩勢力，已被登用的人物或已被占領的城池不強制改屬。月內上旬時點及節點地理代理為本作配置，不冒稱確切史日或完整郡域控制。",
+            "ja": "本作では184年2月の地方人物と11月の条件付き挙兵によって、涼州の情勢変化を表します。宋建と北宮伯玉は別勢力とし、既に登用された人物や占領された都市の所属を強制的に変えません。上旬という時点と地図上の代替地点は本作の設定であり、正確な史実の日付や郡全域の支配を示すものではありません。"
+          },
+          "liangzhou_revolt_notes_i18n": {
+            "zh-Hant": [
+              "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：宋建仍存活在野且隴西中立才獨立起兵，不歸北宮伯玉；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
+              "北宮伯玉、李文侯在184年2月只以金城在野地方人物登場；《後漢書·靈帝紀》十一月段記其起事，日旬不詳。本作於十一月上旬檢查：北宮伯玉仍存活在野且金城中立才成立勢力；李文侯已投他方不強奪。未成立亦有提示，不覆寫已發生的占城或登用。",
+              "金城節點代理湟中及金城活動區域，不是二月確切駐城或已占金城全郡的史證；不因此增領西平或武威。兩人原被共推為將軍，不當作宋建、韓遂或馬騰的既定部下；本作以北宮伯玉為介面上的單一主君，不另虛構私人部將。",
+              "《後漢書·董卓傳》把韓遂殺北宮伯玉、李文侯接在186年冬；《資治通鑑》編入187年而未記確月。本庫187僅為遊戲退場邊界，不斷言187年四月遇害，生年與二月地域配置亦為明列的本作估計。"
+            ],
+            "ja": [
+              "宋建は184年2月には隴西の在野の地方人物としてのみ登場し、独立政権を最初から設けません。『後漢書』巻72は宋建の涼州の反乱への参加を184年冬に記しますが、建国した正確な月は不明です。本作ではユーザーの指定により11月上旬に、宋建が存命で在野のまま、かつ隴西が中立の場合に限り独立して挙兵させ、北宮伯玉の配下にはしません。既に登用された場合や都市が占領された場合は不成立を通知し、ゲームの進行を上書きしません。隴西の地点は枹罕の活動地域を表す代替拠点で、画面の名称は隴西のままとします。都市の追加や移動は行わず、隴西郡全域の支配を意味しません。原典に姓名のない丞相や百官は創作しません。",
+              "北宮伯玉・李文侯は184年2月には、金城にいる在野の地方人物としてのみ登場します。『後漢書』の「霊帝紀」は反乱を11月の記事に置きますが、日付や旬は不明です。本作では11月上旬に、北宮伯玉が存命で在野のまま、かつ金城が中立の場合に限り勢力を成立させます。李文侯が他勢力に仕えていれば奪い返しません。不成立の場合も通知し、既に起きた都市占領や登用を上書きしません。",
+              "金城の地点は湟中・金城での活動地域を表す代替拠点であり、2月の正確な居所や金城郡全域の支配が確認されたものではありません。この設定を理由に西平・武威を追加領有させません。両者は共に将軍に推されており、宋建・韓遂・馬騰の既存の配下とは扱いません。本作では画面上の君主を北宮伯玉1人としますが、架空の直属武将は作りません。",
+              "『後漢書』の「董卓伝」は韓遂による北宮伯玉・李文侯の殺害を186年冬の記述に続けて置き、『資治通鑑』は187年に収めています。正確な月は記されていません。本データの187年はゲーム上の退場の境界にすぎず、187年4月に殺害されたと断定しません。生年や2月の地域配置も、本作の推定と明記します。"
             ]
           },
-          "setup_basis": "reviewed_SAN14_9_faction_baseline_plus_authorial_early_song_jian",
-          "summary_i18n": {
-            "zh-Hant": "黃巾之亂沿用九勢力17城遊戲基線，另加入宋建的枹罕據點；其184年2月登場早於原典所記當年冬涼州亂，屬明列的本作提前配置。",
-            "ja": "黄巾の乱の9勢力17都市を基礎に、宋建の枹罕拠点を追加します。184年2月の登場は、原典が同年冬に記す涼州の反乱より早い本作の明示的な設定です。"
-          }
+          "scheduled_faction_additions": [
+            {
+              "id": "beigong_boyu",
+              "available_from": [
+                184,
+                11
+              ],
+              "basis": "HHS08_184_11",
+              "start_selectable": false,
+              "co_leaders": [
+                "historical-beigong-boyu",
+                "historical-li-wenhou"
+              ],
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷71",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+                "https://zh.wikisource.org/zh-hant/三國志/卷01"
+              ]
+            },
+            {
+              "id": "song_jian",
+              "available_from": [
+                184,
+                11
+              ],
+              "basis": "user_requested_184_11",
+              "start_selectable": false,
+              "co_leaders": [
+                "historical-song-jian"
+              ],
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                "https://zh.wikisource.org/zh-hant/三國志/卷09",
+                "https://zh.wikisource.org/zh-hant/三國志/卷01"
+              ]
+            }
+          ],
+          "group": "base",
+          "official_source": "https://www.gamecity.com.tw/sangokushi14/scenario.html",
+          "adaptation": true,
+          "membership_basis": "dated_snapshot_with_reviewed_revisions; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
+          "roster_complete": true,
+          "scope": "7 original historical main scenarios + 4 PK built-in historical main scenarios; excludes bonus, DLC, fictional and War Chronicles scenarios",
+          "profiles_complete": true,
+          "virtue_default_policy": "virtue-default-60-2026-10-21",
+          "city_economy": "dated-scenario-economy-v1",
+          "travel": "hazardous-marches-v1",
+          "city_chronology_note": "章陵222年改義陽；240年後開局不設義陽，進行中戰役保留。臨江208年9月開、210年12月改宜都，月份為使用者指定；假想劇本維持其世界線。",
+          "garrison_basis": "reviewed_source_city_then_even_enemy_frontier",
+          "roster_completeness_scope": "all1030 opening/excluded/future plans, not attested complete historical garrisons"
         }
       },
       "city_profiles": {
@@ -33727,13 +34394,6 @@
               "reserves": 1320
             }
           },
-          "wuwei": {
-            "set": {
-              "gold": 1020,
-              "grain": 3050,
-              "reserves": 1260
-            }
-          },
           "anding": {
             "set": {
               "gold": 1020,
@@ -34473,6 +35133,13 @@
               "grain": 4275,
               "reserves": 1120
             }
+          }
+        },
+        "set": {
+          "wuwei": {
+            "gold": 1020,
+            "grain": 3050,
+            "reserves": 1560
           }
         }
       },
@@ -36328,74 +36995,27 @@
               }
             ],
             "opening": {
-              "owner": "neutral",
-              "basis": "reviewed_SAN14_opening_adapted_to_expanded_board",
-              "note": "参考公开SAN14攻略的184年2月游戏配置，并非官方原始剧本导出，也不等同严格史实。何进4城、黄巾6城及七个一城势力映射到本作17个节点，其余88个当年开放节点设中立；中立表示本作未设独立势力驻军，不表示汉代没有地方行政。小沛映射qiao、北平映射yuyang是既有棋盘代理，不是原地同址复制；本作额外郡城不机械推定归属。",
+              "owner": "dong_zhuo",
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
               "sources": [
                 {
-                  "url": "https://wikiwiki.jp/sangokushi14/184年2月　黄巾の乱",
-                  "note": "势力表9势力：何进4城、张角6城，其余7势力各1城；合计17座SAN14主城。"
-                },
-                {
-                  "url": "https://pepedash.biz/sangokushi14-scenario1/",
-                  "note": "开局攻略明确何进洛阳、长安、邺与陈留；许昌属黄巾，安定和汉中为空白；南方大量空白。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/何進",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張角",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/孫堅",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/董卓",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/公孫サン",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/馬騰",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/劉焉",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/丁原",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/士燮",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張宝",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張梁",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/程遠志",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張曼成",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/管亥",
-                  "note": "184剧本表：小沛太守、张角势力；小沛在本作仅以谯郡节点代理。"
+                  "url": "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                  "note": "原典活動區域與使用者開局配置分開記錄。"
                 }
+              ]
+            },
+            "control_review": {
+              "date": [
+                184,
+                2
+              ],
+              "owner": "dong_zhuo",
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。",
+              "certainty": "authorial_garrison_relocation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
               ]
             }
           },
@@ -36611,73 +37231,26 @@
             ],
             "opening": {
               "owner": "neutral",
-              "basis": "reviewed_SAN14_opening_adapted_to_expanded_board",
-              "note": "参考公开SAN14攻略的184年2月游戏配置，并非官方原始剧本导出，也不等同严格史实。何进4城、黄巾6城及七个一城势力映射到本作17个节点，其余88个当年开放节点设中立；中立表示本作未设独立势力驻军，不表示汉代没有地方行政。小沛映射qiao、北平映射yuyang是既有棋盘代理，不是原地同址复制；本作额外郡城不机械推定归属。",
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+              "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。",
               "sources": [
                 {
-                  "url": "https://wikiwiki.jp/sangokushi14/184年2月　黄巾の乱",
-                  "note": "势力表9势力：何进4城、张角6城，其余7势力各1城；合计17座SAN14主城。"
-                },
-                {
-                  "url": "https://pepedash.biz/sangokushi14-scenario1/",
-                  "note": "开局攻略明确何进洛阳、长安、邺与陈留；许昌属黄巾，安定和汉中为空白；南方大量空白。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/何進",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張角",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/孫堅",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/董卓",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/公孫サン",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/馬騰",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/劉焉",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/丁原",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/士燮",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張宝",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張梁",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/程遠志",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張曼成",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/管亥",
-                  "note": "184剧本表：小沛太守、张角势力；小沛在本作仅以谯郡节点代理。"
+                  "url": "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                  "note": "原典活動區域與使用者開局配置分開記錄。"
                 }
+              ]
+            },
+            "control_review": {
+              "date": [
+                184,
+                2
+              ],
+              "owner": "neutral",
+              "note": "184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。",
+              "certainty": "authorial_pre_revolt_region_proxy",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
               ]
             }
           },
@@ -39853,74 +40426,27 @@
               }
             ],
             "opening": {
-              "owner": "dong_zhuo",
-              "basis": "reviewed_SAN14_opening_adapted_to_expanded_board",
-              "note": "参考公开SAN14攻略的184年2月游戏配置，并非官方原始剧本导出，也不等同严格史实。何进4城、黄巾6城及七个一城势力映射到本作17个节点，其余88个当年开放节点设中立；中立表示本作未设独立势力驻军，不表示汉代没有地方行政。小沛映射qiao、北平映射yuyang是既有棋盘代理，不是原地同址复制；本作额外郡城不机械推定归属。",
+              "owner": "neutral",
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt",
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。 184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。",
               "sources": [
                 {
-                  "url": "https://wikiwiki.jp/sangokushi14/184年2月　黄巾の乱",
-                  "note": "势力表9势力：何进4城、张角6城，其余7势力各1城；合计17座SAN14主城。"
-                },
-                {
-                  "url": "https://pepedash.biz/sangokushi14-scenario1/",
-                  "note": "开局攻略明确何进洛阳、长安、邺与陈留；许昌属黄巾，安定和汉中为空白；南方大量空白。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/何進",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張角",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/孫堅",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/董卓",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/公孫サン",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/馬騰",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/劉焉",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/丁原",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/士燮",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張宝",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張梁",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/程遠志",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/張曼成",
-                  "note": "184年2月逐人剧本表的君主/太守/驻城记录。"
-                },
-                {
-                  "url": "https://wikiwiki.jp/sangokushi14/管亥",
-                  "note": "184剧本表：小沛太守、张角势力；小沛在本作仅以谯郡节点代理。"
+                  "url": "https://zh.wikisource.org/zh-hant/後漢書/卷72",
+                  "note": "原典活動區域與使用者開局配置分開記錄。"
                 }
+              ]
+            },
+            "control_review": {
+              "date": [
+                184,
+                2
+              ],
+              "owner": "neutral",
+              "note": "依使用者指定讓天水在184年2月保持中立，以供十一月條件起兵；原董卓勢力的14名駐將與本據全部轉到相鄰的既有安定節點，保留人物、勢力、帶兵與城市原資源。這是本作開局地域配置，不聲稱原典確證所有駐將當月在安定。 184年2月邊章、韓遂、北宮伯玉、李文侯均以金城在野人物登場，尚不預設獨立軍政。依使用者指定，十一月以宋建、北宮伯玉、李文侯等聯合響應涼州起事、推邊章為首、韓遂協助軍政的連續敘事呈現；先判定邊章在金城與天水成軍，再判定宋建於隴西獨立。韓遂的軍師是本作敘事角色，原典僅記專任軍政，非正式軍師官職的確證。邊章仍在本地存活在野、金城與天水均中立才成立兩城勢力；部將已被登用則保留原屬，任一目標城已被占領則整件不成立，不強奪。原典記北宮伯玉、李文侯被推為將軍並劫邊章、韓遂專任軍政；邊章單一主君及兩城對應均為使用者的遊戲配置，不是當月郡縣占領與上下級名冊的確證。",
+              "certainty": "authorial_pre_revolt_region_proxy",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/後漢書/卷8",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷72"
               ]
             }
           },
@@ -48017,24 +48543,7 @@
           },
           "longxi": {
             "detail": "",
-            "names": [
-              {
-                "from_date": [
-                  184,
-                  2
-                ],
-                "to_date": [
-                  9999,
-                  12
-                ],
-                "name": "枹罕",
-                "basis": "scenario_only_fuhan_county_proxy_not_longxi_commandery",
-                "source_urls": [
-                  "https://zh.wikisource.org/zh-hant/三國志/卷01",
-                  "https://zh.wikisource.org/zh-hant/三國志/卷09"
-                ]
-              }
-            ],
+            "names": [],
             "sources": [
               {
                 "url": "https://wikiwiki.jp/sangokushi14/184年2月　黄巾の乱",
@@ -48102,21 +48611,17 @@
               }
             ],
             "opening": {
-              "owner": "song_jian",
-              "basis": "explicit_user_requested_early_song_jian_adaptation",
-              "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
+              "owner": "neutral",
+              "basis": "user_requested_local_song_jian_before_184_11",
+              "note": "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
               "sources": [
                 {
                   "url": "https://zh.wikisource.org/zh-hant/三國志/卷01",
-                  "note": "原典身分與年代；184年2月在場和節點代理為本作設定。"
+                  "note": "宋建身分與214年十月死亡；184年2月在野、十一月條件起兵及隴西節點為使用者指定的本作配置。"
                 },
                 {
                   "url": "https://zh.wikisource.org/zh-hant/三國志/卷09",
-                  "note": "原典身分與年代；184年2月在場和節點代理為本作設定。"
-                },
-                {
-                  "url": "https://zh.wikisource.org/zh-hant/後漢書/卷72",
-                  "note": "原典身分與年代；184年2月在場和節點代理為本作設定。"
+                  "note": "宋建身分與214年十月死亡；184年2月在野、十一月條件起兵及隴西節點為使用者指定的本作配置。"
                 }
               ]
             },
@@ -48125,9 +48630,9 @@
                 184,
                 2
               ],
-              "owner": "song_jian",
-              "note": "《三國志》卷01、09記宋建據枹罕三十餘年、214年十月被夏侯淵討滅，未載確切建國月；《後漢書》卷72將宋建參與涼州亂列於184年冬。本篇依使用者要求於184年2月提前登場，以隴西節點代理枹罕據點，並非聲稱當月已建立政權或占有整個隴西郡。原典的丞相、百官無姓名，不虛構部下。",
-              "certainty": "authorial_early_appearance_region_proxy",
+              "owner": "neutral",
+              "note": "宋建於184年2月只以隴西在野地方人物登場，不預設獨立政權；《後漢書》卷72將宋建參與涼州亂記在184年冬，未載確切建國月。本作依使用者指定於十一月上旬檢查：先判定邊章聯軍成軍，再判定宋建仍存活在野且隴西中立才於隴西分立；已登用或城池已被占領則提示未成立，不覆寫遊戲進展。隴西節點僅代理枹罕活動區域，畫面仍稱隴西，不新增城池、不移動位置、不聲稱控制整個隴西郡；原典未載姓名的丞相、百官不虛構。",
+              "certainty": "authorial_pre_revolt_region_proxy",
               "source_urls": [
                 "https://zh.wikisource.org/zh-hant/三國志/卷01",
                 "https://zh.wikisource.org/zh-hant/三國志/卷09",
@@ -56458,15 +56963,89 @@
               ],
               "end": [
                 214,
-                12
+                9
               ],
               "city": "longxi",
-              "basis": "authorial_song_jian_184_early_opening"
+              "basis": "user_requested_local_song_jian_before_184_11"
             }
           ],
           "historical-lu-xing": [],
           "historical-tang-pu": [],
-          "historical-li-tong-jiaozhi": []
+          "historical-li-tong-jiaozhi": [],
+          "historical-beigong-boyu": [
+            {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                187,
+                12
+              ],
+              "city": "jincheng",
+              "resolve_death_year": false,
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+            }
+          ],
+          "historical-li-wenhou": [
+            {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                187,
+                12
+              ],
+              "city": "jincheng",
+              "resolve_death_year": false,
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+            }
+          ],
+          "historical-bian-zhang": [
+            {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                186,
+                12
+              ],
+              "city": "jincheng",
+              "resolve_death_year": false,
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+            }
+          ],
+          "san14-candidate-0166": [
+            {
+              "start": [
+                184,
+                2
+              ],
+              "end": [
+                215,
+                12
+              ],
+              "city": "jincheng",
+              "resolve_death_year": false,
+              "basis": "user_requested_bian_zhang_conditional_liangzhou_revolt"
+            }
+          ],
+          "san14-candidate-0074": [],
+          "san14-candidate-0097": [],
+          "san14-candidate-0199": [],
+          "san14-candidate-0471": [],
+          "san14-candidate-0592": [],
+          "san14-candidate-0625": [],
+          "san14-candidate-0638": [],
+          "san14-candidate-0736": [],
+          "san14-candidate-0743": [],
+          "san14-candidate-0782": [],
+          "san14-candidate-0874": [],
+          "san14-candidate-0893": [],
+          "san14-candidate-0907": [],
+          "san14-candidate-0922": []
         }
       },
       "placement_completion": {
@@ -56474,18 +57053,20 @@
           "future_plans": 736,
           "city_owner_corrections": [
             "yidu",
-            "longxi"
+            "anding",
+            "tianshui"
           ],
           "source_snapshot_complete": false,
           "pending": 0,
           "reference_classes": {
-            "authorial_region_placement": 1022,
+            "authorial_region_placement": 1007,
             "game_reference": 1,
-            "authorial_early_appearance_region_proxy": 1,
+            "authorial_garrison_relocation": 14,
+            "authorial_pre_revolt_region_proxy": 5,
             "explicit_scenario_scope": 3
           },
           "schema": "tk2-placement-completion-v1",
-          "people": 1027,
+          "people": 1030,
           "source_hashes": {
             "game/config/references/history-postings.json": "d13fd180dd16b5bf63e7c911bdecb73fdec82fc97baf5fc87478c7e941a0fe1b",
             "game/config/references/san14-postings.json": "85d3ff30528af7c8596a46ca46a14901b19db500df606f5d6b7bec625eef3ba9",
@@ -56502,9 +57083,11 @@
             "person_specific_future_free_appearance": 736,
             "same_date_SAN14_guide_free_location": 1,
             "retained_person_specific_free_location": 149,
-            "retained_reviewed_opening_membership": 128,
-            "retained_explicit_scenario_ruler": 9,
-            "authorial_song_jian_184_early_opening": 1,
+            "retained_reviewed_opening_membership": 114,
+            "authorial_dong_zhuo_184_andi_relocation": 14,
+            "retained_explicit_scenario_ruler": 8,
+            "user_requested_bian_zhang_conditional_liangzhou_revolt": 4,
+            "user_requested_local_song_jian_before_184_11": 1,
             "explicit_scenario_scope": 3
           }
         },

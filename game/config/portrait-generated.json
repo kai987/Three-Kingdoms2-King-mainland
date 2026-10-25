@@ -1,7 +1,7 @@
 {
   "schema": "tk2-generated-portraits-v1",
-  "count": 807,
-  "unique_pixel_images": 807,
+  "count": 810,
+  "unique_pixel_images": 810,
   "native_size": [
     32,
     40
@@ -15,6 +15,16 @@
       "path": "art/portraits/historical-additions-v1/plan.json",
       "sha256": "e91452cc899b242928cfdf48844753e4c109113630e5a79466da94c4ed093aed",
       "count": 4
+    },
+    {
+      "path": "art/portraits/northwest-rising-v1/plan.json",
+      "sha256": "eebea02f2aac0ffd7c57978dcc6a0f8a7df84e761276133590c5e33c3fa62663",
+      "count": 2
+    },
+    {
+      "path": "art/portraits/bian-zhang-v1/plan.json",
+      "sha256": "d1f8e7868f562c80b963d307a8d40b3de6a7da2a445a0bf105fdc56302dd0840",
+      "count": 1
     }
   ],
   "processing": {
@@ -1538,10 +1548,103 @@
           ]
         ]
       }
+    },
+    {
+      "id": "northwest-rising-v1",
+      "path": "art/portraits/northwest-rising-v1/source.png",
+      "sha256": "5296abce5e18cfcc785faf848a9a7734ac806938ab7c68b876fd2a4bd44e62dc",
+      "size": [
+        1586,
+        992
+      ],
+      "art_gender_design": "male",
+      "grid": [
+        2,
+        1
+      ],
+      "actual_grid_partition": {
+        "x_bounds": [
+          0,
+          793,
+          1586
+        ],
+        "y_bounds": [
+          0,
+          992
+        ],
+        "vertical_black_bands": [
+          [
+            0,
+            124
+          ],
+          [
+            729,
+            858
+          ],
+          [
+            1462,
+            1586
+          ]
+        ],
+        "horizontal_black_bands": [
+          [
+            0,
+            123
+          ],
+          [
+            885,
+            992
+          ]
+        ]
+      }
+    },
+    {
+      "id": "bian-zhang-v1",
+      "path": "art/portraits/bian-zhang-v1/source.png",
+      "sha256": "ef9ee5d2dda8bc2c3ab6766686b6cd68aa48e8dc80415fd3adea206b5c17f9c4",
+      "size": [
+        1122,
+        1402
+      ],
+      "art_gender_design": "male",
+      "grid": [
+        1,
+        1
+      ],
+      "actual_grid_partition": {
+        "x_bounds": [
+          0,
+          1122
+        ],
+        "y_bounds": [
+          0,
+          1402
+        ],
+        "vertical_black_bands": [
+          [
+            0,
+            140
+          ],
+          [
+            982,
+            1122
+          ]
+        ],
+        "horizontal_black_bands": [
+          [
+            0,
+            161
+          ],
+          [
+            1228,
+            1402
+          ]
+        ]
+      }
     }
   ],
   "assigned_by_gender": {
-    "male": 755,
+    "male": 758,
     "female": 52
   },
   "duplicate_fallback_count": 0,
@@ -33823,6 +33926,126 @@
         2,
         1,
         30,
+        39
+      ]
+    },
+    "historical-beigong-boyu": {
+      "path": "/assets/portraits/generated/historical-beigong-boyu.png",
+      "png_sha256": "5cff560882146e9793ea2579915d71454cf7c7e47011fa8f165473cb8cc1450e",
+      "rgba_sha256": "18702264261884a7612b2c5f17dc78a207c7d60c860c16dc7a4c8db2bce04073",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 452,
+      "source_atlas": "art/portraits/northwest-rising-v1/source.png",
+      "source_atlas_sha256": "5296abce5e18cfcc785faf848a9a7734ac806938ab7c68b876fd2a4bd44e62dc",
+      "cell_index": 0,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "北宫伯玉",
+      "opaque_pixels": 793,
+      "source_cell_box": [
+        0,
+        0,
+        793,
+        992
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        793,
+        992
+      ],
+      "source_visible_box": [
+        124,
+        123,
+        729,
+        885
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-li-wenhou": {
+      "path": "/assets/portraits/generated/historical-li-wenhou.png",
+      "png_sha256": "e24b0fa71ad0cb35434703249b29ef707320a9def5a365b1eee65b29bc26493e",
+      "rgba_sha256": "c9603081caed1d337a1109559c746137a01b17e0efa8cbd4b9b4f4106752d898",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 408,
+      "source_atlas": "art/portraits/northwest-rising-v1/source.png",
+      "source_atlas_sha256": "5296abce5e18cfcc785faf848a9a7734ac806938ab7c68b876fd2a4bd44e62dc",
+      "cell_index": 1,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "李文侯",
+      "opaque_pixels": 872,
+      "source_cell_box": [
+        793,
+        0,
+        1586,
+        992
+      ],
+      "declared_grid_cell_box": [
+        793,
+        0,
+        1586,
+        992
+      ],
+      "source_visible_box": [
+        858,
+        123,
+        1462,
+        885
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
+        39
+      ]
+    },
+    "historical-bian-zhang": {
+      "path": "/assets/portraits/generated/historical-bian-zhang.png",
+      "png_sha256": "0b9a6d8063f42c312e99a7b8fce9ef881dd43330fb149fe807528ffd6871bffb",
+      "rgba_sha256": "c96d8b04313f51d2d0937e888b484c5960a4c882ffc73d3827b58c03681f823d",
+      "width": 32,
+      "height": 40,
+      "png_bytes": 403,
+      "source_atlas": "art/portraits/bian-zhang-v1/source.png",
+      "source_atlas_sha256": "ef9ee5d2dda8bc2c3ab6766686b6cd68aa48e8dc80415fd3adea206b5c17f9c4",
+      "cell_index": 0,
+      "source": "imagegen_new_pixel_art",
+      "art_direction_basis": "authorial_game_art_not_historical_likeness",
+      "gender_design": "male",
+      "name": "边章",
+      "opaque_pixels": 830,
+      "source_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "declared_grid_cell_box": [
+        0,
+        0,
+        1122,
+        1402
+      ],
+      "source_visible_box": [
+        140,
+        161,
+        982,
+        1228
+      ],
+      "native_fitted_box": [
+        1,
+        1,
+        31,
         39
       ]
     }

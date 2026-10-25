@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'source'))
 
 from remake.campaign import Campaign, Catalog
+from remake.dated_events import visible_factions
 
 
 HAN_SUI_CHAPTERS = (
@@ -292,7 +293,8 @@ class HistoricalScenarioTests(unittest.TestCase):
                 game.validate(game.state)
                 self.assertEqual(catalog.rules.city_officer_capacity, 99)
                 self.assertEqual(catalog.rules.battle_officers_per_side, 10)
-                for faction, metadata in catalog.factions.items():
+                for metadata in visible_factions(catalog):
+                    faction=metadata["id"]
                     self.assertEqual(game.state.cities[metadata['city']].owner, faction,
                                      'An opening capital must still belong to its displayed faction')
                 seen = set()

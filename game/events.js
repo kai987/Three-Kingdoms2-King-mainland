@@ -6,6 +6,8 @@
   recruit_success:['登用成功','登用に成功'],recruit_failure:['登用未果','登用を断られました'],
   defection:['武將轉屬','武将の移籍'],officer_death:['武將逝世','武将の死去'],
   succession:['主將繼任','君主の継承'],faction_ended:['勢力滅亡','勢力の滅亡'],
+  faction_founded:['地方勢力起兵','地方勢力の挙兵'],faction_founding_skipped:['起兵未成','挙兵の不成立'],
+  faction_coup:['勢力內部奪權','勢力内の政変'],faction_coup_skipped:['奪權未成','政変の不成立'],
   city_founded:['新城建置','新都市の開設'],city_captured:['城池易主','都市の陥落'],
   city_upgraded:['都市擴建','都市の発展'],city_renamed:['城名顯示變更','都市名表示の変更'],
   battle_started:['戰鬥開始','戦闘開始'],battle_result:['戰果揭曉','戦闘の結果'],
@@ -32,14 +34,38 @@
  const SUPPLY=new Set(['march_resupplied','march_starvation','march_retreat']);
  const SUPPLY_REASONS=new Set(['city','convoy','cargo','shortage','route_blocked','no_friendly_city','origin_changed','target_changed','completed']);
  const BATCH=new Set(['officer_appeared','officer_death','recruit_success','recruit_failure','march_arrived','march_returned']);
- const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
+ const FOUNDINGS=new Set(['faction_founded','faction_founding_skipped']);
+ const COUPS=new Set(['faction_coup','faction_coup_skipped']);
+ const WORLD=new Set(['campaign_start','officer_appeared','officer_death','succession','faction_ended','faction_founded','faction_founding_skipped','faction_coup','faction_coup_skipped','city_founded','city_upgraded','city_renamed','city_captured','new_year','campaign_victory','campaign_defeat']);
  const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const clone=value=>JSON.parse(JSON.stringify(value));
  function validEvent(row){
   return !!row&&Number.isSafeInteger(row.id)&&row.id>0&&Object.hasOwn(KINDS,row.kind)&&['player','world'].includes(row.audience)&&
    Number.isSafeInteger(row.year)&&row.year>0&&Number.isInteger(row.month)&&row.month>=1&&row.month<=12&&[1,11,21].includes(row.day)&&Number.isSafeInteger(row.turn)&&row.turn>0&&
    ['person_ids','city_ids','factions'].every(key=>Array.isArray(row[key])&&row[key].every(id=>typeof id==='string'&&id.length<=128))&&
-   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
+   !!row.details&&typeof row.details==='object'&&!Array.isArray(row.details)&&(!STAFF.has(row.kind)||validStaffEvent(row))&&(!TREASURY.has(row.kind)||validTreasuryEvent(row))&&(!FACILITIES.has(row.kind)||validFacilityEvent(row))&&(!EQUIPMENT.has(row.kind)||validEquipmentEvent(row))&&(!OPERATIONS.has(row.kind)||validOperationEvent(row))&&(!SUPPLY.has(row.kind)||validSupplyEvent(row))&&(!FOUNDINGS.has(row.kind)||validFoundingEvent(row))&&(!COUPS.has(row.kind)||validCoupEvent(row))&&(row.kind!=='city_upgraded'||validSizeEvent(row))&&(row.kind!=='city_renamed'||validNameEvent(row));
+ }
+ function validCoupEvent(row){
+  const d=row.details;
+  if(row.audience!=='world'||row.day!==1||row.factions.length!==1||!row.factions[0]||
+   row.city_ids.length>99||row.city_ids.some(id=>!id)||new Set(row.city_ids).size!==row.city_ids.length||
+   row.person_ids.length!==4||row.person_ids.some(id=>!id)||new Set(row.person_ids).size!==4||
+   Object.keys(d).sort().join(',')!=='coup_id,reason,released_troops'||
+   typeof d.coup_id!=='string'||!/^[a-z][a-z0-9_-]{0,79}$/.test(d.coup_id)||
+   !Number.isSafeInteger(d.released_troops)||d.released_troops<0)return false;
+  return row.kind==='faction_coup'?row.city_ids.length>0&&d.reason==='executed'&&d.released_troops<=2997:
+   d.reason==='conditions_changed'&&d.released_troops===0;
+ }
+ function validFoundingEvent(row){
+  const d=row.details;
+  if(row.audience!=='world'||row.day!==1||row.city_ids.length<1||row.city_ids.length>2||row.factions.length!==1||
+   row.city_ids.some(id=>!id)||new Set(row.city_ids).size!==row.city_ids.length||!row.factions[0]||!row.person_ids.length||row.person_ids.length>99||
+   row.person_ids.some(id=>!id)||new Set(row.person_ids).size!==row.person_ids.length||
+   Object.keys(d).sort().join(',')!=='founding_id,reason,reserves'||
+   typeof d.founding_id!=='string'||!/^[a-z][a-z0-9_-]{0,79}$/.test(d.founding_id)||
+   !Number.isSafeInteger(d.reserves)||d.reserves<0)return false;
+  return row.kind==='faction_founded'?d.reason==='formed'&&d.reserves<=999*row.person_ids.length:
+   ['city_occupied','leader_unavailable'].includes(d.reason)&&d.reserves===0;
  }
  function validFacilityEvent(row){
   const d=row.details,k=row.kind,fields={town_developed:['actor','from_town','to_town','gold'],officer_treated:['actor','target','gold','before','after'],officer_studied:['actor','target','gold','before','after','bonus'],grain_traded:['actor','direction','batches','grain','gold','rate'],equipment_bought:['actor','target','slot','item','previous','gold'],prevention_improved:['actor','gold','gain','repair','preparedness_before','preparedness_after','damage_before','damage_after'],city_disaster:['disaster','gold','grain','reserves','rate','preparedness_before','preparedness_after','damage_before','damage_after']}[k];
@@ -136,7 +162,7 @@
    const catalog=view?.catalog||{},people=new Map((catalog.library||[]).map(p=>[p.person_id,p.name]));
    const personName=id=>{const current=Object.entries(view?.game?.officers||{}).find(([,person])=>person.person_id===id);return people.get(id)||(current&&catalog.names?.[current[0]])||text('未具名武將','名前未設定の武将');};
    return {people:row.person_ids.map(id=>label(personName(id))),cities:row.city_ids.map(id=>label(catalog.cities?.find(c=>c.id===id)?.name||text('未知城池','不明な都市'))),
-    factions:row.factions.map(id=>label(catalog.factions?.find(f=>f.id===id)?.name||(id==='neutral'?text('無主','空白都市'):text('未具名勢力','名前未設定の勢力'))))};
+    factions:row.factions.map(id=>label(catalog.factions?.find(f=>f.id===id)?.name||catalog.scheduled_factions?.find(f=>f.id===id)?.name||(id==='neutral'?text('無主','空白都市'):text('未具名勢力','名前未設定の勢力'))))};
   }
   function description(row){
    const n=names(row),p=n.people.join(text('、','・'))||text('武將','武将'),c=n.cities.join(' → ')||text('戰役地圖','戦役地図'),f=n.factions.at(-1)||text('本方','自軍'),d=row.details;
@@ -171,6 +197,10 @@
     case 'officer_death':return text(`${p}離世。兵員與主將繼任依當前戰局結算。`,`${p}が死去しました。兵力と君主の継承は現在の戦況に従い処理されます。`);
     case 'succession':return text(`${p}接任${f}主將，勢力繼續行動。`,`${p}が${f}の君主を継承し、勢力の活動を続けます。`);
     case 'faction_ended':return text(`${f}失去繼續作戰的條件，退出戰役。`,`${f}は戦いを続けられなくなり、戦役から退場しました。`);
+    case 'faction_founded':{const faction=/(?:勢力|势力)$/.test(f)?f:f+'勢力',cities=n.cities.join(text('、','・'))||c;return text(`${p}在${cities}起兵，成立${faction}。從${n.cities.length>1?'上述城池':'該城'}原有預備兵編入${d.reserves}兵，按武優先分配，每人至多999兵；沒有額外產生兵員或錢糧。`,`${p}が${cities}で挙兵し、${faction}が成立しました。都市の既存の予備兵から${d.reserves}を編成し、武の高い順に1人最大999兵を配分しました。兵員・資金・兵糧を新たに発生させる処理はありません。`);}
+    case 'faction_founding_skipped':{const cities=n.cities.join(text('、','・'))||c;return text(`${n.people[0]||f}原定於${cities}起兵；${d.reason==='city_occupied'?'城池已易主':'起兵領袖已被登用、離世或不在本地待訪'}，本次未成立。保留現有的人事與城池歸屬，此起兵判定不會重複。`,`${n.people[0]||f}は${cities}で挙兵する予定でしたが、${d.reason==='city_occupied'?'都市が既に他勢力の支配下にある':'挙兵の指導者が登用済み・死去・現地不在のいずれかである'}ため成立しませんでした。現在の人事と都市の所属を維持し、この挙兵判定は繰り返しません。`);}
+    case 'faction_coup':{const victims=n.people.slice(0,3).join(text('、','・')),successor=n.people[3]||text('繼任者','後継者');return text(`${victims}遇害，${successor}奪取原勢力主導權並自立。釋放兵員${d.released_troops}，各自歸入原所在城池的預備兵；沒有額外產生兵員或錢糧，其他城池與未涉事件武將沿用當前戰局。`,`${victims}が殺害され、${successor}が元の勢力の主導権を奪って自立しました。配下兵${d.released_troops}を、それぞれ元の所在都市の予備兵へ戻しました。兵員・資金・兵糧を新たに発生させず、その他の都市と事件に関与しない武将は現在の戦況を引き継ぎます。`);}
+    case 'faction_coup_skipped':return text(`原定的內部奪權條件已改變：原主將或四名相關人物的歸屬、生死、行軍情況不符，本次不執行殺害或強制轉屬。尊重當前戰局，此判定不會重複。`,'予定していた政変の条件が変わりました。元の君主、または関係者4人の所属・生死・行軍状況が条件を満たさないため、殺害や強制的な所属変更を行いません。現在の戦況を尊重し、この判定は繰り返しません。');
     case 'city_founded':{const founded=n.cities[0]||c,parent=n.cities[1];return text(`${founded}依年代建置，承接${parent||'原城'}目前歸屬及部分資源。`,`${founded}が設定年代に開設され、${parent||'元の都市'}の現在の所属と一部の資源を引き継ぎました。`);}
     case 'city_renamed':return text(`${row.year}年${row.month}月起，本作節點的顯示城名由${label(d.from_name)}切換為${label(d.to_name)}。目前歸屬、武將、兵數與庫存保持實際戰局狀態。`,`${row.year}年${row.month}月から、本作の拠点表示名が${label(d.from_name)}から${label(d.to_name)}へ切り替わりました。現在の支配・武将・兵力・在庫は実際の戦況を引き継ぎます。`);
     case 'city_upgraded':{
@@ -244,6 +274,20 @@
    }
   }
   function historicalIntroduction(row){
+   if(COUPS.has(row.kind)&&row.year===186&&row.month===12&&row.details.coup_id==='han-sui-coup-186-12'){
+    const body=text('《後漢書·董卓傳》把韓遂殺邊章、北宮伯玉、李文侯的敘事接在中平三年冬；《資治通鑑》編入187年，《三國志·武帝紀》裴注引《典略》另記邊章病卒。本作採《後漢書》的奪權敘述，以186年12月上旬作指定遊戲月界；不是三書一致記載的確切遇害月，也不主張韓遂史實稱王。事件仍受當前主將、人物歸屬、生死及行軍條件約束。','『後漢書』の「董卓伝」は、韓遂による辺章・北宮伯玉・李文侯の殺害を中平3年冬の記述に続けて置きます。『資治通鑑』は187年に収め、『三国志』「武帝紀」の裴松之注が引く『典略』には辺章の病死という異なる記述もあります。本作は『後漢書』の主導権奪取の叙述を採り、186年12月上旬を指定されたゲーム上の境界とします。三書が一致して示す正確な殺害月ではなく、韓遂が史実で王を称したとも扱いません。事件の発生は、現在の君主と人物の所属・生死・行軍状況に従います。');
+    const sources=[['後漢書/卷72','《後漢書》卷72','『後漢書』巻72'],['資治通鑑/卷058','《資治通鑑》卷058','『資治通鑑』巻58'],['三國志/卷01','《三國志》卷01','『三国志』巻1']];
+    return `<aside class="event-history" data-event-history="han-sui-186"><h3>${text('史實背景','史実の背景')}</h3><p>${escape(body)}</p><p class="event-history-sources">${text('史料：','史料：')}${sources.map(([path,tc,ja])=>`<a href="https://zh.wikisource.org/zh-hant/${path}" target="_blank" rel="noopener noreferrer">${escape(text(tc,ja))}</a>`).join(' · ')}</p></aside>`;
+   }
+   if(FOUNDINGS.has(row.kind)&&row.year===184&&row.month===11){
+    const northern=row.details.founding_id==='liangzhou-revolt-184-11',song=row.details.founding_id==='song-jian-rise-184-11';
+    if(northern||song){
+     const body=northern?text('《後漢書·靈帝紀》在184年十一月段記北宮伯玉與先零羌起事；《董卓傳》並列北宮伯玉、李文侯為共推的將軍，後劫邊章、韓遂專任軍政，其注亦記宋建、王國參與起事並脅邊允、韓約。本作依指定，在十一月條件符合時，以宋建、北宮伯玉、李文侯共同起事、推邊章為首領及韓遂為軍師，使用金城、天水節點。宋建參與起事後另據隴西自立，由其獨立事件結算，不列入邊章現役名冊。首領與軍師是本作將共任軍政角色化的安排，不自動委任內政官；金城為湟中及金城活動區域代理，上旬不是史料確切起事日。','『後漢書』の「霊帝紀」は、北宮伯玉と先零羌の反乱を184年11月の記事に置きます。「董卓伝」では北宮伯玉・李文侯が共に将軍に推され、その後に辺章・韓遂に軍政を任せたとあり、注には宋建・王国の参加と辺允・韓約への強制も記されています。本作は指定により、11月に条件がそろえば宋建・北宮伯玉・李文侯が共に起ち、辺章を指導者、韓遂を軍師とする勢力を金城・天水に成立させます。参加後の宋建は隴西で独立し、別の勢力として処理するため辺章の現役名簿には含めません。指導者と軍師は共に軍政を担ったことを役割化した本作の設定で、内政担当官への自動任命ではありません。金城は湟中・金城の代替拠点で、上旬は史料で確定した挙兵日ではありません。'):
+      text('《後漢書·董卓傳》將宋建參與涼州亂記在184年冬；《三國志》記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依指定，宋建先參與同月金城、天水的起事，再於隴西條件符合時另立勢力，與邊章現役軍分開。隴西僅作枹罕活動區域的固定地圖代理，十一月不是已證的建國月。','『後漢書』の「董卓伝」は宋建の涼州の反乱への参加を184年冬に記します。『三国志』によれば宋建は枹罕に30余年拠り、214年10月に夏侯淵に討ち滅ぼされましたが、建国した正確な月は不明です。本作では指定に従い、宋建は同月の金城・天水での挙兵に参加し、その後、隴西で条件を満たした場合に独立します。辺章の現役軍とは別の勢力として処理します。隴西は枹罕の活動地域を表す固定の代替拠点で、11月は史料で確認された建国月ではありません。');
+     const sources=northern?[['後漢書/卷8','《後漢書》卷8','『後漢書』巻8'],['後漢書/卷72','《後漢書》卷72','『後漢書』巻72']]:[['後漢書/卷72','《後漢書》卷72','『後漢書』巻72'],['三國志/卷01','《三國志》卷01','『三国志』巻1'],['三國志/卷09','《三國志》卷09','『三国志』巻9']];
+     return `<aside class="event-history" data-event-history="${northern?'liangzhou':'song-jian'}-184"><h3>${text('史實背景','史実の背景')}</h3><p>${escape(body)}</p><p class="event-history-sources">${text('史料：','史料：')}${sources.map(([path,tc,ja])=>`<a href="https://zh.wikisource.org/zh-hant/${path}" target="_blank" rel="noopener noreferrer">${escape(text(tc,ja))}</a>`).join(' · ')}</p></aside>`;
+    }
+   }
    if(row.city_ids.length!==1||row.city_ids[0]!=='qiao')return '';
    const renamed=row.kind==='city_renamed'&&row.year===219&&row.month===1,
     upgraded=row.kind==='city_upgraded'&&row.year===221&&row.month===1;
