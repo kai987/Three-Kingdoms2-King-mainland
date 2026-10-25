@@ -105,6 +105,34 @@ class HistoricalScenarioTests(unittest.TestCase):
                     self.assertEqual(game.catalog.data['initial_owners'][city], 'neutral')
                     self.assertEqual(game.state.cities[city].owner, 'neutral')
 
+    def test_188_sun_jian_governs_changsha_after_ou_xings_defeat(self):
+        game = self.game('188-06', 'sun_jian')
+        expected = {'san14-candidate-0551', 'san14-candidate-0703',
+                    'san14-candidate-0247', 'san14-candidate-0176',
+                    'san14-candidate-0390'}
+        self.assertNotIn('ou_xing', game.catalog.factions)
+        self.assertEqual(game.catalog.factions['sun_jian']['city'], 'changsha')
+        self.assertEqual(game.state.cities['changsha'].owner, 'sun_jian')
+        self.assert_ruler(game, 'sun_jian', 'san14-candidate-0551')
+        stationed = {game.state.officers[ident].person_id
+                     for ident in game.state.cities['changsha'].roster.officer_ids}
+        self.assertEqual(stationed, expected)
+        for person_id in expected:
+            with self.subTest(person_id=person_id):
+                officer = game.state.officers[game.catalog.ids[person_id]]
+                self.assertEqual(officer.faction_id, 'sun_jian')
+                assignment = game.catalog.data['era_assignments'][person_id]
+                self.assertEqual((assignment['status'], assignment['faction'], assignment['city']),
+                                 ('serving', 'sun_jian', 'changsha'))
+        excluded = 'san14-candidate-0065'
+        self.assertEqual(game.catalog.data['era_assignments'][excluded]['status'], 'scenario_excluded')
+        self.assertNotIn(game.catalog.ids[excluded], game.state.officers)
+        definition = game.catalog.definitions[excluded]
+        self.assertEqual(definition.death_year, self.people[excluded]['death_year'])
+        game._spawn_eligible(game.state)
+        self.assertNotIn(game.catalog.ids[excluded], game.state.officers)
+        game.validate(game.state)
+
     def test_212_december_has_the_actual_entry_frontier_and_no_retired_guards(self):
         game = self.game('212-12', 'shu')
         self.assertEqual((game.state.year, game.state.month), (212, 12))
@@ -221,6 +249,7 @@ class HistoricalScenarioTests(unittest.TestCase):
 
     def test_added_factions_can_start_and_restore_a_real_json_save(self):
         targets = [(chapter, 'han_sui') for chapter in HAN_SUI_CHAPTERS]
+        targets += [('188-06', 'sun_jian')]
         targets += [('190-01', faction) for faction, _ in EARLY_GOVERNORS.values()]
         targets += [('191-10', faction) for faction, _ in GOVERNORS_191.values()]
         targets += [('208-10', faction) for faction, _ in JINGNAN.values()]

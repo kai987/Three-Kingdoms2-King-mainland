@@ -2,8 +2,8 @@
   "schema": "tk2-scenario-history-audit-v1",
   "review_revision": "2026-10-25",
   "review_file": "game/config/references/scenario-history-review.json",
-  "review_sha256": "819cc658b0ac729b565be07643125cff4649af1917a662847843c928cee5171e",
-  "presentation_sha256": "5a301fccf825f3c89720afd0500e38c15398209115b367ffd10a048332a50eab",
+  "review_sha256": "44381f243497afdc972c1a414d131a8ee571df8b76fb79915cc613efb6ec62c9",
+  "presentation_sha256": "e4cf452127f738161f23a772b262d1fceda5bc023a7e64c525594592a92fdecc",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -18,13 +18,13 @@
   "summary": {
     "cities": 2515,
     "factions": 234,
-    "boundary_links": 1255,
-    "opening_officers": 8718,
-    "new_factions": 23,
-    "city_changes": 83,
-    "officer_changes": 406,
-    "city_change_records": 84,
-    "officer_change_records": 406
+    "boundary_links": 1259,
+    "opening_officers": 8717,
+    "new_factions": 24,
+    "city_changes": 86,
+    "officer_changes": 437,
+    "city_change_records": 87,
+    "officer_change_records": 437
   },
   "sources": {
     "han_sui": [
@@ -77,12 +77,25 @@
     "lvxing": [
       "https://zh.wikisource.org/wiki/三國志/卷48",
       "https://zh.wikisource.org/wiki/資治通鑑/卷078"
+    ],
+    "sun_jian188": [
+      "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+      "https://zh.wikisource.org/zh-hant/三國志/卷46",
+      "https://zh.wikisource.org/zh-hant/三國志/卷55",
+      "https://zh.wikisource.org/zh-hant/三國志/卷56"
+    ],
+    "yan194": [
+      "https://zh.wikisource.org/zh-hant/三國志/卷01",
+      "https://zh.wikisource.org/zh-hant/三國志/卷07",
+      "https://zh.wikisource.org/zh-hant/三國志/卷10",
+      "https://zh.wikisource.org/zh-hant/資治通鑑/卷061",
+      "https://zh.wikisource.org/zh-hant/後漢書/卷111"
     ]
   },
   "limits": [
     "Regional review, not a complete transcription of SAN14 or an attested prefect list for each exact month.",
     "Zhang Yan, Wuhuan, Yan Baihu, Song Jian, Di rulers and Lu Xing lack separate matching city/person configurations; omission is recorded instead of inventing administrative city control.",
-    "184 early deployments,188 Ou Xing chronology,194 Cao Cao/Chenliu versus Zhang Miao and other simultaneous occupants retain existing gameplay proxies and are not certified exact history.",
+    "184 early military groups retain playable command proxies: Sun Jian at Xiapi is grounded in his county-deputy posting, but not represented as a historically independent commandery governor.",
     "207 Zhangling for Liu Bei,208 August Zhangling cutoff,209 IF Linjiang owner and other earlier explicit user settings are retained.",
     "Lujiang/Wan transition before213/214 and some Jiangxia cross-river splits lack a proven exact opening-month boundary; no unsupported backdating from214 conquest.",
     "Four Jingnan prefect groups are playable local administrations; the subordinate roster distinguishes primary history from Romance-game compatibility."
@@ -97,7 +110,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "1cceb3d3947a445bf9cbcfdd92d8cfcfd9f065deb6fb75efb1b322d48a50d331",
+      "catalog_sha256": "7bd308717cba8942e38e031727a5aeea940faeddd63f02300f9302ac0f399d01",
       "factions": [
         {
           "id": "ding_yuan",
@@ -4769,6 +4782,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -4786,7 +4800,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "877899a31c17f3997a5aacc14ffe600fefb4034c075991b34db1225cc0c98648",
+      "catalog_sha256": "6b8807e611e06e4c5c6c3bd80e2ade665c1461d85e06e0a588d3b0135f0652b3",
       "factions": [
         {
           "id": "ding_yuan",
@@ -4813,7 +4827,7 @@
           "city": "henan",
           "city_name": "洛阳",
           "city_count": 4,
-          "officer_count": 58
+          "officer_count": 53
         },
         {
           "id": "han_sui",
@@ -4843,15 +4857,6 @@
           "officer_count": 13
         },
         {
-          "id": "ou_xing",
-          "ruler": "区星",
-          "person_id": "san14-candidate-0065",
-          "city": "changsha",
-          "city_name": "长沙",
-          "city_count": 1,
-          "officer_count": 1
-        },
-        {
           "id": "shi_xie",
           "ruler": "士燮",
           "person_id": "san14-candidate-0341",
@@ -4859,6 +4864,15 @@
           "city_name": "交趾",
           "city_count": 1,
           "officer_count": 6
+        },
+        {
+          "id": "sun_jian",
+          "ruler": "孙坚",
+          "person_id": "san14-candidate-0551",
+          "city": "changsha",
+          "city_name": "长沙",
+          "city_count": 1,
+          "officer_count": 5
         },
         {
           "id": "zhang_chun",
@@ -4923,7 +4937,7 @@
         {
           "city": "changsha",
           "name": "长沙",
-          "owner": "ou_xing",
+          "owner": "sun_jian",
           "neutral_label": null
         },
         {
@@ -5596,7 +5610,7 @@
             "guiyang"
           ],
           "owners": [
-            "ou_xing",
+            "sun_jian",
             "neutral"
           ],
           "modes": [
@@ -5613,7 +5627,7 @@
             "jiangxia"
           ],
           "owners": [
-            "ou_xing",
+            "sun_jian",
             "neutral"
           ],
           "modes": [
@@ -5631,7 +5645,7 @@
             "lingling"
           ],
           "owners": [
-            "ou_xing",
+            "sun_jian",
             "neutral"
           ],
           "modes": [
@@ -5649,7 +5663,7 @@
             "luling"
           ],
           "owners": [
-            "ou_xing",
+            "sun_jian",
             "neutral"
           ],
           "modes": [
@@ -5666,7 +5680,7 @@
             "wuling"
           ],
           "owners": [
-            "ou_xing",
+            "sun_jian",
             "neutral"
           ],
           "modes": [
@@ -6739,16 +6753,6 @@
           "city_name": "成都"
         },
         {
-          "person_id": "san14-candidate-0065",
-          "name": "区星",
-          "status": "serving",
-          "faction": "ou_xing",
-          "city": "changsha",
-          "ruler": true,
-          "appearance_basis": "explicit_serving",
-          "city_name": "长沙"
-        },
-        {
           "person_id": "san14-candidate-0067",
           "name": "王忠",
           "status": "free",
@@ -7112,11 +7116,11 @@
           "person_id": "san14-candidate-0176",
           "name": "韩当",
           "status": "serving",
-          "faction": "han",
-          "city": "jingzhao",
+          "faction": "sun_jian",
+          "city": "changsha",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "长安"
+          "city_name": "长沙"
         },
         {
           "person_id": "san14-candidate-0177",
@@ -7452,11 +7456,11 @@
           "person_id": "san14-candidate-0247",
           "name": "黄盖",
           "status": "serving",
-          "faction": "han",
-          "city": "wei",
+          "faction": "sun_jian",
+          "city": "changsha",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "邺"
+          "city_name": "长沙"
         },
         {
           "person_id": "san14-candidate-0248",
@@ -8042,11 +8046,11 @@
           "person_id": "san14-candidate-0390",
           "name": "朱治",
           "status": "serving",
-          "faction": "han",
-          "city": "henan",
+          "faction": "sun_jian",
+          "city": "changsha",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "洛阳"
+          "city_name": "长沙"
         },
         {
           "person_id": "san14-candidate-0393",
@@ -8452,11 +8456,11 @@
           "person_id": "san14-candidate-0551",
           "name": "孙坚",
           "status": "serving",
-          "faction": "han",
-          "city": "wei",
-          "ruler": false,
+          "faction": "sun_jian",
+          "city": "changsha",
+          "ruler": true,
           "appearance_basis": "explicit_serving",
-          "city_name": "邺"
+          "city_name": "长沙"
         },
         {
           "person_id": "san14-candidate-0552",
@@ -8912,11 +8916,11 @@
           "person_id": "san14-candidate-0703",
           "name": "程普",
           "status": "serving",
-          "faction": "han",
-          "city": "henan",
+          "faction": "sun_jian",
+          "city": "changsha",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "洛阳"
+          "city_name": "长沙"
         },
         {
           "person_id": "san14-candidate-0709",
@@ -9899,9 +9903,54 @@
           "city_name": "洛阳"
         }
       ],
-      "new_factions": [],
-      "city_changes": [],
+      "new_factions": [
+        {
+          "id": "sun_jian",
+          "person_id": "san14-candidate-0551",
+          "city": "changsha",
+          "certainty": "primary_text_affiliation",
+          "note": "《資治通鑑》繫孫堅任長沙太守、討平區星於187年冬十月；188年6月以長沙為其郡治據點，名義仍屬漢廷。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷46"
+          ],
+          "ruler": "孙坚"
+        }
+      ],
+      "removed_factions": [
+        "ou_xing"
+      ],
+      "city_changes": [
+        {
+          "city": "changsha",
+          "before": "ou_xing",
+          "owner": "sun_jian",
+          "certainty": "primary_text_affiliation",
+          "note": "187年冬區星叛亂已被平定；188年6月長沙由太守孫堅掌理，區星不再列為開局勢力，史料未明言其本人被殺。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷46"
+          ]
+        }
+      ],
       "officer_changes": [
+        {
+          "person_id": "san14-candidate-0065",
+          "name": "区星",
+          "before": {
+            "faction": "ou_xing",
+            "city": "changsha",
+            "status": "serving"
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology_choice",
+          "note": "《資治通鑑》記187年冬十月孫堅任長沙太守並討平區星；188年6月不再列區星為開局勢力。此為失勢排除，並非認定史料已證其本人死亡。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷46"
+          ]
+        },
         {
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
@@ -9918,12 +9967,96 @@
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0176",
+          "name": "韩当",
+          "before": {
+            "faction": "han",
+            "city": "jingzhao",
+            "status": "serving"
+          },
+          "faction": "sun_jian",
+          "city": "changsha",
+          "certainty": "bounded_career_inference",
+          "note": "《三國志》記韓當隨孫堅征伐，終孫堅之世為別部司馬；188年從屬為生涯窗口推定，具體合駐長沙為本作安排。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷55"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0247",
+          "name": "黄盖",
+          "before": {
+            "faction": "han",
+            "city": "wei",
+            "status": "serving"
+          },
+          "faction": "sun_jian",
+          "city": "changsha",
+          "certainty": "bounded_career_inference",
+          "note": "《三國志》記黃蓋從孫堅南破山賊、北走董卓；188年從屬為生涯窗口推定，具體合駐長沙為本作安排。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷55"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0390",
+          "name": "朱治",
+          "before": {
+            "faction": "han",
+            "city": "henan",
+            "status": "serving"
+          },
+          "faction": "sun_jian",
+          "city": "changsha",
+          "certainty": "bounded_career_inference",
+          "note": "《三國志》記朱治隨孫堅征伐，中平五年拜司馬；188年6月延續其從屬，具體合駐長沙為本作安排，未斷言拜官月份。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷56"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0551",
+          "name": "孙坚",
+          "before": {
+            "faction": "han",
+            "city": "wei",
+            "status": "serving"
+          },
+          "faction": "sun_jian",
+          "city": "changsha",
+          "certainty": "primary_text_affiliation",
+          "note": "《資治通鑑》繫孫堅任長沙太守、討平區星於187年冬十月；188年6月以長沙為其郡治據點，名義仍屬漢廷。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+            "https://zh.wikisource.org/zh-hant/三國志/卷46"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0703",
+          "name": "程普",
+          "before": {
+            "faction": "han",
+            "city": "henan",
+            "status": "serving"
+          },
+          "faction": "sun_jian",
+          "city": "changsha",
+          "certainty": "bounded_career_inference",
+          "note": "《三國志》記程普隨孫堅討黃巾，188年延續其從屬；具體合駐長沙為本作安排，非逐月駐防已證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷55"
+          ]
         }
       ],
-      "owner_expectations": {},
+      "owner_expectations": {
+        "changsha": "sun_jian"
+      },
       "notable_exclusions": [],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "187年冬區星叛亂已被平定；188年6月長沙由太守孫堅掌理，區星不再列為開局勢力，史料未明言其本人被殺。"
       ]
     },
     {
@@ -9935,7 +10068,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "a7f9b75671907c340ed7fb1d27b84a31a83829944d30ea5c33519b238688321a",
+      "catalog_sha256": "a780ce0e1032bcf39c64ff690284398c8b0d09669ea47e1075468867783c49bf",
       "factions": [
         {
           "id": "bao_xin",
@@ -16347,6 +16480,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "dongjun",
@@ -17021,7 +17155,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "a0bd236e52dfe6ee329ff836c0b3c0c2e45039fcf491bb51ccf7fb9808517fbe",
+      "catalog_sha256": "d6037b528eff6722a98f1e5abe885d6c65dd5dcb333bf53b0306675df8a1b838",
       "factions": [
         {
           "id": "bao_xin",
@@ -23395,6 +23529,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "chenliu",
@@ -24402,7 +24537,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "81132eb176e3d5c21369787574d352399f9a1110a83831470c4a078403cb2552",
+      "catalog_sha256": "f331ba60eb65506e40ad6d201e6a729e234c8a9e56c320ea9ddfda6871b291fc",
       "factions": [
         {
           "id": "gongsun",
@@ -24534,8 +24669,8 @@
           "id": "wei",
           "ruler": "曹操",
           "person_id": "san14-candidate-0521",
-          "city": "chenliu",
-          "city_name": "陈留",
+          "city": "jiyin",
+          "city_name": "鄄城",
           "city_count": 2,
           "officer_count": 33
         },
@@ -24650,7 +24785,7 @@
         {
           "city": "chenliu",
           "name": "陈留",
-          "owner": "wei",
+          "owner": "lubu",
           "neutral_label": null
         },
         {
@@ -24865,8 +25000,8 @@
         },
         {
           "city": "jiyin",
-          "name": "济阴",
-          "owner": "lubu",
+          "name": "鄄城",
+          "owner": "wei",
           "neutral_label": null
         },
         {
@@ -25465,7 +25600,7 @@
             "henei"
           ],
           "owners": [
-            "wei",
+            "lubu",
             "zhang_yang"
           ],
           "modes": [
@@ -25482,8 +25617,8 @@
             "jiyin"
           ],
           "owners": [
-            "wei",
-            "lubu"
+            "lubu",
+            "wei"
           ],
           "modes": [
             "land"
@@ -25499,8 +25634,25 @@
             "qiao"
           ],
           "owners": [
-            "wei",
+            "lubu",
             "shu"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "chenliu",
+            "yingchuan"
+          ],
+          "owners": [
+            "lubu",
+            "wei"
           ],
           "modes": [
             "land"
@@ -25651,6 +25803,23 @@
         {
           "cities": [
             "dongjun",
+            "jiyin"
+          ],
+          "owners": [
+            "lubu",
+            "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "dongjun",
             "qinghe"
           ],
           "owners": [
@@ -25690,6 +25859,23 @@
           "owners": [
             "lubu",
             "yuan_shao"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "dongping",
+            "jiyin"
+          ],
+          "owners": [
+            "lubu",
+            "wei"
           ],
           "modes": [
             "land"
@@ -26290,6 +26476,23 @@
           "owners": [
             "yuan_shu",
             "neutral"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jiyin",
+            "shanyang"
+          ],
+          "owners": [
+            "wei",
+            "lubu"
           ],
           "modes": [
             "land"
@@ -27325,10 +27528,10 @@
           "name": "乐进",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0105",
@@ -27345,10 +27548,10 @@
           "name": "郝萌",
           "status": "serving",
           "faction": "lubu",
-          "city": "jiyin",
+          "city": "chenliu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "济阴"
+          "city_name": "陈留"
         },
         {
           "person_id": "san14-candidate-0114",
@@ -27365,20 +27568,20 @@
           "name": "夏侯恩",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0124",
           "name": "夏侯惇",
           "status": "serving",
           "faction": "wei",
-          "city": "yingchuan",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "许县"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0134",
@@ -27465,10 +27668,10 @@
           "name": "韩浩",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0160",
@@ -27735,10 +27938,10 @@
           "name": "许汜",
           "status": "serving",
           "faction": "lubu",
-          "city": "jiyin",
+          "city": "chenliu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "济阴"
+          "city_name": "陈留"
         },
         {
           "person_id": "san14-candidate-0213",
@@ -28365,10 +28568,10 @@
           "name": "史涣",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0334",
@@ -28455,10 +28658,10 @@
           "name": "司马朗",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0355",
@@ -28595,10 +28798,10 @@
           "name": "荀彧",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0395",
@@ -28795,20 +28998,20 @@
           "name": "秦宜禄",
           "status": "serving",
           "faction": "lubu",
-          "city": "jiyin",
+          "city": "chenliu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "济阴"
+          "city_name": "陈留"
         },
         {
           "person_id": "san14-candidate-0460",
           "name": "任峻",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0462",
@@ -29005,10 +29208,10 @@
           "name": "曹安民",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0505",
@@ -29045,10 +29248,10 @@
           "name": "曹昂",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0511",
@@ -29075,40 +29278,40 @@
           "name": "曹纯",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0518",
           "name": "曹仁",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0519",
           "name": "曹性",
           "status": "serving",
           "faction": "lubu",
-          "city": "jiyin",
+          "city": "chenliu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "济阴"
+          "city_name": "陈留"
         },
         {
           "person_id": "san14-candidate-0521",
           "name": "曹操",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": true,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0524",
@@ -29575,10 +29778,10 @@
           "name": "张邈",
           "status": "serving",
           "faction": "lubu",
-          "city": "dongping",
+          "city": "chenliu",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "东平"
+          "city_name": "陈留"
         },
         {
           "person_id": "san14-candidate-0654",
@@ -29665,10 +29868,10 @@
           "name": "陈宫",
           "status": "serving",
           "faction": "lubu",
-          "city": "jiyin",
+          "city": "dongjun",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "济阴"
+          "city_name": "濮阳"
         },
         {
           "person_id": "san14-candidate-0672",
@@ -29755,10 +29958,10 @@
           "name": "程昱",
           "status": "serving",
           "faction": "wei",
-          "city": "yingchuan",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "许县"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0691",
@@ -29805,10 +30008,10 @@
           "name": "丁斐",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0703",
@@ -30215,10 +30418,10 @@
           "name": "卞氏",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0819",
@@ -30295,10 +30498,10 @@
           "name": "毛玠",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0847",
@@ -30695,10 +30898,10 @@
           "name": "刘岱",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0949",
@@ -30865,10 +31068,10 @@
           "name": "吕虔",
           "status": "serving",
           "faction": "wei",
-          "city": "chenliu",
+          "city": "jiyin",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "陈留"
+          "city_name": "鄄城"
         },
         {
           "person_id": "san14-candidate-0983",
@@ -30989,7 +31192,21 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
+        {
+          "city": "chenliu",
+          "before": "wei",
+          "owner": "lubu",
+          "note": "194年夏張邈、陳宮迎呂布，兗州郡縣響應；陳留由張邈—呂布聯盟控制，不能再作曹操本據。本作合併表示為呂布勢力，不另立敵對張邈勢力。",
+          "certainty": "primary_text_affiliation",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
         {
           "city": "jincheng",
           "before": "ma_teng",
@@ -30999,6 +31216,20 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "city": "jiyin",
+          "before": "lubu",
+          "owner": "wei",
+          "note": "194年夏曹操僅保鄄城、范、東阿三縣。鄄城屬濟陰郡；本劇本沿用濟陰節點代表鄄城據點及三縣防區，顯示鄄城，並非聲稱定陶郡治或整個濟陰郡歸曹操。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷111"
           ]
         },
         {
@@ -31058,6 +31289,101 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0102",
+          "name": "乐进",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0108",
+          "name": "郝萌",
+          "before": {
+            "faction": "lubu",
+            "city": "jiyin",
+            "status": "serving"
+          },
+          "faction": "lubu",
+          "city": "chenliu",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0115",
+          "name": "夏侯恩",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0124",
+          "name": "夏侯惇",
+          "before": {
+            "faction": "wei",
+            "city": "yingchuan",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "primary_text_affiliation",
+          "note": "《夏侯惇傳》《荀彧傳》記夏侯惇由濮陽輕軍救鄄城，呂布遂據濮陽；駐本作鄄城代理節點。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0159",
+          "name": "韩浩",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
           "before": {
@@ -31094,6 +31420,25 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0212",
+          "name": "许汜",
+          "before": {
+            "faction": "lubu",
+            "city": "jiyin",
+            "status": "serving"
+          },
+          "faction": "lubu",
+          "city": "chenliu",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0250",
           "name": "黄权",
           "before": {
@@ -31112,6 +31457,101 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0333",
+          "name": "史涣",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0353",
+          "name": "司马朗",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0393",
+          "name": "荀彧",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "primary_text_affiliation",
+          "note": "《荀彧傳》記荀彧守鄄城，與夏侯惇保全留守；194年6月駐本作鄄城代理節點，不留在已叛的陳留。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0456",
+          "name": "秦宜禄",
+          "before": {
+            "faction": "lubu",
+            "city": "jiyin",
+            "status": "serving"
+          },
+          "faction": "lubu",
+          "city": "chenliu",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0460",
+          "name": "任峻",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0475",
           "name": "成公英",
           "before": {
@@ -31126,6 +31566,121 @@
           "source_urls": [
             "https://zh.wikisource.org/wiki/三國志/卷15",
             "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0499",
+          "name": "曹安民",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0510",
+          "name": "曹昂",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0514",
+          "name": "曹纯",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0518",
+          "name": "曹仁",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0519",
+          "name": "曹性",
+          "before": {
+            "faction": "lubu",
+            "city": "jiyin",
+            "status": "serving"
+          },
+          "faction": "lubu",
+          "city": "chenliu",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0521",
+          "name": "曹操",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "regional_primary_mapping",
+          "note": "曹操194年夏自徐州回救，仍以鄄城為本據；本作沿用濟陰節點代表鄄城縣域，不表示曹操據有整個濟陰郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061",
+            "https://zh.wikisource.org/zh-hant/後漢書/卷111"
           ]
         },
         {
@@ -31147,6 +31702,120 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0653",
+          "name": "张邈",
+          "before": {
+            "faction": "lubu",
+            "city": "dongping",
+            "status": "serving"
+          },
+          "faction": "lubu",
+          "city": "chenliu",
+          "certainty": "primary_text_affiliation",
+          "note": "陳留太守張邈194年夏與陳宮迎呂布；沿用既有呂布聯盟身份，配置於陳留，不改為曹操或新造勢力。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0671",
+          "name": "陈宫",
+          "before": {
+            "faction": "lubu",
+            "city": "jiyin",
+            "status": "serving"
+          },
+          "faction": "lubu",
+          "city": "dongjun",
+          "certainty": "primary_text_affiliation",
+          "note": "陳宮194年夏率留屯東郡之眾迎呂布，呂布據濮陽；配置於東郡/濮陽節點，保持呂布勢力。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0689",
+          "name": "程昱",
+          "before": {
+            "faction": "wei",
+            "city": "yingchuan",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "primary_text_affiliation",
+          "note": "程昱撫范、守東阿，助保鄄城、范、東阿三縣；本作將三縣防區合併在鄄城代理節點，不把范縣誤作整個東平國。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0702",
+          "name": "丁斐",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0816",
+          "name": "卞氏",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0844",
+          "name": "毛玠",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0854",
           "name": "杨怀",
           "before": {
@@ -31163,17 +31832,69 @@
             "https://zh.wikisource.org/wiki/三國志/卷16",
             "https://zh.wikisource.org/wiki/華陽國志/卷二"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0980",
+          "name": "吕虔",
+          "before": {
+            "faction": "wei",
+            "city": "chenliu",
+            "status": "serving"
+          },
+          "faction": "wei",
+          "city": "jiyin",
+          "certainty": "authorial_garrison_relocation",
+          "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/zh-hant/三國志/卷01",
+            "https://zh.wikisource.org/zh-hant/三國志/卷07",
+            "https://zh.wikisource.org/zh-hant/三國志/卷10",
+            "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+          ]
         }
       ],
       "owner_expectations": {
+        "chenliu": "lubu",
         "jincheng": "han_sui",
+        "jiyin": "wei",
         "wudu": "neutral",
         "wujun": "xu_gong",
         "yinping": "neutral"
       },
       "notable_exclusions": [],
       "notes": [
-        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
+        "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
+        "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+        "194年夏張邈、陳宮迎呂布，兗州郡縣響應；陳留由張邈—呂布聯盟控制，不能再作曹操本據。本作合併表示為呂布勢力，不另立敵對張邈勢力。",
+        "194年夏曹操僅保鄄城、范、東阿三縣。鄄城屬濟陰郡；本劇本沿用濟陰節點代表鄄城據點及三縣防區，顯示鄄城，並非聲稱定陶郡治或整個濟陰郡歸曹操。",
+        "《夏侯惇傳》《荀彧傳》記夏侯惇由濮陽輕軍救鄄城，呂布遂據濮陽；駐本作鄄城代理節點。",
+        "《荀彧傳》記荀彧守鄄城，與夏侯惇保全留守；194年6月駐本作鄄城代理節點，不留在已叛的陳留。",
+        "曹操194年夏自徐州回救，仍以鄄城為本據；本作沿用濟陰節點代表鄄城縣域，不表示曹操據有整個濟陰郡。",
+        "程昱撫范、守東阿，助保鄄城、范、東阿三縣；本作將三縣防區合併在鄄城代理節點，不把范縣誤作整個東平國。",
+        "陳宮194年夏率留屯東郡之眾迎呂布，呂布據濮陽；配置於東郡/濮陽節點，保持呂布勢力。",
+        "陳留太守張邈194年夏與陳宮迎呂布；沿用既有呂布聯盟身份，配置於陳留，不改為曹操或新造勢力。",
+        "194年6月的鄄城、范、東阿以同一既有濟陰節點表示；不是整個濟陰郡控制色。",
+        "颍川不属兖州，不能由兖州仅三城一句直接推断其归属；本轮不扩大结论。",
+        "兗州之變後，曹操據鄄城、范、東阿；陳留由張邈與呂布聯盟控制。本劇本以原濟陰節點代理鄄城三縣防區。"
       ]
     },
     {
@@ -31185,7 +31906,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "8e81e9f863c2045743fa75ae88750a3f158145d618e12782c213a16390672f10",
+      "catalog_sha256": "6455716c9d6b77f947d7e819ba3ecc6ed3e26b24b91685b7f1b1633eb0e69160",
       "factions": [
         {
           "id": "gongsun",
@@ -38058,6 +38779,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "jincheng",
@@ -38453,7 +39175,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "5fe4a884d3abe1fa5915a01680b0dab48df7895eb8d9e44879257eae480d85b7",
+      "catalog_sha256": "6e6faf5a0e3e86cbd129ce71f0682efff63a481f0fdf8905c90e993e38afbe23",
       "factions": [
         {
           "id": "gongsun",
@@ -45219,6 +45941,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "jincheng",
@@ -45419,7 +46142,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "ec96eff3e548b9d57aa410f3856763646d928c47d2275986a71b563acf3d040f",
+      "catalog_sha256": "4928c850c992e6d985703b719df8af2b3113ff09fde11993227a831d7c4422f1",
       "factions": [
         {
           "id": "gongsun",
@@ -51571,6 +52294,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "cangwu",
@@ -52229,7 +52953,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "4820d30855b20baccc71bfc89db52c81a877e6d08562097e9117032329fee947",
+      "catalog_sha256": "8404736921f46cf718c276ef82ada0b9ddffbba5f16b2eae8b9b01e9856db149",
       "factions": [
         {
           "id": "gao_gan",
@@ -58589,6 +59313,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "cangwu",
@@ -59211,7 +59936,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "1216dc6e891fb0e6dfe9e10bf606fd5f3c3c940d58ddf957fc77488658b0c8b0",
+      "catalog_sha256": "dbf51169accfb732bc3e24ec30fba39f199e6c758793ee060f08fecce6ec4d33",
       "factions": [
         {
           "id": "gongsun",
@@ -65373,6 +66098,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "cangwu",
@@ -66656,7 +67382,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "70c38dd1650dd8c147e7e6530822f050cbc6ba187b87c8480ee6a83c41ae1269",
+      "catalog_sha256": "e79759cc08da4043af00f8296bad4753bbb223813c2d069b03b8ebd89a25ccb8",
       "factions": [
         {
           "id": "gongsun",
@@ -72985,6 +73711,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "cangwu",
@@ -74304,7 +75031,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "d82eaafc4b0ea9559395b00975ae25e4dc3f7d6298c8649fe206d1f51c43eecc",
+      "catalog_sha256": "c94d6213aeb1a41a13ee3355fd33414cb4c9ccaf53a154901b2bf8a371c1c740",
       "factions": [
         {
           "id": "gongsun",
@@ -80248,6 +80975,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "jincheng",
@@ -80837,7 +81565,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "7b95ab2819afcb60fa163789aba80a77a5ec158f16dfa4f01d396379b3cd83bb",
+      "catalog_sha256": "b6153b8d5ee66d703049c8da127481c8af93f787e7da517f2ecaf679bfc6cc07",
       "factions": [
         {
           "id": "gongsun",
@@ -86567,6 +87295,7 @@
           ]
         }
       ],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "anding",
@@ -88404,7 +89133,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "7418927aaa682157262993a36d957fd199df5962f04fe2b8ced348adb0657bf6",
+      "catalog_sha256": "9ef9242de9b8e9e564687e59bb3bea750509f56b8104d221c0cd9e1a8c4e9186",
       "factions": [
         {
           "id": "gongsun",
@@ -93791,6 +94520,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -93808,7 +94538,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "8de110bc327e0a0d0bf15fed44cdb09566b753685e537e74a0d4e7cdd9340071",
+      "catalog_sha256": "28bf0d12da8e8e2a40f9bd3773fc8ce7cfead39408c67cc41e4cfa0d8dd8ef89",
       "factions": [
         {
           "id": "gongsun",
@@ -99245,6 +99975,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -99262,7 +99993,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "7fa26a0dd7b78e0d6ff8970b7b9bddba17dba57facd63ad50292a8aa70cb5f20",
+      "catalog_sha256": "36fd66b8a2c60f1f31a6f043c91dea80872bf9549e5791a66e103684a93a42d3",
       "factions": [
         {
           "id": "gongsun",
@@ -104790,6 +105521,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -104807,7 +105539,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "6982e543368bd619b020f53a536cc6c372b7fafcbb75ab899dcc866a18b3c0e9",
+      "catalog_sha256": "92bb5d24b85f588d4c770510311627f97333191cf4116d3dd98c7635f00f79a1",
       "factions": [
         {
           "id": "gongsun",
@@ -110109,6 +110841,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -110126,7 +110859,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "ed59e973e7aeb8d8e13d5e0b7e4ca4727cdf528092c8333374e896416c927921",
+      "catalog_sha256": "d3bbc9a6b465fb9af787c664af74d571978be67c839008be8cdc5b9013e786e7",
       "factions": [
         {
           "id": "gongsun",
@@ -115375,6 +116108,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "zangke",
@@ -115475,7 +116209,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "c05f341adc49ad3d4d7adeddf8f2de50f3a09d8b1ff489bf1099734df07038db",
+      "catalog_sha256": "4e02a9202ab491a26643fa48a448aca437ce6bc4b3cf2ef40c0a4774ce761c30",
       "factions": [
         {
           "id": "gongsun",
@@ -120306,6 +121040,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -120323,7 +121058,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "56c5a29b168ecf0db6e594244f56dee255c9b231489d81017220cc99b0dfdc27",
+      "catalog_sha256": "61950f687e990899885102d3b57f071ad1ecb04a90629524a0b79c5e2c77a561",
       "factions": [
         {
           "id": "gongsun",
@@ -124626,6 +125361,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -124643,7 +125379,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "ee649be4de4ecf291eb648241fd4eab55e5c853ec667f8eb2605e600c9c1c72b",
+      "catalog_sha256": "e6e4a5e22d63ea9b12e2e4020e438daf825d0e1b14b6ef446b2f2a23630d02df",
       "factions": [
         {
           "id": "gongsun",
@@ -128786,6 +129522,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -128803,7 +129540,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "e85e117534e8587021183c8e99c2ab261b87ff2ffe1b9c45662f289ff222e3c7",
+      "catalog_sha256": "087278b75c48c211587b79e3d3f181615bbfcdb9ae33e1d5fced4169d741860f",
       "factions": [
         {
           "id": "shu",
@@ -132604,6 +133341,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [],
       "officer_changes": [],
       "owner_expectations": {},
@@ -132621,7 +133359,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "32bdde4ad6b652717be6b29cc7c1abca0d895768be2742ffef7d8adc7043f9e7",
+      "catalog_sha256": "2af77b043a7fe269513c6802286ef09c6cfed905524796c6f1661183e55062f2",
       "factions": [
         {
           "id": "shu",
@@ -135622,6 +136360,7 @@
         }
       ],
       "new_factions": [],
+      "removed_factions": [],
       "city_changes": [
         {
           "city": "jiaozhi",

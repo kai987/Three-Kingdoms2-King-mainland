@@ -14,7 +14,7 @@
           "city": "henan",
           "name": "何进",
           "color": "#a79044",
-          "initial_officers": 58
+          "initial_officers": 53
         },
         {
           "id": "dong_zhuo",
@@ -73,12 +73,12 @@
           "initial_officers": 2
         },
         {
-          "id": "ou_xing",
-          "captain": "区星",
+          "id": "sun_jian",
+          "captain": "孙坚",
           "city": "changsha",
-          "color": "#b840f0",
-          "name": "区星勢力",
-          "initial_officers": 1
+          "color": "#f85898",
+          "name": "孫堅勢力",
+          "initial_officers": 5
         }
       ],
       "active_cities": [
@@ -249,13 +249,6 @@
           "resolve_death_year": false
         },
         {
-          "person_id": "san14-candidate-0065",
-          "city": "changsha",
-          "troops": 300,
-          "ruler": true,
-          "resolve_death_year": true
-        },
-        {
           "person_id": "san14-candidate-0074",
           "city": "tianshui",
           "troops": 300,
@@ -313,7 +306,7 @@
         },
         {
           "person_id": "san14-candidate-0176",
-          "city": "jingzhao",
+          "city": "changsha",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -383,7 +376,7 @@
         },
         {
           "person_id": "san14-candidate-0247",
-          "city": "wei",
+          "city": "changsha",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -530,7 +523,7 @@
         },
         {
           "person_id": "san14-candidate-0390",
-          "city": "henan",
+          "city": "changsha",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -642,9 +635,9 @@
         },
         {
           "person_id": "san14-candidate-0551",
-          "city": "wei",
+          "city": "changsha",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
@@ -768,7 +761,7 @@
         },
         {
           "person_id": "san14-candidate-0703",
-          "city": "henan",
+          "city": "changsha",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1008,7 +1001,8 @@
         "每城最多99人；每方出戰最多10人。人物總庫1023人，各年代按出生、出仕、死亡及明列劇本分歧配置。",
         "全部人物均完成在籍、在野、未來登場或明列排除計畫；來源不詳的駐城與連續任職屬本作配置，不是逐月史實已證。",
         "優先同年月SAN14攻略表及原典生涯窗口；其餘依本人既有年代／區域記錄推定，駐軍再按來源城及邊境容量均衡分配。",
-        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。"
+        "未來人物到達出仕窗口才以在野待訪，不強迫在遊玩中改投歷史勢力；已登場身分不重複生成、不復活。",
+        "187年冬區星叛亂已被平定；188年6月長沙由太守孫堅掌理，區星不再列為開局勢力，史料未明言其本人被殺。"
       ],
       "initial_free_officers": [
         {
@@ -2151,28 +2145,7 @@
         "schema": "DLC-opening-audit-v1",
         "source_snapshot": "mainland184-02-v11",
         "official_source_boundary": "Dates and premises only; no original SAN14 roster/economy export.",
-        "chronology_overrides": [
-          {
-            "person_id": "san14-candidate-0065",
-            "name": "区星",
-            "before": {
-              "birth_year": 157,
-              "service_year": 184,
-              "death_year": 187
-            },
-            "after": {
-              "birth_year": 157,
-              "service_year": 184,
-              "death_year": 188
-            },
-            "basis": "official_scenario_alive_at_188_conflicts_with_library_death_187",
-            "is_historical_correction": false,
-            "sources": [
-              "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-              "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
-            ]
-          }
-        ],
+        "chronology_overrides": [],
         "unrepresented_members": [
           {
             "name": "鲜于银",
@@ -2235,9 +2208,9 @@
           {
             "person_id": "san14-candidate-0065",
             "name": "区星",
-            "faction": "ou_xing",
-            "basis": "explicit_chapter_ruler",
-            "status": "serving"
+            "faction": null,
+            "basis": "historical_review_20261025",
+            "status": "scenario_excluded"
           },
           {
             "person_id": "san14-candidate-0103",
@@ -2263,15 +2236,15 @@
           {
             "person_id": "san14-candidate-0176",
             "name": "韩当",
-            "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "faction": "sun_jian",
+            "basis": "historical_review_20261025",
             "status": "serving"
           },
           {
             "person_id": "san14-candidate-0247",
             "name": "黄盖",
-            "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "faction": "sun_jian",
+            "basis": "historical_review_20261025",
             "status": "serving"
           },
           {
@@ -2291,8 +2264,8 @@
           {
             "person_id": "san14-candidate-0390",
             "name": "朱治",
-            "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "faction": "sun_jian",
+            "basis": "historical_review_20261025",
             "status": "serving"
           },
           {
@@ -2312,8 +2285,8 @@
           {
             "person_id": "san14-candidate-0551",
             "name": "孙坚",
-            "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "faction": "sun_jian",
+            "basis": "historical_review_20261025",
             "status": "serving"
           },
           {
@@ -2347,8 +2320,8 @@
           {
             "person_id": "san14-candidate-0703",
             "name": "程普",
-            "faction": "han",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "faction": "sun_jian",
+            "basis": "historical_review_20261025",
             "status": "serving"
           },
           {
@@ -2380,7 +2353,17 @@
             "status": "serving"
           }
         ],
-        "excluded_people": [],
+        "excluded_people": [
+          {
+            "person_id": "san14-candidate-0065",
+            "name": "区星",
+            "reason": "《資治通鑑》記187年冬十月孫堅任長沙太守並討平區星；188年6月不再列區星為開局勢力。此為失勢排除，並非認定史料已證其本人死亡。",
+            "source_urls": [
+              "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+              "https://zh.wikisource.org/zh-hant/三國志/卷46"
+            ]
+          }
+        ],
         "pending_capacity": [],
         "career_references": [],
         "history_review_revision": "2026-10-25"
@@ -2411,7 +2394,7 @@
           "jiangxia": "neutral",
           "nanjun": "neutral",
           "cangwu": "neutral",
-          "changsha": "ou_xing",
+          "changsha": "sun_jian",
           "lingling": "neutral",
           "hanzhong": "neutral",
           "shujun": "liu_yan",
@@ -2563,7 +2546,7 @@
           "san14-candidate-0164": "xiapi",
           "san14-candidate-0171": "kuaiji",
           "san14-candidate-0172": "yingchuan",
-          "san14-candidate-0176": "jingzhao",
+          "san14-candidate-0176": "changsha",
           "san14-candidate-0179": "nanyang",
           "san14-candidate-0183": "henan",
           "san14-candidate-0185": "shujun",
@@ -2583,7 +2566,6 @@
           "san14-candidate-0241": "chenliu",
           "san14-candidate-0245": "yingchuan",
           "san14-candidate-0246": "nanyang",
-          "san14-candidate-0247": "wei",
           "san14-candidate-0249": "nanyang",
           "san14-candidate-0250": "zitong",
           "san14-candidate-0253": "chenliu",
@@ -2624,7 +2606,7 @@
           "san14-candidate-0385": "yingchuan",
           "san14-candidate-0386": "henan",
           "san14-candidate-0389": "danyang",
-          "san14-candidate-0390": "henan",
+          "san14-candidate-0390": "changsha",
           "san14-candidate-0392": "pingyuan",
           "san14-candidate-0394": "yingchuan",
           "san14-candidate-0405": "lingling",
@@ -2871,7 +2853,6 @@
           "san14-candidate-0056": "jingzhao",
           "san14-candidate-0062": "wei",
           "san14-candidate-0063": "shujun",
-          "san14-candidate-0065": "changsha",
           "san14-candidate-0067": "jingzhao",
           "san14-candidate-0074": "tianshui",
           "san14-candidate-0076": "liaodong",
@@ -3031,7 +3012,7 @@
           "san14-candidate-0543": "henan",
           "san14-candidate-0545": "jingzhao",
           "san14-candidate-0549": "wujun",
-          "san14-candidate-0551": "wei",
+          "san14-candidate-0551": "changsha",
           "san14-candidate-0552": "beihai",
           "san14-candidate-0557": "wujun",
           "san14-candidate-0567": "chenliu",
@@ -3086,7 +3067,7 @@
           "san14-candidate-0694": "taiyuan",
           "san14-candidate-0699": "chenliu",
           "san14-candidate-0701": "shujun",
-          "san14-candidate-0703": "henan",
+          "san14-candidate-0703": "changsha",
           "san14-candidate-0709": "chenliu",
           "san14-candidate-0710": "yan",
           "san14-candidate-0712": "yuyang",
@@ -3200,7 +3181,7 @@
           "liu_yu": 931,
           "han_sui": 165,
           "zhang_chun": 627,
-          "ou_xing": 64
+          "sun_jian": 550
         },
         "delete": [
           "wei",
@@ -3211,10 +3192,10 @@
       },
       "coverage": {
         "set": {
-          "initial_serving": 114,
+          "initial_serving": 113,
           "initial_free": 227,
           "source_scenario": "san14-184-01",
-          "planned_serving": 114,
+          "planned_serving": 113,
           "planned_max_city_roster": 15,
           "future_plans": 669
         }
@@ -5247,34 +5228,29 @@
           },
           "san14-candidate-0065": {
             "set": {
-              "source_status": "serving",
-              "source_ruler": "区星",
-              "year_state": "death_year_review",
-              "faction": "ou_xing",
-              "city": "changsha",
-              "placement_basis": "retained_faction_ruler_seat",
-              "status": "serving",
-              "death_year_resolved": true,
-              "posting_reference": {
-                "person_id": "san14-candidate-0065",
-                "faction": "ou_xing",
-                "origin": "changsha",
-                "city": "changsha",
-                "basis": "retained_faction_ruler_seat",
-                "source_city": null
-              },
-              "scenario_membership_basis": "explicit_chapter_ruler",
-              "source_snapshot": "mainland184-02-v11"
+              "source_status": "excluded",
+              "placement_basis": "historical_review_20261025",
+              "scenario_membership_basis": "historical_review_20261025",
+              "source_snapshot": "mainland184-02-v11",
+              "reason": "《資治通鑑》記187年冬十月孫堅任長沙太守並討平區星；188年6月不再列區星為開局勢力。此為失勢排除，並非認定史料已證其本人死亡。",
+              "membership_revision": "2026-10-25",
+              "exclusion_kind": "defeated_before_opening"
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_explicit_scenario_ruler",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-a-line/"
+                    "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+                    "https://zh.wikisource.org/zh-hant/三國志/卷46"
                   ],
-                  "note": "保留本篇明列君主及根據地，不以外部快照覆寫劇本君主。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "《資治通鑑》記187年冬十月孫堅任長沙太守並討平區星；188年6月不再列區星為開局勢力。此為失勢排除，並非認定史料已證其本人死亡。",
+                  "historical_certainty": "primary_text_chronology_choice",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06"
                 }
               },
               "appearance_plan": {
@@ -5285,17 +5261,13 @@
                   ],
                   "end": [
                     188,
-                    12
+                    6
                   ],
-                  "city": "changsha",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "status": "scenario_excluded",
+                  "basis": "historical_review_20261025"
                 }
               }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0066": {
             "set": {
@@ -8784,21 +8756,26 @@
           },
           "san14-candidate-0176": {
             "set": {
-              "source_ruler": "何进",
-              "faction": "han",
-              "city": "jingzhao",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland184-02-v11"
+              "source_ruler": "孫堅",
+              "faction": "sun_jian",
+              "city": "changsha",
+              "placement_basis": "historical_review_20261025",
+              "scenario_membership_basis": "historical_review_20261025",
+              "source_snapshot": "mainland184-02-v11",
+              "membership_revision": "2026-10-25"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "han",
-                  "origin": "henan",
-                  "city": "jingzhao",
-                  "basis": "authored_no_enemy_frontier_owned_balance"
-                }
+                  "faction": "sun_jian",
+                  "origin": "changsha",
+                  "city": "changsha",
+                  "basis": "historical_review_20261025"
+                },
+                "delete": [
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -8806,7 +8783,23 @@
                     188,
                     6
                   ],
-                  "city": "jingzhao"
+                  "city": "changsha",
+                  "basis": "historical_review_20261025"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_review_20261025",
+                  "source_urls": [
+                    "https://zh.wikisource.org/zh-hant/三國志/卷55"
+                  ],
+                  "note": "《三國志》記韓當隨孫堅征伐，終孫堅之世為別部司馬；188年從屬為生涯窗口推定，具體合駐長沙為本作安排。",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06",
+                  "historical_certainty": "bounded_career_inference"
                 }
               }
             }
@@ -11181,26 +11174,24 @@
           },
           "san14-candidate-0247": {
             "set": {
-              "source_ruler": "何进",
+              "source_ruler": "孫堅",
               "source_city": null,
-              "faction": "han",
-              "city": "wei",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland184-02-v11"
+              "faction": "sun_jian",
+              "placement_basis": "historical_review_20261025",
+              "scenario_membership_basis": "historical_review_20261025",
+              "source_snapshot": "mainland184-02-v11",
+              "membership_revision": "2026-10-25"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "han",
-                  "origin": "henan",
-                  "city": "wei",
-                  "basis": "authored_no_enemy_frontier_owned_balance",
-                  "source_city": null,
-                  "source_disposition": "missing_source_city",
-                  "source_board_city": null
+                  "faction": "sun_jian",
+                  "origin": "changsha",
+                  "basis": "historical_review_20261025",
+                  "source_city": null
                 },
                 "delete": [
+                  "source_disposition",
                   "source_reference"
                 ]
               },
@@ -11210,7 +11201,22 @@
                     188,
                     6
                   ],
-                  "city": "wei"
+                  "basis": "historical_review_20261025"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_review_20261025",
+                  "source_urls": [
+                    "https://zh.wikisource.org/zh-hant/三國志/卷55"
+                  ],
+                  "note": "《三國志》記黃蓋從孫堅南破山賊、北走董卓；188年從屬為生涯窗口推定，具體合駐長沙為本作安排。",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06",
+                  "historical_certainty": "bounded_career_inference"
                 }
               }
             },
@@ -15688,21 +15694,26 @@
           },
           "san14-candidate-0390": {
             "set": {
-              "source_ruler": "何进",
-              "faction": "han",
-              "city": "henan",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland184-02-v11"
+              "source_ruler": "孫堅",
+              "faction": "sun_jian",
+              "city": "changsha",
+              "placement_basis": "historical_review_20261025",
+              "scenario_membership_basis": "historical_review_20261025",
+              "source_snapshot": "mainland184-02-v11",
+              "membership_revision": "2026-10-25"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "han",
-                  "origin": "henan",
-                  "city": "henan",
-                  "basis": "authored_no_enemy_frontier_owned_balance"
-                }
+                  "faction": "sun_jian",
+                  "origin": "changsha",
+                  "city": "changsha",
+                  "basis": "historical_review_20261025"
+                },
+                "delete": [
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -15710,7 +15721,23 @@
                     188,
                     6
                   ],
-                  "city": "henan"
+                  "city": "changsha",
+                  "basis": "historical_review_20261025"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "historical_review_20261025",
+                  "source_urls": [
+                    "https://zh.wikisource.org/zh-hant/三國志/卷56"
+                  ],
+                  "note": "《三國志》記朱治隨孫堅征伐，中平五年拜司馬；188年6月延續其從屬，具體合駐長沙為本作安排，未斷言拜官月份。",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06",
+                  "historical_certainty": "bounded_career_inference"
                 }
               }
             }
@@ -20470,34 +20497,39 @@
           "san14-candidate-0551": {
             "set": {
               "source_status": "serving",
-              "source_ruler": "何进",
+              "source_ruler": "孫堅",
               "year_state": "available",
-              "faction": "han",
-              "city": "wei",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
+              "faction": "sun_jian",
+              "city": "changsha",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0551",
-                "faction": "han",
-                "origin": "henan",
-                "city": "wei",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": "sun_jian",
+                "origin": "changsha",
+                "city": "changsha",
+                "basis": "historical_review_20261025",
+                "source_city": null
               },
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland184-02-v11"
+              "scenario_membership_basis": "historical_review_20261025",
+              "source_snapshot": "mainland184-02-v11",
+              "membership_revision": "2026-10-25"
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                    "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
+                    "https://zh.wikisource.org/zh-hant/三國志/卷46"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "《資治通鑑》繫孫堅任長沙太守、討平區星於187年冬十月；188年6月以長沙為其郡治據點，名義仍屬漢廷。",
+                  "historical_certainty": "primary_text_affiliation",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06"
                 }
               },
               "appearance_plan": {
@@ -20510,9 +20542,9 @@
                     192,
                     12
                   ],
-                  "city": "wei",
+                  "city": "changsha",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "historical_review_20261025"
                 }
               }
             },
@@ -25455,34 +25487,38 @@
           "san14-candidate-0703": {
             "set": {
               "source_status": "serving",
-              "source_ruler": "何进",
+              "source_ruler": "孫堅",
               "year_state": "available",
-              "faction": "han",
-              "city": "henan",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
+              "faction": "sun_jian",
+              "city": "changsha",
+              "placement_basis": "historical_review_20261025",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0703",
-                "faction": "han",
-                "origin": "henan",
-                "city": "henan",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": "sun_jian",
+                "origin": "changsha",
+                "city": "changsha",
+                "basis": "historical_review_20261025",
+                "source_city": null
               },
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland184-02-v11"
+              "scenario_membership_basis": "historical_review_20261025",
+              "source_snapshot": "mainland184-02-v11",
+              "membership_revision": "2026-10-25"
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "historical_review_20261025",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                    "https://zh.wikisource.org/zh-hant/三國志/卷55"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "《三國志》記程普隨孫堅討黃巾，188年延續其從屬；具體合駐長沙為本作安排，非逐月駐防已證。",
+                  "historical_certainty": "bounded_career_inference",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06"
                 }
               },
               "appearance_plan": {
@@ -25495,9 +25531,9 @@
                     216,
                     12
                   ],
-                  "city": "henan",
+                  "city": "changsha",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "historical_review_20261025"
                 }
               }
             },
@@ -35253,7 +35289,7 @@
           "group": "dlc",
           "title": "漢朝搖搖欲墜",
           "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-          "summary": "漢廷政爭與西涼、幽州、長沙叛亂並起；地方漢郡不一概視作何進直轄。",
+          "summary": "漢廷政爭與西涼、幽州叛亂並起；長沙由太守孫堅掌理，地方漢郡不一概視作何進直轄。",
           "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
           "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
           "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
@@ -35262,8 +35298,8 @@
             "ja": "揺らぐ漢朝"
           },
           "summary_i18n": {
-            "zh-Hant": "漢廷政爭與西涼、幽州、長沙叛亂並起；地方漢郡不一概視作何進直轄。",
-            "ja": "漢の政争と西涼・幽州・長沙の反乱を描く。地方の漢郡をすべて何進の直轄とはしない。"
+            "zh-Hant": "漢廷政爭與西涼、幽州叛亂並起；長沙由太守孫堅掌理，地方漢郡不一概視作何進直轄。",
+            "ja": "漢朝の政争に加え、西涼・幽州でも反乱が起こります。長沙は太守の孫堅が治め、各地の漢朝の郡を一律に何進の直轄領とは扱いません。"
           },
           "fictional": false,
           "source_urls": [
@@ -35271,28 +35307,7 @@
             "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
           ],
           "category": "historical_DLC",
-          "chronology_overrides": [
-            {
-              "person_id": "san14-candidate-0065",
-              "name": "区星",
-              "before": {
-                "birth_year": 157,
-                "service_year": 184,
-                "death_year": 187
-              },
-              "after": {
-                "birth_year": 157,
-                "service_year": 184,
-                "death_year": 188
-              },
-              "basis": "official_scenario_alive_at_188_conflicts_with_library_death_187",
-              "is_historical_correction": false,
-              "sources": [
-                "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-                "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
-              ]
-            }
-          ],
+          "chronology_overrides": [],
           "chronology_policy": "All births/service/deaths stay in force. Only per-catalog explicit story/official-game exceptions listed below apply; future IF death boundaries are authorial and not claimed official.",
           "story_note_i18n": {
             "zh-Hant": "本作依官網年代與故事改編；領土、駐將、數值及未實作的事件均不是官方原始資料匯入。",
@@ -35301,8 +35316,12 @@
           "historical_review": {
             "revision": "2026-10-25",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
-            "faction_additions": [],
-            "city_owner_corrections": [],
+            "faction_additions": [
+              "sun_jian"
+            ],
+            "city_owner_corrections": [
+              "changsha"
+            ],
             "all_city_months_independently_attested": false
           }
         },
@@ -52034,13 +52053,9 @@
         "set": {
           "future_plans": 669,
           "city_owner_corrections": [
-            "yidu"
-          ],
-          "reference_classes": {
-            "authorial_region_placement": 1020,
-            "game_reference": 2,
-            "primary_text_affiliation": 1
-          }
+            "yidu",
+            "changsha"
+          ]
         },
         "update": {
           "bases": {
@@ -52048,10 +52063,10 @@
               "person_specific_future_free_appearance": 669,
               "retained_person_specific_free_location": 209,
               "authorial_region_placement": 16,
-              "retained_reviewed_opening_membership": 105,
-              "retained_explicit_scenario_ruler": 8,
+              "retained_reviewed_opening_membership": 100,
+              "retained_explicit_scenario_ruler": 7,
               "retained_chronology_or_explicit_exclusion": 13,
-              "historical_review_20261025": 1
+              "historical_review_20261025": 7
             },
             "delete": [
               "same_date_SAN14_recorded_death",
@@ -52059,39 +52074,21 @@
               "authored_bounded_source_snapshot_continuity",
               "bounded_career_inference"
             ]
+          },
+          "reference_classes": {
+            "set": {
+              "authorial_region_placement": 1014,
+              "game_reference": 2,
+              "primary_text_chronology_choice": 1,
+              "primary_text_affiliation": 2,
+              "bounded_career_inference": 4
+            }
           }
         }
       }
     }
   },
   "people_overrides": {
-    "update": {
-      "san14-candidate-0065": {
-        "set": {
-          "death_year": 188,
-          "chronology_basis": "third_party_SAN14_game_setting_transcription; scenario_specific_explicit_exception",
-          "scenario_chronology_override": {
-            "person_id": "san14-candidate-0065",
-            "name": "区星",
-            "before": {
-              "birth_year": 157,
-              "service_year": 184,
-              "death_year": 187
-            },
-            "after": {
-              "birth_year": 157,
-              "service_year": 184,
-              "death_year": 188
-            },
-            "basis": "official_scenario_alive_at_188_conflicts_with_library_death_187",
-            "is_historical_correction": false,
-            "sources": [
-              "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-              "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
-            ]
-          }
-        }
-      }
-    }
+    "update": {}
   }
 }

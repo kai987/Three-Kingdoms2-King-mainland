@@ -198,6 +198,9 @@ def compile_report():
         city_rows = {row['id']: row for row in data['cities']}
         factions = {row['id']: row for row in data['factions']}
         require(len(factions) == len(data['factions']) and active <= set(city_rows), ident + ': invalid city/faction identities')
+        removed_factions = decision.get('removed_factions', [])
+        require(all(fid not in factions for fid in removed_factions),
+                ident + ': a reviewed retired faction remains selectable')
         for city in active:
             require(data['initial_owners'].get(city) in {*factions, 'neutral'}, ident + ': unknown city owner ' + city)
         names = display_names(data, presentation)
@@ -278,7 +281,8 @@ def compile_report():
                 neutral_label=data.get('city_history', {}).get(city, {}).get('neutral_label'))
                 for city in sorted(active)],
             boundary_links=borders, opening_officers=roster,
-            new_factions=changes['new_factions'], city_changes=changes['city_changes'],
+            new_factions=changes['new_factions'], removed_factions=removed_factions,
+            city_changes=changes['city_changes'],
             officer_changes=changes['officer_changes'], owner_expectations=expected_owners,
             notable_exclusions=spotlight, notes=decision.get('notes', []))
         reports.append(row)

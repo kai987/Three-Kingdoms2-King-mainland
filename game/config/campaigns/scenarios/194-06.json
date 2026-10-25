@@ -19,7 +19,7 @@
         {
           "id": "wei",
           "captain": "曹操",
-          "city": "chenliu",
+          "city": "jiyin",
           "name": "曹操势力",
           "color": "#527d77",
           "initial_officers": 33
@@ -527,7 +527,7 @@
         },
         {
           "person_id": "san14-candidate-0102",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -541,7 +541,7 @@
         },
         {
           "person_id": "san14-candidate-0108",
-          "city": "jiyin",
+          "city": "chenliu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -555,14 +555,14 @@
         },
         {
           "person_id": "san14-candidate-0115",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0124",
-          "city": "yingchuan",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -590,7 +590,7 @@
         },
         {
           "person_id": "san14-candidate-0159",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -709,7 +709,7 @@
         },
         {
           "person_id": "san14-candidate-0212",
-          "city": "jiyin",
+          "city": "chenliu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1052,7 +1052,7 @@
         },
         {
           "person_id": "san14-candidate-0333",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1108,7 +1108,7 @@
         },
         {
           "person_id": "san14-candidate-0353",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1178,7 +1178,7 @@
         },
         {
           "person_id": "san14-candidate-0393",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1255,14 +1255,14 @@
         },
         {
           "person_id": "san14-candidate-0456",
-          "city": "jiyin",
+          "city": "chenliu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0460",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1367,7 +1367,7 @@
         },
         {
           "person_id": "san14-candidate-0499",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1388,7 +1388,7 @@
         },
         {
           "person_id": "san14-candidate-0510",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1409,28 +1409,28 @@
         },
         {
           "person_id": "san14-candidate-0514",
-          "city": "chenliu",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0518",
-          "city": "chenliu",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0519",
           "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
         },
         {
-          "person_id": "san14-candidate-0521",
+          "person_id": "san14-candidate-0518",
+          "city": "jiyin",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0519",
           "city": "chenliu",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0521",
+          "city": "jiyin",
           "troops": 300,
           "ruler": true,
           "resolve_death_year": false
@@ -1682,7 +1682,7 @@
         },
         {
           "person_id": "san14-candidate-0653",
-          "city": "dongping",
+          "city": "chenliu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1731,7 +1731,7 @@
         },
         {
           "person_id": "san14-candidate-0671",
-          "city": "jiyin",
+          "city": "dongjun",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1780,7 +1780,7 @@
         },
         {
           "person_id": "san14-candidate-0689",
-          "city": "yingchuan",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1808,7 +1808,7 @@
         },
         {
           "person_id": "san14-candidate-0702",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1990,7 +1990,7 @@
         },
         {
           "person_id": "san14-candidate-0816",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2025,7 +2025,7 @@
         },
         {
           "person_id": "san14-candidate-0844",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2214,7 +2214,7 @@
         },
         {
           "person_id": "san14-candidate-0947",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2284,7 +2284,7 @@
         },
         {
           "person_id": "san14-candidate-0980",
-          "city": "chenliu",
+          "city": "jiyin",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2999,7 +2999,7 @@
           "anping": "yuan_shao",
           "pingyuan": "yuan_shao",
           "jinan": "yuan_shao",
-          "jiyin": "lubu",
+          "jiyin": "wei",
           "dongping": "lubu",
           "henei": "zhang_yang",
           "hedong": "li_jue",
@@ -3021,7 +3021,8 @@
           "jiameng": "liu_zhang",
           "fuxian": "liu_zhang",
           "dangqu": "liu_zhang",
-          "nanguang": "liu_zhang"
+          "nanguang": "liu_zhang",
+          "chenliu": "lubu"
         },
         "delete": [
           "yidu",
@@ -3064,7 +3065,7 @@
           "san14-candidate-0099": "nanjun",
           "san14-candidate-0100": "taiyuan",
           "san14-candidate-0101": "wei",
-          "san14-candidate-0102": "chenliu",
+          "san14-candidate-0102": "jiyin",
           "san14-candidate-0104": "dongjun",
           "san14-candidate-0107": "nanyang",
           "san14-candidate-0109": "nanyang",
@@ -3075,7 +3076,7 @@
           "san14-candidate-0121": "yingchuan",
           "san14-candidate-0122": "yingchuan",
           "san14-candidate-0123": "yingchuan",
-          "san14-candidate-0124": "yingchuan",
+          "san14-candidate-0124": "jiyin",
           "san14-candidate-0125": "yingchuan",
           "san14-candidate-0126": "yingchuan",
           "san14-candidate-0127": "yingchuan",
@@ -3087,7 +3088,7 @@
           "san14-candidate-0148": "changsha",
           "san14-candidate-0150": "nanyang",
           "san14-candidate-0153": "henan",
-          "san14-candidate-0159": "chenliu",
+          "san14-candidate-0159": "jiyin",
           "san14-candidate-0161": "nanyang",
           "san14-candidate-0162": "nanyang",
           "san14-candidate-0164": "yingchuan",
@@ -3200,9 +3201,9 @@
           "san14-candidate-0515": "yingchuan",
           "san14-candidate-0516": "yingchuan",
           "san14-candidate-0517": "yingchuan",
-          "san14-candidate-0518": "chenliu",
+          "san14-candidate-0518": "jiyin",
           "san14-candidate-0520": "wei",
-          "san14-candidate-0521": "chenliu",
+          "san14-candidate-0521": "jiyin",
           "san14-candidate-0524": "jiangxia",
           "san14-candidate-0525": "donghai",
           "san14-candidate-0526": "yingchuan",
@@ -3258,14 +3259,14 @@
           "san14-candidate-0680": "bajun",
           "san14-candidate-0681": "zhongshan",
           "san14-candidate-0684": "runan",
-          "san14-candidate-0689": "yingchuan",
+          "san14-candidate-0689": "jiyin",
           "san14-candidate-0691": "zitong",
           "san14-candidate-0692": "qiao",
           "san14-candidate-0695": "kuaiji",
           "san14-candidate-0696": "jiujiang",
           "san14-candidate-0697": "wujun",
           "san14-candidate-0698": "yingchuan",
-          "san14-candidate-0702": "chenliu",
+          "san14-candidate-0702": "jiyin",
           "san14-candidate-0704": "dongjun",
           "san14-candidate-0705": "beihai",
           "san14-candidate-0707": "lujiang",
@@ -3309,7 +3310,7 @@
           "san14-candidate-0808": "nanyang",
           "san14-candidate-0810": "yingchuan",
           "san14-candidate-0814": "nanyang",
-          "san14-candidate-0816": "chenliu",
+          "san14-candidate-0816": "jiyin",
           "san14-candidate-0823": "fuling",
           "san14-candidate-0824": "dongjun",
           "san14-candidate-0827": "jingzhao",
@@ -3368,7 +3369,7 @@
           "san14-candidate-0976": "wuling",
           "san14-candidate-0978": "nanyang",
           "san14-candidate-0979": "runan",
-          "san14-candidate-0980": "chenliu",
+          "san14-candidate-0980": "jiyin",
           "san14-candidate-0981": "taiyuan",
           "san14-candidate-0985": "danyang",
           "san14-candidate-0986": "jiujiang",
@@ -3408,8 +3409,8 @@
           "san14-candidate-0097": "henan",
           "san14-candidate-0098": "jiujiang",
           "san14-candidate-0105": "xihe",
-          "san14-candidate-0108": "jiyin",
-          "san14-candidate-0115": "chenliu",
+          "san14-candidate-0108": "chenliu",
+          "san14-candidate-0115": "jiyin",
           "san14-candidate-0146": "lujiang",
           "san14-candidate-0156": "yan",
           "san14-candidate-0158": "henan",
@@ -3430,7 +3431,7 @@
           "san14-candidate-0206": "lujiang",
           "san14-candidate-0208": "runan",
           "san14-candidate-0211": "wujun",
-          "san14-candidate-0212": "jiyin",
+          "san14-candidate-0212": "chenliu",
           "san14-candidate-0217": "jinan",
           "san14-candidate-0218": "danyang",
           "san14-candidate-0219": "jiujiang",
@@ -3474,9 +3475,9 @@
           "san14-candidate-0326": "henan",
           "san14-candidate-0330": "danyang",
           "san14-candidate-0331": "jingzhao",
-          "san14-candidate-0333": "chenliu",
+          "san14-candidate-0333": "jiyin",
           "san14-candidate-0343": "fufeng",
-          "san14-candidate-0353": "chenliu",
+          "san14-candidate-0353": "jiyin",
           "san14-candidate-0359": "xiapi",
           "san14-candidate-0364": "kuaiji",
           "san14-candidate-0365": "yanmen",
@@ -3485,7 +3486,7 @@
           "san14-candidate-0379": "lujiang",
           "san14-candidate-0384": "jiujiang",
           "san14-candidate-0387": "hedong",
-          "san14-candidate-0393": "chenliu",
+          "san14-candidate-0393": "jiyin",
           "san14-candidate-0395": "jinan",
           "san14-candidate-0399": "pingyuan",
           "san14-candidate-0400": "jiujiang",
@@ -3498,8 +3499,8 @@
           "san14-candidate-0441": "runan",
           "san14-candidate-0443": "lujiang",
           "san14-candidate-0454": "xihe",
-          "san14-candidate-0456": "jiyin",
-          "san14-candidate-0460": "chenliu",
+          "san14-candidate-0456": "chenliu",
+          "san14-candidate-0460": "jiyin",
           "san14-candidate-0462": "donghai",
           "san14-candidate-0464": "yan",
           "san14-candidate-0466": "zhongshan",
@@ -3512,12 +3513,12 @@
           "san14-candidate-0486": "dongjun",
           "san14-candidate-0487": "danyang",
           "san14-candidate-0493": "liaoxi",
-          "san14-candidate-0499": "chenliu",
+          "san14-candidate-0499": "jiyin",
           "san14-candidate-0507": "dongping",
-          "san14-candidate-0510": "chenliu",
+          "san14-candidate-0510": "jiyin",
           "san14-candidate-0512": "pingyuan",
-          "san14-candidate-0514": "chenliu",
-          "san14-candidate-0519": "jiyin",
+          "san14-candidate-0514": "jiyin",
+          "san14-candidate-0519": "chenliu",
           "san14-candidate-0523": "yingchuan",
           "san14-candidate-0527": "xiapi",
           "san14-candidate-0534": "wei",
@@ -3559,14 +3560,14 @@
           "san14-candidate-0642": "wuling",
           "san14-candidate-0647": "dongjun",
           "san14-candidate-0651": "yanmen",
-          "san14-candidate-0653": "dongping",
+          "san14-candidate-0653": "chenliu",
           "san14-candidate-0655": "jiujiang",
           "san14-candidate-0661": "henei",
           "san14-candidate-0666": "hanzhong",
           "san14-candidate-0667": "danyang",
           "san14-candidate-0668": "guiyang",
           "san14-candidate-0670": "jiujiang",
-          "san14-candidate-0671": "jiyin",
+          "san14-candidate-0671": "dongjun",
           "san14-candidate-0674": "xiapi",
           "san14-candidate-0678": "jiangxia",
           "san14-candidate-0683": "donghai",
@@ -3605,7 +3606,7 @@
           "san14-candidate-0822": "wei",
           "san14-candidate-0828": "xiangyang",
           "san14-candidate-0831": "guiyang",
-          "san14-candidate-0844": "chenliu",
+          "san14-candidate-0844": "jiyin",
           "san14-candidate-0852": "danyang",
           "san14-candidate-0854": "fuxian",
           "san14-candidate-0861": "lujiang",
@@ -3635,7 +3636,7 @@
           "san14-candidate-0933": "jiujiang",
           "san14-candidate-0936": "xihe",
           "san14-candidate-0946": "xiangyang",
-          "san14-candidate-0947": "chenliu",
+          "san14-candidate-0947": "jiyin",
           "san14-candidate-0949": "lingling",
           "san14-candidate-0951": "nanyang",
           "san14-candidate-0953": "xiangyang",
@@ -6660,28 +6661,6 @@
               }
             }
           },
-          "san14-candidate-0102": {
-            "set": {
-              "city": "chenliu"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "chenliu"
-                }
-              }
-            }
-          },
           "san14-candidate-0104": {
             "set": {
               "source_status": "not_appeared",
@@ -6800,57 +6779,6 @@
                 }
               }
             }
-          },
-          "san14-candidate-0108": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "呂布",
-              "year_state": "available",
-              "faction": "lubu",
-              "city": "jiyin",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0108",
-                "faction": "lubu",
-                "origin": "dongjun",
-                "city": "jiyin",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    197,
-                    12
-                  ],
-                  "city": "jiyin",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0109": {
             "set": {
@@ -6986,57 +6914,6 @@
                 }
               }
             }
-          },
-          "san14-candidate-0115": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0115",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    208,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0116": {
             "set": {
@@ -7190,28 +7067,6 @@
                   ],
                   "city": "yingchuan",
                   "status": "future_free"
-                }
-              }
-            }
-          },
-          "san14-candidate-0124": {
-            "set": {
-              "city": "yingchuan"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "chenliu",
-                  "city": "yingchuan"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "yingchuan"
                 }
               }
             }
@@ -7869,28 +7724,6 @@
             "delete": [
               "exclusion_kind"
             ]
-          },
-          "san14-candidate-0159": {
-            "set": {
-              "city": "chenliu"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "chenliu"
-                }
-              }
-            }
           },
           "san14-candidate-0160": {
             "set": {
@@ -9254,57 +9087,6 @@
                   "city": "wujun",
                   "status": "serving",
                   "basis": "bounded_career_inference"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
-          "san14-candidate-0212": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "呂布",
-              "year_state": "available",
-              "faction": "lubu",
-              "city": "jiyin",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0212",
-                "faction": "lubu",
-                "origin": "dongjun",
-                "city": "jiyin",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    206,
-                    12
-                  ],
-                  "city": "jiyin",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
                 }
               }
             },
@@ -12775,57 +12557,6 @@
               }
             }
           },
-          "san14-candidate-0333": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0333",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    202,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0334": {
             "update": {
               "appearance_plan": {
@@ -13110,77 +12841,6 @@
             "set": {
               "year_state": "not_born"
             }
-          },
-          "san14-candidate-0353": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "source_city": "陳留",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "reviewed_SAN14_source_city_to_board",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0353",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "reviewed_SAN14_source_city_to_board",
-                "source_city": "陳留",
-                "source_disposition": "matched_source_city",
-                "source_reference": {
-                  "year": 194,
-                  "month": 6,
-                  "name": "司马朗",
-                  "city_source_name": "陳留",
-                  "source_ruler": "曹操",
-                  "url": "https://wikiwiki.jp/sangokushi14/%E5%8F%B8%E9%A6%AC%E6%9C%97",
-                  "source_scenario_date": "194-06",
-                  "notes": "逐人剧本表的在任驻地；仅同年同月且已确认属该势力者采用，不从相邻年代挪用。"
-                }
-              },
-              "source_city_reference": {
-                "year": 194,
-                "month": 6,
-                "name": "司马朗",
-                "city_source_name": "陳留",
-                "source_ruler": "曹操",
-                "url": "https://wikiwiki.jp/sangokushi14/%E5%8F%B8%E9%A6%AC%E6%9C%97",
-                "source_scenario_date": "194-06",
-                "notes": "逐人剧本表的在任驻地；仅同年同月且已确认属该势力者采用，不从相邻年代挪用。"
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    217,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0355": {
             "set": {
@@ -14298,57 +13958,6 @@
                 }
               }
             }
-          },
-          "san14-candidate-0393": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0393",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    212,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0394": {
             "set": {
@@ -15806,57 +15415,6 @@
               }
             }
           },
-          "san14-candidate-0456": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "呂布",
-              "year_state": "available",
-              "faction": "lubu",
-              "city": "jiyin",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0456",
-                "faction": "lubu",
-                "origin": "dongjun",
-                "city": "jiyin",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    199,
-                    12
-                  ],
-                  "city": "jiyin",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0457": {
             "set": {
               "source_status": "not_appeared",
@@ -15924,57 +15482,6 @@
                 }
               }
             }
-          },
-          "san14-candidate-0460": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0460",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    204,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0461": {
             "set": {
@@ -17072,57 +16579,6 @@
               }
             }
           },
-          "san14-candidate-0499": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0499",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    197,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0500": {
             "set": {
               "source_status": "not_appeared",
@@ -17351,57 +16807,6 @@
               }
             }
           },
-          "san14-candidate-0510": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0510",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    197,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0511": {
             "set": {
               "city": "yingchuan"
@@ -17509,57 +16914,6 @@
               }
             }
           },
-          "san14-candidate-0514": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0514",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    210,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0515": {
             "set": {
               "source_status": "not_appeared",
@@ -17662,110 +17016,6 @@
               }
             }
           },
-          "san14-candidate-0518": {
-            "set": {
-              "source_city": "陳留",
-              "city": "chenliu"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu",
-                  "source_city": "陳留"
-                },
-                "update": {
-                  "source_reference": {
-                    "set": {
-                      "source_scenario_date": [
-                        194,
-                        6
-                      ],
-                      "title": "群雄割拠"
-                    }
-                  }
-                }
-              },
-              "source_city_reference": {
-                "set": {
-                  "source_scenario_date": [
-                    194,
-                    6
-                  ],
-                  "title": "群雄割拠"
-                }
-              },
-              "placement_review": {
-                "set": {
-                  "reference_date": [
-                    194,
-                    6
-                  ],
-                  "reference_scenario": "群雄割拠"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "chenliu"
-                }
-              }
-            }
-          },
-          "san14-candidate-0519": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "呂布",
-              "year_state": "available",
-              "faction": "lubu",
-              "city": "jiyin",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0519",
-                "faction": "lubu",
-                "origin": "dongjun",
-                "city": "jiyin",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    198,
-                    12
-                  ],
-                  "city": "jiyin",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0520": {
             "set": {
               "source_status": "not_appeared",
@@ -17796,28 +17046,6 @@
                   ],
                   "city": "wei",
                   "status": "future_free"
-                }
-              }
-            }
-          },
-          "san14-candidate-0521": {
-            "set": {
-              "city": "chenliu"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "chenliu"
                 }
               }
             }
@@ -21626,57 +20854,6 @@
               }
             }
           },
-          "san14-candidate-0653": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "呂布",
-              "year_state": "available",
-              "faction": "lubu",
-              "city": "dongping",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0653",
-                "faction": "lubu",
-                "origin": "dongjun",
-                "city": "dongping",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    195,
-                    12
-                  ],
-                  "city": "dongping",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0654": {
             "set": {
               "source_status": "free",
@@ -22187,57 +21364,6 @@
               "exclusion_kind"
             ]
           },
-          "san14-candidate-0671": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "呂布",
-              "year_state": "available",
-              "faction": "lubu",
-              "city": "jiyin",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0671",
-                "faction": "lubu",
-                "origin": "dongjun",
-                "city": "jiyin",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    198,
-                    12
-                  ],
-                  "city": "jiyin",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0672": {
             "set": {
               "source_status": "free",
@@ -22714,45 +21840,6 @@
               "exclusion_kind"
             ]
           },
-          "san14-candidate-0689": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "source_city": null,
-              "faction": "wei",
-              "city": "yingchuan",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0689",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "yingchuan",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "yingchuan",
-                  "status": "serving"
-                }
-              }
-            }
-          },
           "san14-candidate-0691": {
             "set": {
               "source_ruler": "劉璋",
@@ -23054,28 +22141,6 @@
             "delete": [
               "exclusion_kind"
             ]
-          },
-          "san14-candidate-0702": {
-            "set": {
-              "city": "chenliu"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "chenliu"
-                }
-              }
-            }
           },
           "san14-candidate-0703": {
             "set": {
@@ -25917,28 +24982,6 @@
               "exclusion_kind"
             ]
           },
-          "san14-candidate-0816": {
-            "set": {
-              "city": "chenliu"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "chenliu"
-                }
-              }
-            }
-          },
           "san14-candidate-0817": {
             "set": {
               "source_status": "not_appeared",
@@ -26487,57 +25530,6 @@
             "set": {
               "year_state": "not_born"
             }
-          },
-          "san14-candidate-0844": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0844",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ma-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    216,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
           },
           "san14-candidate-0845": {
             "set": {
@@ -29326,57 +28318,6 @@
               "exclusion_kind"
             ]
           },
-          "san14-candidate-0947": {
-            "set": {
-              "source_status": "serving",
-              "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0947",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
-                  ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "end": [
-                    202,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
-                }
-              }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
-          },
           "san14-candidate-0948": {
             "set": {
               "source_status": "not_appeared",
@@ -30442,28 +29383,6 @@
               }
             }
           },
-          "san14-candidate-0980": {
-            "set": {
-              "city": "chenliu"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
-                    194,
-                    6
-                  ],
-                  "city": "chenliu"
-                }
-              }
-            }
-          },
           "san14-candidate-0981": {
             "set": {
               "source_status": "not_appeared",
@@ -31110,12 +30029,1349 @@
               "city": "nanjun"
             }
           }
+        },
+        "set": {
+          "san14-candidate-0102": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0102",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                218,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0115": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0115",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                208,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0159": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0159",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                218,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0333": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0333",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                202,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0353": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": "陳留",
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0353",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": "陳留",
+              "source_disposition": "matched_source_city",
+              "source_reference": {
+                "year": 194,
+                "month": 6,
+                "name": "司马朗",
+                "city_source_name": "陳留",
+                "source_ruler": "曹操",
+                "url": "https://wikiwiki.jp/sangokushi14/%E5%8F%B8%E9%A6%AC%E6%9C%97",
+                "source_scenario_date": "194-06",
+                "notes": "逐人剧本表的在任驻地；仅同年同月且已确认属该势力者采用，不从相邻年代挪用。"
+              }
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                217,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            },
+            "source_city_reference": {
+              "year": 194,
+              "month": 6,
+              "name": "司马朗",
+              "city_source_name": "陳留",
+              "source_ruler": "曹操",
+              "url": "https://wikiwiki.jp/sangokushi14/%E5%8F%B8%E9%A6%AC%E6%9C%97",
+              "source_scenario_date": "194-06",
+              "notes": "逐人剧本表的在任驻地；仅同年同月且已确认属该势力者采用，不从相邻年代挪用。"
+            }
+          },
+          "san14-candidate-0393": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0393",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_review_20261025",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "《荀彧傳》記荀彧守鄄城，與夏侯惇保全留守；194年6月駐本作鄄城代理節點，不留在已叛的陳留。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "primary_text_affiliation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                212,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0460": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0460",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                204,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0499": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0499",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                197,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0510": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0510",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                197,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0514": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0514",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                210,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0518": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": "陳留",
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0518",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": "陳留",
+              "source_disposition": "matched_source_city",
+              "source_reference": {
+                "url": "https://wikiwiki.jp/sangokushi14/%E6%9B%B9%E4%BB%81",
+                "source_scenario_date": [
+                  194,
+                  6
+                ],
+                "title": "群雄割拠",
+                "basis": "same_date_SAN14_guide_city_not_official_export"
+              }
+            },
+            "membership_revision": null,
+            "source_city_reference": {
+              "url": "https://wikiwiki.jp/sangokushi14/%E6%9B%B9%E4%BB%81",
+              "source_scenario_date": [
+                194,
+                6
+              ],
+              "title": "群雄割拠",
+              "basis": "same_date_SAN14_guide_city_not_official_export"
+            },
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                223,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "same_date_game_location"
+            }
+          },
+          "san14-candidate-0521": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0521",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_review_20261025",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷111"
+              ],
+              "note": "曹操194年夏自徐州回救，仍以鄄城為本據；本作沿用濟陰節點代表鄄城縣域，不表示曹操據有整個濟陰郡。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "regional_primary_mapping"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                220,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "retained_person_specific_released_location"
+            }
+          },
+          "san14-candidate-0702": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0702",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                219,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0816": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0816",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                230,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "retained_person_specific_released_location"
+            }
+          },
+          "san14-candidate-0844": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0844",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                216,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0947": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0947",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                202,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "retained_person_specific_released_location"
+            }
+          },
+          "san14-candidate-0980": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0980",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                247,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0108": {
+            "source_status": "serving",
+            "source_ruler": "呂布",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lubu",
+            "city": "chenliu",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0108",
+              "faction": "lubu",
+              "origin": "dongjun",
+              "city": "chenliu",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                197,
+                12
+              ],
+              "city": "chenliu",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0212": {
+            "source_status": "serving",
+            "source_ruler": "呂布",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lubu",
+            "city": "chenliu",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0212",
+              "faction": "lubu",
+              "origin": "dongjun",
+              "city": "chenliu",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                206,
+                12
+              ],
+              "city": "chenliu",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0456": {
+            "source_status": "serving",
+            "source_ruler": "呂布",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lubu",
+            "city": "chenliu",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0456",
+              "faction": "lubu",
+              "origin": "dongjun",
+              "city": "chenliu",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                199,
+                12
+              ],
+              "city": "chenliu",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0519": {
+            "source_status": "serving",
+            "source_ruler": "呂布",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lubu",
+            "city": "chenliu",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0519",
+              "faction": "lubu",
+              "origin": "dongjun",
+              "city": "chenliu",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_city_owner_relocation_authorial_garrison",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "authorial_garrison_relocation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                198,
+                12
+              ],
+              "city": "chenliu",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0671": {
+            "source_status": "serving",
+            "source_ruler": "呂布",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lubu",
+            "city": "dongjun",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0671",
+              "faction": "lubu",
+              "origin": "dongjun",
+              "city": "dongjun",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_review_20261025",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "陳宮194年夏率留屯東郡之眾迎呂布，呂布據濮陽；配置於東郡/濮陽節點，保持呂布勢力。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "primary_text_affiliation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                198,
+                12
+              ],
+              "city": "dongjun",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0124": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0124",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_review_20261025",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "《夏侯惇傳》《荀彧傳》記夏侯惇由濮陽輕軍救鄄城，呂布遂據濮陽；駐本作鄄城代理節點。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "primary_text_affiliation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                220,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0689": {
+            "source_status": "serving",
+            "source_ruler": "曹操",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "wei",
+            "city": "jiyin",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0689",
+              "faction": "wei",
+              "origin": "jiyin",
+              "city": "jiyin",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_review_20261025",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "程昱撫范、守東阿，助保鄄城、范、東阿三縣；本作將三縣防區合併在鄄城代理節點，不把范縣誤作整個東平國。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "primary_text_affiliation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                220,
+                12
+              ],
+              "city": "jiyin",
+              "status": "serving",
+              "basis": "person_specific_SAN14_location_board_proxy"
+            }
+          },
+          "san14-candidate-0653": {
+            "source_status": "serving",
+            "source_ruler": "呂布",
+            "source_city": null,
+            "year_state": "available",
+            "faction": "lubu",
+            "city": "chenliu",
+            "placement_basis": "historical_review_20261025",
+            "status": "serving",
+            "reason": null,
+            "death_year_resolved": false,
+            "posting_reference": {
+              "person_id": "san14-candidate-0653",
+              "faction": "lubu",
+              "origin": "dongjun",
+              "city": "chenliu",
+              "basis": "historical_review_20261025",
+              "source_city": null,
+              "source_disposition": "missing_source_city",
+              "source_board_city": null
+            },
+            "membership_revision": null,
+            "planning_complete": true,
+            "placement_review": {
+              "basis": "historical_review_20261025",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ],
+              "note": "陳留太守張邈194年夏與陳宮迎呂布；沿用既有呂布聯盟身份，配置於陳留，不改為曹操或新造勢力。",
+              "reference_date": [
+                194,
+                6
+              ],
+              "historical_certainty": "primary_text_affiliation"
+            },
+            "appearance_plan": {
+              "start": [
+                194,
+                6
+              ],
+              "end": [
+                195,
+                12
+              ],
+              "city": "chenliu",
+              "status": "serving",
+              "basis": "retained_person_specific_released_location"
+            }
+          }
         }
       },
       "main_scenario": {
         "set": {
           "title": "群雄割据",
-          "summary": "群雄割据：使用已发布的本作年代配置，采用30人城池容量。",
+          "summary": "兗州之變後，曹操據鄄城、范、東阿；陳留由張邈與呂布聯盟控制。本劇本以原濟陰節點代理鄄城三縣防區。",
           "historical_review": {
             "revision": "2026-10-25",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
@@ -31124,12 +31380,30 @@
               "xu_gong"
             ],
             "city_owner_corrections": [
+              "chenliu",
               "jincheng",
+              "jiyin",
               "wudu",
-              "yinping",
-              "wujun"
+              "wujun",
+              "yinping"
             ],
-            "all_city_months_independently_attested": false
+            "all_city_months_independently_attested": false,
+            "local_map_proxies": {
+              "jiyin": {
+                "display_name": "鄄城",
+                "represents": [
+                  "鄄城",
+                  "范",
+                  "東阿"
+                ],
+                "does_not_represent": "曹操控制整個濟陰郡或定陶郡治",
+                "note": "194年夏曹操僅保鄄城、范、東阿三縣。鄄城屬濟陰郡；本劇本沿用濟陰節點代表鄄城據點及三縣防區，顯示鄄城，並非聲稱定陶郡治或整個濟陰郡歸曹操。"
+              }
+            }
+          },
+          "summary_i18n": {
+            "zh-TW": "兗州之變後，曹操據鄄城、范、東阿；陳留由張邈與呂布聯盟控制。本劇本以原濟陰節點代理鄄城三縣防區。",
+            "ja": "兗州の反乱後、曹操は鄄城・范・東阿を保持し、陳留は張邈・呂布の連合が支配する。本シナリオでは既存の済陰拠点を鄄城と三県の防衛域の代替として使用する。"
           }
         }
       },
@@ -34101,6 +34375,62 @@
                 "https://zh.wikisource.org/wiki/三國志/卷56"
               ]
             }
+          },
+          "chenliu": {
+            "control_review": {
+              "date": [
+                194,
+                6
+              ],
+              "owner": "lubu",
+              "note": "194年夏張邈、陳宮迎呂布，兗州郡縣響應；陳留由張邈—呂布聯盟控制，不能再作曹操本據。本作合併表示為呂布勢力，不另立敵對張邈勢力。",
+              "certainty": "primary_text_affiliation",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061"
+              ]
+            }
+          },
+          "jiyin": {
+            "control_review": {
+              "date": [
+                194,
+                6
+              ],
+              "owner": "wei",
+              "note": "194年夏曹操僅保鄄城、范、東阿三縣。鄄城屬濟陰郡；本劇本沿用濟陰節點代表鄄城據點及三縣防區，顯示鄄城，並非聲稱定陶郡治或整個濟陰郡歸曹操。",
+              "certainty": "regional_primary_mapping",
+              "source_urls": [
+                "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                "https://zh.wikisource.org/zh-hant/資治通鑑/卷061",
+                "https://zh.wikisource.org/zh-hant/後漢書/卷111"
+              ]
+            },
+            "names": [
+              {
+                "from_date": [
+                  194,
+                  6
+                ],
+                "to_date": [
+                  9999,
+                  12
+                ],
+                "name": "鄄城",
+                "basis": "scenario_only_county_proxy_not_commandery_capital",
+                "source_urls": [
+                  "https://zh.wikisource.org/zh-hant/三國志/卷01",
+                  "https://zh.wikisource.org/zh-hant/三國志/卷07",
+                  "https://zh.wikisource.org/zh-hant/三國志/卷10",
+                  "https://zh.wikisource.org/zh-hant/資治通鑑/卷061",
+                  "https://zh.wikisource.org/zh-hant/後漢書/卷111"
+                ]
+              }
+            ]
           }
         }
       },
@@ -38116,41 +38446,37 @@
         "set": {
           "future_plans": 535,
           "city_owner_corrections": [
-            "yiyang",
-            "yidu",
+            "chenliu",
             "jincheng",
+            "jiyin",
             "wudu",
             "wujun",
-            "yinping"
+            "yidu",
+            "yinping",
+            "yiyang"
           ],
           "reference_classes": {
-            "authorial_garrison_relocation": 3,
-            "authorial_region_placement": 934,
+            "authorial_garrison_relocation": 22,
+            "authorial_region_placement": 910,
             "bounded_career_inference": 1,
-            "game_reference": 82,
-            "primary_text_affiliation": 2,
-            "regional_primary_mapping": 1
+            "game_reference": 81,
+            "primary_text_affiliation": 7,
+            "regional_primary_mapping": 2
+          },
+          "bases": {
+            "authorial_region_placement": 4,
+            "historical_city_owner_relocation_authorial_garrison": 26,
+            "historical_review_20261025": 13,
+            "person_specific_future_free_appearance": 535,
+            "retained_explicit_scenario_ruler": 17,
+            "retained_person_specific_free_location": 114,
+            "retained_reviewed_opening_membership": 233,
+            "same_date_SAN14_guide_affiliation": 2,
+            "same_date_SAN14_guide_free_location": 2,
+            "same_date_SAN14_recorded_death": 77
           }
         },
-        "update": {
-          "bases": {
-            "set": {
-              "person_specific_future_free_appearance": 535,
-              "same_date_SAN14_guide_affiliation": 3,
-              "retained_reviewed_opening_membership": 256,
-              "same_date_SAN14_recorded_death": 77,
-              "retained_person_specific_free_location": 114,
-              "retained_explicit_scenario_ruler": 18,
-              "historical_city_owner_relocation_authorial_garrison": 7,
-              "authorial_region_placement": 4,
-              "historical_review_20261025": 7
-            },
-            "delete": [
-              "authored_bounded_source_snapshot_continuity",
-              "bounded_career_inference"
-            ]
-          }
-        }
+        "update": {}
       }
     }
   },

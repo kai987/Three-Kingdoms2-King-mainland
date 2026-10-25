@@ -720,6 +720,45 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  expect([shu.state.year,shu.state.month,shu.state.day]).toEqual([212,12,1]);
  for(const city of ['jiameng','fuxian'])expect(shu.state.cities[city].owner).toBe('shu');
  expect(shu.state.cities.danyang.owner).toBe('wu');
+
+ // Reuse this browser and Worker for the earlier dated frontier corrections;
+ // neither an obsolete rebel faction nor a captured capital can persist.
+ await page.locator('#main-menu').click();await expect(page.locator('#begin')).toBeEnabled();
+ await scenarios.selectOption('mainland188-06');
+ await expect(page.locator('input[name=faction][value=ou_xing]')).toHaveCount(0);
+ const sun=page.locator('input[name=faction][value=sun_jian]');
+ await expect(sun).toHaveCount(1);await sun.check();
+ await expect(marker('changsha')).toHaveAttribute('data-owner','sun_jian');
+ await page.locator('#city-jump').selectOption('changsha');
+ const changsha=page.locator('.city-information[data-inspected-city=changsha]');
+ await expect(changsha).toHaveAttribute('data-information-mode','preview');
+ await expect(changsha.locator('.roster-table tbody tr')).toHaveCount(5);
+ for(const name of ['孫堅','程普','黃蓋','韓當','朱治'])await expect(changsha.locator('.roster-table tbody tr').filter({hasText:name})).toHaveCount(1);
+ await closeDialog(page);await page.locator('#begin').click();
+ await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});await waitIdle(page);await dismissHistoryOpening(page);
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0188-06-01');
+ await expect(page.locator('#inspector .owner')).toContainText('孫堅');
+ await expect(page.locator('#inspector [data-city-roster-officer]')).toHaveCount(5);
+ const sunOpening=await exportSave();expect(sunOpening.state.player).toBe('sun_jian');
+ expect(sunOpening.state.cities.changsha.owner).toBe('sun_jian');
+ expect(sunOpening.state.cities.changsha.roster.officer_ids.map(id=>sunOpening.state.officers[id].person_id).sort()).toEqual(
+  [551,703,247,176,390].map(id=>'san14-candidate-'+String(id).padStart(4,'0')).sort());
+ expect(Object.values(sunOpening.state.officers).some(officer=>officer.person_id==='san14-candidate-0065')).toBe(false);
+ await historyScreenshot(page,testInfo,'188-sun-jian-live-tc');
+
+ await page.locator('#main-menu').click();await expect(page.locator('#begin')).toBeEnabled();
+ await scenarios.selectOption('mainland194-06');await page.locator('input[name=faction][value=wei]').check();
+ await expect(marker('jiyin')).toHaveAttribute('data-owner','wei');
+ await expect(marker('jiyin')).toHaveAttribute('aria-label',/鄄城/);
+ await expect(marker('chenliu')).toHaveAttribute('data-owner','lubu');
+ await page.locator('#begin').click();await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
+ await waitIdle(page);await dismissHistoryOpening(page);
+ await expect(page.locator('#map-date')).toHaveAttribute('datetime','0194-06-01');
+ await expect(page.locator('#city-jump')).toHaveValue('jiyin');
+ await expect(page.locator('#inspector .owner')).toContainText('曹操');
+ const yanOpening=await exportSave();expect(yanOpening.state.player).toBe('wei');
+ expect(yanOpening.state.cities.jiyin.owner).toBe('wei');expect(yanOpening.state.cities.chenliu.owner).toBe('lubu');
+ await historyScreenshot(page,testInfo,'194-yan-frontier-live-tc');
  expect(errors.get(page)).toEqual([]);
 });
 
