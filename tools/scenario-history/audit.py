@@ -302,7 +302,7 @@ def source_links(values):
 
 def markdown(report):
     summary = report['summary']
-    conversion = read(ROOT / 'game/locales/zh-Hant.json')['stages']
+    conversion = read(ROOT / 'game/locales/zh-hant.json')['stages']
 
     def human(value):
         """Use traditional forms for Chinese proper names, not Japanese prose."""
