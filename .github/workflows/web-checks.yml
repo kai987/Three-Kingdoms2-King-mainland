@@ -170,7 +170,9 @@ jobs:
           git diff --check
   web-release:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Desktop and touch acceptance run sequentially against the same artifact.
+    # The complete suite takes about 25 minutes on the hosted runner.
+    timeout-minutes: 35
     env:
       MARCH_CORE_BACKEND: python
     steps:
