@@ -36,7 +36,7 @@ node tests/browser_engine_smoke.mjs build/web
 
 ## 真實瀏覽器操作
 
-[瀏覽器驗收](../tests/browser_ui.spec.mjs)使用固定Playwright `1.64.1`與其對應的Chromium，在實際頁面載入同一份`build/web/`、Worker、Pyodide與戰役核心。桌面為1280×800，觸控模擬為390×844，循序執行以限制資源占用；觸控Chromium模擬不等同於已驗收實體手機或Safari。
+[瀏覽器驗收](../tests/browser_ui.spec.mjs)使用固定Playwright `1.64.1`與其對應的Chromium，在實際頁面載入同一份`build/web/`、Worker、Pyodide與戰役核心。桌面為1280×800，觸控模擬為390×844；本機預設循序執行，CI則拆成兩個獨立工作，在相同發布包上並行驗收。觸控Chromium模擬不等同於已驗收實體手機或Safari。
 
 ```sh
 # 先按前節建置build/web，再安裝鎖定的測試套件及瀏覽器
@@ -94,17 +94,45 @@ python3 -B tools/campaign-soak/run.py \
   --output build/soak/smoke.json
 ```
 
-## CI與發布門檻
+## 按影響範圍執行的CI
 
-[共用驗證流程](../.github/workflows/web-checks.yml)集中以下檢查，避免規則CI與發布各自重跑整套工作：
+[範圍規劃器](../tools/ci/plan.py)在每次main推送或PR產生`tk2-test-plan-v1`計畫，摘要列明基準commit、修改檔案、選中的瀏覽器／Python組、劇本ID、必要工作及發布決定。未知路徑、缺少可信基準、改動範圍無法辨識或CI選擇器自身變更，都回退完整驗證。
 
-- Rust格式、lint、測試、可重現原生／WASM建置及差分；依賴工作使用同次執行產生的原生核心。
-- Python與Rust兩個後端各跑完整戰役回歸；每個後端按測試檔案穩定拆成3片，合計6個並行工作，另有全集與無重疊檢查。各片安裝固定瀏覽器執行環境，避免發布邊界測試因缺少Pyodide而靜默跳過。
-- 六組案例／種子的跨年回放並行執行，每組內對照Python與Rust，成功或失敗均保留診斷報告7天。
-- 來源資料、語言、JavaScript介面夾具、固定雲端SDK與原版／補繪素材檢查。
-- 一次靜態建置、真實WASM／CPU回放、桌面及觸控Chromium操作；通過後保留同一份發布包。
+| 改動 | 選擇的驗證 |
+| --- | --- |
+| 白名單內README、純說明Markdown | 空白、UTF-8與倉庫內聯相對連結；不建置或部署遊戲 |
+| 獨立封面、圖標、音頻 | 全局輕量校驗、相關Node夾具、封面／音頻／開始入口／失敗重試／認證回跳／存讀恢復的8個視口用例 |
+| 全局`app.js`、共用樣式或語言入口 | 全局輕量校驗、完整瀏覽器組；不因純UI改動執行規則矩陣及跨年AI |
+| 單個`scenarios/*.json`的獨立開局資料 | 全29劇本身份／引用校驗、指定ID的生成位元組與真實開局、3旬正常命令、完整存檔／RNG雙後端對照、相關歷史及瀏覽器用例 |
+| 共享武將／城池／道路／規則、構建器、CI基礎設施 | 完整驗證；劇本內覆寫公共規則也不視為局部開局變更 |
 
-[主驗證入口](../.github/workflows/remake.yml)在`main`推送或PR時呼叫共用流程。同一分支的舊驗證可由較新提交取代。[Pages流程](../.github/workflows/pages.yml)只接受本倉庫`main`推送成功的精確commit與同次驗證產物；手動發布也先走同一組門檻，不跳過檢查。部署前核對目前`main`、`runtime/build.json`的commit、完整檔案清單、大小、逐檔SHA256及整體內容SHA，直接部署已測試的產物，不重新建置或執行下載包內的程式碼。較舊提交已被新`main`取代時不發布。
+所有非純文檔改動都保留來源資料一致性、全部29劇本的基本身份／引用／容量／資源檢查、JS語法與現有Node夾具、固定SDK及素材校驗。單個劇本也可能更新全局來源指紋；這類生成物或存檔標識變化仍要檢查，不會以刪除SHA或RNG斷言來縮短測試。
+
+Python與瀏覽器分別使用[`test-groups.json`](../tools/ci/test-groups.json)和[`cases.json`](../tools/browser-tests/cases.json)登記依賴。Python模組新增而未登記、瀏覽器用例未登記、計畫含未知組／未知ID，或篩選後沒有任何用例，都會失敗。`python_groups`與瀏覽器`groups`分開，避免全局UI測試意外拉入全部後端規則。瀏覽器仍保留現有24用例各兩個視口的完整48項模式；歷史專題按明列ID選入，其必要跨劇本比較保留，一般深度開局循環只使用指定ID。
+
+行軍測試另拆成純向量／ABI矩陣與[真實存檔相容性](../tests/test_remake_march_save_compat.py)。局部劇本仍檢查8條原始存檔／RNG基線與雙向後端讀檔；大向量矩陣留在完整模式。只省略未被這些基線使用的昂貴UI視圖，生產規則、原金標、完整狀態與存檔摘要不變；實際視圖由WASM回放和瀏覽器檢查。
+
+main推送以[上次實際成功部署](../tools/ci/published_base.py)的commit為基準，確認`github-pages`有效success狀態、同倉庫main、Pages工作流、成功的deploy工作及精確發布步驟；不使用`HEAD^`或僅看工作流綠燈。新推送因此包含尚未發布的累積改動，即使前一輪CI被取消也不會漏測。PR使用與目標分支的merge-base；新增／刪除／改ID讀取前後索引，不能只由檔名猜測。
+
+`tools/ci/run_scoped_tests.py --plan PATH --list-only`只輸出選中的模組／劇本，不載入戰役或執行測試；去掉`--list-only`執行對應檢查，`--report PATH`保存結果。以下建立本機完整計畫，不要求查詢遠端部署：
+
+```sh
+mkdir -p build/ci
+python3 -B tools/ci/plan.py --head HEAD --force-full > build/ci/full-plan.json
+python3 -B tools/ci/run_scoped_tests.py --plan build/ci/full-plan.json --list-only
+TK2_TEST_PLAN=build/ci/full-plan.json node tools/browser-tests/node_modules/@playwright/test/cli.js test \
+  --config tools/browser-tests/playwright.config.mjs --list
+```
+
+完整模式仍使用Python／Rust各3分片、6組跨年種子、Rust格式／lint／原生／WASM差分，以及全部現有素材與瀏覽器驗收。可在GitHub Actions的`Web campaign checks`手動選`force_full`；每天日本時間03:00另跑一次完整回歸，定期／手動驗證不取消main推送的發布CI，也不自動發布網站。
+
+## CI發布門檻
+
+[共用流程](../.github/workflows/web-checks.yml)只建置一次`candidate-web-SHA`，先驗真實WASM與CPU回放；桌面／觸屏在兩個獨立runner下載同一份候選包，各自檢查commit、檔案清單和內容SHA，再執行所需用例。物流／補給有獨立的條件工作。
+
+[最終閘門](../tools/ci/gate.py)根據計畫核對每項必要工作，失敗、取消、意外跳過或缺失都拒絕；通過後再次驗證原候選包，才保留`verified-web-SHA`。按計畫不需要的工作可顯示skipped，不能冒充已測過。
+
+[Pages流程](../.github/workflows/pages.yml)只接受本倉庫main推送的成功精確commit與同次計畫，純說明文檔的`publish=false`不發布。手動Pages發布明確要求完整驗證；所有發布都前後核對目前main與完整檔案SHA，直接部署通過測試的原產物，不重新建置、不執行下載包內的程式碼。較新推送可取代舊推送驗證，較舊commit不發布。
 
 ## 發布後的實際驗收
 
