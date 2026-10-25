@@ -979,7 +979,9 @@ test('scenario totals and DLC labels stay bilingual while island history remains
 test('a stale local API menu warns without restarting or changing its campaign',async({page,context},testInfo)=>{
  const api=[];
  await page.exposeFunction('__recordScenarioApi',row=>api.push(row));
- await context.route('**/app.js',async route=>{
+ // Entry scripts carry a content hash query; match their pathname so this
+ // old-API fixture still wraps the actual shipped client.
+ await context.route(url=>url.pathname.endsWith('/app.js'),async route=>{
   const response=await route.fetch();
   const prefix=`'use strict';\n(() => {
    const original=window.fetch.bind(window);
