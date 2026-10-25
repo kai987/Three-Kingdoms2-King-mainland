@@ -52035,18 +52035,14 @@
           "future_plans": 669,
           "city_owner_corrections": [
             "yidu"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_region_placement": 1020,
+            "game_reference": 2,
+            "primary_text_affiliation": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 1021,
-              "game_reference": 2
-            },
-            "delete": [
-              "bounded_career_inference"
-            ]
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 669,

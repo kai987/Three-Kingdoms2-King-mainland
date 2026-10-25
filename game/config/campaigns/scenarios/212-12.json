@@ -36689,16 +36689,19 @@
             "wuwei",
             "xiping",
             "yinping"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_garrison_relocation": 31,
+            "authorial_region_placement": 788,
+            "bounded_career_inference": 152,
+            "bounded_regional_inference": 17,
+            "game_reference": 5,
+            "primary_text_affiliation": 7,
+            "primary_text_chronology_choice": 1,
+            "regional_primary_mapping": 22
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 842,
-              "game_reference": 7,
-              "bounded_career_inference": 174
-            }
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 306,

@@ -73730,16 +73730,17 @@
             "xiping",
             "yinping"
           ],
-          "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons."
+          "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons.",
+          "reference_classes": {
+            "authorial_garrison_relocation": 26,
+            "authorial_region_placement": 963,
+            "bounded_career_inference": 25,
+            "game_reference": 6,
+            "primary_text_affiliation": 2,
+            "regional_primary_mapping": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 991,
-              "game_reference": 6,
-              "bounded_career_inference": 26
-            }
-          },
           "bases": {
             "set": {
               "authored_nearby_historical_snapshot_continuity": 961,

@@ -38122,18 +38122,17 @@
             "wudu",
             "wujun",
             "yinping"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_garrison_relocation": 3,
+            "authorial_region_placement": 934,
+            "bounded_career_inference": 1,
+            "game_reference": 82,
+            "primary_text_affiliation": 2,
+            "regional_primary_mapping": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 941,
-              "game_reference": 82
-            },
-            "delete": [
-              "bounded_career_inference"
-            ]
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 535,

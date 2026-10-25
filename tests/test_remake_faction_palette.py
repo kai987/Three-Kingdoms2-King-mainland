@@ -28,6 +28,7 @@ class FactionPaletteTests(unittest.TestCase):
 
     def test_all_current_scenarios_have_separated_visible_fills(self):
         self.assertEqual(len(self.catalogs),29)
+        self.assertEqual(len(self.catalogs['mainland190-01'].factions),25)
         for identity,catalog in self.catalogs.items():
             palette=faction_colors(catalog)
             self.assertEqual(set(palette),{'neutral',*catalog.factions},identity)
@@ -43,6 +44,28 @@ class FactionPaletteTests(unittest.TestCase):
             for i,color in enumerate(fills):
                 for other in fills[i+1:]:
                     self.assertGreaterEqual(color_distance(color,other),29,identity)
+
+    def test_native_colors_remain_unchanged_when_their_spacing_is_sufficient(self):
+        self.assertEqual(faction_colors(self.catalogs['mainland198-03']),{
+            'neutral':'#ffffff', 'gongsun':'#009438', 'gongsun_zan':'#f83800',
+            'han_sui':'#b8f818', 'hua_xin':'#008088', 'li_jue':'#d800cc',
+            'liu_biao':'#6844fc', 'liu_zhang':'#00e8d8', 'lubu':'#b8b8f8',
+            'ma_teng':'#fc7460', 'shi_xie':'#e4c490', 'shu':'#f8b800',
+            'wei':'#0078f8', 'wu':'#f85898', 'yuan_shao':'#a868b8',
+            'yuan_shu':'#607c00', 'zhang_lu':'#b8e8b8', 'zhang_xiu':'#b87800',
+            'zhang_yang':'#888888'})
+
+    def test_larger_unknown_catalogs_keep_distinct_deterministic_visible_fills(self):
+        identities=['wei','shu','wu','nanman',*(f'future_{n:02d}' for n in range(36))]
+        catalog=SimpleNamespace(factions=dict.fromkeys(identities,{}))
+        first=faction_colors(catalog)
+        reversed_catalog=SimpleNamespace(factions=dict(reversed(list(catalog.factions.items()))))
+        self.assertEqual(faction_colors(reversed_catalog),first)
+        self.assertEqual(len(set(first.values())),41)
+        for identity in identities:
+            self.assertGreaterEqual(color_lab(first[identity])[0],35)
+            self.assertGreaterEqual(color_distance(first[identity],'#ffffff'),30)
+            self.assertGreaterEqual(color_distance(first[identity],'#000000'),30)
 
     def test_nanman_is_cyan_and_shu_gold_in_every_current_preview(self):
         current=list(self.catalogs.values())

@@ -88,7 +88,7 @@ class DatedScenarioEconomyTests(unittest.TestCase):
         self.assertGreater(stock((190, 1), 'henan'), stock((191, 10), 'henan'))
         self.assertGreater(stock((221, 7), 'henan'), stock((191, 10), 'henan'))
         self.assertGreater(stock((197, 7), 'yingchuan'), stock((196, 6), 'yingchuan'))
-        self.assertGreater(stock((234, 2), 'danyang'), stock((211, 7), 'danyang'))
+        self.assertGreater(stock((234, 2), 'danyang'), stock((212, 12), 'danyang'))
         self.assertLess(stock((263, 5), 'danyang'), stock((249, 1), 'danyang'))
         self.assertLess(stock((219, 7), 'hanzhong'), stock((217, 7), 'hanzhong'))
         self.assertGreater(stock((227, 2), 'hanzhong', 'reserves'), stock((219, 7), 'hanzhong', 'reserves'))

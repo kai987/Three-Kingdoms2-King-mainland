@@ -27708,16 +27708,18 @@
             "wudu",
             "yinping",
             "yulin"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_garrison_relocation": 47,
+            "authorial_region_placement": 722,
+            "bounded_career_inference": 1,
+            "game_reference": 237,
+            "novel_compatible_regional_mapping": 10,
+            "primary_text_affiliation": 5,
+            "regional_primary_mapping": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 785,
-              "game_reference": 237,
-              "bounded_career_inference": 1
-            }
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 359,

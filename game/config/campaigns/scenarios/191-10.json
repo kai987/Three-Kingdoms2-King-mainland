@@ -54367,16 +54367,18 @@
             "shanyang",
             "wudu",
             "yinping"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_garrison_relocation": 43,
+            "authorial_region_placement": 843,
+            "bounded_career_inference": 128,
+            "explicit_regional_proxy": 1,
+            "game_reference": 4,
+            "primary_text_affiliation": 3,
+            "regional_primary_mapping": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 860,
-              "game_reference": 5,
-              "bounded_career_inference": 158
-            }
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 591,

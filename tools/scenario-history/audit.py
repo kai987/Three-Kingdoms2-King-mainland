@@ -202,6 +202,10 @@ def compile_report():
             require(data['initial_owners'].get(city) in {*factions, 'neutral'}, ident + ': unknown city owner ' + city)
         names = display_names(data, presentation)
         people, opening = opening_people(data, active, factions)
+        evidence_counts = Counter(row['placement_review']['historical_certainty']
+                                  for row in data['era_assignments'].values())
+        require(data['placement_completion']['reference_classes'] == dict(evidence_counts),
+                ident + ': placement evidence summary is stale')
         changes = {field: latest(decision.get(field, []), key) for field, key in
                    (('new_factions', 'id'), ('city_changes', 'city'), ('officer_changes', 'person_id'))}
         for field, rows in changes.items():

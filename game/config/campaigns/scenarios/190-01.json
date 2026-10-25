@@ -42048,16 +42048,18 @@
             "wudu",
             "yingchuan",
             "yinping"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_garrison_relocation": 20,
+            "authorial_region_placement": 967,
+            "bounded_career_inference": 1,
+            "explicit_regional_proxy": 1,
+            "game_reference": 25,
+            "primary_text_affiliation": 8,
+            "regional_primary_mapping": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 996,
-              "game_reference": 25,
-              "bounded_career_inference": 2
-            }
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 616,

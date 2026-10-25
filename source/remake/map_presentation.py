@@ -66,6 +66,15 @@ def color_distance(first,second):
     return sum((a-b)**2 for a,b in zip(color_lab(first),color_lab(second)))**.5
 
 
+@lru_cache(maxsize=1)
+def _extended_faction_swatches():
+    """Deterministic RGB candidates for openings beyond the native palette."""
+    levels=(*range(0,256,32),255)
+    return tuple(color for r in levels for g in levels for b in levels
+                 if color_lab(color:='#%02x%02x%02x'%(r,g,b))[0]>=35
+                 and color_distance(color,'#ffffff')>=30)
+
+
 @lru_cache(maxsize=256)
 def _faction_colors(identities):
     chosen={}
@@ -79,16 +88,19 @@ def _faction_colors(identities):
         if identity in chosen:continue
         remaining=[color for color in _FACTION_SWATCHES if color not in chosen.values()
                    and color_lab(color)[0]>=35 and color_distance(color,'#ffffff')>=30]
-        # All released catalogs fit the native pool (at most 19 factions).
-        # An unknown future catalog may use more: retain deterministic distinct
-        # fills rather than recycling a previous faction's color.
-        if not remaining:
-            remaining=['#%02x%02x%02x'%(r,g,b)
-                for r in (24,72,120,168,216) for g in (24,72,120,168,216)
-                for b in (24,72,120,168,216) if '#%02x%02x%02x'%(r,g,b) not in chosen.values()
-                and color_lab('#%02x%02x%02x'%(r,g,b))[0]>=35
-                and color_distance('#%02x%02x%02x'%(r,g,b),'#ffffff')>=30]
-        chosen[identity]=max(remaining,key=separation)
+        best=max(remaining,key=separation,default=None)
+        # Preserve native fills until their best spacing becomes insufficient.
+        # Current openings have up to25 factions. Larger unknown catalogs keep
+        # distinct fills, but cannot be promised the same perceptual spacing.
+        if best is None or separation(best)<29:
+            expanded=[color for color in _extended_faction_swatches()
+                      if color not in chosen.values()]
+            candidate=max(expanded,key=separation,default=None)
+            if candidate is not None and (best is None or separation(candidate)>separation(best)):
+                best=candidate
+        if best is None:
+            raise ValueError('Too many factions for the display palette')
+        chosen[identity]=best
     return tuple([('neutral','#ffffff'),*sorted(chosen.items())])
 
 

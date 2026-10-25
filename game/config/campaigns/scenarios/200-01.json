@@ -32725,18 +32725,17 @@
             "wudu",
             "yinping",
             "yulin"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_garrison_relocation": 24,
+            "authorial_region_placement": 827,
+            "bounded_regional_inference": 1,
+            "game_reference": 168,
+            "primary_text_affiliation": 2,
+            "regional_primary_mapping": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 855,
-              "game_reference": 168
-            },
-            "delete": [
-              "bounded_career_inference"
-            ]
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 443,

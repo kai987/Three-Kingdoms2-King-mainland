@@ -77,9 +77,12 @@ class JingnanPrefectTests(unittest.TestCase):
                          ('han_xuan', 'changsha'))
         self.assertIn('三國志/卷36', assignment['placement_review']['source_urls'][0])
         self.assertIn('攸縣', assignment['placement_review']['note'])
-        self.assertEqual(faction_officer_counts(self.catalog)['han_xuan'], 2)
-        # The primary text does not name Wei Yan as Han Xuan's subordinate.
-        self.assertEqual(self.data['era_assignments']['san14-candidate-0189']['faction'], 'shu')
+        self.assertEqual(faction_officer_counts(self.catalog)['han_xuan'], 3)
+        # Wei Yan's posting is separately marked as a Romance-compatible game
+        # setting; it does not change Huang Zhong's primary-text evidence.
+        self.assertEqual(self.data['era_assignments']['san14-candidate-0189']['faction'], 'han_xuan')
+        self.assertEqual(assignment['placement_review']['historical_certainty'],
+                         'primary_text_attested')
 
     def test_new_rulers_are_selectable_and_roundtrip_current_saves(self):
         for city, faction, _, _, ident in PREFECTS:
@@ -142,15 +145,48 @@ class JingnanPrefectTests(unittest.TestCase):
                          dict(Counter(a['placement_review']['basis']
                                       for a in self.data['era_assignments'].values())))
 
-    def test_fictional_jingnan_subordinates_are_not_invented_for_the_new_factions(self):
-        factions = {row[1] for row in PREFECTS}
-        members = {r['person_id'] for r in self.data['initial_officers']
-                   if self.data['initial_owners'][r['city']] in factions}
-        self.assertEqual(members, {row[3] for row in PREFECTS} | {'san14-candidate-0271'})
-        # Gong Zhi, Xing Daorong, Liu Xian, Chen Ying and Bao Long retain their
-        # preexisting game identities, without being certified historical staff.
-        self.assertFalse(members.intersection({f'san14-candidate-{i:04d}'
-                                              for i in (204, 228, 934, 668, 831)}))
+    def test_reviewed_jingnan_rosters_reuse_existing_ids_with_explicit_novel_provenance(self):
+        expected = {
+            'han_xuan': {f'san14-candidate-{i:04d}' for i in (158, 271, 189)},
+            'jin_xuan': {f'san14-candidate-{i:04d}' for i in (223, 204)},
+            'zhao_fan': {f'san14-candidate-{i:04d}' for i in (654, 668, 831)},
+            'liu_du': {f'san14-candidate-{i:04d}' for i in (949, 934, 228)},
+        }
+        actual = {side: {row['person_id'] for row in self.data['initial_officers']
+                         if self.data['initial_owners'][row['city']] == side}
+                  for side in expected}
+        self.assertEqual(actual, expected)
+        self.assertEqual({side: len(members) for side, members in actual.items()},
+                         {'han_xuan': 3, 'jin_xuan': 2, 'zhao_fan': 3, 'liu_du': 3})
+
+        portraits = json.loads((ROOT / 'game/assets/portraits/index.json').read_text())['people']
+        self.assertEqual(len(self.canonical_people), 1023)
+        self.assertEqual(set(self.catalog.ids), set(self.canonical_people))
+        self.assertEqual(set(portraits), set(self.canonical_people))
+        game = Campaign(self.catalog)
+        game.command('new', dict(faction='han_xuan', seed=2026), 0)
+        for city, side, _, _, _ in PREFECTS:
+            with self.subTest(faction=side):
+                self.assertEqual(set(game.state.cities[city].roster.officer_ids),
+                                 {self.catalog.ids[pid] for pid in expected[side]})
+                for pid in expected[side]:
+                    self.assertEqual(self.catalog.ids[pid], self.canonical_people[pid]['runtime_id'])
+                    self.assertTrue((ROOT / 'game' / portraits[pid]['path'].lstrip('/')).is_file())
+
+        # The novel supplies these affiliations, while all six identities and
+        # their portraits were already in the pool. Do not label them as
+        # independently attested historical garrisons or introduce new people.
+        for ident in (189, 204, 228, 668, 831, 934):
+            pid = f'san14-candidate-{ident:04d}'
+            with self.subTest(person=pid):
+                review = self.data['era_assignments'][pid]['placement_review']
+                self.assertEqual(review['historical_certainty'], 'novel_compatible_affiliation')
+                self.assertIn('演義兼容', review['note'])
+                self.assertIn('不冒稱正史', review['note'])
+                self.assertEqual(set(review['source_urls']), {
+                    'https://zh.wikisource.org/wiki/三國演義/第052回',
+                    'https://zh.wikisource.org/wiki/三國演義/第053回',
+                })
 
     def test_map_colors_distinguish_every_new_faction_and_linjiang_is_cao_caos(self):
         palette = faction_colors(self.catalog)

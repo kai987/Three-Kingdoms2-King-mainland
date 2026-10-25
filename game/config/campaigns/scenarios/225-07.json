@@ -32752,16 +32752,15 @@
           "future_plans": 163,
           "city_owner_corrections": [
             "zangke"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_garrison_relocation": 4,
+            "authorial_region_placement": 999,
+            "bounded_career_inference": 8,
+            "game_reference": 12
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "game_reference": 12,
-              "authorial_region_placement": 1003,
-              "bounded_career_inference": 8
-            }
-          },
           "bases": {
             "set": {
               "same_date_SAN14_guide_affiliation": 3,

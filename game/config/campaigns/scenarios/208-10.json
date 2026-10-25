@@ -46111,17 +46111,20 @@
             "yinping",
             "yulin"
           ],
-          "primary_text_reviewed_opening_people": 5
+          "primary_text_reviewed_opening_people": 5,
+          "reference_classes": {
+            "authorial_garrison_relocation": 50,
+            "authorial_region_placement": 795,
+            "bounded_career_inference": 150,
+            "bounded_regional_inference": 1,
+            "game_reference": 8,
+            "novel_compatible_affiliation": 6,
+            "primary_text_affiliation": 4,
+            "primary_text_attested": 5,
+            "regional_primary_mapping": 4
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 837,
-              "game_reference": 8,
-              "bounded_career_inference": 173,
-              "primary_text_attested": 5
-            }
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 348,

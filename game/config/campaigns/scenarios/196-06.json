@@ -42630,18 +42630,18 @@
             "wudu",
             "yinping",
             "yuzhang"
-          ]
+          ],
+          "reference_classes": {
+            "authorial_garrison_relocation": 10,
+            "authorial_region_placement": 999,
+            "bounded_career_inference": 1,
+            "bounded_regional_inference": 1,
+            "game_reference": 8,
+            "primary_text_affiliation": 3,
+            "regional_primary_mapping": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 1015,
-              "game_reference": 8
-            },
-            "delete": [
-              "bounded_career_inference"
-            ]
-          },
           "bases": {
             "set": {
               "person_specific_future_free_appearance": 495,

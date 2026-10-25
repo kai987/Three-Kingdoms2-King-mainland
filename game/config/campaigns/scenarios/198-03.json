@@ -79126,18 +79126,17 @@
             "wudu",
             "yinping"
           ],
-          "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons."
+          "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons.",
+          "reference_classes": {
+            "authorial_garrison_relocation": 4,
+            "authorial_region_placement": 995,
+            "bounded_career_inference": 20,
+            "bounded_regional_inference": 1,
+            "primary_text_affiliation": 2,
+            "regional_primary_mapping": 1
+          }
         },
         "update": {
-          "reference_classes": {
-            "set": {
-              "authorial_region_placement": 1003,
-              "bounded_career_inference": 20
-            },
-            "delete": [
-              "game_reference"
-            ]
-          },
           "bases": {
             "set": {
               "authored_nearby_historical_snapshot_continuity": 966,
