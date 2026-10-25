@@ -91,12 +91,42 @@ test('pixel loading cover animates, respects reduced motion and waits for the re
   await expect(page.locator('#begin')).toHaveCount(0);
   await expect.poll(()=>cover.locator('.loading-cover-art').evaluate(node=>node.complete&&node.naturalWidth>0)).toBe(true);
   await expect.poll(()=>rider.locator('img').evaluateAll(nodes=>nodes.every(node=>node.complete&&node.naturalWidth===384))).toBe(true);
-  const firstOpacity=await rider.locator('img').first().evaluate(node=>getComputedStyle(node).opacity);
+  const runningTime=await rider.locator('img').first().evaluate(node=>node.getAnimations()[0]?.currentTime);
+  expect(typeof runningTime).toBe('number');
+  await expect.poll(()=>rider.locator('img').first().evaluate(node=>node.getAnimations()[0]?.currentTime)).toBeGreaterThan(runningTime);
+  // Read the real CSS timeline above before controlling only this diagnostic
+  // presentation. Pausing the parent march prevents the screenshot crop from
+  // moving; seeking both sprite timelines removes CI capture-scheduling races.
+  const seekFrames=async fraction=>cover.evaluate(async(node,value)=>{
+   const animations=node.getAnimations({subtree:true});
+   for(const animation of animations)animation.pause();
+   await Promise.all(animations.map(animation=>animation.ready));
+   for(const animation of animations){
+    const duration=Number(animation.effect.getTiming().duration);
+    if(!Number.isFinite(duration)||duration<=0)throw Error('Cover CSS animation has no finite duration');
+    animation.currentTime=animation.animationName==='loading-cover-frame'?duration*value:0;
+   }
+   return animations.map(animation=>({name:animation.animationName,state:animation.playState,time:animation.currentTime}));
+  },fraction);
+  const firstTimings=await seekFrames(0);
+  expect(firstTimings.filter(animation=>animation.name==='loading-cover-frame')).toHaveLength(8);
+  expect(firstTimings.every(animation=>animation.state==='paused')).toBe(true);
+  await expect(rider.locator('img').nth(0)).toHaveCSS('opacity','1');
+  await expect(rider.locator('img').nth(1)).toHaveCSS('opacity','0');
   const riderBounds=await rider.boundingBox();expect(riderBounds).not.toBeNull();
   const firstFrame=await page.screenshot({path:testInfo.outputPath('loading-rider-frame-a.png'),clip:riderBounds,animations:'allow'});
-  await expect.poll(()=>rider.locator('img').first().evaluate(node=>getComputedStyle(node).opacity)).not.toBe(firstOpacity);
+  const secondTimings=await seekFrames(.75);
+  await expect(rider.locator('img').nth(0)).toHaveCSS('opacity','0');
+  await expect(rider.locator('img').nth(1)).toHaveCSS('opacity','1');
+  expect(await rider.boundingBox()).toEqual(riderBounds);
   const secondFrame=await page.screenshot({path:testInfo.outputPath('loading-rider-frame-b.png'),clip:riderBounds,animations:'allow'});
   expect(secondFrame.equals(firstFrame)).toBe(false);
+  await testInfo.attach('loading-css-animation-timings',{body:Buffer.from(JSON.stringify({runningTime,firstTimings,secondTimings},null,2)),contentType:'application/json'});
+  await cover.evaluate(async node=>{
+   const animations=node.getAnimations({subtree:true});for(const animation of animations)animation.play();
+   await Promise.all(animations.map(animation=>animation.ready));
+  });
+  await expect.poll(()=>rider.locator('img').first().evaluate(node=>node.getAnimations()[0]?.playState)).toBe('running');
   await page.screenshot({path:testInfo.outputPath('loading-cover-animated.png'),fullPage:false,animations:'allow'});
   const bounds=await cover.evaluate(node=>({width:node.scrollWidth,viewport:innerWidth,title:node.querySelector('h1').getBoundingClientRect().width}));
   expect(bounds.width).toBeLessThanOrEqual(bounds.viewport);expect(bounds.title).toBeLessThanOrEqual(bounds.viewport);
