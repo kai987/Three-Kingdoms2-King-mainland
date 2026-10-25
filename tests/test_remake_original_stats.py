@@ -92,7 +92,7 @@ class OriginalStatEvidenceTests(unittest.TestCase):
             self.assertEqual(len(validate_original_virtue(people, self.reference, self.identities)), 220)
             charisma = [p for p in people.values() if type(p['profile']['source_stats'].get('charisma')) is int]
             fallback = [p for p in people.values() if type(p['profile']['source_stats'].get('charisma')) is not int]
-            self.assertEqual((len(charisma), len(fallback)), (1000, 23))
+            self.assertEqual((len(charisma), len(fallback)), (1000, 27))
             for person in charisma:
                 self.assertEqual(person['profile']['virtue'], min(99, person['profile']['source_stats']['charisma']))
                 self.assertEqual(person['virtue_design']['status'], 'san14_charisma')

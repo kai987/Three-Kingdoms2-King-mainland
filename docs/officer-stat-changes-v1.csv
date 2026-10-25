@@ -1022,3 +1022,7 @@ historical-expansion-0021,朱熊,60,60,0,configured_default,,80,80,80,80,0,expli
 historical-expansion-0022,朱损,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-expansion-0023,虞忠,76,60,-16,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
 historical-expansion-0024,虞昺,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-song-jian,宋建,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-lu-xing,吕兴,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-tang-pu,唐谱,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
+historical-li-tong-jiaozhi,李统,60,60,0,configured_default,,80,80,80,80,0,explicit_remake_default80,,,80,80,,,,,ruler100; free0; numeric_source_only_in_explicit_source_faction_ids; otherwise80
