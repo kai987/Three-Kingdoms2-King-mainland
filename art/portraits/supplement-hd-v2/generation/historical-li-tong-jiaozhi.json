@@ -1,0 +1,24 @@
+{
+  "schema": "tk2-portrait-redraw-generation-v1",
+  "person_id": "historical-li-tong-jiaozhi",
+  "tool": "built_in_image_gen",
+  "use_case": "identity-preserve",
+  "source_path": "art/portraits/supplement-hd-v2/sources/historical-li-tong-jiaozhi.png",
+  "source_sha256": "91ad24e424a218e0b0e0611fc99b69fbee666432f5fe773e8b2811617b5ea42b",
+  "size": [
+    1122,
+    1402
+  ],
+  "mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "edit_target": "game/assets/portraits/enhanced/historical-li-tong-jiaozhi.png",
+  "edit_target_sha256": "fe31870974f1b632f9135164467922e4bd56f8e7bb778a477ed8ccad36954d05",
+  "style_reference": "art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png",
+  "prompt": "art/portraits/supplement-hd-v2/prompts/historical-li-tong-jiaozhi.txt",
+  "prompt_sha256": "87788e7733a74e7548f58fc9ab4800baa0793405512933956ee97f4e619b9ab7",
+  "original_tool_output": "/Users/paulasmith/.codex/generated_images/01a173e6-0b8b-7e43-a2f1-0b97f7eddc66/exec-05c410eb-a2b5-475c-8b7a-aa12a312c506.png",
+  "visual_review": "Same clean-shaven oval face, straight nose and small mouth, black/brown flat cap with white headband/side gaps and white collar. Added small skin/cloth pixel shading; source kept unmodified. Runtime/native untouched."
+}

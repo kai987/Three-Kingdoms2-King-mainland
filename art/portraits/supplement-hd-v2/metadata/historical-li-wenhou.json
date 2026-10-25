@@ -1,0 +1,54 @@
+{
+  "schema": "tk2-imagegen-generation-v1",
+  "tool": "image_gen.imagegen",
+  "generated_on": "2026-10-26",
+  "person_id": "historical-li-wenhou",
+  "use_case": "identity-preserve",
+  "transparent_background": true,
+  "original_output": "/Users/paulasmith/.codex/generated_images/01a162a5-f169-7970-9363-2037b7796ca7/exec-4aac9f08-b6b0-4d80-a643-fd3dfac152db.png",
+  "retained_source": "art/portraits/supplement-hd-v2/sources/historical-li-wenhou.png",
+  "prompt_file": "art/portraits/supplement-hd-v2/prompts/historical-li-wenhou-revision-2.txt",
+  "initial_prompt_file": "art/portraits/supplement-hd-v2/prompts/historical-li-wenhou.txt",
+  "referenced_image_paths": [
+    "art/portraits/supplement-hd-v2/sources/historical-li-wenhou-attempt-1.png",
+    "game/assets/portraits/enhanced/historical-li-wenhou.png"
+  ],
+  "initial_referenced_image_paths": [
+    "game/assets/portraits/enhanced/historical-li-wenhou.png",
+    "art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png"
+  ],
+  "source_size": [
+    1122,
+    1402
+  ],
+  "source_mode": "RGBA",
+  "source_sha256": "9fb3588122bd7cdf27d31bd11fbf4e3f7a31830e428483d072092f30bb5ed566",
+  "source_bytes": 1294521,
+  "raw_bytes_preserved": true,
+  "identity_basis": "Identity-preserving redraw of the existing newly authored game portrait; not authentic historical likeness.",
+  "iterations": [
+    {
+      "attempt": 1,
+      "retained_source": "art/portraits/supplement-hd-v2/sources/historical-li-wenhou-attempt-1.png",
+      "original_output": "/Users/paulasmith/.codex/generated_images/01a162a5-f169-7970-9363-2037b7796ca7/exec-ad3330e1-37ab-4ddf-9a81-c4dbdc8566e2.png",
+      "status": "rejected",
+      "reason": "Invented two side cap ornaments and hollow crown shape, absent from the identity target."
+    },
+    {
+      "attempt": 2,
+      "status": "selected",
+      "correction": "Removed invented twin ornaments/hollow cap; restored low solid black cap with single small central brown/orange detail while retaining face/clothing."
+    }
+  ],
+  "visual_review": "Narrow long face, narrow nose, thin moustache without full beard, opaque white wrapped headband, single central cap detail, brown crossed collar and white robe retained. Fine internal pixel shading; generated draft only, not deployed. Model removed outer white backing despite prompt; opaque white garment/headband remain. Parent final pipeline must review/restore backing if required.",
+  "raw_alpha_review": {
+    "note": "Native imagegen output has near-opaque主体 alpha mostly253/254, transparent exterior0 and edge fragments. Parent final pixel pipeline must use alpha threshold rather than black-color keying, and review white backing; source file remains unmodified.",
+    "counts": {
+      "near_opaque_white_pixels": 185099,
+      "near_opaque_black_pixels": 83479,
+      "transparent_pixels": 424992
+    },
+    "finalization_owner": "parent agent",
+    "draft_status": "visually_reviewed_pending_parent_finalization"
+  }
+}

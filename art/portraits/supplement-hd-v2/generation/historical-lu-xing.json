@@ -1,0 +1,24 @@
+{
+  "schema": "tk2-portrait-redraw-generation-v1",
+  "person_id": "historical-lu-xing",
+  "tool": "built_in_image_gen",
+  "use_case": "identity-preserve",
+  "source_path": "art/portraits/supplement-hd-v2/sources/historical-lu-xing.png",
+  "source_sha256": "71ae07abbf7a5aa8152ef8a7e39cb1ef9704360d9d792091fe55434d12993da7",
+  "size": [
+    1122,
+    1402
+  ],
+  "mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "edit_target": "game/assets/portraits/enhanced/historical-lu-xing.png",
+  "edit_target_sha256": "69ef1227d95189c8c941fe3985605ececd14214d334529c64be4510db9953605",
+  "style_reference": "art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png",
+  "prompt": "art/portraits/supplement-hd-v2/prompts/historical-lu-xing.txt",
+  "prompt_sha256": "6798fc0d5bd334e9103eb0c071da312fbd721f5c2ea328bd3c9986297b80deab",
+  "original_tool_output": "/Users/paulasmith/.codex/generated_images/01a173e6-0b8b-7e43-a2f1-0b97f7eddc66/exec-768b0765-d6f2-42f1-ac7e-6a31ec05cb37.png",
+  "visual_review": "Same long angular face, slanted eyebrows, moustache/pointed beard and white lapels; added small pixel cel shading. Raw source retained for root silhouette/palette validation; no runtime replacement made."
+}

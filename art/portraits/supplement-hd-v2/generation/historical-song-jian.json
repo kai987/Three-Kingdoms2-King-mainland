@@ -1,0 +1,26 @@
+{
+  "schema": "tk2-portrait-redraw-generation-v1",
+  "person_id": "historical-song-jian",
+  "tool": "built_in_image_gen",
+  "use_case": "identity-preserve",
+  "source_path": "art/portraits/supplement-hd-v2/sources/historical-song-jian.png",
+  "source_sha256": "c7df321e6abd04e4a0f052715940dd67bc4382f292654930edbaa66786e8436c",
+  "size": [
+    1122,
+    1402
+  ],
+  "mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "edit_target": "game/assets/portraits/enhanced/historical-song-jian.png",
+  "edit_target_sha256": "3f7bd17919765b255f3eec9a083f15d34ff11299bdda610330889f100ae3b5eb",
+  "style_reference": "art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png",
+  "prompt": "art/portraits/supplement-hd-v2/prompts/historical-song-jian.txt",
+  "prompt_sha256": "599a620a6d0b61d327788d6167b781f03f060d7cc6f654dabf67414428615991",
+  "correction_prompt": "art/portraits/supplement-hd-v2/prompts/historical-song-jian-cap-correction.txt",
+  "original_tool_output": "/Users/paulasmith/.codex/generated_images/01a173e6-0b8b-7e43-a2f1-0b97f7eddc66/exec-37b5473b-948e-4f88-96df-93a5a5311fb9.png",
+  "prior_tool_output": "/Users/paulasmith/.codex/generated_images/01a173e6-0b8b-7e43-a2f1-0b97f7eddc66/exec-2dbaaa78-6bb4-4538-9b52-2962bfecfcab.png",
+  "visual_review": "Same broad face/heavy brows/moustache/beard and white collar; cap corrected in second built-in edit to white central gap with flat top. Root must enforce original silhouette/white gaps during final identity-preserving material transfer."
+}

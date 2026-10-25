@@ -1,0 +1,131 @@
+{
+  "schema": "tk2-portrait-redraw-v2",
+  "size": [
+    128,
+    160
+  ],
+  "scope": "seven_supplemental_people_only",
+  "native_policy": "retain_native32x40_and_previous128x160",
+  "processing": "Builtin imagegen identity-preserving edits; direct authored source to128x160 fit and16warm-color quantization, never through32x40; threshold alpha at128, retain opaque black ink and opaque white clothing",
+  "people": {
+    "historical-song-jian": {
+      "name": "宋建",
+      "native": {
+        "path": "game/assets/portraits/generated/historical-song-jian.png",
+        "sha256": "551df6216dc27d8557c3bd03e94b51cb9ac71abd7693a08a3fbd545ae17805c5",
+        "rgba_sha256": "7ae8e6f40037c5fef07f2c6e84f5d20340d7c3549142dd09400db0feadc59b49"
+      },
+      "original_enhanced": {
+        "path": "art/portraits/supplement-hd-v2/original-enhanced/historical-song-jian.png",
+        "sha256": "3f7bd17919765b255f3eec9a083f15d34ff11299bdda610330889f100ae3b5eb",
+        "rgba_sha256": "40e311de26ee6790775896b7fff7e1e2efdb9739ee417adc3324469122fb6522"
+      },
+      "generated_source": "art/portraits/supplement-hd-v2/sources/historical-song-jian.png",
+      "generated_source_sha256": "c7df321e6abd04e4a0f052715940dd67bc4382f292654930edbaa66786e8436c",
+      "prompt": "art/portraits/supplement-hd-v2/prompts/historical-song-jian.txt",
+      "prompt_sha256": "599a620a6d0b61d327788d6167b781f03f060d7cc6f654dabf67414428615991"
+    },
+    "historical-lu-xing": {
+      "name": "吕兴",
+      "native": {
+        "path": "game/assets/portraits/generated/historical-lu-xing.png",
+        "sha256": "456717666ed668c0a9950f00f979b36b43d59d27c55738883871cd2d1137fc62",
+        "rgba_sha256": "5a1686c569557635b9c8ef9f47a695ca52e7ef1ea23753c79c71902a59c247b7"
+      },
+      "original_enhanced": {
+        "path": "art/portraits/supplement-hd-v2/original-enhanced/historical-lu-xing.png",
+        "sha256": "69ef1227d95189c8c941fe3985605ececd14214d334529c64be4510db9953605",
+        "rgba_sha256": "b4af1d3ad1fcf083d7d0b600df51b2aa49b882737d68cca27e65998ef9fced6a"
+      },
+      "generated_source": "art/portraits/supplement-hd-v2/sources/historical-lu-xing.png",
+      "generated_source_sha256": "71ae07abbf7a5aa8152ef8a7e39cb1ef9704360d9d792091fe55434d12993da7",
+      "prompt": "art/portraits/supplement-hd-v2/prompts/historical-lu-xing.txt",
+      "prompt_sha256": "6798fc0d5bd334e9103eb0c071da312fbd721f5c2ea328bd3c9986297b80deab"
+    },
+    "historical-tang-pu": {
+      "name": "唐谱",
+      "native": {
+        "path": "game/assets/portraits/generated/historical-tang-pu.png",
+        "sha256": "129c7dc10a47abb19898ea1775abcfb6940fdc5cc07da3f819ab06775b4b2379",
+        "rgba_sha256": "f5ae0fb06e8a9d7e50ec3a42d29898173c3718fdf8035ee04ccaf4d13afb58c5"
+      },
+      "original_enhanced": {
+        "path": "art/portraits/supplement-hd-v2/original-enhanced/historical-tang-pu.png",
+        "sha256": "4823db283e39662198a3288ba3476519ab12f72836a6cf80062dbe997bde4833",
+        "rgba_sha256": "4abb19eab7fec2a3f28c1b9223453b2a16858faeead87a9df18b7785070c168b"
+      },
+      "generated_source": "art/portraits/supplement-hd-v2/sources/historical-tang-pu.png",
+      "generated_source_sha256": "2ebdb639616848158c45f9df7f53a90944c6a17fff84001e879b0f19e6ca955e",
+      "prompt": "art/portraits/supplement-hd-v2/prompts/historical-tang-pu.txt",
+      "prompt_sha256": "53010b4c12e2dd541b77953f1cbb9692fb40d713cbebe85d09ea6f48c153c706"
+    },
+    "historical-li-tong-jiaozhi": {
+      "name": "李统",
+      "native": {
+        "path": "game/assets/portraits/generated/historical-li-tong-jiaozhi.png",
+        "sha256": "24efbe71d5f9e9449fa6c55b2a69219e0517f890ecdb36d68dc64b58d2578ae7",
+        "rgba_sha256": "f3814c9a0e5c5b2e120ec6ab8121cefad75dc8f12de63e34b260cd2c7b00c53d"
+      },
+      "original_enhanced": {
+        "path": "art/portraits/supplement-hd-v2/original-enhanced/historical-li-tong-jiaozhi.png",
+        "sha256": "fe31870974f1b632f9135164467922e4bd56f8e7bb778a477ed8ccad36954d05",
+        "rgba_sha256": "1dc5b6bbc417ad05d7c2a7172397d6fc3ecbf4f3e355ee7935db161c3cc22d27"
+      },
+      "generated_source": "art/portraits/supplement-hd-v2/sources/historical-li-tong-jiaozhi.png",
+      "generated_source_sha256": "91ad24e424a218e0b0e0611fc99b69fbee666432f5fe773e8b2811617b5ea42b",
+      "prompt": "art/portraits/supplement-hd-v2/prompts/historical-li-tong-jiaozhi.txt",
+      "prompt_sha256": "87788e7733a74e7548f58fc9ab4800baa0793405512933956ee97f4e619b9ab7"
+    },
+    "historical-beigong-boyu": {
+      "name": "北宫伯玉",
+      "native": {
+        "path": "game/assets/portraits/generated/historical-beigong-boyu.png",
+        "sha256": "5cff560882146e9793ea2579915d71454cf7c7e47011fa8f165473cb8cc1450e",
+        "rgba_sha256": "18702264261884a7612b2c5f17dc78a207c7d60c860c16dc7a4c8db2bce04073"
+      },
+      "original_enhanced": {
+        "path": "art/portraits/supplement-hd-v2/original-enhanced/historical-beigong-boyu.png",
+        "sha256": "db6bbae0ad8b44bb9045e4a9a7f653c07772200812f470199c115ce9f4e9a0d0",
+        "rgba_sha256": "66ef8c774573515f334ceb04349bb82173cc2b86691a11cb102cbaaa2a3932df"
+      },
+      "generated_source": "art/portraits/supplement-hd-v2/sources/historical-beigong-boyu.png",
+      "generated_source_sha256": "07ea3e28ca7dd55d49949cd7420026cdf2b3a9b0c5188541e6bc97ef2530450b",
+      "prompt": "art/portraits/supplement-hd-v2/prompts/historical-beigong-boyu.txt",
+      "prompt_sha256": "fd9b95354c7c44e687bfe91058c8451b8daa1029fc38b5900614ee8f1d78a2e3"
+    },
+    "historical-li-wenhou": {
+      "name": "李文侯",
+      "native": {
+        "path": "game/assets/portraits/generated/historical-li-wenhou.png",
+        "sha256": "e24b0fa71ad0cb35434703249b29ef707320a9def5a365b1eee65b29bc26493e",
+        "rgba_sha256": "c9603081caed1d337a1109559c746137a01b17e0efa8cbd4b9b4f4106752d898"
+      },
+      "original_enhanced": {
+        "path": "art/portraits/supplement-hd-v2/original-enhanced/historical-li-wenhou.png",
+        "sha256": "139bf998d01e6628c15915eaf27498c6d60e1f29d97f7a35083d0d7e3d8ede19",
+        "rgba_sha256": "da7e62874428c688f755012b05ac28849960116febb5ba07fb040760bc771299"
+      },
+      "generated_source": "art/portraits/supplement-hd-v2/sources/historical-li-wenhou.png",
+      "generated_source_sha256": "9fb3588122bd7cdf27d31bd11fbf4e3f7a31830e428483d072092f30bb5ed566",
+      "prompt": "art/portraits/supplement-hd-v2/prompts/historical-li-wenhou.txt",
+      "prompt_sha256": "d0647238a4ebdd44c7b73fc46d9c3cd5b1e8abe754fd7aa4993d8d8798a80330"
+    },
+    "historical-bian-zhang": {
+      "name": "边章",
+      "native": {
+        "path": "game/assets/portraits/generated/historical-bian-zhang.png",
+        "sha256": "0b9a6d8063f42c312e99a7b8fce9ef881dd43330fb149fe807528ffd6871bffb",
+        "rgba_sha256": "c96d8b04313f51d2d0937e888b484c5960a4c882ffc73d3827b58c03681f823d"
+      },
+      "original_enhanced": {
+        "path": "art/portraits/supplement-hd-v2/original-enhanced/historical-bian-zhang.png",
+        "sha256": "22093b52512656966729bfc47379e644367931752248b43379b5e1c582dc9196",
+        "rgba_sha256": "360fda5e6dc108dead7354258a54ca381a81965d4945603161a019233e21ff19"
+      },
+      "generated_source": "art/portraits/supplement-hd-v2/sources/historical-bian-zhang.png",
+      "generated_source_sha256": "8d40f1024feb48db1cdd20f6e0ce0b9dc4889700c5ab1a8a8469047c6774fb5d",
+      "prompt": "art/portraits/supplement-hd-v2/prompts/historical-bian-zhang.txt",
+      "prompt_sha256": "a5ddc1039f9e92f4ddcede50a5debe10ec60574356a1f9f77dd0fc4cfb78a884"
+    }
+  }
+}

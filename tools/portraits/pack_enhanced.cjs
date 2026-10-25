@@ -102,13 +102,22 @@ async function finalize(plan,page){
    if(!people[id])people[id]=row;
   }
  }
+ const redrawPath=path.join(ROOT,'art/portraits/supplement-hd-v2/enhanced-records.json');
+ if(fs.existsSync(redrawPath)){
+  const redraw=read(redrawPath);assert.equal(redraw.schema,'tk2-portrait-supplement-enhanced-v1');
+  assert.deepEqual(Object.keys(redraw.people).sort(),[...supplementIds].sort(),'Incomplete supplemental redraw coverage');
+  for(const[id,row]of Object.entries(redraw.people)){
+   assert.equal(row.rendering,'redrawn128');people[id]=row;
+  }
+ }
  const canonical=read(path.join(ROOT,'game/config/campaigns/people.json'));
  assert.deepEqual(Object.keys(people).sort(),canonical.order.slice().sort());
  for(const[id,row]of Object.entries(people)){
   assert.equal(sha(fs.readFileSync(path.join(ROOT,'game',row.source_path))),row.source_sha256,'Original changed: '+id);
   assert.equal(sha(fs.readFileSync(path.join(ROOT,'game',row.path))),row.sha256,'Enhanced changed: '+id);
  }
- const result={schema:'tk2-enhanced-portraits-v1',width:128,height:160,approved_reference:plan.approved_reference,counts:{people:Object.keys(people).length,source_unique:new Set(Object.values(people).map(row=>row.pixel_sha256)).size,atlas_count:plan.atlases.length+supplements.length},processing:{mode:'imagegen_atlas_color_studies_with_original_material_masks',background:'#000000',originalsRetained:true,newArtHistoricalLikenessClaim:false,supplement_mode:'authorial_pixel_art_native_nearest4x_preserving_identity'},people};
+ const redrawn=Object.values(people).filter(row=>row.rendering==='redrawn128').length;
+ const result={schema:'tk2-enhanced-portraits-v1',width:128,height:160,approved_reference:plan.approved_reference,counts:{people:Object.keys(people).length,source_unique:new Set(Object.values(people).map(row=>row.pixel_sha256)).size,atlas_count:plan.atlases.length+supplements.length},processing:{mode:'imagegen_atlas_color_studies_with_original_material_masks',background:'#000000',originalsRetained:true,newArtHistoricalLikenessClaim:false,supplement_mode:redrawn?'identity_preserving_redrawn128':'authorial_pixel_art_native_nearest4x_preserving_identity'},people};
  const output=path.join(ROOT,'game/config/portrait-enhanced.json');fs.writeFileSync(output+'.tmp',JSON.stringify(result,null,2)+'\n');fs.renameSync(output+'.tmp',output);console.log(JSON.stringify({finalized:Object.keys(people).length,output}));
 }
 (async()=>{const plan=read(path.join(WORK,'plan.json'));const browser=await chromium.launch({channel:'chrome',headless:true});try{const page=await browser.newPage();await page.setContent('<!doctype html><body></body>');

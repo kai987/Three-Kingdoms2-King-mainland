@@ -1,6 +1,6 @@
 # 武將像素肖像
 
-全1030名人物均有32×40原生像素肖像和128×160顯示圖：初期1023名沿用明暗強化版，追加7名使用精確4倍最近鄰放大版，按同一穩定的`person_id`綁定。人物庫、城內名冊、開局城市預覽、人物資料、戰鬥與單挑使用同一索引；繁中與日文來源說明可即時切換。顯示採黑底與清楚的像素邊緣，不使用瀏覽器平滑濾鏡。新版製作、來源保留與驗證見[128×160肖像說明](portrait-enhancement.md)，初期1023名可在[原圖／新版對照頁](../art/portraits/enhancement-v1/index.html)查看，追加7名另見[第一批4人預覽](../art/portraits/historical-additions-v1/preview.png)、[西北2人預覽](../art/portraits/northwest-rising-v1/preview.png)及[邊章預覽](../art/portraits/bian-zhang-v1/preview.png)。
+全1030名人物均有32×40原生像素肖像和128×160顯示圖：初期1023名沿用明暗強化版，追加7名使用直接烘焙的128×160有限色補繪版，原32×40與舊最近鄰放大版均保留，按同一穩定的`person_id`綁定。人物庫、城內名冊、開局城市預覽、人物資料、戰鬥與單挑使用同一索引；繁中與日文來源說明可即時切換。顯示採黑底與清楚的像素邊緣，不使用瀏覽器平滑濾鏡。新版製作、來源保留與驗證見[128×160肖像說明](portrait-enhancement.md)，初期1023名可在[原圖／新版對照頁](../art/portraits/enhancement-v1/index.html)查看，追加7名的補繪來源與舊圖歸檔見[HD補繪計畫](../art/portraits/supplement-hd-v2/plan.json)。
 
 ## 原版整理與身分證據
 
@@ -48,17 +48,23 @@ node tests/test_remake_portraits.cjs
 
 宋建、呂興、唐譜、李統分別綁定`historical-song-jian`、`historical-lu-xing`、`historical-tang-pu`、`historical-li-tong-jiaozhi`；執行期ID依序為1024～1027，未填入原有1005空缺，也未改動舊1023名身分。使用內建imagegen獨立繪製一張2×2來源圖，每格唯一，沒有借用其他人物。李統為交阯功曹，與魏將李通分開配置。
 
-完整原圖、生成提示詞、來源與參考圖雜湊、每格指派及處理規則位於[`art/portraits/historical-additions-v1/plan.json`](../art/portraits/historical-additions-v1/plan.json)。`build_generated.py`同時可確定性重建這4張原生圖與128×160最近鄰衍生圖；原圖及初期所有資產逐位元組保留。這些皆是本作人物形象，不聲稱史實容貌。
+完整原圖、生成提示詞、來源與參考圖雜湊、每格指派及處理規則位於[`art/portraits/historical-additions-v1/plan.json`](../art/portraits/historical-additions-v1/plan.json)。`build_generated.py`可確定性重建這4張原生圖；其舊128×160最近鄰衍生圖另行歸檔，執行時改用後述HD補繪版。原圖及初期所有資產逐位元組保留。這些皆是本作人物形象，不聲稱史實容貌。
 
 ## 西北追加2名地方人物
 
 北宮伯玉、李文侯分別綁定`historical-beigong-boyu`、`historical-li-wenhou`，執行期ID為1028、1029。另用imagegen製作獨立2×1來源圖，每格只對應一人；先前1027名的資料、原圖、增強圖與第一批4人來源圖均保留。
 
-完整原圖、提示詞、生成記錄與分區計畫見[`northwest-rising-v1/plan.json`](../art/portraits/northwest-rising-v1/plan.json)，由`build_generated.py`一併確定性烘焙32×40及128×160精確4倍版。來源標示為「新增繪製像素肖像・4倍放大・非史實容貌」，不把單純放大稱作明暗重繪。兩圖不借用原武將，也不是史實容貌復原。
+完整原圖、提示詞、生成記錄與分區計畫見[`northwest-rising-v1/plan.json`](../art/portraits/northwest-rising-v1/plan.json)，由`build_generated.py`確定性烘焙32×40原生圖；舊128×160精確4倍版保留於HD補繪計畫的歸檔路徑，現改用有限色128×160補繪版。來源標示區分單純放大與真正補繪。兩圖不借用原武將，也不是史實容貌復原。
 
 ## 邊章的獨立肖像
 
-邊章原名邊允，以`historical-bian-zhang`、執行期ID1030綁定獨立新圖，不借用北宮伯玉、李文侯或其他武將。單人imagegen原圖、完整提示詞、生成記錄與1×1分區計畫保留在[`bian-zhang-v1/plan.json`](../art/portraits/bian-zhang-v1/plan.json)。32×40原生圖與128×160精確4倍版使用同一人臉與像素，來源標示為本作新繪，不稱史實容貌；原有1029人的肖像記錄保留。
+邊章原名邊允，以`historical-bian-zhang`、執行期ID1030綁定獨立新圖，不借用北宮伯玉、李文侯或其他武將。單人imagegen原圖、完整提示詞、生成記錄與1×1分區計畫保留在[`bian-zhang-v1/plan.json`](../art/portraits/bian-zhang-v1/plan.json)。32×40原生圖與舊128×160精確4倍版均保留。現改用同一人物的128×160有限色補繪圖，來源標示為本作新繪，不稱史實容貌；原有1029人的肖像身分綁定保留。
+
+## 7人HD補繪與驗證
+
+7人的正式顯示圖改以高解析度生成源直接取樣至128×160，再限制為5～16色硬邊像素。各自`redrawn128`記錄保留新源圖、提示詞、原native32×40及舊128×160檔案的SHA256。生成源與原圖不是同一檔案，二者都保留，不用改寫原圖來配合新雜湊。
+
+驗證器除尺寸外，檢查相對最近鄰放大至少1,024個像素有變化，至少20個4×4區塊內存在更細像素，且QA必須與實際RGBA一致。人物相貌、帽飾與自然度另作目視驗收。完整規格見[128×160肖像說明](portrait-enhancement.md)及[HD補繪來源](../art/portraits/supplement-hd-v2/plan.json)。
 
 ## 存檔與邊界
 

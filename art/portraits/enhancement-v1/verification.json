@@ -11,12 +11,16 @@
     128,
     160
   ],
-  "allNonReferenceInkAndAlphaMasksMatch": true,
+  "allLegacyNonReferenceInkAndAlphaMasksMatch": true,
   "allNonReferencePalettesAtMost16Colors": true,
   "protectedInkPixelsCompared": 11505111,
   "totalEnhancedPixelsCompared": 3530903,
   "allPublishedFileAndRgbaHashesMatch": true,
   "unexpectedFiles": 0,
-  "supplementalNearest4xPeople": 7,
-  "scope": "Per-file automatic source, identity-mask, dimensions and hash audit; visual quality reviewed separately"
+  "supplementalNearest4xPeople": 0,
+  "supplementalRedrawn128People": 7,
+  "oldSupplementEnhancedFilesRetained": 7,
+  "minimumRedrawChangedPixels": 13400,
+  "minimumRedrawNonUniformBlocks": 585,
+  "scope": "Per-file source, dimensions, hashes and legacy mask audit;7 redraws additionally require5..16colors, at least5percent actual pixel changes from nearest4x and20 nonuniform4x4 blocks. Visual likeness and quality reviewed separately"
 }

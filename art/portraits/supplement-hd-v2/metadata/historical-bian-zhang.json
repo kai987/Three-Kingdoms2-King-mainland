@@ -1,0 +1,36 @@
+{
+  "schema": "tk2-imagegen-generation-v1",
+  "tool": "image_gen.imagegen",
+  "generated_on": "2026-10-26",
+  "person_id": "historical-bian-zhang",
+  "use_case": "identity-preserve",
+  "transparent_background": true,
+  "original_output": "/Users/paulasmith/.codex/generated_images/01a162a5-f169-7970-9363-2037b7796ca7/exec-80842bfc-4d7e-496e-b499-0f1ed404b321.png",
+  "retained_source": "art/portraits/supplement-hd-v2/sources/historical-bian-zhang.png",
+  "prompt_file": "art/portraits/supplement-hd-v2/prompts/historical-bian-zhang.txt",
+  "referenced_image_paths": [
+    "game/assets/portraits/enhanced/historical-bian-zhang.png",
+    "art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png"
+  ],
+  "additional_visual_review_reference": "art/portraits/bian-zhang-v1/source.png",
+  "source_size": [
+    1122,
+    1402
+  ],
+  "source_mode": "RGBA",
+  "source_sha256": "8d40f1024feb48db1cdd20f6e0ce0b9dc4889700c5ab1a8a8469047c6774fb5d",
+  "source_bytes": 1022434,
+  "raw_bytes_preserved": true,
+  "identity_basis": "Identity-preserving redraw of the existing newly authored game portrait; no claim of authentic historical likeness.",
+  "visual_review": "Same tall black folded official cap with flat brown top/T-shaped middle and narrow side panels, small opaque white cap seam/ear flaps, long narrow face, thin moustache and pointed beard, brown segmented shoulders and white collar. Cross-checked original larger Bian source cap design. Increased internal fine pixel shading. Raw generated draft for parent-controlled final128x160 pipeline, not deployed. Outer white backing was removed by model despite prompt; opaque white garment/ear cloth/cap seams remain.",
+  "raw_alpha_review": {
+    "note": "Native imagegen output has near-opaque主体 alpha mostly253/254, transparent exterior0 and edge fragments. Parent final pixel pipeline must use alpha threshold rather than black-color keying, and review white backing; source file remains unmodified.",
+    "counts": {
+      "near_opaque_white_pixels": 108808,
+      "near_opaque_black_pixels": 165978,
+      "transparent_pixels": 646122
+    },
+    "finalization_owner": "parent agent",
+    "draft_status": "visually_reviewed_pending_parent_finalization"
+  }
+}

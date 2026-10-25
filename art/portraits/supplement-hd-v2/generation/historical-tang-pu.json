@@ -1,0 +1,24 @@
+{
+  "schema": "tk2-portrait-redraw-generation-v1",
+  "person_id": "historical-tang-pu",
+  "tool": "built_in_image_gen",
+  "use_case": "identity-preserve",
+  "source_path": "art/portraits/supplement-hd-v2/sources/historical-tang-pu.png",
+  "source_sha256": "2ebdb639616848158c45f9df7f53a90944c6a17fff84001e879b0f19e6ca955e",
+  "size": [
+    1122,
+    1402
+  ],
+  "mode": "RGBA",
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "edit_target": "game/assets/portraits/enhanced/historical-tang-pu.png",
+  "edit_target_sha256": "4823db283e39662198a3288ba3476519ab12f72836a6cf80062dbe997bde4833",
+  "style_reference": "art/portraits/hd-samples/zhuge-liang-preserved-v8/portrait-128x160.png",
+  "prompt": "art/portraits/supplement-hd-v2/prompts/historical-tang-pu.txt",
+  "prompt_sha256": "53010b4c12e2dd541b77953f1cbb9692fb40d713cbebe85d09ea6f48c153c706",
+  "original_tool_output": "/Users/paulasmith/.codex/generated_images/01a173e6-0b8b-7e43-a2f1-0b97f7eddc66/exec-99fc0faa-7a10-4002-bdb2-8b82dfd1afb2.png",
+  "visual_review": "Same broad face, short moustache/chin shape, domed brown helmet with central white marking and side flaps, white collar. Added smaller cel-shading clusters. Source retained unmodified; runtime/native untouched."
+}

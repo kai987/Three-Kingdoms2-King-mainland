@@ -2,7 +2,9 @@
 
 初期1,023名畫像依已確認的諸葛亮版本製作，對應982張不同的源圖；先追加宋建、呂興、唐譜、李統，再追加北宮伯玉、李文侯及邊章後，全庫為1,030名、989種不同畫像。原版共用肖像的關係保留。原版237張、初期新增803張32×40畫像及13張來源圖集均保留，沒有覆蓋或刪除。
 
-追加7人使用三份獨立imagegen來源圖，保留原版三色及透明黑線，再由32×40精確最近鄰放大4倍至128×160，與初期的有限明暗強化流程分開記錄。新圖不重畫舊人物、不套用別人的頭像。首批4人的完整來源、提示詞、2×2分區、人物ID及衍生記錄見[`historical-additions-v1/plan.json`](../art/portraits/historical-additions-v1/plan.json)，[4人預覽](../art/portraits/historical-additions-v1/preview.png)按宋建、呂興、唐譜、李統由左至右排列。北宮伯玉、李文侯的2×1來源與衍生圖另見[`northwest-rising-v1/plan.json`](../art/portraits/northwest-rising-v1/plan.json)及[2人預覽](../art/portraits/northwest-rising-v1/preview.png)。邊章的單人來源另見[`bian-zhang-v1/plan.json`](../art/portraits/bian-zhang-v1/plan.json)與[預覽](../art/portraits/bian-zhang-v1/preview.png)。
+追加7人（宋建、呂興、唐譜、李統、北宮伯玉、李文侯、邊章）改用imagegen補繪的高解析度來源，直接烘焙成128×160有限色像素圖。來源以各自舊肖像與原版風格為參考，沒有先縮回32×40再放大。這是本作美術補繪，不聲稱史實容貌復原。完整人物綁定、原圖／舊放大版雜湊、新生成源圖、提示詞與像素檢查見[`supplement-hd-v2/plan.json`](../art/portraits/supplement-hd-v2/plan.json)。
+
+每人的原32×40檔案和先前128×160最近鄰放大版均保留；舊放大圖另存於[`original-enhanced/`](../art/portraits/supplement-hd-v2/original-enhanced/)。最初三批生成源圖及分區計畫仍位於[`historical-additions-v1`](../art/portraits/historical-additions-v1/plan.json)、[`northwest-rising-v1`](../art/portraits/northwest-rising-v1/plan.json)、[`bian-zhang-v1`](../art/portraits/bian-zhang-v1/plan.json)。遊戲仍以原有`person_id`綁定，新版失敗時退回同一人的32×40原圖。
 
 ## 地方文吏的128×160共用肖像
 
@@ -46,6 +48,8 @@ node tools/portraits/build_enhanced_gallery.cjs
 python3 game/build_portrait_manifest.py --check
 ```
 
-`art/portraits/enhancement-v1/source-index.json`保留初期1023人的來源索引快照。準備工具逐一比對這些既有綁定、執行期ID及實際檔案；後加7人由三份獨立來源計畫重建，合併新版索引時再檢查全庫精確覆蓋，避免更新時遺失追加人物或改動舊來源。
+`art/portraits/enhancement-v1/source-index.json`保留初期1023人的來源索引快照。準備工具逐一比對這些既有綁定、執行期ID及實際檔案；後加7人的原生圖由三份原始計畫重建，128×160補繪版另依supplement-hd-v2計畫烘焙，合併新版索引時再檢查全庫精確覆蓋，避免更新時遺失追加人物或改動舊來源。
 
-初期1023人對照頁位於`art/portraits/enhancement-v1/index.html`，追加7人另見各批預覽。自動驗證範圍涵蓋全部1030人、原圖與來源圖集雜湊、尺寸、色數、黑線／透明度及綁定；新7圖另外逐像素驗證精確4倍放大；自然度等美術判斷另以圖集與遊戲畫面檢查，不將自動檢查稱為逐人手工審美驗收。
+初期1023人對照頁位於`art/portraits/enhancement-v1/index.html`，其既有黑線與透明度檢查維持不變。追加7人的新版逐張檢查128×160尺寸、二值透明度、5～16色調色板、相較原32×40最近鄰放大至少1,024個像素改變，且至少20個4×4區塊含有更細的像素變化。這些門檻同時與實際解碼結果核對，不能只填寫QA數字或替大色塊換色。
+
+新生成源圖、提示詞、原生圖與舊128×160歸檔檔案均按雜湊綁定同一人物。尺寸、色數及差異門檻是完整性檢查；同一人相貌、帽飾、自然度與畫面可讀性仍須目視驗收，不將數字通過稱為畫質已通過。

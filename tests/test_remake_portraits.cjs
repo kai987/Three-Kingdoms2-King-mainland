@@ -148,11 +148,12 @@ const source=fs.readFileSync(require('node:path').join(__dirname,'../game/app.js
   assert.equal(released.asset(pid).path,`/assets/portraits/enhanced/${pid}.png`);
   const visible=released.html(pid,peoplePool.people[pid].name,{source:true});
   assert(visible.includes(`data-portrait-person="${pid}"`));
-  assert(visible.includes('新增繪製像素肖像・4倍放大・非史實容貌'));assert(!visible.includes('明暗強化'));
-  assert.equal(shipped.people[pid].enhanced.rendering,'nearest4x');
+  assert(visible.includes('128×160'));assert(visible.includes('非史實容貌'));assert(!visible.includes('4倍放大'));
+  assert.equal(shipped.people[pid].enhanced.rendering,'redrawn128');
   assert.equal(shipped.people[pid].kind,'generated');assert.equal(shipped.people[pid].original_id,null);
  }
  i18n.locale='ja';
- assert(released.html(additions[0],'宋建',{source:true}).includes('新規制作のドット肖像・4倍拡大・史実の容貌ではありません'));
+ const redrawnJapanese=released.html(additions[0],'宋建',{source:true});
+ assert(redrawnJapanese.includes('128×160'));assert(redrawnJapanese.includes('史実の容貌ではありません'));assert(!redrawnJapanese.includes('4倍拡大'));
  console.log('portraits: stable IDs, original/generated provenance, enhanced variants and native error fallback, strict paths/dimensions, single index load, locale-only refresh, missing assets and read-only roster/profile/battle/duel views passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

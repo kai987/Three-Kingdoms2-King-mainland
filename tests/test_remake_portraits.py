@@ -125,7 +125,7 @@ class PortraitReleaseTests(unittest.TestCase):
                     self.assertEqual(row['source'], 'pinned_ROM_static_frame0')
                     self.assertIn(row['original_id'], range(237))
 
-    def test_historical_additions_have_new_identities_and_exact_fourfold_portraits(self):
+    def test_historical_additions_have_retained_natives_and_real_redrawn_detail(self):
         canonical = read('game/config/campaigns/people.json')
         expected = ['historical-song-jian', 'historical-lu-xing',
                     'historical-tang-pu', 'historical-li-tong-jiaozhi',
@@ -142,6 +142,13 @@ class PortraitReleaseTests(unittest.TestCase):
                          'd3300e904f938234f25ca56c2e82e67c97c5f68d99b55533f1671966a7bf385b')
         generated = read('game/config/portrait-generated.json')['by_person_id']
         hd = read('game/config/portrait-enhanced.json')['people']
+        legacy = {}
+        for batch in ('historical-additions-v1', 'northwest-rising-v1', 'bian-zhang-v1'):
+            legacy.update(read(f'art/portraits/{batch}/enhanced-records.json')['people'])
+        redraw_plan = read('art/portraits/supplement-hd-v2/plan.json')
+        self.assertEqual(redraw_plan['schema'], 'tk2-portrait-redraw-v2')
+        self.assertEqual(redraw_plan['size'], [128, 160])
+        self.assertEqual(set(redraw_plan['people']), set(expected))
         old_hashes = {row['rgba_sha256'] for pid, row in generated.items() if pid not in expected}
         new_hashes = set()
         for number, pid in enumerate(expected, 1024):
@@ -160,17 +167,44 @@ class PortraitReleaseTests(unittest.TestCase):
                 enlarged = builder.png_pixels((ROOT / 'game' / enhanced_row['path'].lstrip('/')).read_bytes(), (128, 160))[1]
                 self.assertEqual(enhanced_row['source_path'], native_row['path'])
                 self.assertEqual(enhanced_row['source_sha256'], native_row['png_sha256'])
-                self.assertTrue(enhanced_row['provenance']['qa']['nearest4xExact'])
-                self.assertEqual(self.index['people'][pid]['enhanced']['rendering'], 'nearest4x')
-                self.assertEqual(enhanced_row['provenance']['cell_index'], [0, 1, 2, 3, 0, 1, 0][number - 1024])
+                provenance = enhanced_row['provenance']
+                self.assertEqual(self.index['people'][pid]['enhanced']['rendering'], 'redrawn128')
+                self.assertEqual(provenance['base_method'], 'identity_preserving_redrawn128')
+                self.assertIs(provenance['qa']['nearest4xExact'], False)
+                self.assertEqual(native_row['png_sha256'], legacy[pid]['source_sha256'])
+                self.assertEqual(provenance['original_enhanced_sha256'], legacy[pid]['sha256'])
+                archived = (ROOT / provenance['original_enhanced']).read_bytes()
+                self.assertEqual(builder.sha(archived), legacy[pid]['sha256'])
+                binding = redraw_plan['people'][pid]
+                self.assertEqual(binding['native']['path'], 'game' + native_row['path'])
+                self.assertEqual(binding['native']['sha256'], legacy[pid]['source_sha256'])
+                self.assertEqual(binding['native']['rgba_sha256'], native_row['rgba_sha256'])
+                self.assertEqual(binding['original_enhanced']['sha256'], legacy[pid]['sha256'])
+                for key in ('generated_source', 'prompt', 'redraw_plan'):
+                    self.assertEqual(builder.sha((ROOT / provenance[key]).read_bytes()),
+                                     provenance[key + '_sha256'])
                 self.assertEqual({tuple(native[i:i+4]) for i in range(0, len(native), 4)},
                                  {(0, 0, 0, 0), (255, 255, 255, 255),
                                   (247, 162, 71, 255), (158, 65, 0, 255)})
+                different = 0
+                palette = {tuple(enlarged[i:i+4]) for i in range(0, len(enlarged), 4)}
                 for y in range(160):
                     for x in range(128):
                         at = (y * 128 + x) * 4
                         source_at = ((y // 4) * 32 + x // 4) * 4
-                        self.assertEqual(enlarged[at:at+4], native[source_at:source_at+4])
+                        different += enlarged[at:at+4] != native[source_at:source_at+4]
+                self.assertGreaterEqual(different, 1024)
+                self.assertGreater(len(palette), 4)
+                self.assertLessEqual(len(palette), 16)
+                self.assertEqual(provenance['qa']['changedPixels'], different)
+                self.assertEqual(provenance['qa']['paletteSize'], len(palette))
+                blocks = sum(len({enlarged[((by * 4 + y) * 128 + bx * 4 + x) * 4:
+                                          ((by * 4 + y) * 128 + bx * 4 + x) * 4 + 4]
+                                  for y in range(4) for x in range(4)}) > 1
+                             for by in range(40) for bx in range(32))
+                self.assertGreaterEqual(blocks, 20)
+                self.assertEqual(provenance['qa']['nonUniformBlocks4x4'], blocks)
+                self.assertTrue(all(enlarged[i] in (0, 255) for i in range(3, len(enlarged), 4)))
 
     def test_rebuilding_is_deterministic_and_does_not_mutate_campaign_catalogs(self):
         index_path = ROOT / 'game/assets/portraits/index.json'
@@ -383,6 +417,187 @@ class EnhancedPortraitTests(unittest.TestCase):
         external.write_bytes(self.image)
         self.output_path.symlink_to(external)
         with self.assertRaisesRegex(ValueError, 'missing or outside'):
+            builder.enhanced_records(self.data, self.primary)
+
+
+class RedrawnPortraitTests(unittest.TestCase):
+    """New HD art needs measured detail and retained, identity-bound sources."""
+
+    def setUp(self):
+        EnhancedPortraitTests.setUp(self)
+        self.person = 'historical-lu-xing'
+        self.native, self.native_pixels = solid_png(32, 40, (247, 162, 71, 255))
+        self.old_hd, self.old_pixels = solid_png(128, 160, (247, 162, 71, 255))
+        self.native_path = 'game/assets/portraits/generated/' + self.person + '.png'
+        native_file = self.root / self.native_path
+        native_file.parent.mkdir(parents=True, exist_ok=True)
+        native_file.write_bytes(self.native)
+        self.primary = {self.person: {'name': '吕兴', 'path': self.native_path.removeprefix('game'),
+                                     'png_sha256': builder.sha(self.native)}}
+        self.art = 'art/portraits/supplement-hd-v2/'
+        self.archived_path = self.art + 'original-enhanced/' + self.person + '.png'
+        self.source_path = self.art + 'sources/' + self.person + '.png'
+        self.prompt_path = self.art + 'prompts/' + self.person + '.txt'
+        self.plan_path = self.art + 'plan.json'
+        self.image, self.pixels = self.pattern_png(6)
+        for path, content in ((self.archived_path, self.old_hd), (self.source_path, self.image),
+                              (self.prompt_path, b'Fixture: preserve this identity in limited pixel colors.')):
+            file = self.root / path
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_bytes(content)
+        self.output_path = self.root / 'game/assets/portraits/enhanced' / (self.person + '.png')
+        self.record = {'path': '/assets/portraits/enhanced/' + self.person + '.png',
+                       'width': 128, 'height': 160, 'source_path': self.primary[self.person]['path'],
+                       'source_sha256': builder.sha(self.native),
+                       'method': 'identity_preserving_pixel_enhancement', 'rendering': 'redrawn128',
+                       'provenance': {'base_method': 'identity_preserving_redrawn128',
+                                      'redraw_plan': self.plan_path,
+                                      'generated_source': self.source_path,
+                                      'generated_source_sha256': builder.sha(self.image),
+                                      'prompt': self.prompt_path,
+                                      'prompt_sha256': builder.sha((self.root / self.prompt_path).read_bytes()),
+                                      'original_enhanced': self.archived_path,
+                                      'original_enhanced_sha256': builder.sha(self.old_hd)}}
+        self.plan = {'schema': 'tk2-portrait-redraw-v2', 'size': [128, 160], 'people': {
+            self.person: {'name': '吕兴',
+                          'native': {'path': self.native_path, 'sha256': builder.sha(self.native),
+                                     'rgba_sha256': builder.sha(self.native_pixels)},
+                          'original_enhanced': {'path': self.archived_path, 'sha256': builder.sha(self.old_hd),
+                                                'rgba_sha256': builder.sha(self.old_pixels)},
+                          **{key: self.record['provenance'][key] for key in
+                             ('generated_source', 'generated_source_sha256', 'prompt', 'prompt_sha256')}}}}
+        self.write_plan()
+        self.set_output(self.image, self.pixels)
+        self.data['people'] = {self.person: self.record}
+
+    @staticmethod
+    def pattern_png(colors, coarse_blocks=False):
+        palette = [(247, 162, 71, 255), (223, 121, 34, 255), (158, 65, 0, 255),
+                   (255, 218, 128, 255), (255, 255, 255, 255), (0, 0, 0, 0)]
+        palette += [(80 + n * 5, 40 + n * 3, 5 + n, 255) for n in range(max(0, colors - len(palette)))]
+        pixels = bytes(channel for y in range(160) for x in range(128)
+                       for channel in palette[((y // 4) * 32 + x // 4 if coarse_blocks else y * 128 + x) % colors])
+        scan = b''.join(b'\0' + pixels[y * 128 * 4:(y + 1) * 128 * 4] for y in range(160))
+        header = struct.pack('>IIBBBBB', 128, 160, 8, 6, 0, 0, 0)
+        raw = (b'\x89PNG\r\n\x1a\n' + png_chunk(b'IHDR', header)
+               + png_chunk(b'IDAT', zlib.compress(scan)) + png_chunk(b'IEND', b''))
+        return raw, pixels
+
+    def write_plan(self):
+        content = (json.dumps(self.plan, ensure_ascii=False, indent=2) + '\n').encode()
+        (self.root / self.plan_path).write_bytes(content)
+        self.record['provenance']['redraw_plan_sha256'] = builder.sha(content)
+
+    def set_output(self, raw, pixels):
+        self.output_path.write_bytes(raw)
+        self.record.update(sha256=builder.sha(raw), pixel_sha256=builder.sha(pixels))
+        changed = sum(pixels[i:i+4] != self.old_pixels[i:i+4] for i in range(0, len(pixels), 4))
+        palette = {pixels[i:i+4] for i in range(0, len(pixels), 4)}
+        blocks = sum(len({pixels[((by * 4 + y) * 128 + bx * 4 + x) * 4:
+                                 ((by * 4 + y) * 128 + bx * 4 + x) * 4 + 4]
+                          for y in range(4) for x in range(4)}) > 1
+                     for by in range(40) for bx in range(32))
+        self.record['provenance']['qa'] = dict(size=[128, 160], paletteSize=len(palette),
+                                              changedPixels=changed, nearest4xExact=False,
+                                              source_size=[128, 160], nonUniformBlocks4x4=blocks)
+
+    def reject(self, change):
+        data = deepcopy(self.data)
+        change(data['people'][self.person])
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(data, self.primary)
+
+    def test_real_redraw_with_bound_sources_and_archives_is_accepted(self):
+        self.assertEqual(builder.enhanced_records(self.data, self.primary), {
+            self.person: {'path': self.record['path'], 'width': 128, 'height': 160,
+                          'rendering': 'redrawn128'}})
+        self.assertEqual((self.root / self.native_path).read_bytes(), self.native)
+        self.assertEqual((self.root / self.archived_path).read_bytes(), self.old_hd)
+
+    def test_redraw_requires_every_provenance_file_and_hash(self):
+        for key in ('base_method', 'redraw_plan', 'redraw_plan_sha256', 'generated_source',
+                    'generated_source_sha256', 'prompt', 'prompt_sha256',
+                    'original_enhanced', 'original_enhanced_sha256', 'qa'):
+            with self.subTest(field=key):
+                self.reject(lambda row: row['provenance'].pop(key))
+        self.reject(lambda row: row['provenance'].update(base_method='native32x40_exact_nearest4x'))
+        for key in ('redraw_plan_sha256', 'generated_source_sha256', 'prompt_sha256', 'original_enhanced_sha256'):
+            with self.subTest(hash=key):
+                self.reject(lambda row: row['provenance'].update({key: '0' * 64}))
+
+    def test_qa_must_match_real_pixels_not_just_a_claim(self):
+        for key, value in (('size', [32, 40]), ('paletteSize', 4), ('changedPixels', 1023),
+                           ('nearest4xExact', True), ('nonUniformBlocks4x4', 19),
+                           ('source_size', [64, 80])):
+            with self.subTest(qa=key):
+                self.reject(lambda row: row['provenance']['qa'].update({key: value}))
+        self.set_output(self.old_hd, self.old_pixels)
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_redraw_palette_is_limited_even_with_honest_qa(self):
+        self.set_output(*self.pattern_png(17))
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_recolored_coarse_blocks_are_not_high_resolution_redraws(self):
+        self.set_output(*self.pattern_png(6, coarse_blocks=True))
+        self.assertGreaterEqual(self.record['provenance']['qa']['changedPixels'], 1024)
+        self.assertEqual(self.record['provenance']['qa']['nonUniformBlocks4x4'], 0)
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_mutated_source_or_missing_old_hd_is_rejected(self):
+        (self.root / self.source_path).write_bytes(self.old_hd)
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+        (self.root / self.source_path).write_bytes(self.image)
+        tiny, _ = solid_png(32, 40, (247, 162, 71, 255))
+        (self.root / self.source_path).write_bytes(tiny)
+        self.plan['people'][self.person]['generated_source_sha256'] = builder.sha(tiny)
+        self.record['provenance']['generated_source_sha256'] = builder.sha(tiny)
+        self.record['provenance']['qa']['source_size'] = [32, 40]
+        self.write_plan()
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+        (self.root / self.source_path).write_bytes(self.image)
+        self.plan['people'][self.person]['generated_source_sha256'] = builder.sha(self.image)
+        self.record['provenance']['generated_source_sha256'] = builder.sha(self.image)
+        self.record['provenance']['qa']['source_size'] = [128, 160]
+        (self.root / self.archived_path).write_bytes(self.image)
+        self.plan['people'][self.person]['original_enhanced'].update(
+            sha256=builder.sha(self.image), rgba_sha256=builder.sha(self.pixels))
+        self.record['provenance']['original_enhanced_sha256'] = builder.sha(self.image)
+        self.write_plan()
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+        (self.root / self.archived_path).write_bytes(self.old_hd)
+        self.plan['people'][self.person]['original_enhanced'].update(
+            sha256=builder.sha(self.old_hd), rgba_sha256=builder.sha(self.old_pixels))
+        self.record['provenance']['original_enhanced_sha256'] = builder.sha(self.old_hd)
+        self.write_plan()
+        (self.root / self.archived_path).unlink()
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_plan_cannot_substitute_another_person_or_native(self):
+        self.plan['people']['historical-song-jian'] = self.plan['people'].pop(self.person)
+        self.write_plan()
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+        self.plan['people'][self.person] = self.plan['people'].pop('historical-song-jian')
+        self.plan['people'][self.person]['native']['sha256'] = '0' * 64
+        self.write_plan()
+        with self.assertRaises(ValueError):
+            builder.enhanced_records(self.data, self.primary)
+
+    def test_matching_hashes_do_not_allow_source_path_traversal(self):
+        outside = self.root / 'outside.png'
+        outside.write_bytes(self.image)
+        self.plan['people'][self.person]['generated_source'] = 'art/portraits/supplement-hd-v2/../../../outside.png'
+        self.record['provenance']['generated_source'] = self.plan['people'][self.person]['generated_source']
+        self.write_plan()
+        with self.assertRaises(ValueError):
             builder.enhanced_records(self.data, self.primary)
 
 

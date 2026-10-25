@@ -1,0 +1,257 @@
+{
+  "schema": "tk2-portrait-supplement-enhanced-v1",
+  "people": {
+    "historical-song-jian": {
+      "path": "/assets/portraits/enhanced/historical-song-jian.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-song-jian.png",
+      "source_sha256": "551df6216dc27d8557c3bd03e94b51cb9ac71abd7693a08a3fbd545ae17805c5",
+      "sha256": "0493700a0976f666e3cd8cc9131a656bc8f9593dbbfadd998e9a12eeba203cc3",
+      "pixel_sha256": "acfc199f60acae3f0135dca330465451b19dd0ff1f0deef27bad8a43b60f1b2c",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "identity_preserving_redrawn128",
+        "redraw_plan": "art/portraits/supplement-hd-v2/plan.json",
+        "redraw_plan_sha256": "4d07aae641216cb2f312f1a29021b26dcacbb675f2032419c06e18d95a1e9342",
+        "generated_source": "art/portraits/supplement-hd-v2/sources/historical-song-jian.png",
+        "generated_source_sha256": "c7df321e6abd04e4a0f052715940dd67bc4382f292654930edbaa66786e8436c",
+        "prompt": "art/portraits/supplement-hd-v2/prompts/historical-song-jian.txt",
+        "prompt_sha256": "599a620a6d0b61d327788d6167b781f03f060d7cc6f654dabf67414428615991",
+        "original_enhanced": "art/portraits/supplement-hd-v2/original-enhanced/historical-song-jian.png",
+        "original_enhanced_sha256": "3f7bd17919765b255f3eec9a083f15d34ff11299bdda610330889f100ae3b5eb",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 14201,
+          "nearest4xExact": false,
+          "source_size": [
+            1122,
+            1402
+          ],
+          "nonUniformBlocks4x4": 740
+        }
+      }
+    },
+    "historical-lu-xing": {
+      "path": "/assets/portraits/enhanced/historical-lu-xing.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-lu-xing.png",
+      "source_sha256": "456717666ed668c0a9950f00f979b36b43d59d27c55738883871cd2d1137fc62",
+      "sha256": "205a43f1eef2de66b9f0e6cd285437c64f30b89fed88db32983857c8efd8337b",
+      "pixel_sha256": "bf6673fc7a78465b813b097aec5d6e1f614b454bf64b7e2e60b67b91cd2728b5",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "identity_preserving_redrawn128",
+        "redraw_plan": "art/portraits/supplement-hd-v2/plan.json",
+        "redraw_plan_sha256": "4d07aae641216cb2f312f1a29021b26dcacbb675f2032419c06e18d95a1e9342",
+        "generated_source": "art/portraits/supplement-hd-v2/sources/historical-lu-xing.png",
+        "generated_source_sha256": "71ae07abbf7a5aa8152ef8a7e39cb1ef9704360d9d792091fe55434d12993da7",
+        "prompt": "art/portraits/supplement-hd-v2/prompts/historical-lu-xing.txt",
+        "prompt_sha256": "6798fc0d5bd334e9103eb0c071da312fbd721f5c2ea328bd3c9986297b80deab",
+        "original_enhanced": "art/portraits/supplement-hd-v2/original-enhanced/historical-lu-xing.png",
+        "original_enhanced_sha256": "69ef1227d95189c8c941fe3985605ececd14214d334529c64be4510db9953605",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 16,
+          "changedPixels": 14084,
+          "nearest4xExact": false,
+          "source_size": [
+            1122,
+            1402
+          ],
+          "nonUniformBlocks4x4": 751
+        }
+      }
+    },
+    "historical-tang-pu": {
+      "path": "/assets/portraits/enhanced/historical-tang-pu.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-tang-pu.png",
+      "source_sha256": "129c7dc10a47abb19898ea1775abcfb6940fdc5cc07da3f819ab06775b4b2379",
+      "sha256": "0d3bc468a190903d3f1f5ae5141f32927d9406915863e7549e42dc2b4930922a",
+      "pixel_sha256": "2823955db87a68da8e77c6fd892b3a39b19978df35e05c7bee9b20e0439376fa",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "identity_preserving_redrawn128",
+        "redraw_plan": "art/portraits/supplement-hd-v2/plan.json",
+        "redraw_plan_sha256": "4d07aae641216cb2f312f1a29021b26dcacbb675f2032419c06e18d95a1e9342",
+        "generated_source": "art/portraits/supplement-hd-v2/sources/historical-tang-pu.png",
+        "generated_source_sha256": "2ebdb639616848158c45f9df7f53a90944c6a17fff84001e879b0f19e6ca955e",
+        "prompt": "art/portraits/supplement-hd-v2/prompts/historical-tang-pu.txt",
+        "prompt_sha256": "53010b4c12e2dd541b77953f1cbb9692fb40d713cbebe85d09ea6f48c153c706",
+        "original_enhanced": "art/portraits/supplement-hd-v2/original-enhanced/historical-tang-pu.png",
+        "original_enhanced_sha256": "4823db283e39662198a3288ba3476519ab12f72836a6cf80062dbe997bde4833",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 16,
+          "changedPixels": 14346,
+          "nearest4xExact": false,
+          "source_size": [
+            1122,
+            1402
+          ],
+          "nonUniformBlocks4x4": 714
+        }
+      }
+    },
+    "historical-li-tong-jiaozhi": {
+      "path": "/assets/portraits/enhanced/historical-li-tong-jiaozhi.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-li-tong-jiaozhi.png",
+      "source_sha256": "24efbe71d5f9e9449fa6c55b2a69219e0517f890ecdb36d68dc64b58d2578ae7",
+      "sha256": "4f795733de9184a1ab6e745ec4897f8bde5f453b4bd0e6b9d21acbe82839b6ba",
+      "pixel_sha256": "a4c808b0e51c950850dd8108510e8f83de57f45733058bae6c9f9b1d05ecaa3f",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "identity_preserving_redrawn128",
+        "redraw_plan": "art/portraits/supplement-hd-v2/plan.json",
+        "redraw_plan_sha256": "4d07aae641216cb2f312f1a29021b26dcacbb675f2032419c06e18d95a1e9342",
+        "generated_source": "art/portraits/supplement-hd-v2/sources/historical-li-tong-jiaozhi.png",
+        "generated_source_sha256": "91ad24e424a218e0b0e0611fc99b69fbee666432f5fe773e8b2811617b5ea42b",
+        "prompt": "art/portraits/supplement-hd-v2/prompts/historical-li-tong-jiaozhi.txt",
+        "prompt_sha256": "87788e7733a74e7548f58fc9ab4800baa0793405512933956ee97f4e619b9ab7",
+        "original_enhanced": "art/portraits/supplement-hd-v2/original-enhanced/historical-li-tong-jiaozhi.png",
+        "original_enhanced_sha256": "fe31870974f1b632f9135164467922e4bd56f8e7bb778a477ed8ccad36954d05",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 15,
+          "changedPixels": 13400,
+          "nearest4xExact": false,
+          "source_size": [
+            1122,
+            1402
+          ],
+          "nonUniformBlocks4x4": 585
+        }
+      }
+    },
+    "historical-beigong-boyu": {
+      "path": "/assets/portraits/enhanced/historical-beigong-boyu.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-beigong-boyu.png",
+      "source_sha256": "5cff560882146e9793ea2579915d71454cf7c7e47011fa8f165473cb8cc1450e",
+      "sha256": "155e4509ea76fd4d50162a07095e31a2e1c80ec5bdde595a5a128077255f8ebe",
+      "pixel_sha256": "ed3bd2e679b5269e3209be2281b9e7cf37aa9dd384568a6800c05bf0b868b0cb",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "identity_preserving_redrawn128",
+        "redraw_plan": "art/portraits/supplement-hd-v2/plan.json",
+        "redraw_plan_sha256": "4d07aae641216cb2f312f1a29021b26dcacbb675f2032419c06e18d95a1e9342",
+        "generated_source": "art/portraits/supplement-hd-v2/sources/historical-beigong-boyu.png",
+        "generated_source_sha256": "07ea3e28ca7dd55d49949cd7420026cdf2b3a9b0c5188541e6bc97ef2530450b",
+        "prompt": "art/portraits/supplement-hd-v2/prompts/historical-beigong-boyu.txt",
+        "prompt_sha256": "fd9b95354c7c44e687bfe91058c8451b8daa1029fc38b5900614ee8f1d78a2e3",
+        "original_enhanced": "art/portraits/supplement-hd-v2/original-enhanced/historical-beigong-boyu.png",
+        "original_enhanced_sha256": "db6bbae0ad8b44bb9045e4a9a7f653c07772200812f470199c115ce9f4e9a0d0",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 16,
+          "changedPixels": 14443,
+          "nearest4xExact": false,
+          "source_size": [
+            1122,
+            1402
+          ],
+          "nonUniformBlocks4x4": 751
+        }
+      }
+    },
+    "historical-li-wenhou": {
+      "path": "/assets/portraits/enhanced/historical-li-wenhou.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-li-wenhou.png",
+      "source_sha256": "e24b0fa71ad0cb35434703249b29ef707320a9def5a365b1eee65b29bc26493e",
+      "sha256": "c790e5414dc75d37d9294c89aa810085c56a0a76c9f57d0282669c56f39a7a95",
+      "pixel_sha256": "54634c85a3c878a313c03af54c49f40d8cefde6dd114b2ae6ef51a7efb3a2d15",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "identity_preserving_redrawn128",
+        "redraw_plan": "art/portraits/supplement-hd-v2/plan.json",
+        "redraw_plan_sha256": "4d07aae641216cb2f312f1a29021b26dcacbb675f2032419c06e18d95a1e9342",
+        "generated_source": "art/portraits/supplement-hd-v2/sources/historical-li-wenhou.png",
+        "generated_source_sha256": "9fb3588122bd7cdf27d31bd11fbf4e3f7a31830e428483d072092f30bb5ed566",
+        "prompt": "art/portraits/supplement-hd-v2/prompts/historical-li-wenhou.txt",
+        "prompt_sha256": "d0647238a4ebdd44c7b73fc46d9c3cd5b1e8abe754fd7aa4993d8d8798a80330",
+        "original_enhanced": "art/portraits/supplement-hd-v2/original-enhanced/historical-li-wenhou.png",
+        "original_enhanced_sha256": "139bf998d01e6628c15915eaf27498c6d60e1f29d97f7a35083d0d7e3d8ede19",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 16,
+          "changedPixels": 13561,
+          "nearest4xExact": false,
+          "source_size": [
+            1122,
+            1402
+          ],
+          "nonUniformBlocks4x4": 695
+        }
+      }
+    },
+    "historical-bian-zhang": {
+      "path": "/assets/portraits/enhanced/historical-bian-zhang.png",
+      "width": 128,
+      "height": 160,
+      "source_path": "/assets/portraits/generated/historical-bian-zhang.png",
+      "source_sha256": "0b9a6d8063f42c312e99a7b8fce9ef881dd43330fb149fe807528ffd6871bffb",
+      "sha256": "51d451fa432609da169c67c89eed6b815543a92d407d19a48dddc6c34bc68289",
+      "pixel_sha256": "66adfec746be3e45325d0d4ec16e748a01e66eee265f679eb483bc6aa8173e4f",
+      "method": "identity_preserving_pixel_enhancement",
+      "rendering": "redrawn128",
+      "provenance": {
+        "base_method": "identity_preserving_redrawn128",
+        "redraw_plan": "art/portraits/supplement-hd-v2/plan.json",
+        "redraw_plan_sha256": "4d07aae641216cb2f312f1a29021b26dcacbb675f2032419c06e18d95a1e9342",
+        "generated_source": "art/portraits/supplement-hd-v2/sources/historical-bian-zhang.png",
+        "generated_source_sha256": "8d40f1024feb48db1cdd20f6e0ce0b9dc4889700c5ab1a8a8469047c6774fb5d",
+        "prompt": "art/portraits/supplement-hd-v2/prompts/historical-bian-zhang.txt",
+        "prompt_sha256": "a5ddc1039f9e92f4ddcede50a5debe10ec60574356a1f9f77dd0fc4cfb78a884",
+        "original_enhanced": "art/portraits/supplement-hd-v2/original-enhanced/historical-bian-zhang.png",
+        "original_enhanced_sha256": "22093b52512656966729bfc47379e644367931752248b43379b5e1c582dc9196",
+        "qa": {
+          "size": [
+            128,
+            160
+          ],
+          "paletteSize": 16,
+          "changedPixels": 15827,
+          "nearest4xExact": false,
+          "source_size": [
+            1122,
+            1402
+          ],
+          "nonUniformBlocks4x4": 773
+        }
+      }
+    }
+  }
+}

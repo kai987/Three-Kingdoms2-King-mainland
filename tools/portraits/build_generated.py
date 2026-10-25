@@ -19,9 +19,13 @@ import json
 from pathlib import Path
 import re
 import struct
+import sys
 import zlib
 
 from PIL import Image, ImageDraw
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from supplement_redraw import PLAN as REDRAW_PLAN, bake as bake_redraw
 
 ROOT = Path(__file__).resolve().parents[2]
 PLAN = ROOT / 'art/portraits/plan.json'
@@ -194,7 +198,7 @@ def append_supplement(entries, outputs, atlases, used_hashes, supplement):
                         sha256=plan['source_sha256'], size=list(image.size),
                         art_gender_design='male', grid=grid, actual_grid_partition=partition))
     canonical = json.loads((ROOT / 'game/config/campaigns/people.json').read_bytes())['people']
-    enhanced = {}
+    enhanced, legacy = {}, {}
     seen = set()
     for person in plan['people']:
         pid, index = person['person_id'], person['cell_index']
@@ -221,7 +225,6 @@ def append_supplement(entries, outputs, atlases, used_hashes, supplement):
         pixels = enlarged.tobytes()
         encoded = png(pixels, (128, 160))
         hd_path = f'/assets/portraits/enhanced/{pid}.png'
-        outputs[ROOT / 'game' / hd_path.lstrip('/')] = encoded
         enhanced[pid] = dict(path=hd_path, width=128, height=160, source_path=path,
                              source_sha256=value['png_sha256'], sha256=sha(encoded),
                              pixel_sha256=sha(pixels), method='identity_preserving_pixel_enhancement',
@@ -234,16 +237,27 @@ def append_supplement(entries, outputs, atlases, used_hashes, supplement):
                                              art_direction_basis='authorial_game_art_not_historical_likeness',
                                              qa=dict(size=[128, 160], paletteSize=len(set(enlarged.getdata())),
                                                      alphaChanges=0, nearest4xExact=True)))
+        legacy[pid] = enhanced[pid]
+        if (ROOT / REDRAW_PLAN).is_file():
+            encoded, enhanced[pid] = bake_redraw(ROOT,pid,path,value['png'],encoded)
+        outputs[ROOT / 'game' / hd_path.lstrip('/')] = encoded
     records = supplement.parent / 'enhanced-records.json'
     outputs[records] = (json.dumps(dict(schema='tk2-portrait-supplement-enhanced-v1',
-                                       people=enhanced), ensure_ascii=False, indent=2) + '\n').encode()
+                                       people=legacy), ensure_ascii=False, indent=2) + '\n').encode()
+    if (ROOT/REDRAW_PLAN).is_file():
+        records_v2 = ROOT/'art/portraits/supplement-hd-v2/enhanced-records.json'
+        combined = json.loads(outputs.get(records_v2,b'{"people":{}}'))['people']
+        combined.update(enhanced)
+        outputs[records_v2] = (json.dumps(dict(schema='tk2-portrait-supplement-enhanced-v1',people=combined),
+                                         ensure_ascii=False,indent=2)+'\n').encode()
     hd_file = ROOT / 'game/config/portrait-enhanced.json'
-    hd = json.loads(hd_file.read_bytes())
+    hd = json.loads(outputs.get(hd_file, hd_file.read_bytes()))
     hd['people'].update(enhanced)
     hd['counts'].update(people=len(hd['people']),
                         source_unique=len({row['pixel_sha256'] for row in hd['people'].values()}),
                         atlas_count=len(json.loads((ROOT / 'art/portraits/enhancement-v1/plan.json').read_bytes())['atlases']) + len(SUPPLEMENTS))
-    hd['processing']['supplement_mode'] = 'authorial_pixel_art_native_nearest4x_preserving_identity'
+    hd['processing']['supplement_mode'] = ('identity_preserving_redrawn128' if (ROOT/REDRAW_PLAN).is_file()
+                                         else 'authorial_pixel_art_native_nearest4x_preserving_identity')
     outputs[hd_file] = (json.dumps(hd, ensure_ascii=False, indent=2) + '\n').encode()
     return dict(path=str(supplement.relative_to(ROOT)), sha256=sha(raw), count=len(enhanced))
 

@@ -157,7 +157,7 @@ def enhanced_records(data, primary):
             raise ValueError('Enhanced portrait source/person binding mismatch: ' + person_id)
         if row.get('method') != 'identity_preserving_pixel_enhancement' or not isinstance(row.get('provenance'), dict):
             raise ValueError('Enhanced portrait must state its enhancement provenance')
-        if 'rendering' in row and row['rendering'] != 'nearest4x':
+        if 'rendering' in row and row['rendering'] not in ('nearest4x','redrawn128'):
             raise ValueError('Unknown enhanced portrait rendering')
         if (row.get('rendering') == 'nearest4x'
                 and row['provenance'].get('base_method') != 'native32x40_exact_nearest4x'):
@@ -181,10 +181,79 @@ def enhanced_records(data, primary):
                                 for y in range(160) for x in range(128))
             if pixels != expected:
                 raise ValueError('Nearest4x portrait pixels do not preserve the native source')
+        if row.get('rendering') == 'redrawn128':
+            validate_redrawn(person_id,row,source,pixels)
         enhanced[person_id] = dict(path=path, width=size[0], height=size[1])
         if 'rendering' in row:
             enhanced[person_id]['rendering'] = row['rendering']
     return enhanced
+
+
+def validate_redrawn(person_id, row, source, pixels):
+    """A larger file is insufficient: retain its sources and verify real detail."""
+    p = row['provenance']
+    if p.get('base_method') != 'identity_preserving_redrawn128':
+        raise ValueError('Redrawn portrait source method differs')
+    directory = 'art/portraits/supplement-hd-v2/'
+    def retained(path, expected):
+        if (not isinstance(path,str) or Path(path).is_absolute() or '..' in Path(path).parts
+                or not path.startswith(directory) or not isinstance(expected,str) or not HEX.fullmatch(expected)):
+            raise ValueError('Invalid retained redraw path or hash')
+        file = ROOT/path
+        if (file.is_symlink() or not file.resolve().is_relative_to((ROOT/directory).resolve())
+                or not file.is_file() or sha(file.read_bytes()) != expected):
+            raise ValueError('Retained redraw source is missing or changed')
+        return file.read_bytes()
+    if p.get('redraw_plan') != directory+'plan.json':
+        raise ValueError('Redrawn portrait plan path differs')
+    plan = json.loads(retained(p['redraw_plan'],p.get('redraw_plan_sha256')))
+    if plan.get('schema') != 'tk2-portrait-redraw-v2' or plan.get('size') != [128,160]:
+        raise ValueError('Invalid redrawn portrait plan')
+    person = plan.get('people',{}).get(person_id)
+    if not isinstance(person,dict):
+        raise ValueError('Redrawn portrait plan belongs to another person')
+    native = person.get('native',{})
+    if native.get('path') != 'game'+source['path'] or native.get('sha256') != source['png_sha256']:
+        raise ValueError('Redrawn portrait native source differs')
+    native_pixels = png_pixels((ROOT/'game'/source['path'].lstrip('/')).read_bytes(),NATIVE)[1]
+    if native.get('rgba_sha256') != sha(native_pixels):
+        raise ValueError('Redrawn portrait native pixels differ')
+    old = person.get('original_enhanced',{})
+    if (old.get('path') != directory+'original-enhanced/'+person_id+'.png'
+            or p.get('original_enhanced') != old.get('path')
+            or p.get('original_enhanced_sha256') != old.get('sha256')):
+        raise ValueError('Redrawn portrait previous file binding differs')
+    old_pixels = png_pixels(retained(old['path'],old.get('sha256')),ENHANCED)[1]
+    if sha(old_pixels) != old.get('rgba_sha256'):
+        raise ValueError('Redrawn portrait archived pixels differ')
+    for key, suffix in (('generated_source','sources/'+person_id+'.png'),('prompt','prompts/'+person_id+'.txt')):
+        if (person.get(key) != directory+suffix or p.get(key) != person.get(key)
+                or p.get(key+'_sha256') != person.get(key+'_sha256')):
+            raise ValueError('Redrawn portrait authored source binding differs')
+        retained(person[key],person.get(key+'_sha256'))
+    authored = retained(person['generated_source'],person['generated_source_sha256'])
+    if len(authored)<33 or authored[:8] != b'\x89PNG\r\n\x1a\n':
+        raise ValueError('Redrawn portrait authored source is not a PNG')
+    source_size = list(struct.unpack('>II',authored[16:24]))
+    if min(source_size)<128 or max(source_size)>4096:
+        raise ValueError('Redrawn portrait authored source resolution is insufficient')
+    baseline = b''.join(native_pixels[((y//4)*32+x//4)*4:((y//4)*32+x//4)*4+4]
+                        for y in range(160) for x in range(128))
+    if old_pixels != baseline:
+        raise ValueError('Redrawn portrait archived fourfold source differs from native')
+    changed = sum(pixels[i:i+4] != baseline[i:i+4] for i in range(0,len(pixels),4))
+    colors = len({pixels[i:i+4] for i in range(0,len(pixels),4)})
+    blocks = sum(len({pixels[((y+dy)*128+x+dx)*4:((y+dy)*128+x+dx)*4+4]
+                         for dy in range(4) for dx in range(4)}) > 1
+                 for y in range(0,160,4) for x in range(0,128,4))
+    qa = p.get('qa',{})
+    if (not isinstance(qa,dict) or qa.get('size') != [128,160] or qa.get('nearest4xExact') is not False
+            or qa.get('source_size') != source_size
+            or type(qa.get('changedPixels')) is not int or qa['changedPixels'] != changed or changed < 1024
+            or type(qa.get('paletteSize')) is not int or qa['paletteSize'] != colors or not 5 <= colors <= 16
+            or type(qa.get('nonUniformBlocks4x4')) is not int
+            or qa['nonUniformBlocks4x4'] != blocks or blocks < 20):
+        raise ValueError('Redrawn portrait has insufficient or misreported high resolution detail')
 
 
 def identities():
