@@ -1,4 +1,4 @@
-"""Han Sui remains a ruler separate from Ma Teng in the five live IF openings.
+"""Han Sui and Ma Teng remain separate in historical and live IF openings.
 
 The pre-fix material totals and unaffected garrisons are fixed here explicitly.
 No Git checkout, network response, or player save is used as a test oracle.
@@ -58,6 +58,94 @@ class HanSuiIfTests(unittest.TestCase):
                         for catalog in map(Catalog, cls.paths)}
         cls.if_paths = [root / 'campaigns' / (chapter + '.json')
                         for chapter in BASELINES]
+
+    def test_ma_teng_and_ma_chao_are_not_han_sui_retainers_in_any_of_29_openings(self):
+        for chapter, catalog in self.catalogs.items():
+            with self.subTest(chapter=chapter):
+                for person in ('san14-candidate-0771', 'san14-candidate-0769'):
+                    assignment = catalog.data['era_assignments'][person]
+                    self.assertNotEqual(assignment.get('faction'), 'han_sui', person)
+                    for row in catalog.data['initial_officers']:
+                        if row['person_id'] == person:
+                            self.assertNotEqual(catalog.data['initial_owners'][row['city']],
+                                                'han_sui', person)
+        early = self.catalogs['184-02'].data
+        self.assertEqual(early['faction_rulers']['ma_teng'], 770)
+        self.assertEqual(early['initial_owners']['wuwei'], 'ma_teng')
+        self.assertEqual(early['era_assignments']['san14-candidate-0771']['faction'], 'ma_teng')
+        # Entering Cao Cao's court is distinct from being Han Sui's retainer;
+        # do not "fix" the later historical Ma Teng back into Ma Chao's army.
+        for chapter in ('208-10', '211-07-tongguan'):
+            data = self.catalogs[chapter].data
+            self.assertEqual(data['era_assignments']['san14-candidate-0771']['faction'], 'wei')
+            self.assertEqual(data['era_assignments']['san14-candidate-0769']['faction'], 'ma_teng')
+            self.assertEqual(data['faction_rulers']['ma_teng'], 768)
+
+    def test_188_preview_start_and_save_keep_both_independent_rulers(self):
+        session = CampaignSession([ROOT / 'game/data/campaigns/188-06.json'])
+        before = session.to_dict()
+        preview = session.view()['catalog']['scenarios'][0]
+        factions = {row['id']: row for row in preview['factions']}
+        self.assertEqual((factions['ma_teng']['city'], factions['ma_teng']['ruler_person_id']),
+                         ('wuwei', 'san14-candidate-0771'))
+        self.assertEqual((factions['han_sui']['city'], factions['han_sui']['ruler_person_id']),
+                         ('jincheng', HAN_SUI))
+        for faction, city, person in (('ma_teng', 'wuwei', 'san14-candidate-0771'),
+                                       ('han_sui', 'jincheng', HAN_SUI)):
+            self.assertEqual(preview['initial_owners'][city], faction)
+            data = session.preview_city('mainland188-06', city)['city']
+            self.assertEqual(data['owner'], faction)
+            rulers = {row['person_id'] for row in data['officers'] if row['is_ruler']}
+            self.assertEqual(rulers, {person})
+            self.assertEqual(preview['faction_officers'][faction], len(data['officers']))
+            expected = ({'san14-candidate-0771', 'san14-candidate-0830'} if faction == 'ma_teng'
+                        else {HAN_SUI, 'san14-candidate-0030', 'san14-candidate-0474'})
+            self.assertEqual({row['person_id'] for row in data['officers']}, expected)
+        self.assertEqual(session.to_dict(), before)
+        for faction in ('ma_teng', 'han_sui'):
+            session.command('new', dict(scenario='mainland188-06', faction=faction, seed=2026),
+                            session.revision)
+            state = session.game.state
+            self.assertEqual(state.player, faction)
+            self.assertEqual(state.rng.draws, 0)
+            self.assertEqual(state.extension['leaders']['ma_teng'], 770)
+            self.assertEqual(state.extension['leaders']['han_sui'], 165)
+            for owner, city, ident in (('ma_teng', 'wuwei', 770), ('han_sui', 'jincheng', 165)):
+                self.assertEqual(state.cities[city].owner, owner)
+                self.assertIn(ident, state.cities[city].roster.officer_ids)
+                self.assertEqual(state.officers[ident].faction_id, owner)
+                self.assertEqual(state.officers[ident].loyalty, 100)
+            self.assertEqual(set(state.cities['wuwei'].roster.officer_ids), {770, 829})
+            self.assertEqual(set(state.cities['jincheng'].roster.officer_ids), {165, 29, 473})
+            self.assertEqual(state.officers[829].faction_id, 'ma_teng')
+            self.assertNotIn(474, state.officers, 'Chenggong Ying is not eligible until189')
+            session.game.validate(state)
+            saved = json.loads(json.dumps(session.export_save(), ensure_ascii=False))
+            original = session.to_dict()
+            restored = CampaignSession([ROOT / 'game/data/campaigns/188-06.json'])
+            restored.load_save(saved, restored.revision)
+            self.assertEqual(restored.export_save(), saved)
+            self.assertEqual(restored.to_dict(), original)
+            restored.game.validate(restored.game.state)
+
+    def test_188_separation_conserves_materials_people_and_other_garrisons(self):
+        data = self.catalogs['188-06'].data
+        actual = (len(data['initial_officers']), len(data['initial_free_officers']),
+                  sum(row['troops'] for row in data['initial_officers']),
+                  *(sum(data['initial_city_resources'].get(city, data['initial_resources'])[field]
+                        for city in data['active_cities'])
+                    for field in ('gold', 'grain', 'reserves')))
+        self.assertEqual(actual, (114, 227, 34200, 147640, 520075, 153660))
+        attributes = {row['person_id']: {key: row[key] for key in
+                      ('runtime_id', 'birth_year', 'service_year', 'death_year',
+                       'profile', 'initialization')} for row in data['people']}
+        self.assertEqual(digest(attributes),
+                         'b84b47046cbe2a1e0bc9f53cb5ff49c35633a831c05043a95b713e1adf564088')
+        other = [dict(row, owner=data['initial_owners'][row['city']])
+                 for row in data['initial_officers']
+                 if row['person_id'] not in {'san14-candidate-0771', 'san14-candidate-0830'}]
+        self.assertEqual(digest(other),
+                         'df7a4eaf8bc6a91ec68d4a12ad3e943906536151c119773be1ab0a7d76353cfe')
 
     def test_all_29_openings_do_not_make_han_sui_a_ma_family_retainer(self):
         self.assertEqual(len(self.catalogs), 29)

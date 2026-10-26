@@ -62,7 +62,7 @@
           "city": "jincheng",
           "color": "#ff8a00",
           "name": "韩遂勢力",
-          "initial_officers": 5
+          "initial_officers": 3
         },
         {
           "id": "zhang_chun",
@@ -87,6 +87,14 @@
           "city": "longxi",
           "color": "#007f89",
           "initial_officers": 1
+        },
+        {
+          "id": "ma_teng",
+          "name": "馬騰",
+          "captain": "馬騰",
+          "city": "wuwei",
+          "color": "#8a8054",
+          "initial_officers": 2
         }
       ],
       "active_cities": [
@@ -827,7 +835,7 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
@@ -860,7 +868,7 @@
         },
         {
           "person_id": "san14-candidate-0830",
-          "city": "jincheng",
+          "city": "wuwei",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2394,7 +2402,7 @@
           "qi": "neutral",
           "wei": "han",
           "xihe": "neutral",
-          "wuwei": "han_sui",
+          "wuwei": "ma_teng",
           "anding": "neutral",
           "jingzhao": "han",
           "jincheng": "han_sui",
@@ -2781,7 +2789,7 @@
           "san14-candidate-0823": "zitong",
           "san14-candidate-0824": "dongjun",
           "san14-candidate-0827": "jingzhao",
-          "san14-candidate-0830": "jincheng",
+          "san14-candidate-0830": "wuwei",
           "san14-candidate-0832": "xiangyang",
           "san14-candidate-0834": "xiangyang",
           "san14-candidate-0838": "wujun",
@@ -3199,7 +3207,8 @@
           "han_sui": 165,
           "zhang_chun": 627,
           "sun_jian": 550,
-          "song_jian": 1024
+          "song_jian": 1024,
+          "ma_teng": 770
         },
         "delete": [
           "wei",
@@ -8423,51 +8432,51 @@
               "year_state": "available",
               "faction": "han_sui",
               "city": "jincheng",
-              "placement_basis": "historical_review_20261025",
+              "placement_basis": "user_reviewed_188_independent_ma_teng",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0166",
                 "faction": "han_sui",
                 "city": "jincheng",
-                "basis": "primary_referenced_career_posting",
+                "basis": "user_reviewed_188_independent_ma_teng",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷15",
-                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                  "https://zh.wikisource.org/wiki/三國志/卷36",
+                  "https://zh.wikisource.org/wiki/三國志/卷18"
                 ],
-                "historical_certainty": "primary_text_affiliation"
+                "historical_certainty": "regional_primary_mapping"
               },
-              "scenario_membership_basis": "primary_text_affiliation",
+              "scenario_membership_basis": "user_reviewed_188_independent_ma_teng",
               "source_snapshot": "mainland184-02-v11",
               "membership_revision": {
-                "basis": "primary_text_affiliation",
-                "note": "韓遂金城部曲，保留188遊戲聯軍故事映射。",
+                "basis": "regional_primary_mapping",
+                "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷15",
-                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                  "https://zh.wikisource.org/wiki/三國志/卷36",
+                  "https://zh.wikisource.org/wiki/三國志/卷18"
                 ]
               },
               "historical_posting_reference": {
                 "person_id": "san14-candidate-0166",
                 "faction": "han_sui",
                 "city": "jincheng",
-                "basis": "primary_referenced_career_posting",
+                "basis": "user_reviewed_188_independent_ma_teng",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷15",
-                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                  "https://zh.wikisource.org/wiki/三國志/卷36",
+                  "https://zh.wikisource.org/wiki/三國志/卷18"
                 ],
-                "historical_certainty": "primary_text_affiliation"
+                "historical_certainty": "regional_primary_mapping"
               }
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "historical_review_20261025",
+                  "basis": "user_reviewed_188_independent_ma_teng",
                   "source_urls": [
-                    "https://zh.wikisource.org/wiki/三國志/卷15",
-                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                    "https://zh.wikisource.org/wiki/三國志/卷36",
+                    "https://zh.wikisource.org/wiki/三國志/卷18"
                   ],
-                  "note": "韓遂金城部曲，保留188遊戲聯軍故事映射。",
-                  "historical_certainty": "primary_text_affiliation",
+                  "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+                  "historical_certainty": "regional_primary_mapping",
                   "reference_date": [
                     188,
                     6
@@ -8487,7 +8496,7 @@
                   ],
                   "city": "jincheng",
                   "status": "serving",
-                  "basis": "primary_text_affiliation"
+                  "basis": "user_reviewed_188_independent_ma_teng"
                 }
               }
             },
@@ -27717,32 +27726,87 @@
               "source_status": "serving",
               "source_ruler": "韩遂",
               "year_state": "available",
-              "faction": "han_sui",
+              "faction": "ma_teng",
               "city": "wuwei",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
+              "placement_basis": "user_reviewed_188_independent_ma_teng",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0771",
-                "faction": "han_sui",
-                "origin": "wuwei",
+                "faction": "ma_teng",
                 "city": "wuwei",
-                "basis": "authored_no_enemy_frontier_owned_balance",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "basis": "user_reviewed_188_independent_ma_teng",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36",
+                  "https://zh.wikisource.org/wiki/三國志/卷18"
+                ],
+                "historical_certainty": "regional_primary_mapping"
               },
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland184-02-v11"
+              "scenario_membership_basis": "user_reviewed_188_independent_ma_teng",
+              "source_snapshot": "mainland184-02-v11",
+              "membership_revision": {
+                "basis": "user_reviewed_188_independent_ma_teng",
+                "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36",
+                  "https://zh.wikisource.org/wiki/三國志/卷18"
+                ],
+                "previous_placement": {
+                  "faction": "han_sui",
+                  "city": "wuwei",
+                  "placement_basis": "authored_no_enemy_frontier_owned_balance",
+                  "posting_reference": {
+                    "person_id": "san14-candidate-0771",
+                    "faction": "han_sui",
+                    "origin": "wuwei",
+                    "city": "wuwei",
+                    "basis": "authored_no_enemy_frontier_owned_balance",
+                    "source_city": null,
+                    "source_disposition": "missing_source_city",
+                    "source_board_city": null
+                  },
+                  "membership_revision": null,
+                  "placement_review": {
+                    "basis": "retained_reviewed_opening_membership",
+                    "source_urls": [
+                      "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
+                    ],
+                    "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                    "reference_date": null,
+                    "reference_scenario": null,
+                    "historical_certainty": "authorial_region_placement"
+                  },
+                  "appearance_plan": {
+                    "start": [
+                      188,
+                      6
+                    ],
+                    "end": [
+                      211,
+                      12
+                    ],
+                    "city": "wuwei",
+                    "status": "serving",
+                    "basis": "retained_person_specific_released_location"
+                  },
+                  "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export"
+                }
+              }
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
+                  "basis": "user_reviewed_188_independent_ma_teng",
                   "source_urls": [
-                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
+                    "https://zh.wikisource.org/wiki/三國志/卷36",
+                    "https://zh.wikisource.org/wiki/三國志/卷18"
                   ],
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
-                  "historical_certainty": "authorial_region_placement"
+                  "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06"
                 }
               },
               "appearance_plan": {
@@ -27757,7 +27821,7 @@
                   ],
                   "city": "wuwei",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "user_reviewed_188_independent_ma_teng"
                 }
               }
             },
@@ -29602,20 +29666,78 @@
           "san14-candidate-0830": {
             "set": {
               "source_ruler": "韩遂",
-              "faction": "han_sui",
-              "city": "jincheng",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland184-02-v11"
+              "faction": "ma_teng",
+              "city": "wuwei",
+              "placement_basis": "user_reviewed_188_independent_ma_teng",
+              "scenario_membership_basis": "user_reviewed_188_independent_ma_teng",
+              "source_snapshot": "mainland184-02-v11",
+              "membership_revision": {
+                "basis": "user_reviewed_188_independent_ma_teng",
+                "note": "《龐德傳》記初平中從馬騰；本作保留原188年已出場的人物與兵力，隨馬騰轉至姑臧。這是按已知從屬關係作生涯窗口推定，原典未證188年6月已從馬騰或駐姑臧。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36",
+                  "https://zh.wikisource.org/wiki/三國志/卷18"
+                ],
+                "previous_placement": {
+                  "faction": "han_sui",
+                  "city": "jincheng",
+                  "placement_basis": "authored_no_enemy_frontier_owned_balance",
+                  "posting_reference": {
+                    "person_id": "san14-candidate-0830",
+                    "faction": "han_sui",
+                    "origin": "wuwei",
+                    "city": "jincheng",
+                    "basis": "authored_no_enemy_frontier_owned_balance",
+                    "source_city": null,
+                    "source_disposition": "missing_source_city",
+                    "source_board_city": null
+                  },
+                  "membership_revision": null,
+                  "placement_review": {
+                    "basis": "retained_reviewed_opening_membership",
+                    "source_urls": [
+                      "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
+                    ],
+                    "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                    "reference_date": null,
+                    "reference_scenario": null,
+                    "historical_certainty": "authorial_region_placement"
+                  },
+                  "appearance_plan": {
+                    "start": [
+                      188,
+                      6
+                    ],
+                    "end": [
+                      219,
+                      12
+                    ],
+                    "city": "jincheng",
+                    "status": "serving",
+                    "basis": "retained_person_specific_released_location"
+                  },
+                  "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference"
+                }
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "han_sui",
-                  "origin": "wuwei",
-                  "city": "jincheng",
-                  "basis": "authored_no_enemy_frontier_owned_balance"
-                }
+                  "faction": "ma_teng",
+                  "city": "wuwei",
+                  "basis": "user_reviewed_188_independent_ma_teng",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷36",
+                    "https://zh.wikisource.org/wiki/三國志/卷18"
+                  ],
+                  "historical_certainty": "bounded_career_inference"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -29623,7 +29745,24 @@
                     188,
                     6
                   ],
-                  "city": "jincheng"
+                  "city": "wuwei",
+                  "basis": "user_reviewed_188_independent_ma_teng"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "user_reviewed_188_independent_ma_teng",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷36",
+                    "https://zh.wikisource.org/wiki/三國志/卷18"
+                  ],
+                  "note": "《龐德傳》記初平中從馬騰；本作保留原188年已出場的人物與兵力，隨馬騰轉至姑臧。這是按已知從屬關係作生涯窗口推定，原典未證188年6月已從馬騰或駐姑臧。",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06",
+                  "historical_certainty": "bounded_career_inference"
                 }
               }
             }
@@ -35495,7 +35634,7 @@
           "group": "dlc",
           "title": "漢朝搖搖欲墜",
           "official_source": "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
-          "summary": "漢廷政爭與西涼、幽州叛亂並起；長沙由太守孫堅掌理，地方漢郡不一概視作何進直轄。",
+          "summary": "漢廷政爭與西涼、幽州叛亂並起；長沙由太守孫堅掌理，地方漢郡不一概視作何進直轄。 馬騰據姑臧、韓遂據金城，兩人各領自己的部曲，分別作為可選勢力。",
           "setup_basis": "explicit_DLC_story_premise_with_retimed_remake_snapshot",
           "membership_basis": "Retimed nearby immutable remake snapshot plus explicit story/leadership membership revisions; missing historical affiliations are not represented as verified SAN14 export.; source_referenced_v13_career_windows_and_explicit_new_person_game_design",
           "scope": "The ten additional scenarios on the linked PK official page, plus the requested211 full-board custom campaign and official234-02 store bonus;225 is one entry.",
@@ -35504,8 +35643,8 @@
             "ja": "揺らぐ漢朝"
           },
           "summary_i18n": {
-            "zh-Hant": "漢廷政爭與西涼、幽州叛亂並起；長沙由太守孫堅掌理，地方漢郡不一概視作何進直轄。",
-            "ja": "漢朝の政争に加え、西涼・幽州でも反乱が起こります。長沙は太守の孫堅が治め、各地の漢朝の郡を一律に何進の直轄領とは扱いません。"
+            "zh-Hant": "漢廷政爭與西涼、幽州叛亂並起；長沙由太守孫堅掌理，地方漢郡不一概視作何進直轄。 馬騰據姑臧、韓遂據金城，兩人各領自己的部曲，分別作為可選勢力。",
+            "ja": "漢朝の政争に加え、西涼・幽州でも反乱が起こります。長沙は太守の孫堅が治め、各地の漢朝の郡を一律に何進の直轄領とは扱いません。 馬騰は姑臧、韓遂は金城を本拠とし、それぞれ独立した選択勢力として部曲を率います。"
           },
           "fictional": false,
           "source_urls": [
@@ -35520,15 +35659,17 @@
             "ja": "公式の年月と物語を基にした本作独自の改編です。領土・配属・数値や未実装のイベントは公式データの移植ではありません。"
           },
           "historical_review": {
-            "revision": "2026-10-25",
+            "revision": "2026-10-27",
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
             "faction_additions": [
               "sun_jian",
-              "song_jian"
+              "song_jian",
+              "ma_teng"
             ],
             "city_owner_corrections": [
               "changsha",
-              "longxi"
+              "longxi",
+              "wuwei"
             ],
             "all_city_months_independently_attested": false,
             "local_map_proxies": {
@@ -35560,6 +35701,15 @@
               "source_urls": [
                 "https://zh.wikisource.org/zh-hant/三國志/卷01",
                 "https://zh.wikisource.org/zh-hant/三國志/卷09"
+              ]
+            },
+            "ma_teng_separation": {
+              "basis": "user_reviewed_188_independent_ma_teng",
+              "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+              "pang_de_note": "《龐德傳》記初平中從馬騰；本作保留原188年已出場的人物與兵力，隨馬騰轉至姑臧。這是按已知從屬關係作生涯窗口推定，原典未證188年6月已從馬騰或駐姑臧。",
+              "source_urls": [
+                "https://zh.wikisource.org/wiki/三國志/卷36",
+                "https://zh.wikisource.org/wiki/三國志/卷18"
               ]
             }
           }
@@ -52330,15 +52480,17 @@
           "city_owner_corrections": [
             "yidu",
             "changsha",
-            "longxi"
+            "longxi",
+            "wuwei"
           ],
           "people": 1030,
           "reference_classes": {
-            "authorial_region_placement": 1014,
+            "authorial_region_placement": 1012,
             "game_reference": 2,
             "primary_text_chronology_choice": 1,
-            "primary_text_affiliation": 2,
-            "bounded_career_inference": 4,
+            "regional_primary_mapping": 2,
+            "bounded_career_inference": 5,
+            "primary_text_affiliation": 1,
             "authorial_lifetime_region_proxy": 1,
             "explicit_scenario_scope": 6
           },
@@ -52347,15 +52499,15 @@
             "same_date_SAN14_guide_free_location": 2,
             "retained_person_specific_free_location": 209,
             "authorial_region_placement": 16,
-            "retained_reviewed_opening_membership": 100,
+            "retained_reviewed_opening_membership": 98,
             "historical_review_20261025": 7,
             "retained_chronology_or_explicit_exclusion": 13,
             "retained_explicit_scenario_ruler": 7,
+            "user_reviewed_188_independent_ma_teng": 2,
             "user_requested_song_jian_lifetime_longxi_opening": 1,
             "explicit_scenario_scope": 6
           }
-        },
-        "update": {}
+        }
       }
     }
   },

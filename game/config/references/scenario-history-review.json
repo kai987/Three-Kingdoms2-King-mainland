@@ -92,6 +92,10 @@
     "han_sui_independent_IF": [
       "https://zh.wikisource.org/wiki/三國志/卷36",
       "https://zh.wikisource.org/wiki/三國志/卷15"
+    ],
+    "ma_teng_188_separation": [
+      "https://zh.wikisource.org/wiki/三國志/卷36",
+      "https://zh.wikisource.org/wiki/三國志/卷18"
     ]
   },
   "scenarios": [
@@ -650,6 +654,18 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "id": "ma_teng",
+          "ruler": "馬騰",
+          "person_id": "san14-candidate-0771",
+          "city": "wuwei",
+          "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷18"
+          ]
         }
       ],
       "city_changes": [
@@ -673,6 +689,17 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "city": "wuwei",
+          "before": "han_sui",
+          "owner": "ma_teng",
+          "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷18"
           ]
         }
       ],
@@ -808,16 +835,70 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0771",
+          "name": "马腾",
+          "before": {
+            "status": "serving",
+            "faction": "han_sui",
+            "city": "wuwei"
+          },
+          "faction": "ma_teng",
+          "city": "wuwei",
+          "certainty": "regional_primary_mapping",
+          "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷18"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0830",
+          "name": "庞德",
+          "before": {
+            "status": "serving",
+            "faction": "han_sui",
+            "city": "jincheng"
+          },
+          "faction": "ma_teng",
+          "city": "wuwei",
+          "certainty": "bounded_career_inference",
+          "note": "《龐德傳》記初平中從馬騰；本作保留原188年已出場的人物與兵力，隨馬騰轉至姑臧。這是按已知從屬關係作生涯窗口推定，原典未證188年6月已從馬騰或駐姑臧。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷18"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0166",
+          "name": "韩遂",
+          "before": {
+            "status": "serving",
+            "faction": "han_sui",
+            "city": "jincheng"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "regional_primary_mapping",
+          "note": "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷18"
+          ]
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
         "187年冬區星叛亂已被平定；188年6月長沙由太守孫堅掌理，區星不再列為開局勢力，史料未明言其本人被殺。",
-        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup.",
+        "依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。",
+        "《龐德傳》記初平中從馬騰；本作保留原188年已出場的人物與兵力，隨馬騰轉至姑臧。這是按已知從屬關係作生涯窗口推定，原典未證188年6月已從馬騰或駐姑臧。"
       ],
       "owner_expectations": {
         "changsha": "sun_jian",
-        "longxi": "song_jian"
+        "longxi": "song_jian",
+        "wuwei": "ma_teng"
       },
       "removed_factions": [
         "ou_xing"
