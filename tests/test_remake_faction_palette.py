@@ -28,7 +28,8 @@ class FactionPaletteTests(unittest.TestCase):
 
     def test_all_current_scenarios_have_separated_visible_fills(self):
         self.assertEqual(len(self.catalogs),29)
-        self.assertEqual(len(self.catalogs['mainland190-01'].factions),26)
+        self.assertEqual(len(self.catalogs['mainland190-01'].factions),27)
+        self.assertIn('zhang_miao',self.catalogs['mainland190-01'].factions)
         for identity,catalog in self.catalogs.items():
             palette=faction_colors(catalog)
             self.assertEqual(set(palette),{'neutral',*catalog.factions},identity)
@@ -47,9 +48,12 @@ class FactionPaletteTests(unittest.TestCase):
 
     def test_native_colors_remain_unchanged_when_their_spacing_is_sufficient(self):
         # Isolate the original native set; the real expanded198 palette is
-        # separately checked above for every faction, including Song Jian.
+        # separately checked above for every faction, including Song Jian and
+        # the newly independent Zang Ba. Neither belongs to this native set.
         original=SimpleNamespace(factions={key:row for key,row in
-            self.catalogs['mainland198-03'].factions.items() if key!='song_jian'})
+            self.catalogs['mainland198-03'].factions.items()
+            if key not in {'song_jian','zang_ba'}})
+        self.assertEqual(len(original.factions),18)
         self.assertEqual(faction_colors(original),{
             'neutral':'#ffffff', 'gongsun':'#009438', 'gongsun_zan':'#f83800',
             'han_sui':'#b8f818', 'hua_xin':'#008088', 'li_jue':'#d800cc',
@@ -58,6 +62,22 @@ class FactionPaletteTests(unittest.TestCase):
             'wei':'#0078f8', 'wu':'#f85898', 'yuan_shao':'#a868b8',
             'yuan_shu':'#607c00', 'zhang_lu':'#b8e8b8', 'zhang_xiu':'#b87800',
             'zhang_yang':'#888888'})
+
+    def test_new_zhang_miao_and_zang_ba_have_present_distinct_colors(self):
+        for chapter,faction in (('mainland190-01','zhang_miao'),
+                                ('mainland197-07','zang_ba'),
+                                ('mainland198-03','zang_ba')):
+            with self.subTest(chapter=chapter,faction=faction):
+                catalog=self.catalogs[chapter]
+                self.assertIn(faction,catalog.factions)
+                palette=faction_colors(catalog)
+                self.assertIn(faction,palette)
+                for other,color in palette.items():
+                    if other!=faction:
+                        self.assertNotEqual(palette[faction],color,other)
+                        self.assertGreaterEqual(color_distance(palette[faction],color),29,other)
+                reordered=SimpleNamespace(factions=dict(reversed(list(catalog.factions.items()))))
+                self.assertEqual(faction_colors(reordered),palette)
 
     def test_larger_unknown_catalogs_keep_distinct_deterministic_visible_fills(self):
         identities=['wei','shu','wu','nanman',*(f'future_{n:02d}' for n in range(36))]
