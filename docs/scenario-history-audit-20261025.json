@@ -1,9 +1,9 @@
 {
   "schema": "tk2-scenario-history-audit-v1",
-  "review_revision": "2026-10-25",
+  "review_revision": "2026-10-27",
   "review_file": "game/config/references/scenario-history-review.json",
-  "review_sha256": "ceeaeae193ccdafcc4dd83143c3222bd40a394acfd96f236558c40908b2f544b",
-  "presentation_sha256": "cf08698702eabc8eedef5b3b8e5460dc2179bb0513073afb1e72e7d47a937952",
+  "review_sha256": "7fe4e1f888dbebbff2a888de47813b40ea9148cdcfd17b02c2ef4758ab9aa173",
+  "presentation_sha256": "2de0b75da200be29d869bd1aa36088b7aa8731987c53b49c70fa475c33fe3599",
   "scope": "Regional review and current-data consistency, not a complete attested city/month prefect list or a SAN14 export.",
   "boundary_definition": "Different opening owners connected by links, sea_links or travel_routes; each unordered city pair is listed once. These are network borders, not geographic administrative boundary polygons.",
   "historical_count": 23,
@@ -31,17 +31,17 @@
   },
   "fictional_adaptation_summary": {
     "cities": 543,
-    "factions": 55,
+    "factions": 60,
     "future_factions": 0,
     "scheduled_faction_foundings": 0,
     "scheduled_faction_coups": 0,
-    "boundary_links": 322,
+    "boundary_links": 332,
     "opening_officers": 2133,
-    "new_factions": 5,
-    "city_changes": 5,
-    "officer_changes": 27,
-    "city_change_records": 5,
-    "officer_change_records": 27
+    "new_factions": 10,
+    "city_changes": 10,
+    "officer_changes": 36,
+    "city_change_records": 10,
+    "officer_change_records": 42
   },
   "sources": {
     "han_sui": [
@@ -121,6 +121,10 @@
       "https://zh.wikisource.org/zh-hant/後漢書/卷71",
       "https://zh.wikisource.org/zh-hant/資治通鑑/卷058",
       "https://zh.wikisource.org/zh-hant/三國志/卷01"
+    ],
+    "han_sui_independent_IF": [
+      "https://zh.wikisource.org/wiki/三國志/卷36",
+      "https://zh.wikisource.org/wiki/三國志/卷15"
     ]
   },
   "limits": [
@@ -142,7 +146,7 @@
       "title": "184年2月 · 黄巾之乱",
       "title_ja": "184年2月 · 黄巾之乱",
       "catalog_file": "game/data/campaigns/184-02.json",
-      "catalog_sha256": "7441b166c263b8bc03ced08958c500b7615c86ae756ac71884bd553466f23055",
+      "catalog_sha256": "969c26569226a3fcff991c474558f90451328d83e875690be739d3abb703c78a",
       "factions": [
         {
           "id": "ding_yuan",
@@ -5416,7 +5420,7 @@
       "title": "188年6月 · 漢朝搖搖欲墜",
       "title_ja": "揺らぐ漢朝",
       "catalog_file": "game/data/campaigns/188-06.json",
-      "catalog_sha256": "0a72abd8982415aea33b79d1b645d09d7da00dc8da1a39e311eb0bd9a1be69bc",
+      "catalog_sha256": "1ee729a9418c48c89d56325276286e9d9d8e5d693723a11ed06fd5564700d4e9",
       "factions": [
         {
           "id": "ding_yuan",
@@ -10775,7 +10779,7 @@
       "title": "190年1月 · 反董卓联盟",
       "title_ja": "190年1月 · 反董卓联盟",
       "catalog_file": "game/data/campaigns/190-01.json",
-      "catalog_sha256": "505e7644212f0f841eb133086f83d02c58e33ee478f1cf438cb26867066d02e6",
+      "catalog_sha256": "396c5fa36b4141f38c281784f9e61d2d646f9cf2405042add8e06d8993f93ef1",
       "factions": [
         {
           "id": "bao_xin",
@@ -17987,7 +17991,7 @@
       "title": "191年10月 · 二袁的意图",
       "title_ja": "191年10月 · 二袁的意图",
       "catalog_file": "game/data/campaigns/191-10.json",
-      "catalog_sha256": "8a736bae9f0f76a1ec508260c92dea9b68a2d42a4e7642a5a6ecdf8961140841",
+      "catalog_sha256": "f13d5427e75326b25cdcdf0cb6792fa1e6b4b4f019450b6dd7cb2090e1c6265e",
       "factions": [
         {
           "id": "bao_xin",
@@ -25511,7 +25515,7 @@
       "title": "194年6月 · 群雄割据",
       "title_ja": "194年6月 · 群雄割据",
       "catalog_file": "game/data/campaigns/194-06.json",
-      "catalog_sha256": "c853186e6b6fe52c2899a30d1cbc570fe1d728328c0da43d7db34f0a88b20191",
+      "catalog_sha256": "21be6c9cf758da42d1894a7ba52e1d75e16731bd6f8bec9e63f6e0e0f4c0aab7",
       "factions": [
         {
           "id": "gongsun",
@@ -33022,7 +33026,7 @@
       "title": "196年6月 · 曹操得勢",
       "title_ja": "曹操の台頭",
       "catalog_file": "game/data/campaigns/196-06.json",
-      "catalog_sha256": "bbf5d5543c5cd2fefac53802889fc578fe4200983f8fd3146cf79a1e5c23b523",
+      "catalog_sha256": "53c452046a31b5a00b0999a6ce8c4ef5a7097521cbd907c85a5239f14f53d76e",
       "factions": [
         {
           "id": "gongsun",
@@ -40433,7 +40437,7 @@
       "title": "198年3月 · 呂布討伐戰",
       "title_ja": "呂布討伐戦",
       "catalog_file": "game/data/campaigns/198-03.json",
-      "catalog_sha256": "0402e931b4fa29d1d10e6c0d118f21d8dcd48c555dacf1569569a579e17bf13d",
+      "catalog_sha256": "230fe52c8f93aabf63ae8e286f0c64e0b5c4589c89c7234593072e8c1921242f",
       "factions": [
         {
           "id": "gongsun",
@@ -47559,7 +47563,7 @@
       "title": "200年1月 · 官渡之战",
       "title_ja": "200年1月 · 官渡之战",
       "catalog_file": "game/data/campaigns/200-01.json",
-      "catalog_sha256": "8da90e458b068b33675710fad18d467c1514d39fe3010e8c8a3875a5b9ea4f4a",
+      "catalog_sha256": "2d671a548a44515b740a53766a86592c02dd0915536779ac4645cbfea441884d",
       "factions": [
         {
           "id": "gongsun",
@@ -54529,7 +54533,7 @@
       "title": "202年6月 · 河北爭亂",
       "title_ja": "河北争乱",
       "catalog_file": "game/data/campaigns/202-06.json",
-      "catalog_sha256": "adbf58b10e3e812fa43c1561f35280cd3c09633a8538f51f3ec0b1dadf3d9eee",
+      "catalog_sha256": "b6905a87a98927441c5693ae3cf66b3e97e2073949c394b8edbb68f6c7c9e114",
       "factions": [
         {
           "id": "gao_gan",
@@ -61671,7 +61675,7 @@
       "title": "207年9月 · 三顾茅庐",
       "title_ja": "207年9月 · 三顾茅庐",
       "catalog_file": "game/data/campaigns/207-09.json",
-      "catalog_sha256": "013106a8adb6493c3ea6919b1667701bf546157bb4e975053bcff16977bae50b",
+      "catalog_sha256": "f1359c570313b4d3310c16ac13da6ed865bc3901ac88ef98923f9acf9edd5b1f",
       "factions": [
         {
           "id": "gongsun",
@@ -69276,7 +69280,7 @@
       "title": "208年10月 · 赤壁之战",
       "title_ja": "208年10月 · 赤壁之战",
       "catalog_file": "game/data/campaigns/208-10.json",
-      "catalog_sha256": "32ec48daab4a0fa4ff0a65d2d26fa6653d85912429c9e2e0e00676228eba50f8",
+      "catalog_sha256": "63345d7948539438654a5b1063f88ee7458671fca39aa9709cfb311079b47ea4",
       "factions": [
         {
           "id": "gongsun",
@@ -77084,7 +77088,7 @@
       "title": "211年7月 · 潼關之戰",
       "title_ja": "潼関の戦い",
       "catalog_file": "game/data/campaigns/211-07-tongguan.json",
-      "catalog_sha256": "0c174fafedb0fad2466a8fb51baec13379778178e90274ec72df3597964978f2",
+      "catalog_sha256": "e06058031bb96891894e1a3b3e71d037d013689a149eb6ebfa25f70f0dccddea",
       "factions": [
         {
           "id": "gongsun",
@@ -83760,7 +83764,7 @@
       "title": "212年12月 · 入蜀爭奪戰",
       "title_ja": "入蜀争奪戦",
       "catalog_file": "game/data/campaigns/212-12.json",
-      "catalog_sha256": "4d229c4345dd30d284f79ece69073377907aa411afe218b580af7a847b8b7813",
+      "catalog_sha256": "fd06d32d6da7ba524c609e66d52f687466c0ec805e8721a137afa31c988767d1",
       "factions": [
         {
           "id": "gongsun",
@@ -91435,7 +91439,7 @@
       "title": "215年8月 · 合淝之戰",
       "title_ja": "合肥の戦い",
       "catalog_file": "game/data/campaigns/215-08.json",
-      "catalog_sha256": "61a7aad2edfb425495b5495d91020e941319c090c14fb745318eff3d84e01694",
+      "catalog_sha256": "bdfdaecdb02ac49c4eb080f55e595dbb51121c52d459e7c310c33f9b4a190a07",
       "factions": [
         {
           "id": "gongsun",
@@ -96853,7 +96857,7 @@
       "title": "217年7月 · 汉中争夺战",
       "title_ja": "217年7月 · 汉中争夺战",
       "catalog_file": "game/data/campaigns/217-07.json",
-      "catalog_sha256": "31a037b5c224bfc28d54cabbca049c6b74539f4ebe7d52635e75536a65718d9a",
+      "catalog_sha256": "ce8b4ff1be55b8e444a787a9a33892ac8665834458aab9c451fc201673750469",
       "factions": [
         {
           "id": "gongsun",
@@ -102321,7 +102325,7 @@
       "title": "219年7月 · 关羽包围网",
       "title_ja": "219年7月 · 关羽包围网",
       "catalog_file": "game/data/campaigns/219-07.json",
-      "catalog_sha256": "4c8594b28968ed56baa54ab68a67860561311d778b198eefa0ef16912229c216",
+      "catalog_sha256": "c9c2e980cbfb5565daba87f1ffd20df94112cd5c5ca50be33b2bdb65a5a62209",
       "factions": [
         {
           "id": "gongsun",
@@ -107880,7 +107884,7 @@
       "title": "221年7月 · 夷陵前夕",
       "title_ja": "221年7月 · 夷陵前夕",
       "catalog_file": "game/data/campaigns/221-07.json",
-      "catalog_sha256": "91936d404119d62c2737ad2289e9ccb1584dba3a41e7422923e7f59cb2dc8b11",
+      "catalog_sha256": "a3b47ddb55ab8d416f1e2f6aa15bf901f986c5eaabfa4d5a6607f09f4544e986",
       "factions": [
         {
           "id": "gongsun",
@@ -113213,7 +113217,7 @@
       "title": "225年7月 · 征伐南蠻",
       "title_ja": "南蛮征伐",
       "catalog_file": "game/data/campaigns/225-07.json",
-      "catalog_sha256": "2566573602da6a6dc5650be02313f947d90819ab68cde0fbf9a1e20389c36dbe",
+      "catalog_sha256": "a3e16b5c0e644f7610d0df401e596271fa7bc12c7be6142ac8f3c1af72c66b49",
       "factions": [
         {
           "id": "gongsun",
@@ -118656,7 +118660,7 @@
       "title": "227年2月 · 出师表",
       "title_ja": "227年2月 · 出师表",
       "catalog_file": "game/data/campaigns/227-02.json",
-      "catalog_sha256": "531655ca8454d29ba775a79e735b86a70e80d4aaa69f384162e8b7efdff1327c",
+      "catalog_sha256": "097fde3c984676b656575846d529518f964f1edab594540681783b55d51d0049",
       "factions": [
         {
           "id": "gongsun",
@@ -123518,7 +123522,7 @@
       "title": "234年2月 · 秋風五丈原",
       "title_ja": "秋風五丈原",
       "catalog_file": "game/data/campaigns/234-02.json",
-      "catalog_sha256": "f6889e5113554e19eaf61d7c67c136b548526189005e8787ccfeb52da7eae264",
+      "catalog_sha256": "9ef9e5e8c93ea5aa6dd539f12786ec4e04e8ec9e46eecf3c3b990ab4c4b9e48f",
       "factions": [
         {
           "id": "gongsun",
@@ -127852,7 +127856,7 @@
       "title": "238年1月 · 征讨辽东",
       "title_ja": "238年1月 · 征讨辽东",
       "catalog_file": "game/data/campaigns/238-01.json",
-      "catalog_sha256": "87f9eaef9269656ad110466cadb921243bb3a8727a55919796aff964e733f011",
+      "catalog_sha256": "4743475d0cd323f31c0abaa5de802aa03de2f0c289761720623461f168d396d0",
       "factions": [
         {
           "id": "gongsun",
@@ -132026,7 +132030,7 @@
       "title": "249年1月 · 正始之变",
       "title_ja": "249年1月 · 正始之变",
       "catalog_file": "game/data/campaigns/249-01.json",
-      "catalog_sha256": "79c164cae6545b24839327464ec1cc32b6e793b11426e63032fefcb0ee0e8484",
+      "catalog_sha256": "5774647c915673eed41e94f4745ac305ca705823749ff69240b94296186911f3",
       "factions": [
         {
           "id": "shu",
@@ -135858,7 +135862,7 @@
       "title": "263年5月 · 蜀漢滅亡",
       "title_ja": "蜀漢の滅亡",
       "catalog_file": "game/data/campaigns/263-05.json",
-      "catalog_sha256": "e9ee76f5c93d35a5071ed8401650afdbd0635932c4c29ac8c10f8c9479fde6d3",
+      "catalog_sha256": "75df1ff2c97f97565499b018545a21fe7532da156898b33acbc8a8396d749528",
       "factions": [
         {
           "id": "lu_xing",
@@ -139068,7 +139072,7 @@
       "title": "197年7月 · 皇帝呂布",
       "title_ja": "皇帝呂布",
       "catalog_file": "game/data/campaigns/197-07.json",
-      "catalog_sha256": "0a9b3e60383745fd7fd5365a3b65bebe05f21cd833d5d54dbaa2999090b725c3",
+      "catalog_sha256": "7e25d33e0fe0407d90801c9ef1cd601329417ab183794efbfabdb4424a70fc6a",
       "factions": [
         {
           "id": "gongsun",
@@ -139087,6 +139091,15 @@
           "city_name": "渔阳",
           "city_count": 5,
           "officer_count": 11
+        },
+        {
+          "id": "han_sui",
+          "ruler": "韩遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "city_name": "金城",
+          "city_count": 1,
+          "officer_count": 3
         },
         {
           "id": "kong_rong",
@@ -139148,8 +139161,8 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
-          "officer_count": 16
+          "city_count": 3,
+          "officer_count": 13
         },
         {
           "id": "shi_xie",
@@ -139245,7 +139258,7 @@
         ]
       },
       "fictional": true,
-      "adaptation_scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
       "city_count": 108,
       "city_owners": [
         {
@@ -139497,7 +139510,7 @@
         {
           "city": "jincheng",
           "name": "金城",
-          "owner": "ma_teng",
+          "owner": "han_sui",
           "neutral_label": null
         },
         {
@@ -139906,6 +139919,23 @@
           "owners": [
             "ma_teng",
             "li_jue"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "jincheng"
+          ],
+          "owners": [
+            "ma_teng",
+            "han_sui"
           ],
           "modes": [
             "land"
@@ -140862,8 +140892,25 @@
             "longxi"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "song_jian"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "wuwei"
+          ],
+          "owners": [
+            "han_sui",
+            "ma_teng"
           ],
           "modes": [
             "land"
@@ -140879,7 +140926,7 @@
             "xiping"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "neutral"
           ],
           "modes": [
@@ -141693,11 +141740,11 @@
           "person_id": "san14-candidate-0030",
           "name": "阎行",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "anding",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "安定"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0031",
@@ -142263,11 +142310,11 @@
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "ruler": false,
+          "faction": "han_sui",
+          "city": "jincheng",
+          "ruler": true,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0167",
@@ -143723,11 +143770,11 @@
           "person_id": "san14-candidate-0475",
           "name": "成公英",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0477",
@@ -145922,6 +145969,18 @@
       ],
       "new_factions": [
         {
+          "id": "han_sui",
+          "ruler": "韓遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "id": "song_jian",
           "ruler": "宋建",
           "person_id": "historical-song-jian",
@@ -145936,6 +145995,17 @@
       ],
       "removed_factions": [],
       "city_changes": [
+        {
+          "city": "jincheng",
+          "before": "ma_teng",
+          "owner": "han_sui",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
         {
           "city": "longxi",
           "before": "ma_teng",
@@ -145967,20 +146037,37 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0030",
+          "name": "阎行",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "anding"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
           "before": {
             "status": "serving",
-            "city": "longxi",
-            "faction": "ma_teng"
+            "faction": "ma_teng",
+            "city": "tianshui"
           },
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "certainty": "authorial_garrison_relocation",
-          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/三國志/卷01",
-            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
         },
         {
@@ -145988,16 +146075,16 @@
           "name": "成公英",
           "before": {
             "status": "serving",
-            "city": "longxi",
-            "faction": "ma_teng"
+            "faction": "ma_teng",
+            "city": "tianshui"
           },
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "certainty": "authorial_garrison_relocation",
-          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/三國志/卷01",
-            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
         },
         {
@@ -146053,11 +146140,13 @@
         }
       ],
       "owner_expectations": {
+        "jincheng": "han_sui",
         "longxi": "song_jian"
       },
       "notable_exclusions": [],
       "notes": [
-        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
       ]
     },
     {
@@ -146069,7 +146158,7 @@
       "title": "201年5月 · 華北霸者・袁紹",
       "title_ja": "華北の覇者・袁紹",
       "catalog_file": "game/data/campaigns/201-05.json",
-      "catalog_sha256": "1a3d06611a9e17dd1ccbe905eee13e65a2f8fdfa87da8ba1b8e36a8126f66871",
+      "catalog_sha256": "c9f964d9d201942d064460938fb3be1302994187a6096a9813531eb5474c2d88",
       "factions": [
         {
           "id": "gongsun",
@@ -146079,6 +146168,15 @@
           "city_name": "襄平",
           "city_count": 1,
           "officer_count": 5
+        },
+        {
+          "id": "han_sui",
+          "ruler": "韩遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "city_name": "金城",
+          "city_count": 1,
+          "officer_count": 3
         },
         {
           "id": "liu_biao",
@@ -146104,8 +146202,8 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 7,
-          "officer_count": 21
+          "city_count": 6,
+          "officer_count": 18
         },
         {
           "id": "shi_xie",
@@ -146183,7 +146281,7 @@
         ]
       },
       "fictional": true,
-      "adaptation_scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
       "city_count": 108,
       "city_owners": [
         {
@@ -146435,7 +146533,7 @@
         {
           "city": "jincheng",
           "name": "金城",
-          "owner": "ma_teng",
+          "owner": "han_sui",
           "neutral_label": null
         },
         {
@@ -146836,6 +146934,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "jincheng"
+          ],
+          "owners": [
+            "ma_teng",
+            "han_sui"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "anding",
@@ -147445,8 +147560,25 @@
             "longxi"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "song_jian"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "wuwei"
+          ],
+          "owners": [
+            "han_sui",
+            "ma_teng"
           ],
           "modes": [
             "land"
@@ -147462,7 +147594,7 @@
             "xiping"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "neutral"
           ],
           "modes": [
@@ -148051,11 +148183,11 @@
           "person_id": "san14-candidate-0030",
           "name": "阎行",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "fufeng",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "扶风"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0031",
@@ -148631,11 +148763,11 @@
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "hongnong",
-          "ruler": false,
+          "faction": "han_sui",
+          "city": "jincheng",
+          "ruler": true,
           "appearance_basis": "explicit_serving",
-          "city_name": "弘农"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0167",
@@ -149971,11 +150103,11 @@
           "person_id": "san14-candidate-0475",
           "name": "成公英",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0485",
@@ -152060,6 +152192,18 @@
       ],
       "new_factions": [
         {
+          "id": "han_sui",
+          "ruler": "韓遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "id": "song_jian",
           "ruler": "宋建",
           "person_id": "historical-song-jian",
@@ -152074,6 +152218,17 @@
       ],
       "removed_factions": [],
       "city_changes": [
+        {
+          "city": "jincheng",
+          "before": "ma_teng",
+          "owner": "han_sui",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
         {
           "city": "longxi",
           "before": "ma_teng",
@@ -152105,6 +152260,40 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0030",
+          "name": "阎行",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "fufeng"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0166",
+          "name": "韩遂",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "hongnong"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0474",
           "name": "成宜",
           "before": {
@@ -152119,6 +152308,23 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "name": "成公英",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "tianshui"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
         },
         {
@@ -152157,11 +152363,13 @@
         }
       ],
       "owner_expectations": {
+        "jincheng": "han_sui",
         "longxi": "song_jian"
       },
       "notable_exclusions": [],
       "notes": [
-        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
       ]
     },
     {
@@ -152173,7 +152381,7 @@
       "title": "209年6月 · 志在千里",
       "title_ja": "志在千里",
       "catalog_file": "game/data/campaigns/209-06.json",
-      "catalog_sha256": "d8b0e4151dfd56ad1d5e6483dadaa3dbd4594dda30ddd1cb9629292c88d2c997",
+      "catalog_sha256": "bb6fced6ef46ea4511b19f868955cc64f9487e48b41004be2ddad8c759f9bfd4",
       "factions": [
         {
           "id": "gongsun",
@@ -152181,6 +152389,15 @@
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "city_name": "襄平",
+          "city_count": 1,
+          "officer_count": 3
+        },
+        {
+          "id": "han_sui",
+          "ruler": "韩遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "city_name": "金城",
           "city_count": 1,
           "officer_count": 3
         },
@@ -152199,8 +152416,8 @@
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
-          "officer_count": 20
+          "city_count": 3,
+          "officer_count": 17
         },
         {
           "id": "shi_xie",
@@ -152269,7 +152486,7 @@
         ]
       },
       "fictional": true,
-      "adaptation_scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
       "city_count": 109,
       "city_owners": [
         {
@@ -152521,7 +152738,7 @@
         {
           "city": "jincheng",
           "name": "金城",
-          "owner": "ma_teng",
+          "owner": "han_sui",
           "neutral_label": null
         },
         {
@@ -152936,6 +153153,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "jincheng"
+          ],
+          "owners": [
+            "ma_teng",
+            "han_sui"
           ],
           "modes": [
             "land"
@@ -153486,8 +153720,25 @@
             "longxi"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "song_jian"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "wuwei"
+          ],
+          "owners": [
+            "han_sui",
+            "ma_teng"
           ],
           "modes": [
             "land"
@@ -153503,7 +153754,7 @@
             "xiping"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "neutral"
           ],
           "modes": [
@@ -154011,11 +154262,11 @@
           "person_id": "san14-candidate-0030",
           "name": "阎行",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "anding",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "安定"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0031",
@@ -154551,11 +154802,11 @@
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "ruler": false,
+          "faction": "han_sui",
+          "city": "jincheng",
+          "ruler": true,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0167",
@@ -155811,11 +156062,11 @@
           "person_id": "san14-candidate-0475",
           "name": "成公英",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0479",
@@ -158160,6 +158411,18 @@
       ],
       "new_factions": [
         {
+          "id": "han_sui",
+          "ruler": "韓遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "id": "song_jian",
           "ruler": "宋建",
           "person_id": "historical-song-jian",
@@ -158174,6 +158437,17 @@
       ],
       "removed_factions": [],
       "city_changes": [
+        {
+          "city": "jincheng",
+          "before": "ma_teng",
+          "owner": "han_sui",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
         {
           "city": "longxi",
           "before": "ma_teng",
@@ -158205,20 +158479,37 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0030",
+          "name": "阎行",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "anding"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
           "before": {
             "status": "serving",
-            "city": "longxi",
-            "faction": "ma_teng"
+            "faction": "ma_teng",
+            "city": "tianshui"
           },
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "certainty": "authorial_garrison_relocation",
-          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/三國志/卷01",
-            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
         },
         {
@@ -158226,16 +158517,16 @@
           "name": "成公英",
           "before": {
             "status": "serving",
-            "city": "longxi",
-            "faction": "ma_teng"
+            "faction": "ma_teng",
+            "city": "tianshui"
           },
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "certainty": "authorial_garrison_relocation",
-          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/三國志/卷01",
-            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
         },
         {
@@ -158308,11 +158599,13 @@
         }
       ],
       "owner_expectations": {
+        "jincheng": "han_sui",
         "longxi": "song_jian"
       },
       "notable_exclusions": [],
       "notes": [
-        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
       ]
     },
     {
@@ -158324,7 +158617,7 @@
       "title": "210年11月 · 二分天下之計",
       "title_ja": "天下二分計",
       "catalog_file": "game/data/campaigns/210-11.json",
-      "catalog_sha256": "bb3279b720a49d9cd401b49d2319d9e411a5dfa93a36ec45460d7f18b1b64977",
+      "catalog_sha256": "ac1b7a418b30a2c492a538cb4f8d23023b0d79389a8c38fafa1f7542ee048948",
       "factions": [
         {
           "id": "gongsun",
@@ -158336,13 +158629,22 @@
           "officer_count": 3
         },
         {
+          "id": "han_sui",
+          "ruler": "韩遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "city_name": "金城",
+          "city_count": 1,
+          "officer_count": 3
+        },
+        {
           "id": "ma_teng",
           "ruler": "马腾",
           "person_id": "san14-candidate-0771",
           "city": "wuwei",
           "city_name": "姑臧",
-          "city_count": 4,
-          "officer_count": 21
+          "city_count": 3,
+          "officer_count": 18
         },
         {
           "id": "shi_xie",
@@ -158402,7 +158704,7 @@
         ]
       },
       "fictional": true,
-      "adaptation_scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
       "city_count": 109,
       "city_owners": [
         {
@@ -158654,7 +158956,7 @@
         {
           "city": "jincheng",
           "name": "金城",
-          "owner": "ma_teng",
+          "owner": "han_sui",
           "neutral_label": null
         },
         {
@@ -159069,6 +159371,23 @@
           "owners": [
             "ma_teng",
             "wei"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "anding",
+            "jincheng"
+          ],
+          "owners": [
+            "ma_teng",
+            "han_sui"
           ],
           "modes": [
             "land"
@@ -159514,8 +159833,25 @@
             "longxi"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "song_jian"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "wuwei"
+          ],
+          "owners": [
+            "han_sui",
+            "ma_teng"
           ],
           "modes": [
             "land"
@@ -159531,7 +159867,7 @@
             "xiping"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "neutral"
           ],
           "modes": [
@@ -160047,11 +160383,11 @@
           "person_id": "san14-candidate-0030",
           "name": "阎行",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0031",
@@ -160607,11 +160943,11 @@
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "ruler": false,
+          "faction": "han_sui",
+          "city": "jincheng",
+          "ruler": true,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0167",
@@ -161857,11 +162193,11 @@
           "person_id": "san14-candidate-0475",
           "name": "成公英",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0479",
@@ -164236,6 +164572,18 @@
       ],
       "new_factions": [
         {
+          "id": "han_sui",
+          "ruler": "韓遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "id": "song_jian",
           "ruler": "宋建",
           "person_id": "historical-song-jian",
@@ -164250,6 +164598,17 @@
       ],
       "removed_factions": [],
       "city_changes": [
+        {
+          "city": "jincheng",
+          "before": "ma_teng",
+          "owner": "han_sui",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
         {
           "city": "longxi",
           "before": "ma_teng",
@@ -164285,16 +164644,33 @@
           "name": "阎行",
           "before": {
             "status": "serving",
-            "city": "longxi",
-            "faction": "ma_teng"
+            "faction": "ma_teng",
+            "city": "tianshui"
           },
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "certainty": "authorial_garrison_relocation",
-          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/三國志/卷01",
-            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0166",
+          "name": "韩遂",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "tianshui"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
         },
         {
@@ -164312,6 +164688,23 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "name": "成公英",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "tianshui"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
         },
         {
@@ -164401,11 +164794,13 @@
         }
       ],
       "owner_expectations": {
+        "jincheng": "han_sui",
         "longxi": "song_jian"
       },
       "notable_exclusions": [],
       "notes": [
-        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
       ]
     },
     {
@@ -164417,7 +164812,7 @@
       "title": "212年6月 · 錦馬超展翅高飛",
       "title_ja": "錦馬超飛翔",
       "catalog_file": "game/data/campaigns/212-06.json",
-      "catalog_sha256": "ee1d1ee334881657f969811a604474c8cc565d6db47867caa4ecc3a7f31f9abe",
+      "catalog_sha256": "b3f6bef806e421523553292c2a97b1cbec43d3467472e519682baacb5764e0f1",
       "factions": [
         {
           "id": "cao_zhang",
@@ -164438,6 +164833,15 @@
           "officer_count": 3
         },
         {
+          "id": "han_sui",
+          "ruler": "韩遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "city_name": "金城",
+          "city_count": 1,
+          "officer_count": 3
+        },
+        {
           "id": "liu_zhang",
           "ruler": "刘璋",
           "person_id": "san14-candidate-0938",
@@ -164452,8 +164856,8 @@
           "person_id": "san14-candidate-0769",
           "city": "henan",
           "city_name": "洛阳",
-          "city_count": 9,
-          "officer_count": 13
+          "city_count": 8,
+          "officer_count": 10
         },
         {
           "id": "shi_xie",
@@ -164522,7 +164926,7 @@
         ]
       },
       "fictional": true,
-      "adaptation_scope": "explicit_user_song_jian_lifetime_addition_without_revising_core_IF_story",
+      "adaptation_scope": "explicit_user_song_jian_lifetime_and_han_sui_independence_without_revising_core_IF_story",
       "city_count": 109,
       "city_owners": [
         {
@@ -164774,7 +165178,7 @@
         {
           "city": "jincheng",
           "name": "金城",
-          "owner": "ma_teng",
+          "owner": "han_sui",
           "neutral_label": null
         },
         {
@@ -165181,6 +165585,23 @@
         }
       ],
       "boundary_links": [
+        {
+          "cities": [
+            "anding",
+            "jincheng"
+          ],
+          "owners": [
+            "ma_teng",
+            "han_sui"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
         {
           "cities": [
             "anding",
@@ -165858,8 +166279,25 @@
             "longxi"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "song_jian"
+          ],
+          "modes": [
+            "land"
+          ],
+          "link_sources": [
+            "links",
+            "travel_routes"
+          ]
+        },
+        {
+          "cities": [
+            "jincheng",
+            "wuwei"
+          ],
+          "owners": [
+            "han_sui",
+            "ma_teng"
           ],
           "modes": [
             "land"
@@ -165875,7 +166313,7 @@
             "xiping"
           ],
           "owners": [
-            "ma_teng",
+            "han_sui",
             "neutral"
           ],
           "modes": [
@@ -166401,11 +166839,11 @@
           "person_id": "san14-candidate-0030",
           "name": "阎行",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "fengyi",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "冯翊"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0031",
@@ -166941,11 +167379,11 @@
           "person_id": "san14-candidate-0166",
           "name": "韩遂",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "fufeng",
-          "ruler": false,
+          "faction": "han_sui",
+          "city": "jincheng",
+          "ruler": true,
           "appearance_basis": "explicit_serving",
-          "city_name": "扶风"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0171",
@@ -168141,11 +168579,11 @@
           "person_id": "san14-candidate-0475",
           "name": "成公英",
           "status": "serving",
-          "faction": "ma_teng",
-          "city": "tianshui",
+          "faction": "han_sui",
+          "city": "jincheng",
           "ruler": false,
           "appearance_basis": "explicit_serving",
-          "city_name": "天水"
+          "city_name": "金城"
         },
         {
           "person_id": "san14-candidate-0479",
@@ -170410,6 +170848,18 @@
       ],
       "new_factions": [
         {
+          "id": "han_sui",
+          "ruler": "韓遂",
+          "person_id": "san14-candidate-0166",
+          "city": "jincheng",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "id": "song_jian",
           "ruler": "宋建",
           "person_id": "historical-song-jian",
@@ -170424,6 +170874,17 @@
       ],
       "removed_factions": [],
       "city_changes": [
+        {
+          "city": "jincheng",
+          "before": "ma_teng",
+          "owner": "han_sui",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
         {
           "city": "longxi",
           "before": "ma_teng",
@@ -170455,29 +170916,65 @@
           ]
         },
         {
+          "person_id": "san14-candidate-0030",
+          "name": "阎行",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "fengyi"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0166",
+          "name": "韩遂",
+          "before": {
+            "status": "serving",
+            "faction": "ma_teng",
+            "city": "fufeng"
+          },
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
+          ]
+        },
+        {
           "person_id": "san14-candidate-0475",
           "name": "成公英",
           "before": {
             "status": "serving",
-            "city": "longxi",
-            "faction": "ma_teng"
+            "faction": "ma_teng",
+            "city": "tianshui"
           },
-          "faction": "ma_teng",
-          "city": "tianshui",
-          "certainty": "authorial_garrison_relocation",
-          "note": "依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。",
+          "faction": "han_sui",
+          "city": "jincheng",
+          "certainty": "authorial_if_independent_faction_mapping",
+          "note": "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
           "source_urls": [
-            "https://zh.wikisource.org/zh-hant/三國志/卷01",
-            "https://zh.wikisource.org/zh-hant/三國志/卷09"
+            "https://zh.wikisource.org/wiki/三國志/卷36",
+            "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
         }
       ],
       "owner_expectations": {
+        "jincheng": "han_sui",
         "longxi": "song_jian"
       },
       "notable_exclusions": [],
       "notes": [
-        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions."
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
       ]
     }
   ]

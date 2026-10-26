@@ -287,6 +287,21 @@
         "save"
       ]
     },
+    "tests/test_remake_han_sui_if.py": {
+      "tier": "related",
+      "groups": [
+        "scenarios",
+        "people",
+        "save"
+      ],
+      "scenario_ids": [
+        "mainland197-07",
+        "mainland201-05",
+        "mainland209-06",
+        "mainland210-11",
+        "mainland212-06"
+      ]
+    },
     "tests/test_remake_historical_scenarios.py": {
       "tier": "full",
       "groups": [

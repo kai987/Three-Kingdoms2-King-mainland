@@ -36,8 +36,9 @@ SONG_OPENINGS = {
 }
 SONG_IF_OPENINGS = {'mainland197-07', 'mainland201-05', 'mainland209-06',
                     'mainland210-11', 'mainland212-06'}
-# These released garrisons move without inheriting the replacement city owner.
-# Keep explicit IDs: names are not unique person identities.
+# These are the 57 earlier Longxi relocations. Six Han Sui retinue placements
+# are subsequently corrected to independent Jincheng; the earlier relocation
+# record stays as provenance. Keep IDs: names are not unique identities.
 RELOCATED = {
     'mainland190-01': ('san14-candidate-0693', 'san14-candidate-0804'),
     'mainland191-10': ('san14-candidate-0693', 'san14-candidate-0804', 'san14-candidate-0969'),
@@ -65,6 +66,14 @@ RELOCATED = {
                                 'san14-candidate-0864'),
     'mainland212-06': ('san14-candidate-0475',),
     'mainland212-12': ('san14-candidate-0429',),
+}
+LATER_HAN_SUI_CORRECTIONS = {
+    ('mainland197-07', 'san14-candidate-0166'),
+    ('mainland197-07', 'san14-candidate-0475'),
+    ('mainland209-06', 'san14-candidate-0166'),
+    ('mainland209-06', 'san14-candidate-0475'),
+    ('mainland210-11', 'san14-candidate-0030'),
+    ('mainland212-06', 'san14-candidate-0475'),
 }
 
 
@@ -204,8 +213,9 @@ class SongJianLuXingTests(unittest.TestCase):
                 self.assertEqual(game.state.officers[1024].loyalty, 100)
                 game.validate(game.state)
 
-    def test_57_relocated_garrisons_keep_their_factions_and_212_free_people_stay_unaligned(self):
+    def test_longxi_relocations_keep_51_members_and_record_six_han_sui_corrections(self):
         self.assertEqual(sum(map(len, RELOCATED.values())), 57)
+        self.assertEqual(len(LATER_HAN_SUI_CORRECTIONS), 6)
         for key, people in RELOCATED.items():
             data = self.data[key]
             initial = {row['person_id']: row for row in data['initial_officers']}
@@ -213,15 +223,29 @@ class SongJianLuXingTests(unittest.TestCase):
             for pid in people:
                 with self.subTest(campaign=key, person_id=pid):
                     plan = data['era_assignments'][pid]
-                    self.assertEqual((plan['faction'], plan['city']), (owner, 'tianshui'))
-                    self.assertEqual(initial[pid]['city'], 'tianshui')
-                    self.assertEqual(plan['posting_reference']['city'], 'tianshui')
-                    self.assertEqual(plan['appearance_plan']['city'], 'tianshui')
-                    self.assertEqual(data['appearance_locations'][pid], 'tianshui')
+                    corrected = (key, pid) in LATER_HAN_SUI_CORRECTIONS
+                    city, faction = ('jincheng', 'han_sui') if corrected else ('tianshui', owner)
+                    self.assertEqual((plan['faction'], plan['city']), (faction, city))
+                    self.assertEqual(initial[pid]['city'], city)
+                    self.assertEqual(plan['posting_reference']['city'], city)
+                    self.assertEqual(plan['appearance_plan']['city'], city)
+                    self.assertEqual(data['appearance_locations'][pid], city)
                     self.assertTrue(all(w['city'] != 'longxi'
                                         for w in data['appearance_windows'].get(pid, [])))
-                    self.assertEqual(plan['placement_review']['historical_certainty'],
-                                     'authorial_garrison_relocation')
+                    if corrected:
+                        self.assertEqual(data['initial_owners']['jincheng'], 'han_sui')
+                        previous = plan['membership_revision']['previous_placement']
+                        self.assertEqual((previous['faction'], previous['city']),
+                                         ('ma_teng', 'tianshui'))
+                        self.assertEqual(previous['relocation_review']['from_city'], 'longxi')
+                        self.assertEqual(previous['relocation_review']['to_city'], 'tianshui')
+                        self.assertEqual(previous['relocation_review']['faction_preserved'], 'ma_teng')
+                        self.assertNotIn('relocation_review', plan)
+                        self.assertEqual(plan['placement_review']['historical_certainty'],
+                                         'authorial_if_independent_faction_mapping')
+                    else:
+                        self.assertEqual(plan['placement_review']['historical_certainty'],
+                                         'authorial_garrison_relocation')
             self.assertLessEqual(Counter(row['city'] for row in data['initial_officers'])['tianshui'], 13)
         game = self.opening('mainland212-12', 'song_jian')
         free = [row['person_id'] for row in game.catalog.data['initial_free_officers']
@@ -348,7 +372,9 @@ class SongJianLuXingTests(unittest.TestCase):
         self.assertEqual({row['id'] for row in adaptations}, SONG_IF_OPENINGS)
         self.assertTrue(all(row['fictional'] for row in adaptations))
         self.assertTrue(SONG_IF_OPENINGS <= set(report['fictional_excluded']))
-        self.assertEqual(report['fictional_adaptation_summary']['new_factions'], 5)
+        self.assertEqual(report['fictional_adaptation_summary']['new_factions'], 10)
+        additions = [faction['id'] for row in adaptations for faction in row['new_factions']]
+        self.assertEqual(Counter(additions), {'song_jian': 5, 'han_sui': 5})
 
     def test_audit_rejects_premature_ownership_recruitment_or_changed_founding_month(self):
         spec = spec_from_file_location('tk2_local_faction_audit_negative',
