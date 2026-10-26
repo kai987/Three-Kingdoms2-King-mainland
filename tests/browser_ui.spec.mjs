@@ -907,14 +907,26 @@ test('Han Sui and the December 212 Shu opening remain playable with reviewed fro
  await scenarios.selectOption('mainland194-06');await page.locator('input[name=faction][value=wei]').check();
  await expect(marker('jiyin')).toHaveAttribute('data-owner','wei');
  await expect(marker('jiyin')).toHaveAttribute('aria-label',/鄄城/);
- await expect(marker('chenliu')).toHaveAttribute('data-owner','lubu');
+ // Zhang Miao's allied army is independently selectable, rather than an
+ // ordinary Lü Bu garrison. Cao Cao still opens in the Juancheng proxy.
+ await expect(marker('chenliu')).toHaveAttribute('data-owner','zhang_miao');
+ const zhangMiao=page.locator('input[name=faction][value=zhang_miao]');
+ await expect(zhangMiao).toHaveCount(1);await zhangMiao.check();
+ await expect(page.locator('#setup-summary')).toContainText('張邈');
+ await expect(page.locator('#setup-summary [data-portrait-person]')).toHaveAttribute('data-portrait-person','san14-candidate-0653');
+ await page.locator('input[name=faction][value=wei]').check();
  await page.locator('#begin').click();await expect(page.locator('#allocate')).toBeEnabled({timeout:90_000});
  await waitIdle(page);await dismissHistoryOpening(page);
  await expect(page.locator('#map-date')).toHaveAttribute('datetime','0194-06-01');
  await expect(page.locator('#city-jump')).toHaveValue('jiyin');
  await expect(page.locator('#inspector .owner')).toContainText('曹操');
  const yanOpening=await exportSave();expect(yanOpening.state.player).toBe('wei');
- expect(yanOpening.state.cities.jiyin.owner).toBe('wei');expect(yanOpening.state.cities.chenliu.owner).toBe('lubu');
+ expect(yanOpening.state.cities.jiyin.owner).toBe('wei');expect(yanOpening.state.cities.chenliu.owner).toBe('zhang_miao');
+ expect(yanOpening.state.extension.leaders.zhang_miao).toBe(652);
+ expect(yanOpening.state.officers[652].person_id).toBe('san14-candidate-0653');
+ expect(yanOpening.state.officers[652].faction_id).toBe('zhang_miao');
+ expect(yanOpening.state.officers[652].loyalty).toBe(100);
+ expect(yanOpening.state.cities.chenliu.roster.officer_ids).toContain(652);
  await historyScreenshot(page,testInfo,'194-yan-frontier-live-tc');
  expect(errors.get(page)).toEqual([]);
 });
