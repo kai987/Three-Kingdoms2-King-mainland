@@ -38,7 +38,7 @@
           "captain": "公孙渊",
           "city": "liaodong",
           "color": "#788455",
-          "initial_officers": 8
+          "initial_officers": 7
         }
       ],
       "active_cities": [
@@ -643,13 +643,6 @@
           "city": "liaodong",
           "troops": 300,
           "ruler": true,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0263",
-          "troops": 300,
-          "city": "daifang",
-          "ruler": false,
           "resolve_death_year": false
         },
         {
@@ -2577,7 +2570,6 @@
           "san14-candidate-0253": "anding",
           "san14-candidate-0255": "fufeng",
           "san14-candidate-0257": "fuling",
-          "san14-candidate-0263": "daifang",
           "san14-candidate-0265": "lelang",
           "san14-candidate-0272": "hanzhong",
           "san14-candidate-0273": "beihai",
@@ -3026,7 +3018,8 @@
           "san14-candidate-0988",
           "san14-candidate-0999",
           "historical-expansion-0001",
-          "historical-expansion-0002"
+          "historical-expansion-0002",
+          "san14-candidate-0263"
         ]
       },
       "faction_rulers": {
@@ -3041,10 +3034,10 @@
       },
       "coverage": {
         "set": {
-          "initial_serving": 295,
+          "initial_serving": 294,
           "initial_free": 18,
           "source_scenario": "adapted-238-01",
-          "planned_serving": 295,
+          "planned_serving": 294,
           "planned_max_city_roster": 12,
           "future_plans": 120,
           "library": 1030,
@@ -11583,22 +11576,41 @@
           "san14-candidate-0263": {
             "set": {
               "source_ruler": "公孫淵",
-              "city": "daifang",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "scenario_membership_basis": null,
-              "source_snapshot": "mainland238-01-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "city": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland238-01-v11",
+              "year_state": "unavailable",
+              "faction": null,
+              "status": "scenario_excluded",
+              "reason": "公孫淵於228年奪位囚禁公孫恭；238年城破後才獲釋，故本開局為仍存世但被囚、不可出任，不另立新國亦不捏造死亡。",
+              "posting_reference": null,
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "公孫淵於228年奪位囚禁公孫恭；238年城破後才獲釋，故本開局為仍存世但被囚、不可出任，不另立新國亦不捏造死亡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/晉書/卷001",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷074"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "gongsun",
+                "city": "daifang",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0263",
+                  "faction": "gongsun",
+                  "origin": "liaodong",
                   "city": "daifang",
                   "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
                   "source_disposition": "missing_source_city",
                   "source_board_city": null
-                }
-              },
-              "placement_review": {
-                "set": {
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_bounded_source_snapshot_continuity",
                   "source_urls": [
                     "https://xgodgame.blogspot.com/2020/02/14_9.html"
@@ -11610,15 +11622,48 @@
                   ],
                   "reference_scenario": "san14-227-02",
                   "historical_certainty": "bounded_career_inference"
-                }
-              },
-              "appearance_plan": {
-                "set": {
+                },
+                "appearance_plan": {
                   "start": [
                     235,
                     1
                   ],
-                  "city": "daifang"
+                  "end": [
+                    238,
+                    12
+                  ],
+                  "city": "daifang",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "exclusion_kind": "explicit_scenario_scope"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/晉書/卷001",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷074"
+                  ],
+                  "note": "公孫淵於228年奪位囚禁公孫恭；238年城破後才獲釋，故本開局為仍存世但被囚、不可出任，不另立新國亦不捏造死亡。",
+                  "reference_date": [
+                    235,
+                    1
+                  ],
+                  "reference_scenario": "mainland235-01",
+                  "historical_certainty": "primary_text_captivity"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": null,
+                  "city": null,
+                  "end": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -35420,6 +35465,63 @@
           "story_note_i18n": {
             "zh-Hant": "本作依官網年代與故事改編；領土、駐將、數值及未實作的事件均不是官方原始資料匯入。",
             "ja": "公式の年月と物語を基にした本作独自の改編です。領土・配属・数値や未実装のイベントは公式データの移植ではありません。"
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0263",
+                "name": "公孙恭",
+                "before": {
+                  "status": "serving",
+                  "faction": "gongsun",
+                  "city": "daifang",
+                  "ruler": false
+                },
+                "note": "公孫淵於228年奪位囚禁公孫恭；238年城破後才獲釋，故本開局為仍存世但被囚、不可出任，不另立新國亦不捏造死亡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/晉書/卷001",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷074"
+                ],
+                "certainty": "primary_text_captivity",
+                "after": {
+                  "status": "scenario_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [],
+            "resource_transfers": [
+              {
+                "city": "daifang",
+                "person_id": "san14-candidate-0263",
+                "actual_before": 1510,
+                "actual_after": 1810,
+                "actual_delta": 300,
+                "raw_before": 1510,
+                "raw_after": 1810,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              }
+            ],
+            "material_before": {
+              "gold": 177390,
+              "grain": 616575,
+              "reserves": 187120,
+              "soldiers": 275620
+            },
+            "material_after": {
+              "gold": 177390,
+              "grain": 616575,
+              "reserves": 187420,
+              "soldiers": 275620
+            },
+            "notes": [
+              "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
+            ]
           }
         },
         "delete": [
@@ -36843,7 +36945,7 @@
             "set": {
               "gold": 1220,
               "grain": 3950,
-              "reserves": 1510
+              "reserves": 1810
             }
           },
           "zitong": {
@@ -38472,23 +38574,24 @@
           "reference_classes": {
             "authorial_region_placement": 912,
             "game_reference": 2,
-            "bounded_career_inference": 109,
+            "bounded_career_inference": 108,
+            "primary_text_captivity": 1,
             "explicit_scenario_scope": 7
           },
           "bases": {
             "retained_chronology_or_explicit_exclusion": 590,
             "retained_explicit_IF_membership": 180,
             "same_date_SAN14_guide_affiliation": 2,
-            "authored_bounded_source_snapshot_continuity": 107,
+            "authored_bounded_source_snapshot_continuity": 106,
             "person_specific_future_free_appearance": 120,
             "authorial_region_placement": 6,
             "authored_bounded_snapshot_continuity": 2,
             "retained_person_specific_free_location": 12,
             "retained_explicit_scenario_ruler": 4,
+            "ruler_affiliation_review_20261027": 1,
             "explicit_scenario_scope": 7
           }
-        },
-        "update": {}
+        }
       }
     }
   },

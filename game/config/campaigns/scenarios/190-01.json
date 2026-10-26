@@ -27,10 +27,10 @@
         {
           "id": "wei",
           "captain": "曹操",
-          "city": "chenliu",
+          "city": "qiao",
           "name": "曹操势力",
           "color": "#9c774f",
-          "initial_officers": 19
+          "initial_officers": 17
         },
         {
           "id": "yuan_shu",
@@ -215,6 +215,14 @@
           "city": "longxi",
           "color": "#007f89",
           "initial_officers": 1
+        },
+        {
+          "id": "zhang_miao",
+          "name": "张邈",
+          "captain": "张邈",
+          "city": "chenliu",
+          "color": "#8753a1",
+          "initial_officers": 2
         }
       ],
       "active_cities": [
@@ -442,7 +450,7 @@
         },
         {
           "person_id": "san14-candidate-0071",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -512,7 +520,7 @@
         },
         {
           "person_id": "san14-candidate-0102",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -526,14 +534,14 @@
         },
         {
           "person_id": "san14-candidate-0114",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0124",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1009,7 +1017,7 @@
         },
         {
           "person_id": "san14-candidate-0333",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1065,7 +1073,7 @@
         },
         {
           "person_id": "san14-candidate-0365",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1157,7 +1165,7 @@
         {
           "person_id": "san14-candidate-0441",
           "troops": 300,
-          "city": "chenliu",
+          "city": "qiao",
           "ruler": false,
           "resolve_death_year": false
         },
@@ -1247,7 +1255,7 @@
         },
         {
           "person_id": "san14-candidate-0505",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1261,14 +1269,14 @@
         },
         {
           "person_id": "san14-candidate-0510",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0511",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1282,14 +1290,14 @@
         },
         {
           "person_id": "san14-candidate-0514",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0518",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1303,7 +1311,7 @@
         },
         {
           "person_id": "san14-candidate-0521",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": true,
           "resolve_death_year": false
@@ -1473,7 +1481,7 @@
           "person_id": "san14-candidate-0653",
           "city": "chenliu",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
@@ -1513,7 +1521,7 @@
         },
         {
           "person_id": "san14-candidate-0671",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1555,7 +1563,7 @@
         },
         {
           "person_id": "san14-candidate-0702",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1751,7 +1759,7 @@
         },
         {
           "person_id": "san14-candidate-0816",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1898,7 +1906,7 @@
         },
         {
           "person_id": "san14-candidate-0913",
-          "city": "chenliu",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2838,7 +2846,7 @@
           "beihai": "kong_rong",
           "dongjun": "qiao_mao",
           "runan": "neutral",
-          "qiao": "neutral",
+          "qiao": "wei",
           "xiapi": "tao_qian",
           "wudu": "neutral",
           "badong": "liu_yan",
@@ -2900,7 +2908,8 @@
           "fuxian": "liu_yan",
           "dangqu": "liu_yan",
           "nanguang": "liu_yan",
-          "shanyang": "yuan_yi"
+          "shanyang": "yuan_yi",
+          "chenliu": "zhang_miao"
         },
         "delete": [
           "yidu",
@@ -2927,7 +2936,7 @@
           "san14-candidate-0059": "henan",
           "san14-candidate-0061": "lujiang",
           "san14-candidate-0068": "taiyuan",
-          "san14-candidate-0071": "chenliu",
+          "san14-candidate-0071": "qiao",
           "san14-candidate-0072": "zitong",
           "san14-candidate-0073": "shujun",
           "san14-candidate-0075": "shujun",
@@ -2944,18 +2953,18 @@
           "san14-candidate-0099": "nanjun",
           "san14-candidate-0100": "taiyuan",
           "san14-candidate-0101": "wei",
-          "san14-candidate-0102": "chenliu",
+          "san14-candidate-0102": "qiao",
           "san14-candidate-0104": "dongjun",
           "san14-candidate-0107": "nanyang",
           "san14-candidate-0109": "nanyang",
           "san14-candidate-0111": "taiyuan",
           "san14-candidate-0113": "yingchuan",
-          "san14-candidate-0114": "chenliu",
+          "san14-candidate-0114": "qiao",
           "san14-candidate-0120": "yingchuan",
           "san14-candidate-0121": "yingchuan",
           "san14-candidate-0122": "yingchuan",
           "san14-candidate-0123": "yingchuan",
-          "san14-candidate-0124": "chenliu",
+          "san14-candidate-0124": "qiao",
           "san14-candidate-0125": "yingchuan",
           "san14-candidate-0126": "yingchuan",
           "san14-candidate-0127": "yingchuan",
@@ -3075,17 +3084,17 @@
           "san14-candidate-0498": "hanzhong",
           "san14-candidate-0500": "wei",
           "san14-candidate-0502": "wei",
-          "san14-candidate-0505": "chenliu",
+          "san14-candidate-0505": "qiao",
           "san14-candidate-0508": "lujiang",
           "san14-candidate-0509": "wei",
-          "san14-candidate-0511": "chenliu",
+          "san14-candidate-0511": "qiao",
           "san14-candidate-0513": "jiujiang",
           "san14-candidate-0515": "yingchuan",
           "san14-candidate-0516": "yingchuan",
           "san14-candidate-0517": "yingchuan",
-          "san14-candidate-0518": "chenliu",
+          "san14-candidate-0518": "qiao",
           "san14-candidate-0520": "wei",
-          "san14-candidate-0521": "chenliu",
+          "san14-candidate-0521": "qiao",
           "san14-candidate-0524": "xiangyang",
           "san14-candidate-0525": "xiapi",
           "san14-candidate-0526": "yingchuan",
@@ -3147,7 +3156,7 @@
           "san14-candidate-0696": "jingzhao",
           "san14-candidate-0697": "wujun",
           "san14-candidate-0698": "yingchuan",
-          "san14-candidate-0702": "chenliu",
+          "san14-candidate-0702": "qiao",
           "san14-candidate-0704": "dongjun",
           "san14-candidate-0705": "beihai",
           "san14-candidate-0707": "lujiang",
@@ -3191,7 +3200,7 @@
           "san14-candidate-0808": "nanyang",
           "san14-candidate-0810": "yingchuan",
           "san14-candidate-0814": "nanyang",
-          "san14-candidate-0816": "chenliu",
+          "san14-candidate-0816": "qiao",
           "san14-candidate-0823": "fuling",
           "san14-candidate-0824": "dongjun",
           "san14-candidate-0827": "jingzhao",
@@ -3383,13 +3392,13 @@
           "san14-candidate-0327": "henan",
           "san14-candidate-0330": "xiapi",
           "san14-candidate-0331": "jingzhao",
-          "san14-candidate-0333": "chenliu",
+          "san14-candidate-0333": "qiao",
           "san14-candidate-0343": "fufeng",
           "san14-candidate-0353": "henan",
           "san14-candidate-0354": "rinan",
           "san14-candidate-0359": "xiapi",
           "san14-candidate-0364": "danyang",
-          "san14-candidate-0365": "chenliu",
+          "san14-candidate-0365": "qiao",
           "san14-candidate-0367": "bohai",
           "san14-candidate-0370": "lujiang",
           "san14-candidate-0379": "changsha",
@@ -3407,7 +3416,7 @@
           "san14-candidate-0416": "bohai",
           "san14-candidate-0417": "yingchuan",
           "san14-candidate-0428": "fufeng",
-          "san14-candidate-0441": "chenliu",
+          "san14-candidate-0441": "qiao",
           "san14-candidate-0443": "wuling",
           "san14-candidate-0454": "wei",
           "san14-candidate-0456": "taiyuan",
@@ -3427,9 +3436,9 @@
           "san14-candidate-0493": "yuyang",
           "san14-candidate-0499": "yingchuan",
           "san14-candidate-0507": "jingzhao",
-          "san14-candidate-0510": "chenliu",
+          "san14-candidate-0510": "qiao",
           "san14-candidate-0512": "donghai",
-          "san14-candidate-0514": "chenliu",
+          "san14-candidate-0514": "qiao",
           "san14-candidate-0519": "fufeng",
           "san14-candidate-0523": "yingchuan",
           "san14-candidate-0527": "xiapi",
@@ -3482,7 +3491,7 @@
           "san14-candidate-0667": "danyang",
           "san14-candidate-0668": "guiyang",
           "san14-candidate-0670": "nanyang",
-          "san14-candidate-0671": "chenliu",
+          "san14-candidate-0671": "qiao",
           "san14-candidate-0674": "xiapi",
           "san14-candidate-0678": "jiangxia",
           "san14-candidate-0683": "xiapi",
@@ -3559,7 +3568,7 @@
           "san14-candidate-0907": "jingzhao",
           "san14-candidate-0908": "fufeng",
           "san14-candidate-0911": "runan",
-          "san14-candidate-0913": "chenliu",
+          "san14-candidate-0913": "qiao",
           "san14-candidate-0914": "bohai",
           "san14-candidate-0919": "nanyang",
           "san14-candidate-0920": "dongjun",
@@ -3622,7 +3631,8 @@
           "wang_kuang": 46,
           "yuan_yi": 23,
           "bao_xin": 825,
-          "song_jian": 1024
+          "song_jian": 1024,
+          "zhang_miao": 652
         },
         "delete": [
           "wu"
@@ -4225,37 +4235,59 @@
               "source_status": "serving",
               "source_ruler": "曹操",
               "year_state": "available",
-              "faction": "wei",
+              "faction": "zhang_miao",
               "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "death_year_resolved": true,
               "posting_reference": {
                 "person_id": "san14-candidate-0021",
-                "faction": "wei",
+                "faction": "zhang_miao",
                 "city": "chenliu",
-                "basis": "reviewed_regional_or_novel_posting",
+                "basis": "ruler_affiliation_review_20261027",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ],
-                "historical_certainty": "authorial_garrison_relocation"
+                "historical_certainty": "regional_primary_mapping"
               },
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0021",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
                   "basis": "historical_review_20261025",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
@@ -4263,7 +4295,38 @@
                     "https://zh.wikisource.org/wiki/三國志/卷12"
                   ],
                   "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
-                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    190,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+                  "historical_certainty": "regional_primary_mapping",
                   "reference_date": [
                     190,
                     1
@@ -4283,7 +4346,7 @@
                   ],
                   "city": "chenliu",
                   "status": "serving",
-                  "basis": "authorial_garrison_relocation"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -5836,28 +5899,82 @@
           },
           "san14-candidate-0071": {
             "set": {
-              "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0071",
+                  "faction": "wei",
                   "city": "chenliu",
                   "basis": "reviewed_regional_or_novel_posting",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
                     "https://zh.wikisource.org/wiki/三國志/卷08",
                     "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
+                  "basis": "historical_review_20261025",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    218,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                   ],
                   "historical_certainty": "authorial_garrison_relocation"
                 },
@@ -5874,19 +5991,18 @@
                     190,
                     1
                   ],
-                  "city": "chenliu",
-                  "basis": "authorial_garrison_relocation"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               },
               "placement_review": {
                 "set": {
-                  "basis": "historical_review_20261025",
+                  "basis": "ruler_affiliation_review_20261027",
                   "historical_certainty": "authorial_garrison_relocation",
-                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                   "source_urls": [
-                    "https://zh.wikisource.org/wiki/三國志/卷01",
-                    "https://zh.wikisource.org/wiki/三國志/卷08",
-                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                   ],
                   "reference_date": [
                     190,
@@ -6930,14 +7046,76 @@
           },
           "san14-candidate-0102": {
             "set": {
-              "city": "chenliu"
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0102",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    218,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -6945,7 +7123,24 @@
                     190,
                     1
                   ],
-                  "city": "chenliu"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               }
             }
@@ -7224,28 +7419,82 @@
           },
           "san14-candidate-0114": {
             "set": {
-              "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0114",
+                  "faction": "wei",
                   "city": "chenliu",
                   "basis": "reviewed_regional_or_novel_posting",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
                     "https://zh.wikisource.org/wiki/三國志/卷08",
                     "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
+                  "basis": "historical_review_20261025",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    219,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                   ],
                   "historical_certainty": "authorial_garrison_relocation"
                 },
@@ -7262,19 +7511,18 @@
                     190,
                     1
                   ],
-                  "city": "chenliu",
-                  "basis": "authorial_garrison_relocation"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               },
               "placement_review": {
                 "set": {
-                  "basis": "historical_review_20261025",
+                  "basis": "ruler_affiliation_review_20261027",
                   "historical_certainty": "authorial_garrison_relocation",
-                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                   "source_urls": [
-                    "https://zh.wikisource.org/wiki/三國志/卷01",
-                    "https://zh.wikisource.org/wiki/三國志/卷08",
-                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                   ],
                   "reference_date": [
                     190,
@@ -7480,14 +7728,76 @@
           },
           "san14-candidate-0124": {
             "set": {
-              "city": "chenliu"
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0124",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    220,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -7495,7 +7805,24 @@
                     190,
                     1
                   ],
-                  "city": "chenliu"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               }
             }
@@ -11742,7 +12069,7 @@
                     1
                   ],
                   "end": [
-                    210,
+                    220,
                     12
                   ],
                   "city": "liaodong",
@@ -12121,7 +12448,11 @@
                     207,
                     1
                   ],
-                  "status": "future_free"
+                  "status": "future_free",
+                  "end": [
+                    225,
+                    12
+                  ]
                 }
               }
             }
@@ -14015,35 +14346,57 @@
               "source_ruler": "曹操",
               "year_state": "available",
               "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0333",
                 "faction": "wei",
-                "city": "chenliu",
-                "basis": "reviewed_regional_or_novel_posting",
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ],
                 "historical_certainty": "authorial_garrison_relocation"
               },
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0333",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
                   "basis": "historical_review_20261025",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
@@ -14051,6 +14404,37 @@
                     "https://zh.wikisource.org/wiki/三國志/卷12"
                   ],
                   "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    202,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                   "historical_certainty": "authorial_garrison_relocation",
                   "reference_date": [
                     190,
@@ -14069,9 +14453,9 @@
                     202,
                     12
                   ],
-                  "city": "chenliu",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "authorial_garrison_relocation"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -14764,29 +15148,86 @@
               "source_ruler": "曹操",
               "year_state": "available",
               "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0365",
                 "faction": "wei",
-                "origin": "chenliu",
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
                 "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0365",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    196,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01"
                 }
               },
               "appearance_plan": {
@@ -14799,9 +15240,9 @@
                     196,
                     12
                   ],
-                  "city": "chenliu",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -16716,37 +17157,91 @@
               "source_ruler": "孔伷",
               "year_state": "available",
               "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0441",
                 "faction": "wei",
-                "city": "chenliu",
-                "basis": "reviewed_regional_or_novel_posting",
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ],
                 "historical_certainty": "authorial_garrison_relocation"
               },
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0441",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
+                  "basis": "historical_review_20261025",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    208,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
             },
             "update": {
               "placement_review": {
                 "set": {
-                  "basis": "historical_review_20261025",
-                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                   "reference_date": [
                     190,
                     1
@@ -16754,9 +17249,8 @@
                   "reference_scenario": "mainland190-01",
                   "historical_certainty": "authorial_garrison_relocation",
                   "source_urls": [
-                    "https://zh.wikisource.org/wiki/三國志/卷01",
-                    "https://zh.wikisource.org/wiki/三國志/卷08",
-                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                   ]
                 }
               },
@@ -16770,9 +17264,9 @@
                     208,
                     12
                   ],
-                  "city": "chenliu",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "authorial_garrison_relocation"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -18588,14 +19082,76 @@
           },
           "san14-candidate-0505": {
             "set": {
-              "city": "chenliu"
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0505",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    228,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -18603,7 +19159,24 @@
                     190,
                     1
                   ],
-                  "city": "chenliu"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               }
             }
@@ -18739,35 +19312,57 @@
               "source_ruler": "曹操",
               "year_state": "available",
               "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0510",
                 "faction": "wei",
-                "city": "chenliu",
-                "basis": "reviewed_regional_or_novel_posting",
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ],
                 "historical_certainty": "authorial_garrison_relocation"
               },
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0510",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
                   "basis": "historical_review_20261025",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
@@ -18775,6 +19370,37 @@
                     "https://zh.wikisource.org/wiki/三國志/卷12"
                   ],
                   "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    197,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                   "historical_certainty": "authorial_garrison_relocation",
                   "reference_date": [
                     190,
@@ -18793,9 +19419,9 @@
                     197,
                     12
                   ],
-                  "city": "chenliu",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "authorial_garrison_relocation"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -18805,14 +19431,76 @@
           },
           "san14-candidate-0511": {
             "set": {
-              "city": "chenliu"
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0511",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    232,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -18820,7 +19508,24 @@
                     190,
                     1
                   ],
-                  "city": "chenliu"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               }
             }
@@ -18916,35 +19621,57 @@
               "source_ruler": "曹操",
               "year_state": "available",
               "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0514",
                 "faction": "wei",
-                "city": "chenliu",
-                "basis": "reviewed_regional_or_novel_posting",
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ],
                 "historical_certainty": "authorial_garrison_relocation"
               },
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0514",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
                   "basis": "historical_review_20261025",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
@@ -18952,6 +19679,37 @@
                     "https://zh.wikisource.org/wiki/三國志/卷12"
                   ],
                   "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    210,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                   "historical_certainty": "authorial_garrison_relocation",
                   "reference_date": [
                     190,
@@ -18970,9 +19728,9 @@
                     210,
                     12
                   ],
-                  "city": "chenliu",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "authorial_garrison_relocation"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -19085,26 +19843,87 @@
           "san14-candidate-0518": {
             "set": {
               "source_city": "陳留",
-              "city": "chenliu"
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "reviewed_SAN14_source_city_to_board",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0518",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "reviewed_SAN14_source_city_to_board",
+                  "source_city": "陳留",
+                  "source_disposition": "matched_source_city",
+                  "source_reference": {
+                    "url": "https://wikiwiki.jp/sangokushi14/%E6%9B%B9%E4%BB%81",
+                    "source_scenario_date": [
+                      190,
+                      1
+                    ],
+                    "title": "反董卓連合",
+                    "basis": "same_date_SAN14_guide_city_not_official_export"
+                  }
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "same_date_SAN14_guide_affiliation",
+                  "source_urls": [
+                    "https://wikiwiki.jp/sangokushi14/%E6%9B%B9%E4%BB%81"
+                  ],
+                  "note": "同年月攻略逐人表所載遊戲歸屬；本作疆界與劇本仍為獨立改編，不是官方匯出或史實駐軍。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "反董卓連合",
+                  "historical_certainty": "game_reference"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    223,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "same_date_game_location"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu",
-                  "source_city": "陳留"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
                 },
-                "update": {
-                  "source_reference": {
-                    "set": {
-                      "source_scenario_date": [
-                        190,
-                        1
-                      ],
-                      "title": "反董卓連合"
-                    }
-                  }
-                }
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_reference"
+                ]
               },
               "source_city_reference": {
                 "set": {
@@ -19121,7 +19940,14 @@
                     190,
                     1
                   ],
-                  "reference_scenario": "反董卓連合"
+                  "reference_scenario": "mainland190-01",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               },
               "appearance_plan": {
@@ -19130,7 +19956,8 @@
                     190,
                     1
                   ],
-                  "city": "chenliu"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -19222,14 +20049,72 @@
           },
           "san14-candidate-0521": {
             "set": {
-              "city": "chenliu"
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "retained_faction_ruler_seat",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0521",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "retained_faction_ruler_seat",
+                  "source_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_explicit_scenario_ruler",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                  ],
+                  "note": "保留本篇明列君主及根據地，不以外部快照覆寫劇本君主。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    220,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -19237,7 +20122,24 @@
                     190,
                     1
                   ],
-                  "city": "chenliu"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               }
             }
@@ -22936,30 +23838,87 @@
               "source_status": "serving",
               "source_ruler": "曹操",
               "year_state": "available",
-              "faction": "wei",
+              "faction": "zhang_miao",
               "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0653",
-                "faction": "wei",
-                "origin": "chenliu",
+                "faction": "zhang_miao",
                 "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "historical_certainty": "regional_primary_mapping"
+              },
+              "reason": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0653",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    195,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01"
                 }
               },
               "appearance_plan": {
@@ -22974,7 +23933,7 @@
                   ],
                   "city": "chenliu",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -23539,35 +24498,57 @@
               "source_ruler": "曹操",
               "year_state": "available",
               "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0671",
                 "faction": "wei",
-                "city": "chenliu",
-                "basis": "reviewed_regional_or_novel_posting",
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ],
                 "historical_certainty": "authorial_garrison_relocation"
               },
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0671",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "basis": "reviewed_regional_or_novel_posting",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
                   "basis": "historical_review_20261025",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
@@ -23575,6 +24556,37 @@
                     "https://zh.wikisource.org/wiki/三國志/卷12"
                   ],
                   "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    198,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                   "historical_certainty": "authorial_garrison_relocation",
                   "reference_date": [
                     190,
@@ -23593,9 +24605,9 @@
                     198,
                     12
                   ],
-                  "city": "chenliu",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "authorial_garrison_relocation"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -24389,14 +25401,76 @@
           },
           "san14-candidate-0702": {
             "set": {
-              "city": "chenliu"
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0702",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    219,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "origin": "chenliu",
-                  "city": "chenliu"
-                }
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -24404,7 +25478,24 @@
                     190,
                     1
                   ],
-                  "city": "chenliu"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               }
             }
@@ -26332,7 +27423,11 @@
                     190,
                     1
                   ],
-                  "city": "anding"
+                  "city": "anding",
+                  "end": [
+                    222,
+                    12
+                  ]
                 }
               }
             }
@@ -26644,7 +27739,7 @@
                     1
                   ],
                   "end": [
-                    192,
+                    195,
                     12
                   ],
                   "city": "henan",
@@ -27673,28 +28768,82 @@
           },
           "san14-candidate-0816": {
             "set": {
-              "city": "chenliu",
-              "placement_basis": "historical_review_20261025",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "membership_revision": {
-                "basis": "authorial_garrison_relocation",
-                "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                 "source_urls": [
-                  "https://zh.wikisource.org/wiki/三國志/卷01",
-                  "https://zh.wikisource.org/wiki/三國志/卷08",
-                  "https://zh.wikisource.org/wiki/三國志/卷12"
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                 ]
               },
-              "scenario_membership_basis": "authorial_garrison_relocation"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "historical_review_20261025",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0816",
+                  "faction": "wei",
                   "city": "chenliu",
                   "basis": "reviewed_regional_or_novel_posting",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷01",
                     "https://zh.wikisource.org/wiki/三國志/卷08",
                     "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "membership_revision": {
+                  "basis": "authorial_garrison_relocation",
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ]
+                },
+                "placement_review": {
+                  "basis": "historical_review_20261025",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                  ],
+                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01",
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    230,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "authorial_garrison_relocation"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                   ],
                   "historical_certainty": "authorial_garrison_relocation"
                 },
@@ -27711,19 +28860,18 @@
                     190,
                     1
                   ],
-                  "city": "chenliu",
-                  "basis": "authorial_garrison_relocation"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               },
               "placement_review": {
                 "set": {
-                  "basis": "historical_review_20261025",
+                  "basis": "ruler_affiliation_review_20261027",
                   "historical_certainty": "authorial_garrison_relocation",
-                  "note": "原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。",
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
                   "source_urls": [
-                    "https://zh.wikisource.org/wiki/三國志/卷01",
-                    "https://zh.wikisource.org/wiki/三國志/卷08",
-                    "https://zh.wikisource.org/wiki/三國志/卷12"
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                   ],
                   "reference_date": [
                     190,
@@ -30716,29 +31864,86 @@
               "source_ruler": "曹操",
               "year_state": "available",
               "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0913",
                 "faction": "wei",
-                "origin": "chenliu",
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
                 "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0913",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    190,
+                    1
+                  ],
+                  "end": [
+                    216,
+                    12
+                  ],
+                  "city": "chenliu",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷07",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    190,
+                    1
+                  ],
+                  "reference_scenario": "mainland190-01"
                 }
               },
               "appearance_plan": {
@@ -30751,9 +31956,9 @@
                     216,
                     12
                   ],
-                  "city": "chenliu",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -31851,7 +33056,7 @@
                     1
                   ],
                   "end": [
-                    202,
+                    192,
                     12
                   ],
                   "city": "jiyin",
@@ -34121,7 +35326,7 @@
       "main_scenario": {
         "set": {
           "title": "反董卓联盟",
-          "summary": "反董卓联盟：使用已发布的本作年代配置，采用30人城池容量。",
+          "summary": "曹操與張邈各領部曲，共同參與反董卓聯軍。張邈據陳留；小沛節點僅代理曹操在己吾的募兵軍營，不表示曹操領有史實小沛。",
           "reviewed_source_city_records": 6,
           "historical_review": {
             "revision": "2026-10-25",
@@ -34133,7 +35338,8 @@
               "wang_kuang",
               "yuan_yi",
               "bao_xin",
-              "song_jian"
+              "song_jian",
+              "zhang_miao"
             ],
             "city_owner_corrections": [
               "jincheng",
@@ -34145,7 +35351,9 @@
               "henei",
               "shanyang",
               "dongping",
-              "longxi"
+              "longxi",
+              "qiao",
+              "chenliu"
             ],
             "all_city_months_independently_attested": false,
             "local_map_proxies": {
@@ -34159,6 +35367,14 @@
                 "early_opening": false,
                 "fictional_adaptation": false,
                 "note": "《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。"
+              },
+              "qiao": {
+                "display_name": "小沛",
+                "represents": [
+                  "曹操己吾募兵軍營的可玩區域代理"
+                ],
+                "does_not_represent": "曹操實控歷史小沛或譙郡",
+                "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。"
               }
             },
             "song_jian_lifetime_setup": {
@@ -34179,6 +35395,512 @@
                 "https://zh.wikisource.org/zh-hant/三國志/卷09"
               ]
             }
+          },
+          "summary_i18n": {
+            "zh-Hant": "曹操與張邈各領部曲，共同參與反董卓聯軍。張邈據陳留；小沛節點僅代理曹操在己吾的募兵軍營，不表示曹操領有史實小沛。",
+            "ja": "曹操と張邈は別部曲です。小沛拠点は、曹操の己吾での募兵軍営を表すゲーム上の代替で、史実の小沛領有ではありません。"
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0071",
+                "name": "王必",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0102",
+                "name": "乐进",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0114",
+                "name": "夏侯渊",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0124",
+                "name": "夏侯惇",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0333",
+                "name": "史涣",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0365",
+                "name": "周喁",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0441",
+                "name": "徐璆",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0505",
+                "name": "曹休",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0510",
+                "name": "曹昂",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0511",
+                "name": "曹洪",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0514",
+                "name": "曹纯",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0518",
+                "name": "曹仁",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0521",
+                "name": "曹操",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": true
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0671",
+                "name": "陈宫",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0702",
+                "name": "丁斐",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0816",
+                "name": "卞氏",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0913",
+                "name": "李典",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0653",
+                "name": "张邈",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zhang_miao",
+                  "city": "chenliu",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0021",
+                "name": "卫兹",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷07",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zhang_miao",
+                  "city": "chenliu",
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [],
+            "material_before": {
+              "gold": 143240,
+              "grain": 495475,
+              "reserves": 147970,
+              "soldiers": 223570
+            },
+            "material_after": {
+              "gold": 143240,
+              "grain": 495475,
+              "reserves": 147970,
+              "soldiers": 223570
+            },
+            "notes": []
           }
         }
       },
@@ -38479,7 +40201,7 @@
                 1
               ],
               "end": [
-                251,
+                225,
                 12
               ],
               "city": "jianning",
@@ -42428,14 +44150,16 @@
             "wudu",
             "yingchuan",
             "yinping",
-            "longxi"
+            "longxi",
+            "qiao",
+            "chenliu"
           ],
           "reference_classes": {
-            "authorial_region_placement": 965,
-            "game_reference": 25,
-            "authorial_garrison_relocation": 22,
+            "authorial_region_placement": 956,
+            "game_reference": 24,
+            "authorial_garrison_relocation": 30,
+            "regional_primary_mapping": 3,
             "primary_text_affiliation": 8,
-            "regional_primary_mapping": 1,
             "bounded_career_inference": 1,
             "explicit_regional_proxy": 1,
             "authorial_lifetime_region_proxy": 1,
@@ -42446,21 +44170,53 @@
             "person_specific_future_free_appearance": 616,
             "same_date_SAN14_guide_free_location": 3,
             "retained_person_specific_free_location": 132,
-            "historical_review_20261025": 30,
+            "historical_review_20261025": 21,
+            "ruler_affiliation_review_20261027": 19,
             "historical_city_owner_relocation_authorial_garrison": 13,
-            "retained_reviewed_opening_membership": 187,
-            "retained_explicit_scenario_ruler": 17,
+            "retained_reviewed_opening_membership": 179,
+            "retained_explicit_scenario_ruler": 16,
             "same_date_SAN14_recorded_death": 21,
             "authored_bounded_source_snapshot_continuity": 1,
-            "same_date_SAN14_guide_affiliation": 1,
             "authorial_garrison_relocation_for_song_jian_longxi": 2,
             "user_requested_song_jian_lifetime_longxi_opening": 1,
             "explicit_scenario_scope": 6
           }
-        },
-        "update": {}
+        }
       }
     }
   },
-  "people_overrides": {}
+  "people_overrides": {
+    "update": {
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+        }
+      }
+    }
+  }
 }

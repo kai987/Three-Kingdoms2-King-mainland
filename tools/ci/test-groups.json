@@ -472,6 +472,12 @@
         "logistics"
       ]
     },
+    "tests/test_remake_ruler_late_review.py": {
+      "tier": "full",
+      "groups": [
+        "scenarios"
+      ]
+    },
     "tests/test_remake_save_transfer.py": {
       "tier": "related",
       "groups": [

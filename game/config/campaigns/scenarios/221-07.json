@@ -6482,7 +6482,11 @@
                     7
                   ],
                   "city": "fuling",
-                  "status": "serving"
+                  "status": "serving",
+                  "end": [
+                    225,
+                    12
+                  ]
                 }
               }
             }
@@ -12410,7 +12414,11 @@
                     221,
                     7
                   ],
-                  "city": "hanzhong"
+                  "city": "hanzhong",
+                  "end": [
+                    222,
+                    12
+                  ]
                 }
               }
             }
@@ -15201,6 +15209,197 @@
             "set": {
               "year_state": "not_appeared"
             }
+          },
+          "san14-candidate-0264": {
+            "set": {
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "reason": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ]
+              },
+              "exclusion_kind": "primary_text_dead_by_opening",
+              "ruler_affiliation_previous": {
+                "status": "scenario_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": "authored_career_fallback_not_attested_post",
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "same_date_SAN14_recorded_death",
+                  "source_urls": [
+                    "https://xgodgame.blogspot.com/2020/02/14_9.html"
+                  ],
+                  "note": "本篇來源記已死亡或明列故事排除，不生成、不復活。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "game_reference"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "same_date_SAN14_recorded_death"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08"
+                  ],
+                  "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                  "reference_date": [
+                    221,
+                    7
+                  ],
+                  "reference_scenario": "mainland221-07",
+                  "historical_certainty": "primary_text_chronology"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              }
+            }
+          },
+          "san14-candidate-0782": {
+            "set": {
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "reason": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "exclusion_kind": "primary_text_dead_by_opening",
+              "ruler_affiliation_previous": {
+                "status": "scenario_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": null,
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "same_date_SAN14_recorded_death",
+                  "source_urls": [
+                    "https://xgodgame.blogspot.com/2020/02/14_9.html"
+                  ],
+                  "note": "本篇來源記已死亡或明列故事排除，不生成、不復活。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "game_reference"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "same_date_SAN14_recorded_death"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                  "reference_date": [
+                    221,
+                    7
+                  ],
+                  "reference_scenario": "mainland221-07",
+                  "historical_certainty": "primary_text_chronology"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              }
+            }
+          },
+          "san14-candidate-0947": {
+            "set": {
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "reason": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ]
+              },
+              "exclusion_kind": "primary_text_dead_by_opening",
+              "ruler_affiliation_previous": {
+                "status": "scenario_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": "authored_career_fallback_not_attested_post",
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "same_date_SAN14_recorded_death",
+                  "source_urls": [
+                    "https://xgodgame.blogspot.com/2020/02/14_9.html"
+                  ],
+                  "note": "本篇來源記已死亡或明列故事排除，不生成、不復活。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "game_reference"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "same_date_SAN14_recorded_death"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷49"
+                  ],
+                  "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                  "reference_date": [
+                    221,
+                    7
+                  ],
+                  "reference_scenario": "mainland221-07",
+                  "historical_certainty": "primary_text_chronology"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              }
+            }
           }
         },
         "set": {
@@ -15335,6 +15534,154 @@
             "faction_additions": [],
             "city_owner_corrections": [],
             "all_city_months_independently_attested": false
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": {
+                  "status": "scenario_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": {
+                  "status": "scenario_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": {
+                  "status": "scenario_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [],
+            "material_before": {
+              "gold": 167170,
+              "grain": 568375,
+              "reserves": 177170,
+              "soldiers": 281870
+            },
+            "material_after": {
+              "gold": 167170,
+              "grain": 568375,
+              "reserves": 177170,
+              "soldiers": 281870
+            },
+            "notes": []
           }
         },
         "delete": [
@@ -17985,13 +18332,14 @@
           "people": 1030,
           "reference_classes": {
             "authorial_region_placement": 589,
-            "game_reference": 422,
+            "game_reference": 419,
             "bounded_career_inference": 12,
+            "primary_text_chronology": 3,
             "explicit_scenario_scope": 7
           },
           "bases": {
             "unrepresented_source_faction_local_free_design": 1,
-            "same_date_SAN14_recorded_death": 418,
+            "same_date_SAN14_recorded_death": 415,
             "person_specific_future_free_appearance": 200,
             "same_date_SAN14_guide_affiliation": 3,
             "same_date_SAN14_guide_free_location": 1,
@@ -18000,14 +18348,47 @@
             "bounded_career_inference": 8,
             "authorial_region_placement": 3,
             "retained_explicit_scenario_ruler": 5,
+            "ruler_affiliation_review_20261027": 3,
             "authored_bounded_source_snapshot_continuity": 4,
             "retained_chronology_or_explicit_exclusion": 2,
             "explicit_scenario_scope": 7
           }
-        },
-        "update": {}
+        }
       }
     }
   },
-  "people_overrides": {}
+  "people_overrides": {
+    "update": {
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+        }
+      }
+    }
+  }
 }

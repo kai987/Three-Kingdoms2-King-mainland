@@ -43,7 +43,11 @@ UI = {
     'original-ui': set(GROUPS), 'command-menu': set(GROUPS),
 }
 GLOBAL_UI = {'game/app.js', 'game/style.css', 'game/i18n.js', 'game/index.html'}
-DERIVED_REPORTS = {'docs/officer-stat-scenarios-v1.json', 'docs/scenario-history-audit-20261025.json'}
+DERIVED_REPORTS = {
+    'docs/officer-stat-scenarios-v1.json',
+    'docs/scenario-history-audit-20261025.json',
+    'docs/ruler-affiliation-audit-20261027.json',
+}
 SMALL_UI_TESTS = {
     'tests/test_remake_loading_cover.cjs', 'tests/test_remake_site_icon.py',
     'tests/test_remake_audio.cjs', 'tests/test_remake_audio_assets.py',

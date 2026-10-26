@@ -60,7 +60,7 @@ for date,side in [('217-07','wu'),('191-10','wei'),('201-05','wei')]:
     game=Campaign(Catalog(Path('game/data/campaigns')/(date+'.json')))
     game.state=game._new(side,2026)
     game.validate(game.state)
-    rows.append(dict(date=date,library=game._expanded_catalog_view(game.state)['library']))
+    rows.append(dict(date=date,library=game._expanded_catalog_view(game.state)['library'],leaders=game.state.extension['leaders']))
 print(json.dumps(rows,ensure_ascii=False))
 `],{cwd:root,encoding:'utf8',maxBuffer:16*1024*1024,env:{...process.env,MARCH_CORE_BACKEND:'python',PYTHONDONTWRITEBYTECODE:'1'}});
 if(python.status!==0)throw new Error(python.stderr||'Runtime fixture generation failed');
@@ -74,7 +74,24 @@ for(const row of rows){
  const [year,month]=row.date.split('-').map(Number),summary=context.libraryEntrySummary(row.library,{year,month});
  assert(summary.includes('data-locale-only="zh-Hant"'));assert(summary.includes('data-locale-only="ja"'));assert(summary.includes(`已登場 ${serving+free}／總庫 1030`));
  assert.equal(counts.pending_history,0);assert.equal(counts.pending_capacity,0);assert.equal(counts.pending_faction,0);
- if(row.date==='217-07'){assert.equal(counts.serving,365);assert.equal(counts.free,52);}
+ if(row.date==='217-07'){
+  // Gongsun Kang's restored opening entry replaces Zhao Fan in the serving
+  // count; Zhao Fan remains alive as a free officer, so only free grows by1.
+  assert.equal(counts.serving,365);assert.equal(counts.free,53);
+  const kang=row.library.find(p=>p.person_id==='san14-candidate-0264');
+  const gong=row.library.find(p=>p.person_id==='san14-candidate-0263');
+  const zhao=row.library.find(p=>p.person_id==='san14-candidate-0654');
+  assert.equal(kang.id,263);assert.equal(kang.alive,true);assert.equal(kang.year_state,'available');assert.equal(kang.faction,'gongsun');
+  assert.equal(row.leaders.gongsun,kang.id);assert.equal(context.libraryEntryStatus(kang),'serving');
+  assert(context.libraryFilterMatches(kang,'own','gongsun'));assert(!context.libraryFilterMatches(kang,'free'));
+  assert(!context.libraryFilterMatches(kang,'unentered'));
+  assert.equal(gong.id,262);assert.equal(gong.alive,true);assert.equal(gong.faction,'gongsun');
+  assert.notEqual(row.leaders.gongsun,gong.id);
+  assert.equal(zhao.id,653);assert.equal(zhao.alive,true);assert.equal(zhao.year_state,'available');assert.equal(zhao.faction,null);assert.equal(zhao.location,'guiyang');
+  assert.equal(context.libraryEntryStatus(zhao),'free');assert(context.libraryFilterMatches(zhao,'free'));
+  assert(!context.libraryFilterMatches(zhao,'own','shu'));assert(!context.libraryFilterMatches(zhao,'serving'));
+  assert(!context.libraryFilterMatches(zhao,'unentered'));
+ }
  if(row.date==='191-10'){assert.equal(counts.serving,301);assert.equal(counts.free,96);}
  if(row.date==='201-05'){
   assert.equal(counts.serving,290);assert.equal(counts.free,127);

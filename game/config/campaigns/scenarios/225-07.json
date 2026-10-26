@@ -21,7 +21,7 @@
           "captain": "刘禅",
           "city": "shujun",
           "color": "#4c7650",
-          "initial_officers": 81
+          "initial_officers": 80
         },
         {
           "id": "wu",
@@ -679,7 +679,7 @@
           "city": "jianning",
           "troops": 300,
           "ruler": false,
-          "resolve_death_year": false
+          "resolve_death_year": true
         },
         {
           "person_id": "san14-candidate-0273",
@@ -1804,13 +1804,6 @@
         {
           "person_id": "san14-candidate-0768",
           "city": "hanzhong",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0769",
-          "city": "shujun",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -3257,7 +3250,6 @@
           "san14-candidate-0765": "fuling",
           "san14-candidate-0766": "guanghan",
           "san14-candidate-0768": "hanzhong",
-          "san14-candidate-0769": "shujun",
           "san14-candidate-0780": "kuaiji",
           "san14-candidate-0787": "wenshan",
           "san14-candidate-0789": "yongchang",
@@ -3439,7 +3431,8 @@
           "san14-candidate-0988",
           "san14-candidate-0999",
           "historical-expansion-0001",
-          "historical-expansion-0002"
+          "historical-expansion-0002",
+          "san14-candidate-0769"
         ]
       },
       "faction_rulers": {
@@ -3451,10 +3444,10 @@
       },
       "coverage": {
         "set": {
-          "initial_serving": 311,
+          "initial_serving": 310,
           "initial_free": 79,
           "source_scenario": "san14-221-07",
-          "planned_serving": 311,
+          "planned_serving": 310,
           "planned_max_city_roster": 13,
           "future_plans": 163,
           "library": 1030,
@@ -10539,32 +10532,67 @@
           },
           "san14-candidate-0264": {
             "set": {
-              "placement_basis": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "chronology_excluded",
-              "reason": "Birth, service or death year excludes opening.",
-              "scenario_membership_basis": null,
-              "source_snapshot": "mainland221-07-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "reason": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland221-07-v11",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "chronology_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": null,
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_chronology_or_explicit_exclusion",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
                   ],
                   "note": "本作年表已過退場／卒年，不配置在籍或未來登場。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "retained_chronology_or_explicit_exclusion"
+                }
+              },
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08"
+                  ],
+                  "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                  "historical_certainty": "primary_text_chronology",
+                  "reference_date": [
+                    225,
+                    7
+                  ],
+                  "reference_scenario": "mainland225-07"
                 }
               },
               "appearance_plan": {
                 "set": {
-                  "basis": "retained_chronology_or_explicit_exclusion"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0265": {
             "set": {
@@ -23403,33 +23431,81 @@
           "san14-candidate-0769": {
             "set": {
               "source_ruler": "刘禅",
-              "city": "shujun",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland221-07-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "city": "shujun"
-                }
+              "city": null,
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland221-07-v11",
+              "year_state": "dead",
+              "faction": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "reason": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+              "posting_reference": null,
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ]
               },
-              "placement_review": {
-                "set": {
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "shujun",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0769",
+                  "faction": "shu",
+                  "origin": "shujun",
+                  "city": "shujun",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                  "historical_certainty": "primary_text_chronology",
+                  "reference_date": [
+                    225,
+                    7
+                  ],
+                  "reference_scenario": "mainland225-07"
                 }
               },
               "appearance_plan": {
                 "set": {
-                  "start": [
-                    225,
-                    7
-                  ],
-                  "city": "shujun"
+                  "start": null,
+                  "city": null,
+                  "end": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -23722,30 +23798,66 @@
           "san14-candidate-0782": {
             "set": {
               "status": "chronology_excluded",
-              "reason": "Birth, service or death year excludes opening.",
-              "scenario_membership_basis": null,
-              "source_snapshot": "mainland221-07-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "reason": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland221-07-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "chronology_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": null,
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_chronology_or_explicit_exclusion",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
                   ],
                   "note": "本作年表已過退場／卒年，不配置在籍或未來登場。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "retained_chronology_or_explicit_exclusion"
+                }
+              },
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                  "historical_certainty": "primary_text_chronology",
+                  "reference_date": [
+                    225,
+                    7
+                  ],
+                  "reference_scenario": "mainland225-07"
                 }
               },
               "appearance_plan": {
                 "set": {
-                  "basis": "retained_chronology_or_explicit_exclusion"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0783": {
             "set": {
@@ -28111,32 +28223,69 @@
           },
           "san14-candidate-0947": {
             "set": {
-              "placement_basis": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "chronology_excluded",
-              "reason": "Birth, service or death year excludes opening.",
-              "scenario_membership_basis": null,
-              "source_snapshot": "mainland221-07-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "reason": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland221-07-v11",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "chronology_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": null,
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_chronology_or_explicit_exclusion",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
                   ],
                   "note": "本作年表已過退場／卒年，不配置在籍或未來登場。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "retained_chronology_or_explicit_exclusion"
+                }
+              },
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷49"
+                  ],
+                  "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                  "historical_certainty": "primary_text_chronology",
+                  "reference_date": [
+                    225,
+                    7
+                  ],
+                  "reference_scenario": "mainland225-07"
                 }
               },
               "appearance_plan": {
                 "set": {
-                  "basis": "retained_chronology_or_explicit_exclusion"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0948": {
             "set": {
@@ -29816,7 +29965,7 @@
             "placement_basis": "user_requested_225_nanzhong_merge",
             "status": "serving",
             "reason": null,
-            "death_year_resolved": false,
+            "death_year_resolved": true,
             "posting_reference": {
               "person_id": "san14-candidate-0272",
               "faction": "nanman",
@@ -29849,7 +29998,7 @@
                 7
               ],
               "end": [
-                251,
+                225,
                 12
               ],
               "city": "jianning",
@@ -30107,7 +30256,187 @@
               "shared_chronology_changed": false,
               "historical_boundary": "Yong Kai was killed before Zhuge Liang arrived; Huayang Guozhi places Gao Dings death before the fifth-month river crossing. These three simultaneous July225 subordinates and the combined territory are user-requested game setup, not attested month-exact history or an official SAN14 roster."
             }
-          ]
+          ],
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "shujun",
+                  "ruler": false
+                },
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [
+              {
+                "city": "shujun",
+                "person_id": "san14-candidate-0769",
+                "actual_before": 4790,
+                "actual_after": 5090,
+                "actual_delta": 300,
+                "raw_before": 3190,
+                "raw_after": 3390,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              }
+            ],
+            "material_before": {
+              "gold": 169240,
+              "grain": 577550,
+              "reserves": 178050,
+              "soldiers": 271350
+            },
+            "material_after": {
+              "gold": 169240,
+              "grain": 577550,
+              "reserves": 178350,
+              "soldiers": 271350
+            },
+            "notes": []
+          }
         },
         "delete": [
           "travel",
@@ -31353,7 +31682,7 @@
             "set": {
               "gold": 3190,
               "grain": 12450,
-              "reserves": 3190
+              "reserves": 3390
             }
           },
           "bajun": {
@@ -33015,9 +33344,10 @@
           "city_owner_corrections": [],
           "reference_classes": {
             "game_reference": 12,
-            "authorial_region_placement": 999,
+            "authorial_region_placement": 995,
             "bounded_career_inference": 8,
             "authorial_garrison_relocation": 4,
+            "primary_text_chronology": 4,
             "explicit_scenario_scope": 7
           },
           "user_setup_city_overrides": [
@@ -33029,19 +33359,52 @@
             "same_date_SAN14_recorded_death": 7,
             "same_date_SAN14_guide_free_location": 2,
             "person_specific_future_free_appearance": 163,
-            "retained_reviewed_opening_membership": 287,
-            "retained_chronology_or_explicit_exclusion": 463,
+            "retained_reviewed_opening_membership": 286,
+            "retained_chronology_or_explicit_exclusion": 460,
             "retained_person_specific_free_location": 77,
             "bounded_career_inference": 8,
             "historical_review_20261025": 4,
             "retained_explicit_scenario_ruler": 6,
+            "ruler_affiliation_review_20261027": 4,
             "user_requested_225_nanzhong_merge": 3,
             "explicit_scenario_scope": 7
           }
-        },
-        "update": {}
+        }
       }
     }
   },
-  "people_overrides": {}
+  "people_overrides": {
+    "update": {
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+        }
+      }
+    }
+  }
 }

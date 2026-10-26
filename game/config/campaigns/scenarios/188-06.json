@@ -30,7 +30,7 @@
           "city": "shujun",
           "name": "刘焉",
           "color": "#786985",
-          "initial_officers": 8
+          "initial_officers": 5
         },
         {
           "id": "ding_yuan",
@@ -295,13 +295,6 @@
         {
           "person_id": "san14-candidate-0142",
           "city": "henan",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0147",
-          "city": "shujun",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -741,13 +734,6 @@
           "resolve_death_year": false
         },
         {
-          "person_id": "san14-candidate-0656",
-          "city": "shujun",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
           "person_id": "san14-candidate-0661",
           "city": "taiyuan",
           "troops": 300,
@@ -946,13 +932,6 @@
         {
           "person_id": "san14-candidate-0947",
           "city": "wei",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0952",
-          "city": "shujun",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2163,6 +2142,21 @@
           "person_id": "san14-candidate-0994",
           "city": "nanyang",
           "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0952",
+          "city": "zhongshan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0147",
+          "city": "zhongshan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0656",
+          "city": "zhongshan",
+          "resolve_death_year": false
         }
       ],
       "dlc_audit": {
@@ -2560,7 +2554,7 @@
           "san14-candidate-0134": "kuaiji",
           "san14-candidate-0135": "yingchuan",
           "san14-candidate-0136": "shujun",
-          "san14-candidate-0147": "shujun",
+          "san14-candidate-0147": "zhongshan",
           "san14-candidate-0148": "changsha",
           "san14-candidate-0150": "nanyang",
           "san14-candidate-0153": "henan",
@@ -2724,7 +2718,7 @@
           "san14-candidate-0645": "wujun",
           "san14-candidate-0652": "wuling",
           "san14-candidate-0654": "wei",
-          "san14-candidate-0656": "shujun",
+          "san14-candidate-0656": "zhongshan",
           "san14-candidate-0658": "nanyang",
           "san14-candidate-0663": "taiyuan",
           "san14-candidate-0665": "nanjun",
@@ -3194,7 +3188,8 @@
           "san14-candidate-0996": "yuyang",
           "san14-candidate-0997": "lujiang",
           "san14-candidate-1000": "henan",
-          "historical-song-jian": "longxi"
+          "historical-song-jian": "longxi",
+          "san14-candidate-0952": "zhongshan"
         }
       },
       "faction_rulers": {
@@ -3219,10 +3214,10 @@
       },
       "coverage": {
         "set": {
-          "initial_serving": 114,
-          "initial_free": 227,
+          "initial_serving": 111,
+          "initial_free": 230,
           "source_scenario": "san14-184-01",
-          "planned_serving": 114,
+          "planned_serving": 111,
           "planned_max_city_roster": 15,
           "future_plans": 669,
           "library": 1030,
@@ -7835,24 +7830,79 @@
             "set": {
               "source_ruler": "刘焉",
               "source_city": null,
-              "faction": "liu_yan",
-              "city": "shujun",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland184-02-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "faction": null,
+              "city": "zhongshan",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland184-02-v11",
+              "status": "free",
+              "reason": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷32",
+                  "https://zh.wikisource.org/wiki/後漢書/卷75"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_yan",
+                "city": "shujun",
+                "placement_basis": "authored_no_enemy_frontier_owned_balance",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0147",
                   "faction": "liu_yan",
+                  "origin": "shujun",
                   "city": "shujun",
                   "basis": "authored_no_enemy_frontier_owned_balance",
                   "source_city": null,
                   "source_disposition": "missing_source_city",
                   "source_board_city": null
                 },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    188,
+                    6
+                  ],
+                  "end": [
+                    219,
+                    12
+                  ],
+                  "city": "shujun",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "faction": null,
+                  "city": "zhongshan",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷32",
+                    "https://zh.wikisource.org/wiki/後漢書/卷75"
+                  ],
+                  "historical_certainty": "authorial_northern_career_proxy"
+                },
                 "delete": [
-                  "source_reference"
+                  "source_reference",
+                  "origin",
+                  "source_city",
+                  "source_disposition"
                 ]
               },
               "appearance_plan": {
@@ -7861,7 +7911,25 @@
                     188,
                     6
                   ],
-                  "city": "shujun"
+                  "city": "zhongshan",
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷32",
+                    "https://zh.wikisource.org/wiki/後漢書/卷75"
+                  ],
+                  "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06",
+                  "historical_certainty": "authorial_northern_career_proxy"
                 }
               }
             },
@@ -11834,7 +11902,7 @@
                     6
                   ],
                   "end": [
-                    210,
+                    220,
                     12
                   ],
                   "city": "liaodong",
@@ -12178,7 +12246,11 @@
                     207,
                     1
                   ],
-                  "status": "future_free"
+                  "status": "future_free",
+                  "end": [
+                    225,
+                    12
+                  ]
                 }
               }
             }
@@ -23970,19 +24042,80 @@
           "san14-candidate-0656": {
             "set": {
               "source_ruler": "刘焉",
-              "faction": "liu_yan",
-              "city": "shujun",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland184-02-v11"
+              "faction": null,
+              "city": "zhongshan",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland184-02-v11",
+              "status": "free",
+              "reason": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷32",
+                  "https://zh.wikisource.org/wiki/後漢書/卷75"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_yan",
+                "city": "shujun",
+                "placement_basis": "authored_no_enemy_frontier_owned_balance",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0656",
+                  "faction": "liu_yan",
+                  "origin": "shujun",
+                  "city": "shujun",
+                  "basis": "authored_no_enemy_frontier_owned_balance",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    188,
+                    6
+                  ],
+                  "end": [
+                    221,
+                    12
+                  ],
+                  "city": "shujun",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "liu_yan",
-                  "city": "shujun",
-                  "basis": "authored_no_enemy_frontier_owned_balance"
-                }
+                  "faction": null,
+                  "city": "zhongshan",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷32",
+                    "https://zh.wikisource.org/wiki/後漢書/卷75"
+                  ],
+                  "historical_certainty": "authorial_northern_career_proxy"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -23990,7 +24123,25 @@
                     188,
                     6
                   ],
-                  "city": "shujun"
+                  "city": "zhongshan",
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷32",
+                    "https://zh.wikisource.org/wiki/後漢書/卷75"
+                  ],
+                  "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06",
+                  "historical_certainty": "authorial_northern_career_proxy"
                 }
               }
             }
@@ -27677,7 +27828,11 @@
                     1
                   ],
                   "city": "wuwei",
-                  "status": "future_free"
+                  "status": "future_free",
+                  "end": [
+                    222,
+                    12
+                  ]
                 }
               }
             }
@@ -28099,7 +28254,7 @@
                     6
                   ],
                   "end": [
-                    192,
+                    195,
                     12
                   ],
                   "city": "tianshui",
@@ -33438,7 +33593,7 @@
                     6
                   ],
                   "end": [
-                    202,
+                    192,
                     12
                   ],
                   "city": "wei",
@@ -33604,24 +33759,93 @@
           "san14-candidate-0952": {
             "set": {
               "source_ruler": "刘焉",
-              "faction": "liu_yan",
-              "placement_basis": "authored_no_enemy_frontier_owned_balance",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland184-02-v11"
+              "faction": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland184-02-v11",
+              "city": "zhongshan",
+              "status": "free",
+              "reason": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷32",
+                  "https://zh.wikisource.org/wiki/後漢書/卷75"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_yan",
+                "city": "shujun",
+                "placement_basis": "authored_no_enemy_frontier_owned_balance",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0952",
+                  "faction": "liu_yan",
+                  "origin": "shujun",
+                  "city": "shujun",
+                  "basis": "authored_no_enemy_frontier_owned_balance",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    188,
+                    6
+                  ],
+                  "end": [
+                    223,
+                    12
+                  ],
+                  "city": "shujun",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "liu_yan",
-                  "basis": "authored_no_enemy_frontier_owned_balance",
-                  "source_disposition": "missing_source_city",
-                  "source_board_city": null
-                }
+                  "faction": null,
+                  "basis": "ruler_affiliation_review_20261027",
+                  "city": "zhongshan",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷32",
+                    "https://zh.wikisource.org/wiki/後漢書/卷75"
+                  ],
+                  "historical_certainty": "authorial_northern_career_proxy"
+                },
+                "delete": [
+                  "origin",
+                  "source_city"
+                ]
               },
               "placement_review": {
                 "set": {
-                  "basis": "retained_reviewed_opening_membership",
-                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。"
+                  "basis": "ruler_affiliation_review_20261027",
+                  "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷32",
+                    "https://zh.wikisource.org/wiki/後漢書/卷75"
+                  ],
+                  "reference_date": [
+                    188,
+                    6
+                  ],
+                  "reference_scenario": "mainland188-06",
+                  "historical_certainty": "authorial_northern_career_proxy"
                 }
               },
               "appearance_plan": {
@@ -33629,7 +33853,10 @@
                   "start": [
                     188,
                     6
-                  ]
+                  ],
+                  "city": "zhongshan",
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -35712,6 +35939,187 @@
                 "https://zh.wikisource.org/wiki/三國志/卷18"
               ]
             }
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0952",
+                "name": "刘备",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_yan",
+                  "city": "shujun",
+                  "ruler": false
+                },
+                "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷32",
+                  "https://zh.wikisource.org/wiki/後漢書/卷75"
+                ],
+                "certainty": "authorial_northern_career_proxy",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "zhongshan",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0147",
+                "name": "关羽",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_yan",
+                  "city": "shujun",
+                  "ruler": false
+                },
+                "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷32",
+                  "https://zh.wikisource.org/wiki/後漢書/卷75"
+                ],
+                "certainty": "authorial_northern_career_proxy",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "zhongshan",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0656",
+                "name": "张飞",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_yan",
+                  "city": "shujun",
+                  "ruler": false
+                },
+                "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷32",
+                  "https://zh.wikisource.org/wiki/後漢書/卷75"
+                ],
+                "certainty": "authorial_northern_career_proxy",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "zhongshan",
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [
+              {
+                "city": "shujun",
+                "person_id": "san14-candidate-0952",
+                "actual_before": 4350,
+                "actual_after": 4650,
+                "actual_delta": 300,
+                "raw_before": 2900,
+                "raw_after": 3100,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              },
+              {
+                "city": "shujun",
+                "person_id": "san14-candidate-0147",
+                "actual_before": 4650,
+                "actual_after": 4950,
+                "actual_delta": 300,
+                "raw_before": 3100,
+                "raw_after": 3300,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              },
+              {
+                "city": "shujun",
+                "person_id": "san14-candidate-0656",
+                "actual_before": 4950,
+                "actual_after": 5250,
+                "actual_delta": 300,
+                "raw_before": 3300,
+                "raw_after": 3500,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              }
+            ],
+            "material_before": {
+              "gold": 147640,
+              "grain": 520075,
+              "reserves": 153660,
+              "soldiers": 187860
+            },
+            "material_after": {
+              "gold": 147640,
+              "grain": 520075,
+              "reserves": 154560,
+              "soldiers": 187860
+            },
+            "notes": []
           }
         },
         "delete": [
@@ -37071,7 +37479,7 @@
             "set": {
               "gold": 2900,
               "grain": 12350,
-              "reserves": 2900
+              "reserves": 3500
             }
           },
           "bajun": {
@@ -48024,7 +48432,7 @@
                 1
               ],
               "end": [
-                251,
+                225,
                 12
               ],
               "city": "jianning",
@@ -50978,7 +51386,7 @@
                 1
               ],
               "end": [
-                226,
+                222,
                 12
               ],
               "city": "wuwei",
@@ -52471,7 +52879,49 @@
           ],
           "historical-beigong-boyu": [],
           "historical-li-wenhou": [],
-          "historical-bian-zhang": []
+          "historical-bian-zhang": [],
+          "san14-candidate-0147": [
+            {
+              "start": [
+                188,
+                6
+              ],
+              "end": [
+                219,
+                12
+              ],
+              "city": "zhongshan",
+              "resolve_death_year": false
+            }
+          ],
+          "san14-candidate-0656": [
+            {
+              "start": [
+                188,
+                6
+              ],
+              "end": [
+                221,
+                12
+              ],
+              "city": "zhongshan",
+              "resolve_death_year": false
+            }
+          ],
+          "san14-candidate-0952": [
+            {
+              "start": [
+                188,
+                6
+              ],
+              "end": [
+                223,
+                12
+              ],
+              "city": "zhongshan",
+              "resolve_death_year": false
+            }
+          ]
         }
       },
       "placement_completion": {
@@ -52485,9 +52935,10 @@
           ],
           "people": 1030,
           "reference_classes": {
-            "authorial_region_placement": 1012,
+            "authorial_region_placement": 1009,
             "game_reference": 2,
             "primary_text_chronology_choice": 1,
+            "authorial_northern_career_proxy": 3,
             "regional_primary_mapping": 2,
             "bounded_career_inference": 5,
             "primary_text_affiliation": 1,
@@ -52499,10 +52950,11 @@
             "same_date_SAN14_guide_free_location": 2,
             "retained_person_specific_free_location": 209,
             "authorial_region_placement": 16,
-            "retained_reviewed_opening_membership": 98,
+            "retained_reviewed_opening_membership": 95,
             "historical_review_20261025": 6,
             "retained_chronology_or_explicit_exclusion": 13,
             "retained_explicit_scenario_ruler": 7,
+            "ruler_affiliation_review_20261027": 3,
             "user_reviewed_188_independent_ma_teng": 3,
             "user_requested_song_jian_lifetime_longxi_opening": 1,
             "explicit_scenario_scope": 6
@@ -52512,6 +52964,37 @@
     }
   },
   "people_overrides": {
-    "update": {}
+    "update": {
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+        }
+      }
+    }
   }
 }

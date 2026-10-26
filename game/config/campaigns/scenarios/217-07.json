@@ -11,6 +11,217 @@
             "faction_additions": [],
             "city_owner_corrections": [],
             "all_city_months_independently_attested": false
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": {
+                  "status": "scenario_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": {
+                  "status": "scenario_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0263",
+                "name": "公孙恭",
+                "before": {
+                  "status": "serving",
+                  "faction": "gongsun",
+                  "city": "liaodong",
+                  "ruler": true
+                },
+                "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate",
+                "after": {
+                  "status": "serving",
+                  "faction": "gongsun",
+                  "city": "liaodong",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": {
+                  "status": "scenario_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate",
+                "after": {
+                  "status": "serving",
+                  "faction": "gongsun",
+                  "city": "liaodong",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0654",
+                "name": "赵范",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "jiameng",
+                  "ruler": false
+                },
+                "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "annotated_biography_fugitive_region_proxy",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "guiyang",
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [
+              {
+                "city": "liaodong",
+                "person_id": "san14-candidate-0264",
+                "actual_before": 1240,
+                "actual_after": 940,
+                "actual_delta": -300,
+                "raw_before": 1240,
+                "raw_after": 940,
+                "note": "恢復已存世人物，以當城既有預備兵組成300兵，不新造兵員。"
+              },
+              {
+                "city": "jiameng",
+                "person_id": "san14-candidate-0654",
+                "actual_before": 1730,
+                "actual_after": 2030,
+                "actual_delta": 300,
+                "raw_before": 1730,
+                "raw_after": 2030,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              }
+            ],
+            "material_before": {
+              "gold": 158590,
+              "grain": 555750,
+              "reserves": 174120,
+              "soldiers": 283620
+            },
+            "material_after": {
+              "gold": 158590,
+              "grain": 555750,
+              "reserves": 174120,
+              "soldiers": 283620
+            },
+            "notes": []
           }
         }
       },
@@ -23,7 +234,7 @@
           "placement_plans": 1030,
           "new_historical_people": 30,
           "initial_serving": 365,
-          "initial_free": 52,
+          "initial_free": 53,
           "planned_serving": 365,
           "planned_max_city_roster": 20,
           "future_plans": 249,
@@ -41,19 +252,23 @@
         "set": {
           "people": 1030,
           "reference_classes": {
-            "game_reference": 363,
-            "authorial_region_placement": 650,
+            "game_reference": 360,
+            "authorial_region_placement": 648,
+            "bounded_authorial_estimate": 2,
             "bounded_career_inference": 10,
+            "annotated_biography_fugitive_region_proxy": 1,
+            "primary_text_chronology": 2,
             "explicit_scenario_scope": 7
           },
           "bases": {
             "same_date_SAN14_guide_free_location": 2,
-            "same_date_SAN14_recorded_death": 357,
+            "same_date_SAN14_recorded_death": 354,
             "person_specific_future_free_appearance": 249,
             "same_date_SAN14_guide_affiliation": 4,
-            "retained_reviewed_opening_membership": 346,
+            "retained_reviewed_opening_membership": 345,
             "retained_person_specific_free_location": 48,
-            "retained_explicit_scenario_ruler": 5,
+            "ruler_affiliation_review_20261027": 5,
+            "retained_explicit_scenario_ruler": 4,
             "authored_bounded_source_snapshot_continuity": 4,
             "bounded_career_inference": 6,
             "authorial_region_placement": 2,
@@ -179,16 +394,3383 @@
               "basis": "explicit_scenario_scope"
             }
           }
+        },
+        "update": {
+          "san14-candidate-0263": {
+            "set": {
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "gongsun",
+                "city": "liaodong",
+                "placement_basis": "retained_faction_ruler_seat",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0263",
+                  "faction": "gongsun",
+                  "origin": "liaodong",
+                  "city": "liaodong",
+                  "basis": "retained_faction_ruler_seat",
+                  "source_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_explicit_scenario_ruler",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                  ],
+                  "note": "保留本篇明列君主及根據地，不以外部快照覆寫劇本君主。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    217,
+                    7
+                  ],
+                  "end": [
+                    238,
+                    12
+                  ],
+                  "city": "liaodong",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "posting_reference": {
+                "delete": [
+                  "origin",
+                  "source_city"
+                ],
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08"
+                  ],
+                  "historical_certainty": "bounded_authorial_estimate"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08"
+                  ],
+                  "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                  "reference_date": [
+                    217,
+                    7
+                  ],
+                  "reference_scenario": "mainland217-07",
+                  "historical_certainty": "bounded_authorial_estimate"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              }
+            }
+          },
+          "san14-candidate-0264": {
+            "set": {
+              "year_state": "available",
+              "faction": "gongsun",
+              "city": "liaodong",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "serving",
+              "reason": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+              "posting_reference": {
+                "person_id": "san14-candidate-0264",
+                "faction": "gongsun",
+                "city": "liaodong",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "historical_certainty": "bounded_authorial_estimate"
+              },
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "scenario_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": "authored_career_fallback_not_attested_post",
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "same_date_SAN14_recorded_death",
+                  "source_urls": [
+                    "https://xgodgame.blogspot.com/2020/02/14_9.html"
+                  ],
+                  "note": "本篇來源記已死亡或明列故事排除，不生成、不復活。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "game_reference"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "same_date_SAN14_recorded_death"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08"
+                  ],
+                  "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                  "reference_date": [
+                    217,
+                    7
+                  ],
+                  "reference_scenario": "mainland217-07",
+                  "historical_certainty": "bounded_authorial_estimate"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    217,
+                    7
+                  ],
+                  "end": [
+                    220,
+                    12
+                  ],
+                  "city": "liaodong",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              }
+            },
+            "delete": [
+              "exclusion_kind"
+            ]
+          },
+          "san14-candidate-0272": {
+            "update": {
+              "appearance_plan": {
+                "set": {
+                  "end": [
+                    225,
+                    12
+                  ]
+                }
+              }
+            }
+          },
+          "san14-candidate-0654": {
+            "set": {
+              "faction": null,
+              "city": "guiyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "free",
+              "reason": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "jiameng",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0654",
+                  "faction": "shu",
+                  "origin": "shujun",
+                  "city": "jiameng",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    217,
+                    7
+                  ],
+                  "end": [
+                    218,
+                    12
+                  ],
+                  "city": "jiameng",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "faction": null,
+                  "city": "guiyang",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "historical_certainty": "annotated_biography_fugitive_region_proxy"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+                  "reference_date": [
+                    217,
+                    7
+                  ],
+                  "reference_scenario": "mainland217-07",
+                  "historical_certainty": "annotated_biography_fugitive_region_proxy"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "city": "guiyang",
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              }
+            }
+          },
+          "san14-candidate-0769": {
+            "update": {
+              "appearance_plan": {
+                "set": {
+                  "end": [
+                    222,
+                    12
+                  ]
+                }
+              }
+            }
+          },
+          "san14-candidate-0782": {
+            "set": {
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "reason": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "exclusion_kind": "primary_text_dead_by_opening",
+              "ruler_affiliation_previous": {
+                "status": "scenario_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": null,
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "same_date_SAN14_recorded_death",
+                  "source_urls": [
+                    "https://xgodgame.blogspot.com/2020/02/14_9.html"
+                  ],
+                  "note": "本篇來源記已死亡或明列故事排除，不生成、不復活。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "game_reference"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "same_date_SAN14_recorded_death"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                  "reference_date": [
+                    217,
+                    7
+                  ],
+                  "reference_scenario": "mainland217-07",
+                  "historical_certainty": "primary_text_chronology"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              }
+            }
+          },
+          "san14-candidate-0947": {
+            "set": {
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "reason": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ]
+              },
+              "exclusion_kind": "primary_text_dead_by_opening",
+              "ruler_affiliation_previous": {
+                "status": "scenario_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": "authored_career_fallback_not_attested_post",
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "same_date_SAN14_recorded_death",
+                  "source_urls": [
+                    "https://xgodgame.blogspot.com/2020/02/14_9.html"
+                  ],
+                  "note": "本篇來源記已死亡或明列故事排除，不生成、不復活。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "game_reference"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "same_date_SAN14_recorded_death"
+                }
+              },
+              "scenario_membership_basis": "ruler_affiliation_review_20261027"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷49"
+                  ],
+                  "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                  "reference_date": [
+                    217,
+                    7
+                  ],
+                  "reference_scenario": "mainland217-07",
+                  "historical_certainty": "primary_text_chronology"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              }
+            }
+          }
         }
       },
       "appearance_windows": {
         "set": {
           "historical-beigong-boyu": [],
           "historical-li-wenhou": [],
-          "historical-bian-zhang": []
+          "historical-bian-zhang": [],
+          "san14-candidate-0654": [
+            {
+              "start": [
+                217,
+                7
+              ],
+              "end": [
+                218,
+                12
+              ],
+              "city": "guiyang",
+              "resolve_death_year": false
+            }
+          ]
+        }
+      },
+      "appearance_locations": {
+        "set": {
+          "san14-candidate-0654": "guiyang",
+          "san14-candidate-0264": "liaodong"
+        }
+      },
+      "faction_rulers": {
+        "set": {
+          "gongsun": 263
+        }
+      },
+      "initial_city_resources": {
+        "update": {
+          "liaodong": {
+            "set": {
+              "reserves": 940
+            }
+          },
+          "jiameng": {
+            "set": {
+              "reserves": 2030
+            }
+          }
+        }
+      }
+    },
+    "set": {
+      "factions": [
+        {
+          "id": "wei",
+          "name": "曹操势力",
+          "captain": "曹操",
+          "city": "wei",
+          "color": "#916a47",
+          "initial_officers": 158
+        },
+        {
+          "id": "shu",
+          "name": "刘备势力",
+          "captain": "刘备",
+          "city": "shujun",
+          "color": "#4c7650",
+          "initial_officers": 114
+        },
+        {
+          "id": "wu",
+          "name": "孙权势力",
+          "captain": "孙权",
+          "city": "danyang",
+          "color": "#9b4b3d",
+          "initial_officers": 80
+        },
+        {
+          "id": "shi_xie",
+          "name": "士燮势力",
+          "captain": "士燮",
+          "city": "jiaozhi",
+          "color": "#927d58",
+          "initial_officers": 7
+        },
+        {
+          "id": "gongsun",
+          "name": "公孙康",
+          "captain": "公孙康",
+          "city": "liaodong",
+          "color": "#788455",
+          "initial_officers": 6
+        }
+      ],
+      "initial_officers": [
+        {
+          "person_id": "san14-candidate-0005",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0007",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0009",
+          "city": "anding",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0013",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0014",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0015",
+          "city": "guiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0016",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0022",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0028",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0030",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0031",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0038",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0044",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0051",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0055",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0057",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0059",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0068",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0071",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0072",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0073",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0075",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0077",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0079",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0080",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0082",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0083",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0086",
+          "city": "hepu",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0089",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0091",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0092",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0093",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0099",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": true
+        },
+        {
+          "person_id": "san14-candidate-0100",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0101",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0102",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0104",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0107",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0109",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0111",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0113",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0114",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0120",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0121",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0122",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0123",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0124",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0125",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0126",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0127",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0133",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0134",
+          "city": "jiangxia",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0135",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0136",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0137",
+          "city": "kuaiji",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0147",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0148",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0150",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0151",
+          "city": "liaodong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0153",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0159",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0161",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0162",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0164",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0171",
+          "city": "linhe",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0172",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0176",
+          "city": "lujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0179",
+          "city": "wujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0183",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0185",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0187",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0189",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0195",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0197",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0204",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0213",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0214",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0215",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0216",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0220",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0225",
+          "city": "yulin",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0231",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0235",
+          "city": "yuzhang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0236",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0241",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0245",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0246",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0247",
+          "city": "changsha",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0249",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0250",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0253",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0259",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0263",
+          "city": "liaodong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0265",
+          "city": "liaodong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0271",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0273",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0287",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0288",
+          "city": "changsha",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0293",
+          "city": "guiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0294",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0295",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0303",
+          "city": "hepu",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0309",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0310",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0311",
+          "city": "jiangxia",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0314",
+          "city": "kuaiji",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0315",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0318",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0328",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0332",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0334",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0335",
+          "city": "linhe",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0336",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0337",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0340",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0341",
+          "city": "jiaozhi",
+          "troops": 300,
+          "ruler": true,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0342",
+          "city": "lujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0344",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0347",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0350",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0355",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0357",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0358",
+          "city": "wujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0361",
+          "city": "yulin",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0366",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0369",
+          "city": "yuzhang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0371",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0373",
+          "city": "changsha",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0376",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0377",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0380",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0381",
+          "city": "guiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0382",
+          "city": "hepu",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0383",
+          "troops": 300,
+          "city": "zitong",
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0385",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0386",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0389",
+          "city": "jiangxia",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0390",
+          "city": "kuaiji",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0392",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0394",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0405",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0407",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0412",
+          "city": "linhe",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0418",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0419",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0424",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0426",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0427",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0429",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0430",
+          "city": "lujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0432",
+          "city": "wujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0433",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0440",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0442",
+          "city": "jingzhao",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0444",
+          "city": "yulin",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0446",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0447",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0448",
+          "city": "yuzhang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0449",
+          "city": "changsha",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0450",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0451",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0457",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0459",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0465",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0467",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0468",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0475",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0479",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0484",
+          "city": "danyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0485",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0489",
+          "city": "guiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0490",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0494",
+          "city": "hepu",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": true
+        },
+        {
+          "person_id": "san14-candidate-0496",
+          "city": "jiangxia",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0500",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0502",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0505",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0508",
+          "city": "kuaiji",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0509",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0511",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0513",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0515",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0516",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0517",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0518",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0520",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0521",
+          "city": "wei",
+          "troops": 300,
+          "ruler": true,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0524",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0525",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0526",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0528",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0531",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0532",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0536",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0537",
+          "city": "linhe",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0544",
+          "city": "lujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0546",
+          "city": "wujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0553",
+          "city": "danyang",
+          "troops": 300,
+          "ruler": true,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0555",
+          "city": "yulin",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0558",
+          "city": "yuzhang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0559",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0562",
+          "city": "changsha",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0563",
+          "city": "danyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0564",
+          "city": "guiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0565",
+          "city": "hepu",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0579",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0581",
+          "city": "jiangxia",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0582",
+          "city": "kuaiji",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0585",
+          "city": "linhe",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0587",
+          "troops": 300,
+          "city": "shujun",
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0589",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0591",
+          "city": "lujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0593",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0596",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0600",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0604",
+          "city": "wujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0608",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0613",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0615",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0616",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0618",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0621",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0623",
+          "city": "yulin",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0626",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0630",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0631",
+          "city": "danyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0633",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0634",
+          "city": "yuzhang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0643",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0644",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0645",
+          "city": "changsha",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0652",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0656",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0658",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0662",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0663",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0665",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0669",
+          "city": "danyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0672",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0673",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0679",
+          "city": "guiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0680",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0681",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0684",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0691",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0692",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0695",
+          "city": "hepu",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0696",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0697",
+          "city": "jiangxia",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0698",
+          "city": "kuaiji",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0702",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0704",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0705",
+          "city": "linhe",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0706",
+          "city": "lujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0707",
+          "city": "wujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0714",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0715",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0718",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0719",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0725",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0728",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0729",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0735",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0745",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0748",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0749",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0750",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0751",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0756",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0757",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0764",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0765",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0766",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0767",
+          "city": "yulin",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0768",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0774",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0776",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0780",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0781",
+          "city": "yuzhang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0787",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0788",
+          "city": "liaodong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0789",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0791",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0793",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0795",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0796",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0799",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0801",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0802",
+          "city": "changsha",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0804",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0805",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0807",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0808",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0810",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0814",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0816",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0823",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0824",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0827",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0830",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0832",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0834",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0838",
+          "city": "danyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0841",
+          "city": "guiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0842",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0845",
+          "troops": 300,
+          "city": "wuling",
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0846",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0847",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0849",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0850",
+          "troops": 300,
+          "city": "baxi",
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0851",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0855",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0856",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0857",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0863",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0866",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0867",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0872",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0879",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0883",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0886",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0888",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0889",
+          "city": "hepu",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0891",
+          "city": "jiangxia",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0892",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0899",
+          "city": "kuaiji",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0901",
+          "city": "linhe",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0902",
+          "city": "danyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0904",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0910",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0912",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0915",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0917",
+          "city": "nanjun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0926",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0930",
+          "city": "lujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0934",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0935",
+          "city": "wujun",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0937",
+          "city": "wenshan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0938",
+          "city": "wuling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0939",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0942",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0944",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0950",
+          "city": "zitong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0952",
+          "city": "shujun",
+          "troops": 300,
+          "ruler": true,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0955",
+          "city": "badong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0959",
+          "city": "baxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0960",
+          "city": "runan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0962",
+          "city": "xiangyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0968",
+          "city": "guanghan",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0971",
+          "city": "xincheng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0974",
+          "city": "yulin",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0975",
+          "city": "yinping",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0976",
+          "city": "jiameng",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0978",
+          "city": "lingling",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0979",
+          "city": "yuzhang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0980",
+          "city": "yiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0981",
+          "city": "hanzhong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0985",
+          "city": "changsha",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0986",
+          "city": "danyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0988",
+          "city": "guiyang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0990",
+          "city": "liaodong",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0993",
+          "city": "jiujiang",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0999",
+          "city": "liaoxi",
+          "troops": 300,
+          "ruler": false,
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "city": "liaodong",
+          "troops": 300,
+          "ruler": true,
+          "resolve_death_year": false
+        }
+      ],
+      "initial_free_officers": [
+        {
+          "person_id": "san14-candidate-0001",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0010",
+          "city": "tianshui",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0023",
+          "city": "tianshui",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0041",
+          "city": "tianshui",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0061",
+          "city": "xiapi",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0070",
+          "city": "danyang",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0138",
+          "city": "tianshui",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0141",
+          "city": "taiyuan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0178",
+          "city": "anding",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0190",
+          "city": "wuwei",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0205",
+          "city": "tianshui",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0207",
+          "city": "hanzhong",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0221",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0229",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0255",
+          "city": "zitong",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "city": "jianning",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0306",
+          "city": "taiyuan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0307",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0323",
+          "city": "xiangyang",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0360",
+          "city": "wuling",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0378",
+          "city": "wujun",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0391",
+          "city": "jianning",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0408",
+          "city": "tianshui",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0452",
+          "city": "nanyang",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0455",
+          "city": "xincheng",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0463",
+          "city": "xincheng",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0482",
+          "city": "taiyuan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0498",
+          "city": "zitong",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0590",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0636",
+          "city": "jingzhao",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0646",
+          "city": "zitong",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0689",
+          "city": "dongjun",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0708",
+          "city": "tianshui",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0716",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0720",
+          "city": "runan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0739",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0786",
+          "city": "kuaiji",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0817",
+          "city": "wuwei",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0821",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0837",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0840",
+          "city": "taiyuan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0877",
+          "city": "henan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0881",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0903",
+          "city": "wujun",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0923",
+          "city": "shujun",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0948",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0954",
+          "city": "taiyuan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0967",
+          "city": "danyang",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0972",
+          "city": "tianshui",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0977",
+          "city": "yunnan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-expansion-0001",
+          "city": "yuyang",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "historical-expansion-0002",
+          "city": "yan",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0654",
+          "city": "guiyang",
+          "resolve_death_year": false
+        }
+      ]
+    }
+  },
+  "people_overrides": {
+    "update": {
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
         }
       }
     }
-  },
-  "people_overrides": {}
+  }
 }

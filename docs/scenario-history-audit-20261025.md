@@ -4,7 +4,7 @@
 
 生成元は [レビュー決定表](../game/config/references/scenario-history-review.json)、照合結果は [全都市・境界経路・人物のJSON](scenario-history-audit-20261025.json)です。同じ人物を一度の修正で複数回動かした場合は最後の記録を採用し、都市は最終的な `owner_expectations` と照合します。
 
-今回の記録は追加勢力38件（シナリオごとの組合せ）、都市延べ103件（最終の都市・シナリオ単位102件）、人物延べ511件（同一シナリオ内の重複整理後510件）です。全都市一覧は変更対象以外も含みますが、変更のない都市を新たに逐月確証した件数とは数えません。
+今回の記録は追加勢力43件（シナリオごとの組合せ）、都市延べ109件（最終の都市・シナリオ単位107件）、人物延べ636件（同一シナリオ内の重複整理後620件）です。全都市一覧は変更対象以外も含みますが、変更のない都市を新たに逐月確証した件数とは数えません。
 
 ## 対象と判定の意味
 
@@ -22,28 +22,28 @@
 | 開始年月 | シナリオ | 勢力の君主（本拠） | 都市／境界接続 | 今回の修正件数 |
 | --- | --- | --- | --- | --- |
 | 184年2月 | 184年2月 · 黄巾之乱 | 丁原（晉陽）、董卓（安定）、公孫瓚（漁陽）、何進（洛陽）、劉焉（薊）、馬騰（姑臧）、士燮（交趾）、孫堅（下邳）、張角（平原） | 108／62 | 勢力0・都市4・人物19 |
-| 188年6月 | 揺らぐ漢朝 | 丁原（晉陽）、董卓（天水）、何進（洛陽）、韓遂（金城）、劉焉（成都）、劉虞（薊）、馬騰（姑臧）、士燮（交趾）、宋建（隴西）、孫堅（長沙）、張純（遼西） | 108／58 | 勢力3・都市3・人物10 |
-| 190年1月 | 190年1月 · 反董卓联盟 | 鮑信（東平）、董卓（洛陽）、公孫度（襄平）、公孫瓚（漁陽）、韓馥（鄴）、韓遂（金城）、孔融（北海）、孔伷（許縣）、劉表（襄陽）、劉岱（濟陰）、劉焉（成都）、劉虞（薊）、馬騰（姑臧）、橋瑁（濮陽）、士燮（交趾）、劉備（平原）、宋建（隴西）、孫堅（長沙）、陶謙（下邳）、王匡（河內）、曹操（陳留）、袁紹（南皮）、袁術（宛城）、袁遺（昌邑）、張超（東海）、張楊（上黨） | 108／94 | 勢力7・都市10・人物33 |
+| 188年6月 | 揺らぐ漢朝 | 丁原（晉陽）、董卓（天水）、何進（洛陽）、韓遂（金城）、劉焉（成都）、劉虞（薊）、馬騰（姑臧）、士燮（交趾）、宋建（隴西）、孫堅（長沙）、張純（遼西） | 108／58 | 勢力3・都市3・人物13 |
+| 190年1月 | 190年1月 · 反董卓联盟 | 鮑信（東平）、董卓（洛陽）、公孫度（襄平）、公孫瓚（漁陽）、韓馥（鄴）、韓遂（金城）、孔融（北海）、孔伷（許縣）、劉表（襄陽）、劉岱（濟陰）、劉焉（成都）、劉虞（薊）、馬騰（姑臧）、橋瑁（濮陽）、士燮（交趾）、劉備（平原）、宋建（隴西）、孫堅（長沙）、陶謙（下邳）、王匡（河內）、曹操（小沛）、袁紹（南皮）、袁術（宛城）、袁遺（昌邑）、張超（東海）、張邈（陳留）、張楊（上黨） | 108／96 | 勢力8・都市12・人物43 |
 | 191年10月 | 191年10月 · 二袁的意图 | 鮑信（東平）、董卓（長安）、公孫度（襄平）、公孫瓚（漁陽）、韓遂（金城）、孔融（北海）、劉表（襄陽）、劉岱（濟陰）、劉焉（成都）、劉虞（薊）、馬騰（姑臧）、士燮（交趾）、劉備（平原）、宋建（隴西）、孫堅（長沙）、陶謙（下邳）、曹操（濮陽）、袁紹（鄴）、袁術（宛城）、袁遺（昌邑）、張超（東海）、張邈（陳留）、張楊（河內） | 108／89 | 勢力5・都市8・人物54 |
-| 194年6月 | 194年6月 · 群雄割据 | 公孫度（襄平）、公孫瓚（漁陽）、韓遂（金城）、孔融（北海）、李傕（長安）、劉表（襄陽）、劉繇（秣陵）、劉璋（成都）、呂布（濮陽）、馬騰（姑臧）、士燮（交趾）、劉備（小沛）、宋建（隴西）、陶謙（下邳）、王朗（山陰）、曹操（鄄城）、許貢（吳）、袁紹（鄴）、袁術（壽春）、張魯（漢中）、張楊（河內） | 108／99 | 勢力3・都市7・人物36 |
-| 196年6月 | 曹操の台頭 | 公孫度（襄平）、公孫瓚（漁陽）、韓遂（金城）、華歆（南昌）、孔融（北海）、李傕（長安）、劉表（襄陽）、劉繇（鄱陽）、劉璋（成都）、呂布（小沛）、馬騰（姑臧）、士燮（交趾）、劉備（下邳）、宋建（隴西）、王朗（山陰）、曹操（陳留）、孫策（秣陵）、袁紹（鄴）、袁術（壽春）、張魯（漢中）、張楊（河內） | 108／100 | 勢力3・都市7・人物20 |
-| 198年3月 | 呂布討伐戦 | 公孫度（襄平）、公孫瓚（漁陽）、韓遂（金城）、華歆（南昌）、李傕（長安）、劉表（襄陽）、劉璋（成都）、呂布（下邳）、馬騰（姑臧）、士燮（交趾）、劉備（小沛）、宋建（隴西）、曹操（許縣）、孫策（秣陵）、袁紹（鄴）、袁術（壽春）、張魯（漢中）、張繡（宛城）、張楊（河內） | 108／95 | 勢力2・都市4・人物13 |
-| 200年1月 | 200年1月 · 官渡之战 | 公孫度（襄平）、韓遂（金城）、劉表（襄陽）、劉璋（成都）、馬騰（姑臧）、士燮（交趾）、劉備（下邳）、宋建（隴西）、曹操（許縣）、孫策（吳）、袁紹（鄴）、張魯（漢中） | 108／70 | 勢力2・都市10・人物33 |
-| 202年6月 | 河北争乱 | 高幹（晉陽）、公孫度（襄平）、韓遂（金城）、劉表（襄陽）、劉璋（成都）、馬騰（姑臧）、士燮（交趾）、劉備（章陵）、宋建（隴西）、曹操（許縣）、孫權（吳）、袁尚（鄴）、袁譚（北海）、袁熙（薊）、張魯（漢中） | 108／80 | 勢力2・都市10・人物31 |
-| 207年9月 | 207年9月 · 三顾茅庐 | 公孫康（襄平）、韓遂（金城）、劉表（襄陽）、劉璋（成都）、馬騰（姑臧）、士燮（交趾）、劉備（章陵）、宋建（隴西）、曹操（鄴）、孫權（吳）、吳巨（蒼梧）、張魯（漢中） | 108／62 | 勢力3・都市10・人物68 |
-| 208年10月 | 208年10月 · 赤壁之战 | 公孫康（襄平）、韓遂（金城）、韓玄（長沙）、金旋（武陵）、劉度（零陵）、劉璋（成都）、馬超（姑臧）、士燮（交趾）、劉備（江夏）、宋建（隴西）、曹操（鄴）、孫權（吳）、吳巨（蒼梧）、張魯（漢中）、趙範（桂陽） | 109／68 | 勢力3・都市10・人物70 |
-| 211年7月 | 潼関の戦い | 公孫康（襄平）、韓遂（金城）、劉璋（成都）、馬超（姑臧）、士燮（交趾）、劉備（江陵）、宋建（隴西）、曹操（鄴）、孫權（吳）、張魯（漢中） | 109／56 | 勢力2・都市5・人物33 |
-| 212年12月 | 入蜀争奪戦 | 公孫康（襄平）、韓遂（金城）、劉璋（成都）、士燮（交趾）、劉備（涪縣）、宋建（隴西）、曹操（鄴）、孫權（建業）、張魯（漢中） | 109／53 | 勢力2・都市10・人物80 |
-| 215年8月 | 合肥の戦い | 公孫康（襄平）、士燮（交趾）、劉備（成都）、曹操（鄴）、孫權（建業） | 110／32 | 勢力0・都市0・人物0 |
-| 217年7月 | 217年7月 · 汉中争夺战 | 公孫恭（襄平）、士燮（交趾）、劉備（成都）、曹操（鄴）、孫權（建業） | 110／32 | 勢力0・都市0・人物0 |
-| 219年7月 | 219年7月 · 关羽包围网 | 公孫恭（襄平）、士燮（交趾）、劉備（成都）、曹操（鄴）、孫權（建業） | 110／32 | 勢力0・都市0・人物0 |
-| 221年7月 | 221年7月 · 夷陵前夕 | 公孫恭（襄平）、士燮（交趾）、劉備（成都）、曹丕（洛陽）、孫權（武昌） | 111／32 | 勢力0・都市0・人物0 |
-| 225年7月 | 南蛮征伐 | 公孫恭（襄平）、孟獲（建寧）、士燮（交趾）、劉禪（成都）、曹丕（洛陽）、孫權（武昌） | 111／37 | 勢力0・都市1・人物7 |
-| 227年2月 | 227年2月 · 出师表 | 公孫恭（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（武昌） | 111／29 | 勢力0・都市0・人物0 |
-| 234年2月 | 秋風五丈原 | 公孫淵（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（建業） | 111／25 | 勢力0・都市0・人物0 |
-| 238年1月 | 238年1月 · 征讨辽东 | 公孫淵（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（建業） | 111／25 | 勢力0・都市0・人物0 |
-| 249年1月 | 249年1月 · 正始之变 | 劉禪（成都）、曹芳（洛陽）、孫權（建業） | 110／20 | 勢力0・都市0・人物0 |
-| 263年5月 | 蜀漢の滅亡 | 呂興（交趾）、劉禪（成都）、曹奐（洛陽）、孫休（建業） | 113／23 | 勢力1・都市3・人物3 |
+| 194年6月 | 194年6月 · 群雄割据 | 公孫度（襄平）、公孫瓚（漁陽）、韓遂（金城）、孔融（北海）、李傕（長安）、劉表（襄陽）、劉繇（秣陵）、劉璋（成都）、呂布（濮陽）、馬騰（姑臧）、士燮（交趾）、劉備（小沛）、宋建（隴西）、陶謙（下邳）、王朗（山陰）、曹操（鄄城）、許貢（吳）、袁紹（鄴）、袁術（壽春）、張濟（弘農）、張魯（漢中）、張邈（陳留）、張楊（河內） | 108／103 | 勢力5・都市8・人物41 |
+| 196年6月 | 曹操の台頭 | 公孫度（襄平）、公孫瓚（漁陽）、韓遂（金城）、華歆（南昌）、孔融（北海）、李傕（長安）、劉表（襄陽）、劉繇（鄱陽）、劉璋（成都）、呂布（小沛）、馬騰（姑臧）、士燮（交趾）、劉備（下邳）、宋建（隴西）、王朗（山陰）、曹操（陳留）、孫策（秣陵）、袁紹（鄴）、袁術（壽春）、張濟（弘農）、張魯（漢中）、張楊（河內） | 108／104 | 勢力4・都市8・人物28 |
+| 198年3月 | 呂布討伐戦 | 公孫度（襄平）、公孫瓚（漁陽）、韓遂（金城）、華歆（南昌）、李傕（長安）、劉表（襄陽）、劉璋（成都）、呂布（下邳）、馬騰（姑臧）、士燮（交趾）、劉備（小沛）、宋建（隴西）、曹操（許縣）、孫策（秣陵）、袁紹（鄴）、袁術（壽春）、臧霸（東海）、張魯（漢中）、張繡（宛城）、張楊（河內） | 108／96 | 勢力3・都市5・人物27 |
+| 200年1月 | 200年1月 · 官渡之战 | 公孫度（襄平）、韓遂（金城）、劉表（襄陽）、劉璋（成都）、馬騰（姑臧）、士燮（交趾）、劉備（下邳）、宋建（隴西）、曹操（許縣）、孫策（吳）、袁紹（鄴）、張魯（漢中） | 108／70 | 勢力2・都市10・人物35 |
+| 202年6月 | 河北争乱 | 高幹（晉陽）、公孫度（襄平）、韓遂（金城）、劉表（襄陽）、劉璋（成都）、馬騰（姑臧）、士燮（交趾）、劉備（章陵）、宋建（隴西）、曹操（許縣）、孫權（吳）、袁尚（鄴）、袁譚（北海）、袁熙（薊）、張魯（漢中） | 108／80 | 勢力2・都市10・人物33 |
+| 207年9月 | 207年9月 · 三顾茅庐 | 公孫康（襄平）、韓遂（金城）、劉表（襄陽）、劉璋（成都）、馬騰（姑臧）、士燮（交趾）、劉備（章陵）、宋建（隴西）、曹操（鄴）、孫權（吳）、吳巨（蒼梧）、張魯（漢中） | 108／62 | 勢力3・都市10・人物73 |
+| 208年10月 | 208年10月 · 赤壁之战 | 公孫康（襄平）、韓遂（金城）、韓玄（長沙）、金旋（武陵）、劉度（零陵）、劉璋（成都）、馬超（姑臧）、士燮（交趾）、劉備（江夏）、宋建（隴西）、曹操（鄴）、孫權（吳）、吳巨（蒼梧）、張魯（漢中）、趙範（桂陽） | 109／68 | 勢力3・都市10・人物75 |
+| 211年7月 | 潼関の戦い | 公孫康（襄平）、韓遂（金城）、劉璋（成都）、馬超（姑臧）、士燮（交趾）、劉備（江陵）、宋建（隴西）、曹操（鄴）、孫權（吳）、張魯（漢中） | 109／56 | 勢力2・都市5・人物37 |
+| 212年12月 | 入蜀争奪戦 | 公孫康（襄平）、韓遂（金城）、劉璋（成都）、士燮（交趾）、劉備（涪縣）、宋建（隴西）、曹操（鄴）、孫權（建業）、張魯（漢中） | 109／53 | 勢力2・都市10・人物83 |
+| 215年8月 | 合肥の戦い | 公孫康（襄平）、士燮（交趾）、劉備（成都）、曹操（鄴）、孫權（建業） | 110／32 | 勢力0・都市0・人物3 |
+| 217年7月 | 217年7月 · 汉中争夺战 | 公孫康（襄平）、士燮（交趾）、劉備（成都）、曹操（鄴）、孫權（建業） | 110／32 | 勢力0・都市0・人物5 |
+| 219年7月 | 219年7月 · 关羽包围网 | 公孫康（襄平）、士燮（交趾）、劉備（成都）、曹操（鄴）、孫權（建業） | 110／32 | 勢力0・都市0・人物4 |
+| 221年7月 | 221年7月 · 夷陵前夕 | 公孫恭（襄平）、士燮（交趾）、劉備（成都）、曹丕（洛陽）、孫權（武昌） | 111／32 | 勢力0・都市0・人物3 |
+| 225年7月 | 南蛮征伐 | 公孫恭（襄平）、孟獲（建寧）、士燮（交趾）、劉禪（成都）、曹丕（洛陽）、孫權（武昌） | 111／37 | 勢力0・都市1・人物11 |
+| 227年2月 | 227年2月 · 出师表 | 公孫恭（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（武昌） | 111／29 | 勢力0・都市0・人物5 |
+| 234年2月 | 秋風五丈原 | 公孫淵（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（建業） | 111／25 | 勢力0・都市0・人物7 |
+| 238年1月 | 238年1月 · 征讨辽东 | 公孫淵（襄平）、劉禪（成都）、曹叡（洛陽）、孫權（建業） | 111／25 | 勢力0・都市0・人物7 |
+| 249年1月 | 249年1月 · 正始之变 | 劉禪（成都）、曹芳（洛陽）、孫權（建業） | 110／20 | 勢力0・都市0・人物5 |
+| 263年5月 | 蜀漢の滅亡 | 呂興（交趾）、劉禪（成都）、曹奐（洛陽）、孫休（建業） | 113／23 | 勢力1・都市3・人物9 |
 
 件数は本作データの変更記録です。同じ勢力を複数の年代に追加した場合は各開幕で1件と数えます。JSONは全開放都市の所有者、各勢力の全開幕武将、異なる所有者を結ぶ接続を収録します。境界接続は陸路・内河・海路の都市間隣接であり、行政区の境界線を復元したものではありません。
 
@@ -129,35 +129,47 @@
 
 ### 194年6月・194年6月 · 群雄割据
 
-- 都市 陳留 `chenliu`：wei → lubu。194年夏張邈、陳宮迎呂布，兗州郡縣響應；陳留由張邈—呂布聯盟控制，不能再作曹操本據。本作合併表示為呂布勢力，不另立敵對張邈勢力。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 閻行 `san14-candidate-0030`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 夏侯惇 `san14-candidate-0124`：wei／鄄城。《夏侯惇傳》《荀彧傳》記夏侯惇由濮陽輕軍救鄄城，呂布遂據濮陽；駐本作鄄城代理節點。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 荀彧 `san14-candidate-0393`：wei／鄄城。《荀彧傳》記荀彧守鄄城，與夏侯惇保全留守；194年6月駐本作鄄城代理節點，不留在已叛的陳留。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
-- 人物 張邈 `san14-candidate-0653`：lubu／陳留。陳留太守張邈194年夏與陳宮迎呂布；沿用既有呂布聯盟身份，配置於陳留，不改為曹操或新造勢力。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 陳宮 `san14-candidate-0671`：lubu／濮陽。陳宮194年夏率留屯東郡之眾迎呂布，呂布據濮陽；配置於東郡/濮陽節點，保持呂布勢力。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 程昱 `san14-candidate-0689`：wei／鄄城。程昱撫范、守東阿，助保鄄城、范、東阿三縣；本作將三縣防區合併在鄄城代理節點，不把范縣誤作整個東平國。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
+- 人物 樊稠 `san14-candidate-0782`：li_jue／長安。樊稠至195年二月才被殺；194年恢復在李傕郭汜共掌朝廷的集團中。此為同城共治軍政映射，不稱私人隸屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 
 ### 196年6月・曹操の台頭
 
+- 人物 尹禮 `san14-candidate-0014`：在野／東海。臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 閻行 `san14-candidate-0030`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 吳敦 `san14-candidate-0308`：在野／東海。臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 臧霸 `san14-candidate-0525`：在野／東海。臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 孫觀 `san14-candidate-0545`：在野／東海。臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 - 人物 劉繇 `san14-candidate-0963`：liu_you／鄱陽。劉繇退彭澤，以鄱陽節點作明示地域代理。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
 
 ### 198年3月・呂布討伐戦
 
 - 人物 閻行 `san14-candidate-0030`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 
 ### 200年1月・200年1月 · 官渡之战
 
 - 人物 閻行 `san14-candidate-0030`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 
 ### 202年6月・河北争乱
 
 - 人物 閻行 `san14-candidate-0030`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 
 ### 207年9月・207年9月 · 三顾茅庐
 
@@ -166,20 +178,29 @@
 - 人物 黃忠 `san14-candidate-0271`：liu_biao／長沙。劉表荊南郡域駐點；四太守確任月不詳，演義人物採地域兼容配置，不提前獨立。 [史料1](https://zh.wikisource.org/wiki/三國志/卷32)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 吳巨 `san14-candidate-0285`：wu_ju／蒼梧。劉表遣吳巨領蒼梧；210/211步騭入交州事件以前保留地方勢力。 [史料1](https://zh.wikisource.org/wiki/三國志/卷49)、[史料2](https://zh.wikisource.org/wiki/三國志/卷52)、[史料3](https://zh.wikisource.org/wiki/宋書/卷37)、[史料4](https://zh.wikisource.org/wiki/宋書/卷38)
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 張繡 `san14-candidate-0625`：開幕対象外／―。《張繡傳》記隨征烏丸，未抵柳城即卒；207年九月白狼山戰後不再出任曹軍將領。 [史料1](https://zh.wikisource.org/wiki/三國志/卷06)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 - 人物 劉磐 `san14-candidate-0951`：liu_biao／長沙。劉表荊南郡域駐點；四太守確任月不詳，演義人物採地域兼容配置，不提前獨立。 [史料1](https://zh.wikisource.org/wiki/三國志/卷32)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 
 ### 208年10月・208年10月 · 赤壁之战
 
 - 都市 蒼梧 `cangwu`：wu → wu_ju。劉表遣吳巨領蒼梧；210/211步騭入交州事件以前保留地方勢力。 [史料1](https://zh.wikisource.org/wiki/三國志/卷49)、[史料2](https://zh.wikisource.org/wiki/三國志/卷52)、[史料3](https://zh.wikisource.org/wiki/宋書/卷37)、[史料4](https://zh.wikisource.org/wiki/宋書/卷38)
 - 人物 閻行 `san14-candidate-0030`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 孔融 `san14-candidate-0280`：開幕対象外／―。《後漢書》明記208年八月孔融被殺、劉表卒；十月不再列為可出任或可招募人物。 [史料1](https://zh.wikisource.org/wiki/後漢書/卷9)
 - 人物 吳巨 `san14-candidate-0285`：wu_ju／蒼梧。劉表遣吳巨領蒼梧；210/211步騭入交州事件以前保留地方勢力。 [史料1](https://zh.wikisource.org/wiki/三國志/卷49)、[史料2](https://zh.wikisource.org/wiki/三國志/卷52)、[史料3](https://zh.wikisource.org/wiki/宋書/卷37)、[史料4](https://zh.wikisource.org/wiki/宋書/卷38)
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 馬超 `san14-candidate-0769`：ma_teng／姑臧。馬騰入朝後馬超承領部曲。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+- 人物 劉表 `san14-candidate-0953`：開幕対象外／―。《後漢書》明記208年八月孔融被殺、劉表卒；十月不再列為可出任或可招募人物。 [史料1](https://zh.wikisource.org/wiki/後漢書/卷9)
 
 ### 211年7月・潼関の戦い
 
 - 人物 閻行 `san14-candidate-0030`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 
 ### 212年12月・入蜀争奪戦
 
@@ -190,7 +211,82 @@
 - 人物 成公英 `san14-candidate-0475`：han_sui／金城。韓遂腹心/部將，不因聯軍合從而當作馬騰普通部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 孫權 `san14-candidate-0553`：wu／建業。孫權211年徙治秣陵，212年改名建業。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
 - 人物 鄭度 `san14-candidate-0701`：liu_zhang／成都。劉璋從事，拒劉備獻策。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 - 人物 劉備 `san14-candidate-0952`：shu／涪縣。212年十二月劉備進據涪城。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
+
+### 215年8月・合肥の戦い
+
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 217年7月・217年7月 · 汉中争夺战
+
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 219年7月・219年7月 · 关羽包围网
+
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 221年7月・221年7月 · 夷陵前夕
+
+- 人物 公孫康 `san14-candidate-0264`：開幕対象外／―。原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 225年7月・南蛮征伐
+
+- 人物 公孫康 `san14-candidate-0264`：開幕対象外／―。原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 馬超 `san14-candidate-0769`：開幕対象外／―。《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 227年2月・227年2月 · 出师表
+
+- 人物 公孫康 `san14-candidate-0264`：開幕対象外／―。原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 高定 `san14-candidate-0272`：開幕対象外／―。《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 人物 馬超 `san14-candidate-0769`：開幕対象外／―。《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 234年2月・秋風五丈原
+
+- 人物 公孫恭 `san14-candidate-0263`：開幕対象外／―。公孫淵於228年奪位囚禁公孫恭；238年城破後才獲釋，故本開局為仍存世但被囚、不可出任，不另立新國亦不捏造死亡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)、[史料2](https://zh.wikisource.org/wiki/晉書/卷001)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷074)
+- 人物 公孫康 `san14-candidate-0264`：開幕対象外／―。原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 公孫晃 `san14-candidate-0265`：開幕対象外／―。公孫晃是留洛陽的任子，公孫淵叛後被拘繫；不能當作遼東前線普通部將或可自由調遣的魏將。仍存世受限，不新增死亡月。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 高定 `san14-candidate-0272`：開幕対象外／―。《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 人物 馬超 `san14-candidate-0769`：開幕対象外／―。《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 238年1月・238年1月 · 征讨辽东
+
+- 人物 公孫恭 `san14-candidate-0263`：開幕対象外／―。公孫淵於228年奪位囚禁公孫恭；238年城破後才獲釋，故本開局為仍存世但被囚、不可出任，不另立新國亦不捏造死亡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)、[史料2](https://zh.wikisource.org/wiki/晉書/卷001)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷074)
+- 人物 公孫康 `san14-candidate-0264`：開幕対象外／―。原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 公孫晃 `san14-candidate-0265`：開幕対象外／―。公孫晃是留洛陽的任子，公孫淵叛後被拘繫；不能當作遼東前線普通部將或可自由調遣的魏將。仍存世受限，不新增死亡月。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 高定 `san14-candidate-0272`：開幕対象外／―。《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 人物 馬超 `san14-candidate-0769`：開幕対象外／―。《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 249年1月・249年1月 · 正始之变
+
+- 人物 公孫康 `san14-candidate-0264`：開幕対象外／―。原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 高定 `san14-candidate-0272`：開幕対象外／―。《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 人物 馬超 `san14-candidate-0769`：開幕対象外／―。《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
+
+### 263年5月・蜀漢の滅亡
+
+- 人物 公孫康 `san14-candidate-0264`：開幕対象外／―。原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 高定 `san14-candidate-0272`：開幕対象外／―。《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
+- 人物 曹芳 `san14-candidate-0529`：開幕対象外／―。曹芳於254年九月被廢，遷居河內重門齊王宮；263年為退位受限人物，不是遼東魏軍部將，也不另造齊王獨立領土。 [史料1](https://zh.wikisource.org/wiki/三國志/卷04)
+- 人物 馬超 `san14-candidate-0769`：開幕対象外／―。《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 樊稠 `san14-candidate-0782`：開幕対象外／―。《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 劉岱 `san14-candidate-0947`：開幕対象外／―。此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷49)
 
 ## 演義・ゲーム互換の配置
 
@@ -249,43 +345,58 @@
 - 都市 隴西 `longxi`：neutral → song_jian。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 都市 姑臧 `wuwei`：han_sui → ma_teng。依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)、[史料2](https://zh.wikisource.org/wiki/三國志/卷18)
 - 人物 宋建 `historical-song-jian`：song_jian／隴西。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
+- 人物 關羽 `san14-candidate-0147`：在野／中山。劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。 [史料1](https://zh.wikisource.org/wiki/三國志/卷32)、[史料2](https://zh.wikisource.org/wiki/後漢書/卷75)
 - 人物 韓遂 `san14-candidate-0166`：han_sui／金城。依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)、[史料2](https://zh.wikisource.org/wiki/三國志/卷18)
 - 人物 韓當 `san14-candidate-0176`：sun_jian／長沙。《三國志》記韓當隨孫堅征伐，終孫堅之世為別部司馬；188年從屬為生涯窗口推定，具體合駐長沙為本作安排。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷55)
 - 人物 黃蓋 `san14-candidate-0247`：sun_jian／長沙。《三國志》記黃蓋從孫堅南破山賊、北走董卓；188年從屬為生涯窗口推定，具體合駐長沙為本作安排。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷55)
 - 人物 朱治 `san14-candidate-0390`：sun_jian／長沙。《三國志》記朱治隨孫堅征伐，中平五年拜司馬；188年6月延續其從屬，具體合駐長沙為本作安排，未斷言拜官月份。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷56)
+- 人物 張飛 `san14-candidate-0656`：在野／中山。劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。 [史料1](https://zh.wikisource.org/wiki/三國志/卷32)、[史料2](https://zh.wikisource.org/wiki/後漢書/卷75)
 - 人物 程普 `san14-candidate-0703`：sun_jian／長沙。《三國志》記程普隨孫堅討黃巾，188年延續其從屬；具體合駐長沙為本作安排，非逐月駐防已證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷55)
 - 人物 馬騰 `san14-candidate-0771`：ma_teng／姑臧。依使用者要求將馬騰與韓遂作兩個獨立勢力：馬騰沿用姑臧為本城、韓遂保留金城。原典記兩人各領部曲及不同駐地；188年6月具體姑臧／金城兩城分配為本作區域代理，不聲稱史料已證當月郡城完整控制。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)、[史料2](https://zh.wikisource.org/wiki/三國志/卷18)
 - 人物 龐德 `san14-candidate-0830`：ma_teng／姑臧。《龐德傳》記初平中從馬騰；本作保留原188年已出場的人物與兵力，隨馬騰轉至姑臧。這是按已知從屬關係作生涯窗口推定，原典未證188年6月已從馬騰或駐姑臧。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)、[史料2](https://zh.wikisource.org/wiki/三國志/卷18)
+- 人物 劉備 `san14-candidate-0952`：在野／中山。劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。 [史料1](https://zh.wikisource.org/wiki/三國志/卷32)、[史料2](https://zh.wikisource.org/wiki/後漢書/卷75)
 
 ### 190年1月・190年1月 · 反董卓联盟
 
+- 都市 陳留 `chenliu`：wei → zhang_miao。張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 都市 東平 `dongping`：liu_dai → bao_xin。初平元年關東軍地方長官；鮑信使用泰山/濟北鄰近東平節點作區域代理。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
 - 都市 金城 `jincheng`：ma_teng → han_sui。韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 都市 隴西 `longxi`：ma_teng → song_jian。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
+- 都市 小沛 `qiao`：neutral → wei。張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 都市 上黨 `shangdang`：neutral → zhang_yang。張楊當時在上黨募兵；節點作活動區域代理，不稱確證郡城。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
 - 人物 宋建 `historical-song-jian`：song_jian／隴西。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 于禁 `san14-candidate-0016`：liu_dai／濟陰。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
-- 人物 衛茲 `san14-candidate-0021`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
+- 人物 衛茲 `san14-candidate-0021`：zhang_miao／陳留。張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 應劭 `san14-candidate-0062`：liu_dai／濟陰。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
-- 人物 王必 `san14-candidate-0071`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
-- 人物 夏侯淵 `san14-candidate-0114`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
+- 人物 王必 `san14-candidate-0071`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 樂進 `san14-candidate-0102`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 夏侯淵 `san14-candidate-0114`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 夏侯惇 `san14-candidate-0124`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 韓浩 `san14-candidate-0159`：zhang_yang／上黨。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
 - 人物 韓遂 `san14-candidate-0166`：han_sui／金城。韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 黃權 `san14-candidate-0250`：liu_yan／江州。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
-- 人物 史渙 `san14-candidate-0333`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
-- 人物 徐璆 `san14-candidate-0441`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
-- 人物 曹昂 `san14-candidate-0510`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
-- 人物 曹純 `san14-candidate-0514`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
+- 人物 史渙 `san14-candidate-0333`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 周喁 `san14-candidate-0365`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 徐璆 `san14-candidate-0441`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 曹休 `san14-candidate-0505`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 曹昂 `san14-candidate-0510`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 曹洪 `san14-candidate-0511`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 曹純 `san14-candidate-0514`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 曹仁 `san14-candidate-0518`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 曹操 `san14-candidate-0521`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 張肅 `san14-candidate-0627`：liu_yan／閬中。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
-- 人物 陳宮 `san14-candidate-0671`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
+- 人物 張邈 `san14-candidate-0653`：zhang_miao／陳留。張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 陳宮 `san14-candidate-0671`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 程銀 `san14-candidate-0693`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
+- 人物 丁斐 `san14-candidate-0702`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 傅幹 `san14-candidate-0804`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
-- 人物 卞氏 `san14-candidate-0816`：wei／陳留。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
+- 人物 卞氏 `san14-candidate-0816`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 方悅 `san14-candidate-0818`：zhang_yang／上黨。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
 - 人物 鮑信 `san14-candidate-0826`：bao_xin／東平。初平元年關東軍地方長官；鮑信使用泰山/濟北鄰近東平節點作區域代理。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
 - 人物 穆順 `san14-candidate-0835`：zhang_yang／上黨。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
 - 人物 楊醜 `san14-candidate-0865`：zhang_yang／上黨。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
 - 人物 楊松 `san14-candidate-0868`：liu_yan／宕渠。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 李典 `san14-candidate-0913`：wei／小沛。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 劉岱 `san14-candidate-0947`：liu_dai／濟陰。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/三國志/卷12)
 - 人物 劉瑁 `san14-candidate-0961`：liu_yan／涪縣。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 
@@ -351,30 +462,37 @@
 
 ### 194年6月・194年6月 · 群雄割据
 
+- 都市 陳留 `chenliu`：wei → zhang_miao。張邈與其弟張超擁部曲迎呂布共牧兗州；分作陳留與濮陽的聯合軍政勢力，不把兩人改成呂布私人部將。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 都市 弘農 `hongnong`：li_jue → zhang_ji。《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。 [史料1](https://zh.wikisource.org/wiki/三國志/卷06)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 都市 金城 `jincheng`：ma_teng → han_sui。韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 都市 鄄城 `jiyin`：lubu → wei。194年夏曹操僅保鄄城、范、東阿三縣。鄄城屬濟陰郡；本劇本沿用濟陰節點代表鄄城據點及三縣防區，顯示鄄城，並非聲稱定陶郡治或整個濟陰郡歸曹操。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)、[史料5](https://zh.wikisource.org/zh-hant/後漢書/卷111)
 - 都市 隴西 `longxi`：ma_teng → song_jian。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 都市 吳 `wujun`：neutral → xu_gong。許貢為吳郡太守，未被朱治逐走前不屬王朗部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
 - 人物 宋建 `historical-song-jian`：song_jian／隴西。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
+- 人物 華歆 `san14-candidate-0091`：在野／下邳。華歆奉使關東、經徐州後受命豫章，原典未給確切任命月；194年以徐州在野／行使區域代理，不憑未知月提前設豫章君主，也不編入王朗。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)
 - 人物 樂進 `san14-candidate-0102`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
-- 人物 郝萌 `san14-candidate-0108`：lubu／陳留。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
+- 人物 郝萌 `san14-candidate-0108`：lubu／濮陽。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 夏侯恩 `san14-candidate-0115`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 韓浩 `san14-candidate-0159`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 韓遂 `san14-candidate-0166`：han_sui／金城。韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 許貢 `san14-candidate-0211`：xu_gong／吳。許貢為吳郡太守，未被朱治逐走前不屬王朗部下。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
-- 人物 許汜 `san14-candidate-0212`：lubu／陳留。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
+- 人物 許汜 `san14-candidate-0212`：lubu／濮陽。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 黃權 `san14-candidate-0250`：liu_zhang／江州。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 史渙 `san14-candidate-0333`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 司馬朗 `san14-candidate-0353`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
-- 人物 秦宜祿 `san14-candidate-0456`：lubu／陳留。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
+- 人物 秦宜祿 `san14-candidate-0456`：lubu／濮陽。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 任峻 `san14-candidate-0460`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 曹安民 `san14-candidate-0499`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 曹昂 `san14-candidate-0510`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 曹純 `san14-candidate-0514`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 曹仁 `san14-candidate-0518`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
-- 人物 曹性 `san14-candidate-0519`：lubu／陳留。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
+- 人物 曹性 `san14-candidate-0519`：lubu／濮陽。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 曹操 `san14-candidate-0521`：wei／鄄城。曹操194年夏自徐州回救，仍以鄄城為本據；本作沿用濟陰節點代表鄄城縣域，不表示曹操據有整個濟陰郡。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)、[史料5](https://zh.wikisource.org/zh-hant/後漢書/卷111)
+- 人物 張繡 `san14-candidate-0625`：zhang_ji／弘農。《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。 [史料1](https://zh.wikisource.org/wiki/三國志/卷06)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 張松 `san14-candidate-0632`：liu_zhang／宕渠。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 張濟 `san14-candidate-0638`：zhang_ji／弘農。《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。 [史料1](https://zh.wikisource.org/wiki/三國志/卷06)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 張超 `san14-candidate-0647`：zhang_miao／陳留。張邈與其弟張超擁部曲迎呂布共牧兗州；分作陳留與濮陽的聯合軍政勢力，不把兩人改成呂布私人部將。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
+- 人物 張邈 `san14-candidate-0653`：zhang_miao／陳留。張邈與其弟張超擁部曲迎呂布共牧兗州；分作陳留與濮陽的聯合軍政勢力，不把兩人改成呂布私人部將。 [史料1](https://zh.wikisource.org/wiki/三國志/卷07)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷061)
 - 人物 丁斐 `san14-candidate-0702`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 馬休 `san14-candidate-0760`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 傅幹 `san14-candidate-0804`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
@@ -382,11 +500,11 @@
 - 人物 毛玠 `san14-candidate-0844`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 楊懷 `san14-candidate-0854`：liu_zhang／涪縣。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 楊秋 `san14-candidate-0867`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
-- 人物 劉岱 `san14-candidate-0947`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 - 人物 呂虔 `san14-candidate-0980`：wei／鄄城。194年兗州叛亂修正城池控制後，按原有勢力遷移駐軍；不因城池易手改投敵方。具體駐城為本作配置，非逐人史料確證。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷07)、[史料3](https://zh.wikisource.org/zh-hant/三國志/卷10)、[史料4](https://zh.wikisource.org/zh-hant/資治通鑑/卷061)
 
 ### 196年6月・曹操の台頭
 
+- 都市 弘農 `hongnong`：li_jue → zhang_ji。《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。 [史料1](https://zh.wikisource.org/wiki/三國志/卷06)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 都市 金城 `jincheng`：ma_teng → han_sui。韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 都市 隴西 `longxi`：ma_teng → song_jian。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 都市 廬江 `lujiang`：wu → yuan_shu。袁術破陸康後以劉勳領廬江，孫策199才襲取；196不提前歸孫策。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
@@ -402,7 +520,9 @@
 - 人物 蔣欽 `san14-candidate-0412`：wu／吳。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
 - 人物 孫賁 `san14-candidate-0572`：wu／秣陵。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
 - 人物 太史慈 `san14-candidate-0586`：liu_you／鄱陽。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
+- 人物 張繡 `san14-candidate-0625`：zhang_ji／弘農。《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。 [史料1](https://zh.wikisource.org/wiki/三國志/卷06)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 張松 `san14-candidate-0632`：liu_zhang／宕渠。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 張濟 `san14-candidate-0638`：zhang_ji／弘農。《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。 [史料1](https://zh.wikisource.org/wiki/三國志/卷06)、[史料2](https://zh.wikisource.org/wiki/三國志/卷08)、[史料3](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 陳武 `san14-candidate-0686`：wu／吳。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
 - 人物 馬休 `san14-candidate-0760`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 傅幹 `san14-candidate-0804`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
@@ -412,14 +532,27 @@
 
 ### 198年3月・呂布討伐戦
 
+- 都市 東海 `donghai`：lubu → zang_ba。臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 都市 金城 `jincheng`：ma_teng → han_sui。韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
 - 都市 隴西 `longxi`：ma_teng → song_jian。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 宋建 `historical-song-jian`：song_jian／隴西。《三國志》卷01、09記宋建據枹罕三十餘年，214年十月被夏侯淵討滅，未載確切建國月。本作依使用者指定，在184年至214年十月前開局的劇本加入宋建，以既有隴西節點作區域代理，畫面仍稱隴西；不新增城池、不移動位置，不聲稱宋建控制整個隴西郡。原駐將保留原勢力移駐本方相鄰城，在野人物仍在原地。原典的丞相、百官無姓名，不虛構部下。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
+- 人物 尹禮 `san14-candidate-0014`：zang_ba／東海。臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 王楷 `san14-candidate-0043`：lubu／下邳。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 韓遂 `san14-candidate-0166`：han_sui／金城。韓遂與馬騰/馬超是並列部曲；金城採有首尾史料支持的區域延續映射。 [史料1](https://zh.wikisource.org/wiki/三國志/卷15)、[史料2](https://zh.wikisource.org/wiki/三國志/卷36)
+- 人物 魏越 `san14-candidate-0188`：lubu／下邳。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 許貢 `san14-candidate-0211`：在野／吳。許貢被朱治逐出吳郡後投嚴白虎；以吳郡在野表示，不作王朗、曹操或孫氏的既成部將。 [史料1](https://zh.wikisource.org/wiki/三國志/卷13)、[史料2](https://zh.wikisource.org/wiki/三國志/卷46)、[史料3](https://zh.wikisource.org/wiki/三國志/卷49)、[史料4](https://zh.wikisource.org/wiki/三國志/卷56)
+- 人物 許汜 `san14-candidate-0212`：lubu／下邳。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 嚴顏 `san14-candidate-0231`：liu_zhang／巴東。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 高順 `san14-candidate-0254`：lubu／下邳。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 吳敦 `san14-candidate-0308`：zang_ba／東海。臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 射援 `san14-candidate-0355`：liu_zhang／江州。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 秦宜祿 `san14-candidate-0456`：lubu／下邳。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 宋憲 `san14-candidate-0507`：lubu／下邳。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 臧霸 `san14-candidate-0525`：zang_ba／東海。臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 孫觀 `san14-candidate-0545`：zang_ba／東海。臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
+- 人物 張遼 `san14-candidate-0663`：lubu／下邳。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 鄭度 `san14-candidate-0701`：liu_zhang／宕渠。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 杜氏 `san14-candidate-0750`：lubu／下邳。新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。 [史料1](https://zh.wikisource.org/wiki/三國志/卷18)、[史料2](https://zh.wikisource.org/wiki/資治通鑑/卷062)
 - 人物 馬雲騄 `san14-candidate-0757`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 馬岱 `san14-candidate-0766`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 傅幹 `san14-candidate-0804`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
@@ -625,6 +758,7 @@
 - 人物 傅幹 `san14-candidate-0804`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 卞氏 `san14-candidate-0816`：wei／河間。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 毛玠 `san14-candidate-0844`：wei／晉陽。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 雍闓 `san14-candidate-0855`：在野／建寧。雍闓為益州南中地方豪族，未證此時出仕劉備荊州軍；建寧沿用本作既有地方在野代理，不提前套用223年反叛主權。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
 - 人物 楊秋 `san14-candidate-0867`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 李異 `san14-candidate-0891`：wu／新都。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷49)、[史料2](https://zh.wikisource.org/wiki/三國志/卷52)、[史料3](https://zh.wikisource.org/wiki/宋書/卷37)、[史料4](https://zh.wikisource.org/wiki/宋書/卷38)
 - 人物 劉延 `san14-candidate-0926`：wei／洛陽。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
@@ -662,11 +796,13 @@
 - 人物 蘇則 `san14-candidate-0536`：wei／東平。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 仲長統 `san14-candidate-0593`：wei／上谷。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 張泉 `san14-candidate-0643`：wei／范陽。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 趙範 `san14-candidate-0654`：在野／桂陽。趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 陳琳 `san14-candidate-0688`：wei／昌邑。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 董昭 `san14-candidate-0735`：wei／河間。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 裴潛 `san14-candidate-0756`：wei／晉陽。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 馬雲騄 `san14-candidate-0757`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 毛玠 `san14-candidate-0844`：wei／河內。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
+- 人物 雍闓 `san14-candidate-0855`：在野／建寧。雍闓為益州南中地方豪族，未證此時出仕劉備荊州軍；建寧沿用本作既有地方在野代理，不提前套用223年反叛主權。 [史料1](https://zh.wikisource.org/wiki/華陽國志/卷四)、[史料2](https://zh.wikisource.org/wiki/三國志/卷43)
 - 人物 楊氏 `san14-candidate-0864`：ma_teng／天水。依使用者指定將隴西節點配置宋建，原駐將保留原勢力移至相鄰天水；這是配合地圖節點所有權的本作駐防調整，並非史料確證本人當月駐天水。 [史料1](https://zh.wikisource.org/zh-hant/三國志/卷01)、[史料2](https://zh.wikisource.org/zh-hant/三國志/卷09)
 - 人物 楊阜 `san14-candidate-0879`：wei／下邳。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 劉曄 `san14-candidate-0962`：wei／濟南。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
@@ -721,6 +857,7 @@
 - 人物 趙儼 `san14-candidate-0615`：wei／臨淄。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 張肅 `san14-candidate-0627`：liu_zhang／雒城。212年仍屬劉璋，廣漢節點為益州北線軍政區域代理；不提前213年轉屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
 - 人物 張任 `san14-candidate-0637`：liu_zhang／雒城。212年仍屬劉璋，廣漢節點為益州北線軍政區域代理；不提前213年轉屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
+- 人物 趙範 `san14-candidate-0654`：在野／桂陽。趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
 - 人物 張飛 `san14-candidate-0656`：shu／江陵。此時尚留荊州，不能提前按213/214入蜀完成後配置。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
 - 人物 張苞 `san14-candidate-0658`：在野／宛城。重定212年十二月後已到出仕年，以在野登場，不憑空推定仕官。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
 - 人物 張遼 `san14-candidate-0663`：wei／東平。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
@@ -754,6 +891,21 @@
 - 人物 劉封 `san14-candidate-0959`：shu／江陵。此時尚留荊州，不能提前按213/214入蜀完成後配置。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
 - 人物 涼茂 `san14-candidate-0975`：wei／上谷。原駐城歸屬修訂後保留原勢力，改駐本方城；具體駐防屬本作安排。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 人物 冷苞 `san14-candidate-0992`：liu_zhang／雒城。212年仍屬劉璋，廣漢節點為益州北線軍政區域代理；不提前213年轉屬。 [史料1](https://zh.wikisource.org/wiki/資治通鑑/卷066)、[史料2](https://zh.wikisource.org/wiki/三國志/卷32)、[史料3](https://zh.wikisource.org/wiki/三國志/卷40)、[史料4](https://zh.wikisource.org/wiki/三國志/卷41)、[史料5](https://zh.wikisource.org/wiki/三國志/卷43)、[史料6](https://zh.wikisource.org/wiki/三國志/卷45)、[史料7](https://zh.wikisource.org/wiki/三國志/卷47)
+
+### 215年8月・合肥の戦い
+
+- 人物 趙範 `san14-candidate-0654`：在野／桂陽。趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
+
+### 217年7月・217年7月 · 汉中争夺战
+
+- 人物 公孫恭 `san14-candidate-0263`：gongsun／襄平。公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 公孫康 `san14-candidate-0264`：gongsun／襄平。公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 趙範 `san14-candidate-0654`：在野／桂陽。趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。 [史料1](https://zh.wikisource.org/wiki/三國志/卷36)
+
+### 219年7月・219年7月 · 关羽包围网
+
+- 人物 公孫恭 `san14-candidate-0263`：gongsun／襄平。公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
+- 人物 公孫康 `san14-candidate-0264`：gongsun／襄平。公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。 [史料1](https://zh.wikisource.org/wiki/三國志/卷08)
 
 ### 225年7月・南蛮征伐
 
@@ -821,6 +973,8 @@
 - 都市 武都 `wudu`：wei → neutral。215年曹操進軍前，地方氐部與漢官並存；本開局實際控制待考，不斷言全屬曹操或張魯。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 都市 陰平 `yinping`：wei → neutral。215年曹操進軍前，地方氐部與漢官並存；本開局實際控制待考，不斷言全屬曹操或張魯。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/三國志/卷16)、[史料3](https://zh.wikisource.org/wiki/華陽國志/卷二)
 - 都市 鬱林 `yulin`：wu → neutral。鬱林此時實控缺直接材料，不以名義督七郡推定孫權或士家已全控制。 [史料1](https://zh.wikisource.org/wiki/三國志/卷49)、[史料2](https://zh.wikisource.org/wiki/三國志/卷52)、[史料3](https://zh.wikisource.org/wiki/宋書/卷37)、[史料4](https://zh.wikisource.org/wiki/宋書/卷38)
+- 人物 袁熙 `san14-candidate-0029`：在野／襄平。袁氏兄弟敗走遼東是求容／謀奪眾，非公孫康普通部將；殺害月份有《三國志》九月與《後漢書》十一月之差，九月開局保留活人在野客居，不據一說提前死亡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/後漢書/卷9)、[史料3](https://zh.wikisource.org/wiki/三國志/卷06)
+- 人物 袁尚 `san14-candidate-0034`：在野／襄平。袁氏兄弟敗走遼東是求容／謀奪眾，非公孫康普通部將；殺害月份有《三國志》九月與《後漢書》十一月之差，九月開局保留活人在野客居，不據一說提前死亡。 [史料1](https://zh.wikisource.org/wiki/三國志/卷01)、[史料2](https://zh.wikisource.org/wiki/後漢書/卷9)、[史料3](https://zh.wikisource.org/wiki/三國志/卷06)
 
 ### 208年10月・208年10月 · 赤壁之战
 
@@ -904,6 +1058,7 @@
 | 趙儼 | wei | 臨淄 | authorial_garrison_relocation |
 | 張肅 | liu_zhang | 雒城 | regional_primary_mapping |
 | 張任 | liu_zhang | 雒城 | regional_primary_mapping |
+| 趙範 | 在野 | 桂陽 | annotated_biography_fugitive_region_proxy |
 | 張飛 | shu | 江陵 | regional_primary_mapping |
 | 張苞 | 在野 | 宛城 | bounded_regional_inference |
 | 張遼 | wei | 東平 | authorial_garrison_relocation |
@@ -916,6 +1071,7 @@
 | 馬雲騄 | 在野 | 隴西 | bounded_regional_inference |
 | 馬岱 | 在野 | 隴西 | bounded_regional_inference |
 | 馬超 | 在野 | 隴西 | bounded_regional_inference |
+| 樊稠 | 在野 | 開幕対象外 | primary_text_chronology |
 | 費禕 | 在野 | 江州 | bounded_regional_inference |
 | 費詩 | liu_zhang | 雒城 | regional_primary_mapping |
 | 傅幹 | 在野 | 隴西 | bounded_regional_inference |
@@ -935,6 +1091,7 @@
 | 劉循 | liu_zhang | 江陽 | authorial_garrison_relocation |
 | 劉劭 | 在野 | 鄴 | bounded_regional_inference |
 | 劉先 | wei | 河東 | authorial_garrison_relocation |
+| 劉岱 | 在野 | 開幕対象外 | primary_text_chronology |
 | 劉備 | shu | 涪縣 | primary_text_affiliation |
 | 劉封 | shu | 江陵 | regional_primary_mapping |
 | 涼茂 | wei | 上谷 | authorial_garrison_relocation |

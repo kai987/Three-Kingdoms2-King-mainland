@@ -1,6 +1,8 @@
 """Han Sui and Ma Teng remain separate in historical and live IF openings.
 
-The pre-fix material totals and unaffected garrisons are fixed here explicitly.
+Material totals and complete garrisons are fixed here explicitly. The later
+ruler review changes only the named allocations tested below; its prior totals
+are retained separately so updating a roster cannot create money, grain or men.
 No Git checkout, network response, or player save is used as a test oracle.
 """
 from hashlib import sha256
@@ -25,8 +27,8 @@ HISTORICAL_OPENINGS = {
 # serving, free, troops, gold, grain, reserves, Ma-family capital,
 # unaffected initial-garrison hash, immutable person/ability hash.
 BASELINES = {
-    '197-07': (271, 168, 81300, 137820, 477325, 145880, 'wuwei',
-        '363d419b3f9f6a482a9e1a4dab51f841f5d5f9a4ab7b7c7fab080b7c88377770',
+    '197-07': (270, 169, 81000, 137820, 477325, 146180, 'wuwei',
+        'c7ea4b81cdca56393d41a19d1e9c876e9cf7639725f1bfe775bd52ec214b43a9',
         'ab9e4252c752bc8e5159a97d947fee89d9ad96cd5d4b0ee5c05a236ef2a4d9a5'),
     '201-05': (290, 127, 87000, 148290, 525325, 158350, 'wuwei',
         '8e716c3470348bd2b02d83474fb89b8118211e16f56967607e67dbc3c84be4ab',
@@ -35,11 +37,21 @@ BASELINES = {
         'a1577b08dc1bbbb06e8d3d2b3b065b4fc5c49f24a04760ec8c0297c26b1bf448',
         'b84b47046cbe2a1e0bc9f53cb5ff49c35633a831c05043a95b713e1adf564088'),
     '210-11': (378, 55, 113400, 148630, 523825, 157170, 'wuwei',
-        '0eea64d7cd69ece0c55dec1ec44c31118d10703593647f3f6b58f9ffe907790f',
-        '86839632dd1b854a7ff8430648e29b3cc02a77ce2a8fec0f8d4e232b3704230f'),
-    '212-06': (377, 39, 113100, 157380, 550975, 172300, 'henan',
-        '539edbefdf3871d2caf51350c1df2dd2b1f0ee8801993d7fc34ea97f125eb978',
-        'b84b47046cbe2a1e0bc9f53cb5ff49c35633a831c05043a95b713e1adf564088'),
+        '8441bcaf876984b113e3bd263e1842428286cdd757c937ee796d8827f39131de',
+        'a6aac56a7b4441783c4fe572bf687808c57ce98aab599777055e7bb8c534a8f2'),
+    '212-06': (378, 39, 113400, 157380, 550975, 172000, 'henan',
+        'ae2c80af3005646844a2f505716a6f11f26ee2d65b4397fcf69d032583dd1a67',
+        '01346a510190fc4e1b7b874770f3a1b58c831fcf2518a15fb039193f34089ffd'),
+}
+
+# Before the independent-ruler audit: serving, free, troops, gold, grain,
+# reserves. 188 frees Liu/Guan/Zhang; 197 frees Xu Gong; 210 only changes the
+# Gongsun ruler flags; 212 equips the restored Kang from Liaodong's reserves.
+PRIOR_OPENINGS = {
+    '188-06': (114, 227, 34200, 147640, 520075, 153660),
+    '197-07': (271, 168, 81300, 137820, 477325, 145880),
+    '210-11': (378, 55, 113400, 148630, 523825, 157170),
+    '212-06': (377, 39, 113100, 157380, 550975, 172300),
 }
 
 
@@ -135,17 +147,27 @@ class HanSuiIfTests(unittest.TestCase):
                   *(sum(data['initial_city_resources'].get(city, data['initial_resources'])[field]
                         for city in data['active_cities'])
                     for field in ('gold', 'grain', 'reserves')))
-        self.assertEqual(actual, (114, 227, 34200, 147640, 520075, 153660))
+        self.assertEqual(actual, (111, 230, 33300, 147640, 520075, 154560))
+        prior = PRIOR_OPENINGS['188-06']
+        self.assertEqual((actual[3], actual[4], actual[2] + actual[5]),
+                         (prior[3], prior[4], prior[2] + prior[5]))
+        for person_id in ('san14-candidate-0952', 'san14-candidate-0147',
+                          'san14-candidate-0656'):
+            assignment = data['era_assignments'][person_id]
+            self.assertEqual((assignment['status'], assignment['faction'], assignment['city']),
+                             ('free', None, 'zhongshan'))
+            self.assertNotIn(person_id, {row['person_id'] for row in data['initial_officers']})
+            self.assertIn(person_id, {row['person_id'] for row in data['initial_free_officers']})
         attributes = {row['person_id']: {key: row[key] for key in
                       ('runtime_id', 'birth_year', 'service_year', 'death_year',
                        'profile', 'initialization')} for row in data['people']}
         self.assertEqual(digest(attributes),
-                         'b84b47046cbe2a1e0bc9f53cb5ff49c35633a831c05043a95b713e1adf564088')
+                         '68c5a3ec40e611f85733e230ae7b6d599b0c7aa810102e6355120831e18b5e50')
         other = [dict(row, owner=data['initial_owners'][row['city']])
                  for row in data['initial_officers']
                  if row['person_id'] not in {'san14-candidate-0771', 'san14-candidate-0830'}]
         self.assertEqual(digest(other),
-                         'df7a4eaf8bc6a91ec68d4a12ad3e943906536151c119773be1ab0a7d76353cfe')
+                         '2b32526869b318818e5f6fbdcde81d45add73628a6a0c75b1da534d712123fe7')
 
     def test_all_29_openings_do_not_make_han_sui_a_ma_family_retainer(self):
         self.assertEqual(len(self.catalogs), 29)
@@ -236,6 +258,30 @@ class HanSuiIfTests(unittest.TestCase):
                                 for city in data['active_cities'])
                             for field in ('gold', 'grain', 'reserves')))
                 self.assertEqual(actual, baseline[:6])
+                prior = PRIOR_OPENINGS.get(chapter, baseline[:6])
+                self.assertEqual((actual[3], actual[4], actual[2] + actual[5]),
+                                 (prior[3], prior[4], prior[2] + prior[5]))
+                if chapter == '197-07':
+                    assignment = data['era_assignments']['san14-candidate-0211']
+                    self.assertEqual((assignment['status'], assignment['faction'], assignment['city']),
+                                     ('free', None, 'wujun'))
+                    for faction, person_id, city in (
+                            ('hua_xin', 'san14-candidate-0091', 'yuzhang'),
+                            ('zang_ba', 'san14-candidate-0525', 'donghai'),
+                            ('zhang_xiu', 'san14-candidate-0625', 'nanyang')):
+                        self.assertEqual(data['faction_rulers'][faction],
+                                         self.catalogs[chapter].ids[person_id])
+                        self.assertEqual(data['initial_owners'][city], faction)
+                if chapter in ('210-11', '212-06'):
+                    self.assertEqual(data['faction_rulers']['gongsun'], 263)
+                    kang = next(row for row in data['initial_officers']
+                                if row['person_id'] == 'san14-candidate-0264')
+                    gong = next(row for row in data['initial_officers']
+                                if row['person_id'] == 'san14-candidate-0263')
+                    self.assertEqual((kang['ruler'], gong['ruler']), (True, False))
+                    self.assertEqual((kang['troops'], gong['troops']), (300, 300))
+                    self.assertEqual(data['initial_city_resources']['liaodong']['reserves'],
+                                     1240 if chapter == '210-11' else 940)
                 # Jincheng had no garrison before this correction. Only the
                 # three authored Han Sui members should occupy it afterward.
                 other = [dict(row, owner=data['initial_owners'][row['city']])

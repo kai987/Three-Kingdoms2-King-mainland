@@ -88,6 +88,8 @@ class ScopePlanTests(unittest.TestCase):
     def test_docs_allowlist_is_nonvacuous_and_excludes_audit_json(self):
         self.changed('README.zh-TW.md', '說明\n')
         self.changed('docs/nested/design.md', 'Plan\n')
+        self.changed('docs/scenario-history-audit-20261025.md', 'Historical report prose\n')
+        self.changed('docs/ruler-affiliation-audit-20261027.md', 'Ruler report prose\n')
         result = self.repo.plan(event_name='push', ref='refs/heads/main')
         self.assertEqual(result['mode'], 'docs')
         self.assertEqual(result['groups'], [])
@@ -95,6 +97,25 @@ class ScopePlanTests(unittest.TestCase):
         self.assertFalse(any(result[field] for field in ('web', 'native', 'rules', 'soak', 'resupply', 'publish')))
         self.changed('docs/unknown-audit.json', {})
         self.assertTrue(self.repo.plan()['full'])
+
+    def test_generated_ruler_audit_uses_the_existing_report_consistency_scope(self):
+        # The source-and-browser job checks generated reports. Changing only
+        # their JSON must select that job without the full native/rule matrix;
+        # their Markdown companions retain the ordinary documentation policy.
+        for path in ('docs/officer-stat-scenarios-v1.json',
+                     'docs/scenario-history-audit-20261025.json',
+                     'docs/ruler-affiliation-audit-20261027.json'):
+            with self.subTest(path=path):
+                self.changed(path, {})
+                result = self.repo.plan()
+                self.assertEqual(result['mode'], 'scoped', result['reasons'])
+                self.assertIn('scenarios', result['groups'])
+                self.assertTrue(result['web'])
+                self.assertEqual(result['scenario_ids'],
+                                 ['mainland184-02', 'mainland194-06', 'mainland217-07'])
+                self.assertEqual(result['python_groups'], ['global'])
+                self.assertFalse(any(result[field] for field in
+                                     ('full', 'native', 'rules', 'soak', 'resupply')))
 
     def test_cover_audio_and_all_icon_sizes_have_small_scopes(self):
         for path in ('game/loading-cover.js', 'game/loading-cover.css',

@@ -3,6 +3,7 @@
 SGZ1/7/10 and ZZTJ61 place Chenliu in the Zhang Miao/Lu Bu coalition and
 preserve Juancheng, Fan and Dong'e for Cao Cao. The pre-existing Jiyin node is
 an explicit county proxy, rather than a claim about the whole commandery.
+Zhang Miao's allied local command is represented separately from Lu Bu's army.
 """
 from collections import Counter
 import json
@@ -27,12 +28,12 @@ WEI_BRIDGEHEAD = {
     'san14-candidate-0393', 'san14-candidate-0460', 'san14-candidate-0499',
     'san14-candidate-0510', 'san14-candidate-0514', 'san14-candidate-0518',
     'san14-candidate-0521', 'san14-candidate-0689', 'san14-candidate-0702',
-    'san14-candidate-0816', 'san14-candidate-0844', 'san14-candidate-0947',
+    'san14-candidate-0816', 'san14-candidate-0844',
     'san14-candidate-0980',
 }
 LU_BU_CHENLIU = {
     'san14-candidate-0108', 'san14-candidate-0212', 'san14-candidate-0456',
-    'san14-candidate-0519', 'san14-candidate-0653',
+    'san14-candidate-0519',
 }
 
 
@@ -60,7 +61,7 @@ class Frontier194ReviewTests(unittest.TestCase):
         return game
 
     def test_capital_and_city_preview_distinguish_county_proxy_from_commandery(self):
-        self.assertEqual(self.data['initial_owners']['chenliu'], 'lubu')
+        self.assertEqual(self.data['initial_owners']['chenliu'], 'zhang_miao')
         self.assertEqual(self.data['initial_owners']['jiyin'], 'wei')
         for city in ('dongjun', 'dongping', 'shanyang'):
             self.assertEqual(self.data['initial_owners'][city], 'lubu')
@@ -77,8 +78,10 @@ class Frontier194ReviewTests(unittest.TestCase):
     def test_owner_corrections_relocate_people_without_switching_their_allegiances(self):
         game = self.game()
         postings = {pid: ('wei', 'jiyin') for pid in WEI_BRIDGEHEAD}
-        postings.update({pid: ('lubu', 'chenliu') for pid in LU_BU_CHENLIU})
+        postings.update({pid: ('lubu', 'dongjun') for pid in LU_BU_CHENLIU})
         postings['san14-candidate-0671'] = ('lubu', 'dongjun')  # Chen Gong
+        postings['san14-candidate-0653'] = ('zhang_miao', 'chenliu')
+        postings['san14-candidate-0647'] = ('zhang_miao', 'chenliu')
         self.assertEqual(len(postings), 25)
         for pid, (faction, city) in postings.items():
             with self.subTest(person_id=pid):
@@ -92,14 +95,15 @@ class Frontier194ReviewTests(unittest.TestCase):
                 self.assertEqual((assignment['city'], assignment['faction']), (city, faction))
                 self.assertEqual(self.data['appearance_locations'][pid], city)
         self.assertEqual(game.state.extension['leaders']['wei'], self.catalog.ids['san14-candidate-0521'])
-        self.assertEqual(faction_officer_counts(self.catalog)['wei'], 33)
-        self.assertEqual(faction_officer_counts(self.catalog)['lubu'], 21)
-        self.assertEqual(len(self.data['initial_officers']), 292)
+        self.assertEqual(faction_officer_counts(self.catalog)['wei'], 32)
+        self.assertEqual(faction_officer_counts(self.catalog)['lubu'], 19)
+        self.assertEqual(faction_officer_counts(self.catalog)['zhang_miao'], 2)
+        self.assertEqual(len(self.data['initial_officers']), 291)
         self.assertEqual(len(self.catalog.ids), 1030)
 
     def test_primary_postings_and_authorial_garrisons_keep_separate_evidence(self):
         for pid in ('san14-candidate-0393', 'san14-candidate-0124',
-                    'san14-candidate-0689', 'san14-candidate-0653',
+                    'san14-candidate-0689',
                     'san14-candidate-0671'):
             review = self.data['era_assignments'][pid]['placement_review']
             self.assertEqual(review['historical_certainty'], 'primary_text_affiliation')
@@ -120,7 +124,7 @@ class Frontier194ReviewTests(unittest.TestCase):
         game._reconcile_factions(game.state)
         game.validate(game.state)
         self.assertEqual(before, {ident: officer.faction_id for ident, officer in game.state.officers.items()})
-        self.assertEqual(game.state.cities['chenliu'].owner, 'lubu')
+        self.assertEqual(game.state.cities['chenliu'].owner, 'zhang_miao')
         self.assertEqual(game.state.cities['jiyin'].owner, 'wei')
         self.assertIn(self.catalog.ids['san14-candidate-0521'],
                       game.state.cities['jiyin'].roster.officer_ids)

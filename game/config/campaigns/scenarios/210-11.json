@@ -50,8 +50,8 @@
         },
         {
           "id": "gongsun",
-          "name": "公孙康势力",
-          "captain": "公孙恭",
+          "name": "公孙康",
+          "captain": "公孙康",
           "city": "liaodong",
           "color": "#786985",
           "initial_officers": 3
@@ -812,15 +812,15 @@
           "person_id": "san14-candidate-0263",
           "city": "liaodong",
           "troops": 300,
-          "ruler": true,
+          "ruler": false,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0264",
           "city": "liaodong",
           "troops": 300,
-          "ruler": false,
-          "resolve_death_year": true
+          "ruler": true,
+          "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0271",
@@ -3193,7 +3193,7 @@
             "person_id": "san14-candidate-0263",
             "name": "公孙恭",
             "faction": "gongsun",
-            "basis": "explicit_chapter_ruler"
+            "basis": "ruler_affiliation_review_20261027"
           },
           {
             "person_id": "san14-candidate-0271",
@@ -3820,7 +3820,8 @@
         "set": {
           "ma_teng": 770,
           "song_jian": 1024,
-          "han_sui": 165
+          "han_sui": 165,
+          "gongsun": 263
         }
       },
       "coverage": {
@@ -11405,8 +11406,55 @@
           "san14-candidate-0263": {
             "set": {
               "source_ruler": "公孙恭",
-              "scenario_membership_basis": "explicit_chapter_ruler",
-              "source_snapshot": "mainland208-10-v11"
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland208-10-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "gongsun",
+                "city": "liaodong",
+                "placement_basis": "retained_faction_ruler_seat",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0263",
+                  "faction": "gongsun",
+                  "origin": "liaodong",
+                  "city": "liaodong",
+                  "basis": "retained_faction_ruler_seat",
+                  "source_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_explicit_scenario_ruler",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
+                  ],
+                  "note": "保留本篇明列君主及根據地，不以外部快照覆寫劇本君主。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    210,
+                    11
+                  ],
+                  "end": [
+                    238,
+                    12
+                  ],
+                  "city": "liaodong",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
             },
             "update": {
               "appearance_plan": {
@@ -11414,7 +11462,36 @@
                   "start": [
                     210,
                     11
-                  ]
+                  ],
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "posting_reference": {
+                "delete": [
+                  "origin",
+                  "source_city"
+                ],
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08"
+                  ],
+                  "historical_certainty": "bounded_authorial_estimate"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08"
+                  ],
+                  "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                  "reference_date": [
+                    210,
+                    11
+                  ],
+                  "reference_scenario": "mainland210-11",
+                  "historical_certainty": "bounded_authorial_estimate"
                 }
               }
             }
@@ -11423,35 +11500,88 @@
             "set": {
               "source_status": "serving",
               "source_ruler": "公孙恭",
-              "year_state": "death_year_review",
+              "year_state": "available",
               "faction": "gongsun",
               "city": "liaodong",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
-              "death_year_resolved": true,
+              "death_year_resolved": false,
               "posting_reference": {
                 "person_id": "san14-candidate-0264",
                 "faction": "gongsun",
-                "origin": "liaodong",
                 "city": "liaodong",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "historical_certainty": "bounded_authorial_estimate"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland208-10-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland208-10-v11",
+              "reason": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "gongsun",
+                "city": "liaodong",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0264",
+                  "faction": "gongsun",
+                  "origin": "liaodong",
+                  "city": "liaodong",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    210,
+                    11
+                  ],
+                  "end": [
+                    220,
+                    12
+                  ],
+                  "city": "liaodong",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷08"
+                  ],
+                  "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                  "historical_certainty": "bounded_authorial_estimate",
+                  "reference_date": [
+                    210,
+                    11
+                  ],
+                  "reference_scenario": "mainland210-11"
                 }
               },
               "appearance_plan": {
@@ -11461,12 +11591,12 @@
                     11
                   ],
                   "end": [
-                    210,
+                    220,
                     12
                   ],
                   "city": "liaodong",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -33818,6 +33948,84 @@
                 "https://zh.wikisource.org/wiki/三國志/卷15"
               ]
             }
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0263",
+                "name": "公孙恭",
+                "before": {
+                  "status": "serving",
+                  "faction": "gongsun",
+                  "city": "liaodong",
+                  "ruler": true
+                },
+                "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate",
+                "after": {
+                  "status": "serving",
+                  "faction": "gongsun",
+                  "city": "liaodong",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": {
+                  "status": "serving",
+                  "faction": "gongsun",
+                  "city": "liaodong",
+                  "ruler": false
+                },
+                "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate",
+                "after": {
+                  "status": "serving",
+                  "faction": "gongsun",
+                  "city": "liaodong",
+                  "ruler": true
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "假想核心故事不涉及遼東，沿用本作220年公孫康／恭交替的估年邊界；不是已證卒年。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [],
+            "material_before": {
+              "gold": 148630,
+              "grain": 523825,
+              "reserves": 157170,
+              "soldiers": 270570
+            },
+            "material_after": {
+              "gold": 148630,
+              "grain": 523825,
+              "reserves": 157170,
+              "soldiers": 270570
+            },
+            "notes": [
+              "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
+            ]
           }
         },
         "delete": [
@@ -37523,29 +37731,31 @@
           ],
           "people": 1030,
           "reference_classes": {
+            "authorial_region_placement": 843,
             "game_reference": 3,
-            "authorial_region_placement": 845,
-            "bounded_career_inference": 166,
-            "explicit_scenario_scope": 6,
             "authorial_if_independent_faction_mapping": 3,
+            "bounded_career_inference": 166,
+            "bounded_authorial_estimate": 2,
             "authorial_garrison_relocation": 6,
-            "authorial_if_lifetime_region_proxy": 1
+            "authorial_if_lifetime_region_proxy": 1,
+            "explicit_scenario_scope": 6
           },
           "bases": {
             "person_specific_future_free_appearance": 317,
             "same_date_SAN14_guide_affiliation": 3,
-            "retained_person_specific_free_location": 19,
-            "retained_explicit_scenario_ruler": 6,
-            "authored_bounded_source_snapshot_continuity": 165,
-            "authorial_region_placement": 36,
-            "explicit_scenario_scope": 6,
             "retained_chronology_or_explicit_exclusion": 274,
             "historical_city_owner_relocation_authorial_garrison": 3,
-            "retained_explicit_IF_membership": 190,
+            "retained_explicit_IF_membership": 189,
+            "authorial_region_placement": 36,
             "user_requested_independent_han_sui_IF": 3,
+            "authored_bounded_source_snapshot_continuity": 165,
+            "retained_person_specific_free_location": 19,
+            "ruler_affiliation_review_20261027": 2,
+            "retained_explicit_scenario_ruler": 5,
             "authorial_garrison_relocation_for_song_jian_longxi": 6,
             "authored_bounded_snapshot_continuity": 1,
-            "user_requested_song_jian_lifetime_longxi_opening": 1
+            "user_requested_song_jian_lifetime_longxi_opening": 1,
+            "explicit_scenario_scope": 6
           }
         }
       }
@@ -37577,6 +37787,12 @@
               "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
             ]
           }
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
         }
       }
     }

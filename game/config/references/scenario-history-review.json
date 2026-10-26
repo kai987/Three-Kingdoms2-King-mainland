@@ -96,6 +96,27 @@
     "ma_teng_188_separation": [
       "https://zh.wikisource.org/wiki/三國志/卷36",
       "https://zh.wikisource.org/wiki/三國志/卷18"
+    ],
+    "ruler_affiliation_review_20261027": [
+      "https://zh.wikisource.org/wiki/三國志/卷07",
+      "https://zh.wikisource.org/wiki/資治通鑑/卷061",
+      "https://zh.wikisource.org/wiki/三國志/卷06",
+      "https://zh.wikisource.org/wiki/三國志/卷08",
+      "https://zh.wikisource.org/wiki/資治通鑑/卷062",
+      "https://zh.wikisource.org/wiki/三國志/卷18",
+      "https://zh.wikisource.org/wiki/三國志/卷13",
+      "https://zh.wikisource.org/wiki/三國志/卷32",
+      "https://zh.wikisource.org/wiki/後漢書/卷75",
+      "https://zh.wikisource.org/wiki/三國志/卷01",
+      "https://zh.wikisource.org/wiki/三國志/卷49",
+      "https://zh.wikisource.org/wiki/後漢書/卷9",
+      "https://zh.wikisource.org/wiki/晉書/卷001",
+      "https://zh.wikisource.org/wiki/資治通鑑/卷074",
+      "https://zh.wikisource.org/wiki/三國志/卷04",
+      "https://zh.wikisource.org/wiki/三國志/卷36",
+      "https://zh.wikisource.org/wiki/華陽國志/卷四",
+      "https://zh.wikisource.org/wiki/三國志/卷43",
+      "https://zh.wikisource.org/wiki/三國志/卷46"
     ]
   },
   "scenarios": [
@@ -886,6 +907,60 @@
             "https://zh.wikisource.org/wiki/三國志/卷36",
             "https://zh.wikisource.org/wiki/三國志/卷18"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0952",
+          "name": "刘备",
+          "before": {
+            "status": "serving",
+            "faction": "liu_yan",
+            "city": "shujun",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "zhongshan",
+          "certainty": "authorial_northern_career_proxy",
+          "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷32",
+            "https://zh.wikisource.org/wiki/後漢書/卷75"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0147",
+          "name": "关羽",
+          "before": {
+            "status": "serving",
+            "faction": "liu_yan",
+            "city": "shujun",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "zhongshan",
+          "certainty": "authorial_northern_career_proxy",
+          "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷32",
+            "https://zh.wikisource.org/wiki/後漢書/卷75"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0656",
+          "name": "张飞",
+          "before": {
+            "status": "serving",
+            "faction": "liu_yan",
+            "city": "shujun",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "zhongshan",
+          "certainty": "authorial_northern_career_proxy",
+          "note": "劉備早期任安喜等北方經歷，以中山為在野區域代理；不把劉關張配置為劉焉成都的普通部將，也不冒稱188年六月確切任所。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷32",
+            "https://zh.wikisource.org/wiki/後漢書/卷75"
+          ]
         }
       ],
       "notes": [
@@ -999,6 +1074,18 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "id": "zhang_miao",
+          "ruler": "张邈",
+          "person_id": "san14-candidate-0653",
+          "city": "chenliu",
+          "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
           ]
         }
       ],
@@ -1120,6 +1207,28 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "city": "qiao",
+          "before": "neutral",
+          "owner": "wei",
+          "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ],
+          "certainty": "explicit_user_military_camp_region_proxy"
+        },
+        {
+          "city": "chenliu",
+          "before": "wei",
+          "owner": "zhang_miao",
+          "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ],
+          "certainty": "regional_primary_mapping"
         }
       ],
       "officer_changes": [
@@ -1710,6 +1819,348 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0071",
+          "name": "王必",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0102",
+          "name": "乐进",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0114",
+          "name": "夏侯渊",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0124",
+          "name": "夏侯惇",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0333",
+          "name": "史涣",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0365",
+          "name": "周喁",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0441",
+          "name": "徐璆",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0505",
+          "name": "曹休",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0510",
+          "name": "曹昂",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0511",
+          "name": "曹洪",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0514",
+          "name": "曹纯",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0518",
+          "name": "曹仁",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0521",
+          "name": "曹操",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": true
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0671",
+          "name": "陈宫",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0702",
+          "name": "丁斐",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0816",
+          "name": "卞氏",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0913",
+          "name": "李典",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "wei",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0653",
+          "name": "张邈",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "zhang_miao",
+          "city": "chenliu",
+          "certainty": "regional_primary_mapping",
+          "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0021",
+          "name": "卫兹",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "zhang_miao",
+          "city": "chenliu",
+          "certainty": "regional_primary_mapping",
+          "note": "張邈為陳留太守，遣衛茲從曹操作戰，是聯合起兵而非曹操普通部屬。保留陳留予張邈；經使用者確認，用既有小沛節點明示代理曹操的己吾募兵軍營，不代表曹操控制歷史小沛或譙郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
         }
       ],
       "notes": [
@@ -1727,7 +2178,9 @@
         "henei": "wang_kuang",
         "shanyang": "yuan_yi",
         "dongping": "bao_xin",
-        "longxi": "song_jian"
+        "longxi": "song_jian",
+        "qiao": "wei",
+        "chenliu": "zhang_miao"
       }
     },
     {
@@ -2925,6 +3378,31 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "id": "zhang_miao",
+          "ruler": "张邈",
+          "person_id": "san14-candidate-0653",
+          "city": "chenliu",
+          "note": "張邈與其弟張超擁部曲迎呂布共牧兗州；分作陳留與濮陽的聯合軍政勢力，不把兩人改成呂布私人部將。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "id": "zhang_ji",
+          "ruler": "张济",
+          "person_id": "san14-candidate-0638",
+          "city": "hongnong",
+          "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
         }
       ],
       "city_changes": [
@@ -3013,6 +3491,29 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "city": "chenliu",
+          "before": "lubu",
+          "owner": "zhang_miao",
+          "note": "張邈與其弟張超擁部曲迎呂布共牧兗州；分作陳留與濮陽的聯合軍政勢力，不把兩人改成呂布私人部將。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ],
+          "certainty": "regional_primary_mapping"
+        },
+        {
+          "city": "hongnong",
+          "before": "li_jue",
+          "owner": "zhang_ji",
+          "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ],
+          "certainty": "regional_primary_mapping"
         }
       ],
       "officer_changes": [
@@ -3683,6 +4184,204 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "jiyin",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0108",
+          "name": "郝萌",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "dongjun",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0212",
+          "name": "许汜",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "dongjun",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0456",
+          "name": "秦宜禄",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "dongjun",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0519",
+          "name": "曹性",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "dongjun",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0653",
+          "name": "张邈",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": "zhang_miao",
+          "city": "chenliu",
+          "certainty": "regional_primary_mapping",
+          "note": "張邈與其弟張超擁部曲迎呂布共牧兗州；分作陳留與濮陽的聯合軍政勢力，不把兩人改成呂布私人部將。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0647",
+          "name": "张超",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "dongjun",
+            "ruler": false
+          },
+          "faction": "zhang_miao",
+          "city": "chenliu",
+          "certainty": "regional_primary_mapping",
+          "note": "張邈與其弟張超擁部曲迎呂布共牧兗州；分作陳留與濮陽的聯合軍政勢力，不把兩人改成呂布私人部將。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷07",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0091",
+          "name": "华歆",
+          "before": {
+            "status": "serving",
+            "faction": "wang_lang",
+            "city": "kuaiji",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "xiapi",
+          "certainty": "dated_envoy_regional_proxy",
+          "note": "華歆奉使關東、經徐州後受命豫章，原典未給確切任命月；194年以徐州在野／行使區域代理，不憑未知月提前設豫章君主，也不編入王朗。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷13"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": "li_jue",
+          "city": "jingzhao",
+          "certainty": "primary_text_chronology",
+          "note": "樊稠至195年二月才被殺；194年恢復在李傕郭汜共掌朝廷的集團中。此為同城共治軍政映射，不稱私人隸屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0638",
+          "name": "张济",
+          "before": {
+            "status": "serving",
+            "faction": "li_jue",
+            "city": "henan",
+            "ruler": false
+          },
+          "faction": "zhang_ji",
+          "city": "hongnong",
+          "certainty": "regional_primary_mapping",
+          "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0625",
+          "name": "张绣",
+          "before": {
+            "status": "serving",
+            "faction": "li_jue",
+            "city": "hedong",
+            "ruler": false
+          },
+          "faction": "zhang_ji",
+          "city": "hongnong",
+          "certainty": "regional_primary_mapping",
+          "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
         }
       ],
       "notes": [
@@ -3699,16 +4398,18 @@
         "194年6月的鄄城、范、東阿以同一既有濟陰節點表示；不是整個濟陰郡控制色。",
         "颍川不属兖州，不能由兖州仅三城一句直接推断其归属；本轮不扩大结论。",
         "兗州之變後，曹操據鄄城、范、東阿；陳留由張邈與呂布聯盟控制。本劇本以原濟陰節點代理鄄城三縣防區。",
-        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup.",
+        "李傕陣營對郭汜等共治朝廷、同城分營者仍為軍政集團的地圖抽象；沒有可確證獨占的既有節點，不憑空分配整郡，也不將其關係標為私人隸屬。"
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
         "wudu": "neutral",
         "yinping": "neutral",
         "wujun": "xu_gong",
-        "chenliu": "lubu",
+        "chenliu": "zhang_miao",
         "jiyin": "wei",
-        "longxi": "song_jian"
+        "longxi": "song_jian",
+        "hongnong": "zhang_ji"
       }
     },
     {
@@ -3755,6 +4456,19 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "id": "zhang_ji",
+          "ruler": "张济",
+          "person_id": "san14-candidate-0638",
+          "city": "hongnong",
+          "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
           ]
         }
       ],
@@ -3843,6 +4557,18 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "city": "hongnong",
+          "before": "li_jue",
+          "owner": "zhang_ji",
+          "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ],
+          "certainty": "regional_primary_mapping"
         }
       ],
       "officer_changes": [
@@ -4208,11 +4934,157 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "chenliu",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0638",
+          "name": "张济",
+          "before": {
+            "status": "serving",
+            "faction": "li_jue",
+            "city": "fufeng",
+            "ruler": false
+          },
+          "faction": "zhang_ji",
+          "city": "hongnong",
+          "certainty": "regional_primary_mapping",
+          "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0625",
+          "name": "张绣",
+          "before": {
+            "status": "serving",
+            "faction": "li_jue",
+            "city": "jingzhao",
+            "ruler": false
+          },
+          "faction": "zhang_ji",
+          "city": "hongnong",
+          "certainty": "regional_primary_mapping",
+          "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0525",
+          "name": "臧霸",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "jiyin",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "donghai",
+          "certainty": "local_warband_without_attested_city",
+          "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0545",
+          "name": "孙观",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "donghai",
+          "certainty": "local_warband_without_attested_city",
+          "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0308",
+          "name": "吴敦",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "xiapi",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "donghai",
+          "certainty": "local_warband_without_attested_city",
+          "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0014",
+          "name": "尹礼",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "donghai",
+          "certainty": "local_warband_without_attested_city",
+          "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
         }
       ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month.",
-        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup."
+        "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup.",
+        "李傕陣營對郭汜等共治朝廷、同城分營者仍為軍政集團的地圖抽象；沒有可確證獨占的既有節點，不憑空分配整郡，也不將其關係標為私人隸屬。"
       ],
       "owner_expectations": {
         "jincheng": "han_sui",
@@ -4221,7 +5093,8 @@
         "lujiang": "yuan_shu",
         "poyang": "liu_you",
         "yuzhang": "hua_xin",
-        "longxi": "song_jian"
+        "longxi": "song_jian",
+        "hongnong": "zhang_ji"
       }
     },
     {
@@ -4254,6 +5127,18 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "id": "zang_ba",
+          "ruler": "臧霸",
+          "person_id": "san14-candidate-0525",
+          "city": "donghai",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
           ]
         }
       ],
@@ -4303,6 +5188,17 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "city": "donghai",
+          "before": "lubu",
+          "owner": "zang_ba",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ],
+          "certainty": "regional_primary_mapping"
         }
       ],
       "officer_changes": [
@@ -4532,6 +5428,257 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "dongping",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "dead",
+            "faction": null,
+            "city": "henan",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0043",
+          "name": "王楷",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "xiapi",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0188",
+          "name": "魏越",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "xiapi",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0212",
+          "name": "许汜",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "xiapi",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0254",
+          "name": "高顺",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "xiapi",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0456",
+          "name": "秦宜禄",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "xiapi",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0507",
+          "name": "宋宪",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "xiapi",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0663",
+          "name": "张辽",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "xiapi",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0750",
+          "name": "杜氏",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "lubu",
+          "city": "xiapi",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0525",
+          "name": "臧霸",
+          "before": {
+            "status": "serving",
+            "faction": "lubu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "zang_ba",
+          "city": "donghai",
+          "certainty": "regional_primary_mapping",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0545",
+          "name": "孙观",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "qiao",
+            "ruler": false
+          },
+          "faction": "zang_ba",
+          "city": "donghai",
+          "certainty": "regional_primary_mapping",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0308",
+          "name": "吴敦",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "qiao",
+            "ruler": false
+          },
+          "faction": "zang_ba",
+          "city": "donghai",
+          "certainty": "regional_primary_mapping",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0014",
+          "name": "尹礼",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "qiao",
+            "ruler": false
+          },
+          "faction": "zang_ba",
+          "city": "donghai",
+          "certainty": "regional_primary_mapping",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
         }
       ],
       "notes": [
@@ -4542,7 +5689,8 @@
         "jincheng": "han_sui",
         "wudu": "neutral",
         "yinping": "neutral",
-        "longxi": "song_jian"
+        "longxi": "song_jian",
+        "donghai": "zang_ba"
       }
     },
     {
@@ -5305,6 +6453,41 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "nanyang",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
         }
       ],
       "notes": [
@@ -6047,6 +7230,41 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "henei",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "dead",
+            "faction": null,
+            "city": "henan",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
           ]
         }
       ],
@@ -7465,6 +8683,98 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0029",
+          "name": "袁熙",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "liaodong",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "liaodong",
+          "certainty": "contested_month_guest_region_proxy",
+          "note": "袁氏兄弟敗走遼東是求容／謀奪眾，非公孫康普通部將；殺害月份有《三國志》九月與《後漢書》十一月之差，九月開局保留活人在野客居，不據一說提前死亡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/後漢書/卷9",
+            "https://zh.wikisource.org/wiki/三國志/卷06"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0034",
+          "name": "袁尚",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "liaodong",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "liaodong",
+          "certainty": "contested_month_guest_region_proxy",
+          "note": "袁氏兄弟敗走遼東是求容／謀奪眾，非公孫康普通部將；殺害月份有《三國志》九月與《後漢書》十一月之差，九月開局保留活人在野客居，不據一說提前死亡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/後漢書/卷9",
+            "https://zh.wikisource.org/wiki/三國志/卷06"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0625",
+          "name": "张绣",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "jingzhao",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_dead_by_opening",
+          "note": "《張繡傳》記隨征烏丸，未抵柳城即卒；207年九月白狼山戰後不再出任曹軍將領。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
           ]
         }
       ],
@@ -8919,6 +10229,93 @@
           "source_urls": [
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0280",
+          "name": "孔融",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "xincheng",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_dead_by_opening",
+          "note": "《後漢書》明記208年八月孔融被殺、劉表卒；十月不再列為可出任或可招募人物。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/後漢書/卷9"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0953",
+          "name": "刘表",
+          "before": {
+            "status": "free",
+            "faction": null,
+            "city": "xiangyang",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_dead_by_opening",
+          "note": "《後漢書》明記208年八月孔融被殺、劉表卒；十月不再列為可出任或可招募人物。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/後漢書/卷9"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0855",
+          "name": "雍闿",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "jiangxia",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "jianning",
+          "certainty": "bounded_local_career_inference",
+          "note": "雍闓為益州南中地方豪族，未證此時出仕劉備荊州軍；建寧沿用本作既有地方在野代理，不提前套用223年反叛主權。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/華陽國志/卷四",
+            "https://zh.wikisource.org/wiki/三國志/卷43"
           ]
         }
       ],
@@ -10784,6 +12181,58 @@
               "https://zh.wikisource.org/wiki/華陽國志/卷二"
             ]
           }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0654",
+          "name": "赵范",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "changsha",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "guiyang",
+          "certainty": "annotated_biography_fugitive_region_proxy",
+          "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
         }
       ],
       "notes": [
@@ -11483,6 +12932,76 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷01",
             "https://zh.wikisource.org/zh-hant/三國志/卷09"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "dead",
+            "faction": null,
+            "city": "henan",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "dead",
+            "faction": null,
+            "city": "henan",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0654",
+          "name": "赵范",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "changsha",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "guiyang",
+          "certainty": "annotated_biography_fugitive_region_proxy",
+          "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0855",
+          "name": "雍闿",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "yidu",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "jianning",
+          "certainty": "bounded_local_career_inference",
+          "note": "雍闓為益州南中地方豪族，未證此時出仕劉備荊州軍；建寧沿用本作既有地方在野代理，不提前套用223年反叛主權。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/華陽國志/卷四",
+            "https://zh.wikisource.org/wiki/三國志/卷43"
+          ]
         }
       ],
       "notes": [
@@ -11506,7 +13025,60 @@
       "title": "215年8月 · 合淝之戰",
       "new_factions": [],
       "city_changes": [],
-      "officer_changes": [],
+      "officer_changes": [
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "dead",
+            "faction": null,
+            "city": "henan",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "dead",
+            "faction": null,
+            "city": "henan",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0654",
+          "name": "赵范",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "guanghan",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "guiyang",
+          "certainty": "annotated_biography_fugitive_region_proxy",
+          "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        }
+      ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
@@ -11521,7 +13093,77 @@
       "title": "219年7月 · 关羽包围网",
       "new_factions": [],
       "city_changes": [],
-      "officer_changes": [],
+      "officer_changes": [
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0263",
+          "name": "公孙恭",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "liaodong",
+            "ruler": true
+          },
+          "faction": "gongsun",
+          "city": "liaodong",
+          "certainty": "bounded_authorial_estimate",
+          "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": "gongsun",
+          "city": "liaodong",
+          "certainty": "bounded_authorial_estimate",
+          "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        }
+      ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
@@ -11536,7 +13178,60 @@
       "title": "221年7月 · 夷陵前夕",
       "new_factions": [],
       "city_changes": [],
-      "officer_changes": [],
+      "officer_changes": [
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        }
+      ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
@@ -11693,6 +13388,75 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷43",
             "https://zh.wikisource.org/zh-hant/華陽國志_(四庫全書本)/卷04"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "shujun",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
         }
       ],
       "notes": [
@@ -11712,7 +13476,95 @@
       "title": "227年2月 · 出师表",
       "new_factions": [],
       "city_changes": [],
-      "officer_changes": [],
+      "officer_changes": [
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "shujun",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/華陽國志/卷四",
+            "https://zh.wikisource.org/wiki/三國志/卷43"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        }
+      ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
@@ -11727,7 +13579,131 @@
       "title": "234年2月 · 秋風五丈原",
       "new_factions": [],
       "city_changes": [],
-      "officer_changes": [],
+      "officer_changes": [
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "fuling",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/華陽國志/卷四",
+            "https://zh.wikisource.org/wiki/三國志/卷43"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0263",
+          "name": "公孙恭",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "daifang",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_captivity",
+          "note": "公孫淵於228年奪位囚禁公孫恭；238年城破後才獲釋，故本開局為仍存世但被囚、不可出任，不另立新國亦不捏造死亡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/晉書/卷001",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷074"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0265",
+          "name": "公孙晃",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "lelang",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_hostage_unavailable",
+          "note": "公孫晃是留洛陽的任子，公孫淵叛後被拘繫；不能當作遼東前線普通部將或可自由調遣的魏將。仍存世受限，不新增死亡月。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        }
+      ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
@@ -11742,7 +13718,131 @@
       "title": "238年1月 · 征讨辽东",
       "new_factions": [],
       "city_changes": [],
-      "officer_changes": [],
+      "officer_changes": [
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "fuling",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/華陽國志/卷四",
+            "https://zh.wikisource.org/wiki/三國志/卷43"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0263",
+          "name": "公孙恭",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "lelang",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_captivity",
+          "note": "公孫淵於228年奪位囚禁公孫恭；238年城破後才獲釋，故本開局為仍存世但被囚、不可出任，不另立新國亦不捏造死亡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/晉書/卷001",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷074"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0265",
+          "name": "公孙晃",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "daifang",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_hostage_unavailable",
+          "note": "公孫晃是留洛陽的任子，公孫淵叛後被拘繫；不能當作遼東前線普通部將或可自由調遣的魏將。仍存世受限，不新增死亡月。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        }
+      ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
@@ -11757,7 +13857,95 @@
       "title": "249年1月 · 正始之变",
       "new_factions": [],
       "city_changes": [],
-      "officer_changes": [],
+      "officer_changes": [
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "fuling",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/華陽國志/卷四",
+            "https://zh.wikisource.org/wiki/三國志/卷43"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        }
+      ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
@@ -11903,6 +14091,110 @@
             "https://zh.wikisource.org/zh-hant/三國志/卷48",
             "https://zh.wikisource.org/zh-hant/三國志/卷04"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/華陽國志/卷四",
+            "https://zh.wikisource.org/wiki/三國志/卷43"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0529",
+          "name": "曹芳",
+          "before": {
+            "status": "serving",
+            "faction": "wei",
+            "city": "liaodong",
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_deposed_unavailable",
+          "note": "曹芳於254年九月被廢，遷居河內重門齊王宮；263年為退位受限人物，不是遼東魏軍部將，也不另造齊王獨立領土。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷04"
+          ]
         }
       ],
       "notes": [
@@ -11924,7 +14216,94 @@
       "title": "217年7月 · 汉中争夺战",
       "new_factions": [],
       "city_changes": [],
-      "officer_changes": [],
+      "officer_changes": [
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷01",
+            "https://zh.wikisource.org/wiki/三國志/卷49"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": null,
+          "city": null,
+          "certainty": "primary_text_chronology",
+          "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0263",
+          "name": "公孙恭",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "liaodong",
+            "ruler": true
+          },
+          "faction": "gongsun",
+          "city": "liaodong",
+          "certainty": "bounded_authorial_estimate",
+          "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "scenario_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": "gongsun",
+          "city": "liaodong",
+          "certainty": "bounded_authorial_estimate",
+          "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0654",
+          "name": "赵范",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "jiameng",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "guiyang",
+          "certainty": "annotated_biography_fugitive_region_proxy",
+          "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷36"
+          ]
+        }
+      ],
       "notes": [
         "Every border is listed by the audit, but a province-scale mapping is not a claim of an individually attested owner for every city/month."
       ],
@@ -11974,6 +14353,42 @@
             "https://zh.wikisource.org/wiki/三國志/卷36",
             "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
+        },
+        {
+          "id": "zang_ba",
+          "ruler": "臧霸",
+          "person_id": "san14-candidate-0525",
+          "city": "donghai",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "id": "zhang_xiu",
+          "ruler": "张绣",
+          "person_id": "san14-candidate-0625",
+          "city": "nanyang",
+          "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "id": "hua_xin",
+          "ruler": "华歆",
+          "person_id": "san14-candidate-0091",
+          "city": "yuzhang",
+          "note": "197年華歆以豫章太守自領地方；不因不相關的呂布稱帝前提被編入王朗。豫章節點為本作郡治映射。",
+          "certainty": "regional_primary_mapping",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷13"
+          ]
         }
       ],
       "city_changes": [
@@ -11998,6 +14413,49 @@
             "https://zh.wikisource.org/wiki/三國志/卷36",
             "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
+        },
+        {
+          "city": "donghai",
+          "before": "shu",
+          "owner": "zang_ba",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ],
+          "certainty": "regional_primary_mapping"
+        },
+        {
+          "city": "nanyang",
+          "before": "liu_biao",
+          "owner": "zhang_xiu",
+          "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ],
+          "certainty": "regional_primary_mapping"
+        },
+        {
+          "city": "poyang",
+          "before": "neutral",
+          "owner": "liu_you",
+          "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷13"
+          ],
+          "certainty": "authorial_region_proxy"
+        },
+        {
+          "city": "yuzhang",
+          "before": "liu_you",
+          "owner": "hua_xin",
+          "note": "197年華歆以豫章太守自領地方；不因不相關的呂布稱帝前提被編入王朗。豫章節點為本作郡治映射。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷13"
+          ],
+          "certainty": "regional_primary_mapping"
         }
       ],
       "officer_changes": [
@@ -12153,15 +14611,402 @@
             "https://zh.wikisource.org/wiki/三國志/卷36",
             "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0147",
+          "name": "关羽",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0185",
+          "name": "简雍",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0409",
+          "name": "昌豨",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0656",
+          "name": "张飞",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0674",
+          "name": "陈珪",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0793",
+          "name": "糜竺",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "shu",
+          "city": "qiao",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0525",
+          "name": "臧霸",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "qiao",
+            "ruler": false
+          },
+          "faction": "zang_ba",
+          "city": "donghai",
+          "certainty": "regional_primary_mapping",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0545",
+          "name": "孙观",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "zang_ba",
+          "city": "donghai",
+          "certainty": "regional_primary_mapping",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0308",
+          "name": "吴敦",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "qiao",
+            "ruler": false
+          },
+          "faction": "zang_ba",
+          "city": "donghai",
+          "certainty": "regional_primary_mapping",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0014",
+          "name": "尹礼",
+          "before": {
+            "status": "serving",
+            "faction": "shu",
+            "city": "donghai",
+            "ruler": false
+          },
+          "faction": "zang_ba",
+          "city": "donghai",
+          "certainty": "regional_primary_mapping",
+          "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷18",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0260",
+          "name": "黄祖",
+          "before": {
+            "status": "serving",
+            "faction": "liu_biao",
+            "city": "nanyang",
+            "ruler": false
+          },
+          "faction": "liu_biao",
+          "city": "xiangyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0321",
+          "name": "蔡氏",
+          "before": {
+            "status": "serving",
+            "faction": "liu_biao",
+            "city": "nanyang",
+            "ruler": false
+          },
+          "faction": "liu_biao",
+          "city": "xiangyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0595",
+          "name": "张允",
+          "before": {
+            "status": "serving",
+            "faction": "liu_biao",
+            "city": "nanyang",
+            "ruler": false
+          },
+          "faction": "liu_biao",
+          "city": "xiangyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0951",
+          "name": "刘磐",
+          "before": {
+            "status": "serving",
+            "faction": "liu_biao",
+            "city": "nanyang",
+            "ruler": false
+          },
+          "faction": "liu_biao",
+          "city": "xiangyang",
+          "certainty": "authorial_garrison_relocation",
+          "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0625",
+          "name": "张绣",
+          "before": {
+            "status": "serving",
+            "faction": "li_jue",
+            "city": "henan",
+            "ruler": false
+          },
+          "faction": "zhang_xiu",
+          "city": "nanyang",
+          "certainty": "regional_primary_mapping",
+          "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0092",
+          "name": "贾诩",
+          "before": {
+            "status": "serving",
+            "faction": "li_jue",
+            "city": "hedong",
+            "ruler": false
+          },
+          "faction": "zhang_xiu",
+          "city": "nanyang",
+          "certainty": "regional_primary_mapping",
+          "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0296",
+          "name": "胡车儿",
+          "before": {
+            "status": "serving",
+            "faction": "li_jue",
+            "city": "fufeng",
+            "ruler": false
+          },
+          "faction": "zhang_xiu",
+          "city": "nanyang",
+          "certainty": "regional_primary_mapping",
+          "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷06",
+            "https://zh.wikisource.org/wiki/三國志/卷08",
+            "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0586",
+          "name": "太史慈",
+          "before": {
+            "status": "serving",
+            "faction": "liu_you",
+            "city": "yuzhang",
+            "ruler": false
+          },
+          "faction": "liu_you",
+          "city": "poyang",
+          "certainty": "authorial_region_proxy",
+          "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷13"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0963",
+          "name": "刘繇",
+          "before": {
+            "status": "serving",
+            "faction": "liu_you",
+            "city": "yuzhang",
+            "ruler": true
+          },
+          "faction": "liu_you",
+          "city": "poyang",
+          "certainty": "authorial_region_proxy",
+          "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷13"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0091",
+          "name": "华歆",
+          "before": {
+            "status": "serving",
+            "faction": "wang_lang",
+            "city": "kuaiji",
+            "ruler": false
+          },
+          "faction": "hua_xin",
+          "city": "yuzhang",
+          "certainty": "regional_primary_mapping",
+          "note": "197年華歆以豫章太守自領地方；不因不相關的呂布稱帝前提被編入王朗。豫章節點為本作郡治映射。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷13"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0211",
+          "name": "许贡",
+          "before": {
+            "status": "serving",
+            "faction": "wang_lang",
+            "city": "kuaiji",
+            "ruler": false
+          },
+          "faction": null,
+          "city": "wujun",
+          "certainty": "displaced_prefect_region_proxy",
+          "note": "許貢失吳郡後投嚴白虎，沒有歸王朗的根據；197年以吳郡地方在野表示，不虛造新領土。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷46"
+          ]
         }
       ],
       "owner_expectations": {
         "longxi": "song_jian",
-        "jincheng": "han_sui"
+        "jincheng": "han_sui",
+        "donghai": "zang_ba",
+        "nanyang": "zhang_xiu",
+        "poyang": "liu_you",
+        "yuzhang": "hua_xin"
       },
       "notes": [
         "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
-        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+        "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
+        "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ]
     },
     {
@@ -12350,7 +15195,9 @@
       },
       "notes": [
         "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
-        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+        "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
+        "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ]
     },
     {
@@ -12590,7 +15437,8 @@
       },
       "notes": [
         "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
-        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+        "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ]
     },
     {
@@ -12839,6 +15687,40 @@
             "https://zh.wikisource.org/wiki/三國志/卷36",
             "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0263",
+          "name": "公孙恭",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "liaodong",
+            "ruler": true
+          },
+          "faction": "gongsun",
+          "city": "liaodong",
+          "certainty": "bounded_authorial_estimate",
+          "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "liaodong",
+            "ruler": false
+          },
+          "faction": "gongsun",
+          "city": "liaodong",
+          "certainty": "bounded_authorial_estimate",
+          "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
         }
       ],
       "owner_expectations": {
@@ -12847,7 +15729,8 @@
       },
       "notes": [
         "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
-        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+        "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ]
     },
     {
@@ -12994,6 +15877,40 @@
             "https://zh.wikisource.org/wiki/三國志/卷36",
             "https://zh.wikisource.org/wiki/三國志/卷15"
           ]
+        },
+        {
+          "person_id": "san14-candidate-0263",
+          "name": "公孙恭",
+          "before": {
+            "status": "serving",
+            "faction": "gongsun",
+            "city": "liaodong",
+            "ruler": true
+          },
+          "faction": "gongsun",
+          "city": "liaodong",
+          "certainty": "bounded_authorial_estimate",
+          "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "before": {
+            "status": "chronology_excluded",
+            "faction": null,
+            "city": null,
+            "ruler": false
+          },
+          "faction": "gongsun",
+          "city": "liaodong",
+          "certainty": "bounded_authorial_estimate",
+          "note": "公孫康未確切記卒年，沿用本作既定220年的估年邊界，康任當主、恭為其弟；不把估年提前死亡造成的配屬倒置當成史實。",
+          "source_urls": [
+            "https://zh.wikisource.org/wiki/三國志/卷08"
+          ]
         }
       ],
       "owner_expectations": {
@@ -13002,7 +15919,8 @@
       },
       "notes": [
         "Song Jian is included during his reviewed lifetime window using the existing Longxi node and unchanged city label. Former garrisons retain their faction and move to friendly adjacent Tianshui; unaligned people do not become Song Jian retainers. The214-10 death month is primary-backed; the one-node ownership mapping is an explicit user game setup. This IF adaptation preserves the original core story and other capitals; it is recorded outside the23 historical decisions.",
-        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。"
+        "依使用者指定，韓遂與馬騰／馬超分為兩個可玩勢力；韓遂以金城為本城，閻行、成公英歸其麾下。原典可支持兩支部曲的區別；本篇假想開局的具體金城歸屬是本作區域配置，不宣稱是官方SAN14原始配置或當月史實確證。",
+        "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
       ]
     }
   ]

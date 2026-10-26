@@ -22,7 +22,7 @@
           "city": "chenliu",
           "name": "曹操势力",
           "color": "#527d77",
-          "initial_officers": 33
+          "initial_officers": 32
         },
         {
           "id": "liu_biao",
@@ -54,7 +54,7 @@
           "city": "qiao",
           "name": "吕布势力",
           "color": "#786985",
-          "initial_officers": 18
+          "initial_officers": 17
         },
         {
           "id": "li_jue",
@@ -62,7 +62,7 @@
           "city": "jingzhao",
           "name": "李傕势力",
           "color": "#9c774f",
-          "initial_officers": 17
+          "initial_officers": 15
         },
         {
           "id": "ma_teng",
@@ -118,7 +118,7 @@
           "city": "xiapi",
           "name": "刘备势力",
           "color": "#786985",
-          "initial_officers": 16
+          "initial_officers": 13
         },
         {
           "id": "gongsun",
@@ -175,6 +175,14 @@
           "city": "longxi",
           "color": "#007f89",
           "initial_officers": 1
+        },
+        {
+          "id": "zhang_ji",
+          "name": "张济",
+          "captain": "张济",
+          "city": "hongnong",
+          "color": "#8753a1",
+          "initial_officers": 2
         }
       ],
       "active_cities": [
@@ -305,13 +313,6 @@
         {
           "person_id": "san14-candidate-0008",
           "city": "wei",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0014",
-          "city": "donghai",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -954,13 +955,6 @@
           "resolve_death_year": false
         },
         {
-          "person_id": "san14-candidate-0308",
-          "city": "xiapi",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
           "person_id": "san14-candidate-0310",
           "city": "zitong",
           "troops": 300,
@@ -1402,13 +1396,6 @@
           "resolve_death_year": false
         },
         {
-          "person_id": "san14-candidate-0525",
-          "city": "jiyin",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
           "person_id": "san14-candidate-0527",
           "city": "xiapi",
           "troops": 300,
@@ -1439,13 +1426,6 @@
         {
           "person_id": "san14-candidate-0543",
           "city": "jiujiang",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0545",
-          "city": "donghai",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1578,7 +1558,7 @@
         },
         {
           "person_id": "san14-candidate-0625",
-          "city": "jingzhao",
+          "city": "hongnong",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1613,9 +1593,9 @@
         },
         {
           "person_id": "san14-candidate-0638",
-          "city": "fufeng",
+          "city": "hongnong",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": true
         },
         {
@@ -2139,13 +2119,6 @@
         {
           "person_id": "san14-candidate-0944",
           "city": "lingling",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0947",
-          "city": "chenliu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -3032,6 +3005,26 @@
           "person_id": "san14-candidate-0211",
           "city": "wujun",
           "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0525",
+          "city": "donghai",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0545",
+          "city": "donghai",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0308",
+          "city": "donghai",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0014",
+          "city": "donghai",
+          "resolve_death_year": false
         }
       ],
       "dlc_audit": {
@@ -3219,8 +3212,8 @@
           {
             "person_id": "san14-candidate-0525",
             "name": "臧霸",
-            "faction": "lubu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "faction": null,
+            "basis": "ruler_affiliation_review_20261027",
             "status": "serving"
           },
           {
@@ -3490,7 +3483,7 @@
           "dongping": "lubu",
           "henei": "zhang_yang",
           "hedong": "li_jue",
-          "hongnong": "li_jue",
+          "hongnong": "zhang_ji",
           "fengyi": "li_jue",
           "fufeng": "li_jue",
           "longxi": "song_jian",
@@ -3692,7 +3685,7 @@
           "san14-candidate-0520": "wei",
           "san14-candidate-0521": "chenliu",
           "san14-candidate-0524": "jiangxia",
-          "san14-candidate-0525": "jiyin",
+          "san14-candidate-0525": "donghai",
           "san14-candidate-0526": "yingchuan",
           "san14-candidate-0528": "wei",
           "san14-candidate-0531": "wei",
@@ -3943,7 +3936,7 @@
           "san14-candidate-0296": "fufeng",
           "san14-candidate-0297": "hedong",
           "san14-candidate-0300": "wujun",
-          "san14-candidate-0308": "xiapi",
+          "san14-candidate-0308": "donghai",
           "san14-candidate-0317": "pingyuan",
           "san14-candidate-0319": "jiangxia",
           "san14-candidate-0320": "lingling",
@@ -4021,12 +4014,12 @@
           "san14-candidate-0609": "yan",
           "san14-candidate-0614": "jiujiang",
           "san14-candidate-0617": "wujun",
-          "san14-candidate-0625": "jingzhao",
+          "san14-candidate-0625": "hongnong",
           "san14-candidate-0627": "jiameng",
           "san14-candidate-0632": "dangqu",
           "san14-candidate-0635": "jiujiang",
           "san14-candidate-0637": "zangke",
-          "san14-candidate-0638": "fufeng",
+          "san14-candidate-0638": "hongnong",
           "san14-candidate-0640": "qiao",
           "san14-candidate-0641": "nanyang",
           "san14-candidate-0642": "wuling",
@@ -4101,7 +4094,6 @@
           "san14-candidate-0933": "jiujiang",
           "san14-candidate-0936": "yan",
           "san14-candidate-0946": "xiangyang",
-          "san14-candidate-0947": "chenliu",
           "san14-candidate-0949": "lingling",
           "san14-candidate-0951": "nanyang",
           "san14-candidate-0953": "xiangyang",
@@ -4143,15 +4135,16 @@
           "kong_rong": 279,
           "han_sui": 165,
           "hua_xin": 90,
-          "song_jian": 1024
+          "song_jian": 1024,
+          "zhang_ji": 637
         }
       },
       "coverage": {
         "set": {
-          "initial_serving": 281,
-          "initial_free": 151,
+          "initial_serving": 276,
+          "initial_free": 155,
           "source_scenario": "san14-194-06",
-          "planned_serving": 281,
+          "planned_serving": 276,
           "planned_max_city_roster": 24,
           "future_plans": 495,
           "library": 1030,
@@ -4648,18 +4641,80 @@
           "san14-candidate-0014": {
             "set": {
               "source_ruler": "刘备",
-              "faction": "shu",
+              "faction": null,
               "city": "donghai",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "free",
+              "reason": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0014",
+                  "faction": "shu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-a-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    196,
+                    6
+                  ],
+                  "end": [
+                    222,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "shu",
-                  "origin": "xiapi",
-                  "city": "donghai"
-                }
+                  "faction": null,
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "local_warband_without_attested_city"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -4667,7 +4722,25 @@
                     196,
                     6
                   ],
-                  "city": "donghai"
+                  "city": "donghai",
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "reference_scenario": "mainland196-06",
+                  "historical_certainty": "local_warband_without_attested_city"
                 }
               }
             }
@@ -12676,7 +12749,7 @@
                     6
                   ],
                   "end": [
-                    210,
+                    220,
                     12
                   ],
                   "city": "liaodong",
@@ -13013,7 +13086,11 @@
                     207,
                     1
                   ],
-                  "status": "future_free"
+                  "status": "future_free",
+                  "end": [
+                    225,
+                    12
+                  ]
                 }
               }
             }
@@ -14053,32 +14130,88 @@
               "source_status": "serving",
               "source_ruler": "刘备",
               "year_state": "available",
-              "faction": "shu",
-              "city": "xiapi",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
+              "faction": null,
+              "city": "donghai",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "free",
               "posting_reference": {
                 "person_id": "san14-candidate-0308",
-                "faction": "shu",
-                "origin": "xiapi",
-                "city": "xiapi",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": null,
+                "city": "donghai",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "local_warband_without_attested_city"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "xiapi",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0308",
+                  "faction": "shu",
+                  "origin": "xiapi",
+                  "city": "xiapi",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ka-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    196,
+                    6
+                  ],
+                  "end": [
+                    209,
+                    12
+                  ],
+                  "city": "xiapi",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                  "historical_certainty": "local_warband_without_attested_city",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "reference_scenario": "mainland196-06"
                 }
               },
               "appearance_plan": {
@@ -14091,9 +14224,9 @@
                     209,
                     12
                   ],
-                  "city": "xiapi",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "city": "donghai",
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -20667,18 +20800,80 @@
           "san14-candidate-0525": {
             "set": {
               "source_ruler": "吕布",
-              "faction": "lubu",
-              "city": "jiyin",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland194-06-v11"
+              "faction": null,
+              "city": "donghai",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "free",
+              "reason": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
+                "city": "jiyin",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0525",
+                  "faction": "lubu",
+                  "origin": "qiao",
+                  "city": "jiyin",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
+                  "basis": "retained_reviewed_opening_membership",
+                  "source_urls": [
+                    "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
+                  ],
+                  "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    196,
+                    6
+                  ],
+                  "end": [
+                    231,
+                    12
+                  ],
+                  "city": "jiyin",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
             },
             "update": {
               "posting_reference": {
                 "set": {
-                  "faction": "lubu",
-                  "origin": "qiao",
-                  "city": "jiyin"
-                }
+                  "faction": null,
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "local_warband_without_attested_city"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               },
               "appearance_plan": {
                 "set": {
@@ -20686,7 +20881,25 @@
                     196,
                     6
                   ],
-                  "city": "jiyin"
+                  "city": "donghai",
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "reference_scenario": "mainland196-06",
+                  "historical_certainty": "local_warband_without_attested_city"
                 }
               }
             }
@@ -21270,32 +21483,88 @@
               "source_status": "serving",
               "source_ruler": "刘备",
               "year_state": "available",
-              "faction": "shu",
+              "faction": null,
               "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "free",
               "posting_reference": {
                 "person_id": "san14-candidate-0545",
-                "faction": "shu",
-                "origin": "xiapi",
+                "faction": null,
                 "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "local_warband_without_attested_city"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0545",
+                  "faction": "shu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-sa-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    196,
+                    6
+                  ],
+                  "end": [
+                    217,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                  "historical_certainty": "local_warband_without_attested_city",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "reference_scenario": "mainland196-06"
                 }
               },
               "appearance_plan": {
@@ -21309,8 +21578,8 @@
                     12
                   ],
                   "city": "donghai",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -23803,32 +24072,91 @@
               "source_status": "serving",
               "source_ruler": "李傕",
               "year_state": "available",
-              "faction": "li_jue",
-              "city": "jingzhao",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "faction": "zhang_ji",
+              "city": "hongnong",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0625",
-                "faction": "li_jue",
-                "origin": "jingzhao",
-                "city": "jingzhao",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": "zhang_ji",
+                "city": "hongnong",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "regional_primary_mapping"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "li_jue",
+                "city": "jingzhao",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0625",
+                  "faction": "li_jue",
+                  "origin": "jingzhao",
+                  "city": "jingzhao",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    196,
+                    6
+                  ],
+                  "end": [
+                    207,
+                    12
+                  ],
+                  "city": "jingzhao",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "reference_scenario": "mainland196-06"
                 }
               },
               "appearance_plan": {
@@ -23841,9 +24169,9 @@
                     207,
                     12
                   ],
-                  "city": "jingzhao",
+                  "city": "hongnong",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -24319,34 +24647,93 @@
             "set": {
               "source_status": "serving",
               "source_ruler": "李傕",
-              "year_state": "death_year_review",
-              "faction": "li_jue",
-              "city": "fufeng",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "year_state": "available",
+              "faction": "zhang_ji",
+              "city": "hongnong",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "death_year_resolved": true,
               "posting_reference": {
                 "person_id": "san14-candidate-0638",
-                "faction": "li_jue",
-                "origin": "jingzhao",
-                "city": "fufeng",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": "zhang_ji",
+                "city": "hongnong",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "regional_primary_mapping"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "li_jue",
+                "city": "fufeng",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0638",
+                  "faction": "li_jue",
+                  "origin": "jingzhao",
+                  "city": "fufeng",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ta-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    196,
+                    6
+                  ],
+                  "end": [
+                    196,
+                    12
+                  ],
+                  "city": "fufeng",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "reference_scenario": "mainland196-06"
                 }
               },
               "appearance_plan": {
@@ -24359,9 +24746,9 @@
                     196,
                     12
                   ],
-                  "city": "fufeng",
+                  "city": "hongnong",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -28507,7 +28894,11 @@
                     196,
                     6
                   ],
-                  "city": "tianshui"
+                  "city": "tianshui",
+                  "end": [
+                    222,
+                    12
+                  ]
                 }
               }
             }
@@ -28839,30 +29230,66 @@
           "san14-candidate-0782": {
             "set": {
               "status": "chronology_excluded",
-              "reason": "Birth, service or death year excludes opening.",
-              "scenario_membership_basis": null,
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "reason": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "chronology_excluded",
+                "faction": null,
+                "city": null,
+                "placement_basis": null,
+                "posting_reference": null,
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_chronology_or_explicit_exclusion",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ha-line/"
                   ],
                   "note": "本作年表已過退場／卒年，不配置在籍或未來登場。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "retained_chronology_or_explicit_exclusion"
+                }
+              },
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                  "historical_certainty": "primary_text_chronology",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "reference_scenario": "mainland196-06"
                 }
               },
               "appearance_plan": {
                 "set": {
-                  "basis": "retained_chronology_or_explicit_exclusion"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0783": {
             "set": {
@@ -33903,54 +34330,86 @@
             "set": {
               "source_status": "serving",
               "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "chenliu",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "posting_reference": {
-                "person_id": "san14-candidate-0947",
-                "faction": "wei",
-                "origin": "chenliu",
-                "city": "chenliu",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+              "year_state": "dead",
+              "faction": null,
+              "city": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "posting_reference": null,
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ]
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wei",
+                "city": "chenliu",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0947",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "chenliu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_reviewed_opening_membership",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
                   ],
                   "note": "沿用本篇已配置歸屬；駐城在99人限制內優先來源城，其餘按邊境防務均衡安排。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷49"
+                  ],
+                  "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                  "historical_certainty": "primary_text_chronology",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "reference_scenario": "mainland196-06"
                 }
               },
               "appearance_plan": {
                 "set": {
-                  "start": [
-                    196,
-                    6
-                  ],
-                  "end": [
-                    202,
-                    12
-                  ],
-                  "city": "chenliu",
-                  "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0948": {
             "set": {
@@ -36369,7 +36828,8 @@
             "faction_additions": [
               "han_sui",
               "hua_xin",
-              "song_jian"
+              "song_jian",
+              "zhang_ji"
             ],
             "city_owner_corrections": [
               "jincheng",
@@ -36378,7 +36838,8 @@
               "lujiang",
               "poyang",
               "yuzhang",
-              "longxi"
+              "longxi",
+              "hongnong"
             ],
             "all_city_months_independently_attested": false,
             "local_map_proxies": {
@@ -36412,6 +36873,320 @@
                 "https://zh.wikisource.org/zh-hant/三國志/卷09"
               ]
             }
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "chenliu",
+                  "ruler": false
+                },
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                },
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0638",
+                "name": "张济",
+                "before": {
+                  "status": "serving",
+                  "faction": "li_jue",
+                  "city": "fufeng",
+                  "ruler": false
+                },
+                "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zhang_ji",
+                  "city": "hongnong",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0625",
+                "name": "张绣",
+                "before": {
+                  "status": "serving",
+                  "faction": "li_jue",
+                  "city": "jingzhao",
+                  "ruler": false
+                },
+                "note": "《三國志》記192年後張濟以將軍屯弘農，後與李傕郭汜合兵／調停；張繡隨叔而非李傕普通部將。196年六月不憑未確月的叔父死亡提前讓張繡繼位。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zhang_ji",
+                  "city": "hongnong",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0525",
+                "name": "臧霸",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "jiyin",
+                  "ruler": false
+                },
+                "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "local_warband_without_attested_city",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "donghai",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0545",
+                "name": "孙观",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "local_warband_without_attested_city",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "donghai",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0308",
+                "name": "吴敦",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "xiapi",
+                  "ruler": false
+                },
+                "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "local_warband_without_attested_city",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "donghai",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0014",
+                "name": "尹礼",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "臧霸與孫觀、吳敦、尹禮聚眾，以霸為帥，非劉備或呂布的普通部下；196年獨占城與月界未確，以徐州地方在野群體表示，不虛構整郡領有。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "local_warband_without_attested_city",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "donghai",
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [
+              {
+                "city": "chenliu",
+                "person_id": "san14-candidate-0947",
+                "actual_before": 1080,
+                "actual_after": 1380,
+                "actual_delta": 300,
+                "raw_before": 2160,
+                "raw_after": 2760,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              },
+              {
+                "city": "jiyin",
+                "person_id": "san14-candidate-0525",
+                "actual_before": 1080,
+                "actual_after": 1380,
+                "actual_delta": 300,
+                "raw_before": 1080,
+                "raw_after": 1380,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              },
+              {
+                "city": "donghai",
+                "person_id": "san14-candidate-0545",
+                "actual_before": 1080,
+                "actual_after": 1380,
+                "actual_delta": 300,
+                "raw_before": 1080,
+                "raw_after": 1380,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              },
+              {
+                "city": "xiapi",
+                "person_id": "san14-candidate-0308",
+                "actual_before": 1080,
+                "actual_after": 1380,
+                "actual_delta": 300,
+                "raw_before": 1080,
+                "raw_after": 1380,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              },
+              {
+                "city": "donghai",
+                "person_id": "san14-candidate-0014",
+                "actual_before": 1380,
+                "actual_after": 1680,
+                "actual_delta": 300,
+                "raw_before": 1380,
+                "raw_after": 1680,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              }
+            ],
+            "material_before": {
+              "gold": 136810,
+              "grain": 472400,
+              "reserves": 144910,
+              "soldiers": 229210
+            },
+            "material_after": {
+              "gold": 136810,
+              "grain": 472400,
+              "reserves": 146410,
+              "soldiers": 229210
+            },
+            "notes": [
+              "李傕陣營對郭汜等共治朝廷、同城分營者仍為軍政集團的地圖抽象；沒有可確證獨占的既有節點，不憑空分配整郡，也不將其關係標為私人隸屬。"
+            ]
           }
         },
         "delete": [
@@ -37642,7 +38417,7 @@
             "set": {
               "gold": 910,
               "grain": 3425,
-              "reserves": 1080
+              "reserves": 1680
             }
           },
           "shanyang": {
@@ -37838,7 +38613,7 @@
             "set": {
               "gold": 1940,
               "grain": 7300,
-              "reserves": 2160
+              "reserves": 2760
             }
           },
           "runan": {
@@ -37859,7 +38634,7 @@
             "set": {
               "gold": 910,
               "grain": 3425,
-              "reserves": 1080
+              "reserves": 1380
             }
           },
           "wudu": {
@@ -38167,7 +38942,7 @@
             "set": {
               "gold": 910,
               "grain": 3425,
-              "reserves": 1080
+              "reserves": 1380
             }
           },
           "dongping": {
@@ -40328,7 +41103,7 @@
                 1
               ],
               "end": [
-                251,
+                225,
                 12
               ],
               "city": "jianning",
@@ -43014,7 +43789,63 @@
           "san14-candidate-0867": [],
           "historical-beigong-boyu": [],
           "historical-li-wenhou": [],
-          "historical-bian-zhang": []
+          "historical-bian-zhang": [],
+          "san14-candidate-0014": [
+            {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                222,
+                12
+              ],
+              "city": "donghai",
+              "resolve_death_year": false
+            }
+          ],
+          "san14-candidate-0308": [
+            {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                209,
+                12
+              ],
+              "city": "donghai",
+              "resolve_death_year": false
+            }
+          ],
+          "san14-candidate-0525": [
+            {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                231,
+                12
+              ],
+              "city": "donghai",
+              "resolve_death_year": false
+            }
+          ],
+          "san14-candidate-0545": [
+            {
+              "start": [
+                196,
+                6
+              ],
+              "end": [
+                217,
+                12
+              ],
+              "city": "donghai",
+              "resolve_death_year": false
+            }
+          ]
         }
       },
       "placement_completion": {
@@ -43029,16 +43860,19 @@
             "wudu",
             "yinping",
             "yuzhang",
-            "longxi"
+            "longxi",
+            "hongnong"
           ],
           "reference_classes": {
-            "authorial_region_placement": 996,
+            "authorial_region_placement": 988,
             "game_reference": 8,
+            "local_warband_without_attested_city": 4,
             "primary_text_affiliation": 3,
             "bounded_career_inference": 1,
-            "regional_primary_mapping": 1,
+            "regional_primary_mapping": 3,
             "authorial_garrison_relocation": 13,
             "bounded_regional_inference": 1,
+            "primary_text_chronology": 2,
             "authorial_lifetime_region_proxy": 1,
             "explicit_scenario_scope": 6
           },
@@ -43047,8 +43881,9 @@
             "person_specific_future_free_appearance": 495,
             "same_date_SAN14_guide_free_location": 4,
             "same_date_SAN14_guide_affiliation": 4,
-            "retained_reviewed_opening_membership": 234,
-            "retained_chronology_or_explicit_exclusion": 97,
+            "ruler_affiliation_review_20261027": 8,
+            "retained_reviewed_opening_membership": 227,
+            "retained_chronology_or_explicit_exclusion": 96,
             "retained_person_specific_free_location": 142,
             "historical_review_20261025": 16,
             "retained_explicit_scenario_ruler": 17,
@@ -43058,8 +43893,7 @@
             "user_requested_song_jian_lifetime_longxi_opening": 1,
             "explicit_scenario_scope": 6
           }
-        },
-        "update": {}
+        }
       }
     }
   },
@@ -43088,6 +43922,36 @@
               "https://zh.wikisource.org/wiki/後漢書/卷72"
             ]
           }
+        }
+      },
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
         }
       }
     }

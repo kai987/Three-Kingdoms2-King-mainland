@@ -372,9 +372,17 @@ class SongJianLuXingTests(unittest.TestCase):
         self.assertEqual({row['id'] for row in adaptations}, SONG_IF_OPENINGS)
         self.assertTrue(all(row['fictional'] for row in adaptations))
         self.assertTrue(SONG_IF_OPENINGS <= set(report['fictional_excluded']))
-        self.assertEqual(report['fictional_adaptation_summary']['new_factions'], 10)
+        self.assertEqual(report['fictional_adaptation_summary']['new_factions'], 13)
         additions = [faction['id'] for row in adaptations for faction in row['new_factions']]
-        self.assertEqual(Counter(additions), {'song_jian': 5, 'han_sui': 5})
+        self.assertEqual(Counter(additions), {'song_jian': 5, 'han_sui': 5,
+                                             'hua_xin': 1, 'zang_ba': 1, 'zhang_xiu': 1})
+        for row in adaptations:
+            with self.subTest(if_additions=row['id']):
+                expected = {'song_jian', 'han_sui'}
+                if row['id'] == 'mainland197-07':
+                    expected |= {'hua_xin', 'zang_ba', 'zhang_xiu'}
+                self.assertEqual({faction['id'] for faction in row['new_factions']},
+                                 expected)
 
     def test_audit_rejects_premature_ownership_recruitment_or_changed_founding_month(self):
         spec = spec_from_file_location('tk2_local_faction_audit_negative',

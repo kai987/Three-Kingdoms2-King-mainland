@@ -34987,6 +34987,29 @@
                 "https://zh.wikisource.org/wiki/三國志/卷15"
               ]
             }
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [],
+            "chronology": [],
+            "resource_transfers": [],
+            "material_before": {
+              "gold": 148290,
+              "grain": 525325,
+              "reserves": 158350,
+              "soldiers": 245350
+            },
+            "material_after": {
+              "gold": 148290,
+              "grain": 525325,
+              "reserves": 158350,
+              "soldiers": 245350
+            },
+            "notes": [
+              "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
+              "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
+            ]
           }
         },
         "delete": [

@@ -14,20 +14,20 @@
   },
   "summary": {
     "cities": 3169,
-    "serving": 8844,
-    "rulers": 312,
-    "ordinary_serving": 8532,
-    "free": 2338,
-    "total_instantiated": 11182,
-    "initial_health_changed": 2919,
+    "serving": 8813,
+    "rulers": 320,
+    "ordinary_serving": 8493,
+    "free": 2354,
+    "total_instantiated": 11167,
+    "initial_health_changed": 2918,
     "health_cap_increased": 1237,
     "ordinary_loyalty_changed": 1507,
     "source_context_applied": 1561,
-    "source_context_mismatch_defaults": 1001,
-    "source_ruler_marker_nonruler_defaults": 19,
-    "no_source_loyalty_defaults": 5951,
+    "source_context_mismatch_defaults": 987,
+    "source_ruler_marker_nonruler_defaults": 18,
+    "no_source_loyalty_defaults": 5927,
     "preview_cities_checked": 3169,
-    "preview_officers_checked": 8844
+    "preview_officers_checked": 8813
   },
   "scenarios": [
     {
@@ -64,13 +64,84 @@
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "39eae650e9673d8c3894f2f84918bc30b21120c58bae567afec9781f778c919f",
+      "opening_save_sha256": "3ad52043be945221cbc3fba6b3e01bd1be42e128724d97879a8f9b7294ec5504",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -1074,17 +1145,17 @@
       "player": "han",
       "seed": 2026,
       "cities": 108,
-      "serving": 114,
+      "serving": 111,
       "rulers": 11,
-      "ordinary_serving": 103,
-      "free": 227,
+      "ordinary_serving": 100,
+      "free": 230,
       "total_instantiated": 341,
       "initial_health_changed": 86,
       "health_cap_increased": 36,
       "ordinary_loyalty_changed": 10,
       "source_context_applied": 10,
-      "source_context_mismatch_defaults": 11,
-      "source_ruler_marker_nonruler_defaults": 4,
+      "source_context_mismatch_defaults": 9,
+      "source_ruler_marker_nonruler_defaults": 3,
       "no_source_loyalty_defaults": 78,
       "virtue_coverage": {
         "san14_charisma": 1000,
@@ -1093,20 +1164,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 114,
+      "preview_officers_checked": 111,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "71d433ff1e60a8f47520da2ef11ab54dfebea8b265559585af27ac94d6b6902c",
+      "opening_save_sha256": "60206ee837455137c9cc62de78c7c7f8f8684760333972a1e08ca62313c5f6d1",
       "changed_people": [
         {
           "person_id": "san14-candidate-0016",
@@ -2008,17 +2150,17 @@
           "person_id": "san14-candidate-0656",
           "runtime_id": 655,
           "name": "张飞",
-          "role": "serving",
-          "city": "shujun",
-          "faction": "liu_yan",
+          "role": "free",
+          "city": "zhongshan",
+          "faction": null,
           "source_row_id": "cnblogs-line-0004",
           "previous_initial_health": 80,
           "initial_health": 99,
           "previous_health_max": 80,
           "health_max": 99,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         },
         {
           "person_id": "san14-candidate-0663",
@@ -2511,8 +2653,8 @@
       "seed": 2026,
       "cities": 108,
       "serving": 252,
-      "rulers": 26,
-      "ordinary_serving": 226,
+      "rulers": 27,
+      "ordinary_serving": 225,
       "free": 135,
       "total_instantiated": 387,
       "initial_health_changed": 103,
@@ -2521,7 +2663,7 @@
       "source_context_applied": 48,
       "source_context_mismatch_defaults": 25,
       "source_ruler_marker_nonruler_defaults": 2,
-      "no_source_loyalty_defaults": 151,
+      "no_source_loyalty_defaults": 150,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -2536,13 +2678,84 @@
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "ab8f931938ef4aaea4ea412dc785ac5e764125a8751236db15467be9b42f2e86",
+      "opening_save_sha256": "3b77d998911e7315177906fd65a82534bce812463f60b0577a11ae738e85727f",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -2773,7 +2986,7 @@
           "runtime_id": 101,
           "name": "乐进",
           "role": "serving",
-          "city": "chenliu",
+          "city": "qiao",
           "faction": "wei",
           "source_row_id": "cnblogs-line-0010",
           "previous_initial_health": 80,
@@ -2805,7 +3018,7 @@
           "runtime_id": 113,
           "name": "夏侯渊",
           "role": "serving",
-          "city": "chenliu",
+          "city": "qiao",
           "faction": "wei",
           "source_row_id": "cnblogs-line-0013",
           "previous_initial_health": 80,
@@ -2821,7 +3034,7 @@
           "runtime_id": 123,
           "name": "夏侯惇",
           "role": "serving",
-          "city": "chenliu",
+          "city": "qiao",
           "faction": "wei",
           "source_row_id": "cnblogs-line-0012",
           "previous_initial_health": 94,
@@ -3477,7 +3690,7 @@
           "runtime_id": 504,
           "name": "曹休",
           "role": "serving",
-          "city": "chenliu",
+          "city": "qiao",
           "faction": "wei",
           "source_row_id": "cnblogs-line-0258",
           "previous_initial_health": 80,
@@ -3509,7 +3722,7 @@
           "runtime_id": 510,
           "name": "曹洪",
           "role": "serving",
-          "city": "chenliu",
+          "city": "qiao",
           "faction": "wei",
           "source_row_id": "cnblogs-line-0009",
           "previous_initial_health": 80,
@@ -3525,7 +3738,7 @@
           "runtime_id": 517,
           "name": "曹仁",
           "role": "serving",
-          "city": "chenliu",
+          "city": "qiao",
           "faction": "wei",
           "source_row_id": "cnblogs-line-0008",
           "previous_initial_health": 80,
@@ -3541,7 +3754,7 @@
           "runtime_id": 520,
           "name": "曹操",
           "role": "ruler",
-          "city": "chenliu",
+          "city": "qiao",
           "faction": "wei",
           "source_row_id": "cnblogs-line-0007",
           "previous_initial_health": 80,
@@ -4133,7 +4346,7 @@
           "runtime_id": 912,
           "name": "李典",
           "role": "serving",
-          "city": "chenliu",
+          "city": "qiao",
           "faction": "wei",
           "source_row_id": "cnblogs-line-0084",
           "previous_initial_health": 80,
@@ -4324,13 +4537,84 @@
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "7f148c51030b81158413e3e9cb03e8d0ec8902983547fc0f3d616355ff10fb4b",
+      "opening_save_sha256": "eb4fac3aa77450556c23cd8d4b7133bf064511e532a31a7a6409350fab5b07e3",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -6134,18 +6418,18 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 292,
-      "rulers": 21,
-      "ordinary_serving": 271,
-      "free": 120,
+      "serving": 291,
+      "rulers": 23,
+      "ordinary_serving": 268,
+      "free": 121,
       "total_instantiated": 412,
-      "initial_health_changed": 112,
-      "health_cap_increased": 43,
+      "initial_health_changed": 113,
+      "health_cap_increased": 44,
       "ordinary_loyalty_changed": 55,
       "source_context_applied": 57,
-      "source_context_mismatch_defaults": 36,
+      "source_context_mismatch_defaults": 35,
       "source_ruler_marker_nonruler_defaults": 1,
-      "no_source_loyalty_defaults": 177,
+      "no_source_loyalty_defaults": 175,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -6153,20 +6437,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 292,
+      "preview_officers_checked": 291,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "8ca389e3208e3fa64dd8912323454716a13b398ef3860c7c05335e01e0f3565c",
+      "opening_save_sha256": "fa4e422403e8ba9858aa3dbe2222ce4705ed510ce4462eb351eaac6866969f6c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0006",
@@ -6364,17 +6719,17 @@
           "person_id": "san14-candidate-0091",
           "runtime_id": 90,
           "name": "华歆",
-          "role": "serving",
-          "city": "kuaiji",
-          "faction": "wang_lang",
+          "role": "free",
+          "city": "xiapi",
+          "faction": null,
           "source_row_id": "cnblogs-line-0120",
           "previous_initial_health": 80,
           "initial_health": 63,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         },
         {
           "person_id": "san14-candidate-0092",
@@ -7388,17 +7743,17 @@
           "person_id": "san14-candidate-0638",
           "runtime_id": 637,
           "name": "张济",
-          "role": "serving",
-          "city": "henan",
-          "faction": "li_jue",
+          "role": "ruler",
+          "city": "hongnong",
+          "faction": "zhang_ji",
           "source_row_id": "cnblogs-line-0041",
           "previous_initial_health": 80,
           "initial_health": 71,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 100,
+          "loyalty": 100,
+          "loyalty_reason": "ruler"
         },
         {
           "person_id": "san14-candidate-0651",
@@ -7687,6 +8042,22 @@
           "previous_loyalty": 80,
           "loyalty": 88,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "runtime_id": 781,
+          "name": "樊稠",
+          "role": "serving",
+          "city": "jingzhao",
+          "faction": "li_jue",
+          "source_row_id": "cnblogs-line-0039",
+          "previous_initial_health": 80,
+          "initial_health": 86,
+          "previous_health_max": 80,
+          "health_max": 86,
+          "previous_loyalty": 80,
+          "loyalty": 80,
+          "loyalty_reason": "source_context_mismatch_default"
         },
         {
           "person_id": "san14-candidate-0793",
@@ -8066,18 +8437,18 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 281,
-      "rulers": 21,
-      "ordinary_serving": 260,
-      "free": 151,
-      "total_instantiated": 432,
+      "serving": 276,
+      "rulers": 22,
+      "ordinary_serving": 254,
+      "free": 155,
+      "total_instantiated": 431,
       "initial_health_changed": 125,
       "health_cap_increased": 50,
       "ordinary_loyalty_changed": 66,
       "source_context_applied": 68,
-      "source_context_mismatch_defaults": 30,
+      "source_context_mismatch_defaults": 29,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 162,
+      "no_source_loyalty_defaults": 157,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -8085,7 +8456,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 281,
+      "preview_officers_checked": 276,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -8093,6 +8464,34 @@
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
       "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
         {
           "person_id": "san14-candidate-0661",
           "name": "张杨",
@@ -8106,6 +8505,48 @@
               "scenario": "third_party_SAN14_game_setting_transcription; scenario_specific_explicit_exception"
             }
           }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
         }
       ],
       "opening_ownership_rosters_match": true,
@@ -8113,7 +8554,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "6ed9afb26e911d9b729150a5fc3d8801621dfaf3ad8cdf2266795859b448c464",
+      "opening_save_sha256": "ebef8337b02a950ad51acfba747f337d093e582d20026031b9795cd7169793c2",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -9463,17 +9904,17 @@
           "person_id": "san14-candidate-0638",
           "runtime_id": 637,
           "name": "张济",
-          "role": "serving",
-          "city": "fufeng",
-          "faction": "li_jue",
+          "role": "ruler",
+          "city": "hongnong",
+          "faction": "zhang_ji",
           "source_row_id": "cnblogs-line-0041",
           "previous_initial_health": 80,
           "initial_health": 71,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 100,
+          "loyalty": 100,
+          "loyalty_reason": "ruler"
         },
         {
           "person_id": "san14-candidate-0651",
@@ -10237,18 +10678,18 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 271,
-      "rulers": 19,
-      "ordinary_serving": 252,
-      "free": 168,
+      "serving": 270,
+      "rulers": 22,
+      "ordinary_serving": 248,
+      "free": 169,
       "total_instantiated": 439,
       "initial_health_changed": 129,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 65,
       "source_context_applied": 67,
-      "source_context_mismatch_defaults": 30,
+      "source_context_mismatch_defaults": 29,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 155,
+      "no_source_loyalty_defaults": 152,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -10256,7 +10697,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 271,
+      "preview_officers_checked": 270,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -10284,7 +10725,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d46661ccd91965a8122286ccfc51fd536c589e8157ac21d6f3342416bb909e19",
+      "opening_save_sha256": "311184bfd26f76d5e17ad0a25ca2d18b88ff1d0037d39008f416156fb95f50f4",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -10514,25 +10955,25 @@
           "person_id": "san14-candidate-0091",
           "runtime_id": 90,
           "name": "华歆",
-          "role": "serving",
-          "city": "kuaiji",
-          "faction": "wang_lang",
+          "role": "ruler",
+          "city": "yuzhang",
+          "faction": "hua_xin",
           "source_row_id": "cnblogs-line-0120",
           "previous_initial_health": 80,
           "initial_health": 63,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 100,
+          "loyalty": 100,
+          "loyalty_reason": "ruler"
         },
         {
           "person_id": "san14-candidate-0092",
           "runtime_id": 91,
           "name": "贾诩",
           "role": "serving",
-          "city": "hedong",
-          "faction": "li_jue",
+          "city": "nanyang",
+          "faction": "zhang_xiu",
           "source_row_id": "cnblogs-line-0043",
           "previous_initial_health": 80,
           "initial_health": 52,
@@ -10643,7 +11084,7 @@
           "runtime_id": 146,
           "name": "关羽",
           "role": "serving",
-          "city": "donghai",
+          "city": "qiao",
           "faction": "shu",
           "source_row_id": "cnblogs-line-0005",
           "previous_initial_health": 97,
@@ -10723,7 +11164,7 @@
           "runtime_id": 184,
           "name": "简雍",
           "role": "serving",
-          "city": "donghai",
+          "city": "qiao",
           "faction": "shu",
           "source_row_id": "cnblogs-line-0096",
           "previous_initial_health": 80,
@@ -11011,8 +11452,8 @@
           "runtime_id": 295,
           "name": "胡车儿",
           "role": "serving",
-          "city": "fufeng",
-          "faction": "li_jue",
+          "city": "nanyang",
+          "faction": "zhang_xiu",
           "source_row_id": "cnblogs-line-0102",
           "previous_initial_health": 80,
           "initial_health": 94,
@@ -11555,7 +11996,7 @@
           "runtime_id": 585,
           "name": "太史慈",
           "role": "serving",
-          "city": "yuzhang",
+          "city": "poyang",
           "faction": "liu_you",
           "source_row_id": "cnblogs-line-0034",
           "previous_initial_health": 80,
@@ -11683,7 +12124,7 @@
           "runtime_id": 655,
           "name": "张飞",
           "role": "serving",
-          "city": "donghai",
+          "city": "qiao",
           "faction": "shu",
           "source_row_id": "cnblogs-line-0004",
           "previous_initial_health": 80,
@@ -12019,7 +12460,7 @@
           "runtime_id": 792,
           "name": "糜竺",
           "role": "serving",
-          "city": "donghai",
+          "city": "qiao",
           "faction": "shu",
           "source_row_id": "cnblogs-line-0115",
           "previous_initial_health": 80,
@@ -12472,18 +12913,18 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 290,
-      "rulers": 19,
-      "ordinary_serving": 271,
+      "serving": 289,
+      "rulers": 20,
+      "ordinary_serving": 269,
       "free": 143,
-      "total_instantiated": 433,
+      "total_instantiated": 432,
       "initial_health_changed": 129,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 71,
       "source_context_applied": 73,
       "source_context_mismatch_defaults": 29,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 169,
+      "no_source_loyalty_defaults": 167,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -12491,7 +12932,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 290,
+      "preview_officers_checked": 289,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -12499,6 +12940,34 @@
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
       "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
         {
           "person_id": "san14-candidate-0661",
           "name": "张杨",
@@ -12512,6 +12981,48 @@
               "scenario": "third_party_SAN14_game_setting_transcription; scenario_specific_explicit_exception"
             }
           }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
         }
       ],
       "opening_ownership_rosters_match": true,
@@ -12519,7 +13030,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "3d1d219942e10b0ae9510807e4b5a448d67455e369f38198e3715b45d79947b5",
+      "opening_save_sha256": "a00f4e3e7362926e7345d82cdb56167465caeecc6d22b2d35cfaa3e585bba874",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -13950,7 +14461,7 @@
           "runtime_id": 662,
           "name": "张辽",
           "role": "serving",
-          "city": "donghai",
+          "city": "xiapi",
           "faction": "lubu",
           "source_row_id": "cnblogs-line-0178",
           "previous_initial_health": 80,
@@ -14707,18 +15218,18 @@
       "player": "yuan_shao",
       "seed": 2026,
       "cities": 108,
-      "serving": 303,
+      "serving": 302,
       "rulers": 12,
-      "ordinary_serving": 291,
+      "ordinary_serving": 290,
       "free": 118,
-      "total_instantiated": 421,
+      "total_instantiated": 420,
       "initial_health_changed": 130,
       "health_cap_increased": 54,
       "ordinary_loyalty_changed": 83,
       "source_context_applied": 86,
       "source_context_mismatch_defaults": 28,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 177,
+      "no_source_loyalty_defaults": 176,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -14726,20 +15237,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 303,
+      "preview_officers_checked": 302,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "2531a762553a72af91cd904ca98cb2f582a14883ae3116202b4395212772f6ca",
+      "opening_save_sha256": "9e051ee8263e8e91e753e834c69ab6d98f2011736953b81620ae525143ad0ba1",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -17007,7 +17589,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "86a8200851b9da15ebfaba7333302b0159885349229b01ae55e124026ee4092b",
+      "opening_save_sha256": "2e6874d46e722498e94e521433e62363b8d4e79657643ee10198cd1d85d2039e",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -19179,18 +19761,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 108,
-      "serving": 310,
+      "serving": 309,
       "rulers": 15,
-      "ordinary_serving": 295,
+      "ordinary_serving": 294,
       "free": 112,
-      "total_instantiated": 422,
+      "total_instantiated": 421,
       "initial_health_changed": 126,
       "health_cap_increased": 51,
       "ordinary_loyalty_changed": 62,
       "source_context_applied": 63,
       "source_context_mismatch_defaults": 44,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 188,
+      "no_source_loyalty_defaults": 187,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -19198,20 +19780,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 310,
+      "preview_officers_checked": 309,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "3ba05a42af986e5b9b3af43fd860dacaeadbe22aa94c983795180b82c8221145",
+      "opening_save_sha256": "e1873741f1fa31c8d3eb6b068a1d017b918e61ee1a1fb0ed3226532aa760baa7",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -21367,18 +22020,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 108,
-      "serving": 348,
+      "serving": 345,
       "rulers": 12,
-      "ordinary_serving": 336,
-      "free": 86,
-      "total_instantiated": 434,
+      "ordinary_serving": 333,
+      "free": 88,
+      "total_instantiated": 433,
       "initial_health_changed": 128,
       "health_cap_increased": 54,
       "ordinary_loyalty_changed": 82,
       "source_context_applied": 84,
-      "source_context_mismatch_defaults": 35,
+      "source_context_mismatch_defaults": 34,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 217,
+      "no_source_loyalty_defaults": 215,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -21386,20 +22039,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 108,
-      "preview_officers_checked": 348,
+      "preview_officers_checked": 345,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "f957c8f58b58beb0410aba543eb2b59ecfdb1b7f764e30f4513262d88fd9a26d",
+      "opening_save_sha256": "854a1546461603378ccdd47aacffe8b588bfb3d9e7916f288192f934bec31d29",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -21437,17 +22161,17 @@
           "person_id": "san14-candidate-0029",
           "runtime_id": 28,
           "name": "袁熙",
-          "role": "serving",
+          "role": "free",
           "city": "liaodong",
-          "faction": "gongsun",
+          "faction": null,
           "source_row_id": "cnblogs-line-0022",
           "previous_initial_health": 80,
           "initial_health": 64,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         },
         {
           "person_id": "san14-candidate-0038",
@@ -23587,18 +24311,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 388,
+      "serving": 386,
       "rulers": 15,
-      "ordinary_serving": 373,
+      "ordinary_serving": 371,
       "free": 49,
-      "total_instantiated": 437,
+      "total_instantiated": 435,
       "initial_health_changed": 126,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 82,
       "source_context_applied": 84,
-      "source_context_mismatch_defaults": 41,
+      "source_context_mismatch_defaults": 40,
       "source_ruler_marker_nonruler_defaults": 1,
-      "no_source_loyalty_defaults": 247,
+      "no_source_loyalty_defaults": 246,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -23606,7 +24330,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 388,
+      "preview_officers_checked": 386,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -23629,6 +24353,34 @@
           }
         },
         {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
           "person_id": "san14-candidate-0760",
           "name": "马休",
           "fields": {
@@ -23639,6 +24391,20 @@
             "chronology_basis": {
               "canonical": "third_party_SAN14_game_setting_transcription",
               "scenario": "SGZ36_and_HHS9_death212; court208_month_is_opening_adaptation"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
             }
           }
         },
@@ -23669,6 +24435,34 @@
               "scenario": "SGZ36_and_HHS9_death212; court208_month_is_opening_adaptation"
             }
           }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
         }
       ],
       "opening_ownership_rosters_match": true,
@@ -23676,7 +24470,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "0501797f169a12effdc263a8308aa29cdc3e9d57b0f65319800b00037d2833c3",
+      "opening_save_sha256": "8a02ae960a790e9a3cce87ea2f0e98540f5537c7d360a5a47d5a033be67a4afa",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -25506,17 +26300,17 @@
           "person_id": "san14-candidate-0855",
           "runtime_id": 854,
           "name": "雍闿",
-          "role": "serving",
-          "city": "jiangxia",
-          "faction": "shu",
+          "role": "free",
+          "city": "jianning",
+          "faction": null,
           "source_row_id": "cnblogs-line-0135",
           "previous_initial_health": 80,
           "initial_health": 79,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         },
         {
           "person_id": "san14-candidate-0863",
@@ -25880,7 +26674,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "8c3af23ffb6090ccd2c61bf264aa92cf4358fd61aa549cb79296c8a3887efba3",
+      "opening_save_sha256": "8d16a52c231ca2e16c49f44038d80d15ee7d8037ab0f9c4ff8918f2dfbf8cd0c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -28077,9 +28871,9 @@
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 73,
       "source_context_applied": 75,
-      "source_context_mismatch_defaults": 50,
+      "source_context_mismatch_defaults": 49,
       "source_ruler_marker_nonruler_defaults": 1,
-      "no_source_loyalty_defaults": 244,
+      "no_source_loyalty_defaults": 245,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -28095,6 +28889,20 @@
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
       "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
         {
           "person_id": "san14-candidate-0379",
           "name": "周瑜",
@@ -28115,7 +28923,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d410d5779995ef795d8916732e2b5587f8c7f232f54e12cbfd4114b7a4040aaa",
+      "opening_save_sha256": "6730b1949bc6fee2850542f8a4a92e7d9d321ec39752d9b97b8ccd17b3251efc",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -28697,7 +29505,7 @@
           "person_id": "san14-candidate-0264",
           "runtime_id": 263,
           "name": "公孙康",
-          "role": "serving",
+          "role": "ruler",
           "city": "liaodong",
           "faction": "gongsun",
           "source_row_id": "cnblogs-line-0098",
@@ -28705,9 +29513,9 @@
           "initial_health": 79,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 100,
+          "loyalty": 100,
+          "loyalty_reason": "ruler"
         },
         {
           "person_id": "san14-candidate-0271",
@@ -30303,18 +31111,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 389,
+      "serving": 387,
       "rulers": 10,
-      "ordinary_serving": 379,
-      "free": 36,
+      "ordinary_serving": 377,
+      "free": 38,
       "total_instantiated": 425,
       "initial_health_changed": 127,
       "health_cap_increased": 53,
       "ordinary_loyalty_changed": 81,
       "source_context_applied": 84,
-      "source_context_mismatch_defaults": 41,
+      "source_context_mismatch_defaults": 40,
       "source_ruler_marker_nonruler_defaults": 1,
-      "no_source_loyalty_defaults": 253,
+      "no_source_loyalty_defaults": 252,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -30322,7 +31130,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 389,
+      "preview_officers_checked": 387,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -30340,7 +31148,21 @@
             },
             "chronology_basis": {
               "canonical": "third_party_SAN14_game_setting_transcription",
-              "scenario": "unknown_historical_death_authorial_retirement220_for_playable_career"
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
             }
           }
         },
@@ -30355,6 +31177,20 @@
             "chronology_basis": {
               "canonical": "third_party_SAN14_game_setting_transcription",
               "scenario": "scenario_primary_year_correction_Ma_family_executed_212_not_211"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
             }
           }
         },
@@ -30385,6 +31221,34 @@
               "scenario": "scenario_primary_year_correction_Ma_family_executed_212_not_211"
             }
           }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
         }
       ],
       "opening_ownership_rosters_match": true,
@@ -30392,7 +31256,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "0548e6aa29d8d929f4b4169163a14c7898cbdd661871d328ac12729dc71a6404",
+      "opening_save_sha256": "0d931e1f7a310c8efd8ed493cd5cbe1bdf01e3ee3611795f702f13c67abc367c",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -32238,17 +33102,17 @@
           "person_id": "san14-candidate-0855",
           "runtime_id": 854,
           "name": "雍闿",
-          "role": "serving",
-          "city": "yidu",
-          "faction": "shu",
+          "role": "free",
+          "city": "jianning",
+          "faction": null,
           "source_row_id": "cnblogs-line-0135",
           "previous_initial_health": 80,
           "initial_health": 79,
           "previous_health_max": 80,
           "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
+          "previous_loyalty": 0,
+          "loyalty": 0,
+          "loyalty_reason": "free"
         },
         {
           "person_id": "san14-candidate-0856",
@@ -32580,18 +33444,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 377,
+      "serving": 378,
       "rulers": 11,
-      "ordinary_serving": 366,
+      "ordinary_serving": 367,
       "free": 39,
-      "total_instantiated": 416,
-      "initial_health_changed": 121,
+      "total_instantiated": 417,
+      "initial_health_changed": 122,
       "health_cap_increased": 50,
       "ordinary_loyalty_changed": 71,
       "source_context_applied": 74,
       "source_context_mismatch_defaults": 42,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 250,
+      "no_source_loyalty_defaults": 251,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -32599,20 +33463,35 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 377,
+      "preview_officers_checked": 378,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "1954b74c6a1912f33bf75c2747921adba9a988f99e0d120a62c4d9d3549adbd1",
+      "opening_save_sha256": "fd8cce79ae1e505c09a32bd471636ba95926faae98e5a3307b4984804a796fab",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -33173,6 +34052,22 @@
           "previous_loyalty": 80,
           "loyalty": 71,
           "loyalty_reason": "source_context_applied"
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "runtime_id": 263,
+          "name": "公孙康",
+          "role": "ruler",
+          "city": "liaodong",
+          "faction": "gongsun",
+          "source_row_id": "cnblogs-line-0098",
+          "previous_initial_health": 80,
+          "initial_health": 79,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 100,
+          "loyalty": 100,
+          "loyalty_reason": "ruler"
         },
         {
           "person_id": "san14-candidate-0271",
@@ -34672,10 +35567,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 109,
-      "serving": 357,
+      "serving": 356,
       "rulers": 9,
-      "ordinary_serving": 348,
-      "free": 53,
+      "ordinary_serving": 347,
+      "free": 54,
       "total_instantiated": 410,
       "initial_health_changed": 120,
       "health_cap_increased": 50,
@@ -34683,7 +35578,7 @@
       "source_context_applied": 70,
       "source_context_mismatch_defaults": 39,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 239,
+      "no_source_loyalty_defaults": 238,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -34691,7 +35586,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 109,
-      "preview_officers_checked": 357,
+      "preview_officers_checked": 356,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -34723,7 +35618,21 @@
             },
             "chronology_basis": {
               "canonical": "third_party_SAN14_game_setting_transcription",
-              "scenario": "unknown_historical_death_authorial_retirement220_for_playable_career"
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
             }
           }
         },
@@ -34738,6 +35647,20 @@
             "chronology_basis": {
               "canonical": "third_party_SAN14_game_setting_transcription",
               "scenario": "scenario_primary_year_correction_Ma_family_executed_212_not_211"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
             }
           }
         },
@@ -34768,6 +35691,34 @@
               "scenario": "scenario_primary_year_correction_Ma_family_executed_212_not_211"
             }
           }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
         }
       ],
       "opening_ownership_rosters_match": true,
@@ -34775,7 +35726,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "62c127f6527f2b6ff2bf281e81a8c502786cd9021d5eb9edc6145f6288aed2dc",
+      "opening_save_sha256": "1a0018079cadd4ab54e90af9e76c9cd8cf52f4494fb094e364ff951f43b0fd92",
       "changed_people": [
         {
           "person_id": "san14-candidate-0003",
@@ -36819,10 +37770,10 @@
       "player": "wei",
       "seed": 2026,
       "cities": 110,
-      "serving": 365,
+      "serving": 364,
       "rulers": 5,
-      "ordinary_serving": 360,
-      "free": 47,
+      "ordinary_serving": 359,
+      "free": 48,
       "total_instantiated": 412,
       "initial_health_changed": 120,
       "health_cap_increased": 52,
@@ -36830,7 +37781,7 @@
       "source_context_applied": 62,
       "source_context_mismatch_defaults": 53,
       "source_ruler_marker_nonruler_defaults": 1,
-      "no_source_loyalty_defaults": 244,
+      "no_source_loyalty_defaults": 243,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -36838,7 +37789,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 110,
-      "preview_officers_checked": 365,
+      "preview_officers_checked": 364,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -36856,7 +37807,63 @@
             },
             "chronology_basis": {
               "canonical": "third_party_SAN14_game_setting_transcription",
-              "scenario": "unknown_historical_death_authorial_retirement220_for_playable_career"
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
             }
           }
         }
@@ -36866,7 +37873,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "df53761c73cf0e68032b115da4fa597697c4bc7baf1a42c2537d81888c268a18",
+      "opening_save_sha256": "b110fe98cd7636621246640bc1dd863c95612cc1ef85afc4585e13b6b2355f6a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -38897,9 +39904,9 @@
       "serving": 365,
       "rulers": 5,
       "ordinary_serving": 360,
-      "free": 52,
-      "total_instantiated": 417,
-      "initial_health_changed": 115,
+      "free": 53,
+      "total_instantiated": 418,
+      "initial_health_changed": 116,
       "health_cap_increased": 55,
       "ordinary_loyalty_changed": 57,
       "source_context_applied": 59,
@@ -38920,13 +39927,84 @@
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d6f02427c84480727c2562eec6d88399c7142f5c107e502794b8f56183ad2595",
+      "opening_save_sha256": "07ab200c3ce9e07b5f11b36861022bb60f986811f160b57f5e38c7f6eb4089da",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -39503,6 +40581,22 @@
           "previous_loyalty": 80,
           "loyalty": 80,
           "loyalty_reason": "source_context_mismatch_default"
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "runtime_id": 263,
+          "name": "公孙康",
+          "role": "ruler",
+          "city": "liaodong",
+          "faction": "gongsun",
+          "source_row_id": "cnblogs-line-0098",
+          "previous_initial_health": 80,
+          "initial_health": 79,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 100,
+          "loyalty": 100,
+          "loyalty_reason": "ruler"
         },
         {
           "person_id": "san14-candidate-0271",
@@ -40858,18 +41952,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 110,
-      "serving": 386,
+      "serving": 387,
       "rulers": 5,
-      "ordinary_serving": 381,
+      "ordinary_serving": 382,
       "free": 40,
-      "total_instantiated": 426,
-      "initial_health_changed": 116,
+      "total_instantiated": 427,
+      "initial_health_changed": 117,
       "health_cap_increased": 56,
       "ordinary_loyalty_changed": 57,
       "source_context_applied": 59,
       "source_context_mismatch_defaults": 57,
       "source_ruler_marker_nonruler_defaults": 1,
-      "no_source_loyalty_defaults": 264,
+      "no_source_loyalty_defaults": 265,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -40877,20 +41971,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 110,
-      "preview_officers_checked": 386,
+      "preview_officers_checked": 387,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e993a3d12183b6275551f25e851b9b01504b3ca4adbc0370e190645cdbba4c72",
+      "opening_save_sha256": "3bcfce8de20adf52a734057980c2193598646a1f0996fc2f37ede2ac3ee733cc",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -41467,6 +42632,22 @@
           "previous_loyalty": 80,
           "loyalty": 80,
           "loyalty_reason": "source_context_mismatch_default"
+        },
+        {
+          "person_id": "san14-candidate-0264",
+          "runtime_id": 263,
+          "name": "公孙康",
+          "role": "ruler",
+          "city": "liaodong",
+          "faction": "gongsun",
+          "source_row_id": "cnblogs-line-0098",
+          "previous_initial_health": 80,
+          "initial_health": 79,
+          "previous_health_max": 80,
+          "health_max": 80,
+          "previous_loyalty": 100,
+          "loyalty": 100,
+          "loyalty_reason": "ruler"
         },
         {
           "person_id": "san14-candidate-0271",
@@ -42848,13 +44029,84 @@
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "dc9cfe7dcd48230b48139a20c6db974cb75c4d752a1207ed9549f86d7204232d",
+      "opening_save_sha256": "1bd1baa0430b961a397b26635854633d09a1302a457ac70e623616e2490b5663",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -44482,16 +45734,16 @@
       "player": "wei",
       "seed": 2026,
       "cities": 111,
-      "serving": 311,
+      "serving": 310,
       "rulers": 6,
-      "ordinary_serving": 305,
+      "ordinary_serving": 304,
       "free": 79,
-      "total_instantiated": 390,
-      "initial_health_changed": 88,
-      "health_cap_increased": 43,
+      "total_instantiated": 389,
+      "initial_health_changed": 87,
+      "health_cap_increased": 42,
       "ordinary_loyalty_changed": 37,
       "source_context_applied": 38,
-      "source_context_mismatch_defaults": 46,
+      "source_context_mismatch_defaults": 45,
       "source_ruler_marker_nonruler_defaults": 0,
       "no_source_loyalty_defaults": 221,
       "virtue_coverage": {
@@ -44501,20 +45753,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 111,
-      "preview_officers_checked": 311,
+      "preview_officers_checked": 310,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "da62ff6c1adc1029e1ccd2d5d911ceb3e2f5ba40f1190aa2bd999259f73ec71d",
+      "opening_save_sha256": "87bf8ae2dca904dd9a1b1ad7559a23e41a92e6caed997ed5c8609a5439fc197a",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -45637,22 +46960,6 @@
           "loyalty_reason": "source_context_mismatch_default"
         },
         {
-          "person_id": "san14-candidate-0769",
-          "runtime_id": 768,
-          "name": "马超",
-          "role": "serving",
-          "city": "shujun",
-          "faction": "shu",
-          "source_row_id": "cnblogs-line-0168",
-          "previous_initial_health": 80,
-          "initial_health": 97,
-          "previous_health_max": 80,
-          "health_max": 97,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
-        },
-        {
           "person_id": "san14-candidate-0787",
           "runtime_id": 786,
           "name": "费祎",
@@ -45934,16 +47241,16 @@
       "player": "wei",
       "seed": 2026,
       "cities": 111,
-      "serving": 324,
+      "serving": 323,
       "rulers": 4,
-      "ordinary_serving": 320,
+      "ordinary_serving": 319,
       "free": 38,
-      "total_instantiated": 362,
-      "initial_health_changed": 78,
+      "total_instantiated": 361,
+      "initial_health_changed": 77,
       "health_cap_increased": 38,
       "ordinary_loyalty_changed": 31,
       "source_context_applied": 33,
-      "source_context_mismatch_defaults": 45,
+      "source_context_mismatch_defaults": 44,
       "source_ruler_marker_nonruler_defaults": 0,
       "no_source_loyalty_defaults": 242,
       "virtue_coverage": {
@@ -45953,20 +47260,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 111,
-      "preview_officers_checked": 324,
+      "preview_officers_checked": 323,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "0be54c981effe97240bdf232468ac7f8b34234ce946c30059fa85b6ad17ec81b",
+      "opening_save_sha256": "08d19d76823290bca0b89d5abaae6f02a0f3dab9eab7c7ceb84bf3f25a886c30",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -46348,22 +47726,6 @@
           "initial_health": 87,
           "previous_health_max": 80,
           "health_max": 87,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
-        },
-        {
-          "person_id": "san14-candidate-0272",
-          "runtime_id": 271,
-          "name": "高定",
-          "role": "serving",
-          "city": "shujun",
-          "faction": "shu",
-          "source_row_id": "cnblogs-line-0108",
-          "previous_initial_health": 80,
-          "initial_health": 63,
-          "previous_health_max": 80,
-          "health_max": 80,
           "previous_loyalty": 80,
           "loyalty": 80,
           "loyalty_reason": "source_context_mismatch_default"
@@ -47226,18 +48588,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 111,
-      "serving": 298,
+      "serving": 295,
       "rulers": 4,
-      "ordinary_serving": 294,
+      "ordinary_serving": 291,
       "free": 18,
-      "total_instantiated": 316,
-      "initial_health_changed": 57,
+      "total_instantiated": 313,
+      "initial_health_changed": 56,
       "health_cap_increased": 24,
       "ordinary_loyalty_changed": 22,
       "source_context_applied": 24,
-      "source_context_mismatch_defaults": 33,
+      "source_context_mismatch_defaults": 32,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 237,
+      "no_source_loyalty_defaults": 235,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -47245,20 +48607,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 111,
-      "preview_officers_checked": 298,
+      "preview_officers_checked": 295,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "929765118772db2f39b5d2192551ef7837fb4141293fe89d8f6065af20373107",
+      "opening_save_sha256": "557ab38e4eecf78cd3d25d1a9300f539cc6b239e855386007feb831729bd00d5",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -47515,22 +48948,6 @@
           "previous_loyalty": 100,
           "loyalty": 100,
           "loyalty_reason": "ruler"
-        },
-        {
-          "person_id": "san14-candidate-0272",
-          "runtime_id": 271,
-          "name": "高定",
-          "role": "serving",
-          "city": "fuling",
-          "faction": "shu",
-          "source_row_id": "cnblogs-line-0108",
-          "previous_initial_health": 80,
-          "initial_health": 63,
-          "previous_health_max": 80,
-          "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
         },
         {
           "person_id": "san14-candidate-0314",
@@ -48182,18 +49599,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 111,
-      "serving": 295,
+      "serving": 294,
       "rulers": 4,
-      "ordinary_serving": 291,
+      "ordinary_serving": 290,
       "free": 18,
-      "total_instantiated": 313,
+      "total_instantiated": 312,
       "initial_health_changed": 55,
       "health_cap_increased": 22,
       "ordinary_loyalty_changed": 21,
       "source_context_applied": 23,
       "source_context_mismatch_defaults": 32,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 236,
+      "no_source_loyalty_defaults": 235,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -48201,7 +49618,7 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 111,
-      "preview_officers_checked": 295,
+      "preview_officers_checked": 294,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
@@ -48243,7 +49660,7 @@
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "5266224a2d7b3a955c59e49ed0677b886ce65dcacec20010037d383e6e9faa24",
+      "opening_save_sha256": "017976c09082052e00330f72d9c3069d3ffc62b4bf541904ee6b0037dfa89d2d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49135,18 +50552,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 111,
-      "serving": 285,
+      "serving": 282,
       "rulers": 4,
-      "ordinary_serving": 281,
+      "ordinary_serving": 278,
       "free": 15,
-      "total_instantiated": 300,
-      "initial_health_changed": 46,
+      "total_instantiated": 297,
+      "initial_health_changed": 45,
       "health_cap_increased": 18,
       "ordinary_loyalty_changed": 20,
       "source_context_applied": 21,
-      "source_context_mismatch_defaults": 24,
+      "source_context_mismatch_defaults": 23,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 236,
+      "no_source_loyalty_defaults": 234,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -49154,20 +50571,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 111,
-      "preview_officers_checked": 285,
+      "preview_officers_checked": 282,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "e29c5529df1a91acb902e8d2f3931a5954b0c39fe9614c0b990a77926bf54bb1",
+      "opening_save_sha256": "4fde92d543f5c3ca11681dfe47611f8534563352242bb3d6b2a9562eef7a8184",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -49360,22 +50848,6 @@
           "previous_loyalty": 100,
           "loyalty": 100,
           "loyalty_reason": "ruler"
-        },
-        {
-          "person_id": "san14-candidate-0272",
-          "runtime_id": 271,
-          "name": "高定",
-          "role": "serving",
-          "city": "fuling",
-          "faction": "shu",
-          "source_row_id": "cnblogs-line-0108",
-          "previous_initial_health": 80,
-          "initial_health": 63,
-          "previous_health_max": 80,
-          "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
         },
         {
           "person_id": "san14-candidate-0314",
@@ -49915,16 +51387,16 @@
       "player": "wei",
       "seed": 2026,
       "cities": 110,
-      "serving": 242,
+      "serving": 241,
       "rulers": 3,
-      "ordinary_serving": 239,
+      "ordinary_serving": 238,
       "free": 34,
-      "total_instantiated": 276,
-      "initial_health_changed": 27,
+      "total_instantiated": 275,
+      "initial_health_changed": 26,
       "health_cap_increased": 12,
       "ordinary_loyalty_changed": 10,
       "source_context_applied": 11,
-      "source_context_mismatch_defaults": 15,
+      "source_context_mismatch_defaults": 14,
       "source_ruler_marker_nonruler_defaults": 0,
       "no_source_loyalty_defaults": 213,
       "virtue_coverage": {
@@ -49934,20 +51406,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 110,
-      "preview_officers_checked": 242,
+      "preview_officers_checked": 241,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d35150f2328ee9aac6efca1af030853518ee327f59046e73a30319df7e249ad8",
+      "opening_save_sha256": "4e9b958ad84e413fae02f11d8352c2f18ba2bca6edb5ffec2f1e2f8f56260454",
       "changed_people": [
         {
           "person_id": "san14-candidate-0010",
@@ -50044,22 +51587,6 @@
           "previous_loyalty": 0,
           "loyalty": 0,
           "loyalty_reason": "free"
-        },
-        {
-          "person_id": "san14-candidate-0272",
-          "runtime_id": 271,
-          "name": "高定",
-          "role": "serving",
-          "city": "fuling",
-          "faction": "shu",
-          "source_row_id": "cnblogs-line-0108",
-          "previous_initial_health": 80,
-          "initial_health": 63,
-          "previous_health_max": 80,
-          "health_max": 80,
-          "previous_loyalty": 80,
-          "loyalty": 80,
-          "loyalty_reason": "source_context_mismatch_default"
         },
         {
           "person_id": "san14-candidate-0344",
@@ -50391,18 +51918,18 @@
       "player": "wei",
       "seed": 2026,
       "cities": 113,
-      "serving": 158,
+      "serving": 157,
       "rulers": 4,
-      "ordinary_serving": 154,
+      "ordinary_serving": 153,
       "free": 34,
-      "total_instantiated": 192,
+      "total_instantiated": 191,
       "initial_health_changed": 7,
       "health_cap_increased": 3,
       "ordinary_loyalty_changed": 2,
       "source_context_applied": 3,
       "source_context_mismatch_defaults": 5,
       "source_ruler_marker_nonruler_defaults": 0,
-      "no_source_loyalty_defaults": 146,
+      "no_source_loyalty_defaults": 145,
       "virtue_coverage": {
         "san14_charisma": 1000,
         "missing_charisma_default60": 30
@@ -50410,20 +51937,91 @@
       "city_capacity": 99,
       "battle_capacity": 10,
       "preview_cities_checked": 113,
-      "preview_officers_checked": 158,
+      "preview_officers_checked": 157,
       "preview_rng_unchanged": true,
       "preview_save_bytes_unchanged": true,
       "save_roundtrip_bytes_equal": true,
       "save_health_loyalty_preserved": true,
       "canonical_ids_match": true,
       "declared_source_dates_match": true,
-      "declared_person_date_overrides": [],
+      "declared_person_date_overrides": [
+        {
+          "person_id": "san14-candidate-0264",
+          "name": "公孙康",
+          "fields": {
+            "death_year": {
+              "canonical": 210,
+              "scenario": 220
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0272",
+          "name": "高定",
+          "fields": {
+            "death_year": {
+              "canonical": 251,
+              "scenario": 225
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0769",
+          "name": "马超",
+          "fields": {
+            "death_year": {
+              "canonical": 226,
+              "scenario": 222
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0782",
+          "name": "樊稠",
+          "fields": {
+            "death_year": {
+              "canonical": 192,
+              "scenario": 195
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        },
+        {
+          "person_id": "san14-candidate-0947",
+          "name": "刘岱",
+          "fields": {
+            "death_year": {
+              "canonical": 202,
+              "scenario": 192
+            },
+            "chronology_basis": {
+              "canonical": "third_party_SAN14_game_setting_transcription",
+              "scenario": "primary_text_death_year_correction"
+            }
+          }
+        }
+      ],
       "opening_ownership_rosters_match": true,
       "rng": {
         "state": 2026,
         "draws": 0
       },
-      "opening_save_sha256": "d41df7d1527cc9fa092f3a98a127fe222a5bab22947b03ac03798480ed75bf1a",
+      "opening_save_sha256": "0c85e432f40fcc8a2b6fc957ddf5b90943430c147b2c94c7d10fcac7e95f6d1d",
       "changed_people": [
         {
           "person_id": "san14-candidate-0348",

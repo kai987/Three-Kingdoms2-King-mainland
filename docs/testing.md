@@ -9,6 +9,8 @@
 ```sh
 # 戰役來源與生成資料一致
 python3 -B game/build_campaigns.py --check
+python3 -B tools/scenario-history/audit.py --check
+python3 -B tools/scenario-history/ruler_audit.py --check
 
 # Python規則、名冊、事件、兵員守恆、存讀與API邊界
 python3 -B -m unittest discover -s tests -p 'test_remake_*.py' -v
@@ -23,6 +25,8 @@ node tests/march_wasm_parity.cjs
 ```
 
 介面夾具可驗證人選排序、輸入上限、滿10人停選、路線合併、自動恢復、語言切換與延遲回應失效等程式行為，但不宣稱涵蓋真實瀏覽器的排版、焦點、觸控或資源載入。
+
+君主歸屬核查以固定的`game/config/references/ruler-affiliation-review.json`為依據，逐一核對29個開局的67名君主人選、君主ID／旗標／本據所有者、全員配置集計與開放城池的資金、兵糧、兵員。`ruler_audit.py --check`同時檢查逐人報告未過期，已加入CI；`--write`只生成報告，不重寫固定決定表。負例測試確認誤改君主、城主、計數、兵員與年代資料會失敗。公孫康沒年、曹操與臧霸軍營的區域代理及假想例外均保留限定說明，不把結構一致當作所有駐地均有史料證明。
 
 ## 真實WASM與CPU回放
 

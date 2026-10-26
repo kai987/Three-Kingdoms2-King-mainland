@@ -53,7 +53,7 @@
           "city": "jingzhao",
           "name": "李傕势力",
           "color": "#9c774f",
-          "initial_officers": 15
+          "initial_officers": 12
         },
         {
           "id": "ma_teng",
@@ -74,7 +74,7 @@
         {
           "id": "liu_you",
           "captain": "刘繇",
-          "city": "yuzhang",
+          "city": "poyang",
           "name": "刘繇势力",
           "color": "#8a8054",
           "initial_officers": 4
@@ -101,7 +101,7 @@
           "city": "kuaiji",
           "name": "王朗势力",
           "color": "#527d77",
-          "initial_officers": 5
+          "initial_officers": 3
         },
         {
           "id": "shu",
@@ -109,7 +109,7 @@
           "city": "qiao",
           "name": "刘备势力",
           "color": "#786985",
-          "initial_officers": 16
+          "initial_officers": 12
         },
         {
           "id": "gongsun",
@@ -158,6 +158,30 @@
           "city": "jincheng",
           "color": "#8753a1",
           "initial_officers": 3
+        },
+        {
+          "id": "zang_ba",
+          "name": "臧霸",
+          "captain": "臧霸",
+          "city": "donghai",
+          "color": "#8753a1",
+          "initial_officers": 4
+        },
+        {
+          "id": "zhang_xiu",
+          "name": "张绣",
+          "captain": "张绣",
+          "city": "nanyang",
+          "color": "#8753a1",
+          "initial_officers": 3
+        },
+        {
+          "id": "hua_xin",
+          "name": "华歆",
+          "captain": "华歆",
+          "city": "yuzhang",
+          "color": "#8753a1",
+          "initial_officers": 1
         }
       ],
       "active_cities": [
@@ -476,14 +500,14 @@
         },
         {
           "person_id": "san14-candidate-0091",
-          "city": "kuaiji",
+          "city": "yuzhang",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
           "person_id": "san14-candidate-0092",
-          "city": "hedong",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -553,7 +577,7 @@
         },
         {
           "person_id": "san14-candidate-0147",
-          "city": "donghai",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -637,7 +661,7 @@
         },
         {
           "person_id": "san14-candidate-0185",
-          "city": "donghai",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -666,13 +690,6 @@
         {
           "person_id": "san14-candidate-0193",
           "city": "lujiang",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0211",
-          "city": "kuaiji",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -819,7 +836,7 @@
         },
         {
           "person_id": "san14-candidate-0260",
-          "city": "nanyang",
+          "city": "xiangyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -924,7 +941,7 @@
         },
         {
           "person_id": "san14-candidate-0296",
-          "city": "fufeng",
+          "city": "nanyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -938,7 +955,7 @@
         },
         {
           "person_id": "san14-candidate-0308",
-          "city": "qiao",
+          "city": "donghai",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -973,7 +990,7 @@
         },
         {
           "person_id": "san14-candidate-0321",
-          "city": "nanyang",
+          "city": "xiangyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1134,7 +1151,7 @@
         },
         {
           "person_id": "san14-candidate-0409",
-          "city": "donghai",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1337,9 +1354,9 @@
         },
         {
           "person_id": "san14-candidate-0525",
-          "city": "qiao",
+          "city": "donghai",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
@@ -1435,7 +1452,7 @@
         },
         {
           "person_id": "san14-candidate-0586",
-          "city": "yuzhang",
+          "city": "poyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1449,7 +1466,7 @@
         },
         {
           "person_id": "san14-candidate-0595",
-          "city": "nanyang",
+          "city": "xiangyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1505,9 +1522,9 @@
         },
         {
           "person_id": "san14-candidate-0625",
-          "city": "henan",
+          "city": "nanyang",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
@@ -1561,7 +1578,7 @@
         },
         {
           "person_id": "san14-candidate-0656",
-          "city": "donghai",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1610,7 +1627,7 @@
         },
         {
           "person_id": "san14-candidate-0674",
-          "city": "donghai",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1799,7 +1816,7 @@
         },
         {
           "person_id": "san14-candidate-0793",
-          "city": "donghai",
+          "city": "qiao",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2065,7 +2082,7 @@
         },
         {
           "person_id": "san14-candidate-0951",
-          "city": "nanyang",
+          "city": "xiangyang",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2100,7 +2117,7 @@
         },
         {
           "person_id": "san14-candidate-0963",
-          "city": "yuzhang",
+          "city": "poyang",
           "troops": 300,
           "ruler": true,
           "resolve_death_year": true
@@ -3030,6 +3047,11 @@
           "person_id": "historical-expansion-0002",
           "city": "fanyang",
           "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0211",
+          "city": "wujun",
+          "resolve_death_year": false
         }
       ],
       "dlc_audit": {
@@ -3088,7 +3110,7 @@
             "person_id": "san14-candidate-0147",
             "name": "关羽",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "ruler_affiliation_review_20261027"
           },
           {
             "person_id": "san14-candidate-0176",
@@ -3100,7 +3122,7 @@
             "person_id": "san14-candidate-0185",
             "name": "简雍",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "ruler_affiliation_review_20261027"
           },
           {
             "person_id": "san14-candidate-0219",
@@ -3202,7 +3224,7 @@
             "person_id": "san14-candidate-0656",
             "name": "张飞",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "ruler_affiliation_review_20261027"
           },
           {
             "person_id": "san14-candidate-0661",
@@ -3250,7 +3272,7 @@
             "person_id": "san14-candidate-0793",
             "name": "糜竺",
             "faction": "shu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export"
+            "basis": "ruler_affiliation_review_20261027"
           },
           {
             "person_id": "san14-candidate-0861",
@@ -3286,7 +3308,7 @@
             "person_id": "san14-candidate-0963",
             "name": "刘繇",
             "faction": "liu_you",
-            "basis": "explicit_chapter_ruler"
+            "basis": "ruler_affiliation_review_20261027"
           },
           {
             "person_id": "san14-candidate-0986",
@@ -3335,12 +3357,12 @@
           "anding": "ma_teng",
           "jingzhao": "li_jue",
           "jincheng": "han_sui",
-          "donghai": "shu",
+          "donghai": "zang_ba",
           "shanyang": "lubu",
           "henan": "li_jue",
           "yiyang": "liu_biao",
           "jiujiang": "lubu",
-          "yuzhang": "liu_you",
+          "yuzhang": "hua_xin",
           "yulin": "neutral",
           "jiangxia": "liu_biao",
           "nanjun": "liu_biao",
@@ -3353,7 +3375,7 @@
           "yunnan": "liu_zhang",
           "yongchang": "liu_zhang",
           "xincheng": "neutral",
-          "nanyang": "liu_biao",
+          "nanyang": "zhang_xiu",
           "bohai": "yuan_shao",
           "tianshui": "ma_teng",
           "lujiang": "lubu",
@@ -3381,7 +3403,7 @@
           "yinping": "liu_zhang",
           "fuling": "liu_zhang",
           "xindu": "liu_you",
-          "poyang": "neutral",
+          "poyang": "liu_you",
           "luling": "neutral",
           "qichun": "neutral",
           "linhe": "neutral",
@@ -3457,8 +3479,8 @@
           "san14-candidate-0083": "wei",
           "san14-candidate-0086": "lujiang",
           "san14-candidate-0089": "henan",
-          "san14-candidate-0091": "kuaiji",
-          "san14-candidate-0092": "hedong",
+          "san14-candidate-0091": "yuzhang",
+          "san14-candidate-0092": "nanyang",
           "san14-candidate-0093": "yingchuan",
           "san14-candidate-0099": "nanjun",
           "san14-candidate-0100": "taiyuan",
@@ -3482,7 +3504,7 @@
           "san14-candidate-0134": "kuaiji",
           "san14-candidate-0135": "yingchuan",
           "san14-candidate-0136": "shujun",
-          "san14-candidate-0147": "donghai",
+          "san14-candidate-0147": "qiao",
           "san14-candidate-0148": "changsha",
           "san14-candidate-0150": "nanyang",
           "san14-candidate-0153": "henan",
@@ -3495,7 +3517,7 @@
           "san14-candidate-0176": "wujun",
           "san14-candidate-0179": "nanyang",
           "san14-candidate-0183": "henan",
-          "san14-candidate-0185": "donghai",
+          "san14-candidate-0185": "qiao",
           "san14-candidate-0189": "nanyang",
           "san14-candidate-0195": "qiao",
           "san14-candidate-0197": "nanyang",
@@ -3603,7 +3625,7 @@
           "san14-candidate-0520": "wei",
           "san14-candidate-0521": "chenliu",
           "san14-candidate-0524": "jiangxia",
-          "san14-candidate-0525": "qiao",
+          "san14-candidate-0525": "donghai",
           "san14-candidate-0526": "yingchuan",
           "san14-candidate-0528": "wei",
           "san14-candidate-0531": "wei",
@@ -3644,7 +3666,7 @@
           "san14-candidate-0645": "wujun",
           "san14-candidate-0652": "wuling",
           "san14-candidate-0654": "wei",
-          "san14-candidate-0656": "donghai",
+          "san14-candidate-0656": "qiao",
           "san14-candidate-0658": "nanyang",
           "san14-candidate-0665": "nanjun",
           "san14-candidate-0669": "kuaiji",
@@ -3693,7 +3715,7 @@
           "san14-candidate-0787": "bajun",
           "san14-candidate-0789": "bajun",
           "san14-candidate-0791": "shujun",
-          "san14-candidate-0793": "donghai",
+          "san14-candidate-0793": "qiao",
           "san14-candidate-0795": "qiao",
           "san14-candidate-0796": "tianshui",
           "san14-candidate-0799": "runan",
@@ -3820,7 +3842,7 @@
           "san14-candidate-0188": "jiyin",
           "san14-candidate-0193": "lujiang",
           "san14-candidate-0208": "runan",
-          "san14-candidate-0211": "kuaiji",
+          "san14-candidate-0211": "wujun",
           "san14-candidate-0212": "shanyang",
           "san14-candidate-0217": "pingyuan",
           "san14-candidate-0218": "danyang",
@@ -3835,7 +3857,7 @@
           "san14-candidate-0252": "liaoxi",
           "san14-candidate-0254": "lujiang",
           "san14-candidate-0258": "shanyang",
-          "san14-candidate-0260": "nanyang",
+          "san14-candidate-0260": "xiangyang",
           "san14-candidate-0264": "liaodong",
           "san14-candidate-0266": "yuyang",
           "san14-candidate-0267": "shanggu",
@@ -3848,14 +3870,14 @@
           "san14-candidate-0285": "nanjun",
           "san14-candidate-0289": "xiapi",
           "san14-candidate-0292": "dongping",
-          "san14-candidate-0296": "fufeng",
+          "san14-candidate-0296": "nanyang",
           "san14-candidate-0297": "hedong",
           "san14-candidate-0300": "wujun",
-          "san14-candidate-0308": "qiao",
+          "san14-candidate-0308": "donghai",
           "san14-candidate-0317": "pingyuan",
           "san14-candidate-0319": "jiangxia",
           "san14-candidate-0320": "lingling",
-          "san14-candidate-0321": "nanyang",
+          "san14-candidate-0321": "xiangyang",
           "san14-candidate-0322": "pingyuan",
           "san14-candidate-0324": "wuling",
           "san14-candidate-0325": "nanjun",
@@ -3870,7 +3892,7 @@
           "san14-candidate-0395": "zhongshan",
           "san14-candidate-0399": "jinan",
           "san14-candidate-0402": "chenliu",
-          "san14-candidate-0409": "donghai",
+          "san14-candidate-0409": "qiao",
           "san14-candidate-0410": "pingyuan",
           "san14-candidate-0411": "lujiang",
           "san14-candidate-0416": "qi",
@@ -3910,9 +3932,9 @@
           "san14-candidate-0576": "wujun",
           "san14-candidate-0583": "danyang",
           "san14-candidate-0584": "lujiang",
-          "san14-candidate-0586": "yuzhang",
+          "san14-candidate-0586": "poyang",
           "san14-candidate-0592": "hedong",
-          "san14-candidate-0595": "nanyang",
+          "san14-candidate-0595": "xiangyang",
           "san14-candidate-0597": "hanzhong",
           "san14-candidate-0599": "qi",
           "san14-candidate-0601": "taiyuan",
@@ -3922,7 +3944,7 @@
           "san14-candidate-0609": "taiyuan",
           "san14-candidate-0614": "xiapi",
           "san14-candidate-0617": "wujun",
-          "san14-candidate-0625": "henan",
+          "san14-candidate-0625": "nanyang",
           "san14-candidate-0627": "jiameng",
           "san14-candidate-0632": "wudu",
           "san14-candidate-0635": "runan",
@@ -3937,7 +3959,7 @@
           "san14-candidate-0668": "guiyang",
           "san14-candidate-0670": "jiyin",
           "san14-candidate-0671": "lujiang",
-          "san14-candidate-0674": "donghai",
+          "san14-candidate-0674": "qiao",
           "san14-candidate-0678": "jiangxia",
           "san14-candidate-0683": "qiao",
           "san14-candidate-0686": "wujun",
@@ -4002,12 +4024,12 @@
           "san14-candidate-0946": "xiangyang",
           "san14-candidate-0947": "chenliu",
           "san14-candidate-0949": "lingling",
-          "san14-candidate-0951": "nanyang",
+          "san14-candidate-0951": "xiangyang",
           "san14-candidate-0953": "xiangyang",
           "san14-candidate-0956": "jiujiang",
           "san14-candidate-0958": "runan",
           "san14-candidate-0961": "badong",
-          "san14-candidate-0963": "yuzhang",
+          "san14-candidate-0963": "poyang",
           "san14-candidate-0966": "wei",
           "san14-candidate-0969": "tianshui",
           "san14-candidate-0970": "xiapi",
@@ -4040,16 +4062,19 @@
           "zhang_yang": 660,
           "kong_rong": 279,
           "song_jian": 1024,
-          "han_sui": 165
+          "han_sui": 165,
+          "zang_ba": 524,
+          "zhang_xiu": 624,
+          "hua_xin": 90
         }
       },
       "coverage": {
         "set": {
-          "initial_serving": 271,
-          "initial_free": 168,
+          "initial_serving": 270,
+          "initial_free": 169,
           "source_scenario": "san14-194-06",
-          "planned_serving": 271,
-          "planned_max_city_roster": 11,
+          "planned_serving": 270,
+          "planned_max_city_roster": 12,
           "future_plans": 475,
           "library": 1030,
           "configured_profiles": 1030,
@@ -4549,27 +4574,95 @@
           "san14-candidate-0014": {
             "set": {
               "source_ruler": "刘备",
-              "faction": "shu",
+              "faction": "zang_ba",
               "city": "donghai",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0014",
                   "faction": "shu",
                   "origin": "qiao",
-                  "city": "donghai"
-                }
-              },
-              "placement_review": {
-                "set": {
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    222,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "regional_primary_mapping"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07",
+                  "historical_certainty": "regional_primary_mapping"
                 }
               },
               "appearance_plan": {
@@ -4578,7 +4671,8 @@
                     197,
                     7
                   ],
-                  "city": "donghai"
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -7127,27 +7221,92 @@
           "san14-candidate-0091": {
             "set": {
               "source_ruler": "王朗",
-              "faction": "wang_lang",
-              "city": "kuaiji",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "faction": "hua_xin",
+              "city": "yuzhang",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "197年華歆以豫章太守自領地方；不因不相關的呂布稱帝前提被編入王朗。豫章節點為本作郡治映射。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "197年華歆以豫章太守自領地方；不因不相關的呂布稱帝前提被編入王朗。豫章節點為本作郡治映射。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wang_lang",
+                "city": "kuaiji",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0091",
                   "faction": "wang_lang",
                   "origin": "kuaiji",
-                  "city": "kuaiji"
-                }
-              },
-              "placement_review": {
-                "set": {
+                  "city": "kuaiji",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    231,
+                    12
+                  ],
+                  "city": "kuaiji",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "faction": "hua_xin",
+                  "city": "yuzhang",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷13"
+                  ],
+                  "historical_certainty": "regional_primary_mapping"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷13"
+                  ],
+                  "note": "197年華歆以豫章太守自領地方；不因不相關的呂布稱帝前提被編入王朗。豫章節點為本作郡治映射。",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07",
+                  "historical_certainty": "regional_primary_mapping"
                 }
               },
               "appearance_plan": {
@@ -7156,7 +7315,8 @@
                     197,
                     7
                   ],
-                  "city": "kuaiji"
+                  "city": "yuzhang",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -7164,27 +7324,98 @@
           "san14-candidate-0092": {
             "set": {
               "source_ruler": "李傕",
-              "faction": "li_jue",
-              "city": "hedong",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "faction": "zhang_xiu",
+              "city": "nanyang",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "li_jue",
+                "city": "hedong",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0092",
                   "faction": "li_jue",
                   "origin": "jingzhao",
-                  "city": "hedong"
-                }
-              },
-              "placement_review": {
-                "set": {
+                  "city": "hedong",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    223,
+                    12
+                  ],
+                  "city": "hedong",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "faction": "zhang_xiu",
+                  "city": "nanyang",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "regional_primary_mapping"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07",
+                  "historical_certainty": "regional_primary_mapping"
                 }
               },
               "appearance_plan": {
@@ -7193,7 +7424,8 @@
                     197,
                     7
                   ],
-                  "city": "hedong"
+                  "city": "nanyang",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -8782,14 +9014,27 @@
             "set": {
               "source_ruler": "刘备",
               "source_city": null,
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0147",
+                  "faction": "shu",
                   "origin": "qiao",
                   "city": "donghai",
                   "basis": "authored_enemy_frontier_balanced",
@@ -8797,18 +9042,65 @@
                   "source_disposition": "missing_source_city",
                   "source_board_city": null
                 },
-                "delete": [
-                  "source_reference"
-                ]
-              },
-              "placement_review": {
-                "set": {
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    219,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "source_reference",
+                  "origin",
+                  "source_city",
+                  "source_disposition"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               },
               "appearance_plan": {
@@ -8817,7 +9109,8 @@
                     197,
                     7
                   ],
-                  "city": "donghai"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -10014,25 +10307,93 @@
           "san14-candidate-0185": {
             "set": {
               "source_ruler": "刘备",
-              "city": "donghai",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "qiao",
-                  "city": "donghai"
-                }
+              "city": "qiao",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
               },
-              "placement_review": {
-                "set": {
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0185",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    225,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               },
               "appearance_plan": {
@@ -10041,7 +10402,8 @@
                     197,
                     7
                   ],
-                  "city": "donghai"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -10747,33 +11109,86 @@
               "source_status": "serving",
               "source_ruler": "王朗",
               "year_state": "available",
-              "faction": "wang_lang",
-              "city": "kuaiji",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
+              "faction": null,
+              "city": "wujun",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "free",
               "posting_reference": {
                 "person_id": "san14-candidate-0211",
-                "faction": "wang_lang",
-                "origin": "kuaiji",
-                "city": "kuaiji",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": null,
+                "city": "wujun",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷46"
+                ],
+                "historical_certainty": "displaced_prefect_region_proxy"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "許貢失吳郡後投嚴白虎，沒有歸王朗的根據；197年以吳郡地方在野表示，不虛造新領土。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "許貢失吳郡後投嚴白虎，沒有歸王朗的根據；197年以吳郡地方在野表示，不虛造新領土。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷46"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "wang_lang",
+                "city": "kuaiji",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0211",
+                  "faction": "wang_lang",
+                  "origin": "kuaiji",
+                  "city": "kuaiji",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    200,
+                    12
+                  ],
+                  "city": "kuaiji",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷46"
+                  ],
+                  "note": "許貢失吳郡後投嚴白虎，沒有歸王朗的根據；197年以吳郡地方在野表示，不虛造新領土。",
+                  "historical_certainty": "displaced_prefect_region_proxy",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -10786,9 +11201,9 @@
                     200,
                     12
                   ],
-                  "city": "kuaiji",
-                  "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "city": "wujun",
+                  "status": "free",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -12467,32 +12882,91 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "nanyang",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiangyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0260",
                 "faction": "liu_biao",
-                "origin": "xiangyang",
-                "city": "nanyang",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "xiangyang",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_biao",
+                "city": "nanyang",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0260",
+                  "faction": "liu_biao",
+                  "origin": "xiangyang",
+                  "city": "nanyang",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    208,
+                    12
+                  ],
+                  "city": "nanyang",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -12505,9 +12979,9 @@
                     208,
                     12
                   ],
-                  "city": "nanyang",
+                  "city": "xiangyang",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -13719,33 +14193,92 @@
               "source_status": "serving",
               "source_ruler": "李傕",
               "year_state": "available",
-              "faction": "li_jue",
-              "city": "fufeng",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "faction": "zhang_xiu",
+              "city": "nanyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0296",
-                "faction": "li_jue",
-                "origin": "jingzhao",
-                "city": "fufeng",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": "zhang_xiu",
+                "city": "nanyang",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "regional_primary_mapping"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "li_jue",
+                "city": "fufeng",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0296",
+                  "faction": "li_jue",
+                  "origin": "jingzhao",
+                  "city": "fufeng",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    206,
+                    12
+                  ],
+                  "city": "fufeng",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -13758,9 +14291,9 @@
                     206,
                     12
                   ],
-                  "city": "fufeng",
+                  "city": "nanyang",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -14025,33 +14558,89 @@
               "source_status": "serving",
               "source_ruler": "刘备",
               "year_state": "available",
-              "faction": "shu",
-              "city": "qiao",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "faction": "zang_ba",
+              "city": "donghai",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0308",
-                "faction": "shu",
-                "origin": "qiao",
-                "city": "qiao",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": "zang_ba",
+                "city": "donghai",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "regional_primary_mapping"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "qiao",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0308",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "qiao",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    209,
+                    12
+                  ],
+                  "city": "qiao",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -14064,9 +14653,9 @@
                     209,
                     12
                   ],
-                  "city": "qiao",
+                  "city": "donghai",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -14476,32 +15065,91 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "nanyang",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiangyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0321",
                 "faction": "liu_biao",
-                "origin": "xiangyang",
-                "city": "nanyang",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "xiangyang",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_biao",
+                "city": "nanyang",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0321",
+                  "faction": "liu_biao",
+                  "origin": "xiangyang",
+                  "city": "nanyang",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    208,
+                    12
+                  ],
+                  "city": "nanyang",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -14514,9 +15162,9 @@
                     208,
                     12
                   ],
-                  "city": "nanyang",
+                  "city": "xiangyang",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -17055,32 +17703,88 @@
               "source_ruler": "刘备",
               "year_state": "available",
               "faction": "shu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0409",
                 "faction": "shu",
-                "origin": "qiao",
-                "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0409",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    206,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -17093,9 +17797,9 @@
                     206,
                     12
                   ],
-                  "city": "donghai",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -20551,27 +21255,95 @@
           "san14-candidate-0525": {
             "set": {
               "source_ruler": "刘备",
-              "faction": "shu",
-              "city": "qiao",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
+              "faction": "zang_ba",
+              "city": "donghai",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "qiao",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0525",
                   "faction": "shu",
                   "origin": "qiao",
-                  "city": "qiao"
-                }
-              },
-              "placement_review": {
-                "set": {
+                  "city": "qiao",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    231,
+                    12
+                  ],
+                  "city": "qiao",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "regional_primary_mapping"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07",
+                  "historical_certainty": "regional_primary_mapping"
                 }
               },
               "appearance_plan": {
@@ -20580,7 +21352,8 @@
                     197,
                     7
                   ],
-                  "city": "qiao"
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -21154,33 +21927,89 @@
               "source_status": "serving",
               "source_ruler": "刘备",
               "year_state": "available",
-              "faction": "shu",
+              "faction": "zang_ba",
               "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0545",
-                "faction": "shu",
-                "origin": "qiao",
+                "faction": "zang_ba",
                 "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "regional_primary_mapping"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0545",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    217,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -21195,7 +22024,7 @@
                   ],
                   "city": "donghai",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -22347,32 +23176,85 @@
               "source_ruler": "刘繇",
               "year_state": "available",
               "faction": "liu_you",
-              "city": "yuzhang",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "poyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0586",
                 "faction": "liu_you",
-                "origin": "yuzhang",
-                "city": "yuzhang",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "poyang",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13"
+                ],
+                "historical_certainty": "authorial_region_proxy"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_you",
+                "city": "yuzhang",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0586",
+                  "faction": "liu_you",
+                  "origin": "yuzhang",
+                  "city": "yuzhang",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    209,
+                    12
+                  ],
+                  "city": "yuzhang",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷13"
+                  ],
+                  "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+                  "historical_certainty": "authorial_region_proxy",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -22385,9 +23267,9 @@
                     209,
                     12
                   ],
-                  "city": "yuzhang",
+                  "city": "poyang",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -22669,32 +23551,91 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "nanyang",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiangyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0595",
                 "faction": "liu_biao",
-                "origin": "xiangyang",
-                "city": "nanyang",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "xiangyang",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_biao",
+                "city": "nanyang",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0595",
+                  "faction": "liu_biao",
+                  "origin": "xiangyang",
+                  "city": "nanyang",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    208,
+                    12
+                  ],
+                  "city": "nanyang",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -22707,9 +23648,9 @@
                     208,
                     12
                   ],
-                  "city": "nanyang",
+                  "city": "xiangyang",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -23683,33 +24624,92 @@
               "source_status": "serving",
               "source_ruler": "李傕",
               "year_state": "available",
-              "faction": "li_jue",
-              "city": "henan",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "faction": "zhang_xiu",
+              "city": "nanyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0625",
-                "faction": "li_jue",
-                "origin": "jingzhao",
-                "city": "henan",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "faction": "zhang_xiu",
+                "city": "nanyang",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "regional_primary_mapping"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "li_jue",
+                "city": "henan",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0625",
+                  "faction": "li_jue",
+                  "origin": "jingzhao",
+                  "city": "henan",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    207,
+                    12
+                  ],
+                  "city": "henan",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -23722,9 +24722,9 @@
                     207,
                     12
                   ],
-                  "city": "henan",
+                  "city": "nanyang",
                   "status": "serving",
-                  "basis": "retained_person_specific_released_location"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -24759,25 +25759,93 @@
           "san14-candidate-0656": {
             "set": {
               "source_ruler": "刘备",
-              "city": "donghai",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "qiao",
-                  "city": "donghai"
-                }
+              "city": "qiao",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
               },
-              "placement_review": {
-                "set": {
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0656",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    221,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "retained_person_specific_released_location"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               },
               "appearance_plan": {
@@ -24786,7 +25854,8 @@
                     197,
                     7
                   ],
-                  "city": "donghai"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -25426,32 +26495,88 @@
               "source_ruler": "刘备",
               "year_state": "available",
               "faction": "shu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "qiao",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0674",
                 "faction": "shu",
-                "origin": "qiao",
-                "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "qiao",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0674",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    206,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -25464,9 +26589,9 @@
                     206,
                     12
                   ],
-                  "city": "donghai",
+                  "city": "qiao",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -29122,25 +30247,93 @@
           "san14-candidate-0793": {
             "set": {
               "source_ruler": "刘备",
-              "city": "donghai",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "posting_reference": {
-                "set": {
-                  "origin": "qiao",
-                  "city": "donghai"
-                }
+              "city": "qiao",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
               },
-              "placement_review": {
-                "set": {
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0793",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
-                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。"
+                  "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    220,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "posting_reference": {
+                "set": {
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
+              },
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07",
+                  "historical_certainty": "authorial_garrison_relocation"
                 }
               },
               "appearance_plan": {
@@ -29149,7 +30342,8 @@
                     197,
                     7
                   ],
-                  "city": "donghai"
+                  "city": "qiao",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             }
@@ -34060,32 +35254,91 @@
               "source_ruler": "刘表",
               "year_state": "available",
               "faction": "liu_biao",
-              "city": "nanyang",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiangyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "posting_reference": {
                 "person_id": "san14-candidate-0951",
                 "faction": "liu_biao",
-                "origin": "xiangyang",
-                "city": "nanyang",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
+                "city": "xiangyang",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
               },
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_biao",
+                "city": "nanyang",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0951",
+                  "faction": "liu_biao",
+                  "origin": "xiangyang",
+                  "city": "nanyang",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_IF_membership",
                   "source_urls": [
                     "https://www.gamecity.com.tw/sangokushi14/wpk/scenario.html",
                     "https://www.gamecity.ne.jp/sangokushi14/wpk/scenario.html"
                   ],
                   "note": "保留本篇假想局勢的明列／既有成員，非史實連續任職證明。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    210,
+                    12
+                  ],
+                  "city": "nanyang",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷06",
+                    "https://zh.wikisource.org/wiki/三國志/卷08",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -34098,9 +35351,9 @@
                     210,
                     12
                   ],
-                  "city": "nanyang",
+                  "city": "xiangyang",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -34488,32 +35741,85 @@
             "set": {
               "source_status": "serving",
               "source_ruler": "刘繇",
-              "year_state": "death_year_review",
+              "year_state": "available",
               "faction": "liu_you",
-              "city": "yuzhang",
-              "placement_basis": "retained_faction_ruler_seat",
+              "city": "poyang",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "death_year_resolved": true,
               "posting_reference": {
                 "person_id": "san14-candidate-0963",
                 "faction": "liu_you",
-                "origin": "yuzhang",
-                "city": "yuzhang",
-                "basis": "retained_faction_ruler_seat",
-                "source_city": null
+                "city": "poyang",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13"
+                ],
+                "historical_certainty": "authorial_region_proxy"
               },
-              "scenario_membership_basis": "explicit_chapter_ruler",
-              "source_snapshot": "mainland194-06-v11"
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
+              "source_snapshot": "mainland194-06-v11",
+              "reason": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "liu_you",
+                "city": "yuzhang",
+                "placement_basis": "retained_faction_ruler_seat",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0963",
+                  "faction": "liu_you",
+                  "origin": "yuzhang",
+                  "city": "yuzhang",
+                  "basis": "retained_faction_ruler_seat",
+                  "source_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "retained_explicit_scenario_ruler",
                   "source_urls": [
                     "https://sangokushi-fun.com/sangokushi14/san14-bushou-list-ra-line/"
                   ],
                   "note": "保留本篇明列君主及根據地，不以外部快照覆寫劇本君主。",
+                  "reference_date": null,
+                  "reference_scenario": null,
                   "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": [
+                    197,
+                    7
+                  ],
+                  "end": [
+                    197,
+                    12
+                  ],
+                  "city": "yuzhang",
+                  "status": "serving",
+                  "basis": "person_specific_SAN14_location_board_proxy"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷13"
+                  ],
+                  "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+                  "historical_certainty": "authorial_region_proxy",
+                  "reference_date": [
+                    197,
+                    7
+                  ],
+                  "reference_scenario": "mainland197-07"
                 }
               },
               "appearance_plan": {
@@ -34526,9 +35832,9 @@
                     197,
                     12
                   ],
-                  "city": "yuzhang",
+                  "city": "poyang",
                   "status": "serving",
-                  "basis": "person_specific_SAN14_location_board_proxy"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -36591,11 +37897,18 @@
             "all_city_months_independently_attested": false,
             "faction_additions": [
               "song_jian",
-              "han_sui"
+              "han_sui",
+              "zang_ba",
+              "zhang_xiu",
+              "hua_xin"
             ],
             "city_owner_corrections": [
               "longxi",
-              "jincheng"
+              "jincheng",
+              "donghai",
+              "nanyang",
+              "poyang",
+              "yuzhang"
             ],
             "local_map_proxies": {
               "longxi": {
@@ -36636,6 +37949,506 @@
                 "https://zh.wikisource.org/wiki/三國志/卷15"
               ]
             }
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0147",
+                "name": "关羽",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0185",
+                "name": "简雍",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0409",
+                "name": "昌豨",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0656",
+                "name": "张飞",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0674",
+                "name": "陈珪",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0793",
+                "name": "糜竺",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0525",
+                "name": "臧霸",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                },
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0545",
+                "name": "孙观",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0308",
+                "name": "吴敦",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                },
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0014",
+                "name": "尹礼",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0260",
+                "name": "黄祖",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_biao",
+                  "city": "nanyang",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "liu_biao",
+                  "city": "xiangyang",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0321",
+                "name": "蔡氏",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_biao",
+                  "city": "nanyang",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "liu_biao",
+                  "city": "xiangyang",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0595",
+                "name": "张允",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_biao",
+                  "city": "nanyang",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "liu_biao",
+                  "city": "xiangyang",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0951",
+                "name": "刘磐",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_biao",
+                  "city": "nanyang",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "liu_biao",
+                  "city": "xiangyang",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0625",
+                "name": "张绣",
+                "before": {
+                  "status": "serving",
+                  "faction": "li_jue",
+                  "city": "henan",
+                  "ruler": false
+                },
+                "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zhang_xiu",
+                  "city": "nanyang",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0092",
+                "name": "贾诩",
+                "before": {
+                  "status": "serving",
+                  "faction": "li_jue",
+                  "city": "hedong",
+                  "ruler": false
+                },
+                "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zhang_xiu",
+                  "city": "nanyang",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0296",
+                "name": "胡车儿",
+                "before": {
+                  "status": "serving",
+                  "faction": "li_jue",
+                  "city": "fufeng",
+                  "ruler": false
+                },
+                "note": "張濟死後張繡屯宛，與劉表合而自領部曲；官方皇帝呂布假想只改袁術與呂布核心局勢，未令張繡歸李傕，故在宛城獨立。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷06",
+                  "https://zh.wikisource.org/wiki/三國志/卷08",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zhang_xiu",
+                  "city": "nanyang",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0586",
+                "name": "太史慈",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_you",
+                  "city": "yuzhang",
+                  "ruler": false
+                },
+                "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13"
+                ],
+                "certainty": "authorial_region_proxy",
+                "after": {
+                  "status": "serving",
+                  "faction": "liu_you",
+                  "city": "poyang",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0963",
+                "name": "刘繇",
+                "before": {
+                  "status": "serving",
+                  "faction": "liu_you",
+                  "city": "yuzhang",
+                  "ruler": true
+                },
+                "note": "197年劉繇、太史慈沿用196年已審核的鄱陽區域代理；不因華歆接豫章而被改編到華歆麾下。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13"
+                ],
+                "certainty": "authorial_region_proxy",
+                "after": {
+                  "status": "serving",
+                  "faction": "liu_you",
+                  "city": "poyang",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0091",
+                "name": "华歆",
+                "before": {
+                  "status": "serving",
+                  "faction": "wang_lang",
+                  "city": "kuaiji",
+                  "ruler": false
+                },
+                "note": "197年華歆以豫章太守自領地方；不因不相關的呂布稱帝前提被編入王朗。豫章節點為本作郡治映射。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷13"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "hua_xin",
+                  "city": "yuzhang",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0211",
+                "name": "许贡",
+                "before": {
+                  "status": "serving",
+                  "faction": "wang_lang",
+                  "city": "kuaiji",
+                  "ruler": false
+                },
+                "note": "許貢失吳郡後投嚴白虎，沒有歸王朗的根據；197年以吳郡地方在野表示，不虛造新領土。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷46"
+                ],
+                "certainty": "displaced_prefect_region_proxy",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "wujun",
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [],
+            "resource_transfers": [
+              {
+                "city": "kuaiji",
+                "person_id": "san14-candidate-0211",
+                "actual_before": 2160,
+                "actual_after": 2460,
+                "actual_delta": 300,
+                "raw_before": 1080,
+                "raw_after": 1230,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              }
+            ],
+            "material_before": {
+              "gold": 137820,
+              "grain": 477325,
+              "reserves": 145880,
+              "soldiers": 227180
+            },
+            "material_after": {
+              "gold": 137820,
+              "grain": 477325,
+              "reserves": 146180,
+              "soldiers": 227180
+            },
+            "notes": [
+              "本假想劇本保留遊戲／演義把兗州刺史劉岱與曹軍同名同字將領合併的例外；不得把它作為刺史192年後史實降曹的證據。史實劇本則按192年退出原ID。",
+              "官方明示的假想核心局勢仍優先，例如210年吳吞劉璋張魯、212年馬超勝與曹丕曹彰分立、235年諸葛亮續命；未逐一把假想國土改成史實。"
+            ]
           }
         },
         "delete": [
@@ -38116,7 +39929,7 @@
             "set": {
               "gold": 1240,
               "grain": 3975,
-              "reserves": 1080
+              "reserves": 1230
             }
           },
           "yizhou": {
@@ -42865,7 +44678,21 @@
           "san14-candidate-0867": [],
           "historical-beigong-boyu": [],
           "historical-li-wenhou": [],
-          "historical-bian-zhang": []
+          "historical-bian-zhang": [],
+          "san14-candidate-0211": [
+            {
+              "start": [
+                197,
+                7
+              ],
+              "end": [
+                200,
+                12
+              ],
+              "city": "wujun",
+              "resolve_death_year": false
+            }
+          ]
         }
       },
       "placement_completion": {
@@ -42875,31 +44702,39 @@
             "yiyang",
             "yidu",
             "longxi",
-            "jincheng"
+            "jincheng",
+            "donghai",
+            "nanyang",
+            "poyang",
+            "yuzhang"
           ],
           "people": 1030,
           "reference_classes": {
+            "authorial_region_placement": 991,
             "game_reference": 5,
-            "authorial_region_placement": 1012,
-            "explicit_scenario_scope": 6,
+            "regional_primary_mapping": 8,
             "authorial_if_independent_faction_mapping": 3,
-            "authorial_garrison_relocation": 3,
-            "authorial_if_lifetime_region_proxy": 1
+            "authorial_garrison_relocation": 13,
+            "displaced_prefect_region_proxy": 1,
+            "authorial_region_proxy": 2,
+            "authorial_if_lifetime_region_proxy": 1,
+            "explicit_scenario_scope": 6
           },
           "bases": {
-            "same_date_SAN14_guide_free_location": 4,
             "person_specific_future_free_appearance": 475,
+            "same_date_SAN14_guide_free_location": 4,
+            "retained_explicit_IF_membership": 219,
             "same_date_SAN14_guide_affiliation": 1,
-            "retained_person_specific_free_location": 162,
-            "retained_explicit_scenario_ruler": 17,
-            "authorial_region_placement": 2,
-            "explicit_scenario_scope": 6,
-            "retained_explicit_IF_membership": 239,
+            "ruler_affiliation_review_20261027": 21,
             "retained_chronology_or_explicit_exclusion": 110,
+            "retained_person_specific_free_location": 162,
             "user_requested_independent_han_sui_IF": 3,
+            "retained_explicit_scenario_ruler": 16,
             "historical_city_owner_relocation_authorial_garrison": 7,
             "authorial_garrison_relocation_for_song_jian_longxi": 3,
-            "user_requested_song_jian_lifetime_longxi_opening": 1
+            "authorial_region_placement": 2,
+            "user_requested_song_jian_lifetime_longxi_opening": 1,
+            "explicit_scenario_scope": 6
           }
         }
       }

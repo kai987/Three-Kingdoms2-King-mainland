@@ -22,7 +22,7 @@
           "city": "yingchuan",
           "name": "曹操勢力",
           "color": "#527d77",
-          "initial_officers": 41
+          "initial_officers": 40
         },
         {
           "id": "liu_biao",
@@ -54,7 +54,7 @@
           "city": "xiapi",
           "name": "吕布勢力",
           "color": "#786985",
-          "initial_officers": 17
+          "initial_officers": 16
         },
         {
           "id": "li_jue",
@@ -102,7 +102,7 @@
           "city": "qiao",
           "name": "刘备勢力",
           "color": "#786985",
-          "initial_officers": 16
+          "initial_officers": 13
         },
         {
           "id": "gongsun",
@@ -159,6 +159,14 @@
           "city": "longxi",
           "color": "#007f89",
           "initial_officers": 1
+        },
+        {
+          "id": "zang_ba",
+          "name": "臧霸",
+          "captain": "臧霸",
+          "city": "donghai",
+          "color": "#8753a1",
+          "initial_officers": 4
         }
       ],
       "active_cities": [
@@ -295,7 +303,7 @@
         },
         {
           "person_id": "san14-candidate-0014",
-          "city": "qiao",
+          "city": "donghai",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -400,7 +408,7 @@
         },
         {
           "person_id": "san14-candidate-0043",
-          "city": "donghai",
+          "city": "xiapi",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -673,7 +681,7 @@
         },
         {
           "person_id": "san14-candidate-0188",
-          "city": "donghai",
+          "city": "xiapi",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": true
@@ -694,7 +702,7 @@
         },
         {
           "person_id": "san14-candidate-0212",
-          "city": "donghai",
+          "city": "xiapi",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -813,7 +821,7 @@
         },
         {
           "person_id": "san14-candidate-0254",
-          "city": "donghai",
+          "city": "xiapi",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": true
@@ -960,7 +968,7 @@
         },
         {
           "person_id": "san14-candidate-0308",
-          "city": "qiao",
+          "city": "donghai",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1247,7 +1255,7 @@
         },
         {
           "person_id": "san14-candidate-0456",
-          "city": "donghai",
+          "city": "xiapi",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1338,7 +1346,7 @@
         },
         {
           "person_id": "san14-candidate-0507",
-          "city": "donghai",
+          "city": "xiapi",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1389,7 +1397,7 @@
           "person_id": "san14-candidate-0525",
           "city": "donghai",
           "troops": 300,
-          "ruler": false,
+          "ruler": true,
           "resolve_death_year": false
         },
         {
@@ -1429,7 +1437,7 @@
         },
         {
           "person_id": "san14-candidate-0545",
-          "city": "qiao",
+          "city": "donghai",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1653,7 +1661,7 @@
         },
         {
           "person_id": "san14-candidate-0663",
-          "city": "donghai",
+          "city": "xiapi",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -1828,7 +1836,7 @@
         },
         {
           "person_id": "san14-candidate-0750",
-          "city": "donghai",
+          "city": "xiapi",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -2186,13 +2194,6 @@
         {
           "person_id": "san14-candidate-0944",
           "city": "wuling",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0947",
-          "city": "dongping",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -3129,7 +3130,7 @@
             "person_id": "san14-candidate-0254",
             "name": "高顺",
             "faction": "lubu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "basis": "ruler_affiliation_review_20261027",
             "status": "serving"
           },
           {
@@ -3206,7 +3207,7 @@
             "person_id": "san14-candidate-0507",
             "name": "宋宪",
             "faction": "lubu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "basis": "ruler_affiliation_review_20261027",
             "status": "serving"
           },
           {
@@ -3226,8 +3227,8 @@
           {
             "person_id": "san14-candidate-0525",
             "name": "臧霸",
-            "faction": "lubu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "faction": "zang_ba",
+            "basis": "ruler_affiliation_review_20261027",
             "status": "serving"
           },
           {
@@ -3297,7 +3298,7 @@
             "person_id": "san14-candidate-0663",
             "name": "张辽",
             "faction": "lubu",
-            "basis": "explicit_story_or_career_assignment_not_SAN14_export",
+            "basis": "ruler_affiliation_review_20261027",
             "status": "serving"
           },
           {
@@ -3431,7 +3432,7 @@
           "anding": "ma_teng",
           "jingzhao": "li_jue",
           "jincheng": "han_sui",
-          "donghai": "lubu",
+          "donghai": "zang_ba",
           "yiyang": "liu_biao",
           "jiujiang": "yuan_shu",
           "yuzhang": "hua_xin",
@@ -3519,7 +3520,7 @@
           "san14-candidate-0005": "jiangxia",
           "san14-candidate-0009": "jingzhao",
           "san14-candidate-0013": "zitong",
-          "san14-candidate-0014": "qiao",
+          "san14-candidate-0014": "donghai",
           "san14-candidate-0015": "wujun",
           "san14-candidate-0016": "beihai",
           "san14-candidate-0022": "chenliu",
@@ -3731,7 +3732,7 @@
           "san14-candidate-0654": "wei",
           "san14-candidate-0656": "qiao",
           "san14-candidate-0658": "nanyang",
-          "san14-candidate-0663": "donghai",
+          "san14-candidate-0663": "xiapi",
           "san14-candidate-0665": "nanjun",
           "san14-candidate-0669": "kuaiji",
           "san14-candidate-0672": "donghai",
@@ -3762,7 +3763,7 @@
           "san14-candidate-0745": "nanjun",
           "san14-candidate-0748": "jingzhao",
           "san14-candidate-0749": "shujun",
-          "san14-candidate-0750": "donghai",
+          "san14-candidate-0750": "xiapi",
           "san14-candidate-0751": "changsha",
           "san14-candidate-0756": "xiangyang",
           "san14-candidate-0757": "tianshui",
@@ -3877,7 +3878,7 @@
           "san14-candidate-0039": "lujiang",
           "san14-candidate-0040": "lingling",
           "san14-candidate-0042": "henan",
-          "san14-candidate-0043": "donghai",
+          "san14-candidate-0043": "xiapi",
           "san14-candidate-0047": "henan",
           "san14-candidate-0053": "wuling",
           "san14-candidate-0056": "fengyi",
@@ -3922,7 +3923,7 @@
           "san14-candidate-0182": "henan",
           "san14-candidate-0184": "qi",
           "san14-candidate-0186": "taiyuan",
-          "san14-candidate-0188": "donghai",
+          "san14-candidate-0188": "xiapi",
           "san14-candidate-0191": "henan",
           "san14-candidate-0192": "henan",
           "san14-candidate-0193": "xiapi",
@@ -3934,7 +3935,7 @@
           "san14-candidate-0208": "runan",
           "san14-candidate-0209": "henan",
           "san14-candidate-0211": "wujun",
-          "san14-candidate-0212": "donghai",
+          "san14-candidate-0212": "xiapi",
           "san14-candidate-0217": "wei",
           "san14-candidate-0218": "danyang",
           "san14-candidate-0219": "runan",
@@ -3951,7 +3952,7 @@
           "san14-candidate-0244": "lingling",
           "san14-candidate-0248": "yan",
           "san14-candidate-0252": "liaoxi",
-          "san14-candidate-0254": "donghai",
+          "san14-candidate-0254": "xiapi",
           "san14-candidate-0256": "henan",
           "san14-candidate-0258": "xiapi",
           "san14-candidate-0260": "wuling",
@@ -3976,7 +3977,7 @@
           "san14-candidate-0297": "fufeng",
           "san14-candidate-0300": "kuaiji",
           "san14-candidate-0301": "henan",
-          "san14-candidate-0308": "qiao",
+          "san14-candidate-0308": "donghai",
           "san14-candidate-0312": "henan",
           "san14-candidate-0317": "pingyuan",
           "san14-candidate-0319": "jiangxia",
@@ -4017,7 +4018,7 @@
           "san14-candidate-0441": "runan",
           "san14-candidate-0443": "runan",
           "san14-candidate-0454": "xihe",
-          "san14-candidate-0456": "donghai",
+          "san14-candidate-0456": "xiapi",
           "san14-candidate-0460": "hongnong",
           "san14-candidate-0462": "donghai",
           "san14-candidate-0464": "yan",
@@ -4033,7 +4034,7 @@
           "san14-candidate-0487": "henan",
           "san14-candidate-0493": "fanyang",
           "san14-candidate-0499": "chenliu",
-          "san14-candidate-0507": "donghai",
+          "san14-candidate-0507": "xiapi",
           "san14-candidate-0510": "yingchuan",
           "san14-candidate-0512": "qi",
           "san14-candidate-0514": "chenliu",
@@ -4045,7 +4046,7 @@
           "san14-candidate-0538": "henan",
           "san14-candidate-0539": "taiyuan",
           "san14-candidate-0543": "jiujiang",
-          "san14-candidate-0545": "qiao",
+          "san14-candidate-0545": "donghai",
           "san14-candidate-0549": "wujun",
           "san14-candidate-0551": "henan",
           "san14-candidate-0552": "qiao",
@@ -4135,7 +4136,6 @@
           "san14-candidate-0770": "anding",
           "san14-candidate-0771": "wuwei",
           "san14-candidate-0778": "wei",
-          "san14-candidate-0782": "henan",
           "san14-candidate-0783": "henan",
           "san14-candidate-0784": "henan",
           "san14-candidate-0785": "henan",
@@ -4192,7 +4192,6 @@
           "san14-candidate-0933": "lujiang",
           "san14-candidate-0936": "xihe",
           "san14-candidate-0946": "xiangyang",
-          "san14-candidate-0947": "dongping",
           "san14-candidate-0949": "lingling",
           "san14-candidate-0951": "xiangyang",
           "san14-candidate-0953": "xiangyang",
@@ -4234,15 +4233,16 @@
           "zhang_xiu": 624,
           "hua_xin": 90,
           "han_sui": 165,
-          "song_jian": 1024
+          "song_jian": 1024,
+          "zang_ba": 524
         }
       },
       "coverage": {
         "set": {
-          "initial_serving": 290,
+          "initial_serving": 289,
           "initial_free": 143,
           "source_scenario": "mainland198-03",
-          "planned_serving": 290,
+          "planned_serving": 289,
           "planned_max_city_roster": 16,
           "future_plans": 0,
           "library": 1030,
@@ -5029,23 +5029,42 @@
           "san14-candidate-0014": {
             "set": {
               "source_ruler": "刘备",
-              "faction": "shu",
-              "city": "qiao",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "faction": "zang_ba",
+              "city": "donghai",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
                 6
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "qiao",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0014",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "qiao",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -5057,11 +5076,44 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
+                "appearance_plan": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    222,
+                    12
+                  ],
+                  "city": "qiao",
+                  "status": "serving",
+                  "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_scenario": "mainland198-03"
+                }
               },
               "appearance_plan": {
                 "set": {
@@ -5069,16 +5121,27 @@
                     198,
                     3
                   ],
-                  "city": "qiao",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               },
               "posting_reference": {
                 "set": {
-                  "faction": "shu",
-                  "origin": "qiao",
-                  "city": "qiao"
-                }
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "regional_primary_mapping"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               }
             }
           },
@@ -6822,10 +6885,10 @@
               "source_ruler": "吕布",
               "year_state": "available",
               "faction": "lubu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiapi",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
@@ -6834,23 +6897,41 @@
               "posting_reference": {
                 "person_id": "san14-candidate-0043",
                 "faction": "lubu",
-                "origin": "xiapi",
+                "city": "xiapi",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
                 "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0043",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -6862,14 +6943,14 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
+                "appearance_plan": {
                   "start": [
                     198,
                     3
@@ -6881,6 +6962,39 @@
                   "city": "donghai",
                   "status": "serving",
                   "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    199,
+                    12
+                  ],
+                  "city": "xiapi",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -15082,13 +15196,13 @@
             "set": {
               "source_status": "serving",
               "source_ruler": "吕布",
-              "year_state": "death_year_review",
+              "year_state": "available",
               "faction": "lubu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiapi",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "death_year_resolved": true,
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
@@ -15097,23 +15211,41 @@
               "posting_reference": {
                 "person_id": "san14-candidate-0188",
                 "faction": "lubu",
-                "origin": "xiapi",
+                "city": "xiapi",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
                 "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0188",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -15125,14 +15257,14 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
+                "appearance_plan": {
                   "start": [
                     198,
                     3
@@ -15144,6 +15276,39 @@
                   "city": "donghai",
                   "status": "serving",
                   "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    198,
+                    12
+                  ],
+                  "city": "xiapi",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -16461,10 +16626,10 @@
               "source_ruler": "吕布",
               "year_state": "available",
               "faction": "lubu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiapi",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
@@ -16473,23 +16638,41 @@
               "posting_reference": {
                 "person_id": "san14-candidate-0212",
                 "faction": "lubu",
-                "origin": "xiapi",
+                "city": "xiapi",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
                 "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0212",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -16501,14 +16684,14 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
+                "appearance_plan": {
                   "start": [
                     198,
                     3
@@ -16520,6 +16703,39 @@
                   "city": "donghai",
                   "status": "serving",
                   "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    206,
+                    12
+                  ],
+                  "city": "xiapi",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -18952,13 +19168,13 @@
             "set": {
               "source_status": "serving",
               "source_ruler": "吕布",
-              "year_state": "death_year_review",
+              "year_state": "available",
               "faction": "lubu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiapi",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
               "death_year_resolved": true,
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
@@ -18967,23 +19183,41 @@
               "posting_reference": {
                 "person_id": "san14-candidate-0254",
                 "faction": "lubu",
-                "origin": "xiapi",
+                "city": "xiapi",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
                 "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0254",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -18995,14 +19229,14 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
+                "appearance_plan": {
                   "start": [
                     198,
                     3
@@ -19014,6 +19248,39 @@
                   "city": "donghai",
                   "status": "serving",
                   "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    198,
+                    12
+                  ],
+                  "city": "xiapi",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -19604,7 +19871,7 @@
                     3
                   ],
                   "end": [
-                    210,
+                    220,
                     12
                   ],
                   "city": "liaodong",
@@ -20117,7 +20384,11 @@
                     1
                   ],
                   "status": "future",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "basis": "authored_nearby_historical_snapshot_continuity",
+                  "end": [
+                    225,
+                    12
+                  ]
                 }
               }
             },
@@ -22167,11 +22438,11 @@
               "source_status": "serving",
               "source_ruler": "刘备",
               "year_state": "available",
-              "faction": "shu",
-              "city": "qiao",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "faction": "zang_ba",
+              "city": "donghai",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
@@ -22179,24 +22450,42 @@
               ],
               "posting_reference": {
                 "person_id": "san14-candidate-0308",
+                "faction": "zang_ba",
+                "city": "donghai",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "regional_primary_mapping"
+              },
+              "reason": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
                 "faction": "shu",
-                "origin": "qiao",
                 "city": "qiao",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0308",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "qiao",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -22208,14 +22497,14 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
+                "appearance_plan": {
                   "start": [
                     198,
                     3
@@ -22227,6 +22516,39 @@
                   "city": "qiao",
                   "status": "serving",
                   "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "historical_certainty": "regional_primary_mapping",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    209,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -30461,10 +30783,10 @@
               "source_ruler": "吕布",
               "year_state": "available",
               "faction": "lubu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiapi",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
@@ -30473,23 +30795,41 @@
               "posting_reference": {
                 "person_id": "san14-candidate-0456",
                 "faction": "lubu",
-                "origin": "xiapi",
+                "city": "xiapi",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
                 "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0456",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -30501,14 +30841,14 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
+                "appearance_plan": {
                   "start": [
                     198,
                     3
@@ -30520,6 +30860,39 @@
                   "city": "donghai",
                   "status": "serving",
                   "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    199,
+                    12
+                  ],
+                  "city": "xiapi",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -33396,10 +33769,10 @@
               "source_ruler": "吕布",
               "year_state": "available",
               "faction": "lubu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "city": "xiapi",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
@@ -33408,23 +33781,41 @@
               "posting_reference": {
                 "person_id": "san14-candidate-0507",
                 "faction": "lubu",
-                "origin": "xiapi",
+                "city": "xiapi",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "authorial_garrison_relocation"
+              },
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
                 "city": "donghai",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0507",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -33436,14 +33827,14 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
+                "appearance_plan": {
                   "start": [
                     198,
                     3
@@ -33455,6 +33846,39 @@
                   "city": "donghai",
                   "status": "serving",
                   "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    200,
+                    12
+                  ],
+                  "city": "xiapi",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -34468,23 +34892,42 @@
           "san14-candidate-0525": {
             "set": {
               "source_ruler": "吕布",
-              "faction": "lubu",
+              "faction": "zang_ba",
               "city": "donghai",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
                 6
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0525",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -34496,11 +34939,44 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
+                "appearance_plan": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    231,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                  "historical_certainty": "regional_primary_mapping",
+                  "reference_scenario": "mainland198-03"
+                }
               },
               "appearance_plan": {
                 "set": {
@@ -34509,15 +34985,26 @@
                     3
                   ],
                   "city": "donghai",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               },
               "posting_reference": {
                 "set": {
-                  "faction": "lubu",
-                  "origin": "xiapi",
-                  "city": "donghai"
-                }
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "regional_primary_mapping"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               }
             }
           },
@@ -35620,11 +36107,11 @@
               "source_status": "serving",
               "source_ruler": "刘备",
               "year_state": "available",
-              "faction": "shu",
-              "city": "qiao",
-              "placement_basis": "authored_enemy_frontier_balanced",
+              "faction": "zang_ba",
+              "city": "donghai",
+              "placement_basis": "ruler_affiliation_review_20261027",
               "status": "serving",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
@@ -35632,24 +36119,42 @@
               ],
               "posting_reference": {
                 "person_id": "san14-candidate-0545",
+                "faction": "zang_ba",
+                "city": "donghai",
+                "basis": "ruler_affiliation_review_20261027",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "historical_certainty": "regional_primary_mapping"
+              },
+              "reason": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
                 "faction": "shu",
-                "origin": "qiao",
                 "city": "qiao",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0545",
+                  "faction": "shu",
+                  "origin": "qiao",
+                  "city": "qiao",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -35661,14 +36166,14 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
+                "appearance_plan": {
                   "start": [
                     198,
                     3
@@ -35680,6 +36185,39 @@
                   "city": "qiao",
                   "status": "serving",
                   "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "historical_certainty": "regional_primary_mapping",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    217,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
             },
@@ -42524,23 +43062,41 @@
               "source_ruler": "吕布",
               "source_city": null,
               "faction": "lubu",
-              "city": "donghai",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "scenario_membership_basis": "explicit_story_or_career_assignment_not_SAN14_export",
+              "city": "xiapi",
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
                 6
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0663",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -42552,11 +43108,44 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
+                "appearance_plan": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    222,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_scenario": "mainland198-03"
+                }
               },
               "appearance_plan": {
                 "set": {
@@ -42564,22 +43153,26 @@
                     198,
                     3
                   ],
-                  "city": "donghai",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "city": "xiapi",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               },
               "posting_reference": {
                 "set": {
                   "faction": "lubu",
-                  "origin": "xiapi",
-                  "city": "donghai",
-                  "basis": "authored_enemy_frontier_balanced",
-                  "source_city": null,
-                  "source_disposition": "missing_source_city",
-                  "source_board_city": null
+                  "city": "xiapi",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
                 },
                 "delete": [
-                  "source_reference"
+                  "source_reference",
+                  "origin",
+                  "source_city",
+                  "source_disposition"
                 ]
               }
             },
@@ -47616,22 +48209,41 @@
             "set": {
               "source_ruler": "吕布",
               "faction": "lubu",
-              "city": "donghai",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "city": "xiapi",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
                 6
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "reason": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "lubu",
+                "city": "donghai",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0750",
+                  "faction": "lubu",
+                  "origin": "xiapi",
+                  "city": "donghai",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -47643,11 +48255,44 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
+                "appearance_plan": {
+                  "start": [
+                    198,
+                    3
+                  ],
+                  "end": [
+                    221,
+                    12
+                  ],
+                  "city": "donghai",
+                  "status": "serving",
+                  "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    198,
+                    3
+                  ],
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                  "historical_certainty": "authorial_garrison_relocation",
+                  "reference_scenario": "mainland198-03"
+                }
               },
               "appearance_plan": {
                 "set": {
@@ -47655,16 +48300,27 @@
                     198,
                     3
                   ],
-                  "city": "donghai",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "city": "xiapi",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               },
               "posting_reference": {
                 "set": {
                   "faction": "lubu",
-                  "origin": "xiapi",
-                  "city": "donghai"
-                }
+                  "city": "xiapi",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷18",
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                  ],
+                  "historical_certainty": "authorial_garrison_relocation"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               }
             }
           },
@@ -48644,7 +49300,11 @@
                     3
                   ],
                   "city": "tianshui",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "basis": "authored_nearby_historical_snapshot_continuity",
+                  "end": [
+                    222,
+                    12
+                  ]
                 }
               },
               "posting_reference": {
@@ -49329,25 +49989,31 @@
           },
           "san14-candidate-0782": {
             "set": {
-              "city": "henan",
-              "placement_basis": "authored_nearby_historical_snapshot_continuity",
-              "status": "dead",
-              "scenario_membership_basis": null,
+              "city": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
                 6
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "reason": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "dead",
+                "faction": null,
+                "city": "henan",
+                "placement_basis": "authored_nearby_historical_snapshot_continuity",
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -49359,32 +50025,50 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
               },
-              "appearance_plan": {
+              "posting_reference": null,
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
                 "set": {
-                  "start": [
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
                     198,
                     3
                   ],
-                  "end": [
-                    192,
-                    12
+                  "historical_certainty": "primary_text_chronology",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
                   ],
-                  "city": "henan",
-                  "status": "dead",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "posting_reference",
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0783": {
             "set": {
@@ -58725,37 +59409,45 @@
             "set": {
               "source_status": "serving",
               "source_ruler": "曹操",
-              "year_state": "available",
-              "faction": "wei",
-              "city": "dongping",
-              "placement_basis": "authored_enemy_frontier_balanced",
-              "status": "serving",
-              "scenario_membership_basis": "retimed_nearby_snapshot_membership_authorial_inference",
+              "year_state": "dead",
+              "faction": null,
+              "city": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland194-06-v11",
               "source_reference_date": [
                 196,
                 6
               ],
-              "posting_reference": {
-                "person_id": "san14-candidate-0947",
+              "posting_reference": null,
+              "reason": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
                 "faction": "wei",
-                "origin": "chenliu",
                 "city": "dongping",
-                "basis": "authored_enemy_frontier_balanced",
-                "source_city": null,
-                "source_disposition": "missing_source_city",
-                "source_board_city": null
-              }
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0947",
+                  "faction": "wei",
+                  "origin": "chenliu",
+                  "city": "dongping",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    196,
-                    6
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -58767,31 +59459,50 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    196,
+                    6
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
               },
-              "appearance_plan": {
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
                 "set": {
-                  "start": [
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
                     198,
                     3
                   ],
-                  "end": [
-                    202,
-                    12
+                  "historical_certainty": "primary_text_chronology",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷49"
                   ],
-                  "city": "dongping",
-                  "status": "serving",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                  "reference_scenario": "mainland198-03"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0948": {
             "set": {
@@ -63650,13 +64361,15 @@
             "basis": "primary_text_regional_review_with_explicit_novel_and_map_limits",
             "faction_additions": [
               "han_sui",
-              "song_jian"
+              "song_jian",
+              "zang_ba"
             ],
             "city_owner_corrections": [
               "jincheng",
               "wudu",
               "yinping",
-              "longxi"
+              "longxi",
+              "donghai"
             ],
             "all_city_months_independently_attested": false,
             "local_map_proxies": {
@@ -63690,6 +64403,408 @@
                 "https://zh.wikisource.org/zh-hant/三國志/卷09"
               ]
             }
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": {
+                  "status": "serving",
+                  "faction": "wei",
+                  "city": "dongping",
+                  "ruler": false
+                },
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": {
+                  "status": "dead",
+                  "faction": null,
+                  "city": "henan",
+                  "ruler": false
+                },
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0043",
+                "name": "王楷",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "xiapi",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0188",
+                "name": "魏越",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "xiapi",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0212",
+                "name": "许汜",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "xiapi",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0254",
+                "name": "高顺",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "xiapi",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0456",
+                "name": "秦宜禄",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "xiapi",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0507",
+                "name": "宋宪",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "xiapi",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0663",
+                "name": "张辽",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "xiapi",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0750",
+                "name": "杜氏",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "新獨立據點的原駐將保留原勢力，移駐既有本方城；本作駐防調整，非逐月史實駐城證明。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "authorial_garrison_relocation",
+                "after": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "xiapi",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0525",
+                "name": "臧霸",
+                "before": {
+                  "status": "serving",
+                  "faction": "lubu",
+                  "city": "donghai",
+                  "ruler": false
+                },
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "ruler": true
+                }
+              },
+              {
+                "person_id": "san14-candidate-0545",
+                "name": "孙观",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                },
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0308",
+                "name": "吴敦",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                },
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0014",
+                "name": "尹礼",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "qiao",
+                  "ruler": false
+                },
+                "note": "臧霸等自領部曲駐開陽，197年可與呂布對峙、198年率兵助布；聯盟不等於普通部屬。本圖東海節點代理開陽／徐州軍營，不宣稱臧霸獨占歷史整個東海郡。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷18",
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷062"
+                ],
+                "certainty": "regional_primary_mapping",
+                "after": {
+                  "status": "serving",
+                  "faction": "zang_ba",
+                  "city": "donghai",
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [
+              {
+                "city": "dongping",
+                "person_id": "san14-candidate-0947",
+                "actual_before": 1080,
+                "actual_after": 1380,
+                "actual_delta": 300,
+                "raw_before": 1080,
+                "raw_after": 1380,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              }
+            ],
+            "material_before": {
+              "gold": 137830,
+              "grain": 477325,
+              "reserves": 145880,
+              "soldiers": 232880
+            },
+            "material_after": {
+              "gold": 137830,
+              "grain": 477325,
+              "reserves": 146180,
+              "soldiers": 232880
+            },
+            "notes": []
           }
         },
         "delete": [
@@ -65563,7 +66678,7 @@
             "set": {
               "gold": 910,
               "grain": 3425,
-              "reserves": 1080
+              "reserves": 1380
             }
           },
           "henei": {
@@ -67107,20 +68222,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0014": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                222,
-                12
-              ],
-              "city": "qiao",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0014": [],
           "san14-candidate-0015": [
             {
               "start": [
@@ -67443,20 +68545,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0043": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                199,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0043": [],
           "san14-candidate-0044": [
             {
               "start": [
@@ -69221,20 +70310,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0188": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                198,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": true
-            }
-          ],
+          "san14-candidate-0188": [],
           "san14-candidate-0189": [
             {
               "start": [
@@ -69445,20 +70521,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0212": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                206,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0212": [],
           "san14-candidate-0213": [
             {
               "start": [
@@ -69949,20 +71012,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0254": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                198,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": true
-            }
-          ],
+          "san14-candidate-0254": [],
           "san14-candidate-0255": [
             {
               "start": [
@@ -70068,7 +71118,7 @@
                 3
               ],
               "end": [
-                210,
+                220,
                 12
               ],
               "city": "liaodong",
@@ -70166,7 +71216,7 @@
                 1
               ],
               "end": [
-                251,
+                225,
                 12
               ],
               "city": "jianning",
@@ -70607,20 +71657,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0308": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                209,
-                12
-              ],
-              "city": "qiao",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0308": [],
           "san14-candidate-0309": [
             {
               "start": [
@@ -72469,20 +73506,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0456": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                199,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0456": [],
           "san14-candidate-0457": [
             {
               "start": [
@@ -73099,20 +74123,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0507": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                200,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0507": [],
           "san14-candidate-0508": [
             {
               "start": [
@@ -73323,20 +74334,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0525": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                231,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0525": [],
           "san14-candidate-0526": [
             {
               "start": [
@@ -73575,20 +74573,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0545": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                217,
-                12
-              ],
-              "city": "qiao",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0545": [],
           "san14-candidate-0546": [
             {
               "start": [
@@ -75031,20 +76016,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0663": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                222,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0663": [],
           "san14-candidate-0665": [
             {
               "start": [
@@ -76067,20 +77039,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0750": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                221,
-                12
-              ],
-              "city": "donghai",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0750": [],
           "san14-candidate-0751": [
             {
               "start": [
@@ -76312,7 +77271,7 @@
                 3
               ],
               "end": [
-                226,
+                222,
                 12
               ],
               "city": "tianshui",
@@ -78503,20 +79462,7 @@
               "resolve_death_year": false
             }
           ],
-          "san14-candidate-0947": [
-            {
-              "start": [
-                198,
-                3
-              ],
-              "end": [
-                202,
-                12
-              ],
-              "city": "dongping",
-              "resolve_death_year": false
-            }
-          ],
+          "san14-candidate-0947": [],
           "san14-candidate-0948": [
             {
               "start": [
@@ -79530,22 +80476,25 @@
             "jincheng",
             "wudu",
             "yinping",
-            "longxi"
+            "longxi",
+            "donghai"
           ],
           "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons.",
           "reference_classes": {
-            "authorial_region_placement": 991,
+            "authorial_region_placement": 977,
+            "regional_primary_mapping": 5,
             "primary_text_affiliation": 2,
             "bounded_career_inference": 20,
-            "regional_primary_mapping": 1,
+            "authorial_garrison_relocation": 16,
             "bounded_regional_inference": 1,
-            "authorial_garrison_relocation": 8,
+            "primary_text_chronology": 2,
             "authorial_lifetime_region_proxy": 1,
             "explicit_scenario_scope": 6
           },
           "people": 1030,
           "bases": {
-            "authored_nearby_historical_snapshot_continuity": 964,
+            "authored_nearby_historical_snapshot_continuity": 950,
+            "ruler_affiliation_review_20261027": 14,
             "historical_review_20261025": 8,
             "explicit_primary_or_reviewed_DLC_membership": 19,
             "bounded_career_inference": 1,
@@ -79596,6 +80545,36 @@
               "https://zh.wikisource.org/wiki/後漢書/卷72"
             ]
           }
+        }
+      },
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
         }
       }
     }

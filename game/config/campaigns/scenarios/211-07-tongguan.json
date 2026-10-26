@@ -21,7 +21,7 @@
           "captain": "刘备",
           "city": "nanjun",
           "color": "#786985",
-          "initial_officers": 66
+          "initial_officers": 64
         },
         {
           "id": "wu",
@@ -1902,13 +1902,6 @@
           "resolve_death_year": false
         },
         {
-          "person_id": "san14-candidate-0654",
-          "city": "changsha",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
           "person_id": "san14-candidate-0656",
           "city": "guiyang",
           "troops": 300,
@@ -2485,13 +2478,6 @@
         {
           "person_id": "san14-candidate-0854",
           "city": "shujun",
-          "troops": 300,
-          "ruler": false,
-          "resolve_death_year": false
-        },
-        {
-          "person_id": "san14-candidate-0855",
-          "city": "yidu",
           "troops": 300,
           "ruler": false,
           "resolve_death_year": false
@@ -3125,6 +3111,16 @@
           "person_id": "san14-candidate-0954",
           "city": "taiyuan",
           "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0654",
+          "city": "guiyang",
+          "resolve_death_year": false
+        },
+        {
+          "person_id": "san14-candidate-0855",
+          "city": "jianning",
+          "resolve_death_year": false
         }
       ],
       "dlc_audit": {
@@ -3632,7 +3628,7 @@
           "san14-candidate-0644": "wuling",
           "san14-candidate-0645": "lujiang",
           "san14-candidate-0652": "yidu",
-          "san14-candidate-0654": "changsha",
+          "san14-candidate-0654": "guiyang",
           "san14-candidate-0656": "guiyang",
           "san14-candidate-0658": "nanyang",
           "san14-candidate-0662": "lingling",
@@ -3711,7 +3707,7 @@
           "san14-candidate-0849": "jiameng",
           "san14-candidate-0850": "yunnan",
           "san14-candidate-0851": "xihe",
-          "san14-candidate-0855": "yidu",
+          "san14-candidate-0855": "jianning",
           "san14-candidate-0856": "changsha",
           "san14-candidate-0857": "shujun",
           "san14-candidate-0863": "wenshan",
@@ -4034,7 +4030,6 @@
           "san14-candidate-0770": "yingchuan",
           "san14-candidate-0771": "yingchuan",
           "san14-candidate-0778": "wei",
-          "san14-candidate-0782": "henan",
           "san14-candidate-0783": "henan",
           "san14-candidate-0784": "henan",
           "san14-candidate-0785": "henan",
@@ -4091,7 +4086,6 @@
           "san14-candidate-0933": "jingzhao",
           "san14-candidate-0936": "henan",
           "san14-candidate-0946": "henan",
-          "san14-candidate-0947": "henan",
           "san14-candidate-0949": "lingling",
           "san14-candidate-0951": "henan",
           "san14-candidate-0953": "henan",
@@ -4128,10 +4122,10 @@
       },
       "coverage": {
         "set": {
-          "initial_serving": 389,
-          "initial_free": 36,
+          "initial_serving": 387,
+          "initial_free": 38,
           "source_scenario": "mainland211-07-tongguan",
-          "planned_serving": 389,
+          "planned_serving": 387,
           "planned_max_city_roster": 14,
           "future_plans": 0,
           "library": 1030,
@@ -19494,7 +19488,11 @@
                     211,
                     7
                   ],
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "basis": "authored_nearby_historical_snapshot_continuity",
+                  "end": [
+                    225,
+                    12
+                  ]
                 }
               }
             },
@@ -40726,22 +40724,42 @@
           "san14-candidate-0654": {
             "set": {
               "source_ruler": null,
-              "city": "changsha",
-              "scenario_membership_basis": null,
+              "city": "guiyang",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland208-10-v11",
               "source_reference_date": [
                 211,
                 7
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "faction": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "free",
+              "reason": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "changsha",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0654",
+                  "faction": "shu",
+                  "origin": "changsha",
+                  "city": "changsha",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    211,
-                    7
-                  ],
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -40753,11 +40771,43 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    211,
+                    7
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
+                "appearance_plan": {
+                  "start": [
+                    211,
+                    7
+                  ],
+                  "end": [
+                    218,
+                    12
+                  ],
+                  "city": "changsha",
+                  "status": "serving",
+                  "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    211,
+                    7
+                  ],
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+                  "historical_certainty": "annotated_biography_fugitive_region_proxy",
+                  "reference_scenario": "mainland211-07-tongguan"
+                }
               },
               "appearance_plan": {
                 "set": {
@@ -40765,15 +40815,27 @@
                     211,
                     7
                   ],
-                  "city": "changsha",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "city": "guiyang",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "status": "free"
                 }
               },
               "posting_reference": {
                 "set": {
-                  "origin": "changsha",
-                  "city": "changsha"
-                }
+                  "city": "guiyang",
+                  "faction": null,
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷36"
+                  ],
+                  "historical_certainty": "annotated_biography_fugitive_region_proxy"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               }
             }
           },
@@ -47279,7 +47341,11 @@
                     7
                   ],
                   "city": "wuwei",
-                  "basis": "explicit_primary_or_reviewed_DLC_membership"
+                  "basis": "explicit_primary_or_reviewed_DLC_membership",
+                  "end": [
+                    222,
+                    12
+                  ]
                 }
               },
               "posting_reference": {
@@ -48005,25 +48071,31 @@
           "san14-candidate-0782": {
             "set": {
               "source_status": "unreviewed",
-              "city": "henan",
-              "placement_basis": "authored_nearby_historical_snapshot_continuity",
-              "status": "dead",
-              "scenario_membership_basis": null,
+              "city": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland208-10-v11",
               "source_reference_date": [
                 211,
                 7
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "reason": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "dead",
+                "faction": null,
+                "city": "henan",
+                "placement_basis": "authored_nearby_historical_snapshot_continuity",
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    211,
-                    7
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -48035,32 +48107,50 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
-                },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
                     211,
                     7
                   ],
-                  "end": [
-                    192,
-                    12
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "posting_reference": null,
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    211,
+                    7
                   ],
-                  "city": "henan",
-                  "status": "dead",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "historical_certainty": "primary_text_chronology",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                  ],
+                  "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                  "reference_scenario": "mainland211-07-tongguan"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "posting_reference",
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0783": {
             "set": {
@@ -52131,22 +52221,43 @@
           "san14-candidate-0855": {
             "set": {
               "source_ruler": null,
-              "city": "yidu",
-              "scenario_membership_basis": null,
+              "city": "jianning",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland208-10-v11",
               "source_reference_date": [
                 211,
                 7
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "faction": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "free",
+              "reason": "雍闓為益州南中地方豪族，未證此時出仕劉備荊州軍；建寧沿用本作既有地方在野代理，不提前套用223年反叛主權。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "雍闓為益州南中地方豪族，未證此時出仕劉備荊州軍；建寧沿用本作既有地方在野代理，不提前套用223年反叛主權。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "serving",
+                "faction": "shu",
+                "city": "yidu",
+                "placement_basis": "authored_enemy_frontier_balanced",
+                "posting_reference": {
+                  "person_id": "san14-candidate-0855",
+                  "faction": "shu",
+                  "origin": "nanjun",
+                  "city": "yidu",
+                  "basis": "authored_enemy_frontier_balanced",
+                  "source_city": null,
+                  "source_disposition": "missing_source_city",
+                  "source_board_city": null
+                },
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    211,
-                    7
-                  ],
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -52158,11 +52269,44 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
+                    211,
+                    7
+                  ],
+                  "historical_certainty": "authorial_region_placement"
                 },
-                "delete": [
-                  "reference_scenario"
-                ]
+                "appearance_plan": {
+                  "start": [
+                    211,
+                    7
+                  ],
+                  "end": [
+                    225,
+                    12
+                  ],
+                  "city": "yidu",
+                  "status": "serving",
+                  "basis": "authored_nearby_historical_snapshot_continuity"
+                }
+              }
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    211,
+                    7
+                  ],
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                    "https://zh.wikisource.org/wiki/三國志/卷43"
+                  ],
+                  "note": "雍闓為益州南中地方豪族，未證此時出仕劉備荊州軍；建寧沿用本作既有地方在野代理，不提前套用223年反叛主權。",
+                  "historical_certainty": "bounded_local_career_inference",
+                  "reference_scenario": "mainland211-07-tongguan"
+                }
               },
               "appearance_plan": {
                 "set": {
@@ -52170,15 +52314,28 @@
                     211,
                     7
                   ],
-                  "city": "yidu",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "city": "jianning",
+                  "basis": "ruler_affiliation_review_20261027",
+                  "status": "free"
                 }
               },
               "posting_reference": {
                 "set": {
-                  "origin": "nanjun",
-                  "city": "yidu"
-                }
+                  "city": "jianning",
+                  "faction": null,
+                  "basis": "ruler_affiliation_review_20261027",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                    "https://zh.wikisource.org/wiki/三國志/卷43"
+                  ],
+                  "historical_certainty": "bounded_local_career_inference"
+                },
+                "delete": [
+                  "origin",
+                  "source_city",
+                  "source_disposition",
+                  "source_board_city"
+                ]
               }
             }
           },
@@ -57313,25 +57470,32 @@
           "san14-candidate-0947": {
             "set": {
               "source_status": "unreviewed",
-              "city": "henan",
-              "placement_basis": "authored_nearby_historical_snapshot_continuity",
-              "status": "dead",
-              "scenario_membership_basis": null,
+              "city": null,
+              "placement_basis": "ruler_affiliation_review_20261027",
+              "status": "chronology_excluded",
+              "scenario_membership_basis": "ruler_affiliation_review_20261027",
               "source_snapshot": "mainland208-10-v11",
               "source_reference_date": [
                 211,
                 7
-              ]
-            },
-            "update": {
-              "placement_review": {
-                "set": {
+              ],
+              "reason": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+              "membership_revision": {
+                "basis": "ruler_affiliation_review_20261027",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ]
+              },
+              "ruler_affiliation_previous": {
+                "status": "dead",
+                "faction": null,
+                "city": "henan",
+                "placement_basis": "authored_nearby_historical_snapshot_continuity",
+                "membership_revision": null,
+                "placement_review": {
                   "basis": "authored_nearby_historical_snapshot_continuity",
-                  "reference_date": [
-                    211,
-                    7
-                  ],
-                  "historical_certainty": "authorial_region_placement",
                   "source_urls": [
                     "https://zh.wikisource.org/wiki/三國志/卷13",
                     "https://zh.wikisource.org/wiki/三國志/卷17",
@@ -57343,32 +57507,51 @@
                     "https://zh.wikisource.org/wiki/三國志/卷32",
                     "https://zh.wikisource.org/wiki/三國志/卷47"
                   ],
-                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。"
-                },
-                "delete": [
-                  "reference_scenario"
-                ]
-              },
-              "appearance_plan": {
-                "set": {
-                  "start": [
+                  "note": "官網日期與前提之外，依已審查鄰近開局及具名生涯完成本作1023人年代配置；推定駐城不冒稱SAN14逐將匯出或逐月史實。",
+                  "reference_date": [
                     211,
                     7
                   ],
-                  "end": [
-                    202,
-                    12
+                  "historical_certainty": "authorial_region_placement"
+                },
+                "appearance_plan": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
+                }
+              },
+              "posting_reference": null,
+              "exclusion_kind": "primary_text_dead_by_opening"
+            },
+            "update": {
+              "placement_review": {
+                "set": {
+                  "basis": "ruler_affiliation_review_20261027",
+                  "reference_date": [
+                    211,
+                    7
                   ],
-                  "city": "henan",
-                  "status": "dead",
-                  "basis": "authored_nearby_historical_snapshot_continuity"
+                  "historical_certainty": "primary_text_chronology",
+                  "source_urls": [
+                    "https://zh.wikisource.org/wiki/三國志/卷01",
+                    "https://zh.wikisource.org/wiki/三國志/卷49"
+                  ],
+                  "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                  "reference_scenario": "mainland211-07-tongguan"
+                }
+              },
+              "appearance_plan": {
+                "set": {
+                  "start": null,
+                  "end": null,
+                  "city": null,
+                  "status": "excluded",
+                  "basis": "ruler_affiliation_review_20261027"
                 }
               }
-            },
-            "delete": [
-              "posting_reference",
-              "exclusion_kind"
-            ]
+            }
           },
           "san14-candidate-0948": {
             "set": {
@@ -62153,6 +62336,197 @@
                 "https://zh.wikisource.org/zh-hant/三國志/卷09"
               ]
             }
+          },
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": {
+                  "status": "dead",
+                  "faction": null,
+                  "city": "henan",
+                  "ruler": false
+                },
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": {
+                  "status": "dead",
+                  "faction": null,
+                  "city": "henan",
+                  "ruler": false
+                },
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology",
+                "after": {
+                  "status": "chronology_excluded",
+                  "faction": null,
+                  "city": null,
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0654",
+                "name": "赵范",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "changsha",
+                  "ruler": false
+                },
+                "note": "趙範降後逃走，不能把無後續出任證據當作劉備普通部將；桂陽僅為原任郡的在野區域代理，不確證其逃亡後實際所在，也不另造獨立國。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "annotated_biography_fugitive_region_proxy",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "guiyang",
+                  "ruler": false
+                }
+              },
+              {
+                "person_id": "san14-candidate-0855",
+                "name": "雍闿",
+                "before": {
+                  "status": "serving",
+                  "faction": "shu",
+                  "city": "yidu",
+                  "ruler": false
+                },
+                "note": "雍闓為益州南中地方豪族，未證此時出仕劉備荊州軍；建寧沿用本作既有地方在野代理，不提前套用223年反叛主權。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "bounded_local_career_inference",
+                "after": {
+                  "status": "free",
+                  "faction": null,
+                  "city": "jianning",
+                  "ruler": false
+                }
+              }
+            ],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 220,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [
+              {
+                "city": "changsha",
+                "person_id": "san14-candidate-0654",
+                "actual_before": 1260,
+                "actual_after": 1560,
+                "actual_delta": 300,
+                "raw_before": 1260,
+                "raw_after": 1560,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              },
+              {
+                "city": "yidu",
+                "person_id": "san14-candidate-0855",
+                "actual_before": 1260,
+                "actual_after": 1560,
+                "actual_delta": 300,
+                "raw_before": 1260,
+                "raw_after": 1560,
+                "note": "在籍轉為在野／不可出任；原有部曲計入原城預備兵，保持本作總人力。"
+              }
+            ],
+            "material_before": {
+              "gold": 157380,
+              "grain": 550975,
+              "reserves": 172300,
+              "soldiers": 289000
+            },
+            "material_after": {
+              "gold": 157380,
+              "grain": 550975,
+              "reserves": 172900,
+              "soldiers": 289000
+            },
+            "notes": []
           }
         },
         "delete": [
@@ -63387,6 +63761,16 @@
               "gold": 1080,
               "grain": 3225,
               "reserves": 1260
+            }
+          },
+          "changsha": {
+            "set": {
+              "reserves": 1560
+            }
+          },
+          "yidu": {
+            "set": {
+              "reserves": 1560
             }
           }
         }
@@ -66244,7 +66628,7 @@
                 7
               ],
               "end": [
-                251,
+                225,
                 12
               ],
               "city": "jianning",
@@ -70153,7 +70537,7 @@
                 218,
                 12
               ],
-              "city": "changsha",
+              "city": "guiyang",
               "resolve_death_year": false
             }
           ],
@@ -71312,7 +71696,7 @@
                 7
               ],
               "end": [
-                226,
+                222,
                 12
               ],
               "city": "wuwei",
@@ -72267,7 +72651,7 @@
                 225,
                 12
               ],
-              "city": "yidu",
+              "city": "jianning",
               "resolve_death_year": false
             }
           ],
@@ -74080,23 +74464,27 @@
           ],
           "source_boundary": "Configuration complete with authorial regional inference; official DLC page establishes dates and premise, not all individual garrisons.",
           "reference_classes": {
-            "authorial_region_placement": 961,
+            "authorial_region_placement": 957,
             "game_reference": 6,
             "primary_text_affiliation": 2,
             "authorial_garrison_relocation": 29,
             "bounded_career_inference": 24,
             "regional_primary_mapping": 1,
+            "annotated_biography_fugitive_region_proxy": 1,
+            "primary_text_chronology": 2,
+            "bounded_local_career_inference": 1,
             "authorial_lifetime_region_proxy": 1,
             "explicit_scenario_scope": 6
           },
           "people": 1030,
           "bases": {
-            "authored_nearby_historical_snapshot_continuity": 959,
+            "authored_nearby_historical_snapshot_continuity": 955,
             "same_date_third_party_SAN14_guide_affiliation": 6,
             "historical_review_20261025": 29,
             "bounded_career_inference": 6,
             "explicit_primary_or_reviewed_DLC_membership": 18,
             "authorial_garrison_relocation_for_song_jian_longxi": 3,
+            "ruler_affiliation_review_20261027": 4,
             "authorial_region_placement": 2,
             "user_requested_song_jian_lifetime_longxi_opening": 1,
             "explicit_scenario_scope": 6
@@ -74122,7 +74510,7 @@
       "san14-candidate-0264": {
         "set": {
           "death_year": 220,
-          "chronology_basis": "unknown_historical_death_authorial_retirement220_for_playable_career",
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
           "scenario_chronology_override": {
             "person_id": "san14-candidate-0264",
             "before": {
@@ -74200,6 +74588,30 @@
               "https://zh.wikisource.org/wiki/三國志/卷01"
             ]
           }
+        }
+      },
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
         }
       }
     }

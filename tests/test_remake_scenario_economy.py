@@ -261,9 +261,29 @@ class DatedScenarioEconomyTests(unittest.TestCase):
                 # Canonical date values were already quantized before this size
                 # edit; changing tiers may differ by at most two stock quanta.
                 multiplier = 2 if qiao_tier == 'large' else 1
+                chenliu_stocks = dict(data['initial_city_resources']['chenliu'])
+                if date[:2] == (196, 6):
+                    # Liu Dai's reviewed death returns his existing 300 men to
+                    # Chenliu; this dated transfer is separate from city size.
+                    review = data['main_scenario']['ruler_affiliation_review']
+                    transfers = [row for row in review['resource_transfers']
+                                 if row['city'] == 'chenliu']
+                    self.assertEqual(len(transfers), 1)
+                    transfer = transfers[0]
+                    self.assertEqual((transfer['person_id'], transfer['actual_before'],
+                                      transfer['actual_after'], transfer['actual_delta']),
+                                     ('san14-candidate-0947', 1080, 1380, 300))
+                    self.assertEqual(chenliu_stocks['reserves'], transfer['actual_after'])
+                    self.assertEqual(data['era_assignments']['san14-candidate-0947']['status'],
+                                     'chronology_excluded')
+                    self.assertNotIn('san14-candidate-0947',
+                                     {row['person_id'] for row in data['initial_officers']})
+                    self.assertEqual(review['material_before']['soldiers'],
+                                     review['material_after']['soldiers'])
+                    chenliu_stocks['reserves'] -= transfer['actual_delta']
                 for field in FIELDS:
                     self.assertLessEqual(abs(data['initial_city_resources']['qiao'][field] -
-                                             data['initial_city_resources']['chenliu'][field] * multiplier),
+                                             chenliu_stocks[field] * multiplier),
                                          data['city_scale_rules']['stock_quantum'][field] * 2)
                 for field in FIELDS:
                     # Chenliu's canonical large income was rounded before

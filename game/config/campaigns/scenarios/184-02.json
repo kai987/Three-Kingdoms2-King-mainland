@@ -10701,7 +10701,7 @@
                     1
                   ],
                   "end": [
-                    210,
+                    220,
                     12
                   ],
                   "city": "liaodong",
@@ -11026,7 +11026,11 @@
                     207,
                     1
                   ],
-                  "status": "future_free"
+                  "status": "future_free",
+                  "end": [
+                    225,
+                    12
+                  ]
                 }
               }
             }
@@ -24951,7 +24955,11 @@
                     1
                   ],
                   "city": "wuwei",
-                  "status": "future_free"
+                  "status": "future_free",
+                  "end": [
+                    222,
+                    12
+                  ]
                 }
               }
             }
@@ -29833,7 +29841,7 @@
                     2
                   ],
                   "end": [
-                    202,
+                    192,
                     12
                   ],
                   "city": "henan",
@@ -32700,7 +32708,7 @@
                 2
               ],
               "end": [
-                192,
+                195,
                 12
               ],
               "city": "anding",
@@ -33184,7 +33192,90 @@
           "travel": "hazardous-marches-v1",
           "city_chronology_note": "章陵222年改義陽；240年後開局不設義陽，進行中戰役保留。臨江208年9月開、210年12月改宜都，月份為使用者指定；假想劇本維持其世界線。",
           "garrison_basis": "reviewed_source_city_then_even_enemy_frontier",
-          "roster_completeness_scope": "all1030 opening/excluded/future plans, not attested complete historical garrisons"
+          "roster_completeness_scope": "all1030 opening/excluded/future plans, not attested complete historical garrisons",
+          "ruler_affiliation_review": {
+            "revision": "2026-10-27",
+            "scope": "dated_independent_rulers_and_former_ruler_availability_not_complete_garrison_history",
+            "corrections": [],
+            "chronology": [
+              {
+                "person_id": "san14-candidate-0947",
+                "name": "刘岱",
+                "before": 202,
+                "death_year": 192,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "此ID為東萊出身的兗州刺史劉岱，初平三年討黃巾戰死；不再與後來曹軍同名同字的沛國劉岱混用。另一人尚未另建ID，不憑姓名移轉刺史。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷01",
+                  "https://zh.wikisource.org/wiki/三國志/卷49"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0782",
+                "name": "樊稠",
+                "before": 192,
+                "death_year": 195,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《通鑑》記興平二年二月樊稠被李傕殺，修正原來源192年死亡；不將其共同執政誤稱私人部屬。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/資治通鑑/卷061"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0769",
+                "name": "马超",
+                "before": 226,
+                "death_year": 222,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《馬超傳》記章武二年卒，既有來源的226年設定改為222年；無可靠月份，不新增逐月死亡事件。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷36"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0272",
+                "name": "高定",
+                "before": 251,
+                "death_year": 225,
+                "chronology_basis": "primary_text_death_year_correction",
+                "note": "《華陽國志》南中平定段明記斬高定元，死亡年採225；本作225年7月仍依使用者指定與孟獲同陣營，屬明列的開局例外。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/華陽國志/卷四",
+                  "https://zh.wikisource.org/wiki/三國志/卷43"
+                ],
+                "certainty": "primary_text_chronology"
+              },
+              {
+                "person_id": "san14-candidate-0264",
+                "name": "公孙康",
+                "before": 210,
+                "death_year": 220,
+                "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year",
+                "note": "原典只確知康死後眾立恭，曹丕踐祚時恭已領眾；沿用本作既定220年邊界以統一年表，並非史料已證康卒於220。",
+                "source_urls": [
+                  "https://zh.wikisource.org/wiki/三國志/卷08"
+                ],
+                "certainty": "bounded_authorial_estimate"
+              }
+            ],
+            "resource_transfers": [],
+            "material_before": {
+              "gold": 147640,
+              "grain": 520075,
+              "reserves": 153960,
+              "soldiers": 194760
+            },
+            "material_after": {
+              "gold": 147640,
+              "grain": 520075,
+              "reserves": 153960,
+              "soldiers": 194760
+            },
+            "notes": []
+          }
         }
       },
       "city_profiles": {
@@ -51782,7 +51873,7 @@
                 1
               ],
               "end": [
-                210,
+                220,
                 12
               ],
               "city": "liaodong",
@@ -51824,7 +51915,7 @@
                 1
               ],
               "end": [
-                251,
+                225,
                 12
               ],
               "city": "jianning",
@@ -55240,7 +55331,7 @@
                 1
               ],
               "end": [
-                226,
+                222,
                 12
               ],
               "city": "wuwei",
@@ -57095,5 +57186,38 @@
       }
     }
   },
-  "people_overrides": {}
+  "people_overrides": {
+    "update": {
+      "san14-candidate-0947": {
+        "set": {
+          "death_year": 192,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0782": {
+        "set": {
+          "death_year": 195,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0769": {
+        "set": {
+          "death_year": 222,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0272": {
+        "set": {
+          "death_year": 225,
+          "chronology_basis": "primary_text_death_year_correction"
+        }
+      },
+      "san14-candidate-0264": {
+        "set": {
+          "death_year": 220,
+          "chronology_basis": "primary_text_bounded_authorial_death_boundary_not_exact_year"
+        }
+      }
+    }
+  }
 }
